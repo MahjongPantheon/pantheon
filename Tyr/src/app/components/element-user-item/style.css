@@ -1,0 +1,103 @@
+/*
+ * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+ *
+ * This file is part of Tyr.
+ *
+ * Tyr is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Tyr is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+:host {
+  width: 100%;
+  flex: 1;
+  align-self: center;
+  padding: 3px;
+  text-align: center;
+  background-color: #72b370;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.displayName {
+  padding: 4px;
+  margin-bottom: 3px;
+  font-weight: bold;
+}
+
+.player-state {
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.win-lose {
+  flex: 1;
+  display: flex;
+  height: 100%;
+}
+.win-lose button {
+  border: outset 2px;
+  flex: 1;
+  background-color: #ccc;
+  margin: 5px 0;
+  min-height: 45px;
+  background-size: 75% 75%;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+.win-lose button.pressed {
+  border: inset 2px;
+  background-color: #bbb;
+}
+.win-lose button.disabled {
+  opacity: 0.4;
+}
+.win-lose button.win {
+  background-color: #afa;
+}
+.win-lose button.win.pressed {
+  background-color: #7d7;
+}
+.win-lose button.lose {
+  background-color: #faa;
+}
+.win-lose button.lose.pressed {
+  background-color: #d77;
+}
+
+.riichi-bet-button {
+  border-radius: 15px;
+  width: 100%;
+  height: 24px;
+  border: solid 2px #888;
+  background-color: #ddd;
+}
+.riichi-bet-button:after {
+  content: 'нет риичи';
+  font-size: 12px;
+  color: #999;
+  line-height: 12px;
+}
+
+.riichi-bet-button.pressed {
+  /*background-color: #bbb;*/
+}
+.riichi-bet-button.pressed:after {
+  content: '•';
+  font-size: 20px;
+  color: #f00;
+}

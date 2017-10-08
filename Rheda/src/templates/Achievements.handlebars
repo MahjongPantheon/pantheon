@@ -1,0 +1,93 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<h2>Особые номинации</h2>
+
+{{#error}}
+    <div class="alert alert-error" style="white-space: pre">{{error}}</div>
+{{/error}}
+{{^error}}
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <th>Номинация</th>
+                <th style="width: 30%">Расшифровка</th>
+                <th>Значение</th>
+                <th>Номинанты</th>
+            </tr>
+            <tr>
+                <td><b>Лучшая рука турнира</b></td>
+                <td style="width: 30%">Присуждается за сбор руки с самым большим числом хан за турнир, независимо от стоимости/дилерства.</td>
+                <td>{{bestHandValue}}</td>
+                <td><ul>
+                    {{#bestHandPlayers}}
+                        <li>{{.}}</li>
+                    {{/bestHandPlayers}}
+                </ul></td>
+            </tr>
+            <tr>
+                <td><b>Задолбал!</b></td>
+                <td style="width: 30%">Присуждается за максимальное число цумо в рамках одного ханчана.</td>
+                <td>{{bestTsumoCount}}</td>
+                <td><ul>
+                    {{#bestTsumoPlayers}}
+                        <li>{{.}}</li>
+                    {{/bestTsumoPlayers}}
+                </ul></td>
+            </tr>
+            <tr>
+                <td><b>Бравый сапёр</b></td>
+                <td style="width: 30%">Присуждается за наибольшее число набросов в рон за турнир.</td>
+                <td>{{bestSapperValue}}</td>
+                <td><ul>
+                    {{#bestSapperPlayers}}
+                        <li>{{.}}</li>
+                    {{/bestSapperPlayers}}
+                </ul></td>
+            </tr>
+            <tr>
+                <td><b>Чомбо-мастер</b></td>
+                <td style="width: 30%">Присуждается за получение чомбо на турнире.</td>
+                <td>-</td>
+                <td><ul>
+                    {{#chomboMasters}}
+                        <li>{{name}}: {{count}} чомбо</li>
+                    {{/chomboMasters}}
+                </ul></td>
+            </tr>
+            <tr>
+                <td><b>Довакин aka The mother of dragons</b></td>
+                <td style="width: 30%">Присуждается за сбор наибольшего числа якухаев за турнир.</td>
+                <td>-</td>
+                <td><ul>
+                    {{#dovakins}}
+                        <li>{{name}}: {{count}} якухаев</li>
+                    {{/dovakins}}
+                </ul></td>
+            </tr>
+            <tr>
+                <td><b>Якуман-мастер</b></td>
+                <td style="width: 30%">Присуждается за сбор якумана на турнире</td>
+                <td>-</td>
+                <td><ul>
+                    {{#yakumans}}
+                        <li>{{.}}</li>
+                    {{/yakumans}}
+                </ul></td>
+            </tr>
+        </tbody>
+    </table>
+{{/error}}

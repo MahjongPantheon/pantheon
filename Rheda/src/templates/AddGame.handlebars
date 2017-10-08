@@ -1,0 +1,92 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+{{#successfullyAdded}}
+    <h4>Игра успешно добавлена!</h4>
+    <br>
+    Идем обратно через 3 секунды...
+    <script type='text/javascript'>
+        window.setTimeout(function () {
+            window.location = '/add/';
+        }, 3000);
+    </script>
+{{/successfullyAdded}}
+
+{{^successfullyAdded}}
+    <div class="row">
+        <div class="span9">
+            <h2>Добавить игру</h2>
+            <br>
+            Формат:
+            <br>
+            <pre>
+[player][:][(-)?\d{,5}] [player][:][(-)?\d{,5}] [player][:][(-)?\d{,5}] [player][:][(-)?\d{,5}]
+ron [player] from [player] [5-12]han riichi [player] [player]
+ron [player] from [player] [5-12]han
+ron [player] from [player] [1-4]han \d{2,3}fu
+ron [player] from [player] yakuman
+tsumo [player] [5-12]han riichi [player] [player]
+tsumo [player] [5-12]han
+tsumo [player] [1-4]han \d{2,3}fu
+tsumo [player] yakuman
+draw tempai nobody
+draw tempai [player] riichi [player] [player]
+draw tempai [player] [player]
+draw tempai [player] [player] [player]
+draw tempai all
+chombo [player]
+            </pre>
+            Пример:
+            <br>
+            <pre>
+heilage:12300 Chaos:32000 Frontier:-2000 Manabi:30000
+ron heilage from Chaos 2han 30fu riichi Frontier
+ron Chaos from Frontier 2han 40fu
+tsumo Frontier yakuman riichi heilage Chaos
+draw tempai nobody riichi Manabi
+tsumo heilage 5han
+ron heilage from Chaos yakuman
+итд
+Ренчаны и хонба высчитываются автоматически. Также производится проверка начисленных очков и выводится предупреждение в случае несоответствия.
+            </pre>
+            {{#error}}
+                <div class="alert alert-error" style="white-space: pre">{{error}}</div>
+            {{/error}}
+
+            <form action="" method="POST" id="addform">
+                <textarea name="content" style="width:100%; height: 300px">{{text}}</textarea>
+                <div class="row">
+                    <div class="span10">
+                        <input type="submit" value="Добавить" class="btn btn-primary btn-large">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="span3">
+            <h5>Алиасы</h5>
+            <table border=0 class='table table-condensed'>
+                {{#players}}
+                    <tr>
+                        <td>{{alias}}</td>
+                        <td> =</td>
+                        <td>{{display_name}}</td>
+                    </tr>
+                {{/players}}
+            </table>
+        </div>
+    </div>
+{{/successfullyAdded}}
+

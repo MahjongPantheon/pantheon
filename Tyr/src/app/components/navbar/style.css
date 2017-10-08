@@ -1,0 +1,184 @@
+/*
+ * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+ *
+ * This file is part of Tyr.
+ *
+ * Tyr is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Tyr is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+:host {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  margin-top: -60px;
+  background-color: #333;
+}
+
+.tournament-title, .outcome-title {
+  flex: 1;
+  color: #bbb;
+  text-align: center;
+  font-size: 24px;
+  line-height: 2.5;
+}
+
+.back-button,.fwd-button {
+  font-size: 25px;
+  line-height: 10px;
+  min-width: 50px;
+}
+
+.fwd-button.larger-font {
+  font-size: 40px;
+  line-height: 10px;
+}
+
+.round-summary {
+  flex: 1;
+  color: #bbb;
+}
+
+.round-summary > * {
+  flex: 1;
+  text-align: center;
+  line-height: 2.3;
+  font-size: 26px;
+  align-items: center;
+}
+
+/* ---------------------------- */
+
+
+.with-selectors > * {
+  flex: initial;
+}
+
+
+/* Container used for styling the custom select, the buttom class below adds the
+ * bg gradient, corners, etc. */
+.custom-select {
+  position: relative;
+  display: inline-block;
+  height: 90%;
+  top: -20%;
+}
+
+/* This is the native select, we're making everything but the text invisible so
+ * we can see the button styles in the wrapper */
+.custom-select select {
+  width: 100%;
+  margin: 0;
+  outline: none;
+  padding: 0.5em 1em 0em 1em;
+
+  font-size: 26px;
+  font-family: 'PTSans', sans-serif;
+  color: #ccc;
+
+  /* Prefixed box-sizing rules necessary for older browsers */
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+/* Custom arrow sits on top of the select - could be an image, SVG, icon font,
+ * etc. or the arrow could just baked into the bg image on the select. */
+.custom-select::after {
+  content: ' ';
+  background-image: url('data:image/svg+xml;utf8,<svg width="10" height="10" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path fill="#ccc" d="m10.5,13l26,40l26,-40l-52,0z"/></svg>');
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 75%;
+  right: 0.5em;
+  z-index: 2;
+  /* These hacks make the select behind the arrow clickable in some browsers */
+  pointer-events: none;
+  display: none;
+}
+
+.noafter::after {
+  content: none;
+}
+
+@supports ( -webkit-appearance: none ) or ( appearance: none )
+/* Firefox <= 34 has a false positive on @supports( -moz-appearance: none )
+ * @supports ( mask-type: alpha ) is Firefox 35+
+ */
+or ( ( -moz-appearance: none ) and ( mask-type: alpha ) ) {
+  
+  /* Show custom arrow */
+  .custom-select::after {
+    display: block;
+  }
+
+  /* Remove select styling */
+  .custom-select select {
+    /* inside @supports so that iOS <= 8 display the native arrow */
+    background: none; /* Match-04 */
+    /* inside @supports so that Android <= 4.3 display the native arrow */
+    border: 1px solid transparent; /* Match-05 */
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  .custom-select select:focus {
+    border-color: #aaa; /* Match-03 */
+  }
+}
+
+/* ------------------------------------------ */
+
+.with-selectors {
+  display: flex;
+}
+
+.with-selectors .separator {
+  width: 5%;
+  line-height: 2.9;
+}
+
+.with-selectors .yaku-han-count {
+  width: 20%
+}
+
+.with-selectors .dora-han-count {
+  width: 35%;
+}
+
+.with-selectors .fu-count {
+  width: 35%;
+}
+
+.yaku-han-count, .dora-han-count, .fu-count {
+  display: flex;
+  flex-direction: column;
+}
+
+.with-selectors .title {
+  height: 20%;
+  font-size: 14px;
+  margin-top: -5px;
+}
+.with-selectors .value {
+  height: 80%;
+  margin-top: 10px;
+}
+
+.with-selectors .value select {
+  font-size: 20px;
+}

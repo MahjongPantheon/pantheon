@@ -1,0 +1,80 @@
+<!--
+     Tyr - Allows online game recording in japanese (riichi) mahjong sessions
+     Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+
+     This file is part of Tyr.
+
+     Tyr is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+
+     Tyr is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+
+     You should have received a copy of the GNU General Public License
+     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+   -->
+<div class="page-wrap">
+  <nav-bar
+    [state]="state"
+    [screen]="state.currentScreen()"
+  ></nav-bar>
+  <div class="content">
+    <screen-login
+      *ngIf="state.currentScreen() === 'login'"
+      [state]="state"
+      [api]="api"
+    ></screen-login>
+    <screen-overview
+      *ngIf="state.currentScreen() === 'overview'"
+      [state]="state"
+      [players]="state.getPlayers()"
+      [loading]="state.isLoading('overview', 'games')"
+      [currentGameHash]="state.getHashcode()"
+      [currentRound]="state.getCurrentRound()"
+    ></screen-overview>
+    <screen-new-game
+      *ngIf="state.currentScreen() === 'newGame'"
+      [state]="state"
+      [api]="api"
+    ></screen-new-game>
+    <screen-last-results
+      *ngIf="state.currentScreen() === 'lastResults'"
+      [state]="state"
+      [api]="api"
+    ></screen-last-results>
+    <screen-outcome-select
+      *ngIf="state.currentScreen() === 'outcomeSelect'"
+      [state]="state"
+    ></screen-outcome-select>
+    <screen-players-select
+      *ngIf="state.currentScreen() === 'playersSelect'"
+      [state]="state"
+    ></screen-players-select>
+    <screen-yaku-select
+      *ngIf="state.currentScreen() === 'yakuSelect'"
+      [state]="state"
+    ></screen-yaku-select>
+    <screen-confirmation
+      *ngIf="state.currentScreen() === 'confirmation'"
+      [state]="state"
+    ></screen-confirmation>
+    <screen-last-round
+      *ngIf="state.currentScreen() === 'lastRound'"
+      [state]="state"
+    ></screen-last-round>
+    <screen-other-tables-list
+      *ngIf="state.currentScreen() === 'otherTablesList'"
+      [state]="state"
+    ></screen-other-tables-list>
+    <screen-other-table
+      *ngIf="state.currentScreen() === 'otherTable'"
+      [state]="state"
+      [players]="state.getCurrentOtherTablePlayers()"
+      [lastRound]="state.getCurrentOtherTableLastRound()"
+    ></screen-other-table>
+  </div>
+</div>

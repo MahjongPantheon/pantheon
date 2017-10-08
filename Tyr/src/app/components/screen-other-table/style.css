@@ -1,0 +1,232 @@
+/*
+ * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+ *
+ * This file is part of Tyr.
+ *
+ * Tyr is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Tyr is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+:host {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.riichi-table {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.ka-shi {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.centered {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  padding: 0 10px;
+}
+
+.side {
+  height: 80%;
+  width: 40%;
+  align-self: center;
+  padding: 3px;
+  text-align: center;
+  background-color: #72b370;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  position: relative;
+}
+
+.side.selected {
+  background-color: #7072b3;
+}
+
+.edge-block {
+  height: 80%;
+  width: 20%;
+  align-self: center;
+  text-align: center;
+  color: #72b370;
+}
+
+.edge-block.stretched-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.edge-block.stretched-content > * {
+  flex: 1;
+}
+
+/* round info */
+.round-info {
+  line-height: 20px;
+  font-size: 20px;
+}
+.honba-count, .riichi-count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.honba-count > span, .riichi-count > span {
+  flex: 1;
+  text-align: right;
+}
+.round-index {
+  font-size: 30px;
+  margin: 20px 0;
+}
+
+.not-found {
+  font-size: 32px;
+  text-align: center;
+  flex: 3;
+  color: #ccc;
+}
+
+/* timer */
+.timer {
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+}
+
+.timer.redZone {
+  background-color: #900;
+}
+
+.timer.yellowZone {
+  color: #333;
+  background-color: #aa0;
+}
+
+/* players blocks */
+.displayName {
+  padding: 4px;
+  margin-bottom: 3px;
+  font-weight: bold;
+}
+
+.wind {
+  font-size: 36px;
+}
+.points {
+  font-size: 30px;
+}
+
+.newgame-button {
+  width: 100%;
+  background-color: #ccc;
+  font-size: 24px;
+  flex: 1;
+  margin: 5px 0;
+  padding: 10px 0;
+  line-height: 1px;
+}
+
+.table-index {
+  margin-top: 10px;
+  text-align: center;
+  padding: 5px;
+  background: #232;
+}
+
+.table-index span {
+  font-size: 40px;
+  display: block;
+}
+
+.chombo {
+  position: absolute;
+  right: 4px;
+  top: 45%;
+  background-color: #f66;
+  font-size: 22px;
+  padding: 3px;
+}
+
+.round-results-overlay {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 5;
+}
+
+.round-results-window {
+  position: absolute;
+  margin: auto;
+  width: 80%;
+  height: 50%;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #aae;
+  box-shadow: 0 0 20px 0px;
+  z-index: 6;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.round-results-window h3 {
+  display: block;
+  background-color: #ccc;
+  color: #333; 
+  padding: 10px;
+  text-align: center;
+  font-size: 25px;
+}
+
+.round-results-window .table-info {
+  padding: 10px;
+}
+
+.round-results-window .round-info {
+  display: flex;
+}
+
+.round-results-window .round-info div {
+  flex: 0.5;
+  padding-left: 10px;
+}
+
+.round-results-window .round-info span {
+  margin-top: 5px;
+  flex: 1;
+}
+
+.wins-list {
+  font-size: 20px;
+}

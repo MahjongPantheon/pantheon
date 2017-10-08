@@ -1,0 +1,230 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+
+<style>
+    .badge {
+        display: inline-block;
+        color: #eee;
+        background-color: #555;
+        padding: 1px 4px;
+        border-radius: 20%;
+        min-width: 30px;
+        text-align: right;
+    }
+    .badge.important {
+        background-color: #800;
+    }
+    .badge.success {
+        background-color: #070;
+    }
+    .stats {
+        margin: 10px 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .stats .stat-item {
+        padding: 3px;
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        font-size: 18px;
+        line-height: normal;
+    }
+    .stats .stat-item:nth-child(even) {
+        background-color: #ddd;
+    }
+    .stats .iname {
+        flex: 1;
+    }
+    .stats .ival {
+        flex-shrink: 1;
+    }
+    .stats .ival2 {
+        width: 20%;
+    }
+    .stat-div {
+        text-align: center;
+        background-color: #aaa;
+    }
+
+    .rating-chart-details {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    .rating-chart-details .player-item {
+        padding: 3px;
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        font-size: 18px;
+        line-height: normal;
+    }
+
+    .rating-chart-details .player-name {
+        flex: 1;
+    }
+    .rating-chart-details .player-score {
+        flex-shrink: 1;
+    }
+    .own {
+        background-color: #ff8;
+    }
+</style>
+
+<h2 class="header-title">Графики рейтинга</h2>
+<div class="main-content">
+    {{#playerData}}
+        <h3>Игрок: {{display_name}}</h3>
+        <hr/>
+
+        {{^data}}
+            Пока никакой статистики нет :(
+        {{/data}}
+
+        {{#data}}
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    plotRating(
+                        {{{points}}},
+                        {{{games}}},
+                        {{{currentPlayer}}},
+                        {{{playersMap}}},
+                        {{{labelThreshold}}}
+                    );
+                    plotHands(
+                        {{{handValueStats}}},
+                        {{{yakuStats}}}
+                    );
+                });
+            </script>
+            <div class="stats">
+                <div class="stat-div">График рейтинга</div>
+                <div class="stat-item" style="display: block">
+                    <div id='chart_rating'></div>
+                    <div id="chart_rating_info"></div>
+                </div>
+                <div class="stat-div">Общая статистика</div>
+                <div class="stat-item">
+                    <div class="iname">Сыграно игр</div>
+                    <div class="ival2">{{totalPlayedGames}}</div>
+                    <div class="ival2">&nbsp;</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">Сыграно раздач</div>
+                    <div class="ival2">{{totalPlayedRounds}}</div>
+                    <div class="ival2">&nbsp;</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">Выиграно раздач</div>
+                    <div class="ival2">{{winCount}}</div>
+                    <div class="ival2">({{winCountPercent}}%)</div>
+                </div>
+                <div class="stat-div">По исходам раздач:</div>
+                <div class="stat-item">
+                    <div class="iname">Выигрышей по рон</div>
+                    <div class="ival2">{{ronCount}}</div>
+                    <div class="ival2">({{ronCountPercent}}%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">Выигрышей по цумо</div>
+                    <div class="ival2">{{tsumoCount}}</div>
+                    <div class="ival2">({{tsumoCountPercent}}%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">Набросов в рон</div>
+                    <div class="ival2">{{feedCount}}</div>
+                    <div class="ival2">({{feedCountPercent}}%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">- в том числе из-за риичи</div>
+                    <div class="ival2">{{feedUnderRiichi}}</div>
+                    <div class="ival2">({{feedUnderRiichiPercent}}%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">Проигрышей по цумо</div>
+                    <div class="ival2">{{tsumoFeedCount}}</div>
+                    <div class="ival2">({{tsumoFeedCountPercent}}%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">Открытых рук</div>
+                    <div class="ival2">{{openHand}}</div>
+                    <div class="ival2">({{openHandPercent}}%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">Штрафов чомбо</div>
+                    <div class="ival2">{{chomboCount}}</div>
+                    <div class="ival2">({{chomboCountPercent}}%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">Ставок риичи</div>
+                    <div class="ival2">{{riichiTotal}}</div>
+                    <div class="ival2">({{riichiTotalPercent}}%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">- из них выигравших</div>
+                    <div class="ival2">{{riichiWon}}</div>
+                    <div class="ival2">({{riichiWonPercent}}%)</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">- из них потерянных</div>
+                    <div class="ival2">{{riichiLost}}</div>
+                    <div class="ival2">({{riichiLostPercent}}%)</div>
+                </div>
+                <div class="stat-div">По занятым местам:</div>
+                <div class="stat-item">
+                    <div class="iname">1 место</div>
+                    <div class="ival">{{place1}} %</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">2 место</div>
+                    <div class="ival">{{place2}} %</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">3 место</div>
+                    <div class="ival">{{place3}} %</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">4 место</div>
+                    <div class="ival">{{place4}} %</div>
+                </div>
+                <div class="stat-div">Набранные очки по итогу игр:</div>
+                <div class="stat-item">
+                    <div class="iname">Минимум</div>
+                    <div class="ival">{{minScores}}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">Максимум</div>
+                    <div class="ival">{{maxScores}}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="iname">Среднее</div>
+                    <div class="ival">{{averageScores}}</div>
+                </div>
+                <div class="stat-div">Ценность собранных рук</div>
+                <div class="stat-item" style="display: block">
+                    <div id='chart_hands'></div>
+                    <hr/>
+                </div>
+                <div class="stat-div">Собранные яку (за всё время)</div>
+                <div class="stat-item" style="display: block">
+                    <div id='chart_yaku'></div>
+                </div>
+            </div>
+        {{/data}}
+    {{/playerData}}
+</div>

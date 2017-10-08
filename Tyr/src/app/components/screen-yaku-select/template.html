@@ -1,0 +1,78 @@
+<!--
+    Tyr - Allows online game recording in japanese (riichi) mahjong sessions
+    Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+
+    This file is part of Tyr.
+
+    Tyr is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Tyr is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<div
+  class="buttons"
+  [class.multiron]="showTabs()">
+  <div class="outcome-indicator">{{outcome()}}</div>
+  <button
+      (click)="showSimple()"
+      [class.pressed]="this.selectedSimple"
+  ><custom-icon [type]="'common'" [resize]="36"></custom-icon></button>
+  <button
+      (click)="showRare()"
+      [class.pressed]="this.selectedRare"
+  ><custom-icon [type]="'rare'" [resize]="36"></custom-icon></button>
+  <button
+      (click)="showYakuman()"
+      [class.pressed]="this.selectedYakuman"
+  ><custom-icon [type]="'yman'" [resize]="36"></custom-icon></button>
+</div>
+<div
+  class="scroller-wrap"
+  [class.multiron]="showTabs()"
+  (scroll)="updateAfterScroll()"
+  #scroller>
+  <div class="yakuList">
+    <div
+      class="yaku-set"
+      *ngFor="let data of yakuList[this._currentUser]"
+      >
+      <a href="" [name]="data.anchor" #scrlink></a>
+      <div
+        class="yaku-row"
+        *ngFor="let yakuRow of data.groups"
+        >
+        <yaku-item-button
+          *ngFor="let yaku of yakuRow"
+          [yaku]="yaku"
+          [pressed]="isSelected(yaku.id)"
+          [disabled]="this.disabledYaku[this._currentUser][yaku.id]"
+          (onClick)="yakuSelect($event)"
+          ></yaku-item-button>
+      </div>
+    </div>
+  </div>
+  <hr />
+</div>
+<div
+  class="player-tabs"
+  *ngIf="showTabs()"
+  [style.width]="_viewportHeight"
+  [style.height]="_tabsHeight"
+>
+  <div
+    *ngFor="let user of this.state.getWinningUsers()"
+    (click)="selectMultiRonUser(user.id)"
+    [class.selected]="user.id === this.state.getCurrentMultiRonUser()"
+  >
+    <div class="name">{{user.displayName}}</div>
+    <div class="score">{{han(user.id)}}<span *ngIf="showFuOf(user.id)">/{{this.state.getFuOf(user.id)}}</span></div>
+  </div>
+</div>

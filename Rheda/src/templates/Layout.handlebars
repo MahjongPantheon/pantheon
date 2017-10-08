@@ -1,0 +1,105 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{pageTitle}} - Rheda</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Oleg Klimenko @ Novosibirsk Mahjong Club">
+
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.jqplot.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jqplot.categoryAxisRenderer.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jqplot.barRenderer.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jqplot.highlighter.js"></script>
+    <script type="text/javascript" src="/assets/js/jqplot.cursor.js"></script>
+    <script type="text/javascript" src="/assets/bundle.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/css/jquery.jqplot.min.css"/>
+    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="/assets/ico/rhedaico.png">
+    <link rel="apple-touch-icon-precomposed" href="/assets/ico/rhedahires.png">
+    <link rel="stylesheet" type="text/css" href="/assets/styles.css">
+</head>
+
+<body>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li>{{#a href='/'}}{{eventTitle}}{{/a}}</li>
+                    <li>{{#a href='/last/'}}Сыгранные игры{{/a}}</li>
+                    <li>{{#a href='/stat/'}}Рейтинг{{/a}}</li>
+                    {{#isOnline}}
+                        <li>{{#a href='/add-online/'}}+Онлайн-игра{{/a}}</li>
+                    {{/isOnline}}
+                    {{#isLoggedIn}}
+                        {{^isOnline}}
+                            <li>{{#a href='/tourn/'}}Старт игр{{/a}}</li>
+                            {{#usePenalty}}
+                                <li>{{#a href='/penalties/'}}Штрафы{{/a}}</li>
+                            {{/usePenalty}}
+                        {{/isOnline}}
+                        <li>{{#a href='/enroll/'}}Добавить игрока{{/a}}</li>
+                        <li>{{#a href='/reg/'}}Игроки и регистрация{{/a}}</li>
+                        <li>{{#a href='/achievements/'}}Номинации{{/a}}</li>
+                        {{!--<li>
+                            #href '/sortition/' Пересечения&nbsp;&nbsp;<span style="opacity: 0.5"
+                            class="icon-lock icon-white"></span> /href
+                        </li>--}}
+                    {{/isLoggedIn}}
+
+                    {{#useTimer}}
+                        <li>{{#a href='/timer/' target='_blank'}}Таймер и рассадка{{/a}}</li>
+                    {{/useTimer}}
+
+                    {{^isLoggedIn}}
+                        <li>
+                            {{#a href='/login/'}}Вход&nbsp;&nbsp;<span style="opacity: 0.5" class="icon-lock icon-white"></span>{{/a}}
+                        </li>
+                    {{/isLoggedIn}}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    {{{content}}}
+</div>
+
+</body>
+</html>

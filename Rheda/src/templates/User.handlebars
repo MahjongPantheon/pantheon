@@ -1,0 +1,159 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<h2>Графики рейтинга</h2>
+<br>
+<div class="graphs">
+    {{#error}}
+        <div class="alert alert-error">{{error}}</div>
+    {{/error}}
+
+    {{#playerData}}
+        <h3>Игрок: {{display_name}}</h3>
+        <h5>id: {{id}}, alias: {{alias}}</h5>
+        <hr/>
+
+        {{^data}}
+            Пока никакой статистики нет :(
+        {{/data}}
+
+        {{#data}}
+            <div id='chart_rating'></div>
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    plotRating(
+                        {{{points}}},
+                        {{{games}}},
+                        {{{currentPlayer}}},
+                        {{{playersMap}}},
+                        {{{labelThreshold}}}
+                    );
+                    plotHands(
+                        {{{handValueStats}}},
+                        {{{yakuStats}}}
+                    );
+                });
+            </script>
+            <hr>
+
+            <div class="row">
+                <div class="span4">
+                    <table class="table table-striped table-condensed">
+                        <tr>
+                            <td colspan="2" style="padding-left: 20px"><b>Общая статистика:</b></td>
+                        </tr>
+                        <tr>
+                            <td>Сыграно игр</td>
+                            <td><b>{{totalPlayedGames}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Сыграно раздач</td>
+                            <td><b>{{totalPlayedRounds}}</b></td>
+                        </tr>
+                        <tr>
+                            <td>Выиграно раздач</td>
+                            <td><b>{{winCount}}</b> &nbsp; ({{winCountPercent}}%)</td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" style="padding-left: 20px"><b>По исходам раздач:</b></td>
+                        </tr>
+                        <tr>
+                            <td>Выигрышей по рон</td>
+                            <td><b>{{ronCount}}</b> &nbsp; ({{ronCountPercent}}%)</td>
+                        </tr>
+                        <tr>
+                            <td>Выигрышей по цумо</td>
+                            <td><b>{{tsumoCount}}</b> &nbsp; ({{tsumoCountPercent}}%)</td>
+                        </tr>
+                        <tr>
+                            <td>Набросов в рон</td>
+                            <td><b>{{feedCount}}</b> &nbsp; ({{feedCountPercent}}%)</td>
+                        </tr>
+                        <tr>
+                            <td>- в том числе из-за риичи</td>
+                            <td><b>{{feedUnderRiichi}}</b> &nbsp; ({{feedUnderRiichiPercent}}%)</td>
+                        </tr>
+                        <tr>
+                            <td>Проигрышей по цумо</td>
+                            <td><b>{{tsumoFeedCount}}</b> &nbsp; ({{tsumoFeedCountPercent}}%)</td>
+                        </tr>
+                        <tr>
+                            <td>Открытых рук</td>
+                            <td><b>{{openHand}}</b> &nbsp; ({{openHandPercent}}%)</td>
+                        </tr>
+                        <tr>
+                            <td>Штрафов чомбо</td>
+                            <td><b>{{chomboCount}}</b> &nbsp; ({{chomboCountPercent}}%)</td>
+                        </tr>
+                        <tr>
+                            <td>Ставок риичи</td>
+                            <td><b>{{riichiTotal}}</b> &nbsp; ({{riichiTotalPercent}}%)</td>
+                        </tr>
+                        <tr>
+                            <td>- из них выигравших</td>
+                            <td><b>{{riichiWon}}</b> &nbsp; ({{riichiWonPercent}}%)</td>
+                        </tr>
+                        <tr>
+                            <td>- из них потерянных</td>
+                            <td><b>{{riichiLost}}</b> &nbsp; ({{riichiLostPercent}}%)</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-left: 20px"><b>По занятым местам:</b></td>
+                        </tr>
+                        <tr>
+                            <td>1 место</td>
+                            <td>{{place1}} %</td>
+                        </tr>
+                        <tr>
+                            <td>2 место</td>
+                            <td>{{place2}} %</td>
+                        </tr>
+                        <tr>
+                            <td>3 место</td>
+                            <td>{{place3}} %</td>
+                        </tr>
+                        <tr>
+                            <td>4 место</td>
+                            <td>{{place4}} %</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="padding-left: 20px"><b>Очки:</b></td>
+                        </tr>
+                        <tr>
+                            <td>Минимальные</td>
+                            <td>{{minScores}}</td>
+                        </tr>
+                        <tr>
+                            <td>Максимальные</td>
+                            <td>{{maxScores}}</td>
+                        </tr>
+                        <tr>
+                            <td>Средние за ханчан</td>
+                            <td>{{averageScores}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="span8">
+                    <div id='chart_hands'></div>
+                    <hr/>
+                    <div id='chart_yaku'></div>
+                </div>
+            </div>
+
+        {{/data}}
+    {{/playerData}}
+</div>

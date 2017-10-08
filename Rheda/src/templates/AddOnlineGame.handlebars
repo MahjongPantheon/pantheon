@@ -1,0 +1,41 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<div class="row">
+    <div class="span9">
+        {{#successfullyAdded}}
+            <div class="alert alert-success">
+                <p>Игра успешно добавлена!</p>
+            </div>
+        {{/successfullyAdded}}
+
+        <h2>Добавить онлайн-игру</h2>
+        <br>
+        {{#error}}
+            <div class="alert alert-error">{{error}}</div>
+        {{/error}}
+        <form action="" method="POST" id="addform">
+            <input type="text" name="log" value="">
+
+            <div class="row">
+                <div class="span10">
+                    <input type="submit" value="Добавить" class="btn btn-primary btn-large">
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
