@@ -18,10 +18,10 @@ Administration features:
 
 - Allows starting a tournament session with random or manual seating
 - Allows players' enrollment and registration, enrolled players also get their PIN code, which will identify them in 
-[Tyr](https://github.com/MahjongPantheon/pantheon/Tyr).
+[Tyr](https://github.com/MahjongPantheon/pantheon/tree/master/Tyr).
 - Allows additional penalties for players.
 - Shows current state of tournament tables and recently added rounds.
-- Allows cancellation of round results, recently added through [Tyr](https://github.com/MahjongPantheon/pantheon/Tyr).
+- Allows cancellation of round results, recently added through [Tyr](https://github.com/MahjongPantheon/pantheon/tree/master/Tyr).
 
 Please use our [Bug tracker](https://pantheon.myjetbrains.com/youtrack/issues/RHEDA) for error reports and feature requests.
 
@@ -37,7 +37,7 @@ features of Rheda are not available from mobile-friendly version.*
 
 - Make sure you run *nix-based OS or VM. Rheda is not tested to run on Windows host.
 - To install all dependencies, run `make deps`.
-- Edit `config/sysconf.php` and fill in your [Mimir](https://github.com/MahjongPantheon/pantheon/Mimir) API server url.
+- Edit `config/sysconf.php` and fill in your [Mimir](https://github.com/MahjongPantheon/pantheon/tree/master/Mimir) API server url.
 - Set up your web server to use `www` folder as document root. Also it should invoke 
 `www/index.php` as default entry point for every requested path that is not a file or directory.
 
