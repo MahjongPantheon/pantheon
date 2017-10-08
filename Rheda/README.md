@@ -1,8 +1,6 @@
 ## Rheda: visualizer & control panel
 ![Rheda](www/assets/ico/rhedahires.png?raw=true "Rheda")
 
-[![Build Status](https://travis-ci.org/MahjongPantheon/Rheda.svg?branch=master)](https://travis-ci.org/MahjongPantheon/Rheda)
-
 **Rheda** provides visualization tools and control panel for japanese (riichi) mahjong sessions and events. 
 
 Features:
@@ -19,12 +17,11 @@ Features:
 Administration features:
 
 - Allows starting a tournament session with random or manual seating
-- Allows players' enrollment and registration, enrolled players also get their PIN code, which will identify them in [Tyr](https://github.com/MahjongPantheon/Tyr).
+- Allows players' enrollment and registration, enrolled players also get their PIN code, which will identify them in 
+[Tyr](https://github.com/MahjongPantheon/pantheon/Tyr).
 - Allows additional penalties for players.
 - Shows current state of tournament tables and recently added rounds.
-- Allows cancellation of round results, recently added through [Tyr](https://github.com/MahjongPantheon/Tyr).
-
-**Rheda** is a part of [Pantheon](https://github.com/MahjongPantheon) system.
+- Allows cancellation of round results, recently added through [Tyr](https://github.com/MahjongPantheon/pantheon/Tyr).
 
 Please use our [Bug tracker](https://pantheon.myjetbrains.com/youtrack/issues/RHEDA) for error reports and feature requests.
 
@@ -33,24 +30,16 @@ Please use our [Bug tracker](https://pantheon.myjetbrains.com/youtrack/issues/RH
 - Rheda is simple PHP-based multi-page application.
 - Written in PHP v5.5+.
 - Uses jQuery & Twitter Bootstrap on client side.
-- Rheda autodetects mobile clients and sends them mobile-friendly version of content. *Note: Administration features of Rheda are not available from mobile-friendly version.*
+- Rheda autodetects mobile clients and sends them mobile-friendly version of content. *Note: Administration 
+features of Rheda are not available from mobile-friendly version.*
 
-### Local installation
+### Standalone installation
 
 - Make sure you run *nix-based OS or VM. Rheda is not tested to run on Windows host.
 - To install all dependencies, run `make deps`.
-- Edit `config/sysconf.php` and fill in your [Mimir](https://github.com/MahjongPantheon/Mimir) API server url.
-- Run `make dev` to start Rheda in development mode. Rheda will listen on port 8001.
-- On production environment, set up your web server to use `www` folder as document root. Also it should invoke `www/index.php` as default entry point for every requested path that is not a file or directory.
-
-### Development
-
-- Run `make deps` and then `make dev` to run dev server.
-- Use `make lint` to check code style.
-- Use `make autofix` to fix all codestyle problems, that can be fixed automatically.
-- Remember to use PSR2 coding standards when adding php code.
-
-Please send your issues and pull requests. Any help is appreciated.
+- Edit `config/sysconf.php` and fill in your [Mimir](https://github.com/MahjongPantheon/pantheon/Mimir) API server url.
+- Set up your web server to use `www` folder as document root. Also it should invoke 
+`www/index.php` as default entry point for every requested path that is not a file or directory.
 
 ### Legend
 
