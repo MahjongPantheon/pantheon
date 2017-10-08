@@ -1,0 +1,170 @@
+<style>
+    .playdate {
+        background-color: #bbb;
+        padding: 3px;
+    }
+    .badge {
+        display: inline-block;
+        color: #eee;
+        background-color: #555;
+        padding: 1px 4px;
+        border-radius: 20%;
+        min-width: 45px;
+        text-align: right;
+    }
+    .badge.important {
+        background-color: #800;
+    }
+    .badge.success {
+        background-color: #070;
+    }
+    .results {
+        margin: 10px 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .results .player-item {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        margin: 4px 0;
+    }
+    .results .username {
+        flex: 1;
+    }
+    .results .score {
+        flex-shrink: 1;
+    }
+    .details {
+        display: none;
+    }
+    .fullLog {
+        font-size: 14px;
+        line-height: normal;
+        margin-bottom: 20px;
+    }
+    .fullLog div:nth-child(even) {
+        background-color: #ddd;
+    }
+</style>
+
+<script>
+    function toggleDetails(self) {
+        self.nextSibling.style.display =
+                self.nextSibling.style.display === 'block'
+                        ? 'none'
+                        : 'block';
+    }
+</script>
+
+{{#games}}
+    <div class="playdate">{{#a href='/game/{hash}/'}}{{endDate}}{{/a}}</div>
+    <div class="results" onclick="toggleDetails(this)">
+        {{#players}}
+            <div class="player-item">
+                <div class="username">{{wind}} <strong>{{display_name}}</strong></div>
+                <div class="score">{{score}} <span class='badge {{label}}'>{{rating_delta}}</span></div>
+            </div>
+        {{/players}}
+    </div><div class="details">
+        <hr />
+        <ul>
+            {{#replayLink}}
+                <li><a href='{{replayLink}}' class="replay-link" target='_blank'>Посмотреть реплей</a></li>
+            {{/replayLink}}
+            <li>Выигрышей по рон: {{ronWins}}</li>
+            <li>Выигрышей по цумо: {{tsumoWins}}</li>
+            <li>Ничьих: {{draws}}</li>
+            {{#chombo}}
+                <li>Чомбо: {{chombo}}</li>
+            {{/chombo}}
+            {{#showPenalties}}
+                <li>
+                    Дополнительные штрафы:
+                    <ul>
+                        {{#penalties}}
+                            <li>{{who}} - {{amount}} очков ({{reason}})</li>
+                        {{/penalties}}
+                    </ul>
+                </li>
+            {{/showPenalties}}
+        </ul>
+        <div class='fullLog'>
+            {{#logItems}}
+                <div>
+                    {{roundWind}}{{roundIndex}}:
+
+                    {{#roundTypeRon}}
+                        <b>{{winnerName}}</b> -
+                        {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}} (<b>{{loserName}}</b>),
+                        {{#yakuman}}
+                            якуман!
+                        {{/yakuman}}
+                        {{^yakuman}}
+                            {{han}}{{#fu}}/{{fu}}{{/fu}}{{^fu}} хан{{/fu}}.
+                        {{/yakuman}}
+                        {{#riichiPlayers}}
+                            Риичи: {{riichiPlayers}}
+                        {{/riichiPlayers}}
+                    {{/roundTypeRon}}
+
+                    {{#roundTypeMultiRon}}
+                        Дабл-рон:
+                        {{#multiRonWins}}{{! double & triple rons }}
+                            <div>
+                                <b>{{winnerName}}</b> -
+                                {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}} (<b>{{loserName}}</b>),
+                                {{#yakuman}}
+                                    якуман!
+                                {{/yakuman}}
+                                {{^yakuman}}
+                                    {{han}} хан{{#fu}}, {{fu}} фу{{/fu}}.
+                                {{/yakuman}}
+                            </div>
+                        {{/multiRonWins}}
+                        {{#riichiPlayers}}
+                            Риичи: {{riichiPlayers}}
+                        {{/riichiPlayers}}
+                    {{/roundTypeMultiRon}}
+
+                    {{#roundTypeTsumo}}
+                        <b>{{winnerName}}</b> -
+                        {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}} (цумо),
+                        {{#yakuman}}
+                            якуман!
+                        {{/yakuman}}
+                        {{^yakuman}}
+                            {{han}} хан{{#fu}}, {{fu}} фу{{/fu}}.
+                        {{/yakuman}}
+                        {{#riichiPlayers}}
+                            Риичи: {{riichiPlayers}}
+                        {{/riichiPlayers}}
+                    {{/roundTypeTsumo}}
+
+                    {{#roundTypeDraw}}
+                        {{#tempaiPlayers}}
+                            Ничья (темпай: {{tempaiPlayers}}).
+                        {{/tempaiPlayers}}
+                        {{^tempaiPlayers}}
+                            Ничья (все нотен).
+                        {{/tempaiPlayers}}
+                        {{#riichiPlayers}}
+                            Риичи: {{riichiPlayers}}
+                        {{/riichiPlayers}}
+                    {{/roundTypeDraw}}
+
+                    {{#roundTypeAbort}}
+                        Пересдача.
+                        {{#riichiPlayers}}
+                            Риичи: {{riichiPlayers}}
+                        {{/riichiPlayers}}
+                    {{/roundTypeAbort}}
+
+                    {{#roundTypeChombo}}
+                        Чомбо: {{loserName}}.
+                    {{/roundTypeChombo}}
+                </div>
+            {{/logItems}}
+        </div>
+    </div>
+{{/games}}

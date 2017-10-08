@@ -1,0 +1,230 @@
+/*
+ * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+ *
+ * This file is part of Tyr.
+ *
+ * Tyr is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Tyr is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+ */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ------------ Application-wide styles ------------ */
+html,
+body {
+  overflow: hidden;
+  font-family: 'ptsans', arial, sans-serif;
+}
+button {
+  font-family: 'ptsans', arial, sans-serif;
+}
+.preloader {
+  position: absolute;
+  font-size: 100px;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gradient-button {
+  background: #999;
+  padding: 5px;
+  border: solid #2c374c 2px;
+  text-decoration: none;
+}
+
+.gradient-button:disabled {
+  opacity: 0.5;
+  background: #666;
+}
+
+/* ---- Riichi-bet preloader :) ----- */
+
+.inline-preloader {
+  position: absolute;
+  
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto;
+
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  
+  width: 120px;
+  height: 18px;
+  background-color: #ccc;
+  border: 1px solid #333;
+  border-radius: 4px;
+}
+
+.inline-preloader:after {
+  display: block;
+  margin-top: 3px;
+  content: ' ';
+  margin-left: 52px;
+  width: 12px;
+  height: 12px;
+  background-color: rgb(255,0,0);
+  border-radius: 50%;
+  animation: cssload-motion 1.45s linear infinite;
+  -o-animation: cssload-motion 1.45s linear infinite;
+  -ms-animation: cssload-motion 1.45s linear infinite;
+  -webkit-animation: cssload-motion 1.45s linear infinite;
+  -moz-animation: cssload-motion 1.45s linear infinite;
+}
+
+@keyframes cssload-motion {
+  0% {
+    transform: translateX(0) scale(1);
+  }
+  25% {
+    transform: translateX(-49px) scale(0.3);
+  }
+  50% {
+    transform: translateX(0) scale(1);
+  }
+  75% {
+    transform: translateX(49px) scale(0.3);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+  }
+}
+
+@-o-keyframes cssload-motion {
+  0% {
+    -o-transform: translateX(0) scale(1);
+  }
+  25% {
+    -o-transform: translateX(-49px) scale(0.3);
+  }
+  50% {
+    -o-transform: translateX(0) scale(1);
+  }
+  75% {
+    -o-transform: translateX(49px) scale(0.3);
+  }
+  100% {
+    -o-transform: translateX(0) scale(1);
+  }
+}
+
+@-ms-keyframes cssload-motion {
+  0% {
+    -ms-transform: translateX(0) scale(1);
+  }
+  25% {
+    -ms-transform: translateX(-49px) scale(0.3);
+  }
+  50% {
+    -ms-transform: translateX(0) scale(1);
+  }
+  75% {
+    -ms-transform: translateX(49px) scale(0.3);
+  }
+  100% {
+    -ms-transform: translateX(0) scale(1);
+  }
+}
+
+@-webkit-keyframes cssload-motion {
+  0% {
+    -webkit-transform: translateX(0) scale(1);
+  }
+  25% {
+    -webkit-transform: translateX(-49px) scale(0.3);
+  }
+  50% {
+    -webkit-transform: translateX(0) scale(1);
+  }
+  75% {
+    -webkit-transform: translateX(49px) scale(0.3);
+  }
+  100% {
+    -webkit-transform: translateX(0) scale(1);
+  }
+}
+
+@-moz-keyframes cssload-motion {
+  0% {
+    -moz-transform: translateX(0) scale(1);
+  }
+  25% {
+    -moz-transform: translateX(-49px) scale(0.3);
+  }
+  50% {
+    -moz-transform: translateX(0) scale(1);
+  }
+  75% {
+    -moz-transform: translateX(49px) scale(0.3);
+  }
+  100% {
+    -moz-transform: translateX(0) scale(1);
+  }
+}

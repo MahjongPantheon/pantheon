@@ -1,0 +1,83 @@
+/*
+ * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+ *
+ * This file is part of Tyr.
+ *
+ * Tyr is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Tyr is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+:host {
+  color: #ccc;
+  font-size: 32px;
+}
+
+.wrap {
+  overflow: scroll;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.wrap > * {
+  margin-bottom: 5px;
+}
+
+.header-title {
+  text-align: center;
+  font-size: 40px;
+  padding: 5px 0;
+  background-color: #474;
+}
+
+.table-info {
+  font-size: 18px;
+  margin: 4px 16px;
+}
+
+.table-info tr td:first-child {
+  padding-right: 10px;
+}
+
+.table-info .round-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.outcome-name {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.tenbou {
+  flex: 1;
+}
+
+.indicator {
+  padding-left: 10px;
+  flex: 0.5;
+}
+
+.table-info ul li b {
+  color: #fff;
+}
+
+.table-info ul li .yaku-list {
+  color: #aaa;
+  font-style: italic;
+}

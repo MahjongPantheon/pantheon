@@ -1,0 +1,78 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+
+<style>
+    table {
+        width: 100%;
+    }
+    td {
+        font-size: 16px;
+    }
+    td.cn {
+        text-align: center;
+    }
+    th {
+        padding-bottom: 20px;
+    }
+    tr {
+        height: 40px;
+    }
+    table tr:nth-child(even) {
+        background-color: #ddd;
+    }
+
+    .badge {
+        display: inline-block;
+        color: #eee;
+        background-color: #555;
+        padding: 1px 4px;
+        border-radius: 20%;
+    }
+    .badge.important {
+        background-color: #800;
+    }
+    .badge.success {
+        background-color: #070;
+    }
+</style>
+
+<h2 class="header-title">Рейтинг игроков</h2>
+<div class="main-content">
+  <table class="table table-striped table-condensed">
+    <tr>
+      <th>#</th>
+      <th>Игрок</th>
+      <th>{{#a href='/stat/?sort=rating'}}Итог{{/a}}{{#orderByRating}}<span class="icon-arrow-down"></span>{{/orderByRating}}</th>
+      <th>{{#a href='/stat/?sort=avg_place'}}СМ{{/a}}{{#orderByAvgPlace}}<span class="icon-arrow-up"></span>{{/orderByAvgPlace}}</th>
+      <th>{{#a href='/stat/?sort=avg_score'}}СО{{/a}}{{#orderByAvgScore}}<span class="icon-arrow-up"></span>{{/orderByAvgScore}}</th>
+      <th>&nbsp;</th>
+    </tr>
+    {{#data}}
+      <tr>
+        <td>{{_index}}</td>
+        <td>{{#a href='/user/{id}/'}}<nobr>{{short_name}}</nobr>{{/a}}</td>
+        <td class="cn"><span class="badge
+                         {{#winner_zone}}success{{/winner_zone}}
+                         {{^winner_zone}}important{{/winner_zone}}
+                         ">{{rating}}</span></td>
+        <td class="cn">{{avg_place_less_precision}}</td>
+        <td class="cn">{{avg_score_int}}</td>
+        <td class="cn">{{games_played}}</td>
+      </tr>
+    {{/data}}
+  </table>
+</div>

@@ -1,0 +1,144 @@
+/*
+ * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+ *
+ * This file is part of Tyr.
+ *
+ * Tyr is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Tyr is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.scroller-wrap {
+    position: absolute;
+    top: 130px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+}
+
+.buttons {
+  height: 70px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #000;
+  background: linear-gradient(to bottom, #000000 0%,#000000 97%,#000000 97%,#888888 97%,#888888 100%,#888888 100%)
+}
+
+.scroller-wrap.multiron, .buttons.multiron {
+  margin-left: 10%; /* This should equal to scripted tabs height */
+}
+
+.buttons > button {
+    flex: 1 0 auto;
+    margin: 5px 5px 0 5px;
+    border: 2px solid transparent;
+    border-bottom: none;
+    background-color: transparent;
+    outline: none;
+}
+
+.buttons > button.pressed {
+    background-color: #444;
+    border: 2px solid #888;
+    border-bottom: none;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.yaku-row:nth-of-type(7n) {
+    background-color: #666;
+}
+.yaku-row:nth-of-type(7n+1) {
+    background-color: #363;
+}
+.yaku-row:nth-of-type(7n+2) {
+    background-color: #336;
+}
+.yaku-row:nth-of-type(7n+3) {
+    background-color: #663;
+}
+.yaku-row:nth-of-type(7n+4) {
+    background-color: #636;
+}
+.yaku-row:nth-of-type(7n+5) {
+    background-color: #366;
+}
+.yaku-row:nth-of-type(7n+6) {
+  background-color: #633;
+}
+
+.yaku-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+hr {
+    color: #666;
+    border: #666;
+    margin-bottom: 40px;
+}
+
+.outcome-indicator {
+  color: #ccc;
+  line-height: 64px;
+  font-size: 32px;
+  padding: 0 16px;
+}
+
+.player-tabs {
+  position: fixed;
+  top: 60px;
+  background-color: #449;
+  color: #aaa;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  transform: rotate(-90deg) translate(-100%, 0);
+  transform-origin: 0 0;
+  width: 100%; /* This should be changed by script */
+  height: 30px; /* This should be changed by script */
+}
+
+.player-tabs > div {
+  flex: 1;
+  line-height: 28px;
+  text-align: center;
+  display: flex;
+  min-width: 0;
+}
+
+.player-tabs > div.selected {
+  background-color: #98b;
+  color: #fff;
+}
+
+.player-tabs .name {
+  flex: 1;
+  min-width: 0;
+  padding: 0 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-tabs .score {
+  flex: 0;
+  background-color: #000;
+  padding: 0 6px;
+}
+
+.player-tabs > div.selected .score {
+  background-color: #555;
+  color: #fff;
+}

@@ -1,0 +1,86 @@
+/*  Rheda: visualizer and control panel
+ *  Copyright (C) 2016  o.klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+@font-face {
+    font-family: 'PT Sans Narrow';
+    src: local('PT Sans Narrow'), local('PTSans-Narrow'), url('./ptn57f.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PT Sans Narrow';
+    src: local('PT Sans Narrow Bold'), local('PTSans-NarrowBold'), url('./ptn77f.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+* {
+    font-family: "PT Sans Narrow", Arial, sans-serif !important;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.label, .badge {
+    font-size: 16px !important;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    vertical-align: top;
+    margin-top: 3px;
+}
+
+li, .table th, .table td {
+    line-height: 24px;
+}
+
+/* graphs */
+.graphs .own {
+    background-color: #ffff00 !important;
+}
+.graphs .jqplot-highlighter-tooltip {
+    border: 1px solid #555;
+    -webkit-box-shadow: 4px 4px 24px 1px rgba(0, 0, 0, 0.7);
+    box-shadow: 4px 4px 24px 1px rgba(0, 0, 0, 0.7);
+}
+.graphs .table-plot-rating {
+    background-color: #fff;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+/* last games */
+.last-games tr.user-item-row td {
+    background: transparent;
+    width: 25%;
+}
+.last-games tr.user-item-row td:first-child {
+    background: transparent;
+    width: 50%;
+}
+
+.last-games a {
+  color: #000;
+}
+
+.last-games a:hover {
+  cursor: pointer;
+}
+
+.last-games .replay-link {
+  color: #0088cc;
+}

@@ -1,0 +1,139 @@
+<!--
+    Tyr - Allows online game recording in japanese (riichi) mahjong sessions
+    Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+
+    This file is part of Tyr.
+
+    Tyr is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Tyr is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!-- Navbar for non-start-screens -->
+<button
+  class="back-button gradient-button"
+  *ngIf="!isScreen('overview')"
+  [disabled]="isScreen('lastResults', 'login')"
+  (click)="prevScreen()"
+><custom-icon [type]="'prev'"></custom-icon></button>
+<button
+  class="back-button gradient-button"
+  *ngIf="isScreen('overview')"
+  [disabled]="logoutDisabled"
+  (click)="logout()"
+><custom-icon [type]="'logout'"></custom-icon></button>
+<!-- Navbar for yaku select screen -->
+<div
+  class="round-summary with-selectors"
+  [class.ios-spec]="state.isIos"
+  *ngIf="isScreen('yakuSelect')">
+  <div class="yaku-han-count">
+    <div class="title">За яку</div>
+    <div class="value">
+      <div class="custom-select noafter">{{han() | yakuman}}</div>
+    </div>
+  </div>
+  <div class="separator">+</div>
+  <div class="dora-han-count">
+    <div class="title">Дора</div>
+    <div class="value">
+      <div class="button custom-select">
+        <select [(ngModel)]="selectedDora">
+          <option *ngFor="let dora of doraOptions" [value]="dora">{{dora}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="separator">/</div>
+  <div class="fu-count">
+    <div class="title">Фу</div>
+    <div class="value">  
+      <div class="custom-select noafter" *ngIf="han() <= 0 || han() + selectedDora > 4">N/A</div>
+      <div class="button custom-select" *ngIf="han() > 0 && han() + selectedDora < 5">
+        <select [(ngModel)]="selectedFu">
+          <option *ngFor="let fu of fuOptions" [value]="fu">{{fu}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Navbar for confirmation screen -->
+<div class="round-summary"
+  *ngIf="isScreen('confirmation')">
+  <div class="confirmation">
+    Итог:
+    <span *ngIf="isMultiron()">{{multironTitle()}}</span>
+    <span *ngIf="!isMultiron() && han() > 0">{{han() + selectedDora | yakuman}} хан</span>
+    <span *ngIf="!isMultiron() && han() < 0">Якуман!</span>
+    <span *ngIf="!isMultiron() && han() > 0 && han() + selectedDora < 5">{{selectedFu}} фу</span>
+  </div>
+</div>
+<!-- Navbar for start screen -->
+<div class="tournament-title"
+  *ngIf="isScreen('overview', 'outcomeSelect')">
+  {{tournamentTitle()}}
+</div>
+<!-- Navbar with outcome only -->
+<div class="outcome-title"
+  *ngIf="isScreen('playersSelect')">
+  {{outcome()}}
+</div>
+<!-- Navbar for last game results -->
+<div class="outcome-title"
+  *ngIf="isScreen('lastResults')">
+  Результаты
+</div>
+<div class="outcome-title"
+     *ngIf="isScreen('lastRound')">
+  Предыдущая раздача
+</div>
+<!-- Navbar for login screen -->
+<div class="outcome-title"
+     *ngIf="isScreen('login')">
+  Вход в систему
+</div>
+<!-- Navbar for other tables list -->
+<div class="outcome-title"
+     *ngIf="isScreen('otherTablesList')">
+  Столы в игре
+</div>
+<div class="outcome-title"
+     *ngIf="isScreen('otherTable')">
+  Просмотр стола
+</div>
+<button
+  *ngIf="isScreen('playersSelect')"
+  [disabled]="!mayGoNext('playersSelect')"
+  class="fwd-button gradient-button"
+  (click)="nextScreen()"
+><custom-icon [type]="'next'"></custom-icon></button>
+<button
+  *ngIf="isScreen('yakuSelect')"
+  [disabled]="!mayGoNext('yakuSelect')"
+  class="fwd-button gradient-button"
+  (click)="nextScreen()"
+><custom-icon [type]="'next'"></custom-icon></button>
+<button
+  *ngIf="isScreen('overview')"
+  class="fwd-button gradient-button"
+  (click)="nextScreen()"
+  [disabled]="!state.getHashcode()"
+><custom-icon [type]="'write'"></custom-icon></button>
+<button
+  *ngIf="isScreen('outcomeSelect')"
+  disabled="disabled"
+  class="fwd-button gradient-button"
+><custom-icon [type]="'next'"></custom-icon></button>
+<button
+  *ngIf="isScreen('confirmation')"
+  class="fwd-button gradient-button"
+  (click)="scrollDown()"
+><custom-icon [type]="'next'"></custom-icon></button>

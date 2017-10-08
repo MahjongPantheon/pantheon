@@ -1,0 +1,55 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<style>
+    .adm-actions form {
+        display: inline;
+    }
+</style>
+<h2>Добавить игрока</h2>
+<br>
+{{#error}}
+<div class="alert alert-error">{{error}}</div>
+{{/error}}
+<hr />
+<h3>Все существующие игроки</h3>
+Добавление в турнир игрока, который уже участвует, эквивалентно выдаче PIN-кода заново на странице "Игроки и регистрация".
+<table class="table table-condensed table-stripped">
+    <tr>
+        <th>Игрок</th>
+        <th>Действия администратора</th>
+    </tr>
+{{#everybody}}
+    <tr>
+        <td>{{display_name}}</td>
+        <td>
+            <form action="" method="post">
+                <input type="hidden" name="action_type" value="enroll" />
+                <input type="hidden" name="id" value="{{id}}" />
+                <input class="btn btn-large btn-success" type="submit" value="Добавить в текущий турнир" />
+            </form>
+        </td>
+    </tr>
+{{/everybody}}
+</table>
+<hr />
+<h3>Добавить нового игрока в систему</h3>
+<form action="" method="post" class="well form-search">
+    <input type="hidden" name="action_type" value="sys_reg" />
+    <input type="text" class="input-medium search-query" name="ident" placeholder='Системное имя' />
+    <input type="text" class="input-medium search-query" name="display_name" placeholder='Реальный ник' />
+    <button type="submit" class="btn">Зарегистрировать</button>
+</form>

@@ -1,0 +1,21 @@
+<!--
+     /0/?log=2017060214gm-00a9-0000-40a46a1c
+
+     All intellectual rights for the format and contents of this file belong to its
+     respective owners. Since contents of this file are available freely on the net,
+     we decided to include it in the repo. If owners of the file would wish to remove
+     this file from public access and this repo, we will remove it by first claim.
+ -->
+<mjloggm ver="2.3">
+    <SHUFFLE seed="" ref=""/>
+    <GO type="169" lobby="1111"/>
+    <UN n0="tenhou1" n1="tenhou2" n2="tenhou3" n3="NoName" dan="16,16,19,16"
+        rate="2179.17,2152.91,2234.74,2117.26" sx="M,M,M,M"/>
+    <TAIKYOKU oya="0"/>
+    <INIT seed="0,0,0,3,0,133" ten="250,250,250,250" oya="0" hai0="69,127,94,36,86,15,93,66,12,101,114,29,102"
+          hai1="90,131,45,117,120,113,112,22,70,134,111,123,11" hai2="14,18,7,124,51,54,100,122,47,80,79,37,2"
+          hai3="31,57,60,99,88,104,103,38,58,44,17,43,34"/>
+    <AGARI ba="0,0" hai="5,7,25,28,33,37,41,44,63,67,71,86,88,92" machi="92" ten="30,2000,0" yaku="7,1,54,1"
+           doraHai="35" who="0" fromWho="3" sc="212,20,251,0,183,0,354,-20"
+           owari="232,-17.0,251,5.0,183,-32.0,334,44.0"/>
+</mjloggm>

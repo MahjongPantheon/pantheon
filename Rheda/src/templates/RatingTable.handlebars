@@ -1,0 +1,46 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<h2>Рейтинг игроков</h2>
+<br>
+{{#error}}
+    <div class="alert alert-error">{{error}}</div>
+{{/error}}
+<table class="table table-striped table-condensed">
+    <tr>
+        <th>#</th>
+        <th>{{#a href='/stat/?sort=name'}}Игрок{{/a}}{{#orderByName}}<span class="icon-arrow-up"></span>{{/orderByName}}</th>
+        <th>{{#a href='/stat/?sort=rating'}}Итог{{/a}}{{#orderByRating}}<span class="icon-arrow-down"></span>{{/orderByRating}}</th>
+        <th>{{#a href='/stat/?sort=avg_place'}}Среднее место{{/a}}{{#orderByAvgPlace}}<span class="icon-arrow-up"></span>{{/orderByAvgPlace}}</th>
+        <th>{{#a href='/stat/?sort=avg_score'}}Средние очки{{/a}}{{#orderByAvgScore}}<span class="icon-arrow-down"></span>{{/orderByAvgScore}}</th>
+<!--        <th><abbr title="Среднеквадратичное отклонение">СКО</abbr></th>-->
+        <th>Сыграно игр</th>
+    </tr>
+    {{#data}}
+    <tr>
+        <td>{{_index}}</td>
+        <td>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</td>
+        <td><span class="badge
+            {{#winner_zone}}badge-success{{/winner_zone}}
+            {{^winner_zone}}badge-important{{/winner_zone}}
+        ">{{rating}}</span></td>
+        <td>{{avg_place}}</td>
+        <td>{{avg_score_int}}</td>
+        {{! <td>stddev</td> }}
+        <td>{{games_played}}</td>
+    </tr>
+    {{/data}}
+</table>

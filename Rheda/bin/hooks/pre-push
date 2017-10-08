@@ -1,0 +1,12 @@
+#!/bin/sh
+
+RED="\033[31m"
+make check
+RESULT=$?
+
+if [ $RESULT -ne 0 ]; then
+	echo "${RED}Error: Some checks failed. Please provide a fix and try again."
+	exit 1
+fi
+
+exit 0
