@@ -2,7 +2,7 @@
 ![Tyr](src/assets/tyrhires.png?raw=true "Tyr")
 
 **Tyr** is a tool for online game recording in japanese (riichi) mahjong sessions. Tyr uses 
-[Mimir](https://github.com/MahjongPantheon/pantheon/Mimir) as its supporting backend. 
+[Mimir](https://github.com/MahjongPantheon/pantheon/tree/master/Mimir) as its supporting backend. 
 
 Features:
 
