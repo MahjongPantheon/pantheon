@@ -346,7 +346,10 @@ class SessionPrimitive extends Primitive
      */
     public function save()
     {
-        $this->_representationalHash = sha1(implode(',', $this->_playersIds) . $this->_startDate);
+        if (empty($this->_representationalHash)) {
+            // Set representation hash only if it is empty
+            $this->_representationalHash = sha1(implode(',', $this->_playersIds) . $this->_startDate);
+        }
         return parent::save();
     }
 
