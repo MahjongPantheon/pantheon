@@ -3,6 +3,7 @@ deps:
 
 build:
 	./node_modules/.bin/ng build --prod --aot --env=prod
+	cd dist && gzip -9 -f *.js *.css
 
 cleanup_prebuilts:
 	# clean all generated bundle files except last 20
@@ -10,7 +11,6 @@ cleanup_prebuilts:
 
 prebuild:
 	cd dist && \
-	gzip -9 -f *.js *.css && \
 	cp -R * ../../Tyr-prebuilt/
 
 dev:

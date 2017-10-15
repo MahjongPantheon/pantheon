@@ -17,7 +17,7 @@ script:
 - make prod_build_tyr
 
 after_success:
-  - .travis-push.sh
+  - ./.travis-push.sh
 
 env:
   global:
