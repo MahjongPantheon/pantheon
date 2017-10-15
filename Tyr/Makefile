@@ -4,13 +4,14 @@ deps:
 build:
 	./node_modules/.bin/ng build --prod --aot --env=prod
 
-deploy:
-	make build && \
+cleanup:
+	# clean all generated bundle files except last 20
+	cd ../Tyr-prebuilt && ls -t *bundle* | tail -n +20 | xargs -I {} rm {}
+
+prebuild: build cleanup
 	cd dist && \
 	gzip -9 -f *.js *.css && \
-	tar cf mstat.tar assets *.gz *.html && \
-	scp -P2022 mstat.tar heilage@furiten.ru:/srv/www/m.furiten.ru/ && \
-	ssh -p2022 heilage@furiten.ru "bash -c \"cd /srv/www/m.furiten.ru/ && tar xf mstat.tar\""
+	cp -R * ../../Tyr-prebuilt/
 
 dev:
 	./node_modules/.bin/ng serve

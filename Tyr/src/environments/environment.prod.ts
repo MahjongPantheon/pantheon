@@ -20,5 +20,5 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'https://api.furiten.ru/'
+  apiUrl: 'https://api.mjtop.net/'
 };
