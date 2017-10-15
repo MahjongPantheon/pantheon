@@ -136,9 +136,13 @@ prod_deps:
 	cd Rheda && make deps
 
 .PHONY: prod_build_tyr
-prod_build_tyr:
-	$(eval CURRENT_BRANCH := $(shell git symbolic-ref --short HEAD))
+prod_build_tyr: get_docker_id # this is for automated travis builds, don't run it manually
+	$(eval CURRENT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD))
 	@if [ "$(CURRENT_BRANCH)" = "master" ]; then \
-		cd Tyr && make deps && make prebuild ; \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make deps && make build'; \
+		cd Tyr && make cleanup_prebuilts && make prebuild ; \
+	else \
+		exit 1 ; \
 	fi
+	# we should exit with error to prevent push to repo from travis on non-master branches
 
