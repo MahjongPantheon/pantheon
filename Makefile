@@ -127,3 +127,18 @@ check: get_docker_id
 autofix: get_docker_id
 	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user make autofix';
 	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user gosu user make autofix';
+
+# Prod related tasks & shortcuts
+
+.PHONY: prod_deps
+prod_deps:
+	cd Mimir && make deps
+	cd Rheda && make deps
+
+.PHONY: prod_build_tyr
+prod_build_tyr:
+	$(eval CURRENT_BRANCH := $(shell git symbolic-ref --short HEAD))
+	@if [ "$(CURRENT_BRANCH)" = "master" ]; then \
+		cd Tyr && make deps && make prebuild ; \
+	fi
+
