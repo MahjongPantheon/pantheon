@@ -137,8 +137,7 @@ prod_deps:
 
 .PHONY: prod_build_tyr
 prod_build_tyr: get_docker_id # this is for automated travis builds, don't run it manually
-	$(eval CURRENT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD))
-	@if [ "$(CURRENT_BRANCH)" = "master" ]; then \
+	@if [ "$(TRAVIS_BRANCH)" = "master" ]; then \
 		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make deps && make build'; \
 		cd Tyr && make cleanup_prebuilts && make prebuild ; \
 	else \
