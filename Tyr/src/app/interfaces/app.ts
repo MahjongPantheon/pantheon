@@ -58,12 +58,14 @@ export interface AppOutcomeTsumo extends Outcome, WinProps {
 export interface AppOutcomeAbort extends Outcome {
   selectedOutcome: 'abort';
   riichiBets: number[]; // ids of players
+  deadhands: number[]; // ids of players
 }
 
 export interface AppOutcomeDraw extends Outcome {
   selectedOutcome: 'draw';
   riichiBets: number[]; // ids of players
   tempai: number[]; // ids of players
+  deadhands: number[]; // ids of players 
 }
 
 export interface AppOutcomeChombo extends Outcome {

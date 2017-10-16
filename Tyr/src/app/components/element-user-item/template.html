@@ -33,6 +33,12 @@
     [class.disabled]="loseDisabled()"
     (click)="loseClick()"
   ><custom-icon [type]="'down'"></custom-icon></button>
+  <button
+    *ngIf="showDeadButton()"
+    class="dead"
+    [class.pressed]="deadPressed()"
+    (click)="deadClick()"
+  ><custom-icon [type]="'dead'"></custom-icon></button>
 </div>
 <div class="riichi-bet">
   <button

@@ -39,7 +39,11 @@ export type LoadingSet = {
 
 // functional modules
 import { TimerData, initTimer, getTimeRemaining, getCurrentTimerZone } from './timer';
-import { toggleLoser, toggleWinner, getWinningUsers, getLosingUsers } from './winLoseToggles';
+import {
+  toggleLoser, toggleWinner,
+  getWinningUsers, getLosingUsers,
+  getDeadhandUsers, toggleDeadhand
+} from './winLoseToggles';
 import { toggleRiichi, getRiichiUsers } from './riichiToggle';
 import { updateOtherTablesList, getOtherTable, getLastRound } from './otherTables';
 import { setHan, getHanOf, setFu, getFuOf, getPossibleFu } from './hanFu';
@@ -421,9 +425,11 @@ export class AppState {
   toggleWinner = (p: Player) => toggleWinner(p, this._currentOutcome);
   toggleLoser = (p: Player) => toggleLoser(p, this._currentOutcome);
   toggleRiichi = (p: Player) => toggleRiichi(p, this._currentOutcome, (y: YakuId) => this.removeYaku(y));
+  toggleDeadhand = (p: Player) => toggleDeadhand(p, this._currentOutcome);
   getWinningUsers = () => getWinningUsers(this._currentOutcome, this._mapIdToPlayer);
   getLosingUsers = () => getLosingUsers(this._currentOutcome, this._mapIdToPlayer);
   getRiichiUsers = () => getRiichiUsers(this._currentOutcome, this._mapIdToPlayer);
+  getDeadhandUsers = () => getDeadhandUsers(this._currentOutcome, this._mapIdToPlayer);
   setHan = (han: number) => setHan(han, this._currentOutcome, this._multironCurrentWinner);
   setFu = (fu: number) => setFu(fu, this._currentOutcome, this._multironCurrentWinner);
   getHan = () => getHanOf(this._multironCurrentWinner, this._currentOutcome);

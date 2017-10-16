@@ -72,6 +72,29 @@ export function toggleLoser(p: Player, outcome: AppOutcome) {
   }
 }
 
+export function toggleDeadhand(p: Player, outcome: AppOutcome) {
+  switch (outcome.selectedOutcome) {
+    case 'draw':
+      const pIdx = outcome.deadhands.indexOf(p.id);
+      if (pIdx === -1) {
+        outcome.deadhands.push(p.id);
+        const rIdx = outcome.tempai.indexOf(p.id);
+        if (rIdx !== -1) { // remove tempai of dead user
+          outcome.tempai.splice(rIdx, 1);
+        }
+      } else {
+        outcome.deadhands.splice(pIdx, 1);
+        const rIdx = outcome.riichiBets.indexOf(p.id);
+        if (rIdx !== -1) { // if we remove dead hand from riichi user, he should become tempai
+          outcome.tempai.push(p.id);
+        }
+      }
+      break;
+    default:
+      throw new Error('No losers exist on this outcome');
+  }
+}
+
 export type PMap = { [key: number]: Player };
 
 export function getWinningUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
@@ -106,3 +129,14 @@ export function getLosingUsers(outcome: AppOutcome, playerIdMap: PMap): Player[]
       return [];
   }
 }
+
+export function getDeadhandUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
+  switch (outcome.selectedOutcome) {
+    case 'draw':
+      return outcome.deadhands.map((t) => playerIdMap[t]);
+    default:
+      return [];
+  }
+}
+
+

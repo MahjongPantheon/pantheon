@@ -78,6 +78,13 @@
 .win-lose button.lose.pressed {
   background-color: #d77;
 }
+.win-lose button.dead {
+  flex: 0.4;
+  background-color: #bbb;
+}
+.win-lose button.dead.pressed {
+  background-color: #999;
+}
 
 .riichi-bet-button {
   border-radius: 15px;
