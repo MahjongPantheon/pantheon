@@ -80,7 +80,8 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         selectedOutcome: 'draw',
         roundIndex: round,
         riichiBets: [],
-        tempai: []
+        tempai: [],
+        deadhands: []
       };
       out = outcomeDraw;
       break;
@@ -88,7 +89,8 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       const outcomeAbort: AppOutcomeAbort = {
         selectedOutcome: 'abort',
         roundIndex: round,
-        riichiBets: []
+        riichiBets: [],
+        deadhands: []
       };
       out = outcomeAbort;
       break;

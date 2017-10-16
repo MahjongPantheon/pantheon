@@ -35,7 +35,8 @@ export function toggleRiichi(
     case 'multiron':
       if (
         outcome.selectedOutcome === 'draw' &&
-        outcome.tempai.indexOf(p.id) === -1
+        outcome.tempai.indexOf(p.id) === -1 &&
+        outcome.deadhands.indexOf(p.id) === -1
       ) {
         outcome.tempai.push(p.id); // add tempai on riichi click
       }
