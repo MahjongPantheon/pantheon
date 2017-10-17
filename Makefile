@@ -137,11 +137,8 @@ prod_deps:
 
 .PHONY: prod_build_tyr
 prod_build_tyr: get_docker_id # this is for automated travis builds, don't run it manually
-	@if [ "$(TRAVIS_BRANCH)" = "master" ]; then \
+	@if [ "$(TRAVIS_BRANCH)" = "master" ] && [ "$(TRAVIS_PULL_REQUEST)" = "false" ]; then \
 		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make deps && make build'; \
 		cd Tyr && make cleanup_prebuilts && make prebuild ; \
-	else \
-		exit 1 ; \
 	fi
-	# we should exit with error to prevent push to repo from travis on non-master branches
 
