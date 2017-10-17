@@ -153,8 +153,6 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
 
     public function testSeatingAfterSeveralGames()
     {
-        $this->markTestSkipped();
-
         $players = [
             1 => 1500,
             2 => 1500,
@@ -194,7 +192,8 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
 
         $intersections = Seating::makeIntersectionsTable($seating, $previousSeating);
         foreach ($intersections as $i) {
-            $this->assertEquals(1, $i);
+            // shuffled seating is not as good as swiss and may produce intersections even in second game
+            $this->assertLessThanOrEqual(2, $i);
         }
     }
 
@@ -249,4 +248,45 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue($i <= 2); // may be 2, as of stricter conditions
         }
     }
+
+    public function testSwissSeatingAfterSeveralGames()
+    {
+        $players = [
+            1 => 1500,
+            2 => 1500,
+            3 => 1500,
+            4 => 1500,
+            5 => 1500,
+            6 => 1500,
+            7 => 1500,
+            8 => 1500,
+            9 => 1500,
+            10 => 1500,
+            11 => 1500,
+            12 => 1500,
+            13 => 1500,
+            14 => 1500,
+            15 => 1500,
+            16 => 1500
+        ];
+
+        $previousSeating = [
+            [1, 2, 3, 4],
+            [5, 6, 7, 8],
+            [9, 10, 11, 12],
+            [13, 14, 15, 16],
+            [1, 5, 9, 13],
+            [2, 6, 10, 14],
+            [3, 7, 11, 15],
+            [4, 8, 12, 16]
+        ];
+
+        $seating = Seating::swissSeating($players, $previousSeating);
+
+        $intersections = Seating::makeIntersectionsTable($seating, $previousSeating);
+        foreach ($intersections as $i) {
+            $this->assertEquals(1, $i);
+        }
+    }
+
 }
