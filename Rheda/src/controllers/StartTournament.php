@@ -73,6 +73,25 @@ class StartTournament extends Controller
             return false;
         }
 
+        if (!empty($this->_path['action']) && $this->_path['action'] == 'startSwiss') {
+            if (!$this->_adminAuthOk()) {
+                return true; // to show error in _run
+            }
+
+            try {
+                $this->_api->execute(
+                    'startGamesWithSwissSeating',
+                    [$this->_eventId]
+                );
+                $this->_api->execute('startTimer', [$this->_eventId]);
+            } catch (Exception $e) {
+                $this->_lastEx = $e;
+                return true;
+            }
+            header('Location: ' . Url::make('/tourn/', $this->_eventId));
+            return false;
+        }
+
         if (!empty($this->_path['action']) && $this->_path['action'] == 'resetTimer') {
             if (!$this->_adminAuthOk()) {
                 return true; // to show error in _run
