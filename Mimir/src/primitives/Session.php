@@ -341,6 +341,23 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * Total count of played games
+     *
+     * @param IDb $db
+     * @param $eventId
+     * @return integer
+     */
+    public static function gamesCount(IDb $db, $eventId, $withStatus)
+    {
+        $result = $db->table(self::$_table)
+            ->where('event_id', $eventId)
+            ->where('status', $withStatus)
+            ->count();
+
+        return $result;
+    }
+
+    /**
      * Save session instance to db
      * @return bool success
      */
