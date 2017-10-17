@@ -395,7 +395,12 @@ class EventModel extends Model
 
         $result = [
             'games' => [],
-            'players' => $this->_getPlayersOfGames($games)
+            'players' => $this->_getPlayersOfGames($games),
+            'total_games' => SessionPrimitive::gamesCount(
+                $this->_db,
+                $event->getId(),
+                'finished'
+            )
         ];
 
         foreach ($games as $session) {

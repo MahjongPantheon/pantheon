@@ -119,6 +119,9 @@
           ]
         }
       }
+    },
+    "total_games": {
+      "type": "integer"
     }
   },
   "definitions": {
