@@ -21,10 +21,18 @@
         Ни одной игры еще не сыграно
     {{/noGames}}
     {{^noGames}}
+        <p>{{start}} &dash; {{end}} (всего {{gamesCount}})</p>
         {{> partials/Games }}
-        <div class='pagination'><ul>
-            <li>{{#a href='/last/?page={prevPage}'}}Назад{{/a}}</li>
-            <li>{{#a href='/last/?page={nextPage}'}}Вперед{{/a}}</li>
-        </ul></div>
+        <div class='pagination'>
+            <ul>
+                {{#hasPreviousButton}}
+                    <li>{{#a href='/last/?page={prevPage}'}}Назад{{/a}}</li>
+                {{/hasPreviousButton}}
+
+                {{#hasNextButton}}
+                    <li>{{#a href='/last/?page={nextPage}'}}Вперед{{/a}}</li>
+                {{/hasNextButton}}
+            </ul>
+        </div>
     {{/noGames}}
 </div>

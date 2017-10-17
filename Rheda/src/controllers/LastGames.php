@@ -43,13 +43,35 @@ class LastGames extends Controller
             'getLastGames',
             [$this->_eventId, $limit, $offset, 'end_date', 'desc']
         );
+
         $formatter = new GameFormatter();
 
+        $totalGames = $gamesData['total_games'];
+        $start = $offset + 1;
+        $end = $offset + $limit;
+
+        $hasNextButton = true;
+        $hasPreviousButton = true;
+
+        if ($end >= $totalGames) {
+            $end = $totalGames;
+            $hasNextButton = false;
+        }
+
+        if ($currentPage == 1) {
+            $hasPreviousButton = false;
+        }
+
         return [
-            'noGames' => empty($gamesData['games']) && $currentPage == 1,
+            'noGames' => $gamesData['total_games'] == 0,
             'games' => $formatter->formatGamesData($gamesData, $this->_rules),
             'nextPage' => $currentPage + 1,
-            'prevPage' => $currentPage == 1 ? 1 : $currentPage - 1
+            'prevPage' => $currentPage == 1 ? 1 : $currentPage - 1,
+            'gamesCount' => $gamesData['total_games'],
+            'start' => $start,
+            'end' => $end,
+            'hasNextButton' => $hasNextButton,
+            'hasPreviousButton' => $hasPreviousButton,
         ];
     }
 }
