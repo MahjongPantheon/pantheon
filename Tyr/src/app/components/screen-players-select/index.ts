@@ -69,7 +69,7 @@ export class PlayersSelectScreen {
     this.seatKamicha = seating[3];
   }
 
-  handle([player, what]: [Player, 'win' | 'lose' | 'riichi']) {
+  handle([player, what]: [Player, 'win' | 'lose' | 'riichi' | 'dead']) {
     switch (what) {
       case 'win':
         this.state.toggleWinner(player);
@@ -79,6 +79,9 @@ export class PlayersSelectScreen {
         break;
       case 'riichi':
         this.state.toggleRiichi(player);
+        break;
+      case 'dead':
+        this.state.toggleDeadhand(player);
         break;
     }
   }
