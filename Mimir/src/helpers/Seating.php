@@ -328,14 +328,20 @@ class Seating
             $isPlaying[$i] = false;
             $playerTable[$i] = -1;
         }
+
         $maxCrossings = 0;
+        // adjust initial max crossings to make better performance by the cost of less precision
+        $maxCrossingsPrecisionFactor = 0;
+        $iteration = 0;
         while (!self::_makeSwissSeating(
             $isPlaying,
             $maxCrossings,
+            $maxCrossingsPrecisionFactor,
             $numPlayers,
             $playerTable,
             $playerTotalGamePoints,
-            $playedWith
+            $playedWith,
+            $iteration
         )) {
             $maxCrossings++;
         }
@@ -349,20 +355,30 @@ class Seating
      *
      * @param $isPlaying - list of flags: [ playerIdx -> isInGame? ]
      * @param $maxCrossings - integer factor of max allowed intersections
+     * @param $maxCrossingsPrecisionFactor - addition to max crossings to relax requirements if too many iterations passed
      * @param $numPlayers - players count
      * @param $playerTable - seating: [ playerIdx -> tableIdx ]
      * @param $playerTotalGamePoints - rating points sum as array: [ player index -> points ]
      * @param $playedWith - matrix of intersections [ playerIdx1 -> [ playerIdx2 -> N ... ] ... ]
+     * @param $iteration - current iteration of calculations
      * @return bool - success flag
      */
     protected static function _makeSwissSeating(
         &$isPlaying,
         $maxCrossings,
+        &$maxCrossingsPrecisionFactor,
         $numPlayers,
         &$playerTable,
         &$playerTotalGamePoints,
-        &$playedWith
+        &$playedWith,
+        &$iteration
     ) {
+        $iteration++;
+        if ($iteration > 15000) {
+            $maxCrossingsPrecisionFactor++;
+            $iteration = 0;
+        }
+
         // check if everybody have taken a seat, and quit with success if yes
         $isAllPlaying = true;
         for ($i = 0; $i < $numPlayers; $i++) {
@@ -411,11 +427,13 @@ class Seating
             $playerTable[$maxRatingPlayer] = $maxTable;
             if (self::_makeSwissSeating(
                 $isPlaying,
-                $maxCrossings,
+                $maxCrossings + $maxCrossingsPrecisionFactor,
+                $maxCrossingsPrecisionFactor,
                 $numPlayers,
                 $playerTable,
                 $playerTotalGamePoints,
-                $playedWith
+                $playedWith,
+                $iteration
             )) {
                 return true;
             } else {
@@ -445,7 +463,7 @@ class Seating
                 }
                 if ($numNextPlayers > 0) {
                     break;
-                } else if ($curCrossings == $maxCrossings) {
+                } else if ($curCrossings == $maxCrossings + $maxCrossingsPrecisionFactor) {
                     return false;
                 } else {
                     $curCrossings++;
@@ -475,11 +493,13 @@ class Seating
                 // return success if we found a seating, or falling back otherwise
                 if (self::_makeSwissSeating(
                     $isPlaying,
-                    $maxCrossings - $curCrossings,
+                    $maxCrossings + $maxCrossingsPrecisionFactor - $curCrossings,
+                    $maxCrossingsPrecisionFactor,
                     $numPlayers,
                     $playerTable,
                     $playerTotalGamePoints,
-                    $playedWith
+                    $playedWith,
+                    $iteration
                 )) {
                     return true;
                 } else {
