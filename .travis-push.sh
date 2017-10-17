@@ -16,6 +16,8 @@ upload_files() {
   git push --quiet --set-upstream origin-pntn master
 }
 
-setup_git
-commit_built_tyr
-upload_files
+if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
+    setup_git
+    commit_built_tyr
+    upload_files
+fi
