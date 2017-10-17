@@ -105,7 +105,7 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             '12' => 1500
         ];
 
-        $seating = Seating::generateTables($players, [], /* group count = */ 1, /* seed = */ 3464752);
+        $seating = Seating::shuffledSeating($players, [], /* group count = */ 1, /* seed = */ 3464752);
         $this->assertEquals(12, count($seating));
         $this->assertEquals($seating, $players);
         $this->assertNotEquals(json_encode($seating), json_encode($players));
@@ -139,7 +139,7 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             [13, 14, 15, 16]
         ];
 
-        $seating = Seating::generateTables(
+        $seating = Seating::shuffledSeating(
             $players,
             $previousSeating,
             /* group count = */ 1, /* seed = */
@@ -183,7 +183,7 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             [4, 8, 12, 16]
         ];
 
-        $seating = Seating::generateTables(
+        $seating = Seating::shuffledSeating(
             $players,
             $previousSeating,
             /* group count = */ 1, /* seed = */
@@ -228,7 +228,7 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             [13, 14, 15, 16]
         ];
 
-        $seating = Seating::generateTables(
+        $seating = Seating::shuffledSeating(
             $players,
             $previousSeating,
             /* group count = */ 2, /* seed = */
@@ -288,5 +288,4 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals(1, $i);
         }
     }
-
 }
