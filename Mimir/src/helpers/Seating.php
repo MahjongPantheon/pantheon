@@ -395,7 +395,7 @@ class Seating
                 $maxTable++;
             }
             // find a player with highest rating
-            $maxGP = -1;
+            $maxGP = -2147483648;
             $maxRatingPlayer = -1;
             for ($i = 0; $i < $numPlayers; $i++) {
                 if (!$isPlaying[$i]) {
