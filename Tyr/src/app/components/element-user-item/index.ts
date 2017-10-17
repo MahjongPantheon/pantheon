@@ -33,7 +33,7 @@ export class UserItemComponent {
   @Input() userData: Player;
   @Input() seat: string;
 
-  @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi']>();
+  @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi' | 'dead']>();
 
   // helpers
   showWinButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'draw']
@@ -45,6 +45,9 @@ export class UserItemComponent {
   showRiichiButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'abort', 'draw']
     .indexOf(this.state.getOutcome());
 
+  showDeadButton = () => -1 !== ['draw']
+    .indexOf(this.state.getOutcome());
+
   winPressed = () => -1 !== this.state.getWinningUsers()
     .indexOf(this.userData);
 
@@ -54,10 +57,14 @@ export class UserItemComponent {
   riichiPressed = () => -1 !== this.state.getRiichiUsers()
     .indexOf(this.userData);
 
+  deadPressed = () => -1 !== this.state.getDeadhandUsers()
+    .indexOf(this.userData);
+
   winDisabled = () => {
     if (this.state.getOutcome() === 'draw') {
-      return false;
+      return -1 !== this.state.getDeadhandUsers().indexOf(this.userData)
     }
+
     if (this.state.getOutcome() === 'multiron') {
       return -1 !== this.state.getLosingUsers().indexOf(this.userData)
     }
@@ -67,7 +74,7 @@ export class UserItemComponent {
       this.state.getWinningUsers().length > 0
       && -1 === this.state.getWinningUsers().indexOf(this.userData)
     ) || -1 !== this.state.getLosingUsers().indexOf(this.userData); // and it should not be current loser
-  }
+  };
 
   // for ron/multiron/chombo - loser is only one
   loseDisabled = () => {
@@ -75,14 +82,14 @@ export class UserItemComponent {
       this.state.getLosingUsers().length > 0
       && -1 === this.state.getLosingUsers().indexOf(this.userData)
     ) || -1 !== this.state.getWinningUsers().indexOf(this.userData); // and it should not be current winner
-  }
+  };
 
-  // riichi can't be disabled
-
+  // riichi & dead hand can't be disabled
 
   // event handlers
   winClick = () => this.winDisabled() ? null : this.onEvent.emit([this.userData, 'win']);
   loseClick = () => this.loseDisabled() ? null : this.onEvent.emit([this.userData, 'lose']);
   riichiClick = () => this.onEvent.emit([this.userData, 'riichi']);
+  deadClick = () => this.onEvent.emit([this.userData, 'dead']);
 }
 
