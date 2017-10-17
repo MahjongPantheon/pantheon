@@ -21,18 +21,25 @@
         Ни одной игры еще не сыграно
     {{/noGames}}
     {{^noGames}}
+        <p>{{start}} &dash; {{end}} (всего {{gamesCount}})</p>
         <div class="games">
             {{> partials/MobileGames }}
         </div>
-        {{#a href='/last/?page={prevPage}' class='prevbutton'}}
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 445 445" xml:space="preserve" fill="#ccc">
-                <path transform="rotate(180 222 222)" d="M352,197L166,11C159,4,150,0,140,0c-10,0-19,4-26,11L93,32c-7,7-11,15-11,26c0,10,4,19,11,26l139,138L93,361c-7,7-11,16-11,26c0,10,4,19,11,26l22,21c7,7,16,11,26,11c10,0,19-4,26-11l186-186c7-7,11-16,11-26C363,212,359,204,352,197z"/>
-            </svg>
-        {{/a}}
-        {{#a href='/last/?page={nextPage}' class='nextbutton'}}
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 445 445" xml:space="preserve" fill="#ccc">
-                <path d="M352,197L166,11C159,4,150,0,140,0c-10,0-19,4-26,11L93,32c-7,7-11,15-11,26c0,10,4,19,11,26l139,138L93,361c-7,7-11,16-11,26c0,10,4,19,11,26l22,21c7,7,16,11,26,11c10,0,19-4,26-11l186-186c7-7,11-16,11-26C363,212,359,204,352,197z"/>
-            </svg>
-        {{/a}}
+        {{#hasPreviousButton}}
+            {{#a href='/last/?page={prevPage}' class='prevbutton'}}
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 445 445" xml:space="preserve" fill="#ccc">
+                    <path transform="rotate(180 222 222)" d="M352,197L166,11C159,4,150,0,140,0c-10,0-19,4-26,11L93,32c-7,7-11,15-11,26c0,10,4,19,11,26l139,138L93,361c-7,7-11,16-11,26c0,10,4,19,11,26l22,21c7,7,16,11,26,11c10,0,19-4,26-11l186-186c7-7,11-16,11-26C363,212,359,204,352,197z"/>
+                </svg>
+            {{/a}}
+        {{/hasPreviousButton}}
+
+        {{#hasNextButton}}
+            {{#a href='/last/?page={nextPage}' class='nextbutton'}}
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 445 445" xml:space="preserve" fill="#ccc">
+                    <path d="M352,197L166,11C159,4,150,0,140,0c-10,0-19,4-26,11L93,32c-7,7-11,15-11,26c0,10,4,19,11,26l139,138L93,361c-7,7-11,16-11,26c0,10,4,19,11,26l22,21c7,7,16,11,26,11c10,0,19-4,26-11l186-186c7-7,11-16,11-26C363,212,359,204,352,197z"/>
+                </svg>
+            {{/a}}
+        {{/hasNextButton}}
+
     {{/noGames}}
 </div>
