@@ -65,9 +65,21 @@
     {{/showTimerControls}}
     {{#showAutoSeating}}
         <h3>Старт игр с автоматической рассадкой</h3>
-        {{#form action='/tourn/start/' method='post'}}
-            <input type="button" style="font-size: 50px; height: 100px" onclick="return disableTemporarily(this);" value="START AUTO">
-        {{/form}}
+        <table><tr>
+            <td>
+                Рандом
+                {{#form action='/tourn/start/' method='post'}}
+                    <input type="button" style="font-size: 50px; height: 100px" onclick="return disableTemporarily(this);" value="START SHUFFLED AUTO">
+                {{/form}}
+            </td>
+            <td>&nbsp;&nbsp;&nbsp;</td>
+            <td>
+                Швейцарка
+                {{#form action='/tourn/startSwiss/' method='post'}}
+                    <input type="button" style="font-size: 50px; height: 100px" onclick="return disableTemporarily(this);" value="START SWISS AUTO">
+                {{/form}}
+            </td>
+        </tr></table>
         <hr/>
     {{/showAutoSeating}}
     {{#showControls}}
