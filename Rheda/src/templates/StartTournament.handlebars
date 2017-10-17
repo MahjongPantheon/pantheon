@@ -23,6 +23,19 @@
         font-size: 16px;
     }
 </style>
+
+<script>
+    function disableTemporarily(what) {
+        $(what).attr('disabled', true);
+        var timer = window.setTimeout(function() {
+            $(what).attr('disabled', false);
+            window.clearTimeout(timer);
+        }, 3000);
+        $(what).parent('form').submit();
+        return true;
+    }
+</script>
+
 {{^showAll}}
     <h2>Нельзя стартовать игры: {{reason}}</h2>
     {{#showTimerControls}}
@@ -39,17 +52,6 @@
     {{/showTimerControls}}
 {{/showAll}}
 {{#showAll}}
-    <script>
-        function disableTemporarily(what) {
-            $(what).attr('disabled', true);
-            var timer = window.setTimeout(function() {
-                $(what).attr('disabled', false);
-                window.clearTimeout(timer);
-            }, 3000);
-            $(what).parent('form').submit();
-            return true;
-        }
-    </script>
     {{#showTimerControls}}
         <h3>Рестарт текущего таймера</h3>
         {{#form action='/tourn/resetTimer/' method='post'}}
