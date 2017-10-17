@@ -93,6 +93,7 @@ class AchievementsPrimitive extends Primitive
             ->where('event_id', $eventId)
             ->where('outcome', 'chombo')
             ->groupBy('loser_id')
+            ->groupBy('display_name')
             ->orderByDesc('cnt')
             ->findArray();
         return array_map(function ($round) {
@@ -128,6 +129,7 @@ class AchievementsPrimitive extends Primitive
             ->where('event_id', $eventId)
             ->where('outcome', 'ron')
             ->groupBy('loser_id')
+            ->groupBy('display_name')
             ->orderByDesc('cnt')
             ->findArray();
         $maxThrows = 0;
@@ -162,6 +164,7 @@ class AchievementsPrimitive extends Primitive
             ->where('outcome', 'tsumo')
             ->groupBy('winner_id')
             ->groupBy('session_id')
+            ->groupBy('display_name')
             ->orderByDesc('cnt')
             ->findArray();
         $maxTsumo = 0;
