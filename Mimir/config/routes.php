@@ -80,5 +80,6 @@ return [
     'generateSeating'   => ['SeatingController', 'generate'],
     'getCurrentSeating' => ['EventsController', 'getCurrentSeating'],
     'startGamesWithSeating' => ['SeatingController', 'startGamesWithSeating'],
+    'startGamesWithSwissSeating' => ['SeatingController', 'startGamesWithSwissSeating'],
     'startGamesWithManualSeating' => ['SeatingController', 'startGamesWithManualSeating'],
 ];

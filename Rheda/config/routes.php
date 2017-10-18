@@ -41,6 +41,7 @@ return [ // Omit trailing slashes in keys when possible
     '/tourn/(?<action>start)'                              => 'StartTournament',
     '/tourn/(?<action>dropLastRound)/(?<hash>[0-9a-f]+)'   => 'StartTournament',
     '/tourn/(?<action>startManual)'                        => 'StartTournament',
+    '/tourn/(?<action>startSwiss)'                         => 'StartTournament',
     '/tourn/(?<action>resetTimer)'                         => 'StartTournament',
 
     '/penalties'       => 'Penalties',
