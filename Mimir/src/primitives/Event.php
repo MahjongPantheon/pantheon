@@ -788,8 +788,7 @@ class EventPrimitive extends Primitive
      */
     public function setGamesStatus($gamesStatus)
     {
-        if (
-            $gamesStatus != self::GS_SEATING_READY &&
+        if ($gamesStatus != self::GS_SEATING_READY &&
             $gamesStatus != self::GS_STARTED &&
             $gamesStatus !== null
         ) {

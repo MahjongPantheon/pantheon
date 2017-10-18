@@ -43,6 +43,7 @@ class Config
     protected $_useTimer = false;
     protected $_usePenalty = false;
     protected $_seriesLength = 0;
+    protected $_gamesStatus = false;
 
     public static function fromRaw($arr)
     {
@@ -338,5 +339,13 @@ class Config
     public function seriesLength()
     {
         return $this->_seriesLength;
+    }
+
+    /**
+     * @return bool
+     */
+    public function gamesWaitingForTimer()
+    {
+        return ($this->_gamesStatus == 'seating_ready');
     }
 }

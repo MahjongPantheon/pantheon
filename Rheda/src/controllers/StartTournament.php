@@ -23,12 +23,15 @@ require_once __DIR__ . '/../helpers/Array.php';
 class StartTournament extends Controller
 {
     protected $_mainTemplate = 'StartTournament';
+    /**
+     * @var \Exception
+     */
     protected $_lastEx = null;
 
     protected $_errors = [
         '_WRONG_PASSWORD' => 'Секретное слово неправильное',
         '_TABLES_NOT_FULL' => 'Столы не укомплектованы! Число игроков не делится нацело на 4, нужно добавить или убрать людей!',
-        '_GAMES_STARTED' => 'Игры уже начаты'
+        '_GAMES_STARTED' => 'Игры уже начаты / еще не завершены'
     ];
 
     protected function _pageTitle()
@@ -38,15 +41,14 @@ class StartTournament extends Controller
 
     protected function _beforeRun()
     {
-        if (!empty($this->_path['action']) && $this->_path['action'] == 'start') {
+        if (!empty($this->_path['action']) && $this->_path['action'] == 'shuffledSeating') {
             if (!$this->_adminAuthOk()) {
                 return true; // to show error in _run
             }
 
             try {
                 $this->_api->execute('startGamesWithSeating', [$this->_eventId, 1, mt_rand(100000, 999999)]);
-                $this->_api->execute('startTimer', [$this->_eventId]);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->_lastEx = $e;
                 return true;
             }
@@ -54,7 +56,7 @@ class StartTournament extends Controller
             return false;
         }
 
-        if (!empty($this->_path['action']) && $this->_path['action'] == 'startManual') {
+        if (!empty($this->_path['action']) && $this->_path['action'] == 'manualSeating') {
             if (!$this->_adminAuthOk()) {
                 return true; // to show error in _run
             }
@@ -64,8 +66,7 @@ class StartTournament extends Controller
                     'startGamesWithManualSeating',
                     [$this->_eventId, $_POST['description'], $_POST['randomize'] == 'true']
                 );
-                $this->_api->execute('startTimer', [$this->_eventId]);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->_lastEx = $e;
                 return true;
             }
@@ -73,7 +74,7 @@ class StartTournament extends Controller
             return false;
         }
 
-        if (!empty($this->_path['action']) && $this->_path['action'] == 'startSwiss') {
+        if (!empty($this->_path['action']) && $this->_path['action'] == 'swissSeating') {
             if (!$this->_adminAuthOk()) {
                 return true; // to show error in _run
             }
@@ -83,8 +84,7 @@ class StartTournament extends Controller
                     'startGamesWithSwissSeating',
                     [$this->_eventId]
                 );
-                $this->_api->execute('startTimer', [$this->_eventId]);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->_lastEx = $e;
                 return true;
             }
@@ -92,14 +92,14 @@ class StartTournament extends Controller
             return false;
         }
 
-        if (!empty($this->_path['action']) && $this->_path['action'] == 'resetTimer') {
+        if (!empty($this->_path['action']) && $this->_path['action'] == 'startTimer') {
             if (!$this->_adminAuthOk()) {
                 return true; // to show error in _run
             }
 
             try {
                 $this->_api->execute('startTimer', [$this->_eventId]);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->_lastEx = $e;
                 return true;
             }
@@ -114,7 +114,7 @@ class StartTournament extends Controller
 
             try {
                 $this->_api->execute('dropLastRound', [$this->_path['hash']]);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->_lastEx = $e;
                 return true;
             }
@@ -129,14 +129,16 @@ class StartTournament extends Controller
     {
         if (!$this->_adminAuthOk()) {
             return [
-                'showAll' => false,
+                'showManualControls' => false,
+                'showAutoControls' => false,
                 'reason' => $this->_errors['_WRONG_PASSWORD']
             ];
         }
 
         if (!empty($this->_lastEx)) {
             return [
-                'showAll' => false,
+                'showManualControls' => false,
+                'showAutoControls' => false,
                 'reason' => $this->_lastEx->getMessage()
             ];
         }
@@ -145,7 +147,7 @@ class StartTournament extends Controller
 
         // Tables info
         $tables = $this->_api->execute('getTablesState', [$this->_eventId]);
-        $tablesFormatted = $this->_formatTables($tables);
+        $tablesFormatted = $this->_formatTables($tables, $this->_rules->gamesWaitingForTimer());
 
         $unfinishedTablesCount = array_reduce($tablesFormatted, function ($acc, $i) {
             return $acc + ($i['finished'] ? 0 : 1);
@@ -157,16 +159,21 @@ class StartTournament extends Controller
                 $errCode = '_TABLES_NOT_FULL';
             } else {
                 $timerState = $this->_api->execute('getTimerState', [$this->_eventId]);
-                if ($timerState['started'] && $unfinishedTablesCount !== 0) { // Check once after click on START
+                if ($timerState['started'] || $unfinishedTablesCount !== 0) { // Check once after click on START
                     $errCode = '_GAMES_STARTED';
                 }
             }
         }
 
         return [
-            'showAll' => empty($errCode),
-            'showControls' => empty($errCode) || $errCode === '_GAMES_STARTED',
-            'showAutoSeating' => $this->_rules->autoSeating(),
+            'showManualControls' => !$this->_rules->gamesWaitingForTimer() && (empty($errCode) || (
+                // this is for club events manual start
+                $this->_rules->allowPlayerAppend() && $errCode === '_GAMES_STARTED'
+            )),
+            'showAutoControls' => !$this->_rules->gamesWaitingForTimer()
+                && empty($errCode)
+                && $this->_rules->autoSeating(),
+            'seatingReady' => $this->_rules->gamesWaitingForTimer(),
             'showTimerControls' => $this->_rules->syncStart() || (!empty($errCode) && $errCode === '_GAMES_STARTED'),
             'reason' => $errCode ? $this->_errors[$errCode] : '',
             'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
@@ -174,9 +181,12 @@ class StartTournament extends Controller
         ];
     }
 
-    protected function _formatTables($tables)
+    protected function _formatTables($tables, $waitingForTimer)
     {
-        return array_map(function ($t) {
+        return array_map(function ($t) use ($waitingForTimer) {
+            if ($waitingForTimer) {
+                $t['status'] = 'READY';
+            }
             $t['finished'] = $t['status'] == 'finished';
             if ($t['status'] == 'finished') {
                 $t['last_round'] = '';

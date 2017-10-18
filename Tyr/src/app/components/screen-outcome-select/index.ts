@@ -37,6 +37,10 @@ export class OutcomeSelectScreen {
     return !this.state.getGameConfig('withAtamahane');
   }
 
+  get screenEnabled() {
+    return !this.state.isTimerWaiting();
+  }
+
   select(outcome) {
     this.state.initBlankOutcome(outcome);
     this.state.nextScreen();

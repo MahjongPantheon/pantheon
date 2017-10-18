@@ -43,3 +43,9 @@ button:after {
   margin-right: 20px;
   content: '›';
 }
+
+.disabledText {
+  color: #ccc;
+  font-size: 20px;
+  text-align: center;
+}

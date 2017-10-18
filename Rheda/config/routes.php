@@ -38,11 +38,11 @@ return [ // Omit trailing slashes in keys when possible
     '/sortition/(?<seed>[0-9a-f]+)' => 'Sortition',
 
     '/tourn'                                               => 'StartTournament',
-    '/tourn/(?<action>start)'                              => 'StartTournament',
     '/tourn/(?<action>dropLastRound)/(?<hash>[0-9a-f]+)'   => 'StartTournament',
-    '/tourn/(?<action>startManual)'                        => 'StartTournament',
-    '/tourn/(?<action>startSwiss)'                         => 'StartTournament',
-    '/tourn/(?<action>resetTimer)'                         => 'StartTournament',
+    '/tourn/(?<action>shuffledSeating)'                    => 'StartTournament',
+    '/tourn/(?<action>manualSeating)'                      => 'StartTournament',
+    '/tourn/(?<action>swissSeating)'                       => 'StartTournament',
+    '/tourn/(?<action>startTimer)'                         => 'StartTournament',
 
     '/penalties'       => 'Penalties',
     '/penalties/(?<action>apply)' => 'Penalties',

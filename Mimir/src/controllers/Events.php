@@ -487,8 +487,7 @@ class EventsController extends Controller
         $response = [
             'started' => false,
             'finished' => true,
-            'time_remaining' => null,
-            'waiting_for_timer' => false
+            'time_remaining' => null
         ];
 
         if (empty($event[0]->getLastTimer())) {
@@ -496,18 +495,18 @@ class EventsController extends Controller
             $response = [
                 'started' => false,
                 'finished' => false,
-                'time_remaining' => null,
-                'waiting_for_timer' => false
+                'time_remaining' => null
             ];
         } else if ($event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 > time()) {
             // game in progress
             $response = [
                 'started' => true,
                 'finished' => false,
-                'time_remaining' => $event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 - time(),
-                'waiting_for_timer' => ($event[0]->getGamesStatus() == EventPrimitive::GS_SEATING_READY)
+                'time_remaining' => $event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 - time()
             ];
         }
+
+        $response['waiting_for_timer'] = ($event[0]->getGamesStatus() == EventPrimitive::GS_SEATING_READY);
 
         $this->_log->addInfo('Successfully got timer data for event id#' . $eventId);
 
