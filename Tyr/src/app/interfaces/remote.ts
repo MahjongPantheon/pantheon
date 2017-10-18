@@ -125,6 +125,7 @@ export interface RTimerState {
   started: boolean;
   finished: boolean;
   time_remaining: string;
+  waiting_for_timer: boolean;
 }
 
 export interface RSessionOverview {
