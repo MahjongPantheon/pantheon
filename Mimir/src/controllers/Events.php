@@ -318,7 +318,8 @@ class EventsController extends Controller
             'allowPlayerAppend'   => (bool)$event[0]->getAllowPlayerAppend(),
             'withLeadingDealerGameover' => $rules->withLeadingDealerGameOver(),
             'subtractStartPoints' => $rules->subtractStartPoints(),
-            'seriesLength'        => $event[0]->getSeriesLength()
+            'seriesLength'        => $event[0]->getSeriesLength(),
+            'gamesStatus'         => $event[0]->getGamesStatus()
         ];
 
         $this->_log->addInfo('Successfully received config for event id# ' . $eventId);
@@ -477,11 +478,17 @@ class EventsController extends Controller
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
+        if (!$event[0]->getUseTimer()) {
+            $this->_log->addInfo('Timer is not used for event id#' . $eventId);
+            return [];
+        }
+
         // default: game finished
         $response = [
             'started' => false,
             'finished' => true,
-            'time_remaining' => null
+            'time_remaining' => null,
+            'waiting_for_timer' => false
         ];
 
         if (empty($event[0]->getLastTimer())) {
@@ -489,14 +496,16 @@ class EventsController extends Controller
             $response = [
                 'started' => false,
                 'finished' => false,
-                'time_remaining' => null
+                'time_remaining' => null,
+                'waiting_for_timer' => false
             ];
         } else if ($event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 > time()) {
             // game in progress
             $response = [
                 'started' => true,
                 'finished' => false,
-                'time_remaining' => $event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 - time()
+                'time_remaining' => $event[0]->getLastTimer() + $event[0]->getGameDuration() * 60 - time(),
+                'waiting_for_timer' => ($event[0]->getGamesStatus() == EventPrimitive::GS_SEATING_READY)
             ];
         }
 
@@ -520,6 +529,8 @@ class EventsController extends Controller
     }
 
     /**
+     * Start or restart timer for event
+     *
      * @param integer $eventId
      * @throws InvalidParametersException
      * @return bool
@@ -531,6 +542,10 @@ class EventsController extends Controller
         $event = EventPrimitive::findById($this->_db, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        if ($event[0]->getGamesStatus() == EventPrimitive::GS_SEATING_READY) {
+            $event[0]->setGamesStatus(EventPrimitive::GS_STARTED);
         }
 
         $success = $event[0]->setLastTimer(time())->save();

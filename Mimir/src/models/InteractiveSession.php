@@ -119,6 +119,11 @@ class InteractiveSessionModel extends Model
         $session = $this->_findGame($gameHashcode, 'inprogress');
         $this->_checkAuth($session->getPlayersIds(), $session->getEventId());
 
+        if ($session->getEvent()->getGamesStatus() == EventPrimitive::GS_SEATING_READY) {
+            // We should not allow adding new rounds if session is not started yet
+            throw new BadActionException('Sessions are ready, but not started yet. You can\'t add new round now');
+        }
+
         // TODO: checks are not atomic
         // check that same game is not passed
         $currentHonba = $session->getCurrentState()->getHonba();
