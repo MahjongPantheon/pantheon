@@ -14,7 +14,7 @@ Exceptions:
 ### getRatingTable
 Parameters:
 * **$eventId** (_integer_) 
-* **$orderBy** (_string_) either 'name', 'rating' or 'avg_place'
+* **$orderBy** (_string_) either 'name', 'rating', 'avg_place' or 'avg_score'
 * **$order** (_string_) either 'asc' or 'desc'
 
 Returns: _array_ 
@@ -38,6 +38,15 @@ Exceptions:
 ### getGame
 Parameters:
 * **$representationalHash** (_string_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _InvalidParametersException_ 
+
+### getGamesSeries
+Parameters:
+* **$eventId** (_integer_) 
 
 Returns: _array_ 
 
@@ -441,6 +450,16 @@ Parameters:
 * **$eventId** (_int_) 
 * **$groupsCount** (_int_) 
 * **$seed** (_int_) 
+
+Returns: _bool_ 
+
+Exceptions:
+* _InvalidParametersException_ 
+* _AuthFailedException_ 
+
+### startGamesWithSwissSeating
+Parameters:
+* **$eventId** (_int_) 
 
 Returns: _bool_ 
 

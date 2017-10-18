@@ -20,6 +20,49 @@ namespace Riichi;
 class Seating
 {
     /**
+     * Swiss seating entry point
+     * Wrapper for formats conformity
+     *
+     * @param $playersMap array [id => rating] - current rating table
+     * @param $previousSeatings array [ [id, id, id, id] ... ] - players ordered as eswn in table array
+     * @return array [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
+     */
+    public static function swissSeating($playersMap, $previousSeatings)
+    {
+        $indexToPlayer = array_keys($playersMap);
+        $playerToIndex = array_flip($indexToPlayer);
+        $indexToRating = array_values($playersMap); // playerTotalGamePoints
+
+        $playedWith = [];
+        foreach ($indexToPlayer as $id1) {
+            $playedWith[$playerToIndex[$id1]] = [];
+            foreach ($indexToPlayer as $id2) {
+                $playedWith[$playerToIndex[$id1]][$playerToIndex[$id2]] = 0;
+            }
+        }
+
+        foreach ($previousSeatings as $table) {
+            for ($i = 0; $i < 4; $i ++) {
+                for ($j = 0; $j < 4; $j ++) {
+                    if ($i == $j) {
+                        continue;
+                    }
+                    $playedWith[$playerToIndex[$table[$i]]][$playerToIndex[$table[$j]]] ++;
+                }
+            }
+        }
+
+        $playerTable = self::_swissSeatingOriginal($indexToRating, $playedWith);
+        asort($playerTable);
+        $seating = [];
+        foreach ($playerTable as $playerIndex => $tableIndex) {
+            $seating[$indexToPlayer[$playerIndex]] = $indexToRating[$playerIndex];
+        }
+
+        return $seating;
+    }
+
+    /**
      * Format seating data for better view
      *
      * @param $seating
@@ -68,7 +111,7 @@ class Seating
      * @param $randFactor int - RNG init seed
      * @return array [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
      */
-    public static function generateTables($playersMap, $previousSeatings, $groupsCount, $randFactor)
+    public static function shuffledSeating($playersMap, $previousSeatings, $groupsCount, $randFactor)
     {
         /*
          * Simple random search. Too many variables for real optimising methods :(
@@ -264,6 +307,212 @@ class Seating
         }
 
         return $totalsum;
+    }
+
+    /**
+     * Swiss seating generator
+     * Code & algorithm were taken from mahjongsoft.ru website and ported from javascript.
+     *
+     * $playedWith is mutated during algorithm work.
+     *
+     * @param $playerTotalGamePoints - rating points sum as array: [ player index -> points ]
+     * @param $playedWith - matrix of intersections [ playerIdx1 -> [ playerIdx2 -> N ... ] ... ]
+     * @return array seating [ playerIdx -> tableIdx ]
+     */
+    protected static function _swissSeatingOriginal($playerTotalGamePoints, &$playedWith)
+    {
+        $isPlaying = [];
+        $playerTable = []; // мап "игрок -> номер стола", тут харнятся все позиции за столами
+        $numPlayers = count($playerTotalGamePoints);
+        for ($i = 0; $i < $numPlayers; $i++) {
+            $isPlaying[$i] = false;
+            $playerTable[$i] = -1;
+        }
+
+        $maxCrossings = 0;
+        // adjust initial max crossings to make better performance by the cost of less precision
+        $maxCrossingsPrecisionFactor = 0;
+        $iteration = 0;
+        while (!self::_makeSwissSeating(
+            $isPlaying,
+            $maxCrossings,
+            $maxCrossingsPrecisionFactor,
+            $numPlayers,
+            $playerTable,
+            $playerTotalGamePoints,
+            $playedWith,
+            $iteration
+        )) {
+            $maxCrossings++;
+        }
+
+        return $playerTable;
+    }
+
+    /**
+     * Recursive swiss seating algorithm.
+     * Taken from mahjongsoft.ru
+     *
+     * @param $isPlaying - list of flags: [ playerIdx -> isInGame? ]
+     * @param $maxCrossings - integer factor of max allowed intersections
+     * @param $maxCrossingsPrecisionFactor - addition to max crossings to relax requirements if too many iterations passed
+     * @param $numPlayers - players count
+     * @param $playerTable - seating: [ playerIdx -> tableIdx ]
+     * @param $playerTotalGamePoints - rating points sum as array: [ player index -> points ]
+     * @param $playedWith - matrix of intersections [ playerIdx1 -> [ playerIdx2 -> N ... ] ... ]
+     * @param $iteration - current iteration of calculations
+     * @return bool - success flag
+     */
+    protected static function _makeSwissSeating(
+        &$isPlaying,
+        $maxCrossings,
+        &$maxCrossingsPrecisionFactor,
+        $numPlayers,
+        &$playerTable,
+        &$playerTotalGamePoints,
+        &$playedWith,
+        &$iteration
+    ) {
+        $iteration++;
+        if ($iteration > 15000) {
+            $maxCrossingsPrecisionFactor++;
+            $iteration = 0;
+        }
+
+        // check if everybody have taken a seat, and quit with success if yes
+        $isAllPlaying = true;
+        for ($i = 0; $i < $numPlayers; $i++) {
+            if (!$isPlaying[$i]) {
+                $isAllPlaying = false;
+                break;
+            }
+        }
+        if ($isAllPlaying) {
+            return true;
+        }
+
+        // find table with highest index and highest players count already at that table
+        $maxTable = 0;
+        $numPlayersOnMaxTable = 0;
+        $playersOnMaxTable = [];
+        for ($i = 0; $i < $numPlayers; $i++) {
+            if ($playerTable[$i] > $maxTable) {
+                $maxTable = $playerTable[$i];
+                $playersOnMaxTable[0] = $i;
+                $numPlayersOnMaxTable = 1;
+            } else if ($playerTable[$i] == $maxTable) {
+                $playersOnMaxTable[$numPlayersOnMaxTable++] = $i;
+            }
+        }
+
+        // if table is already filled, take next table and place there a player with highest rating
+        if ($numPlayersOnMaxTable == 0 || $numPlayersOnMaxTable == 4) {
+            if ($numPlayersOnMaxTable == 4) {
+                $maxTable++;
+            }
+            // find a player with highest rating
+            $maxGP = -2147483648;
+            $maxRatingPlayer = -1;
+            for ($i = 0; $i < $numPlayers; $i++) {
+                if (!$isPlaying[$i]) {
+                    if ($playerTotalGamePoints[$i] > $maxGP) {
+                        $maxGP = $playerTotalGamePoints[$i];
+                        $maxRatingPlayer = $i;
+                    }
+                }
+            }
+
+            // check 'playing' flag and place the player to the table, then call the procedure recursively
+            $isPlaying[$maxRatingPlayer] = true;
+            $playerTable[$maxRatingPlayer] = $maxTable;
+            if (self::_makeSwissSeating(
+                $isPlaying,
+                $maxCrossings + $maxCrossingsPrecisionFactor,
+                $maxCrossingsPrecisionFactor,
+                $numPlayers,
+                $playerTable,
+                $playerTotalGamePoints,
+                $playedWith,
+                $iteration
+            )) {
+                return true;
+            } else {
+                // failed to make a seating: falling back
+                $isPlaying[$maxRatingPlayer] = false;
+                $playerTable[$maxRatingPlayer] = -1;
+                return false;
+            }
+        } else {
+            // there are already players at the table: we should take next players with highest ratings
+            $numNextPlayers = 0;
+            $nextPlayers = [];
+            $curCrossings = 0; // current intersections count; first try to make seating without intersections
+            while (true) {
+                for ($i = 0; $i < $numPlayers; $i++) {
+                    if (!$isPlaying[$i]) {
+                        // check if players have already played at the same table
+                        $numCrossings = 0;
+                        for ($j = 0; $j < $numPlayersOnMaxTable; $j++) {
+                            $numCrossings += $playedWith[$i][$playersOnMaxTable[$j]];
+                        }
+
+                        if ($numCrossings <= $curCrossings) {
+                            $nextPlayers[$numNextPlayers++] = $i;
+                        }
+                    }
+                }
+                if ($numNextPlayers > 0) {
+                    break;
+                } else if ($curCrossings == $maxCrossings + $maxCrossingsPrecisionFactor) {
+                    return false;
+                } else {
+                    $curCrossings++;
+                }
+            }
+
+            // sort players by rating
+            for ($i = 0; $i < $numNextPlayers - 1; $i++) {
+                for ($j = $i + 1; $j < $numNextPlayers; $j++) {
+                    if ($playerTotalGamePoints[$nextPlayers[$i]] < $playerTotalGamePoints[$nextPlayers[$j]]) {
+                        $t = $nextPlayers[$i];
+                        $nextPlayers[$i] = $nextPlayers[$j];
+                        $nextPlayers[$j] = $t;
+                    }
+                }
+            }
+
+            // substitute candidates for seating, then make a check
+            for ($i = 0; $i < $numNextPlayers; $i++) {
+                // check 'playing' flag and place the player to the table, then call the procedure recursively
+                $isPlaying[$nextPlayers[$i]] = true;
+                $playerTable[$nextPlayers[$i]] = $maxTable;
+                for ($j = 0; $j < $numPlayersOnMaxTable; $j++) {
+                    $playedWith[$nextPlayers[$i]][$playersOnMaxTable[$j]]++;
+                    $playedWith[$playersOnMaxTable[$j]][$nextPlayers[$i]]++;
+                }
+                // return success if we found a seating, or falling back otherwise
+                if (self::_makeSwissSeating(
+                    $isPlaying,
+                    $maxCrossings + $maxCrossingsPrecisionFactor - $curCrossings,
+                    $maxCrossingsPrecisionFactor,
+                    $numPlayers,
+                    $playerTable,
+                    $playerTotalGamePoints,
+                    $playedWith,
+                    $iteration
+                )) {
+                    return true;
+                } else {
+                    $isPlaying[$nextPlayers[$i]] = false;
+                    $playerTable[$nextPlayers[$i]] = -1;
+                    for ($j = 0; $j < $numPlayersOnMaxTable; $j++) {
+                        $playedWith[$nextPlayers[$i]][$playersOnMaxTable[$j]]--;
+                        $playedWith[$playersOnMaxTable[$j]][$nextPlayers[$i]]--;
+                    }
+                }
+            }
+            return false;
+        }
     }
 
     /**

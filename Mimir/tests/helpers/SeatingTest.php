@@ -105,7 +105,7 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             '12' => 1500
         ];
 
-        $seating = Seating::generateTables($players, [], /* group count = */ 1, /* seed = */ 3464752);
+        $seating = Seating::shuffledSeating($players, [], /* group count = */ 1, /* seed = */ 3464752);
         $this->assertEquals(12, count($seating));
         $this->assertEquals($seating, $players);
         $this->assertNotEquals(json_encode($seating), json_encode($players));
@@ -139,7 +139,7 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             [13, 14, 15, 16]
         ];
 
-        $seating = Seating::generateTables(
+        $seating = Seating::shuffledSeating(
             $players,
             $previousSeating,
             /* group count = */ 1, /* seed = */
@@ -153,8 +153,6 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
 
     public function testSeatingAfterSeveralGames()
     {
-        $this->markTestSkipped();
-
         $players = [
             1 => 1500,
             2 => 1500,
@@ -185,7 +183,7 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             [4, 8, 12, 16]
         ];
 
-        $seating = Seating::generateTables(
+        $seating = Seating::shuffledSeating(
             $players,
             $previousSeating,
             /* group count = */ 1, /* seed = */
@@ -194,7 +192,8 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
 
         $intersections = Seating::makeIntersectionsTable($seating, $previousSeating);
         foreach ($intersections as $i) {
-            $this->assertEquals(1, $i);
+            // shuffled seating is not as good as swiss and may produce intersections even in second game
+            $this->assertLessThanOrEqual(2, $i);
         }
     }
 
@@ -229,7 +228,7 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             [13, 14, 15, 16]
         ];
 
-        $seating = Seating::generateTables(
+        $seating = Seating::shuffledSeating(
             $players,
             $previousSeating,
             /* group count = */ 2, /* seed = */
@@ -247,6 +246,134 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
         $intersections = Seating::makeIntersectionsTable($seating, $previousSeating);
         foreach ($intersections as $i) {
             $this->assertTrue($i <= 2); // may be 2, as of stricter conditions
+        }
+    }
+
+    public function testSwissSeatingAfterSeveralGames()
+    {
+        $players = [
+            1 => -1200,
+            2 => 9200,
+            3 => -13700,
+            4 => 4400,
+            5 => -27400,
+            6 => 10500,
+            7 => -29500,
+            8 => -8000,
+            9 => -23700,
+            10 => -9000,
+            11 => 1900,
+            12 => -38200,
+            13 => -1000,
+            14 => 13400,
+            15 => -34900,
+            16 => -19200,
+            17 => 8500,
+            18 => 11700,
+            19 => -32100,
+            20 => -4700,
+            21 => -15100,
+            22 => -2000,
+            23 => -25700,
+            24 => 21400,
+            25 => 40000,
+            26 => 64200,
+            27 => -14700,
+            28 => 49500,
+            29 => 35400,
+            30 => 1900,
+            31 => 59400,
+            32 => -31300,
+        ];
+
+        $previousSeating = [
+            // session 1
+            [1, 2, 3, 4],
+            [5, 6, 7, 8],
+            [9, 10, 11, 12],
+            [13, 14, 15, 16],
+            [17, 18, 19, 20],
+            [21, 22, 23, 24],
+            [25, 26, 27, 28],
+            [29, 30, 31, 32],
+
+            // session 2
+            [1, 5, 9, 13],
+            [2, 6, 10, 14],
+            [3, 7, 11, 15],
+            [4, 8, 12, 16],
+            [17, 21, 25, 29],
+            [18, 22, 26, 30],
+            [19, 23, 27, 31],
+            [20, 24, 28, 32],
+
+            // session 3
+            [26, 14, 31, 24],
+            [29, 28, 18, 6],
+            [25, 11, 30, 2],
+            [4, 22, 13, 17],
+            [20, 1, 8, 10],
+            [27, 16, 21, 3],
+            [7, 9, 23, 32],
+            [5, 12, 19, 15],
+
+            // session 4
+            [13, 26, 29, 2],
+            [11, 28, 17, 31],
+            [18, 24, 4, 25],
+            [1, 27, 30, 14],
+            [9, 6, 15, 22],
+            [21, 12, 20, 7],
+            [3, 32, 8, 19],
+            [16, 5, 10, 23],
+
+            // session 5
+            [26, 17, 6, 1],
+            [25, 13, 31, 20],
+            [4, 14, 28, 21],
+            [29, 11, 5, 24],
+            [2, 18, 9, 8],
+            [23, 12, 3, 30],
+            [16, 19, 7, 22],
+            [32, 15, 27, 10],
+
+            // session 6
+            [26, 20, 11, 4],
+            [31, 21, 1, 18],
+            [28, 30, 16, 9],
+            [12, 25, 32, 6],
+            [29, 8, 23, 15],
+            [24, 19, 13, 10],
+            [3, 5, 22, 14],
+            [2, 17, 7, 27],
+
+            // session 7
+            [11, 26, 8, 21],
+            [30, 4, 31, 6],
+            [12, 2, 22, 28],
+            [25, 9, 19, 14],
+            [29, 24, 16, 1],
+            [10, 3, 13, 18],
+            [5, 23, 17, 20],
+            [32, 15, 27, 7],
+
+            // session 8
+            [26, 7, 10, 31],
+            [23, 1, 25, 28],
+            [20, 22, 27, 29],
+            [30, 8, 17, 24],
+            [32, 18, 14, 11],
+            [13, 21, 19, 6],
+            [16, 2, 4, 5],
+            [12, 3, 9, 15]
+        ];
+
+        $seating = Seating::swissSeating($players, $previousSeating);
+
+        $intersections = Seating::makeIntersectionsTable($seating, $previousSeating);
+        foreach ($intersections as $i) {
+            // Swiss seating should produce seating of 32 players in 8 games with no more than 2 intersections of each pair
+            $this->assertLessThanOrEqual(2, $i);
         }
     }
 }

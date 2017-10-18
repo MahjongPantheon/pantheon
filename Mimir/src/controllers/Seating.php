@@ -40,7 +40,7 @@ class SeatingController extends Controller
 
         $this->_log->addInfo('Generating seating for event #' . $eventId);
         list ($playersMap, $tables) = $this->_getData($eventId);
-        $seating = Seating::generateTables($playersMap, $tables, $groupsCount, $seed);
+        $seating = Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed);
         $intersections = Seating::makeIntersectionsTable($seating, $tables);
         $this->_log->addInfo('Successfully generated seating for event #' . $eventId);
 
@@ -79,7 +79,7 @@ class SeatingController extends Controller
         }
 
         list ($playersMap, $tables) = $this->_getData($eventId);
-        $seating = array_chunk(array_keys(Seating::generateTables($playersMap, $tables, $groupsCount, $seed)), 4);
+        $seating = array_chunk(array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed)), 4);
         $tableIndex = 1;
         foreach ($seating as $table) {
             (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
@@ -87,6 +87,38 @@ class SeatingController extends Controller
         }
 
         $this->_log->addInfo('Started all games by seed #' . $seed . ' for event #' . $eventId);
+        return true;
+    }
+
+    /**
+     * Make a swiss seating and start all games immediately
+     *
+     * @param int $eventId
+     * @throws InvalidParametersException
+     * @throws AuthFailedException
+     * @return bool
+     */
+    public function startGamesWithSwissSeating($eventId)
+    {
+        if (!(new EventModel($this->_db, $this->_config, $this->_meta))->checkAdminToken()) {
+            throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
+        }
+
+        $this->_log->addInfo('Starting new games with swiss seating for event #' . $eventId);
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, 'inprogress');
+        if (!empty($sessions)) {
+            throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
+        }
+
+        list ($playersMap, $tables) = $this->_getData($eventId);
+        $seating = array_chunk(array_keys(Seating::swissSeating($playersMap, $tables)), 4);
+        $tableIndex = 1;
+        foreach ($seating as $table) {
+            (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
+                ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
+        }
+
+        $this->_log->addInfo('Started all games with swiss seating for event #' . $eventId);
         return true;
     }
 
