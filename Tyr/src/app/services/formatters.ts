@@ -35,7 +35,8 @@ export function timerFormatter(timer: RTimerState): LTimerState {
   return {
     started: !!timer.started,
     finished: !!timer.finished,
-    timeRemaining: timer.time_remaining ? parseInt(timer.time_remaining.toString(), 10) : 0
+    timeRemaining: timer.time_remaining ? parseInt(timer.time_remaining.toString(), 10) : 0,
+    waitingForTimer: !!timer.waiting_for_timer
   };
 }
 

@@ -38,7 +38,7 @@ export type LoadingSet = {
 };
 
 // functional modules
-import { TimerData, initTimer, getTimeRemaining, getCurrentTimerZone } from './timer';
+import { TimerData, initTimer, getTimeRemaining, getCurrentTimerZone, timerIsWaiting } from './timer';
 import {
   toggleLoser, toggleWinner,
   getWinningUsers, getLosingUsers,
@@ -92,7 +92,12 @@ export class AppState {
     this._players = null;
     this._mapIdToPlayer = {};
     this.isIos = !!navigator.userAgent.match(/(iPad|iPhone|iPod)/i);
-    initTimer();
+    initTimer({
+      started: false,
+      finished: false,
+      waitingForTimer: false,
+      timeRemaining: 0
+    });
   }
 
   isLoading(...what: string[]) {
@@ -162,7 +167,7 @@ export class AppState {
         }
 
         if (gameConfig.useTimer) {
-          initTimer(timerState.timeRemaining);
+          initTimer(timerState);
         }
 
         // Player is now in game, so kick him to overview from watching
@@ -458,6 +463,7 @@ export class AppState {
   getAllowedYaku = (): YakuId[] => getAllowedYaku(this._currentOutcome, this._multironCurrentWinner);
   getTimeRemaining = () => getTimeRemaining();
   getCurrentTimerZone = () => getCurrentTimerZone(this, this._yellowZoneAlreadyPlayed);
+  isTimerWaiting = () => timerIsWaiting();
 
   updateOtherTablesList = () => updateOtherTablesList(this.api, this._loading, (tables) => this._otherTablesList = tables);
   updateOtherTable = (hash: string) => {

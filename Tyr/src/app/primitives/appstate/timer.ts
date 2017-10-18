@@ -19,37 +19,55 @@
  */
 
 import { AppState } from '.';
+import { LTimerState } from '../../interfaces/local';
 
 export interface TimerData {
   timeRemaining: number;
   lastUpdateTimeRemaining: number;
   lastUpdateTimestamp: number;
+  waiting: boolean;
 }
 
 // module-level singleton vars
 let timerData: TimerData;
 const now = () => Math.round((new Date()).getTime() / 1000);
+let timer: NodeJS.Timer | null = null;
 
-export function initTimer(timeRemaining?: number) {
+export function initTimer(state: LTimerState) {
+  if (timer) {
+    clearInterval(timer);
+    timer = null;
+  }
+
   timerData = {
-    timeRemaining: timeRemaining || 0,
-    lastUpdateTimeRemaining: timeRemaining || 0,
-    lastUpdateTimestamp: now()
+    timeRemaining: state.timeRemaining || 0,
+    lastUpdateTimeRemaining: state.timeRemaining || 0,
+    lastUpdateTimestamp: now(),
+    waiting: state.waitingForTimer
   };
 
-  let timer = setInterval(() => {
+  if (state.waitingForTimer) {
+    return;
+  }
+
+  timer = setInterval(() => {
     // Calc delta to support mobile suspending with js timers stopping
     let delta = now() - timerData.lastUpdateTimestamp;
     timerData.timeRemaining = timerData.lastUpdateTimeRemaining - delta;
     if (timerData.timeRemaining <= 0) {
       timerData.timeRemaining = 0;
       clearInterval(timer);
+      timer = null;
     }
   }, 1000);
 }
 
-export function getTimeRemaining() {
+export function getTimeRemaining(): number {
   return timerData.timeRemaining;
+}
+
+export function timerIsWaiting(): boolean {
+  return timerData.waiting;
 }
 
 export function getCurrentTimerZone(state: AppState, yellowZoneAlreadyPlayed: boolean) {
