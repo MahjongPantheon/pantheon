@@ -43,6 +43,8 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
             ->setTimezone('UTC')
             ->setTitle('test')
             ->setDescription('test')
+            ->setUseTimer(1)
+            ->setAllowPlayerAppend(0)
             ->setGameDuration(1); // for timers check
         $evt->save();
 
@@ -64,7 +66,8 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([
             'started' => false,
             'finished' => false,
-            'time_remaining' => null
+            'time_remaining' => null,
+            'waiting_for_timer' => false
         ], $response);
 
         $this->assertTrue($this->_client->execute('startTimer', [1]));

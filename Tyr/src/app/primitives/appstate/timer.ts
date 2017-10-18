@@ -75,13 +75,13 @@ export function getCurrentTimerZone(state: AppState, yellowZoneAlreadyPlayed: bo
   switch (state.getGameConfig('timerPolicy')) {
     case 'redZone':
       zoneLength = state.getGameConfig('redZone');
-      if (zoneLength && (state.getTimeRemaining() < zoneLength)) {
+      if (zoneLength && (state.getTimeRemaining() < zoneLength) && !timerData.waiting) {
         return 'redZone';
       }
       break;
     case 'yellowZone':
       zoneLength = state.getGameConfig('yellowZone');
-      if (zoneLength && (state.getTimeRemaining() < zoneLength)) {
+      if (zoneLength && (state.getTimeRemaining() < zoneLength) && !timerData.waiting) {
         return yellowZoneAlreadyPlayed ? 'redZone' : 'yellowZone';
       }
       break;

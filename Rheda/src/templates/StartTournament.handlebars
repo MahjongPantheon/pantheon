@@ -36,73 +36,66 @@
     }
 </script>
 
-{{^showAll}}
-    <h2>Нельзя стартовать игры: {{reason}}</h2>
-    {{#showTimerControls}}
-        <br />
-        <h3>Рестарт текущего таймера</h3>
-        {{#form action='/tourn/resetTimer/' method='post'}}
-            <input type="button" style="font-size: 50px; height: 100px;"
-                   onclick="return window.confirm('Сбросить таймер в начальное значение? Внимание - ' +
-                    'эта кнопка не должна использоваться в нормальных условиях и предназначена только ' +
-                    'для случаев непредвиденных ошибок!') && disableTemporarily(this);"
-                   value="TIMER RESET">
-        {{/form}}
-        <hr />
-    {{/showTimerControls}}
-{{/showAll}}
-{{#showAll}}
-    {{#showTimerControls}}
-        <h3>Рестарт текущего таймера</h3>
-        {{#form action='/tourn/resetTimer/' method='post'}}
-            <input type="button" style="font-size: 50px; height: 100px;"
-                   onclick="return window.confirm('Сбросить таймер в начальное значение? Внимание - ' +
-                    'эта кнопка не должна использоваться в нормальных условиях и предназначена только ' +
-                    'для случаев непредвиденных ошибок!') && disableTemporarily(this);"
-                   value="TIMER RESET">
-        {{/form}}
-        <hr />
-    {{/showTimerControls}}
-    {{#showAutoSeating}}
-        <h3>Старт игр с автоматической рассадкой</h3>
-        <table><tr>
-            <td>
-                Рандом
-                {{#form action='/tourn/start/' method='post'}}
-                    <input type="button" style="font-size: 50px; height: 100px" onclick="return disableTemporarily(this);" value="START SHUFFLED AUTO">
-                {{/form}}
-            </td>
-            <td>&nbsp;&nbsp;&nbsp;</td>
-            <td>
-                Швейцарка
-                {{#form action='/tourn/startSwiss/' method='post'}}
-                    <input type="button" style="font-size: 50px; height: 100px" onclick="return disableTemporarily(this);" value="START SWISS AUTO">
-                {{/form}}
-            </td>
-        </tr></table>
-        <hr/>
-    {{/showAutoSeating}}
-    {{#showControls}}
-        <h3>Старт игр с ручной рассадкой</h3>
-        {{#form action='/tourn/startManual/' method='post'}}
-            Введите состав столов. Один стол = одна строка.<br>
-            Если не отмечена галочка, игроки будут рассажены на "восток-юг-запад-север" согласно порядку ввода.<br>
-            Цифры означают текущее место игрока в рейтинге. Пример швейцарской рассадки с шагом 4 для четырех столов: <br>
-            1-5-9-13<br>
-            2-6-10-14<br>
-            3-7-11-15<br>
-            4-8-12-16<br>
-            <div><textarea name="description" rows="6">{{tablesList}}</textarea></div>
-            <div><label for="randomize" style="font-size: 17px;">
-                <input checked="checked" id="randomize" type="checkbox" name="randomize" value="true"> Перемешать игроков за
-                каждым столом
-            </label></div>
-            <input type="button" style="font-size: 50px; height: 100px" value="START MANUAL" onclick="return disableTemporarily(this);">
-        {{/form}}
-    {{/showControls}}
-{{/showAll}}
+{{#reason}}<h2>Невозможно сделать новую рассадку: {{reason}}</h2>{{/reason}}
+{{#showTimerControls}}
+    <br />
+    <h3>Старт/рестарт текущего таймера и начало игр</h3>
+    В случае, если рассадка сгенерирована, нажатие на эту кнопку стартует все игры и запускает таймер.
+    Все последующие нажатия на эту кнопку просто обнуляют таймер до начального значения - будьте осторожны.
+    {{#form action='/tourn/startTimer/' method='post'}}
+        <input type="button" style="font-size: 50px; height: 100px;"
+               onclick="return window.confirm('Выставить таймер в начальное значение?') && disableTemporarily(this);"
+               value="TIMER">
+    {{/form}}
+    <hr />
+{{/showTimerControls}}
+{{#showAutoControls}}
+    <h3>Автоматическая рассадка</h3>
+    <table><tr>
+        <td>
+            Рандом
+            {{#form action='/tourn/shuffledSeating/' method='post'}}
+                <input type="button" style="font-size: 50px; height: 100px"
+                    onclick="return window.confirm('Используем случайную рассадку для новой игры?')
+                        && disableTemporarily(this);"
+                    value="START SHUFFLED">
+            {{/form}}
+        </td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td>
+            Швейцарка
+            {{#form action='/tourn/swissSeating/' method='post'}}
+                <input type="button" style="font-size: 50px; height: 100px"
+                    onclick="return window.confirm('Используем швейцарскую рассадку для новой игры?')
+                        && disableTemporarily(this);"
+                    value="START SWISS">
+            {{/form}}
+        </td>
+    </tr></table>
+    Не забудьте нажать на кнопку "TIMER", после того как игроки рассядутся за столы.
+    <hr/>
+{{/showAutoControls}}
+{{#showManualControls}}
+    <h3>Ручная рассадка</h3>
+    {{#form action='/tourn/manualSeating/' method='post'}}
+        Введите состав столов. Один стол = одна строка.<br>
+        Если не отмечена галочка, игроки будут рассажены на "восток-юг-запад-север" согласно порядку ввода.<br>
+        Цифры означают текущее место игрока в рейтинге. Пример швейцарской рассадки с шагом 4 для четырех столов: <br>
+        1-5-9-13<br>
+        2-6-10-14<br>
+        3-7-11-15<br>
+        4-8-12-16<br>
+        <div><textarea name="description" rows="6">{{tablesList}}</textarea></div>
+        <div><label for="randomize" style="font-size: 17px;">
+            <input checked="checked" id="randomize" type="checkbox" name="randomize" value="true"> Перемешать игроков за
+            каждым столом
+        </label></div>
+        <input type="button" style="font-size: 50px; height: 100px" value="START MANUAL" onclick="return
+            window.confirm('Используем ручную рассадку для новой игры?') && disableTemporarily(this);">
+    {{/form}}
+{{/showManualControls}}
 <hr/>
-<h3>Состояние столов:</h3>
+<h3>Состояние столов:{{#seatingReady}} РАССАДКА ГОТОВА, МОЖНО НАЧИНАТЬ!{{/seatingReady}}</h3>
 <table class="table table-bordered">
     {{#tables}}
         <tr>
