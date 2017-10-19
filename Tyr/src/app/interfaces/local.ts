@@ -46,6 +46,7 @@ export interface LTimerState {
   started: boolean;
   finished: boolean;
   timeRemaining: number;
+  waitingForTimer: boolean;
 }
 
 export interface LWinItem {

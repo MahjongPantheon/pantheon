@@ -86,6 +86,11 @@ class SeatingController extends Controller
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
+        list($event) = EventPrimitive::findById($this->_db, [$eventId]);
+        if ($event->getUseTimer()) {
+            $event->setGamesStatus(EventPrimitive::GS_SEATING_READY)->save();
+        }
+
         $this->_log->addInfo('Started all games by seed #' . $seed . ' for event #' . $eventId);
         return true;
     }
@@ -116,6 +121,11 @@ class SeatingController extends Controller
         foreach ($seating as $table) {
             (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
+        }
+
+        list($event) = EventPrimitive::findById($this->_db, [$eventId]);
+        if ($event->getUseTimer()) {
+            $event->setGamesStatus(EventPrimitive::GS_SEATING_READY)->save();
         }
 
         $this->_log->addInfo('Started all games with swiss seating for event #' . $eventId);
@@ -152,6 +162,11 @@ class SeatingController extends Controller
         foreach ($seating as $table) {
             (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex++);
+        }
+
+        list($event) = EventPrimitive::findById($this->_db, [$eventId]);
+        if ($event->getUseTimer()) {
+            $event->setGamesStatus(EventPrimitive::GS_SEATING_READY)->save();
         }
 
         $this->_log->addInfo('Started all games by manual seating for event #' . $eventId);

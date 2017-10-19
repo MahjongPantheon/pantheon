@@ -17,11 +17,14 @@
     You should have received a copy of the GNU General Public License
     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div class="wrap">
+<div class="wrap" *ngIf="screenEnabled">
   <button *ngIf="abortsAllowed" (click)="select('abort');">Абортивная ничья</button>
   <button (click)="select('chombo');">Чомбо</button>
   <button *ngIf="multironAllowed" (click)="select('multiron');">Дабл/трипл-рон</button>
   <button (click)="select('ron');">Рон</button>
   <button (click)="select('tsumo');">Цумо</button>
   <button (click)="select('draw');">Ничья</button>
+</div>
+<div class="wrap disabledText" *ngIf="!screenEnabled">
+  Таймер еще не запущен. Нельзя ввести раздачу.
 </div>

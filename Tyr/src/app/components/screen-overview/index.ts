@@ -69,6 +69,11 @@ export class OverviewScreen {
     if (!this.state.getGameConfig('useTimer')) {
       return '';
     }
+
+    if (this.state.isTimerWaiting()) {
+      return '⏳';
+    }
+
     let min = Math.floor(this.state.getTimeRemaining() / 60);
     let sec = this.state.getTimeRemaining() % 60;
     return min.toString() + ':' + (
