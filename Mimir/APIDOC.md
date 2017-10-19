@@ -332,6 +332,15 @@ Returns: _array_
 Exceptions:
 * _InvalidParametersException_ 
 
+### toggleHideResults
+Parameters:
+* **$eventId** (_integer_) 
+
+Returns: _bool_ 
+
+Exceptions:
+* _InvalidParametersException_ 
+
 ### startGame
 Parameters:
 * **$eventId** (_int_) Event this session belongs to

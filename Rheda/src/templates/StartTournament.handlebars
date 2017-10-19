@@ -37,6 +37,22 @@
 </script>
 
 {{#reason}}<h2>Невозможно сделать новую рассадку: {{reason}}</h2>{{/reason}}
+
+<br />
+<h3>Скрыть таблицу с результатами игроков</h3>
+<p>Это может быть полезно для сохранения интриги на последних ханчанах турнира.</p>
+
+{{#form action='/tourn/toggleHideResults/' method='post'}}
+    <button type="submit" style="font-size: 50px; height: 100px;">
+        {{^hideResults}}
+            HIDE
+        {{/hideResults}}
+        {{#hideResults}}
+            SHOW
+        {{/hideResults}}
+    </button>
+{{/form}}
+
 {{#showTimerControls}}
     <br />
     <h3>Старт/рестарт текущего таймера и начало игр</h3>
@@ -49,6 +65,7 @@
     {{/form}}
     <hr />
 {{/showTimerControls}}
+
 {{#showAutoControls}}
     <h3>Автоматическая рассадка</h3>
     <table><tr>
@@ -75,6 +92,7 @@
     Не забудьте нажать на кнопку "TIMER", после того как игроки рассядутся за столы.
     <hr/>
 {{/showAutoControls}}
+
 {{#showManualControls}}
     <h3>Ручная рассадка</h3>
     {{#form action='/tourn/manualSeating/' method='post'}}
@@ -94,6 +112,7 @@
             window.confirm('Используем ручную рассадку для новой игры?') && disableTemporarily(this);">
     {{/form}}
 {{/showManualControls}}
+
 <hr/>
 <h3>Состояние столов:{{#seatingReady}} РАССАДКА ГОТОВА, МОЖНО НАЧИНАТЬ!{{/seatingReady}}</h3>
 <table class="table table-bordered">
