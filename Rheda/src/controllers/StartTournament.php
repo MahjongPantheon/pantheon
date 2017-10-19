@@ -122,9 +122,24 @@ class StartTournament extends Controller
             return false;
         }
 
+        if (!empty($this->_path['action']) && $this->_path['action'] == 'toggleHideResults') {
+            if (!$this->_adminAuthOk()) {
+                return true; // to show error in _run
+            }
+
+            try {
+                $this->_api->execute('toggleHideResults', [$this->_eventId]);
+            } catch (\Exception $e) {
+                $this->_lastEx = $e;
+                return true;
+            }
+            header('Location: ' . Url::make('/tourn/', $this->_eventId));
+            return false;
+        }
+
         return true;
     }
-    
+
     protected function _run()
     {
         if (!$this->_adminAuthOk()) {
@@ -177,7 +192,8 @@ class StartTournament extends Controller
             'showTimerControls' => $this->_rules->syncStart() || (!empty($errCode) && $errCode === '_GAMES_STARTED'),
             'reason' => $errCode ? $this->_errors[$errCode] : '',
             'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
-            'tables' => $tablesFormatted
+            'tables' => $tablesFormatted,
+            'hideResults' => $this->_rules->hideResults()
         ];
     }
 

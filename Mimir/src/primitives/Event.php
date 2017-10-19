@@ -57,6 +57,7 @@ class EventPrimitive extends Primitive
         'timezone'          => '_timezone',
         'series_length'     => '_seriesLength',
         'games_status'      => '_gamesStatus',
+        'hide_results'      => '_hideResults',
     ];
 
     protected function _getFieldsTransforms()
@@ -83,6 +84,7 @@ class EventPrimitive extends Primitive
             '_statHost'           => $this->_stringTransform(),
             '_seriesLength'       => $this->_integerTransform(),
             '_gamesStatus'        => $this->_stringTransform(true),
+            '_hideResults'        => $this->_integerTransform(),
             '_ruleset'            => [
                 'serialize' => function (Ruleset $rules) {
                     return $rules->title();
@@ -226,6 +228,11 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_seriesLength;
+    /**
+     * Should be rating table hidden or not
+     * @var integer
+     */
+    protected $_hideResults;
     /**
      * Status of games in event: one of
      * - seating_ready
@@ -770,6 +777,24 @@ class EventPrimitive extends Primitive
     public function setSeriesLength($seriesLength)
     {
         $this->_seriesLength = $seriesLength;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getHideResults()
+    {
+        return $this->_hideResults;
+    }
+
+    /**
+     * @param integer $hideResults
+     * @return EventPrimitive
+     */
+    public function setHideResults($hideResults)
+    {
+        $this->_hideResults = $hideResults;
         return $this;
     }
 
