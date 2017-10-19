@@ -50,13 +50,14 @@ class Timer extends Controller
         }
 
         return [
+            'waiting' => $this->_rules->gamesWaitingForTimer(),
             'redZoneLength' => $this->_rules->redZone() / 60,
             'yellowZoneLength' => $this->_rules->yellowZone() / 60,
             'redZone' => $this->_rules->timerPolicy() === 'redZone',
             'yellowZone' => $this->_rules->timerPolicy() === 'yellowZone',
             'gameDuration' => $this->_rules->gameDuration(), // already in minutes
             'gameDurationWithoutSeating' => $durationWithoutSeating,
-            'initialTime' => '00:00',
+            'initialTime' => $this->_rules->gamesWaitingForTimer() ? '99:99' : '00:00',
             'seating' => $currentSeating
         ];
     }

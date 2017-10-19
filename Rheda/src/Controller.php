@@ -163,7 +163,7 @@ abstract class Controller
     /**
      * @param $url
      * @return Controller
-     * @throws Exception
+     * @throws \Exception
      */
     public static function makeInstance($url)
     {
@@ -173,7 +173,7 @@ abstract class Controller
             : self::_multiEventMode($url, $routes);
 
         if (!$controller) {
-            throw new Exception('No available controller found for this URL');
+            throw new \Exception('No available controller found for this URL');
         }
 
         return $controller;
@@ -270,7 +270,7 @@ abstract class Controller
         list ($major, $minor) = explode('.', trim(str_replace('X-Api-Version: ', '', $header)));
 
         if (intval($major) !== Sysconf::API_VERSION_MAJOR) {
-            throw new Exception('API major version mismatch. Update your app or API instance!');
+            throw new \Exception('API major version mismatch. Update your app or API instance!');
         }
 
         if (intval($minor) > Sysconf::API_VERSION_MINOR && Sysconf::DEBUG_MODE) {

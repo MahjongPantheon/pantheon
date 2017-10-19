@@ -21,5 +21,10 @@ require_once __DIR__ . '/../config/sysconf.php';
 
 // Main entry point
 require_once __DIR__ . '/../src/Controller.php';
+if ($_SERVER['REQUEST_URI'] == '/favicon.ico') {
+    // Kludge ^_^ This should not be handled by php, nginx to the rescue on prod.
+    return '';
+}
+
 $controller = \Riichi\Controller::makeInstance($_SERVER['REQUEST_URI']);
 $controller->run();

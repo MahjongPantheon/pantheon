@@ -46,6 +46,7 @@ run: get_docker_id
 		echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as angular dev server."; \
 		echo "----------------------------------------------------------------------------------"; \
 		echo " ${GREEN}Run 'make logs' in separate console to view container logs on-line${NC} "; \
+		echo " ${GREEN}Run 'make php_logs' in separate console to view php logs on-line${NC} "; \
 		echo " ${YELLOW}Run 'make shell' in separate console to get into container shell${NC} "; \
 		echo "----------------------------------------------------------------------------------"; \
 		docker run \
@@ -89,7 +90,15 @@ seed: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Pantheon container is not running, can't run seeding.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user bin/phinx seed:run -e docker'; \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user bin/phinx seed:run -e docker -s ClubEventSeeder'; \
+	fi
+
+.PHONY: seed_tournament
+seed_tournament: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Pantheon container is not running, can't run seeding.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user bin/phinx seed:run -e docker -s TournamentSeeder'; \
 	fi
 
 .PHONY: logs
@@ -98,6 +107,14 @@ logs: get_docker_id
 		echo "${RED}Pantheon container is not running, can't view logs.${NC}"; \
 	else \
 		docker logs -f $(RUNNING_DOCKER_ID); \
+	fi
+
+.PHONY: php_logs
+php_logs: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Pantheon container is not running, can't view logs.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'tail -f /var/log/php-errors.log' ; \
 	fi
 
 .PHONY: shell
@@ -114,7 +131,7 @@ shell: get_docker_id
 empty_event:
 		@curl -s http://localhost:4001/ \
 		-H 'content-type: application/json' \
-		-d '{"jsonrpc": "2.0", "method": "createEvent", "params": ["Test offline", "description", "offline", "ema", 90, 1], "id": "5db41fc6-5947-423c-a2ca-6e7f7e6a45c0" }' \
+		-d '{"jsonrpc": "2.0", "method": "createEvent", "params": ["Test offline", "description", "offline", "ema", 90, "Europe/Moscow"], "id": "5db41fc6-5947-423c-a2ca-6e7f7e6a45c0" }' \
 		| php -r 'echo "New event: http://localhost:4002/eid" . json_decode(file_get_contents("php://stdin"))->result . PHP_EOL;'
 
 .PHONY: check
