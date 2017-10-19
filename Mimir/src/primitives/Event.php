@@ -56,6 +56,7 @@ class EventPrimitive extends Primitive
         'ruleset'           => '_ruleset',
         'timezone'          => '_timezone',
         'series_length'     => '_seriesLength',
+        'games_status'      => '_gamesStatus',
     ];
 
     protected function _getFieldsTransforms()
@@ -81,6 +82,7 @@ class EventPrimitive extends Primitive
             '_usePenalty'         => $this->_integerTransform(),
             '_statHost'           => $this->_stringTransform(),
             '_seriesLength'       => $this->_integerTransform(),
+            '_gamesStatus'        => $this->_stringTransform(true),
             '_ruleset'            => [
                 'serialize' => function (Ruleset $rules) {
                     return $rules->title();
@@ -224,6 +226,17 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_seriesLength;
+    /**
+     * Status of games in event: one of
+     * - seating_ready
+     * - started
+     * - NULL
+     * In club events without timer should be null
+     * @var string
+     */
+    protected $_gamesStatus = null;
+    const GS_SEATING_READY = 'seating_ready';
+    const GS_STARTED = 'started';
 
     public function __construct(IDb $db)
     {
@@ -700,6 +713,9 @@ class EventPrimitive extends Primitive
     public function setUseTimer($useTimer)
     {
         $this->_useTimer = $useTimer;
+        if (!$useTimer) { // disable timer?
+            $this->_gamesStatus = null;
+        }
         return $this;
     }
 
@@ -754,6 +770,31 @@ class EventPrimitive extends Primitive
     public function setSeriesLength($seriesLength)
     {
         $this->_seriesLength = $seriesLength;
+        return $this;
+    }
+
+    /**
+     * @return string | null
+     */
+    public function getGamesStatus()
+    {
+        return $this->_gamesStatus;
+    }
+
+    /**
+     * @param string $gamesStatus
+     * @throws InvalidParametersException
+     * @return EventPrimitive
+     */
+    public function setGamesStatus($gamesStatus)
+    {
+        if ($gamesStatus != self::GS_SEATING_READY &&
+            $gamesStatus != self::GS_STARTED &&
+            $gamesStatus !== null
+        ) {
+            throw new InvalidParametersException('Games status should be one of [seating_ready|started|NULL]');
+        }
+        $this->_gamesStatus = $gamesStatus;
         return $this;
     }
 }
