@@ -174,7 +174,11 @@ class StartTournament extends Controller
                 $errCode = '_TABLES_NOT_FULL';
             } else {
                 $timerState = $this->_api->execute('getTimerState', [$this->_eventId]);
-                if ($timerState['started'] || $unfinishedTablesCount !== 0) { // Check once after click on START
+                if ($timerState['started'] && $unfinishedTablesCount !== 0) { // Check once after click on START
+                    $errCode = '_GAMES_STARTED';
+                }
+                if ($unfinishedTablesCount === (count($players) / 4)) {
+                    // seating just done, timer not yet started, should show timer controls
                     $errCode = '_GAMES_STARTED';
                 }
             }
@@ -189,7 +193,9 @@ class StartTournament extends Controller
                 && empty($errCode)
                 && $this->_rules->autoSeating(),
             'seatingReady' => $this->_rules->gamesWaitingForTimer(),
-            'showTimerControls' => $this->_rules->syncStart() || (!empty($errCode) && $errCode === '_GAMES_STARTED'),
+            'showTimerControls' => $this->_rules->syncStart()
+                && !empty($errCode)
+                && $errCode === '_GAMES_STARTED',
             'reason' => $errCode ? $this->_errors[$errCode] : '',
             'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
             'tables' => $tablesFormatted,
