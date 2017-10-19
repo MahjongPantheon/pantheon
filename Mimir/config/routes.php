@@ -67,6 +67,7 @@ return [
     'enrollPlayerCP'     => ['EventsController', 'enrollPlayer'],
     'getAllEnrolled'     => ['EventsController', 'getAllEnrolledPlayers'],
     'getAchievements'    => ['EventsController', 'getAchievements'],
+    'toggleHideResults'  => ['EventsController', 'toggleHideResults'],
     'startGame'          => ['GamesController', 'start'],
     'endGame'            => ['GamesController', 'end'],
     'addTextLog'         => ['GamesController', 'addTextLog'],
