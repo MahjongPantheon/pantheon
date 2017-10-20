@@ -31,6 +31,9 @@ We needed a simple but stateful API for gaming assistance in aspects like:
 - For standalone installation, run `make deps` from current folder to install all runtime dependencies.
 - To configure your Mimir instance, see `config/index.php` file, you may want to alter that file, or to make use of
 local overrides, as described in the file.
+- Make sure you have created database and user for Mimir; if you migrated from other database, check that all tables
+are owned by your database user. This is required to run migrations. Creating tables in schema other than `public` is
+not supported (although may work somehow).
 - Run `bin/phinx migrate -e production` to create tables in your database. It requires some `PHINX_DBPROD_*` environment
 variables to be set, see phinx documentation and `phinx.yml` file for details.
 - PHP v5.6.x comes with `always_populate_raw_post_data = 0` in default php.ini, and this breaks JSON reply validity, 
