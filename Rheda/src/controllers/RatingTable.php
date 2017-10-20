@@ -137,7 +137,7 @@ class RatingTable extends Controller
 
     private function _makeShortName($name)
     {
-        list($surname, $name) = explode(' ', $name);
+        list($surname, $name) = explode(' ', $name . ' '); // Trailing slash will suppress errors with names without any space
         return $surname . ' ' . mb_substr($name, 0, 1, 'utf8') . '.';
     }
 }

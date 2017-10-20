@@ -51,6 +51,7 @@
         var seconds = parseInt(initialTime[1]) / 10;
         var redZone = '{{redZone}}' === '1';
         var yellowZone = '{{yellowZone}}' === '1';
+        var waiting = '{{waiting}}';
         var timer;
 
         $(function () {
@@ -113,6 +114,10 @@
         }
 
         function runTimer() {
+            if (waiting) {
+                return;
+            }
+
             if (seconds === 0) {
                 minutes--;
                 seconds = 6; // just in case
@@ -133,9 +138,11 @@
     }();
 </script>
 
-<div class="timer">
-    <span id="time">{{initialTime}}</span>
-</div>
+{{^waiting}}
+    <div class="timer">
+        <span id="time">{{initialTime}}</span>
+    </div>
+{{/waiting}}
 <div class="seating">
     <hr/>
     <h3>РАССАДКА</h3>

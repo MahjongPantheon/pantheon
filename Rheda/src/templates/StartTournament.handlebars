@@ -130,13 +130,11 @@
                 {{^last_round}}(ни одной раздачи не сыграно){{/last_round}}
                 {{#last_round}}
                     {{last_round}}
-                    {{#showControls}}
-                        {{#a
-                            href="/tourn/dropLastRound/{hash}/"
-                            class="cancellation"
-                            onclick="return window.confirm('Отменяем раздачу: {last_round}. Точно отменить раздачу? Назад дороги нет!')"
-                        }}Отменить последнюю внесенную раздачу{{/a}}
-                    {{/showControls}}
+                    {{#a
+                        href="/tourn/dropLastRound/{hash}/"
+                        class="cancellation"
+                        onclick="return window.confirm('Отменяем раздачу: {last_round}. Точно отменить раздачу? Назад дороги нет!')"
+                    }}Отменить последнюю внесенную раздачу{{/a}}
                 {{/last_round}}
             </td>
         </tr>

@@ -24,11 +24,14 @@ is displayed, try adding `sudo` before `make`._
 1. `make container` to build a pantheon container (this should be done every time Dockerfile is changed).
 2. `make run` to run the container and do all preparations inside of it (this should be done after each container shutdown).
 3. `make dev` to install dependencies for all projects, run database migrations and start all servers.
+4. Now you can use `make logs` and `make php_logs` to view all logs in real-time. Also you may use `make shell` to get
+to container shell, if you want to. Notice that killing php-fpm, postgres or nginx will ruin the container entirely.
+Use Dockerfile to alter their configuration.
 
 To create new empty event, run `make empty_event` - and you will be able to access event with printed link. Admin
 password for every generated empty event is `password`.
-To create an event and fill it with some data, run `make seed` (with `sudo` if required). Note: this command will
-perform a full cleanup of data!
+To create an event and fill it with some data, run `make seed` or `make seed_tournament` (with `sudo` if required). 
+Note: this command will perform a full cleanup of data!
 
 Default ports for services are:
 - 4001 for **Mimir** JSON RPC API
