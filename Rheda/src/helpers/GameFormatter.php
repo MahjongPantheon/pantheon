@@ -32,27 +32,24 @@ class GameFormatter
         $labelColorThreshold = $config->subtractStartPoints() ? 0 : $config->startPoints();
         $result = [];
         foreach ($gamesData['games'] as $gameId => $game) {
-            $players = array_map(
-                function ($finalScore, $playerId) use (&$gamesData, $labelColorThreshold) {
-
-                    return $this->_enrichWithInitials([
-                        'display_name' => $gamesData['players'][$playerId]['display_name'],
-                        'score' => number_format($finalScore['score'], 0, '.', ','),
-                        'label' => ($finalScore['rating_delta'] > $labelColorThreshold
-                            ? 'success'
-                            : ($finalScore['rating_delta'] < $labelColorThreshold
-                                ? 'important'
-                                : 'info'
-                            )
-                        ),
-                        'rating_delta' => ($finalScore['rating_delta'] > 0 ? '+' : '') .
-                            number_format($finalScore['rating_delta'], 1, '.', ','),
-                        'id' => $playerId
-                    ]);
-                },
-                array_values($game['final_results']),
-                array_keys($game['final_results'])
-            );
+            $players = [];
+            foreach ($game['players'] as $playerId) {
+                $finalScore = $game['final_results'][$playerId];
+                $players []= $this->_enrichWithInitials([
+                    'display_name' => $gamesData['players'][$playerId]['display_name'],
+                    'score' => number_format($finalScore['score'], 0, '.', ','),
+                    'label' => ($finalScore['rating_delta'] > $labelColorThreshold
+                        ? 'success'
+                        : ($finalScore['rating_delta'] < $labelColorThreshold
+                            ? 'important'
+                            : 'info'
+                        )
+                    ),
+                    'rating_delta' => ($finalScore['rating_delta'] > 0 ? '+' : '') .
+                        number_format($finalScore['rating_delta'], 1, '.', ','),
+                    'id' => $playerId
+                ]);
+            }
 
             $iterator = 0;
             $winds = ['東', '南', '西', '北'];
