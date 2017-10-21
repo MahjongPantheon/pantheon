@@ -148,6 +148,7 @@ class AchievementsPrimitive extends Primitive
             ->where('event_id', $eventId)
             ->where('han', 1)
             ->where('fu', 30)
+            ->whereRaw('dora is null')
             ->groupBy('winner_id')
             ->groupBy('display_name')
             ->orderByDesc('cnt')
