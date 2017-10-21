@@ -60,6 +60,8 @@ class RulesetTenhounet extends Ruleset
             3 => -5,
             4 => -15
         ],
+        'replacementPlayerFixedPoints' => false,
+        'replacementPlayerOverrideUma' => false
     ];
 
     public function allowedYaku()

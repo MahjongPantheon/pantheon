@@ -233,4 +233,14 @@ abstract class Ruleset
     {
         return static::$_ruleset['timerPolicy'];
     }
+
+    public function replacementPlayerFixedPoints()
+    {
+        return static::$_ruleset['replacementPlayerFixedPoints'];
+    }
+
+    public function replacementOverrideUma()
+    {
+        return static::$_ruleset['replacementPlayerOverrideUma'];
+    }
 }

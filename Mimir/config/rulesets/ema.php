@@ -48,7 +48,9 @@ class RulesetEma extends Ruleset
         'timerPolicy'           => 'yellowZone',
         'yellowZone'            => 900, // 15min
         'redZone'               => 0,
-        'withLeadingDealerGameOver' => false
+        'withLeadingDealerGameOver' => false,
+        'replacementPlayerFixedPoints' => -15000,
+        'replacementPlayerOverrideUma' => -15000
     ];
 
     public function allowedYaku()

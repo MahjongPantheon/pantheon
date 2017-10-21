@@ -32,17 +32,19 @@ class PlayerPrimitive extends Primitive
     protected static $_table = 'player';
 
     protected static $_fieldsMapping = [
-        'id'            => '_id',
-        'display_name'  => '_displayName',
-        'ident'         => '_ident',
-        'alias'         => '_alias',
-        'tenhou_id'     => '_tenhouId'
+        'id'             => '_id',
+        'display_name'   => '_displayName',
+        'ident'          => '_ident',
+        'alias'          => '_alias',
+        'tenhou_id'      => '_tenhouId',
+        'is_replacement' => '_isReplacement'
     ];
 
     protected function _getFieldsTransforms()
     {
         return [
             '_id' => $this->_integerTransform(true),
+            '_isReplacement' => $this->_integerTransform()
         ];
     }
 
@@ -71,6 +73,11 @@ class PlayerPrimitive extends Primitive
      * @var string
      */
     protected $_tenhouId;
+    /**
+     * Is player a substitution player
+     * @var int
+     */
+    protected $_isReplacement = 0;
 
     /**
      * Find players by local ids (primary key)
@@ -230,5 +237,23 @@ class PlayerPrimitive extends Primitive
     public function getTenhouId()
     {
         return $this->_tenhouId;
+    }
+
+    /**
+     * @param int $isRep
+     * @return $this
+     */
+    public function setIsReplacement($isRep)
+    {
+        $this->_isReplacement = $isRep;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsReplacement()
+    {
+        return $this->_isReplacement;
     }
 }
