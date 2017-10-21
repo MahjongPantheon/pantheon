@@ -99,7 +99,10 @@ class EventModel extends Model
             'braveSapper' => AchievementsPrimitive::getBraveSappers($this->_db, $eventId),
             'chomboMaster' => AchievementsPrimitive::getChomboMasters($this->_db, $eventId),
             'dovakin' => AchievementsPrimitive::getDovakins($this->_db, $eventId),
-            'yakuman' => AchievementsPrimitive::getYakumans($this->_db, $eventId)
+            'yakuman' => AchievementsPrimitive::getYakumans($this->_db, $eventId),
+            'shithander' => AchievementsPrimitive::getBestShithander($this->_db, $eventId),
+            'bestDealer' => AchievementsPrimitive::getBestDealer($this->_db, $eventId),
+            'bestFu' => AchievementsPrimitive::getMaxFuHand($this->_db, $eventId)
         ];
     }
 

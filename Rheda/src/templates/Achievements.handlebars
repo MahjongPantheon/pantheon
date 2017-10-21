@@ -39,6 +39,16 @@
                 </ul></td>
             </tr>
             <tr>
+                <td><b>Over 9000 fu</b></td>
+                <td style="width: 30%">Присуждается за сбор руки с самым большим числом фу/минипойнтов за турнир.</td>
+                <td>{{bestFuHandValue}} фу</td>
+                <td><ul>
+                    {{#bestFuHandPlayers}}
+                        <li>{{.}}</li>
+                    {{/bestFuHandPlayers}}
+                </ul></td>
+            </tr>
+            <tr>
                 <td><b>Задолбал!</b></td>
                 <td style="width: 30%">Присуждается за максимальное число цумо в рамках одного ханчана.</td>
                 <td>{{bestTsumoCount}}</td>
@@ -76,6 +86,26 @@
                     {{#dovakins}}
                         <li>{{name}}: {{count}} якухаев</li>
                     {{/dovakins}}
+                </ul></td>
+            </tr>
+            <tr>
+                <td><b>Восточный мастер</b></td>
+                <td style="width: 30%">Присуждается за максимальное число побед на дилере за весь турнир.</td>
+                <td>{{bestDealerRenchans}} ренчанов с агари</td>
+                <td><ul>
+                    {{#bestDealerPlayers}}
+                        <li>{{.}}</li>
+                    {{/bestDealerPlayers}}
+                </ul></td>
+            </tr>
+            <tr>
+                <td><b>Мистер Хэнки</b></td>
+                <td style="width: 30%">Присуждается за максимальное число побед стоимостью в 1/30.</td>
+                <td>{{shithandsCount}} самых быстрых косарей</td>
+                <td><ul>
+                    {{#shithanderPlayers}}
+                        <li>{{.}}</li>
+                    {{/shithanderPlayers}}
                 </ul></td>
             </tr>
             <tr>

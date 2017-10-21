@@ -21,10 +21,9 @@ require_once __DIR__ . '/../helpers/YakuMap.php';
 require_once __DIR__ . '/../Primitive.php';
 
 /**
- * Class MultiRoundPrimitive
- * Special case of round: multi-ron, contains multiple RoundPrimitives
+ * Class AchievementsPrimitive
+ * Should not be used in AR scenarios; all functions are static
  *
- * Low-level model with basic CRUD operations and relations
  * @package Riichi
  */
 class AchievementsPrimitive extends Primitive
@@ -50,6 +49,128 @@ class AchievementsPrimitive extends Primitive
     protected function _create()
     {
         // nothing
+    }
+
+    public static function getMaxFuHand(IDb $db, $eventId)
+    {
+        $rounds = $db->table('round')
+            ->select('fu')
+            ->select('winner_id')
+            ->select('display_name')
+            ->join('player', ['player.id', '=', 'round.winner_id'])
+            ->where('event_id', $eventId)
+            ->whereGt('fu', 0)
+            ->orderByDesc('fu')
+            ->limit(10)
+            ->findArray();
+
+        $maxFu = 0;
+        $names = [];
+        foreach ($rounds as $round) {
+            if ($maxFu === 0) {
+                $maxFu = $round['fu'];
+            }
+
+            if ($round['fu'] < $maxFu) {
+                continue;
+            }
+
+            $names []= $round['display_name'];
+        }
+
+        return [
+            'fu' => $maxFu,
+            'names' => array_unique($names)
+        ];
+    }
+
+    public static function getBestDealer(IDb $db, $eventId)
+    {
+        $rounds = $db->table('round')
+            ->select('winner_id')
+            ->select('round')
+            ->select('session_id')
+            ->where('event_id', $eventId)
+            ->whereIn('outcome', ['ron', 'tsumo'])
+            ->orderByAsc('session_id')
+            ->orderByAsc('id')
+            ->findArray();
+
+        $dealerWinnings = [];
+
+        for ($i = 1; $i < count($rounds); $i ++) {
+            $currentRound = $rounds[$i - 1];
+            $nextRound = $rounds[$i];
+
+            if (// renchan with agari
+                $nextRound['session_id'] == $currentRound['session_id'] &&
+                $nextRound['round'] == $currentRound['round']
+            ) {
+                if (!isset($dealerWinnings[$currentRound['winner_id']])) {
+                    $dealerWinnings[$currentRound['winner_id']] = 0;
+                }
+                $dealerWinnings[$currentRound['winner_id']] ++;
+            }
+        }
+
+        arsort($dealerWinnings);
+        $bestCount = reset($dealerWinnings);
+
+        $bestDealers = [];
+        foreach ($dealerWinnings as $id => $count) {
+            if ($count < $bestCount) {
+                continue;
+            }
+            $bestDealers []= $id;
+        }
+
+        $players = $db->table('player')
+            ->select('id')
+            ->select('display_name')
+            ->whereIdIn($bestDealers)
+            ->findArray();
+
+        return [
+            'names' => array_map(function ($p) {
+                return $p['display_name'];
+            }, $players),
+            'bestWinCount' => $bestCount
+        ];
+    }
+
+    public static function getBestShithander(IDb $db, $eventId)
+    {
+        $rounds = $db->table('round')
+            ->select('winner_id')
+            ->select('display_name')
+            ->selectExpr('count(*)', 'cnt')
+            ->join('player', ['player.id', '=', 'round.winner_id'])
+            ->where('event_id', $eventId)
+            ->where('han', 1)
+            ->where('fu', 30)
+            ->groupBy('winner_id')
+            ->groupBy('display_name')
+            ->orderByDesc('cnt')
+            ->limit(10)
+            ->findArray();
+        $maxHands = 0;
+        $names = [];
+        foreach ($rounds as $round) {
+            if ($maxHands === 0) {
+                $maxHands = $round['cnt'];
+            }
+
+            if ($round['cnt'] < $maxHands) {
+                continue;
+            }
+
+            $names []= $round['display_name'];
+        }
+
+        return [
+            'handsCount' => $maxHands,
+            'names' => $names
+        ];
     }
 
     public static function getBestHandOfEvent(IDb $db, $eventId)

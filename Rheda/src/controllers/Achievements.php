@@ -56,6 +56,12 @@ class Achievements extends Controller
             'chomboMasters' => $achievements['chomboMaster'], // Array<{ name: string, count: number }>
             'dovakins' => $dovakins,
             'yakumans' => $achievements['yakuman'], // string[]
+            'bestFuHandValue' => $achievements['bestFu']['fu'],
+            'bestFuHandPlayers' => $achievements['bestFu']['names'], // string[]
+            'bestDealerRenchans' => $achievements['bestDealer']['bestWinCount'],
+            'bestDealerPlayers' => $achievements['bestDealer']['names'], // string[]
+            'shithandsCount' => $achievements['shithander']['handsCount'],
+            'shithanderPlayers' => $achievements['shithander']['names'], // string[]
         ];
     }
 }
