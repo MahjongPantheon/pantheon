@@ -48,7 +48,9 @@ class RulesetJpmlA extends Ruleset
         'timerPolicy'           => 'redZone',
         'yellowZone'            => 0,
         'redZone'               => 300, // 5min
-        'withLeadingDealerGameOver' => false
+        'withLeadingDealerGameOver' => false,
+        'replacementPlayerFixedPoints' => false,
+        'replacementPlayerOverrideUma' => false
     ];
 
     public function allowedYaku()
