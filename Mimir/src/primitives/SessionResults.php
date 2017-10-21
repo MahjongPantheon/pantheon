@@ -418,12 +418,18 @@ class SessionResultsPrimitive extends Primitive
      */
     protected function _calcRatingDelta(Ruleset $rules, $allScores)
     {
+        $score = ($this->_player->getIsReplacement() && $rules->replacementPlayerFixedPoints() !== false)
+            ? $rules->replacementPlayerFixedPoints()
+            : $this->_score - ($rules->subtractStartPoints() ? $rules->startPoints() : 0);
+
+        $uma = ($this->_player->getIsReplacement() && $rules->replacementOverrideUma() !== false)
+            ? $rules->replacementOverrideUma()
+            : $rules->uma($allScores)[$this->_place];
+
         return (
-            (
-                $this->_score - ($rules->subtractStartPoints() ? $rules->startPoints() : 0)
-            ) / (float)$rules->tenboDivider()
+            $score / (float)$rules->tenboDivider()
             + $rules->oka($this->_place)
-            + $rules->uma($allScores)[$this->_place]
+            + $uma
         ) / (float)$rules->ratingDivider();
     }
 }
