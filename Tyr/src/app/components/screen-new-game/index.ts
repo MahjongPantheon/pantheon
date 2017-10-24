@@ -23,6 +23,7 @@ import { AppState } from '../../primitives/appstate';
 import { RiichiApiService } from '../../services/riichiApi';
 import { LUser } from '../../interfaces/local';
 import { rand } from '../../helpers/rand';
+import { toNumber, map, uniq } from 'lodash';
 
 const defaultPlayer: LUser = {
   displayName: '--- ? ---',
@@ -68,21 +69,19 @@ export class NewGameScreen {
   }
 
   playersValid(): boolean {
-    if (!this.toimen || !this.shimocha || !this.kamicha || !this.self) {
+    let playerIndices = [this.self, this.shimocha, this.toimen, this.kamicha];
+
+    // we had to convert ids to the int
+    // to be able properly validate selected players
+    playerIndices = map(playerIndices, (id) => toNumber(id));
+
+    // all players should be initialized
+    // player with index=0 is not initialized player
+    if (playerIndices.indexOf(0) != -1) {
       return false;
     }
 
-    if (this.toimen === this.kamicha
-      || this.toimen === this.shimocha
-      || this.toimen === this.self
-      || this.kamicha === this.shimocha
-      || this.kamicha === this.self
-      || this.shimocha === this.self
-    ) {
-      return false;
-    }
-
-    return true;
+    return uniq(playerIndices).length == 4;
   }
 
   /**
