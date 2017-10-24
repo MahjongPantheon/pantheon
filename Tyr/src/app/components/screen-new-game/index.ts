@@ -91,10 +91,7 @@ export class NewGameScreen {
    * randomize seating
    */
   randomize() {
-    let randomized = rand([
-      this.toimen, this.kamicha,
-      this.self, this.shimocha
-    ]);
+    let randomized = rand(this._selectedPlayerIds());
 
     this.toimen = randomized[0];
     this.kamicha = randomized[1];
@@ -128,12 +125,7 @@ export class NewGameScreen {
     }
 
     this._loading = true;
-    this.api.startGame([
-      this.self,
-      this.shimocha,
-      this.toimen,
-      this.kamicha
-    ]).then(() => {
+    this.api.startGame(this._selectedPlayerIds()).then(() => {
       this.state._reset();
       this.state.updateCurrentGames();
     });
