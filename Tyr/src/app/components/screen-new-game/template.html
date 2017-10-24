@@ -25,11 +25,11 @@
     <div class="edge-block"><!-- some free space --></div>
     <div class="toimen side">
       <div class="wind">西</div>
-      <div class="player-replacer">{{players[toimen].displayName}}</div>
-      <select class="player-selector" [(ngModel)]="toimen">
+      <div class="player-replacer">{{findById(toimen).displayName}}</div>
+      <select class="player-selector" [(ngModel)]="toimen" (change)="afterSelect()">
         <option
-          *ngFor="let player of players; let i=index"
-          [value]="i"
+          *ngFor="let player of availablePlayers; let i=index"
+          [value]="player.id"
         >{{player.displayName}}</option>
       </select>
     </div>
@@ -44,21 +44,21 @@
   <div class="ka-shi">
     <div class="kamicha side">
       <div class="wind">北</div>
-      <div class="player-replacer">{{players[kamicha].displayName}}</div>
-      <select class="player-selector" [(ngModel)]="kamicha">
+      <div class="player-replacer">{{findById(kamicha).displayName}}</div>
+      <select class="player-selector" [(ngModel)]="kamicha" (change)="afterSelect()">
         <option
-          *ngFor="let player of players; let i=index"
-          [value]="i"
+          *ngFor="let player of availablePlayers; let i=index"
+          [value]="player.id"
         >{{player.displayName}}</option>
       </select>
     </div>
     <div class="shimocha side">
       <div class="wind">南</div>
-      <div class="player-replacer">{{players[shimocha].displayName}}</div>
-      <select class="player-selector" [(ngModel)]="shimocha">
+      <div class="player-replacer">{{findById(shimocha).displayName}}</div>
+      <select class="player-selector" [(ngModel)]="shimocha" (change)="afterSelect()">
         <option
-          *ngFor="let player of players; let i=index"
-          [value]="i"
+          *ngFor="let player of availablePlayers; let i=index"
+          [value]="player.id"
         >{{player.displayName}}</option>
       </select>
     </div>
@@ -67,11 +67,11 @@
     <div class="edge-block"><!-- some free space --></div>
     <div class="my side">
       <div class="wind">東</div>
-      <div class="player-replacer">{{players[self].displayName}}</div>
-      <select class="player-selector" [(ngModel)]="self">
+      <div class="player-replacer">{{findById(self).displayName}}</div>
+      <select class="player-selector" [(ngModel)]="self" (change)="afterSelect()">
         <option
-          *ngFor="let player of players; let i=index"
-          [value]="i"
+          *ngFor="let player of availablePlayers; let i=index"
+          [value]="player.id"
         >{{player.displayName}}</option>
       </select>
     </div>
