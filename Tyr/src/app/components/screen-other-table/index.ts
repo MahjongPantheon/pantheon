@@ -269,10 +269,10 @@ export class OtherTableScreen {
     return yakuNames.join(', ');
   }
 
-  private _getPlayerName(player_id: number): string {
+  private _getPlayerName(playerId: number): string {
     let players = this.players;
     for (let i in players) {
-      if (players[i].id == player_id) {
+      if (players[i].id == playerId) {
         return players[i].displayName;
       }
     }

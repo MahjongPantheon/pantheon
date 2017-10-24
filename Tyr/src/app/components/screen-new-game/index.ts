@@ -23,13 +23,13 @@ import { AppState } from '../../primitives/appstate';
 import { RiichiApiService } from '../../services/riichiApi';
 import { LUser } from '../../interfaces/local';
 import { rand } from '../../helpers/rand';
-import { toNumber, map, uniq, clone, find, remove } from 'lodash';
+import { toNumber, uniq, clone, find, remove } from 'lodash';
 
-const defaultId = -1;
+const DEFAULT_ID = -1;
 
 const defaultPlayer: LUser = {
   displayName: '--- ? ---',
-  id: defaultId,
+  id: DEFAULT_ID,
   tenhouId: null,
   ident: null,
   alias: null
@@ -46,10 +46,10 @@ export class NewGameScreen {
   public _loading: boolean = false;
 
   // These are indexes in _players array
-  toimen: number = defaultId;
-  shimocha: number = defaultId;
-  kamicha: number = defaultId;
-  self: number = defaultId; // Self is always considered east!
+  toimen: number = DEFAULT_ID;
+  shimocha: number = DEFAULT_ID;
+  kamicha: number = DEFAULT_ID;
+  self: number = DEFAULT_ID; // Self is always considered east!
 
   players: LUser[] = [defaultPlayer];
   availablePlayers: LUser[] = [];
@@ -70,8 +70,7 @@ export class NewGameScreen {
           })
         );
 
-        this.availablePlayers = map(this.players, clone);
-
+        this.availablePlayers = clone(this.players);
         this._selectCurrentPlayer();
       });
   }
@@ -80,7 +79,7 @@ export class NewGameScreen {
     let playerIds = this._selectedPlayerIds();
 
     // all players should have initialized ids
-    if (playerIds.indexOf(defaultId) != -1) {
+    if (playerIds.indexOf(DEFAULT_ID) != -1) {
       return false;
     }
 
@@ -105,10 +104,10 @@ export class NewGameScreen {
 
   afterSelect() {
     let playerIds = this._selectedPlayerIds();
-    remove(playerIds, (id) => id == defaultId);
+    remove(playerIds, (id) => id == DEFAULT_ID);
 
     // don't display already selected players
-    this.availablePlayers = map(this.players, clone);
+    this.availablePlayers = clone(this.players);
     for (let playerId of playerIds) {
       remove(this.availablePlayers, {id: playerId})
     }
@@ -140,12 +139,15 @@ export class NewGameScreen {
     });
   }
 
-  private _selectedPlayerIds() {
-    let playerIds = [this.self, this.shimocha, this.toimen, this.kamicha];
+  private _selectedPlayerIds(): number[] {
     // we had to convert ids to the int
     // to be able properly validate selected players
-    playerIds = map(playerIds, (id) => toNumber(id));
-    return playerIds;
+    return [
+      toNumber(this.self),
+      toNumber(this.shimocha),
+      toNumber(this.toimen),
+      toNumber(this.kamicha)
+    ];
   }
 
   private _selectCurrentPlayer() {
