@@ -50,8 +50,12 @@ export class NewGameScreen {
 
   players: LUser[] = [defaultPlayer];
   ngOnInit() {
+    this._loading = true;
+
     this.api.getAllPlayers()
       .then((players) => {
+        this._loading = false;
+
         this.players = [defaultPlayer].concat(
           players.sort((a, b) => {
             if (a == b) {
