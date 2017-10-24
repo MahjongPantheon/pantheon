@@ -71,6 +71,8 @@ export class NewGameScreen {
         );
 
         this.availablePlayers = map(this.players, clone);
+
+        this._selectCurrentPlayer();
       });
   }
 
@@ -117,6 +119,10 @@ export class NewGameScreen {
     return find(this.players, {id: playerId});
   }
 
+  disableSelect(value) {
+    return value == this.state.getCurrentPlayerId();
+  }
+
   startGame() {
     if (!this.playersValid()) {
       return;
@@ -134,12 +140,17 @@ export class NewGameScreen {
     });
   }
 
-  _selectedPlayerIds() {
+  private _selectedPlayerIds() {
     let playerIds = [this.self, this.shimocha, this.toimen, this.kamicha];
     // we had to convert ids to the int
     // to be able properly validate selected players
     playerIds = map(playerIds, (id) => toNumber(id));
     return playerIds;
+  }
+
+  private _selectCurrentPlayer() {
+    this.self = this.state.getCurrentPlayerId();
+    this.afterSelect();
   }
 }
 
