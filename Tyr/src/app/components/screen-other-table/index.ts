@@ -269,16 +269,14 @@ export class OtherTableScreen {
     return yakuNames.join(', ');
   }
 
-  private _getPlayerName(player) {
-    return this.players.reduce((acc, curr) => {
-      if (acc) {
-        return acc;
+  private _getPlayerName(playerId: number): string {
+    let players = this.players;
+    for (let i in players) {
+      if (players[i].id == playerId) {
+        return players[i].displayName;
       }
-
-      if (curr.id === player) {
-        return curr.displayName;
-      }
-    }, null);
+    }
+    return '';
   }
 
   private _getLoserName() {

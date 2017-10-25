@@ -60,7 +60,7 @@ export class LastRoundScreen {
       case 'ron':
       case 'tsumo':
         return [{
-          winner: this._getWinnerName(this._data.winner),
+          winner: this._getPlayerName(this._data.winner),
           yakuList: this._getYakuList(this._data.yaku),
           han: this._data.han,
           fu: this._data.fu,
@@ -70,7 +70,7 @@ export class LastRoundScreen {
         let wins = [];
         for (let idx in this._data.winner) {
           wins.push({
-            winner: this._getWinnerName(this._data.winner[idx]),
+            winner: this._getPlayerName(this._data.winner[idx]),
             yakuList: this._getYakuList(this._data.yaku[idx]),
             han: this._data.han[idx],
             fu: this._data.fu[idx],
@@ -98,16 +98,14 @@ export class LastRoundScreen {
     return yakuNames.join(', ');
   }
 
-  private _getWinnerName(winner) {
-    return this.state.getPlayers().reduce((acc, curr) => {
-      if (acc) {
-        return acc;
+  private _getPlayerName(playerId: number): string {
+    let players = this.state.getPlayers();
+    for (let i in players) {
+      if (players[i].id == playerId) {
+        return players[i].displayName;
       }
-
-      if (curr.id === winner) {
-        return curr.displayName;
-      }
-    }, null);
+    }
+    return '';
   }
 
   onerror(e) {
