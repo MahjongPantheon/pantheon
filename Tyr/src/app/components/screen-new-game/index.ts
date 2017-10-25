@@ -23,10 +23,13 @@ import { AppState } from '../../primitives/appstate';
 import { RiichiApiService } from '../../services/riichiApi';
 import { LUser } from '../../interfaces/local';
 import { rand } from '../../helpers/rand';
+import { toNumber, uniq, clone, find, remove } from 'lodash';
+
+const DEFAULT_ID = -1;
 
 const defaultPlayer: LUser = {
   displayName: '--- ? ---',
-  id: -1,
+  id: DEFAULT_ID,
   tenhouId: null,
   ident: null,
   alias: null
@@ -43,15 +46,21 @@ export class NewGameScreen {
   public _loading: boolean = false;
 
   // These are indexes in _players array
-  toimen: number = 0;
-  shimocha: number = 0;
-  kamicha: number = 0;
-  self: number = 0; // Self is always considered east!
+  toimen: number = DEFAULT_ID;
+  shimocha: number = DEFAULT_ID;
+  kamicha: number = DEFAULT_ID;
+  self: number = DEFAULT_ID; // Self is always considered east!
 
   players: LUser[] = [defaultPlayer];
+  availablePlayers: LUser[] = [];
+
   ngOnInit() {
+    this._loading = true;
+
     this.api.getAllPlayers()
       .then((players) => {
+        this._loading = false;
+
         this.players = [defaultPlayer].concat(
           players.sort((a, b) => {
             if (a == b) {
@@ -60,40 +69,54 @@ export class NewGameScreen {
             return (a.displayName < b.displayName ? -1 : 1);
           })
         );
+
+        this.availablePlayers = clone(this.players);
+        this._selectCurrentPlayer();
       });
   }
 
   playersValid(): boolean {
-    if (!this.toimen || !this.shimocha || !this.kamicha || !this.self) {
+    let playerIds = this._selectedPlayerIds();
+
+    // all players should have initialized ids
+    if (playerIds.indexOf(DEFAULT_ID) != -1) {
       return false;
     }
 
-    if (this.toimen === this.kamicha
-      || this.toimen === this.shimocha
-      || this.toimen === this.self
-      || this.kamicha === this.shimocha
-      || this.kamicha === this.self
-      || this.shimocha === this.self
-    ) {
-      return false;
-    }
-
-    return true;
+    // all players should be unique
+    return uniq(playerIds).length == 4;
   }
 
   /**
    * randomize seating
    */
   randomize() {
-    let randomized = rand([
-      this.toimen, this.kamicha,
-      this.self, this.shimocha
-    ]);
+    let randomized = rand(this._selectedPlayerIds());
 
     this.toimen = randomized[0];
     this.kamicha = randomized[1];
     this.self = randomized[2];
     this.shimocha = randomized[3];
+  }
+
+  afterSelect() {
+    let playerIds = this._selectedPlayerIds();
+    remove(playerIds, (id) => id == DEFAULT_ID);
+
+    // don't display already selected players
+    this.availablePlayers = clone(this.players);
+    for (let playerId of playerIds) {
+      remove(this.availablePlayers, {id: playerId})
+    }
+  }
+
+  findById(playerId) {
+    playerId = toNumber(playerId);
+    return find(this.players, {id: playerId});
+  }
+
+  disableSelect(value) {
+    return value == this.state.getCurrentPlayerId();
   }
 
   startGame() {
@@ -102,15 +125,26 @@ export class NewGameScreen {
     }
 
     this._loading = true;
-    this.api.startGame([
-      this.players[this.self].id,
-      this.players[this.shimocha].id,
-      this.players[this.toimen].id,
-      this.players[this.kamicha].id
-    ]).then(() => {
+    this.api.startGame(this._selectedPlayerIds()).then(() => {
       this.state._reset();
       this.state.updateCurrentGames();
     });
+  }
+
+  private _selectedPlayerIds(): number[] {
+    // we had to convert ids to the int
+    // to be able properly validate selected players
+    return [
+      toNumber(this.self),
+      toNumber(this.shimocha),
+      toNumber(this.toimen),
+      toNumber(this.kamicha)
+    ];
+  }
+
+  private _selectCurrentPlayer() {
+    this.self = this.state.getCurrentPlayerId();
+    this.afterSelect();
   }
 }
 
