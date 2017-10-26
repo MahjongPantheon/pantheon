@@ -5,7 +5,9 @@
 Pantheon project consists of some submodules, each of those might be installed standalone (see instructions in folder 
 of each submodule). To quickly run Pantheon locally using Docker, read further.
 
-Please use our [Bug tracker](https://pantheon.myjetbrains.com/youtrack/issues/PANTHEON) for error reports and feature requests.
+Join our [Gitter chat](https://gitter.im/MahjongPantheon/Lobby) for news, announcements and developer conversations.
+
+Also use our [Bug tracker](https://pantheon.myjetbrains.com/youtrack/issues/PANTHEON) for error reports and feature requests.
 
 ### Preparations
 
