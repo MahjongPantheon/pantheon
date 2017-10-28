@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 class PointsCalc
 {
@@ -320,6 +320,8 @@ class PointsCalc
     /**
      * @param $rounds RoundPrimitive[]
      * @param $loserId int
+     * @param $riichiBets int
+     * @param $honba int
      * @param $session SessionPrimitive
      * @return array
      * @throws InvalidParametersException

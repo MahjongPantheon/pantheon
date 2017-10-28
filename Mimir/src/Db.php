@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 use \Idiorm\ORM;
 
@@ -25,7 +25,7 @@ require_once __DIR__ . '/../src/Config.php';
 
 /**
  * Class Db
- * @package Riichi
+ * @package Mimir
  *
  * Simple wrapper around IdiORM to encapsulate it's configuration
  */

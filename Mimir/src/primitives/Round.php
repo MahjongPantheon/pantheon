@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/Player.php';
 require_once __DIR__ . '/Session.php';
@@ -27,7 +27,7 @@ require_once __DIR__ . '/../validators/Round.php';
  * Class EventPrimitive
  *
  * Low-level model with basic CRUD operations and relations
- * @package Riichi
+ * @package Mimir
  */
 class RoundPrimitive extends Primitive
 {
@@ -357,7 +357,7 @@ class RoundPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\EventPrimitive
+     * @return \Mimir\EventPrimitive
      */
     public function getEvent()
     {
@@ -457,7 +457,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @param \Riichi\PlayerPrimitive $loser
+     * @param \Mimir\PlayerPrimitive $loser
      * @return RoundPrimitive
      */
     public function setLoser(PlayerPrimitive $loser)
@@ -469,7 +469,7 @@ class RoundPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\PlayerPrimitive
+     * @return \Mimir\PlayerPrimitive
      */
     public function getLoser()
     {
@@ -536,7 +536,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @param \Riichi\PlayerPrimitive[] $riichiUsers
+     * @param \Mimir\PlayerPrimitive[] $riichiUsers
      * @return RoundPrimitive
      */
     public function setRiichiUsers($riichiUsers)
@@ -550,7 +550,7 @@ class RoundPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\PlayerPrimitive[]
+     * @return \Mimir\PlayerPrimitive[]
      */
     public function getRiichiUsers()
     {
@@ -586,7 +586,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @param \Riichi\SessionPrimitive $session
+     * @param \Mimir\SessionPrimitive $session
      * @return RoundPrimitive
      */
     public function setSession(SessionPrimitive $session)
@@ -599,7 +599,7 @@ class RoundPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\SessionPrimitive
+     * @return \Mimir\SessionPrimitive
      */
     public function getSession()
     {
@@ -633,7 +633,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @param \Riichi\PlayerPrimitive[] $tempaiUsers
+     * @param \Mimir\PlayerPrimitive[] $tempaiUsers
      * @return RoundPrimitive
      */
     public function setTempaiUsers($tempaiUsers)
@@ -647,7 +647,7 @@ class RoundPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\PlayerPrimitive[]
+     * @return \Mimir\PlayerPrimitive[]
      */
     public function getTempaiUsers()
     {
@@ -683,7 +683,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @param \Riichi\PlayerPrimitive $winner
+     * @param \Mimir\PlayerPrimitive $winner
      * @return RoundPrimitive
      */
     public function setWinner(PlayerPrimitive $winner)
@@ -695,7 +695,7 @@ class RoundPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\PlayerPrimitive
+     * @return \Mimir\PlayerPrimitive
      */
     public function getWinner()
     {

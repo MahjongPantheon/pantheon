@@ -26,5 +26,5 @@ if ($_SERVER['REQUEST_URI'] == '/favicon.ico') {
     return '';
 }
 
-$controller = \Riichi\Controller::makeInstance($_SERVER['REQUEST_URI']);
+$controller = \Rheda\Controller::makeInstance($_SERVER['REQUEST_URI']);
 $controller->run();

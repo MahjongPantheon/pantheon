@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../YakuMap.php';
 require_once __DIR__ . '/Token.php';
@@ -207,7 +207,7 @@ class Tokenizer
         $matches = [];
         foreach (self::_getRegexps() as $name => $re) {
             if (preg_match($re, $token, $matches)) {
-                return [constant('Riichi\Tokenizer::' . $name), $matches];
+                return [constant('Mimir\Tokenizer::' . $name), $matches];
             }
         }
 

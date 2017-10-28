@@ -35,9 +35,9 @@ class TournamentSeeder extends AbstractSeed
         echo '-----------------------------------------------------------------' . PHP_EOL;
     }
 
-    protected function _seedEvent(\Riichi\Db $db)
+    protected function _seedEvent(\Mimir\Db $db)
     {
-        $event = (new \Riichi\EventPrimitive($db))
+        $event = (new \Mimir\EventPrimitive($db))
             ->setTitle('title')
             ->setDescription('desc')
             ->setType('offline')
@@ -48,33 +48,33 @@ class TournamentSeeder extends AbstractSeed
             ->setUsePenalty(1)
             ->setUseTimer(1)
             ->setGameDuration(20)
-            ->setRuleset(\Riichi\Ruleset::instance('ema'));
+            ->setRuleset(\Mimir\Ruleset::instance('ema'));
         $event->save();
         return $event;
     }
 
-    protected function _seedPlayers(\Riichi\Db $db, \Riichi\EventPrimitive $event)
+    protected function _seedPlayers(\Mimir\Db $db, \Mimir\EventPrimitive $event)
     {
         $playerNames = array_filter(preg_split('#\s#is', file_get_contents(__DIR__ . '/../../tests/models/testdata/players.txt')));
         array_map(function ($id) use ($db, $event) {
-            $p = (new \Riichi\PlayerPrimitive($db))
+            $p = (new \Mimir\PlayerPrimitive($db))
                 ->setDisplayName($id)
                 ->setAlias($id)
                 ->setIdent($id)
                 ->setTenhouId($id);
             $p->save();
-            (new \Riichi\PlayerRegistrationPrimitive($db))
+            (new \Mimir\PlayerRegistrationPrimitive($db))
                 ->setReg($p, $event)
                 ->save();
             return $p;
         }, $playerNames);
     }
 
-    protected function _seedGames(\Riichi\Db $db, \Riichi\Config $config, \Riichi\EventPrimitive $event)
+    protected function _seedGames(\Mimir\Db $db, \Mimir\Config $config, \Mimir\EventPrimitive $event)
     {
         $games = explode("\n\n\n", file_get_contents(__DIR__ . '/../../tests/models/testdata/games.txt'));
-        $meta = new \Riichi\Meta($_SERVER);
-        $model = new \Riichi\TextmodeSessionModel($db, $config, $meta);
+        $meta = new \Mimir\Meta($_SERVER);
+        $model = new \Mimir\TextmodeSessionModel($db, $config, $meta);
 
         foreach ($games as $log) {
             $model->addGame($event->getId(), $log);
@@ -83,7 +83,7 @@ class TournamentSeeder extends AbstractSeed
 
     protected function _getConnection()
     {
-        $cfg = new \Riichi\Config([
+        $cfg = new \Mimir\Config([
             'db' => [
                 'connection_string' => 'pgsql:host=localhost;port=' . $_SERVER['PHINX_DB_PORT']
                                        . 'dbname=' . $_SERVER['PHINX_DB_NAME'],
@@ -105,6 +105,6 @@ class TournamentSeeder extends AbstractSeed
             ]
         ]);
 
-        return [new \Riichi\Db($cfg), $cfg];
+        return [new \Mimir\Db($cfg), $cfg];
     }
 }

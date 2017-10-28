@@ -15,9 +15,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
-use Monolog\Logger;
 use Idiorm\ORM;
 
 define('EXTERNAL_RELATION_MARKER', '::');

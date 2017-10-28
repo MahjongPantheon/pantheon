@@ -1,5 +1,5 @@
 <?php
-namespace Riichi;
+namespace Rheda;
 
 class Config
 {

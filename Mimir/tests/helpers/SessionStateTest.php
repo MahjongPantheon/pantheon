@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../../src/helpers/SessionState.php';
 require_once __DIR__ . '/../../src/primitives/Round.php';
@@ -355,7 +355,7 @@ class SessionStateTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\InvalidParametersException
+     * @expectedException \Mimir\InvalidParametersException
      */
     public function testAbortWhenNotAllowed()
     {

@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../helpers/YakuMap.php';
 require_once __DIR__ . '/../Primitive.php';
@@ -24,7 +24,7 @@ require_once __DIR__ . '/../Primitive.php';
  * Class AchievementsPrimitive
  * Should not be used in AR scenarios; all functions are static
  *
- * @package Riichi
+ * @package Mimir
  */
 class AchievementsPrimitive extends Primitive
 {

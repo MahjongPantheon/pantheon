@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../Primitive.php';
 require_once __DIR__ . '/PlayerRegistration.php';
@@ -25,7 +25,7 @@ require_once __DIR__ . '/../Ruleset.php';
  * Class EventPrimitive
  *
  * Low-level model with basic CRUD operations and relations
- * @package Riichi
+ * @package Mimir
  */
 class EventPrimitive extends Primitive
 {
@@ -449,7 +449,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param null|\Riichi\FormationPrimitive $ownerFormation
+     * @param null|\Mimir\FormationPrimitive $ownerFormation
      * @return EventPrimitive
      */
     public function setOwnerFormation(FormationPrimitive $ownerFormation)
@@ -461,7 +461,7 @@ class EventPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return null|\Riichi\FormationPrimitive
+     * @return null|\Mimir\FormationPrimitive
      */
     public function getOwnerFormation()
     {
@@ -484,7 +484,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param null|\Riichi\PlayerPrimitive $ownerPlayer
+     * @param null|\Mimir\PlayerPrimitive $ownerPlayer
      * @return EventPrimitive
      */
     public function setOwnerPlayer(PlayerPrimitive $ownerPlayer)
@@ -496,7 +496,7 @@ class EventPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return null|\Riichi\PlayerPrimitive
+     * @return null|\Mimir\PlayerPrimitive
      */
     public function getOwnerPlayer()
     {
