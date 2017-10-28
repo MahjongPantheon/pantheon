@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/PointsCalc.php';
 
@@ -23,7 +23,7 @@ require_once __DIR__ . '/PointsCalc.php';
  * Class SessionState
  *
  * Low-level model helper
- * @package Riichi
+ * @package Mimir
  */
 class SessionState
 {
@@ -305,7 +305,7 @@ class SessionState
                 $payments = $this->_updateAfterChombo($round);
                 break;
             default:
-                ;
+                throw new InvalidParametersException('wrong outcome passed');
         }
 
         $this->_roundJustChanged = ($lastRoundIndex != $this->getRound());

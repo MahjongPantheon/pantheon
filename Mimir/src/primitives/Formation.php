@@ -15,9 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
-
-use \Idiorm\ORM;
+namespace Mimir;
 
 require_once __DIR__ . '/../Primitive.php';
 
@@ -26,7 +24,7 @@ require_once __DIR__ . '/../Primitive.php';
  *
  * Represents any organisation, club, association of players, etc
  * Low-level model with basic CRUD operations and relations
- * @package Riichi
+ * @package Mimir
  */
 class FormationPrimitive extends Primitive
 {
@@ -149,7 +147,7 @@ class FormationPrimitive extends Primitive
     }
 
     /**
-     * @param null|\Riichi\PlayerPrimitive $owner
+     * @param null|\Mimir\PlayerPrimitive $owner
      * @return FormationPrimitive
      */
     public function setPrimaryOwner($owner)
@@ -161,7 +159,7 @@ class FormationPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return null|\Riichi\PlayerPrimitive
+     * @return null|\Mimir\PlayerPrimitive
      */
     public function getPrimaryOwner()
     {

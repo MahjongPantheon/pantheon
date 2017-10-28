@@ -15,9 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
-
-use \Idiorm\ORM;
+namespace Mimir;
 
 require_once __DIR__ . '/../Primitive.php';
 
@@ -25,7 +23,7 @@ require_once __DIR__ . '/../Primitive.php';
  * Class PlayerPrimitive
  *
  * Low-level model with basic CRUD operations and relations
- * @package Riichi
+ * @package Mimir
  */
 class PlayerHistoryPrimitive extends Primitive
 {
@@ -204,7 +202,7 @@ class PlayerHistoryPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\EventPrimitive
+     * @return \Mimir\EventPrimitive
      */
     public function getEvent()
     {
@@ -225,7 +223,7 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
-     * @param \Riichi\PlayerPrimitive $player
+     * @param \Mimir\PlayerPrimitive $player
      * @return PlayerHistoryPrimitive
      */
     public function setPlayer(PlayerPrimitive $player)
@@ -237,7 +235,7 @@ class PlayerHistoryPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\PlayerPrimitive
+     * @return \Mimir\PlayerPrimitive
      */
     public function getPlayer()
     {
@@ -372,7 +370,7 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
-     * @param \Riichi\SessionPrimitive $session
+     * @param \Mimir\SessionPrimitive $session
      * @return PlayerHistoryPrimitive
      */
     public function setSession(SessionPrimitive $session)
@@ -385,7 +383,7 @@ class PlayerHistoryPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\SessionPrimitive
+     * @return \Mimir\SessionPrimitive
      */
     public function getSession()
     {

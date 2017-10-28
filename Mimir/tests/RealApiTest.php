@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../src/Db.php';
 require_once __DIR__ . '/../src/primitives/Event.php';
@@ -24,7 +24,7 @@ use JsonRPC\Client;
 
 /**
  * Class RealApiTest: integration test suite
- * @package Riichi
+ * @package Mimir
  */
 class RealApiTest extends \PHPUnit_Framework_TestCase
 {

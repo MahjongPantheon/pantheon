@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../../../src/helpers/textLog/Parser.php';
 require_once __DIR__ . '/../../../src/primitives/PlayerRegistration.php';
@@ -24,7 +24,7 @@ require_once __DIR__ . '/../../../src/primitives/PlayerRegistration.php';
  * Log parser integration test suite
  *
  * Class TextlogParserTest
- * @package Riichi
+ * @package Mimir
  */
 class TextlogParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -153,7 +153,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionCode 100
      */
     public function testInvalidHeader()
@@ -163,7 +163,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionCode 101
      */
     public function testMistypedUserHeader()
@@ -173,7 +173,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionCode 106
      */
     public function testInvalidOutcome()
@@ -308,7 +308,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\TokenizerException
+     * @expectedException \Mimir\TokenizerException
      * @expectedExceptionCode 108
      */
     public function testInvalidRonNoLoser()
@@ -321,7 +321,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionCode 104
      */
     public function testInvalidRonMistypedWinner()
@@ -334,7 +334,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionCode 105
      */
     public function testInvalidRonMistypedLoser()
@@ -347,7 +347,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionCode 107
      */
     public function testInvalidRonMistypedRiichi()
@@ -360,7 +360,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\TokenizerException
+     * @expectedException \Mimir\TokenizerException
      * @expectedExceptionCode 108
      */
     public function testInvalidRonWrongRiichi()
@@ -433,7 +433,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionCode 104
      */
     public function testInvalidTsumoMistypedWinner()
@@ -446,7 +446,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionCode 107
      */
     public function testInvalidTsumoMistypedRiichi()
@@ -459,7 +459,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\TokenizerException
+     * @expectedException \Mimir\TokenizerException
      * @expectedExceptionCode 108
      */
     public function testInvalidTsumoWrongRiichi()
@@ -567,7 +567,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\TokenizerException
+     * @expectedException \Mimir\TokenizerException
      * @expectedExceptionCode 108
      */
     public function testInvalidDrawNoTempaiList()
@@ -580,7 +580,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionCode 117
      */
     public function testInvalidDrawMistypedTempai()
@@ -593,7 +593,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionCode 107
      */
     public function testInvalidDrawMistypedRiichi()
@@ -606,7 +606,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\TokenizerException
+     * @expectedException \Mimir\TokenizerException
      * @expectedExceptionCode 108
      */
     public function testInvalidDrawWrongRiichi()
@@ -663,7 +663,7 @@ class TextlogParserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionCode 104
      */
     public function testInvalidChomboMistyped()

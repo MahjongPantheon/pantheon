@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 abstract class Ruleset
 {
@@ -34,7 +34,7 @@ abstract class Ruleset
             }
             require_once __DIR__ . '/../config/rulesets/' . $title . '.php';
             /** @var Ruleset $className */
-            $className = 'Riichi\Ruleset' . ucfirst($title);
+            $className = 'Mimir\Ruleset' . ucfirst($title);
             self::$_instances[$title] = new $className();
         }
 

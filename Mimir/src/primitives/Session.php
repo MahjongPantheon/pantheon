@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../exceptions/EntityNotFound.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
@@ -27,7 +27,7 @@ require_once __DIR__ . '/SessionResults.php';
  * Class SessionPrimitive
  *
  * Low-level model with basic CRUD operations and relations
- * @package Riichi
+ * @package Mimir
  */
 class SessionPrimitive extends Primitive
 {
@@ -219,7 +219,7 @@ class SessionPrimitive extends Primitive
      *
      * @param IDb $db
      * @param integer $eventId
-     * @param string $state
+     * @param string|string[] $state
      * @param integer $offset
      * @param integer $limit
      * @param string $orderBy
@@ -345,6 +345,7 @@ class SessionPrimitive extends Primitive
      *
      * @param IDb $db
      * @param $eventId
+     * @param $withStatus
      * @return integer
      */
     public static function gamesCount(IDb $db, $eventId, $withStatus)
@@ -387,7 +388,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
-     * @param \Riichi\EventPrimitive $event
+     * @param \Mimir\EventPrimitive $event
      * @return $this
      */
     public function setEvent(EventPrimitive $event)
@@ -399,7 +400,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\EventPrimitive
+     * @return \Mimir\EventPrimitive
      */
     public function getEvent()
     {
@@ -474,7 +475,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
-     * @param \Riichi\PlayerPrimitive[] $players
+     * @param \Mimir\PlayerPrimitive[] $players
      * @return $this
      */
     public function setPlayers($players)
@@ -489,7 +490,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\PlayerPrimitive[]
+     * @return \Mimir\PlayerPrimitive[]
      */
     public function getPlayers()
     {
