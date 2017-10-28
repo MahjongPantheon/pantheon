@@ -389,7 +389,7 @@ class PlayersController extends Controller
             'scores'     => $lastRound->getLastSessionState()->getScores(), // scores before payments!
             'payments'   => $paymentsInfo,
             'winner'     => $multiGet($lastRound, 'getWinnerId'),
-            'pao_player' => $multiGet($lastRound, 'getPaoPlayerId'),
+            'paoPlayer'  => array_filter($multiGet($lastRound, 'getPaoPlayerId')),
             'yaku'       => $multiGet($lastRound, 'getYaku'),
             'han'        => $multiGet($lastRound, 'getHan'),
             'fu'         => $multiGet($lastRound, 'getFu'),
