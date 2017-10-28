@@ -17,8 +17,6 @@
  */
 namespace Riichi;
 
-require_once __DIR__ . '/Date.php';
-
 use Monolog\Logger;
 use Idiorm\ORM;
 

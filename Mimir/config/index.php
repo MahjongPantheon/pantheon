@@ -38,6 +38,7 @@ return array_merge([
     'routes'    => require __DIR__ . '/routes.php',
     'verbose'   => false,
     'verboseLog' => null,
+    'serverDefaultTimezone' => 'UTC',
     'trackerUrl' => null, // should be string or null, %s is placeholder for game hash token
 
     // ---------- not intended for local override! ------------

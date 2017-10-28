@@ -45,9 +45,9 @@ class Api
         }
     }
 
-    public function getTimezone()
+    public function getDefaultServerTimezone()
     {
-        return 'Asia/Novosibirsk'; // TODO
+        return $this->_config->getValue('serverDefaultTimezone');
     }
 
     public function registerImplAutoloading()
