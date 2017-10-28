@@ -72,6 +72,23 @@ export function toggleLoser(p: Player, outcome: AppOutcome) {
   }
 }
 
+export function togglePao(p: Player, outcome: AppOutcome) {
+  switch (outcome.selectedOutcome) {
+    case 'ron':
+    case 'tsumo':
+      outcome.paoPlayerId = outcome.paoPlayerId === p.id ? null : p.id;
+      break;
+    case 'multiron':
+      for (let playerId in outcome.wins) {
+        if (outcome.wins[playerId].paoPlayerId === p.id && outcome.wins[playerId]) {
+          // TODO: find outcome with yakuman in pao list, toggle pao_id there
+        }
+      }
+    default:
+      throw new Error('No pao exist on this outcome');
+  }
+}
+
 export function toggleDeadhand(p: Player, outcome: AppOutcome) {
   switch (outcome.selectedOutcome) {
     case 'draw':
@@ -125,6 +142,25 @@ export function getLosingUsers(outcome: AppOutcome, playerIdMap: PMap): Player[]
       return outcome.loser
         ? [playerIdMap[outcome.loser]]
         : [];
+    default:
+      return [];
+  }
+}
+
+export function getPaoUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
+  switch (outcome.selectedOutcome) {
+    case 'ron':
+    case 'tsumo':
+      return outcome.paoPlayerId
+        ? [playerIdMap[outcome.paoPlayerId]]
+        : [];
+    case 'multiron':
+      return Object.keys(outcome.wins).reduce<Player[]>((acc, playerId) => {
+        if (outcome.wins[playerId].paoPlayerId) {
+          acc.push(playerIdMap[outcome.wins[playerId].paoPlayerId]);
+        }
+        return acc;
+      }, []);
     default:
       return [];
   }

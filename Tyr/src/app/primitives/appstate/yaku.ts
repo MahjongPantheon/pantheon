@@ -23,6 +23,8 @@ import { YakuId } from '../yaku';
 import { getHan, getFixedFu } from '../yaku-values';
 import { WinProps } from '../../interfaces/app';
 import { getAllowedYaku as getAllowedYakuCompat, addYakuToList, initYakuGraph, limits } from '../yaku-compat';
+import { LGameConfig } from '../../interfaces/local';
+import { intersection } from 'lodash';
 
 export const initYaku = initYakuGraph;
 
@@ -288,4 +290,22 @@ function _hasYakumanInYakuList(outcome: AppOutcome, props: WinProps, mrWinner: n
   }
 
   return false;
+}
+
+export function winnerHasYakuWithPao(outcome: AppOutcome, gameConfig: LGameConfig) {
+  if (!outcome) {
+    return false;
+  }
+
+  switch (outcome.selectedOutcome) {
+    case 'ron':
+    case 'tsumo':
+      return intersection(outcome.yaku, gameConfig.yakuWithPao).length > 0;
+    case 'multiron':
+      return Object.keys(outcome.wins).reduce<boolean>((acc, playerId) => {
+        return acc || (intersection(outcome.wins[playerId].yaku, gameConfig.yakuWithPao).length > 0);
+      }, false);
+    default:
+      throw new Error('No pao exist on this outcome');
+  }
 }

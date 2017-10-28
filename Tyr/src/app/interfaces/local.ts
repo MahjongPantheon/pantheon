@@ -62,6 +62,7 @@ export interface LWinItem {
 }
 
 export interface LGameConfig {
+  yakuWithPao: YakuId[];
   allowedYaku: YakuId[];
   startPoints: number;
   withKazoe: boolean;

@@ -82,6 +82,7 @@ export function gameConfigFormatter(config: RGameConfig): LGameConfig {
   }
 
   return {
+    yakuWithPao: (config.yakuWithPao || []).map((y) => parseInt(y.toString(), 10)),
     allowedYaku: (config.allowedYaku || []).map((y) => parseInt(y.toString(), 10)),
     startPoints: parseInt(config.startPoints.toString(), 10),
     withKazoe: !!config.withKazoe,

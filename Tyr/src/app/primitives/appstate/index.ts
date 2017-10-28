@@ -40,8 +40,8 @@ export type LoadingSet = {
 // functional modules
 import { TimerData, initTimer, getTimeRemaining, getCurrentTimerZone, timerIsWaiting } from './timer';
 import {
-  toggleLoser, toggleWinner,
-  getWinningUsers, getLosingUsers,
+  toggleLoser, toggleWinner, togglePao,
+  getWinningUsers, getLosingUsers, getPaoUsers,
   getDeadhandUsers, toggleDeadhand
 } from './winLoseToggles';
 import { toggleRiichi, getRiichiUsers } from './riichiToggle';
@@ -51,7 +51,8 @@ import { setDora, getDoraOf } from './dora';
 import { initBlankOutcome } from './initials';
 import {
   initYaku, hasYaku, addYaku, removeYaku,
-  getRequiredYaku, getSelectedYaku, getAllowedYaku, yakumanInYaku
+  getRequiredYaku, getSelectedYaku, getAllowedYaku, yakumanInYaku,
+  winnerHasYakuWithPao
 } from './yaku';
 
 // implementation
@@ -422,6 +423,7 @@ export class AppState {
     }
   };
   getGameConfig = (key) => this._gameConfig && this._gameConfig[key];
+  winnerHasYakuWithPao = () => winnerHasYakuWithPao(this._currentOutcome, this._gameConfig);
   getTableIndex = () => this._tableIndex;
   playerName = () => this._currentPlayerDisplayName;
   currentScreen = () => this._currentScreen;
@@ -429,10 +431,12 @@ export class AppState {
   getHashcode = () => this._currentSessionHash;
   toggleWinner = (p: Player) => toggleWinner(p, this._currentOutcome);
   toggleLoser = (p: Player) => toggleLoser(p, this._currentOutcome);
+  togglePao = (p: Player) => togglePao(p, this._currentOutcome);
   toggleRiichi = (p: Player) => toggleRiichi(p, this._currentOutcome, (y: YakuId) => this.removeYaku(y));
   toggleDeadhand = (p: Player) => toggleDeadhand(p, this._currentOutcome);
   getWinningUsers = () => getWinningUsers(this._currentOutcome, this._mapIdToPlayer);
   getLosingUsers = () => getLosingUsers(this._currentOutcome, this._mapIdToPlayer);
+  getPaoUsers = () => getPaoUsers(this._currentOutcome, this._mapIdToPlayer);
   getRiichiUsers = () => getRiichiUsers(this._currentOutcome, this._mapIdToPlayer);
   getDeadhandUsers = () => getDeadhandUsers(this._currentOutcome, this._mapIdToPlayer);
   setHan = (han: number) => setHan(han, this._currentOutcome, this._multironCurrentWinner);

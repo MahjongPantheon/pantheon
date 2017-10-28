@@ -39,6 +39,12 @@
     [class.pressed]="deadPressed()"
     (click)="deadClick()"
   ><custom-icon [type]="'dead'"></custom-icon></button>
+  <button
+    *ngIf="showPaoButton()"
+    class="lose"
+    [class.pressed]="paoPressed()"
+    (click)="paoClick()"
+  ><span class="pao-label">pao</span><custom-icon [type]="'down'"></custom-icon></button>
 </div>
 <div class="riichi-bet">
   <button

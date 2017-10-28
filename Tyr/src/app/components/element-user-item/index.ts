@@ -33,11 +33,18 @@ export class UserItemComponent {
   @Input() userData: Player;
   @Input() seat: string;
 
-  @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi' | 'dead']>();
+  @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao']>();
 
   // helpers
   showWinButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'draw']
     .indexOf(this.state.getOutcome());
+
+  showPaoButton = () => {
+    return (
+      -1 !== ['ron', 'multiron', 'tsumo'].indexOf(this.state.getOutcome()) &&
+      this.state.winnerHasYakuWithPao()
+    );
+  };
 
   showLoseButton = () => -1 !== ['ron', 'multiron', 'chombo']
     .indexOf(this.state.getOutcome());
@@ -52,6 +59,9 @@ export class UserItemComponent {
     .indexOf(this.userData);
 
   losePressed = () => -1 !== this.state.getLosingUsers()
+    .indexOf(this.userData);
+
+  paoPressed = () => -1 !== this.state.getPaoUsers()
     .indexOf(this.userData);
 
   riichiPressed = () => -1 !== this.state.getRiichiUsers()
@@ -91,5 +101,6 @@ export class UserItemComponent {
   loseClick = () => this.loseDisabled() ? null : this.onEvent.emit([this.userData, 'lose']);
   riichiClick = () => this.onEvent.emit([this.userData, 'riichi']);
   deadClick = () => this.onEvent.emit([this.userData, 'dead']);
+  paoClick = () => this.onEvent.emit([this.userData, 'pao']);
 }
 

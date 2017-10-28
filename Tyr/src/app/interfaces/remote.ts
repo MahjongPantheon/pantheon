@@ -89,6 +89,7 @@ export type RRound
   ;
 
 export interface RGameConfig {
+  yakuWithPao: number[];
   allowedYaku: number[];
   startPoints: number;
   withKazoe: boolean;
