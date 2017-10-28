@@ -30,7 +30,7 @@ if (!empty(getenv('OVERRIDE_CONFIG_PATH'))) {
 $server = new Server();
 $api = new Api($configPath);
 $api->registerImplAutoloading();
-date_default_timezone_set($api->getTimezone());
+date_default_timezone_set($api->getDefaultServerTimezone());
 
 foreach ($api->getMethods() as $proc => $method) {
 //    $api->log("Registered proc: $proc ({$method['className']}::{$method['method']})" . PHP_EOL);
