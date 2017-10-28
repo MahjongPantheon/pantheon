@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/Player.php';
 require_once __DIR__ . '/Session.php';
@@ -29,7 +29,7 @@ require_once __DIR__ . '/../validators/Round.php';
  * Special case of round: multi-ron, contains multiple RoundPrimitives
  *
  * Low-level model with basic CRUD operations and relations
- * @package Riichi
+ * @package Mimir
  */
 class MultiRoundPrimitive extends RoundPrimitive
 {

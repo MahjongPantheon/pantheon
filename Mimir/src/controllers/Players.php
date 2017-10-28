@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
@@ -28,7 +28,7 @@ require_once __DIR__ . '/../models/Event.php';
  * For user management.
  * Don't do any ACL here - it's expected to be managed by client app.
  *
- * @package Riichi
+ * @package Mimir
  */
 class PlayersController extends Controller
 {

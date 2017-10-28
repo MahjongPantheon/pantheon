@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
@@ -175,11 +175,13 @@ class EventModel extends Model
             while (($offset + $limit) <= $gamesCount) {
                 $slicedGames = array_slice($playerGames, $offset, $limit);
                 $places = array_reduce($slicedGames, function ($i, $item) {
-                    return $i += $item['place'];
-                });
+                    $i += $item['place'];
+                    return $i;
+                }, 0);
                 $scores = array_reduce($slicedGames, function ($i, $item) {
-                    return $i += $item['score'];
-                });
+                    $i += $item['score'];
+                    return $i;
+                }, 0);
 
                 $sessionIds = array_map(function ($el) {
                     return $el['sessionId'];
@@ -227,8 +229,9 @@ class EventModel extends Model
                 return $el['sessionId'];
             }, $currentSeries);
             $currentSeriesScores = array_reduce($currentSeries, function ($i, $item) {
-                return $i += $item['score'];
-            });
+                $i += $item['score'];
+                return $i;
+            }, 0);
 
             $bestSeries['playerId'] = $playerId;
             $bestSeries['currentSeries'] = $currentSeriesSessionIds;
@@ -265,7 +268,7 @@ class EventModel extends Model
      * @param int $playerId
      * @param int[] $seriesIds
      * @param SessionPrimitive[] $sessions
-     * @param SessionResultsPrimitive[] $sessionResults
+     * @param SessionResultsPrimitive[][] $sessionResults
      * @return array
      */
     private function _formatSeries($playerId, $seriesIds, $sessions, $sessionResults)

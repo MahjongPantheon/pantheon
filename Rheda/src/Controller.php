@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Rheda;
 
 require_once __DIR__ . '/helpers/MobileDetect.php';
 require_once __DIR__ . '/helpers/Url.php';
@@ -187,7 +187,7 @@ abstract class Controller
             if (preg_match($re, $url, $matches)) {
                 require_once __DIR__ . "/controllers/{$controller}.php";
                 $matches['event'] = 'eid' . Sysconf::OVERRIDE_EVENT_ID;
-                $wNs = '\\Riichi\\' . $controller;
+                $wNs = '\\Rheda\\' . $controller;
                 return new $wNs($url, $matches);
             }
         }
@@ -207,7 +207,7 @@ abstract class Controller
 
             if (preg_match($re, $url, $matches)) {
                 require_once __DIR__ . "/controllers/{$controller}.php";
-                $wNs = '\\Riichi\\' . $controller;
+                $wNs = '\\Rheda\\' . $controller;
                 return new $wNs($url, $matches);
             }
         }

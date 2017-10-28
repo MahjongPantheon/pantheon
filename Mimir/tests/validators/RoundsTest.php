@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../../src/validators/Round.php';
 require_once __DIR__ . '/../../src/Db.php';
@@ -32,7 +32,7 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckOneOf()
     {
-        $checkOneOf = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkOneOf');
+        $checkOneOf = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkOneOf');
         $checkOneOf->setAccessible(true);
 
         $data = ['test' => 'okval'];
@@ -43,7 +43,7 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckZeroOrMoreOf()
     {
-        $checkOneOf = new \ReflectionMethod('\Riichi\RoundsHelper', '_csvCheckZeroOrMoreOf');
+        $checkOneOf = new \ReflectionMethod('\Mimir\RoundsHelper', '_csvCheckZeroOrMoreOf');
         $checkOneOf->setAccessible(true);
 
         $data = ['test' => 'a,b'];
@@ -86,7 +86,7 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckYakuEmpty()
     {
-        $checkYaku = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkYaku');
+        $checkYaku = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkYaku');
         $checkYaku->setAccessible(true);
 
         $data = '';
@@ -96,7 +96,7 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckYakuAllowed()
     {
-        $checkYaku = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkYaku');
+        $checkYaku = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkYaku');
         $checkYaku->setAccessible(true);
 
         $data = '1,3';
@@ -106,7 +106,7 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckRonValid()
     {
-        $checkRon = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkRon');
+        $checkRon = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkRon');
         $checkRon->setAccessible(true);
 
         $checkRon->invokeArgs(null, [
@@ -130,7 +130,7 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckMultiRonValid()
     {
-        $checkRon = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkMultiron');
+        $checkRon = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkMultiron');
         $checkRon->setAccessible(true);
 
         $checkRon->invokeArgs(null, [
@@ -168,7 +168,7 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckTsumoValid()
     {
-        $checkTsumo = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkTsumo');
+        $checkTsumo = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkTsumo');
         $checkTsumo->setAccessible(true);
 
         $checkTsumo->invokeArgs(null, [
@@ -190,7 +190,7 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckDrawValid()
     {
-        $checkDraw = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkDraw');
+        $checkDraw = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkDraw');
         $checkDraw->setAccessible(true);
 
         $checkDraw->invokeArgs(null, [
@@ -204,7 +204,7 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckAbortiveDrawValid()
     {
-        $checkAbort = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkAbortiveDraw');
+        $checkAbort = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkAbortiveDraw');
         $checkAbort->setAccessible(true);
 
         $checkAbort->invokeArgs(null, [
@@ -217,7 +217,7 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckChomboValid()
     {
-        $checkChombo = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkChombo');
+        $checkChombo = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkChombo');
         $checkChombo->setAccessible(true);
 
         $checkChombo->invokeArgs(null, [
@@ -231,11 +231,11 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
     // Negative tests
 
     /**
-     * @expectedException \Riichi\MalformedPayloadException
+     * @expectedException \Mimir\MalformedPayloadException
      */
     public function testCheckOneOfFail()
     {
-        $checkOneOf = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkOneOf');
+        $checkOneOf = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkOneOf');
         $checkOneOf->setAccessible(true);
 
         $data = ['test' => 'notokval'];
@@ -244,11 +244,11 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\MalformedPayloadException
+     * @expectedException \Mimir\MalformedPayloadException
      */
     public function testCheckYakuWrongDataFail()
     {
-        $checkYaku = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkYaku');
+        $checkYaku = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkYaku');
         $checkYaku->setAccessible(true);
 
         $data = 'wat';
@@ -257,11 +257,11 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\MalformedPayloadException
+     * @expectedException \Mimir\MalformedPayloadException
      */
     public function testCheckYakuNotAllowedFail()
     {
-        $checkYaku = new \ReflectionMethod('\Riichi\RoundsHelper', '_checkYaku');
+        $checkYaku = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkYaku');
         $checkYaku->setAccessible(true);
 
         $data = '1,4';
@@ -271,7 +271,7 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
     public function testCheckZeroOrMoreOfFail()
     {
-        $checkOneOf = new \ReflectionMethod('\Riichi\RoundsHelper', '_csvCheckZeroOrMoreOf');
+        $checkOneOf = new \ReflectionMethod('\Mimir\RoundsHelper', '_csvCheckZeroOrMoreOf');
         $checkOneOf->setAccessible(true);
 
         $data = ['test' => 'a,b'];

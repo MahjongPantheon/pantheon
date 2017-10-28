@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Riichi;
+namespace Rheda;
 
 if (file_exists(__DIR__ . '/local/index.php')) {
     include __DIR__ . '/local/index.php';
