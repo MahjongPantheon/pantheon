@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/Db.php';
@@ -30,7 +30,7 @@ require_once __DIR__ . '/../../src/helpers/onlineLog/Downloader.php';
 
 /**
  * Class SessionTest: integration test suite
- * @package Riichi
+ * @package Mimir
  */
 class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
 {
@@ -148,7 +148,7 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
     // Negative tests
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionMessage "NoName" players are not allowed in replays
      */
     public function testAddGameWithNoNamePlayer()
@@ -161,7 +161,7 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionMessage Not all tenhou nicknames were registered in the system: tenhou1, tenhou2
      */
     public function testAddGameWithNotRegisteredInSystemPlayers()
@@ -173,7 +173,7 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionMessage Provided replay doesn't belong to the event lobby 2222
      */
     public function testAddGameFromDifferentLobby()
@@ -188,7 +188,7 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\ParseException
+     * @expectedException \Mimir\ParseException
      * @expectedExceptionMessage Replay is older than 27 hours (within JST timezone), so it can't be accepted
      */
     public function testAddExpiredGame()
@@ -203,7 +203,7 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\InvalidParametersException
+     * @expectedException \Mimir\InvalidParametersException
      * @expectedExceptionMessage This game is already added to the system
      */
     public function testAddAlreadyAddedGame()
@@ -218,7 +218,7 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\DownloadException
+     * @expectedException \Mimir\DownloadException
      * @expectedExceptionMessage Invalid replay link
      */
     public function testGameLinkValidation()
@@ -233,7 +233,7 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\MalformedPayloadException
+     * @expectedException \Mimir\MalformedPayloadException
      * @expectedExceptionMessage Player id #1 is not registered for this event
      */
     public function testAddGameWithNotRegisteredToEventPlayers()

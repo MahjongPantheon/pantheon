@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../../../src/Db.php';
 require_once __DIR__ . '/../../../src/helpers/onlineLog/Parser.php';
@@ -25,7 +25,7 @@ require_once __DIR__ . '/../../../src/primitives/PlayerRegistration.php';
  * Replay parser integration test suite
  *
  * Class OnlinelogParserTest
- * @package Riichi
+ * @package Mimir
  */
 class OnlinelogParserTest extends \PHPUnit_Framework_TestCase
 {

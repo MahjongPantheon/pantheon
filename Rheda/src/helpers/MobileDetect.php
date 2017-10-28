@@ -24,7 +24,7 @@
  *
  * @version     2.8.24
  */
-namespace Riichi;
+namespace Rheda;
 
 class MobileDetect
 {

@@ -15,14 +15,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../../src/Ruleset.php';
 
 /**
  * Class RulesetTenhounet
  * Describes most popular row3-column2 rules
- * @package Riichi
+ * @package Mimir
  */
 class RulesetTenhounet extends Ruleset
 {

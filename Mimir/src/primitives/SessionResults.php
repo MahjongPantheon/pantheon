@@ -15,9 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
-
-use \Idiorm\ORM;
+namespace Mimir;
 
 require_once __DIR__ . '/../exceptions/EntityNotFound.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
@@ -28,7 +26,7 @@ require_once __DIR__ . '/../helpers/SessionState.php';
  * Class SessionResultsPrimitive
  *
  * Low-level model with basic CRUD operations and relations
- * @package Riichi
+ * @package Mimir
  */
 class SessionResultsPrimitive extends Primitive
 {
@@ -202,7 +200,7 @@ class SessionResultsPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\EventPrimitive
+     * @return \Mimir\EventPrimitive
      */
     public function getEvent()
     {
@@ -222,7 +220,7 @@ class SessionResultsPrimitive extends Primitive
     }
 
     /**
-     * @param \Riichi\SessionPrimitive $session
+     * @param \Mimir\SessionPrimitive $session
      * @return SessionResultsPrimitive
      */
     public function setSession(SessionPrimitive $session)
@@ -266,7 +264,7 @@ class SessionResultsPrimitive extends Primitive
     }
 
     /**
-     * @param \Riichi\PlayerPrimitive $player
+     * @param \Mimir\PlayerPrimitive $player
      * @return SessionResultsPrimitive
      */
     public function setPlayer(PlayerPrimitive $player)
@@ -278,7 +276,7 @@ class SessionResultsPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
-     * @return \Riichi\PlayerPrimitive
+     * @return \Mimir\PlayerPrimitive
      */
     public function getPlayer()
     {
@@ -393,6 +391,7 @@ class SessionResultsPrimitive extends Primitive
      *
      * @param $scoreList
      * @param $originalPlayersSequence
+     * @return int
      */
     protected function _calcPlace($scoreList, $originalPlayersSequence)
     {

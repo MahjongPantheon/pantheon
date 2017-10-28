@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Riichi;
+namespace Mimir;
 
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/models/InteractiveSession.php';
@@ -27,7 +27,7 @@ require_once __DIR__ . '/../../src/Meta.php';
 
 /**
  * Class SessionTest: integration test suite
- * @package Riichi
+ * @package Mimir
  */
 class SessionModelTest extends \PHPUnit_Framework_TestCase
 {
@@ -274,7 +274,7 @@ class SessionModelTest extends \PHPUnit_Framework_TestCase
     // Negative tests
 
     /**
-     * @expectedException \Riichi\InvalidParametersException
+     * @expectedException \Mimir\InvalidParametersException
      * @expectedExceptionMessage This event doesn't support adding penalties
      */
     public function testAddPenaltyToEventWithEmptyPenaltyFlag()
@@ -294,7 +294,7 @@ class SessionModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\InvalidUserException
+     * @expectedException \Mimir\InvalidUserException
      */
     public function testNewGameBadUser()
     {
@@ -308,7 +308,7 @@ class SessionModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Riichi\InvalidUserException
+     * @expectedException \Mimir\InvalidUserException
      */
     public function testNewGameWrongUserCount()
     {
@@ -322,7 +322,7 @@ class SessionModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-         * @expectedException \Riichi\InvalidParametersException
+         * @expectedException \Mimir\InvalidParametersException
      */
     public function testEndGameWrongHash()
     {
