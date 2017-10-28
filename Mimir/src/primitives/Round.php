@@ -52,6 +52,7 @@ class RoundPrimitive extends Primitive
         'tempai'        => '_tempaiIds',
         'winner_id'     => '_winnerId',
         'loser_id'      => '_loserId',
+        'pao_player_id' => '_paoPlayerId',
         'open_hand'     => '_openHand',
         'end_date'      => '_endDate',
         'last_session_state' => '_lastSessionState'
@@ -65,21 +66,22 @@ class RoundPrimitive extends Primitive
                     return (int)$this->getSession()->getEventId();
                 }
             ],
-            '_tempaiIds'  => $this->_csvTransform(),
-            '_riichiIds'  => $this->_csvTransform(),
-            '_winnerId'   => $this->_integerTransform(true),
-            '_loserId'    => $this->_integerTransform(true),
-            '_sessionId'  => $this->_integerTransform(),
-            '_han'        => $this->_integerTransform(true),
-            '_fu'         => $this->_integerTransform(true),
-            '_dora'       => $this->_integerTransform(true),
-            '_uradora'    => $this->_integerTransform(true),
-            '_kandora'    => $this->_integerTransform(true),
-            '_kanuradora' => $this->_integerTransform(true),
-            '_multiRon'   => $this->_integerTransform(true),
-            '_id'         => $this->_integerTransform(true),
-            '_openHand'   => $this->_integerTransform(),
-            '_endDate'    => $this->_stringTransform(true),
+            '_tempaiIds'   => $this->_csvTransform(),
+            '_riichiIds'   => $this->_csvTransform(),
+            '_winnerId'    => $this->_integerTransform(true),
+            '_loserId'     => $this->_integerTransform(true),
+            '_paoPlayerId' => $this->_integerTransform(true),
+            '_sessionId'   => $this->_integerTransform(),
+            '_han'         => $this->_integerTransform(true),
+            '_fu'          => $this->_integerTransform(true),
+            '_dora'        => $this->_integerTransform(true),
+            '_uradora'     => $this->_integerTransform(true),
+            '_kandora'     => $this->_integerTransform(true),
+            '_kanuradora'  => $this->_integerTransform(true),
+            '_multiRon'    => $this->_integerTransform(true),
+            '_id'          => $this->_integerTransform(true),
+            '_openHand'    => $this->_integerTransform(),
+            '_endDate'     => $this->_stringTransform(true),
             '_lastSessionState' => [
                 'serialize' => function () {
                     return $this->getSession()->getCurrentState()->toJson();
@@ -133,6 +135,16 @@ class RoundPrimitive extends Primitive
      * @var string
      */
     protected $_loserId;
+    /**
+     * not null only if pao is applied
+     * @var PlayerPrimitive
+     */
+    protected $_paoPlayer;
+    /**
+     * not null only if pao is applied
+     * @var string
+     */
+    protected $_paoPlayerId;
     /**
      * @var int
      */
@@ -724,6 +736,41 @@ class RoundPrimitive extends Primitive
     public function getWinnerId()
     {
         return $this->_winnerId;
+    }
+
+    /**
+     * @param \Mimir\PlayerPrimitive $paoPlayer
+     * @return RoundPrimitive
+     */
+    public function setPaoPlayer(PlayerPrimitive $paoPlayer)
+    {
+        $this->_paoPlayer = $paoPlayer;
+        $this->_paoPlayerId = $paoPlayer->getId();
+        return $this;
+    }
+
+    /**
+     * @throws EntityNotFoundException
+     * @return \Mimir\PlayerPrimitive
+     */
+    public function getPaoPlayer()
+    {
+        if (!$this->_paoPlayer) {
+            $foundUsers = PlayerPrimitive::findById($this->_db, [$this->_paoPlayerId]);
+            if (empty($foundUsers)) {
+                throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_paoPlayerId . ' not found in DB');
+            }
+            $this->_paoPlayer = $foundUsers[0];
+        }
+        return $this->_paoPlayer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaoPlayerId()
+    {
+        return $this->_paoPlayerId;
     }
 
     /**

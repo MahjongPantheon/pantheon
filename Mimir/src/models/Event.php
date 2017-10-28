@@ -529,6 +529,7 @@ class EventModel extends Model
                     'outcome'       => $round->getOutcome(),
                     'winner_id'     => (int) $round->getWinnerId(),
                     'loser_id'      => (int) $round->getLoserId(),
+                    'pao_player_id' => (int) $round->getPaoPlayerId(),
                     'han'           => (int) $round->getHan(),
                     'fu'            => (int) $round->getFu(),
                     'yaku'          => $round->getYaku(),
@@ -552,6 +553,7 @@ class EventModel extends Model
                     'wins'          => array_map(function (RoundPrimitive $round) {
                         return [
                             'winner_id'     => (int) $round->getWinnerId(),
+                            'pao_player_id' => (int) $round->getPaoPlayerId(),
                             'han'           => (int) $round->getHan(),
                             'fu'            => (int) $round->getFu(),
                             'yaku'          => $round->getYaku(),
@@ -569,6 +571,7 @@ class EventModel extends Model
                     'round_index'   => (int) $round->getRoundIndex(),
                     'outcome'       => $round->getOutcome(),
                     'winner_id'     => (int) $round->getWinnerId(),
+                    'pao_player_id' => (int) $round->getPaoPlayerId(),
                     'han'           => (int) $round->getHan(),
                     'fu'            => (int) $round->getFu(),
                     'yaku'          => $round->getYaku(),

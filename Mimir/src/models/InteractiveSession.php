@@ -162,6 +162,7 @@ class InteractiveSessionModel extends Model
                 'scores'     => $currentScores, // scores before payments!
                 'payments'   => $paymentsInfo,
                 'winner'     => $multiGet($round, 'getWinnerId'),
+                'pao_player' => $multiGet($round, 'getPaoPlayerId'),
                 'yaku'       => $multiGet($round, 'getYaku'),
                 'han'        => $multiGet($round, 'getHan'),
                 'fu'         => $multiGet($round, 'getFu'),

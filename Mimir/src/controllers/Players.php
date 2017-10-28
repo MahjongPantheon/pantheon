@@ -389,6 +389,7 @@ class PlayersController extends Controller
             'scores'     => $lastRound->getLastSessionState()->getScores(), // scores before payments!
             'payments'   => $paymentsInfo,
             'winner'     => $multiGet($lastRound, 'getWinnerId'),
+            'pao_player' => $multiGet($lastRound, 'getPaoPlayerId'),
             'yaku'       => $multiGet($lastRound, 'getYaku'),
             'han'        => $multiGet($lastRound, 'getHan'),
             'fu'         => $multiGet($lastRound, 'getFu'),
@@ -454,7 +455,8 @@ class PlayersController extends Controller
                     $roundItem->getFu(),
                     $riichiWinners[$roundItem->getWinnerId()]['from_players'],
                     $riichiWinners[$roundItem->getWinnerId()]['honba'],
-                    $riichiWinners[$roundItem->getWinnerId()]['from_table']
+                    $riichiWinners[$roundItem->getWinnerId()]['from_table'],
+                    $roundItem->getPaoPlayerId()
                 );
                 $payments = array_merge_recursive($payments, PointsCalc::lastPaymentsInfo());
             }
@@ -475,7 +477,8 @@ class PlayersController extends Controller
                     $round->getFu(),
                     $round->getRiichiIds(),
                     $sessionState->getHonba(),
-                    $sessionState->getRiichiBets()
+                    $sessionState->getRiichiBets(),
+                    $round->getPaoPlayerId()
                 );
                 break;
             case 'tsumo':
@@ -488,7 +491,8 @@ class PlayersController extends Controller
                     $round->getFu(),
                     $round->getRiichiIds(),
                     $sessionState->getHonba(),
-                    $sessionState->getRiichiBets()
+                    $sessionState->getRiichiBets(),
+                    $round->getPaoPlayerId()
                 );
                 break;
             case 'draw':
