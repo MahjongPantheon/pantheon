@@ -335,7 +335,8 @@ class SessionState
             $round->getFu(),
             $round->getRiichiIds(),
             $this->getHonba(),
-            $this->getRiichiBets()
+            $this->getRiichiBets(),
+            $round->getPaoPlayerId()
         );
 
         if ($isDealer) {
@@ -379,7 +380,8 @@ class SessionState
                 $roundItem->getFu(),
                 $riichiWinners[$roundItem->getWinnerId()]['from_players'],
                 $riichiWinners[$roundItem->getWinnerId()]['honba'],
-                $riichiWinners[$roundItem->getWinnerId()]['from_table']
+                $riichiWinners[$roundItem->getWinnerId()]['from_table'],
+                $roundItem->getPaoPlayerId()
             );
             $payments = array_merge_recursive($payments, PointsCalc::lastPaymentsInfo());
         }
@@ -410,7 +412,8 @@ class SessionState
             $round->getFu(),
             $round->getRiichiIds(),
             $this->getHonba(),
-            $this->getRiichiBets()
+            $this->getRiichiBets(),
+            $round->getPaoPlayerId()
         );
 
         if ($this->getCurrentDealer() == $round->getWinnerId()) {
