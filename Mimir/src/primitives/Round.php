@@ -21,6 +21,7 @@ require_once __DIR__ . '/Player.php';
 require_once __DIR__ . '/Session.php';
 require_once __DIR__ . '/Event.php';
 require_once __DIR__ . '/../Primitive.php';
+require_once __DIR__ . '/../helpers/Date.php';
 require_once __DIR__ . '/../validators/Round.php';
 
 /**
@@ -52,6 +53,7 @@ class RoundPrimitive extends Primitive
         'winner_id'     => '_winnerId',
         'loser_id'      => '_loserId',
         'open_hand'     => '_openHand',
+        'end_date'      => '_endDate',
         'last_session_state' => '_lastSessionState'
     ];
 
@@ -77,6 +79,7 @@ class RoundPrimitive extends Primitive
             '_multiRon'   => $this->_integerTransform(true),
             '_id'         => $this->_integerTransform(true),
             '_openHand'   => $this->_integerTransform(),
+            '_endDate'    => $this->_stringTransform(true),
             '_lastSessionState' => [
                 'serialize' => function () {
                     return $this->getSession()->getCurrentState()->toJson();
@@ -194,6 +197,11 @@ class RoundPrimitive extends Primitive
      * @var boolean
      */
     protected $_openHand;
+    /**
+     * Timestamp
+     * @var string
+     */
+    protected $_endDate;
 
     /**
      * Find rounds by local ids (primary key) - should not be used in business code
@@ -323,6 +331,7 @@ class RoundPrimitive extends Primitive
         $roundData['event_id'] = $session->getEventId();
         $roundData['round'] = $session->getCurrentState()->getRound();
         $roundData['id'] = null;
+        $roundData['end_date'] = date('Y-m-d H:i:s');
 
         // Just set it, as we already checked its perfect validity.
         return (new RoundPrimitive($db))->_restore($roundData);
@@ -755,5 +764,23 @@ class RoundPrimitive extends Primitive
             $this->getSession()->getPlayersIds(),
             $this->_lastSessionState
         );
+    }
+
+    /**
+     * @param string $date UTC date string
+     * @return $this
+     */
+    public function setEndDate($date)
+    {
+        $this->_endDate = $date;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEndDate()
+    {
+        return DateHelper::getLocalDate($this->_endDate, $this->getEvent()->getTimezone());
     }
 }
