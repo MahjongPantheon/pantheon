@@ -79,6 +79,7 @@ class MultiRoundPrimitive extends RoundPrimitive
         $roundData['event_id'] = $session->getEventId();
         $roundData['round'] = $session->getCurrentState()->getRound();
         $roundData['id'] = null;
+        $roundData['end_date'] = date('Y-m-d H:i:s');
 
         $item = new self($db);
         $item->_rounds = array_map(function ($round) use (&$roundData, $db) {
@@ -89,6 +90,7 @@ class MultiRoundPrimitive extends RoundPrimitive
                 'session_id' => $roundData['session_id'],
                 'event_id'   => $roundData['event_id'],
                 'round'      => $roundData['round'],
+                'end_date'   => $roundData['end_date'],
                 'id'         => null
             ]));
         }, $roundData['wins']);
