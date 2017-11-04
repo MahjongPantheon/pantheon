@@ -218,12 +218,12 @@ export class OtherTableScreen {
 
   getOutcomeName() {
     switch (this._lastRoundLocal.outcome) {
-      case 'ron': return 'Рон';
-      case 'tsumo': return 'Цумо';
-      case 'draw': return 'Ничья';
-      case 'abort': return 'Абортивная ничья';
-      case 'chombo': return 'Чомбо';
-      case 'multiron': return this._lastRoundLocal.winner.length === 2 ? 'Дабл-рон' : 'Трипл-рон';
+      case 'ron': return 'Ron';
+      case 'tsumo': return 'Tsumo';
+      case 'draw': return 'Exhaustive draw';
+      case 'abort': return 'Abortive draw';
+      case 'chombo': return 'Chombo';
+      case 'multiron': return this._lastRoundLocal.winner.length === 2 ? 'Double ron' : 'Triple ron';
     }
   }
 

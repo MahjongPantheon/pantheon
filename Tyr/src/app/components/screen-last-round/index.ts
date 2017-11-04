@@ -83,12 +83,12 @@ export class LastRoundScreen {
 
   getOutcomeName() {
     switch (this._data.outcome) {
-      case 'ron': return 'Рон';
-      case 'tsumo': return 'Цумо';
-      case 'draw': return 'Ничья';
-      case 'abort': return 'Абортивная ничья';
-      case 'chombo': return 'Чомбо';
-      case 'multiron': return this._data.winner.length === 2 ? 'Дабл-рон' : 'Трипл-рон';
+      case 'ron': return 'Ron';
+      case 'tsumo': return 'Tsumo';
+      case 'draw': return 'Exhaustive draw';
+      case 'abort': return 'Abortive draw';
+      case 'chombo': return 'Chombo';
+      case 'multiron': return this._data.winner.length === 2 ? 'Double ron' : 'Triple ron';
     }
   }
 
@@ -110,14 +110,14 @@ export class LastRoundScreen {
 
   onerror(e) {
     this._dataReady = true;
-    this._error = 'Произошла ошибка. Попробуйте еще раз.';
+    this._error = 'Error. Try again.';
     if (!e) {
-      this._error = `Последняя внесенная раздача не найдена.`;
+      this._error = `Latest hand wasn't found`;
     } else if (e instanceof RemoteError) {
       if (e.code === 403) {
-        this._error = 'Не удалось выполнить действие: авторизация не подтверждена';
+        this._error = "Error. Authentication wasn't confirmed";
       } else {
-        this._error = 'Не удалось выполнить действие. Ошибка сервера.';
+        this._error = 'Server unexpected error';
       }
     }
   }

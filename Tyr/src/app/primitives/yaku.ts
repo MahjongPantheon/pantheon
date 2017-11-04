@@ -72,272 +72,266 @@ export const yakuList: Yaku[] = [
   {
     id: YakuId.__OPENHAND,
     yakuman: false,
-    name: "Открытая рука",
-    shortName: "Открытая рука",
+    name: "Opened hand",
+    shortName: "Opened hand",
   },
   {
     id: YakuId.TOITOI,
     yakuman: false,
-    name: "Тойтой",
-    shortName: "Тойтой",
+    name: "Toitoi",
+    shortName: "Toitoi",
   },
   {
     id: YakuId.HONROTO,
     yakuman: false,
-    name: "Хонрото",
-    shortName: "Хонрото"
+    name: "Honroutou",
+    shortName: "Honroutou"
   },
   {
     id: YakuId.SANANKOU,
     yakuman: false,
-    name: "Сананко",
-    shortName: "Сананко"
+    name: "Sanankou",
+    shortName: "Sanankou"
   },
   {
     id: YakuId.SANKANTSU,
     yakuman: false,
-    name: "Санканцу",
-    shortName: "Санканцу"
+    name: "Sankantsu",
+    shortName: "Sankantsu"
   },
   {
     id: YakuId.SUUKANTSU,
     yakuman: true,
-    name: "Сууканцу",
-    shortName: "Сууканцу",
+    name: "Suukantsu",
+    shortName: "Suukantsu",
   },
   {
     id: YakuId.SUUANKOU,
     yakuman: true,
-    name: "Сууанко",
-    shortName: "Сууанко"
+    name: "Suuankou",
+    shortName: "Suuankou"
   },
   {
     id: YakuId.PINFU,
     yakuman: false,
-    name: "Пинфу",
-    shortName: "Пинфу"
+    name: "Pinfu",
+    shortName: "Pinfu"
   },
   {
     id: YakuId.IIPEIKOU,
     yakuman: false,
-    name: "Иипейко",
-    shortName: "Иипейко"
+    name: "Iipeikou",
+    shortName: "Iipeikou"
   },
   {
     id: YakuId.RYANPEIKOU,
     yakuman: false,
-    name: "Рянпейко",
-    shortName: "Рянпейко"
+    name: "Ryanpeikou",
+    shortName: "Ryanpeikou"
   },
   {
     id: YakuId.SANSHOKUDOUJUN,
     yakuman: false,
-    name: "Саншоку",
-    shortName: "Саншоку"
+    name: "Sanshoku",
+    shortName: "Sanshoku"
   },
   {
     id: YakuId.SANSHOKUDOUKOU,
     yakuman: false,
-    name: "Саншоку доко",
-    shortName: "Сандоко"
+    name: "Sanshoku doukou",
+    shortName: "Sanshoku doukou"
   },
   {
     id: YakuId.ITTSU,
     yakuman: false,
-    name: "Иццу",
-    shortName: "Иццу"
+    name: "Ittsu",
+    shortName: "Ittsu"
   },
   {
     id: YakuId.YAKUHAI1,
     yakuman: false,
-    name: "Якухай 1",
-    shortName: "Якухай",
+    name: "Yakuhai 1",
+    shortName: "Yakuhai",
   },
   {
     id: YakuId.YAKUHAI2,
     yakuman: false,
-    name: "Якухай 2",
+    name: "Yakuhai 2",
     shortName: "x2",
   },
   {
     id: YakuId.YAKUHAI3,
     yakuman: false,
-    name: "Якухай 3",
+    name: "Yakuhai 3",
     shortName: "x3",
   },
   {
     id: YakuId.YAKUHAI4,
     yakuman: false,
-    name: "Якухай 4",
+    name: "Yakuhai 4",
     shortName: "x4"
   },
-  //{
-  //  id: YakuId.YAKUHAI5,
-  //  yakuman: false,
-  //  name: "Якухай 5",
-  //  shortName: "x5"
-  //},
   {
     id: YakuId.SHOSANGEN,
     yakuman: false,
-    name: "Шосанген",
-    shortName: "Шосанген"
+    name: "Shousangen",
+    shortName: "Shousangen"
   },
   {
     id: YakuId.DAISANGEN,
     yakuman: true,
-    name: "Дайсанген",
-    shortName: "Дайсанген"
+    name: "Daisangen",
+    shortName: "Daisangen"
   },
   {
     id: YakuId.SHOSUUSHII,
     yakuman: true,
-    name: "Шосуши",
-    shortName: "Шосуши",
+    name: "Shousuushii",
+    shortName: "Shousuushii",
   },
   {
     id: YakuId.DAISUUSHII,
     yakuman: true,
-    name: "Дайсуши",
-    shortName: "Дайсуши"
+    name: "Daisuushii",
+    shortName: "Daisuushii"
   },
   {
     id: YakuId.TSUUIISOU,
     yakuman: true,
-    name: "Цуисо",
-    shortName: "Цуисо"
+    name: "Tsuuiisou",
+    shortName: "Tsuuiisou"
   },
   {
     id: YakuId.TANYAO,
     yakuman: false,
-    name: "Таняо",
-    shortName: "Таняо"
+    name: "Tanyao",
+    shortName: "Tanyao"
   },
   {
     id: YakuId.CHANTA,
     yakuman: false,
-    name: "Чанта",
-    shortName: "Чанта"
+    name: "Chanta",
+    shortName: "Chanta"
   },
   {
     id: YakuId.JUNCHAN,
     yakuman: false,
-    name: "Джунчан",
-    shortName: "Джунчан"
+    name: "Junchan",
+    shortName: "Junchan"
   },
   {
     id: YakuId.CHINROTO,
     yakuman: true,
-    name: "Чинрото",
-    shortName: "Чинрото"
+    name: "Chinroutou",
+    shortName: "Chinroutou"
   },
   {
     id: YakuId.HONITSU,
     yakuman: false,
-    name: "Хоницу",
-    shortName: "Хоницу"
+    name: "Honitsu",
+    shortName: "Honitsu"
   },
   {
     id: YakuId.CHINITSU,
     yakuman: false,
-    name: "Чиницу",
-    shortName: "Чиницу"
+    name: "Chinitsu",
+    shortName: "Chinitsu"
   },
   {
     id: YakuId.CHUURENPOUTO,
     yakuman: true,
-    name: "Чууренпото",
-    shortName: "Чууренпото"
+    name: "Chuuren poutou",
+    shortName: "Chuuren poutou"
   },
   {
     id: YakuId.RYUUIISOU,
     yakuman: true,
-    name: "Рюисо",
-    shortName: "Рюисо"
+    name: "Ryuuiisou",
+    shortName: "Ryuuiisou"
   },
   {
     id: YakuId.CHIITOITSU,
     yakuman: false,
-    name: "Чиитойцу",
-    shortName: "Чиитойцу"
+    name: "Chiitoitsu",
+    shortName: "Chiitoitsu"
   },
   {
     id: YakuId.KOKUSHIMUSOU,
     yakuman: true,
-    name: "Кокушимусо",
-    shortName: "Кокушимусо"
+    name: "Kokushi musou",
+    shortName: "Kokushi musou"
   },
   {
     id: YakuId.RIICHI,
     yakuman: false,
-    name: "Риичи",
-    shortName: "Риичи",
+    name: "Riichi",
+    shortName: "Riichi",
   },
   {
     id: YakuId.DOUBLERIICHI,
     yakuman: false,
-    name: "Дабл риичи",
-    shortName: "Дабури"
+    name: "Daburu riichi",
+    shortName: "Daburu"
   },
   {
     id: YakuId.IPPATSU,
     yakuman: false,
-    name: "Иппацу",
-    shortName: "Иппацу",
+    name: "Ippatsu",
+    shortName: "Ippatsu",
   },
   {
     id: YakuId.MENZENTSUMO,
     yakuman: false,
-    name: "Цумо",
-    shortName: "Цумо",
+    name: "Tsumo",
+    shortName: "Tsumo",
   },
   {
     id: YakuId.HAITEI,
     yakuman: false,
-    name: "Хайтей",
-    shortName: "Хайтей"
+    name: "Haitei",
+    shortName: "Haitei"
   },
   {
     id: YakuId.RINSHANKAIHOU,
     yakuman: false,
-    name: "Риншан кайхо",
-    shortName: "Риншан"
+    name: "Rinshan kaihou",
+    shortName: "Rinshan"
   },
   {
     id: YakuId.TENHOU,
     yakuman: true,
-    name: "Тенхо",
-    shortName: "Тенхо"
+    name: "Tenhou",
+    shortName: "Tenhou"
   },
   {
     id: YakuId.CHIHOU,
     yakuman: true,
-    name: "Чихо",
-    shortName: "Чихо"
+    name: "Chiihou",
+    shortName: "Chiihou"
   },
   {
     id: YakuId.HOUTEI,
     yakuman: false,
-    name: "Хотей",
-    shortName: "Хотей"
+    name: "Houtei raoyui",
+    shortName: "Houtei"
   },
   {
     id: YakuId.CHANKAN,
     yakuman: false,
-    name: "Чанкан",
-    shortName: "Чанкан"
+    name: "Chankan",
+    shortName: "Chankan"
   },
   {
     id: YakuId.RENHOU,
     yakuman: false,
-    name: "Ренхо",
-    shortName: "Ренхо"
+    name: "Renhou",
+    shortName: "Renhou"
   },
   {
     id: YakuId.OPENRIICHI,
     yakuman: false,
-    name: "Опен риичи",
-    shortName: "Опен"
+    name: "Open riichi",
+    shortName: "Open riichi"
   },
 ];
 

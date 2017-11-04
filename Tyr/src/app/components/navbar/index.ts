@@ -88,27 +88,27 @@ export class NavBarComponent {
 
   multironTitle() {
     if (this.state.getOutcome() === 'multiron' && this.state.getMultiRonCount() === 3) {
-      return 'Трипл-рон';
+      return 'Triple ron';
     }
     if (this.state.getOutcome() === 'multiron' && this.state.getMultiRonCount() === 2) {
-      return 'Дабл-рон';
+      return 'Double ron';
     }
   }
 
   outcome() {
     switch (this.state.getOutcome()) {
       case 'ron':
-        return 'Рон';
+        return 'Ron';
       case 'multiron':
-        return 'Дабл/трипл рон';
+        return 'Double/Triple ron';
       case 'tsumo':
-        return 'Цумо';
+        return 'Tsumo';
       case 'draw':
-        return 'Ничья';
+        return 'Exhaustive draw';
       case 'abort':
-        return 'Абортивная ничья';
+        return 'Abortive draw';
       case 'chombo':
-        return 'Чомбо';
+        return 'Chombo';
       default:
         return '';
     }
@@ -183,7 +183,7 @@ export class NavBarComponent {
   }
 
   logout() {
-    if (window.confirm("Выйти из текущего рейтинга? Для повторного входа будет нужен новый пин-код!")) {
+    if (window.confirm("Are you sure you want to logout? You will have to get a new pin code to login again")) {
       this.state.logout();
     }
   }

@@ -22,7 +22,7 @@
   *ngIf="!_dataReady"></div>
 <div class="wrap scroller-wrap" *ngIf="_dataReady && _error">
   <div style="text-align: center; padding: 30% 0;">{{_error}}</div>
-  <button class="allok" style="width: 100%" (click)="okay()">К главному экрану</button>
+  <button class="allok" style="width: 100%" (click)="okay()">Ok</button>
 </div>
 <div class="wrap scroller-wrap" *ngIf="_dataReady && !_error">
   <confirmation-scheme
@@ -39,11 +39,11 @@
         class="allok"
         (click)="confirmed=!confirmed"
         [class.pressed]="confirmed"
-    >Всё ОК!</button>
+    >It is ok!</button>
     <button
         class="confirm gradient-button"
         [disabled]="!confirmed"
         (click)="confirm()"
-    >Внести</button>
+    >Save</button>
   </div>
 </div>

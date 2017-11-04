@@ -83,7 +83,7 @@ function _addYakuToProps(outcome: AppOutcome, id: YakuId, props: WinProps, bypas
   }
 
   if (!bypassChecks && id === YakuId.RIICHI && props.yaku.indexOf(YakuId.RIICHI) === -1) {
-    alert('Чтобы добавить риичи, вернитесь назад и отметьте риичи-ставку у победителя');
+    alert('If you want to select a riichi, return back and press riichi button for the winner');
     return false;
   }
 
@@ -96,7 +96,7 @@ function _addYakuToProps(outcome: AppOutcome, id: YakuId, props: WinProps, bypas
     ) &&
     outcome.riichiBets.indexOf(props.winner) === -1
   ) {
-    alert('Чтобы добавить дабл-риичи, необходимо вернуться назад и отметить риичи-ставку у победителя');
+    alert('If you want to select a riichi, return back and press riichi button for the winner');
     return false;
   }
 

@@ -60,12 +60,12 @@ export class ConfirmationScreen {
 
   onerror(e) {
     this._dataReady = true;
-    this._error = 'Произошла ошибка при добавлении раунда. Попробуйте еще раз.';
+    this._error = "Results weren't added. Please try again";
     if (e instanceof RemoteError) {
       if (e.code === 403) {
-        this._error = 'Не удалось выполнить действие: авторизация не подтверждена';
+        this._error = "Error. Authentication wasn't confirmed";
       } else {
-        this._error = 'Не удалось выполнить действие. Возможно данный раунд уже был внесен кем-то еще?';
+        this._error = 'Error. Maybe this hand was already added by someone else?';
       }
     }
   }
