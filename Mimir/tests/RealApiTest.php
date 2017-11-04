@@ -178,7 +178,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
             'uradora'    => [0, 0],
             'kanuradora' => [0, 0],
             'openHand'   => [false, false],
-            'paoPlayer'  => []
+            'paoPlayer'  => null
         ];
 
         $dryRunData = $this->_client->execute('addRound', [$hashcode, $data, true]);

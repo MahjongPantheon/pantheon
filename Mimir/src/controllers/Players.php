@@ -402,7 +402,7 @@ class PlayersController extends Controller
 
         if (is_array($result['paoPlayer'])) {
             // pao player may be only one
-            $result['paoPlayer'] = reset(array_filter($result['paoPlayer']));
+            $result['paoPlayer'] = reset(array_filter($result['paoPlayer'])) or null;
         }
 
         return $result;
