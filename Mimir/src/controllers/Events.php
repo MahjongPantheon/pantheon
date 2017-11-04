@@ -320,8 +320,7 @@ class EventsController extends Controller
             'withLeadingDealerGameover' => $rules->withLeadingDealerGameOver(),
             'subtractStartPoints' => $rules->subtractStartPoints(),
             'seriesLength'        => $event[0]->getSeriesLength(),
-            'gamesStatus'         => $event[0]->getGamesStatus(),
-            'hideResults'         => (bool)$event[0]->getHideResults()
+            'gamesStatus'         => $event[0]->getGamesStatus()
         ];
 
         $this->_log->addInfo('Successfully received config for event id# ' . $eventId);
@@ -551,27 +550,6 @@ class EventsController extends Controller
 
         $success = $event[0]->setLastTimer(time())->save();
         $this->_log->addInfo('Successfully started timer for event id#' . $eventId);
-        return $success;
-    }
-
-    /**
-     * Toggle hide results table flag
-     *
-     * @param integer $eventId
-     * @throws InvalidParametersException
-     * @return bool
-     */
-    public function toggleHideResults($eventId)
-    {
-        $this->_log->addInfo('Toggle hide results flag for event id#' . $eventId);
-
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
-        if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
-        }
-
-        $success = $event[0]->setHideResults($event[0]->getHideResults() == 1 ? 0 : 1)->save();
-        $this->_log->addInfo('Successfully toggle hide results flag for event id#' . $eventId);
         return $success;
     }
 }

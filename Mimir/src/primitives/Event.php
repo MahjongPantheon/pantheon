@@ -46,6 +46,7 @@ class EventPrimitive extends Primitive
         'is_online'         => '_isOnline',
         'is_textlog'        => '_isTextlog',
         'sync_start'        => '_syncStart',
+        'sync_end'          => '_syncEnd',
         'auto_seating'      => '_autoSeating',
         'sort_by_games'     => '_sortByGames',
         'use_timer'         => '_useTimer',
@@ -57,7 +58,6 @@ class EventPrimitive extends Primitive
         'timezone'          => '_timezone',
         'series_length'     => '_seriesLength',
         'games_status'      => '_gamesStatus',
-        'hide_results'      => '_hideResults',
     ];
 
     protected function _getFieldsTransforms()
@@ -75,6 +75,7 @@ class EventPrimitive extends Primitive
             '_isOnline'           => $this->_integerTransform(),
             '_isTextlog'          => $this->_integerTransform(),
             '_syncStart'          => $this->_integerTransform(),
+            '_syncEnd'            => $this->_integerTransform(),
             '_autoSeating'        => $this->_integerTransform(),
             '_sortByGames'        => $this->_integerTransform(),
             '_allowPlayerAppend'  => $this->_integerTransform(),
@@ -84,7 +85,6 @@ class EventPrimitive extends Primitive
             '_statHost'           => $this->_stringTransform(),
             '_seriesLength'       => $this->_integerTransform(),
             '_gamesStatus'        => $this->_stringTransform(true),
-            '_hideResults'        => $this->_integerTransform(),
             '_ruleset'            => [
                 'serialize' => function (Ruleset $rules) {
                     return $rules->title();
@@ -178,6 +178,12 @@ class EventPrimitive extends Primitive
      */
     protected $_syncStart;
     /**
+     * Should tables finish synchronously or not: if yes, when out of time, table will
+     * be taken into 'pre-finished' state. Last round may be cancelled in this state.
+     * @var integer
+     */
+    protected $_syncEnd;
+    /**
      * enable automatic seating feature. Disabled if allow_player_append == true.
      * @var int
      */
@@ -228,11 +234,6 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_seriesLength;
-    /**
-     * Should be rating table hidden or not
-     * @var integer
-     */
-    protected $_hideResults;
     /**
      * Status of games in event: one of
      * - seating_ready
@@ -783,18 +784,18 @@ class EventPrimitive extends Primitive
     /**
      * @return integer
      */
-    public function getHideResults()
+    public function getSyncEnd()
     {
-        return $this->_hideResults;
+        return $this->_syncEnd;
     }
 
     /**
-     * @param integer $hideResults
+     * @param integer $syncEnd
      * @return EventPrimitive
      */
-    public function setHideResults($hideResults)
+    public function setSyncEnd($syncEnd)
     {
-        $this->_hideResults = $hideResults;
+        $this->_syncEnd = $syncEnd;
         return $this;
     }
 

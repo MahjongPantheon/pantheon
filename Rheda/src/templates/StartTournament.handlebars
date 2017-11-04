@@ -38,20 +38,20 @@
 
 {{#reason}}<h2>Невозможно сделать новую рассадку: {{reason}}</h2>{{/reason}}
 
-<br />
-<h3>Скрыть таблицу с результатами игроков</h3>
-<p>Это может быть полезно для сохранения интриги на последних ханчанах турнира.</p>
+{{#finalizeSessions}}
+    <br />
+    <h3>Завершить игры</h3>
+    <p>
+        После нажатия на кнопку невозможно будет отменить раздачи. Нажатие на эту кнопку необходимо для
+        обновления рейтинговой таблицы согласно результатам игры.
+    </p>
 
-{{#form action='/tourn/toggleHideResults/' method='post'}}
-    <button type="submit" style="font-size: 50px; height: 100px;">
-        {{^hideResults}}
-            HIDE
-        {{/hideResults}}
-        {{#hideResults}}
-            SHOW
-        {{/hideResults}}
-    </button>
-{{/form}}
+    {{#form action='/tourn/finalizeSessions/' method='post'}}
+        <button type="submit" style="font-size: 50px; height: 100px;">
+            FINALIZE
+        </button>
+    {{/form}}
+{{/finalizeSessions}}
 
 {{#showTimerControls}}
     <br />
