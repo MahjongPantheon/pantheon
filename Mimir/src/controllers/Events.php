@@ -300,6 +300,7 @@ class EventsController extends Controller
             'minPenalty'          => $rules->minPenalty(),
             'maxPenalty'          => $rules->maxPenalty(),
             'penaltyStep'         => $rules->penaltyStep(),
+            'yakuWithPao'         => $rules->yakuWithPao(),
             'eventTitle'          => $event[0]->getTitle(),
             'eventDescription'    => $event[0]->getDescription(),
             'eventStatHost'       => $event[0]->getStatHost(),
