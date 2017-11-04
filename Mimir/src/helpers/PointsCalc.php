@@ -55,7 +55,7 @@ class PointsCalc
             throw new InvalidParametersException('Ron must have winner and loser');
         }
 
-        if (!empty($paoPlayerId)) {
+        if (!empty($paoPlayerId) && $paoPlayerId != $loserId) {
             $currentScores[$winnerId] += $pointsDiff['winner'];
             $currentScores[$loserId] += $pointsDiff['loser'] / 2;
             $currentScores[$paoPlayerId] += $pointsDiff['loser'] / 2;

@@ -29,7 +29,7 @@ import { LCurrentGame, LUser, LTimerState, LWinItem, LGameConfig } from '../../i
 import { RSessionOverview, RRoundPaymentsInfo } from '../../interfaces/remote';
 
 export type AppScreen = 'overview' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
-  | 'yakuSelect' | 'confirmation' | 'newGame' | 'lastResults' | 'lastRound' | 'login';
+  | 'yakuSelect' | 'confirmation' | 'newGame' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect';
 export type LoadingSet = {
   games: boolean,
   overview: boolean,
@@ -328,6 +328,21 @@ export class AppState {
         }
         break;
       case 'yakuSelect':
+        switch (this._currentOutcome.selectedOutcome) {
+          case 'ron':
+          case 'tsumo':
+          case 'multiron':
+            if (this.winnerHasYakuWithPao()) {
+              this._currentScreen = 'paoSelect';
+            } else {
+              this._currentScreen = 'confirmation';
+            }
+            break;
+          default:
+            this._currentScreen = 'confirmation';
+        }
+        break;
+      case 'paoSelect':
         this._currentScreen = 'confirmation';
         break;
       case 'lastResults':
@@ -358,7 +373,11 @@ export class AppState {
           case 'ron':
           case 'tsumo':
           case 'multiron':
-            this._currentScreen = 'yakuSelect';
+            if (this.winnerHasYakuWithPao()) {
+              this._currentScreen = 'paoSelect';
+            } else {
+              this._currentScreen = 'yakuSelect';
+            }
             break;
           case 'draw':
           case 'abort':
@@ -367,6 +386,9 @@ export class AppState {
             break;
           default: ;
         }
+        break;
+      case 'paoSelect':
+        this._currentScreen = 'yakuSelect';
         break;
       case 'otherTable':
         this._currentScreen = 'otherTablesList';

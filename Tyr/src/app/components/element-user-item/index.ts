@@ -21,6 +21,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Player } from '../../interfaces/common';
 import { AppState } from '../../primitives/appstate';
+import { intersection } from 'lodash';
 
 @Component({
   selector: 'user-item',
@@ -32,28 +33,47 @@ export class UserItemComponent {
   @Input() state: AppState;
   @Input() userData: Player;
   @Input() seat: string;
+  @Input() paoSelectionMode: boolean;
 
   @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao']>();
 
   // helpers
   showWinButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'draw']
-    .indexOf(this.state.getOutcome());
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
 
   showPaoButton = () => {
-    return (
-      -1 !== ['ron', 'multiron', 'tsumo'].indexOf(this.state.getOutcome()) &&
-      this.state.winnerHasYakuWithPao()
-    );
+    if (!this.paoSelectionMode) {
+      return false;
+    }
+
+    switch (this.state.getOutcome()) {
+      case 'ron':
+      case 'tsumo':
+        // no pao for current winner or loser
+        return this.state.getWinningUsers().indexOf(this.userData) === -1 &&
+          this.state.getLosingUsers().indexOf(this.userData) === -1;
+      case 'multiron':
+        // no pao for loser and winner with yakuman
+        if (this.state.getLosingUsers().indexOf(this.userData) !== -1) {
+          return false;
+        }
+        for (let win of this.state.getWins()) {
+          if (intersection(win.yaku, this.state.getGameConfig('yakuWithPao')).length !== 0) {
+            return false;
+          }
+        }
+        return true;
+    }
   };
 
   showLoseButton = () => -1 !== ['ron', 'multiron', 'chombo']
-    .indexOf(this.state.getOutcome());
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
 
   showRiichiButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'abort', 'draw']
-    .indexOf(this.state.getOutcome());
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
 
   showDeadButton = () => -1 !== ['draw']
-    .indexOf(this.state.getOutcome());
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
 
   winPressed = () => -1 !== this.state.getWinningUsers()
     .indexOf(this.userData);

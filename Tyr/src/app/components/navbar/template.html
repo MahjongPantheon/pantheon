@@ -100,6 +100,11 @@
      *ngIf="isScreen('login')">
   Вход в систему
 </div>
+<!-- Navbar for pao screen -->
+<div class="outcome-title"
+     *ngIf="isScreen('paoSelect')">
+  Якуман: выбор пао
+</div>
 <!-- Navbar for other tables list -->
 <div class="outcome-title"
      *ngIf="isScreen('otherTablesList')">
@@ -112,6 +117,11 @@
 <button
   *ngIf="isScreen('playersSelect')"
   [disabled]="!mayGoNext('playersSelect')"
+  class="fwd-button gradient-button"
+  (click)="nextScreen()"
+><custom-icon [type]="'next'"></custom-icon></button>
+<button
+  *ngIf="isScreen('paoSelect')"
   class="fwd-button gradient-button"
   (click)="nextScreen()"
 ><custom-icon [type]="'next'"></custom-icon></button>
