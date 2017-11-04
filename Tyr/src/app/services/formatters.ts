@@ -148,6 +148,7 @@ export function formatRoundToRemote(state: AppState): RRound {
         riichi: state.getRiichiUsers().map((player) => player.id).join(','),
         winner_id: state.getWinningUsers()[0].id,
         loser_id: state.getLosingUsers()[0].id,
+        pao_player_id: state.getPaoUsers()[0].id,
         han: state.getHan() + state.getDora(),
         fu: state.getFu(),
         multi_ron: null,
@@ -166,6 +167,7 @@ export function formatRoundToRemote(state: AppState): RRound {
         return {
           riichi: riichi,
           winner_id: win.winner,
+          pao_player_id: win.paoPlayerId,
           han: win.han + win.dora,
           fu: state.getFuOf(win.winner),
           dora: win.dora,
@@ -192,6 +194,7 @@ export function formatRoundToRemote(state: AppState): RRound {
         outcome: 'tsumo',
         riichi: state.getRiichiUsers().map((player) => player.id).join(','),
         winner_id: state.getWinningUsers()[0].id,
+        pao_player_id: state.getPaoUsers()[0].id,
         han: state.getHan() + state.getDora(),
         fu: state.getFu(),
         multi_ron: null,

@@ -51,6 +51,7 @@ export interface LTimerState {
 
 export interface LWinItem {
   winner: number;
+  paoPlayerId?: number;
   han: number;
   fu: number;
   dora: number;
