@@ -29,6 +29,7 @@ import { AppState } from '../../primitives/appstate';
 })
 export class PlayersSelectScreen {
   @Input() state: AppState;
+  @Input() paoSelectionMode: boolean;
   outcome() {
     return this.state.getOutcome();
   }
