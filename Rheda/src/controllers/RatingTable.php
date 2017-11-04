@@ -110,14 +110,7 @@ class RatingTable extends Controller
             $errMsg = $e->getMessage();
         }
 
-        $hideResults = $this->_rules->hideResults();
         $showAdminWarning = false;
-
-        // admin should be able to see results
-        if ($this->_adminAuthOk() && $hideResults) {
-            $hideResults = false;
-            $showAdminWarning = true;
-        }
 
         return [
             'error'             => $errMsg,
@@ -130,7 +123,6 @@ class RatingTable extends Controller
             'orderByAvgScore'   => $orderBy == 'avg_score',
             'orderByName'       => $orderBy == 'name',
 
-            'hideResults'       => $hideResults,
             'showAdminWarning'  => $showAdminWarning,
         ];
     }
