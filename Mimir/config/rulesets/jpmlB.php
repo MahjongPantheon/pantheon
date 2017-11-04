@@ -42,6 +42,7 @@ class RulesetJpmlB extends Ruleset
         'withKiriageMangan'     => true,
         'tonpuusen'             => false,
         'gameExpirationTime'    => false,
+        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
         'minPenalty'            => 10,
         'maxPenalty'            => 200,
         'penaltyStep'           => 10,
