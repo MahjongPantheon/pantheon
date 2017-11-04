@@ -58,7 +58,10 @@ export class UserItemComponent {
           return false;
         }
         for (let win of this.state.getWins()) {
-          if (intersection(win.yaku, this.state.getGameConfig('yakuWithPao')).length !== 0) {
+          if (
+            win.winner === this.userData.id &&
+            intersection(win.yaku, this.state.getGameConfig('yakuWithPao')).length !== 0
+          ) {
             return false;
           }
         }

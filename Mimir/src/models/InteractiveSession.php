@@ -151,7 +151,7 @@ class InteractiveSessionModel extends Model
             };
 
             // Warning! Should match PlayersController::getLastRound return format!
-            return [
+            $result = [
                 'outcome'    => $round->getOutcome(),
                 'penaltyFor' => $round->getOutcome() === 'chombo' ? $round->getLoserId() : null,
                 'riichiIds'  => $round->getRiichiIds(),
@@ -162,7 +162,7 @@ class InteractiveSessionModel extends Model
                 'scores'     => $currentScores, // scores before payments!
                 'payments'   => $paymentsInfo,
                 'winner'     => $multiGet($round, 'getWinnerId'),
-                'paoPlayer'  => array_filter($multiGet($round, 'getPaoPlayerId')),
+                'paoPlayer'  => $multiGet($round, 'getPaoPlayerId'),
                 'yaku'       => $multiGet($round, 'getYaku'),
                 'han'        => $multiGet($round, 'getHan'),
                 'fu'         => $multiGet($round, 'getFu'),
@@ -172,6 +172,13 @@ class InteractiveSessionModel extends Model
                 'kanuradora' => $multiGet($round, 'getKanuradora'),
                 'openHand'   => $multiGet($round, 'getOpenHand')
             ];
+
+            if (is_array($result['paoPlayer'])) {
+                // pao player may be only one
+                $result['paoPlayer'] = reset(array_filter($result['paoPlayer']));
+            }
+
+            return $result;
         }
 
         return $round->save() && $session->updateCurrentState($round) && $this->_trackUpdate($gameHashcode);

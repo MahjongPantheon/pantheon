@@ -20,6 +20,8 @@
 
 import { Player } from '../../interfaces/common';
 import { AppOutcome } from '../../interfaces/app';
+import { YakuId } from '../yaku';
+import { intersection } from 'lodash';
 
 export function toggleWinner(p: Player, outcome: AppOutcome) {
   switch (outcome.selectedOutcome) {
@@ -72,7 +74,7 @@ export function toggleLoser(p: Player, outcome: AppOutcome) {
   }
 }
 
-export function togglePao(p: Player, outcome: AppOutcome) {
+export function togglePao(p: Player, outcome: AppOutcome, yakuWithPao: YakuId[]) {
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
@@ -80,10 +82,11 @@ export function togglePao(p: Player, outcome: AppOutcome) {
       break;
     case 'multiron':
       for (let playerId in outcome.wins) {
-        if (outcome.wins[playerId].paoPlayerId === p.id && outcome.wins[playerId]) {
-          // TODO: find outcome with yakuman in pao list, toggle pao_id there
+        if (intersection(outcome.wins[playerId].yaku, yakuWithPao).length !== 0) {
+          outcome.wins[playerId].paoPlayerId = outcome.wins[playerId].paoPlayerId === p.id ? null : p.id;
         }
       }
+      break;
     default:
       throw new Error('No pao exist on this outcome');
   }
