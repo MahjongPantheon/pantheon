@@ -47,6 +47,7 @@ class RulesetTenhounet extends Ruleset
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
         'gameExpirationTime'    => 27, // hours, to cover JST difference
+        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
         'withLeadingDealerGameOver' => true,
         'timerPolicy'           => 'none',
         'yellowZone'            => 0,

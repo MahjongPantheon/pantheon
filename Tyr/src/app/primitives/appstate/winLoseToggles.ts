@@ -20,6 +20,8 @@
 
 import { Player } from '../../interfaces/common';
 import { AppOutcome } from '../../interfaces/app';
+import { YakuId } from '../yaku';
+import { intersection } from 'lodash';
 
 export function toggleWinner(p: Player, outcome: AppOutcome) {
   switch (outcome.selectedOutcome) {
@@ -69,6 +71,24 @@ export function toggleLoser(p: Player, outcome: AppOutcome) {
       break;
     default:
       throw new Error('No losers exist on this outcome');
+  }
+}
+
+export function togglePao(p: Player, outcome: AppOutcome, yakuWithPao: YakuId[]) {
+  switch (outcome.selectedOutcome) {
+    case 'ron':
+    case 'tsumo':
+      outcome.paoPlayerId = outcome.paoPlayerId === p.id ? null : p.id;
+      break;
+    case 'multiron':
+      for (let playerId in outcome.wins) {
+        if (intersection(outcome.wins[playerId].yaku, yakuWithPao).length !== 0) {
+          outcome.wins[playerId].paoPlayerId = outcome.wins[playerId].paoPlayerId === p.id ? null : p.id;
+        }
+      }
+      break;
+    default:
+      throw new Error('No pao exist on this outcome');
   }
 }
 
@@ -125,6 +145,25 @@ export function getLosingUsers(outcome: AppOutcome, playerIdMap: PMap): Player[]
       return outcome.loser
         ? [playerIdMap[outcome.loser]]
         : [];
+    default:
+      return [];
+  }
+}
+
+export function getPaoUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
+  switch (outcome.selectedOutcome) {
+    case 'ron':
+    case 'tsumo':
+      return outcome.paoPlayerId
+        ? [playerIdMap[outcome.paoPlayerId]]
+        : [];
+    case 'multiron':
+      return Object.keys(outcome.wins).reduce<Player[]>((acc, playerId) => {
+        if (outcome.wins[playerId].paoPlayerId) {
+          acc.push(playerIdMap[outcome.wins[playerId].paoPlayerId]);
+        }
+        return acc;
+      }, []);
     default:
       return [];
   }

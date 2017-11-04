@@ -58,7 +58,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             50, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 3200, 0, -3200, 0], $actualPoints);
@@ -76,7 +77,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             50, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 4800, 0, -4800, 0], $actualPoints);
@@ -94,7 +96,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             20, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 5200, 0, -5200, 0], $actualPoints);
@@ -109,7 +112,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             30, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 7700, 0, -7700, 0], $actualPoints);
@@ -124,7 +128,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             40, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 8000, 0, -8000, 0], $actualPoints);
@@ -139,7 +144,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             40, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 12000, 0, -12000, 0], $actualPoints);
@@ -159,7 +165,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             30, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 8000, 0, -8000, 0], $actualPoints);
@@ -174,7 +181,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             60, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 8000, 0, -8000, 0], $actualPoints);
@@ -189,7 +197,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             30, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 12000, 0, -12000, 0], $actualPoints);
@@ -204,7 +213,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             60, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 12000, 0, -12000, 0], $actualPoints);
@@ -222,7 +232,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             20, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 7700, 0, -7700, 0], $actualPoints);
@@ -237,7 +248,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             30, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 11600, 0, -11600, 0], $actualPoints);
@@ -252,7 +264,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             40, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 12000, 0, -12000, 0], $actualPoints);
@@ -267,7 +280,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             40, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 18000, 0, -18000, 0], $actualPoints);
@@ -285,7 +299,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             40, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 32000, 0, -32000, 0], $actualPoints);
@@ -302,7 +317,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             40, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 24000, 0, -24000, 0], $actualPoints);
@@ -319,7 +335,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             50, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => -1600, 3200, -800, -800], $actualPoints);
@@ -336,7 +353,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             50, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 4800, -1600, -1600, -1600], $actualPoints);
@@ -353,7 +371,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             20, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 5200, -2600, -1300, -1300], $actualPoints);
@@ -367,7 +386,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             30, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 7900, -3900, -2000, -2000], $actualPoints);
@@ -381,7 +401,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             40, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 8000, -4000, -2000, -2000], $actualPoints);
@@ -395,7 +416,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             40, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 12000, -6000, -3000, -3000], $actualPoints);
@@ -414,7 +436,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             30, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 8000, -4000, -2000, -2000], $actualPoints);
@@ -428,7 +451,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             60, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 8000, -4000, -2000, -2000], $actualPoints);
@@ -442,7 +466,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             30, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 12000, -4000, -4000, -4000], $actualPoints);
@@ -456,7 +481,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             60, // fu
             [], // riichi list
             0, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 12000, -4000, -4000, -4000], $actualPoints);
@@ -529,7 +555,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             40, // fu
             [], // riichi list
             3, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 18900, 0, -18900, 0], $actualPoints);
@@ -543,7 +570,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             30, // fu
             [], // riichi list
             4, // honba
-            0 // riichi bets count
+            0, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 13200, -4400, -4400, -4400], $actualPoints);
@@ -561,7 +589,8 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             40, // fu
             [], // riichi list
             0, // honba
-            3 // riichi bets count
+            3, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 21000, 0, -18000, 0], $actualPoints);
@@ -575,9 +604,66 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             30, // fu
             [], // riichi list
             0, // honba
-            4 // riichi bets count
+            4, // riichi bets count
+            null // pao player id
         );
 
         $this->assertEquals([1 => 16000, -4000, -4000, -4000], $actualPoints);
+    }
+
+    public function testYakuman()
+    {
+        $actualPoints = PointsCalc::ron(
+            $this->_ruleset,
+            false, // dealer
+            $this->_currentScores,
+            1, // winner id
+            3, // loser id
+            -1, // han
+            40, // fu
+            [], // riichi list
+            0, // honba
+            0, // riichi bets count
+            null // pao player id
+        );
+
+        $this->assertEquals([1 => 32000, 0, -32000, 0], $actualPoints);
+    }
+
+    public function testPaoTsumo()
+    {
+        $actualPoints = PointsCalc::tsumo(
+            $this->_ruleset,
+            2, // dealer
+            $this->_currentScores,
+            1, // winner id
+            -1, // han
+            40, // fu
+            [], // riichi list
+            0, // honba
+            0, // riichi bets count
+            3 // pao player id
+        );
+
+        $this->assertEquals([1 => 32000, 0, -32000, 0], $actualPoints);
+    }
+
+    public function testPaoRon()
+    {
+        $actualPoints = PointsCalc::ron(
+            $this->_ruleset,
+            false, // dealer
+            $this->_currentScores,
+            1, // winner id
+            2, // loser id
+            -1, // han
+            40, // fu
+            [], // riichi list
+            0, // honba
+            0, // riichi bets count
+            3 // pao player id
+        );
+
+        $this->assertEquals([1 => 32000, -16000, -16000, 0], $actualPoints);
     }
 }

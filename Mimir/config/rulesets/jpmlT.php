@@ -43,6 +43,7 @@ class RulesetJpmlT extends Ruleset
         'tonpuusen'             => false,
         'autoRegisterUsers'     => false,
         'gameExpirationTime'    => false,
+        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
         'minPenalty'            => 10,
         'maxPenalty'            => 200,
         'penaltyStep'           => 10,

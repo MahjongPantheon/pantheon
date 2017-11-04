@@ -18,30 +18,30 @@
     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <svg
-    width="100%"
-    viewBox="0 0 280 400"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    >
+  width="100%"
+  viewBox="0 0 280 400"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
   <defs>
     <path
-        id="curve-top-left"
-        d="m50,190c40,-20 80,-20 80,-140"/>
+      id="curve-top-left"
+      d="m50,190c40,-20 80,-20 80,-140"/>
     <path
-        id="curve-top-right"
-        d="m150,50c7,100 7,100 80,140"/>
+      id="curve-top-right"
+      d="m150,50c7,100 7,100 80,140"/>
     <path
-        id="curve-bottom-left"
-        d="m50,210c40,20 80,20 80,140"/>
+      id="curve-bottom-left"
+      d="m50,210c40,20 80,20 80,140"/>
     <path
-        id="curve-bottom-right"
-        d="m150,350c7,-100 7,-100 80,-140"/>
+      id="curve-bottom-right"
+      d="m150,350c7,-100 7,-100 80,-140"/>
     <path
-        id="curve-top-bottom"
-        d="m140,50l0,300"/>
+      id="curve-top-bottom"
+      d="m140,50l0,300"/>
     <path
-        id="curve-left-right"
-        d="m50,200l180,0"/>
+      id="curve-left-right"
+      d="m50,200l180,0"/>
   </defs>
   <symbol id="riichi-stick" viewBox="0 0 300 50">
     <rect stroke="#000" height="50" width="300" y="0" x="0" stroke-width="7" fill="#ffffff"/>
@@ -50,130 +50,167 @@
 
   <!-- Round index -->
   <path
-      d="m70,78l-30,-30l0,60l60,0l0,-60l-60,0l30,30z"
-      fill="#686"
-      stroke-width="1.5"/>
+    d="m70,78l-30,-30l0,60l60,0l0,-60l-60,0l30,30z"
+    fill="#686"
+    stroke-width="1.5"/>
   
   <text
-      xml:space="preserve"
-      text-anchor="middle"
-      font-size="36"
-      x="70"
-      y="90"
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="36"
+    x="70"
+    y="90"
   >{{round | formatRound}}</text>
   <!--  -->
 
   <!-- User names -->
   <text
-      xml:space="preserve"
-      text-anchor="middle"
-      font-size="24"
-      y="30"
-      x="140"
-      >{{toimen.displayName}} {{seatToimen}}</text>
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="24"
+    y="30"
+    x="140"
+  >{{toimen.displayName}} {{seatToimen}}</text>
   <text
-      xml:space="preserve"
-      text-anchor="middle"
-      font-size="24"
-      y="380"
-      x="140"
-      >{{self.displayName}} {{seatSelf}}</text>
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="24"
+    y="380"
+    x="140"
+  >{{self.displayName}} {{seatSelf}}</text>
   <text
-      transform="rotate(-90 25,200) "
-      xml:space="preserve"
-      text-anchor="middle"
-      font-size="24"
-      y="200"
-      x="25"
-      >{{kamicha.displayName}} {{seatKamicha}}</text>
+    transform="rotate(-90 25,200) "
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="24"
+    y="200"
+    x="25"
+  >{{kamicha.displayName}} {{seatKamicha}}</text>
   <text
-      transform="rotate(90 250,200) "
-      xml:space="preserve"
-      text-anchor="middle"
-      font-size="24"
-      y="200"
-      x="250"
-      >{{shimocha.displayName}} {{seatShimocha}}</text>
+    transform="rotate(90 250,200) "
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="24"
+    y="200"
+    x="250"
+  >{{shimocha.displayName}} {{seatShimocha}}</text>
 
   <!-- Riichi markers -->
   <use
-      xlink:href="#riichi-stick"
-      *ngIf="shimochaRiichi"
-      xml:space="preserve"
-      y="310"
-      x="230"
-      width="100"
-      height="10"
-      transform="rotate(-90 230,310)"
+    xlink:href="#riichi-stick"
+    *ngIf="shimochaRiichi"
+    xml:space="preserve"
+    y="310"
+    x="230"
+    width="100"
+    height="10"
+    transform="rotate(-90 230,310)"
   ></use>
 
   <use
-      xlink:href="#riichi-stick"
-      *ngIf="selfRiichi"
-      xml:space="preserve"
-      y="340"
-      x="40"
-      width="100"
-      height="10"
+    xlink:href="#riichi-stick"
+    *ngIf="selfRiichi"
+    xml:space="preserve"
+    y="340"
+    x="40"
+    width="100"
+    height="10"
   ></use>
 
   <use
-      xlink:href="#riichi-stick"
-      *ngIf="kamichaRiichi"
-      xml:space="preserve"
-      y="90"
-      x="50"
-      width="100"
-      height="10"
-      transform="rotate(90 50,90)"
+    xlink:href="#riichi-stick"
+    *ngIf="kamichaRiichi"
+    xml:space="preserve"
+    y="90"
+    x="50"
+    width="100"
+    height="10"
+    transform="rotate(90 50,90)"
   ></use>
 
   <use
-      xlink:href="#riichi-stick"
-      *ngIf="toimenRiichi"
-      xml:space="preserve"
-      y="50"
-      x="150"
-      width="100"
-      height="10"
+    xlink:href="#riichi-stick"
+    *ngIf="toimenRiichi"
+    xml:space="preserve"
+    y="50"
+    x="150"
+    width="100"
+    height="10"
   ></use>
   
   <!-- Chombo markers -->
   <text
-      *ngIf="shimochaChombo"
-      xml:space="preserve"
-      text-anchor="middle"
-      font-size="30"
-      y="250"
-      x="230"
+    *ngIf="shimochaChombo"
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="30"
+    y="250"
+    x="230"
   >☹</text>
   
   <text
-      *ngIf="selfChombo"
-      xml:space="preserve"
-      text-anchor="middle"
-      font-size="30"
-      y="350"
-      x="110"
+    *ngIf="selfChombo"
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="30"
+    y="350"
+    x="110"
   >☹</text>
   
   <text
-      *ngIf="kamichaChombo"
-      xml:space="preserve"
-      text-anchor="middle"
-      font-size="30"
-      y="170"
-      x="50"
+    *ngIf="kamichaChombo"
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="30"
+    y="170"
+    x="50"
   >☹</text>
   
   <text
-      *ngIf="toimenChombo"
-      xml:space="preserve"
-      text-anchor="middle"
-      font-size="30"
-      y="70"
-      x="170"
+    *ngIf="toimenChombo"
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="30"
+    y="70"
+    x="170"
   >☹</text>
+
+  <!-- Pao markers -->
+  <text
+    *ngIf="shimochaPao"
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="30"
+    y="250"
+    x="230"
+  >🤦‍</text>
+  
+  <text
+    *ngIf="selfPao"
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="30"
+    y="350"
+    x="110"
+  >🤦‍</text>
+  
+  <text
+    *ngIf="kamichaPao"
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="30"
+    y="170"
+    x="50"
+  >🤦‍</text>
+  
+  <text
+    *ngIf="toimenPao"
+    xml:space="preserve"
+    text-anchor="middle"
+    font-size="30"
+    y="70"
+    x="170"
+  >🤦‍</text>
   
   <!-- cross-lines -->
   <use
@@ -235,14 +272,14 @@
   >{{topLeftPayment.title}}</text>
   
   <use
-      xlink:href="#riichi-stick"
-      *ngIf="topLeftPayment && topLeftPayment.riichi"
-      xml:space="preserve"
-      y="145"
-      x="130"
-      width="50"
-      height="5"
-      transform="rotate(135 130,145)"
+    xlink:href="#riichi-stick"
+    *ngIf="topLeftPayment && topLeftPayment.riichi"
+    xml:space="preserve"
+    y="145"
+    x="130"
+    width="50"
+    height="5"
+    transform="rotate(135 130,145)"
   ></use>
   
   <text
@@ -255,14 +292,14 @@
   >{{topRightPayment.title}}</text>
 
   <use
-      xlink:href="#riichi-stick"
-      *ngIf="topRightPayment && topRightPayment.riichi"
-      xml:space="preserve"
-      y="145"
-      x="160"
-      width="50"
-      height="5"
-      transform="rotate(45 160,145)"
+    xlink:href="#riichi-stick"
+    *ngIf="topRightPayment && topRightPayment.riichi"
+    xml:space="preserve"
+    y="145"
+    x="160"
+    width="50"
+    height="5"
+    transform="rotate(45 160,145)"
   ></use>
   
   <text
@@ -275,14 +312,14 @@
   >{{bottomLeftPayment.title}}</text>
   
   <use
-      xlink:href="#riichi-stick"
-      *ngIf="bottomLeftPayment && bottomLeftPayment.riichi"
-      xml:space="preserve"
-      y="215"
-      x="90"
-      width="50"
-      height="5"
-      transform="rotate(45 90,215)"
+    xlink:href="#riichi-stick"
+    *ngIf="bottomLeftPayment && bottomLeftPayment.riichi"
+    xml:space="preserve"
+    y="215"
+    x="90"
+    width="50"
+    height="5"
+    transform="rotate(45 90,215)"
   ></use>
   
   <text
@@ -295,14 +332,14 @@
   >{{bottomRightPayment.title}}</text>
 
   <use
-      xlink:href="#riichi-stick"
-      *ngIf="bottomRightPayment && bottomRightPayment.riichi"
-      xml:space="preserve"
-      y="220"
-      x="195"
-      width="50"
-      height="5"
-      transform="rotate(135 195,220)"
+    xlink:href="#riichi-stick"
+    *ngIf="bottomRightPayment && bottomRightPayment.riichi"
+    xml:space="preserve"
+    y="220"
+    x="195"
+    width="50"
+    height="5"
+    transform="rotate(135 195,220)"
   ></use>
 
   <text
@@ -315,14 +352,14 @@
   >{{topBottomPayment.title}}</text>
   
   <use
-      xlink:href="#riichi-stick"
-      *ngIf="topBottomPayment && topBottomPayment.riichi"
-      xml:space="preserve"
-      y="200"
-      x="135"
-      width="50"
-      height="5"
-      transform="rotate(90 135,200)"
+    xlink:href="#riichi-stick"
+    *ngIf="topBottomPayment && topBottomPayment.riichi"
+    xml:space="preserve"
+    y="200"
+    x="135"
+    width="50"
+    height="5"
+    transform="rotate(90 135,200)"
   ></use>
 
   <text
@@ -334,74 +371,74 @@
   >{{leftRightPayment.title}}</text>
   
   <use
-      xlink:href="#riichi-stick"
-      *ngIf="leftRightPayment && leftRightPayment.riichi"
-      xml:space="preserve"
-      y="203"
-      x="90"
-      width="50"
-      height="5"
+    xlink:href="#riichi-stick"
+    *ngIf="leftRightPayment && leftRightPayment.riichi"
+    xml:space="preserve"
+    y="203"
+    x="90"
+    width="50"
+    height="5"
   ></use>
 
   
   <!-- arrow-head triangles -->
   
   <path
-      *ngIf="topLeftPayment && topLeftPayment.backward"
-      d="m130,45l-3,13l6,0l-3,-13z"
-      stroke-width="1.5"/>
+    *ngIf="topLeftPayment && topLeftPayment.backward"
+    d="m130,45l-3,13l6,0l-3,-13z"
+    stroke-width="1.5"/>
   <path
-      *ngIf="topBottomPayment && topBottomPayment.backward"
-      d="m140,45l-3,13l6,0l-3,-13z"
-      stroke-width="1.5"/>
+    *ngIf="topBottomPayment && topBottomPayment.backward"
+    d="m140,45l-3,13l6,0l-3,-13z"
+    stroke-width="1.5"/>
   <path
-      *ngIf="topRightPayment && topRightPayment.backward"
-      d="m150,45l-3,13l6,0l-3,-13z"
-      stroke-width="1.5"/>
+    *ngIf="topRightPayment && topRightPayment.backward"
+    d="m150,45l-3,13l6,0l-3,-13z"
+    stroke-width="1.5"/>
 
   
   <path
-      *ngIf="bottomLeftPayment && bottomLeftPayment.backward"
-      d="m130,355l-3,-13l6,0l-3,13z"
-      stroke-width="1.5"/>
+    *ngIf="bottomLeftPayment && bottomLeftPayment.backward"
+    d="m130,355l-3,-13l6,0l-3,13z"
+    stroke-width="1.5"/>
   <path
-      *ngIf="topBottomPayment && !topBottomPayment.backward"
-      d="m140,355l-3,-13l6,0l-3,13z"
-      stroke-width="1.5"/>
+    *ngIf="topBottomPayment && !topBottomPayment.backward"
+    d="m140,355l-3,-13l6,0l-3,13z"
+    stroke-width="1.5"/>
   <path
-      *ngIf="bottomRightPayment && bottomRightPayment.backward"
-      d="m150,355l-3,-13l6,0l-3,13z"
-      stroke-width="1.5"/>
+    *ngIf="bottomRightPayment && bottomRightPayment.backward"
+    d="m150,355l-3,-13l6,0l-3,13z"
+    stroke-width="1.5"/>
 
   
   <path
-      *ngIf="topLeftPayment && !topLeftPayment.backward"
-      transform="rotate(-25 45,190)"
-      d="m45,192l13,3l0,-6l-13,3z"
-      stroke-width="1.5"/>
+    *ngIf="topLeftPayment && !topLeftPayment.backward"
+    transform="rotate(-25 45,190)"
+    d="m45,192l13,3l0,-6l-13,3z"
+    stroke-width="1.5"/>
   <path
-      *ngIf="leftRightPayment && leftRightPayment.backward"
-      d="m45,200l13,3l0,-6l-13,3z"
-      stroke-width="1.5"/>
+    *ngIf="leftRightPayment && leftRightPayment.backward"
+    d="m45,200l13,3l0,-6l-13,3z"
+    stroke-width="1.5"/>
   <path
-      *ngIf="bottomLeftPayment && !bottomLeftPayment.backward"
-      transform="rotate(25 45,210)"
-      d="m45,208l13,3l0,-6l-13,3z"
-      stroke-width="1.5"/>
+    *ngIf="bottomLeftPayment && !bottomLeftPayment.backward"
+    transform="rotate(25 45,210)"
+    d="m45,208l13,3l0,-6l-13,3z"
+    stroke-width="1.5"/>
 
   
   <path
-      *ngIf="topRightPayment && !topRightPayment.backward"
-      transform="rotate(25 235,190)"
-      d="m235,192l-13,3l0,-6l13,3z"
-      stroke-width="1.5"/>
+    *ngIf="topRightPayment && !topRightPayment.backward"
+    transform="rotate(25 235,190)"
+    d="m235,192l-13,3l0,-6l13,3z"
+    stroke-width="1.5"/>
   <path
-      *ngIf="leftRightPayment && !leftRightPayment.backward"
-      d="m235,200l-13,3l0,-6l13,3z"
-      stroke-width="1.5"/>
+    *ngIf="leftRightPayment && !leftRightPayment.backward"
+    d="m235,200l-13,3l0,-6l13,3z"
+    stroke-width="1.5"/>
   <path
-      *ngIf="bottomRightPayment && !bottomRightPayment.backward"
-      transform="rotate(-25 235,210)"
-      d="m235,208l-13,3l0,-6l13,3z"
-      stroke-width="1.5"/>
+    *ngIf="bottomRightPayment && !bottomRightPayment.backward"
+    transform="rotate(-25 235,210)"
+    d="m235,208l-13,3l0,-6l13,3z"
+    stroke-width="1.5"/>
 </svg>

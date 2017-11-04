@@ -389,6 +389,7 @@ class PlayersController extends Controller
             'scores'     => $lastRound->getLastSessionState()->getScores(), // scores before payments!
             'payments'   => $paymentsInfo,
             'winner'     => $multiGet($lastRound, 'getWinnerId'),
+            'paoPlayer'  => $multiGet($lastRound, 'getPaoPlayerId'),
             'yaku'       => $multiGet($lastRound, 'getYaku'),
             'han'        => $multiGet($lastRound, 'getHan'),
             'fu'         => $multiGet($lastRound, 'getFu'),
@@ -398,6 +399,11 @@ class PlayersController extends Controller
             'kanuradora' => $multiGet($lastRound, 'getKanuradora'),
             'openHand'   => $multiGet($lastRound, 'getOpenHand')
         ];
+
+        if (is_array($result['paoPlayer'])) {
+            // pao player may be only one
+            $result['paoPlayer'] = reset(array_filter($result['paoPlayer'])) or null;
+        }
 
         return $result;
     }
@@ -454,7 +460,8 @@ class PlayersController extends Controller
                     $roundItem->getFu(),
                     $riichiWinners[$roundItem->getWinnerId()]['from_players'],
                     $riichiWinners[$roundItem->getWinnerId()]['honba'],
-                    $riichiWinners[$roundItem->getWinnerId()]['from_table']
+                    $riichiWinners[$roundItem->getWinnerId()]['from_table'],
+                    $roundItem->getPaoPlayerId()
                 );
                 $payments = array_merge_recursive($payments, PointsCalc::lastPaymentsInfo());
             }
@@ -475,7 +482,8 @@ class PlayersController extends Controller
                     $round->getFu(),
                     $round->getRiichiIds(),
                     $sessionState->getHonba(),
-                    $sessionState->getRiichiBets()
+                    $sessionState->getRiichiBets(),
+                    $round->getPaoPlayerId()
                 );
                 break;
             case 'tsumo':
@@ -488,7 +496,8 @@ class PlayersController extends Controller
                     $round->getFu(),
                     $round->getRiichiIds(),
                     $sessionState->getHonba(),
-                    $sessionState->getRiichiBets()
+                    $sessionState->getRiichiBets(),
+                    $round->getPaoPlayerId()
                 );
                 break;
             case 'draw':

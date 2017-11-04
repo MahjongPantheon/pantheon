@@ -51,6 +51,7 @@ export interface LTimerState {
 
 export interface LWinItem {
   winner: number;
+  paoPlayerId?: number;
   han: number;
   fu: number;
   dora: number;
@@ -62,6 +63,7 @@ export interface LWinItem {
 }
 
 export interface LGameConfig {
+  yakuWithPao: YakuId[];
   allowedYaku: YakuId[];
   startPoints: number;
   withKazoe: boolean;

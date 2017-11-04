@@ -140,6 +140,9 @@
         "loser_id": {
           "type": "integer"
         },
+        "pao_player_id": {
+          "type": "integer"
+        },
         "han": {
           "type": "integer"
         },
@@ -208,6 +211,9 @@
               "winner_id": {
                 "type": "integer"
               },
+              "pao_player_id": {
+                "type": "integer"
+              },
               "han": {
                 "type": "integer"
               },
@@ -271,6 +277,9 @@
           "type": "string"
         },
         "winner_id": {
+          "type": "integer"
+        },
+        "pao_player_id": {
           "type": "integer"
         },
         "han": {

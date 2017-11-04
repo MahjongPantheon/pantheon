@@ -219,6 +219,11 @@ abstract class Ruleset
         return static::$_ruleset['penaltyStep'];
     }
 
+    public function yakuWithPao()
+    {
+        return static::$_ruleset['yakuWithPao'];
+    }
+
     public function redZone()
     {
         return static::$_ruleset['redZone'];

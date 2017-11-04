@@ -63,6 +63,9 @@ class RoundsHelper
         self::_csvCheckZeroOrMoreOf($roundData, 'riichi', $players);
         self::_checkOneOf($roundData, 'winner_id', explode(',', $players));
         self::_checkOneOf($roundData, 'loser_id', explode(',', $players));
+        if (!empty($roundData['pao_player_id'])) {
+            self::_checkOneOf($roundData, 'pao_player_id', explode(',', $players));
+        }
         self::_checkHan($roundData, 'han');
         // 0 for 5+ han
         self::_checkOneOf($roundData, 'fu', [20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 110, 0]);
@@ -86,6 +89,9 @@ class RoundsHelper
         foreach ($roundData['wins'] as $ron) {
             self::_csvCheckZeroOrMoreOf($ron, 'riichi', $players);
             self::_checkOneOf($ron, 'winner_id', explode(',', $players));
+            if (!empty($ron['pao_player_id'])) {
+                self::_checkOneOf($ron, 'pao_player_id', explode(',', $players));
+            }
 
             self::_checkHan($ron, 'han');
             // 0 for 5+ han
@@ -107,6 +113,9 @@ class RoundsHelper
     {
         self::_csvCheckZeroOrMoreOf($roundData, 'riichi', $players);
         self::_checkOneOf($roundData, 'winner_id', explode(',', $players));
+        if (!empty($roundData['pao_player_id'])) {
+            self::_checkOneOf($roundData, 'pao_player_id', explode(',', $players));
+        }
         self::_checkHan($roundData, 'han');
         // 0 for 5+ han
         self::_checkOneOf($roundData, 'fu', [20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 110, 0]);

@@ -96,7 +96,8 @@
 
                     {{#roundTypeRon}}
                         <b>{{winnerName}}</b> -
-                        {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}} (<b>{{loserName}}</b>),
+                        {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}}
+                            (<b>{{loserName}}</b>{{#paoPlayerName}}, пао: <b>{{paoPlayerName}}</b>{{/paoPlayerName}}),
                         {{#yakuman}}
                             якуман!
                         {{/yakuman}}
@@ -113,7 +114,8 @@
                         {{#multiRonWins}}{{! double & triple rons }}
                             <div>
                                 <b>{{winnerName}}</b> -
-                                {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}} (<b>{{loserName}}</b>),
+                                {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}}
+                                    (<b>{{loserName}}</b>{{#paoPlayerName}}, пао: <b>{{paoPlayerName}}</b>{{/paoPlayerName}}),
                                 {{#yakuman}}
                                     якуман!
                                 {{/yakuman}}
@@ -129,7 +131,8 @@
 
                     {{#roundTypeTsumo}}
                         <b>{{winnerName}}</b> -
-                        {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}} (цумо),
+                        {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}}
+                            (цумо{{#paoPlayerName}}, пао: <b>{{paoPlayerName}}</b>{{/paoPlayerName}}),
                         {{#yakuman}}
                             якуман!
                         {{/yakuman}}
