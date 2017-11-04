@@ -45,7 +45,8 @@ class PointsCalc
         $fu,
         $riichiIds,
         $honba,
-        $riichiBetsCount
+        $riichiBetsCount,
+        $paoPlayerId
     ) {
         self::resetPaymentsInfo();
         $pointsDiff = self::_calcPoints($rules, $han, $fu, false, $isDealer);
@@ -54,9 +55,17 @@ class PointsCalc
             throw new InvalidParametersException('Ron must have winner and loser');
         }
 
-        $currentScores[$winnerId] += $pointsDiff['winner'];
-        $currentScores[$loserId] += $pointsDiff['loser'];
-        self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $loserId] = $pointsDiff['winner'];
+        if (!empty($paoPlayerId) && $paoPlayerId != $loserId) {
+            $currentScores[$winnerId] += $pointsDiff['winner'];
+            $currentScores[$loserId] += $pointsDiff['loser'] / 2;
+            $currentScores[$paoPlayerId] += $pointsDiff['loser'] / 2;
+            self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $loserId] = $pointsDiff['winner'] / 2;
+            self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $paoPlayerId] = $pointsDiff['winner'] / 2;
+        } else {
+            $currentScores[$winnerId] += $pointsDiff['winner'];
+            $currentScores[$loserId] += $pointsDiff['loser'];
+            self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $loserId] = $pointsDiff['winner'];
+        }
 
         if (empty($riichiIds)) {
             $riichiIds = [];
@@ -87,15 +96,32 @@ class PointsCalc
         $fu,
         $riichiIds,
         $honba,
-        $riichiBetsCount
+        $riichiBetsCount,
+        $paoPlayerId
     ) {
         self::resetPaymentsInfo();
-        $pointsDiff = self::_calcPoints($rules, $han, $fu, true, $currentDealer == $winnerId);
 
         if (empty($winnerId)) {
             throw new InvalidParametersException('Tsumo must have winner');
         }
 
+        if (!empty($paoPlayerId)) { // tsumo pao should be treated as ron
+            return self::ron(
+                $rules,
+                $currentDealer == $winnerId,
+                $currentScores,
+                $winnerId,
+                $paoPlayerId,
+                $han,
+                $fu,
+                $riichiIds,
+                $honba,
+                $riichiBetsCount,
+                null
+            );
+        }
+
+        $pointsDiff = self::_calcPoints($rules, $han, $fu, true, $currentDealer == $winnerId);
         $currentScores[$winnerId] += $pointsDiff['winner'];
 
         if ($currentDealer == $winnerId) { // dealer tsumo

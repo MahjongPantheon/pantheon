@@ -21,6 +21,7 @@
 export interface WinItem {
   riichi: string; // comma-separated
   winner_id: number;
+  pao_player_id: number;
   han: number;
   fu: number;
   dora: number;
@@ -89,6 +90,7 @@ export type RRound
   ;
 
 export interface RGameConfig {
+  yakuWithPao: number[];
   allowedYaku: number[];
   startPoints: number;
   withKazoe: boolean;
@@ -204,6 +206,7 @@ export interface RRoundPaymentsInfoSingle {
   penaltyFor: number | null;
   honba: number;
   scores: number[];
+  paoPlayer: number;
   payments: {
     direct: { [key: string]: number },
     riichi: { [key: string]: number },
@@ -236,6 +239,7 @@ export interface RRoundPaymentsInfoMulti {
   };
 
   winner: number[];
+  paoPlayer: number;
   yaku: string[];
   han: number[];
   fu: number[];

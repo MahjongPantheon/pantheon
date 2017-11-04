@@ -82,6 +82,7 @@ export function gameConfigFormatter(config: RGameConfig): LGameConfig {
   }
 
   return {
+    yakuWithPao: (config.yakuWithPao || []).map((y) => parseInt(y.toString(), 10)),
     allowedYaku: (config.allowedYaku || []).map((y) => parseInt(y.toString(), 10)),
     startPoints: parseInt(config.startPoints.toString(), 10),
     withKazoe: !!config.withKazoe,
@@ -147,6 +148,7 @@ export function formatRoundToRemote(state: AppState): RRound {
         riichi: state.getRiichiUsers().map((player) => player.id).join(','),
         winner_id: state.getWinningUsers()[0].id,
         loser_id: state.getLosingUsers()[0].id,
+        pao_player_id: (state.getPaoUsers()[0] || { id: null }).id,
         han: state.getHan() + state.getDora(),
         fu: state.getFu(),
         multi_ron: null,
@@ -165,6 +167,7 @@ export function formatRoundToRemote(state: AppState): RRound {
         return {
           riichi: riichi,
           winner_id: win.winner,
+          pao_player_id: win.paoPlayerId,
           han: win.han + win.dora,
           fu: state.getFuOf(win.winner),
           dora: win.dora,
@@ -191,6 +194,7 @@ export function formatRoundToRemote(state: AppState): RRound {
         outcome: 'tsumo',
         riichi: state.getRiichiUsers().map((player) => player.id).join(','),
         winner_id: state.getWinningUsers()[0].id,
+        pao_player_id: (state.getPaoUsers()[0] || { id: null }).id,
         han: state.getHan() + state.getDora(),
         fu: state.getFu(),
         multi_ron: null,

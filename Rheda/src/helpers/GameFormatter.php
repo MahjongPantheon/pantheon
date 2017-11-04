@@ -185,6 +185,14 @@ class GameFormatter
             $array['winnerShort'] = $array['winnerSurname'] . ' ' . $array['winnerInitial'] . '.';
         }
 
+        if (!empty($array['paoPlayerName'])) {
+            $nameparts = explode(' ', $array['paoPlayerName']);
+            $array['paoPlayerFirstname'] = reset($nameparts);
+            $array['paoPlayerSurname'] = end($nameparts);
+            $array['paoPlayerInitial'] = mb_substr($nameparts[0], 0, 1, 'utf8');
+            $array['paoPlayerShort'] = $array['paoPlayerSurname'] . ' ' . $array['paoPlayerInitial'] . '.';
+        }
+
         return $array;
     }
 
@@ -224,6 +232,7 @@ class GameFormatter
 
                 'winnerName'        => isset($round['winner_id']) ? $playersData[$round['winner_id']]['display_name'] : null,
                 'loserName'         => isset($round['loser_id']) ? $playersData[$round['loser_id']]['display_name'] : null,
+                'paoPlayerName'     => isset($round['pao_player_id']) ? $playersData[$round['pao_player_id']]['display_name'] : null,
                 'yakuList'          => $this->_formatYaku($round),
                 'doras'             => isset($round['dora']) ? $round['dora'] : null,
                 'han'               => isset($round['han']) ? $round['han'] : null,
@@ -281,6 +290,7 @@ class GameFormatter
                 return $this->_enrichWithInitials([
                     'winnerName'    => $playersData[$win['winner_id']]['display_name'],
                     'loserName'     => $playersData[$round['loser_id']]['display_name'],
+                    'paoPlayerName' => empty($win['pao_player_id']) ? '' : $playersData[$win['pao_player_id']]['display_name'],
                     'han'           => $win['han'],
                     'fu'            => $win['fu'],
                     'yakuman'       => $win['han'] < 0,

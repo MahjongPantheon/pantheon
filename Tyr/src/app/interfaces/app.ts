@@ -28,6 +28,7 @@ export interface Outcome {
 
 export interface WinProps {
   winner: number;
+  paoPlayerId?: number;
   han: number;
   fu: number;
   possibleFu: number[];

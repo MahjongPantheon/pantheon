@@ -58,6 +58,11 @@
       *ngIf="state.currentScreen() === 'yakuSelect'"
       [state]="state"
     ></screen-yaku-select>
+    <screen-players-select
+      *ngIf="state.currentScreen() === 'paoSelect'"
+      [paoSelectionMode]="true"
+      [state]="state"
+    ></screen-players-select>
     <screen-confirmation
       *ngIf="state.currentScreen() === 'confirmation'"
       [state]="state"

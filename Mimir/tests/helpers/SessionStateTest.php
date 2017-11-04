@@ -138,6 +138,58 @@ class SessionStateTest extends \PHPUnit_Framework_TestCase
         ], $this->_state->getScores());
     }
 
+    public function testPaoRon()
+    {
+        $round = new RoundPrimitive($this->_db);
+        $round
+            ->setOutcome('ron')
+            ->setWinner($this->_players[1])
+            ->setLoser($this->_players[0])
+            ->setPaoPlayer($this->_players[2])
+            ->setHan(-1)
+            ->setFu(30)
+            ->setDora(0)
+            ->setRiichiUsers([$this->_players[2]]);
+        $this->_state->update($round);
+
+        $this->assertEquals($this->_players[1]->getId(), $this->_state->getCurrentDealer());
+        $this->assertEquals(2, $this->_state->getRound());
+        $this->assertEquals(0, $this->_state->getHonba());
+        $this->assertEquals(0, $this->_state->getRiichiBets());
+        $this->assertEquals([
+            1 => 30000 - 16000,
+            30000 + 32000 + 1000,
+            30000 - 1000 - 16000,
+            30000
+        ], $this->_state->getScores());
+    }
+
+    public function testPaoRonDealer()
+    {
+        $round = new RoundPrimitive($this->_db);
+        $round
+            ->setOutcome('ron')
+            ->setWinner($this->_players[0])
+            ->setLoser($this->_players[1])
+            ->setPaoPlayer($this->_players[2])
+            ->setHan(-1)
+            ->setFu(30)
+            ->setDora(1)
+            ->setRiichiUsers([$this->_players[2]]);
+        $this->_state->update($round);
+
+        $this->assertEquals($this->_players[0]->getId(), $this->_state->getCurrentDealer());
+        $this->assertEquals(1, $this->_state->getRound());
+        $this->assertEquals(1, $this->_state->getHonba());
+        $this->assertEquals(0, $this->_state->getRiichiBets());
+        $this->assertEquals([
+            1 => 30000 + 48000 + 1000,
+            30000 - 24000,
+            30000 - 1000 - 24000,
+            30000
+        ], $this->_state->getScores());
+    }
+
     public function testMultiRon()
     {
         $rounds = [
@@ -172,6 +224,44 @@ class SessionStateTest extends \PHPUnit_Framework_TestCase
                  30000 + 3900 - 1000 + 1000         + 1000,
                  30000                              - 1000,
                  30000                       + 2000
+        ], $this->_state->getScores());
+    }
+
+    public function testMultiRonWithPao()
+    {
+        $rounds = [
+            (new RoundPrimitive($this->_db))
+                ->setSession($this->_session)
+                ->setOutcome('ron')
+                ->setWinner($this->_players[1])
+                ->setLoser($this->_players[0])
+                ->setPaoPlayer($this->_players[3])
+                ->setHan(-1)
+                ->setFu(30)
+                ->setDora(0)
+                ->setRiichiUsers([$this->_players[1]]),
+            (new RoundPrimitive($this->_db))
+                ->setSession($this->_session)
+                ->setOutcome('ron')
+                ->setWinner($this->_players[3])
+                ->setLoser($this->_players[0])
+                ->setHan(2)
+                ->setFu(30)
+                ->setDora(1)
+                ->setRiichiUsers([$this->_players[2]]),
+        ];
+
+        $this->_state->update((new MultiRoundPrimitive($this->_db))->_setRounds($rounds));
+
+        $this->assertEquals($this->_players[1]->getId(), $this->_state->getCurrentDealer());
+        $this->assertEquals(2, $this->_state->getRound());
+        $this->assertEquals(0, $this->_state->getHonba());
+        $this->assertEquals(0, $this->_state->getRiichiBets());
+        $this->assertEquals([
+            1 => 30000 - 16000                - 2000,
+                 30000 + 32000 - 1000 + 1000          + 1000,
+                 30000                                - 1000,
+                 30000 - 16000                + 2000
         ], $this->_state->getScores());
     }
 
@@ -267,6 +357,56 @@ class SessionStateTest extends \PHPUnit_Framework_TestCase
                  30000 - 2000,
                  30000 - 2000 - 1000,
                  30000 - 2000
+        ], $this->_state->getScores());
+    }
+
+    public function testPaoTsumo()
+    {
+        $round = new RoundPrimitive($this->_db);
+        $round
+            ->setOutcome('tsumo')
+            ->setWinner($this->_players[1])
+            ->setPaoPlayer($this->_players[0])
+            ->setHan(-1)
+            ->setFu(30)
+            ->setDora(0)
+            ->setRiichiUsers([$this->_players[2]]);
+        $this->_state->update($round);
+
+        $this->assertEquals($this->_players[1]->getId(), $this->_state->getCurrentDealer());
+        $this->assertEquals(2, $this->_state->getRound());
+        $this->assertEquals(0, $this->_state->getHonba());
+        $this->assertEquals(0, $this->_state->getRiichiBets());
+        $this->assertEquals([
+            1 => 30000 - 32000,
+                 30000 + 32000 + 1000,
+                 30000         - 1000,
+                 30000
+        ], $this->_state->getScores());
+    }
+
+    public function testPaoTsumoDealer()
+    {
+        $round = new RoundPrimitive($this->_db);
+        $round
+            ->setOutcome('tsumo')
+            ->setWinner($this->_players[0])
+            ->setPaoPlayer($this->_players[1])
+            ->setHan(-1)
+            ->setFu(30)
+            ->setDora(0)
+            ->setRiichiUsers([$this->_players[2]]);
+        $this->_state->update($round);
+
+        $this->assertEquals($this->_players[0]->getId(), $this->_state->getCurrentDealer());
+        $this->assertEquals(1, $this->_state->getRound());
+        $this->assertEquals(1, $this->_state->getHonba());
+        $this->assertEquals(0, $this->_state->getRiichiBets());
+        $this->assertEquals([
+            1 => 30000 + 48000 + 1000,
+                 30000 - 48000,
+                 30000         - 1000,
+                 30000
         ], $this->_state->getScores());
     }
 

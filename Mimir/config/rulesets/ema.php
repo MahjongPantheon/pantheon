@@ -42,6 +42,7 @@ class RulesetEma extends Ruleset
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
         'gameExpirationTime'    => false,
+        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
         'minPenalty'            => 100,
         'maxPenalty'            => 20000,
         'penaltyStep'           => 100,

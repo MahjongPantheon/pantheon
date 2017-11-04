@@ -21,6 +21,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Player } from '../../interfaces/common';
 import { AppState } from '../../primitives/appstate';
+import { intersection } from 'lodash';
 
 @Component({
   selector: 'user-item',
@@ -32,26 +33,58 @@ export class UserItemComponent {
   @Input() state: AppState;
   @Input() userData: Player;
   @Input() seat: string;
+  @Input() paoSelectionMode: boolean;
 
-  @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi' | 'dead']>();
+  @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao']>();
 
   // helpers
   showWinButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'draw']
-    .indexOf(this.state.getOutcome());
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
+
+  showPaoButton = () => {
+    if (!this.paoSelectionMode) {
+      return false;
+    }
+
+    switch (this.state.getOutcome()) {
+      case 'ron':
+      case 'tsumo':
+        // no pao for current winner or loser
+        return this.state.getWinningUsers().indexOf(this.userData) === -1 &&
+          this.state.getLosingUsers().indexOf(this.userData) === -1;
+      case 'multiron':
+        // no pao for loser and winner with yakuman
+        if (this.state.getLosingUsers().indexOf(this.userData) !== -1) {
+          return false;
+        }
+        for (let win of this.state.getWins()) {
+          if (
+            win.winner === this.userData.id &&
+            intersection(win.yaku, this.state.getGameConfig('yakuWithPao')).length !== 0
+          ) {
+            return false;
+          }
+        }
+        return true;
+    }
+  };
 
   showLoseButton = () => -1 !== ['ron', 'multiron', 'chombo']
-    .indexOf(this.state.getOutcome());
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
 
   showRiichiButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'abort', 'draw']
-    .indexOf(this.state.getOutcome());
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
 
   showDeadButton = () => -1 !== ['draw']
-    .indexOf(this.state.getOutcome());
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
 
   winPressed = () => -1 !== this.state.getWinningUsers()
     .indexOf(this.userData);
 
   losePressed = () => -1 !== this.state.getLosingUsers()
+    .indexOf(this.userData);
+
+  paoPressed = () => -1 !== this.state.getPaoUsers()
     .indexOf(this.userData);
 
   riichiPressed = () => -1 !== this.state.getRiichiUsers()
@@ -91,5 +124,6 @@ export class UserItemComponent {
   loseClick = () => this.loseDisabled() ? null : this.onEvent.emit([this.userData, 'lose']);
   riichiClick = () => this.onEvent.emit([this.userData, 'riichi']);
   deadClick = () => this.onEvent.emit([this.userData, 'dead']);
+  paoClick = () => this.onEvent.emit([this.userData, 'pao']);
 }
 

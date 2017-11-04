@@ -180,6 +180,9 @@ class OnlineParser
     {
         $winner = array_keys($this->_players)[$reader->getAttribute('who')];
         $loser = array_keys($this->_players)[$reader->getAttribute('fromWho')];
+        $paoPlayer = $reader->getAttribute('paoWho')
+            ? array_keys($this->_players)[$reader->getAttribute('paoWho')]
+            : null;
         $openHand = $reader->getAttribute('m') ? 1 : 0;
         $outcomeType = ($winner == $loser ? 'tsumo' : 'ron');
 
@@ -195,6 +198,7 @@ class OnlineParser
                 'outcome' => $outcomeType,
                 'winner_id' => $this->_players[$winner]->getId(),
                 'loser_id' => $outcomeType === 'ron' ? $this->_players[$loser]->getId() : null,
+                'pao_player_id' => $paoPlayer ? $this->_players[$paoPlayer]->getId() : null,
                 'han' => $yakuData['han'],
                 'fu' => $fu,
                 'multi_ron' => false,
@@ -219,6 +223,7 @@ class OnlineParser
                     'loser_id' => $this->_players[$loser]->getId(),
                     'wins' => [[
                         'winner_id' => $roundRecord['winner_id'],
+                        'pao_player_id' => $roundRecord['pao_player_id'],
                         'han' => $roundRecord['han'],
                         'fu' => $roundRecord['fu'],
                         'dora' => $roundRecord['dora'],
@@ -235,6 +240,7 @@ class OnlineParser
             $roundRecord['multi_ron'] ++;
             $roundRecord['wins'] []= [
                 'winner_id' => $this->_players[$winner]->getId(),
+                'pao_player_id' => $paoPlayer ? $this->_players[$paoPlayer]->getId() : null,
                 'han' => $yakuData['han'],
                 'fu' => $fu,
                 'dora' => $yakuData['dora'],

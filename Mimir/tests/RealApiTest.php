@@ -117,6 +117,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
                 [
                     "riichi" => "",
                     "winner_id" => 2,
+                    "pao_player_id" => null,
                     "han" => 2,
                     "fu" => 30,
                     "dora" => 0,
@@ -127,6 +128,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
                 ], [
                     "riichi" => "",
                     "winner_id" => 3,
+                    "pao_player_id" => null,
                     "han" => 3,
                     "fu" => 30,
                     "dora" => 0,
@@ -175,7 +177,8 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
             'kandora'    => [0, 0],
             'uradora'    => [0, 0],
             'kanuradora' => [0, 0],
-            'openHand'   => [false, false]
+            'openHand'   => [false, false],
+            'paoPlayer'  => null
         ];
 
         $dryRunData = $this->_client->execute('addRound', [$hashcode, $data, true]);
