@@ -386,6 +386,7 @@ export class AppState {
             han: v.han,
             fu: v.fu,
             dora: v.dora,
+            paoPlayerId: v.paoPlayerId,
             uradora: 0,
             kandora: 0,
             kanuradora: 0,
