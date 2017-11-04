@@ -94,7 +94,7 @@
   background-color: #ddd;
 }
 .riichi-bet-button:after {
-  content: 'нет риичи';
+  content: 'no riichi';
   font-size: 12px;
   color: #999;
   line-height: 12px;

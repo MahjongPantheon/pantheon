@@ -440,7 +440,7 @@ export class AppState {
   getCurrentMultiRonUser = () => this._multironCurrentWinner;
   getEventTitle = () => {
     if (this.isUniversalWatcher()) {
-      return 'Просмотр игр';
+      return 'Games spectating';
     } else {
       return this._gameConfig && this._gameConfig.eventTitle || 'Loading...';
     }

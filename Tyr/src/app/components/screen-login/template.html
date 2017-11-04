@@ -22,17 +22,17 @@
 </div>
 <div class="riichi-table" *ngIf="_error">
   <div class="hint">
-    Не удалось зарегистрироваться на игру. Возможные причины:
+    Login attempt was failed. Possible reasons:
     <ul>
-      <li>Игры уже начались и вы опоздали на регистрацию</li>
-      <li>Вы уже использовали ваш пин-код на другом устройстве</li>
-      <li>Произошла ошибка сервера</li>
+      <li>Tournament games already started and you wasn't registered</li>
+      <li>Pin code was already used on other device</li>
+      <li>Server unexpected error</li>
     </ul>
-    Обратитесь к представителю оргкомитета для разъяснений и получения помощи.
+    Contact to the tournament administrator for further instructions.
   </div>
 </div>
 <div class="riichi-table" *ngIf="!_loading && !_error">
-  <div class="hint">Введите свой пин-код</div>
+  <div class="hint">Enter pin code</div>
   <div class="pin" [class.error]="_error">{{_pinView}}</div>
   <div class="pinkbd">
     <button (click)="press('1')">1</button><button (click)="press('2')">2</button><button (click)="press('3')">3</button>

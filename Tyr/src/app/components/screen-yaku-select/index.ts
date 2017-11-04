@@ -101,15 +101,15 @@ export class YakuSelectScreen {
     switch (this.state.getOutcome()) {
       case 'ron':
       case 'multiron':
-        return 'Рон';
+        return 'Ron';
       case 'tsumo':
-        return 'Цумо';
+        return 'Tsumo';
       case 'draw':
-        return 'Ничья';
+        return 'Exhaustive draw';
       case 'abort':
-        return 'Абортивная ничья';
+        return 'Abortive draw';
       case 'chombo':
-        return 'Чомбо';
+        return 'Chombo';
       default:
         return '';
     }
