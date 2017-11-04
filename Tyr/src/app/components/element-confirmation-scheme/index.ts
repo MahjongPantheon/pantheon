@@ -57,6 +57,11 @@ export class ConfirmationSchemeComponent {
   kamichaChombo: boolean = false;
   selfChombo: boolean = false;
 
+  shimochaPao: boolean = false;
+  toimenPao: boolean = false;
+  kamichaPao: boolean = false;
+  selfPao: boolean = false;
+
   shimochaRiichi: boolean = false;
   toimenRiichi: boolean = false;
   kamichaRiichi: boolean = false;
@@ -134,6 +139,24 @@ export class ConfirmationSchemeComponent {
           break;
         case this.shimocha.id:
           this.shimochaChombo = true;
+          break;
+      }
+    }
+
+    // update pao
+    if (['ron', 'tsumo', 'multiron'].indexOf(this.overview.outcome) !== -1) {
+      switch (this.overview.paoPlayer) {
+        case this.self.id:
+          this.selfPao = true;
+          break;
+        case this.kamicha.id:
+          this.kamichaPao = true;
+          break;
+        case this.toimen.id:
+          this.toimenPao = true;
+          break;
+        case this.shimocha.id:
+          this.shimochaPao = true;
           break;
       }
     }

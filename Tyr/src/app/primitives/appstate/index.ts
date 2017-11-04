@@ -454,7 +454,7 @@ export class AppState {
   getHashcode = () => this._currentSessionHash;
   toggleWinner = (p: Player) => toggleWinner(p, this._currentOutcome);
   toggleLoser = (p: Player) => toggleLoser(p, this._currentOutcome);
-  togglePao = (p: Player) => togglePao(p, this._currentOutcome);
+  togglePao = (p: Player) => togglePao(p, this._currentOutcome, this._gameConfig.yakuWithPao);
   toggleRiichi = (p: Player) => toggleRiichi(p, this._currentOutcome, (y: YakuId) => this.removeYaku(y));
   toggleDeadhand = (p: Player) => toggleDeadhand(p, this._currentOutcome);
   getWinningUsers = () => getWinningUsers(this._currentOutcome, this._mapIdToPlayer);

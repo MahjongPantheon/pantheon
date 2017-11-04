@@ -206,6 +206,7 @@ export interface RRoundPaymentsInfoSingle {
   penaltyFor: number | null;
   honba: number;
   scores: number[];
+  paoPlayer: number;
   payments: {
     direct: { [key: string]: number },
     riichi: { [key: string]: number },
@@ -238,6 +239,7 @@ export interface RRoundPaymentsInfoMulti {
   };
 
   winner: number[];
+  paoPlayer: number;
   yaku: string[];
   han: number[];
   fu: number[];

@@ -389,7 +389,7 @@ class PlayersController extends Controller
             'scores'     => $lastRound->getLastSessionState()->getScores(), // scores before payments!
             'payments'   => $paymentsInfo,
             'winner'     => $multiGet($lastRound, 'getWinnerId'),
-            'paoPlayer'  => array_filter($multiGet($lastRound, 'getPaoPlayerId')),
+            'paoPlayer'  => $multiGet($lastRound, 'getPaoPlayerId'),
             'yaku'       => $multiGet($lastRound, 'getYaku'),
             'han'        => $multiGet($lastRound, 'getHan'),
             'fu'         => $multiGet($lastRound, 'getFu'),
@@ -399,6 +399,11 @@ class PlayersController extends Controller
             'kanuradora' => $multiGet($lastRound, 'getKanuradora'),
             'openHand'   => $multiGet($lastRound, 'getOpenHand')
         ];
+
+        if (is_array($result['paoPlayer'])) {
+            // pao player may be only one
+            $result['paoPlayer'] = reset(array_filter($result['paoPlayer']));
+        }
 
         return $result;
     }
