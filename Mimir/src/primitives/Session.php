@@ -142,8 +142,13 @@ class SessionPrimitive extends Primitive
      */
     protected $_players = null;
 
+    const STATUS_PLANNED = 'planned';
+    const STATUS_INPROGRESS = 'inprogress';
+    const STATUS_PREFINISHED = 'prefinished';
+    const STATUS_FINISHED = 'finished';
+
     /**
-     * planned / inprogress / finished
+     * planned / inprogress / prefinished / finished
      * @var string
      */
     protected $_status;
@@ -199,7 +204,7 @@ class SessionPrimitive extends Primitive
      */
     public static function findAllInProgress(IDb $db)
     {
-        return self::_findBy($db, 'status', ['inprogress']);
+        return self::_findBy($db, 'status', [SessionPrimitive::STATUS_INPROGRESS]);
     }
 
     /**
@@ -693,12 +698,12 @@ class SessionPrimitive extends Primitive
      */
     public function finish()
     {
-        if ($this->getStatus() === 'finished') {
+        if ($this->getStatus() === SessionPrimitive::STATUS_FINISHED) {
             return false;
         }
 
         $success = $this
-            ->setStatus('finished')
+            ->setStatus(SessionPrimitive::STATUS_FINISHED)
             ->setEndDate(date('Y-m-d H:i:s'))
             ->save();
 

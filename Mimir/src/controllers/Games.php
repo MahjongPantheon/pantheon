@@ -94,6 +94,23 @@ class GamesController extends Controller
     }
 
     /**
+     * Finalize all pre-finished sessions in interactive tournament
+     *
+     * @param int $eventId
+     * @throws DatabaseException
+     * @throws BadActionException
+     * @return bool Success?
+     */
+    public function finalizeSessions($eventId)
+    {
+        $this->_log->addInfo('Finalizing sessions of event # ' . $eventId);
+        $result = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
+            ->finalizeSessions($eventId);
+        $this->_log->addInfo(($result ? 'Successfully finalized' : 'Failed to finalize') . ' sessions of event # ' . $eventId);
+        return $result;
+    }
+
+    /**
      * Add new round to interactive game
      *
      * @param string $gameHashcode Hashcode of game

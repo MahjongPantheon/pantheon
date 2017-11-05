@@ -69,6 +69,7 @@ return [
     'getAchievements'    => ['EventsController', 'getAchievements'],
     'startGame'          => ['GamesController', 'start'],
     'endGame'            => ['GamesController', 'end'],
+    'finalizeSessions'   => ['GamesController', 'finalizeSessions'],
     'addTextLog'         => ['GamesController', 'addTextLog'],
     'dropLastRound'      => ['GamesController', 'dropLastRound'],
     'addPenalty'         => ['GamesController', 'addPenalty'],

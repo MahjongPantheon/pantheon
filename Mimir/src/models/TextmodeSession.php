@@ -42,7 +42,7 @@ class TextmodeSessionModel extends Model
         $parser = new TextlogParser($this->_db);
         $session = (new SessionPrimitive($this->_db))
             ->setEvent($event[0])
-            ->setStatus('inprogress');
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS);
 
         list($originalScore, $debug) = $parser->parseToSession($session, $gameLog);
         $success = true;

@@ -96,7 +96,7 @@ class SessionModelTest extends \PHPUnit_Framework_TestCase
         $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
         $this->assertEquals(1, count($sessionPrimitive));
         $this->assertEquals($this->_event->getId(), $sessionPrimitive[0]->getEventId());
-        $this->assertEquals('inprogress', $sessionPrimitive[0]->getStatus());
+        $this->assertEquals(SessionPrimitive::STATUS_INPROGRESS, $sessionPrimitive[0]->getStatus());
     }
 
     public function testEndGame()
@@ -122,7 +122,7 @@ class SessionModelTest extends \PHPUnit_Framework_TestCase
         $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
         $this->assertEquals(1, count($sessionPrimitive));
         $this->assertEquals($this->_event->getId(), $sessionPrimitive[0]->getEventId());
-        $this->assertEquals('finished', $sessionPrimitive[0]->getStatus());
+        $this->assertEquals(SessionPrimitive::STATUS_FINISHED, $sessionPrimitive[0]->getStatus());
         $this->assertNotEquals('', $sessionPrimitive[0]->getEndDate());
     }
 
