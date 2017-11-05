@@ -47,7 +47,7 @@ class TextmodeSessionModel extends Model
         list($originalScore, $debug) = $parser->parseToSession($session, $gameLog);
         $success = true;
         $success = $success && $session->save();
-        $success = $success && $session->finish();
+        $success = $success && $session->prefinish();
 
         $calculatedScore = $session->getCurrentState()->getScores();
         $aliases = array_map(function (PlayerPrimitive $p) {

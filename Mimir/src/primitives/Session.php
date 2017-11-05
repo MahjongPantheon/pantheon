@@ -643,7 +643,7 @@ class SessionPrimitive extends Primitive
                 }
 
                 if ($this->getCurrentState()->isFinished()) {
-                    $success = $success && $this->finish();
+                    $success = $success && $this->prefinish();
                 }
 
                 break;
@@ -664,7 +664,7 @@ class SessionPrimitive extends Primitive
                 }
 
                 if ($this->getCurrentState()->isFinished()) {
-                    $success = $success && $this->finish();
+                    $success = $success && $this->prefinish();
                 }
 
                 break;
@@ -675,7 +675,7 @@ class SessionPrimitive extends Primitive
                 // We should finish game here for offline events, but online ones will be finished manually in model.
                 // Looks ugly :( But works as expected, so let it be until we find better solution.
                 if (!$this->getEvent()->getIsOnline() && $this->getCurrentState()->isFinished()) {
-                    $success = $success && $this->finish();
+                    $success = $success && $this->prefinish();
                 }
         }
 
@@ -691,6 +691,26 @@ class SessionPrimitive extends Primitive
         $cloneState = clone $this->getCurrentState();
         $paymentsInfo = $cloneState->update($round);
         return [$cloneState, $paymentsInfo];
+    }
+
+    /**
+     * @return bool
+     */
+    public function prefinish()
+    {
+        // pre-finish state is not applied for games without synchronous ending
+        if (!$this->getEvent()->getSyncEnd()) {
+            return $this->finish();
+        }
+
+        if ($this->getStatus() === SessionPrimitive::STATUS_PREFINISHED) {
+            return false;
+        }
+
+        return $this
+            ->setStatus(SessionPrimitive::STATUS_PREFINISHED)
+            ->setEndDate(date('Y-m-d H:i:s'))
+            ->save();
     }
 
     /**
@@ -743,6 +763,6 @@ class SessionPrimitive extends Primitive
     {
         $this->_current = $round->getLastSessionState();
         $round->drop();
-        $this->save();
+        $this->setStatus(SessionPrimitive::STATUS_INPROGRESS)->save();
     }
 }

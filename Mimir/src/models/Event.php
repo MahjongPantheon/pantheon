@@ -294,7 +294,9 @@ class EventModel extends Model
         $tablesCount = count($reggedPlayers) / 4;
 
         $lastGames = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, [
-            SessionPrimitive::STATUS_FINISHED, SessionPrimitive::STATUS_INPROGRESS
+            SessionPrimitive::STATUS_FINISHED,
+            SessionPrimitive::STATUS_INPROGRESS,
+            SessionPrimitive::STATUS_PREFINISHED
         ], 0, $tablesCount);
         return $this->_formatTablesState($lastGames);
     }
