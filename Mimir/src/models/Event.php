@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Composer\Script\Event;
+
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
 require_once __DIR__ . '/../primitives/Event.php';
@@ -617,13 +619,19 @@ class EventModel extends Model
 
     // ------ Rating table related -------
 
-    public function getRatingTable(EventPrimitive $event, $orderBy, $order)
+    public function getRatingTable(EventPrimitive $event, $orderBy, $order, $withPrefinished = false)
     {
         if (!in_array($order, ['asc', 'desc'])) {
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
         }
 
         $playersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_db, $event->getId());
+
+        if ($withPrefinished) {
+            // Include fake player history items made of prefinished games results
+            $playersHistoryItems = array_merge($playersHistoryItems, $this->_getFakePrefinishedItems($event));
+        }
+
         $playerItems = $this->_getPlayers($playersHistoryItems);
         $this->_sortItems($orderBy, $playerItems, $playersHistoryItems);
 
@@ -665,6 +673,15 @@ class EventModel extends Model
                 'games_played'  => (int)$el->getGamesPlayed()
             ];
         }, $playersHistoryItems);
+    }
+
+    /**
+     * @param EventPrimitive $event
+     * @return PlayerHistoryPrimitive[]
+     */
+    protected function _getFakePrefinishedItems(EventPrimitive $event)
+    {
+        // TODO
     }
 
     /**
