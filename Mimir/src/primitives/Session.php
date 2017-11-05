@@ -225,7 +225,7 @@ class SessionPrimitive extends Primitive
      *
      * @param IDb $db
      * @param integer $eventId
-     * @param string|string[] $state
+     * @param string|string[] $status
      * @param integer $offset
      * @param integer $limit
      * @param string $orderBy
@@ -236,7 +236,7 @@ class SessionPrimitive extends Primitive
     public static function findByEventAndStatus(
         IDb $db,
         $eventId,
-        $state,
+        $status,
         $offset = 0,
         $limit = null,
         $orderBy = 'id',
@@ -245,7 +245,7 @@ class SessionPrimitive extends Primitive
 
         return self::_findBySeveral(
             $db,
-            ['status' => (array)$state, 'event_id' => [$eventId]],
+            ['status' => (array)$status, 'event_id' => [$eventId]],
             [
                 'limit' => $limit, 'offset'  => $offset,
                 'order' => $order, 'orderBy' => $orderBy
@@ -736,22 +736,33 @@ class SessionPrimitive extends Primitive
      */
     protected function _finalizeGame()
     {
-        return array_reduce($this->getPlayers(), function ($acc, PlayerPrimitive $player) {
-            $result = (new SessionResultsPrimitive($this->_db))
-                ->setPlayer($player)
-                ->setSession($this)
-                ->calc($this->getEvent()->getRuleset(), $this->getCurrentState(), $this->getPlayersIds());
-
+        $sessionResults = $this->getSessionResults();
+        return array_reduce($sessionResults, function ($acc, SessionResultsPrimitive $result) {
             $playerHistoryItem = PlayerHistoryPrimitive::makeNewHistoryItem(
                 $this->_db,
-                $player,
+                $result->getPlayer(),
                 $this,
                 $result->getRatingDelta(),
                 $result->getPlace()
             );
 
+            // Should save the result explicitly! It's not saved inside ->getSessionResults()
             return $acc && $result->save() && $playerHistoryItem->save();
         }, true);
+    }
+
+    /**
+     * Get a list on unsaved session results primitives
+     * @return SessionResultsPrimitive[]
+     */
+    public function getSessionResults()
+    {
+        return array_map(function (PlayerPrimitive $player) {
+            return (new SessionResultsPrimitive($this->_db))
+                ->setPlayer($player)
+                ->setSession($this)
+                ->calc($this->getEvent()->getRuleset(), $this->getCurrentState(), $this->getPlayersIds());
+        }, $this->getPlayers());
     }
 
     /**

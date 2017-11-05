@@ -245,9 +245,32 @@ class PlayersController extends Controller
     {
         $this->_log->addInfo('Getting prefinished session results for player id #' . $playerId . ' at event id #' . $eventId);
 
-        // TODO
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_PREFINISHED);
+        if (empty($session)) {
+            return null;
+        }
+
+        $tmpResults = $session->getSessionResults();
+
+        /** @var SessionResultsPrimitive[] $sessionResults */
+        $sessionResults = [];
+        foreach ($tmpResults as $sr) {
+            $sessionResults[$sr->getPlayerId()] = $sr;
+        }
+
+        $result = array_map(function (PlayerPrimitive $p) use (&$session, &$sessionResults) {
+            return [
+                'id'            => $p->getId(),
+                'alias'         => $p->getAlias(),
+                'ident'         => $p->getIdent(),
+                'display_name'  => $p->getDisplayName(),
+                'score'         => $sessionResults[$p->getId()]->getScore(),
+                'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),
+            ];
+        }, $session->getPlayers());
 
         $this->_log->addInfo('Successfully got prefinished session results for player id #' . $playerId . ' at event id #' . $eventId);
+        return $result;
     }
 
     /**
