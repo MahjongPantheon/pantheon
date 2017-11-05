@@ -120,7 +120,7 @@ class EventModel extends Model
         $gamesRaw = SessionPrimitive::findByEventAndStatus(
             $this->_db,
             $event->getId(),
-            'finished'
+            SessionPrimitive::STATUS_FINISHED
         );
 
         $games = [];
@@ -293,7 +293,9 @@ class EventModel extends Model
         $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $eventId);
         $tablesCount = count($reggedPlayers) / 4;
 
-        $lastGames = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, ['finished', 'inprogress'], 0, $tablesCount);
+        $lastGames = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, [
+            SessionPrimitive::STATUS_FINISHED, SessionPrimitive::STATUS_INPROGRESS
+        ], 0, $tablesCount);
         return $this->_formatTablesState($lastGames);
     }
 
@@ -382,7 +384,7 @@ class EventModel extends Model
         $games = SessionPrimitive::findByEventAndStatus(
             $this->_db,
             $event->getId(),
-            'finished',
+            SessionPrimitive::STATUS_FINISHED,
             $offset,
             $limit,
             $orderBy,
@@ -405,7 +407,7 @@ class EventModel extends Model
             'total_games' => SessionPrimitive::gamesCount(
                 $this->_db,
                 $event->getId(),
-                'finished'
+                SessionPrimitive::STATUS_FINISHED
             )
         ];
 

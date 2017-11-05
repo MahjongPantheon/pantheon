@@ -73,7 +73,7 @@ class SeatingController extends Controller
         }
 
         $this->_log->addInfo('Starting new games by seed #' . $seed . ' for event #' . $eventId);
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, 'inprogress');
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         if (!empty($sessions)) {
             throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }
@@ -110,7 +110,7 @@ class SeatingController extends Controller
         }
 
         $this->_log->addInfo('Starting new games with swiss seating for event #' . $eventId);
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, 'inprogress');
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         if (!empty($sessions)) {
             throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }
@@ -151,7 +151,7 @@ class SeatingController extends Controller
         }
 
         $this->_log->addInfo('Starting new games by manual seating for event #' . $eventId);
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, 'inprogress');
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         if (!empty($sessions)) {
             throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }

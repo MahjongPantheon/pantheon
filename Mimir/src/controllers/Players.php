@@ -190,7 +190,7 @@ class PlayersController extends Controller
     public function getCurrentSessions($playerId, $eventId)
     {
         $this->_log->addInfo('Getting current sessions for player id #' . $playerId . ' at event id #' . $eventId);
-        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId, 'inprogress');
+        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
 
         $result = array_map(function (SessionPrimitive $session) {
             return [
@@ -243,7 +243,7 @@ class PlayersController extends Controller
     public function getLastResults($playerId, $eventId)
     {
         $this->_log->addInfo('Getting last session results for player id #' . $playerId . ' at event id #' . $eventId);
-        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, 'finished');
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_FINISHED);
         if (empty($session)) {
             return null;
         }
@@ -340,7 +340,7 @@ class PlayersController extends Controller
     public function getLastRound($playerId, $eventId)
     {
         $this->_log->addInfo('Getting last round for player id #' . $playerId . ' at event id #' . $eventId);
-        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, 'inprogress');
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         if (empty($session)) {
             return null;
         }
