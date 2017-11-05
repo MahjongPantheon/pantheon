@@ -137,6 +137,21 @@ class StartTournament extends Controller
             return false;
         }
 
+        if (!empty($this->_path['action']) && $this->_path['action'] == 'toggleHideResults') {
+            if (!$this->_adminAuthOk()) {
+                return true; // to show error in _run
+            }
+
+            try {
+                $this->_api->execute('toggleHideResults', [$this->_eventId]);
+            } catch (\Exception $e) {
+                $this->_lastEx = $e;
+                return true;
+            }
+            header('Location: ' . Url::make('/tourn/', $this->_eventId));
+            return false;
+        }
+
         return true;
     }
 
@@ -199,6 +214,7 @@ class StartTournament extends Controller
             'reason' => $errCode ? $this->_errors[$errCode] : '',
             'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
             'tables' => $tablesFormatted,
+            'hideResults' => $this->_rules->hideResults(),
             'finalizeSessions' => false // TODO: this should be true when all games are pre-finished
         ];
     }
