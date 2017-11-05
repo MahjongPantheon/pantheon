@@ -17,8 +17,6 @@
  */
 namespace Mimir;
 
-use Composer\Script\Event;
-
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
 require_once __DIR__ . '/../primitives/Event.php';
@@ -625,12 +623,25 @@ class EventModel extends Model
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
         }
 
-        $playersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_db, $event->getId());
+        $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_db, $event->getId());
+        $playersHistoryItems = [];
+        foreach ($tmpPlayersHistoryItems as $item) {
+            // php kludge: keys should be string, not numeric (to overwrite values)
+            $playersHistoryItems['id' . $item->getPlayerId()] = $item;
+        }
 
         if ($withPrefinished) {
             // Include fake player history items made of prefinished games results
-            $playersHistoryItems = array_merge($playersHistoryItems, $this->_getFakePrefinishedItems($event));
+            $tmpFakeItems = $this->_getFakePrefinishedItems($event);
+            $fakeItems = [];
+            foreach ($tmpFakeItems as $item) {
+                // php kludge: keys should be string, not numeric (to overwrite values)
+                $fakeItems['id' . $item->getPlayerId()] = $item;
+            }
+            $playersHistoryItems = array_merge($playersHistoryItems, $fakeItems);
         }
+
+        $playersHistoryItems = array_values($playersHistoryItems);
 
         $playerItems = $this->_getPlayers($playersHistoryItems);
         $this->_sortItems($orderBy, $playerItems, $playersHistoryItems);
@@ -676,12 +687,31 @@ class EventModel extends Model
     }
 
     /**
+     * For games that should end synchronously, make fake history items
+     * to properly display rating table for tournament administrators
+     *
      * @param EventPrimitive $event
      * @return PlayerHistoryPrimitive[]
      */
     protected function _getFakePrefinishedItems(EventPrimitive $event)
     {
-        // TODO
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $event->getId(), SessionPrimitive::STATUS_PREFINISHED);
+        $historyItems = [];
+
+        foreach ($sessions as $session) {
+            $sessionResults = $session->getSessionResults();
+            foreach ($sessionResults as $sessionResult) {
+                $historyItems []= PlayerHistoryPrimitive::makeNewHistoryItem(
+                    $this->_db,
+                    $sessionResult->getPlayer(),
+                    $session,
+                    $sessionResult->getRatingDelta(),
+                    $sessionResult->getPlace()
+                );
+            }
+        }
+
+        return $historyItems;
     }
 
     /**
