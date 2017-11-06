@@ -141,9 +141,9 @@ check: get_docker_id
 	# TODO: checks for Tyr
 
 .PHONY: autofix
-autofix: get_docker_id
-	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user make autofix';
-	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user gosu user make autofix';
+autofix:
+	cd Mimir && make autofix
+	cd Rheda && make autofix
 
 # Prod related tasks & shortcuts
 

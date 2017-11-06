@@ -2,13 +2,13 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class ReplaceHideResultsWithSyncEnd extends AbstractMigration
+class AddEventGamesSyncEnd extends AbstractMigration
 {
 
     public function change()
     {
         $this->table('event')
-            ->renameColumn('hide_results', 'sync_end')
+            ->addColumn('sync_end', 'integer', array('default' => 0))
             ->save();
     }
 }
