@@ -123,7 +123,7 @@ class InteractiveSessionModel extends Model
             return 0;
         }
 
-        return array_reduce($games, function($acc, SessionPrimitive $p) {
+        return array_reduce($games, function ($acc, SessionPrimitive $p) {
             return $p->finish() ? $acc + 1 : $acc;
         }, 0);
     }
