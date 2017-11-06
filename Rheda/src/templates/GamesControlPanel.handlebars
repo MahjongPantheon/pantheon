@@ -15,15 +15,11 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
 <style>
-    .cancellation {
-        background-color: #900;
-        color: #fff;
-        display: inline-block;
-        padding: 5px;
+    .actionButton {
         font-size: 16px;
+        font-weight: bold;
     }
 </style>
-
 <script>
     function disableTemporarily(what) {
         $(what).attr('disabled', true);
@@ -55,7 +51,7 @@
                     {{last_round}}
                     {{#a
                         href="/games/dropLastRound/{hash}/"
-                        class="cancellation"
+                        class="btn btn-large btn-danger actionButton"
                         onclick="return window.confirm('Отменяем раздачу: {last_round}. Точно отменить раздачу? Назад дороги нет!')"
                     }}Отменить последнюю внесенную раздачу{{/a}}
                 {{/last_round}}

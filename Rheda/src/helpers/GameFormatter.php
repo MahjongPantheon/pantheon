@@ -362,7 +362,7 @@ class GameFormatter
             case 'abort':
                 return "Пересдача; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
                         return $players[$e]['display_name'];
-                    }, $roundData['riichi']));
+                }, $roundData['riichi']));
             case 'chombo':
                 return "Чомбо ({$players[$roundData['loser']]['display_name']})";
             case 'multiron':
