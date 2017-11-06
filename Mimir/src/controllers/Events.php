@@ -315,6 +315,7 @@ class EventsController extends Controller
             'autoSeating'         => (bool)$event[0]->getAutoSeating(),
             'isTextlog'           => (bool)$event[0]->getIsTextlog(),
             'syncStart'           => (bool)$event[0]->getSyncStart(),
+            'syncEnd'             => (bool)$event[0]->getSyncEnd(),
             'sortByGames'         => (bool)$event[0]->getSortByGames(),
             'allowPlayerAppend'   => (bool)$event[0]->getAllowPlayerAppend(),
             'withLeadingDealerGameover' => $rules->withLeadingDealerGameOver(),

@@ -62,7 +62,8 @@
     </p>
 
     {{#form action='/tourn/finalizeSessions/' method='post'}}
-        <button type="submit" style="font-size: 50px; height: 100px;">
+        <button type="submit" style="font-size: 50px; height: 100px;"
+            onclick="return window.confirm('Завершить все игры? Отменить раздачи у завершенных игр будет невозможно!') && disableTemporarily(this);">
             FINALIZE
         </button>
     {{/form}}

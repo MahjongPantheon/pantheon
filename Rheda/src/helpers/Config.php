@@ -38,6 +38,7 @@ class Config
     protected $_withLeadingDealerGameover = false;
     protected $_isTextlog = false;
     protected $_syncStart = false;
+    protected $_syncEnd = false;
     protected $_sortByGames = false;
     protected $_allowPlayerAppend = false;
     protected $_useTimer = false;
@@ -305,6 +306,13 @@ class Config
     public function syncStart()
     {
         return $this->_syncStart;
+    }
+    /**
+     * @return bool
+     */
+    public function syncEnd()
+    {
+        return $this->_syncEnd;
     }
     /**
      * @return bool
