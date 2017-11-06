@@ -120,7 +120,7 @@ class EventModel extends Model
         $gamesRaw = SessionPrimitive::findByEventAndStatus(
             $this->_db,
             $event->getId(),
-            'finished'
+            SessionPrimitive::STATUS_FINISHED
         );
 
         $games = [];
@@ -293,7 +293,11 @@ class EventModel extends Model
         $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $eventId);
         $tablesCount = count($reggedPlayers) / 4;
 
-        $lastGames = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, ['finished', 'inprogress'], 0, $tablesCount);
+        $lastGames = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, [
+            SessionPrimitive::STATUS_FINISHED,
+            SessionPrimitive::STATUS_INPROGRESS,
+            SessionPrimitive::STATUS_PREFINISHED
+        ], 0, $tablesCount);
         return $this->_formatTablesState($lastGames);
     }
 
@@ -382,7 +386,7 @@ class EventModel extends Model
         $games = SessionPrimitive::findByEventAndStatus(
             $this->_db,
             $event->getId(),
-            'finished',
+            SessionPrimitive::STATUS_FINISHED,
             $offset,
             $limit,
             $orderBy,
@@ -405,7 +409,7 @@ class EventModel extends Model
             'total_games' => SessionPrimitive::gamesCount(
                 $this->_db,
                 $event->getId(),
-                'finished'
+                SessionPrimitive::STATUS_FINISHED
             )
         ];
 
@@ -613,13 +617,33 @@ class EventModel extends Model
 
     // ------ Rating table related -------
 
-    public function getRatingTable(EventPrimitive $event, $orderBy, $order)
+    public function getRatingTable(EventPrimitive $event, $orderBy, $order, $withPrefinished = false)
     {
         if (!in_array($order, ['asc', 'desc'])) {
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
         }
 
-        $playersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_db, $event->getId());
+        $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_db, $event->getId());
+        $playersHistoryItems = [];
+        foreach ($tmpPlayersHistoryItems as $item) {
+            // php kludge: keys should be string, not numeric (to overwrite values)
+            $playersHistoryItems['id' . $item->getPlayerId()] = $item;
+        }
+
+        if ($withPrefinished) {
+            // Include fake player history items made of prefinished games results
+            $tmpFakeItems = $this->_getFakePrefinishedItems($event);
+            $fakeItems = [];
+            foreach ($tmpFakeItems as $item) {
+                // php kludge: keys should be string, not numeric (to overwrite values)
+                $fakeItems['id' . $item->getPlayerId()] = $item;
+            }
+            $playersHistoryItems = array_merge($playersHistoryItems, $fakeItems);
+            // Warning: don't ever call ->save() on these items!
+        }
+
+        $playersHistoryItems = array_values($playersHistoryItems);
+
         $playerItems = $this->_getPlayers($playersHistoryItems);
         $this->_sortItems($orderBy, $playerItems, $playersHistoryItems);
 
@@ -661,6 +685,35 @@ class EventModel extends Model
                 'games_played'  => (int)$el->getGamesPlayed()
             ];
         }, $playersHistoryItems);
+    }
+
+    /**
+     * For games that should end synchronously, make fake history items
+     * to properly display rating table for tournament administrators.
+     * These history items are not intended to be SAVED!
+     *
+     * @param EventPrimitive $event
+     * @return PlayerHistoryPrimitive[]
+     */
+    protected function _getFakePrefinishedItems(EventPrimitive $event)
+    {
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $event->getId(), SessionPrimitive::STATUS_PREFINISHED);
+        $historyItems = [];
+
+        foreach ($sessions as $session) {
+            $sessionResults = $session->getSessionResults();
+            foreach ($sessionResults as $sessionResult) {
+                $historyItems []= PlayerHistoryPrimitive::makeNewHistoryItem(
+                    $this->_db,
+                    $sessionResult->getPlayer(),
+                    $session,
+                    $sessionResult->getRatingDelta(),
+                    $sessionResult->getPlace()
+                );
+            }
+        }
+
+        return $historyItems;
     }
 
     /**

@@ -178,7 +178,7 @@ class InitVersion1m0 extends AbstractMigration
             ->addColumn('start_date', 'datetime', ['null' => true])
             ->addColumn('end_date', 'datetime', ['null' => true])
             ->addColumn('status', 'string', ['limit' => 255, 'null' => true,
-                'comment' => 'planned / inprogress / finished'])
+                'comment' => 'planned / inprogress / prefinished / finished'])
             ->addColumn('intermediate_results', 'text', ['null' => true,
                 'comment' => 'json-encoded results for in-progress sessions'])
 

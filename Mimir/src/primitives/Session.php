@@ -142,8 +142,13 @@ class SessionPrimitive extends Primitive
      */
     protected $_players = null;
 
+    const STATUS_PLANNED = 'planned';
+    const STATUS_INPROGRESS = 'inprogress';
+    const STATUS_PREFINISHED = 'prefinished';
+    const STATUS_FINISHED = 'finished';
+
     /**
-     * planned / inprogress / finished
+     * planned / inprogress / prefinished / finished
      * @var string
      */
     protected $_status;
@@ -199,7 +204,7 @@ class SessionPrimitive extends Primitive
      */
     public static function findAllInProgress(IDb $db)
     {
-        return self::_findBy($db, 'status', ['inprogress']);
+        return self::_findBy($db, 'status', [SessionPrimitive::STATUS_INPROGRESS]);
     }
 
     /**
@@ -220,7 +225,7 @@ class SessionPrimitive extends Primitive
      *
      * @param IDb $db
      * @param integer $eventId
-     * @param string|string[] $state
+     * @param string|string[] $status
      * @param integer $offset
      * @param integer $limit
      * @param string $orderBy
@@ -231,7 +236,7 @@ class SessionPrimitive extends Primitive
     public static function findByEventAndStatus(
         IDb $db,
         $eventId,
-        $state,
+        $status,
         $offset = 0,
         $limit = null,
         $orderBy = 'id',
@@ -240,7 +245,7 @@ class SessionPrimitive extends Primitive
 
         return self::_findBySeveral(
             $db,
-            ['status' => (array)$state, 'event_id' => [$eventId]],
+            ['status' => (array)$status, 'event_id' => [$eventId]],
             [
                 'limit' => $limit, 'offset'  => $offset,
                 'order' => $order, 'orderBy' => $orderBy
@@ -638,7 +643,7 @@ class SessionPrimitive extends Primitive
                 }
 
                 if ($this->getCurrentState()->isFinished()) {
-                    $success = $success && $this->finish();
+                    $success = $success && $this->prefinish();
                 }
 
                 break;
@@ -659,7 +664,7 @@ class SessionPrimitive extends Primitive
                 }
 
                 if ($this->getCurrentState()->isFinished()) {
-                    $success = $success && $this->finish();
+                    $success = $success && $this->prefinish();
                 }
 
                 break;
@@ -670,7 +675,7 @@ class SessionPrimitive extends Primitive
                 // We should finish game here for offline events, but online ones will be finished manually in model.
                 // Looks ugly :( But works as expected, so let it be until we find better solution.
                 if (!$this->getEvent()->getIsOnline() && $this->getCurrentState()->isFinished()) {
-                    $success = $success && $this->finish();
+                    $success = $success && $this->prefinish();
                 }
         }
 
@@ -691,14 +696,34 @@ class SessionPrimitive extends Primitive
     /**
      * @return bool
      */
+    public function prefinish()
+    {
+        // pre-finish state is not applied for games without synchronous ending
+        if (!$this->getEvent()->getSyncEnd()) {
+            return $this->finish();
+        }
+
+        if ($this->getStatus() === SessionPrimitive::STATUS_PREFINISHED) {
+            return false;
+        }
+
+        return $this
+            ->setStatus(SessionPrimitive::STATUS_PREFINISHED)
+            ->setEndDate(date('Y-m-d H:i:s'))
+            ->save();
+    }
+
+    /**
+     * @return bool
+     */
     public function finish()
     {
-        if ($this->getStatus() === 'finished') {
+        if ($this->getStatus() === SessionPrimitive::STATUS_FINISHED) {
             return false;
         }
 
         $success = $this
-            ->setStatus('finished')
+            ->setStatus(SessionPrimitive::STATUS_FINISHED)
             ->setEndDate(date('Y-m-d H:i:s'))
             ->save();
 
@@ -711,22 +736,33 @@ class SessionPrimitive extends Primitive
      */
     protected function _finalizeGame()
     {
-        return array_reduce($this->getPlayers(), function ($acc, PlayerPrimitive $player) {
-            $result = (new SessionResultsPrimitive($this->_db))
-                ->setPlayer($player)
-                ->setSession($this)
-                ->calc($this->getEvent()->getRuleset(), $this->getCurrentState(), $this->getPlayersIds());
-
+        $sessionResults = $this->getSessionResults();
+        return array_reduce($sessionResults, function ($acc, SessionResultsPrimitive $result) {
             $playerHistoryItem = PlayerHistoryPrimitive::makeNewHistoryItem(
                 $this->_db,
-                $player,
+                $result->getPlayer(),
                 $this,
                 $result->getRatingDelta(),
                 $result->getPlace()
             );
 
+            // Should save the result explicitly! It's not saved inside ->getSessionResults()
             return $acc && $result->save() && $playerHistoryItem->save();
         }, true);
+    }
+
+    /**
+     * Get a list on unsaved session results primitives
+     * @return SessionResultsPrimitive[]
+     */
+    public function getSessionResults()
+    {
+        return array_map(function (PlayerPrimitive $player) {
+            return (new SessionResultsPrimitive($this->_db))
+                ->setPlayer($player)
+                ->setSession($this)
+                ->calc($this->getEvent()->getRuleset(), $this->getCurrentState(), $this->getPlayersIds());
+        }, $this->getPlayers());
     }
 
     /**
@@ -738,6 +774,6 @@ class SessionPrimitive extends Primitive
     {
         $this->_current = $round->getLastSessionState();
         $round->drop();
-        $this->save();
+        $this->setStatus(SessionPrimitive::STATUS_INPROGRESS)->save();
     }
 }

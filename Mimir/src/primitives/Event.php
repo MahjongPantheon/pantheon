@@ -46,6 +46,7 @@ class EventPrimitive extends Primitive
         'is_online'         => '_isOnline',
         'is_textlog'        => '_isTextlog',
         'sync_start'        => '_syncStart',
+        'sync_end'          => '_syncEnd',
         'auto_seating'      => '_autoSeating',
         'sort_by_games'     => '_sortByGames',
         'use_timer'         => '_useTimer',
@@ -75,6 +76,7 @@ class EventPrimitive extends Primitive
             '_isOnline'           => $this->_integerTransform(),
             '_isTextlog'          => $this->_integerTransform(),
             '_syncStart'          => $this->_integerTransform(),
+            '_syncEnd'            => $this->_integerTransform(),
             '_autoSeating'        => $this->_integerTransform(),
             '_sortByGames'        => $this->_integerTransform(),
             '_allowPlayerAppend'  => $this->_integerTransform(),
@@ -177,6 +179,12 @@ class EventPrimitive extends Primitive
      * @var int
      */
     protected $_syncStart;
+    /**
+     * Should tables finish synchronously or not: if yes, when out of time, table will
+     * be taken into 'pre-finished' state. Last round may be cancelled in this state.
+     * @var integer
+     */
+    protected $_syncEnd;
     /**
      * enable automatic seating feature. Disabled if allow_player_append == true.
      * @var int
@@ -777,6 +785,24 @@ class EventPrimitive extends Primitive
     public function setSeriesLength($seriesLength)
     {
         $this->_seriesLength = $seriesLength;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getSyncEnd()
+    {
+        return $this->_syncEnd;
+    }
+
+    /**
+     * @param integer $syncEnd
+     * @return EventPrimitive
+     */
+    public function setSyncEnd($syncEnd)
+    {
+        $this->_syncEnd = $syncEnd;
         return $this;
     }
 

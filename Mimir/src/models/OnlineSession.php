@@ -69,7 +69,7 @@ class OnlineSessionModel extends Model
         $session = (new SessionPrimitive($this->_db))
             ->setEvent($event)
             ->setReplayHash($replayHash)
-            ->setStatus('inprogress');
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS);
 
         list($success, $originalScore, $rounds/*, $debug*/) = $parser->parseToSession($session, $gameContent);
         $success = $success && $session->save();
@@ -78,7 +78,7 @@ class OnlineSessionModel extends Model
             $round->setSession($session);
             $success = $success && $round->save();
         }
-        $success = $success && $session->finish();
+        $success = $success && $session->prefinish();
 
         $calculatedScore = $session->getCurrentState()->getScores();
         if (array_diff($calculatedScore, $originalScore) !== []

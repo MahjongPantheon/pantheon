@@ -86,7 +86,7 @@ migrate: get_docker_id
 	fi
 
 .PHONY: seed
-seed: get_docker_id
+seed: get_docker_id migrate
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Pantheon container is not running, can't run seeding.${NC}"; \
 	else \
@@ -94,7 +94,7 @@ seed: get_docker_id
 	fi
 
 .PHONY: seed_tournament
-seed_tournament: get_docker_id
+seed_tournament: get_docker_id migrate
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Pantheon container is not running, can't run seeding.${NC}"; \
 	else \
@@ -128,7 +128,7 @@ shell: get_docker_id
 # Some shortcuts for common tasks
 
 .PHONY: empty_event
-empty_event:
+empty_event: migrate
 		@curl -s http://localhost:4001/ \
 		-H 'content-type: application/json' \
 		-d '{"jsonrpc": "2.0", "method": "createEvent", "params": ["Test offline", "description", "offline", "ema", 90, "Europe/Moscow"], "id": "5db41fc6-5947-423c-a2ca-6e7f7e6a45c0" }' \
@@ -141,9 +141,9 @@ check: get_docker_id
 	# TODO: checks for Tyr
 
 .PHONY: autofix
-autofix: get_docker_id
-	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user make autofix';
-	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user gosu user make autofix';
+autofix:
+	cd Mimir && make autofix
+	cd Rheda && make autofix
 
 # Prod related tasks & shortcuts
 

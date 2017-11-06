@@ -44,6 +44,7 @@ return [ // Omit trailing slashes in keys when possible
     '/tourn/(?<action>swissSeating)'                       => 'StartTournament',
     '/tourn/(?<action>startTimer)'                         => 'StartTournament',
     '/tourn/(?<action>toggleHideResults)'                  => 'StartTournament',
+    '/tourn/(?<action>finalizeSessions)'                   => 'StartTournament',
 
     '/penalties'       => 'Penalties',
     '/penalties/(?<action>apply)' => 'Penalties',
