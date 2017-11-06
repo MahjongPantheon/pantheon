@@ -1,0 +1,9 @@
+<h3>Скрыть таблицу с результатами игроков</h3>
+<p>Это может быть полезно для сохранения интриги на последних ханчанах турнира.</p>
+
+{{#form action='/tourn/toggleHideResults/' method='post'}}
+    <input type="submit"
+           class="btn btn-large btn-{{#hideResults}}success{{/hideResults}}{{^hideResults}}warning{{/hideResults}} actionButton"
+           value="{{#hideResults}}Данные скрыты. Показать{{/hideResults}}{{^hideResults}}Данные доступны всем. Скрыть{{/hideResults}}"
+    />
+{{/form}}
