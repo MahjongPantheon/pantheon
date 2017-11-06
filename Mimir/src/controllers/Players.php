@@ -251,6 +251,7 @@ class PlayersController extends Controller
         }
 
         $tmpResults = $session->getSessionResults();
+        // Warning: don't ever call ->save() on these items!
 
         /** @var SessionResultsPrimitive[] $sessionResults */
         $sessionResults = [];

@@ -639,6 +639,7 @@ class EventModel extends Model
                 $fakeItems['id' . $item->getPlayerId()] = $item;
             }
             $playersHistoryItems = array_merge($playersHistoryItems, $fakeItems);
+            // Warning: don't ever call ->save() on these items!
         }
 
         $playersHistoryItems = array_values($playersHistoryItems);
@@ -688,7 +689,8 @@ class EventModel extends Model
 
     /**
      * For games that should end synchronously, make fake history items
-     * to properly display rating table for tournament administrators
+     * to properly display rating table for tournament administrators.
+     * These history items are not intended to be SAVED!
      *
      * @param EventPrimitive $event
      * @return PlayerHistoryPrimitive[]
