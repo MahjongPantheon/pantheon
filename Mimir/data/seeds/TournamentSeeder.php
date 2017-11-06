@@ -47,6 +47,7 @@ class TournamentSeeder extends AbstractSeed
             ->setSyncStart(1)
             ->setUsePenalty(1)
             ->setUseTimer(1)
+            ->setSyncEnd(1)
             ->setGameDuration(20)
             ->setRuleset(\Mimir\Ruleset::instance('ema'));
         $event->save();
