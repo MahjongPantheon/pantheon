@@ -46,7 +46,8 @@ class GamesControlPanel extends Controller
                     case 'dropLastRound':
                         $this->_api->execute('dropLastRound', [$this->_path['hash']]);
                         break;
-                    default:;
+                    default:
+                        ;
                 }
             } catch (\Exception $e) {
                 $this->_lastEx = $e;

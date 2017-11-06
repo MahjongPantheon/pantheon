@@ -73,7 +73,8 @@ class TournamentControlPanel extends Controller
                     case 'toggleHideResults':
                         $this->_api->execute('toggleHideResults', [$this->_eventId]);
                         break;
-                    default:;
+                    default:
+                        ;
                 }
             } catch (\Exception $e) {
                 $this->_lastEx = $e;
