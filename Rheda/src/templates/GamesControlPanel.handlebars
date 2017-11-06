@@ -1,0 +1,77 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<style>
+    .cancellation {
+        background-color: #900;
+        color: #fff;
+        display: inline-block;
+        padding: 5px;
+        font-size: 16px;
+    }
+</style>
+
+<script>
+    function disableTemporarily(what) {
+        $(what).attr('disabled', true);
+        var timer = window.setTimeout(function() {
+            $(what).attr('disabled', false);
+            window.clearTimeout(timer);
+        }, 3000);
+        $(what).parent('form').submit();
+        return true;
+    }
+</script>
+
+<hr/>
+<h3>Состояние столов:</h3>
+<table class="table table-bordered">
+    {{#tables}}
+        <tr>
+            <td>#{{table_index}}</td>
+            {{#players}}
+                <td>{{display_name}}</td>
+            {{/players}}
+            <td><span class="badge {{#finished}}badge-success{{/finished}}">{{status}}</span></td>
+        </tr>
+        <tr>
+            <td colspan="6" style="font-weight: bold; font-size: 16px">
+                Предыдущая раздача:
+                {{^last_round}}(ни одной раздачи не сыграно){{/last_round}}
+                {{#last_round}}
+                    {{last_round}}
+                    {{#a
+                        href="/games/dropLastRound/{hash}/"
+                        class="cancellation"
+                        onclick="return window.confirm('Отменяем раздачу: {last_round}. Точно отменить раздачу? Назад дороги нет!')"
+                    }}Отменить последнюю внесенную раздачу{{/a}}
+                {{/last_round}}
+            </td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold; font-size: 16px">
+                Штрафы:
+            </td>
+            <td colspan="5">
+                <ul>
+                    {{#penalties}}
+                        <li>{{who}} - штраф {{amount}} очков. Причина: {{reason}}</li>
+                    {{/penalties}}
+                </ul>
+            </td>
+        </tr>
+    {{/tables}}
+</table>
