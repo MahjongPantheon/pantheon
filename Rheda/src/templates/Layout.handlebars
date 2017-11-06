@@ -69,7 +69,12 @@
                     {{/isOnline}}
                     {{#isLoggedIn}}
                         {{^isOnline}}
-                            <li>{{#a href='/tourn/'}}Старт игр{{/a}}</li>
+                            {{#isTournament}}
+                                <li>{{#a href='/tourn/'}}Управление турниром{{/a}}</li>
+                            {{/isTournament}}
+                            {{^isTournament}}
+                                <li>{{#a href='/games/'}}Управление играми{{/a}}</li>
+                            {{/isTournament}}
                             {{#usePenalty}}
                                 <li>{{#a href='/penalties/'}}Штрафы{{/a}}</li>
                             {{/usePenalty}}
