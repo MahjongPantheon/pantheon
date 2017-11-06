@@ -30,6 +30,9 @@ class TournamentSeeder extends AbstractSeed
         $this->_seedPlayers($db, $event);
         $this->_seedGames($db, $config, $event);
 
+        // update event and set syncEnd to true for pre-finished state testing
+        $event->setSyncEnd(1)->save();
+
         echo '-----------------------------------------------------------------' . PHP_EOL;
         echo "New seeded event link: http://localhost:4002/eid{$event->getId()}" . PHP_EOL;
         echo '-----------------------------------------------------------------' . PHP_EOL;
@@ -47,7 +50,6 @@ class TournamentSeeder extends AbstractSeed
             ->setSyncStart(1)
             ->setUsePenalty(1)
             ->setUseTimer(1)
-            ->setSyncEnd(1)
             ->setGameDuration(20)
             ->setRuleset(\Mimir\Ruleset::instance('ema'));
         $event->save();
