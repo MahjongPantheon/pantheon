@@ -190,7 +190,7 @@ class PlayersController extends Controller
     public function getCurrentSessions($playerId, $eventId)
     {
         $this->_log->addInfo('Getting current sessions for player id #' . $playerId . ' at event id #' . $eventId);
-        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId, 'inprogress');
+        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
 
         $result = array_map(function (SessionPrimitive $session) {
             return [
@@ -232,6 +232,48 @@ class PlayersController extends Controller
         return $this->getCurrentSessions($data->getPlayerId(), $data->getEventId());
     }
 
+
+    /**
+     * Get last prefinished game results of player in event with syncEnd = true
+     *
+     * @param int $playerId
+     * @param int $eventId
+     * @throws EntityNotFoundException
+     * @return array|null
+     */
+    public function getPrefinishedSessionResults($playerId, $eventId)
+    {
+        $this->_log->addInfo('Getting prefinished session results for player id #' . $playerId . ' at event id #' . $eventId);
+
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_PREFINISHED);
+        if (empty($session)) {
+            return null;
+        }
+
+        $tmpResults = $session->getSessionResults();
+        // Warning: don't ever call ->save() on these items!
+
+        /** @var SessionResultsPrimitive[] $sessionResults */
+        $sessionResults = [];
+        foreach ($tmpResults as $sr) {
+            $sessionResults[$sr->getPlayerId()] = $sr;
+        }
+
+        $result = array_map(function (PlayerPrimitive $p) use (&$session, &$sessionResults) {
+            return [
+                'id'            => $p->getId(),
+                'alias'         => $p->getAlias(),
+                'ident'         => $p->getIdent(),
+                'display_name'  => $p->getDisplayName(),
+                'score'         => $sessionResults[$p->getId()]->getScore(),
+                'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),
+            ];
+        }, $session->getPlayers());
+
+        $this->_log->addInfo('Successfully got prefinished session results for player id #' . $playerId . ' at event id #' . $eventId);
+        return $result;
+    }
+
     /**
      * Get last game results of player in event
      *
@@ -243,7 +285,22 @@ class PlayersController extends Controller
     public function getLastResults($playerId, $eventId)
     {
         $this->_log->addInfo('Getting last session results for player id #' . $playerId . ' at event id #' . $eventId);
-        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, 'finished');
+        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        if (empty($event)) {
+            return null;
+        }
+
+        if ($event[0]->getSyncEnd()) {
+            $results = $this->getPrefinishedSessionResults($playerId, $eventId);
+            if (!empty($results)) {
+                return $results;
+            }
+
+            // No prefinished games found but syncEnd == true -> continue and show last finished
+            // (i.e. games may be already confirmed by admin)
+        }
+
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_FINISHED);
         if (empty($session)) {
             return null;
         }
@@ -340,7 +397,7 @@ class PlayersController extends Controller
     public function getLastRound($playerId, $eventId)
     {
         $this->_log->addInfo('Getting last round for player id #' . $playerId . ' at event id #' . $eventId);
-        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, 'inprogress');
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         if (empty($session)) {
             return null;
         }

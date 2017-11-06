@@ -53,6 +53,22 @@
     </button>
 {{/form}}
 
+{{#finalizeSessions}}
+    <br />
+    <h3>Завершить игры</h3>
+    <p>
+        После нажатия на кнопку невозможно будет отменить раздачи. Нажатие на эту кнопку необходимо для
+        обновления рейтинговой таблицы согласно результатам игры.
+    </p>
+
+    {{#form action='/tourn/finalizeSessions/' method='post'}}
+        <button type="submit" style="font-size: 50px; height: 100px;"
+            onclick="return window.confirm('Завершить все игры? Отменить раздачи у завершенных игр будет невозможно!') && disableTemporarily(this);">
+            FINALIZE
+        </button>
+    {{/form}}
+{{/finalizeSessions}}
+
 {{#showTimerControls}}
     <br />
     <h3>Старт/рестарт текущего таймера и начало игр</h3>

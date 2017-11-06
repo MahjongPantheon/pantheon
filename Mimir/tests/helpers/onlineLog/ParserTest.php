@@ -75,7 +75,7 @@ class OnlinelogParserTest extends \PHPUnit_Framework_TestCase
         $this->_session = (new SessionPrimitive($this->_db))
             ->setEvent($this->_event)
             ->setPlayers($this->_players)
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setReplayHash('');
         $this->_session->save();
     }

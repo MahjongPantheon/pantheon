@@ -65,13 +65,13 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
     {
         $newSession = new SessionPrimitive($this->_db);
         $newSession
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setReplayHash('hash')
             ->setEvent($this->_event)
             ->setPlayers($this->_players);
 
         $this->assertEquals('hash', $newSession->getReplayHash());
-        $this->assertEquals('inprogress', $newSession->getStatus());
+        $this->assertEquals(SessionPrimitive::STATUS_INPROGRESS, $newSession->getStatus());
         $this->assertTrue($this->_event === $newSession->getEvent());
         $this->assertTrue($this->_players[1] === $newSession->getPlayers()[1]);
 
@@ -84,7 +84,7 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
     {
         $newSession = new SessionPrimitive($this->_db);
         $newSession
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
             ->setReplayHash('hash')
             ->setEvent($this->_event)
@@ -100,7 +100,7 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
     {
         $newSession = new SessionPrimitive($this->_db);
         $newSession
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
             ->setReplayHash('hash')
             ->setEvent($this->_event)
@@ -116,7 +116,7 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
     {
         $newSession = new SessionPrimitive($this->_db);
         $newSession
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
             ->setReplayHash('hash')
             ->setEvent($this->_event)
@@ -124,7 +124,7 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
 
         $sessionCopy = SessionPrimitive::findByReplayHashAndEvent($this->_db, $this->_event->getId(), $newSession->getReplayHash());
         $this->assertEquals(1, count($sessionCopy));
-        $this->assertEquals('inprogress', $sessionCopy[0]->getStatus());
+        $this->assertEquals(SessionPrimitive::STATUS_INPROGRESS, $sessionCopy[0]->getStatus());
         $this->assertTrue($newSession !== $sessionCopy[0]); // different objects!
     }
 
@@ -132,7 +132,7 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
     {
         $newSession = new SessionPrimitive($this->_db);
         $newSession
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
             ->setReplayHash('hash')
             ->setEvent($this->_event)
@@ -149,7 +149,7 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
     {
         $newSession = new SessionPrimitive($this->_db);
         $newSession
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
             ->setReplayHash('hash')
             ->setEvent($this->_event)
@@ -165,7 +165,7 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
     {
         $newSession = new SessionPrimitive($this->_db);
         $newSession
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
             ->setReplayHash('hash')
             ->setEvent($this->_event)
@@ -184,7 +184,7 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
     {
         $newSession = new SessionPrimitive($this->_db);
         $newSession
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
             ->setReplayHash('hash')
             ->setEvent($this->_event)
@@ -207,7 +207,7 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
     {
         $newSession = new SessionPrimitive($this->_db);
         $newSession
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
             ->setReplayHash('hash')
             ->setEvent($this->_event)
@@ -224,7 +224,7 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
     {
         $newSession = new SessionPrimitive($this->_db);
         $newSession
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
             ->setReplayHash('hash')
             ->setEvent($this->_event)
@@ -245,7 +245,7 @@ class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
     {
         $newSession = new SessionPrimitive($this->_db);
         $newSession
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
             ->setReplayHash('hash')
             ->setEvent($this->_event)

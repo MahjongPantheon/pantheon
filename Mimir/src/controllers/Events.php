@@ -315,6 +315,7 @@ class EventsController extends Controller
             'autoSeating'         => (bool)$event[0]->getAutoSeating(),
             'isTextlog'           => (bool)$event[0]->getIsTextlog(),
             'syncStart'           => (bool)$event[0]->getSyncStart(),
+            'syncEnd'             => (bool)$event[0]->getSyncEnd(),
             'sortByGames'         => (bool)$event[0]->getSortByGames(),
             'allowPlayerAppend'   => (bool)$event[0]->getAllowPlayerAppend(),
             'withLeadingDealerGameover' => $rules->withLeadingDealerGameOver(),
@@ -350,10 +351,11 @@ class EventsController extends Controller
      * @param integer $eventId
      * @param string $orderBy either 'name', 'rating', 'avg_place' or 'avg_score'
      * @param string $order either 'asc' or 'desc'
+     * @param bool $withPrefinished include prefinished games score
      * @throws InvalidParametersException
      * @return array
      */
-    public function getRatingTable($eventId, $orderBy, $order)
+    public function getRatingTable($eventId, $orderBy, $order, $withPrefinished)
     {
         $this->_log->addInfo('Getting rating table for event id# ' . $eventId);
 
@@ -363,7 +365,7 @@ class EventsController extends Controller
         }
 
         $table = (new EventModel($this->_db, $this->_config, $this->_meta))
-            ->getRatingTable($event[0], $orderBy, $order);
+            ->getRatingTable($event[0], $orderBy, $order, $withPrefinished);
 
         $this->_log->addInfo('Successfully received rating table for event id# ' . $eventId);
         return $table;

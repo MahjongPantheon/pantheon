@@ -79,7 +79,7 @@ class InteractiveSessionModel extends Model
         $success = $newSession
             ->setEvent($event[0])
             ->setPlayers($players)
-            ->setStatus('inprogress')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setReplayHash($replayHash)
             ->setTableIndex($tableIndex)
             ->save();
@@ -93,16 +93,39 @@ class InteractiveSessionModel extends Model
 
     /**
      * This method is strictly for premature end of session (timeout, etc)
-     * Normal end should happen when final round is added.
+     * Normal end or pre-finish should happen when final round is added.
      *
      * @param $gameHash
      * @return bool
      */
     public function endGame($gameHash)
     {
-        $session = $this->_findGame($gameHash, 'inprogress');
+        $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
         $this->_checkAuth($session->getPlayersIds(), $session->getEventId());
-        return $session->finish();
+        return $session->prefinish();
+    }
+
+    /**
+     * Finalize all sessions in event
+     *
+     * @param $eventId
+     * @throws AuthFailedException
+     * @return int count of finalized sessions
+     */
+    public function finalizeSessions($eventId)
+    {
+        if (!$this->checkAdminToken()) {
+            throw new AuthFailedException('Only administrators are allowed to finalize sessions');
+        }
+
+        $games = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, 'prefinished');
+        if (empty($games)) {
+            return 0;
+        }
+
+        return array_reduce($games, function ($acc, SessionPrimitive $p) {
+            return $p->finish() ? $acc + 1 : $acc;
+        }, 0);
     }
 
     /**
@@ -116,7 +139,7 @@ class InteractiveSessionModel extends Model
      */
     public function addRound($gameHashcode, $roundData, $dry = false)
     {
-        $session = $this->_findGame($gameHashcode, 'inprogress');
+        $session = $this->_findGame($gameHashcode, SessionPrimitive::STATUS_INPROGRESS);
         $this->_checkAuth($session->getPlayersIds(), $session->getEventId());
 
         if ($session->getEvent()->getGamesStatus() == EventPrimitive::GS_SEATING_READY) {
@@ -199,7 +222,7 @@ class InteractiveSessionModel extends Model
             throw new AuthFailedException('Only administrators are allowed to add penalties');
         }
 
-        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, 'inprogress');
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         if (empty($session)) {
             throw new InvalidParametersException("Couldn't find session in DB");
         }
@@ -279,7 +302,7 @@ class InteractiveSessionModel extends Model
             throw new InvalidParametersException("Couldn't find session in DB");
         }
 
-        if ($session[0]->getStatus() === 'finished') {
+        if ($session[0]->getStatus() === SessionPrimitive::STATUS_FINISHED) {
             throw new InvalidParametersException('Session id#' . $session[0]->getId() . ' is already finished. '
                 . 'Can\'t alter finished sessions');
         }

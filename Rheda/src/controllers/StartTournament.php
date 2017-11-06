@@ -122,6 +122,21 @@ class StartTournament extends Controller
             return false;
         }
 
+        if (!empty($this->_path['action']) && $this->_path['action'] == 'finalizeSessions') {
+            if (!$this->_adminAuthOk()) {
+                return true; // to show error in _run
+            }
+
+            try {
+                $this->_api->execute('finalizeSessions', [$this->_eventId]);
+            } catch (\Exception $e) {
+                $this->_lastEx = $e;
+                return true;
+            }
+            header('Location: ' . Url::make('/tourn/', $this->_eventId));
+            return false;
+        }
+
         if (!empty($this->_path['action']) && $this->_path['action'] == 'toggleHideResults') {
             if (!$this->_adminAuthOk()) {
                 return true; // to show error in _run
@@ -168,6 +183,12 @@ class StartTournament extends Controller
             return $acc + ($i['finished'] ? 0 : 1);
         }, 0);
 
+        // This will include both prefinished and finished tables, to show the button in case of any errors.
+        // If some of tables are finished, and some are prefinished, this will allow recovering working state.
+        $prefinishedTablesCount = array_reduce($tablesFormatted, function ($acc, $i) {
+            return $acc + ($i['status'] == 'prefinished' || $i['finished'] ? 1 : 0);
+        }, 0);
+
         if (!$this->_rules->allowPlayerAppend()) { // Club games do not require all of these checks
             $players = $this->_api->execute('getAllPlayers', [$this->_eventId]);
             if (count($players) % 4 !== 0) {
@@ -199,7 +220,10 @@ class StartTournament extends Controller
             'reason' => $errCode ? $this->_errors[$errCode] : '',
             'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
             'tables' => $tablesFormatted,
-            'hideResults' => $this->_rules->hideResults()
+            'hideResults' => $this->_rules->hideResults(),
+            'finalizeSessions' => $this->_rules->syncEnd()
+                && $prefinishedTablesCount == count($tables)
+                && $unfinishedTablesCount != 0
         ];
     }
 
