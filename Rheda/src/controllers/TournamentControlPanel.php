@@ -29,11 +29,11 @@ class TournamentControlPanel extends Controller
      */
     protected $_lastEx = null;
 
-    protected $_errors = [
-        '_WRONG_PASSWORD' => 'Секретное слово неправильное',
-        '_TABLES_NOT_FULL' => 'Столы не укомплектованы! Число игроков не делится нацело на 4, нужно добавить или убрать людей!',
-        '_GAMES_STARTED' => 'Игры уже начаты / еще не завершены'
-    ];
+    const STAGE_NOT_READY = 1;
+    const STAGE_READY_BUT_NOT_STARTED = 2;
+    const STAGE_SEATING_READY = 3;
+    const STAGE_STARTED = 4;
+    const STAGE_PREFINISHED = 5;
 
     protected function _pageTitle()
     {
@@ -93,60 +93,66 @@ class TournamentControlPanel extends Controller
 
         if (!$this->_adminAuthOk()) {
             return [
-                'showManualControls' => false,
-                'showAutoControls' => false,
-                'reason' => $this->_errors['_WRONG_PASSWORD']
+                'error' => 'Секретное слово неправильное'
             ];
         }
 
         if (!empty($this->_lastEx)) {
             return [
-                'showManualControls' => false,
-                'showAutoControls' => false,
-                'reason' => $this->_lastEx->getMessage()
+                'error' => $this->_lastEx->getMessage()
             ];
         }
 
         $errCode = null;
 
-        // Tables info
+        // Api calls. TODO: merge into one? Http pipelining maybe?
         $tables = $this->_api->execute('getTablesState', [$this->_eventId]);
         $tablesFormatted = $formatter->formatTables($tables, $this->_rules->gamesWaitingForTimer());
+        $players = $this->_api->execute('getAllPlayers', [$this->_eventId]);
+        $timerState = $this->_api->execute('getTimerState', [$this->_eventId]);
 
-        $unfinishedTablesCount = array_reduce($tablesFormatted, function ($acc, $i) {
-            return $acc + ($i['finished'] ? 0 : 1);
+        $currentStage = $this->_determineStage($tablesFormatted, $players, $timerState);
+
+        return [
+            'error' => null,
+            'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
+            'tables' => $tablesFormatted,
+            'stageNotReady' => $currentStage == self::STAGE_NOT_READY,
+            'stageReadyButNotStarted' => $currentStage == self::STAGE_READY_BUT_NOT_STARTED,
+            'stageSeatingReady' => $currentStage == self::STAGE_SEATING_READY,
+            'stageStarted' => $currentStage == self::STAGE_STARTED,
+            'stagePrefinished' => $currentStage == self::STAGE_PREFINISHED,
+            'withAutoSeating' => $this->_rules->autoSeating(),
+            'hideResults' => $this->_rules->hideResults(),
+        ];
+    }
+
+    protected function _determineStage(&$tables, &$players, &$timerState)
+    {
+        $notFinishedTablesCount = array_reduce($tables, function ($acc, $i) {
+            return $acc + ($i['status'] == 'finished' ? 0 : 1);
         }, 0);
 
-        // This will include both prefinished and finished tables, to show the button in case of any errors.
+        // This will include both prefinished and finished tables, to show the "Finalize" button in case of any errors.
         // If some of tables are finished, and some are prefinished, this will allow recovering working state.
-        $prefinishedTablesCount = array_reduce($tablesFormatted, function ($acc, $i) {
+        $prefinishedTablesCount = array_reduce($tables, function ($acc, $i) {
             return $acc + ($i['status'] == 'prefinished' || $i['finished'] ? 1 : 0);
         }, 0);
 
-        $players = $this->_api->execute('getAllPlayers', [$this->_eventId]);
         if (count($players) % 4 !== 0) {
-            $errCode = '_TABLES_NOT_FULL';
+            return self::STAGE_NOT_READY;
         } else {
-            $timerState = $this->_api->execute('getTimerState', [$this->_eventId]);
-            if ($timerState['started'] && $unfinishedTablesCount !== 0) { // Check once after click on START
-                $errCode = '_GAMES_STARTED';
+            if ($this->_rules->syncEnd() && $prefinishedTablesCount == count($tables) && $notFinishedTablesCount != 0) {
+                return self::STAGE_PREFINISHED;
             }
-            if ($unfinishedTablesCount === (count($players) / 4)) {
-                // seating just done, timer not yet started, should show timer controls
-                $errCode = '_GAMES_STARTED';
+            if ($this->_rules->gamesWaitingForTimer() && $notFinishedTablesCount === (count($players) / 4)) {
+                return self::STAGE_SEATING_READY;
+            }
+            if ($timerState['started'] && $notFinishedTablesCount !== 0) {
+                return self::STAGE_STARTED;
             }
         }
 
-        return [
-            'showManualControls' => !$this->_rules->gamesWaitingForTimer() && empty($errCode),
-            'showAutoControls' => !$this->_rules->gamesWaitingForTimer() && empty($errCode) && $this->_rules->autoSeating(),
-            'seatingReady' => $this->_rules->gamesWaitingForTimer(),
-            'showTimerControls' => $this->_rules->syncStart() && !empty($errCode) && $errCode === '_GAMES_STARTED',
-            'reason' => $errCode ? $this->_errors[$errCode] : '',
-            'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
-            'tables' => $tablesFormatted,
-            'hideResults' => $this->_rules->hideResults(),
-            'finalizeSessions' => $this->_rules->syncEnd() && $prefinishedTablesCount == count($tables) && $unfinishedTablesCount != 0
-        ];
+        return self::STAGE_READY_BUT_NOT_STARTED;
     }
 }

@@ -312,6 +312,7 @@ class GameFormatter
                 $t['status'] = 'READY';
             }
             $t['finished'] = $t['status'] == 'finished';
+            $t['prefinished'] = $t['status'] == 'prefinished';
             if ($t['status'] == 'finished') {
                 $t['last_round'] = '';
             } else {
