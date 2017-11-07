@@ -21,6 +21,7 @@ require_once __DIR__ . '/helpers/MobileDetect.php';
 require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/helpers/HttpClient.php';
+require_once __DIR__ . '/helpers/i18n.php';
 use Handlebars\Handlebars;
 
 abstract class Controller
@@ -61,6 +62,13 @@ abstract class Controller
         $this->_url = $url;
         $this->_path = $path;
         $this->_api = new \JsonRPC\Client(Sysconf::API_URL(), false, new HttpClient(Sysconf::API_URL()));
+
+        // i18n support
+        $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']) or 'en_US.UTF-8';
+        if (setlocale(LC_ALL, $locale) === false) {
+            throw new \Exception("Server error: The $locale locale is not installed");
+        }
+        putenv('LC_ALL=' . $locale);
 
         $eidMatches = [];
         if (empty($path['event']) || !preg_match('#eid(\d+)#is', $path['event'], $eidMatches)) {
@@ -115,11 +123,22 @@ abstract class Controller
                     . (empty($a['onclick']) ? '' : ' onclick="' . Url::interpolate($a['onclick'], $context) . '"')
                     . '>' . $inlineRenderer->render($source, $context) . '</a>';
             });
+
             $m->addHelper("form", function ($template, $context, $args, $source) use ($inlineRenderer) {
                 $form = $args->getNamedArguments();
                 return '<form action="' . Url::make(Url::interpolate($form['action'], $context), $this->_eventId)
-                . (empty($form['method']) ? ' method="get"' : '" method="' . $form['method'] . '"')
-                . '>' . $inlineRenderer->render($source, $context) . '</form>';
+                    . (empty($form['method']) ? ' method="get"' : '" method="' . $form['method'] . '"')
+                    . '>' . $inlineRenderer->render($source, $context) . '</form>';
+            });
+
+            // i18n
+            $m->addHelper("_t", function ($template, $context, $args, $source) {
+                $args = $args->getPositionalArguments();
+                return _t($args[0]);
+            });
+
+            $m->addHelper("_n", function ($template, $context, $args, $source) {
+                return call_user_func_array('_n', $args->getPositionalArguments());
             });
 
             header("Content-type: text/html; charset=utf-8");

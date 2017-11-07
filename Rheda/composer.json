@@ -2,7 +2,7 @@
     "require": {
         "fguillot/json-rpc": "@stable",
         "justinrainbow/json-schema": "~4.0",
-	"xamin/handlebars.php": "dev-master"
+	    "xamin/handlebars.php": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "4.8.*",
