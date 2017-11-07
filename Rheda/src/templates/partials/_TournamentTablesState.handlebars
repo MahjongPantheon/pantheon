@@ -1,0 +1,38 @@
+<h3>Состояние столов:</h3>
+<table class="table table-bordered">
+    {{#tables}}
+        <tr>
+            <td>#{{table_index}}</td>
+            {{#players}}
+                <td>{{display_name}}</td>
+            {{/players}}
+            <td><span class="badge {{#finished}}badge-success{{/finished}}{{#prefinished}}badge-warning{{/prefinished}}">{{status}}</span></td>
+        </tr>
+        <tr>
+            <td colspan="6" style="font-weight: bold; font-size: 16px">
+                Предыдущая раздача:
+                {{^last_round}}(ни одной раздачи не сыграно){{/last_round}}
+                {{#last_round}}
+                    {{last_round}}
+                    {{#a
+                            href="/tourn/dropLastRound/{hash}/"
+                            class="btn btn-large btn-danger actionButton"
+                            onclick="return window.confirm('Отменяем раздачу: {last_round}. Точно отменить раздачу? Назад дороги нет!')"
+                    }}Отменить последнюю внесенную раздачу{{/a}}
+                {{/last_round}}
+            </td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold; font-size: 16px">
+                Штрафы:
+            </td>
+            <td colspan="5">
+                <ul>
+                    {{#penalties}}
+                        <li>{{who}} - штраф {{amount}} очков. Причина: {{reason}}</li>
+                    {{/penalties}}
+                </ul>
+            </td>
+        </tr>
+    {{/tables}}
+</table>
