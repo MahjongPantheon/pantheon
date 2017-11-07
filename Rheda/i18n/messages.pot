@@ -12,11 +12,11 @@ msgid "Номинация"
 msgstr ""
 
 #: src/templates/Achievements.handlebars:87
-msgid "якухай"
-msgid_plural "якухаев"
+msgid "%d якухай"
+msgid_plural "%d якухаев"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/controllers/Achievements.php:28
+#: src/controllers/Achievements.php:28 src/controllers/Achievements.php:28
 msgid "Особые номинации"
 msgstr ""
