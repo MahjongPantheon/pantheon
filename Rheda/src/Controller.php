@@ -129,6 +129,7 @@ abstract class Controller
             echo $m->render($add . 'Layout', [
                 'isOnline' => $this->_rules->isOnline(),
                 'useTimer' => $this->_rules->useTimer(),
+                'isTournament' => !$this->_rules->allowPlayerAppend(),
                 'usePenalty' => $this->_rules->usePenalty(),
                 'syncStart' => $this->_rules->syncStart(),
                 'eventTitle' => $this->_rules->eventTitle(),

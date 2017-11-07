@@ -1,0 +1,149 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<style>
+    .actionButton {
+        font-size: 16px;
+        font-weight: bold;
+    }
+</style>
+
+<script>
+    function disableTemporarily(what) {
+        $(what).attr('disabled', true);
+        var timer = window.setTimeout(function() {
+            $(what).attr('disabled', false);
+            window.clearTimeout(timer);
+        }, 3000);
+        $(what).parent('form').submit();
+        return true;
+    }
+</script>
+
+{{#error}}<h2>Что-то пошло не так и вот что именно: {{error}}</h2>{{/error}}
+{{^error}}
+    {{#stageNotReady}}
+        <h3>Невозможно сделать рассадку</h3>
+        Общее число зарегистрированных игроков не делится на 4. Воспользуйтесь разделами "Игроки и регистрация" и
+        "Добавить игрока" для того, чтобы добавить или удалить игроков из турнира. Для дополнения столов предусмотрены
+        специальные аккаунты "Игрок замены 1-4".
+    {{/stageNotReady}}
+    {{#stageReadyButNotStarted}}
+        <h3>Всё готово для генерации рассадки</h3>
+        Выберите способ генерации рассадки ниже и нажмите соответствующую кнопку.
+        <hr/>
+        <table class="table table-striped">
+            {{#withAutoSeating}}
+                <tr>
+                    <td style="width:50%">
+                        {{#form action='/tourn/shuffledSeating/' method='post'}}
+                            <input type="button" class="btn btn-large btn-primary actionButton"
+                                   onclick="return window.confirm('Используем случайную рассадку для новой игры?') && disableTemporarily(this);"
+                                   value="Рассадить автоматически случайным образом">
+                        {{/form}}
+                    </td>
+                    <td rowspan="2" style="width:50%">
+                        {{> partials/TournamentHideResults }}
+                    </td>
+                </tr>
+                <tr><td>
+                    {{#form action='/tourn/swissSeating/' method='post'}}
+                        <input type="button" class="btn btn-large btn-success actionButton"
+                               onclick="return window.confirm('Используем швейцарскую рассадку для новой игры?') && disableTemporarily(this);"
+                               value="Рассадить автоматически по швейцарской рассадке">
+                    {{/form}}
+                </td></tr>
+            {{/withAutoSeating}}
+            {{^withAutoSeating}}
+                <td colspan="2">
+                    {{> partials/TournamentHideResults }}
+                </td>
+            {{/withAutoSeating}}
+            <tr><td colspan="2">
+                {{#form action='/tourn/manualSeating/' method='post'}}
+                    Введите состав столов. Один стол = одна строка.<br>
+                    Если не отмечена галочка, игроки будут рассажены на "восток-юг-запад-север" согласно порядку ввода.<br>
+                    Цифры означают текущее место игрока в рейтинге. Пример рассадки с шагом 4 для четырех столов: <br>
+                    1-5-9-13<br>
+                    2-6-10-14<br>
+                    3-7-11-15<br>
+                    4-8-12-16<br>
+                    <div><textarea name="description" rows="6">{{tablesList}}</textarea></div>
+                    <div><label for="randomize" style="font-size: 17px;">
+                        <input checked="checked" id="randomize" type="checkbox" name="randomize" value="true"> Перемешать игроков за
+                        каждым столом
+                    </label></div>
+                    <input type="button" class="btn btn-large btn-warning actionButton"
+                           onclick="return window.confirm('Используем ручную рассадку для новой игры?') && disableTemporarily(this);"
+                           value="Рассадить вручную согласно введенному составу столов">
+                {{/form}}
+            </td></tr>
+        </table>
+    {{/stageReadyButNotStarted}}
+    {{#stageSeatingReady}}
+        <h3>Старт текущего таймера и начало игр</h3>
+        Нажатие на эту кнопку стартует все игры и запускает таймер.
+        {{#form action='/tourn/startTimer/' method='post'}}
+            <input type="button" class="btn btn-large btn-danger actionButton"
+                   onclick="return window.confirm('Стартовать игры и таймер?') && disableTemporarily(this);"
+                   value="Начать игры!">
+        {{/form}}
+        <hr />
+        {{> partials/TournamentTablesState }}
+    {{/stageSeatingReady}}
+    {{#stageStarted}}
+        <table class="table actionTable">
+            <tr>
+                <td>
+                    <h3>Рестарт текущего таймера</h3>
+                    Нажатие на эту кнопку выставит таймер в исходное значение. Будьте осторожны.
+                    {{#form action='/tourn/startTimer/' method='post'}}
+                        <input type="button" class="btn btn-large btn-danger actionButton"
+                               onclick="return window.confirm('Выставить таймер в начальное значение?') && disableTemporarily(this);"
+                               value="Сбросить таймер">
+                    {{/form}}
+                </td>
+                <td>
+                    {{> partials/TournamentHideResults }}
+                </td>
+            </tr>
+        </table>
+        <hr />
+        {{> partials/TournamentTablesState }}
+    {{/stageStarted}}
+    {{#stagePrefinished}}
+        <table class="table actionTable">
+            <tr>
+                <td>
+                    <h3>Завершить игры</h3>
+                    После нажатия на кнопку невозможно будет отменить раздачи. Нажатие на эту кнопку необходимо для
+                    обновления рейтинговой таблицы согласно результатам игры.
+
+                    {{#form action='/tourn/finalizeSessions/' method='post'}}
+                        <input type="button" class="btn btn-large btn-primary actionButton"
+                               onclick="return window.confirm('Завершить все игры? Отменить раздачи у завершенных игр будет невозможно!') && disableTemporarily(this);"
+                               value="Утвердить все результаты и завершить игры">
+                    {{/form}}
+                </td>
+                <td>
+                    {{> partials/TournamentHideResults }}
+                </td>
+            </tr>
+        </table>
+        <hr />
+        {{> partials/TournamentTablesState }}
+    {{/stagePrefinished}}
+{{/error}}

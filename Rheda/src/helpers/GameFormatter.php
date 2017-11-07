@@ -302,4 +302,109 @@ class GameFormatter
 
         return $wins;
     }
+
+    // ------------------- Tournament control page formatters -----------------------
+
+    public function formatTables($tables, $waitingForTimer)
+    {
+        return array_map(function ($t) use ($waitingForTimer) {
+            if ($waitingForTimer) {
+                $t['status'] = 'READY';
+            }
+            $t['finished'] = $t['status'] == 'finished';
+            $t['prefinished'] = $t['status'] == 'prefinished';
+            if ($t['status'] == 'finished') {
+                $t['last_round'] = '';
+            } else {
+                $t['last_round'] = $this->_formatLastRound($t['last_round'], $t['players']);
+            }
+
+            $players = ArrayHelpers::elm2Key($t['players'], 'id');
+            $t['penalties'] = array_map(function ($p) use (&$players) {
+                $p['who'] = $players[$p['who']]['display_name'];
+                return $p;
+            }, $t['penalties']);
+            return $t;
+        }, $tables);
+    }
+
+    protected function _formatLastRound($roundData, $players)
+    {
+        $players = ArrayHelpers::elm2Key($players, 'id');
+        if (empty($roundData)) {
+            return '';
+        }
+
+        switch ($roundData['outcome']) {
+            case 'ron':
+                return "Рон ({$players[$roundData['winner']]['display_name']} "
+                    . "с {$players[$roundData['loser']]['display_name']}) "
+                    . "{$roundData['han']} хан"
+                    . ($roundData['fu'] ? ", {$roundData['fu']} фу" : '')
+                    . "; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
+                        return $players[$e]['display_name'];
+                    }, $roundData['riichi']));
+            case 'tsumo':
+                return "Цумо ({$players[$roundData['winner']]['display_name']}) "
+                    . "{$roundData['han']} хан"
+                    . ($roundData['fu'] ? ", {$roundData['fu']} фу" : '')
+                    . "; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
+                        return $players[$e]['display_name'];
+                    }, $roundData['riichi']));
+            case 'draw':
+                return "Ничья "
+                    . "(темпай: " . implode(', ', array_map(function ($e) use (&$players) {
+                        return $players[$e]['display_name'];
+                    }, $roundData['tempai'])) . ")"
+                    . "; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
+                        return $players[$e]['display_name'];
+                    }, $roundData['riichi']));
+            case 'abort':
+                return "Пересдача; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
+                        return $players[$e]['display_name'];
+                }, $roundData['riichi']));
+            case 'chombo':
+                return "Чомбо ({$players[$roundData['loser']]['display_name']})";
+            case 'multiron':
+                if (count($roundData['wins']) == 2) {
+                    return "Дабл-рон: платит {$players[$roundData['loser']]['display_name']}; "
+
+                        . "№1: {$players[$roundData['wins'][0]['winner']]['display_name']}, "
+                        . "{$roundData['wins'][0]['han']} хан"
+                        . ($roundData['wins'][0]['fu'] ? ", {$roundData['wins'][0]['fu']} фу" : '')
+
+                        . ", №2: {$players[$roundData['wins'][1]['winner']]['display_name']} "
+                        . "{$roundData['wins'][1]['han']} хан"
+                        . ($roundData['wins'][1]['fu'] ? ", {$roundData['wins'][1]['fu']} фу" : '')
+
+                        . "; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
+                            return $players[$e]['display_name'];
+                        }, $roundData['riichi']));
+                }
+
+                if (count($roundData['wins']) == 3) {
+                    return "Трипл-рон: платит {$players[$roundData['loser']]['display_name']}; "
+
+                        . "№1: {$players[$roundData['wins'][0]['winner']]['display_name']}, "
+                        . "{$roundData['wins'][0]['han']} хан"
+                        . ($roundData['wins'][0]['fu'] ? ", {$roundData['wins'][0]['fu']} фу" : '')
+
+                        . ", №2: {$players[$roundData['wins'][1]['winner']]['display_name']} "
+                        . "{$roundData['wins'][1]['han']} хан"
+                        . ($roundData['wins'][1]['fu'] ? ", {$roundData['wins'][1]['fu']} фу" : '')
+
+                        . ", №3: {$players[$roundData['wins'][2]['winner']]['display_name']} "
+                        . "{$roundData['wins'][2]['han']} хан"
+                        . ($roundData['wins'][2]['fu'] ? ", {$roundData['wins'][2]['fu']} фу" : '')
+
+                        . "; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
+                            return $players[$e]['display_name'];
+                        }, $roundData['riichi']));
+                }
+
+                return '';
+            default:
+                return '';
+        }
+    }
 }
