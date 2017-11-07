@@ -23,7 +23,7 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-                <th>Номинация</th>
+                <th>{{_t Номинация}}</th>
                 <th style="width: 30%">Расшифровка</th>
                 <th>Значение</th>
                 <th>Номинанты</th>
@@ -84,7 +84,7 @@
                 <td>-</td>
                 <td><ul>
                     {{#dovakins}}
-                        <li>{{name}}: {{count}} якухаев</li>
+                        <li>{{name}}: {{_n "якухай" "якухаев" count}}</li>
                     {{/dovakins}}
                 </ul></td>
             </tr>
