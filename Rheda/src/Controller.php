@@ -64,7 +64,12 @@ abstract class Controller
         $this->_api = new \JsonRPC\Client(Sysconf::API_URL(), false, new HttpClient(Sysconf::API_URL()));
 
         // i18n support
-        $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']) or 'en_US.UTF-8';
+        $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        if (!empty($locale)) {
+            $locale .= '.UTF-8';
+        } else {
+            $locale = 'en_US.UTF-8';
+        }
         if (setlocale(LC_ALL, $locale) === false) {
             throw new \Exception("Server error: The $locale locale is not installed");
         }
@@ -138,7 +143,10 @@ abstract class Controller
             });
 
             $m->addHelper("_n", function ($template, $context, $args, $source) {
-                return call_user_func_array('_n', $args->getPositionalArguments());
+                $arguments = $args->getPositionalArguments();
+                $countRealValue = $context->get($arguments[2]);
+                $arguments[2] = $countRealValue;
+                return call_user_func_array('\Rheda\_n', $arguments);
             });
 
             header("Content-type: text/html; charset=utf-8");
