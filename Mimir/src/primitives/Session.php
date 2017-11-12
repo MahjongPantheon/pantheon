@@ -722,9 +722,13 @@ class SessionPrimitive extends Primitive
             return false;
         }
 
+        if (!$this->getEndDate()) {
+            // Set end date if it is empty; for prefinished games it won't be.
+            $this->setEndDate(date('Y-m-d H:i:s'));
+        }
+
         $success = $this
             ->setStatus(SessionPrimitive::STATUS_FINISHED)
-            ->setEndDate(date('Y-m-d H:i:s'))
             ->save();
 
         return $success && $this->_finalizeGame();
