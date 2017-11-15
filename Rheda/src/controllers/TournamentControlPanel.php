@@ -149,7 +149,7 @@ class TournamentControlPanel extends Controller
             if ($this->_rules->gamesWaitingForTimer() && $notFinishedTablesCount === (count($players) / 4)) {
                 return self::STAGE_SEATING_READY;
             }
-            if ($timerState['started'] && $notFinishedTablesCount !== 0) {
+            if ($notFinishedTablesCount !== 0) {
                 return self::STAGE_STARTED;
             }
         }
