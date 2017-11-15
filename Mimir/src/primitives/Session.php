@@ -459,6 +459,9 @@ class SessionPrimitive extends Primitive
      */
     public function getStartDate()
     {
+        if (!$this->_startDate) {
+            return null;
+        }
         return DateHelper::getLocalDate($this->_startDate, $this->getEvent()->getTimezone());
     }
 
@@ -473,10 +476,13 @@ class SessionPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getEndDate()
     {
+        if (!$this->_endDate) {
+            return null;
+        }
         return DateHelper::getLocalDate($this->_endDate, $this->getEvent()->getTimezone());
     }
 
