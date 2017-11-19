@@ -34,12 +34,6 @@ msgstr ""
 msgid "Recent games"
 msgstr ""
 
-msgid "No games are played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
-msgstr ""
-
 msgid "Rating table"
 msgstr ""
 
@@ -71,6 +65,12 @@ msgid "Timer & seating"
 msgstr ""
 
 msgid "Login"
+msgstr ""
+
+msgid "No games are played yet"
+msgstr ""
+
+msgid "%d - %d (%d total)"
 msgstr ""
 
 msgid "Sorry, this page is not available for mobile devices"

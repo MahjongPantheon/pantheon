@@ -337,13 +337,13 @@ class GameFormatter
             return '';
         }
 
-        $namesOf = function($list) {
+        $namesOf = function ($list) {
             return implode(', ', array_map(function ($e) use (&$players) {
                 return $players[$e]['display_name'];
             }, $list));
         };
 
-        $handDesc = function($roundData) {
+        $handDesc = function ($roundData) {
             if ($roundData['han'] < 0) {
                 return _t('yakuman');
             }
@@ -355,20 +355,23 @@ class GameFormatter
 
         switch ($roundData['outcome']) {
             case 'ron':
-                return _p("Ron (%s from %s) %s; riichi bets - %s",
+                return _p(
+                    "Ron (%s from %s) %s; riichi bets - %s",
                     $players[$roundData['winner']]['display_name'],
                     $players[$roundData['loser']]['display_name'],
                     $handDesc($roundData),
                     $namesOf($roundData['riichi'])
                 );
             case 'tsumo':
-                return _p("Tsumo (%s) %s; riichi bets - %s",
+                return _p(
+                    "Tsumo (%s) %s; riichi bets - %s",
                     $players[$roundData['winner']]['display_name'],
                     $handDesc($roundData),
                     $namesOf($roundData['riichi'])
                 );
             case 'draw':
-                return _p("Exhaustive draw (tenpai: %s); riichi bets - %s",
+                return _p(
+                    "Exhaustive draw (tenpai: %s); riichi bets - %s",
                     $namesOf($roundData['tempai']),
                     $namesOf($roundData['riichi'])
                 );
@@ -378,7 +381,8 @@ class GameFormatter
                 return _p("Chombo (%s)", $players[$roundData['loser']]['display_name']);
             case 'multiron':
                 if (count($roundData['wins']) == 2) {
-                    return _p('Double ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); riichi bets - %s',
+                    return _p(
+                        'Double ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); riichi bets - %s',
                         $players[$roundData['loser']]['display_name'],
                         $players[$roundData['wins'][0]['winner']]['display_name'],
                         $handDesc($roundData['wins'][0]),
@@ -389,7 +393,8 @@ class GameFormatter
                 }
 
                 if (count($roundData['wins']) == 3) {
-                    return _p('Triple ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); winner #3 is %s (%s); riichi bets - %s',
+                    return _p(
+                        'Triple ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); winner #3 is %s (%s); riichi bets - %s',
                         $players[$roundData['loser']]['display_name'],
                         $players[$roundData['wins'][0]['winner']]['display_name'],
                         $handDesc($roundData['wins'][0]),
