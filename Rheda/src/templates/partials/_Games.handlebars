@@ -8,10 +8,11 @@
     <tr>
         <td>{{#a href='/game/{hash}/'}}{{endDate}}{{/a}}</td>
         <td>
-            <table class='table table-condensed'>
+            <table class='table table-condensed player-list'>
                 {{#players}}
                     <tr class="user-item-row">
-                        <td>{{wind}} <b>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</b></td>
+                        <td class="wind-cell">{{wind}}</td>
+                        <td><b>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</b></td>
                         <td>
                             <div class='badge badge-{{label}}'>{{rating_delta}}</div>
                             <div class="score">{{score}}</div>
