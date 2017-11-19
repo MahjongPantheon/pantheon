@@ -68,7 +68,7 @@ class Sortition extends Controller
             return [
                 'id' => $player['id'],
                 'rating' => $player['score'],
-                'zone' => $player['score'] >= $this->_rules->startRating() ? 'success' : 'important',
+                'zone' => $player['score'] >= $this->_rules->startRating() ? 'success' : 'danger',
                 // TODO; get rid of bootstrap terminology here ^
                 'username' => $players[$player['id']]['display_name']
             ];
@@ -121,7 +121,7 @@ class Sortition extends Controller
     {
         $warningThreshold = ceil($max / 2.);
         if ($num == $max) {
-            return 'important';
+            return 'danger';
         }
         if ($num >= $warningThreshold) {
             return 'warning';

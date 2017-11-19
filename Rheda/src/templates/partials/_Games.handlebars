@@ -12,8 +12,10 @@
                 {{#players}}
                     <tr class="user-item-row">
                         <td>{{wind}} <b>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</b></td>
-                        <td>{{score}}</td>
-                        <td><span class='badge badge-{{label}}'>{{rating_delta}}</span></td>
+                        <td>
+                            <div class='badge badge-{{label}}'>{{rating_delta}}</div>
+                            <div class="score">{{score}}</div>
+                        </td>
                     </tr>
                 {{/players}}
             </table>

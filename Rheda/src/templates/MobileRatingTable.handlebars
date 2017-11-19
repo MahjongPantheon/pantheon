@@ -42,7 +42,7 @@
         padding: 1px 4px;
         border-radius: 20%;
     }
-    .badge.important {
+    .badge.danger {
         background-color: #800;
     }
     .badge.success {
@@ -77,7 +77,7 @@
                     <td>{{#a href='/user/{id}/'}}<nobr>{{short_name}}</nobr>{{/a}}</td>
                     <td class="cn"><span class="badge
                          {{#winner_zone}}success{{/winner_zone}}
-                        {{^winner_zone}}important{{/winner_zone}}
+                        {{^winner_zone}}danger{{/winner_zone}}
                          ">{{rating}}</span></td>
                     <td class="cn">{{avg_place_less_precision}}</td>
                     <td class="cn">{{avg_score_int}}</td>

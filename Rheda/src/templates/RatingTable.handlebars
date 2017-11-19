@@ -14,7 +14,7 @@
 *  You should have received a copy of the GNU General Public License
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
-<h2>Рейтинг игроков</h2>
+<h3>Рейтинг игроков</h3>
 <br>
 {{#error}}
     <div class="alert alert-error">{{error}}</div>
@@ -46,7 +46,7 @@
             <td>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</td>
             <td><span class="badge
                 {{#winner_zone}}badge-success{{/winner_zone}}
-                {{^winner_zone}}badge-important{{/winner_zone}}
+                {{^winner_zone}}badge-danger{{/winner_zone}}
             ">{{rating}}</span></td>
             <td>{{avg_place}}</td>
             <td>{{avg_score_int}}</td>

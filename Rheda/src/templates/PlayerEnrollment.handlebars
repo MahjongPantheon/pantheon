@@ -19,13 +19,13 @@
         display: inline;
     }
 </style>
-<h2>Добавить игрока</h2>
-<br>
+<h3>Добавить игрока</h3>
 {{#error}}
+<br>
 <div class="alert alert-error">{{error}}</div>
 {{/error}}
 <hr />
-<h3>Все существующие игроки</h3>
+<h4>Все существующие игроки</h4>
 Добавление в турнир игрока, который уже участвует, эквивалентно выдаче PIN-кода заново на странице "Игроки и регистрация".
 <table class="table table-condensed table-stripped">
     <tr>
@@ -46,10 +46,11 @@
 {{/everybody}}
 </table>
 <hr />
-<h3>Добавить нового игрока в систему</h3>
+<h4>Добавить нового игрока в систему</h4>
 <form action="" method="post" class="well form-search">
     <input type="hidden" name="action_type" value="sys_reg" />
     <input type="text" class="input-medium search-query" name="ident" placeholder='Системное имя' />
     <input type="text" class="input-medium search-query" name="display_name" placeholder='Реальный ник' />
     <button type="submit" class="btn">Зарегистрировать</button>
 </form>
+<hr />
