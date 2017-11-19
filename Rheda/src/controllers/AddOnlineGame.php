@@ -17,21 +17,15 @@
  */
 namespace Rheda;
 
-/**
- * Добавление онлайн-игры
- */
 class AddOnlineGame extends Controller
 {
     protected $_mainTemplate = 'AddOnlineGame';
 
     protected function _pageTitle()
     {
-        return _t('Добавить онлайн-игру');
+        return _t('Add new online game');
     }
 
-    /**
-     * Основной метод контроллера
-     */
     protected function _run()
     {
         $errorMsg = '';

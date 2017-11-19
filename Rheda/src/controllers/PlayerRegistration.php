@@ -26,7 +26,7 @@ class PlayerRegistration extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Игроки и регистрация');
+        return _t('Players registration');
     }
 
     protected function _run()
@@ -67,7 +67,7 @@ class PlayerRegistration extends Controller
     {
         if (!empty($_POST['action_type'])) {
             if (!$this->_adminAuthOk()) {
-                $this->_lastError = _t("Секретное слово неправильное");
+                $this->_lastError = _t("Wrong admin password");
                 return true;
             }
 
@@ -101,7 +101,7 @@ class PlayerRegistration extends Controller
         try {
             $success = $this->_api->execute('registerPlayerCP', [$userId, $this->_eventId]);
             if (!$success) {
-                $errorMsg = _t('Не удалось зарегистрировать игрока - проблемы с сетью?');
+                $errorMsg = _t('Failed to register the player. Check your network connection.');
             }
         } catch (Exception $e) {
             $errorMsg = $e->getMessage();
@@ -128,7 +128,7 @@ class PlayerRegistration extends Controller
         try {
             $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_eventId]);
             if (!$success) {
-                $errorMsg = _t('Не удалось добавить игрока в списки - проблемы с сетью?');
+                $errorMsg = _t('Failed to enroll the player. Check your network connection.');
             }
         } catch (Exception $e) {
             $errorMsg = $e->getMessage();

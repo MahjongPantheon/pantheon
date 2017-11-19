@@ -25,7 +25,7 @@ class LastGames extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Последние игры');
+        return _t('Latest games');
     }
 
     protected function _run()

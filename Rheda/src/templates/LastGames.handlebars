@@ -14,22 +14,22 @@
 *  You should have received a copy of the GNU General Public License
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
-<h3>{{_t 'Последние сыгранные игры'}}</h3>
+<h3>{{_t 'Recent games'}}</h3>
 <br>
 <div class="last-games">
     {{#noGames}}
-        {{_t 'Ни одной игры еще не сыграно'}}
+        {{_t 'No games are played yet'}}
     {{/noGames}}
     {{^noGames}}
-        <p>{{_p '%d - %d (всего %d)' start end gamesCount}}</p>
+        <p>{{_p '%d - %d (%d total)' start end gamesCount}}</p>
         {{> partials/Games }}
         <ul class="pagination">
             {{#hasPreviousButton}}
-                <li class="page-item">{{#a class='page-link' href='/last/?page={prevPage}'}}Назад{{/a}}</li>
+                <li class="page-item">{{#a class='page-link' href='/last/?page={prevPage}'}}{{_t 'Later'}}{{/a}}</li>
             {{/hasPreviousButton}}
 
             {{#hasNextButton}}
-                <li class="page-item">{{#a class='page-link' href='/last/?page={nextPage}'}}Вперед{{/a}}</li>
+                <li class="page-item">{{#a class='page-link' href='/last/?page={nextPage}'}}{{_t 'Earlier'}}{{/a}}</li>
             {{/hasNextButton}}
         </ul>
     {{/noGames}}

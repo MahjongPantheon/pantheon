@@ -79,7 +79,7 @@ abstract class Controller
         if (empty($path['event']) || !preg_match('#eid(\d+)#is', $path['event'], $eidMatches)) {
             // TODO: убрать чтобы показать страницу со списком событий
             //throw new Exception('No event id found! Use single-event mode, or choose proper event on main page');
-            exit('Please select some event!');
+            exit(_t('Please select some event!'));
         }
         $this->_eventId = intval($eidMatches[1]);
 
@@ -102,7 +102,7 @@ abstract class Controller
     public function run()
     {
         if (empty($this->_rules->rulesetTitle())) {
-            echo '<h2>Oops.</h2>Failed to get event configuration!';
+            echo _t('<h2>Oops.</h2>Failed to get event configuration!');
             return;
         }
 

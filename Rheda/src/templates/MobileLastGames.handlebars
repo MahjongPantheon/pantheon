@@ -15,13 +15,13 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
 
-<h2 class="header-title">{{_t 'Последние сыгранные игры'}}</h2>
+<h2 class="header-title">{{_t 'Recent games'}}</h2>
 <div class="main-content">
     {{#noGames}}
-        {{_t 'Ни одной игры еще не сыграно'}}
+        {{_t 'No games are played yet'}}
     {{/noGames}}
     {{^noGames}}
-        <p>{{_p '%d - %d (всего %d)' start end gamesCount}}</p>
+        <p>{{_p '%d - %d (%d total)' start end gamesCount}}</p>
         <div class="games">
             {{> partials/MobileGames }}
         </div>

@@ -1,8 +1,8 @@
 <table class='table table-striped table-condensed'>
     <tr>
-        <th>{{_t 'Время регистрации'}}</th>
-        <th>{{_t 'Игроки'}}</th>
-        <th>{{_t 'Всякое разное'}}</th>
+        <th>{{_t 'Date & time'}}</th>
+        <th>{{_t 'Players'}}</th>
+        <th>{{_t 'Details'}}</th>
     </tr>
     {{#games}}
     <tr>
@@ -24,174 +24,30 @@
         <td>
             <ul>
                 {{#replayLink}}
-                    <li><a href='{{replayLink}}' class="replay-link" target='_blank'>{{_t 'Посмотреть реплей'}}</a></li>
+                    <li><a href='{{replayLink}}' class="replay-link" target='_blank'>{{_t 'View replay online'}}</a></li>
                 {{/replayLink}}
-                <li>{{{_p 'Лучшая рука: <b>%s</b> - %s' bestHandPlayers bestHandCost}}}</li>
-                <li>{{_p 'Выигрышей по рон: %d' ronWins}}</li>
-                <li>{{_p 'Выигрышей по цумо: %d' tsumoWins}}</li>
-                <li>{{_p 'Ничьих: %d' draws}}</li>
+                <li>{{{_p 'Best hand: <b>%s</b> - %s' bestHandPlayers bestHandCost}}}</li>
+                <li>{{_p 'Ron hands: %d' ronWins}}</li>
+                <li>{{_p 'Tsumo hands: %d' tsumoWins}}</li>
+                <li>{{_p 'Drawn rounds: %d' draws}}</li>
                 {{#chombo}}
-                    <li>{{_p 'Чомбо: %s' chombo}}</li>
+                    <li>{{_p 'Chombo penalties: %s' chombo}}</li>
                 {{/chombo}}
                 {{#showPenalties}}
                     <li>
-                        {{_t 'Дополнительные штрафы:'}}
+                        {{_t 'Additional penalties:'}}
                         <ul>
                             {{#penalties}}
-                                <li>{{_p '%s - %d очков (%s)' who amount reason}}</li>
+                                <li>{{_p '%s - %d points (%s)' who amount reason}}</li>
                             {{/penalties}}
                         </ul>
                     </li>
                 {{/showPenalties}}
-                <li>{{_t 'Полный лог игры:'}}</li>
+                <li>{{_t 'Full game log:'}}</li>
                 <div class='fullLog'>
                     {{#logItems}}
                         <div>
-                            {{roundWind}}{{roundIndex}}:
-                            {{#roundTypeRon}}
-                                {{#paoPlayerName}}
-                                    {{{_p '<b>%s</b> - %s (<b>%s</b>, пао: <b>%s</b>), якуман!'
-                                         winnerName yakuList loserName paoPlayerName}}}
-                                {{/paoPlayerName}}
-                                {{^paoPlayerName}}
-                                    {{#yakuman}}
-                                        {{{_p '<b>%s</b> - %s (<b>%s</b>), якуман!' winnerName yakuList loserName}}}
-                                    {{/yakuman}}
-                                    {{^yakuman}}
-                                        {{#doras}}
-                                            {{#fu}}
-                                                {{{_p '<b>%s</b> - %s, дора %d (<b>%s</b>), %d хан, %d фу.'
-                                                     winnerName yakuList doras loserName han fu}}}
-                                            {{/fu}}
-                                            {{^fu}}
-                                                {{{_p '<b>%s</b> - %s, дора %d (<b>%s</b>), %s хан.'
-                                                     winnerName yakuList doras loserName han}}}
-                                            {{/fu}}
-                                        {{/doras}}
-                                        {{^doras}}
-                                            {{#fu}}
-                                                {{{_p '<b>%s</b> - %s (<b>%s</b>), %d хан, %d фу.'
-                                                     winnerName yakuList loserName han fu}}}
-                                            {{/fu}}
-                                            {{^fu}}
-                                                {{{_p '<b>%s</b> - %s (<b>%s</b>), %d хан.'
-                                                     winnerName yakuList loserName han}}}
-                                            {{/fu}}
-                                        {{/doras}}
-                                    {{/yakuman}}
-                                {{/paoPlayerName}}
-                                {{#riichiPlayers}}
-                                    {{_p 'Риичи: %s' riichiPlayers}}
-                                {{/riichiPlayers}}
-                            {{/roundTypeRon}}
-
-                            {{#roundTypeMultiRon}}
-                                {{#doubleRon}}
-                                    {{_t 'Дабл-рон:'}}
-                                {{/doubleRon}}
-                                {{#tripleRon}}
-                                    {{_t 'Трипл-рон:'}}
-                                {{/tripleRon}}
-                                {{#multiRonWins}}
-                                    <div>
-                                        {{#paoPlayerName}}
-                                            {{{_p '<b>%s</b> - %s (<b>%s</b>, пао: <b>%s</b>), якуман!'
-                                                 winnerName yakuList loserName paoPlayerName}}}
-                                        {{/paoPlayerName}}
-                                        {{^paoPlayerName}}
-                                            {{#yakuman}}
-                                                {{{_p '<b>%s</b> - %s (<b>%s</b>), якуман!' winnerName yakuList loserName}}}
-                                            {{/yakuman}}
-                                            {{^yakuman}}
-                                                {{#doras}}
-                                                    {{#fu}}
-                                                        {{{_p '<b>%s</b> - %s, дора %d (<b>%s</b>), %d хан, %d фу.'
-                                                             winnerName yakuList doras loserName han fu}}}
-                                                    {{/fu}}
-                                                    {{^fu}}
-                                                        {{{_p '<b>%s</b> - %s, дора %d (<b>%s</b>), %s хан.'
-                                                             winnerName yakuList doras loserName han}}}
-                                                    {{/fu}}
-                                                {{/doras}}
-                                                {{^doras}}
-                                                    {{#fu}}
-                                                        {{{_p '<b>%s</b> - %s (<b>%s</b>), %d хан, %d фу.'
-                                                             winnerName yakuList loserName han fu}}}
-                                                    {{/fu}}
-                                                    {{^fu}}
-                                                        {{{_p '<b>%s</b> - %s (<b>%s</b>), %d хан.'
-                                                             winnerName yakuList loserName han}}}
-                                                    {{/fu}}
-                                                {{/doras}}
-                                            {{/yakuman}}
-                                        {{/paoPlayerName}}
-                                    </div>
-                                {{/multiRonWins}}
-                                {{#riichiPlayers}}
-                                    {{_p 'Риичи: %s' riichiPlayers}}
-                                {{/riichiPlayers}}
-                            {{/roundTypeMultiRon}}
-
-                            {{#roundTypeTsumo}}
-                                {{#paoPlayerName}}
-                                    {{{_p '<b>%s</b> - %s (цумо, пао: <b>%s</b>), якуман!'
-                                         winnerName yakuList paoPlayerName}}}
-                                {{/paoPlayerName}}
-                                {{^paoPlayerName}}
-                                    {{#yakuman}}
-                                        {{{_p '<b>%s</b> - %s (цумо), якуман!'
-                                             winnerName yakuList}}}
-                                    {{/yakuman}}
-                                    {{^yakuman}}
-                                        {{#doras}}
-                                            {{#fu}}
-                                                {{{_p '<b>%s</b> - %s, дора %d (цумо), %d хан, %d фу.'
-                                                     winnerName yakuList doras han fu}}}
-                                            {{/fu}}
-                                            {{^fu}}
-                                                {{{_p '<b>%s</b> - %s, дора %d (цумо), %d хан.'
-                                                     winnerName yakuList doras han}}}
-                                            {{/fu}}
-                                        {{/doras}}
-                                        {{^doras}}
-                                            {{#fu}}
-                                                {{{_p '<b>%s</b> - %s (цумо), %d хан, %d фу.'
-                                                     winnerName yakuList han fu}}}
-                                            {{/fu}}
-                                            {{^fu}}
-                                                {{{_p '<b>%s</b> - %s (цумо), %d хан.'
-                                                     winnerName yakuList han}}}
-                                            {{/fu}}
-                                        {{/doras}}
-                                    {{/yakuman}}
-                                {{/paoPlayerName}}
-                                {{#riichiPlayers}}
-                                    {{_p 'Риичи: %s' riichiPlayers}}
-                                {{/riichiPlayers}}
-                            {{/roundTypeTsumo}}
-
-                            {{#roundTypeDraw}}
-                                {{#tempaiPlayers}}
-                                    {{_p 'Ничья (темпай: %s).' tempaiPlayers}}
-                                {{/tempaiPlayers}}
-                                {{^tempaiPlayers}}
-                                    {{_t 'Ничья (все нотен).'}}
-                                {{/tempaiPlayers}}
-                                {{#riichiPlayers}}
-                                    {{_p 'Риичи: %s' riichiPlayers}}
-                                {{/riichiPlayers}}
-                            {{/roundTypeDraw}}
-
-                            {{#roundTypeAbort}}
-                                {{_t 'Пересдача.'}}
-                                {{#riichiPlayers}}
-                                    {{_p 'Риичи: %s' riichiPlayers}}
-                                {{/riichiPlayers}}
-                            {{/roundTypeAbort}}
-
-                            {{#roundTypeChombo}}
-                                {{_p 'Чомбо: %s.' loserName}}
-                            {{/roundTypeChombo}}
+                            {{> partials/GameLogItem}}
                         </div>
                     {{/logItems}}
                 </div>
