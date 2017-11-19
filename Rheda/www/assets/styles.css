@@ -64,13 +64,9 @@ li, .table th, .table td {
 }
 
 /* last games */
-.last-games tr.user-item-row td {
+.last-games tr.user-item-row td:last-child {
     background: transparent;
-    width: 25%;
-}
-.last-games tr.user-item-row td:first-child {
-    background: transparent;
-    width: 50%;
+    width: 90px;
 }
 
 .last-games a {
@@ -88,6 +84,14 @@ li, .table th, .table td {
 .last-games .score {
     text-align: right;
     font-size: small;
+}
+
+.last-games .player-list {
+    min-width: 250px;
+}
+
+.last-games .wind-cell {
+    width: 30px;
 }
 
 .navbar {

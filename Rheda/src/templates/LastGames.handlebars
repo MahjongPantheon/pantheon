@@ -23,16 +23,14 @@
     {{^noGames}}
         <p>{{start}} &dash; {{end}} (всего {{gamesCount}})</p>
         {{> partials/Games }}
-        <div class='pagination'>
-            <ul>
-                {{#hasPreviousButton}}
-                    <li>{{#a href='/last/?page={prevPage}'}}Назад{{/a}}</li>
-                {{/hasPreviousButton}}
+        <ul class="pagination">
+            {{#hasPreviousButton}}
+                <li class="page-item">{{#a class='page-link' href='/last/?page={prevPage}'}}Назад{{/a}}</li>
+            {{/hasPreviousButton}}
 
-                {{#hasNextButton}}
-                    <li>{{#a href='/last/?page={nextPage}'}}Вперед{{/a}}</li>
-                {{/hasNextButton}}
-            </ul>
-        </div>
+            {{#hasNextButton}}
+                <li class="page-item">{{#a class='page-link' href='/last/?page={nextPage}'}}Вперед{{/a}}</li>
+            {{/hasNextButton}}
+        </ul>
     {{/noGames}}
 </div>
