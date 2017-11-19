@@ -1,0 +1,830 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgid "Добро пожаловать в систему статистики по сыгранным играм."
+msgstr ""
+
+msgid "Пройдите сюда, чтобы начать"
+msgstr ""
+
+msgid "Вы просматриваете сокращенную версию статистики для мобильных устройств."
+msgstr ""
+
+msgid "Игрок #%d"
+msgstr ""
+
+msgid "Лучшая серия:"
+msgstr ""
+
+msgid "Очки:"
+msgstr ""
+
+msgid "Текущая серия:"
+msgstr ""
+
+msgid "Сыгранные игры"
+msgstr ""
+
+msgid "Рейтинг"
+msgstr ""
+
+msgid "+Онлайн-игра"
+msgstr ""
+
+msgid "Администрирование"
+msgstr ""
+
+msgid "Управление турниром"
+msgstr ""
+
+msgid "Управление играми"
+msgstr ""
+
+msgid "Штрафы"
+msgstr ""
+
+msgid "Добавить игрока"
+msgstr ""
+
+msgid "Игроки и регистрация"
+msgstr ""
+
+msgid "Номинации"
+msgstr ""
+
+msgid "Таймер и рассадка"
+msgstr ""
+
+msgid "Вход"
+msgstr ""
+
+msgid "Последние сыгранные игры"
+msgstr ""
+
+msgid "Ни одной игры еще не сыграно"
+msgstr ""
+
+msgid "%d - %d (всего %d)"
+msgstr ""
+
+msgid "Игрок"
+msgstr ""
+
+msgid "Лучшая серия"
+msgstr ""
+
+msgid "Очки за лучшую серию"
+msgstr ""
+
+msgid "Текущая серия"
+msgstr ""
+
+msgid "Очки за текущую серию"
+msgstr ""
+
+msgid "Посмотреть реплей"
+msgstr ""
+
+msgid "Выигрышей по рон: %d"
+msgstr ""
+
+msgid "Выигрышей по цумо: %d"
+msgstr ""
+
+msgid "Ничьих: %s"
+msgstr ""
+
+msgid "Чомбо: %s"
+msgstr ""
+
+msgid "Дополнительные штрафы:"
+msgstr ""
+
+msgid "%s - %d очков (%s)"
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>, пао: <b>%s</b>), якуман!"
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), якуман!"
+msgstr ""
+
+msgid "<b>%s</b> - %s, дора %d (<b>%s</b>), %d хан, %d фу."
+msgstr ""
+
+msgid "<b>%s</b> - %s, дора %d (<b>%s</b>), %s хан."
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d хан, %d фу."
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d хан."
+msgstr ""
+
+msgid "Риичи: %s"
+msgstr ""
+
+msgid "Дабл-рон:"
+msgstr ""
+
+msgid "Трипл-рон:"
+msgstr ""
+
+msgid "<b>%s</b> - %s (цумо, пао: <b>%s</b>), якуман!"
+msgstr ""
+
+msgid "<b>%s</b> - %s (цумо), якуман!"
+msgstr ""
+
+msgid "<b>%s</b> - %s, дора %d (цумо), %d хан, %d фу."
+msgstr ""
+
+msgid "<b>%s</b> - %s, дора %d (цумо), %d хан."
+msgstr ""
+
+msgid "<b>%s</b> - %s (цумо), %d хан, %d фу."
+msgstr ""
+
+msgid "<b>%s</b> - %s (цумо), %d хан."
+msgstr ""
+
+msgid "Ничья (темпай: %s)."
+msgstr ""
+
+msgid "Ничья (все нотен)."
+msgstr ""
+
+msgid "Пересдача."
+msgstr ""
+
+msgid "Чомбо: %s."
+msgstr ""
+
+msgid "Графики рейтинга"
+msgstr ""
+
+msgid "Игрок: %s"
+msgstr ""
+
+msgid "Пока никакой статистики нет :("
+msgstr ""
+
+msgid "График рейтинга"
+msgstr ""
+
+msgid "Общая статистика"
+msgstr ""
+
+msgid "Сыграно игр"
+msgstr ""
+
+msgid "Сыграно раздач"
+msgstr ""
+
+msgid "Выиграно раздач"
+msgstr ""
+
+msgid "По исходам раздач:"
+msgstr ""
+
+msgid "Выигрышей по рон"
+msgstr ""
+
+msgid "Выигрышей по цумо"
+msgstr ""
+
+msgid "Набросов в рон"
+msgstr ""
+
+msgid "в том числе из-за риичи"
+msgstr ""
+
+msgid "Проигрышей по цумо"
+msgstr ""
+
+msgid "Открытых рук"
+msgstr ""
+
+msgid "Штрафов чомбо"
+msgstr ""
+
+msgid "Ставок риичи"
+msgstr ""
+
+msgid "из них выигравших"
+msgstr ""
+
+msgid "из них потерянных"
+msgstr ""
+
+msgid "По занятым местам:"
+msgstr ""
+
+msgid "1 место"
+msgstr ""
+
+msgid "2 место"
+msgstr ""
+
+msgid "3 место"
+msgstr ""
+
+msgid "4 место"
+msgstr ""
+
+msgid "Набранные очки по итогу игр:"
+msgstr ""
+
+msgid "Минимум"
+msgstr ""
+
+msgid "Максимум"
+msgstr ""
+
+msgid "Среднее"
+msgstr ""
+
+msgid "Ценность собранных рук"
+msgstr ""
+
+msgid "Собранные яку (за всё время)"
+msgstr ""
+
+msgid "Хан"
+msgstr ""
+
+msgid "Собранные яку (за все время)"
+msgstr ""
+
+msgid "Скрыть таблицу с результатами игроков"
+msgstr ""
+
+msgid "Это может быть полезно для сохранения интриги на последних ханчанах турнира."
+msgstr ""
+
+msgid "Данные скрыты. Показать"
+msgstr ""
+
+msgid "Данные доступны всем. Скрыть"
+msgstr ""
+
+msgid "Время регистрации"
+msgstr ""
+
+msgid "Игроки"
+msgstr ""
+
+msgid "Всякое разное"
+msgstr ""
+
+msgid "Лучшая рука: <b>%s</b> - %s"
+msgstr ""
+
+msgid "Ничьих: %d"
+msgstr ""
+
+msgid "Полный лог игры:"
+msgstr ""
+
+msgid "Подтвердите отмену раздачи: "
+msgstr ""
+
+msgid "Состояние столов:"
+msgstr ""
+
+msgid "Предыдущая раздача:"
+msgstr ""
+
+msgid "(ни одной раздачи не сыграно)"
+msgstr ""
+
+msgid "Отменить последнюю внесенную раздачу"
+msgstr ""
+
+msgid "Штрафы:"
+msgstr ""
+
+msgid "%s - штраф %s очков. Причина: %s"
+msgstr ""
+
+msgid "Информация об игре"
+msgstr ""
+
+msgid "Что-то пошло не так и вот что именно: %s"
+msgstr ""
+
+msgid "Невозможно сделать рассадку"
+msgstr ""
+
+msgid ""
+"Общее число зарегистрированных игроков не делится на 4. Воспользуйтесь "
+"разделами \"Игроки и регистрация\" и \"Добавить игрока\" для того, чтобы "
+"добавить или удалить игроков из турнира. Для дополнения столов "
+"предусмотрены специальные аккаунты \"Игрок замены 1-4\"."
+msgstr ""
+
+msgid "Всё готово для генерации рассадки"
+msgstr ""
+
+msgid "Выберите способ генерации рассадки ниже и нажмите соответствующую кнопку."
+msgstr ""
+
+msgid "Используем случайную рассадку для новой игры?"
+msgstr ""
+
+msgid "Рассадить автоматически случайным образом"
+msgstr ""
+
+msgid "Используем швейцарскую рассадку для новой игры?"
+msgstr ""
+
+msgid "Рассадить автоматически по швейцарской рассадке"
+msgstr ""
+
+msgid "Введите состав столов. Один стол = одна строка."
+msgstr ""
+
+msgid ""
+"Если не отмечена галочка, игроки будут рассажены на "
+"\"восток-юг-запад-север\" согласно порядку ввода."
+msgstr ""
+
+msgid ""
+"Цифры означают текущее место игрока в рейтинге. Пример рассадки с шагом 4 "
+"для четырех столов: "
+msgstr ""
+
+msgid "Перемешать игроков за каждым столом"
+msgstr ""
+
+msgid "Используем ручную рассадку для новой игры?"
+msgstr ""
+
+msgid "Рассадить вручную согласно введенному составу столов?"
+msgstr ""
+
+msgid "Старт текущего таймера и начало игр"
+msgstr ""
+
+msgid "Нажатие на эту кнопку стартует все игры и запускает таймер."
+msgstr ""
+
+msgid "Стартовать игры и таймер?"
+msgstr ""
+
+msgid "Начать игры!"
+msgstr ""
+
+msgid "Рестарт текущего таймера"
+msgstr ""
+
+msgid "Нажатие на эту кнопку выставит таймер в исходное значение. Будьте осторожны."
+msgstr ""
+
+msgid "Выставить таймер в начальное значение?"
+msgstr ""
+
+msgid "Сбросить таймер"
+msgstr ""
+
+msgid "Завершить игры"
+msgstr ""
+
+msgid ""
+"После нажатия на кнопку невозможно будет отменить раздачи. Нажатие на эту "
+"кнопку необходимо для обновления рейтинговой таблицы согласно результатам "
+"игры."
+msgstr ""
+
+msgid "Завершить все игры? Отменить раздачи у завершенных игр будет невозможно!"
+msgstr ""
+
+msgid "Утвердить все результаты и завершить игры"
+msgstr ""
+
+msgid "Особые номинации"
+msgstr ""
+
+msgid "Номинация"
+msgstr ""
+
+msgid "Расшифровка"
+msgstr ""
+
+msgid "Значение"
+msgstr ""
+
+msgid "Номинанты"
+msgstr ""
+
+msgid "Лучшая рука турнира"
+msgstr ""
+
+msgid ""
+"Присуждается за сбор руки с самым большим числом хан за турнир, независимо "
+"от стоимости/дилерства."
+msgstr ""
+
+msgid "Over 9000 fu"
+msgstr ""
+
+msgid "Присуждается за сбор руки с самым большим числом фу/минипойнтов за турнир."
+msgstr ""
+
+msgid "Задолбал!"
+msgstr ""
+
+msgid "Присуждается за максимальное число цумо в рамках одного ханчана."
+msgstr ""
+
+msgid "Бравый сапёр"
+msgstr ""
+
+msgid "Присуждается за наибольшее число набросов в рон за турнир."
+msgstr ""
+
+msgid "Чомбо-мастер"
+msgstr ""
+
+msgid "Присуждается за получение чомбо на турнире."
+msgstr ""
+
+msgid "%s: %d чомбо"
+msgstr ""
+
+msgid "Довакин aka The mother of dragons"
+msgstr ""
+
+msgid "Присуждается за сбор наибольшего числа якухаев за турнир."
+msgstr ""
+
+msgid "%s: %d якухай"
+msgid_plural "%s: %d якухаев"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Восточный мастер"
+msgstr ""
+
+msgid "Присуждается за максимальное число побед на дилере за весь турнир."
+msgstr ""
+
+msgid "%d ренчанов с агари"
+msgstr ""
+
+msgid "Мистер Хэнки"
+msgstr ""
+
+msgid "Присуждается за максимальное число побед стоимостью в 1/30."
+msgstr ""
+
+msgid "%d самых быстрых косарей"
+msgstr ""
+
+msgid "Якуман-мастер"
+msgstr ""
+
+msgid "Присуждается за сбор якумана на турнире"
+msgstr ""
+
+msgid "Штрафы к итоговому рейтингу"
+msgstr ""
+
+msgid ""
+"Назначить штраф можно только игроку, который на данный момент в игре. В "
+"ином случае будет ошибка."
+msgstr ""
+
+msgid "Штрафных очков рейтинга"
+msgstr ""
+
+msgid "Причина штрафа"
+msgstr ""
+
+msgid "Проверьте дважды, что все правильно. Убрать штраф возможности нет."
+msgstr ""
+
+msgid "Назначить штраф"
+msgstr ""
+
+msgid "СТОП!"
+msgstr ""
+
+msgid "РАССАДКА"
+msgstr ""
+
+msgid "Стол №"
+msgstr ""
+
+msgid "ВОСТОК"
+msgstr ""
+
+msgid "ЮГ"
+msgstr ""
+
+msgid "ЗАПАД"
+msgstr ""
+
+msgid "СЕВЕР"
+msgstr ""
+
+msgid "Успешно авторизованы!"
+msgstr ""
+
+msgid "Авторизация"
+msgstr ""
+
+msgid "%s: графики рейтинга"
+msgstr ""
+
+msgid "Общая статистика:"
+msgstr ""
+
+msgid "Минимальные"
+msgstr ""
+
+msgid "Максимальные"
+msgstr ""
+
+msgid "Средние за ханчан"
+msgstr ""
+
+msgid "Добавить онлайн-игру"
+msgstr ""
+
+msgid "Игра успешно добавлена!"
+msgstr ""
+
+msgid "Добавить"
+msgstr ""
+
+msgid "Списки на регистрацию (%d)"
+msgstr ""
+
+msgid "PIN"
+msgstr ""
+
+msgid "Действия администратора"
+msgstr ""
+
+msgid "Подтвердить явку"
+msgstr ""
+
+msgid "Окончательно зарегистрированные игроки (%d)"
+msgstr ""
+
+msgid "Выдать PIN заново"
+msgstr ""
+
+msgid "Удалить"
+msgstr ""
+
+msgid "Удалить игрока %s?"
+msgstr ""
+
+msgid "Рейтинг игроков"
+msgstr ""
+
+msgid "Результаты были скрыты администратором турнира."
+msgstr ""
+
+msgid "Результаты видны только администратору турнира."
+msgstr ""
+
+msgid "Итог"
+msgstr ""
+
+msgid "Среднее место"
+msgstr ""
+
+msgid "Средние очки"
+msgstr ""
+
+msgid "СМ"
+msgstr ""
+
+msgid "СО"
+msgstr ""
+
+msgid "Все существующие игроки"
+msgstr ""
+
+msgid ""
+"Добавление в турнир игрока, который уже участвует, эквивалентно выдаче "
+"PIN-кода заново на странице \"Игроки и регистрация\"."
+msgstr ""
+
+msgid "Добавить в текущий турнир"
+msgstr ""
+
+msgid "Добавить нового игрока в систему"
+msgstr ""
+
+msgid "Системное имя"
+msgstr ""
+
+msgid "Реальный ник"
+msgstr ""
+
+msgid "Зарегистрировать"
+msgstr ""
+
+msgid "Идем обратно через 3 секунды..."
+msgstr ""
+
+msgid "Добавить игру"
+msgstr ""
+
+msgid "Формат:"
+msgstr ""
+
+msgid "Пример:"
+msgstr ""
+
+msgid ""
+"Ренчаны и хонба высчитываются автоматически. Также производится проверка "
+"начисленных очков и выводится предупреждение в случае несоответствия."
+msgstr ""
+
+msgid "Алиасы"
+msgstr ""
+
+msgid "Статистика"
+msgstr ""
+
+msgid "Вход администратора"
+msgstr ""
+
+msgid "Wrong password!"
+msgstr ""
+
+msgid "Последние игры"
+msgstr ""
+
+msgid "Секретное слово неправильное"
+msgstr ""
+
+msgid "Не удалось зарегистрировать игрока - проблемы с сетью?"
+msgstr ""
+
+msgid "Не удалось добавить игрока в списки - проблемы с сетью?"
+msgstr ""
+
+#, php-format
+msgid "Статистика и графики: %s"
+msgstr ""
+
+msgid "Таблица результатов"
+msgstr ""
+
+msgid "Таймер"
+msgstr ""
+
+msgid "Добавление игроков"
+msgstr ""
+
+msgid ""
+"В системном имени должны быть только латинские буквы и цифры, никаких "
+"пробелов"
+msgstr ""
+
+msgid "Управление рассадкой"
+msgstr ""
+
+msgid "Дабл-риичи"
+msgstr ""
+
+msgid "Дайсанген"
+msgstr ""
+
+msgid "Дайсууши"
+msgstr ""
+
+msgid "Джунчан"
+msgstr ""
+
+msgid "Иипейко"
+msgstr ""
+
+msgid "Иппацу"
+msgstr ""
+
+msgid "Иццу"
+msgstr ""
+
+msgid "Кокушимусо"
+msgstr ""
+
+msgid "Мензенцумо"
+msgstr ""
+
+msgid "Пинфу"
+msgstr ""
+
+msgid "Ренхо"
+msgstr ""
+
+msgid "Риичи"
+msgstr ""
+
+msgid "Риншан кайхо"
+msgstr ""
+
+msgid "Рюисо"
+msgstr ""
+
+msgid "Рянпейко"
+msgstr ""
+
+msgid "Сананко"
+msgstr ""
+
+msgid "Санканцу"
+msgstr ""
+
+msgid "Саншоку"
+msgstr ""
+
+msgid "Саншоку доко"
+msgstr ""
+
+msgid "Сууанко"
+msgstr ""
+
+msgid "Сууканцу"
+msgstr ""
+
+msgid "Тан-яо"
+msgstr ""
+
+msgid "Тенхо"
+msgstr ""
+
+msgid "Тойтой"
+msgstr ""
+
+msgid "Хайтей"
+msgstr ""
+
+msgid "Хоницу"
+msgstr ""
+
+msgid "Хонрото"
+msgstr ""
+
+msgid "Хотей"
+msgstr ""
+
+msgid "Цууисо"
+msgstr ""
+
+msgid "Чанкан"
+msgstr ""
+
+msgid "Чанта"
+msgstr ""
+
+msgid "Чиитойцу"
+msgstr ""
+
+msgid "Чиницу"
+msgstr ""
+
+msgid "Чинрото"
+msgstr ""
+
+msgid "Чихо"
+msgstr ""
+
+msgid "Чууренпото"
+msgstr ""
+
+msgid "Шосанген"
+msgstr ""
+
+msgid "Шосууши"
+msgstr ""
+
+msgid "Якухай 1"
+msgstr ""
+
+msgid "Якухай 2"
+msgstr ""
+
+msgid "Якухай 3"
+msgstr ""
+
+msgid "Якухай 4"
+msgstr ""
+
+msgid "Якухай 5"
+msgstr ""
+
+msgid "Опен риичи"
+msgstr ""
