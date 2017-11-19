@@ -22,14 +22,14 @@
         }
     </style>
 
-    <h2 class="header-title">Статистика</h2>
+    <h2 class="header-title">{{_t 'Statistics'}}</h2>
     <div class="main-content big-greeting">
-        Добро пожаловать в систему статистики по сыгранным играм. Чтобы начать - {{#a href='/last/'}}
-        пройдите сюда{{/a}}.
+        {{_t 'Welcome to game statistics system.'}}
+        {{#a href='/last/'}}{{_t 'Click here to start'}}{{/a}}.
         <br/><br/>
         <hr/>
         <br/><br/>
-        Вы просматриваете сокращенную версию статистики для мобильных устройств.
+        {{_t 'You are viewing the clipped statistics for mobile devices.'}}
     </div>
 {{/hasData}}
 
@@ -53,7 +53,7 @@
         <table>
             {{#data}}
                 <tr class="highlighted">
-                    <td>Игрок #{{_index}}</td>
+                    <td>{{_p 'Player #%d' _index}}</td>
                     <td>
                         {{#player}}
                             {{#a href='/user/{id}/'}}{{display_name}}{{/a}}
@@ -61,7 +61,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Лучшая серия:</td>
+                    <td>{{_t 'Best series:'}}</td>
                     <td>
                         {{#best_series}}
                             {{#a href='/game/{hash}/'}}{{place}}{{/a}}
@@ -69,11 +69,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Очки:</td>
+                    <td>{{_t 'Points:'}}</td>
                     <td>{{best_series_scores}}</td>
                 </tr>
                 <tr>
-                    <td>Текущая серия:</td>
+                    <td>{{_t 'Last series:'}}</td>
                     <td>
                         {{#current_series}}
                             {{#a href='/game/{hash}/'}}{{place}}{{/a}}
@@ -81,7 +81,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Очки:</td>
+                    <td>{{_t 'Points:'}}</td>
                     <td>{{current_series_scores}}</td>
                 </tr>
             {{/data}}

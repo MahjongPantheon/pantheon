@@ -31,7 +31,7 @@ class GamesControlPanel extends Controller
 
     protected function _pageTitle()
     {
-        return 'Управление играми';
+        return _t('Games control panel');
     }
 
     protected function _beforeRun()
@@ -67,7 +67,7 @@ class GamesControlPanel extends Controller
 
         if (!$this->_adminAuthOk()) {
             return [
-                'reason' => 'Секретное слово неправильное'
+                'reason' => _t('Wrong admin password')
             ];
         }
 

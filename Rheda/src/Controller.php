@@ -21,7 +21,8 @@ require_once __DIR__ . '/helpers/MobileDetect.php';
 require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/helpers/HttpClient.php';
-use Handlebars\Handlebars;
+require_once __DIR__ . '/helpers/i18n.php';
+require_once __DIR__ . '/Templater.php';
 
 abstract class Controller
 {
@@ -62,11 +63,28 @@ abstract class Controller
         $this->_path = $path;
         $this->_api = new \JsonRPC\Client(Sysconf::API_URL(), false, new HttpClient(Sysconf::API_URL()));
 
+        // i18n support
+        $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        switch ($locale) {
+            // map common lang ids to more specific
+            case 'ru':
+            case 'ru_RU':
+                $locale = 'ru_RU.UTF-8';
+                break;
+            default:
+                $locale = 'en_US.UTF-8';
+        }
+
+        if (setlocale(LC_ALL, $locale) === false) {
+            throw new \Exception("Server error: The $locale locale is not installed");
+        }
+        putenv('LC_ALL=' . $locale);
+
         $eidMatches = [];
         if (empty($path['event']) || !preg_match('#eid(\d+)#is', $path['event'], $eidMatches)) {
             // TODO: убрать чтобы показать страницу со списком событий
             //throw new Exception('No event id found! Use single-event mode, or choose proper event on main page');
-            exit('Please select some event!');
+            exit(_t('Please select some event!'));
         }
         $this->_eventId = intval($eidMatches[1]);
 
@@ -89,7 +107,7 @@ abstract class Controller
     public function run()
     {
         if (empty($this->_rules->rulesetTitle())) {
-            echo '<h2>Oops.</h2>Failed to get event configuration!';
+            echo _t('<h2>Oops.</h2>Failed to get event configuration!');
             return;
         }
 
@@ -98,35 +116,11 @@ abstract class Controller
             $pageTitle = $this->_pageTitle(); // должно быть после run! чтобы могло использовать полученные данные
             $detector = new MobileDetect();
 
-            $m = new Handlebars([
-                'loader' => new \Handlebars\Loader\FilesystemLoader(__DIR__ . '/templates/'),
-                'partials_loader' => new \Handlebars\Loader\FilesystemLoader(
-                    __DIR__ . '/templates/',
-                    ['prefix' => '_']
-                )
-            ]);
-            $inlineRenderer = new Handlebars(); // for block nesting
-
-            $m->addHelper("a", function ($template, $context, $args, $source) use ($inlineRenderer) {
-                $a = $args->getNamedArguments();
-                return '<a href="' . Url::make(Url::interpolate($a['href'], $context), $this->_eventId) . '"'
-                    . (empty($a['target']) ? '' : ' target="' . $a['target'] . '"')
-                    . (empty($a['class']) ? '' : ' class="' . $a['class'] . '"')
-                    . (empty($a['onclick']) ? '' : ' onclick="' . Url::interpolate($a['onclick'], $context) . '"')
-                    . '>' . $inlineRenderer->render($source, $context) . '</a>';
-            });
-            $m->addHelper("form", function ($template, $context, $args, $source) use ($inlineRenderer) {
-                $form = $args->getNamedArguments();
-                return '<form action="' . Url::make(Url::interpolate($form['action'], $context), $this->_eventId)
-                . (empty($form['method']) ? ' method="get"' : '" method="' . $form['method'] . '"')
-                . '>' . $inlineRenderer->render($source, $context) . '</form>';
-            });
-
-            header("Content-type: text/html; charset=utf-8");
-
+            $templateEngine = Templater::getInstance($this->_eventId);
             $add = ($detector->isMobile() && !$detector->isTablet()) ? 'Mobile' : ''; // use full version for tablets
 
-            echo $m->render($add . 'Layout', [
+            header("Content-type: text/html; charset=utf-8");
+            echo $templateEngine->render($add . 'Layout', [
                 'isOnline' => $this->_rules->isOnline(),
                 'useTimer' => $this->_rules->useTimer(),
                 'isTournament' => !$this->_rules->allowPlayerAppend(),
@@ -134,7 +128,7 @@ abstract class Controller
                 'syncStart' => $this->_rules->syncStart(),
                 'eventTitle' => $this->_rules->eventTitle(),
                 'pageTitle' => $pageTitle,
-                'content' => $m->render($add . $this->_mainTemplate, $context),
+                'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
                 'isLoggedIn' => $this->_adminAuthOk()
             ]);
         }
@@ -222,7 +216,7 @@ abstract class Controller
             return !empty($_COOKIE['secret']) && $_COOKIE['secret'] == Sysconf::SUPER_ADMIN_COOKIE;
         } else {
             // Special password policy for debug mode
-            if (Sysconf::DEBUG_MODE && $_COOKIE['secret'] == 'debug_mode_cookie') {
+            if (Sysconf::DEBUG_MODE && !empty($_COOKIE['secret']) && $_COOKIE['secret'] == 'debug_mode_cookie') {
                 return true;
             }
 

@@ -19,18 +19,18 @@
         display: inline;
     }
 </style>
-<h3>Добавить игрока</h3>
+<h3>{{_t 'Add player'}}</h3>
 {{#error}}
 <br>
 <div class="alert alert-error">{{error}}</div>
 {{/error}}
 <hr />
-<h4>Все существующие игроки</h4>
-Добавление в турнир игрока, который уже участвует, эквивалентно выдаче PIN-кода заново на странице "Игроки и регистрация".
+<h4>{{_t 'All players list'}}</h4>
+{{_t 'Note: if a player is already added to the rating, adding him again will result in reissuing his PIN code.'}}
 <table class="table table-condensed table-stripped">
     <tr>
-        <th>Игрок</th>
-        <th>Действия администратора</th>
+        <th>{{_t 'Player'}}</th>
+        <th>{{_t 'Admin actions'}}</th>
     </tr>
 {{#everybody}}
     <tr>
@@ -39,18 +39,18 @@
             <form action="" method="post">
                 <input type="hidden" name="action_type" value="enroll" />
                 <input type="hidden" name="id" value="{{id}}" />
-                <input class="btn btn-large btn-success" type="submit" value="Добавить в текущий турнир" />
+                <input class="btn btn-large btn-success" type="submit" value="{{_t 'Add to current rating'}}" />
             </form>
         </td>
     </tr>
 {{/everybody}}
 </table>
 <hr />
-<h4>Добавить нового игрока в систему</h4>
+<h4>{{_t 'Add new player to the system'}}</h4>
 <form action="" method="post" class="well form-inline">
     <input type="hidden" name="action_type" value="sys_reg" />
-    <input type="text" class="input-medium search-query form-control" name="ident" placeholder='Системное имя' />
-    <input type="text" class="input-medium search-query form-control" name="display_name" placeholder='Реальный ник' />
-    <button type="submit" class="btn">Зарегистрировать</button>
+    <input type="text" class="input-medium search-query form-control" name="ident" placeholder='{{_t 'System name'}}' />
+    <input type="text" class="input-medium search-query form-control" name="display_name" placeholder='{{_t 'Real name'}}' />
+    <button type="submit" class="btn">{{_t 'Register'}}</button>
 </form>
 <hr />

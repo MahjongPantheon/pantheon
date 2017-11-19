@@ -32,6 +32,7 @@ RUN apk update && \
     apk add --update \
     curl \
     make \
+    gettext \
     git \
     nginx \
     postgresql \
@@ -39,6 +40,8 @@ RUN apk update && \
     nodejs-npm \
     php5-mcrypt \
     php5-soap \
+    php5-gettext \
+    php5-intl \
     php5-openssl \
     php5-gmp \
     php5-phar \
@@ -59,6 +62,7 @@ RUN curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/do
     chmod +x /usr/local/bin/gosu
 
 RUN npm install -g yarn
+RUN npm install -g xgettext-template
 RUN touch $PHP_LOGFILE
 RUN chown nobody $PHP_LOGFILE
     

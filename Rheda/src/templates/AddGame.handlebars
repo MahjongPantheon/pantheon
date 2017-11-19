@@ -15,9 +15,9 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
 {{#successfullyAdded}}
-    <h4>Игра успешно добавлена!</h4>
+    <h4>{{_t 'The game has been successfully added!'}}</h4>
     <br>
-    Идем обратно через 3 секунды...
+    {{_t 'Going back in 3 seconds...'}}
     <script type='text/javascript'>
         window.setTimeout(function () {
             window.location = '/add/';
@@ -28,9 +28,9 @@
 {{^successfullyAdded}}
     <div class="row">
         <div class="span9">
-            <h3>Добавить игру</h3>
+            <h3>{{_t 'Add new game'}}</h3>
             <br>
-            Формат:
+            {{_t 'Format:'}}
             <br>
             <pre>
 [player][:][(-)?\d{,5}] [player][:][(-)?\d{,5}] [player][:][(-)?\d{,5}] [player][:][(-)?\d{,5}]
@@ -49,7 +49,7 @@ draw tempai [player] [player] [player]
 draw tempai all
 chombo [player]
             </pre>
-            Пример:
+            {{_t 'Example:'}}
             <br>
             <pre>
 heilage:12300 Chaos:32000 Frontier:-2000 Manabi:30000
@@ -59,9 +59,9 @@ tsumo Frontier yakuman riichi heilage Chaos
 draw tempai nobody riichi Manabi
 tsumo heilage 5han
 ron heilage from Chaos yakuman
-итд
-Ренчаны и хонба высчитываются автоматически. Также производится проверка начисленных очков и выводится предупреждение в случае несоответствия.
             </pre>
+            {{_t 'Renchans/honba are calculated automatically. Also points and payments checks are performed: in case of any inconsistency the alert is displayed.'}}
+
             {{#error}}
                 <div class="alert alert-error" style="white-space: pre">{{error}}</div>
             {{/error}}
@@ -70,13 +70,13 @@ ron heilage from Chaos yakuman
                 <textarea name="content" style="width:100%; height: 300px">{{text}}</textarea>
                 <div class="row">
                     <div class="span10">
-                        <input type="submit" value="Добавить" class="btn btn-primary btn-large">
+                        <input type="submit" value="{{_t 'Add game'}}" class="btn btn-primary btn-large">
                     </div>
                 </div>
             </form>
         </div>
         <div class="span3">
-            <h5>Алиасы</h5>
+            <h5>{{_t 'Player aliases'}}</h5>
             <table border=0 class='table table-condensed'>
                 {{#players}}
                     <tr>

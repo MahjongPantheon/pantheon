@@ -1,8 +1,8 @@
 <table class='table table-striped table-condensed'>
     <tr>
-        <th>Время регистрации</th>
-        <th>Игроки</th>
-        <th>Всякое разное</th>
+        <th>{{_t 'Date & time'}}</th>
+        <th>{{_t 'Players'}}</th>
+        <th>{{_t 'Details'}}</th>
     </tr>
     {{#games}}
     <tr>
@@ -24,103 +24,30 @@
         <td>
             <ul>
                 {{#replayLink}}
-                    <li><a href='{{replayLink}}' class="replay-link" target='_blank'>Посмотреть реплей</a></li>
+                    <li><a href='{{replayLink}}' class="replay-link" target='_blank'>{{_t 'View replay online'}}</a></li>
                 {{/replayLink}}
-                <li>Лучшая рука: <b>{{bestHandPlayers}}</b> - {{bestHandCost}}</li>
-                <li>Выигрышей по рон: {{ronWins}}</li>
-                <li>Выигрышей по цумо: {{tsumoWins}}</li>
-                <li>Ничьих: {{draws}}</li>
+                <li>{{{_p 'Best hand: <b>%s</b> - %s' bestHandPlayers bestHandCost}}}</li>
+                <li>{{_p 'Ron hands: %d' ronWins}}</li>
+                <li>{{_p 'Tsumo hands: %d' tsumoWins}}</li>
+                <li>{{_p 'Drawn rounds: %d' draws}}</li>
                 {{#chombo}}
-                    <li>Чомбо: {{chombo}}</li>
+                    <li>{{_p 'Chombo penalties: %s' chombo}}</li>
                 {{/chombo}}
                 {{#showPenalties}}
                     <li>
-                        Дополнительные штрафы:
+                        {{_t 'Additional penalties:'}}
                         <ul>
                             {{#penalties}}
-                                <li>{{who}} - {{amount}} очков ({{reason}})</li>
+                                <li>{{_p '%s - %d points (%s)' who amount reason}}</li>
                             {{/penalties}}
                         </ul>
                     </li>
                 {{/showPenalties}}
-                <li>Полный лог игры:</li>
+                <li>{{_t 'Full game log:'}}</li>
                 <div class='fullLog'>
                     {{#logItems}}
                         <div>
-                            {{roundWind}}{{roundIndex}}:
-
-                            {{#roundTypeRon}}
-                                <b>{{winnerName}}</b> -
-                                {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}}
-                                    (<b>{{loserName}}</b>{{#paoPlayerName}}, пао: <b>{{paoPlayerName}}</b>{{/paoPlayerName}}),
-                                {{#yakuman}}
-                                    якуман!
-                                {{/yakuman}}
-                                {{^yakuman}}
-                                    {{han}} хан{{#fu}}, {{fu}} фу{{/fu}}.
-                                {{/yakuman}}
-                                {{#riichiPlayers}}
-                                    Риичи: {{riichiPlayers}}
-                                {{/riichiPlayers}}
-                            {{/roundTypeRon}}
-
-                            {{#roundTypeMultiRon}}
-                                Дабл-рон:
-                                {{#multiRonWins}}{{! double & triple rons }}
-                                    <div>
-                                        <b>{{winnerName}}</b> -
-                                        {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}}
-                                            (<b>{{loserName}}</b>{{#paoPlayerName}}, пао: <b>{{paoPlayerName}}</b>{{/paoPlayerName}}),
-                                        {{#yakuman}}
-                                            якуман!
-                                        {{/yakuman}}
-                                        {{^yakuman}}
-                                            {{han}} хан{{#fu}}, {{fu}} фу{{/fu}}.
-                                        {{/yakuman}}
-                                    </div>
-                                {{/multiRonWins}}
-                                {{#riichiPlayers}}
-                                    Риичи: {{riichiPlayers}}
-                                {{/riichiPlayers}}
-                            {{/roundTypeMultiRon}}
-
-                            {{#roundTypeTsumo}}
-                                <b>{{winnerName}}</b> -
-                                {{yakuList}}{{#doras}}, дора {{doras}}{{/doras}}
-                                    (цумо{{#paoPlayerName}}, пао: <b>{{paoPlayerName}}</b>{{/paoPlayerName}}),
-                                {{#yakuman}}
-                                    якуман!
-                                {{/yakuman}}
-                                {{^yakuman}}
-                                    {{han}} хан{{#fu}}, {{fu}} фу{{/fu}}.
-                                {{/yakuman}}
-                                {{#riichiPlayers}}
-                                    Риичи: {{riichiPlayers}}
-                                {{/riichiPlayers}}
-                            {{/roundTypeTsumo}}
-
-                            {{#roundTypeDraw}}
-                                {{#tempaiPlayers}}
-                                    Ничья (темпай: {{tempaiPlayers}}).
-                                {{/tempaiPlayers}}
-                                {{^tempaiPlayers}}
-                                    Ничья (все нотен).
-                                {{/tempaiPlayers}}
-                                {{#riichiPlayers}}
-                                    Риичи: {{riichiPlayers}}
-                                {{/riichiPlayers}}
-                            {{/roundTypeDraw}}
-
-                            {{#roundTypeAbort}}
-                                Пересдача.
-                                {{#riichiPlayers}}
-                                    Риичи: {{riichiPlayers}}
-                                {{/riichiPlayers}}
-                            {{/roundTypeAbort}}
-
-                            {{#roundTypeChombo}}
-                                Чомбо: {{loserName}}.
-                            {{/roundTypeChombo}}
+                            {{> partials/GameLogItem}}
                         </div>
                     {{/logItems}}
                 </div>

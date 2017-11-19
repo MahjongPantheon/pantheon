@@ -17,7 +17,7 @@
  */
 namespace Rheda;
 
-require_once 'src/helpers/Array.php';
+require_once __DIR__ . '/Array.php';
 
 class SortitionHelper
 {
@@ -58,7 +58,7 @@ class SortitionHelper
         }, []));
         $bestIntersection = self::_calcIntersection($ratingsData, $sortition);
 
-        // считаем сколько пересечений по игрокам образовалось
+        // count intersections of players
         $bestIntersectionSets = array_reduce($bestIntersection, function ($acc, $el) {
             if (empty($acc[$el])) {
                 $acc[$el] = 0;
@@ -77,7 +77,7 @@ class SortitionHelper
     }
 
     /**
-     * Определяем оптимальное место (ветер) игрока за столом, исходя из сохраненных данных о рассадке
+     * Detect optimal place (wind) at the table according to previous seating data
      *
      * @param $tablePlayers [{username -> #name}, {username -> #name}, {username -> #name}, {username -> #name}]
      * @param $previousPlacements [{#name -> [[player_num -> 1], [player_num -> 2], [player_num -> 0]]}, ...]
@@ -132,8 +132,7 @@ class SortitionHelper
     }
 
     /**
-     * Подсчет суммы вычетов по местам исходя из предлагаемой рассадки
-     * Чем меньше сумма вычетов, тем равномернее распределение.
+     * Calculate sum of differences of place indexes. The less is sum, the more uniform is distribution.
      *
      * @param $player1
      * @param $player2
@@ -190,12 +189,11 @@ class SortitionHelper
     }
 
     /**
-     * Подсчет обобщенного показателя приемлемости рассадки.
-     * Учитывает также последовательные игры путем добавления 10 к фактору за каждое
-     * последовательное пересечение игроков. Т.о. пытаемся минимизировать такие случаи.
+     * Calculate generalized factor of seating acceptability.
+     * Takes into account sequential crossings of players.
      *
-     * @param $playersMap Упорядоченный список игроков
-     * @param $ratingsData список данных по прошедшим играм для группировки по ид игры
+     * @param $playersMap array Ordered player list
+     * @param $ratingsData array previous seating data
      * @return int
      */
     protected static function _calculateFactor($playersMap, $ratingsData)
