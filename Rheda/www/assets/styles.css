@@ -23,7 +23,7 @@
 }
 
 @font-face {
-    font-family: 'PT Sans Narrow';
+    font-family: 'PT Sans Narrow Bold';
     src: local('PT Sans Narrow Bold'), local('PTSans-NarrowBold'), url('./ptn77f.woff') format('woff');
     font-weight: bold;
     font-style: normal;
@@ -83,4 +83,21 @@ li, .table th, .table td {
 
 .last-games .replay-link {
   color: #0088cc;
+}
+
+.last-games .score {
+    text-align: right;
+    font-size: small;
+}
+
+.navbar {
+    height: 48px;
+}
+
+body {
+    padding-top:58px;
+}
+
+.table th, .table td {
+    padding: 0.25rem;
 }
