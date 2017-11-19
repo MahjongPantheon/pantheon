@@ -26,7 +26,7 @@ class AddGame extends Controller
 
     protected function _pageTitle()
     {
-        return 'Добавить игру';
+        return _t('Добавить игру');
     }
 
     /**
@@ -43,7 +43,7 @@ class AddGame extends Controller
             if (!empty($_POST['content'])) {
                 // пытаемся сохранить игру в базу
                 if (!$this->_adminAuthOk()) {
-                    $errorMsg = "Секретное слово неправильное";
+                    $errorMsg = _t("Секретное слово неправильное");
                 } else {
                     $this->_api->execute('addTextLog', [$this->_eventId, $_POST['content']]);
                     $successfullyAdded = true;

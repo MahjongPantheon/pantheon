@@ -44,10 +44,10 @@
     </div>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav">
-            <li class="nav-item">{{#a class='nav-link' href='/last/'}}Сыгранные игры{{/a}}</li>
-            <li class="nav-item">{{#a class='nav-link' href='/stat/'}}Рейтинг{{/a}}</li>
+            <li class="nav-item">{{#a class='nav-link' href='/last/'}}{{_t 'Сыгранные игры'}}{{/a}}</li>
+            <li class="nav-item">{{#a class='nav-link' href='/stat/'}}{{_t 'Рейтинг'}}{{/a}}</li>
             {{#isOnline}}
-                <li class="nav-item">{{#a class='nav-link' href='/add-online/'}}+Онлайн-игра{{/a}}</li>
+                <li class="nav-item">{{#a class='nav-link' href='/add-online/'}}{{_t '+Онлайн-игра'}}{{/a}}</li>
             {{/isOnline}}
             {{#isLoggedIn}}
                 <li class="nav-item dropdown">
@@ -57,22 +57,22 @@
                        data-toggle="dropdown"
                        aria-haspopup="true"
                        aria-expanded="false"
-                    >Администрирование</a>
+                    >{{_t 'Администрирование'}}</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         {{^isOnline}}
                             {{#isTournament}}
-                                {{#a class='dropdown-item' href='/tourn/'}}Управление турниром{{/a}}
+                                {{#a class='dropdown-item' href='/tourn/'}}{{_t 'Управление турниром'}}{{/a}}
                             {{/isTournament}}
                             {{^isTournament}}
-                                {{#a class='dropdown-item' href='/games/'}}Управление играми{{/a}}
+                                {{#a class='dropdown-item' href='/games/'}}{{_t 'Управление играми'}}{{/a}}
                             {{/isTournament}}
                             {{#usePenalty}}
-                                {{#a class='dropdown-item' href='/penalties/'}}Штрафы{{/a}}
+                                {{#a class='dropdown-item' href='/penalties/'}}{{_t 'Штрафы'}}{{/a}}
                             {{/usePenalty}}
                         {{/isOnline}}
-                        {{#a class='dropdown-item' href='/enroll/'}}Добавить игрока{{/a}}
-                        {{#a class='dropdown-item' href='/reg/'}}Игроки и регистрация{{/a}}
-                        {{#a class='dropdown-item' href='/achievements/'}}Номинации{{/a}}
+                        {{#a class='dropdown-item' href='/enroll/'}}{{_t 'Добавить игрока'}}{{/a}}
+                        {{#a class='dropdown-item' href='/reg/'}}{{_t 'Игроки и регистрация'}}{{/a}}
+                        {{#a class='dropdown-item' href='/achievements/'}}{{_t 'Номинации'}}{{/a}}
                         {{!--
                             #href '/sortition/' Пересечения&nbsp;&nbsp;<span style="opacity: 0.5"
                             class="icon-lock icon-white"></span> /href
@@ -81,11 +81,11 @@
                 </li>
             {{/isLoggedIn}}
             {{#useTimer}}
-                <li class="nav-item">{{#a class='nav-link' href='/timer/' target='_blank'}}Таймер и рассадка{{/a}}</li>
+                <li class="nav-item">{{#a class='nav-link' href='/timer/' target='_blank'}}{{_t 'Таймер и рассадка'}}{{/a}}</li>
             {{/useTimer}}
             {{^isLoggedIn}}
                 <li class="nav-item">
-                    {{#a class='nav-link' href='/login/'}}Вход&nbsp;&nbsp;<span style="opacity: 0.5" class="icon-lock icon-white"></span>{{/a}}
+                    {{#a class='nav-link' href='/login/'}}{{_t 'Вход'}}{{/a}}
                 </li>
             {{/isLoggedIn}}
         </ul>

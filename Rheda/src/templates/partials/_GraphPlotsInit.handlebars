@@ -1,0 +1,24 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        var i18n = {
+            '_LABEL_RATING': '{{_t "Рейтинг"}}',
+            '_HANDS_VALUE': '{{_t "Ценность собранных рук"}}',
+            '_HAN': '{{_t "Хан"}}',
+            '_YAKU_OVERALLTIME': '{{_t "Собранные яку (за все время)"}}'
+        };
+
+        plotRating(
+            {{{points}}},
+            {{{games}}},
+            {{{currentPlayer}}},
+            {{{playersMap}}},
+            {{{labelThreshold}}},
+            i18n
+        );
+        plotHands(
+            {{{handValueStats}}},
+            {{{yakuStats}}},
+            i18n
+        );
+    });
+</script>

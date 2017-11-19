@@ -26,7 +26,7 @@ class PlayerEnrollment extends Controller
 
     protected function _pageTitle()
     {
-        return 'Добавление игроков';
+        return _t('Добавление игроков');
     }
 
     protected function _run()
@@ -58,7 +58,7 @@ class PlayerEnrollment extends Controller
     {
         if (!empty($_POST['action_type'])) {
             if (!$this->_adminAuthOk()) {
-                $this->_lastError = "Секретное слово неправильное";
+                $this->_lastError = _t("Секретное слово неправильное");
                 return true;
             }
 
@@ -87,7 +87,7 @@ class PlayerEnrollment extends Controller
     {
         $errorMsg = '';
         if (preg_match('#[^a-z0-9]+#is', $ident)) {
-            $errorMsg = "В системном имени должны быть только латинские буквы и цифры, никаких пробелов";
+            $errorMsg = _t("В системном имени должны быть только латинские буквы и цифры, никаких пробелов");
         } else {
             try {
                 $this->_api->execute('addPlayer', [$ident, $ident, $displayName, null]);
@@ -105,7 +105,7 @@ class PlayerEnrollment extends Controller
         try {
             $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_eventId]);
             if (!$success) {
-                $errorMsg = 'Не удалось добавить игрока в списки - проблемы с сетью?';
+                $errorMsg = _t('Не удалось добавить игрока в списки - проблемы с сетью?');
             }
         } catch (Exception $e) {
             $errorMsg = $e->getMessage();

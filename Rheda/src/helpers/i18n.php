@@ -11,6 +11,7 @@ function _t($entry) {
     return gettext($entry);
 }
 
+// With plural number substitution
 function _n($entry, $plural, $count) {
     return sprintf(
         ngettext(
@@ -19,5 +20,25 @@ function _n($entry, $plural, $count) {
             doubleval($count)
         ),
         $count
+    );
+}
+
+// With parameters substitution
+function _p($entry, ...$args) {
+    return vsprintf(
+        gettext($entry),
+        $args
+    );
+}
+
+// With plural number and parameters substitution
+function _np($entry, $plural, $count, ...$args) {
+    return vsprintf(
+        ngettext(
+            (string)$entry,
+            (string)$plural,
+            doubleval($count)
+        ),
+        $args
     );
 }

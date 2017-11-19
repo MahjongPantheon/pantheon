@@ -22,7 +22,7 @@ require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/helpers/HttpClient.php';
 require_once __DIR__ . '/helpers/i18n.php';
-use Handlebars\Handlebars;
+require_once __DIR__ . '/Templater.php';
 
 abstract class Controller
 {
@@ -111,49 +111,11 @@ abstract class Controller
             $pageTitle = $this->_pageTitle(); // должно быть после run! чтобы могло использовать полученные данные
             $detector = new MobileDetect();
 
-            $m = new Handlebars([
-                'loader' => new \Handlebars\Loader\FilesystemLoader(__DIR__ . '/templates/'),
-                'partials_loader' => new \Handlebars\Loader\FilesystemLoader(
-                    __DIR__ . '/templates/',
-                    ['prefix' => '_']
-                )
-            ]);
-            $inlineRenderer = new Handlebars(); // for block nesting
-
-            $m->addHelper("a", function ($template, $context, $args, $source) use ($inlineRenderer) {
-                $a = $args->getNamedArguments();
-                return '<a href="' . Url::make(Url::interpolate($a['href'], $context), $this->_eventId) . '"'
-                    . (empty($a['target']) ? '' : ' target="' . $a['target'] . '"')
-                    . (empty($a['class']) ? '' : ' class="' . $a['class'] . '"')
-                    . (empty($a['onclick']) ? '' : ' onclick="' . Url::interpolate($a['onclick'], $context) . '"')
-                    . '>' . $inlineRenderer->render($source, $context) . '</a>';
-            });
-
-            $m->addHelper("form", function ($template, $context, $args, $source) use ($inlineRenderer) {
-                $form = $args->getNamedArguments();
-                return '<form action="' . Url::make(Url::interpolate($form['action'], $context), $this->_eventId)
-                    . (empty($form['method']) ? ' method="get"' : '" method="' . $form['method'] . '"')
-                    . '>' . $inlineRenderer->render($source, $context) . '</form>';
-            });
-
-            // i18n
-            $m->addHelper("_t", function ($template, $context, $args, $source) {
-                $args = $args->getPositionalArguments();
-                return _t($args[0]);
-            });
-
-            $m->addHelper("_n", function ($template, $context, $args, $source) {
-                $arguments = $args->getPositionalArguments();
-                $countRealValue = $context->get($arguments[2]);
-                $arguments[2] = $countRealValue;
-                return call_user_func_array('\Rheda\_n', $arguments);
-            });
-
-            header("Content-type: text/html; charset=utf-8");
-
+            $templateEngine = Templater::getInstance($this->_eventId);
             $add = ($detector->isMobile() && !$detector->isTablet()) ? 'Mobile' : ''; // use full version for tablets
 
-            echo $m->render($add . 'Layout', [
+            header("Content-type: text/html; charset=utf-8");
+            echo $templateEngine->render($add . 'Layout', [
                 'isOnline' => $this->_rules->isOnline(),
                 'useTimer' => $this->_rules->useTimer(),
                 'isTournament' => !$this->_rules->allowPlayerAppend(),
@@ -161,7 +123,7 @@ abstract class Controller
                 'syncStart' => $this->_rules->syncStart(),
                 'eventTitle' => $this->_rules->eventTitle(),
                 'pageTitle' => $pageTitle,
-                'content' => $m->render($add . $this->_mainTemplate, $context),
+                'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
                 'isLoggedIn' => $this->_adminAuthOk()
             ]);
         }
@@ -249,7 +211,7 @@ abstract class Controller
             return !empty($_COOKIE['secret']) && $_COOKIE['secret'] == Sysconf::SUPER_ADMIN_COOKIE;
         } else {
             // Special password policy for debug mode
-            if (Sysconf::DEBUG_MODE && $_COOKIE['secret'] == 'debug_mode_cookie') {
+            if (Sysconf::DEBUG_MODE && !empty($_COOKIE['secret']) && $_COOKIE['secret'] == 'debug_mode_cookie') {
                 return true;
             }
 

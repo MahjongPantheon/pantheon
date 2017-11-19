@@ -232,7 +232,7 @@ class GameFormatter
 
                 'winnerName'        => isset($round['winner_id']) ? $playersData[$round['winner_id']]['display_name'] : null,
                 'loserName'         => isset($round['loser_id']) ? $playersData[$round['loser_id']]['display_name'] : null,
-                'paoPlayerName'     => isset($round['pao_player_id']) ? $playersData[$round['pao_player_id']]['display_name'] : null,
+                'paoPlayerName'     => !empty($round['pao_player_id']) ? $playersData[$round['pao_player_id']]['display_name'] : null,
                 'yakuList'          => $this->_formatYaku($round),
                 'doras'             => isset($round['dora']) ? $round['dora'] : null,
                 'han'               => isset($round['han']) ? $round['han'] : null,
@@ -241,7 +241,9 @@ class GameFormatter
                 'tempaiPlayers'     => $this->_formatCsvPlayersList($round, 'tempai', $playersData),
                 'riichiPlayers'     => $this->_formatCsvPlayersList($riichiSource, 'riichi_bets', $playersData),
 
-                'multiRonWins'      => $this->_formatMultiron($round, $playersData)
+                'multiRonWins'      => $this->_formatMultiron($round, $playersData),
+                'doubleRon'         => $round['outcome'] == 'multiron' && count($round['wins']) == 2,
+                'tripleRon'         => $round['outcome'] == 'multiron' && count($round['wins']) == 3,
             ]);
         }
 

@@ -26,7 +26,7 @@ class User extends Controller
 
     protected function _pageTitle()
     {
-        return 'Статистика и графики: ' . $this->_playerName;
+        return _p('Статистика и графики: %s', $this->_playerName);
     }
 
     protected function _run()

@@ -14,7 +14,7 @@
 *  You should have received a copy of the GNU General Public License
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
-<h3>Штрафы к итоговому рейтингу</h3>
+<h3>{{_t 'Штрафы к итоговому рейтингу'}}</h3>
 <br>
 {{#error}}
     <div class="alert alert-error">{{error}}</div>
@@ -23,12 +23,12 @@
     <table class="table table-striped table-condensed">
         <tr>
             <td colspan="2">
-                Назначить штраф можно только игроку, который на данный момент в игре. В ином случае будет ошибка.
+                {{_t 'Назначить штраф можно только игроку, который на данный момент в игре. В ином случае будет ошибка.'}}
             </td>
         </tr>
         <tr>
             <td>
-                Игрок
+                {{_t 'Игрок'}}
             </td>
             <td>
                 <select name="player">
@@ -40,7 +40,7 @@
         </tr>
         <tr>
             <td>
-                Штрафных очков рейтинга
+                {{_t 'Штрафных очков рейтинга'}}
             </td>
             <td>
                 <select name="amount">
@@ -52,7 +52,7 @@
         </tr>
         <tr>
             <td>
-                Причина штрафа
+                {{_t 'Причина штрафа'}}
             </td>
             <td>
                 <input type="text" name="reason" />
@@ -60,9 +60,9 @@
         </tr>
         <tr>
             <td colspan="2">
-                Проверьте дважды, что все правильно. Убрать штраф возможности нет.
+                {{_t 'Проверьте дважды, что все правильно. Убрать штраф возможности нет.'}}
                 <hr />
-                <input type="submit" value="Назначить штраф">
+                <input type="submit" value="{{_t 'Назначить штраф'}}">
             </td>
         </tr>
     </table>
