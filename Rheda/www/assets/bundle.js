@@ -61,7 +61,7 @@ function plotRating (points, games, currentUser, playersMap, labelColorThreshold
 
                     players.push('<table class="table table-condensed table-bordered table-plot-rating">');
                     for (var i = 0; i < 4; i++) {
-                        outcome = g[i].rating_delta < labelColorThreshold ? 'important' : 'success';
+                        outcome = g[i].rating_delta < labelColorThreshold ? 'danger' : 'success';
                         own = g[i].player_id == currentUser ? 'own' : '';
                         var rating_delta = $.jqplot.sprintf("%'i", g[i].rating_delta);
                         var scores = $.jqplot.sprintf("%'i", g[i].score);
