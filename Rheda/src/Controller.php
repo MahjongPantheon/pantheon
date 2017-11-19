@@ -65,11 +65,16 @@ abstract class Controller
 
         // i18n support
         $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-        if (!empty($locale)) {
-            $locale .= '.UTF-8';
-        } else {
-            $locale = 'en_US.UTF-8';
+        switch ($locale) {
+            // map common lang ids to more specific
+            case 'ru':
+            case 'ru_RU':
+                $locale = 'ru_RU.UTF-8';
+                break;
+            default:
+                $locale = 'en_US.UTF-8';
         }
+
         if (setlocale(LC_ALL, $locale) === false) {
             throw new \Exception("Server error: The $locale locale is not installed");
         }
