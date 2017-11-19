@@ -27,15 +27,11 @@
         {{#error}}
             <div class="alert alert-error">{{error}}</div>
         {{/error}}
-        <form action="" method="POST" id="addform">
-            <input type="text" name="log" value="">
-
-            <div class="row">
-                <div class="span10">
-                    <input type="submit" value="Добавить" class="btn btn-primary btn-large">
-                </div>
+        <form action="" method="POST" id="addform" class="form-inline">
+            <div class="form-group mx-sm-3">
+                <input type="text" class="form-control" id="inputPassword2" name="log" style="width: 500px">
             </div>
-
+            <button type="submit" class="btn btn-primary">Добавить</button>
         </form>
     </div>
 </div>
