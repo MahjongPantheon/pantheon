@@ -24,7 +24,10 @@
     <div class="alert alert-success">Успешно авторизованы!</div>
 {{/isLoggedIn}}
 
-<form action="" method="post" class="well form-search">
-    <input type="password" class="input-medium search-query" name="secret" placeholder='secret'>
-    <button type="submit" class="btn">Авторизация</button>
+<form action="" method="post" class="well form-inline">
+    <div class="form-group mx-sm-3">
+        <label for="inputPassword2" class="sr-only">secret</label>
+        <input type="password" class="form-control" id="inputPassword2" name="secret" placeholder="secret">
+    </div>
+    <button type="submit" class="btn btn-primary">Авторизация</button>
 </form>
