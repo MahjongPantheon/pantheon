@@ -27,7 +27,7 @@ class Penalties extends Controller
 
     protected function _pageTitle()
     {
-        return 'Штрафы';
+        return _t('Штрафы');
     }
 
     protected function _beforeRun()

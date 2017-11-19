@@ -25,7 +25,7 @@ class RatingTable extends Controller
 
     protected function _pageTitle()
     {
-        return 'Таблица результатов';
+        return _t('Таблица результатов');
     }
 
     protected function _run()

@@ -50,25 +50,25 @@
     }
 </style>
 
-<h2 class="header-title">Рейтинг игроков</h2>
+<h2 class="header-title">{{_t 'Рейтинг игроков'}}</h2>
 
 <div class="main-content">
     {{#hideResults}}
-        <p>Результаты были скрыты администратором турнира.</p>
+        <p>{{_t 'Результаты были скрыты администратором турнира.'}}</p>
     {{/hideResults}}
 
     {{#showAdminWarning}}
-        <p>Результаты видны только администратору турнира.</p>
+        <p>{{_t 'Результаты видны только администратору турнира.'}}</p>
     {{/showAdminWarning}}
 
     {{^hideResults}}
         <table class="table table-striped table-condensed">
             <tr>
                 <th>#</th>
-                <th>Игрок</th>
-                <th>{{#a href='/stat/?sort=rating'}}Итог{{/a}}{{#orderByRating}}<span class="icon-arrow-down"></span>{{/orderByRating}}</th>
-                <th>{{#a href='/stat/?sort=avg_place'}}СМ{{/a}}{{#orderByAvgPlace}}<span class="icon-arrow-up"></span>{{/orderByAvgPlace}}</th>
-                <th>{{#a href='/stat/?sort=avg_score'}}СО{{/a}}{{#orderByAvgScore}}<span class="icon-arrow-up"></span>{{/orderByAvgScore}}</th>
+                <th>{{_t 'Игрок'}}</th>
+                <th>{{#a href='/stat/?sort=rating'}}{{_t 'Итог'}}{{/a}}{{#orderByRating}}<span class="icon-arrow-down"></span>{{/orderByRating}}</th>
+                <th>{{#a href='/stat/?sort=avg_place'}}{{_t 'СМ'}}{{/a}}{{#orderByAvgPlace}}<span class="icon-arrow-up"></span>{{/orderByAvgPlace}}</th>
+                <th>{{#a href='/stat/?sort=avg_score'}}{{_t 'СО'}}{{/a}}{{#orderByAvgScore}}<span class="icon-arrow-up"></span>{{/orderByAvgScore}}</th>
                 <th>&nbsp;</th>
             </tr>
             {{#data}}

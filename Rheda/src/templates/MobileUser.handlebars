@@ -86,141 +86,127 @@
     }
 </style>
 
-<h2 class="header-title">Графики рейтинга</h2>
+<h2 class="header-title">{{_t 'Графики рейтинга'}}</h2>
 <div class="main-content">
     {{#playerData}}
-        <h3>Игрок: {{display_name}}</h3>
+        <h3>{{_p 'Игрок: %s' display_name}}</h3>
         <hr/>
 
         {{^data}}
-            Пока никакой статистики нет :(
+            {{_t 'Пока никакой статистики нет :('}}
         {{/data}}
 
         {{#data}}
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    plotRating(
-                        {{{points}}},
-                        {{{games}}},
-                        {{{currentPlayer}}},
-                        {{{playersMap}}},
-                        {{{labelThreshold}}}
-                    );
-                    plotHands(
-                        {{{handValueStats}}},
-                        {{{yakuStats}}}
-                    );
-                });
-            </script>
+            {{> partials/GraphPlotsInit}}
             <div class="stats">
-                <div class="stat-div">График рейтинга</div>
+                <div class="stat-div">{{_t 'График рейтинга'}}</div>
                 <div class="stat-item" style="display: block">
                     <div id='chart_rating'></div>
                     <div id="chart_rating_info"></div>
                 </div>
-                <div class="stat-div">Общая статистика</div>
+                <div class="stat-div">{{_t 'Общая статистика'}}</div>
                 <div class="stat-item">
-                    <div class="iname">Сыграно игр</div>
+                    <div class="iname">{{_t 'Сыграно игр'}}</div>
                     <div class="ival2">{{totalPlayedGames}}</div>
                     <div class="ival2">&nbsp;</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">Сыграно раздач</div>
+                    <div class="iname">{{_t 'Сыграно раздач'}}</div>
                     <div class="ival2">{{totalPlayedRounds}}</div>
                     <div class="ival2">&nbsp;</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">Выиграно раздач</div>
+                    <div class="iname">{{_t 'Выиграно раздач'}}</div>
                     <div class="ival2">{{winCount}}</div>
                     <div class="ival2">({{winCountPercent}}%)</div>
                 </div>
-                <div class="stat-div">По исходам раздач:</div>
+                <div class="stat-div">{{_t 'По исходам раздач:'}}</div>
                 <div class="stat-item">
-                    <div class="iname">Выигрышей по рон</div>
+                    <div class="iname">{{_t 'Выигрышей по рон'}}</div>
                     <div class="ival2">{{ronCount}}</div>
                     <div class="ival2">({{ronCountPercent}}%)</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">Выигрышей по цумо</div>
+                    <div class="iname">{{_t 'Выигрышей по цумо'}}</div>
                     <div class="ival2">{{tsumoCount}}</div>
                     <div class="ival2">({{tsumoCountPercent}}%)</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">Набросов в рон</div>
+                    <div class="iname">{{_t 'Набросов в рон'}}</div>
                     <div class="ival2">{{feedCount}}</div>
                     <div class="ival2">({{feedCountPercent}}%)</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">- в том числе из-за риичи</div>
+                    <div class="iname">- {{_t 'в том числе из-за риичи'}}</div>
                     <div class="ival2">{{feedUnderRiichi}}</div>
                     <div class="ival2">({{feedUnderRiichiPercent}}%)</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">Проигрышей по цумо</div>
+                    <div class="iname">{{_t 'Проигрышей по цумо'}}</div>
                     <div class="ival2">{{tsumoFeedCount}}</div>
                     <div class="ival2">({{tsumoFeedCountPercent}}%)</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">Открытых рук</div>
+                    <div class="iname">{{_t 'Открытых рук'}}</div>
                     <div class="ival2">{{openHand}}</div>
                     <div class="ival2">({{openHandPercent}}%)</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">Штрафов чомбо</div>
+                    <div class="iname">{{_t 'Штрафов чомбо'}}</div>
                     <div class="ival2">{{chomboCount}}</div>
                     <div class="ival2">({{chomboCountPercent}}%)</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">Ставок риичи</div>
+                    <div class="iname">{{_t 'Ставок риичи'}}</div>
                     <div class="ival2">{{riichiTotal}}</div>
                     <div class="ival2">({{riichiTotalPercent}}%)</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">- из них выигравших</div>
+                    <div class="iname">- {{_t 'из них выигравших'}}</div>
                     <div class="ival2">{{riichiWon}}</div>
                     <div class="ival2">({{riichiWonPercent}}%)</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">- из них потерянных</div>
+                    <div class="iname">- {{_t 'из них потерянных'}}</div>
                     <div class="ival2">{{riichiLost}}</div>
                     <div class="ival2">({{riichiLostPercent}}%)</div>
                 </div>
-                <div class="stat-div">По занятым местам:</div>
+                <div class="stat-div">{{_t 'По занятым местам:'}}</div>
                 <div class="stat-item">
-                    <div class="iname">1 место</div>
+                    <div class="iname">{{_t '1 место'}}</div>
                     <div class="ival">{{place1}} %</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">2 место</div>
+                    <div class="iname">{{_t '2 место'}}</div>
                     <div class="ival">{{place2}} %</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">3 место</div>
+                    <div class="iname">{{_t '3 место'}}</div>
                     <div class="ival">{{place3}} %</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">4 место</div>
+                    <div class="iname">{{_t '4 место'}}</div>
                     <div class="ival">{{place4}} %</div>
                 </div>
-                <div class="stat-div">Набранные очки по итогу игр:</div>
+                <div class="stat-div">{{_t 'Набранные очки по итогу игр:'}}</div>
                 <div class="stat-item">
-                    <div class="iname">Минимум</div>
+                    <div class="iname">{{_t 'Минимум'}}</div>
                     <div class="ival">{{minScores}}</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">Максимум</div>
+                    <div class="iname">{{_t 'Максимум'}}</div>
                     <div class="ival">{{maxScores}}</div>
                 </div>
                 <div class="stat-item">
-                    <div class="iname">Среднее</div>
+                    <div class="iname">{{_t 'Среднее'}}</div>
                     <div class="ival">{{averageScores}}</div>
                 </div>
-                <div class="stat-div">Ценность собранных рук</div>
+                <div class="stat-div">{{_t 'Ценность собранных рук'}}</div>
                 <div class="stat-item" style="display: block">
                     <div id='chart_hands'></div>
                     <hr/>
                 </div>
-                <div class="stat-div">Собранные яку (за всё время)</div>
+                <div class="stat-div">{{_t 'Собранные яку (за всё время)'}}</div>
                 <div class="stat-item" style="display: block">
                     <div id='chart_yaku'></div>
                 </div>

@@ -26,7 +26,7 @@ class AddOnlineGame extends Controller
 
     protected function _pageTitle()
     {
-        return 'Добавить онлайн-игру';
+        return _t('Добавить онлайн-игру');
     }
 
     /**

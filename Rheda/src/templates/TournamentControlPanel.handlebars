@@ -33,17 +33,15 @@
     }
 </script>
 
-{{#error}}<h3>Что-то пошло не так и вот что именно: {{error}}</h3>{{/error}}
+{{#error}}<h3>{{_t 'Что-то пошло не так и вот что именно: %s' error}}</h3>{{/error}}
 {{^error}}
     {{#stageNotReady}}
-        <h3>Невозможно сделать рассадку</h3>
-        Общее число зарегистрированных игроков не делится на 4. Воспользуйтесь разделами "Игроки и регистрация" и
-        "Добавить игрока" для того, чтобы добавить или удалить игроков из турнира. Для дополнения столов предусмотрены
-        специальные аккаунты "Игрок замены 1-4".
+        <h3>{{_t 'Невозможно сделать рассадку'}}</h3>
+        {{_t 'Общее число зарегистрированных игроков не делится на 4. Воспользуйтесь разделами "Игроки и регистрация" и "Добавить игрока" для того, чтобы добавить или удалить игроков из турнира. Для дополнения столов предусмотрены специальные аккаунты "Игрок замены 1-4".'}}
     {{/stageNotReady}}
     {{#stageReadyButNotStarted}}
-        <h3>Всё готово для генерации рассадки</h3>
-        Выберите способ генерации рассадки ниже и нажмите соответствующую кнопку.
+        <h3>{{_t 'Всё готово для генерации рассадки'}}</h3>
+        {{_t 'Выберите способ генерации рассадки ниже и нажмите соответствующую кнопку.'}}
         <hr/>
         <table class="table table-striped">
             {{#withAutoSeating}}
@@ -51,8 +49,8 @@
                     <td style="width:50%">
                         {{#form action='/tourn/shuffledSeating/' method='post'}}
                             <input type="button" class="btn btn-large btn-primary actionButton"
-                                   onclick="return window.confirm('Используем случайную рассадку для новой игры?') && disableTemporarily(this);"
-                                   value="Рассадить автоматически случайным образом">
+                                   onclick="return window.confirm('{{_t 'Используем случайную рассадку для новой игры?'}}') && disableTemporarily(this);"
+                                   value="{{_t 'Рассадить автоматически случайным образом'}}">
                         {{/form}}
                     </td>
                     <td rowspan="2" style="width:50%">
@@ -62,8 +60,8 @@
                 <tr><td>
                     {{#form action='/tourn/swissSeating/' method='post'}}
                         <input type="button" class="btn btn-large btn-success actionButton"
-                               onclick="return window.confirm('Используем швейцарскую рассадку для новой игры?') && disableTemporarily(this);"
-                               value="Рассадить автоматически по швейцарской рассадке">
+                               onclick="return window.confirm('{{_t 'Используем швейцарскую рассадку для новой игры?'}}') && disableTemporarily(this);"
+                               value="{{_t 'Рассадить автоматически по швейцарской рассадке'}}">
                     {{/form}}
                 </td></tr>
             {{/withAutoSeating}}
@@ -74,32 +72,31 @@
             {{/withAutoSeating}}
             <tr><td colspan="2">
                 {{#form action='/tourn/manualSeating/' method='post'}}
-                    Введите состав столов. Один стол = одна строка.<br>
-                    Если не отмечена галочка, игроки будут рассажены на "восток-юг-запад-север" согласно порядку ввода.<br>
-                    Цифры означают текущее место игрока в рейтинге. Пример рассадки с шагом 4 для четырех столов: <br>
+                    {{_t 'Введите состав столов. Один стол = одна строка.'}}<br>
+                    {{_t 'Если не отмечена галочка, игроки будут рассажены на "восток-юг-запад-север" согласно порядку ввода.'}}<br>
+                    {{_t 'Цифры означают текущее место игрока в рейтинге. Пример рассадки с шагом 4 для четырех столов: '}}<br>
                     1-5-9-13<br>
                     2-6-10-14<br>
                     3-7-11-15<br>
                     4-8-12-16<br>
                     <div><textarea name="description" rows="6">{{tablesList}}</textarea></div>
                     <div><label for="randomize" style="font-size: 17px;">
-                        <input checked="checked" id="randomize" type="checkbox" name="randomize" value="true"> Перемешать игроков за
-                        каждым столом
+                        <input checked="checked" id="randomize" type="checkbox" name="randomize" value="true"> {{_t 'Перемешать игроков за каждым столом'}}
                     </label></div>
                     <input type="button" class="btn btn-large btn-warning actionButton"
-                           onclick="return window.confirm('Используем ручную рассадку для новой игры?') && disableTemporarily(this);"
-                           value="Рассадить вручную согласно введенному составу столов">
+                           onclick="return window.confirm('{{_t 'Используем ручную рассадку для новой игры?'}}') && disableTemporarily(this);"
+                           value="{{_t 'Рассадить вручную согласно введенному составу столов?'}}">
                 {{/form}}
             </td></tr>
         </table>
     {{/stageReadyButNotStarted}}
     {{#stageSeatingReady}}
-        <h3>Старт текущего таймера и начало игр</h3>
-        Нажатие на эту кнопку стартует все игры и запускает таймер.
+        <h3>{{_t 'Старт текущего таймера и начало игр'}}</h3>
+        {{_t 'Нажатие на эту кнопку стартует все игры и запускает таймер.'}}
         {{#form action='/tourn/startTimer/' method='post'}}
             <input type="button" class="btn btn-large btn-danger actionButton"
-                   onclick="return window.confirm('Стартовать игры и таймер?') && disableTemporarily(this);"
-                   value="Начать игры!">
+                   onclick="return window.confirm('{{_t 'Стартовать игры и таймер?'}}') && disableTemporarily(this);"
+                   value="{{_t 'Начать игры!'}}">
         {{/form}}
         <hr />
         {{> partials/TournamentTablesState }}
@@ -108,12 +105,12 @@
         <table class="table actionTable">
             <tr>
                 <td>
-                    <h3>Рестарт текущего таймера</h3>
-                    Нажатие на эту кнопку выставит таймер в исходное значение. Будьте осторожны.
+                    <h3>{{_t 'Рестарт текущего таймера'}}</h3>
+                    {{_t 'Нажатие на эту кнопку выставит таймер в исходное значение. Будьте осторожны.'}}
                     {{#form action='/tourn/startTimer/' method='post'}}
                         <input type="button" class="btn btn-large btn-danger actionButton"
-                               onclick="return window.confirm('Выставить таймер в начальное значение?') && disableTemporarily(this);"
-                               value="Сбросить таймер">
+                               onclick="return window.confirm('{{_t 'Выставить таймер в начальное значение?'}}') && disableTemporarily(this);"
+                               value="{{_t 'Сбросить таймер'}}">
                     {{/form}}
                 </td>
                 <td>
@@ -128,14 +125,13 @@
         <table class="table actionTable">
             <tr>
                 <td>
-                    <h3>Завершить игры</h3>
-                    После нажатия на кнопку невозможно будет отменить раздачи. Нажатие на эту кнопку необходимо для
-                    обновления рейтинговой таблицы согласно результатам игры.
+                    <h3>{{_t 'Завершить игры'}}</h3>
+                    {{_t 'После нажатия на кнопку невозможно будет отменить раздачи. Нажатие на эту кнопку необходимо для обновления рейтинговой таблицы согласно результатам игры.'}}
 
                     {{#form action='/tourn/finalizeSessions/' method='post'}}
                         <input type="button" class="btn btn-large btn-primary actionButton"
-                               onclick="return window.confirm('Завершить все игры? Отменить раздачи у завершенных игр будет невозможно!') && disableTemporarily(this);"
-                               value="Утвердить все результаты и завершить игры">
+                               onclick="return window.confirm('{{_t 'Завершить все игры? Отменить раздачи у завершенных игр будет невозможно!'}}') && disableTemporarily(this);"
+                               value="{{_t 'Утвердить все результаты и завершить игры'}}">
                     {{/form}}
                 </td>
                 <td>

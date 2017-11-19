@@ -103,7 +103,7 @@
 
         function stopTimer() {
             window.clearInterval(timer);
-            $('#time').html('СТОП!');
+            $('#time').html('{{_t 'СТОП!'}}');
             $('.timer').addClass('mini');
             $('.seating').show();
 
@@ -145,14 +145,14 @@
 {{/waiting}}
 <div class="seating">
     <hr/>
-    <h3>РАССАДКА</h3>
+    <h3>{{_t 'РАССАДКА'}}</h3>
     <table class="table table-bordered">
         <tr>
-            <th>Стол №</th>
-            <th>ВОСТОК</th>
-            <th>ЮГ</th>
-            <th>ЗАПАД</th>
-            <th>СЕВЕР</th>
+            <th>{{_t 'Стол №'}}</th>
+            <th>{{_t 'ВОСТОК'}}</th>
+            <th>{{_t 'ЮГ'}}</th>
+            <th>{{_t 'ЗАПАД'}}</th>
+            <th>{{_t 'СЕВЕР'}}</th>
         </tr>
         {{#seating}}
             <tr>
