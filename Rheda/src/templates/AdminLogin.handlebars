@@ -14,14 +14,14 @@
 *  You should have received a copy of the GNU General Public License
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
-<h3>{{_t 'Администрирование'}}</h3>
+<h3>{{_t 'Admin panel'}}</h3>
 <br>
 {{#error}}
     <div class="alert alert-error">{{error}}</div>
 {{/error}}
 
 {{#isLoggedIn}}
-    <div class="alert alert-success">{{_t 'Успешно авторизованы!'}}</div>
+    <div class="alert alert-success">{{_t 'Authorized successfully!'}}</div>
 {{/isLoggedIn}}
 
 <form action="" method="post" class="well form-inline">
@@ -29,5 +29,5 @@
         <label for="inputPassword2" class="sr-only">secret</label>
         <input type="password" class="form-control" id="inputPassword2" name="secret" placeholder="secret">
     </div>
-    <button type="submit" class="btn btn-primary">{{_t 'Авторизация'}}</button>
+    <button type="submit" class="btn btn-primary">{{_t 'Authorize'}}</button>
 </form>

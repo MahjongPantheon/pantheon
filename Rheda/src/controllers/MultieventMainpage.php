@@ -25,12 +25,12 @@ class MultieventMainpage extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Статистика');
+        return _t('Statistics');
     }
 
     protected function _run()
     {
-        // TODO: список евентов
+        // TODO: event list
         return [];
     }
 }

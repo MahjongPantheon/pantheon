@@ -37,7 +37,7 @@ class TournamentControlPanel extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Управление турниром');
+        return _t('Tournament control panel');
     }
 
     protected function _beforeRun()
@@ -94,7 +94,7 @@ class TournamentControlPanel extends Controller
 
         if (!$this->_adminAuthOk()) {
             return [
-                'error' => _t('Секретное слово неправильное')
+                'error' => _t('Wrong admin password')
             ];
         }
 

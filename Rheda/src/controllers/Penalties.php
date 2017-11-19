@@ -27,7 +27,7 @@ class Penalties extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Штрафы');
+        return _t('Penalties');
     }
 
     protected function _beforeRun()
@@ -35,6 +35,10 @@ class Penalties extends Controller
         $this->_errors = [];
 
         if ($this->_path['action'] == 'apply') {
+            if (!$this->_adminAuthOk()) {
+                return true; // to show error in _run
+            }
+
             $userId = intval($_POST['player']);
             $amount = intval($_POST['amount']);
             $reason = $_POST['reason'];
@@ -54,6 +58,12 @@ class Penalties extends Controller
 
     protected function _run()
     {
+        if (!$this->_adminAuthOk()) {
+            return [
+                'error' => _t('Wrong admin password')
+            ];
+        }
+
         $amounts = [];
         try {
             $players = $this->_api->execute('getAllPlayers', [$this->_eventId]);

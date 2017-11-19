@@ -25,7 +25,7 @@ class AdminLogin extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Вход администратора');
+        return _t('Admin login');
     }
 
     protected function _run()
@@ -34,7 +34,7 @@ class AdminLogin extends Controller
 
         if (!empty($_POST['secret'])) {
             if (!$this->_getAdminCookie($_POST['secret'])) {
-                $error = _t("Wrong password!");
+                $error = _t("Wrong admin password");
             } else {
                 $cookieLife = time() + 3600;
                 if (!empty(Sysconf::ADMIN_AUTH()[$this->_eventId]['cookie_life'])) {

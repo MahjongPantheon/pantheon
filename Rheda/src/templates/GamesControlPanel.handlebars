@@ -31,12 +31,12 @@
         return true;
     }
     function cancelRoundConfirmation(roundInfo) {
-        return window.confirm('{{_t 'Подтвердите отмену раздачи: '}}' + roundInfo);
+        return window.confirm('{{_t 'Confirm round cancellation: '}}' + roundInfo);
     }
 </script>
 
 <hr/>
-<h3>{{_t 'Состояние столов:'}}</h3>
+<h3>{{_t 'Tables state:'}}</h3>
 <table class="table table-bordered">
     {{#tables}}
         <tr>
@@ -48,26 +48,26 @@
         </tr>
         <tr>
             <td colspan="6" style="font-weight: bold; font-size: 16px">
-                {{_t 'Предыдущая раздача:'}}
-                {{^last_round}}{{_t '(ни одной раздачи не сыграно)'}}{{/last_round}}
+                {{_t 'Last played round:'}}
+                {{^last_round}}{{_t '(no rounds are played yet)'}}{{/last_round}}
                 {{#last_round}}
                     {{last_round}}
                     {{#a
                         href="/games/dropLastRound/{hash}/"
                         class="btn btn-large btn-danger actionButton"
                         onclick="return cancelRoundConfirmation('{roundInfo}')"
-                    }}{{_t 'Отменить последнюю внесенную раздачу'}}{{/a}}
+                    }}{{_t 'Cancel last played round'}}{{/a}}
                 {{/last_round}}
             </td>
         </tr>
         <tr>
             <td style="font-weight: bold; font-size: 16px">
-                {{_t 'Штрафы:'}}
+                {{_t 'Penalties:'}}
             </td>
             <td colspan="5">
                 <ul>
                     {{#penalties}}
-                        <li>{{_p '%s - штраф %s очков. Причина: %s' who amount reason}}</li>
+                        <li>{{_p '%s - %s points of penalty. Reason: %s' who amount reason}}</li>
                     {{/penalties}}
                 </ul>
             </td>

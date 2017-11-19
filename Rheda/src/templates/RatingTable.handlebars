@@ -14,19 +14,19 @@
 *  You should have received a copy of the GNU General Public License
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
-<h3>{{_t 'Рейтинг игроков'}}</h3>
+<h3>{{_t 'Rating table'}}</h3>
 <br>
 {{#error}}
     <div class="alert alert-error">{{error}}</div>
 {{/error}}
 
 {{#hideResults}}
-    <p>{{_t 'Результаты были скрыты администратором турнира.'}}</p>
+    <p>{{_t 'Rating table has been hidden by tournament administrator'}}</p>
 {{/hideResults}}
 
 {{#showAdminWarning}}
     <div class="alert alert-success">
-        <p>{{_t 'Результаты видны только администратору турнира.'}}</p>
+        <p>{{_t 'These results are visible only for tournament administrator'}}</p>
     </div>
 {{/showAdminWarning}}
 
@@ -34,11 +34,11 @@
     <table class="table table-striped table-condensed">
         <tr>
             <th>#</th>
-            <th>{{#a href='/stat/?sort=name'}}{{_t 'Игрок'}}{{/a}}{{#orderByName}}<span class="icon-arrow-up"></span>{{/orderByName}}</th>
-            <th>{{#a href='/stat/?sort=rating'}}{{_t 'Итог'}}{{/a}}{{#orderByRating}}<span class="icon-arrow-down"></span>{{/orderByRating}}</th>
-            <th>{{#a href='/stat/?sort=avg_place'}}{{_t 'Среднее место'}}{{/a}}{{#orderByAvgPlace}}<span class="icon-arrow-up"></span>{{/orderByAvgPlace}}</th>
-            <th>{{#a href='/stat/?sort=avg_score'}}{{_t 'Средние очки'}}{{/a}}{{#orderByAvgScore}}<span class="icon-arrow-down"></span>{{/orderByAvgScore}}</th>
-            <th>{{_t 'Сыграно игр'}}</th>
+            <th>{{#a href='/stat/?sort=name'}}{{_t 'Player'}}{{/a}}{{#orderByName}}<span class="icon-arrow-up"></span>{{/orderByName}}</th>
+            <th>{{#a href='/stat/?sort=rating'}}{{_t 'Rating points'}}{{/a}}{{#orderByRating}}<span class="icon-arrow-down"></span>{{/orderByRating}}</th>
+            <th>{{#a href='/stat/?sort=avg_place'}}{{_t 'Average place'}}{{/a}}{{#orderByAvgPlace}}<span class="icon-arrow-up"></span>{{/orderByAvgPlace}}</th>
+            <th>{{#a href='/stat/?sort=avg_score'}}{{_t 'Average points'}}{{/a}}{{#orderByAvgScore}}<span class="icon-arrow-down"></span>{{/orderByAvgScore}}</th>
+            <th>{{_t 'Games played'}}</th>
         </tr>
         {{#data}}
         <tr>

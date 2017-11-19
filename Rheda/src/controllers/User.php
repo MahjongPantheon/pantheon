@@ -22,11 +22,18 @@ require_once __DIR__ . '/../helpers/YakuMap.php';
 class User extends Controller
 {
     protected $_mainTemplate = 'User';
-    protected $_playerName = 'Игрок';
+    protected $_playerName;
+
+    public function __construct($url, $path)
+    {
+        parent::__construct($url, $path);
+        $this->_playerName = _t('Player');
+    }
 
     protected function _pageTitle()
     {
-        return _p('Статистика и графики: %s', $this->_playerName);
+        // This is called after _run, so proper player name is substituted.
+        return _p('Stats & diagrams: %s', $this->_playerName);
     }
 
     protected function _run()
@@ -90,7 +97,7 @@ class User extends Controller
             }
 
             if ($totalYakuhai) {
-                $yakuStats[] = [$totalYakuhai, 'Якухай: всего'];
+                $yakuStats[] = [$totalYakuhai, _t('Yakuhai: total')];
             }
 
             $scoresSummary = $this->_getScoresSummary($currentUser, $data['score_history']);

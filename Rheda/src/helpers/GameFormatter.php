@@ -139,10 +139,10 @@ class GameFormatter
                 'replayLink' => empty($game['replay_link']) ? null : $game['replay_link'],
                 'bestHandPlayers' => implode(', ', $bestHandPlayers),
                 'bestHandCost' => ($bestHan == 200
-                    ? 'якуман'
+                    ? _t('yakuman')
                     : ($bestHan > 4
-                        ? $bestHan . ' хан'
-                        : $bestHan . ' хан, ' . $bestFu . ' фу'
+                        ? _p('%d han', $bestHan)
+                        : _p('%d han, %d fu', $bestHan, $bestFu)
                     )
                 ),
                 'ronWins' => $ronWins + 2 * $doubleronWins + 3 * $tripleronWins,
@@ -337,71 +337,68 @@ class GameFormatter
             return '';
         }
 
+        $namesOf = function($list) {
+            return implode(', ', array_map(function ($e) use (&$players) {
+                return $players[$e]['display_name'];
+            }, $list));
+        };
+
+        $handDesc = function($roundData) {
+            if ($roundData['han'] < 0) {
+                return _t('yakuman');
+            }
+            if (empty($roundData['fu'])) {
+                return _p('%d han', $roundData['han']);
+            }
+            return _p('%d han, %d fu', $roundData['han'], $roundData['fu']);
+        };
+
         switch ($roundData['outcome']) {
             case 'ron':
-                return "Рон ({$players[$roundData['winner']]['display_name']} "
-                    . "с {$players[$roundData['loser']]['display_name']}) "
-                    . "{$roundData['han']} хан"
-                    . ($roundData['fu'] ? ", {$roundData['fu']} фу" : '')
-                    . "; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
-                        return $players[$e]['display_name'];
-                    }, $roundData['riichi']));
+                return _p("Ron (%s from %s) %s; riichi bets - %s",
+                    $players[$roundData['winner']]['display_name'],
+                    $players[$roundData['loser']]['display_name'],
+                    $handDesc($roundData),
+                    $namesOf($roundData['riichi'])
+                );
             case 'tsumo':
-                return "Цумо ({$players[$roundData['winner']]['display_name']}) "
-                    . "{$roundData['han']} хан"
-                    . ($roundData['fu'] ? ", {$roundData['fu']} фу" : '')
-                    . "; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
-                        return $players[$e]['display_name'];
-                    }, $roundData['riichi']));
+                return _p("Tsumo (%s) %s; riichi bets - %s",
+                    $players[$roundData['winner']]['display_name'],
+                    $handDesc($roundData),
+                    $namesOf($roundData['riichi'])
+                );
             case 'draw':
-                return "Ничья "
-                    . "(темпай: " . implode(', ', array_map(function ($e) use (&$players) {
-                        return $players[$e]['display_name'];
-                    }, $roundData['tempai'])) . ")"
-                    . "; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
-                        return $players[$e]['display_name'];
-                    }, $roundData['riichi']));
+                return _p("Exhaustive draw (tenpai: %s); riichi bets - %s",
+                    $namesOf($roundData['tempai']),
+                    $namesOf($roundData['riichi'])
+                );
             case 'abort':
-                return "Пересдача; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
-                        return $players[$e]['display_name'];
-                }, $roundData['riichi']));
+                return _p("Abortive draw; riichi bets - %s", $namesOf($roundData['riichi']));
             case 'chombo':
-                return "Чомбо ({$players[$roundData['loser']]['display_name']})";
+                return _p("Chombo (%s)", $players[$roundData['loser']]['display_name']);
             case 'multiron':
                 if (count($roundData['wins']) == 2) {
-                    return "Дабл-рон: платит {$players[$roundData['loser']]['display_name']}; "
-
-                        . "№1: {$players[$roundData['wins'][0]['winner']]['display_name']}, "
-                        . "{$roundData['wins'][0]['han']} хан"
-                        . ($roundData['wins'][0]['fu'] ? ", {$roundData['wins'][0]['fu']} фу" : '')
-
-                        . ", №2: {$players[$roundData['wins'][1]['winner']]['display_name']} "
-                        . "{$roundData['wins'][1]['han']} хан"
-                        . ($roundData['wins'][1]['fu'] ? ", {$roundData['wins'][1]['fu']} фу" : '')
-
-                        . "; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
-                            return $players[$e]['display_name'];
-                        }, $roundData['riichi']));
+                    return _p('Double ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); riichi bets - %s',
+                        $players[$roundData['loser']]['display_name'],
+                        $players[$roundData['wins'][0]['winner']]['display_name'],
+                        $handDesc($roundData['wins'][0]),
+                        $players[$roundData['wins'][1]['winner']]['display_name'],
+                        $handDesc($roundData['wins'][1]),
+                        $namesOf($roundData['riichi'])
+                    );
                 }
 
                 if (count($roundData['wins']) == 3) {
-                    return "Трипл-рон: платит {$players[$roundData['loser']]['display_name']}; "
-
-                        . "№1: {$players[$roundData['wins'][0]['winner']]['display_name']}, "
-                        . "{$roundData['wins'][0]['han']} хан"
-                        . ($roundData['wins'][0]['fu'] ? ", {$roundData['wins'][0]['fu']} фу" : '')
-
-                        . ", №2: {$players[$roundData['wins'][1]['winner']]['display_name']} "
-                        . "{$roundData['wins'][1]['han']} хан"
-                        . ($roundData['wins'][1]['fu'] ? ", {$roundData['wins'][1]['fu']} фу" : '')
-
-                        . ", №3: {$players[$roundData['wins'][2]['winner']]['display_name']} "
-                        . "{$roundData['wins'][2]['han']} хан"
-                        . ($roundData['wins'][2]['fu'] ? ", {$roundData['wins'][2]['fu']} фу" : '')
-
-                        . "; риичи - " . implode(', ', array_map(function ($e) use (&$players) {
-                            return $players[$e]['display_name'];
-                        }, $roundData['riichi']));
+                    return _p('Triple ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); winner #3 is %s (%s); riichi bets - %s',
+                        $players[$roundData['loser']]['display_name'],
+                        $players[$roundData['wins'][0]['winner']]['display_name'],
+                        $handDesc($roundData['wins'][0]),
+                        $players[$roundData['wins'][1]['winner']]['display_name'],
+                        $handDesc($roundData['wins'][1]),
+                        $players[$roundData['wins'][2]['winner']]['display_name'],
+                        $handDesc($roundData['wins'][2]),
+                        $namesOf($roundData['riichi'])
+                    );
                 }
 
                 return '';

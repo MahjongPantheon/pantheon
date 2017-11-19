@@ -76,7 +76,7 @@
                 $('#time').css({color: '#f55'});
                 if (soundBeforeEnd) {
                     soundBeforeEnd.play();
-                    soundBeforeEnd = false; // нам надо проиграть звук только один раз
+                    soundBeforeEnd = false; // play the sound only once
                 }
             }
         }
@@ -86,7 +86,7 @@
                 $('#time').css({backgroundColor: '#ff5'});
                 if (soundBeforeEnd) {
                     soundBeforeEnd.play();
-                    soundBeforeEnd = false; // нам надо проиграть звук только один раз
+                    soundBeforeEnd = false; // play the sound only once
                 }
             }
         }
@@ -103,13 +103,13 @@
 
         function stopTimer() {
             window.clearInterval(timer);
-            $('#time').html('{{_t 'СТОП!'}}');
+            $('#time').html('{{_t 'No time left!'}}');
             $('.timer').addClass('mini');
             $('.seating').show();
 
             if (soundOnEnd) {
                 soundOnEnd.play();
-                soundOnEnd = false; // нам надо проиграть звук только один раз
+                soundOnEnd = false; // play the sound only once
             }
         }
 
@@ -145,14 +145,14 @@
 {{/waiting}}
 <div class="seating">
     <hr/>
-    <h3>{{_t 'РАССАДКА'}}</h3>
+    <h3>{{_t 'SEATING'}}</h3>
     <table class="table table-bordered">
         <tr>
-            <th>{{_t 'Стол №'}}</th>
-            <th>{{_t 'ВОСТОК'}}</th>
-            <th>{{_t 'ЮГ'}}</th>
-            <th>{{_t 'ЗАПАД'}}</th>
-            <th>{{_t 'СЕВЕР'}}</th>
+            <th>{{_t 'Table #'}}</th>
+            <th>{{_t 'EAST'}}</th>
+            <th>{{_t 'SOUTH'}}</th>
+            <th>{{_t 'WEST'}}</th>
+            <th>{{_t 'NORTH'}}</th>
         </tr>
         {{#seating}}
             <tr>
