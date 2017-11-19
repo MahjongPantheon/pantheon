@@ -68,7 +68,7 @@ class Timer extends Controller
 
         // assign colors first
         foreach ($seating as &$player) {
-            $player['zone'] = $player['rating'] >= $this->_rules->startRating() ? 'success' : 'important';
+            $player['zone'] = $player['rating'] >= $this->_rules->startRating() ? 'success' : 'danger';
         }
         
         $seating = ArrayHelpers::elm2key($seating, 'session_id', true);

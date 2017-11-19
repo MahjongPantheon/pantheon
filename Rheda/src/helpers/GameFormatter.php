@@ -41,7 +41,7 @@ class GameFormatter
                     'label' => ($finalScore['rating_delta'] > $labelColorThreshold
                         ? 'success'
                         : ($finalScore['rating_delta'] < $labelColorThreshold
-                            ? 'important'
+                            ? 'danger'
                             : 'info'
                         )
                     ),
