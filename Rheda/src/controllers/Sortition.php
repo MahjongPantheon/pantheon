@@ -26,7 +26,7 @@ class Sortition extends Controller
 
     protected function _pageTitle()
     {
-        return 'Управление рассадкой';
+        return _t('Seating controls');
     }
 
     protected function _beforeRun()
@@ -48,7 +48,7 @@ class Sortition extends Controller
     {
         if (!$this->_adminAuthOk()) {
             return [
-                'error' => "Секретное слово неправильное"
+                'error' => _t("Wrong admin password")
             ];
         }
 

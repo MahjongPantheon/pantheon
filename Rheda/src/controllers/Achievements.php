@@ -25,7 +25,7 @@ class Achievements extends Controller
 
     protected function _pageTitle()
     {
-        return 'Особые номинации';
+        return _t('Achievements');
     }
 
     protected function _run()

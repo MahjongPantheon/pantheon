@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function plotRating (points, games, currentUser, playersMap, labelColorThreshold) {
+function plotRating (points, games, currentUser, playersMap, labelColorThreshold, i18n) {
     var ticks = [];
     for (var idx = 0; idx < points.length; idx++) {
         ticks.push(idx);
@@ -35,7 +35,6 @@ function plotRating (points, games, currentUser, playersMap, labelColorThreshold
         {
             axes: {
                 xaxis: {
-                    // label:'Сыграно игр',
                     ticks: ticks,
                     tickInterval: 1,
                     tickOptions: {
@@ -43,7 +42,7 @@ function plotRating (points, games, currentUser, playersMap, labelColorThreshold
                     }
                 },
                 yaxis: {
-                    label: 'Рейтинг',
+                    label: i18n['_LABEL_RATING'],
                     tickOptions: {
                       formatString: "%'i"
                     }
@@ -89,9 +88,9 @@ function plotRating (points, games, currentUser, playersMap, labelColorThreshold
     );
 }
 
-function plotHands (handValueStats, yakuStats) {
+function plotHands (handValueStats, yakuStats, i18n) {
     $.jqplot('chart_hands', [handValueStats], {
-        title: 'Ценность собранных рук',
+        title: i18n['_HANDS_VALUE'],
         series:[{renderer:$.jqplot.BarRenderer}],
         axesDefaults: {
             tickOptions: {
@@ -100,7 +99,7 @@ function plotHands (handValueStats, yakuStats) {
         },
         axes: {
             xaxis: {
-                label: 'Хан',
+                label: i18n['_HAN'],
                 renderer: $.jqplot.CategoryAxisRenderer
             }
         }
@@ -108,7 +107,7 @@ function plotHands (handValueStats, yakuStats) {
 
     $.jqplot('chart_yaku', [yakuStats], {
         height: 400,
-        title: 'Собранные яку (за все время)',
+        title: i18n['_YAKU_OVERALLTIME'],
         series:[{
             renderer: $.jqplot.BarRenderer,
             rendererOptions: {

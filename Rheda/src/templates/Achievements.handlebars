@@ -14,7 +14,7 @@
 *  You should have received a copy of the GNU General Public License
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
-<h3>Особые номинации</h3>
+<h3>{{_t 'Achievements'}}</h3>
 
 {{#error}}
     <div class="alert alert-error" style="white-space: pre">{{error}}</div>
@@ -23,14 +23,14 @@
     <table class="table table-striped">
         <tbody>
             <tr>
-                <th>Номинация</th>
-                <th style="width: 30%">Расшифровка</th>
-                <th>Значение</th>
-                <th>Номинанты</th>
+                <th>{{_t 'Achievement'}}</th>
+                <th style="width: 30%">{{_t 'Description'}}</th>
+                <th>{{_t 'Value'}}</th>
+                <th>{{_t 'Nominees'}}</th>
             </tr>
             <tr>
-                <td><b>Лучшая рука турнира</b></td>
-                <td style="width: 30%">Присуждается за сбор руки с самым большим числом хан за турнир, независимо от стоимости/дилерства.</td>
+                <td><b>{{_t 'Best hand'}}</b></td>
+                <td style="width: 30%">{{_t 'Given for collecting the hand with biggest han count (independent of cost).'}}</td>
                 <td>{{bestHandValue}}</td>
                 <td><ul>
                     {{#bestHandPlayers}}
@@ -39,9 +39,9 @@
                 </ul></td>
             </tr>
             <tr>
-                <td><b>Over 9000 fu</b></td>
-                <td style="width: 30%">Присуждается за сбор руки с самым большим числом фу/минипойнтов за турнир.</td>
-                <td>{{bestFuHandValue}} фу</td>
+                <td><b>{{_t 'Over 9000 fu'}}</b></td>
+                <td style="width: 30%">{{_t 'Given for collecting the hand with biggest minipoints (fu) count.'}}</td>
+                <td>{{_p '%s fu' bestFuHandValue}}</td>
                 <td><ul>
                     {{#bestFuHandPlayers}}
                         <li>{{.}}</li>
@@ -49,8 +49,8 @@
                 </ul></td>
             </tr>
             <tr>
-                <td><b>Задолбал!</b></td>
-                <td style="width: 30%">Присуждается за максимальное число цумо в рамках одного ханчана.</td>
+                <td><b>{{_t 'I saw them dancing'}}</b></td>
+                <td style="width: 30%">{{_t 'Given for collecting the most of tsumo hands during single game.'}}</td>
                 <td>{{bestTsumoCount}}</td>
                 <td><ul>
                     {{#bestTsumoPlayers}}
@@ -59,8 +59,8 @@
                 </ul></td>
             </tr>
             <tr>
-                <td><b>Бравый сапёр</b></td>
-                <td style="width: 30%">Присуждается за наибольшее число набросов в рон за турнир.</td>
+                <td><b>{{_t 'Brave minesweeper'}}</b></td>
+                <td style="width: 30%">{{_t 'Given for largest count of feeding into ron during the tournament.'}}</td>
                 <td>{{bestSapperValue}}</td>
                 <td><ul>
                     {{#bestSapperPlayers}}
@@ -69,29 +69,29 @@
                 </ul></td>
             </tr>
             <tr>
-                <td><b>Чомбо-мастер</b></td>
-                <td style="width: 30%">Присуждается за получение чомбо на турнире.</td>
+                <td><b>{{_t 'Chombo master'}}</b></td>
+                <td style="width: 30%">{{_t 'Given for collecting a chombo during a tournament.'}}</td>
                 <td>-</td>
                 <td><ul>
                     {{#chomboMasters}}
-                        <li>{{name}}: {{count}} чомбо</li>
+                        <li>{{_np '%s: %d chombo penalty' '%s: %d chombo penalties' name count}}</li>
                     {{/chomboMasters}}
                 </ul></td>
             </tr>
             <tr>
-                <td><b>Довакин aka The mother of dragons</b></td>
-                <td style="width: 30%">Присуждается за сбор наибольшего числа якухаев за турнир.</td>
+                <td><b>{{_t 'Guest of honors'}}</b></td>
+                <td style="width: 30%">{{_t 'Given for collecting the most of yakuhais during the tournament.'}}</td>
                 <td>-</td>
                 <td><ul>
                     {{#dovakins}}
-                        <li>{{name}}: {{count}} якухаев</li>
+                        <li>{{_np "%s: %d yakuhai" "%s: %d yakuhais" count name count}}</li>
                     {{/dovakins}}
                 </ul></td>
             </tr>
             <tr>
-                <td><b>Восточный мастер</b></td>
-                <td style="width: 30%">Присуждается за максимальное число побед на дилере за весь турнир.</td>
-                <td>{{bestDealerRenchans}} ренчанов с агари</td>
+                <td><b>{{_t 'The great dealer'}}</b></td>
+                <td style="width: 30%">{{_t 'Given for largest count of dealer wins during the tournament.'}}</td>
+                <td>{{_np '%d win' '%d wins' bestDealerRenchans}}</td>
                 <td><ul>
                     {{#bestDealerPlayers}}
                         <li>{{.}}</li>
@@ -99,9 +99,9 @@
                 </ul></td>
             </tr>
             <tr>
-                <td><b>Мистер Хэнки</b></td>
-                <td style="width: 30%">Присуждается за максимальное число побед стоимостью в 1/30.</td>
-                <td>{{shithandsCount}} самых быстрых косарей</td>
+                <td><b>{{_t 'The 1k Flash'}}</b></td>
+                <td style="width: 30%">{{_t 'Given for the most of 1/30 wins during tournament.'}}</td>
+                <td>{{_np '%d quickest hand' '%d quickest hands' shithandsCount}}</td>
                 <td><ul>
                     {{#shithanderPlayers}}
                         <li>{{.}}</li>
@@ -109,8 +109,8 @@
                 </ul></td>
             </tr>
             <tr>
-                <td><b>Якуман-мастер</b></td>
-                <td style="width: 30%">Присуждается за сбор якумана на турнире</td>
+                <td><b>{{_t 'Jewelry included'}}</b></td>
+                <td style="width: 30%">{{_t 'Given for collecting a yakuman during tournament.'}}</td>
                 <td>-</td>
                 <td><ul>
                     {{#yakumans}}

@@ -25,7 +25,7 @@ class Game extends Controller
 
     protected function _pageTitle()
     {
-        return 'Информация об игре';
+        return _t('Game details');
     }
 
     protected function _run()

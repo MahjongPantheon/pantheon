@@ -1,0 +1,24 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        var i18n = {
+            '_LABEL_RATING': '{{_t "Rating"}}',
+            '_HANDS_VALUE': '{{_t "Hands value"}}',
+            '_HAN': '{{_t "Han"}}',
+            '_YAKU_OVERALLTIME': '{{_t "Yaku collected over all time"}}'
+        };
+
+        plotRating(
+            {{{points}}},
+            {{{games}}},
+            {{{currentPlayer}}},
+            {{{playersMap}}},
+            {{{labelThreshold}}},
+            i18n
+        );
+        plotHands(
+            {{{handValueStats}}},
+            {{{yakuStats}}},
+            i18n
+        );
+    });
+</script>

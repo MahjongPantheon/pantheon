@@ -18,11 +18,11 @@
     <div class="span9">
         {{#successfullyAdded}}
             <div class="alert alert-success">
-                <p>Игра успешно добавлена!</p>
+                <p>{{_t 'The game has been successfully added!'}}</p>
             </div>
         {{/successfullyAdded}}
 
-        <h3>Добавить онлайн-игру</h3>
+        <h3>{{_t 'Add online replay'}}</h3>
         <br>
         {{#error}}
             <div class="alert alert-error">{{error}}</div>
@@ -31,7 +31,7 @@
             <div class="form-group mx-sm-3">
                 <input type="text" class="form-control" id="inputPassword2" name="log" style="width: 500px">
             </div>
-            <button type="submit" class="btn btn-primary">Добавить</button>
+            <button type="submit" class="btn btn-primary">{{_t 'Add game'}}</button>
         </form>
     </div>
 </div>

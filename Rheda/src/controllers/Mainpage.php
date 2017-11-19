@@ -25,7 +25,7 @@ class Mainpage extends Controller
 
     protected function _pageTitle()
     {
-        return 'Статистика';
+        return _t('Statistics');
     }
 
     protected function _run()

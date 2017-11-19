@@ -18,7 +18,7 @@
 namespace Rheda;
 
 /**
- * Добавление игры
+ * Add new offline textual game
  */
 class AddGame extends Controller
 {
@@ -26,12 +26,9 @@ class AddGame extends Controller
 
     protected function _pageTitle()
     {
-        return 'Добавить игру';
+        return _t('Add new game');
     }
 
-    /**
-     * Основной метод контроллера
-     */
     protected function _run()
     {
         $players = [];
@@ -41,9 +38,8 @@ class AddGame extends Controller
         try {
             $players = $this->_api->execute('getAllPlayers', [$this->_eventId]);
             if (!empty($_POST['content'])) {
-                // пытаемся сохранить игру в базу
                 if (!$this->_adminAuthOk()) {
-                    $errorMsg = "Секретное слово неправильное";
+                    $errorMsg = _t("Wrong admin password");
                 } else {
                     $this->_api->execute('addTextLog', [$this->_eventId, $_POST['content']]);
                     $successfullyAdded = true;

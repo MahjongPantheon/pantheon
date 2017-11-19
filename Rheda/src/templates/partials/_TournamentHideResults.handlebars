@@ -1,9 +1,10 @@
-<h3>Скрыть таблицу с результатами игроков</h3>
-<p>Это может быть полезно для сохранения интриги на последних ханчанах турнира.</p>
+<h3>{{_t 'Hide rating table'}}</h3>
+<p>{{_t 'Hiding rating table for all players may be useful to keep everybody intrigued at the end of tournament'}}</p>
 
 {{#form action='/tourn/toggleHideResults/' method='post'}}
     <input type="submit"
            class="btn btn-large btn-{{#hideResults}}success{{/hideResults}}{{^hideResults}}warning{{/hideResults}} actionButton"
-           value="{{#hideResults}}Данные скрыты. Показать{{/hideResults}}{{^hideResults}}Данные доступны всем. Скрыть{{/hideResults}}"
+           value="{{#hideResults}}{{_t 'Rating table is hidden. Show'}}{{/hideResults}}
+               {{^hideResults}}{{_t 'Rating table is visible. Hide'}}{{/hideResults}}"
     />
 {{/form}}
