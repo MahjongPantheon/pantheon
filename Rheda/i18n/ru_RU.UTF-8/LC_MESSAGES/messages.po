@@ -480,6 +480,12 @@ msgstr "Бравый сапёр"
 msgid "Given for largest count of feeding into ron during the tournament."
 msgstr "Дается за максимальное число набросов в рон за турнир."
 
+msgid "Die Hard"
+msgstr "Крепкий орешек"
+
+msgid "Given for smallest count of feeding into ron during the tournament."
+msgstr "Дается за минимальное число набросов в рон за турнир."
+
 msgid "Chombo master"
 msgstr "Чомбо-мастер"
 
