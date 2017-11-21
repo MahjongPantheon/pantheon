@@ -30,3 +30,7 @@ declare namespace jasmine {
 interface Window {
   __state: any;
 }
+
+interface Navigator {
+  readonly languages: string[];
+}

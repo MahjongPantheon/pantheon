@@ -36,14 +36,14 @@
   [class.ios-spec]="state.isIos"
   *ngIf="isScreen('yakuSelect')">
   <div class="yaku-han-count">
-    <div class="title">Yaku</div>
+    <div class="title">{{_FOR_YAKU}}</div>
     <div class="value">
       <div class="custom-select noafter">{{han() | yakuman}}</div>
     </div>
   </div>
   <div class="separator">+</div>
   <div class="dora-han-count">
-    <div class="title">Dora</div>
+    <div class="title">{{_FOR_DORA}}</div>
     <div class="value">
       <div class="button custom-select">
         <select [(ngModel)]="selectedDora">
@@ -54,7 +54,7 @@
   </div>
   <div class="separator">/</div>
   <div class="fu-count">
-    <div class="title">Fu</div>
+    <div class="title">{{_FU}}</div>
     <div class="value">
       <div class="custom-select noafter" *ngIf="han() <= 0 || han() + selectedDora > 4">N/A</div>
       <div class="button custom-select" *ngIf="han() > 0 && han() + selectedDora < 5">
@@ -89,30 +89,30 @@
 <!-- Navbar for last game results -->
 <div class="outcome-title"
   *ngIf="isScreen('lastResults')">
-  Results
+  {{_LAST_RESULTS}}
 </div>
 <div class="outcome-title"
      *ngIf="isScreen('lastRound')">
-  Previous hand
+  {{_PREVIOUS_HAND}}
 </div>
 <!-- Navbar for login screen -->
 <div class="outcome-title"
      *ngIf="isScreen('login')">
-  Login
+  {{_LOGIN}}
 </div>
 <!-- Navbar for pao screen -->
 <div class="outcome-title"
      *ngIf="isScreen('paoSelect')">
-  Yakuman: choose pao
+  {{_SELECT_PAO}}
 </div>
 <!-- Navbar for other tables list -->
 <div class="outcome-title"
      *ngIf="isScreen('otherTablesList')">
-  Other playing tables
+  {{_OTHER_TABLES}}
 </div>
 <div class="outcome-title"
      *ngIf="isScreen('otherTable')">
-  Open
+  {{_TABLE_VIEW}}
 </div>
 <button
   *ngIf="isScreen('playersSelect')"

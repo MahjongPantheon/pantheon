@@ -46,8 +46,10 @@ import { CustomIconComponent } from './components/element-custom-icon';
 import { YakumanPipe } from './helpers/yakuman.pipe';
 import { FormatRoundPipe } from './helpers/formatRound.pipe';
 import { DefaultsToPipe } from './helpers/defaultsTo.pipe';
+import { DescriptionPipe } from './helpers/makeHandDescription.pipe';
 
 import { RiichiApiService } from './services/riichiApi';
+import { I18nService } from './services/i18n';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,8 @@ import { RiichiApiService } from './services/riichiApi';
 
     YakumanPipe,
     FormatRoundPipe,
-    DefaultsToPipe
+    DefaultsToPipe,
+    DescriptionPipe
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,8 @@ import { RiichiApiService } from './services/riichiApi';
     HttpModule
   ],
   providers: [
-    RiichiApiService
+    RiichiApiService,
+    I18nService
   ],
   bootstrap: [AppComponent]
 })

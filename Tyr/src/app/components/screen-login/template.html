@@ -22,22 +22,22 @@
 </div>
 <div class="riichi-table" *ngIf="_error">
   <div class="hint">
-    Login attempt was failed. Possible reasons:
+    {{_LOGIN_FAILED_REASONS_ARE}}
     <ul>
-      <li>Tournament games already started and you wasn't registered</li>
-      <li>Pin code was already used on other device</li>
-      <li>Server unexpected error</li>
+      <li>{{_TOURN_GAMES_ALREADY_STARTED}}</li>
+      <li>{{_PIN_ALREADY_USED}}</li>
+      <li>{{_UNEXPECTED_ERROR}}</li>
     </ul>
-    Contact to the tournament administrator for further instructions.
+    {{_CONTACT_ADMINISTRATOR}}
   </div>
 </div>
 <div class="riichi-table" *ngIf="!_loading && !_error">
-  <div class="hint">Enter pin code</div>
+  <div class="hint">{{_ENTER_PIN}}</div>
   <div class="pin" [class.error]="_error">{{_pinView}}</div>
   <div class="pinkbd">
     <button (click)="press('1')">1</button><button (click)="press('2')">2</button><button (click)="press('3')">3</button>
     <button (click)="press('4')">4</button><button (click)="press('5')">5</button><button (click)="press('6')">6</button>
     <button (click)="press('7')">7</button><button (click)="press('8')">8</button><button (click)="press('9')">9</button>
-    <button (click)="backspace()">&larr;</button><button (click)="press('0')">0</button><button (click)="submit()">OK</button>
+    <button (click)="backspace()">&larr;</button><button (click)="press('0')">0</button><button (click)="submit()">{{_OK}}</button>
   </div>
 </div>

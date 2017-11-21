@@ -20,17 +20,20 @@
 
 import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'nav-bar',
   templateUrl: './template.html',
   styleUrls: ['./style.css']
 })
-export class NavBarComponent {
+export class NavBarComponent extends I18nComponent {
   @Input() state: AppState;
   @Input() screen: AppState['_currentScreen'];
   public logoutDisabled: boolean = false;
   private _logoutTimer: number;
+
+  constructor(protected i18n: I18nService) { super(i18n); }
 
   ngOnInit() {
     this.ngOnChanges();
@@ -88,27 +91,27 @@ export class NavBarComponent {
 
   multironTitle() {
     if (this.state.getOutcome() === 'multiron' && this.state.getMultiRonCount() === 3) {
-      return 'Triple ron';
+      return this.i18n._t('Triple ron');
     }
     if (this.state.getOutcome() === 'multiron' && this.state.getMultiRonCount() === 2) {
-      return 'Double ron';
+      return this.i18n._t('Double ron');
     }
   }
 
   outcome() {
     switch (this.state.getOutcome()) {
       case 'ron':
-        return 'Ron';
+        return this.i18n._t('Ron');
       case 'multiron':
-        return 'Double/Triple ron';
+        return this.i18n._t('Double/Triple ron');
       case 'tsumo':
-        return 'Tsumo';
+        return this.i18n._t('Tsumo');
       case 'draw':
-        return 'Exhaustive draw';
+        return this.i18n._t('Exhaustive draw');
       case 'abort':
-        return 'Abortive draw';
+        return this.i18n._t('Abortive draw');
       case 'chombo':
-        return 'Chombo';
+        return this.i18n._t('Chombo');
       default:
         return '';
     }
@@ -183,7 +186,7 @@ export class NavBarComponent {
   }
 
   logout() {
-    if (window.confirm("Are you sure you want to logout? You will have to get a new pin code to login again")) {
+    if (window.confirm(this.i18n._t("Are you sure you want to logout? You will have to get a new pin code to login again"))) {
       this.state.logout();
     }
   }

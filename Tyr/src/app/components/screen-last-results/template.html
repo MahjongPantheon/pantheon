@@ -21,9 +21,9 @@
   <div class="inline-preloader"></div>
 </div>
 <div class="riichi-table" *ngIf="_noResults">
-  <div class="centered not-found">You don't have recorded games.</div>
+  <div class="centered not-found">{{_NO_GAMES_PLAYED}}</div>
   <div class="centered" style="flex: 0.2">
-    <button class="ok-button" (click)="nextScreen()">Fine</button>
+    <button class="ok-button" (click)="nextScreen()">{{_OK}}</button>
   </div>
 </div>
 <div class="riichi-table" *ngIf="!_loading && !_noResults">

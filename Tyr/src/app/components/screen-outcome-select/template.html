@@ -18,13 +18,13 @@
     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div class="wrap" *ngIf="screenEnabled">
-  <button *ngIf="abortsAllowed" (click)="select('abort');">Abortive draw</button>
-  <button (click)="select('chombo');">Chombo</button>
-  <button *ngIf="multironAllowed" (click)="select('multiron');">Double/Triple ron</button>
-  <button (click)="select('ron');">Ron</button>
-  <button (click)="select('tsumo');">Tsumo</button>
-  <button (click)="select('draw');">Exhaustive draw</button>
+  <button *ngIf="abortsAllowed" (click)="select('abort');">{{_ABORTIVE}}</button>
+  <button (click)="select('chombo');">{{_CHOMBO}}</button>
+  <button *ngIf="multironAllowed" (click)="select('multiron');">{{_DOUBLE_OR_TRIPLE_RON}}</button>
+  <button (click)="select('ron');">{{_RON}}</button>
+  <button (click)="select('tsumo');">{{_TSUMO}}</button>
+  <button (click)="select('draw');">{{_EXHAUSTIVE}}</button>
 </div>
 <div class="wrap disabledText" *ngIf="!screenEnabled">
-  Timer haven't started yet. You can't add a hand
+  {{_TIMER_NOT_STARTED}}
 </div>
