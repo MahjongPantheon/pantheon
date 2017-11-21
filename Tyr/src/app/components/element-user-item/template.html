@@ -52,5 +52,5 @@
     class="riichi-bet-button"
     [class.pressed]="riichiPressed()"
     (click)="riichiClick()"
-    ></button>
+  ><span [class.hidden]="riichiPressed()">{{_NO_RIICHI}}</span></button>
 </div>

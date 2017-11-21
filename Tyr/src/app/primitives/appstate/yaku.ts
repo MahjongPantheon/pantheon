@@ -24,6 +24,7 @@ import { getHan, getFixedFu } from '../yaku-values';
 import { WinProps } from '../../interfaces/app';
 import { getAllowedYaku as getAllowedYakuCompat, addYakuToList, initYakuGraph, limits } from '../yaku-compat';
 import { LGameConfig } from '../../interfaces/local';
+import { I18nService } from '../../services/i18n';
 import { intersection } from 'lodash';
 
 export const initYaku = initYakuGraph;
@@ -77,13 +78,13 @@ export function getSelectedYaku(outcome: AppOutcome, mrWinner: number): YakuId[]
   }
 }
 
-function _addYakuToProps(outcome: AppOutcome, id: YakuId, props: WinProps, bypassChecks: boolean = false): boolean {
+function _addYakuToProps(outcome: AppOutcome, id: YakuId, props: WinProps, i18n: I18nService, bypassChecks: boolean = false): boolean {
   if (props.yaku.indexOf(id) !== -1) {
     return false;
   }
 
   if (!bypassChecks && id === YakuId.RIICHI && props.yaku.indexOf(YakuId.RIICHI) === -1) {
-    alert('If you want to select a riichi, return back and press riichi button for the winner');
+    alert(i18n._t('If you want to select a riichi, return back and press riichi button for the winner'));
     return false;
   }
 
@@ -96,7 +97,7 @@ function _addYakuToProps(outcome: AppOutcome, id: YakuId, props: WinProps, bypas
     ) &&
     outcome.riichiBets.indexOf(props.winner) === -1
   ) {
-    alert('If you want to select a riichi, return back and press riichi button for the winner');
+    alert(i18n._t('If you want to select a riichi, return back and press riichi button for the winner'));
     return false;
   }
 
@@ -118,26 +119,26 @@ function _addYakuToProps(outcome: AppOutcome, id: YakuId, props: WinProps, bypas
   return true;
 }
 
-export function addYaku(outcome: AppOutcome, id: YakuId, mrWinner: number, bypassChecks: boolean = false): void {
+export function addYaku(outcome: AppOutcome, id: YakuId, mrWinner: number, i18n: I18nService, bypassChecks: boolean = false): void {
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
-      if (!_addYakuToProps(outcome, id, outcome, bypassChecks)) { // pass outcome to props - because we alter outcome itself
+      if (!_addYakuToProps(outcome, id, outcome, i18n, bypassChecks)) { // pass outcome to props - because we alter outcome itself
         return;
       }
 
       if (outcome.selectedOutcome === 'tsumo') {
         if (id === YakuId.MENZENTSUMO && outcome.yaku.indexOf(YakuId.__OPENHAND) !== -1) {
-          removeYaku(outcome, YakuId.__OPENHAND, mrWinner);
+          removeYaku(outcome, YakuId.__OPENHAND, mrWinner, i18n);
         } else if (id === YakuId.__OPENHAND && outcome.yaku.indexOf(YakuId.MENZENTSUMO) !== -1) {
-          removeYaku(outcome, YakuId.MENZENTSUMO, mrWinner);
+          removeYaku(outcome, YakuId.MENZENTSUMO, mrWinner, i18n);
         }
       }
 
       break;
     case 'multiron':
       let props = outcome.wins[mrWinner];
-      _addYakuToProps(outcome, id, props, bypassChecks);
+      _addYakuToProps(outcome, id, props, i18n, bypassChecks);
       break;
     default:
       throw new Error('No yaku may exist on this outcome');
@@ -165,7 +166,7 @@ function _removeYakuFromProps(outcome: AppOutcome, id: YakuId, props: WinProps, 
   return true;
 }
 
-export function removeYaku(outcome: AppOutcome, id: YakuId, mrWinner: number): void {
+export function removeYaku(outcome: AppOutcome, id: YakuId, mrWinner: number, i18n: I18nService): void {
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
@@ -175,9 +176,9 @@ export function removeYaku(outcome: AppOutcome, id: YakuId, mrWinner: number): v
 
       if (outcome.selectedOutcome === 'tsumo') {
         if (id === YakuId.MENZENTSUMO && outcome.yaku.indexOf(YakuId.__OPENHAND) === -1) {
-          addYaku(outcome, YakuId.__OPENHAND, mrWinner);
+          addYaku(outcome, YakuId.__OPENHAND, mrWinner, i18n);
         } else if (id === YakuId.__OPENHAND && outcome.yaku.indexOf(YakuId.MENZENTSUMO) === -1) {
-          addYaku(outcome, YakuId.MENZENTSUMO, mrWinner);
+          addYaku(outcome, YakuId.MENZENTSUMO, mrWinner, i18n);
         }
       }
       break;

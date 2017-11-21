@@ -1,0 +1,507 @@
+# Translations template for PROJECT.
+# Copyright (C) 2017 
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-11-22 00:59+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: i18n-json2po\n"
+
+#: src/app/components/auxiliary-i18n/index.ts:7:12
+msgid "no riichi"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:10:12
+msgid "Yaku based"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:13:12
+msgid "Dora"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:16:12
+msgid "Fu"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:19:12
+msgid "Latest results"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:22:12
+msgid "Previous hand"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:25:12
+msgid "Login"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:28:12
+msgid "Yakuman: select pao"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:31:12
+msgid "Other playing tables"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:34:12
+msgid "View table"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:37:12
+msgid "OK"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:40:12
+msgid "Looks fine"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:43:12
+msgid "Save"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:46:12
+msgid "There's no games you've already played."
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:49:12
+msgid "Login attempt has failed. Possible reasons are:"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:52:12
+msgid "Tournament games already started and you wasn't registered"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:55:12
+msgid "Pin code was already used on another device"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:58:12
+#: src/app/components/screen-last-round/index.ts:129:23
+msgid "Unexpected server error"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:61:12
+msgid "Contact to the tournament administrator for further instructions."
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:64:12
+msgid "Enter pin code"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:67:12
+msgid "Tenpai: "
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:70:12
+msgid "Noten: "
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:73:12
+msgid "There are no tables playing right now"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:76:12
+#: src/app/components/navbar/index.ts:112:16
+#: src/app/components/screen-last-round/index.ts:95:28
+#: src/app/components/screen-other-table/index.ts:227:28
+#: src/app/components/screen-yaku-select/index.ts:112:16
+msgid "Abortive draw"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:79:12
+#: src/app/components/navbar/index.ts:114:16
+#: src/app/components/screen-last-round/index.ts:96:29
+#: src/app/components/screen-other-table/index.ts:228:29
+#: src/app/components/screen-yaku-select/index.ts:114:16
+msgid "Chombo"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:82:12
+#: src/app/components/navbar/index.ts:110:16
+#: src/app/components/screen-last-round/index.ts:94:27
+#: src/app/components/screen-other-table/index.ts:226:27
+#: src/app/components/screen-yaku-select/index.ts:110:16
+msgid "Exhaustive draw"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:85:12
+#: src/app/components/navbar/index.ts:104:16
+#: src/app/components/screen-last-round/index.ts:92:26
+#: src/app/components/screen-other-table/index.ts:224:26
+#: src/app/components/screen-yaku-select/index.ts:106:16
+msgid "Ron"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:88:12
+#: src/app/components/navbar/index.ts:108:16
+#: src/app/components/screen-last-round/index.ts:93:28
+#: src/app/components/screen-other-table/index.ts:225:28
+#: src/app/components/screen-yaku-select/index.ts:108:16
+msgid "Tsumo"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:91:12
+#: src/app/components/navbar/index.ts:106:16
+msgid "Double/Triple ron"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:94:12
+msgid "Timer was not started yet. Unable to add a hand."
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:97:12
+msgid "There are no games you participate in right now."
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:100:12
+msgid "Refresh"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:103:12
+msgid "Previous game results"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:106:12
+msgid "New game"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:109:12
+msgid "Statistics"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:112:12
+msgid "it's you"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:115:12
+msgid "Table #"
+msgstr ""
+
+#: src/app/components/navbar/index.ts:94:14
+#: src/app/components/screen-last-round/index.ts:99:11
+#: src/app/components/screen-other-table/index.ts:231:11
+msgid "Triple ron"
+msgstr ""
+
+#: src/app/components/navbar/index.ts:97:14
+#: src/app/components/screen-last-round/index.ts:98:11
+#: src/app/components/screen-other-table/index.ts:230:11
+msgid "Double ron"
+msgstr ""
+
+#: src/app/components/navbar/index.ts:189:24
+msgid "Are you sure you want to logout? You will have to get a new pin code to login again"
+msgstr ""
+
+#: src/app/components/screen-confirmation/index.ts:69:19
+msgid "Failed to add round. Please try again"
+msgstr ""
+
+#: src/app/components/screen-confirmation/index.ts:72:23
+#: src/app/components/screen-last-round/index.ts:127:23
+msgid "Authentication failed"
+msgstr ""
+
+#: src/app/components/screen-confirmation/index.ts:74:23
+msgid "Failed to add round. Was this hand already added by someone else?"
+msgstr ""
+
+#: src/app/components/screen-last-round/index.ts:122:19
+msgid "Error occured. Try again."
+msgstr ""
+
+#: src/app/components/screen-last-round/index.ts:124:21
+msgid "Latest hand wasn't found"
+msgstr ""
+
+#: src/app/components/screen-overview/index.ts:52:12
+msgid "Hello, %1!"
+msgstr ""
+
+#: src/app/helpers/makeHandDescription.pipe.ts:38:14
+msgid "%1 (%2)"
+msgstr ""
+
+#: src/app/helpers/makeHandDescription.pipe.ts:45:14
+msgid "%1 han, %2 fu (%3, dora: %4)"
+msgstr ""
+
+#: src/app/helpers/makeHandDescription.pipe.ts:54:14
+msgid "%1 han, %2 fu (%3)"
+msgstr ""
+
+#: src/app/helpers/makeHandDescription.pipe.ts:62:14
+msgid "%1 han (%3, dora: %4)"
+msgstr ""
+
+#: src/app/helpers/makeHandDescription.pipe.ts:70:14
+msgid "%1 han (%3)"
+msgstr ""
+
+#: src/app/primitives/appstate/index.ts:143:40
+msgid "spectator"
+msgstr ""
+
+#: src/app/primitives/appstate/index.ts:444:14
+msgid "Games overview"
+msgstr ""
+
+#: src/app/primitives/appstate/index.ts:446:65
+msgid "Loading..."
+msgstr ""
+
+#: src/app/primitives/appstate/yaku.ts:87:11
+#: src/app/primitives/appstate/yaku.ts:100:11
+msgid "If you want to select a riichi, return back and press riichi button for the winner"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:76:34
+#: src/app/primitives/yaku.ts:77:39
+msgid "Opened hand"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:82:34
+#: src/app/primitives/yaku.ts:83:39
+msgid "Toitoi"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:88:34
+#: src/app/primitives/yaku.ts:89:39
+msgid "Honroutou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:94:34
+#: src/app/primitives/yaku.ts:95:39
+msgid "Sanankou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:100:34
+#: src/app/primitives/yaku.ts:101:39
+msgid "Sankantsu"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:106:34
+#: src/app/primitives/yaku.ts:107:39
+msgid "Suukantsu"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:112:34
+#: src/app/primitives/yaku.ts:113:39
+msgid "Suuankou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:118:34
+#: src/app/primitives/yaku.ts:119:39
+msgid "Pinfu"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:124:34
+#: src/app/primitives/yaku.ts:125:39
+msgid "Iipeikou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:130:34
+#: src/app/primitives/yaku.ts:131:39
+msgid "Ryanpeikou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:136:34
+#: src/app/primitives/yaku.ts:137:39
+msgid "Sanshoku"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:142:34
+#: src/app/primitives/yaku.ts:143:39
+msgid "Sanshoku doukou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:148:34
+#: src/app/primitives/yaku.ts:149:39
+msgid "Ittsu"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:154:34
+msgid "Yakuhai x1"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:155:39
+msgid "Yakuhai"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:160:34
+msgid "Yakuhai x2"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:161:39
+msgid "x2"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:166:34
+msgid "Yakuhai x3"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:167:39
+msgid "x3"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:172:34
+msgid "Yakuhai x4"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:173:39
+msgid "x4"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:178:34
+#: src/app/primitives/yaku.ts:179:39
+msgid "Shousangen"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:184:34
+#: src/app/primitives/yaku.ts:185:39
+msgid "Daisangen"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:190:34
+#: src/app/primitives/yaku.ts:191:39
+msgid "Shousuushii"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:196:34
+#: src/app/primitives/yaku.ts:197:39
+msgid "Daisuushii"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:202:34
+#: src/app/primitives/yaku.ts:203:39
+msgid "Tsuuiisou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:208:34
+#: src/app/primitives/yaku.ts:209:39
+msgid "Tanyao"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:214:34
+#: src/app/primitives/yaku.ts:215:39
+msgid "Chanta"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:220:34
+#: src/app/primitives/yaku.ts:221:39
+msgid "Junchan"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:226:34
+#: src/app/primitives/yaku.ts:227:39
+msgid "Chinroutou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:232:34
+#: src/app/primitives/yaku.ts:233:39
+msgid "Honitsu"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:238:34
+#: src/app/primitives/yaku.ts:239:39
+msgid "Chinitsu"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:244:34
+#: src/app/primitives/yaku.ts:245:39
+msgid "Chuuren poutou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:250:34
+#: src/app/primitives/yaku.ts:251:39
+msgid "Ryuuiisou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:256:34
+#: src/app/primitives/yaku.ts:257:39
+msgid "Chiitoitsu"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:262:34
+#: src/app/primitives/yaku.ts:263:39
+msgid "Kokushi musou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:268:34
+#: src/app/primitives/yaku.ts:269:39
+msgid "Riichi"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:274:34
+msgid "Daburu riichi"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:275:39
+msgid "Daburu"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:280:34
+#: src/app/primitives/yaku.ts:281:39
+msgid "Ippatsu"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:286:34
+#: src/app/primitives/yaku.ts:287:39
+msgid "Menzentsumo"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:292:34
+#: src/app/primitives/yaku.ts:293:39
+msgid "Haitei"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:298:34
+msgid "Rinshan kaihou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:299:39
+msgid "Rinshan"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:304:34
+#: src/app/primitives/yaku.ts:305:39
+msgid "Tenhou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:310:34
+#: src/app/primitives/yaku.ts:311:39
+msgid "Chiihou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:316:34
+msgid "Houtei raoyui"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:317:39
+msgid "Houtei"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:322:34
+#: src/app/primitives/yaku.ts:323:39
+msgid "Chankan"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:328:34
+#: src/app/primitives/yaku.ts:329:39
+msgid "Renhou"
+msgstr ""
+
+#: src/app/primitives/yaku.ts:334:34
+#: src/app/primitives/yaku.ts:335:39
+msgid "Open riichi"
+msgstr ""

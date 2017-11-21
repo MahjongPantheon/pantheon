@@ -20,14 +20,16 @@
 
 import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'screen-outcome-select',
   templateUrl: 'template.html',
   styleUrls: ['style.css']
 })
-export class OutcomeSelectScreen {
+export class OutcomeSelectScreen extends I18nComponent {
   @Input() state: AppState;
+  constructor(i18n: I18nService) { super(i18n); }
 
   get abortsAllowed() {
     return this.state.getGameConfig('withAbortives');

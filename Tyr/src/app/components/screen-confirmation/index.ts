@@ -25,20 +25,26 @@ import { AppState } from '../../primitives/appstate';
 import { RRoundPaymentsInfo } from '../../interfaces/remote';
 import { RiichiApiService } from '../../services/riichiApi';
 import { RemoteError } from '../../services/remoteError';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'screen-confirmation',
   templateUrl: 'template.html',
   styleUrls: ['style.css']
 })
-export class ConfirmationScreen {
+export class ConfirmationScreen extends I18nComponent {
   @Input() state: AppState;
   public _dataReady: boolean;
   public _data: RRoundPaymentsInfo;
   public confirmed: boolean = false;
   public _error: string = '';
 
-  constructor(private api: RiichiApiService) { }
+  constructor(
+    protected i18n: I18nService,
+    private api: RiichiApiService
+  ) {
+    super(i18n);
+  }
 
   ngOnInit() {
     this._error = '';
@@ -60,12 +66,12 @@ export class ConfirmationScreen {
 
   onerror(e) {
     this._dataReady = true;
-    this._error = "Results weren't added. Please try again";
+    this._error = this.i18n._t("Failed to add round. Please try again");
     if (e instanceof RemoteError) {
       if (e.code === 403) {
-        this._error = "Error. Authentication wasn't confirmed";
+        this._error = this.i18n._t("Authentication failed");
       } else {
-        this._error = 'Error. Maybe this hand was already added by someone else?';
+        this._error = this.i18n._t('Failed to add round. Was this hand already added by someone else?');
       }
     }
   }

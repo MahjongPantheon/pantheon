@@ -29,13 +29,14 @@ import { YakuId } from '../../primitives/yaku';
 import { yakuGroups, yakumanGroups, yakuRareGroups, filterAllowed } from './yaku-lists';
 import { throttle, keys, pickBy } from 'lodash';
 import { AppState } from '../../primitives/appstate';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'screen-yaku-select',
   templateUrl: 'template.html',
   styleUrls: ['style.css']
 })
-export class YakuSelectScreen {
+export class YakuSelectScreen extends I18nComponent {
   @Input() state: AppState;
   yakuList: {
     [id: number]: Array<{
@@ -52,7 +53,8 @@ export class YakuSelectScreen {
   _tabsHeight: string = null;
   _currentUser: number = null; // Should be in sync with current multi-ron user in state!
 
-  constructor() {
+  constructor(protected i18n: I18nService) {
+    super(i18n);
     this._viewportHeight = (window.innerHeight - 60) + 'px'; // 60 is height of navbar;
     this._tabsHeight = parseInt((window.innerWidth * 0.10).toString(), 10) + 'px'; // Should equal to margin-left of buttons & scroller-wrap
   }
@@ -101,15 +103,15 @@ export class YakuSelectScreen {
     switch (this.state.getOutcome()) {
       case 'ron':
       case 'multiron':
-        return 'Ron';
+        return this.i18n._t('Ron');
       case 'tsumo':
-        return 'Tsumo';
+        return this.i18n._t('Tsumo');
       case 'draw':
-        return 'Exhaustive draw';
+        return this.i18n._t('Exhaustive draw');
       case 'abort':
-        return 'Abortive draw';
+        return this.i18n._t('Abortive draw');
       case 'chombo':
-        return 'Chombo';
+        return this.i18n._t('Chombo');
       default:
         return '';
     }

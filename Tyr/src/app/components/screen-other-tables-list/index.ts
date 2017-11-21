@@ -20,14 +20,16 @@
 
 import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'screen-other-tables-list',
   templateUrl: 'template.html',
   styleUrls: ['style.css']
 })
-export class OtherTablesListScreen {
+export class OtherTablesListScreen extends I18nComponent {
   @Input() state: AppState;
+  constructor(protected i18n: I18nService) { super(i18n); }
 
   ngOnInit() {
     this.state.updateOtherTablesList();

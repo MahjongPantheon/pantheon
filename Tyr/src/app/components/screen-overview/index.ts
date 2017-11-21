@@ -21,18 +21,20 @@
 import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
 import { Player } from '../../interfaces/common';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'screen-overview',
   templateUrl: 'template.html',
   styleUrls: ['style.css']
 })
-export class OverviewScreen {
+export class OverviewScreen extends I18nComponent {
   @Input() state: AppState;
   @Input() players: [Player, Player, Player, Player];
   @Input('loading') _loading: boolean;
   @Input() currentGameHash: string;
   @Input() currentRound: number;
+  constructor(protected i18n: I18nService) { super(i18n); }
 
   self: Player;
   shimocha: Player;
@@ -45,6 +47,10 @@ export class OverviewScreen {
   seatKamicha: string;
 
   _diffedBy: string = null;
+
+  get greeting() {
+    return this.i18n._t('Hello, %1!', [this.state.playerName()]);
+  }
 
   getScore(who) {
     let score = this[who].score;

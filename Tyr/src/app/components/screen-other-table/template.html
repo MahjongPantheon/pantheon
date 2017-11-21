@@ -35,9 +35,9 @@
       {{getPenalty()}}
     </div>
     <div *ngIf="lastRoundInfo.outcome == 'draw'">
-      Tenpai: {{getTempaiPlayers()}}
+      {{_TENPAI}}{{getTempaiPlayers()}}
       <br>
-      Noten: {{getNotenPlayers()}}
+      {{_NOTEN}}{{getNotenPlayers()}}
     </div>
     <!-- abortive draws have no info to output -->
     <ul *ngIf="lastRoundInfo.outcome == 'ron' || lastRoundInfo.outcome == 'tsumo' || lastRoundInfo.outcome == 'multiron'" class="wins-list">
@@ -47,9 +47,7 @@
         <span class="loser" *ngIf="lastRoundInfo.outcome == 'ron' || lastRoundInfo.outcome == 'multiron'">({{win.loser}})</span>
         <span class="loser" *ngIf="lastRoundInfo.outcome == 'tsumo'">(tsumo)</span>
         <br>
-        {{win.han | yakuman}} han<span *ngIf="win.han < 5">, {{win.fu}} fu</span>
-        <br>
-        <span class="yaku-list">({{win.yakuList}}<span *ngIf="win.dora">, dora: {{win.dora | defaultsTo:'0'}}</span>)</span>
+        {{win | makeHandDescription}}
       </li>
     </ul>
     <div *ngIf="lastRoundInfo.riichiIds.length > 0">

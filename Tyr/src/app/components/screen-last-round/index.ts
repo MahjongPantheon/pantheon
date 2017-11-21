@@ -25,20 +25,26 @@ import { AppState } from '../../primitives/appstate';
 import { RRoundPaymentsInfo } from '../../interfaces/remote';
 import { RiichiApiService } from '../../services/riichiApi';
 import { RemoteError } from '../../services/remoteError';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'screen-last-round',
   templateUrl: 'template.html',
   styleUrls: ['style.css']
 })
-export class LastRoundScreen {
+export class LastRoundScreen extends I18nComponent {
   @Input() state: AppState;
   public _dataReady: boolean;
   public _data: RRoundPaymentsInfo;
   public confirmed: boolean = false;
   public _error: string = '';
 
-  constructor(private api: RiichiApiService) { }
+  constructor(
+    protected i18n: I18nService,
+    private api: RiichiApiService
+  ) {
+    super(i18n);
+  }
 
   ngOnInit() {
     this._error = '';
@@ -83,18 +89,21 @@ export class LastRoundScreen {
 
   getOutcomeName() {
     switch (this._data.outcome) {
-      case 'ron': return 'Ron';
-      case 'tsumo': return 'Tsumo';
-      case 'draw': return 'Exhaustive draw';
-      case 'abort': return 'Abortive draw';
-      case 'chombo': return 'Chombo';
-      case 'multiron': return this._data.winner.length === 2 ? 'Double ron' : 'Triple ron';
+      case 'ron': return this.i18n._t('Ron');
+      case 'tsumo': return this.i18n._t('Tsumo');
+      case 'draw': return this.i18n._t('Exhaustive draw');
+      case 'abort': return this.i18n._t('Abortive draw');
+      case 'chombo': return this.i18n._t('Chombo');
+      case 'multiron': return (this._data.winner.length === 2
+        ? this.i18n._t('Double ron')
+        : this.i18n._t('Triple ron')
+      );
     }
   }
 
   private _getYakuList(str: string) {
     const yakuIds: YakuId[] = str.split(',').map((y) => parseInt(y, 10));
-    const yakuNames: string[] = yakuIds.map((y) => yakuMap[y].name.toLowerCase());
+    const yakuNames: string[] = yakuIds.map((y) => yakuMap[y].name(this.i18n).toLowerCase());
     return yakuNames.join(', ');
   }
 
@@ -110,14 +119,14 @@ export class LastRoundScreen {
 
   onerror(e) {
     this._dataReady = true;
-    this._error = 'Error. Try again.';
+    this._error = this.i18n._t('Error occured. Try again.');
     if (!e) {
-      this._error = `Latest hand wasn't found`;
+      this._error = this.i18n._t("Latest hand wasn't found");
     } else if (e instanceof RemoteError) {
       if (e.code === 403) {
-        this._error = "Error. Authentication wasn't confirmed";
+        this._error = this.i18n._t("Authentication failed");
       } else {
-        this._error = 'Server unexpected error';
+        this._error = this.i18n._t('Unexpected server error');
       }
     }
   }

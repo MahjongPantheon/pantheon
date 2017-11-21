@@ -54,6 +54,7 @@ import {
   getRequiredYaku, getSelectedYaku, getAllowedYaku, yakumanInYaku,
   winnerHasYakuWithPao
 } from './yaku';
+import { I18nService } from '../../services/i18n';
 
 // implementation
 export class AppState {
@@ -89,7 +90,7 @@ export class AppState {
     otherTable: false,
   };
 
-  constructor(private zone: NgZone, private api: RiichiApiService) {
+  constructor(private zone: NgZone, private api: RiichiApiService, private i18n: I18nService) {
     this._players = null;
     this._mapIdToPlayer = {};
     this.isIos = !!navigator.userAgent.match(/(iPad|iPhone|iPod)/i);
@@ -139,7 +140,7 @@ export class AppState {
     if (this.isUniversalWatcher()) {
       this._loading.games = false;
       this._reset();
-      this._currentPlayerDisplayName = 'Big Brother';
+      this._currentPlayerDisplayName = this.i18n._t('spectator');
       this._currentPlayerId = 0;
       return;
     }
@@ -440,9 +441,9 @@ export class AppState {
   getCurrentMultiRonUser = () => this._multironCurrentWinner;
   getEventTitle = () => {
     if (this.isUniversalWatcher()) {
-      return 'Games spectating';
+      return this.i18n._t('Games overview');
     } else {
-      return this._gameConfig && this._gameConfig.eventTitle || 'Loading...';
+      return this._gameConfig && this._gameConfig.eventTitle || this.i18n._t('Loading...');
     }
   };
   getGameConfig = (key) => this._gameConfig && this._gameConfig[key];
@@ -485,8 +486,8 @@ export class AppState {
   getRequiredYaku = () => getRequiredYaku(this._currentOutcome, this._multironCurrentWinner);
   getSelectedYaku = () => getSelectedYaku(this._currentOutcome, this._multironCurrentWinner);
   yakumanInYaku = () => yakumanInYaku(this._currentOutcome, this._multironCurrentWinner);
-  addYaku = (id: YakuId, bypassChecks: boolean = false): void => addYaku(this._currentOutcome, id, this._multironCurrentWinner, bypassChecks);
-  removeYaku = (id: YakuId): void => removeYaku(this._currentOutcome, id, this._multironCurrentWinner);
+  addYaku = (id: YakuId, bypassChecks: boolean = false): void => addYaku(this._currentOutcome, id, this._multironCurrentWinner, this.i18n, bypassChecks);
+  removeYaku = (id: YakuId): void => removeYaku(this._currentOutcome, id, this._multironCurrentWinner, this.i18n);
   getAllowedYaku = (): YakuId[] => getAllowedYaku(this._currentOutcome, this._multironCurrentWinner);
   getTimeRemaining = () => getTimeRemaining();
   getCurrentTimerZone = () => getCurrentTimerZone(this, this._yellowZoneAlreadyPlayed);
@@ -530,3 +531,4 @@ export class AppState {
   getCurrentOtherTablePlayers = () => this._currentOtherTablePlayers;
   getCurrentOtherTableLastRound = () => this._currentOtherTableLastRound;
 }
+
