@@ -2506,6 +2506,10 @@ https-proxy-agent@^1.0.0:
     debug "2"
     extend "3"
 
+i18n-dialect@1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/i18n-dialect/-/i18n-dialect-1.0.8.tgz#6e105b3fda9b90782e303f3e95a32c42e9be32f7"
+
 iconv-lite@0.4.15:
   version "0.4.15"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb"

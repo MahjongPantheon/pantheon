@@ -56,13 +56,13 @@ RUN apk update && \
     php5-iconv \
     php5-curl \
     php5-ctype \
-    php5-fpm
+    php5-fpm \
+    yarn
 
 RUN curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" && \
     chmod +x /usr/local/bin/gosu
 
-RUN npm install -g yarn
-RUN npm install -g xgettext-template
+RUN npm install -g xgettext-template i18n-stex i18n-po-json i18n-json-po
 RUN touch $PHP_LOGFILE
 RUN chown nobody $PHP_LOGFILE
     
