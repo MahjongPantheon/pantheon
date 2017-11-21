@@ -30,6 +30,12 @@ class Achievements extends Controller
 
     protected function _run()
     {
+        if (!$this->_adminAuthOk()) {
+            return [
+                'error' => _t("Wrong admin password"),
+            ];
+        }
+
         $achievements = null;
         try {
             $achievements = $this->_api->execute('getAchievements', [$this->_eventId]);
@@ -53,6 +59,8 @@ class Achievements extends Controller
             'bestTsumoPlayers' => $achievements['bestTsumoist']['names'], // string[]
             'bestSapperValue' => $achievements['braveSapper']['feed'],
             'bestSapperPlayers' => $achievements['braveSapper']['names'], // string[]
+            'dieHardValue' => $achievements['dieHard']['feed'],
+            'dieHardPlayers' => $achievements['dieHard']['names'], // string[]
             'chomboMasters' => $achievements['chomboMaster'], // Array<{ name: string, count: number }>
             'dovakins' => $dovakins,
             'yakumans' => $achievements['yakuman'], // string[]
