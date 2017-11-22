@@ -59,6 +59,16 @@
                 </ul></td>
             </tr>
             <tr>
+                <td><b>{{_t 'Die Hard' }}</b></td>
+                <td style="width: 30%">{{_t 'Given for smallest count of feeding into ron during the tournament.'}}</td>
+                <td>{{dieHardValue}}</td>
+                <td><ul>
+                    {{#dieHardPlayers}}
+                        <li>{{.}}</li>
+                    {{/dieHardPlayers}}
+                </ul></td>
+            </tr>
+            <tr>
                 <td><b>{{_t 'Brave minesweeper'}}</b></td>
                 <td style="width: 30%">{{_t 'Given for largest count of feeding into ron during the tournament.'}}</td>
                 <td>{{bestSapperValue}}</td>
@@ -74,7 +84,7 @@
                 <td>-</td>
                 <td><ul>
                     {{#chomboMasters}}
-                        <li>{{_np '%s: %d chombo penalty' '%s: %d chombo penalties' name count}}</li>
+                        <li>{{_np '%s: %d chombo penalty' '%s: %d chombo penalties' count name count}}</li>
                     {{/chomboMasters}}
                 </ul></td>
             </tr>
@@ -91,7 +101,7 @@
             <tr>
                 <td><b>{{_t 'The great dealer'}}</b></td>
                 <td style="width: 30%">{{_t 'Given for largest count of dealer wins during the tournament.'}}</td>
-                <td>{{_np '%d win' '%d wins' bestDealerRenchans}}</td>
+                <td>{{_np '%d win' '%d wins' bestDealerRenchans bestDealerRenchans}}</td>
                 <td><ul>
                     {{#bestDealerPlayers}}
                         <li>{{.}}</li>
@@ -101,7 +111,7 @@
             <tr>
                 <td><b>{{_t 'The 1k Flash'}}</b></td>
                 <td style="width: 30%">{{_t 'Given for the most of 1/30 wins during tournament.'}}</td>
-                <td>{{_np '%d quickest hand' '%d quickest hands' shithandsCount}}</td>
+                <td>{{_np '%d quickest hand' '%d quickest hands' shithandsCount shithandsCount}}</td>
                 <td><ul>
                     {{#shithanderPlayers}}
                         <li>{{.}}</li>

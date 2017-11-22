@@ -274,6 +274,41 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
+    public static function getDieHardData(IDb $db, $eventId)
+    {
+        $rounds = $db->table('round')
+            ->select('loser_id')
+            ->select('display_name')
+            ->selectExpr('count(*)', 'cnt')
+            ->join('player', ['player.id', '=', 'round.loser_id'])
+            ->where('event_id', $eventId)
+            ->where('outcome', 'ron')
+            ->groupBy('loser_id')
+            ->groupBy('display_name')
+            ->orderByDesc('cnt')
+            ->findArray();
+
+        $minThrows = 0;
+        $names = [];
+        foreach ($rounds as $round) {
+            if ($minThrows === 0) {
+                $minThrows = $round['cnt'];
+            }
+
+            if ($round['cnt'] < $minThrows) {
+                $minThrows = $round['cnt'];
+                $names = [];
+            }
+
+            $names []= $round['display_name'];
+        }
+
+        return [
+            'feed' => $minThrows,
+            'names' => $names
+        ];
+    }
+
     public static function getBestTsumoistInSingleSession(IDb $db, $eventId)
     {
         $rounds = $db->table('round')
