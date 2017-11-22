@@ -638,10 +638,7 @@ class SessionPrimitive extends Primitive
                         // this is red zone, in fact
                         $this->getCurrentState()->update($round);
                         $success = $this->save();
-                        if ($round->getOutcome() !== 'chombo') {
-                            // should not finish game if chombo was made
-                            $this->getCurrentState()->forceFinish();
-                        }
+                        $this->getCurrentState()->forceFinish();
                     }
                 } else {
                     $this->getCurrentState()->update($round);
