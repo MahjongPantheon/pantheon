@@ -629,7 +629,7 @@ class SessionPrimitive extends Primitive
                     ) < time()
                 );
 
-                if ($isInYellowZone) {
+                if ($isInYellowZone && $round->getOutcome() !== 'chombo') {
                     if (!$this->getCurrentState()->yellowZoneAlreadyPlayed()) {
                         $this->getCurrentState()->update($round);
                         $this->getCurrentState()->setYellowZonePlayed(); // call before '->save' to save in one shot
