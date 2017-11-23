@@ -37,7 +37,7 @@
 {{^error}}
     {{#stageNotReady}}
         <h3>{{_t 'Unable to generate seating'}}</h3>
-        {{_t 'Total count of registered players is not divisible by 4. Use the "Add player" and "Player management" pages to add or remove players. Special replacement player accounts may be used to complete the table.'}}
+        {{_t 'Total count of registered players is not divisible by 4. Use the "Add player" and "Players management" pages to add or remove players. Special replacement player accounts may be used to complete the table.'}}
     {{/stageNotReady}}
     {{#stageReadyButNotStarted}}
         <h3>{{_t 'Ready to generate seating'}}</h3>
@@ -105,7 +105,7 @@
         <table class="table actionTable">
             <tr>
                 <td>
-                    <h3>{{_t 'Restart the timer'}}</h3>
+                    <h3>{{_t 'Reset the timer'}}</h3>
                     {{_t 'Pressing this button will reset the timer to its initial value. Be careful: you should not need this usually.'}}
                     {{#form action='/tourn/startTimer/' method='post'}}
                         <input type="button" class="btn btn-large btn-danger actionButton"

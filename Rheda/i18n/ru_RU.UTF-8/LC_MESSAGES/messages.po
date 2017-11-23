@@ -27,7 +27,7 @@ msgstr "Добро пожаловать в систему игровой ста�
 msgid "Click here to start"
 msgstr "Нажмите здесь для начала работы"
 
-msgid "You are viewing the clipped statistics for mobile devices."
+msgid "You are viewing the abbreviated statistics for mobile devices."
 msgstr "Вы просматриваете сокращенную статистику для мобильных устройств."
 
 msgid "Player #%d"
@@ -39,13 +39,13 @@ msgstr "Лучшая серия:"
 msgid "Points:"
 msgstr "Очки:"
 
-msgid "Last series:"
+msgid "Ongoing series:"
 msgstr "Текущая серия:"
 
 msgid "Recent games"
 msgstr "Последние игры"
 
-msgid "No games are played yet"
+msgid "No games has been played yet"
 msgstr "Ни одной игры еще не сыграно"
 
 msgid "%d - %d (%d total)"
@@ -53,9 +53,6 @@ msgstr "%d - %d (всего %d)"
 
 msgid "Rating table"
 msgstr "Рейтинг"
-
-msgid "Add online replay"
-msgstr "Добавить онлайн-игру"
 
 msgid "Admin actions"
 msgstr "Действия администратора"
@@ -342,7 +339,7 @@ msgstr "Невозможно сгенерировать рассадку"
 
 msgid ""
 "Total count of registered players is not divisible by 4. Use the \"Add player"
-"\" and \"Player management\" pages to add or remove players. Special "
+"\" and \"Players management\" pages to add or remove players. Special "
 "replacement player accounts may be used to complete the table."
 msgstr ""
 "Общее число зарегистрированных игроков не делится на 4. Используйте разделы "
@@ -406,9 +403,6 @@ msgstr "Начать игры и запустить таймер?"
 
 msgid "Start games!"
 msgstr "Начать игры!"
-
-msgid "Restart the timer"
-msgstr "Сбросить таймер"
 
 msgid ""
 "Pressing this button will reset the timer to its initial value. Be careful: "
@@ -544,7 +538,7 @@ msgid "Additional penalties"
 msgstr "Дополнительные штрафы"
 
 msgid ""
-"A penalty may be appplied only to player currently in game. Otherwise error "
+"A penalty may be applied only to player currently in game. Otherwise error "
 "will occur."
 msgstr ""
 "Штраф может быть назначен только для игрока, который на данный момент "
@@ -708,7 +702,7 @@ msgstr "Алиасы"
 msgid "Wrong admin password"
 msgstr "Неправильный пароль администратора"
 
-msgid "Add new online game"
+msgid "Add online game"
 msgstr "Добавить онлайн-игру"
 
 msgid "Admin login"
