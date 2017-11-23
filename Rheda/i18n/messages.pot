@@ -7,87 +7,13 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgid "Players management"
-msgstr ""
-
-msgid "Pre-registration list (%d)"
-msgstr ""
-
-msgid "Player"
-msgstr ""
-
-msgid "PIN"
-msgstr ""
-
-msgid "Admin actions"
-msgstr ""
-
-msgid "Confirm attendance manually"
-msgstr ""
-
-msgid "Registered players (%d)"
-msgstr ""
-
-msgid "Reissue PIN"
-msgstr ""
-
-msgid "Remove"
-msgstr ""
-
-msgid "Remove player %s?"
-msgstr ""
-
 msgid "The game has been successfully added!"
 msgstr ""
 
-msgid "Add online replay"
+msgid "Add online game"
 msgstr ""
 
 msgid "Add game"
-msgstr ""
-
-msgid "Additional penalties"
-msgstr ""
-
-msgid ""
-"A penalty may be appplied only to player currently in game. Otherwise error "
-"will occur."
-msgstr ""
-
-msgid "Select player"
-msgstr ""
-
-msgid "Penalty amount"
-msgstr ""
-
-msgid "Penalty reason"
-msgstr ""
-
-msgid "Check twice penalty data. You won't be able to cancel the penalty"
-msgstr ""
-
-msgid "Apply penalty"
-msgstr ""
-
-msgid "No time left!"
-msgstr ""
-
-msgid "SEATING"
-msgstr ""
-
-msgid "Table #"
-msgstr ""
-
-msgid "EAST"
-msgstr ""
-
-msgid "SOUTH"
-msgstr ""
-
-msgid "WEST"
-msgstr ""
-
-msgid "NORTH"
 msgstr ""
 
 msgid "Personal stats"
@@ -180,16 +106,63 @@ msgstr ""
 msgid "Yaku collected over all time"
 msgstr ""
 
+msgid "Additional penalties"
+msgstr ""
+
+msgid ""
+"A penalty may be applied only to player currently in game. Otherwise error "
+"will occur."
+msgstr ""
+
+msgid "Select player"
+msgstr ""
+
+msgid "Penalty amount"
+msgstr ""
+
+msgid "Penalty reason"
+msgstr ""
+
+msgid "Check twice penalty data. You won't be able to cancel the penalty"
+msgstr ""
+
+msgid "Apply penalty"
+msgstr ""
+
 msgid "Sorry, this page is not available for mobile devices"
 msgstr ""
 
-msgid "Recent games"
+msgid "Game details"
 msgstr ""
 
-msgid "No games are played yet"
+msgid "Players management"
 msgstr ""
 
-msgid "%d - %d (%d total)"
+msgid "Pre-registration list (%d)"
+msgstr ""
+
+msgid "Player"
+msgstr ""
+
+msgid "PIN"
+msgstr ""
+
+msgid "Admin actions"
+msgstr ""
+
+msgid "Confirm attendance manually"
+msgstr ""
+
+msgid "Registered players (%d)"
+msgstr ""
+
+msgid "Reissue PIN"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove player %s?"
 msgstr ""
 
 msgid "Something went wrong: %s"
@@ -200,7 +173,7 @@ msgstr ""
 
 msgid ""
 "Total count of registered players is not divisible by 4. Use the \"Add "
-"player\" and \"Player management\" pages to add or remove players. Special "
+"player\" and \"Players management\" pages to add or remove players. Special "
 "replacement player accounts may be used to complete the table."
 msgstr ""
 
@@ -256,7 +229,7 @@ msgstr ""
 msgid "Start games!"
 msgstr ""
 
-msgid "Restart the timer"
+msgid "Reset the timer"
 msgstr ""
 
 msgid ""
@@ -265,9 +238,6 @@ msgid ""
 msgstr ""
 
 msgid "Really reset the timer?"
-msgstr ""
-
-msgid "Reset the timer"
 msgstr ""
 
 msgid "Finish all the games"
@@ -284,87 +254,40 @@ msgstr ""
 msgid "Confirm the results and finish all games"
 msgstr ""
 
+msgid "Recent games"
+msgstr ""
+
+msgid "No games has been played yet"
+msgstr ""
+
+msgid "%d - %d (%d total)"
+msgstr ""
+
 msgid "Later"
 msgstr ""
 
 msgid "Earlier"
 msgstr ""
 
-msgid "Confirm round cancellation: "
+msgid "No time left!"
 msgstr ""
 
-msgid "Tables state:"
+msgid "SEATING"
 msgstr ""
 
-msgid "Last played round:"
+msgid "Table #"
 msgstr ""
 
-msgid "(no rounds are played yet)"
+msgid "EAST"
 msgstr ""
 
-msgid "Cancel last played round"
+msgid "SOUTH"
 msgstr ""
 
-msgid "Penalties:"
+msgid "WEST"
 msgstr ""
 
-msgid "%s - %s points of penalty. Reason: %s"
-msgstr ""
-
-msgid "Game details"
-msgstr ""
-
-msgid "Rating table"
-msgstr ""
-
-msgid "Rating table has been hidden by tournament administrator"
-msgstr ""
-
-msgid "These results are visible only for tournament administrator"
-msgstr ""
-
-msgid "Rating points"
-msgstr ""
-
-msgid "Average place"
-msgstr ""
-
-msgid "Average points"
-msgstr ""
-
-msgid "Add player"
-msgstr ""
-
-msgid "All players list"
-msgstr ""
-
-msgid ""
-"Note: if a player is already added to the rating, adding him again will "
-"result in reissuing his PIN code."
-msgstr ""
-
-msgid "Add to current rating"
-msgstr ""
-
-msgid "Add new player to the system"
-msgstr ""
-
-msgid "System name"
-msgstr ""
-
-msgid "Real name"
-msgstr ""
-
-msgid "Register"
-msgstr ""
-
-msgid "Pts"
-msgstr ""
-
-msgid "AvPlc"
-msgstr ""
-
-msgid "AvPts"
+msgid "NORTH"
 msgstr ""
 
 msgid "Achievements"
@@ -403,16 +326,16 @@ msgstr ""
 msgid "Given for collecting the most of tsumo hands during single game."
 msgstr ""
 
-msgid "Brave minesweeper"
-msgstr ""
-
-msgid "Given for largest count of feeding into ron during the tournament."
-msgstr ""
-
 msgid "Die Hard"
 msgstr ""
 
 msgid "Given for smallest count of feeding into ron during the tournament."
+msgstr ""
+
+msgid "Brave minesweeper"
+msgstr ""
+
+msgid "Given for largest count of feeding into ron during the tournament."
 msgstr ""
 
 msgid "Chombo master"
@@ -465,6 +388,54 @@ msgstr ""
 msgid "Given for collecting a yakuman during tournament."
 msgstr ""
 
+msgid "Confirm round cancellation: "
+msgstr ""
+
+msgid "Tables state:"
+msgstr ""
+
+msgid "Last played round:"
+msgstr ""
+
+msgid "(no rounds are played yet)"
+msgstr ""
+
+msgid "Cancel last played round"
+msgstr ""
+
+msgid "Penalties:"
+msgstr ""
+
+msgid "%s - %s points of penalty. Reason: %s"
+msgstr ""
+
+msgid "Rating table"
+msgstr ""
+
+msgid "Rating table has been hidden by tournament administrator"
+msgstr ""
+
+msgid "These results are visible only for tournament administrator"
+msgstr ""
+
+msgid "Rating points"
+msgstr ""
+
+msgid "Average place"
+msgstr ""
+
+msgid "Average points"
+msgstr ""
+
+msgid "Pts"
+msgstr ""
+
+msgid "AvPlc"
+msgstr ""
+
+msgid "AvPts"
+msgstr ""
+
 msgid "Statistics"
 msgstr ""
 
@@ -474,7 +445,7 @@ msgstr ""
 msgid "Click here to start"
 msgstr ""
 
-msgid "You are viewing the clipped statistics for mobile devices."
+msgid "You are viewing the abbreviated statistics for mobile devices."
 msgstr ""
 
 msgid "Player #%d"
@@ -486,7 +457,45 @@ msgstr ""
 msgid "Points:"
 msgstr ""
 
-msgid "Last series:"
+msgid "Ongoing series:"
+msgstr ""
+
+msgid "Best series"
+msgstr ""
+
+msgid "Points of best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Points of last series"
+msgstr ""
+
+msgid "Add player"
+msgstr ""
+
+msgid "All players list"
+msgstr ""
+
+msgid ""
+"Note: if a player is already added to the rating, adding him again will "
+"result in reissuing his PIN code."
+msgstr ""
+
+msgid "Add to current rating"
+msgstr ""
+
+msgid "Add new player to the system"
+msgstr ""
+
+msgid "System name"
+msgstr ""
+
+msgid "Real name"
+msgstr ""
+
+msgid "Register"
 msgstr ""
 
 msgid "Tournament control panel"
@@ -525,12 +534,6 @@ msgid ""
 msgstr ""
 
 msgid "Player aliases"
-msgstr ""
-
-msgid "Rating"
-msgstr ""
-
-msgid "Han"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -590,19 +593,25 @@ msgstr ""
 msgid "Chombo: %s."
 msgstr ""
 
-msgid "Best series"
+msgid "Rating"
 msgstr ""
 
-msgid "Points of best series"
+msgid "Han"
 msgstr ""
 
-msgid "Last series"
+msgid "Date & time"
 msgstr ""
 
-msgid "Points of last series"
+msgid "Players"
+msgstr ""
+
+msgid "Details"
 msgstr ""
 
 msgid "View replay online"
+msgstr ""
+
+msgid "Best hand: <b>%s</b> - %s"
 msgstr ""
 
 msgid "Ron hands: %d"
@@ -611,7 +620,7 @@ msgstr ""
 msgid "Tsumo hands: %d"
 msgstr ""
 
-msgid "Drawn rounds: %s"
+msgid "Drawn rounds: %d"
 msgstr ""
 
 msgid "Chombo penalties: %s"
@@ -621,6 +630,12 @@ msgid "Additional penalties:"
 msgstr ""
 
 msgid "%s - %d points (%s)"
+msgstr ""
+
+msgid "Full game log:"
+msgstr ""
+
+msgid "Drawn rounds: %s"
 msgstr ""
 
 msgid "%s: personal stats"
@@ -640,24 +655,6 @@ msgstr ""
 msgid "Rating table is visible. Hide"
 msgstr ""
 
-msgid "Date & time"
-msgstr ""
-
-msgid "Players"
-msgstr ""
-
-msgid "Details"
-msgstr ""
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr ""
-
-msgid "Drawn rounds: %d"
-msgstr ""
-
-msgid "Full game log:"
-msgstr ""
-
 msgid "Admin panel"
 msgstr ""
 
@@ -668,9 +665,6 @@ msgid "Authorize"
 msgstr ""
 
 msgid "Wrong admin password"
-msgstr ""
-
-msgid "Add new online game"
 msgstr ""
 
 msgid "Admin login"

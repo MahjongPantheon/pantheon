@@ -26,7 +26,7 @@ msgstr "Willkommen im Spielstatistiksystem."
 msgid "Click here to start"
 msgstr "Klicke hier, um zu starten"
 
-msgid "You are viewing the clipped statistics for mobile devices."
+msgid "You are viewing the abbreviated statistics for mobile devices."
 msgstr "Sie sehen die abgeschnittene Statistik für mobile Geräte."
 
 msgid "Player #%d"
@@ -38,7 +38,7 @@ msgstr "Beste Serie:"
 msgid "Points:"
 msgstr "Punkte:"
 
-msgid "Last series:"
+msgid "Ongoing series:"
 msgstr "Laufende Serie:"
 
 msgid "Recent games"
@@ -46,9 +46,6 @@ msgstr "Letzte Spiele"
 
 msgid "Rating table"
 msgstr "Bewertungstabelle"
-
-msgid "Add online replay"
-msgstr "Online-Spiel hinzufügen"
 
 msgid "Admin actions"
 msgstr "Admin Aktionen"
@@ -77,7 +74,7 @@ msgstr "Timer & Sitzplätze"
 msgid "Login"
 msgstr "Login"
 
-msgid "No games are played yet"
+msgid "No games has been played yet"
 msgstr "Es wurden noch keine Spiele gespielt"
 
 msgid "%d - %d (%d total)"
@@ -341,7 +338,7 @@ msgstr "Sitzplätze können nicht generiert werden"
 
 msgid ""
 "Total count of registered players is not divisible by 4. Use the \"Add player"
-"\" and \"Player management\" pages to add or remove players. Special "
+"\" and \"Players management\" pages to add or remove players. Special "
 "replacement player accounts may be used to complete the table."
 msgstr ""
 "Die Gesamtanzahl registrierter Spieler ist nicht durch 4 teilbar. Verwenden "
@@ -368,7 +365,7 @@ msgid "Swiss seating"
 msgstr "Schweizer Sitzplätze"
 
 msgid "Enter tables, one per line."
-msgstr "Einen Tisch einschließen,, eine pro Zeile."
+msgstr "Einen Tisch einschließen, eine pro Zeile."
 
 msgid ""
 "Check the box to randomize players seating at each table. Otherwise players "
@@ -381,7 +378,7 @@ msgstr ""
 msgid ""
 "Each number is a player's current place in rating. Here is an example of "
 "seating with step of 4: "
-msgstr "Jede Nummer ist der aktuelle Platz eines Spielers in der Bewertung. "
+msgstr "Jede Nummer ist der aktuelle Platz eines Spielers in der Bewertung."
 
 msgid "Randomize seating at each table"
 msgstr "Randomize Sitzplätze an jedem Tisch"
@@ -405,9 +402,6 @@ msgstr "Spiele und Timer starten?"
 
 msgid "Start games!"
 msgstr "Spiele starten!"
-
-msgid "Restart the timer"
-msgstr "Neustarten den Timer"
 
 msgid ""
 "Pressing this button will reset the timer to its initial value. Be careful: "
@@ -483,6 +477,12 @@ msgstr "Mutiger Minensucher"
 msgid "Given for largest count of feeding into ron during the tournament."
 msgstr "Gegeben für die größte Anzahl für Ron bezahle während des Turniers."
 
+msgid "Die Hard"
+msgstr ""
+
+msgid "Given for smallest count of feeding into ron during the tournament."
+msgstr ""
+
 msgid "Chombo master"
 msgstr "Chombo Meister"
 
@@ -537,7 +537,7 @@ msgid "Additional penalties"
 msgstr "Zusätzliche Strafen"
 
 msgid ""
-"A penalty may be appplied only to player currently in game. Otherwise error "
+"A penalty may be applied only to player currently in game. Otherwise error "
 "will occur."
 msgstr ""
 "Eine Strafe kann nur auf Spieler angewendet werden, die gerade im Spiel ist. "
@@ -703,7 +703,7 @@ msgstr "Spieler Aliase"
 msgid "Wrong admin password"
 msgstr "Falsches Administratorpasswort"
 
-msgid "Add new online game"
+msgid "Add online game"
 msgstr "Neues Online-Spiel hinzufügen"
 
 msgid "Admin login"
