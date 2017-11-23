@@ -65,11 +65,22 @@ abstract class Controller
 
         // i18n support
         $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        // List of locales
+        // https://gcc.gnu.org/onlinedocs/libstdc++/manual/localization.html
         switch ($locale) {
             // map common lang ids to more specific
             case 'ru':
             case 'ru_RU':
+            case 'ru_UA':
                 $locale = 'ru_RU.UTF-8';
+                break;
+            case 'de':
+            case 'de_DE':
+            case 'de_AT':
+            case 'de_BE':
+            case 'de_CH':
+            case 'de_LU':
+                $locale = 'de_DE.UTF-8';
                 break;
             default:
                 $locale = 'en_US.UTF-8';
