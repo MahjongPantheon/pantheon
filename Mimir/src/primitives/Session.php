@@ -629,7 +629,7 @@ class SessionPrimitive extends Primitive
                     ) < time()
                 );
 
-                if ($isInYellowZone) {
+                if ($isInYellowZone && $round->getOutcome() !== 'chombo') {
                     if (!$this->getCurrentState()->yellowZoneAlreadyPlayed()) {
                         $this->getCurrentState()->update($round);
                         $this->getCurrentState()->setYellowZonePlayed(); // call before '->save' to save in one shot
@@ -638,10 +638,7 @@ class SessionPrimitive extends Primitive
                         // this is red zone, in fact
                         $this->getCurrentState()->update($round);
                         $success = $this->save();
-                        if ($round->getOutcome() !== 'chombo') {
-                            // should not finish game if chombo was made
-                            $this->getCurrentState()->forceFinish();
-                        }
+                        $this->getCurrentState()->forceFinish();
                     }
                 } else {
                     $this->getCurrentState()->update($round);
