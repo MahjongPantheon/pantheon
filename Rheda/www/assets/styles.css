@@ -105,3 +105,20 @@ body {
 .table th, .table td {
     padding: 0.25rem;
 }
+
+.language-dropdown span {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.language-dropdown {
+  margin-right: 20px;
+}
+
+.language-dropdown a {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.language-dropdown .dropdown-menu {
+  margin-right: 10px;
+}

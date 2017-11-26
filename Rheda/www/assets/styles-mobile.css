@@ -156,3 +156,18 @@ body {
 .mobile-games-list .fullLog div:nth-child(even) {
     background-color: #ddd;
 }
+
+.language-select ul {
+  text-align: right;
+  padding-left: 0;
+  padding-bottom: 10px;
+}
+
+.language-select ul li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.language-select a {
+  text-decoration: none;
+}
