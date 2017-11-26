@@ -52,11 +52,13 @@ li, .table th, .table td {
 .graphs .own {
     background-color: #ffff00 !important;
 }
+
 .graphs .jqplot-highlighter-tooltip {
     border: 1px solid #555;
     -webkit-box-shadow: 4px 4px 24px 1px rgba(0, 0, 0, 0.7);
     box-shadow: 4px 4px 24px 1px rgba(0, 0, 0, 0.7);
 }
+
 .graphs .table-plot-rating {
     background-color: #fff;
     padding-bottom: 0;
@@ -70,15 +72,15 @@ li, .table th, .table td {
 }
 
 .last-games a {
-  color: #000;
+    color: #000;
 }
 
 .last-games a:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .last-games .replay-link {
-  color: #0088cc;
+    color: #0088cc;
 }
 
 .last-games .score {
@@ -99,9 +101,29 @@ li, .table th, .table td {
 }
 
 body {
-    padding-top:58px;
+    padding-top: 58px;
 }
 
 .table th, .table td {
     padding: 0.25rem;
+}
+
+.language-dropdown {
+    margin-right: 20px;
+}
+
+.language-dropdown a.dropdown-toggle {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.language-dropdown .dropdown-menu {
+    margin-right: 10px;
+    min-width: 6em;
+}
+
+.lang-icon span {
+    margin-left: 20px;
+    display: inline-block;
+    vertical-align: top;
 }
