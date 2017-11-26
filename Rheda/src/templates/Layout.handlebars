@@ -84,17 +84,19 @@
                     {{#a class='nav-link' href='/login/'}}{{_t 'Login'}}{{/a}}
                 </li>
             {{/isLoggedIn}}
+            <li class="nav-item dropdown language-dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="dropdownMenuButton"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{> partials/LangIcon i18n=1 width=40 style="position: absolute; top: 0"}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="?l=en">{{> partials/LangIcon en=1 width=24}}</a>
+                    <a class="dropdown-item" href="?l=ru">{{> partials/LangIcon ru=1 width=24}}</a>
+                    <a class="dropdown-item" href="?l=de">{{> partials/LangIcon de=1 width=24}}</a>
+                </div>
+            </li>
         </ul>
-    </div>
-    <div class="dropdown language-dropdown">
-      <span class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Language
-      </span>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="?l=en">🇬🇧 English</a>
-        <a class="dropdown-item" href="?l=ru">🇷🇺 Russian</a>
-        <a class="dropdown-item" href="?l=de">🇩🇪 German</a>
-      </div>
     </div>
 </nav>
 <div class="container">
