@@ -78,7 +78,7 @@ msgid "No games has been played yet"
 msgstr "Es wurden noch keine Spiele gespielt"
 
 msgid "%d - %d (%d total)"
-msgstr "%d - %d (%d total)"
+msgstr "%d - %d (%d gesamt)"
 
 msgid "Sorry, this page is not available for mobile devices"
 msgstr "Entschuldigung, diese Seite ist nicht für Mobilgeräte verfügbar"
@@ -478,10 +478,10 @@ msgid "Given for largest count of feeding into ron during the tournament."
 msgstr "Gegeben für die größte Anzahl für Ron bezahle während des Turniers."
 
 msgid "Die Hard"
-msgstr ""
+msgstr "Stirb langsam"
 
 msgid "Given for smallest count of feeding into ron during the tournament."
-msgstr ""
+msgstr "Gegeben für die größte Anzahl für Ron bezahle während des Turniers."
 
 msgid "Chombo master"
 msgstr "Chombo Meister"
