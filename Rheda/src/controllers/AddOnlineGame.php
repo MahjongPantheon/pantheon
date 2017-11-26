@@ -23,7 +23,7 @@ class AddOnlineGame extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Add new online game');
+        return _t('Add online game');
     }
 
     protected function _run()

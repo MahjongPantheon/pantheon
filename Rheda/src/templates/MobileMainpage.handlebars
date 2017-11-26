@@ -29,7 +29,7 @@
         <br/><br/>
         <hr/>
         <br/><br/>
-        {{_t 'You are viewing the clipped statistics for mobile devices.'}}
+        {{_t 'You are viewing the abbreviated statistics for mobile devices.'}}
     </div>
 {{/hasData}}
 
@@ -73,7 +73,7 @@
                     <td>{{best_series_scores}}</td>
                 </tr>
                 <tr>
-                    <td>{{_t 'Last series:'}}</td>
+                    <td>{{_t 'Ongoing series:'}}</td>
                     <td>
                         {{#current_series}}
                             {{#a href='/game/{hash}/'}}{{place}}{{/a}}
@@ -88,3 +88,12 @@
         </table>
     </div>
 {{/hasData}}
+<br>
+<hr />
+<br>
+<div style="text-align: center;">{{> partials/LangIcon i18n=1 width=60}}</div>
+<div style="text-align: center;" class="language-select">
+    <a class="lang-button" href="?l=en">{{> partials/LangIcon en=1 width=24}}</a>
+    <a class="lang-button" href="?l=ru">{{> partials/LangIcon ru=1 width=24}}</a>
+    <a class="lang-button" href="?l=de">{{> partials/LangIcon de=1 width=24}}</a>
+</div>
