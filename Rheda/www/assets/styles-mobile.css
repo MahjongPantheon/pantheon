@@ -32,7 +32,7 @@ body {
     margin-bottom: 60px;
 }
 
-.lastgames-button, .ratingtable-button, .nextbutton, .prevbutton {
+.lastgames-button, .ratingtable-button, .home-button, .nextbutton, .prevbutton {
     display: block;
     position: fixed;
     width: 32px;
@@ -45,12 +45,18 @@ body {
     z-index: 10;
 }
 
+.home-button {
+    left: 25%;
+}
+
 .lastgames-button {
-    left: 51%;
+    left: 50%;
+    right: 50%;
+    margin-left: -24px;
 }
 
 .ratingtable-button {
-    right: 51%;
+    right: 25%;
 }
 
 .nextbutton {
