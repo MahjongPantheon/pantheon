@@ -647,10 +647,10 @@ msgid "Pts"
 msgstr "PNK"
 
 msgid "AvPlc"
-msgstr "DdurchschnPLZ"
+msgstr "D.PLZ"
 
 msgid "AvPts"
-msgstr "DurchschnPNK"
+msgstr "D.PNK"
 
 msgid "All players list"
 msgstr "Alle Spielerliste"

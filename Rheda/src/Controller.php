@@ -64,7 +64,20 @@ abstract class Controller
         $this->_api = new \JsonRPC\Client(Sysconf::API_URL(), false, new HttpClient(Sysconf::API_URL()));
 
         // i18n support
+        // first step is getting browser language
         $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+
+        // second step is checking cookie
+        if (isset($_COOKIE['language'])) {
+            $locale = $_COOKIE['language'];
+        }
+
+        // third step is checking GET attribute
+        if (isset($_GET['l'])) {
+            $locale = $_GET['l'];
+            setcookie('language', $locale, null, '/');
+        }
+
         // List of locales
         // https://gcc.gnu.org/onlinedocs/libstdc++/manual/localization.html
         switch ($locale) {
@@ -174,6 +187,7 @@ abstract class Controller
     public static function makeInstance($url)
     {
         $routes = require_once __DIR__ . '/../config/routes.php';
+
         $controller = Sysconf::SINGLE_MODE
             ? self::_singleEventMode($url, $routes)
             : self::_multiEventMode($url, $routes);
@@ -188,9 +202,10 @@ abstract class Controller
     protected static function _singleEventMode($url, $routes)
     {
         $matches = [];
+        $path = parse_url($url, PHP_URL_PATH);
         foreach ($routes as $regex => $controller) {
             $re = '#^' . preg_replace('#^!#is', '', $regex) . '/?$#';
-            if (preg_match($re, $url, $matches)) {
+            if (preg_match($re, $path, $matches)) {
                 require_once __DIR__ . "/controllers/{$controller}.php";
                 $matches['event'] = 'eid' . Sysconf::OVERRIDE_EVENT_ID;
                 $wNs = '\\Rheda\\' . $controller;
@@ -204,6 +219,7 @@ abstract class Controller
     protected static function _multiEventMode($url, $routes)
     {
         $matches = [];
+        $path = parse_url($url, PHP_URL_PATH);
         foreach ($routes as $regex => $controller) {
             if (Sysconf::SINGLE_MODE) {
                 $re = '#^' . mb_substr($regex, 1) . '/?$#';
@@ -211,7 +227,7 @@ abstract class Controller
                 $re = '#^/(?<event>eid\d+)' . $regex . '/?$#';
             }
 
-            if (preg_match($re, $url, $matches)) {
+            if (preg_match($re, $path, $matches)) {
                 require_once __DIR__ . "/controllers/{$controller}.php";
                 $wNs = '\\Rheda\\' . $controller;
                 return new $wNs($url, $matches);
