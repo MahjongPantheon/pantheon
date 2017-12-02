@@ -83,83 +83,8 @@ msgstr "Es wurden noch keine Spiele gespielt"
 msgid "%d - %d (%d total)"
 msgstr "%d - %d (%d gesamt)"
 
-msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
-msgstr "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
-
-msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
-msgstr "<b>%s</b> - %s (<b>%s</b>), yakuman!"
-
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
-msgstr "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
-
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
-msgstr "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
-
-msgid "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
-msgstr "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
-
-msgid "<b>%s</b> - %s (<b>%s</b>), %d han."
-msgstr "<b>%s</b> - %s (<b>%s</b>), %d han."
-
-msgid "Riichi bets: %s"
-msgstr "Riichi Einlage: %s"
-
-msgid "Double ron:"
-msgstr "Doppel ron:"
-
-msgid "Triple ron:"
-msgstr "Dreifaches ron:"
-
-msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
-msgstr "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
-
-msgid "<b>%s</b> - %s (tsumo), yakuman!"
-msgstr "<b>%s</b> - %s (tsumo), yakuman!"
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
-msgstr "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
-msgstr "<b>%s</b> - %s, dora %d (tsumo), %d han."
-
-msgid "<b>%s</b> - %s (tsumo), %d han, %d fu."
-msgstr "<b>%s</b> - %s (tsumo), %d han, %d fu."
-
-msgid "<b>%s</b> - %s (tsumo), %d han."
-msgstr "<b>%s</b> - %s (tsumo), %d han."
-
-msgid "Exhaustive draw (tenpai: %s)."
-msgstr "Erschöpfender draw (Tenpai:%s)."
-
-msgid "Exhaustive draw (everybody noten)."
-msgstr "Erschöpfender draw (alle noten)."
-
-msgid "Abortive draw."
-msgstr "Abortive draw."
-
-msgid "Chombo: %s."
-msgstr "Chombo: %s."
-
-msgid "View replay online"
-msgstr "Wiederholungsspiel online sehen"
-
-msgid "Ron hands: %d"
-msgstr "Ron Hände: %d"
-
-msgid "Tsumo hands: %d"
-msgstr "Tsumo Hände: %d"
-
-msgid "Drawn rounds: %d"
-msgstr "Gezeichnet Runden: %d"
-
-msgid "Chombo penalties: %s"
-msgstr "Chombo Strafen"
-
-msgid "Additional penalties:"
-msgstr "Zusätzliche Strafen:"
-
-msgid "%s - %d points (%s)"
-msgstr "%s - %d Punkte (%s)"
+msgid "Sorry, this page is not available for mobile devices"
+msgstr "Entschuldigung, diese Seite ist nicht für Mobilgeräte verfügbar"
 
 msgid "Player"
 msgstr "Spieler"
@@ -266,8 +191,102 @@ msgstr "Hände Wert"
 msgid "Yaku collected over all time"
 msgstr "Yaku gesammelt über alle Zeit"
 
-msgid "Sorry, this page is not available for mobile devices"
-msgstr "Entschuldigung, diese Seite ist nicht für Mobilgeräte verfügbar"
+msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
+msgstr "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
+
+msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
+msgstr "<b>%s</b> - %s (<b>%s</b>), yakuman!"
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
+msgstr "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
+msgstr "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
+msgstr "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d han."
+msgstr "<b>%s</b> - %s (<b>%s</b>), %d han."
+
+msgid "Riichi bets: %s"
+msgstr "Riichi Einlage: %s"
+
+msgid "Double ron:"
+msgstr "Doppel ron:"
+
+msgid "Triple ron:"
+msgstr "Dreifaches ron:"
+
+msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
+msgstr "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
+
+msgid "<b>%s</b> - %s (tsumo), yakuman!"
+msgstr "<b>%s</b> - %s (tsumo), yakuman!"
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
+msgstr "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
+msgstr "<b>%s</b> - %s, dora %d (tsumo), %d han."
+
+msgid "<b>%s</b> - %s (tsumo), %d han, %d fu."
+msgstr "<b>%s</b> - %s (tsumo), %d han, %d fu."
+
+msgid "<b>%s</b> - %s (tsumo), %d han."
+msgstr "<b>%s</b> - %s (tsumo), %d han."
+
+msgid "Exhaustive draw (tenpai: %s)."
+msgstr "Erschöpfender draw (Tenpai:%s)."
+
+msgid "Exhaustive draw (everybody noten)."
+msgstr "Erschöpfender draw (alle noten)."
+
+msgid "Abortive draw."
+msgstr "Abortive draw."
+
+msgid "Chombo: %s."
+msgstr "Chombo: %s."
+
+msgid "View replay online"
+msgstr "Wiederholungsspiel online sehen"
+
+msgid "Ron hands: %d"
+msgstr "Ron Hände: %d"
+
+msgid "Tsumo hands: %d"
+msgstr "Tsumo Hände: %d"
+
+msgid "Drawn rounds: %d"
+msgstr "Gezeichnet Runden: %d"
+
+msgid "Chombo penalties: %s"
+msgstr "Chombo Strafen"
+
+msgid "Additional penalties:"
+msgstr "Zusätzliche Strafen:"
+
+msgid "%s - %d points (%s)"
+msgstr "%s - %d Punkte (%s)"
+
+msgid "Rating"
+msgstr "Bewertung"
+
+msgid "Han"
+msgstr "Han"
+
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+"Ausblenden von Bewertungstabelle für alle Spieler kann nützlich sein, um "
+"alle am Ende des Turniers interessiert zu halten"
+
+msgid "Rating table is hidden. Show"
+msgstr "Wertetabelle ist ausgeblendet. Zeigen"
+
+msgid "Rating table is visible. Hide"
+msgstr "Bewertungstabelle ist sichtbar. Ausblenden"
 
 msgid "Date & time"
 msgstr "Datum & Uhrzeit"
@@ -283,31 +302,6 @@ msgstr "Beste Hand: <b>%s</b> - %s"
 
 msgid "Full game log:"
 msgstr "Vollständiges Spielprotokoll:"
-
-msgid "Rating"
-msgstr "Bewertung"
-
-msgid "Han"
-msgstr "Han"
-
-msgid "Game details"
-msgstr "Spieldetails"
-
-msgid "Hide rating table"
-msgstr "Bewertungstabelle ausblenden"
-
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-"Ausblenden von Bewertungstabelle für alle Spieler kann nützlich sein, um "
-"alle am Ende des Turniers interessiert zu halten"
-
-msgid "Rating table is hidden. Show"
-msgstr "Wertetabelle ist ausgeblendet. Zeigen"
-
-msgid "Rating table is visible. Hide"
-msgstr "Bewertungstabelle ist sichtbar. Ausblenden"
 
 msgid "Confirm round cancellation: "
 msgstr "Runde Stornierung bestätigen: "
@@ -329,6 +323,119 @@ msgstr "Strafen:"
 
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr "%s -%s Strafpunkte. Grund: %s"
+
+msgid "Game details"
+msgstr "Spieldetails"
+
+msgid "Something went wrong: %s"
+msgstr "Etwas ist schief gelaufen:%s"
+
+msgid "Unable to generate seating"
+msgstr "Sitzplätze können nicht generiert werden"
+
+msgid ""
+"Total count of registered players is not divisible by 4. Use the \"Add player"
+"\" and \"Players management\" pages to add or remove players. Special "
+"replacement player accounts may be used to complete the table."
+msgstr ""
+"Die Gesamtanzahl registrierter Spieler ist nicht durch 4 teilbar. Verwenden "
+"Sie die Seiten \"Spieler hinzufügen\" und \"Spielerverwaltung\", um Spieler "
+"hinzuzufügen oder zu entfernen. Spezielle Ersatzspieler-Konten können "
+"verwendet werden, um die Tabelle zu vervollständigen."
+
+msgid "Ready to generate seating"
+msgstr "Bereit, Sitzplätze zu generieren"
+
+msgid "Select seating mode and press the appropriate button."
+msgstr "Wählen Sie den Sitzmodus und drücken Sie die entsprechende Taste."
+
+msgid "Use random seating for new game?"
+msgstr "Verwenden Sie zufällige Sitzplätze für neues Spiel?"
+
+msgid "Random seating"
+msgstr "Zufällige Sitzplätze"
+
+msgid "Use swiss seating for new game?"
+msgstr "Verwenden Sie Schweizer Sitzplätze für neues Spiel?"
+
+msgid "Swiss seating"
+msgstr "Schweizer Sitzplätze"
+
+msgid "Enter tables, one per line."
+msgstr "Einen Tisch einschließen, eine pro Zeile."
+
+msgid ""
+"Check the box to randomize players seating at each table. Otherwise players "
+"will be placed as you entered in order of e-s-w-n."
+msgstr ""
+"Aktivieren Sie das Kontrollkästchen, um die Sitzplätze der Spieler an jedem "
+"Tisch zu randomisieren. Ansonsten werden die Spieler so platziert, wie Sie "
+"es in der Reihenfolge von e-s-w-n eingegeben haben."
+
+msgid ""
+"Each number is a player's current place in rating. Here is an example of "
+"seating with step of 4: "
+msgstr "Jede Nummer ist der aktuelle Platz eines Spielers in der Bewertung."
+
+msgid "Randomize seating at each table"
+msgstr "Randomize Sitzplätze an jedem Tisch"
+
+msgid "Use manual seating for new game?"
+msgstr "Verwenden Sie manuelles Sitzen für neues Spiel?"
+
+msgid "Use manual seating"
+msgstr "Manuelle Sitzgelegenheiten verwenden"
+
+msgid "Tables are being prepared..."
+msgstr "Tische wurden vorbereitet"
+
+msgid "Please wait a while and reload the page."
+msgstr "Bitte warten Sie eine Weile und laden Sie die Seite neu"
+
+msgid "Start timer and games"
+msgstr "Start Timer und Spielen"
+
+msgid "Press next button to start the timer and begin the games."
+msgstr ""
+"Drücken Sie die Taste Next, um den Timer zu starten und die Spiele zu "
+"starten."
+
+msgid "Start games and timer?"
+msgstr "Spiele und Timer starten?"
+
+msgid "Start games!"
+msgstr "Spiele starten!"
+
+msgid "Reset the timer"
+msgstr "Timer zurücksetzen"
+
+msgid ""
+"Pressing this button will reset the timer to its initial value. Be careful: "
+"you should not need this usually."
+msgstr ""
+"Durch Drücken dieser Taste wird der Timer auf seinen Anfangswert "
+"zurückgesetzt. Seien Sie vorsichtig: Sie sollten das normalerweise nicht "
+"brauchen."
+
+msgid "Really reset the timer?"
+msgstr "Wirklich den Timer zurücksetzen?"
+
+msgid "Finish all the games"
+msgstr "Beende alle Spiele"
+
+msgid ""
+"After this button is pressed, you won't be able to cancel any rounds, and "
+"all the results will become visible to all players in rating table."
+msgstr ""
+"Wenn Sie diese Taste gedrückt haben, können Sie keine Runden mehr stornieren "
+"und alle Ergebnisse werden für alle Spieler in der Bewertungstabelle "
+"sichtbar."
+
+msgid "Finish the games? You won't be able to cancel rounds anymore!"
+msgstr "Beenden Sie die Spiele? Sie können keine Runden mehr stornieren!"
+
+msgid "Confirm the results and finish all games"
+msgstr "Bestätige die Ergebnisse und beende alle Spiele"
 
 msgid "Achievement"
 msgstr "Leistungen"
@@ -429,110 +536,6 @@ msgstr "Schmuck enthalten"
 msgid "Given for collecting a yakuman during tournament."
 msgstr "Gegeben für das Sammeln eines Yakuman während des Turniers."
 
-msgid "Something went wrong: %s"
-msgstr "Etwas ist schief gelaufen:%s"
-
-msgid "Unable to generate seating"
-msgstr "Sitzplätze können nicht generiert werden"
-
-msgid ""
-"Total count of registered players is not divisible by 4. Use the \"Add player"
-"\" and \"Players management\" pages to add or remove players. Special "
-"replacement player accounts may be used to complete the table."
-msgstr ""
-"Die Gesamtanzahl registrierter Spieler ist nicht durch 4 teilbar. Verwenden "
-"Sie die Seiten \"Spieler hinzufügen\" und \"Spielerverwaltung\", um Spieler "
-"hinzuzufügen oder zu entfernen. Spezielle Ersatzspieler-Konten können "
-"verwendet werden, um die Tabelle zu vervollständigen."
-
-msgid "Ready to generate seating"
-msgstr "Bereit, Sitzplätze zu generieren"
-
-msgid "Select seating mode and press the appropriate button."
-msgstr "Wählen Sie den Sitzmodus und drücken Sie die entsprechende Taste."
-
-msgid "Use random seating for new game?"
-msgstr "Verwenden Sie zufällige Sitzplätze für neues Spiel?"
-
-msgid "Random seating"
-msgstr "Zufällige Sitzplätze"
-
-msgid "Use swiss seating for new game?"
-msgstr "Verwenden Sie Schweizer Sitzplätze für neues Spiel?"
-
-msgid "Swiss seating"
-msgstr "Schweizer Sitzplätze"
-
-msgid "Enter tables, one per line."
-msgstr "Einen Tisch einschließen, eine pro Zeile."
-
-msgid ""
-"Check the box to randomize players seating at each table. Otherwise players "
-"will be placed as you entered in order of e-s-w-n."
-msgstr ""
-"Aktivieren Sie das Kontrollkästchen, um die Sitzplätze der Spieler an jedem "
-"Tisch zu randomisieren. Ansonsten werden die Spieler so platziert, wie Sie "
-"es in der Reihenfolge von e-s-w-n eingegeben haben."
-
-msgid ""
-"Each number is a player's current place in rating. Here is an example of "
-"seating with step of 4: "
-msgstr "Jede Nummer ist der aktuelle Platz eines Spielers in der Bewertung."
-
-msgid "Randomize seating at each table"
-msgstr "Randomize Sitzplätze an jedem Tisch"
-
-msgid "Use manual seating for new game?"
-msgstr "Verwenden Sie manuelles Sitzen für neues Spiel?"
-
-msgid "Use manual seating"
-msgstr "Manuelle Sitzgelegenheiten verwenden"
-
-msgid "Start timer and games"
-msgstr "Start Timer und Spielen"
-
-msgid "Press next button to start the timer and begin the games."
-msgstr ""
-"Drücken Sie die Taste Next, um den Timer zu starten und die Spiele zu "
-"starten."
-
-msgid "Start games and timer?"
-msgstr "Spiele und Timer starten?"
-
-msgid "Start games!"
-msgstr "Spiele starten!"
-
-msgid "Reset the timer"
-msgstr "Timer zurücksetzen"
-
-msgid ""
-"Pressing this button will reset the timer to its initial value. Be careful: "
-"you should not need this usually."
-msgstr ""
-"Durch Drücken dieser Taste wird der Timer auf seinen Anfangswert "
-"zurückgesetzt. Seien Sie vorsichtig: Sie sollten das normalerweise nicht "
-"brauchen."
-
-msgid "Really reset the timer?"
-msgstr "Wirklich den Timer zurücksetzen?"
-
-msgid "Finish all the games"
-msgstr "Beende alle Spiele"
-
-msgid ""
-"After this button is pressed, you won't be able to cancel any rounds, and "
-"all the results will become visible to all players in rating table."
-msgstr ""
-"Wenn Sie diese Taste gedrückt haben, können Sie keine Runden mehr stornieren "
-"und alle Ergebnisse werden für alle Spieler in der Bewertungstabelle "
-"sichtbar."
-
-msgid "Finish the games? You won't be able to cancel rounds anymore!"
-msgstr "Beenden Sie die Spiele? Sie können keine Runden mehr stornieren!"
-
-msgid "Confirm the results and finish all games"
-msgstr "Bestätige die Ergebnisse und beende alle Spiele"
-
 msgid "Additional penalties"
 msgstr "Zusätzliche Strafen"
 
@@ -592,6 +595,12 @@ msgstr "Autorisieren"
 msgid "%s: personal stats"
 msgstr "%s: persönliche Statistiken"
 
+msgid "The game has been successfully added!"
+msgstr "Das Spiel wurde erfolgreich hinzugefügt!"
+
+msgid "Add game"
+msgstr "Spiel hinzufügen"
+
 msgid "Players management"
 msgstr "Spielerverwaltung"
 
@@ -616,12 +625,6 @@ msgstr "Löschen"
 msgid "Remove player %s?"
 msgstr "Spieler% s entfernen?"
 
-msgid "The game has been successfully added!"
-msgstr "Das Spiel wurde erfolgreich hinzugefügt!"
-
-msgid "Add game"
-msgstr "Spiel hinzufügen"
-
 msgid "Later"
 msgstr "Später"
 
@@ -634,15 +637,6 @@ msgstr "Bewertungstabelle wurde vom Turnieradministrator ausgeblendet"
 msgid "These results are visible only for tournament administrator"
 msgstr "Diese Ergebnisse sind nur für Turnieradministratoren sichtbar"
 
-msgid "Pts"
-msgstr "PNK"
-
-msgid "AvPlc"
-msgstr "D.PLZ"
-
-msgid "AvPts"
-msgstr "D.PNK"
-
 msgid "Rating points"
 msgstr "Bewertungspunkte"
 
@@ -651,6 +645,15 @@ msgstr "Durchschnittlicher Platz"
 
 msgid "Average points"
 msgstr "Durchschnittliche Punkte"
+
+msgid "Pts"
+msgstr "PNK"
+
+msgid "AvPlc"
+msgstr "D.PLZ"
+
+msgid "AvPts"
+msgstr "D.PNK"
 
 msgid "All players list"
 msgstr "Alle Spielerliste"
@@ -699,6 +702,9 @@ msgstr ""
 
 msgid "Player aliases"
 msgstr "Spieler Aliase"
+
+msgid "Hide rating table"
+msgstr "Bewertungstabelle ausblenden"
 
 msgid "Drawn rounds: %s"
 msgstr "Unentschieden Runden"
