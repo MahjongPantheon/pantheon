@@ -105,15 +105,17 @@ class PlayerStatModel extends Model
         $scoreHistory = array_map(function ($game) use ($playerId) {
             /** @var $results SessionResultsPrimitive[] */
             $results = $game['results'];
+            /** @var SessionPrimitive $session */
+            $session = $game['session'];
 
-            return array_map(function (SessionResultsPrimitive $sr, $playerId) {
+            return array_map(function ($playerId) use (&$results) {
                 return [
                     'player_id'     => (int) $playerId,
-                    'score'         => (int) $sr->getScore(),
-                    'rating_delta'  => (float) $sr->getRatingDelta(),
-                    'place'         => (int) $sr->getPlace()
+                    'score'         => (int) $results[$playerId]->getScore(),
+                    'rating_delta'  => (float) $results[$playerId]->getRatingDelta(),
+                    'place'         => (int) $results[$playerId]->getPlace()
                 ];
-            }, array_values($results), array_keys($results));
+            }, $session->getPlayersIds());
         }, $games);
 
         return [
