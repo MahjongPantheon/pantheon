@@ -22,18 +22,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
     <meta name="description" content="">
 
-    <script type="text/javascript" src="/assets/js/jquery.js?1"></script>
-    <script type="text/javascript" src="/assets/js/jquery.jqplot.min.js?1"></script>
-    <script type="text/javascript" src="/assets/js/jqplot.categoryAxisRenderer.min.js?1"></script>
-    <script type="text/javascript" src="/assets/js/jqplot.barRenderer.min.js?1"></script>
-    <script type="text/javascript" src="/assets/js/jqplot.highlighter.js?1"></script>
-    <script type="text/javascript" src="/assets/js/jqplot.cursor.js?1"></script>
-    <script type="text/javascript" src="/assets/bundle-mobile.js?1"></script>
-
     <link rel="shortcut icon" href="/assets/ico/rhedaico.png">
     <link rel="apple-touch-icon-precomposed" href="/assets/ico/rhedahires.png">
-    <link rel="stylesheet" type="text/css" href="/assets/css/jquery.jqplot.min.css?1"/>
-    <link rel="stylesheet" type="text/css" href="/assets/styles-mobile.css?1">
+    {{{css "/assets/css/jquery.jqplot.min.css"}}}
+    {{{css "/assets/styles-mobile.css"}}}
 </head>
 <body>
 <div class="home-button">
@@ -70,6 +62,12 @@
     {{{content}}}
 </div>
 <div class="bottom-fade"></div>
-
+{{{js "/assets/js/jquery.js"}}}
+{{{js "/assets/js/jquery.jqplot.min.js"}}}
+{{{js "/assets/js/jqplot.categoryAxisRenderer.min.js"}}}
+{{{js "/assets/js/jqplot.barRenderer.min.js"}}}
+{{{js "/assets/js/jqplot.highlighter.js"}}}
+{{{js "/assets/js/jqplot.cursor.js"}}}
+{{{js "/assets/bundle-mobile.js"}}}
 </body>
 </html>
