@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.5
 
 ENV TIMEZONE            Europe/Moscow
 ENV PHP_MEMORY_LIMIT    512M
@@ -37,7 +37,6 @@ RUN apk update && \
     nginx \
     postgresql \
     nodejs \
-    nodejs-npm \
     php5-mcrypt \
     php5-soap \
     php5-gettext \
@@ -57,12 +56,12 @@ RUN apk update && \
     php5-curl \
     php5-ctype \
     php5-fpm \
-    yarn
+    php5-apcu
 
 RUN curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" && \
     chmod +x /usr/local/bin/gosu
 
-RUN npm install -g xgettext-template i18n-stex i18n-po-json i18n-json-po
+RUN npm install -g xgettext-template i18n-stex i18n-po-json i18n-json-po yarn
 RUN touch $PHP_LOGFILE
 RUN chown nobody $PHP_LOGFILE
     
@@ -109,7 +108,6 @@ RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Tyr
 RUN mkdir -p /var/www/html/Mimir
 RUN mkdir -p /var/www/html/Rheda
-RUN ln -s /usr/bin/php5 /usr/bin/php
 
 # Entry point
 CMD ["/entrypoint.sh"]
