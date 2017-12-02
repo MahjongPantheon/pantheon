@@ -37,6 +37,10 @@ class Templater
         self::$_inlineRenderer->addHelper("_p", ['Rheda\Templater', '_pHelper']);
         self::$_inlineRenderer->addHelper("_np", ['Rheda\Templater', '_npHelper']);
 
+        // asset loaders
+        self::$_rootRenderer->addHelper("css", ['Rheda\Templater', '_cssLoader']);
+        self::$_rootRenderer->addHelper("js", ['Rheda\Templater', '_jsLoader']);
+
         return self::$_rootRenderer;
     }
 
@@ -85,5 +89,55 @@ class Templater
             . (empty($a['class']) ? '' : ' class="' . $a['class'] . '"')
             . (empty($a['onclick']) ? '' : ' onclick="' . Url::interpolate($a['onclick'], $context) . '"')
             . '>' . self::$_inlineRenderer->render($source, $context) . '</a>';
+    }
+
+    public static function _cssLoader($template, $context, $args, $source)
+    {
+        $a = $args->getPositionalArguments();
+        $resultName = self::_assetLoader('css', $a[0]);
+        if (empty($resultName)) {
+            return '';
+        }
+
+        return '<link rel="stylesheet" type="text/css" href="' . $resultName . '" />';
+    }
+
+    public static function _jsLoader($template, $context, $args, $source)
+    {
+        $a = $args->getPositionalArguments();
+        $resultName = self::_assetLoader('js', $a[0]);
+        if (empty($resultName)) {
+            return '';
+        }
+
+        return '<script type="text/javascript" src="' . $resultName . '"></script>';
+    }
+
+    /**
+     * Creates content-dependent link for easy cache clearing on client side.
+     *
+     * @param $type
+     * @param $webPath
+     * @return mixed|string
+     */
+    protected static function _assetLoader($type, $webPath)
+    {
+        $filePath = __DIR__ . '/../www/' . $webPath;
+        $cacheKey = $type . '_' . md5($filePath);
+        $resultName = '';
+
+        if (apcu_exists($cacheKey)) {
+            $resultName = apcu_fetch($cacheKey);
+        } else {
+            if (!is_file($filePath)) {
+                trigger_error("$filePath is not a file: cannot add asset", E_USER_NOTICE);
+            } else {
+                $hash = md5_file($filePath);
+                $resultName = $webPath . '?' . $hash;
+                apcu_add($cacheKey, $resultName, 30); // 30 secs cache
+            }
+        }
+
+        return $resultName;
     }
 }
