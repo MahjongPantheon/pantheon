@@ -16,7 +16,7 @@
 *}}
 <style>
     .actionButton {
-        font-size: 16px;
+        font-size: 20px;
         font-weight: bold;
     }
 </style>
@@ -48,7 +48,7 @@
                 <tr>
                     <td style="width:50%">
                         {{#form action='/tourn/shuffledSeating/' method='post'}}
-                            <input type="button" class="btn btn-large btn-primary actionButton"
+                            <input type="button" class="btn btn-lg btn-primary actionButton"
                                    onclick="return window.confirm('{{_t 'Use random seating for new game?'}}') && disableTemporarily(this);"
                                    value="{{_t 'Random seating'}}">
                         {{/form}}
@@ -59,7 +59,7 @@
                 </tr>
                 <tr><td>
                     {{#form action='/tourn/swissSeating/' method='post'}}
-                        <input type="button" class="btn btn-large btn-success actionButton"
+                        <input type="button" class="btn btn-lg btn-success actionButton"
                                onclick="return window.confirm('{{_t 'Use swiss seating for new game?'}}') && disableTemporarily(this);"
                                value="{{_t 'Swiss seating'}}">
                     {{/form}}
@@ -83,18 +83,24 @@
                     <div><label for="randomize" style="font-size: 17px;">
                         <input checked="checked" id="randomize" type="checkbox" name="randomize" value="true"> {{_t 'Randomize seating at each table'}}
                     </label></div>
-                    <input type="button" class="btn btn-large btn-warning actionButton"
+                    <input type="button" class="btn btn-lg btn-warning actionButton"
                            onclick="return window.confirm('{{_t 'Use manual seating for new game?'}}') && disableTemporarily(this);"
                            value="{{_t 'Use manual seating'}}">
                 {{/form}}
             </td></tr>
         </table>
     {{/stageReadyButNotStarted}}
+    {{#stageSeatingInProgress}}
+        <h3>{{_t 'Tables are being prepared...'}}</h3>
+        {{_t 'Please wait a while and reload the page.'}}
+        <hr />
+        {{> partials/TournamentTablesState }}
+    {{/stageSeatingInProgress}}
     {{#stageSeatingReady}}
         <h3>{{_t 'Start timer and games'}}</h3>
         {{_t 'Press next button to start the timer and begin the games.'}}
         {{#form action='/tourn/startTimer/' method='post'}}
-            <input type="button" class="btn btn-large btn-danger actionButton"
+            <input type="button" class="btn btn-lg btn-danger actionButton"
                    onclick="return window.confirm('{{_t 'Start games and timer?'}}') && disableTemporarily(this);"
                    value="{{_t 'Start games!'}}">
         {{/form}}
@@ -108,7 +114,7 @@
                     <h3>{{_t 'Reset the timer'}}</h3>
                     {{_t 'Pressing this button will reset the timer to its initial value. Be careful: you should not need this usually.'}}
                     {{#form action='/tourn/startTimer/' method='post'}}
-                        <input type="button" class="btn btn-large btn-danger actionButton"
+                        <input type="button" class="btn btn-lg btn-danger actionButton"
                                onclick="return window.confirm('{{_t 'Really reset the timer?'}}') && disableTemporarily(this);"
                                value="{{_t 'Reset the timer'}}">
                     {{/form}}
@@ -129,7 +135,7 @@
                     {{_t 'After this button is pressed, you won\'t be able to cancel any rounds, and all the results will become visible to all players in rating table.'}}
 
                     {{#form action='/tourn/finalizeSessions/' method='post'}}
-                        <input type="button" class="btn btn-large btn-primary actionButton"
+                        <input type="button" class="btn btn-lg btn-primary actionButton"
                                onclick="return window.confirm('{{_t 'Finish the games? You won\'t be able to cancel rounds anymore!'}}') && disableTemporarily(this);"
                                value="{{_t 'Confirm the results and finish all games'}}">
                     {{/form}}
