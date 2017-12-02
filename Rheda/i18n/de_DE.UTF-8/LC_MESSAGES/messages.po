@@ -5,17 +5,17 @@
 #
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.4\n"
 "Last-Translator: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language-Team: \n"
 "Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.12\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "Statistics"
 msgstr "Statistik"
@@ -46,6 +46,9 @@ msgstr "Letzte Spiele"
 
 msgid "Rating table"
 msgstr "Bewertungstabelle"
+
+msgid "Add online game"
+msgstr "Neues Online-Spiel hinzufügen"
 
 msgid "Admin actions"
 msgstr "Admin Aktionen"
@@ -80,8 +83,83 @@ msgstr "Es wurden noch keine Spiele gespielt"
 msgid "%d - %d (%d total)"
 msgstr "%d - %d (%d gesamt)"
 
-msgid "Sorry, this page is not available for mobile devices"
-msgstr "Entschuldigung, diese Seite ist nicht für Mobilgeräte verfügbar"
+msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
+msgstr "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
+
+msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
+msgstr "<b>%s</b> - %s (<b>%s</b>), yakuman!"
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
+msgstr "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
+msgstr "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
+msgstr "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d han."
+msgstr "<b>%s</b> - %s (<b>%s</b>), %d han."
+
+msgid "Riichi bets: %s"
+msgstr "Riichi Einlage: %s"
+
+msgid "Double ron:"
+msgstr "Doppel ron:"
+
+msgid "Triple ron:"
+msgstr "Dreifaches ron:"
+
+msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
+msgstr "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
+
+msgid "<b>%s</b> - %s (tsumo), yakuman!"
+msgstr "<b>%s</b> - %s (tsumo), yakuman!"
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
+msgstr "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
+msgstr "<b>%s</b> - %s, dora %d (tsumo), %d han."
+
+msgid "<b>%s</b> - %s (tsumo), %d han, %d fu."
+msgstr "<b>%s</b> - %s (tsumo), %d han, %d fu."
+
+msgid "<b>%s</b> - %s (tsumo), %d han."
+msgstr "<b>%s</b> - %s (tsumo), %d han."
+
+msgid "Exhaustive draw (tenpai: %s)."
+msgstr "Erschöpfender draw (Tenpai:%s)."
+
+msgid "Exhaustive draw (everybody noten)."
+msgstr "Erschöpfender draw (alle noten)."
+
+msgid "Abortive draw."
+msgstr "Abortive draw."
+
+msgid "Chombo: %s."
+msgstr "Chombo: %s."
+
+msgid "View replay online"
+msgstr "Wiederholungsspiel online sehen"
+
+msgid "Ron hands: %d"
+msgstr "Ron Hände: %d"
+
+msgid "Tsumo hands: %d"
+msgstr "Tsumo Hände: %d"
+
+msgid "Drawn rounds: %d"
+msgstr "Gezeichnet Runden: %d"
+
+msgid "Chombo penalties: %s"
+msgstr "Chombo Strafen"
+
+msgid "Additional penalties:"
+msgstr "Zusätzliche Strafen:"
+
+msgid "%s - %d points (%s)"
+msgstr "%s - %d Punkte (%s)"
 
 msgid "Player"
 msgstr "Spieler"
@@ -188,89 +266,32 @@ msgstr "Hände Wert"
 msgid "Yaku collected over all time"
 msgstr "Yaku gesammelt über alle Zeit"
 
-msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
-msgstr "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
+msgid "Sorry, this page is not available for mobile devices"
+msgstr "Entschuldigung, diese Seite ist nicht für Mobilgeräte verfügbar"
 
-msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
-msgstr "<b>%s</b> - %s (<b>%s</b>), yakuman!"
+msgid "Date & time"
+msgstr "Datum & Uhrzeit"
 
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
-msgstr "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
+msgid "Players"
+msgstr "Spielern"
 
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
-msgstr "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
+msgid "Details"
+msgstr "Einzelheiten"
 
-msgid "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
-msgstr "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
+msgid "Best hand: <b>%s</b> - %s"
+msgstr "Beste Hand: <b>%s</b> - %s"
 
-msgid "<b>%s</b> - %s (<b>%s</b>), %d han."
-msgstr "<b>%s</b> - %s (<b>%s</b>), %d han."
-
-msgid "Riichi bets: %s"
-msgstr "Riichi Einlage: %s"
-
-msgid "Double ron:"
-msgstr "Doppel ron:"
-
-msgid "Triple ron:"
-msgstr "Dreifaches ron:"
-
-msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
-msgstr "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
-
-msgid "<b>%s</b> - %s (tsumo), yakuman!"
-msgstr "<b>%s</b> - %s (tsumo), yakuman!"
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
-msgstr "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
-msgstr "<b>%s</b> - %s, dora %d (tsumo), %d han."
-
-msgid "<b>%s</b> - %s (tsumo), %d han, %d fu."
-msgstr "<b>%s</b> - %s (tsumo), %d han, %d fu."
-
-msgid "<b>%s</b> - %s (tsumo), %d han."
-msgstr "<b>%s</b> - %s (tsumo), %d han."
-
-msgid "Exhaustive draw (tenpai: %s)."
-msgstr "Erschöpfender draw (Tenpai:%s)."
-
-msgid "Exhaustive draw (everybody noten)."
-msgstr "Erschöpfender draw (alle noten)."
-
-msgid "Abortive draw."
-msgstr "Abortive draw."
-
-msgid "Chombo: %s."
-msgstr "Chombo: %s."
-
-msgid "View replay online"
-msgstr "Wiederholungsspiel online sehen"
-
-msgid "Ron hands: %d"
-msgstr "Ron Hände: %d"
-
-msgid "Tsumo hands: %d"
-msgstr "Tsumo Hände: %d"
-
-msgid "Drawn rounds: %s"
-msgstr "Unentschieden Runden"
-
-msgid "Chombo penalties: %s"
-msgstr "Chombo Strafen"
-
-msgid "Additional penalties:"
-msgstr "Zusätzliche Strafen:"
-
-msgid "%s - %d points (%s)"
-msgstr "%s - %d Punkte (%s)"
+msgid "Full game log:"
+msgstr "Vollständiges Spielprotokoll:"
 
 msgid "Rating"
 msgstr "Bewertung"
 
 msgid "Han"
 msgstr "Han"
+
+msgid "Game details"
+msgstr "Spieldetails"
 
 msgid "Hide rating table"
 msgstr "Bewertungstabelle ausblenden"
@@ -287,24 +308,6 @@ msgstr "Wertetabelle ist ausgeblendet. Zeigen"
 
 msgid "Rating table is visible. Hide"
 msgstr "Bewertungstabelle ist sichtbar. Ausblenden"
-
-msgid "Date & time"
-msgstr "Datum & Uhrzeit"
-
-msgid "Players"
-msgstr "Spielern"
-
-msgid "Details"
-msgstr "Einzelheiten"
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr "Beste Hand: <b>%s</b> - %s"
-
-msgid "Drawn rounds: %d"
-msgstr "Gezeichnet Runden: %d"
-
-msgid "Full game log:"
-msgstr "Vollständiges Spielprotokoll:"
 
 msgid "Confirm round cancellation: "
 msgstr "Runde Stornierung bestätigen: "
@@ -327,8 +330,104 @@ msgstr "Strafen:"
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr "%s -%s Strafpunkte. Grund: %s"
 
-msgid "Game details"
-msgstr "Spieldetails"
+msgid "Achievement"
+msgstr "Leistungen"
+
+msgid "Description"
+msgstr "Beschreibung"
+
+msgid "Value"
+msgstr "Wert"
+
+msgid "Nominees"
+msgstr "Nominierte"
+
+msgid "Best hand"
+msgstr "Beste Hand"
+
+msgid ""
+"Given for collecting the hand with biggest han count (independent of cost)."
+msgstr ""
+"Gegeben für das Sammeln der Hand mit größter Han-Zählung (unabhängig von "
+"Kosten)."
+
+msgid "Over 9000 fu"
+msgstr "Über 9000 fu"
+
+msgid "Given for collecting the hand with biggest minipoints (fu) count."
+msgstr "Gegeben für das Sammeln der Hand mit den größten Minipunkten (fu)."
+
+msgid "%s fu"
+msgstr "%s fu"
+
+msgid "I saw them dancing"
+msgstr "Ich sah Sie tanzen"
+
+msgid "Given for collecting the most of tsumo hands during single game."
+msgstr ""
+"Gegeben für das Sammeln der meisten Tsumo-Hände während eines Einzelspiels."
+
+msgid "Die Hard"
+msgstr "Stirb langsam"
+
+msgid "Given for smallest count of feeding into ron during the tournament."
+msgstr "Gegeben für die größte Anzahl für Ron bezahle während des Turniers."
+
+msgid "Brave minesweeper"
+msgstr "Mutiger Minensucher"
+
+msgid "Given for largest count of feeding into ron during the tournament."
+msgstr "Gegeben für die größte Anzahl für Ron bezahle während des Turniers."
+
+msgid "Chombo master"
+msgstr "Chombo Meister"
+
+msgid "Given for collecting a chombo during a tournament."
+msgstr "Gegeben für das Sammeln eines Chombo während eines Turniers."
+
+msgid "%s: %d chombo penalty"
+msgid_plural "%s: %d chombo penalties"
+msgstr[0] "%s: %d Chombo-Strafe"
+msgstr[1] "%s:%d Chombo-Strafen"
+
+msgid "Guest of honors"
+msgstr "Mutter der Drachen"
+
+msgid "Given for collecting the most of yakuhais during the tournament."
+msgstr "Gegen für das Sammeln der meisten Yakuhais während des Turniers."
+
+msgid "%s: %d yakuhai"
+msgid_plural "%s: %d yakuhais"
+msgstr[0] "%s: %d yakuhai"
+msgstr[1] "%s: %d yakuhais"
+
+msgid "The great dealer"
+msgstr "Der große Dealer"
+
+msgid "Given for largest count of dealer wins during the tournament."
+msgstr "Gegeben für die größte Anzahl von Dielersiegen während des Turniers."
+
+msgid "%d win"
+msgid_plural "%d wins"
+msgstr[0] "%d siege"
+msgstr[1] "%d siegen"
+
+msgid "The 1k Flash"
+msgstr "Der 1k Blitz"
+
+msgid "Given for the most of 1/30 wins during tournament."
+msgstr "Gegeben für die meisten 1/30 Siege während des Turniers."
+
+msgid "%d quickest hand"
+msgid_plural "%d quickest hands"
+msgstr[0] "%d schnellste Hand"
+msgstr[1] "%d schnellste Hände"
+
+msgid "Jewelry included"
+msgstr "Schmuck enthalten"
+
+msgid "Given for collecting a yakuman during tournament."
+msgstr "Gegeben für das Sammeln eines Yakuman während des Turniers."
 
 msgid "Something went wrong: %s"
 msgstr "Etwas ist schief gelaufen:%s"
@@ -403,6 +502,9 @@ msgstr "Spiele und Timer starten?"
 msgid "Start games!"
 msgstr "Spiele starten!"
 
+msgid "Reset the timer"
+msgstr "Timer zurücksetzen"
+
 msgid ""
 "Pressing this button will reset the timer to its initial value. Be careful: "
 "you should not need this usually."
@@ -413,9 +515,6 @@ msgstr ""
 
 msgid "Really reset the timer?"
 msgstr "Wirklich den Timer zurücksetzen?"
-
-msgid "Reset the timer"
-msgstr "Timer zurücksetzen"
 
 msgid "Finish all the games"
 msgstr "Beende alle Spiele"
@@ -433,105 +532,6 @@ msgstr "Beenden Sie die Spiele? Sie können keine Runden mehr stornieren!"
 
 msgid "Confirm the results and finish all games"
 msgstr "Bestätige die Ergebnisse und beende alle Spiele"
-
-msgid "Achievement"
-msgstr "Leistungen"
-
-msgid "Description"
-msgstr "Beschreibung"
-
-msgid "Value"
-msgstr "Wert"
-
-msgid "Nominees"
-msgstr "Nominierte"
-
-msgid "Best hand"
-msgstr "Beste Hand"
-
-msgid ""
-"Given for collecting the hand with biggest han count (independent of cost)."
-msgstr ""
-"Gegeben für das Sammeln der Hand mit größter Han-Zählung (unabhängig von "
-"Kosten)."
-
-msgid "Over 9000 fu"
-msgstr "Über 9000 fu"
-
-msgid "Given for collecting the hand with biggest minipoints (fu) count."
-msgstr "Gegeben für das Sammeln der Hand mit den größten Minipunkten (fu)."
-
-msgid "%s fu"
-msgstr "%s fu"
-
-msgid "I saw them dancing"
-msgstr "Ich sah Sie tanzen"
-
-msgid "Given for collecting the most of tsumo hands during single game."
-msgstr ""
-"Gegeben für das Sammeln der meisten Tsumo-Hände während eines Einzelspiels."
-
-msgid "Brave minesweeper"
-msgstr "Mutiger Minensucher"
-
-msgid "Given for largest count of feeding into ron during the tournament."
-msgstr "Gegeben für die größte Anzahl für Ron bezahle während des Turniers."
-
-msgid "Die Hard"
-msgstr "Stirb langsam"
-
-msgid "Given for smallest count of feeding into ron during the tournament."
-msgstr "Gegeben für die größte Anzahl für Ron bezahle während des Turniers."
-
-msgid "Chombo master"
-msgstr "Chombo Meister"
-
-msgid "Given for collecting a chombo during a tournament."
-msgstr "Gegeben für das Sammeln eines Chombo während eines Turniers."
-
-msgid "%s: %d chombo penalty"
-msgid_plural "%s: %d chombo penalties"
-msgstr[0] "%s: %d Chombo-Strafe"
-msgstr[1] "%s:%d Chombo-Strafen"
-
-msgid "Guest of honors"
-msgstr "Mutter der Drachen"
-
-msgid "Given for collecting the most of yakuhais during the tournament."
-msgstr "Gegen für das Sammeln der meisten Yakuhais während des Turniers."
-
-msgid "%s: %d yakuhai"
-msgid_plural "%s: %d yakuhais"
-msgstr[0] "%s: %d yakuhai"
-msgstr[1] "%s: %d yakuhais"
-
-msgid "The great dealer"
-msgstr "Der große Dealer"
-
-msgid "Given for largest count of dealer wins during the tournament."
-msgstr "Gegeben für die größte Anzahl von Dielersiegen während des Turniers."
-
-msgid "%d win"
-msgid_plural "%d wins"
-msgstr[0] "%d siege"
-msgstr[1] "%d siegen"
-
-msgid "The 1k Flash"
-msgstr "Der 1k Blitz"
-
-msgid "Given for the most of 1/30 wins during tournament."
-msgstr "Gegeben für die meisten 1/30 Siege während des Turniers."
-
-msgid "%d quickest hand"
-msgid_plural "%d quickest hands"
-msgstr[0] "%d schnellste Hand"
-msgstr[1] "%d schnellste Hände"
-
-msgid "Jewelry included"
-msgstr "Schmuck enthalten"
-
-msgid "Given for collecting a yakuman during tournament."
-msgstr "Gegeben für das Sammeln eines Yakuman während des Turniers."
 
 msgid "Additional penalties"
 msgstr "Zusätzliche Strafen"
@@ -592,12 +592,6 @@ msgstr "Autorisieren"
 msgid "%s: personal stats"
 msgstr "%s: persönliche Statistiken"
 
-msgid "The game has been successfully added!"
-msgstr "Das Spiel wurde erfolgreich hinzugefügt!"
-
-msgid "Add game"
-msgstr "Spiel hinzufügen"
-
 msgid "Players management"
 msgstr "Spielerverwaltung"
 
@@ -622,6 +616,12 @@ msgstr "Löschen"
 msgid "Remove player %s?"
 msgstr "Spieler% s entfernen?"
 
+msgid "The game has been successfully added!"
+msgstr "Das Spiel wurde erfolgreich hinzugefügt!"
+
+msgid "Add game"
+msgstr "Spiel hinzufügen"
+
 msgid "Later"
 msgstr "Später"
 
@@ -634,15 +634,6 @@ msgstr "Bewertungstabelle wurde vom Turnieradministrator ausgeblendet"
 msgid "These results are visible only for tournament administrator"
 msgstr "Diese Ergebnisse sind nur für Turnieradministratoren sichtbar"
 
-msgid "Rating points"
-msgstr "Bewertungspunkte"
-
-msgid "Average place"
-msgstr "Durchschnittlicher Platz"
-
-msgid "Average points"
-msgstr "Durchschnittliche Punkte"
-
 msgid "Pts"
 msgstr "PNK"
 
@@ -651,6 +642,15 @@ msgstr "D.PLZ"
 
 msgid "AvPts"
 msgstr "D.PNK"
+
+msgid "Rating points"
+msgstr "Bewertungspunkte"
+
+msgid "Average place"
+msgstr "Durchschnittlicher Platz"
+
+msgid "Average points"
+msgstr "Durchschnittliche Punkte"
 
 msgid "All players list"
 msgstr "Alle Spielerliste"
@@ -700,11 +700,11 @@ msgstr ""
 msgid "Player aliases"
 msgstr "Spieler Aliase"
 
+msgid "Drawn rounds: %s"
+msgstr "Unentschieden Runden"
+
 msgid "Wrong admin password"
 msgstr "Falsches Administratorpasswort"
-
-msgid "Add online game"
-msgstr "Neues Online-Spiel hinzufügen"
 
 msgid "Admin login"
 msgstr "Admin Login"
@@ -793,8 +793,8 @@ msgid ""
 "Triple ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); winner #3 "
 "is %s (%s); riichi bets - %s"
 msgstr ""
-"Dreifaches Ron:% s zahlt aus; Gewinner # 1 ist %s (% s); Gewinner # 2 ist %s "
-"(%s); riichi Einlage  -%s"
+"Dreifaches Ron:%s zahlt aus; Gewinner #1 ist %s (%s); Gewinner #2 ist %s "
+"(%s); Gewinner #3 ist %s (%s); riichi Einlage  -%s"
 
 msgid "Daburu riichi"
 msgstr "Daburu riichi"
