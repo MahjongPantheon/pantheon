@@ -19,7 +19,7 @@ namespace Rheda;
 
 require_once __DIR__ . '/../helpers/YakuMap.php';
 
-class User extends Controller
+class PersonalStats extends Controller
 {
     protected $_mainTemplate = 'User';
     protected $_playerName;
