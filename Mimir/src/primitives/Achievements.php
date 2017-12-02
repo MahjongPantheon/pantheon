@@ -80,7 +80,7 @@ class AchievementsPrimitive extends Primitive
 
         return [
             'fu' => $maxFu,
-            'names' => array_unique($names)
+            'names' => array_values(array_unique($names))
         ];
     }
 
