@@ -16,6 +16,7 @@ Parameters:
 * **$eventId** (_integer_) 
 * **$orderBy** (_string_) either 'name', 'rating', 'avg_place' or 'avg_score'
 * **$order** (_string_) either 'asc' or 'desc'
+* **$withPrefinished** (_bool_) include prefinished games score
 
 Returns: _array_ 
 
@@ -362,6 +363,16 @@ Exceptions:
 * _DatabaseException_ 
 * _BadActionException_ 
 
+### finalizeSessions
+Parameters:
+* **$eventId** (_int_) 
+
+Returns: _bool_ Success?
+
+Exceptions:
+* _DatabaseException_ 
+* _BadActionException_ 
+
 ### addTextLog
 Parameters:
 * **$eventId** (_int_) 
@@ -433,18 +444,6 @@ Parameters:
 
 Returns: _array_ 
 
-### generateSeating
-Parameters:
-* **$eventId** (_int_) 
-* **$groupsCount** (_int_) 
-* **$seed** (_int_) 
-
-Returns: _array_ 
-
-Exceptions:
-* _AuthFailedException_ 
-* _InvalidParametersException_ 
-
 ### getCurrentSeating
 Parameters:
 * **$eventId** (_integer_) 
@@ -454,7 +453,7 @@ Returns: _array_
 Exceptions:
 * _InvalidParametersException_ 
 
-### startGamesWithSeating
+### makeShuffledSeating
 Parameters:
 * **$eventId** (_int_) 
 * **$groupsCount** (_int_) 
@@ -466,7 +465,7 @@ Exceptions:
 * _InvalidParametersException_ 
 * _AuthFailedException_ 
 
-### startGamesWithSwissSeating
+### makeSwissSeating
 Parameters:
 * **$eventId** (_int_) 
 
@@ -476,7 +475,7 @@ Exceptions:
 * _InvalidParametersException_ 
 * _AuthFailedException_ 
 
-### startGamesWithManualSeating
+### makeManualSeating
 Parameters:
 * **$eventId** (_int_) 
 * **$tablesDescription** (_string_) 

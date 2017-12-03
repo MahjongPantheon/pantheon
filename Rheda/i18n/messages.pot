@@ -73,82 +73,7 @@ msgstr ""
 msgid "%d - %d (%d total)"
 msgstr ""
 
-msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
-msgstr ""
-
-msgid "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s (<b>%s</b>), %d han."
-msgstr ""
-
-msgid "Riichi bets: %s"
-msgstr ""
-
-msgid "Double ron:"
-msgstr ""
-
-msgid "Triple ron:"
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo), %d han."
-msgstr ""
-
-msgid "Exhaustive draw (tenpai: %s)."
-msgstr ""
-
-msgid "Exhaustive draw (everybody noten)."
-msgstr ""
-
-msgid "Abortive draw."
-msgstr ""
-
-msgid "Chombo: %s."
-msgstr ""
-
-msgid "View replay online"
-msgstr ""
-
-msgid "Ron hands: %d"
-msgstr ""
-
-msgid "Tsumo hands: %d"
-msgstr ""
-
-msgid "Drawn rounds: %d"
-msgstr ""
-
-msgid "Chombo penalties: %s"
-msgstr ""
-
-msgid "Additional penalties:"
-msgstr ""
-
-msgid "%s - %d points (%s)"
+msgid "Sorry, this page is not available for mobile devices"
 msgstr ""
 
 msgid "Player"
@@ -256,7 +181,99 @@ msgstr ""
 msgid "Yaku collected over all time"
 msgstr ""
 
-msgid "Sorry, this page is not available for mobile devices"
+msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d han."
+msgstr ""
+
+msgid "Riichi bets: %s"
+msgstr ""
+
+msgid "Double ron:"
+msgstr ""
+
+msgid "Triple ron:"
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo), %d han."
+msgstr ""
+
+msgid "Exhaustive draw (tenpai: %s)."
+msgstr ""
+
+msgid "Exhaustive draw (everybody noten)."
+msgstr ""
+
+msgid "Abortive draw."
+msgstr ""
+
+msgid "Chombo: %s."
+msgstr ""
+
+msgid "View replay online"
+msgstr ""
+
+msgid "Ron hands: %d"
+msgstr ""
+
+msgid "Tsumo hands: %d"
+msgstr ""
+
+msgid "Drawn rounds: %d"
+msgstr ""
+
+msgid "Chombo penalties: %s"
+msgstr ""
+
+msgid "Additional penalties:"
+msgstr ""
+
+msgid "%s - %d points (%s)"
+msgstr ""
+
+msgid "Rating"
+msgstr ""
+
+msgid "Han"
+msgstr ""
+
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+
+msgid "Rating table is hidden. Show"
+msgstr ""
+
+msgid "Rating table is visible. Hide"
 msgstr ""
 
 msgid "Date & time"
@@ -272,29 +289,6 @@ msgid "Best hand: <b>%s</b> - %s"
 msgstr ""
 
 msgid "Full game log:"
-msgstr ""
-
-msgid "Rating"
-msgstr ""
-
-msgid "Han"
-msgstr ""
-
-msgid "Game details"
-msgstr ""
-
-msgid "Hide rating table"
-msgstr ""
-
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-
-msgid "Rating table is hidden. Show"
-msgstr ""
-
-msgid "Rating table is visible. Hide"
 msgstr ""
 
 msgid "Confirm round cancellation: "
@@ -316,6 +310,104 @@ msgid "Penalties:"
 msgstr ""
 
 msgid "%s - %s points of penalty. Reason: %s"
+msgstr ""
+
+msgid "Game details"
+msgstr ""
+
+msgid "Something went wrong: %s"
+msgstr ""
+
+msgid "Unable to generate seating"
+msgstr ""
+
+msgid ""
+"Total count of registered players is not divisible by 4. Use the \"Add "
+"player\" and \"Players management\" pages to add or remove players. Special "
+"replacement player accounts may be used to complete the table."
+msgstr ""
+
+msgid "Ready to generate seating"
+msgstr ""
+
+msgid "Select seating mode and press the appropriate button."
+msgstr ""
+
+msgid "Use random seating for new game?"
+msgstr ""
+
+msgid "Random seating"
+msgstr ""
+
+msgid "Use swiss seating for new game?"
+msgstr ""
+
+msgid "Swiss seating"
+msgstr ""
+
+msgid "Enter tables, one per line."
+msgstr ""
+
+msgid ""
+"Check the box to randomize players seating at each table. Otherwise players "
+"will be placed as you entered in order of e-s-w-n."
+msgstr ""
+
+msgid ""
+"Each number is a player's current place in rating. Here is an example of "
+"seating with step of 4: "
+msgstr ""
+
+msgid "Randomize seating at each table"
+msgstr ""
+
+msgid "Use manual seating for new game?"
+msgstr ""
+
+msgid "Use manual seating"
+msgstr ""
+
+msgid "Tables are being prepared..."
+msgstr ""
+
+msgid "Please wait a while and reload the page."
+msgstr ""
+
+msgid "Start timer and games"
+msgstr ""
+
+msgid "Press next button to start the timer and begin the games."
+msgstr ""
+
+msgid "Start games and timer?"
+msgstr ""
+
+msgid "Start games!"
+msgstr ""
+
+msgid "Reset the timer"
+msgstr ""
+
+msgid ""
+"Pressing this button will reset the timer to its initial value. Be careful: "
+"you should not need this usually."
+msgstr ""
+
+msgid "Really reset the timer?"
+msgstr ""
+
+msgid "Finish all the games"
+msgstr ""
+
+msgid ""
+"After this button is pressed, you won't be able to cancel any rounds, and "
+"all the results will become visible to all players in rating table."
+msgstr ""
+
+msgid "Finish the games? You won't be able to cancel rounds anymore!"
+msgstr ""
+
+msgid "Confirm the results and finish all games"
 msgstr ""
 
 msgid "Achievement"
@@ -413,95 +505,6 @@ msgstr ""
 msgid "Given for collecting a yakuman during tournament."
 msgstr ""
 
-msgid "Something went wrong: %s"
-msgstr ""
-
-msgid "Unable to generate seating"
-msgstr ""
-
-msgid ""
-"Total count of registered players is not divisible by 4. Use the \"Add "
-"player\" and \"Players management\" pages to add or remove players. Special "
-"replacement player accounts may be used to complete the table."
-msgstr ""
-
-msgid "Ready to generate seating"
-msgstr ""
-
-msgid "Select seating mode and press the appropriate button."
-msgstr ""
-
-msgid "Use random seating for new game?"
-msgstr ""
-
-msgid "Random seating"
-msgstr ""
-
-msgid "Use swiss seating for new game?"
-msgstr ""
-
-msgid "Swiss seating"
-msgstr ""
-
-msgid "Enter tables, one per line."
-msgstr ""
-
-msgid ""
-"Check the box to randomize players seating at each table. Otherwise players "
-"will be placed as you entered in order of e-s-w-n."
-msgstr ""
-
-msgid ""
-"Each number is a player's current place in rating. Here is an example of "
-"seating with step of 4: "
-msgstr ""
-
-msgid "Randomize seating at each table"
-msgstr ""
-
-msgid "Use manual seating for new game?"
-msgstr ""
-
-msgid "Use manual seating"
-msgstr ""
-
-msgid "Start timer and games"
-msgstr ""
-
-msgid "Press next button to start the timer and begin the games."
-msgstr ""
-
-msgid "Start games and timer?"
-msgstr ""
-
-msgid "Start games!"
-msgstr ""
-
-msgid "Reset the timer"
-msgstr ""
-
-msgid ""
-"Pressing this button will reset the timer to its initial value. Be careful: "
-"you should not need this usually."
-msgstr ""
-
-msgid "Really reset the timer?"
-msgstr ""
-
-msgid "Finish all the games"
-msgstr ""
-
-msgid ""
-"After this button is pressed, you won't be able to cancel any rounds, and "
-"all the results will become visible to all players in rating table."
-msgstr ""
-
-msgid "Finish the games? You won't be able to cancel rounds anymore!"
-msgstr ""
-
-msgid "Confirm the results and finish all games"
-msgstr ""
-
 msgid "Additional penalties"
 msgstr ""
 
@@ -558,6 +561,12 @@ msgstr ""
 msgid "%s: personal stats"
 msgstr ""
 
+msgid "The game has been successfully added!"
+msgstr ""
+
+msgid "Add game"
+msgstr ""
+
 msgid "Players management"
 msgstr ""
 
@@ -582,12 +591,6 @@ msgstr ""
 msgid "Remove player %s?"
 msgstr ""
 
-msgid "The game has been successfully added!"
-msgstr ""
-
-msgid "Add game"
-msgstr ""
-
 msgid "Later"
 msgstr ""
 
@@ -600,15 +603,6 @@ msgstr ""
 msgid "These results are visible only for tournament administrator"
 msgstr ""
 
-msgid "Pts"
-msgstr ""
-
-msgid "AvPlc"
-msgstr ""
-
-msgid "AvPts"
-msgstr ""
-
 msgid "Rating points"
 msgstr ""
 
@@ -616,6 +610,15 @@ msgid "Average place"
 msgstr ""
 
 msgid "Average points"
+msgstr ""
+
+msgid "Pts"
+msgstr ""
+
+msgid "AvPlc"
+msgstr ""
+
+msgid "AvPts"
 msgstr ""
 
 msgid "All players list"
@@ -659,6 +662,9 @@ msgid ""
 msgstr ""
 
 msgid "Player aliases"
+msgstr ""
+
+msgid "Hide rating table"
 msgstr ""
 
 msgid "Drawn rounds: %s"

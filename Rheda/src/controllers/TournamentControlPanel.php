@@ -31,9 +31,10 @@ class TournamentControlPanel extends Controller
 
     const STAGE_NOT_READY = 1;
     const STAGE_READY_BUT_NOT_STARTED = 2;
-    const STAGE_SEATING_READY = 3;
-    const STAGE_STARTED = 4;
-    const STAGE_PREFINISHED = 5;
+    const STAGE_SEATING_INPROGRESS = 3;
+    const STAGE_SEATING_READY = 4;
+    const STAGE_STARTED = 5;
+    const STAGE_PREFINISHED = 6;
 
     protected function _pageTitle()
     {
@@ -50,16 +51,16 @@ class TournamentControlPanel extends Controller
             try {
                 switch ($this->_path['action']) {
                     case 'shuffledSeating':
-                        $this->_api->execute('startGamesWithSeating', [$this->_eventId, 1, mt_rand(100000, 999999)]);
+                        $this->_api->execute('makeShuffledSeating', [$this->_eventId, 1, mt_rand(100000, 999999)]);
                         break;
                     case 'manualSeating':
                         $this->_api->execute(
-                            'startGamesWithManualSeating',
+                            'makeManualSeating',
                             [$this->_eventId, $_POST['description'], $_POST['randomize'] == 'true']
                         );
                         break;
                     case 'swissSeating':
-                        $this->_api->execute('startGamesWithSwissSeating', [$this->_eventId]);
+                        $this->_api->execute('makeSwissSeating', [$this->_eventId]);
                         break;
                     case 'startTimer':
                         $this->_api->execute('startTimer', [$this->_eventId]);
@@ -121,6 +122,7 @@ class TournamentControlPanel extends Controller
             'stageNotReady' => $currentStage == self::STAGE_NOT_READY,
             'stageReadyButNotStarted' => $currentStage == self::STAGE_READY_BUT_NOT_STARTED,
             'stageSeatingReady' => $currentStage == self::STAGE_SEATING_READY,
+            'stageSeatingInProgress' => $currentStage == self::STAGE_SEATING_INPROGRESS,
             'stageStarted' => $currentStage == self::STAGE_STARTED,
             'stagePrefinished' => $currentStage == self::STAGE_PREFINISHED,
             'withAutoSeating' => $this->_rules->autoSeating(),
@@ -145,6 +147,9 @@ class TournamentControlPanel extends Controller
         } else {
             if ($this->_rules->syncEnd() && $prefinishedTablesCount == count($tables) && $notFinishedTablesCount != 0) {
                 return self::STAGE_PREFINISHED;
+            }
+            if ($this->_rules->gamesWaitingForTimer() && $notFinishedTablesCount !== (count($players) / 4)) {
+                return self::STAGE_SEATING_INPROGRESS;
             }
             if ($this->_rules->gamesWaitingForTimer() && $notFinishedTablesCount === (count($players) / 4)) {
                 return self::STAGE_SEATING_READY;
