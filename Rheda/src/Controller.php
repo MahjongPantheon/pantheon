@@ -57,6 +57,8 @@ abstract class Controller
      */
     protected $_mainTemplate = '';
 
+    protected $_useTranslit = false;
+
     public function __construct($url, $path)
     {
         $this->_url = $url;
@@ -94,9 +96,11 @@ abstract class Controller
             case 'de_CH':
             case 'de_LU':
                 $locale = 'de_DE.UTF-8';
+                $this->_useTranslit = true;
                 break;
             default:
                 $locale = 'en_US.UTF-8';
+                $this->_useTranslit = true;
         }
 
         if (setlocale(LC_ALL, $locale) === false) {
@@ -137,6 +141,9 @@ abstract class Controller
 
         if ($this->_beforeRun()) {
             $context = $this->_run();
+
+            $context = $this->_transliterate($context);
+
             $pageTitle = $this->_pageTitle(); // должно быть после run! чтобы могло использовать полученные данные
             $detector = new MobileDetect();
 
@@ -158,6 +165,17 @@ abstract class Controller
         }
 
         $this->_afterRun();
+    }
+
+    protected function _transliterate($data)
+    {
+        if ($this->_useTranslit) {
+            $tr = \Transliterator::create('Cyrillic-Latin; Latin-ASCII');
+            array_walk_recursive($data, function (&$val, $index) use ($tr) {
+                $val = $tr->transliterate($val);
+            });
+        }
+        return $data;
     }
 
     /**
