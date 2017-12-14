@@ -71,12 +71,15 @@ class GameFormatter
             $firstYakuman = true;
 
             foreach ($game['rounds'] as $round) {
+                $calculateHands = false;
+
                 switch ($round['outcome']) {
                     case 'chombo':
                         $chomboCount++;
                         break;
                     case 'ron':
                         $ronWins++;
+                        $calculateHands = true;
                         break;
                     case 'multiron':
                         if ($round['multi_ron'] == 2) {
@@ -85,9 +88,11 @@ class GameFormatter
                         if ($round['multi_ron'] == 3) {
                             $tripleronWins ++;
                         }
+                        $calculateHands = true;
                         break;
                     case 'tsumo':
                         $tsumoWins++;
+                        $calculateHands = true;
                         break;
                     case 'draw':
                         $draws++;
@@ -97,31 +102,39 @@ class GameFormatter
                         break;
                 }
 
-                if (empty($round['winner_id']) || empty($gamesData['players'][$round['winner_id']]['display_name'])) {
+                if (!$calculateHands) {
                     continue;
                 }
 
-                $winner = $gamesData['players'][$round['winner_id']]['display_name'];
-
-                if ($round['han'] < 0) { // yakuman
-                    $bestHan = $bestFu = 200;
-                    if ($firstYakuman) {
-                        $bestHandPlayers = [];
-                        $firstYakuman = false;
-                    }
-                    array_push($bestHandPlayers, $winner);
+                if (empty($round['wins'])) {
+                    $roundsData = [$round];
+                } else {
+                    $roundsData = $round['wins'];
                 }
 
-                if (($round['han'] > $bestHan) || ($round['han'] == $bestHan && $round['fu'] > $bestFu)) {
-                    $bestHan = $round['han'];
-                    $bestFu = $round['fu'];
-                    $bestHandPlayers = [];
-                    array_push($bestHandPlayers, $winner);
-                }
+                foreach ($roundsData as $roundData) {
+                    $winner = $gamesData['players'][$roundData['winner_id']]['display_name'];
 
-                if ($round['han'] == $bestHan && $round['fu'] == $bestFu) {
-                    if (!in_array($winner, $bestHandPlayers)) {
+                    if ($roundData['han'] < 0) { // yakuman
+                        $bestHan = $bestFu = 200;
+                        if ($firstYakuman) {
+                            $bestHandPlayers = [];
+                            $firstYakuman = false;
+                        }
                         array_push($bestHandPlayers, $winner);
+                    }
+
+                    if (($roundData['han'] > $bestHan) || ($roundData['han'] == $bestHan && $round['fu'] > $bestFu)) {
+                        $bestHan = $roundData['han'];
+                        $bestFu = $roundData['fu'];
+                        $bestHandPlayers = [];
+                        array_push($bestHandPlayers, $winner);
+                    }
+
+                    if ($roundData['han'] == $bestHan && $roundData['fu'] == $bestFu) {
+                        if (!in_array($winner, $bestHandPlayers)) {
+                            array_push($bestHandPlayers, $winner);
+                        }
                     }
                 }
             }
