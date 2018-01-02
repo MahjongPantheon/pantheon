@@ -44,8 +44,9 @@ export class AppComponent {
     );
 
     window.__state = this.state; // for great debug
-    this.i18n.init((_localeName: string) => {
+    this.i18n.init((localeName: string) => {
       this.state.init();
-    });
+      window.localStorage.setItem('currentLanguage', localeName);
+    }, (error: any) => console.error(error));
   }
 }
