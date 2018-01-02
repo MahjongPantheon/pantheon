@@ -25,7 +25,25 @@ export class I18nService {
             break;
           case 'en':
           default:
-            let defaultTrn: TranslationJson = { items: [], meta: {} };
+            let defaultTrn: TranslationJson = {
+              items: [], meta: {
+                projectIdVersion: '1',
+                reportMsgidBugsTo: '',
+                potCreationDate: '',
+                poRevisionDate: '',
+                lastTranslator: {
+                  name: '',
+                  email: ''
+                },
+                language: 'en',
+                languageTeam: '',
+                pluralForms: 'nplurals=1; plural=(n==1 ? 0 : 1)', // (n: number) => number
+                mimeVersion: '',
+                contentType: '',
+                contentTransferEncoding: '',
+                generatedBy: ''
+              }
+            };
             onReady('en', JSON.stringify(defaultTrn));
             break;
         }
@@ -38,24 +56,36 @@ export class I18nService {
     this.i18n = new TranslationProvider(this.i18nController);
   }
 
-  public init(onReady: (localeName: string) => void) {
+  public init(onReady: (localeName: string) => void, onError: (error: any) => void) {
+    // See also app.component.ts where this item is set
+    let lang = window.localStorage.getItem('currentLanguage');
+    if (lang) {
+      if (supportedLanguages.indexOf(lang) === -1) {
+        window.localStorage.removeItem('currentLanguage');
+        // pass further if wrong lang is contained in local storage
+      } else {
+        this.i18nController.setLocale(lang, onReady, onError);
+        return;
+      }
+    }
+
     for (let lang of window.navigator.languages) {
       if (supportedLanguages.indexOf(lang) !== -1) {
-        this.i18nController.setLocale(lang, onReady);
+        this.i18nController.setLocale(lang, onReady, onError);
         return;
       }
     }
 
     // default to en if nothing good found
-    this.i18nController.setLocale('en', onReady);
+    this.i18nController.setLocale('en', onReady, onError);
   }
 
-  public _t = this.i18n._t;
-  public _pt = this.i18n._pt;
-  public _nt = this.i18n._nt;
-  public _npt = this.i18n._npt;
-  public _gg = this.i18n._gg;
-  public _ngg = this.i18n._ngg;
-  public _pgg = this.i18n._pgg;
-  public _npgg = this.i18n._npgg;
+  get _t() { return this.i18n._t; }
+  get _pt() { return this.i18n._pt; }
+  get _nt() { return this.i18n._nt; }
+  get _npt() { return this.i18n._npt; }
+  get _gg() { return this.i18n._gg; }
+  get _ngg() { return this.i18n._ngg; }
+  get _pgg() { return this.i18n._pgg; }
+  get _npgg() { return this.i18n._npgg; }
 }
