@@ -34,3 +34,9 @@ interface Window {
 interface Navigator {
   readonly languages: string[];
 }
+
+declare module "*.json" {
+    const value: any;
+    export default value;
+}
+

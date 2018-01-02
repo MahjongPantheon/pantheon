@@ -28,3 +28,6 @@ i18n_extract:
 	./node_modules/.bin/jsonpo -s src/i18n/messages.pot.json -o src/i18n/messages.pot -p
 	rm src/i18n/messages.pot.json
 
+PHONY: i18n_update
+i18n_update:
+	./node_modules/.bin/pojson -s src/i18n/ru.po -o src/i18n/ru.json
