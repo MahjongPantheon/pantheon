@@ -59,7 +59,7 @@ export class DescriptionPipe implements PipeTransform {
     }
 
     if (value.dora) {
-      return this.i18n._t('%1 han (%3, dora: %4)', [
+      return this.i18n._t('%1 han (%2, dora: %3)', [
         value.han,
         value.yakuList,
         value.dora
@@ -67,7 +67,7 @@ export class DescriptionPipe implements PipeTransform {
     }
 
     if (!value.dora) {
-      return this.i18n._t('%1 han (%3)', [
+      return this.i18n._t('%1 han (%2)', [
         value.han,
         value.yakuList
       ]);
