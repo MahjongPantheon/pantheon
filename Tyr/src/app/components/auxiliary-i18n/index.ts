@@ -15,6 +15,9 @@ export class I18nComponent {
   get _FU() {
     return this.i18n._t('Fu');
   }
+  get _SETTINGS() {
+    return this.i18n._t('Settings');
+  }
   get _LAST_RESULTS() {
     return this.i18n._t('Latest results');
   }

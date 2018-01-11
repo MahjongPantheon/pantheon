@@ -30,27 +30,8 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 export class NavBarComponent extends I18nComponent {
   @Input() state: AppState;
   @Input() screen: AppState['_currentScreen'];
-  public logoutDisabled: boolean = false;
-  private _logoutTimer: number;
 
   constructor(protected i18n: I18nService) { super(i18n); }
-
-  ngOnInit() {
-    this.ngOnChanges();
-  }
-
-  ngOnChanges() {
-    if (this.screen === 'overview') {
-      // Disable logout button for 3 secs to avoid misclicks
-      this.logoutDisabled = true;
-      window.clearTimeout(this._logoutTimer);
-      this._logoutTimer = window.setTimeout(() => {
-        this.logoutDisabled = false;
-      }, 3000);
-    } else {
-      window.clearTimeout(this._logoutTimer);
-    }
-  }
 
   get doraOptions() {
     if (this.state.yakumanInYaku()) {
@@ -185,10 +166,8 @@ export class NavBarComponent extends I18nComponent {
     this.state.nextScreen();
   }
 
-  logout() {
-    if (window.confirm(this.i18n._t("Are you sure you want to logout? You will have to get a new pin code to login again"))) {
-      this.state.logout();
-    }
+  openSettings() {
+    this.state.openSettings();
   }
 
   onFuSelect(fu) {
