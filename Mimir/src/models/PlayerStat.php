@@ -358,13 +358,7 @@ class PlayerStatModel extends Model
                 $sessionRiichi = [];
                 /** @var $r MultiRoundPrimitive */
                 foreach ($r->rounds() as $round) {
-                    if (empty($sessionRiichi[$round->getSessionId()])) {
-                        $sessionRiichi[$round->getSessionId()] = [];
-                    }
-
-                    if ($round->getRiichiIds()) {
-                        $sessionRiichi[$round->getSessionId()] = $round->getRiichiIds();
-                    }
+                    $sessionRiichi[$round->getSessionId()] = $round->getRiichiIds() ?: [];
                 }
 
                 /** @var $r MultiRoundPrimitive */
