@@ -27,9 +27,8 @@
 <button
   class="back-button gradient-button"
   *ngIf="isScreen('overview')"
-  [disabled]="logoutDisabled"
-  (click)="logout()"
-><custom-icon [type]="'logout'"></custom-icon></button>
+  (click)="openSettings()"
+><custom-icon [type]="'settings'" resize="36"></custom-icon></button>
 <!-- Navbar for yaku select screen -->
 <div
   class="round-summary with-selectors"
@@ -104,6 +103,11 @@
 <div class="outcome-title"
      *ngIf="isScreen('paoSelect')">
   {{_SELECT_PAO}}
+</div>
+<!-- Navbar for settings screen -->
+<div class="outcome-title"
+     *ngIf="isScreen('settings')">
+  {{_SETTINGS}}
 </div>
 <!-- Navbar for other tables list -->
 <div class="outcome-title"

@@ -81,5 +81,9 @@
       [players]="state.getCurrentOtherTablePlayers()"
       [lastRound]="state.getCurrentOtherTableLastRound()"
     ></screen-other-table>
+    <screen-settings
+      *ngIf="state.currentScreen() === 'settings'"
+      [state]="state"
+    ></screen-settings>
   </div>
 </div>

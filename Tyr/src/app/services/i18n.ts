@@ -48,7 +48,7 @@ export class I18nService {
             break;
         }
       },
-        /* onFailedSubstitution: */(str: string, substitutions) => {
+      /* onFailedSubstitution: */(str: string, substitutions) => {
         console.error(`Failed i18n substitution: ${str}`, substitutions);
       },
       /* defaultPluralSelect: */(factor: number) => factor == 1 ? 0 : 1 // default english plurality rule
