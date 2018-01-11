@@ -353,15 +353,21 @@ class PlayerStatModel extends Model
             }
 
             if ($r->getOutcome() === 'multiron') {
+                $sessionRiichi = [];
                 /** @var $r MultiRoundPrimitive */
                 foreach ($r->rounds() as $round) {
-                    if ($round->getWinnerId() == $playerId && in_array($playerId, $round->getRiichiIds())) {
+                    $sessionRiichi = array_merge($sessionRiichi, $round->getRiichiIds() ?: []);
+                }
+
+                /** @var $r MultiRoundPrimitive */
+                foreach ($r->rounds() as $round) {
+                    if ($round->getWinnerId() == $playerId && in_array($playerId, $sessionRiichi)) {
                         $acc['riichi_won']++;
                     }
-                    if ($round->getWinnerId() != $playerId && in_array($playerId, $round->getRiichiIds())) {
+                    if ($round->getWinnerId() != $playerId && in_array($playerId, $sessionRiichi)) {
                         $acc['riichi_lost']++;
                     }
-                    if ($r->getLoserId() == $playerId && in_array($playerId, $round->getRiichiIds())) {
+                    if ($r->getLoserId() == $playerId && in_array($playerId, $sessionRiichi)) {
                         $acc['feed_under_riichi']++;
                     }
                 }
