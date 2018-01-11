@@ -71,15 +71,9 @@ class GameFormatter
             $firstYakuman = true;
 
             foreach ($game['rounds'] as $round) {
-                $calculateHands = false;
-
                 switch ($round['outcome']) {
-                    case 'chombo':
-                        $chomboCount++;
-                        break;
                     case 'ron':
                         $ronWins++;
-                        $calculateHands = true;
                         break;
                     case 'multiron':
                         if ($round['multi_ron'] == 2) {
@@ -88,25 +82,22 @@ class GameFormatter
                         if ($round['multi_ron'] == 3) {
                             $tripleronWins ++;
                         }
-                        $calculateHands = true;
                         break;
                     case 'tsumo':
                         $tsumoWins++;
-                        $calculateHands = true;
                         break;
+                    case 'chombo':
+                        $chomboCount++;
+                        continue; // explicit continue to prevent further hands calc
                     case 'draw':
                         $draws++;
-                        break;
+                        continue; // explicit continue to prevent further hands calc
                     case 'abort':
                         $draws++;
-                        break;
+                        continue; // explicit continue to prevent further hands calc
                 }
 
-                if (!$calculateHands) {
-                    continue;
-                }
-
-                if (empty($round['wins'])) {
+                if ($round['outcome'] != 'multiron') {
                     $roundsData = [$round];
                 } else {
                     $roundsData = $round['wins'];
