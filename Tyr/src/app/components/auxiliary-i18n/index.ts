@@ -117,4 +117,13 @@ export class I18nComponent {
   get _TABLE_NUM() {
     return this.i18n._t('Table #');
   }
+  get _SELECT_LANGUAGE() {
+    return this.i18n._t('Select preferred language');
+  }
+  get _LOGOUT() {
+    return this.i18n._t('Log out from system');
+  }
+  get _USER_ACTIONS() {
+    return this.i18n._t('User actions');
+  }
 }

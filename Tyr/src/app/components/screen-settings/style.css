@@ -1,0 +1,41 @@
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  color: #ccc;
+}
+
+.settings-container .label {
+  flex: 1;
+  margin-top: 10px;
+  padding-bottom: 2px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #999;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.settings-container .buttons {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.settings-container .buttons button {
+  background-color: #ccc;
+  font-size: 20px;
+  padding: 10px 5px;
+  border: outset 3px;
+  outline: none;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.settings-container .buttons button:active {
+  border: inset 3px;
+}
+
+.settings-container .buttons button > * {
+  flex: 1;
+}

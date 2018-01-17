@@ -1,1 +1,12 @@
-test lol
+<div class="settings-container">
+  <div class="label">{{_SELECT_LANGUAGE}}</div>
+  <div class="buttons">
+    <ng-template ngFor let-lang [ngForOf]="supportedLanguages" let-i="lang">
+      <button (click)="selectLanguage(lang)"><custom-icon type="flag-{{lang}}" resize="40"></custom-icon></button>
+    </ng-template>
+  </div>
+  <div class="label">{{_USER_ACTIONS}}</div>
+  <div class="buttons">
+    <button (click)="logout()">{{_LOGOUT}}</button>
+  </div>
+</div>
