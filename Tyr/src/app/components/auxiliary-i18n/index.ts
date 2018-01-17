@@ -7,7 +7,7 @@ export class I18nComponent {
     return this.i18n._t('no riichi');
   }
   get _FOR_YAKU() {
-    return this.i18n._t('Yaku based');
+    return this.i18n._t('Yaku');
   }
   get _FOR_DORA() {
     return this.i18n._t('Dora');
