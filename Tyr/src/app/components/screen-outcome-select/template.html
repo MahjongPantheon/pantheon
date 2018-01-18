@@ -18,13 +18,13 @@
     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <div class="wrap" *ngIf="screenEnabled">
-  <button *ngIf="abortsAllowed" (click)="select('abort');">Абортивная ничья</button>
-  <button (click)="select('chombo');">Чомбо</button>
-  <button *ngIf="multironAllowed" (click)="select('multiron');">Дабл/трипл-рон</button>
-  <button (click)="select('ron');">Рон</button>
-  <button (click)="select('tsumo');">Цумо</button>
-  <button (click)="select('draw');">Ничья</button>
+  <button *ngIf="abortsAllowed" (click)="select('abort');">{{_ABORTIVE}}</button>
+  <button (click)="select('chombo');">{{_CHOMBO}}</button>
+  <button *ngIf="multironAllowed" (click)="select('multiron');">{{_DOUBLE_OR_TRIPLE_RON}}</button>
+  <button (click)="select('ron');">{{_RON}}</button>
+  <button (click)="select('tsumo');">{{_TSUMO}}</button>
+  <button (click)="select('draw');">{{_EXHAUSTIVE}}</button>
 </div>
 <div class="wrap disabledText" *ngIf="!screenEnabled">
-  Таймер еще не запущен. Нельзя ввести раздачу.
+  {{_TIMER_NOT_STARTED}}
 </div>

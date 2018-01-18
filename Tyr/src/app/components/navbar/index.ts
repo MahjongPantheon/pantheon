@@ -20,34 +20,18 @@
 
 import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'nav-bar',
   templateUrl: './template.html',
   styleUrls: ['./style.css']
 })
-export class NavBarComponent {
+export class NavBarComponent extends I18nComponent {
   @Input() state: AppState;
   @Input() screen: AppState['_currentScreen'];
-  public logoutDisabled: boolean = false;
-  private _logoutTimer: number;
 
-  ngOnInit() {
-    this.ngOnChanges();
-  }
-
-  ngOnChanges() {
-    if (this.screen === 'overview') {
-      // Disable logout button for 3 secs to avoid misclicks
-      this.logoutDisabled = true;
-      window.clearTimeout(this._logoutTimer);
-      this._logoutTimer = window.setTimeout(() => {
-        this.logoutDisabled = false;
-      }, 3000);
-    } else {
-      window.clearTimeout(this._logoutTimer);
-    }
-  }
+  constructor(protected i18n: I18nService) { super(i18n); }
 
   get doraOptions() {
     if (this.state.yakumanInYaku()) {
@@ -88,27 +72,27 @@ export class NavBarComponent {
 
   multironTitle() {
     if (this.state.getOutcome() === 'multiron' && this.state.getMultiRonCount() === 3) {
-      return 'Трипл-рон';
+      return this.i18n._t('Triple ron');
     }
     if (this.state.getOutcome() === 'multiron' && this.state.getMultiRonCount() === 2) {
-      return 'Дабл-рон';
+      return this.i18n._t('Double ron');
     }
   }
 
   outcome() {
     switch (this.state.getOutcome()) {
       case 'ron':
-        return 'Рон';
+        return this.i18n._t('Ron');
       case 'multiron':
-        return 'Дабл/трипл рон';
+        return this.i18n._t('Double/Triple ron');
       case 'tsumo':
-        return 'Цумо';
+        return this.i18n._t('Tsumo');
       case 'draw':
-        return 'Ничья';
+        return this.i18n._t('Exhaustive draw');
       case 'abort':
-        return 'Абортивная ничья';
+        return this.i18n._t('Abortive draw');
       case 'chombo':
-        return 'Чомбо';
+        return this.i18n._t('Chombo');
       default:
         return '';
     }
@@ -182,10 +166,8 @@ export class NavBarComponent {
     this.state.nextScreen();
   }
 
-  logout() {
-    if (window.confirm("Выйти из текущего рейтинга? Для повторного входа будет нужен новый пин-код!")) {
-      this.state.logout();
-    }
+  openSettings() {
+    this.state.openSettings();
   }
 
   onFuSelect(fu) {

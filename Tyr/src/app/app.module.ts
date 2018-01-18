@@ -36,6 +36,7 @@ import { LastRoundScreen } from './components/screen-last-round';
 import { LoginScreen } from './components/screen-login';
 import { OtherTablesListScreen } from './components/screen-other-tables-list';
 import { OtherTableScreen } from './components/screen-other-table';
+import { SettingsScreen } from './components/screen-settings';
 
 import { UserItemComponent } from './components/element-user-item';
 import { YakuItemButtonComponent } from './components/element-yaku-item-button';
@@ -46,8 +47,10 @@ import { CustomIconComponent } from './components/element-custom-icon';
 import { YakumanPipe } from './helpers/yakuman.pipe';
 import { FormatRoundPipe } from './helpers/formatRound.pipe';
 import { DefaultsToPipe } from './helpers/defaultsTo.pipe';
+import { DescriptionPipe } from './helpers/makeHandDescription.pipe';
 
 import { RiichiApiService } from './services/riichiApi';
+import { I18nService } from './services/i18n';
 
 @NgModule({
   declarations: [
@@ -64,6 +67,7 @@ import { RiichiApiService } from './services/riichiApi';
     OtherTablesListScreen,
     LoginScreen,
     OtherTableScreen,
+    SettingsScreen,
 
     UserItemComponent,
     YakuItemButtonComponent,
@@ -73,7 +77,8 @@ import { RiichiApiService } from './services/riichiApi';
 
     YakumanPipe,
     FormatRoundPipe,
-    DefaultsToPipe
+    DefaultsToPipe,
+    DescriptionPipe
   ],
   imports: [
     BrowserModule,
@@ -81,7 +86,8 @@ import { RiichiApiService } from './services/riichiApi';
     HttpModule
   ],
   providers: [
-    RiichiApiService
+    RiichiApiService,
+    I18nService
   ],
   bootstrap: [AppComponent]
 })

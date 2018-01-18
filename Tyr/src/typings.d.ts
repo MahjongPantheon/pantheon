@@ -30,3 +30,13 @@ declare namespace jasmine {
 interface Window {
   __state: any;
 }
+
+interface Navigator {
+  readonly languages: string[];
+}
+
+declare module "*.json" {
+    const value: any;
+    export default value;
+}
+

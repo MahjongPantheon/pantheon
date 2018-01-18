@@ -34,12 +34,11 @@
     </div>
     <ul *ngIf="_data.outcome == 'ron' || _data.outcome == 'tsumo' || _data.outcome == 'multiron'">
       <li *ngFor="let win of getWins()">
-        <b>{{win.winner}}</b>: {{win.han | yakuman}} хан<span *ngIf="win.han < 5">, {{win.fu}} фу</span>
-        <span class="yaku-list">({{win.yakuList}}, дора: {{win.dora | defaultsTo:'0'}})</span>
+        <b>{{win.winner}}</b>: {{win | makeHandDescription}}
       </li>
     </ul>
   </div>
-  <!-- Схема выплат -->
+  <!-- Payments scheme -->
   <confirmation-scheme
       *ngIf="_dataReady"
       [players]="this.state.getPlayers()"

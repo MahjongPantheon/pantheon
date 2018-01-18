@@ -20,6 +20,7 @@
 
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Yaku } from '../../interfaces/common';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'yaku-item-button',
@@ -29,15 +30,16 @@ import { Yaku } from '../../interfaces/common';
       [class.special]="yaku.id < 0"      
       [class.pressed]="pressed"
       [disabled]="disabled"
-      >{{yaku.name}}</button>
+      >{{yaku.name(i18n)}}</button>
   `,
   styleUrls: ['style.css']
 })
-export class YakuItemButtonComponent {
+export class YakuItemButtonComponent extends I18nComponent {
   @Input() yaku: Yaku;
   @Input() pressed: boolean;
   @Input() disabled: boolean;
   @Output() onClick = new EventEmitter<Yaku>();
+  constructor(i18n: I18nService) { super(i18n); }
   yakuClick() {
     this.onClick.emit(this.yaku);
   }

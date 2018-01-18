@@ -21,31 +21,33 @@
 import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { supportedLanguages } from '../../services/i18n';
 
 @Component({
-  selector: 'screen-outcome-select',
-  templateUrl: 'template.html',
-  styleUrls: ['style.css']
+  selector: 'screen-settings',
+  templateUrl: './template.html',
+  styleUrls: ['./style.css']
 })
-export class OutcomeSelectScreen extends I18nComponent {
+export class SettingsScreen extends I18nComponent {
   @Input() state: AppState;
-  constructor(i18n: I18nService) { super(i18n); }
 
-  get abortsAllowed() {
-    return this.state.getGameConfig('withAbortives');
+  constructor(protected i18n: I18nService) { super(i18n); }
+
+  get supportedLanguages(): string[] {
+    return supportedLanguages;
   }
 
-  get multironAllowed() {
-    return !this.state.getGameConfig('withAtamahane');
+  selectLanguage(lang: string) {
+    window.localStorage.setItem('currentLanguage', lang);
+    this.i18n.init((localeName: string) => {
+      // make sure value is valid - set it again in callback
+      window.localStorage.setItem('currentLanguage', localeName);
+    }, (error: any) => console.error(error));
   }
 
-  get screenEnabled() {
-    return !this.state.isTimerWaiting();
-  }
-
-  select(outcome) {
-    this.state.initBlankOutcome(outcome);
-    this.state.nextScreen();
+  logout() {
+    if (window.confirm(this.i18n._t("Are you sure you want to logout? You will have to get a new pin code to login again"))) {
+      this.state.logout();
+    }
   }
 }
-

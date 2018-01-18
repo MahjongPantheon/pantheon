@@ -35,9 +35,9 @@
       {{getPenalty()}}
     </div>
     <div *ngIf="lastRoundInfo.outcome == 'draw'">
-      Темпай: {{getTempaiPlayers()}}
+      {{_TENPAI}}{{getTempaiPlayers()}}
       <br>
-      Нотен: {{getNotenPlayers()}}
+      {{_NOTEN}}{{getNotenPlayers()}}
     </div>
     <!-- abortive draws have no info to output -->
     <ul *ngIf="lastRoundInfo.outcome == 'ron' || lastRoundInfo.outcome == 'tsumo' || lastRoundInfo.outcome == 'multiron'" class="wins-list">
@@ -45,15 +45,13 @@
         <b>{{win.winner}}</b>
         &larr;
         <span class="loser" *ngIf="lastRoundInfo.outcome == 'ron' || lastRoundInfo.outcome == 'multiron'">({{win.loser}})</span>
-        <span class="loser" *ngIf="lastRoundInfo.outcome == 'tsumo'">(цумо)</span>
+        <span class="loser" *ngIf="lastRoundInfo.outcome == 'tsumo'">(tsumo)</span>
         <br>
-        {{win.han | yakuman}} хан<span *ngIf="win.han < 5">, {{win.fu}} фу</span>
-        <br>
-        <span class="yaku-list">({{win.yakuList}}<span *ngIf="win.dora">, дора: {{win.dora | defaultsTo:'0'}}</span>)</span>
+        {{win | makeHandDescription}}
       </li>
     </ul>
     <div *ngIf="lastRoundInfo.riichiIds.length > 0">
-      Риичи: {{getRiichiPlayers()}}
+      Riichi: {{getRiichiPlayers()}}
     </div>
   </div>
 </div>
@@ -104,7 +102,7 @@
   <div class="centered">
     <div class="edge-block">
       <div class="table-index" *ngIf="!!this.state.getTableIndex()">
-        Стол №
+        Table №
         <span>{{this.state.getTableIndex()}}</span>
       </div>
     </div>

@@ -22,18 +22,18 @@
 </div>
 <div class="riichi-table" *ngIf="!currentGameHash && !_loading">
   <div class="centered not-found">
-    Приветствуем, {{state.playerName()}}!
+    {{greeting}}
   </div>
   <div class="centered not-found">
-    На текущий момент нет активных игр с вашим участием.
+    {{_NO_YOUR_GAMES_NOW}}
   </div>
-  <button class="newgame-button" (click)="reloadOverview()" *ngIf="!isUniversalWatcher">Обновить</button>
-  <button class="newgame-button" (click)="otherTables()">Другие столы</button>
-  <button class="newgame-button" (click)="lastResults()" *ngIf="!isUniversalWatcher">Результаты последней игры</button>
-  <button class="newgame-button" (click)="newGame()" *ngIf="showNewGame">Новая игра</button>
+  <button class="newgame-button" (click)="reloadOverview()" *ngIf="!isUniversalWatcher">{{_REFRESH_PAGE}}</button>
+  <button class="newgame-button" (click)="otherTables()">{{_OTHER_TABLES}}</button>
+  <button class="newgame-button" (click)="lastResults()" *ngIf="!isUniversalWatcher">{{_PREV_GAME_RESULTS}}</button>
+  <button class="newgame-button" (click)="newGame()" *ngIf="showNewGame">{{_NEW_GAME}}</button>
   <button class="newgame-button" (click)="gotoStat()" *ngIf="showStatButton"
           style="background-color: #333; color: #ccc; border: none; text-decoration: underline">
-    Статистика <custom-icon type="newtab" style="position: absolute; right: 14px; fill: #ccc"></custom-icon>
+    {{_STATISTICS}} <custom-icon type="newtab" style="position: absolute; right: 14px; fill: #ccc"></custom-icon>
   </button>
 </div>
 <div class="riichi-table" *ngIf="currentGameHash && !_loading">
@@ -80,9 +80,9 @@
   </div>
   <div class="centered">
     <div class="edge-block">
-      <div>это вы →</div>
+      <div>{{_ITS_YOU}} →</div>
       <div class="table-index" *ngIf="!!this.state.getTableIndex()">
-        Стол №
+        {{_TABLE_NUM}}
         <span>{{this.state.getTableIndex()}}</span>
       </div>
     </div>
