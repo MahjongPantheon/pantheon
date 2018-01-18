@@ -29,7 +29,7 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 })
 export class OtherTablesListScreen extends I18nComponent {
   @Input() state: AppState;
-  constructor(protected i18n: I18nService) { super(i18n); }
+  constructor(public i18n: I18nService) { super(i18n); }
 
   ngOnInit() {
     this.state.updateOtherTablesList();

@@ -53,7 +53,7 @@ export class YakuSelectScreen extends I18nComponent {
   _tabsHeight: string = null;
   _currentUser: number = null; // Should be in sync with current multi-ron user in state!
 
-  constructor(protected i18n: I18nService) {
+  constructor(public i18n: I18nService) {
     super(i18n);
     this._viewportHeight = (window.innerHeight - 60) + 'px'; // 60 is height of navbar;
     this._tabsHeight = parseInt((window.innerWidth * 0.10).toString(), 10) + 'px'; // Should equal to margin-left of buttons & scroller-wrap

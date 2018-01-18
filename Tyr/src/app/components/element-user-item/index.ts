@@ -36,7 +36,7 @@ export class UserItemComponent extends I18nComponent {
   @Input() seat: string;
   @Input() paoSelectionMode: boolean;
   @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao']>();
-  constructor(protected i18n: I18nService) { super(i18n); }
+  constructor(public i18n: I18nService) { super(i18n); }
 
   // helpers
   showWinButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'draw']

@@ -2,7 +2,7 @@ import { I18nService } from '../../services/i18n';
 export { I18nService } from '../../services/i18n';
 
 export class I18nComponent {
-  constructor(protected i18n: I18nService) { }
+  constructor(public i18n: I18nService) { }
   get _NO_RIICHI() {
     return this.i18n._t('no riichi');
   }

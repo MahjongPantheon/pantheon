@@ -31,7 +31,7 @@ export class NavBarComponent extends I18nComponent {
   @Input() state: AppState;
   @Input() screen: AppState['_currentScreen'];
 
-  constructor(protected i18n: I18nService) { super(i18n); }
+  constructor(public i18n: I18nService) { super(i18n); }
 
   get doraOptions() {
     if (this.state.yakumanInYaku()) {

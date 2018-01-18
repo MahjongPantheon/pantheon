@@ -40,7 +40,7 @@ export class ConfirmationScreen extends I18nComponent {
   public _error: string = '';
 
   constructor(
-    protected i18n: I18nService,
+    public i18n: I18nService,
     private api: RiichiApiService
   ) {
     super(i18n);

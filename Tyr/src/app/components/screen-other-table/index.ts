@@ -34,7 +34,7 @@ export class OtherTableScreen extends I18nComponent {
   @Input() state: AppState;
   @Input() players: Player[];
   @Input() lastRound: RRoundPaymentsInfo;
-  constructor(protected i18n: I18nService) { super(i18n); }
+  constructor(public i18n: I18nService) { super(i18n); }
 
   /**
    * Flag to prevent blinking on manual updates when all data was already loaded
