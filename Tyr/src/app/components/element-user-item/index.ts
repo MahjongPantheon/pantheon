@@ -22,6 +22,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Player } from '../../interfaces/common';
 import { AppState } from '../../primitives/appstate';
 import { intersection } from 'lodash';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'user-item',
@@ -29,13 +30,13 @@ import { intersection } from 'lodash';
   styleUrls: ['style.css']
 })
 
-export class UserItemComponent {
+export class UserItemComponent extends I18nComponent {
   @Input() state: AppState;
   @Input() userData: Player;
   @Input() seat: string;
   @Input() paoSelectionMode: boolean;
-
   @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao']>();
+  constructor(protected i18n: I18nService) { super(i18n); }
 
   // helpers
   showWinButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'draw']

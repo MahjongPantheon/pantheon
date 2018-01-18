@@ -23,16 +23,19 @@ import { AppState } from '../../primitives/appstate';
 import { YakuId, yakuMap } from '../../primitives/yaku';
 import { Player } from '../../interfaces/common';
 import { RRoundPaymentsInfo } from '../../interfaces/remote';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'screen-other-table',
   templateUrl: 'template.html',
   styleUrls: ['style.css']
 })
-export class OtherTableScreen {
+export class OtherTableScreen extends I18nComponent {
   @Input() state: AppState;
   @Input() players: Player[];
   @Input() lastRound: RRoundPaymentsInfo;
+  constructor(protected i18n: I18nService) { super(i18n); }
+
   /**
    * Flag to prevent blinking on manual updates when all data was already loaded
    */
@@ -218,12 +221,15 @@ export class OtherTableScreen {
 
   getOutcomeName() {
     switch (this._lastRoundLocal.outcome) {
-      case 'ron': return 'Рон';
-      case 'tsumo': return 'Цумо';
-      case 'draw': return 'Ничья';
-      case 'abort': return 'Абортивная ничья';
-      case 'chombo': return 'Чомбо';
-      case 'multiron': return this._lastRoundLocal.winner.length === 2 ? 'Дабл-рон' : 'Трипл-рон';
+      case 'ron': return this.i18n._t('Ron');
+      case 'tsumo': return this.i18n._t('Tsumo');
+      case 'draw': return this.i18n._t('Exhaustive draw');
+      case 'abort': return this.i18n._t('Abortive draw');
+      case 'chombo': return this.i18n._t('Chombo');
+      case 'multiron': return (this._lastRoundLocal.winner.length === 2
+        ? this.i18n._t('Double ron')
+        : this.i18n._t('Triple ron')
+      );
     }
   }
 
@@ -265,7 +271,7 @@ export class OtherTableScreen {
 
   private _getYakuList(str: string) {
     const yakuIds: YakuId[] = str.split(',').map((y) => parseInt(y, 10));
-    const yakuNames: string[] = yakuIds.map((y) => yakuMap[y].name.toLowerCase());
+    const yakuNames: string[] = yakuIds.map((y) => yakuMap[y].name(this.i18n).toLowerCase());
     return yakuNames.join(', ');
   }
 

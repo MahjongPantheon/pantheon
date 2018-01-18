@@ -27,23 +27,22 @@
 <button
   class="back-button gradient-button"
   *ngIf="isScreen('overview')"
-  [disabled]="logoutDisabled"
-  (click)="logout()"
-><custom-icon [type]="'logout'"></custom-icon></button>
+  (click)="openSettings()"
+><custom-icon [type]="'settings'" resize="36"></custom-icon></button>
 <!-- Navbar for yaku select screen -->
 <div
   class="round-summary with-selectors"
   [class.ios-spec]="state.isIos"
   *ngIf="isScreen('yakuSelect')">
   <div class="yaku-han-count">
-    <div class="title">За яку</div>
+    <div class="title">{{_FOR_YAKU}}</div>
     <div class="value">
       <div class="custom-select noafter">{{han() | yakuman}}</div>
     </div>
   </div>
   <div class="separator">+</div>
   <div class="dora-han-count">
-    <div class="title">Дора</div>
+    <div class="title">{{_FOR_DORA}}</div>
     <div class="value">
       <div class="button custom-select">
         <select [(ngModel)]="selectedDora">
@@ -54,8 +53,8 @@
   </div>
   <div class="separator">/</div>
   <div class="fu-count">
-    <div class="title">Фу</div>
-    <div class="value">  
+    <div class="title">{{_FU}}</div>
+    <div class="value">
       <div class="custom-select noafter" *ngIf="han() <= 0 || han() + selectedDora > 4">N/A</div>
       <div class="button custom-select" *ngIf="han() > 0 && han() + selectedDora < 5">
         <select [(ngModel)]="selectedFu">
@@ -69,11 +68,11 @@
 <div class="round-summary"
   *ngIf="isScreen('confirmation')">
   <div class="confirmation">
-    Итог:
+    Total:
     <span *ngIf="isMultiron()">{{multironTitle()}}</span>
-    <span *ngIf="!isMultiron() && han() > 0">{{han() + selectedDora | yakuman}} хан</span>
-    <span *ngIf="!isMultiron() && han() < 0">Якуман!</span>
-    <span *ngIf="!isMultiron() && han() > 0 && han() + selectedDora < 5">{{selectedFu}} фу</span>
+    <span *ngIf="!isMultiron() && han() > 0">{{han() + selectedDora | yakuman}} han</span>
+    <span *ngIf="!isMultiron() && han() < 0">Yakuman!</span>
+    <span *ngIf="!isMultiron() && han() > 0 && han() + selectedDora < 5">{{selectedFu}} fu</span>
   </div>
 </div>
 <!-- Navbar for start screen -->
@@ -89,30 +88,35 @@
 <!-- Navbar for last game results -->
 <div class="outcome-title"
   *ngIf="isScreen('lastResults')">
-  Результаты
+  {{_LAST_RESULTS}}
 </div>
 <div class="outcome-title"
      *ngIf="isScreen('lastRound')">
-  Предыдущая раздача
+  {{_PREVIOUS_HAND}}
 </div>
 <!-- Navbar for login screen -->
 <div class="outcome-title"
      *ngIf="isScreen('login')">
-  Вход в систему
+  {{_LOGIN}}
 </div>
 <!-- Navbar for pao screen -->
 <div class="outcome-title"
      *ngIf="isScreen('paoSelect')">
-  Якуман: выбор пао
+  {{_SELECT_PAO}}
+</div>
+<!-- Navbar for settings screen -->
+<div class="outcome-title"
+     *ngIf="isScreen('settings')">
+  {{_SETTINGS}}
 </div>
 <!-- Navbar for other tables list -->
 <div class="outcome-title"
      *ngIf="isScreen('otherTablesList')">
-  Столы в игре
+  {{_OTHER_TABLES}}
 </div>
 <div class="outcome-title"
      *ngIf="isScreen('otherTable')">
-  Просмотр стола
+  {{_TABLE_VIEW}}
 </div>
 <button
   *ngIf="isScreen('playersSelect')"

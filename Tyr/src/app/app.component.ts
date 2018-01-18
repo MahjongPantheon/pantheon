@@ -22,6 +22,7 @@ import { Component, NgZone, ApplicationRef } from '@angular/core';
 import { AppState } from './primitives/appstate';
 import { Outcome } from './interfaces/common';
 import { RiichiApiService } from './services/riichiApi';
+import { I18nService } from './services/i18n';
 
 @Component({
   selector: 'riichi-app',
@@ -33,14 +34,19 @@ export class AppComponent {
   constructor(
     private appRef: ApplicationRef,
     private zone: NgZone,
-    private api: RiichiApiService
+    private api: RiichiApiService,
+    private i18n: I18nService
   ) {
     this.state = new AppState(
       this.zone,
-      this.api
+      this.api,
+      this.i18n
     );
 
     window.__state = this.state; // for great debug
-    this.state.init();
+    this.i18n.init((localeName: string) => {
+      this.state.init();
+      window.localStorage.setItem('currentLanguage', localeName);
+    }, (error: any) => console.error(error));
   }
 }

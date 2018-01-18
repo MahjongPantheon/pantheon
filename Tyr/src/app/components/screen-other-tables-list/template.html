@@ -20,7 +20,7 @@
 
 <div class="wrap scroller-wrap">
   <div class="table" *ngIf="state.getOtherTables().length === 0">
-    Ни один стол сейчас не играет.
+    {{_NO_TABLES_PLAYING_NOW}}
   </div>
   <div *ngFor="let table of state.getOtherTables()" class="table">
     <ul class="playerList">

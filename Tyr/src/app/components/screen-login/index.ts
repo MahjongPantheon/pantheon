@@ -22,15 +22,17 @@ import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
 import { RiichiApiService } from '../../services/riichiApi';
 import { Player } from '../../interfaces/common';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'screen-login',
   templateUrl: 'template.html',
   styleUrls: ['style.css']
 })
-export class LoginScreen {
+export class LoginScreen extends I18nComponent {
   @Input() state: AppState;
   @Input() api: RiichiApiService;
+  constructor(protected i18n: I18nService) { super(i18n); }
 
   public _loading: boolean = false;
   public _error: boolean = false;
