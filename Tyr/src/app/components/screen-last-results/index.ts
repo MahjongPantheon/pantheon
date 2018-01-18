@@ -32,7 +32,7 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 export class LastResultsScreen extends I18nComponent {
   @Input() state: AppState;
   @Input() api: RiichiApiService;
-  constructor(protected i18n: I18nService) { super(i18n); }
+  constructor(public i18n: I18nService) { super(i18n); }
 
   public _loading: boolean = true;
   public _noResults: boolean = false;

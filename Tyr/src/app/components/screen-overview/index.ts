@@ -34,7 +34,7 @@ export class OverviewScreen extends I18nComponent {
   @Input('loading') _loading: boolean;
   @Input() currentGameHash: string;
   @Input() currentRound: number;
-  constructor(protected i18n: I18nService) { super(i18n); }
+  constructor(public i18n: I18nService) { super(i18n); }
 
   self: Player;
   shimocha: Player;

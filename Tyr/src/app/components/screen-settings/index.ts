@@ -31,7 +31,7 @@ import { supportedLanguages } from '../../services/i18n';
 export class SettingsScreen extends I18nComponent {
   @Input() state: AppState;
 
-  constructor(protected i18n: I18nService) { super(i18n); }
+  constructor(public i18n: I18nService) { super(i18n); }
 
   get supportedLanguages(): string[] {
     return supportedLanguages;
