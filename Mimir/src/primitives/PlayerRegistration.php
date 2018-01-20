@@ -35,6 +35,7 @@ class PlayerRegistrationPrimitive extends Primitive
         'event_id'      => '_eventId',
         'player_id'     => '_playerId',
         'auth_token'    => '_token',
+        'local_id'      => '_localId'
     ];
 
     protected function _getFieldsTransforms()
@@ -42,7 +43,8 @@ class PlayerRegistrationPrimitive extends Primitive
         return [
             '_id' => $this->_integerTransform(true),
             '_eventId' => $this->_integerTransform(),
-            '_playerId' => $this->_integerTransform()
+            '_playerId' => $this->_integerTransform(),
+            '_localId' => $this->_integerTransform(true)
         ];
     }
 
@@ -63,6 +65,10 @@ class PlayerRegistrationPrimitive extends Primitive
      * @var string
      */
     protected $_token;
+    /**
+     * @var int
+     */
+    protected $_localId;
 
     protected function _create()
     {
@@ -125,6 +131,14 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
+     * @return int
+     */
+    public function getLocalId()
+    {
+        return $this->_localId;
+    }
+
+    /**
      * @param IDb $db
      * @param $playerId
      * @param $eventId
@@ -148,6 +162,16 @@ class PlayerRegistrationPrimitive extends Primitive
     {
         $this->_eventId = $event->getId();
         $this->_playerId = $player->getId();
+        return $this;
+    }
+
+    /**
+     * @param int $localId
+     * @return $this
+     */
+    public function setLocalId($localId)
+    {
+        $this->_localId = $localId;
         return $this;
     }
 

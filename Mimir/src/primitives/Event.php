@@ -59,6 +59,7 @@ class EventPrimitive extends Primitive
         'series_length'     => '_seriesLength',
         'games_status'      => '_gamesStatus',
         'hide_results'      => '_hideResults',
+        'is_prescripted'    => '_isPrescripted',
     ];
 
     protected function _getFieldsTransforms()
@@ -75,6 +76,7 @@ class EventPrimitive extends Primitive
             '_type'               => $this->_stringTransform(), // DEPRECATED: to be removed in 2.x
             '_isOnline'           => $this->_integerTransform(),
             '_isTextlog'          => $this->_integerTransform(),
+            '_isPrescripted'      => $this->_integerTransform(),
             '_syncStart'          => $this->_integerTransform(),
             '_syncEnd'            => $this->_integerTransform(),
             '_autoSeating'        => $this->_integerTransform(),
@@ -221,6 +223,11 @@ class EventPrimitive extends Primitive
      * @var int
      */
     protected $_isTextlog;
+    /**
+     * if true, event seating is predefined and no manual or automatic seating abilities are provided
+     * @var int
+     */
+    protected $_isPrescripted;
     /**
      * Tenhou lobby id (for online events)
      * @var int
@@ -702,6 +709,24 @@ class EventPrimitive extends Primitive
     public function setIsTextlog($isTextlog)
     {
         $this->_isTextlog = $isTextlog;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsPrescripted()
+    {
+        return $this->_isPrescripted;
+    }
+
+    /**
+     * @param int $isPrescripted
+     * @return EventPrimitive
+     */
+    public function setIsPrescripted($isPrescripted)
+    {
+        $this->_isPrescripted = $isPrescripted;
         return $this;
     }
 
