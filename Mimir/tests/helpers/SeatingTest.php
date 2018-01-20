@@ -376,4 +376,66 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             $this->assertLessThanOrEqual(2, $i);
         }
     }
+
+    public function testIntervalSeating()
+    {
+        $players = [
+            ['id' => 1],
+            ['id' => 2],
+            ['id' => 3],
+            ['id' => 4],
+            ['id' => 5],
+            ['id' => 6],
+            ['id' => 7],
+            ['id' => 8],
+            ['id' => 9],
+            ['id' => 10],
+            ['id' => 11],
+            ['id' => 12],
+            ['id' => 13],
+            ['id' => 14],
+            ['id' => 15],
+            ['id' => 16],
+            ['id' => 17],
+            ['id' => 18],
+            ['id' => 19],
+            ['id' => 20],
+        ];
+
+        $seating = Seating::makeIntervalSeating($players, 2);
+        $this->assertEquals([
+            [1, 3, 5, 7],
+            [9, 11, 13, 15],
+            [2, 4, 6, 8],
+            [10, 12, 14, 16],
+            [17, 18, 19, 20],
+        ], $seating, 'Seating with step 2');
+
+        $seating = Seating::makeIntervalSeating($players, 3);
+        $this->assertEquals([
+            [1, 4, 7, 10],
+            [2, 5, 8, 11],
+            [3, 6, 9, 12],
+            [13, 14, 15, 16],
+            [17, 18, 19, 20],
+        ], $seating, 'Seating with step 3');
+
+        $seating = Seating::makeIntervalSeating($players, 4);
+        $this->assertEquals([
+            [1, 5, 9, 13],
+            [2, 6, 10, 14],
+            [3, 7, 11, 15],
+            [4, 8, 12, 16],
+            [17, 18, 19, 20],
+        ], $seating, 'Seating with step 4');
+
+        $seating = Seating::makeIntervalSeating($players, 5);
+        $this->assertEquals([
+            [1, 6, 11, 16],
+            [2, 7, 12, 17],
+            [3, 8, 13, 18],
+            [4, 9, 14, 19],
+            [5, 10, 15, 20],
+        ], $seating, 'Seating with step 5');
+    }
 }
