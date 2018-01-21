@@ -33,7 +33,7 @@ class OnlineSessionModel extends Model
      * @param $gameContent string
      * @return bool
      * @throws InvalidParametersException
-     * @throws MalformedPayloadException
+     * @throws \Exception
      * @throws ParseException
      */
     public function addGame($eventId, $logUrl, $gameContent = '')

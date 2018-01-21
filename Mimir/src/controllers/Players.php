@@ -21,7 +21,7 @@ require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
 require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../models/PlayerStat.php';
-require_once __DIR__ . '/../models/Event.php';
+require_once __DIR__ . '/../models/EventUserManagement.php';
 
 /**
  * Class PlayersController
@@ -77,6 +77,7 @@ class PlayersController extends Controller
      * @param string $tenhouId tenhou username
      * @throws EntityNotFoundException
      * @throws MalformedPayloadException
+     * @throws \Exception
      * @return int player id
      */
     public function update($id, $ident, $alias, $displayName, $tenhouId)
@@ -106,6 +107,7 @@ class PlayersController extends Controller
      * Get player info by id
      * @param int $id
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return array
      */
     public function get($id)
@@ -153,12 +155,13 @@ class PlayersController extends Controller
      * Get player info by id
      * @throws InvalidParametersException
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return array
      */
     public function getFromToken()
     {
         $this->_log->addInfo('Getting info of player (by token)');
-        $data = (new EventModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
+        $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
         if (empty($data)) {
             throw new InvalidParametersException('Invalid player token', 401);
         }
@@ -184,7 +187,6 @@ class PlayersController extends Controller
     /**
      * @param int $playerId
      * @param int $eventId
-     * @throws AuthFailedException
      * @return array of session data
      */
     public function getCurrentSessions($playerId, $eventId)
@@ -214,8 +216,8 @@ class PlayersController extends Controller
     }
 
     /**
-     * @throws AuthFailedException
      * @throws InvalidParametersException
+     * @throws \Exception
      * @return array of session data
      */
     public function getCurrentSessionsFromToken()
@@ -225,7 +227,7 @@ class PlayersController extends Controller
             return [];
         }
 
-        $data = (new EventModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
+        $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
         if (empty($data)) {
             throw new InvalidParametersException('Invalid player token', 401);
         }
@@ -280,6 +282,7 @@ class PlayersController extends Controller
      * @param int $playerId
      * @param int $eventId
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return array|null
      */
     public function getLastResults($playerId, $eventId)
@@ -337,12 +340,13 @@ class PlayersController extends Controller
      *
      * @throws InvalidParametersException
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return array|null
      */
     public function getLastResultsFromToken()
     {
         $this->_log->addInfo('Getting last session results (by token)');
-        $data = (new EventModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
+        $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
         if (empty($data)) {
             throw new InvalidParametersException('Invalid player token', 401);
         }
@@ -352,6 +356,7 @@ class PlayersController extends Controller
     /**
      * @param string $playerIdent unique identifying string
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return int player id
      */
     public function getIdByIdent($playerIdent)
@@ -370,7 +375,7 @@ class PlayersController extends Controller
      * Get last recorded round for session by hashcode
      *
      * @param string $hashcode
-     * @throws EntityNotFoundException
+     * @throws \Exception
      * @return array|null
      */
     public function getLastRoundByHashcode($hashcode)
@@ -391,7 +396,7 @@ class PlayersController extends Controller
      *
      * @param int $playerId
      * @param int $eventId
-     * @throws EntityNotFoundException
+     * @throws \Exception
      * @return array|null
      */
     public function getLastRound($playerId, $eventId)
@@ -410,6 +415,7 @@ class PlayersController extends Controller
     /**
      * Common formatting for last round getter
      * @param SessionPrimitive $session
+     * @throws \Exception
      * @return array|null
      */
     protected function _getLastRoundCommon(SessionPrimitive $session)
@@ -469,13 +475,13 @@ class PlayersController extends Controller
      * Get last recorded round with player in event
      *
      * @throws InvalidParametersException
-     * @throws EntityNotFoundException
+     * @throws \Exception
      * @return array|null
      */
     public function getLastRoundFromToken()
     {
         $this->_log->addInfo('Getting last round (by token)');
-        $data = (new EventModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
+        $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
         if (empty($data)) {
             throw new InvalidParametersException('Invalid player token', 401);
         }
