@@ -22,6 +22,7 @@ require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';
 require_once __DIR__ . '/../../src/models/PlayerStat.php';
 require_once __DIR__ . '/../../src/models/Event.php';
+require_once __DIR__ . '/../../src/models/EventSeries.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
@@ -91,7 +92,7 @@ class GamesSeriesTest extends \PHPUnit_Framework_TestCase
 
     public function testGetGamesSeries()
     {
-        $data = (new EventModel($this->_db, $this->_config, $this->_meta))->getGamesSeries($this->_event);
+        $data = (new EventSeriesModel($this->_db, $this->_config, $this->_meta))->getGamesSeries($this->_event);
 
         $referenceData = [
             27 => [

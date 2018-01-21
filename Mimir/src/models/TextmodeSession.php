@@ -30,6 +30,7 @@ class TextmodeSessionModel extends Model
      * @return bool
      * @throws InvalidParametersException
      * @throws MalformedPayloadException
+     * @throws \Exception
      * @throws ParseException
      */
     public function addGame($eventId, $gameLog)

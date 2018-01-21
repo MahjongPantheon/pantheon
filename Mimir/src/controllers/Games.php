@@ -20,6 +20,7 @@ namespace Mimir;
 require_once __DIR__ . '/../models/InteractiveSession.php';
 require_once __DIR__ . '/../models/TextmodeSession.php';
 require_once __DIR__ . '/../models/OnlineSession.php';
+require_once __DIR__ . '/../models/EventUserManagement.php';
 require_once __DIR__ . '/../Controller.php';
 
 class GamesController extends Controller
@@ -33,6 +34,7 @@ class GamesController extends Controller
      * @param array $players Player id list
      * @throws InvalidUserException
      * @throws DatabaseException
+     * @throws \Exception
      * @return string Hashcode of started game
      */
     public function start($eventId, $players)
@@ -50,12 +52,13 @@ class GamesController extends Controller
      * @throws InvalidUserException
      * @throws DatabaseException
      * @throws InvalidParametersException
+     * @throws \Exception
      * @return string Hashcode of started game
      */
     public function startFromToken($players)
     {
         $this->_log->addInfo('Starting new game (by token)');
-        $data = (new EventModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
+        $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
         if (empty($data)) {
             throw new InvalidParametersException('Invalid player token', 401);
         }
@@ -67,6 +70,7 @@ class GamesController extends Controller
      * For interactive mode (tournaments), and only for administrative purposes
      *
      * @param string $gameHashcode
+     * @throws \Exception
      * @return boolean Success?
      */
     public function dropLastRound($gameHashcode)
@@ -81,8 +85,6 @@ class GamesController extends Controller
      * Explicitly force end of interactive game
      *
      * @param string $gameHashcode Hashcode of game
-     * @throws DatabaseException
-     * @throws BadActionException
      * @return bool Success?
      */
     public function end($gameHashcode)
@@ -97,8 +99,7 @@ class GamesController extends Controller
      * Finalize all pre-finished sessions in interactive tournament
      *
      * @param int $eventId
-     * @throws DatabaseException
-     * @throws BadActionException
+     * @throws \Exception
      * @return bool Success?
      */
     public function finalizeSessions($eventId)
@@ -116,8 +117,8 @@ class GamesController extends Controller
      * @param string $gameHashcode Hashcode of game
      * @param array $roundData Structure of round data
      * @param boolean $dry Dry run (without saving to db)
-     * @throws DatabaseException
      * @throws BadActionException
+     * @throws \Exception
      * @return bool|array Success|Results of dry run
      */
     public function addRound($gameHashcode, $roundData, $dry = false)
@@ -134,9 +135,8 @@ class GamesController extends Controller
      * @param integer $eventId Hashcode of game
      * @param integer $playerId Id of penalized player
      * @param integer $amount Penalty amount
-     * @param string $reason Panelty reason
-     * @throws DatabaseException
-     * @throws BadActionException
+     * @param string $reason Penalty reason
+     * @throws \Exception
      * @return bool Success?
      */
     public function addPenalty($eventId, $playerId, $amount, $reason)
@@ -171,6 +171,7 @@ class GamesController extends Controller
      * @param string $gameHashCode
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
+     * @throws \Exception
      * @return array
      */
     public function getSessionOverview($gameHashCode)
@@ -217,6 +218,7 @@ class GamesController extends Controller
      * @param string $text
      * @return bool
      * @throws InvalidParametersException
+     * @throws \Exception
      * @throws ParseException
      */
     public function addTextLog($eventId, $text)
@@ -236,6 +238,7 @@ class GamesController extends Controller
      * @param string $link
      * @return bool
      * @throws InvalidParametersException
+     * @throws \Exception
      * @throws ParseException
      */
     public function addOnlineReplay($eventId, $link)
