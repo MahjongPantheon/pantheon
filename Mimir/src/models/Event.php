@@ -139,6 +139,62 @@ class EventModel extends Model
     }
 
     /**
+     * Get config, status and error list for current prescripted seating
+     *
+     * @param integer $eventId
+     * @return array
+     * @throws \Exception
+     */
+    public function getPrescriptedConfig($eventId)
+    {
+        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
+        if (empty($prescript)) {
+            return [
+                'event_id' => $eventId,
+                'next_session_index' => 1,
+                'prescript' => null,
+                'check_errors' => [
+                    'No predefined seating yet'
+                ]
+            ];
+        }
+
+        $regData = PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventId);
+
+        return [
+            'event_id' => $eventId,
+            'next_session_index' => $prescript[0]->getNextGameIndex(),
+            'prescript' => $prescript[0]->getScriptAsString(),
+            'check_errors' => $prescript[0]->getCheckErrors($regData)
+        ];
+    }
+
+    /**
+     * Update prescripted config and status. No errors are checked here.
+     *
+     * @param integer $eventId
+     * @param integer $nextSessionIndex
+     * @param string $prescriptText
+     * @return bool
+     * @throws \Exception
+     */
+    public function updatePrescriptedConfig($eventId, $nextSessionIndex, $prescriptText)
+    {
+        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
+        if (empty($prescript)) {
+            $prescript = [
+                (new EventPrescriptPrimitive($this->_db))
+                    ->setEventId($eventId)
+            ];
+        }
+
+        return $prescript[0]
+            ->setNextGameIndex($nextSessionIndex)
+            ->setScriptAsString($prescriptText)
+            ->save();
+    }
+
+        /**
      * @param SessionPrimitive[] $lastGames
      * @throws \Exception
      * @return array

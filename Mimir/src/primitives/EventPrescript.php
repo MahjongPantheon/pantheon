@@ -51,10 +51,10 @@ class EventPrescriptPrimitive extends Primitive
     {
         return [
             'serialize' => function ($obj) {
-                return $this->_packSession($obj);
+                return $this->_packScript($obj);
             },
             'deserialize' => function ($str) {
-                return $this->_unpackSession($str);
+                return $this->_unpackScript($str);
             }
         ];
     }
@@ -63,10 +63,14 @@ class EventPrescriptPrimitive extends Primitive
      * @param string $prescript
      * @return int[][][]
      */
-    protected function _unpackSession($prescript)
+    protected function _unpackScript($prescript)
     {
         $sessions = [];
         foreach (explode("\n\n", $prescript) as $sessionScript) {
+            if (empty($sessionScript)) {
+                continue;
+            }
+            $sessionScript = trim($sessionScript);
             $tables = explode("\n", $sessionScript);
             $sessions []= array_map(function ($table) {
                 return array_map('intval', explode('-', $table));
@@ -80,7 +84,7 @@ class EventPrescriptPrimitive extends Primitive
      * @param int[][][] $prescriptObj
      * @return string
      */
-    protected function _packSession($prescriptObj)
+    protected function _packScript($prescriptObj)
     {
         $sessions = [];
         foreach ($prescriptObj as $sessionObj) {
@@ -217,6 +221,24 @@ class EventPrescriptPrimitive extends Primitive
     }
 
     /**
+     * @return string
+     */
+    public function getScriptAsString()
+    {
+        return $this->_packScript($this->_script);
+    }
+
+    /**
+     * @param $script
+     * @return EventPrescriptPrimitive
+     */
+    public function setScriptAsString($script)
+    {
+        $this->_script = $this->_unpackScript($script);
+        return $this;
+    }
+
+    /**
      * @return int[][]
      */
     public function getNextGameSeating()
@@ -250,5 +272,42 @@ class EventPrescriptPrimitive extends Primitive
     {
         $this->_nextGameIndex = $nextGameIndex;
         return $this;
+    }
+
+    /**
+     * Check current prescript for mistakes and output error list
+     *
+     * @param $localIdMap
+     * @return string[]
+     */
+    public function getCheckErrors($localIdMap)
+    {
+        $errors = [];
+        for ($sessionIdx = 0; $sessionIdx < count($this->_script); $sessionIdx++) {
+            $playersInSession = [];
+            for ($tableIdx = 0; $tableIdx < count($this->_script[$sessionIdx]); $tableIdx++) {
+                for ($playerIdx = 0; $playerIdx < count($this->_script[$sessionIdx][$tableIdx]); $playerIdx++) {
+                    // Check for duplicates
+                    $localId = $this->_script[$sessionIdx][$tableIdx][$playerIdx];
+                    if (!empty($playersInSession[$localId])) {
+                        $errors []= "Duplicate local player: #$localId " .
+                            '(at session #' . ($sessionIdx + 1) .
+                            ', at table #' . ($tableIdx + 1) .
+                            ', position #' . ($playerIdx + 1) . ')';
+                    }
+                    $playersInSession[$localId] = true;
+
+                    // Check for existence
+                    if (empty($localIdMap[$localId])) {
+                        $errors []= "Player not exists: wrong local id #$localId " .
+                            '(at session #' . ($sessionIdx + 1) .
+                            ', at table #' . ($tableIdx + 1) .
+                            ', position #' . ($playerIdx + 1) . ')';
+                    }
+                }
+            }
+        }
+
+        return $errors;
     }
 }
