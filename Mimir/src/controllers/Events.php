@@ -601,4 +601,52 @@ class EventsController extends Controller
         $this->_log->addInfo('Successfully toggle hide results flag for event id#' . $eventId);
         return $success;
     }
+
+    /**
+     * Get prescripted config for event
+     *
+     * @param integer $eventId
+     * @return mixed
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function getPrescriptedEventConfig($eventId)
+    {
+        $this->_log->addInfo('Getting prescripted config for event id#' . $eventId);
+
+        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        $config = (new EventModel($this->_db, $this->_config, $this->_meta))
+            ->getPrescriptedConfig($eventId);
+        $this->_log->addInfo('Successfully received prescripted config for event id#' . $eventId);
+        return $config;
+    }
+
+    /**
+     * Update prescripted config for event
+     *
+     * @param integer $eventId
+     * @param integer $currentSessionIndex
+     * @param string $prescript
+     * @return mixed
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function updatePrescriptedEventConfig($eventId, $currentSessionIndex, $prescript)
+    {
+        $this->_log->addInfo('Updating prescripted config for event id#' . $eventId);
+
+        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        $success = (new EventModel($this->_db, $this->_config, $this->_meta))
+            ->updatePrescriptedConfig($eventId, $currentSessionIndex, $prescript);
+        $this->_log->addInfo('Successfully updated prescripted config for event id#' . $eventId);
+        return $success;
+    }
 }
