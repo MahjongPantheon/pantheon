@@ -337,7 +337,8 @@ class EventsController extends Controller
             'seriesLength'        => $event[0]->getSeriesLength(),
             'gamesStatus'         => $event[0]->getGamesStatus(),
             'hideResults'         => (bool)$event[0]->getHideResults(),
-            'hideAddReplayButton' => $hideAddReplayButton
+            'hideAddReplayButton' => $hideAddReplayButton,
+            'isPrescripted'       => (bool)$event[0]->getIsPrescripted(),
         ];
 
         $this->_log->addInfo('Successfully received config for event id# ' . $eventId);
@@ -629,13 +630,13 @@ class EventsController extends Controller
      * Update prescripted config for event
      *
      * @param integer $eventId
-     * @param integer $currentSessionIndex
+     * @param integer $nextSessionIndex
      * @param string $prescript
      * @return mixed
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePrescriptedEventConfig($eventId, $currentSessionIndex, $prescript)
+    public function updatePrescriptedEventConfig($eventId, $nextSessionIndex, $prescript)
     {
         $this->_log->addInfo('Updating prescripted config for event id#' . $eventId);
 
@@ -645,7 +646,7 @@ class EventsController extends Controller
         }
 
         $success = (new EventModel($this->_db, $this->_config, $this->_meta))
-            ->updatePrescriptedConfig($eventId, $currentSessionIndex, $prescript);
+            ->updatePrescriptedConfig($eventId, $nextSessionIndex, $prescript);
         $this->_log->addInfo('Successfully updated prescripted config for event id#' . $eventId);
         return $success;
     }
