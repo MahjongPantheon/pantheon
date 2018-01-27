@@ -646,7 +646,7 @@ class EventsController extends Controller
         }
 
         $success = (new EventModel($this->_db, $this->_config, $this->_meta))
-            ->updatePrescriptedConfig($eventId, $nextSessionIndex, $prescript);
+            ->updatePrescriptedConfig($eventId, $nextSessionIndex - 1, $prescript);
         $this->_log->addInfo('Successfully updated prescripted config for event id#' . $eventId);
         return $success;
     }

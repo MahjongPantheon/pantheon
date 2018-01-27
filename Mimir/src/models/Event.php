@@ -164,7 +164,7 @@ class EventModel extends Model
 
         return [
             'event_id' => $eventId,
-            'next_session_index' => $prescript[0]->getNextGameIndex(),
+            'next_session_index' => $prescript[0]->getNextGameIndex() + 1,
             'prescript' => $prescript[0]->getScriptAsString(),
             'check_errors' => $prescript[0]->getCheckErrors($regData)
         ];
