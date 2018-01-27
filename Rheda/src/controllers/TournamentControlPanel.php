@@ -115,6 +115,17 @@ class TournamentControlPanel extends Controller
 
         $currentStage = $this->_determineStage($tablesFormatted, $players, $timerState);
 
+        $nextPrescriptedSeating = [];
+        if ($this->_rules->isPrescripted() && $currentStage == self::STAGE_READY_BUT_NOT_STARTED) {
+            try {
+                $nextPrescriptedSeating = $this->_api->execute('getNextPrescriptedSeating', [$this->_eventId]);
+            } catch (\Exception $e) {
+                return [
+                    'error' => $e->getMessage()
+                ];
+            }
+        }
+
         return [
             'error' => null,
             'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
@@ -127,6 +138,8 @@ class TournamentControlPanel extends Controller
             'stagePrefinished' => $currentStage == self::STAGE_PREFINISHED,
             'withAutoSeating' => $this->_rules->autoSeating(),
             'hideResults' => $this->_rules->hideResults(),
+            'isPrescripted' => $this->_rules->isPrescripted(),
+            'nextPrescriptedSeating' => $nextPrescriptedSeating
         ];
     }
 

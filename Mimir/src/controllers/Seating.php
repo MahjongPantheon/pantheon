@@ -202,6 +202,12 @@ class SeatingController extends Controller
         $gamesWillStart = $this->_updateEventStatus($eventId);
         $tableIndex = 1;
         foreach ($seating as $table) {
+            $table = array_filter($table);
+            if (empty($table) || count($table) != 4) {
+                $this->_log->addInfo('Failed to form a table from predefined seating at event #' . $eventId);
+                continue;
+            }
+
             (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
@@ -253,7 +259,12 @@ class SeatingController extends Controller
     public function getNextSeatingForPrescriptedEvent($eventId)
     {
         $seating = $this->_getNextPrescriptedSeating($eventId);
-        $players = PlayerPrimitive::findById($this->_db, array_reduce($seating, 'array_merge', []));
+        $playerIds = array_filter(array_reduce($seating, 'array_merge', []));
+        if (empty($playerIds)) {
+            throw new InvalidParametersException('No valid players found in predefined seating');
+        }
+
+        $players = PlayerPrimitive::findById($this->_db, $playerIds);
         /** @var PlayerPrimitive[] $playersMap */
         $playersMap = [];
         foreach ($players as $player) {
