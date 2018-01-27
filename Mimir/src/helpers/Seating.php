@@ -545,4 +545,50 @@ class Seating
 
         return $rand;
     }
+
+    /**
+     * Make interval seating
+     * Players from the top are seating with interval of $step, but if table count is
+     * not divisible by $step, rest of players are seated with step 1.
+     *
+     * @param $currentRatingTable PlayerPrimitive[] :ordered list
+     * @param $step
+     * @param $randomize
+     * @return array
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public static function makeIntervalSeating($currentRatingTable, $step, $randomize = false)
+    {
+        srand(crc32(microtime()));
+        $tables = [];
+        $currentTable = [];
+
+        // These guys from bottom counld not be placed with desired interval, so they play with interval 1
+        $playersToSeatWithNoInterval = 4 * ((count($currentRatingTable) / 4) % $step);
+        // These guys from top should be placed as required
+        $playersPossibleToSeatWithInterval = count($currentRatingTable) - $playersToSeatWithNoInterval;
+
+        // Fill tables with interval of $step
+        for ($offset = 0; $offset < $step; $offset++) {
+            for ($i = 0; $i < $playersPossibleToSeatWithInterval; $i += $step) {
+                $currentTable []= $currentRatingTable[$offset + $i]['id'];
+                if (count($currentTable) == 4) {
+                    $tables []= $randomize ? self::shuffle($currentTable) : $currentTable;
+                    $currentTable = [];
+                }
+            }
+        }
+
+        // Fill rest of tables with interval 1
+        for ($i = $playersPossibleToSeatWithInterval; $i < count($currentRatingTable); $i++) {
+            $currentTable []= $currentRatingTable[$i]['id'];
+            if (count($currentTable) == 4) {
+                $tables []= $randomize ? self::shuffle($currentTable) : $currentTable;
+                $currentTable = [];
+            }
+        }
+
+        return $tables;
+    }
 }
