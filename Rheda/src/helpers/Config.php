@@ -47,6 +47,7 @@ class Config
     protected $_gamesStatus = false;
     protected $_hideResults = false;
     protected $_hideAddReplayButton = false;
+    protected $_isPrescripted = false;
 
     public static function fromRaw($arr)
     {
@@ -370,5 +371,13 @@ class Config
     public function hideAddReplayButton()
     {
         return $this->_hideAddReplayButton;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPrescripted()
+    {
+        return $this->_isPrescripted;
     }
 }
