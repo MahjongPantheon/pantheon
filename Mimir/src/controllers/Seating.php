@@ -197,25 +197,9 @@ class SeatingController extends Controller
      */
     public function makePrescriptedSeating($eventId)
     {
-        $this->_checkIfAllowed($eventId);
         $this->_log->addInfo('Creating new prescripted seating for event #' . $eventId);
+        $seating = $this->_getNextPrescriptedSeating($eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
-
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
-        if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
-        }
-
-        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
-        if (empty($prescript)) {
-            throw new InvalidParametersException('Event prescript for id#' . $eventId . ' not found in DB');
-        }
-        $prescriptForSession = $prescript[0]->getNextGameSeating();
-        $seating = Seating::makePrescriptedSeating(
-            $prescriptForSession,
-            PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventId)
-        );
-
         $tableIndex = 1;
         foreach ($seating as $table) {
             (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
@@ -227,6 +211,65 @@ class SeatingController extends Controller
             $this->_log->addInfo('Started all games by prescripted seating for event #' . $eventId);
         }
         return true;
+    }
+
+    /**
+     * @param $eventId
+     * @return \int[][]
+     * @throws AuthFailedException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    protected function _getNextPrescriptedSeating($eventId)
+    {
+        $this->_checkIfAllowed($eventId);
+        $this->_log->addInfo('Getting next seating for event #' . $eventId);
+
+        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
+        if (empty($prescript)) {
+            throw new InvalidParametersException('Event prescript for id#' . $eventId . ' not found in DB');
+        }
+        $prescriptForSession = $prescript[0]->getNextGameSeating();
+        return Seating::makePrescriptedSeating(
+            $prescriptForSession,
+            PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventId)
+        );
+    }
+
+    /**
+     * Get list of tables for next session. Each table is a list of players data.
+     *
+     * @param integer $eventId
+     * @return array
+     * @throws AuthFailedException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function getNextSeatingForPrescriptedEvent($eventId)
+    {
+        $seating = $this->_getNextPrescriptedSeating($eventId);
+        $players = PlayerPrimitive::findById($this->_db, array_reduce($seating, 'array_merge', []));
+        /** @var PlayerPrimitive[] $playersMap */
+        $playersMap = [];
+        foreach ($players as $player) {
+            $playersMap[$player->getId()] = $player;
+        }
+
+        return array_map(function($table) use ($playersMap) {
+            array_map(function($playerId) use ($playersMap) {
+                return [
+                    'id' => $playersMap[$playerId]->getId(),
+                    'alias' => $playersMap[$playerId]->getAlias(),
+                    'display_name' => $playersMap[$playerId]->getDisplayName(),
+                    'is_replacement' => $playersMap[$playerId]->getIsReplacement()
+                ];
+            }, $table);
+        }, $seating);
     }
 
     /**
