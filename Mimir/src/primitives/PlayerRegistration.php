@@ -222,4 +222,25 @@ class PlayerRegistrationPrimitive extends Primitive
         }
         return $result[0];
     }
+
+    /**
+     * Finds all players registered to event.
+     * Output array has player local id as key and player id as value.
+     *
+     * @param IDb $db
+     * @param $eventId
+     * @return array [local_id => Player_id, ...]
+     * @throws \Exception
+     */
+    public static function findLocalIdsMapByEvent(IDb $db, $eventId)
+    {
+        $map = [];
+        /** @var PlayerRegistrationPrimitive[] $items */
+        $items = self::_findBy($db, 'event_id', [$eventId]);
+
+        foreach ($items as $regItem) {
+            $map[$regItem->getLocalId()] = $regItem->getPlayerId();
+        }
+        return $map;
+    }
 }

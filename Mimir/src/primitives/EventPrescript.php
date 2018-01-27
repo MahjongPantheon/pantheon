@@ -51,12 +51,44 @@ class EventPrescriptPrimitive extends Primitive
     {
         return [
             'serialize' => function ($obj) {
-                return implode("\n\n", $obj);
+                return $this->_packSession($obj);
             },
             'deserialize' => function ($str) {
-                return explode("\n\n", $str);
+                return $this->_unpackSession($str);
             }
         ];
+    }
+
+    /**
+     * @param string $prescript
+     * @return int[][][]
+     */
+    protected function _unpackSession($prescript)
+    {
+        $sessions = [];
+        foreach (explode("\n\n", $prescript) as $sessionScript) {
+            $tables = explode("\n", $sessionScript);
+            $sessions []= array_map(function ($table) {
+                return array_map('intval', explode('-', $table));
+            }, $tables);
+        }
+
+        return $sessions;
+    }
+
+    /**
+     * @param int[][][] $prescriptObj
+     * @return string
+     */
+    protected function _packSession($prescriptObj)
+    {
+        $sessions = [];
+        foreach ($prescriptObj as $sessionObj) {
+            $sessions []= implode("\n", array_map(function ($table) {
+                return implode('-', $table);
+            }, $sessionObj));
+        }
+        return implode("\n\n", $sessions);
     }
 
     /**
@@ -75,8 +107,16 @@ class EventPrescriptPrimitive extends Primitive
      */
     protected $_event;
     /**
-     * Ordered array of seating scripts for each tournament session
-     * @var string[]
+     * Predefined seating for all sessions:
+     *
+     * [
+     *   session_index => [
+     *      table_index => [player_local_id, player_local_id, player_local_id, player_local_id],
+     *      ....
+     *   ],
+     *   ....
+     * ]
+     * @var int[][][]
      */
     protected $_script;
     /**
@@ -169,7 +209,7 @@ class EventPrescriptPrimitive extends Primitive
     }
 
     /**
-     * @return string[]
+     * @return int[][][]
      */
     public function getScript()
     {
@@ -177,7 +217,7 @@ class EventPrescriptPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return int[][]
      */
     public function getNextGameSeating()
     {

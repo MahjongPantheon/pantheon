@@ -187,6 +187,49 @@ class SeatingController extends Controller
     }
 
     /**
+     * @param integer $eventId
+     * @return bool
+     * @throws AuthFailedException
+     * @throws DatabaseException
+     * @throws InvalidParametersException
+     * @throws InvalidUserException
+     * @throws \Exception
+     */
+    public function makePrescriptedSeating($eventId)
+    {
+        $this->_checkIfAllowed($eventId);
+        $this->_log->addInfo('Creating new prescripted seating for event #' . $eventId);
+        $gamesWillStart = $this->_updateEventStatus($eventId);
+
+        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
+        if (empty($prescript)) {
+            throw new InvalidParametersException('Event prescript for id#' . $eventId . ' not found in DB');
+        }
+        $prescriptForSession = $prescript[0]->getNextGameSeating();
+        $seating = Seating::makePrescriptedSeating(
+            $prescriptForSession,
+            PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventId)
+        );
+
+        $tableIndex = 1;
+        foreach ($seating as $table) {
+            (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
+                ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
+        }
+
+        $this->_log->addInfo('Created new prescripted seating for event #' . $eventId);
+        if ($gamesWillStart) {
+            $this->_log->addInfo('Started all games by prescripted seating for event #' . $eventId);
+        }
+        return true;
+    }
+
+    /**
      * Update event "seating ready" status.
      * This should be done before games start, or admin panel will show some inadequate data.
      * @param $eventId
