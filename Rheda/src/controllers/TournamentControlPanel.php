@@ -53,10 +53,10 @@ class TournamentControlPanel extends Controller
                     case 'shuffledSeating':
                         $this->_api->execute('makeShuffledSeating', [$this->_eventId, 1, mt_rand(100000, 999999)]);
                         break;
-                    case 'manualSeating':
+                    case 'intervalSeating':
                         $this->_api->execute(
-                            'makeManualSeating',
-                            [$this->_eventId, $_POST['description'], $_POST['randomize'] == 'true']
+                            'makeIntervalSeating',
+                            [$this->_eventId, intval($_POST['step'])]
                         );
                         break;
                     case 'swissSeating':
