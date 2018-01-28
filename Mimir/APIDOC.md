@@ -362,6 +362,17 @@ Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
 
+### updatePlayersLocalIds
+Parameters:
+* **$eventId** (_integer_) 
+* **$idMap** (_array_) Mapping of player_id => local_id
+
+Returns: _bool_ 
+
+Exceptions:
+* _AuthFailedException_ 
+* _\Exception_ 
+
 ### startGame
 Parameters:
 * **$eventId** (_int_) Event this session belongs to

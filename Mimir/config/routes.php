@@ -68,6 +68,7 @@ return [
     'getAllEnrolled'     => ['EventsController', 'getAllEnrolledPlayers'],
     'getAchievements'    => ['EventsController', 'getAchievements'],
     'toggleHideResults'  => ['EventsController', 'toggleHideResults'],
+    'updatePlayersLocalIds' => ['EventsController', 'updateLocalIds'],
     'startGame'          => ['GamesController', 'start'],
     'endGame'            => ['GamesController', 'end'],
     'finalizeSessions'   => ['GamesController', 'finalizeSessions'],
