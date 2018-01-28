@@ -154,6 +154,46 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
+     * @param IDb $db
+     * @param $eventId
+     * @return PlayerRegistrationPrimitive[]
+     * @throws \Exception
+     */
+    public static function findByEventId(IDb $db, $eventId)
+    {
+        return self::_findBy($db, 'event_id', [$eventId]);
+    }
+
+    /**
+     * Update players' local ids mapping for prescripted event
+     *
+     * @param IDb $db
+     * @param $eventId
+     * @param $idMap
+     * @throws \Exception
+     * @return boolean
+     */
+    public static function updateLocalIds(IDb $db, $eventId, $idMap)
+    {
+        $regs = self::findByEventId($db, $eventId);
+        $upsertData = [];
+        foreach ($regs as $regItem) {
+            if (empty($idMap[$regItem->getPlayerId()])) {
+                continue;
+            }
+
+            $upsertData []= [
+                'id'            => $regItem->getId(),
+                'event_id'      => $eventId,
+                'player_id'     => $regItem->getPlayerId(),
+                'auth_token'    => $regItem->getToken(),
+                'local_id'      => $idMap[$regItem->getPlayerId()]
+            ];
+        }
+        return $db->upsertQuery(self::$_table, $upsertData, ['id']);
+    }
+
+    /**
      * @param PlayerPrimitive $player
      * @param EventPrimitive $event
      * @return PlayerRegistrationPrimitive

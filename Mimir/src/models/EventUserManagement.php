@@ -108,6 +108,10 @@ class EventUserManagementModel extends Model
      */
     public function unregisterPlayer($playerId, $eventId)
     {
+        if (!$this->checkAdminToken()) {
+            throw new AuthFailedException('Only administrators are allowed to enroll players to event');
+        }
+
         $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId);
         if (empty($regItem)) {
             return;
@@ -160,6 +164,24 @@ class EventUserManagementModel extends Model
 
         $eItem->drop();
         return $token;
+    }
+
+    /**
+     * Update players' local id mapping for prescripted event
+     *
+     * @param $eventId
+     * @param $idMap
+     * @return bool
+     * @throws AuthFailedException
+     * @throws \Exception
+     */
+    public function updateLocalIds($eventId, $idMap)
+    {
+        if (!$this->checkAdminToken()) {
+            throw new AuthFailedException('Only administrators are allowed to update local players\' ids');
+        }
+
+        return PlayerRegistrationPrimitive::updateLocalIds($this->_db, $eventId, $idMap);
     }
 
     /**

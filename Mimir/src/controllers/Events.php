@@ -215,6 +215,9 @@ class EventsController extends Controller
     }
 
     /**
+     * Enroll player to registration lists. Player should make a self-registration after this, or
+     * administrator may approve the player manually, and only after that the player will appear in rating table.
+     *
      * @param integer $playerId
      * @param integer $eventId
      * @throws AuthFailedException
@@ -230,6 +233,24 @@ class EventsController extends Controller
             ->enrollPlayer($eventId, $playerId);
         $this->_log->addInfo('Successfully enrolled player id# ' . $playerId . ' for event id# ' . $eventId);
         return $pin;
+    }
+
+    /**
+     * Update static local identifiers for events with predefined seating.
+     *
+     * @param integer $eventId
+     * @param array $idMap Mapping of player_id => local_id
+     * @return bool
+     * @throws AuthFailedException
+     * @throws \Exception
+     */
+    public function updateLocalIds($eventId, $idMap)
+    {
+        $this->_log->addInfo('Updating players\' local ids for event id# ' . $eventId);
+        $success = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))
+            ->updateLocalIds($eventId, $idMap);
+        $this->_log->addInfo('Successfully updated players\' local ids for event id# ' . $eventId);
+        return $success;
     }
 
     /**
