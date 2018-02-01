@@ -325,8 +325,13 @@ class OnlineParser
 
     protected function _tokenGO(\XMLReader $reader, SessionPrimitive $session)
     {
-        $lobby = $reader->getAttribute('lobby');
         $eventLobby = $session->getEvent()->getLobbyId();
+        // we didn't set lobby restriction in the config
+        if (!$eventLobby) {
+            return;
+        }
+
+        $lobby = $reader->getAttribute('lobby');
         if ($eventLobby != $lobby) {
             throw new ParseException('Provided replay doesn\'t belong to the event lobby ' . $eventLobby);
         }
