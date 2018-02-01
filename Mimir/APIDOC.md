@@ -475,6 +475,29 @@ Exceptions:
 * _InvalidParametersException_ 
 * _AuthFailedException_ 
 
+### generateSwissSeating
+Parameters:
+* **$eventId** (_int_) 
+
+Returns: _array_ a multidimensional numerically indexed array
+
+Exceptions:
+* _AuthFailedException_ 
+* _InvalidParametersException_ 
+
+### makeIntervalSeating
+Parameters:
+* **$eventId** (_int_) 
+* **$step** (_int_) 
+
+Returns: _bool_ 
+
+Exceptions:
+* _AuthFailedException_ 
+* _DatabaseException_ 
+* _InvalidParametersException_ 
+* _InvalidUserException_ 
+
 ### makeManualSeating
 Parameters:
 * **$eventId** (_int_) 

@@ -85,6 +85,27 @@ class SeatingController extends Controller
     }
 
     /**
+     * Generate a new swiss seating.
+     * It is here because of online tournaments.
+     *
+     * @param int $eventId
+     * @throws AuthFailedException
+     * @throws InvalidParametersException
+     * @return array a multidimensional numerically indexed array
+     */
+    public function generateSwissSeating($eventId)
+    {
+        $this->_checkIfAllowed($eventId);
+        $this->_log->addInfo('Generating new swiss seating for event #' . $eventId);
+
+        list ($playersMap, $tables) = $this->_getData($eventId);
+        $seating = array_chunk(array_keys(Seating::swissSeating($playersMap, $tables)), 4);
+
+        $this->_log->addInfo('Generated new swiss seating for event #' . $eventId);
+        return $seating;
+    }
+
+    /**
      * Make new manual seating.
      * This will also start games immediately if timer is not used.
      *
@@ -202,12 +223,12 @@ class SeatingController extends Controller
     protected function _getData($eventId)
     {
         $playersMap = [];
-        
+
         $event = EventPrimitive::findById($this->_db, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
-        
+
         $histories = PlayerHistoryPrimitive::findLastByEvent($this->_db, $eventId);
         if (!empty($histories)) {
             foreach ($histories as $h) {
