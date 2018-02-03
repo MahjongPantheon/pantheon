@@ -135,3 +135,17 @@ function plotHands (handValueStats, yakuStats, i18n) {
         }
     });
 }
+
+function saveLocalIds(selectorClass, targetInputId, formId) {
+    var sourceInputs = $('.' + selectorClass);
+    var targetInput = $('#' + targetInputId);
+    var form = $('#' + formId);
+    var mapping = {};
+    for (var i = 0; i < sourceInputs.length; i++) {
+        mapping[parseInt(sourceInputs[i].getAttribute('data-player-id'), 10)] = parseInt(sourceInputs[i].value, 10) || null;
+    }
+
+    targetInput.get(0).value = JSON.stringify(mapping);
+    form.submit();
+    return true; // called on submit, should return true
+}

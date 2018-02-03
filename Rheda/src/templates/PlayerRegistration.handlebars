@@ -26,7 +26,7 @@
 {{/error}}
 <hr />
 <h4>{{_p 'Pre-registration list (%d)' enrolledCount}}</h4>
-<table class="table table-condensed table-stripped">
+<table class="table table-condensed table-striped">
     <tr>
         <th>{{_t 'Player'}}</th>
         <th>{{_t 'PIN'}}</th>
@@ -48,10 +48,13 @@
 </table>
 <hr />
 <h4>{{_p 'Registered players (%d)' registeredCount}}</h4>
-<table class="table table-condensed table-stripped">
+<table class="table table-condensed table-striped table-hover">
     <tr>
         <th>{{_t 'Player'}}</th>
         <th>{{_t 'Admin actions'}}</th>
+        {{#prescriptedEvent}}
+            <th>{{_t 'Local id'}}</th>
+        {{/prescriptedEvent}}
     </tr>
 {{#registered}}
     <tr>
@@ -68,6 +71,21 @@
                 <input class="btn btn-large btn-danger" type="submit" value="{{_t 'Remove'}}" onclick="return confirm('{{_p 'Remove player %s?' display_name}}');" />
             </form>
         </td>
+        {{#prescriptedEvent}}
+            <td><input type="text" tabindex="{{index}}" value="{{local_id}}" class="local-id-selector form-control" data-player-id="{{id}}" /></td>
+        {{/prescriptedEvent}}
     </tr>
 {{/registered}}
 </table>
+{{#prescriptedEvent}}
+    <hr />
+    <form action="" method="post" id="id_map_form">
+        <input type="hidden" name="action_type" value="save_local_ids" />
+        <input type="hidden" name="map_json" value="" id="local_id_map_json" />
+        <div>{{_t 'This will update current local id mapping. See "Predefined seating" page for details'}}</div>
+        <div><input tabindex="{{lastindex}}" type="button"
+                value="{{_t 'Save local IDs'}}"
+                onclick="saveLocalIds('local-id-selector', 'local_id_map_json', 'id_map_form')"
+                class="btn btn-primary" /></div>
+    </form>
+{{/prescriptedEvent}}

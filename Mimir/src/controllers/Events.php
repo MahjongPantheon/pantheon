@@ -73,11 +73,22 @@ class EventsController extends Controller
         $this->_log->addInfo('Getting all players for event id# ' . $eventId);
 
         $players = PlayerRegistrationPrimitive::findRegisteredPlayersByEvent($this->_db, $eventId);
-        $data = array_map(function (PlayerPrimitive $p) {
+        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event #' . $eventId . ' not found in db');
+        }
+
+        $localMap = [];
+        if ($event[0]->getIsPrescripted()) {
+            $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventId));
+        }
+
+        $data = array_map(function (PlayerPrimitive $p) use (&$localMap) {
             return [
                 'id'            => $p->getId(),
                 'display_name'  => $p->getDisplayName(),
                 'alias'         => $p->getAlias(),
+                'local_id'      => $localMap[$p->getId()] ?: null,
                 'tenhou_id'     => $p->getTenhouId()
             ];
         }, $players);
