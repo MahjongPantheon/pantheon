@@ -84,11 +84,20 @@ class EventUserManagementModel extends Model
         if (empty($player)) {
             throw new InvalidParametersException('Player id#' . $playerId . ' not found in DB');
         }
+
         $event = EventPrimitive::findById($this->_db, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
-        $regItem = (new PlayerRegistrationPrimitive($this->_db))->setReg($player[0], $event[0]);
+
+        $nextLocalId = null;
+        if ($event[0]->getIsPrescripted()) {
+            $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_db, $event[0]->getId());
+        }
+
+        $regItem = (new PlayerRegistrationPrimitive($this->_db))
+            ->setLocalId($nextLocalId)
+            ->setReg($player[0], $event[0]);
         $success = $regItem->save();
 
         $eItem = PlayerEnrollmentPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId);
@@ -132,6 +141,7 @@ class EventUserManagementModel extends Model
     {
         $success = false;
         $token = null;
+        $nextLocalId = null;
 
         if ($pin === '0000000000') {
             // Special pin & token for universal watcher
@@ -152,8 +162,13 @@ class EventUserManagementModel extends Model
                 }
             }
 
+            if ($event[0]->getIsPrescripted()) {
+                $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_db, $event[0]->getId());
+            }
+
             $player = PlayerPrimitive::findById($this->_db, [$eItem->getPlayerId()]);
             $regItem = (new PlayerRegistrationPrimitive($this->_db))
+                ->setLocalId($nextLocalId)
                 ->setReg($player[0], $event[0]);
             $success = $regItem->save();
             $token = $regItem->getToken();

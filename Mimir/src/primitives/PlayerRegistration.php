@@ -165,6 +165,27 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
+     * @param IDb $db
+     * @param $eventId
+     * @return int
+     * @throws \Exception
+     */
+    public static function findNextFreeLocalId(IDb $db, $eventId)
+    {
+        $result = $db->table(static::$_table)
+            ->where('event_id', $eventId)
+            ->orderByDesc('local_id')
+            ->limit(1)
+            ->findArray();
+
+        if (empty($result)) {
+            return 1; // first player in event ever
+        }
+
+        return $result[0]['local_id'] + 1;
+    }
+
+    /**
      * Update players' local ids mapping for prescripted event
      *
      * @param IDb $db
