@@ -259,6 +259,15 @@ class SessionState
     }
 
     /**
+     * @return SessionState
+     */
+    public function setScores($scores)
+    {
+        $this->_scores = $scores;
+        return $this;
+    }
+
+    /**
      * @return \int[]
      */
     public function getPenalties()

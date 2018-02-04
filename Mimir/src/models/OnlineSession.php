@@ -73,11 +73,17 @@ class OnlineSessionModel extends Model
 
         list($success, $originalScore, $rounds/*, $debug*/) = $parser->parseToSession($session, $gameContent);
         $success = $success && $session->save();
+
         /** @var MultiRoundPrimitive|RoundPrimitive $round */
         foreach ($rounds as $round) {
             $round->setSession($session);
             $success = $success && $round->save();
         }
+
+        // ignore calculated scores
+        // and set scores that we got from replay
+        $session->getCurrentState()->setScores($originalScore);
+
         $success = $success && $session->prefinish();
 
         // let's disable it for now
