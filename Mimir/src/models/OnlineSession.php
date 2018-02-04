@@ -43,7 +43,7 @@ class OnlineSessionModel extends Model
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
         $event = $event[0];
-        
+
         if (!$event->getIsOnline()) {
             throw new InvalidParametersException('Unable to add online game to event that is not online.');
         }
@@ -80,13 +80,14 @@ class OnlineSessionModel extends Model
         }
         $success = $success && $session->prefinish();
 
-        $calculatedScore = $session->getCurrentState()->getScores();
-        if (array_diff($calculatedScore, $originalScore) !== []
-            || array_diff($originalScore, $calculatedScore) !== []) {
-            throw new ParseException("Calculated scores do not match with given ones: " . PHP_EOL
-                . print_r($originalScore, 1) . PHP_EOL
-                . print_r($calculatedScore, 1), 225);
-        }
+        // let's disable it for now
+//        $calculatedScore = $session->getCurrentState()->getScores();
+//        if (array_diff($calculatedScore, $originalScore) !== []
+//            || array_diff($originalScore, $calculatedScore) !== []) {
+//            throw new ParseException("Calculated scores do not match with given ones: " . PHP_EOL
+//                . print_r($originalScore, 1) . PHP_EOL
+//                . print_r($calculatedScore, 1), 225);
+//        }
 
         return $success;
     }
