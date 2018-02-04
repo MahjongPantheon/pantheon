@@ -277,6 +277,8 @@ class EventsController extends Controller
         }
 
         $rules = $event[0]->getRuleset();
+        # we don't need to display add replay button to the online tournaments
+        $hideAddReplayButton = $rules->title() == 'online';
         $data = [
             'allowedYaku'         => array_values($rules->allowedYaku()),
             'startPoints'         => $rules->startPoints(),
@@ -322,7 +324,8 @@ class EventsController extends Controller
             'subtractStartPoints' => $rules->subtractStartPoints(),
             'seriesLength'        => $event[0]->getSeriesLength(),
             'gamesStatus'         => $event[0]->getGamesStatus(),
-            'hideResults'         => (bool)$event[0]->getHideResults()
+            'hideResults'         => (bool)$event[0]->getHideResults(),
+            'hideAddReplayButton' => $hideAddReplayButton
         ];
 
         $this->_log->addInfo('Successfully received config for event id# ' . $eventId);
