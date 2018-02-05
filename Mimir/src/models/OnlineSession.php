@@ -43,7 +43,7 @@ class OnlineSessionModel extends Model
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
         $event = $event[0];
-        
+
         if (!$event->getIsOnline()) {
             throw new InvalidParametersException('Unable to add online game to event that is not online.');
         }
@@ -73,20 +73,27 @@ class OnlineSessionModel extends Model
 
         list($success, $originalScore, $rounds/*, $debug*/) = $parser->parseToSession($session, $gameContent);
         $success = $success && $session->save();
+
         /** @var MultiRoundPrimitive|RoundPrimitive $round */
         foreach ($rounds as $round) {
             $round->setSession($session);
             $success = $success && $round->save();
         }
+
+        // ignore calculated scores
+        // and set scores that we got from replay
+        $session->getCurrentState()->setScores($originalScore);
+
         $success = $success && $session->prefinish();
 
-        $calculatedScore = $session->getCurrentState()->getScores();
-        if (array_diff($calculatedScore, $originalScore) !== []
-            || array_diff($originalScore, $calculatedScore) !== []) {
-            throw new ParseException("Calculated scores do not match with given ones: " . PHP_EOL
-                . print_r($originalScore, 1) . PHP_EOL
-                . print_r($calculatedScore, 1), 225);
-        }
+        // let's disable it for now
+//        $calculatedScore = $session->getCurrentState()->getScores();
+//        if (array_diff($calculatedScore, $originalScore) !== []
+//            || array_diff($originalScore, $calculatedScore) !== []) {
+//            throw new ParseException("Calculated scores do not match with given ones: " . PHP_EOL
+//                . print_r($originalScore, 1) . PHP_EOL
+//                . print_r($calculatedScore, 1), 225);
+//        }
 
         return $success;
     }
