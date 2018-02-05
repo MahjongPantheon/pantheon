@@ -326,10 +326,6 @@ class OnlineParser
     protected function _tokenGO(\XMLReader $reader, SessionPrimitive $session)
     {
         $eventLobby = $session->getEvent()->getLobbyId();
-        // we didn't set lobby restriction in the config
-        if (!$eventLobby) {
-            return;
-        }
 
         $lobby = $reader->getAttribute('lobby');
         if ($eventLobby != $lobby) {
