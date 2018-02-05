@@ -31,7 +31,7 @@ class RulesetOnline extends Ruleset
         'tenboDivider'          => 1,
         'ratingDivider'         => 1,
         'startRating'           => 0,
-        'oka'                   => 20,
+        'oka'                   => 0,
         'startPoints'           => 30000,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
