@@ -32,7 +32,7 @@ class RulesetOnline extends Ruleset
         'ratingDivider'         => 1,
         'startRating'           => 0,
         'oka'                   => 20,
-        'startPoints'           => 25000,
+        'startPoints'           => 30000,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
         'extraChomboPayments'   => false,
