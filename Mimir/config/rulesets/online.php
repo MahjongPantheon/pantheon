@@ -41,9 +41,9 @@ class RulesetOnline extends Ruleset
         'withAbortives'         => true,
         'withKuitan'            => true,
         'withKazoe'             => true,
-        'withButtobi'           => true,
+        'withButtobi'           => false,
         'withMultiYakumans'     => true,
-        'withNagashiMangan'     => true,
+        'withNagashiMangan'     => false,
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
         'gameExpirationTime'    => 24, // hours, to cover JST difference
