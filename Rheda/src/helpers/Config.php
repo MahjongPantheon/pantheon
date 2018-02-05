@@ -46,6 +46,7 @@ class Config
     protected $_seriesLength = 0;
     protected $_gamesStatus = false;
     protected $_hideResults = false;
+    protected $_hideAddReplayButton = false;
 
     public static function fromRaw($arr)
     {
@@ -349,7 +350,6 @@ class Config
     {
         return $this->_seriesLength;
     }
-
     /**
      * @return bool
      */
@@ -363,5 +363,12 @@ class Config
     public function hideResults()
     {
         return $this->_hideResults;
+    }
+    /**
+     * @return bool
+     */
+    public function hideAddReplayButton()
+    {
+        return $this->_hideAddReplayButton;
     }
 }

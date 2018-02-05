@@ -160,7 +160,8 @@ abstract class Controller
                 'eventTitle' => $this->_rules->eventTitle(),
                 'pageTitle' => $pageTitle,
                 'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
-                'isLoggedIn' => $this->_adminAuthOk()
+                'isLoggedIn' => $this->_adminAuthOk(),
+                'hideAddReplayButton' => $this->_rules->hideAddReplayButton()
             ]);
         }
 
