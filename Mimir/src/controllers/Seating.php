@@ -188,6 +188,7 @@ class SeatingController extends Controller
 
     /**
      * @param integer $eventId
+     * @param boolean $randomizeAtTables
      * @return bool
      * @throws AuthFailedException
      * @throws DatabaseException
@@ -195,17 +196,23 @@ class SeatingController extends Controller
      * @throws InvalidUserException
      * @throws \Exception
      */
-    public function makePrescriptedSeating($eventId)
+    public function makePrescriptedSeating($eventId, $randomizeAtTables = false)
     {
         $this->_log->addInfo('Creating new prescripted seating for event #' . $eventId);
         $seating = $this->_getNextPrescriptedSeating($eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
         $tableIndex = 1;
+
         foreach ($seating as $table) {
             $table = array_filter($table);
             if (empty($table) || count($table) != 4) {
                 $this->_log->addInfo('Failed to form a table from predefined seating at event #' . $eventId);
                 continue;
+            }
+
+            if ($randomizeAtTables) {
+                srand(microtime());
+                $table = Seating::shuffle($table);
             }
 
             (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
@@ -263,6 +270,11 @@ class SeatingController extends Controller
     public function getNextSeatingForPrescriptedEvent($eventId)
     {
         $seating = $this->_getNextPrescriptedSeating($eventId);
+        if (empty($seating)) {
+            // No next seating: probably, all games are finished already.
+            return [];
+        }
+
         $playerIds = array_filter(array_reduce($seating, 'array_merge', []));
         if (empty($playerIds)) {
             throw new InvalidParametersException('No valid players found in predefined seating');
