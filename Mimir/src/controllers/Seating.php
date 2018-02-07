@@ -212,6 +212,10 @@ class SeatingController extends Controller
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
+        // increment game index when seating is generated
+        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
+        $prescript[0]->setNextGameIndex($prescript[0]->getNextGameIndex() + 1)->save();
+
         $this->_log->addInfo('Created new prescripted seating for event #' . $eventId);
         if ($gamesWillStart) {
             $this->_log->addInfo('Started all games by prescripted seating for event #' . $eventId);
@@ -271,8 +275,8 @@ class SeatingController extends Controller
             $playersMap[$player->getId()] = $player;
         }
 
-        return array_map(function($table) use ($playersMap) {
-            array_map(function($playerId) use ($playersMap) {
+        return array_map(function($table) use (&$playersMap) {
+            return array_map(function($playerId) use (&$playersMap) {
                 return [
                     'id' => $playersMap[$playerId]->getId(),
                     'alias' => $playersMap[$playerId]->getAlias(),
