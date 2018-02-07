@@ -40,9 +40,11 @@
         {{_t 'Total count of registered players is not divisible by 4. Use the "Add player" and "Players management" pages to add or remove players. Special replacement player accounts may be used to complete the table.'}}
     {{/stageNotReady}}
     {{#stageReadyButNotStarted}}
-        <h3>{{_t 'Ready to generate seating'}}</h3>
-        {{_t 'Select seating mode and press the appropriate button.'}}
-        <hr/>
+        {{^isPrescripted}}
+            <h3>{{_t 'Ready to generate seating'}}</h3>
+            {{_t 'Select seating mode and press the appropriate button.'}}
+            <hr/>
+        {{/isPrescripted}}
         <table class="table table-striped">
             <tr><td>
                 <h3>{{_t 'Hide/show rating table'}}</h3>
@@ -53,22 +55,32 @@
                     <h3>{{_t 'Predefined seating'}}</h3>
                     <div>{{_t 'This tournament has predefined seating. See Admin actions / Predefined seating page for seating configuration. Next seating is listed below.'}}</div>
                     <hr />
-                    <table class="table table-striped">
-                        {{#nextPrescriptedSeating}}{{#@index}}
-                            <tr>
-                                <td><b>{{_t 'Table #'}}{{@index}}</b></td>
-                                <td>{{this.0.display_name}}</td>
-                                <td>{{this.1.display_name}}</td>
-                                <td>{{this.2.display_name}}</td>
-                                <td>{{this.3.display_name}}</td>
-                            </tr>
-                        {{/@index}}{{/nextPrescriptedSeating}}
-                    </table>
-                    {{#form action='/tourn/predefinedSeating/' method='post'}}
-                        <input type="button" class="btn btn-lg btn-primary actionButton"
-                               onclick="return window.confirm('{{_t 'Use this seating for new game?'}}') && disableTemporarily(this);"
-                               value="{{_t 'Use this seating'}}">
+                    {{#noNextPrescript}}
+                        {{_t 'No seating defined for next game. Looks like the tournament is finished'}}
+                    {{/noNextPrescript}}
+                    {{^noNextPrescript}}
+                        <table class="table table-striped">
+                            {{#nextPrescriptedSeating}}{{#@index}}
+                                <tr>
+                                    <td><b>{{_t 'Table #'}}{{@index}}</b></td>
+                                    <td>{{this.0.display_name}}</td>
+                                    <td>{{this.1.display_name}}</td>
+                                    <td>{{this.2.display_name}}</td>
+                                    <td>{{this.3.display_name}}</td>
+                                </tr>
+                            {{/@index}}{{/nextPrescriptedSeating}}
+                        </table>
+                        {{#form action='/tourn/predefinedSeating/' method='post'}}
+                            <label for="rndseat">
+                                <input type="hidden" name="rndseat" value="" />
+                                <input type="checkbox" checked="checked" name="rndseat" value="1" id="rndseat">
+                                {{_t 'Randomize winds seating at each table'}}
+                            </label><br/>
+                            <input type="button" class="btn btn-lg btn-primary actionButton"
+                                   onclick="return window.confirm('{{_t 'Use this seating for new game?'}}') && disableTemporarily(this);"
+                                   value="{{_t 'Use this seating'}}">
                     {{/form}}
+                    {{/noNextPrescript}}
             {{/isPrescripted}}
             {{^isPrescripted}}
                 {{#withAutoSeating}}

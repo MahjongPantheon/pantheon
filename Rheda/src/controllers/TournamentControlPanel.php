@@ -60,7 +60,7 @@ class TournamentControlPanel extends Controller
                         );
                         break;
                     case 'predefinedSeating':
-                        $this->_api->execute('makePrescriptedSeating', [$this->_eventId]);
+                        $this->_api->execute('makePrescriptedSeating', [$this->_eventId, !!$_POST['rndseat']]);
                         break;
                     case 'swissSeating':
                         $this->_api->execute('makeSwissSeating', [$this->_eventId]);
@@ -122,7 +122,9 @@ class TournamentControlPanel extends Controller
         if ($this->_rules->isPrescripted() && $currentStage == self::STAGE_READY_BUT_NOT_STARTED) {
             try {
                 $nextPrescriptedSeating = $this->_api->execute('getNextPrescriptedSeating', [$this->_eventId]);
-                array_unshift($nextPrescriptedSeating, []); // small hack to start from 1
+                if (!empty($nextPrescriptedSeating)) {
+                    array_unshift($nextPrescriptedSeating, []); // small hack to start from 1
+                }
             } catch (\Exception $e) {
                 return [
                     'error' => $e->getMessage()
@@ -143,7 +145,8 @@ class TournamentControlPanel extends Controller
             'withAutoSeating' => $this->_rules->autoSeating(),
             'hideResults' => $this->_rules->hideResults(),
             'isPrescripted' => $this->_rules->isPrescripted(),
-            'nextPrescriptedSeating' => $nextPrescriptedSeating
+            'nextPrescriptedSeating' => $nextPrescriptedSeating,
+            'noNextPrescript' => empty($nextPrescriptedSeating)
         ];
     }
 
