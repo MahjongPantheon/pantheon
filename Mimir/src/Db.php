@@ -107,7 +107,13 @@ class Db implements IDb
     {
         $data = array_map(function ($dataset) {
             foreach ($dataset as $k => $v) {
-                $dataset[$k] = intval($v); // Maybe use PDO::quote here in future
+                if (is_integer($v)) {
+                    $dataset[$k] = intval($v);
+                } else if (is_numeric($v)) {
+                    $dataset[$k] = doubleval($v);
+                } else {
+                    $dataset[$k] = ORM::getDb()->quote($v);
+                }
             }
             return $dataset;
         }, $data);

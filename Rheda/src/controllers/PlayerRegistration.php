@@ -59,6 +59,7 @@ class PlayerRegistration extends Controller
         }
 
         return [
+            'authorized' => $this->_adminAuthOk(),
             'prescriptedEvent' => $this->_rules->isPrescripted(),
             'lastindex' => count($registeredPlayers) + 2,
             'error' => $errorMsg,

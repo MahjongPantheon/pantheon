@@ -88,7 +88,7 @@ class EventsController extends Controller
                 'id'            => $p->getId(),
                 'display_name'  => $p->getDisplayName(),
                 'alias'         => $p->getAlias(),
-                'local_id'      => $localMap[$p->getId()] ?: null,
+                'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
                 'tenhou_id'     => $p->getTenhouId()
             ];
         }, $players);
