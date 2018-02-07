@@ -43,6 +43,7 @@ class PlayerRegistrationPrimitive extends Primitive
         return [
             '_id' => $this->_integerTransform(true),
             '_eventId' => $this->_integerTransform(),
+            '_token' => $this->_stringTransform(),
             '_playerId' => $this->_integerTransform(),
             '_localId' => $this->_integerTransform(true)
         ];
