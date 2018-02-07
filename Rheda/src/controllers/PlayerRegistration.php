@@ -47,7 +47,7 @@ class PlayerRegistration extends Controller
                 $enrolledPlayers = $this->_api->execute('getAllEnrolled', [$this->_eventId]);
                 usort($enrolledPlayers, $sorter);
                 usort($registeredPlayers, $sorter);
-                $registeredPlayers = array_map(function($el, $index) {
+                $registeredPlayers = array_map(function ($el, $index) {
                     $el['index'] = $index + 1;
                     return $el;
                 }, $registeredPlayers, array_keys($registeredPlayers));

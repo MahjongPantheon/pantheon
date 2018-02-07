@@ -210,6 +210,4 @@ class EventSeriesModel extends Model
         }
         return $result;
     }
-
-
 }

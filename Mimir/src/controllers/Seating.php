@@ -287,8 +287,8 @@ class SeatingController extends Controller
             $playersMap[$player->getId()] = $player;
         }
 
-        return array_map(function($table) use (&$playersMap) {
-            return array_map(function($playerId) use (&$playersMap) {
+        return array_map(function ($table) use (&$playersMap) {
+            return array_map(function ($playerId) use (&$playersMap) {
                 return [
                     'id' => $playersMap[$playerId]->getId(),
                     'alias' => $playersMap[$playerId]->getAlias(),
