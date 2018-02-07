@@ -598,8 +598,8 @@ class Seating
      */
     public static function makePrescriptedSeating($prescriptForSession, $players)
     {
-        return array_map(function($table) use ($players) {
-            return array_map(function($localId) use ($players) {
+        return array_map(function ($table) use ($players) {
+            return array_map(function ($localId) use ($players) {
                 return $players[$localId];
             }, $table);
         }, $prescriptForSession);
