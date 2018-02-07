@@ -38,6 +38,9 @@ msgstr "Bestätigen die Anwesenheit manuell"
 msgid "Registered players (%d)"
 msgstr "Registrierte Spieler (%d)"
 
+msgid "Local id"
+msgstr ""
+
 msgid "Reissue PIN"
 msgstr "PIN neu vergeben"
 
@@ -47,8 +50,16 @@ msgstr "Löschen"
 msgid "Remove player %s?"
 msgstr "Spieler% s entfernen?"
 
-msgid "Game details"
-msgstr "Spieldetails"
+msgid ""
+"This will update current local id mapping. See \"Predefined seating\" page "
+"for details"
+msgstr ""
+
+msgid "Save local IDs"
+msgstr ""
+
+msgid "Sorry, this page is not available for mobile devices"
+msgstr "Entschuldigung, diese Seite ist nicht für Mobilgeräte verfügbar"
 
 msgid "Achievements"
 msgstr "Erreichungen"
@@ -176,6 +187,11 @@ msgstr "Spieler hinzufügen"
 msgid "Manage players"
 msgstr "Spieler verwalten"
 
+#, fuzzy
+#| msgid "Use manual seating"
+msgid "Predefined seating"
+msgstr "Manuelle Sitzgelegenheiten verwenden"
+
 msgid "Timer & seating"
 msgstr "Timer & Sitzplätze"
 
@@ -188,17 +204,8 @@ msgstr "Das Spiel wurde erfolgreich hinzugefügt!"
 msgid "Add game"
 msgstr "Spiel hinzufügen"
 
-msgid "Best series"
-msgstr "Beste Serie"
-
-msgid "Points of best series"
-msgstr "Punkte der besten Serie"
-
-msgid "Last series"
-msgstr "Letzte Serie"
-
-msgid "Points of last series"
-msgstr "Punkte der letzten Serie"
+msgid "Game details"
+msgstr "Spieldetails"
 
 msgid "Admin panel"
 msgstr "Administrationsmenü"
@@ -208,9 +215,6 @@ msgstr "Erfolgreich autorisiert!"
 
 msgid "Authorize"
 msgstr "Autorisieren"
-
-msgid "Sorry, this page is not available for mobile devices"
-msgstr "Entschuldigung, diese Seite ist nicht für Mobilgeräte verfügbar"
 
 msgid "Confirm round cancellation: "
 msgstr "Runde Stornierung bestätigen: "
@@ -232,6 +236,18 @@ msgstr "Strafen:"
 
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr "%s -%s Strafpunkte. Grund: %s"
+
+msgid "Best series"
+msgstr "Beste Serie"
+
+msgid "Points of best series"
+msgstr "Punkte der besten Serie"
+
+msgid "Last series"
+msgstr "Letzte Serie"
+
+msgid "Points of last series"
+msgstr "Punkte der letzten Serie"
 
 msgid "Rating table has been hidden by tournament administrator"
 msgstr "Bewertungstabelle wurde vom Turnieradministrator ausgeblendet"
@@ -373,6 +389,34 @@ msgstr "%d - %d (%d gesamt)"
 msgid "%s: personal stats"
 msgstr "%s: persönliche Statistiken"
 
+msgid "Predefined seating configuration"
+msgstr ""
+
+msgid "Next session index (starting from 1):"
+msgstr ""
+
+msgid "Update predefined seating config"
+msgstr ""
+
+msgid "Found errors:"
+msgstr ""
+
+msgid "No errors found."
+msgstr ""
+
+msgid ""
+"Predefined seating is entered as list of tables, one table per row. New game "
+"session should be indicated as an empty line."
+msgstr ""
+
+msgid "Example:"
+msgstr "Beispiel:"
+
+msgid ""
+"In this example, two tables play two games. Numbers in seating persist "
+"between games and are defined at Admin actions / Manage players page."
+msgstr ""
+
 msgid "Statistics"
 msgstr "Statistik"
 
@@ -396,6 +440,76 @@ msgstr "Punkte:"
 
 msgid "Ongoing series:"
 msgstr "Laufende Serie:"
+
+msgid "Date & time"
+msgstr "Datum & Uhrzeit"
+
+msgid "Players"
+msgstr "Spielern"
+
+msgid "Details"
+msgstr "Einzelheiten"
+
+msgid "View replay online"
+msgstr "Wiederholungsspiel online sehen"
+
+msgid "Best hand: <b>%s</b> - %s"
+msgstr "Beste Hand: <b>%s</b> - %s"
+
+msgid "Ron hands: %d"
+msgstr "Ron Hände: %d"
+
+msgid "Tsumo hands: %d"
+msgstr "Tsumo Hände: %d"
+
+msgid "Drawn rounds: %d"
+msgstr "Gezeichnet Runden: %d"
+
+msgid "Chombo penalties: %s"
+msgstr "Chombo Strafen"
+
+msgid "Additional penalties:"
+msgstr "Zusätzliche Strafen:"
+
+msgid "%s - %d points (%s)"
+msgstr "%s - %d Punkte (%s)"
+
+msgid "Full game log:"
+msgstr "Vollständiges Spielprotokoll:"
+
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+"Ausblenden von Bewertungstabelle für alle Spieler kann nützlich sein, um "
+"alle am Ende des Turniers interessiert zu halten"
+
+msgid "Rating table is hidden. Show"
+msgstr "Wertetabelle ist ausgeblendet. Zeigen"
+
+msgid "Rating table is visible. Hide"
+msgstr "Bewertungstabelle ist sichtbar. Ausblenden"
+
+msgid "No time left!"
+msgstr "Keine Zeit mehr!"
+
+msgid "SEATING"
+msgstr "SITZPLÄTZE"
+
+msgid "Table #"
+msgstr "Tish #"
+
+msgid "EAST"
+msgstr "OSTEN"
+
+msgid "SOUTH"
+msgstr "SÜD"
+
+msgid "WEST"
+msgstr "WEST"
+
+msgid "NORTH"
+msgstr "NORDEN"
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
 msgstr "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -454,76 +568,6 @@ msgstr "Abortive draw."
 msgid "Chombo: %s."
 msgstr "Chombo: %s."
 
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-"Ausblenden von Bewertungstabelle für alle Spieler kann nützlich sein, um "
-"alle am Ende des Turniers interessiert zu halten"
-
-msgid "Rating table is hidden. Show"
-msgstr "Wertetabelle ist ausgeblendet. Zeigen"
-
-msgid "Rating table is visible. Hide"
-msgstr "Bewertungstabelle ist sichtbar. Ausblenden"
-
-msgid "No time left!"
-msgstr "Keine Zeit mehr!"
-
-msgid "SEATING"
-msgstr "SITZPLÄTZE"
-
-msgid "Table #"
-msgstr "Tish #"
-
-msgid "EAST"
-msgstr "OSTEN"
-
-msgid "SOUTH"
-msgstr "SÜD"
-
-msgid "WEST"
-msgstr "WEST"
-
-msgid "NORTH"
-msgstr "NORDEN"
-
-msgid "Date & time"
-msgstr "Datum & Uhrzeit"
-
-msgid "Players"
-msgstr "Spielern"
-
-msgid "Details"
-msgstr "Einzelheiten"
-
-msgid "View replay online"
-msgstr "Wiederholungsspiel online sehen"
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr "Beste Hand: <b>%s</b> - %s"
-
-msgid "Ron hands: %d"
-msgstr "Ron Hände: %d"
-
-msgid "Tsumo hands: %d"
-msgstr "Tsumo Hände: %d"
-
-msgid "Drawn rounds: %d"
-msgstr "Gezeichnet Runden: %d"
-
-msgid "Chombo penalties: %s"
-msgstr "Chombo Strafen"
-
-msgid "Additional penalties:"
-msgstr "Zusätzliche Strafen:"
-
-msgid "%s - %d points (%s)"
-msgstr "%s - %d Punkte (%s)"
-
-msgid "Full game log:"
-msgstr "Vollständiges Spielprotokoll:"
-
 msgid "Rating"
 msgstr "Bewertung"
 
@@ -544,9 +588,6 @@ msgstr "Neues Spiel hinzufügen"
 
 msgid "Format:"
 msgstr "Format:"
-
-msgid "Example:"
-msgstr "Beispiel:"
 
 msgid ""
 "Renchans/honba are calculated automatically. Also points and payments checks "
@@ -585,6 +626,29 @@ msgstr "Wählen Sie den Sitzmodus und drücken Sie die entsprechende Taste."
 #| msgid "Hide rating table"
 msgid "Hide/show rating table"
 msgstr "Bewertungstabelle ausblenden"
+
+msgid ""
+"This tournament has predefined seating. See Admin actions / Predefined "
+"seating page for seating configuration. Next seating is listed below."
+msgstr ""
+
+msgid "No seating defined for next game. Looks like the tournament is finished"
+msgstr ""
+
+#, fuzzy
+#| msgid "Randomize seating at each table"
+msgid "Randomize winds seating at each table"
+msgstr "Randomize Sitzplätze an jedem Tisch"
+
+#, fuzzy
+#| msgid "Use swiss seating for new game?"
+msgid "Use this seating for new game?"
+msgstr "Verwenden Sie Schweizer Sitzplätze für neues Spiel?"
+
+#, fuzzy
+#| msgid "Swiss seating"
+msgid "Use this seating"
+msgstr "Schweizer Sitzplätze"
 
 msgid "Random seating"
 msgstr "Zufällige Sitzplätze"
@@ -1005,3 +1069,20 @@ msgstr "Bitte wählen Sie eine Veranstaltung aus!"
 msgid "<h2>Oops.</h2>Failed to get event configuration!"
 msgstr ""
 "<h2> Hoppla. </ h2> Fehler beim Abrufen Konfiguration für die Veranstaltung!"
+
+#, fuzzy
+#| msgid "Failed to add the player. Check your network connection."
+msgid "Failed to save local ids mapping. Check your network connection."
+msgstr ""
+"Der Spieler konnte nicht addieren werden. Überprüfen Sie Ihre "
+"Netzwerkverbindung."
+
+msgid "Predefined seating and event status"
+msgstr ""
+
+#, fuzzy
+#| msgid "Failed to add the player. Check your network connection."
+msgid "Failed to update predefined seating. Check your network connection."
+msgstr ""
+"Der Spieler konnte nicht addieren werden. Überprüfen Sie Ihre "
+"Netzwerkverbindung."

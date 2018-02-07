@@ -39,6 +39,9 @@ msgstr "Потдвердить явку вручную"
 msgid "Registered players (%d)"
 msgstr "Окончательно зарегистрированные игроки (%d)"
 
+msgid "Local id"
+msgstr "Локальный ID"
+
 msgid "Reissue PIN"
 msgstr "Перевыдать PIN"
 
@@ -48,8 +51,18 @@ msgstr "Удалить"
 msgid "Remove player %s?"
 msgstr "Удалить игрока %s?"
 
-msgid "Game details"
-msgstr "Подробнее об игре"
+msgid ""
+"This will update current local id mapping. See \"Predefined seating\" page "
+"for details"
+msgstr ""
+"Нажатие на кнопку приведет к обновлению списка соответствия игроков и их "
+"локальных ID. См. подробности на странице \"Предопределенная рассадка\"."
+
+msgid "Save local IDs"
+msgstr "Сохранить локальные ID"
+
+msgid "Sorry, this page is not available for mobile devices"
+msgstr "Извините, эта страница недоступна для мобильных устройств"
 
 msgid "Achievements"
 msgstr "Номинации"
@@ -178,6 +191,9 @@ msgstr "Добавить игрока"
 msgid "Manage players"
 msgstr "Управление игроками"
 
+msgid "Predefined seating"
+msgstr "Предопределенная рассадка"
+
 msgid "Timer & seating"
 msgstr "Таймер и рассадка"
 
@@ -190,17 +206,8 @@ msgstr "Игра успешно добавлена!"
 msgid "Add game"
 msgstr "Добавить игру"
 
-msgid "Best series"
-msgstr "Лучшая серия"
-
-msgid "Points of best series"
-msgstr "Очки в лучшей серии"
-
-msgid "Last series"
-msgstr "Текущая серия"
-
-msgid "Points of last series"
-msgstr "Очки в текущей серии"
+msgid "Game details"
+msgstr "Подробнее об игре"
 
 msgid "Admin panel"
 msgstr "Администрирование"
@@ -210,9 +217,6 @@ msgstr "Авторизация прошла успешно!"
 
 msgid "Authorize"
 msgstr "Авторизоваться"
-
-msgid "Sorry, this page is not available for mobile devices"
-msgstr "Извините, эта страница недоступна для мобильных устройств"
 
 msgid "Confirm round cancellation: "
 msgstr "Подтвердите отмену раздачи: "
@@ -234,6 +238,18 @@ msgstr "Штрафы:"
 
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr "%s - штраф %s очков. Причина: %s"
+
+msgid "Best series"
+msgstr "Лучшая серия"
+
+msgid "Points of best series"
+msgstr "Очки в лучшей серии"
+
+msgid "Last series"
+msgstr "Текущая серия"
+
+msgid "Points of last series"
+msgstr "Очки в текущей серии"
 
 msgid "Rating table has been hidden by tournament administrator"
 msgstr "Рейтинговая таблица была скрыта администратором турнира"
@@ -374,6 +390,39 @@ msgstr "%d - %d (всего %d)"
 msgid "%s: personal stats"
 msgstr "%s: личная статистика"
 
+msgid "Predefined seating configuration"
+msgstr "Конфигурация предопределенной рассадки"
+
+msgid "Next session index (starting from 1):"
+msgstr "Номер следующей игры (начиная с 1):"
+
+msgid "Update predefined seating config"
+msgstr "Обновить конфигурацию предопределенной рассадки"
+
+msgid "Found errors:"
+msgstr "Найденные ошибки:"
+
+msgid "No errors found."
+msgstr "Ошибок не найдено."
+
+msgid ""
+"Predefined seating is entered as list of tables, one table per row. New game "
+"session should be indicated as an empty line."
+msgstr ""
+"Предопределенная рассадка вводится как список столов, один стол на строку. "
+"Следующий ханчан должен быть отделен от предыдущего пустой строкой."
+
+msgid "Example:"
+msgstr "Пример:"
+
+msgid ""
+"In this example, two tables play two games. Numbers in seating persist "
+"between games and are defined at Admin actions / Manage players page."
+msgstr ""
+"В этом примере два стола играют два ханчана. Указанные номера сохраняются "
+"между играми и определяются на странице \"Действия администратора\" / "
+"\"Управление игроками\"."
+
 msgid "Statistics"
 msgstr "Статистика"
 
@@ -397,6 +446,76 @@ msgstr "Очки:"
 
 msgid "Ongoing series:"
 msgstr "Текущая серия:"
+
+msgid "Date & time"
+msgstr "Дата/время"
+
+msgid "Players"
+msgstr "Игроки"
+
+msgid "Details"
+msgstr "Подробности"
+
+msgid "View replay online"
+msgstr "Посмотреть реплей"
+
+msgid "Best hand: <b>%s</b> - %s"
+msgstr "Лучшая рука: <b>%s</b> - %s"
+
+msgid "Ron hands: %d"
+msgstr "Выигрышей по рон: %d"
+
+msgid "Tsumo hands: %d"
+msgstr "Выигрышей по цумо: %d"
+
+msgid "Drawn rounds: %d"
+msgstr "Ничьих: %d"
+
+msgid "Chombo penalties: %s"
+msgstr "Штрафов чомбо: %s"
+
+msgid "Additional penalties:"
+msgstr "Дополнительные штрафы:"
+
+msgid "%s - %d points (%s)"
+msgstr "%s - %d очков (%s)"
+
+msgid "Full game log:"
+msgstr "Полный лог игры:"
+
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+"Скрытие рейтинговой таблицы для игроков может быть полезно для сохранения "
+"интриги в последних ханчанах турнира."
+
+msgid "Rating table is hidden. Show"
+msgstr "Рейтинговая таблица скрыта. Показать"
+
+msgid "Rating table is visible. Hide"
+msgstr "Рейтинговая таблица доступна. Скрыть"
+
+msgid "No time left!"
+msgstr "СТОП!"
+
+msgid "SEATING"
+msgstr "РАССАДКА"
+
+msgid "Table #"
+msgstr "Стол №"
+
+msgid "EAST"
+msgstr "ВОСТОК"
+
+msgid "SOUTH"
+msgstr "ЮГ"
+
+msgid "WEST"
+msgstr "ЗАПАД"
+
+msgid "NORTH"
+msgstr "СЕВЕР"
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
 msgstr "<b>%s</b> - %s (<b>%s</b>, пао: <b>%s</b>), якуман!"
@@ -455,76 +574,6 @@ msgstr "Пересдача."
 msgid "Chombo: %s."
 msgstr "Чомбо: %s."
 
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-"Скрытие рейтинговой таблицы для игроков может быть полезно для сохранения "
-"интриги в последних ханчанах турнира."
-
-msgid "Rating table is hidden. Show"
-msgstr "Рейтинговая таблица скрыта. Показать"
-
-msgid "Rating table is visible. Hide"
-msgstr "Рейтинговая таблица доступна. Скрыть"
-
-msgid "No time left!"
-msgstr "СТОП!"
-
-msgid "SEATING"
-msgstr "РАССАДКА"
-
-msgid "Table #"
-msgstr "Стол №"
-
-msgid "EAST"
-msgstr "ВОСТОК"
-
-msgid "SOUTH"
-msgstr "ЮГ"
-
-msgid "WEST"
-msgstr "ЗАПАД"
-
-msgid "NORTH"
-msgstr "СЕВЕР"
-
-msgid "Date & time"
-msgstr "Дата/время"
-
-msgid "Players"
-msgstr "Игроки"
-
-msgid "Details"
-msgstr "Подробности"
-
-msgid "View replay online"
-msgstr "Посмотреть реплей"
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr "Лучшая рука: <b>%s</b> - %s"
-
-msgid "Ron hands: %d"
-msgstr "Выигрышей по рон: %d"
-
-msgid "Tsumo hands: %d"
-msgstr "Выигрышей по цумо: %d"
-
-msgid "Drawn rounds: %d"
-msgstr "Ничьих: %d"
-
-msgid "Chombo penalties: %s"
-msgstr "Штрафов чомбо: %s"
-
-msgid "Additional penalties:"
-msgstr "Дополнительные штрафы:"
-
-msgid "%s - %d points (%s)"
-msgstr "%s - %d очков (%s)"
-
-msgid "Full game log:"
-msgstr "Полный лог игры:"
-
 msgid "Rating"
 msgstr "Рейтинг"
 
@@ -545,9 +594,6 @@ msgstr "Добавить новую игру"
 
 msgid "Format:"
 msgstr "Формат:"
-
-msgid "Example:"
-msgstr "Пример:"
 
 msgid ""
 "Renchans/honba are calculated automatically. Also points and payments checks "
@@ -583,6 +629,26 @@ msgstr "Выберите тип рассадки и нажмите соотве�
 
 msgid "Hide/show rating table"
 msgstr "Показать/скрыть рейтинговую таблицу"
+
+msgid ""
+"This tournament has predefined seating. See Admin actions / Predefined "
+"seating page for seating configuration. Next seating is listed below."
+msgstr ""
+"Этот турнир имеет заранее определенную рассадку. См. страницу \"Действия "
+"администратора / Предопределенная рассадка\" для конфигурации рассадки. "
+"Рассадка для следующей игры указана ниже."
+
+msgid "No seating defined for next game. Looks like the tournament is finished"
+msgstr "Для следующей игры рассадка не определена. Похоже, что турнир окончен."
+
+msgid "Randomize winds seating at each table"
+msgstr "Перемешать игроков за каждым столом"
+
+msgid "Use this seating for new game?"
+msgstr "Использовать эту рассадку для следующей игры?"
+
+msgid "Use this seating"
+msgstr "Использовать эту рассадку"
 
 msgid "Random seating"
 msgstr "Случайная рассадка"
@@ -999,3 +1065,14 @@ msgstr "Выберите рейтинг!"
 
 msgid "<h2>Oops.</h2>Failed to get event configuration!"
 msgstr "<h2>Упс.</h2> Не удалось получить конфигурацию рейтинга!"
+
+msgid "Failed to save local ids mapping. Check your network connection."
+msgstr ""
+"Не удалось сохранить соответствие локальных ID. Проверьте сетевое соединение."
+
+msgid "Predefined seating and event status"
+msgstr "Предопределенная рассадка и состояние игр"
+
+msgid "Failed to update predefined seating. Check your network connection."
+msgstr ""
+"Не удалось обновить предопределенную рассадку. Проверьте сетевое соединение."

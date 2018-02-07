@@ -510,20 +510,6 @@ Exceptions:
 * _AuthFailedException_ 
 * _\Exception_ 
 
-### makeIntervalSeating
-Parameters:
-* **$eventId** (_int_) 
-* **$step** (_int_) 
-
-Returns: _bool_ 
-
-Exceptions:
-* _AuthFailedException_ 
-* _DatabaseException_ 
-* _InvalidParametersException_ 
-* _InvalidUserException_ 
-* _\Exception_ 
-
 ### generateSwissSeating
 Parameters:
 * **$eventId** (_int_) 
@@ -546,6 +532,7 @@ Exceptions:
 * _DatabaseException_ 
 * _InvalidParametersException_ 
 * _InvalidUserException_ 
+* _\Exception_ 
 
 ### makeManualSeating
 Parameters:
@@ -565,6 +552,7 @@ Exceptions:
 ### makePrescriptedSeating
 Parameters:
 * **$eventId** (_integer_) 
+* **$randomizeAtTables** (_boolean_) 
 
 Returns: _bool_ 
 
