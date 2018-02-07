@@ -28,6 +28,9 @@ msgstr ""
 msgid "Registered players (%d)"
 msgstr ""
 
+msgid "Local id"
+msgstr ""
+
 msgid "Reissue PIN"
 msgstr ""
 
@@ -37,7 +40,15 @@ msgstr ""
 msgid "Remove player %s?"
 msgstr ""
 
-msgid "Game details"
+msgid ""
+"This will update current local id mapping. See \"Predefined seating\" page "
+"for details"
+msgstr ""
+
+msgid "Save local IDs"
+msgstr ""
+
+msgid "Sorry, this page is not available for mobile devices"
 msgstr ""
 
 msgid "Achievements"
@@ -162,6 +173,9 @@ msgstr ""
 msgid "Manage players"
 msgstr ""
 
+msgid "Predefined seating"
+msgstr ""
+
 msgid "Timer & seating"
 msgstr ""
 
@@ -174,16 +188,7 @@ msgstr ""
 msgid "Add game"
 msgstr ""
 
-msgid "Best series"
-msgstr ""
-
-msgid "Points of best series"
-msgstr ""
-
-msgid "Last series"
-msgstr ""
-
-msgid "Points of last series"
+msgid "Game details"
 msgstr ""
 
 msgid "Admin panel"
@@ -193,9 +198,6 @@ msgid "Authorized successfully!"
 msgstr ""
 
 msgid "Authorize"
-msgstr ""
-
-msgid "Sorry, this page is not available for mobile devices"
 msgstr ""
 
 msgid "Confirm round cancellation: "
@@ -217,6 +219,18 @@ msgid "Penalties:"
 msgstr ""
 
 msgid "%s - %s points of penalty. Reason: %s"
+msgstr ""
+
+msgid "Best series"
+msgstr ""
+
+msgid "Points of best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Points of last series"
 msgstr ""
 
 msgid "Rating table has been hidden by tournament administrator"
@@ -356,6 +370,34 @@ msgstr ""
 msgid "%s: personal stats"
 msgstr ""
 
+msgid "Predefined seating configuration"
+msgstr ""
+
+msgid "Next session index (starting from 1):"
+msgstr ""
+
+msgid "Update predefined seating config"
+msgstr ""
+
+msgid "Found errors:"
+msgstr ""
+
+msgid "No errors found."
+msgstr ""
+
+msgid ""
+"Predefined seating is entered as list of tables, one table per row. New "
+"game session should be indicated as an empty line."
+msgstr ""
+
+msgid "Example:"
+msgstr ""
+
+msgid ""
+"In this example, two tables play two games. Numbers in seating persist "
+"between games and are defined at Admin actions / Manage players page."
+msgstr ""
+
 msgid "Statistics"
 msgstr ""
 
@@ -378,6 +420,74 @@ msgid "Points:"
 msgstr ""
 
 msgid "Ongoing series:"
+msgstr ""
+
+msgid "Date & time"
+msgstr ""
+
+msgid "Players"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "View replay online"
+msgstr ""
+
+msgid "Best hand: <b>%s</b> - %s"
+msgstr ""
+
+msgid "Ron hands: %d"
+msgstr ""
+
+msgid "Tsumo hands: %d"
+msgstr ""
+
+msgid "Drawn rounds: %d"
+msgstr ""
+
+msgid "Chombo penalties: %s"
+msgstr ""
+
+msgid "Additional penalties:"
+msgstr ""
+
+msgid "%s - %d points (%s)"
+msgstr ""
+
+msgid "Full game log:"
+msgstr ""
+
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+
+msgid "Rating table is hidden. Show"
+msgstr ""
+
+msgid "Rating table is visible. Hide"
+msgstr ""
+
+msgid "No time left!"
+msgstr ""
+
+msgid "SEATING"
+msgstr ""
+
+msgid "Table #"
+msgstr ""
+
+msgid "EAST"
+msgstr ""
+
+msgid "SOUTH"
+msgstr ""
+
+msgid "WEST"
+msgstr ""
+
+msgid "NORTH"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -437,74 +547,6 @@ msgstr ""
 msgid "Chombo: %s."
 msgstr ""
 
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-
-msgid "Rating table is hidden. Show"
-msgstr ""
-
-msgid "Rating table is visible. Hide"
-msgstr ""
-
-msgid "No time left!"
-msgstr ""
-
-msgid "SEATING"
-msgstr ""
-
-msgid "Table #"
-msgstr ""
-
-msgid "EAST"
-msgstr ""
-
-msgid "SOUTH"
-msgstr ""
-
-msgid "WEST"
-msgstr ""
-
-msgid "NORTH"
-msgstr ""
-
-msgid "Date & time"
-msgstr ""
-
-msgid "Players"
-msgstr ""
-
-msgid "Details"
-msgstr ""
-
-msgid "View replay online"
-msgstr ""
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr ""
-
-msgid "Ron hands: %d"
-msgstr ""
-
-msgid "Tsumo hands: %d"
-msgstr ""
-
-msgid "Drawn rounds: %d"
-msgstr ""
-
-msgid "Chombo penalties: %s"
-msgstr ""
-
-msgid "Additional penalties:"
-msgstr ""
-
-msgid "%s - %d points (%s)"
-msgstr ""
-
-msgid "Full game log:"
-msgstr ""
-
 msgid "Rating"
 msgstr ""
 
@@ -524,9 +566,6 @@ msgid "Add new game"
 msgstr ""
 
 msgid "Format:"
-msgstr ""
-
-msgid "Example:"
 msgstr ""
 
 msgid ""
@@ -556,6 +595,23 @@ msgid "Select seating mode and press the appropriate button."
 msgstr ""
 
 msgid "Hide/show rating table"
+msgstr ""
+
+msgid ""
+"This tournament has predefined seating. See Admin actions / Predefined "
+"seating page for seating configuration. Next seating is listed below."
+msgstr ""
+
+msgid "No seating defined for next game. Looks like the tournament is finished"
+msgstr ""
+
+msgid "Randomize winds seating at each table"
+msgstr ""
+
+msgid "Use this seating for new game?"
+msgstr ""
+
+msgid "Use this seating"
 msgstr ""
 
 msgid "Random seating"
@@ -940,4 +996,13 @@ msgid "Please select some event!"
 msgstr ""
 
 msgid "<h2>Oops.</h2>Failed to get event configuration!"
+msgstr ""
+
+msgid "Failed to save local ids mapping. Check your network connection."
+msgstr ""
+
+msgid "Predefined seating and event status"
+msgstr ""
+
+msgid "Failed to update predefined seating. Check your network connection."
 msgstr ""
