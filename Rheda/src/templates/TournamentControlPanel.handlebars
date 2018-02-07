@@ -50,13 +50,20 @@
             </td></tr>
             {{#isPrescripted}}
                 <tr><td>
-                    <h3>{{_t 'Random seating'}}</h3>
+                    <h3>{{_t 'Predefined seating'}}</h3>
                     <div>{{_t 'This tournament has predefined seating. See Admin actions / Predefined seating page for seating configuration. Next seating is listed below.'}}</div>
-                    <div>
-                        {{#nextPrescriptedSeating}}
-TODO
-                        {{/nextPrescriptedSeating}}
-                    </div>
+                    <hr />
+                    <table class="table table-striped">
+                        {{#nextPrescriptedSeating}}{{#@index}}
+                            <tr>
+                                <td><b>{{_t 'Table #'}}{{@index}}</b></td>
+                                <td>{{this.0.display_name}}</td>
+                                <td>{{this.1.display_name}}</td>
+                                <td>{{this.2.display_name}}</td>
+                                <td>{{this.3.display_name}}</td>
+                            </tr>
+                        {{/@index}}{{/nextPrescriptedSeating}}
+                    </table>
                     {{#form action='/tourn/predefinedSeating/' method='post'}}
                         <input type="button" class="btn btn-lg btn-primary actionButton"
                                onclick="return window.confirm('{{_t 'Use this seating for new game?'}}') && disableTemporarily(this);"

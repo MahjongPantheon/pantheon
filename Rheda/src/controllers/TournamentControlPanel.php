@@ -59,6 +59,9 @@ class TournamentControlPanel extends Controller
                             [$this->_eventId, intval($_POST['step'])]
                         );
                         break;
+                    case 'predefinedSeating':
+                        $this->_api->execute('makePrescriptedSeating', [$this->_eventId]);
+                        break;
                     case 'swissSeating':
                         $this->_api->execute('makeSwissSeating', [$this->_eventId]);
                         break;
@@ -119,6 +122,7 @@ class TournamentControlPanel extends Controller
         if ($this->_rules->isPrescripted() && $currentStage == self::STAGE_READY_BUT_NOT_STARTED) {
             try {
                 $nextPrescriptedSeating = $this->_api->execute('getNextPrescriptedSeating', [$this->_eventId]);
+                array_unshift($nextPrescriptedSeating, []); // small hack to start from 1
             } catch (\Exception $e) {
                 return [
                     'error' => $e->getMessage()
