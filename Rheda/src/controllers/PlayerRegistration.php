@@ -47,7 +47,11 @@ class PlayerRegistration extends Controller
                 $enrolledPlayers = $this->_api->execute('getAllEnrolled', [$this->_eventId]);
                 usort($enrolledPlayers, $sorter);
                 usort($registeredPlayers, $sorter);
-            } catch (Exception $e) {
+                $registeredPlayers = array_map(function ($el, $index) {
+                    $el['index'] = $index + 1;
+                    return $el;
+                }, $registeredPlayers, array_keys($registeredPlayers));
+            } catch (\Exception $e) {
                 $registeredPlayers = [];
                 $enrolledPlayers = [];
                 $errorMsg = $e->getMessage();
@@ -55,6 +59,9 @@ class PlayerRegistration extends Controller
         }
 
         return [
+            'authorized' => $this->_adminAuthOk(),
+            'prescriptedEvent' => $this->_rules->isPrescripted(),
+            'lastindex' => count($registeredPlayers) + 2,
             'error' => $errorMsg,
             'registered' => $registeredPlayers,
             'enrolled' => $enrolledPlayers,
@@ -81,6 +88,9 @@ class PlayerRegistration extends Controller
                 case 'reenroll':
                     $err = $this->_reenrollUserForEvent($_POST['id']);
                     break;
+                case 'save_local_ids':
+                    $err = $this->_saveLocalIds($_POST['map_json']);
+                    break;
                 default:
                     ;
             }
@@ -103,7 +113,7 @@ class PlayerRegistration extends Controller
             if (!$success) {
                 $errorMsg = _t('Failed to register the player. Check your network connection.');
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
         };
 
@@ -115,7 +125,7 @@ class PlayerRegistration extends Controller
         $errorMsg = '';
         try {
             $this->_api->execute('unregisterPlayerCP', [$userId, $this->_eventId]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
         };
 
@@ -130,9 +140,25 @@ class PlayerRegistration extends Controller
             if (!$success) {
                 $errorMsg = _t('Failed to enroll the player. Check your network connection.');
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
         };
+
+        return $errorMsg;
+    }
+
+    protected function _saveLocalIds($json)
+    {
+        $errorMsg = '';
+        $mapping = json_decode($json, true);
+        try {
+            $success = $this->_api->execute('updatePlayersLocalIds', [$this->_eventId, $mapping]);
+            if (!$success) {
+                $errorMsg = _t('Failed to save local ids mapping. Check your network connection.');
+            }
+        } catch (\Exception $e) {
+            $errorMsg = $e->getMessage();
+        }
 
         return $errorMsg;
     }

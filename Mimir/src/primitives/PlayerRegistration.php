@@ -35,6 +35,7 @@ class PlayerRegistrationPrimitive extends Primitive
         'event_id'      => '_eventId',
         'player_id'     => '_playerId',
         'auth_token'    => '_token',
+        'local_id'      => '_localId'
     ];
 
     protected function _getFieldsTransforms()
@@ -42,7 +43,9 @@ class PlayerRegistrationPrimitive extends Primitive
         return [
             '_id' => $this->_integerTransform(true),
             '_eventId' => $this->_integerTransform(),
-            '_playerId' => $this->_integerTransform()
+            '_token' => $this->_stringTransform(),
+            '_playerId' => $this->_integerTransform(),
+            '_localId' => $this->_integerTransform(true)
         ];
     }
 
@@ -63,6 +66,10 @@ class PlayerRegistrationPrimitive extends Primitive
      * @var string
      */
     protected $_token;
+    /**
+     * @var int
+     */
+    protected $_localId;
 
     protected function _create()
     {
@@ -82,6 +89,7 @@ class PlayerRegistrationPrimitive extends Primitive
                 $this->_id = $existingItem->_id;
                 $this->_eventId = $existingItem->_eventId;
                 $this->_playerId = $existingItem->_playerId;
+                $this->_localId = $existingItem->_localId;
                 $this->_token = sha1('PlayerReg' . microtime()); // Token to be updated on every re-issue!
                 $this->save();
                 $success = true;
@@ -125,6 +133,14 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
+     * @return int
+     */
+    public function getLocalId()
+    {
+        return $this->_localId;
+    }
+
+    /**
      * @param IDb $db
      * @param $playerId
      * @param $eventId
@@ -140,6 +156,67 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
+     * @param IDb $db
+     * @param $eventId
+     * @return PlayerRegistrationPrimitive[]
+     * @throws \Exception
+     */
+    public static function findByEventId(IDb $db, $eventId)
+    {
+        return self::_findBy($db, 'event_id', [$eventId]);
+    }
+
+    /**
+     * @param IDb $db
+     * @param $eventId
+     * @return int
+     * @throws \Exception
+     */
+    public static function findNextFreeLocalId(IDb $db, $eventId)
+    {
+        $result = $db->table(static::$_table)
+            ->where('event_id', $eventId)
+            ->orderByDesc('local_id')
+            ->limit(1)
+            ->findArray();
+
+        if (empty($result)) {
+            return 1; // first player in event ever
+        }
+
+        return $result[0]['local_id'] + 1;
+    }
+
+    /**
+     * Update players' local ids mapping for prescripted event
+     *
+     * @param IDb $db
+     * @param $eventId
+     * @param $idMap
+     * @throws \Exception
+     * @return boolean
+     */
+    public static function updateLocalIds(IDb $db, $eventId, $idMap)
+    {
+        $regs = self::findByEventId($db, $eventId);
+        $upsertData = [];
+        foreach ($regs as $regItem) {
+            if (empty($idMap[$regItem->getPlayerId()])) {
+                continue;
+            }
+
+            $upsertData []= [
+                'id'            => $regItem->getId(),
+                'event_id'      => $eventId,
+                'player_id'     => $regItem->getPlayerId(),
+                'auth_token'    => $regItem->getToken(),
+                'local_id'      => $idMap[$regItem->getPlayerId()]
+            ];
+        }
+        return $db->upsertQuery(self::$_table, $upsertData, ['id']);
+    }
+
+    /**
      * @param PlayerPrimitive $player
      * @param EventPrimitive $event
      * @return PlayerRegistrationPrimitive
@@ -148,6 +225,16 @@ class PlayerRegistrationPrimitive extends Primitive
     {
         $this->_eventId = $event->getId();
         $this->_playerId = $player->getId();
+        return $this;
+    }
+
+    /**
+     * @param int $localId
+     * @return $this
+     */
+    public function setLocalId($localId)
+    {
+        $this->_localId = $localId;
         return $this;
     }
 
@@ -197,5 +284,26 @@ class PlayerRegistrationPrimitive extends Primitive
             return null;
         }
         return $result[0];
+    }
+
+    /**
+     * Finds all players registered to event.
+     * Output array has player local id as key and player id as value.
+     *
+     * @param IDb $db
+     * @param $eventId
+     * @return array [local_id => Player_id, ...]
+     * @throws \Exception
+     */
+    public static function findLocalIdsMapByEvent(IDb $db, $eventId)
+    {
+        $map = [];
+        /** @var PlayerRegistrationPrimitive[] $items */
+        $items = self::_findBy($db, 'event_id', [$eventId]);
+
+        foreach ($items as $regItem) {
+            $map[$regItem->getLocalId()] = $regItem->getPlayerId();
+        }
+        return $map;
     }
 }

@@ -68,6 +68,9 @@
                         {{/isOnline}}
                         {{#a class='dropdown-item' href='/enroll/'}}{{_t 'Add player'}}{{/a}}
                         {{#a class='dropdown-item' href='/reg/'}}{{_t 'Manage players'}}{{/a}}
+                        {{#isPrescripted}}
+                            {{#a class='dropdown-item' href='/prescript'}}{{_t 'Predefined seating'}}{{/a}}
+                        {{/isPrescripted}}
                         {{#a class='dropdown-item' href='/achievements/'}}{{_t 'Achievements'}}{{/a}}
                     </div>
                 </li>

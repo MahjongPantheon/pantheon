@@ -21,6 +21,8 @@ require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/models/TextmodeSession.php';
 require_once __DIR__ . '/../../src/models/PlayerStat.php';
 require_once __DIR__ . '/../../src/models/Event.php';
+require_once __DIR__ . '/../../src/models/EventRatingTable.php';
+require_once __DIR__ . '/../../src/models/EventFinishedGames.php';
 require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
@@ -114,8 +116,8 @@ class TextmodeSessionWholeEventTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $validator->getErrors());
 
         // Make rating table
-        $eventModel = new EventModel($this->_db, $this->_config, $this->_meta);
-        $ratings = $eventModel->getRatingTable($this->_event, 'avg_place', 'asc');
+        $ratings = (new EventRatingTableModel($this->_db, $this->_config, $this->_meta))
+            ->getRatingTable($this->_event, 'avg_place', 'asc');
         $this->assertNotEmpty($ratings);
         $this->assertEquals(8, $ratings[0]['games_played']);
         $this->assertEquals(3, $ratings[0]['id']); // we know player 3 to win in current tournament
@@ -134,7 +136,8 @@ class TextmodeSessionWholeEventTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $validatorRating->getErrors());
 
         // Try getting last games list
-        $data = $eventModel->getLastFinishedGames($this->_event, 10, 0, 'id', 'desc');
+        $data = (new EventFinishedGamesModel($this->_db, $this->_config, $this->_meta))
+            ->getLastFinishedGames($this->_event, 10, 0, 'id', 'desc');
         $this->assertNotEmpty($data['games']);
         $this->assertNotEmpty($data['players']);
         $this->assertEquals(10, count($data['games']));

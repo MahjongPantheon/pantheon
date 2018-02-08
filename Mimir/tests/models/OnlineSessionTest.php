@@ -23,6 +23,7 @@ require_once __DIR__ . '/../../src/Meta.php';
 require_once __DIR__ . '/../../src/models/OnlineSession.php';
 require_once __DIR__ . '/../../src/models/PlayerStat.php';
 require_once __DIR__ . '/../../src/models/Event.php';
+require_once __DIR__ . '/../../src/models/EventRatingTable.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
@@ -124,7 +125,7 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThan(1, count($stats['players_info']));
         $this->assertEquals(1, array_sum($stats['places_summary']));
 
-        $eventModel = new EventModel($this->_db, $this->_config, $this->_meta);
+        $eventModel = new EventRatingTableModel($this->_db, $this->_config, $this->_meta);
         $ratings = $eventModel->getRatingTable($this->_event, 'avg_place', 'asc');
         $this->assertNotEmpty($ratings);
         $this->assertEquals(1, $ratings[0]['games_played']);

@@ -19,6 +19,8 @@ namespace Mimir;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../helpers/Seating.php';
+require_once __DIR__ . '/../models/Event.php';
+require_once __DIR__ . '/../models/EventRatingTable.php';
 
 class SeatingController extends Controller
 {
@@ -31,6 +33,7 @@ class SeatingController extends Controller
      * @param int $seed
      * @throws InvalidParametersException
      * @throws AuthFailedException
+     * @throws \Exception
      * @return bool
      */
     public function makeShuffledSeating($eventId, $groupsCount, $seed)
@@ -61,6 +64,7 @@ class SeatingController extends Controller
      * @param int $eventId
      * @throws InvalidParametersException
      * @throws AuthFailedException
+     * @throws \Exception
      * @return bool
      */
     public function makeSwissSeating($eventId)
@@ -116,6 +120,7 @@ class SeatingController extends Controller
      * @throws DatabaseException
      * @throws InvalidParametersException
      * @throws InvalidUserException
+     * @throws \Exception
      * @return bool
      */
     public function makeManualSeating($eventId, $tablesDescription, $randomize = false)
@@ -149,6 +154,7 @@ class SeatingController extends Controller
      * @throws DatabaseException
      * @throws InvalidParametersException
      * @throws InvalidUserException
+     * @throws \Exception
      * @return bool
      */
     public function makeIntervalSeating($eventId, $step)
@@ -162,7 +168,7 @@ class SeatingController extends Controller
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
-        $currentRatingTable = (new EventModel($this->_db, $this->_config, $this->_meta))
+        $currentRatingTable = (new EventRatingTableModel($this->_db, $this->_config, $this->_meta))
             ->getRatingTable($event[0], 'rating', 'desc');
 
         $seating = Seating::makeIntervalSeating($currentRatingTable, $step, true);
@@ -181,9 +187,123 @@ class SeatingController extends Controller
     }
 
     /**
+     * @param integer $eventId
+     * @param boolean $randomizeAtTables
+     * @return bool
+     * @throws AuthFailedException
+     * @throws DatabaseException
+     * @throws InvalidParametersException
+     * @throws InvalidUserException
+     * @throws \Exception
+     */
+    public function makePrescriptedSeating($eventId, $randomizeAtTables = false)
+    {
+        $this->_log->addInfo('Creating new prescripted seating for event #' . $eventId);
+        $seating = $this->_getNextPrescriptedSeating($eventId);
+        $gamesWillStart = $this->_updateEventStatus($eventId);
+        $tableIndex = 1;
+
+        foreach ($seating as $table) {
+            $table = array_filter($table);
+            if (empty($table) || count($table) != 4) {
+                $this->_log->addInfo('Failed to form a table from predefined seating at event #' . $eventId);
+                continue;
+            }
+
+            if ($randomizeAtTables) {
+                srand(microtime());
+                $table = Seating::shuffle($table);
+            }
+
+            (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
+                ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
+        }
+
+        // increment game index when seating is generated
+        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
+        $prescript[0]->setNextGameIndex($prescript[0]->getNextGameIndex() + 1)->save();
+
+        $this->_log->addInfo('Created new prescripted seating for event #' . $eventId);
+        if ($gamesWillStart) {
+            $this->_log->addInfo('Started all games by prescripted seating for event #' . $eventId);
+        }
+        return true;
+    }
+
+    /**
+     * @param $eventId
+     * @return \int[][]
+     * @throws AuthFailedException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    protected function _getNextPrescriptedSeating($eventId)
+    {
+        $this->_checkIfAllowed($eventId);
+        $this->_log->addInfo('Getting next seating for event #' . $eventId);
+
+        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
+        if (empty($prescript)) {
+            throw new InvalidParametersException('Event prescript for id#' . $eventId . ' not found in DB');
+        }
+        $prescriptForSession = $prescript[0]->getNextGameSeating();
+        return Seating::makePrescriptedSeating(
+            $prescriptForSession,
+            PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventId)
+        );
+    }
+
+    /**
+     * Get list of tables for next session. Each table is a list of players data.
+     *
+     * @param integer $eventId
+     * @return array
+     * @throws AuthFailedException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function getNextSeatingForPrescriptedEvent($eventId)
+    {
+        $seating = $this->_getNextPrescriptedSeating($eventId);
+        if (empty($seating)) {
+            // No next seating: probably, all games are finished already.
+            return [];
+        }
+
+        $playerIds = array_filter(array_reduce($seating, 'array_merge', []));
+        if (empty($playerIds)) {
+            throw new InvalidParametersException('No valid players found in predefined seating');
+        }
+
+        $players = PlayerPrimitive::findById($this->_db, $playerIds);
+        /** @var PlayerPrimitive[] $playersMap */
+        $playersMap = [];
+        foreach ($players as $player) {
+            $playersMap[$player->getId()] = $player;
+        }
+
+        return array_map(function ($table) use (&$playersMap) {
+            return array_map(function ($playerId) use (&$playersMap) {
+                return [
+                    'id' => $playersMap[$playerId]->getId(),
+                    'alias' => $playersMap[$playerId]->getAlias(),
+                    'display_name' => $playersMap[$playerId]->getDisplayName(),
+                    'is_replacement' => $playersMap[$playerId]->getIsReplacement()
+                ];
+            }, $table);
+        }, $seating);
+    }
+
+    /**
      * Update event "seating ready" status.
      * This should be done before games start, or admin panel will show some inadequate data.
      * @param $eventId
+     * @throws \Exception
      * @return bool flag if games are started immediately
      */
     protected function _updateEventStatus($eventId)
@@ -202,6 +322,7 @@ class SeatingController extends Controller
      * @param $eventId
      * @throws AuthFailedException
      * @throws InvalidParametersException
+     * @throws \Exception
      */
     protected function _checkIfAllowed($eventId)
     {
@@ -219,6 +340,7 @@ class SeatingController extends Controller
      * @param $eventId
      * @return array
      * @throws InvalidParametersException
+     * @throws \Exception
      */
     protected function _getData($eventId)
     {
@@ -270,6 +392,7 @@ class SeatingController extends Controller
      * @param $tablesDescription
      * @param $randomize
      * @throws InvalidParametersException
+     * @throws \Exception
      * @return array
      */
     protected function _makeManualSeating($eventId, $tablesDescription, $randomize)
@@ -288,7 +411,7 @@ class SeatingController extends Controller
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
-        $currentRatingTable = (new EventModel($this->_db, $this->_config, $this->_meta))
+        $currentRatingTable = (new EventRatingTableModel($this->_db, $this->_config, $this->_meta))
             ->getRatingTable($event[0], 'rating', 'desc');
 
         $participatingPlayers = [];

@@ -555,7 +555,6 @@ class Seating
      * @param $step
      * @param $randomize
      * @return array
-     * @throws InvalidParametersException
      * @throws \Exception
      */
     public static function makeIntervalSeating($currentRatingTable, $step, $randomize = false)
@@ -590,5 +589,19 @@ class Seating
         }
 
         return $tables;
+    }
+
+    /**
+     * @param int[][] $prescriptForSession
+     * @param PlayerPrimitive[] $players [local_id => player_id, .... ]
+     * @return int[][]
+     */
+    public static function makePrescriptedSeating($prescriptForSession, $players)
+    {
+        return array_map(function ($table) use ($players) {
+            return array_map(function ($localId) use ($players) {
+                return $players[$localId];
+            }, $table);
+        }, $prescriptForSession);
     }
 }

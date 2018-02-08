@@ -18,6 +18,7 @@
 namespace Mimir;
 
 require_once __DIR__ . '/../Model.php';
+require_once __DIR__ . '/EventUserManagement.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
 require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/Event.php';
@@ -45,10 +46,10 @@ class InteractiveSessionModel extends Model
      * @param int[] $playerIds
      * @param int $tableIndex - Table number in tournament
      * @param string $replayHash
-     * @param string $origLink
+     * @throws \Exception
      * @return string
      */
-    public function startGame($eventId, $playerIds, $tableIndex = null, $replayHash = null, $origLink = null)
+    public function startGame($eventId, $playerIds, $tableIndex = null, $replayHash = null)
     {
         $this->_checkAuth($playerIds, $eventId);
         $event = EventPrimitive::findById($this->_db, [$eventId]);
@@ -96,6 +97,7 @@ class InteractiveSessionModel extends Model
      * Normal end or pre-finish should happen when final round is added.
      *
      * @param $gameHash
+     * @throws \Exception
      * @return bool
      */
     public function endGame($gameHash)
@@ -110,6 +112,7 @@ class InteractiveSessionModel extends Model
      *
      * @param $eventId
      * @throws AuthFailedException
+     * @throws \Exception
      * @return int count of finalized sessions
      */
     public function finalizeSessions($eventId)
@@ -135,6 +138,7 @@ class InteractiveSessionModel extends Model
      * @throws InvalidParametersException
      * @throws BadActionException
      * @throws AuthFailedException
+     * @throws \Exception
      * @return bool|array Success?|Results of dry run
      */
     public function addRound($gameHashcode, $roundData, $dry = false)
@@ -214,6 +218,7 @@ class InteractiveSessionModel extends Model
      * @param string $reason
      * @return bool
      * @throws AuthFailedException
+     * @throws \Exception
      * @throws InvalidParametersException
      */
     public function addPenalty($eventId, $playerId, $amount, $reason)
@@ -245,6 +250,7 @@ class InteractiveSessionModel extends Model
      * @param $withStatus
      * @return SessionPrimitive
      * @throws InvalidParametersException
+     * @throws \Exception
      * @throws BadActionException
      */
     protected function _findGame($gameHash, $withStatus)
@@ -261,10 +267,16 @@ class InteractiveSessionModel extends Model
         return $game[0];
     }
 
+    /**
+     * @param $playersIds
+     * @param $eventId
+     * @throws AuthFailedException
+     * @throws \Exception
+     */
     protected function _checkAuth($playersIds, $eventId)
     {
         // Check that real session player is trying to enter data
-        $evMdl = new EventModel($this->_db, $this->_config, $this->_meta);
+        $evMdl = new EventUserManagementModel($this->_db, $this->_config, $this->_meta);
         if (!$evMdl->checkToken($playersIds[0], $eventId) &&
             !$evMdl->checkToken($playersIds[1], $eventId) &&
             !$evMdl->checkToken($playersIds[2], $eventId) &&
@@ -275,19 +287,11 @@ class InteractiveSessionModel extends Model
     }
 
     /**
-     * Check if token allows administrative operations
-     * @return bool
-     */
-    public function checkAdminToken()
-    {
-        return $this->_meta->getAuthToken() === $this->_config->getValue('admin.god_token');
-    }
-
-    /**
      * Drop last round from session (except if this last round has led to session finish)
      *
      * @param $gameHash
      * @throws AuthFailedException
+     * @throws \Exception
      * @throws InvalidParametersException
      * @return boolean
      */

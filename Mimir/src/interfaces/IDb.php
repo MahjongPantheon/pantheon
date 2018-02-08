@@ -34,8 +34,8 @@ interface IDb
     /**
      * @param $table
      * @param $data [ [ field => value, field2 => value2 ], [ ... ] ] - nested arrays should be monomorphic
-     * @param $tableUniqueField string Name of unique constraint to check
-     * @return string
+     * @param $tableUniqueField string[] Names of unique constraint to check
+     * @return boolean
      */
     public function upsertQuery($table, $data, $tableUniqueField);
 
