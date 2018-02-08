@@ -1,0 +1,61 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<h3>{{_t 'Predefined seating configuration'}}</h3>
+<div class="row">
+    <div class="col-sm">
+        <form action="" method="POST" id="addform">
+            <input type="hidden" name="action" value="update" />
+            <div class="form-group row">
+                <label for="next_index" class="col-sm-8 col-form-label">{{_t 'Next session index (starting from 1):'}}</label>
+                <div class="col-sm-4">
+                    <input class="form-control" id="next_index" type="text" name="next_session_index" value="{{next_session_index}}">
+                </div>
+            </div>
+            <textarea name="prescript" style="width:100%; min-height: 500px">{{prescript}}</textarea>
+            <input type="submit" value="{{_t 'Update predefined seating config'}}" class="btn btn-primary btn-large">
+        </form>
+    </div>
+    <div class="col-sm">
+        {{#has_errors}}
+            <h5 style="color: red">{{_t 'Found errors:'}}</h5>
+            <ul>
+            {{#errors}}
+                <li>{{.}}</li>
+            {{/errors}}
+            </ul>
+        {{/has_errors}}
+        {{^has_errors}}
+            <h5>{{_t 'No errors found.'}}</h5>
+        {{/has_errors}}
+        <hr />
+        <div>
+            {{_t 'Predefined seating is entered as list of tables, one table per row. New game session should be indicated as an empty line.'}}
+            {{_t 'Example:'}}
+        </div>
+        <div>
+    <pre class="border" style="background-color: #ccc; padding: 10px;">1-2-3-4
+5-6-7-8
+
+1-3-5-7
+2-4-6-8</pre>
+        </div>
+        <div>
+            {{_t 'In this example, two tables play two games. Numbers in seating persist between games and are defined at Admin actions / Manage players page.'}}
+        </div>
+    </div>
+</div>
+

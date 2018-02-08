@@ -203,7 +203,7 @@ class PlayerPrimitive extends Primitive
 
     /**
      * @param string $alias
-     * @return $this
+     * @return PlayerPrimitive
      */
     public function setAlias($alias)
     {

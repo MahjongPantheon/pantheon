@@ -158,6 +158,7 @@ abstract class Controller
                 'usePenalty' => $this->_rules->usePenalty(),
                 'syncStart' => $this->_rules->syncStart(),
                 'eventTitle' => $this->_rules->eventTitle(),
+                'isPrescripted' => $this->_rules->isPrescripted(),
                 'pageTitle' => $pageTitle,
                 'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
                 'isLoggedIn' => $this->_adminAuthOk(),

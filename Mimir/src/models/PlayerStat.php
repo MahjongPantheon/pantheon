@@ -36,6 +36,7 @@ class PlayerStatModel extends Model
      * @param $playerId
      * @return array
      * @throws EntityNotFoundException
+     * @throws \Exception
      */
     public function getStats($eventId, $playerId)
     {
@@ -98,6 +99,7 @@ class PlayerStatModel extends Model
      *
      * @param $playerId
      * @param $games
+     * @throws \Exception
      * @return array
      */
     protected function _getScoreHistoryAndPlayers($playerId, $games)
@@ -130,6 +132,7 @@ class PlayerStatModel extends Model
      * 2) get all rows by single query
      *
      * @param $scoreHistory
+     * @throws \Exception
      * @return array
      */
     protected function _fetchPlayersInfo($scoreHistory)
@@ -379,6 +382,7 @@ class PlayerStatModel extends Model
 
     /**
      * @param $games
+     * @throws \Exception
      * @return RoundPrimitive[]
      */
     protected function _fetchRounds($games)
@@ -395,6 +399,7 @@ class PlayerStatModel extends Model
     /**
      * @param EventPrimitive $event
      * @param PlayerPrimitive $player
+     * @throws \Exception
      * @return array [ ['session' => SessionPrimitive, 'results' => SessionResultsPrimitive[] ] ... ]
      */
     protected function _fetchGamesHistory(EventPrimitive $event, PlayerPrimitive $player)

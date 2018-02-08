@@ -68,6 +68,7 @@ return [
     'getAllEnrolled'     => ['EventsController', 'getAllEnrolledPlayers'],
     'getAchievements'    => ['EventsController', 'getAchievements'],
     'toggleHideResults'  => ['EventsController', 'toggleHideResults'],
+    'updatePlayersLocalIds' => ['EventsController', 'updateLocalIds'],
     'startGame'          => ['GamesController', 'start'],
     'endGame'            => ['GamesController', 'end'],
     'finalizeSessions'   => ['GamesController', 'finalizeSessions'],
@@ -85,4 +86,8 @@ return [
     'generateSwissSeating' => ['SeatingController', 'generateSwissSeating'],
     'makeIntervalSeating'  => ['SeatingController', 'makeIntervalSeating'],
     'makeManualSeating'    => ['SeatingController', 'makeManualSeating'],
+    'makePrescriptedSeating'       => ['SeatingController', 'makePrescriptedSeating'],
+    'getNextPrescriptedSeating'    => ['SeatingController', 'getNextSeatingForPrescriptedEvent'],
+    'getPrescriptedEventConfig'    => ['EventsController', 'getPrescriptedEventConfig'],
+    'updatePrescriptedEventConfig' => ['EventsController', 'updatePrescriptedEventConfig'],
 ];

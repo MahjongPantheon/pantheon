@@ -10,6 +10,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getRatingTable
 Parameters:
@@ -22,6 +23,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getLastGames
 Parameters:
@@ -35,6 +37,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getGame
 Parameters:
@@ -44,6 +47,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getGamesSeries
 Parameters:
@@ -53,6 +57,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getCurrentGames
 Parameters:
@@ -61,9 +66,6 @@ Parameters:
 
 Returns: _array_ of session data
 
-Exceptions:
-* _AuthFailedException_ 
-
 ### getAllPlayers
 Parameters:
 * **$eventId** (_integer_) 
@@ -71,7 +73,7 @@ Parameters:
 Returns: _array_ 
 
 Exceptions:
-* _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getPlayerIdByIdent
 Parameters:
@@ -81,6 +83,7 @@ Returns: _int_ player id
 
 Exceptions:
 * _EntityNotFoundException_ 
+* _\Exception_ 
 
 ### getTimerState
 Parameters:
@@ -90,6 +93,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getGameOverview
 Parameters:
@@ -100,6 +104,7 @@ Returns: _array_
 Exceptions:
 * _EntityNotFoundException_ 
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getPlayerStats
 Parameters:
@@ -120,8 +125,8 @@ Parameters:
 Returns: _bool|array_ Success|Results of dry run
 
 Exceptions:
-* _DatabaseException_ 
 * _BadActionException_ 
+* _\Exception_ 
 
 ### addOnlineReplay
 Parameters:
@@ -132,6 +137,7 @@ Returns: _bool_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 * _ParseException_ 
 
 ### getLastResults
@@ -143,6 +149,7 @@ Returns: _array|null_
 
 Exceptions:
 * _EntityNotFoundException_ 
+* _\Exception_ 
 
 ### getLastRound
 Parameters:
@@ -152,7 +159,7 @@ Parameters:
 Returns: _array|null_ 
 
 Exceptions:
-* _EntityNotFoundException_ 
+* _\Exception_ 
 
 ### getLastRoundByHash
 Parameters:
@@ -161,7 +168,7 @@ Parameters:
 Returns: _array|null_ 
 
 Exceptions:
-* _EntityNotFoundException_ 
+* _\Exception_ 
 
 ### getGameConfigT
 Parameters:
@@ -170,6 +177,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getTimerStateT
 Parameters:
@@ -178,6 +186,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getAllPlayersT
 Parameters:
@@ -186,6 +195,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getTablesStateT
 Parameters:
@@ -194,6 +204,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getCurrentGamesT
 Parameters:
@@ -201,8 +212,8 @@ Parameters:
 Returns: _array_ of session data
 
 Exceptions:
-* _AuthFailedException_ 
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getLastResultsT
 Parameters:
@@ -212,6 +223,7 @@ Returns: _array|null_
 Exceptions:
 * _InvalidParametersException_ 
 * _EntityNotFoundException_ 
+* _\Exception_ 
 
 ### getLastRoundT
 Parameters:
@@ -220,7 +232,7 @@ Returns: _array|null_
 
 Exceptions:
 * _InvalidParametersException_ 
-* _EntityNotFoundException_ 
+* _\Exception_ 
 
 ### getPlayerT
 Parameters:
@@ -230,6 +242,7 @@ Returns: _array_
 Exceptions:
 * _InvalidParametersException_ 
 * _EntityNotFoundException_ 
+* _\Exception_ 
 
 ### startGameT
 Parameters:
@@ -241,6 +254,7 @@ Exceptions:
 * _InvalidUserException_ 
 * _DatabaseException_ 
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### createEvent
 Parameters:
@@ -255,6 +269,7 @@ Returns: _int_
 
 Exceptions:
 * _BadActionException_ 
+* _InvalidParametersException_ 
 
 ### getTablesState
 Parameters:
@@ -263,7 +278,7 @@ Parameters:
 Returns: _array_ 
 
 Exceptions:
-* _InvalidParametersException_ 
+* _\Exception_ 
 
 ### startTimer
 Parameters:
@@ -273,6 +288,7 @@ Returns: _bool_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### registerPlayer
 Parameters:
@@ -281,7 +297,7 @@ Parameters:
 Returns: _string_ Auth token
 
 Exceptions:
-* _InvalidParametersException_ 
+* _\Exception_ 
 
 ### registerPlayerCP
 Parameters:
@@ -292,6 +308,7 @@ Returns: _bool_ success?
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### unregisterPlayerCP
 Parameters:
@@ -301,7 +318,7 @@ Parameters:
 Returns: _void_ 
 
 Exceptions:
-* _InvalidParametersException_ 
+* _\Exception_ 
 
 ### enrollPlayerCP
 Parameters:
@@ -314,6 +331,7 @@ Exceptions:
 * _AuthFailedException_ 
 * _BadActionException_ 
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getAllEnrolled
 Parameters:
@@ -322,7 +340,7 @@ Parameters:
 Returns: _array_ 
 
 Exceptions:
-* _InvalidParametersException_ 
+* _\Exception_ 
 
 ### getAchievements
 Parameters:
@@ -332,6 +350,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### toggleHideResults
 Parameters:
@@ -341,6 +360,18 @@ Returns: _bool_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
+
+### updatePlayersLocalIds
+Parameters:
+* **$eventId** (_integer_) 
+* **$idMap** (_array_) Mapping of player_id => local_id
+
+Returns: _bool_ 
+
+Exceptions:
+* _AuthFailedException_ 
+* _\Exception_ 
 
 ### startGame
 Parameters:
@@ -352,16 +383,13 @@ Returns: _string_ Hashcode of started game
 Exceptions:
 * _InvalidUserException_ 
 * _DatabaseException_ 
+* _\Exception_ 
 
 ### endGame
 Parameters:
 * **$gameHashcode** (_string_) Hashcode of game
 
 Returns: _bool_ Success?
-
-Exceptions:
-* _DatabaseException_ 
-* _BadActionException_ 
 
 ### finalizeSessions
 Parameters:
@@ -370,8 +398,7 @@ Parameters:
 Returns: _bool_ Success?
 
 Exceptions:
-* _DatabaseException_ 
-* _BadActionException_ 
+* _\Exception_ 
 
 ### addTextLog
 Parameters:
@@ -382,6 +409,7 @@ Returns: _bool_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 * _ParseException_ 
 
 ### dropLastRound
@@ -390,18 +418,20 @@ Parameters:
 
 Returns: _boolean_ Success?
 
+Exceptions:
+* _\Exception_ 
+
 ### addPenalty
 Parameters:
 * **$eventId** (_integer_) Hashcode of game
 * **$playerId** (_integer_) Id of penalized player
 * **$amount** (_integer_) Penalty amount
-* **$reason** (_string_) Panelty reason
+* **$reason** (_string_) Penalty reason
 
 Returns: _bool_ Success?
 
 Exceptions:
-* _DatabaseException_ 
-* _BadActionException_ 
+* _\Exception_ 
 
 ### addPlayer
 Parameters:
@@ -429,6 +459,7 @@ Returns: _int_ player id
 Exceptions:
 * _EntityNotFoundException_ 
 * _MalformedPayloadException_ 
+* _\Exception_ 
 
 ### getPlayer
 Parameters:
@@ -438,6 +469,7 @@ Returns: _array_
 
 Exceptions:
 * _EntityNotFoundException_ 
+* _\Exception_ 
 
 ### getEverybody
 Parameters:
@@ -452,6 +484,7 @@ Returns: _array_
 
 Exceptions:
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### makeShuffledSeating
 Parameters:
@@ -464,6 +497,7 @@ Returns: _bool_
 Exceptions:
 * _InvalidParametersException_ 
 * _AuthFailedException_ 
+* _\Exception_ 
 
 ### makeSwissSeating
 Parameters:
@@ -474,6 +508,7 @@ Returns: _bool_
 Exceptions:
 * _InvalidParametersException_ 
 * _AuthFailedException_ 
+* _\Exception_ 
 
 ### generateSwissSeating
 Parameters:
@@ -497,6 +532,7 @@ Exceptions:
 * _DatabaseException_ 
 * _InvalidParametersException_ 
 * _InvalidUserException_ 
+* _\Exception_ 
 
 ### makeManualSeating
 Parameters:
@@ -511,4 +547,52 @@ Exceptions:
 * _DatabaseException_ 
 * _InvalidParametersException_ 
 * _InvalidUserException_ 
+* _\Exception_ 
+
+### makePrescriptedSeating
+Parameters:
+* **$eventId** (_integer_) 
+* **$randomizeAtTables** (_boolean_) 
+
+Returns: _bool_ 
+
+Exceptions:
+* _AuthFailedException_ 
+* _DatabaseException_ 
+* _InvalidParametersException_ 
+* _InvalidUserException_ 
+* _\Exception_ 
+
+### getNextPrescriptedSeating
+Parameters:
+* **$eventId** (_integer_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _AuthFailedException_ 
+* _InvalidParametersException_ 
+* _\Exception_ 
+
+### getPrescriptedEventConfig
+Parameters:
+* **$eventId** (_integer_) 
+
+Returns: _mixed_ 
+
+Exceptions:
+* _InvalidParametersException_ 
+* _\Exception_ 
+
+### updatePrescriptedEventConfig
+Parameters:
+* **$eventId** (_integer_) 
+* **$nextSessionIndex** (_integer_) 
+* **$prescript** (_string_) 
+
+Returns: _mixed_ 
+
+Exceptions:
+* _InvalidParametersException_ 
+* _\Exception_ 
 

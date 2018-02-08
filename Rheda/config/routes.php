@@ -40,11 +40,14 @@ return [ // Omit trailing slashes in keys when possible
     '/tourn'                                               => 'TournamentControlPanel',
     '/tourn/(?<action>dropLastRound)/(?<hash>[0-9a-f]+)'   => 'TournamentControlPanel',
     '/tourn/(?<action>shuffledSeating)'                    => 'TournamentControlPanel',
+    '/tourn/(?<action>predefinedSeating)'                  => 'TournamentControlPanel',
     '/tourn/(?<action>intervalSeating)'                    => 'TournamentControlPanel',
     '/tourn/(?<action>swissSeating)'                       => 'TournamentControlPanel',
     '/tourn/(?<action>startTimer)'                         => 'TournamentControlPanel',
     '/tourn/(?<action>toggleHideResults)'                  => 'TournamentControlPanel',
     '/tourn/(?<action>finalizeSessions)'                   => 'TournamentControlPanel',
+
+    '/prescript' => 'PrescriptControls',
 
     '/games'                                               => 'GamesControlPanel',
     '/games/(?<action>dropLastRound)/(?<hash>[0-9a-f]+)'   => 'GamesControlPanel',
