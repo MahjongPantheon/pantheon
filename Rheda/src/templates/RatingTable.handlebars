@@ -43,7 +43,7 @@
         {{#data}}
         <tr>
             <td>{{_index}}</td>
-            <td>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</td>
+            <td>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}{{#if isOnlineTournament}} ({{tenhou_id}}){{/if}}</td>
             <td><span class="badge
                 {{#winner_zone}}badge-success{{/winner_zone}}
                 {{^winner_zone}}badge-danger{{/winner_zone}}
