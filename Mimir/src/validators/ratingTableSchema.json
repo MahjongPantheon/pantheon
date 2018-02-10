@@ -25,6 +25,9 @@
       },
       "winner_zone": {
         "type": "boolean"
+      },
+      "tenhou_id": {
+        "type": "string"
       }
     },
     "required": [

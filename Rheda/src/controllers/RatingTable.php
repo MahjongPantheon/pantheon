@@ -129,6 +129,7 @@ class RatingTable extends Controller
             'data'              => $data,
 
             'orderDesc'         => $order == 'desc',
+            'isOnlineTournament' => $this->_rules->isOnline(),
 
             'orderByRating'     => $orderBy == 'rating',
             'orderByAvgPlace'   => $orderBy == 'avg_place',
