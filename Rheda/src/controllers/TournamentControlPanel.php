@@ -127,7 +127,10 @@ class TournamentControlPanel extends Controller
                 }
             } catch (\Exception $e) {
                 return [
-                    'error' => $e->getMessage()
+                    'error' => null,
+                    'prescriptedEventErrorDescription' => $e->getCode() == 1404
+                        ? _t('No seating defined. Check "Admin actions / Predefined seating" page to define seating for tournament')
+                        : $e->getMessage()
                 ];
             }
         }
