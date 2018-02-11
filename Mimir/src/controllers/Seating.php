@@ -204,7 +204,10 @@ class SeatingController extends Controller
         $tableIndex = 1;
 
         foreach ($seating as $table) {
-            $table = array_filter($table);
+            $table = array_filter(array_map(function ($el) {
+                return $el['id'];
+            }, $table));
+
             if (empty($table) || count($table) != 4) {
                 $this->_log->addInfo('Failed to form a table from predefined seating at event #' . $eventId);
                 continue;
