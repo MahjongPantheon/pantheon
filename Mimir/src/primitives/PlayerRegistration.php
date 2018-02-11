@@ -241,13 +241,13 @@ class PlayerRegistrationPrimitive extends Primitive
     /**
      * @param IDb $db
      * @param $eventId
-     * @return int[]
+     * @return array ['id' => int, 'local_id' => int|null][]
      * @throws \Exception
      */
     public static function findRegisteredPlayersIdsByEvent(IDb $db, $eventId)
     {
         return array_map(function (PlayerRegistrationPrimitive $p) {
-            return $p->_playerId;
+            return ['id' => $p->_playerId, 'local_id' => $p->_localId];
         }, self::_findBy($db, 'event_id', [$eventId]));
     }
 
@@ -259,7 +259,10 @@ class PlayerRegistrationPrimitive extends Primitive
      */
     public static function findRegisteredPlayersByEvent(IDb $db, $eventId)
     {
-        $ids = self::findRegisteredPlayersIdsByEvent($db, $eventId);
+        $ids = array_map(function ($el) {
+            return $el['id'];
+        }, self::findRegisteredPlayersIdsByEvent($db, $eventId));
+
         if (empty($ids)) {
             return [];
         }
