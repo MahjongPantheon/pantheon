@@ -789,10 +789,13 @@ class EventPrimitive extends Primitive
 
     /**
      * @return \int[]
+     * @throws \Exception
      */
     public function getRegisteredPlayersIds()
     {
-        return PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $this->getId());
+        return array_map(function ($el) {
+            return $el['id'];
+        }, PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $this->getId()));
     }
 
     /**
