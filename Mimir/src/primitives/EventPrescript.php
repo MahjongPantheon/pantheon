@@ -51,10 +51,10 @@ class EventPrescriptPrimitive extends Primitive
     {
         return [
             'serialize' => function ($obj) {
-                return $this->_packScript($obj);
+                return $this->packScript($obj);
             },
             'deserialize' => function ($str) {
-                return $this->_unpackScript($str);
+                return $this->unpackScript($str);
             }
         ];
     }
@@ -63,10 +63,12 @@ class EventPrescriptPrimitive extends Primitive
      * @param string $prescript
      * @return int[][][]
      */
-    protected function _unpackScript($prescript)
+    public function unpackScript($prescript)
     {
+        $prescript = str_replace("\r", '', $prescript);
         $sessions = [];
-        foreach (explode("\n\n", $prescript) as $sessionScript) {
+        $sessionScripts = explode("\n\n", $prescript);
+        foreach ($sessionScripts as $sessionScript) {
             if (empty($sessionScript)) {
                 continue;
             }
@@ -74,7 +76,7 @@ class EventPrescriptPrimitive extends Primitive
             $tables = explode("\n", $sessionScript);
             $sessions []= array_map(function ($table) {
                 return array_map('intval', explode('-', $table));
-            }, $tables);
+            }, array_filter($tables));
         }
 
         return $sessions;
@@ -84,7 +86,7 @@ class EventPrescriptPrimitive extends Primitive
      * @param int[][][] $prescriptObj
      * @return string
      */
-    protected function _packScript($prescriptObj)
+    public function packScript($prescriptObj)
     {
         $sessions = [];
         foreach ($prescriptObj as $sessionObj) {
@@ -225,7 +227,7 @@ class EventPrescriptPrimitive extends Primitive
      */
     public function getScriptAsString()
     {
-        return $this->_packScript($this->_script);
+        return $this->packScript($this->_script);
     }
 
     /**
@@ -234,7 +236,7 @@ class EventPrescriptPrimitive extends Primitive
      */
     public function setScriptAsString($script)
     {
-        $this->_script = $this->_unpackScript($script);
+        $this->_script = $this->unpackScript($script);
         return $this;
     }
 

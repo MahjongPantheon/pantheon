@@ -249,7 +249,7 @@ class SeatingController extends Controller
 
         $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
         if (empty($prescript)) {
-            throw new InvalidParametersException('Event prescript for id#' . $eventId . ' not found in DB');
+            throw new InvalidParametersException('Event prescript for id#' . $eventId . ' not found in DB', 1404);
         }
         $prescriptForSession = $prescript[0]->getNextGameSeating();
         return Seating::makePrescriptedSeating(
