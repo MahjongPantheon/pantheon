@@ -61,8 +61,14 @@ msgstr ""
 msgid "Save local IDs"
 msgstr "Сохранить локальные ID"
 
-msgid "Sorry, this page is not available for mobile devices"
-msgstr "Извините, эта страница недоступна для мобильных устройств"
+msgid "Add online game"
+msgstr "Добавить онлайн-игру"
+
+msgid "The game has been successfully added!"
+msgstr "Игра успешно добавлена!"
+
+msgid "Add game"
+msgstr "Добавить игру"
 
 msgid "Achievements"
 msgstr "Номинации"
@@ -173,9 +179,6 @@ msgstr "Последние игры"
 msgid "Rating table"
 msgstr "Рейтинг"
 
-msgid "Add online game"
-msgstr "Добавить онлайн-игру"
-
 msgid "Tournament control panel"
 msgstr "Управление турниром"
 
@@ -200,14 +203,20 @@ msgstr "Таймер и рассадка"
 msgid "Login"
 msgstr "Вход"
 
-msgid "The game has been successfully added!"
-msgstr "Игра успешно добавлена!"
+msgid "Sorry, this page is not available for mobile devices"
+msgstr "Извините, эта страница недоступна для мобильных устройств"
 
-msgid "Add game"
-msgstr "Добавить игру"
+msgid "Best series"
+msgstr "Лучшая серия"
 
-msgid "Game details"
-msgstr "Подробнее об игре"
+msgid "Points of best series"
+msgstr "Очки в лучшей серии"
+
+msgid "Last series"
+msgstr "Текущая серия"
+
+msgid "Points of last series"
+msgstr "Очки в текущей серии"
 
 msgid "Admin panel"
 msgstr "Администрирование"
@@ -217,6 +226,9 @@ msgstr "Авторизация прошла успешно!"
 
 msgid "Authorize"
 msgstr "Авторизоваться"
+
+msgid "Game details"
+msgstr "Подробнее об игре"
 
 msgid "Confirm round cancellation: "
 msgstr "Подтвердите отмену раздачи: "
@@ -238,18 +250,6 @@ msgstr "Штрафы:"
 
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr "%s - штраф %s очков. Причина: %s"
-
-msgid "Best series"
-msgstr "Лучшая серия"
-
-msgid "Points of best series"
-msgstr "Очки в лучшей серии"
-
-msgid "Last series"
-msgstr "Текущая серия"
-
-msgid "Points of last series"
-msgstr "Очки в текущей серии"
 
 msgid "Rating table has been hidden by tournament administrator"
 msgstr "Рейтинговая таблица была скрыта администратором турнира"
@@ -356,6 +356,12 @@ msgstr "Стоимость рук"
 msgid "Yaku collected over all time"
 msgstr "Собранные яку (за все время)"
 
+msgid "No games has been played yet"
+msgstr "Ни одной игры еще не сыграно"
+
+msgid "%d - %d (%d total)"
+msgstr "%d - %d (всего %d)"
+
 msgid "Additional penalties"
 msgstr "Дополнительные штрафы"
 
@@ -380,12 +386,6 @@ msgstr "Проверьте дважды введенные данные. Отм�
 
 msgid "Apply penalty"
 msgstr "Применить штраф"
-
-msgid "No games has been played yet"
-msgstr "Ни одной игры еще не сыграно"
-
-msgid "%d - %d (%d total)"
-msgstr "%d - %d (всего %d)"
 
 msgid "%s: personal stats"
 msgstr "%s: личная статистика"
@@ -447,76 +447,6 @@ msgstr "Очки:"
 msgid "Ongoing series:"
 msgstr "Текущая серия:"
 
-msgid "Date & time"
-msgstr "Дата/время"
-
-msgid "Players"
-msgstr "Игроки"
-
-msgid "Details"
-msgstr "Подробности"
-
-msgid "View replay online"
-msgstr "Посмотреть реплей"
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr "Лучшая рука: <b>%s</b> - %s"
-
-msgid "Ron hands: %d"
-msgstr "Выигрышей по рон: %d"
-
-msgid "Tsumo hands: %d"
-msgstr "Выигрышей по цумо: %d"
-
-msgid "Drawn rounds: %d"
-msgstr "Ничьих: %d"
-
-msgid "Chombo penalties: %s"
-msgstr "Штрафов чомбо: %s"
-
-msgid "Additional penalties:"
-msgstr "Дополнительные штрафы:"
-
-msgid "%s - %d points (%s)"
-msgstr "%s - %d очков (%s)"
-
-msgid "Full game log:"
-msgstr "Полный лог игры:"
-
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-"Скрытие рейтинговой таблицы для игроков может быть полезно для сохранения "
-"интриги в последних ханчанах турнира."
-
-msgid "Rating table is hidden. Show"
-msgstr "Рейтинговая таблица скрыта. Показать"
-
-msgid "Rating table is visible. Hide"
-msgstr "Рейтинговая таблица доступна. Скрыть"
-
-msgid "No time left!"
-msgstr "СТОП!"
-
-msgid "SEATING"
-msgstr "РАССАДКА"
-
-msgid "Table #"
-msgstr "Стол №"
-
-msgid "EAST"
-msgstr "ВОСТОК"
-
-msgid "SOUTH"
-msgstr "ЮГ"
-
-msgid "WEST"
-msgstr "ЗАПАД"
-
-msgid "NORTH"
-msgstr "СЕВЕР"
-
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
 msgstr "<b>%s</b> - %s (<b>%s</b>, пао: <b>%s</b>), якуман!"
 
@@ -574,11 +504,90 @@ msgstr "Пересдача."
 msgid "Chombo: %s."
 msgstr "Чомбо: %s."
 
+msgid "Date & time"
+msgstr "Дата/время"
+
+msgid "Players"
+msgstr "Игроки"
+
+msgid "Details"
+msgstr "Подробности"
+
+msgid "View replay online"
+msgstr "Посмотреть реплей"
+
+msgid "Best hand: <b>%s</b> - %s"
+msgstr "Лучшая рука: <b>%s</b> - %s"
+
+msgid "Ron hands: %d"
+msgstr "Выигрышей по рон: %d"
+
+msgid "Tsumo hands: %d"
+msgstr "Выигрышей по цумо: %d"
+
+msgid "Drawn rounds: %d"
+msgstr "Ничьих: %d"
+
+msgid "Chombo penalties: %s"
+msgstr "Штрафов чомбо: %s"
+
+msgid "Additional penalties:"
+msgstr "Дополнительные штрафы:"
+
+msgid "%s - %d points (%s)"
+msgstr "%s - %d очков (%s)"
+
+msgid "Full game log:"
+msgstr "Полный лог игры:"
+
+msgid "No time left!"
+msgstr "СТОП!"
+
+msgid "SEATING"
+msgstr "РАССАДКА"
+
+msgid "Table #"
+msgstr "Стол №"
+
+msgid "EAST"
+msgstr "ВОСТОК"
+
+msgid "SOUTH"
+msgstr "ЮГ"
+
+msgid "WEST"
+msgstr "ЗАПАД"
+
+msgid "NORTH"
+msgstr "СЕВЕР"
+
 msgid "Rating"
 msgstr "Рейтинг"
 
 msgid "Han"
 msgstr "Хан"
+
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+"Скрытие рейтинговой таблицы для игроков может быть полезно для сохранения "
+"интриги в последних ханчанах турнира."
+
+msgid "Rating table is hidden. Show"
+msgstr "Рейтинговая таблица скрыта. Показать"
+
+msgid "Rating table is visible. Hide"
+msgstr "Рейтинговая таблица доступна. Скрыть"
+
+msgid "Rating points"
+msgstr "Рейтинговые очки"
+
+msgid "Average place"
+msgstr "Среднее место"
+
+msgid "Average points"
+msgstr "Средние очки"
 
 msgid "Later"
 msgstr "Позже"
@@ -586,27 +595,11 @@ msgstr "Позже"
 msgid "Earlier"
 msgstr "Раньше"
 
-msgid "Going back in 3 seconds..."
-msgstr "Идем назад через 3 секунды..."
-
-msgid "Add new game"
-msgstr "Добавить новую игру"
-
-msgid "Format:"
-msgstr "Формат:"
-
-msgid ""
-"Renchans/honba are calculated automatically. Also points and payments checks "
-"are performed: in case of any inconsistency the alert is displayed."
-msgstr ""
-"Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
-"системой, в случае несоответствия будет выдано предупреждение."
-
-msgid "Player aliases"
-msgstr "Алиасы"
-
 msgid "Something went wrong: %s"
 msgstr "Что-то пошло не так, и вот что именно: %s"
+
+msgid "Something went wrong:"
+msgstr "Что-то пошло не так, и вот что именно:"
 
 msgid "Unable to generate seating"
 msgstr "Невозможно сгенерировать рассадку"
@@ -770,14 +763,24 @@ msgstr "Завершить игры? Отменить раздачу стане�
 msgid "Confirm the results and finish all games"
 msgstr "Утвердить результаты и завершить игры"
 
-msgid "Rating points"
-msgstr "Рейтинговые очки"
+msgid "Going back in 3 seconds..."
+msgstr "Идем назад через 3 секунды..."
 
-msgid "Average place"
-msgstr "Среднее место"
+msgid "Add new game"
+msgstr "Добавить новую игру"
 
-msgid "Average points"
-msgstr "Средние очки"
+msgid "Format:"
+msgstr "Формат:"
+
+msgid ""
+"Renchans/honba are calculated automatically. Also points and payments checks "
+"are performed: in case of any inconsistency the alert is displayed."
+msgstr ""
+"Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
+"системой, в случае несоответствия будет выдано предупреждение."
+
+msgid "Player aliases"
+msgstr "Алиасы"
 
 msgid "All players list"
 msgstr "Список всех игроков в системе"
@@ -1076,3 +1079,10 @@ msgstr "Предопределенная рассадка и состояние 
 msgid "Failed to update predefined seating. Check your network connection."
 msgstr ""
 "Не удалось обновить предопределенную рассадку. Проверьте сетевое соединение."
+
+msgid ""
+"No seating defined. Check \"Admin actions / Predefined seating\" page to "
+"define seating for tournament"
+msgstr ""
+"Рассадка не задана. Зайдите на страницу \"Действия администратора / "
+"Предопределенная рассадка\", чтобы задать рассадку на турнир."

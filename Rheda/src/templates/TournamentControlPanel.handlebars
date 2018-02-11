@@ -35,6 +35,10 @@
 
 {{#error}}<h3>{{_p 'Something went wrong: %s' error}}</h3>{{/error}}
 {{^error}}
+    {{#prescriptedEventErrorDescription}}
+        <h3>{{_t 'Something went wrong:'}}</h3>
+        {{prescriptedEventErrorDescription}}
+    {{/prescriptedEventErrorDescription}}
     {{#stageNotReady}}
         <h3>{{_t 'Unable to generate seating'}}</h3>
         {{_t 'Total count of registered players is not divisible by 4. Use the "Add player" and "Players management" pages to add or remove players. Special replacement player accounts may be used to complete the table.'}}
