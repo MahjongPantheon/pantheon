@@ -232,7 +232,7 @@ class SeatingController extends Controller
 
     /**
      * @param $eventId
-     * @return \int[][]
+     * @return array [id => int, local_id => int][][]
      * @throws AuthFailedException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -275,7 +275,10 @@ class SeatingController extends Controller
             return [];
         }
 
-        $playerIds = array_filter(array_reduce($seating, 'array_merge', []));
+        $playerIds = array_filter(array_map(function ($el) {
+            return $el['id'];
+        }, array_reduce($seating, 'array_merge', [])));
+
         if (empty($playerIds)) {
             throw new InvalidParametersException('No valid players found in predefined seating');
         }
@@ -288,12 +291,13 @@ class SeatingController extends Controller
         }
 
         return array_map(function ($table) use (&$playersMap) {
-            return array_map(function ($playerId) use (&$playersMap) {
+            return array_map(function ($player) use (&$playersMap) {
                 return [
-                    'id' => $playersMap[$playerId]->getId(),
-                    'alias' => $playersMap[$playerId]->getAlias(),
-                    'display_name' => $playersMap[$playerId]->getDisplayName(),
-                    'is_replacement' => $playersMap[$playerId]->getIsReplacement()
+                    'id' => $playersMap[$player['id']]->getId(),
+                    'alias' => $playersMap[$player['id']]->getAlias(),
+                    'local_id' => $player['local_id'],
+                    'display_name' => $playersMap[$player['id']]->getDisplayName(),
+                    'is_replacement' => $playersMap[$player['id']]->getIsReplacement()
                 ];
             }, $table);
         }, $seating);

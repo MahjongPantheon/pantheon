@@ -67,10 +67,10 @@
                             {{#nextPrescriptedSeating}}{{#@index}}
                                 <tr>
                                     <td><b>{{_t 'Table #'}}{{@index}}</b></td>
-                                    <td>{{this.0.display_name}}</td>
-                                    <td>{{this.1.display_name}}</td>
-                                    <td>{{this.2.display_name}}</td>
-                                    <td>{{this.3.display_name}}</td>
+                                    <td><b>{{this.0.display_name}}</b> (# {{this.0.local_id}})</td>
+                                    <td><b>{{this.1.display_name}}</b> (# {{this.1.local_id}})</td>
+                                    <td><b>{{this.2.display_name}}</b> (# {{this.2.local_id}})</td>
+                                    <td><b>{{this.3.display_name}}</b> (# {{this.3.local_id}})</td>
                                 </tr>
                             {{/@index}}{{/nextPrescriptedSeating}}
                         </table>
