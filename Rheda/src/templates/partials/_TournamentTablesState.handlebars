@@ -10,7 +10,7 @@
         <tr>
             <td>#{{table_index}}</td>
             {{#players}}
-                <td>{{display_name}}</td>
+                <td>{{display_name}}{{#local_id}} (# {{local_id}}){{/local_id}}</td>
             {{/players}}
             <td><span class="badge {{#finished}}badge-success{{/finished}}{{#prefinished}}badge-warning{{/prefinished}}">{{status}}</span></td>
         </tr>

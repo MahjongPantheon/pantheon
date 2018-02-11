@@ -69,7 +69,7 @@ class EventModel extends Model
         // merge it all together
         $ratings = [];
         foreach ($reggedPlayers as $reg) {
-            $ratings[$reg] = $startRating;
+            $ratings[$reg['id']] = $startRating;
         }
         foreach ($historyItems as $item) { // overwrite with real values
             if (!empty($item->getRating())) {
@@ -125,7 +125,7 @@ class EventModel extends Model
             SessionPrimitive::STATUS_INPROGRESS,
             SessionPrimitive::STATUS_PREFINISHED
         ], 0, $tablesCount);
-        return $this->_formatTablesState($lastGames);
+        return $this->_formatTablesState($lastGames, $reggedPlayers);
     }
 
     /**
@@ -195,14 +195,20 @@ class EventModel extends Model
             ->save();
     }
 
-        /**
+    /**
      * @param SessionPrimitive[] $lastGames
+     * @param array $reggedPlayers
      * @throws \Exception
      * @return array
      */
-    protected function _formatTablesState($lastGames)
+    protected function _formatTablesState($lastGames, $reggedPlayers)
     {
         $output = [];
+        $playerIdMap = [];
+        foreach ($reggedPlayers as $reg) {
+            $playerIdMap[$reg['id']] = $reg['local_id'];
+        }
+
         foreach ($lastGames as $game) {
             $rounds = RoundPrimitive::findBySessionIds($this->_db, [$game->getId()]);
             /** @var MultiRoundPrimitive $lastRound */
@@ -216,9 +222,10 @@ class EventModel extends Model
                 'last_round' => $lastRound ? $this->_formatLastRound($lastRound) : [],
                 'current_round' => $game->getCurrentState()->getRound(),
                 'scores' => $game->getCurrentState()->getScores(),
-                'players' => array_map(function (PlayerPrimitive $p) {
+                'players' => array_map(function (PlayerPrimitive $p) use (&$playerIdMap) {
                     return [
                         'id' => $p->getId(),
+                        'local_id' => $playerIdMap[$p->getId()],
                         'display_name' => $p->getDisplayName()
                     ];
                 }, $game->getPlayers())
