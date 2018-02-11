@@ -48,7 +48,13 @@ msgstr ""
 msgid "Save local IDs"
 msgstr ""
 
-msgid "Sorry, this page is not available for mobile devices"
+msgid "Add online game"
+msgstr ""
+
+msgid "The game has been successfully added!"
+msgstr ""
+
+msgid "Add game"
 msgstr ""
 
 msgid "Achievements"
@@ -155,9 +161,6 @@ msgstr ""
 msgid "Rating table"
 msgstr ""
 
-msgid "Add online game"
-msgstr ""
-
 msgid "Tournament control panel"
 msgstr ""
 
@@ -182,13 +185,19 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-msgid "The game has been successfully added!"
+msgid "Sorry, this page is not available for mobile devices"
 msgstr ""
 
-msgid "Add game"
+msgid "Best series"
 msgstr ""
 
-msgid "Game details"
+msgid "Points of best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Points of last series"
 msgstr ""
 
 msgid "Admin panel"
@@ -198,6 +207,9 @@ msgid "Authorized successfully!"
 msgstr ""
 
 msgid "Authorize"
+msgstr ""
+
+msgid "Game details"
 msgstr ""
 
 msgid "Confirm round cancellation: "
@@ -219,18 +231,6 @@ msgid "Penalties:"
 msgstr ""
 
 msgid "%s - %s points of penalty. Reason: %s"
-msgstr ""
-
-msgid "Best series"
-msgstr ""
-
-msgid "Points of best series"
-msgstr ""
-
-msgid "Last series"
-msgstr ""
-
-msgid "Points of last series"
 msgstr ""
 
 msgid "Rating table has been hidden by tournament administrator"
@@ -338,6 +338,12 @@ msgstr ""
 msgid "Yaku collected over all time"
 msgstr ""
 
+msgid "No games has been played yet"
+msgstr ""
+
+msgid "%d - %d (%d total)"
+msgstr ""
+
 msgid "Additional penalties"
 msgstr ""
 
@@ -359,12 +365,6 @@ msgid "Check twice penalty data. You won't be able to cancel the penalty"
 msgstr ""
 
 msgid "Apply penalty"
-msgstr ""
-
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
 msgstr ""
 
 msgid "%s: personal stats"
@@ -420,74 +420,6 @@ msgid "Points:"
 msgstr ""
 
 msgid "Ongoing series:"
-msgstr ""
-
-msgid "Date & time"
-msgstr ""
-
-msgid "Players"
-msgstr ""
-
-msgid "Details"
-msgstr ""
-
-msgid "View replay online"
-msgstr ""
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr ""
-
-msgid "Ron hands: %d"
-msgstr ""
-
-msgid "Tsumo hands: %d"
-msgstr ""
-
-msgid "Drawn rounds: %d"
-msgstr ""
-
-msgid "Chombo penalties: %s"
-msgstr ""
-
-msgid "Additional penalties:"
-msgstr ""
-
-msgid "%s - %d points (%s)"
-msgstr ""
-
-msgid "Full game log:"
-msgstr ""
-
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-
-msgid "Rating table is hidden. Show"
-msgstr ""
-
-msgid "Rating table is visible. Hide"
-msgstr ""
-
-msgid "No time left!"
-msgstr ""
-
-msgid "SEATING"
-msgstr ""
-
-msgid "Table #"
-msgstr ""
-
-msgid "EAST"
-msgstr ""
-
-msgid "SOUTH"
-msgstr ""
-
-msgid "WEST"
-msgstr ""
-
-msgid "NORTH"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -547,10 +479,87 @@ msgstr ""
 msgid "Chombo: %s."
 msgstr ""
 
+msgid "Date & time"
+msgstr ""
+
+msgid "Players"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "View replay online"
+msgstr ""
+
+msgid "Best hand: <b>%s</b> - %s"
+msgstr ""
+
+msgid "Ron hands: %d"
+msgstr ""
+
+msgid "Tsumo hands: %d"
+msgstr ""
+
+msgid "Drawn rounds: %d"
+msgstr ""
+
+msgid "Chombo penalties: %s"
+msgstr ""
+
+msgid "Additional penalties:"
+msgstr ""
+
+msgid "%s - %d points (%s)"
+msgstr ""
+
+msgid "Full game log:"
+msgstr ""
+
+msgid "No time left!"
+msgstr ""
+
+msgid "SEATING"
+msgstr ""
+
+msgid "Table #"
+msgstr ""
+
+msgid "EAST"
+msgstr ""
+
+msgid "SOUTH"
+msgstr ""
+
+msgid "WEST"
+msgstr ""
+
+msgid "NORTH"
+msgstr ""
+
 msgid "Rating"
 msgstr ""
 
 msgid "Han"
+msgstr ""
+
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+
+msgid "Rating table is hidden. Show"
+msgstr ""
+
+msgid "Rating table is visible. Hide"
+msgstr ""
+
+msgid "Rating points"
+msgstr ""
+
+msgid "Average place"
+msgstr ""
+
+msgid "Average points"
 msgstr ""
 
 msgid "Later"
@@ -559,24 +568,10 @@ msgstr ""
 msgid "Earlier"
 msgstr ""
 
-msgid "Going back in 3 seconds..."
-msgstr ""
-
-msgid "Add new game"
-msgstr ""
-
-msgid "Format:"
-msgstr ""
-
-msgid ""
-"Renchans/honba are calculated automatically. Also points and payments "
-"checks are performed: in case of any inconsistency the alert is displayed."
-msgstr ""
-
-msgid "Player aliases"
-msgstr ""
-
 msgid "Something went wrong: %s"
+msgstr ""
+
+msgid "Something went wrong:"
 msgstr ""
 
 msgid "Unable to generate seating"
@@ -714,13 +709,21 @@ msgstr ""
 msgid "Confirm the results and finish all games"
 msgstr ""
 
-msgid "Rating points"
+msgid "Going back in 3 seconds..."
 msgstr ""
 
-msgid "Average place"
+msgid "Add new game"
 msgstr ""
 
-msgid "Average points"
+msgid "Format:"
+msgstr ""
+
+msgid ""
+"Renchans/honba are calculated automatically. Also points and payments "
+"checks are performed: in case of any inconsistency the alert is displayed."
+msgstr ""
+
+msgid "Player aliases"
 msgstr ""
 
 msgid "All players list"
@@ -1005,4 +1008,9 @@ msgid "Predefined seating and event status"
 msgstr ""
 
 msgid "Failed to update predefined seating. Check your network connection."
+msgstr ""
+
+msgid ""
+"No seating defined. Check \"Admin actions / Predefined seating\" page to "
+"define seating for tournament"
 msgstr ""
