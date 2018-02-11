@@ -594,13 +594,13 @@ class Seating
     /**
      * @param int[][] $prescriptForSession
      * @param PlayerPrimitive[] $players [local_id => player_id, .... ]
-     * @return int[][]
+     * @return array [id => int, local_id => int][][]
      */
     public static function makePrescriptedSeating($prescriptForSession, $players)
     {
         return array_map(function ($table) use ($players) {
             return array_map(function ($localId) use ($players) {
-                return $players[$localId];
+                return ['id' => $players[$localId], 'local_id' => $localId];
             }, $table);
         }, $prescriptForSession);
     }
