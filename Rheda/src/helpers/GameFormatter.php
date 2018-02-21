@@ -104,6 +104,10 @@ class GameFormatter
                 }
 
                 foreach ($roundsData as $roundData) {
+                    if (empty($roundData['winner_id'])) {
+                        continue;
+                    }
+
                     $winner = $gamesData['players'][$roundData['winner_id']]['display_name'];
 
                     if ($roundData['han'] < 0) { // yakuman
