@@ -36,6 +36,7 @@ class RulesetTenhounet extends Ruleset
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => false,
         'doubleronRiichiAtamahane' => true,
+        'doubleronHonbaAtamahane'  => true,
         'extraChomboPayments'   => false,
         'chomboPenalty'         => 0,
         'withAtamahane'         => false,

@@ -47,8 +47,8 @@ class PointsCalc
         $honba,
         $riichiBetsCount,
         $paoPlayerId,
-        $closestWinner=null,
-        $totalRiichiInRound=0
+        $closestWinner = null,
+        $totalRiichiInRound = 0
     ) {
         self::resetPaymentsInfo();
         $pointsDiff = self::_calcPoints($rules, $han, $fu, false, $isDealer);
@@ -78,9 +78,9 @@ class PointsCalc
             self::$_lastPaymentsInfo['riichi'][$winnerId . '<-' . $playerId] = 1000;
         }
 
+        // double ron
         if ($rules->doubleronRiichiAtamahane() && $closestWinner) {
-            // on tenhou we had to give all riichi bets to closes winner only
-            // when double ron happened
+            // on tenhou we had to give all riichi bets to closest winner only
             if ($closestWinner == $winnerId) {
                 $currentScores[$winnerId] += 1000 * $totalRiichiInRound;
                 $currentScores[$winnerId] += 1000 * $riichiBetsCount;
@@ -92,9 +92,19 @@ class PointsCalc
             self::$_lastPaymentsInfo['riichi'][$winnerId . '<-'] = 1000 * $riichiBetsCount;
         }
 
-        $currentScores[$winnerId] += 300 * $honba;
-        $currentScores[$loserId] -= 300 * $honba;
-        self::$_lastPaymentsInfo['honba'][$winnerId . '<-' . $loserId] = 300 * $honba;
+        // double ron
+        if ($rules->doubleronHonbaAtamahane() && $closestWinner) {
+            // on tenhou we had to give all honba sticks to closest winner only
+            if ($winnerId == $closestWinner) {
+                $currentScores[$winnerId] += 300 * $honba;
+                $currentScores[$loserId] -= 300 * $honba;
+                self::$_lastPaymentsInfo['honba'][$winnerId . '<-' . $loserId] = 300 * $honba;
+            }
+        } else {
+            $currentScores[$winnerId] += 300 * $honba;
+            $currentScores[$loserId] -= 300 * $honba;
+            self::$_lastPaymentsInfo['honba'][$winnerId . '<-' . $loserId] = 300 * $honba;
+        }
 
         return $currentScores;
     }
