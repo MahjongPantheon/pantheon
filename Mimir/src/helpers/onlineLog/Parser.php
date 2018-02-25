@@ -105,10 +105,10 @@ class OnlineParser
                     return $p->getId();
                 }, $this->_players),
                 [
-                    $parts[0] . '00',
-                    $parts[2] . '00',
-                    $parts[4] . '00',
-                    $parts[6] . '00'
+                    intval($parts[0] . '00'),
+                    intval($parts[2] . '00'),
+                    intval($parts[4] . '00'),
+                    intval($parts[6] . '00')
                 ]
             );
         }
