@@ -128,4 +128,17 @@ class OnlinelogParserTest extends \PHPUnit_Framework_TestCase
             $this->_session->getCurrentState()->getScores()
         );
     }
+
+    public function testParseDoubleRonAndRiichiBets()
+    {
+        $content = file_get_contents(__DIR__ . '/testdata/doubleron_and_riichi.xml');
+        list($success, $results/*, $debug*/) = (new OnlineParser($this->_db))
+            ->parseToSession($this->_session, $content);
+
+        $this->assertTrue($success);
+        $this->assertEquals(
+            $results,
+            $this->_session->getCurrentState()->getScores()
+        );
+    }
 }

@@ -35,6 +35,7 @@ class RulesetOnline extends Ruleset
         'startPoints'           => 30000,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
+        'doubleronRiichiAtamahane' => true,
         'extraChomboPayments'   => false,
         'chomboPenalty'         => 0,
         'withAtamahane'         => false,
@@ -48,7 +49,7 @@ class RulesetOnline extends Ruleset
         'tonpuusen'             => false,
         'gameExpirationTime'    => 24, // hours, to cover JST difference
         'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
-        'withLeadingDealerGameOver' => true,
+        'withLeadingDealerGameOver' => false,
         'timerPolicy'           => 'none',
         'yellowZone'            => 0,
         'redZone'               => 0,

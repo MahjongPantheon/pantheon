@@ -337,6 +337,7 @@ class EventsController extends Controller
             'tonpuusen'           => $rules->tonpuusen(),
             'startRating'         => $rules->startRating(),
             'riichiGoesToWinner'  => $rules->riichiGoesToWinner(),
+            'doubleronRiichiAtamahane' => $rules->doubleronRiichiAtamahane(),
             'extraChomboPayments' => $rules->extraChomboPayments(),
             'chomboPenalty'       => $rules->chomboPenalty(),
             'withKuitan'          => $rules->withKuitan(),

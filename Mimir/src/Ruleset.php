@@ -144,6 +144,15 @@ abstract class Ruleset
         return static::$_ruleset['riichiGoesToWinner'];
     }
 
+    public function doubleronRiichiAtamahane()
+    {
+        if (isset(static::$_ruleset['doubleronRiichiAtamahane'])) {
+            return static::$_ruleset['doubleronRiichiAtamahane'];
+        } else {
+            return false;
+        }
+    }
+
     public function extraChomboPayments()
     {
         return static::$_ruleset['extraChomboPayments'];
