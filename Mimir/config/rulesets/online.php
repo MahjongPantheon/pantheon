@@ -36,6 +36,7 @@ class RulesetOnline extends Ruleset
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
         'doubleronRiichiAtamahane' => true,
+        'doubleronHonbaAtamahane'  => true,
         'extraChomboPayments'   => false,
         'chomboPenalty'         => 0,
         'withAtamahane'         => false,

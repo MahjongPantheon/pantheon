@@ -153,6 +153,15 @@ abstract class Ruleset
         }
     }
 
+    public function doubleronHonbaAtamahane()
+    {
+        if (isset(static::$_ruleset['doubleronHonbaAtamahane'])) {
+            return static::$_ruleset['doubleronHonbaAtamahane'];
+        } else {
+            return false;
+        }
+    }
+
     public function extraChomboPayments()
     {
         return static::$_ruleset['extraChomboPayments'];
