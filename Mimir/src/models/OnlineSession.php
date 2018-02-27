@@ -80,6 +80,11 @@ class OnlineSessionModel extends Model
             $success = $success && $round->save();
         }
 
+        $success = $success && $session->prefinish();
+        // we need to call it to correctly handle situation with remaining
+        // riichi bets
+        $session->finish();
+
         $calculatedScore = $session->getCurrentState()->getScores();
         if (array_diff($calculatedScore, $originalScore) !== []
             || array_diff($originalScore, $calculatedScore) !== []) {
@@ -87,8 +92,6 @@ class OnlineSessionModel extends Model
                 . print_r($originalScore, 1) . PHP_EOL
                 . print_r($calculatedScore, 1), 225);
         }
-
-        $success = $success && $session->prefinish();
 
         return $success;
     }
