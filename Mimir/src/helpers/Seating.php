@@ -516,8 +516,16 @@ class Seating
     }
 
     /**
+     * Run this method before shuffle
+     */
+    public static function shuffleSeed()
+    {
+        srand(crc32(microtime()));
+    }
+
+    /**
      * Shuffle array while maintaining its keys
-     * Should rely on srand NRG seed
+     * Should rely on srand RNG seed: run shuffleSeed before this!
      *
      * @param $array
      * @return array

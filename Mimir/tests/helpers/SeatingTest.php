@@ -438,4 +438,14 @@ class SeatingTest extends \PHPUnit_Framework_TestCase
             [5, 10, 15, 20],
         ], $seating, 'Seating with step 5');
     }
+
+    public function testRandomizer()
+    {
+        $ordered = [1, 2, 3, 4, 5, 6, 7, 8];
+        Seating::shuffleSeed();
+        $shuffled = Seating::shuffle($ordered);
+        $this->assertEquals(8, count($shuffled));
+        $this->assertEquals($shuffled, $ordered);
+        $this->assertNotEquals(json_encode($shuffled), json_encode($ordered));
+    }
 }
