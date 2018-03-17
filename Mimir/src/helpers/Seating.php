@@ -517,7 +517,7 @@ class Seating
 
     /**
      * Shuffle array while maintaining its keys
-     * Should rely on srand NRG seed
+     * Should rely on srand RNG seed
      *
      * @param $array
      * @return array
