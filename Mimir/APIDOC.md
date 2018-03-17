@@ -519,26 +519,12 @@ Returns: _array_ a multidimensional numerically indexed array
 Exceptions:
 * _AuthFailedException_ 
 * _InvalidParametersException_ 
+* _\Exception_ 
 
 ### makeIntervalSeating
 Parameters:
 * **$eventId** (_int_) 
 * **$step** (_int_) 
-
-Returns: _bool_ 
-
-Exceptions:
-* _AuthFailedException_ 
-* _DatabaseException_ 
-* _InvalidParametersException_ 
-* _InvalidUserException_ 
-* _\Exception_ 
-
-### makeManualSeating
-Parameters:
-* **$eventId** (_int_) 
-* **$tablesDescription** (_string_) 
-* **$randomize** (_boolean_) - randomize each table by winds
 
 Returns: _bool_ 
 

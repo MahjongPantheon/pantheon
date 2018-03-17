@@ -85,7 +85,6 @@ return [
     'makeSwissSeating'     => ['SeatingController', 'makeSwissSeating'],
     'generateSwissSeating' => ['SeatingController', 'generateSwissSeating'],
     'makeIntervalSeating'  => ['SeatingController', 'makeIntervalSeating'],
-    'makeManualSeating'    => ['SeatingController', 'makeManualSeating'],
     'makePrescriptedSeating'       => ['SeatingController', 'makePrescriptedSeating'],
     'getNextPrescriptedSeating'    => ['SeatingController', 'getNextSeatingForPrescriptedEvent'],
     'getPrescriptedEventConfig'    => ['EventsController', 'getPrescriptedEventConfig'],
