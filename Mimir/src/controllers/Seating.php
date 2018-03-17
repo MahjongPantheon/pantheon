@@ -180,7 +180,7 @@ class SeatingController extends Controller
             }
 
             if ($randomizeAtTables) {
-                srand(microtime());
+                Seating::shuffleSeed();
                 $table = Seating::shuffle($table);
             }
 
