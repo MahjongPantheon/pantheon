@@ -33,7 +33,8 @@ class Api
 
     public function __construct($configPath = null)
     {
-        $this->_config = new Config(empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath);
+        $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
+        $this->_config = new Config($cfgPath);
         $this->_db = new Db($this->_config);
         $this->_meta = new Meta($_SERVER);
         $this->_syslog = new Logger('RiichiApi');
