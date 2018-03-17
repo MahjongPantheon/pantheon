@@ -95,6 +95,7 @@ class SeatingController extends Controller
      * @param int $eventId
      * @throws AuthFailedException
      * @throws InvalidParametersException
+     * @throws \Exception
      * @return array a multidimensional numerically indexed array
      */
     public function generateSwissSeating($eventId)
@@ -107,41 +108,6 @@ class SeatingController extends Controller
 
         $this->_log->addInfo('Generated new swiss seating for event #' . $eventId);
         return $seating;
-    }
-
-    /**
-     * Make new manual seating.
-     * This will also start games immediately if timer is not used.
-     *
-     * @param int $eventId
-     * @param string $tablesDescription
-     * @param boolean $randomize  - randomize each table by winds
-     * @throws AuthFailedException
-     * @throws DatabaseException
-     * @throws InvalidParametersException
-     * @throws InvalidUserException
-     * @throws \Exception
-     * @return bool
-     */
-    public function makeManualSeating($eventId, $tablesDescription, $randomize = false)
-    {
-        $this->_checkIfAllowed($eventId);
-        $this->_log->addInfo('Creating new manual seating for event #' . $eventId);
-        $gamesWillStart = $this->_updateEventStatus($eventId);
-
-        $seating = $this->_makeManualSeating($eventId, $tablesDescription, $randomize);
-
-        $tableIndex = 1;
-        foreach ($seating as $table) {
-            (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
-                ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
-        }
-
-        $this->_log->addInfo('Created new manual seating for event #' . $eventId);
-        if ($gamesWillStart) {
-            $this->_log->addInfo('Started all games by manual seating for event #' . $eventId);
-        }
-        return true;
     }
 
     /**
@@ -377,69 +343,5 @@ class SeatingController extends Controller
         }, $seatingInfo), 4);
 
         return [$playersMap, $tables];
-    }
-
-    /**
-     * Make manual seating
-     *
-     * Input:
-     * 1-3-5-6
-     * 2-4-7-9
-     *
-     * Where numbers mean current place of player in rating table.
-     *
-     * Output:
-     * seating by player id:
-     * [
-     *    [12, 43, 23, 43],
-     *    [24, 41, 93, 10]
-     * ]
-     *
-     * @param $eventId
-     * @param $tablesDescription
-     * @param $randomize
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @return array
-     */
-    protected function _makeManualSeating($eventId, $tablesDescription, $randomize)
-    {
-        $tables = array_map(function ($t) use ($randomize) {
-            $places = array_map('trim', explode('-', $t));
-            if (!$randomize) {
-                return $places;
-            }
-            srand(microtime());
-            return Seating::shuffle($places);
-        }, explode("\n", $tablesDescription));
-
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
-        if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
-        }
-
-        $currentRatingTable = (new EventRatingTableModel($this->_db, $this->_config, $this->_meta))
-            ->getRatingTable($event[0], 'rating', 'desc');
-
-        $participatingPlayers = [];
-        foreach ($tables as &$table) {
-            foreach ($table as $k => $player) {
-                if (!is_numeric($player) || empty($player) || empty($currentRatingTable[intval($player) - 1])) {
-                    throw new InvalidParametersException('Wrong rating place found: ' . $player);
-                }
-
-                $playerId = $currentRatingTable[intval($player) - 1]['id'];
-                if (!empty($participatingPlayers[$playerId])) {
-                    throw new InvalidParametersException(
-                        'Player id #' . $playerId . ' (place #' . $player . ') is already placed at another table!'
-                    );
-                }
-
-                $table[$k] = $playerId;
-                $participatingPlayers[$playerId] = true;
-            }
-        }
-
-        return $tables;
     }
 }
