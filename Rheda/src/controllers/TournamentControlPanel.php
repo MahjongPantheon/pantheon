@@ -60,7 +60,7 @@ class TournamentControlPanel extends Controller
                         );
                         break;
                     case 'predefinedSeating':
-                        $this->_api->execute('makePrescriptedSeating', [$this->_eventId, !!$_POST['rndseat']]);
+                        $this->_api->execute('makePrescriptedSeating', [$this->_eventId, isset($_POST['rndseat']) && $_POST['rndseat'] == 1]);
                         break;
                     case 'swissSeating':
                         $this->_api->execute('makeSwissSeating', [$this->_eventId]);
