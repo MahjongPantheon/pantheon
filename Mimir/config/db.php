@@ -17,7 +17,9 @@
  */
 
 return [
-    'connection_string' => 'pgsql:host=localhost;port=' . getenv('PHINX_DB_PORT') . ';dbname=' . getenv('PHINX_DB_NAME'),
+    'connection_string' => 'pgsql:host=localhost;port='
+        . getenv('PHINX_DB_PORT', true)
+        . ';dbname=' . getenv('PHINX_DB_NAME', true),
     'credentials' => [
         'username' => getenv('PHINX_DB_USER'),
         'password' => getenv('PHINX_DB_PASS')
