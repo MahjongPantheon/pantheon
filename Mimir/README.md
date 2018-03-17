@@ -39,7 +39,12 @@ variables to be set, see phinx documentation and `phinx.yml` file for details.
 - PHP v5.6.x comes with `always_populate_raw_post_data = 0` in default php.ini, and this breaks JSON reply validity, 
 if errors output is not disabled (you should disable it on production anyway! But it will flood your log files with 
 crap :( ). When using this PHP version, you should set `always_populate_raw_post_data = -1` in your ini file.
-
+- Use `opcache` module to speed up your installation. Recommended default values for opcache are:
+    - `opcache.enable=1`
+    - `opcache.memory_consumption=128`
+    - `opcache.interned_strings_buffer=8`
+    - `opcache.max_accelerated_files=4000`
+    - `opcache.fast_shutdown=1`  
 ### Developer information
 
 We accept any help with developing, testing and improving our system, so please feel free to create issues or send 
