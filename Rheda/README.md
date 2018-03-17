@@ -28,7 +28,7 @@ Please use our [Bug tracker](https://pantheon.myjetbrains.com/youtrack/issues/RH
 ### Technologies of Rheda
 
 - Rheda is simple PHP-based multi-page application.
-- Written in PHP v5.5+.
+- Written in PHP v7.1+.
 - Uses jQuery & Twitter Bootstrap on client side.
 - Rheda autodetects mobile clients and sends them mobile-friendly version of content. *Note: Administration 
 features of Rheda are not available from mobile-friendly version.*
