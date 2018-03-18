@@ -16,6 +16,9 @@ ENV DB_PORT             5532
 ENV MIMIR_URL http://localhost:4001
 ENV RHEDA_URL http://localhost:4002
 ENV TYR_URL   http://localhost:4003
+ENV FREY_URL  http://localhost:4004
+
+ENV IS_DOCKER 1
 
 # these should match auth data in dbinit.sql
 ENV PHINX_DB_NAME mimir
@@ -23,6 +26,13 @@ ENV PHINX_DB_NAME_UNIT mimir_unit
 ENV PHINX_DB_USER mimir
 ENV PHINX_DB_PASS pgpass
 ENV PHINX_DB_PORT $DB_PORT
+
+# these should match auth data in dbinit_frey.sql
+ENV PHINX_DB_FREY_NAME frey
+ENV PHINX_DB_FREY_NAME_UNIT frey_unit
+ENV PHINX_DB_FREY_USER frey
+ENV PHINX_DB_FREY_PASS pgpass
+ENV PHINX_DB_FREY_PORT $DB_PORT
 
 RUN apk update && \
     apk upgrade && \
@@ -99,7 +109,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/php7.1-fpm.log
 
 # Expose ports
-EXPOSE 4001 4002 4003 $DB_PORT
+EXPOSE 4001 4002 4003 4004 $DB_PORT
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
@@ -108,10 +118,12 @@ RUN chmod 755 /entrypoint.sh
 # copy nginx configs
 COPY Rheda/rheda-docker.nginx.conf /etc/nginx/conf.d/rheda.conf
 COPY Mimir/mimir-docker.nginx.conf /etc/nginx/conf.d/mimir.conf
+COPY Frey/frey-docker.nginx.conf /etc/nginx/conf.d/frey.conf
 
-# copy db init script
+# copy db init scripts
 RUN mkdir -p /docker-entrypoint-initdb.d
 COPY dbinit.sql /docker-entrypoint-initdb.d/dbinit.sql
+COPY dbinit_frey.sql /docker-entrypoint-initdb.d/dbinit_frey.sql
 
 # Folders init
 RUN mkdir -p /run/postgresql && chown postgres /run/postgresql
@@ -119,6 +131,7 @@ RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Tyr
 RUN mkdir -p /var/www/html/Mimir
 RUN mkdir -p /var/www/html/Rheda
+RUN mkdir -p /var/www/html/Frey
 
 # Entry point
 CMD ["/entrypoint.sh"]

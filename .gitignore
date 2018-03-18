@@ -32,3 +32,8 @@ Tyr/testem.log
 Tyr/typings
 Tyr/e2e/*.js
 Tyr/e2e/*.map
+
+Frey/config/local/*
+Frey/vendor/
+Frey/data/db.sqlite
+Frey/tests/data/*
