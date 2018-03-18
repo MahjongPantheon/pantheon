@@ -198,6 +198,11 @@ abstract class Primitive
      */
     protected $_db;
 
+    /**
+     * Primitive constructor.
+     * @param IDb $db
+     * @throws \Exception
+     */
     public function __construct(IDb $db)
     {
         $this->_db = $db;
@@ -328,7 +333,7 @@ abstract class Primitive
 
     protected static function _recreateInstance(IDb $db, $data)
     {
-        /** @var Model $instance */
+        /** @var Primitive $instance */
         $instance = new static($db);
         return $instance->_restore($data);
     }
@@ -340,7 +345,7 @@ abstract class Primitive
      * @param string $key
      * @param array $identifiers
      * @throws \Exception
-     * @return Primitive[]
+     * @return static[]
      */
     protected static function _findBy(IDb $db, $key, $identifiers)
     {
