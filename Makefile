@@ -32,6 +32,7 @@ deps: get_docker_id
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user make deps'; \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user gosu user make deps'; \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make deps'; \
+		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user gosu user make deps'; \
 	fi
 
 .PHONY: kill
@@ -89,37 +90,39 @@ pantheon_run: get_docker_id get_docker_idle_id
 		echo "${YELLOW}Pantheon containers have already been started.${NC}"; \
 	else \
 		echo "----------------------------------------------------------------------------------"; \
-  	echo "${GREEN}Starting container. Don't forget to run 'make stop' to stop it when you're done :)${NC}"; \
-  	echo "----------------------------------------------------------------------------------"; \
-  	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
-  	echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
-  	echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
-  	echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as angular dev server."; \
-  	echo "----------------------------------------------------------------------------------"; \
-  	echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
-  	echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632) of local host"; \
-  	echo "    -> Login to PgAdmin4 as: "; \
-  	echo "    ->     Username: dev@pantheon.local "; \
-  	echo "    ->     Password: password "; \
-  	echo "    -> PgAdmin4 pgsql connection credentials hint: "; \
-  	echo "    ->     Hostname: pantheondev "; \
-  	echo "    ->     Port:     5532 "; \
-  	echo "    ->     Username: mimir "; \
-  	echo "    ->     Password: pgpass "; \
-  	echo "----------------------------------------------------------------------------------"; \
-  	echo " ${GREEN}Run 'make logs' in separate console to view container logs on-line${NC} "; \
-  	echo " ${GREEN}Run 'make php_logs' in separate console to view php logs on-line${NC} "; \
-  	echo " ${YELLOW}Run 'make shell' in separate console to get into container shell${NC} "; \
-  	echo "----------------------------------------------------------------------------------"; \
+		echo "${GREEN}Starting container. Don't forget to run 'make stop' to stop it when you're done :)${NC}"; \
+		echo "----------------------------------------------------------------------------------"; \
+		echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
+		echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
+		echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
+		echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as angular dev server."; \
+		echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
+  		echo "----------------------------------------------------------------------------------"; \
+  		echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
+  		echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
+  		echo "    -> Login to PgAdmin4 as: "; \
+  		echo "    ->     Username: dev@pantheon.local "; \
+  		echo "    ->     Password: password "; \
+  		echo "    -> PgAdmin4 pgsql connection credentials hint: "; \
+  		echo "    ->     Hostname: pantheondev "; \
+  		echo "    ->     Port:     5532 "; \
+  		echo "    ->     Username: mimir "; \
+  		echo "    ->     Password: pgpass "; \
+  		echo "----------------------------------------------------------------------------------"; \
+  		echo " ${GREEN}Run 'make logs' in separate console to view container logs on-line${NC} "; \
+  		echo " ${GREEN}Run 'make php_logs' in separate console to view php logs on-line${NC} "; \
+  		echo " ${YELLOW}Run 'make shell' in separate console to get into container shell${NC} "; \
+  		echo "----------------------------------------------------------------------------------"; \
 		if [ "$(IDLE_DOCKER_ID)" != "" ]; then \
-  		docker start $(IDLE_DOCKER_ID) ; \
-  	else \
+  			docker start $(IDLE_DOCKER_ID) ; \
+  		else \
 			docker run \
 				-d -e LOCAL_USER_ID=$(UID) \
-				-p 127.0.0.1:4001:4001 -p 127.0.0.1:4002:4002 -p 127.0.0.1:4003:4003 -p 127.0.0.1:5532:5532 \
+				-p 127.0.0.1:4001:4001 -p 127.0.0.1:4002:4002 -p 127.0.0.1:4003:4003 -p 127.0.0.1:4004:4004 -p 127.0.0.1:5532:5532 \
 				-v `pwd`/Tyr:/var/www/html/Tyr:z \
 				-v `pwd`/Mimir:/var/www/html/Mimir:z \
 				-v `pwd`/Rheda:/var/www/html/Rheda:z \
+				-v `pwd`/Frey:/var/www/html/Frey:z \
 				--name=pantheondev \
 				pantheondev; \
 		fi \
@@ -156,6 +159,7 @@ migrate: get_docker_id
 		echo "${RED}Pantheon container is not running, can't run migrations.${NC}"; \
 	else \
 		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user bin/phinx migrate -e docker'; \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user gosu user bin/phinx migrate -e docker'; \
 	fi
 
 .PHONY: seed
@@ -210,6 +214,7 @@ empty_event: migrate
 .PHONY: check
 check: get_docker_id
 	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user make check';
+	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user gosu user make check';
 	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user gosu user make check';
 	# TODO: checks for Tyr
 
@@ -225,6 +230,7 @@ run_single_mimir_test: get_docker_id
 autofix:
 	cd Mimir && make autofix
 	cd Rheda && make autofix
+	cd Frey && make autofix
 
 # Prod related tasks & shortcuts
 
@@ -232,6 +238,7 @@ autofix:
 prod_deps:
 	cd Mimir && make deps
 	cd Rheda && make deps
+	cd Frey && make deps
 
 .PHONY: prod_build_tyr
 prod_build_tyr: get_docker_id # this is for automated travis builds, don't run it manually

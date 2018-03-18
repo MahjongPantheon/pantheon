@@ -39,6 +39,7 @@ Default ports for services are:
 - 4001 for **Mimir** JSON RPC API
 - 4002 for **Rheda** interface (http://localhost:4002/)
 - 4003 for **Tyr** mobile interface (http://localhost:4003/)
+- 4004 for **Frey** user management backend, also JSON RPC (http://localhost:4004/)
 - 5532 for PostgreSQL connections - use pgAdmin3/4 or any other client to access your databases.
 
 ### Pull requests
