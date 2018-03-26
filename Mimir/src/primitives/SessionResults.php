@@ -364,26 +364,8 @@ class SessionResultsPrimitive extends Primitive
      */
     protected function _sort($playersSeq, $scores)
     {
-        $map = array_combine(
-            array_values($playersSeq),
-            array_values($scores)
-        );
-
-        $result = [];
-        while (count($result) < 4) {
-            $best = -160000; // this should be less than any possible negative score (e.g. -144000 for triple dealer yakuman)
-            $bestId = -1;
-            foreach ($map as $id => $score) {
-                if ($score > $best && empty($result[$id])) {
-                    $bestId = $id;
-                    $best = $score;
-                }
-            }
-
-            $result[$bestId] = $best;
-        }
-
-        return $result;
+        array_multisort($scores, SORT_DESC, $playersSeq, SORT_ASC);
+        return array_combine($playersSeq, $scores);
     }
 
     /**
