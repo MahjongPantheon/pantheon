@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:3.7
 
 ENV TIMEZONE            Europe/Moscow
 ENV PHP_MEMORY_LIMIT    512M
@@ -37,26 +37,31 @@ RUN apk update && \
     nginx \
     postgresql \
     nodejs \
-    php5-mcrypt \
-    php5-soap \
-    php5-gettext \
-    php5-intl \
-    php5-openssl \
-    php5-gmp \
-    php5-phar \
-    php5-json \
-    php5-pdo \
-    php5-pdo_pgsql \
-    php5-pgsql \
-    php5-gd \
-    php5-gettext \
-    php5-xmlreader \
-    php5-xmlrpc \
-    php5-iconv \
-    php5-curl \
-    php5-ctype \
-    php5-fpm \
-    php5-apcu
+    nodejs-npm \
+    php7-mcrypt \
+    php7-soap \
+    php7-gettext \
+    php7-intl \
+    php7-tokenizer \
+    php7-mbstring \
+    php7-simplexml \
+    php7-openssl \
+    php7-gmp \
+    php7-phar \
+    php7-json \
+    php7-pdo \
+    php7-pdo_pgsql \
+    php7-pgsql \
+    php7-gd \
+    php7-gettext \
+    php7-xmlreader \
+    php7-xmlwriter \
+    php7-xmlrpc \
+    php7-iconv \
+    php7-curl \
+    php7-ctype \
+    php7-fpm \
+    php7-apcu
 
 RUN curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" && \
     chmod +x /usr/local/bin/gosu
@@ -66,17 +71,23 @@ RUN touch $PHP_LOGFILE
 RUN chown nobody $PHP_LOGFILE
     
     # Set environments
-RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php5/php-fpm.conf && \
-    sed -i "s|;*clear_env\s*=\s*no|clear_env = no|g" /etc/php5/php-fpm.conf && \
-    sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = 9000|g" /etc/php5/php-fpm.conf && \
-    sed -i "s|;*listen\s*=\s*/||g" /etc/php5/php-fpm.conf && \
-    sed -i "s|;*date.timezone =.*|date.timezone = ${TIMEZONE}|i" /etc/php5/php.ini && \
-    sed -i "s|;*memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|i" /etc/php5/php.ini && \
-    sed -i "s|;*error_log =.*|error_log = ${PHP_LOGFILE}|i" /etc/php5/php.ini && \
-    sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${MAX_UPLOAD}|i" /etc/php5/php.ini && \
-    sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /etc/php5/php.ini && \
-    sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /etc/php5/php.ini && \
-    sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo= 0|i" /etc/php5/php.ini
+RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.d/www.conf && \
+    sed -i "s|;*clear_env\s*=\s*no|clear_env = no|g" /etc/php7/php-fpm.d/www.conf && \
+    sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = 9000|g" /etc/php7/php-fpm.d/www.conf && \
+    sed -i "s|;*listen\s*=\s*/||g" /etc/php7/php-fpm.d/www.conf && \
+    sed -i "s|;*date.timezone =.*|date.timezone = ${TIMEZONE}|i" /etc/php7/php.ini && \
+    sed -i "s|;*memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|i" /etc/php7/php.ini && \
+    sed -i "s|;*error_log =.*|error_log = ${PHP_LOGFILE}|i" /etc/php7/php.ini && \
+    sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${MAX_UPLOAD}|i" /etc/php7/php.ini && \
+    sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /etc/php7/php.ini && \
+    sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /etc/php7/php.ini && \
+    sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo = 0|i" /etc/php7/php.ini && \
+    sed -i "s|;*opcache.enable=.*|opcache.enable = 1|i" /etc/php7/php.ini && \
+    sed -i "s|;*opcache.enable_cli=.*|opcache.enable_cli = 1|i" /etc/php7/php.ini && \
+    sed -i "s|;*opcache.memory_consumption=.*|opcache.memory_consumption = 128|i" /etc/php7/php.ini && \
+    sed -i "s|;*opcache.interned_strings_buffer=.*|opcache.interned_strings_buffer=8|i" /etc/php7/php.ini && \
+    sed -i "s|;*opcache.max_accelerated_files=.*|opcache.max_accelerated_files=4000|i" /etc/php7/php.ini && \
+    sed -i "s|;*opcache.fast_shutdown=.*|opcache.fast_shutdown=1|i" /etc/php7/php.ini
 
     # Cleaning up
 RUN mkdir /www && \

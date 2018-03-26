@@ -15,7 +15,7 @@ Pantheon developer environment works on *nix hosts (mac, linux, *bsd). Windows-b
 are not supported (while it still MAY work, it is not tested at all, also you may want to try
 using it under WSL in Windows 10+). 
 
-Make sure you have Docker installed and daemon running on your system. Also Pantheon expects PHP5+ to be 
+Make sure you have Docker installed and daemon running on your system. Also Pantheon expects PHP7+ to be 
 installed on your host system for some minor needs.
 
 ### Running containers

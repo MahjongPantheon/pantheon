@@ -31,6 +31,10 @@ container: get_docker_id
 		docker build -t pantheondev . ; \
 	fi
 
+# Alias for conformity
+.PHONY: start
+start: run
+
 .PHONY: run
 run: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" != "" ]; then \
