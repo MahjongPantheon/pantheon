@@ -146,6 +146,21 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(4, count($registered));
     }
 
+    public function testAddOnlineGameWithZeroPlayerAndNegativePlayer()
+    {
+        /**
+         * Previous version failed to add a game with results that contains
+         * player with 0 scores and player with negative scores
+         */
+        $gameContent = file_get_contents(__DIR__ . '/testdata/negative_scores.xml');
+
+        $this->playersRegistration();
+
+        $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
+        $success = $session->addGame($this->_event->getId(), $this->_gameLink, $gameContent);
+        $this->assertTrue($success);
+    }
+
     // Negative tests
 
     /**
