@@ -151,6 +151,7 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
         /**
          * Previous version failed to add a game with results that contains
          * player with 0 scores and player with negative scores
+         * https://pantheon.myjetbrains.com/youtrack/issue/PNTN-235
          */
         $gameContent = file_get_contents(__DIR__ . '/testdata/negative_scores.xml');
 
