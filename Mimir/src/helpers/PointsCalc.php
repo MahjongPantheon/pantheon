@@ -78,7 +78,7 @@ class PointsCalc
             self::$_lastPaymentsInfo['riichi'][$winnerId . '<-' . $playerId] = 1000;
         }
 
-        // double ron
+        // this condition we are checking only for double ron
         if ($rules->doubleronRiichiAtamahane() && $closestWinner) {
             // on tenhou we had to give all riichi bets to closest winner only
             if ($closestWinner == $winnerId) {
@@ -92,7 +92,7 @@ class PointsCalc
             self::$_lastPaymentsInfo['riichi'][$winnerId . '<-'] = 1000 * $riichiBetsCount;
         }
 
-        // double ron
+        // this condition we are checking only for double ron
         if ($rules->doubleronHonbaAtamahane() && $closestWinner) {
             // on tenhou we had to give all honba sticks to closest winner only
             if ($winnerId == $closestWinner) {
