@@ -83,7 +83,7 @@ class OnlineSessionModel extends Model
         $success = $success && $session->prefinish();
         // we need to call it to correctly handle situation with remaining
         // riichi bets
-        $success = $success && $session->finish();
+        $session->finish();
 
         $calculatedScore = $session->getCurrentState()->getScores();
         if (array_diff($calculatedScore, $originalScore) !== []
