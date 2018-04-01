@@ -46,7 +46,9 @@ class PointsCalc
         $riichiIds,
         $honba,
         $riichiBetsCount,
-        $paoPlayerId
+        $paoPlayerId,
+        $closestWinner = null,
+        $totalRiichiInRound = 0
     ) {
         self::resetPaymentsInfo();
         $pointsDiff = self::_calcPoints($rules, $han, $fu, false, $isDealer);
@@ -76,13 +78,33 @@ class PointsCalc
             self::$_lastPaymentsInfo['riichi'][$winnerId . '<-' . $playerId] = 1000;
         }
 
-        $currentScores[$winnerId] += 1000 * count($riichiIds);
-        $currentScores[$winnerId] += 1000 * $riichiBetsCount;
-        self::$_lastPaymentsInfo['riichi'][$winnerId . '<-'] = 1000 * $riichiBetsCount;
+        // this condition we are checking only for double ron
+        if ($rules->doubleronRiichiAtamahane() && $closestWinner) {
+            // on tenhou we had to give all riichi bets to closest winner only
+            if ($closestWinner == $winnerId) {
+                $currentScores[$winnerId] += 1000 * $totalRiichiInRound;
+                $currentScores[$winnerId] += 1000 * $riichiBetsCount;
+                self::$_lastPaymentsInfo['riichi'][$winnerId . '<-'] = 1000 * $riichiBetsCount;
+            }
+        } else {
+            $currentScores[$winnerId] += 1000 * count($riichiIds);
+            $currentScores[$winnerId] += 1000 * $riichiBetsCount;
+            self::$_lastPaymentsInfo['riichi'][$winnerId . '<-'] = 1000 * $riichiBetsCount;
+        }
 
-        $currentScores[$winnerId] += 300 * $honba;
-        $currentScores[$loserId] -= 300 * $honba;
-        self::$_lastPaymentsInfo['honba'][$winnerId . '<-' . $loserId] = 300 * $honba;
+        // this condition we are checking only for double ron
+        if ($rules->doubleronHonbaAtamahane() && $closestWinner) {
+            // on tenhou we had to give all honba sticks to closest winner only
+            if ($winnerId == $closestWinner) {
+                $currentScores[$winnerId] += 300 * $honba;
+                $currentScores[$loserId] -= 300 * $honba;
+                self::$_lastPaymentsInfo['honba'][$winnerId . '<-' . $loserId] = 300 * $honba;
+            }
+        } else {
+            $currentScores[$winnerId] += 300 * $honba;
+            $currentScores[$loserId] -= 300 * $honba;
+            self::$_lastPaymentsInfo['honba'][$winnerId . '<-' . $loserId] = 300 * $honba;
+        }
 
         return $currentScores;
     }
@@ -396,6 +418,7 @@ class PointsCalc
                 'from_table'    => ($id == $closestWinner ? $riichiBets : 0),
                 'from_players'  => $winners[$id],
                 'honba'         => $honba,
+                'closest_winner' => $closestWinner,
             ];
         }
 

@@ -150,19 +150,19 @@ class SessionResultsPrimitiveTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $result->getRatingDelta());
     }
 
-    public function testTwoEqualScore()
+    public function testFourEqualScore()
     {
         $round = (new RoundPrimitive($this->_db))
             ->setOutcome('draw')
             ->setSession($this->_session)
             ->setRoundIndex(1)
-            ->setTempaiUsers([$this->_players[1], $this->_players[2]])
+            ->setTempaiUsers([$this->_players[0], $this->_players[1], $this->_players[2], $this->_players[3]])
             ->setRiichiUsers([]);
         $round->save();
         $this->_session->updateCurrentState($round);
 
         $result1 = (new SessionResultsPrimitive($this->_db))
-            ->setPlayer($this->_players[1])
+            ->setPlayer($this->_players[0])
             ->setSession($this->_session)
             ->calc(
                 $this->_session->getEvent()->getRuleset(),
@@ -172,7 +172,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit_Framework_TestCase
         $result1->save();
 
         $result2 = (new SessionResultsPrimitive($this->_db))
-            ->setPlayer($this->_players[2])
+            ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
                 $this->_session->getEvent()->getRuleset(),
@@ -181,9 +181,37 @@ class SessionResultsPrimitiveTest extends \PHPUnit_Framework_TestCase
             );
         $result2->save();
 
-        $this->assertEquals($result1->getScore(), $result2->getScore());
-        $this->assertEquals(16.5, $result1->getRatingDelta()); // 1st place
-        $this->assertEquals(6.5, $result2->getRatingDelta()); // 2nd place
+        $result3 = (new SessionResultsPrimitive($this->_db))
+            ->setPlayer($this->_players[2])
+            ->setSession($this->_session)
+            ->calc(
+                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getCurrentState(),
+                $this->_session->getPlayersIds()
+            );
+        $result3->save();
+
+        $result4 = (new SessionResultsPrimitive($this->_db))
+            ->setPlayer($this->_players[3])
+            ->setSession($this->_session)
+            ->calc(
+                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getCurrentState(),
+                $this->_session->getPlayersIds()
+            );
+        $result4->save();
+
+        $this->assertEquals(count(array_unique([
+            $result1->getScore(),
+            $result2->getScore(),
+            $result3->getScore(),
+            $result4->getScore()
+        ])), 1);
+
+        $this->assertEquals(15, $result1->getRatingDelta()); // 1st place
+        $this->assertEquals(5, $result2->getRatingDelta()); // 2nd place
+        $this->assertEquals(-5, $result3->getRatingDelta()); // 3nd place
+        $this->assertEquals(-15, $result4->getRatingDelta()); // 4th place
     }
 
     public function testTwoEqualScoreWithEqualityRule()

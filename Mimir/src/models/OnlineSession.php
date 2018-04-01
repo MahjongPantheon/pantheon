@@ -59,7 +59,7 @@ class OnlineSessionModel extends Model
             throw new InvalidParametersException('This game is already added to the system');
         }
 
-        # if game log wasn't set, let's download it from the server
+        // if game log wasn't set, let's download it from the server
         if ($gameContent == '') {
             $replay = $downloader->getReplay($logUrl);
             $gameContent = $replay['content'];
@@ -80,20 +80,15 @@ class OnlineSessionModel extends Model
             $success = $success && $round->save();
         }
 
-        // ignore calculated scores
-        // and set scores that we got from replay
-        $session->getCurrentState()->setScores($originalScore);
+        $success = $success && $session->finish();
 
-        $success = $success && $session->prefinish();
-
-        // let's disable it for now
-//        $calculatedScore = $session->getCurrentState()->getScores();
-//        if (array_diff($calculatedScore, $originalScore) !== []
-//            || array_diff($originalScore, $calculatedScore) !== []) {
-//            throw new ParseException("Calculated scores do not match with given ones: " . PHP_EOL
-//                . print_r($originalScore, 1) . PHP_EOL
-//                . print_r($calculatedScore, 1), 225);
-//        }
+        $calculatedScore = $session->getCurrentState()->getScores();
+        if (array_diff($calculatedScore, $originalScore) !== []
+            || array_diff($originalScore, $calculatedScore) !== []) {
+            throw new ParseException("Calculated scores do not match with given ones: " . PHP_EOL
+                . print_r($originalScore, 1) . PHP_EOL
+                . print_r($calculatedScore, 1), 225);
+        }
 
         return $success;
     }

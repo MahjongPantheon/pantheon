@@ -374,6 +374,11 @@ class SessionState
             $round->getSession()
         );
 
+        $totalRiichiInRound = 0;
+        foreach ($riichiWinners as $x) {
+            $totalRiichiInRound += count($x['from_players']);
+        }
+
         $dealerWon = false;
         PointsCalc::resetPaymentsInfo();
         $payments = PointsCalc::lastPaymentsInfo();
@@ -390,7 +395,9 @@ class SessionState
                 $riichiWinners[$roundItem->getWinnerId()]['from_players'],
                 $riichiWinners[$roundItem->getWinnerId()]['honba'],
                 $riichiWinners[$roundItem->getWinnerId()]['from_table'],
-                $roundItem->getPaoPlayerId()
+                $roundItem->getPaoPlayerId(),
+                $riichiWinners[$roundItem->getWinnerId()]['closest_winner'],
+                $totalRiichiInRound
             );
             $payments = array_merge_recursive($payments, PointsCalc::lastPaymentsInfo());
         }

@@ -144,6 +144,14 @@ check: get_docker_id
 	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user gosu user make check';
 	# TODO: checks for Tyr
 
+.PHONY: run_single_mimir_test
+run_single_mimir_test: get_docker_id
+	@if [ -z "${NAME}" ]; then \
+		echo "${RED}Error: NAME is required.${NC} Typical command usage is: ${GREEN}make run_single_mimir_test NAME=myTestMethodName${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user php bin/unit.php --filter=${NAME}' ; \
+	fi
+
 .PHONY: autofix
 autofix:
 	cd Mimir && make autofix
