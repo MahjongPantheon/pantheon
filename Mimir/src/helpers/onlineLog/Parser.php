@@ -61,7 +61,11 @@ class OnlineParser
             }
         }
 
-        $success = true;
+        // It is vital to save session and assign session id here,
+        // otherwise online game processing will fail in some cases.
+        // More details you can find here: https://pantheon.myjetbrains.com/youtrack/issue/PNTN-233
+        $success = $session->save();
+
         $scores = [];
         $rounds = [];
         foreach ($this->_roundData as $round) {
@@ -100,10 +104,10 @@ class OnlineParser
                     return $p->getId();
                 }, $this->_players),
                 [
-                    $parts[0] . '00',
-                    $parts[2] . '00',
-                    $parts[4] . '00',
-                    $parts[6] . '00'
+                    intval($parts[0] . '00'),
+                    intval($parts[2] . '00'),
+                    intval($parts[4] . '00'),
+                    intval($parts[6] . '00')
                 ]
             );
         }
