@@ -9,6 +9,7 @@ class IgnoreSeatingFlag extends AbstractMigration
     {
         $this->table('event_registered_players')
             ->addColumn('ignore_seating', 'integer', ['default' => 0])
+            ->addIndex('ignore_seating', ['name' => 'registered_players_ignore'])
             ->save();
     }
 }
