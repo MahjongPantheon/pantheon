@@ -29,11 +29,13 @@
 {{_t 'Note: if a player is already added to the rating, adding him again will result in reissuing his PIN code.'}}
 <table class="table table-condensed table-stripped">
     <tr>
+        <th>ID</th>
         <th>{{_t 'Player'}}</th>
         <th>{{_t 'Admin actions'}}</th>
     </tr>
 {{#everybody}}
     <tr>
+        <td>{{id}}</td>
         <td>{{display_name}}</td>
         <td>
             <form action="" method="post">
