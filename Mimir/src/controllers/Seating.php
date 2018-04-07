@@ -324,16 +324,23 @@ class SeatingController extends Controller
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
+        // In rare cases we want to exclude players from seating
+        $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_db, $eventId);
+
         $histories = PlayerHistoryPrimitive::findLastByEvent($this->_db, $eventId);
         if (!empty($histories)) {
             foreach ($histories as $h) {
-                $playersMap[$h->getPlayerId()] = $h->getRating();
+                if (in_array($h->getPlayerId(), $ignoredPlayerIds)) {
+                    $playersMap[$h->getPlayerId()] = $h->getRating();
+                }
             }
         } else {
             $initialRating = $event[0]->getRuleset()->startRating();
             $playersReg = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $eventId);
             foreach ($playersReg as $player) {
-                $playersMap[$player['id']] = $initialRating;
+                if (!in_array($player['id'], $ignoredPlayerIds)) {
+                    $playersMap[$player['id']] = $initialRating;
+                }
             }
         }
 
