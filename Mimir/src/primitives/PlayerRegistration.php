@@ -35,7 +35,8 @@ class PlayerRegistrationPrimitive extends Primitive
         'event_id'      => '_eventId',
         'player_id'     => '_playerId',
         'auth_token'    => '_token',
-        'local_id'      => '_localId'
+        'local_id'      => '_localId',
+        'ignore_seating' => '_ignoreSeating',
     ];
 
     protected function _getFieldsTransforms()
@@ -45,7 +46,8 @@ class PlayerRegistrationPrimitive extends Primitive
             '_eventId' => $this->_integerTransform(),
             '_token' => $this->_stringTransform(),
             '_playerId' => $this->_integerTransform(),
-            '_localId' => $this->_integerTransform(true)
+            '_localId' => $this->_integerTransform(true),
+            '_ignoreSeating' => $this->_integerTransform(),
         ];
     }
 
@@ -70,6 +72,10 @@ class PlayerRegistrationPrimitive extends Primitive
      * @var int
      */
     protected $_localId;
+    /**
+     * @var int
+     */
+    protected $_ignoreSeating;
 
     protected function _create()
     {
@@ -138,6 +144,14 @@ class PlayerRegistrationPrimitive extends Primitive
     public function getLocalId()
     {
         return $this->_localId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIgnoreSeating()
+    {
+        return $this->_ignoreSeating;
     }
 
     /**
@@ -249,6 +263,18 @@ class PlayerRegistrationPrimitive extends Primitive
         return array_map(function (PlayerRegistrationPrimitive $p) {
             return ['id' => $p->_playerId, 'local_id' => $p->_localId];
         }, self::_findBy($db, 'event_id', [$eventId]));
+    }
+
+    public static function findIgnoredPlayersIdsByEvent(IDb $db, $eventId)
+    {
+        $result = $db->table(static::$_table)
+            ->where('event_id', $eventId)
+            ->where('ignore_seating', 1)
+            ->findArray();
+
+        return array_map(function ($p) {
+            return $p['player_id'];
+        }, $result);
     }
 
     /**
