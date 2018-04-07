@@ -327,20 +327,22 @@ class SeatingController extends Controller
         // In rare cases we want to exclude players from seating
         $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_db, $eventId);
 
+        // First step is adding players that already played games
         $histories = PlayerHistoryPrimitive::findLastByEvent($this->_db, $eventId);
-        if (!empty($histories)) {
-            foreach ($histories as $h) {
-                if (in_array($h->getPlayerId(), $ignoredPlayerIds)) {
-                    $playersMap[$h->getPlayerId()] = $h->getRating();
-                }
+        foreach ($histories as $h) {
+            if (!in_array($h->getPlayerId(), $ignoredPlayerIds)) {
+                $playersMap[$h->getPlayerId()] = $h->getRating();
             }
-        } else {
-            $initialRating = $event[0]->getRuleset()->startRating();
-            $playersReg = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $eventId);
-            foreach ($playersReg as $player) {
-                if (!in_array($player['id'], $ignoredPlayerIds)) {
-                    $playersMap[$player['id']] = $initialRating;
-                }
+        }
+
+        // Second step is adding players that didn't play yet
+        // this situation is possible only in online tournament
+        // when we added replacement player
+        $initialRating = $event[0]->getRuleset()->startRating();
+        $playersReg = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $eventId);
+        foreach ($playersReg as $player) {
+            if (!in_array($player['id'], $ignoredPlayerIds) && !isset($playersMap[$player['id']])) {
+                $playersMap[$player['id']] = $initialRating;
             }
         }
 
