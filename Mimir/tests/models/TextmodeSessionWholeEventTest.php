@@ -137,7 +137,7 @@ class TextmodeSessionWholeEventTest extends \PHPUnit_Framework_TestCase
 
         // Try getting last games list
         $data = (new EventFinishedGamesModel($this->_db, $this->_config, $this->_meta))
-            ->getLastFinishedGames($this->_event, 10, 0, 'id', 'desc');
+            ->getLastFinishedGames(array($this->_event), 10, 0, 'id', 'desc');
         $this->assertNotEmpty($data['games']);
         $this->assertNotEmpty($data['players']);
         $this->assertEquals(10, count($data['games']));

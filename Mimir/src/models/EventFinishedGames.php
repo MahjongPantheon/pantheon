@@ -34,7 +34,7 @@ require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 class EventFinishedGamesModel extends Model
 {
     /**
-     * @param EventPrimitive $event
+     * @param array $eventList
      * @param integer $limit
      * @param integer $offset
      * @param string $orderBy
@@ -42,16 +42,26 @@ class EventFinishedGamesModel extends Model
      * @throws \Exception
      * @return array
      */
-    public function getLastFinishedGames(EventPrimitive $event, $limit, $offset, $orderBy, $order)
+    public function getLastFinishedGames($eventList, $limit, $offset, $orderBy, $order)
     {
-        $games = SessionPrimitive::findByEventAndStatus(
+        $eventIdList = array_map(function (EventPrimitive $el) {
+            return $el->getId();
+        }, $eventList);
+
+        $games = SessionPrimitive::findByEventListAndStatus(
             $this->_db,
-            $event->getId(),
+            $eventIdList,
             SessionPrimitive::STATUS_FINISHED,
             $offset,
             $limit,
             $orderBy,
             $order
+        );
+
+        $gamesCount = SessionPrimitive::gamesCountSeveralEvents(
+            $this->_db,
+            $eventIdList,
+            SessionPrimitive::STATUS_FINISHED
         );
 
         $sessionIds = array_map(function (SessionPrimitive $el) {
@@ -67,11 +77,7 @@ class EventFinishedGamesModel extends Model
         $result = [
             'games' => [],
             'players' => EventModel::getPlayersOfGames($this->_db, $games),
-            'total_games' => SessionPrimitive::gamesCount(
-                $this->_db,
-                $event->getId(),
-                SessionPrimitive::STATUS_FINISHED
-            )
+            'total_games' => $gamesCount
         ];
 
         foreach ($games as $session) {

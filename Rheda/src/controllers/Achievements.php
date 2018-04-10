@@ -38,7 +38,7 @@ class Achievements extends Controller
 
         $achievements = null;
         try {
-            $achievements = $this->_api->execute('getAchievements', [$this->_eventId]);
+            $achievements = $this->_api->execute('getAchievements', [$this->_eventIdList]);
         } catch (Exception $e) {
             return [
                 'error' => $e->getMessage()

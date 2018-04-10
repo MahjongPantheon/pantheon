@@ -50,7 +50,15 @@ abstract class Controller
     /**
      * @var int
      */
+    /* FIXME (PNTN-237): Наверное, надо избавиться от этого поля, и поставить везде, где нельзя
+     * работать с агрегированными эвентами, проверки, что count(_eventIdList) == 1. Либо
+     * сделать какое-то поле, определяющее тип эвента - агрегированный или нет. */
     protected $_eventId;
+
+    /**
+     * @var int
+     */
+    protected $_eventIdList;
 
     /**
      * @var string
@@ -109,12 +117,16 @@ abstract class Controller
         putenv('LC_ALL=' . $locale);
 
         $eidMatches = [];
-        if (empty($path['event']) || !preg_match('#eid(\d+)#is', $path['event'], $eidMatches)) {
+        if (empty($path['event']) || !preg_match('#eid(?<ids>\d+(?:\.\d+)*)#is', $path['event'], $eidMatches)) {
             // TODO: убрать чтобы показать страницу со списком событий
             //throw new Exception('No event id found! Use single-event mode, or choose proper event on main page');
             exit(_t('Please select some event!'));
         }
-        $this->_eventId = intval($eidMatches[1]);
+
+        $ids = explode('.', $eidMatches[1]);
+
+        $this->_eventId = intval($ids[0]);
+        $this->_eventIdList = $ids;
 
         /** @var HttpClient $client */
         $client = $this->_api->getHttpClient();
@@ -128,6 +140,10 @@ abstract class Controller
             $client->withDebug();
         }
 
+        /* FIXME (PNTN-237): Наверное, нужно проверить, что эвенты (если их несколько)
+         * совместимы, т.е. имеют одинаковый конфиг. */
+        /* FIXME (PNTN-237): В случае, если эвентов несколько, нужно посетить здесь какой-то специальный
+         * event_title. */
         $this->_rules = Config::fromRaw($this->_api->execute('getGameConfig', [$this->_eventId]));
         $this->_checkCompatibility($client->getLastHeaders());
     }
@@ -147,7 +163,7 @@ abstract class Controller
             $pageTitle = $this->_pageTitle(); // должно быть после run! чтобы могло использовать полученные данные
             $detector = new MobileDetect();
 
-            $templateEngine = Templater::getInstance($this->_eventId);
+            $templateEngine = Templater::getInstance($this->_eventIdList);
             $add = ($detector->isMobile() && !$detector->isTablet()) ? 'Mobile' : ''; // use full version for tablets
 
             header("Content-type: text/html; charset=utf-8");
@@ -244,7 +260,7 @@ abstract class Controller
             if (Sysconf::SINGLE_MODE) {
                 $re = '#^' . mb_substr($regex, 1) . '/?$#';
             } else {
-                $re = '#^/(?<event>eid\d+)' . $regex . '/?$#';
+                $re = '#^/(?<event>eid\d+(?:\.\d+)*)' . $regex . '/?$#';
             }
 
             if (preg_match($re, $path, $matches)) {
