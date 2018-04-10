@@ -175,12 +175,12 @@ class PlayersController extends Controller
      * @throws EntityNotFoundException
      * @return array of statistics
      */
-    public function getStats($playerId, $eventId)
+    public function getStats($playerId, $eventIdList)
     {
-        $this->_log->addInfo('Getting stats for player id #' . $playerId . ' at event id #' . $eventId);
+        $this->_log->addInfo('Getting stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
         $stats = (new PlayerStatModel($this->_db, $this->_config, $this->_meta))
-            ->getStats($eventId, $playerId);
-        $this->_log->addInfo('Successfully got stats for player id #' . $playerId . ' at event id #' . $eventId);
+            ->getStats($eventIdList, $playerId);
+        $this->_log->addInfo('Successfully got stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
         return $stats;
     }
 

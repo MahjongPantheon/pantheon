@@ -333,6 +333,25 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
+     * Merge history items
+     *
+     * @param Db $db
+     * @param PlayerHistoryPrimitive $his1
+     * @param PlayerHistoryPrimitive $his2
+     * @return PlayerHistoryPrimitive
+     */
+    /* FIXME (PNTN-237): merging history items may be ideologically incorrect, need to think about it. */
+    public static function mergeHistoryItems(Db $db, PlayerHistoryPrimitive $his1, PlayerHistoryPrimitive $his2)
+    {
+        return (new self($db))
+            ->setPlayer($his1->getPlayer())
+            ->setSession($his1->getSession())
+            ->_setAvgPlace(($his1->getAvgPlace() + $his2->getAvgPlace()) / 2)
+            ->_setGamesPlayed($his1->getGamesPlayed() + $his2->getGamesPlayed())
+            ->_setRating($his1->getRating() + $his2->getRating());
+    }
+
+    /**
      * @return float
      */
     public function getRating()

@@ -64,37 +64,43 @@ class EventsController extends Controller
     /**
      * Get all players registered for event
      *
-     * @param integer $eventId
+     * @param array $eventId
      * @throws \Exception
      * @return array
      */
-    public function getAllRegisteredPlayers($eventId)
+    public function getAllRegisteredPlayers($eventIdList)
     {
-        $this->_log->addInfo('Getting all players for event id# ' . $eventId);
+        $this->_log->addInfo('Getting all players for event ids: ' . implode(", ", $eventIdList));
 
-        $players = PlayerRegistrationPrimitive::findRegisteredPlayersByEvent($this->_db, $eventId);
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
-        if (empty($event)) {
-            throw new InvalidParametersException('Event #' . $eventId . ' not found in db');
+        $combined_data = [];
+
+        foreach ($eventIdList as $eventId) {
+            $players = PlayerRegistrationPrimitive::findRegisteredPlayersByEvent($this->_db, $eventId);
+            $event = EventPrimitive::findById($this->_db, [$eventId]);
+            if (empty($event)) {
+                throw new InvalidParametersException('Event #' . $eventId . ' not found in db');
+            }
+
+            $localMap = [];
+            if ($event[0]->getIsPrescripted()) {
+                $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventId));
+            }
+
+            $data = array_map(function (PlayerPrimitive $p) use (&$localMap) {
+                return [
+                    'id'            => $p->getId(),
+                    'display_name'  => $p->getDisplayName(),
+                    'alias'         => $p->getAlias(),
+                    'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
+                    'tenhou_id'     => $p->getTenhouId()
+                ];
+            }, $players);
+
+            $combined_data = array_merge($combined_data, $data);
         }
 
-        $localMap = [];
-        if ($event[0]->getIsPrescripted()) {
-            $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventId));
-        }
-
-        $data = array_map(function (PlayerPrimitive $p) use (&$localMap) {
-            return [
-                'id'            => $p->getId(),
-                'display_name'  => $p->getDisplayName(),
-                'alias'         => $p->getAlias(),
-                'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
-                'tenhou_id'     => $p->getTenhouId()
-            ];
-        }, $players);
-
-        $this->_log->addInfo('Successfully received all players for event id# ' . $eventId);
-        return $data;
+        $this->_log->addInfo('Successfully received all players for event ids: ' . implode(", ", $eventIdList));
+        return $combined_data;
     }
 
     /**
@@ -111,7 +117,7 @@ class EventsController extends Controller
         if (empty($data)) {
             throw new InvalidParametersException('Invalid player token', 401);
         }
-        return $this->getAllRegisteredPlayers($data->getEventId());
+        return $this->getAllRegisteredPlayers(array($data->getEventId()));
     }
 
     /**
@@ -399,7 +405,7 @@ class EventsController extends Controller
     /**
      * Get rating table for event
      *
-     * @param integer $eventId
+     * @param array $eventIdList
      * @param string $orderBy either 'name', 'rating', 'avg_place' or 'avg_score'
      * @param string $order either 'asc' or 'desc'
      * @param bool $withPrefinished include prefinished games score
@@ -407,49 +413,51 @@ class EventsController extends Controller
      * @throws \Exception
      * @return array
      */
-    public function getRatingTable($eventId, $orderBy, $order, $withPrefinished)
+    public function getRatingTable($eventIdList, $orderBy, $order, $withPrefinished)
     {
-        $this->_log->addInfo('Getting rating table for event id# ' . $eventId);
+        $this->_log->addInfo('Getting rating table for event ids: ' . implode(", ", $eventIdList));
 
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
-        if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        $eventList = EventPrimitive::findById($this->_db, $eventIdList);
+        if (count($eventList) != count($eventIdList)) {
+            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
         $table = (new EventRatingTableModel($this->_db, $this->_config, $this->_meta))
-            ->getRatingTable($event[0], $orderBy, $order, $withPrefinished);
+            ->getRatingTable($eventList, $orderBy, $order, $withPrefinished);
 
-        $this->_log->addInfo('Successfully received rating table for event id# ' . $eventId);
+        $this->_log->addInfo('Successfully received rating table for event ids: ' . implode(", ", $eventIdList));
+
         return $table;
     }
 
     /**
      * Get achievements list for event
      *
-     * @param integer $eventId
+     * @param array $eventIdList
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
      */
-    public function getAchievements($eventId)
+    public function getAchievements($eventIdList)
     {
-        $this->_log->addInfo('Getting achievements list for event id# ' . $eventId);
+        $this->_log->addInfo('Getting achievements list for event ids# ' . implode(", ", $eventIdList));
 
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
-        if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        $eventList = EventPrimitive::findById($this->_db, $eventIdList);
+        if (count($eventList) != count($eventIdList)) {
+            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
-        $table = (new EventModel($this->_db, $this->_config, $this->_meta))->getAchievements($event[0]->getId());
+        $table = (new EventModel($this->_db, $this->_config, $this->_meta))->getAchievements($eventIdList);
 
-        $this->_log->addInfo('Successfully received achievements list for event id# ' . $eventId);
+        $this->_log->addInfo('Successfully received achievements list for event ids# ' . implode(", ", $eventIdList));
+
         return $table;
     }
 
     /**
      * Get last games for the event
      *
-     * @param integer $eventId
+     * @param array $eventIdList
      * @param integer $limit
      * @param integer $offset
      * @param string $orderBy either 'id' or 'end_date'
@@ -458,13 +466,13 @@ class EventsController extends Controller
      * @throws \Exception
      * @return array
      */
-    public function getLastGames($eventId, $limit, $offset, $orderBy = 'id', $order = 'desc')
+    public function getLastGames($eventIdList, $limit, $offset, $orderBy = 'id', $order = 'desc')
     {
-        $this->_log->addInfo('Getting games list [' . $limit . '/' . $offset . '] for event id# ' . $eventId);
+        $this->_log->addInfo('Getting games list [' . $limit . '/' . $offset . '] for event ids: ' . implode(", ", $eventIdList));
 
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
-        if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        $eventList = EventPrimitive::findById($this->_db, $eventIdList);
+        if (count($eventList) != count($eventIdList)) {
+            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
         if (!in_array($orderBy, ['id', 'end_date']) || !in_array($order, ['asc', 'desc'])) {
@@ -472,9 +480,9 @@ class EventsController extends Controller
         }
 
         $table = (new EventFinishedGamesModel($this->_db, $this->_config, $this->_meta))
-            ->getLastFinishedGames($event[0], $limit, $offset, $orderBy, $order);
+            ->getLastFinishedGames($eventList, $limit, $offset, $orderBy, $order);
 
-        $this->_log->addInfo('Successfully got games list [' . $limit . '/' . $offset . '] for event id# ' . $eventId);
+        $this->_log->addInfo('Successfully got games list [' . $limit . '/' . $offset . '] for event ids: ' . implode(", ", $eventIdList));
         return $table;
     }
 

@@ -41,7 +41,7 @@ class PersonalStats extends Controller
         try {
             $currentUser = $this->_path['user'];
             $playerData = $this->_api->execute('getPlayer', [$currentUser]);
-            $data = $this->_api->execute('getPlayerStats', [$currentUser, $this->_eventId]);
+            $data = $this->_api->execute('getPlayerStats', [$currentUser, $this->_eventIdList]);
             $this->_playerName = $playerData['display_name'];
 
             $usersMap = [];
