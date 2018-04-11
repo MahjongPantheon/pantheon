@@ -117,7 +117,7 @@ class EventsController extends Controller
         if (empty($data)) {
             throw new InvalidParametersException('Invalid player token', 401);
         }
-        return $this->getAllRegisteredPlayers(array($data->getEventId()));
+        return $this->getAllRegisteredPlayers([$data->getEventId()]);
     }
 
     /**

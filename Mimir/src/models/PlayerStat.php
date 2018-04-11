@@ -53,10 +53,14 @@ class PlayerStatModel extends Model
         }
         $player = $player[0];
 
-        $games = [];
-        foreach ($eventList as $event) {
-            $gamesByEvent = $this->_fetchGamesHistory($event, $player);
-            $games = array_merge($games, $gamesByEvent);
+        $games = $this->_fetchGamesHistory($mainEvent, $player);
+        foreach ($eventList as $k => $event) {
+            if ($k == 0) {
+                continue;
+            }
+
+            /* FIXME (PNTN-237): Do we need to keep keys here? Seems like it is important for the single-event test. */
+            $games = array_merge($games, $this->_fetchGamesHistory($event, $player));
         }
 
         $rounds = $this->_fetchRounds($games);
