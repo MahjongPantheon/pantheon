@@ -26,8 +26,9 @@ class Templater
 
         $eventIdListString = strval($eventIdList[0]);
         foreach ($eventIdList as $key => $id) {
-            if ($key == 0)
+            if ($key == 0) {
                 continue;
+            }
 
             $eventIdListString = $eventIdListString . "." . strval($id);
         }

@@ -135,7 +135,7 @@ class SeatingController extends Controller
         }
 
         $currentRatingTable = (new EventRatingTableModel($this->_db, $this->_config, $this->_meta))
-            ->getRatingTable($event, 'rating', 'desc');
+            ->getRatingTable([$event], 'rating', 'desc');
 
         $seating = Seating::makeIntervalSeating($currentRatingTable, $step, true);
 

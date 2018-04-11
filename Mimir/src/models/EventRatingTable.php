@@ -85,17 +85,21 @@ class EventRatingTableModel extends Model
         /* FIXME (PNTN-237): this is kinda ugly. */
         $playerHistoryItemsMerged = [];
         foreach ($playerItems as $player) {
-            $itemsByPlayer = array_values(array_filter(
-                $playersHistoryItemsCombined,
-                function($v, $k) use ($player) {
-                    return $v->getPlayerId() == $player->getId();
-                },
-                ARRAY_FILTER_USE_BOTH));
+            $itemsByPlayer = array_values(
+                array_filter(
+                    $playersHistoryItemsCombined,
+                    function ($v, $k) use ($player) {
+                        return $v->getPlayerId() == $player->getId();
+                    },
+                    ARRAY_FILTER_USE_BOTH
+                )
+            );
 
             $newItem = $itemsByPlayer[0];
             foreach ($itemsByPlayer as $k => $item) {
-                if ($k == 0)
+                if ($k == 0) {
                     continue;
+                }
                 $newItem = PlayerHistoryPrimitive::mergeHistoryItems(
                     $this->_db,
                     $newItem,
