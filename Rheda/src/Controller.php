@@ -279,9 +279,16 @@ abstract class Controller
                 return true;
             }
 
-            return !empty($_COOKIE['secret'])
-                && !empty(Sysconf::ADMIN_AUTH()[$this->_eventId]['cookie'])
-                && $_COOKIE['secret'] == Sysconf::ADMIN_AUTH()[$this->_eventId]['cookie'];
+            /* For aggregated events we allow any password of the events it contains. */
+            foreach ($this->_eventIdList as $eventId) {
+                if (!empty($_COOKIE['secret'])
+                        && !empty(Sysconf::ADMIN_AUTH()[$eventId]['cookie'])
+                        && $_COOKIE['secret'] == Sysconf::ADMIN_AUTH()[$eventId]['cookie']) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 
