@@ -33,7 +33,7 @@ require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 class EventRatingTableModel extends Model
 {
     /**
-     * @param array $eventList
+     * @param EventPrimitive[] $eventList
      * @param $orderBy
      * @param $order
      * @param bool $withPrefinished
@@ -47,15 +47,28 @@ class EventRatingTableModel extends Model
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
         }
 
-        /* FIXME (PNTN-237): main event is needed to get Ruleset and similar things.
-         * Can we get rid of it somehow? */
         $mainEvent = $eventList[0];
 
         $playersHistoryItemsCombined = [];
         $playerItems = [];
 
+        /* Algorithm is kinda complicated when we want to get rating table for several events,
+         * so here is its description step by step:
+         * 1. We get history items for each event and place them all in a
+         *    single $playersHistoryItemsCombined array.
+         *    In the same loop we also get all unique players for all the events. We
+         *    want unique players, because some players may have participated in all of the events,
+         *    some - only in one event. They are placed into $playerItems array.
+         * 2. For each player we find all history items that concern him. Then we create a new
+         *    history item that is the sum of all player's history items. New items are
+         *    placed into $playerHistoryItemsSummed array. The size of this array is now the
+         *    same as the size of $playerItems array.
+         * 3. The rest is the same for one-event case and multi-event case. */
+
         foreach ($eventList as $event) {
             $playersHistoryItems = [];
+
+            /* FIXME (PNTN-237): refactor to get rid of accessing DB in a loop. */
             $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_db, $event->getId());
             foreach ($tmpPlayersHistoryItems as $item) {
                 // php kludge: keys should be string, not numeric (to overwrite values)
@@ -82,8 +95,8 @@ class EventRatingTableModel extends Model
             $playersHistoryItemsCombined = array_merge($playersHistoryItemsCombined, $playersHistoryItems);
         }
 
-        /* FIXME (PNTN-237): this is kinda ugly. */
-        $playerHistoryItemsMerged = [];
+        /*  */
+        $playerHistoryItemsSummed = [];
         foreach ($playerItems as $player) {
             $itemsByPlayer = array_values(
                 array_filter(
@@ -100,25 +113,24 @@ class EventRatingTableModel extends Model
                 if ($k == 0) {
                     continue;
                 }
-                $newItem = PlayerHistoryPrimitive::mergeHistoryItems(
-                    $this->_db,
+                $newItem = PlayerHistoryPrimitive::makeHistoryItemsSum(
                     $newItem,
                     $item
                 );
             }
 
-            array_push($playerHistoryItemsMerged, $newItem);
+            array_push($playerHistoryItemsSummed, $newItem);
         }
 
-        $this->_sortItems($orderBy, $playerItems, $playerHistoryItemsMerged);
+        $this->_sortItems($orderBy, $playerItems, $playerHistoryItemsSummed);
 
         if ($order === 'desc') {
-            $playerHistoryItemsMerged = array_reverse($playerHistoryItemsMerged);
+            $playerHistoryItemsSummed = array_reverse($playerHistoryItemsSummed);
         }
 
         if ($mainEvent->getSortByGames()) {
             $this->_stableSort(
-                $playerHistoryItemsMerged,
+                $playerHistoryItemsSummed,
                 function (PlayerHistoryPrimitive $el1, PlayerHistoryPrimitive $el2) {
                     if ($el1->getGamesPlayed() == $el2->getGamesPlayed()) {
                         return 0;
@@ -150,7 +162,7 @@ class EventRatingTableModel extends Model
                 'avg_score'     => round(($el->getRating() - $mainEvent->getRuleset()->startRating()) / $el->getGamesPlayed(), 4),
                 'games_played'  => (int)$el->getGamesPlayed()
             ];
-        }, $playerHistoryItemsMerged);
+        }, $playerHistoryItemsSummed);
 
         return $data;
     }

@@ -64,7 +64,7 @@ class EventsController extends Controller
     /**
      * Get all players registered for event
      *
-     * @param array $eventId
+     * @param array $eventIdList
      * @throws \Exception
      * @return array
      */
@@ -72,18 +72,27 @@ class EventsController extends Controller
     {
         $this->_log->addInfo('Getting all players for event ids: ' . implode(", ", $eventIdList));
 
+        if (!is_array($eventIdList) or empty($eventIdList)) {
+            throw new InvalidParametersException('Event id list is not array or array is empty');
+        }
+
+        $eventList = EventPrimitive::findById($this->_db, $eventIdList);
+        if (count($eventList) != count($eventIdList)) {
+            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
+        }
+
+        if (!EventPrimitive::areEventsCompatible($eventList)) {
+            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
+        }
+
         $combined_data = [];
 
-        foreach ($eventIdList as $eventId) {
-            $players = PlayerRegistrationPrimitive::findRegisteredPlayersByEvent($this->_db, $eventId);
-            $event = EventPrimitive::findById($this->_db, [$eventId]);
-            if (empty($event)) {
-                throw new InvalidParametersException('Event #' . $eventId . ' not found in db');
-            }
+        foreach ($eventList as $event) {
+            $players = PlayerRegistrationPrimitive::findRegisteredPlayersByEvent($this->_db, $event->getId());
 
             $localMap = [];
-            if ($event[0]->getIsPrescripted()) {
-                $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventId));
+            if ($event->getIsPrescripted()) {
+                $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $event->getId()));
             }
 
             $data = array_map(function (PlayerPrimitive $p) use (&$localMap) {
@@ -415,11 +424,19 @@ class EventsController extends Controller
      */
     public function getRatingTable($eventIdList, $orderBy, $order, $withPrefinished)
     {
+        if (!is_array($eventIdList) or empty($eventIdList)) {
+            throw new InvalidParametersException('Event id list is not array or array is empty');
+        }
+
         $this->_log->addInfo('Getting rating table for event ids: ' . implode(", ", $eventIdList));
 
         $eventList = EventPrimitive::findById($this->_db, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
-            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
+            throw new InvalidParametersException('Some of events for ids: ' . implode(", ", $eventIdList) . ' were not found in DB');
+        }
+
+        if (!EventPrimitive::areEventsCompatible($eventList)) {
+            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
         $table = (new EventRatingTableModel($this->_db, $this->_config, $this->_meta))
@@ -440,11 +457,19 @@ class EventsController extends Controller
      */
     public function getAchievements($eventIdList)
     {
+        if (!is_array($eventIdList) or empty($eventIdList)) {
+            throw new InvalidParametersException('Event id list is not array or array is empty');
+        }
+
         $this->_log->addInfo('Getting achievements list for event ids# ' . implode(", ", $eventIdList));
 
         $eventList = EventPrimitive::findById($this->_db, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
+        }
+
+        if (!EventPrimitive::areEventsCompatible($eventList)) {
+            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
         $table = (new EventModel($this->_db, $this->_config, $this->_meta))->getAchievements($eventIdList);
@@ -468,11 +493,19 @@ class EventsController extends Controller
      */
     public function getLastGames($eventIdList, $limit, $offset, $orderBy = 'id', $order = 'desc')
     {
+        if (!is_array($eventIdList) or empty($eventIdList)) {
+            throw new InvalidParametersException('Event id list is not array or array is empty');
+        }
+
         $this->_log->addInfo('Getting games list [' . $limit . '/' . $offset . '] for event ids: ' . implode(", ", $eventIdList));
 
         $eventList = EventPrimitive::findById($this->_db, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
+        }
+
+        if (!EventPrimitive::areEventsCompatible($eventList)) {
+            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
         if (!in_array($orderBy, ['id', 'end_date']) || !in_array($order, ['asc', 'desc'])) {

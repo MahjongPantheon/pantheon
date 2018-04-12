@@ -34,7 +34,7 @@ require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 class EventFinishedGamesModel extends Model
 {
     /**
-     * @param array $eventList
+     * @param EventPrimitive[] $eventList
      * @param integer $limit
      * @param integer $offset
      * @param string $orderBy
@@ -58,7 +58,7 @@ class EventFinishedGamesModel extends Model
             $order
         );
 
-        $gamesCount = SessionPrimitive::gamesCountSeveralEvents(
+        $gamesCount = SessionPrimitive::getGamesCount(
             $this->_db,
             $eventIdList,
             SessionPrimitive::STATUS_FINISHED

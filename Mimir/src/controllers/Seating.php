@@ -129,13 +129,13 @@ class SeatingController extends Controller
         $this->_log->addInfo('Creating new interval seating for event #' . $eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
-        if (empty($event)) {
+        $eventList = EventPrimitive::findById($this->_db, [$eventId]);
+        if (empty($eventList)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
         $currentRatingTable = (new EventRatingTableModel($this->_db, $this->_config, $this->_meta))
-            ->getRatingTable([$event], 'rating', 'desc');
+            ->getRatingTable($eventList, 'rating', 'desc');
 
         $seating = Seating::makeIntervalSeating($currentRatingTable, $step, true);
 

@@ -876,4 +876,23 @@ class EventPrimitive extends Primitive
         $this->_gamesStatus = $gamesStatus;
         return $this;
     }
+
+    /**
+     * areEventsCompatible
+     *
+     * @param EventPrimitive[] $eventList
+     * @return boolean
+     */
+    public static function areEventsCompatible($eventList)
+    {
+        $mainEvent = $eventList[0];
+
+        foreach ($eventList as $event) {
+            if ($event->getRuleset() !== $mainEvent->getRuleset()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

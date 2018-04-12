@@ -126,7 +126,7 @@ abstract class Controller
         $ids = explode('.', $eidMatches[1]);
 
         $this->_eventId = intval($ids[0]);
-        $this->_eventIdList = $ids;
+        $this->_eventIdList = array_map('intval', $ids);
 
         /** @var HttpClient $client */
         $client = $this->_api->getHttpClient();
@@ -140,10 +140,6 @@ abstract class Controller
             $client->withDebug();
         }
 
-        /* FIXME (PNTN-237): Наверное, нужно проверить, что эвенты (если их несколько)
-         * совместимы, т.е. имеют одинаковый конфиг. */
-        /* FIXME (PNTN-237): В случае, если эвентов несколько, нужно посетить здесь какой-то специальный
-         * event_title. */
         $this->_rules = Config::fromRaw($this->_api->execute('getGameConfig', [$this->_eventId]));
         $this->_checkCompatibility($client->getLastHeaders());
     }

@@ -40,6 +40,10 @@ class PlayerStatModel extends Model
      */
     public function getStats($eventIdList, $playerId)
     {
+        if (!is_array($eventIdList) or empty($eventIdList)) {
+            throw new InvalidParametersException('Event id list is not array or array is empty');
+        }
+
         $eventList = EventPrimitive::findById($this->_db, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
@@ -60,6 +64,7 @@ class PlayerStatModel extends Model
             }
 
             /* FIXME (PNTN-237): Do we need to keep keys here? Seems like it is important for the single-event test. */
+            /* FIXME (PNTN-237): Need to refactor this to avoid accessing DB in a loop. */
             $games = array_merge($games, $this->_fetchGamesHistory($event, $player));
         }
 

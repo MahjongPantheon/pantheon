@@ -384,30 +384,11 @@ class SessionPrimitive extends Primitive
      * Total count of played games
      *
      * @param IDb $db
-     * @param $eventId
-     * @param $withStatus
-     * @return integer
-     */
-    public static function gamesCount(IDb $db, $eventId, $withStatus)
-    {
-        $result = $db->table(self::$_table)
-            ->where('event_id', $eventId)
-            ->where('status', $withStatus)
-            ->count();
-
-        return $result;
-    }
-
-    /**
-     * Total count of played games
-     *
-     * @param IDb $db
      * @param array $eventIdList
      * @param $withStatus
      * @return integer
      */
-    /* FIXME (PNTN-237): merge with single-event implementation. */
-    public static function gamesCountSeveralEvents(IDb $db, $eventIdList, $withStatus)
+    public static function getGamesCount(IDb $db, $eventIdList, $withStatus)
     {
         $result = $db->table(self::$_table)
             ->whereIn('event_id', $eventIdList)
