@@ -47,7 +47,6 @@ abstract class Model
      */
     public function checkAdminToken()
     {
-        /* FIXME (PNTN-237): check token for several events. */
         return $this->_meta->getAuthToken() === $this->_config->getValue('admin.god_token');
     }
 }

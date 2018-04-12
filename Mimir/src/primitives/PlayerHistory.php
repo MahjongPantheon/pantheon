@@ -333,16 +333,20 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
-     * Merge history items
+     * Create a new history item which is a sum of two other history items.
      *
-     * @param Db $db
      * @param PlayerHistoryPrimitive $his1
      * @param PlayerHistoryPrimitive $his2
      * @return PlayerHistoryPrimitive
      */
-    /* FIXME (PNTN-237): merging history items may be ideologically incorrect, need to think about it. */
-    public static function mergeHistoryItems(Db $db, PlayerHistoryPrimitive $his1, PlayerHistoryPrimitive $his2)
+    public static function makeHistoryItemsSum(PlayerHistoryPrimitive $his1, PlayerHistoryPrimitive $his2)
     {
+        if ($his1->_db !== $his2->_db) {
+            throw new InvalidParametersException('PlayerHistoryPrimitives should belong to same DB');
+        }
+
+        $db = $his1->_db;
+
         return (new self($db))
             ->setPlayer($his1->getPlayer())
             ->setSession($his1->getSession())

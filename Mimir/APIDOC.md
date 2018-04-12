@@ -14,7 +14,7 @@ Exceptions:
 
 ### getRatingTable
 Parameters:
-* **$eventIdList** (_array_) event ids
+* **$eventIdList** (_array_) 
 * **$orderBy** (_string_) either 'name', 'rating', 'avg_place' or 'avg_score'
 * **$order** (_string_) either 'asc' or 'desc'
 * **$withPrefinished** (_bool_) include prefinished games score
@@ -27,7 +27,7 @@ Exceptions:
 
 ### getLastGames
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventIdList** (_array_) 
 * **$limit** (_integer_) 
 * **$offset** (_integer_) 
 * **$orderBy** (_string_) either 'id' or 'end_date'
@@ -68,7 +68,7 @@ Returns: _array_ of session data
 
 ### getAllPlayers
 Parameters:
-* **$eventIdList** (_array_) event ids
+* **$eventId** (_array_) 
 
 Returns: _array_ 
 
@@ -109,7 +109,7 @@ Exceptions:
 ### getPlayerStats
 Parameters:
 * **$playerId** (_int_) player to get stats for
-* **$eventIdList** (_array_) event ids to get stats for
+* **$eventId** (_int_) event to get stats for
 
 Returns: _array_ of statistics
 
@@ -344,7 +344,7 @@ Exceptions:
 
 ### getAchievements
 Parameters:
-* **$eventIdList** (_array_) event ids
+* **$eventIdList** (_array_) 
 
 Returns: _array_ 
 

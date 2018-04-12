@@ -24,14 +24,7 @@ class Templater
         ]);
         self::$_inlineRenderer = new Handlebars(); // for block nesting
 
-        $eventIdListString = strval($eventIdList[0]);
-        foreach ($eventIdList as $key => $id) {
-            if ($key == 0) {
-                continue;
-            }
-
-            $eventIdListString = $eventIdListString . "." . strval($id);
-        }
+        $eventIdListString = implode('.', $eventIdList);
 
         /* FIXME (PNTN-237): Со странички ввода пароля для агрегированных эвентов
          * ссылки на админские вкладки оказываются для первого эвента, а не как для агрегированного.
