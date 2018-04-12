@@ -24,12 +24,7 @@ class Templater
         ]);
         self::$_inlineRenderer = new Handlebars(); // for block nesting
 
-        $eventIdListString = implode('.', $eventIdList);
-
-        /* FIXME (PNTN-237): Со странички ввода пароля для агрегированных эвентов
-         * ссылки на админские вкладки оказываются для первого эвента, а не как для агрегированного.
-         * Во всех остальных местах ссылки вроде нормальные. */
-        self::$_eventIdListString = $eventIdListString;
+        self::$_eventIdListString = implode('.', $eventIdList);
 
         self::$_rootRenderer->addHelper("a", ['Rheda\Templater', '_aHelper']);
         self::$_rootRenderer->addHelper("form", ['Rheda\Templater', '_formHelper']);
