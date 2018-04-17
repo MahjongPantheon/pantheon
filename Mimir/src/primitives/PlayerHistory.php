@@ -345,9 +345,7 @@ class PlayerHistoryPrimitive extends Primitive
             throw new InvalidParametersException('PlayerHistoryPrimitives should belong to same DB');
         }
 
-        $db = $his1->_db;
-
-        return (new self($db))
+        return (new self($his1->_db))
             ->setPlayer($his1->getPlayer())
             ->setSession($his1->getSession())
             ->_setAvgPlace(($his1->getAvgPlace() + $his2->getAvgPlace()) / 2)

@@ -49,7 +49,9 @@ class EventRatingTableModel extends Model
 
         $mainEvent = $eventList[0];
 
+        /** @var PlayerHistoryPrimitive[] $playersHistoryItemsCombined */
         $playersHistoryItemsCombined = [];
+        /** @var PlayerPrimitive[] $playerItems */
         $playerItems = [];
 
         /* Algorithm is kinda complicated when we want to get rating table for several events,

@@ -878,7 +878,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * areEventsCompatible
+     * Check if events are compatible (can be used in aggregated event).
      *
      * @param EventPrimitive[] $eventList
      * @return boolean
