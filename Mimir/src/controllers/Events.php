@@ -72,7 +72,7 @@ class EventsController extends Controller
     {
         $this->_log->addInfo('Getting all players for event ids: ' . implode(", ", $eventIdList));
 
-        if (!is_array($eventIdList) or empty($eventIdList)) {
+        if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
@@ -424,7 +424,7 @@ class EventsController extends Controller
      */
     public function getRatingTable($eventIdList, $orderBy, $order, $withPrefinished)
     {
-        if (!is_array($eventIdList) or empty($eventIdList)) {
+        if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
@@ -457,7 +457,7 @@ class EventsController extends Controller
      */
     public function getAchievements($eventIdList)
     {
-        if (!is_array($eventIdList) or empty($eventIdList)) {
+        if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
@@ -493,7 +493,7 @@ class EventsController extends Controller
      */
     public function getLastGames($eventIdList, $limit, $offset, $orderBy = 'id', $order = 'desc')
     {
-        if (!is_array($eventIdList) or empty($eventIdList)) {
+        if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
