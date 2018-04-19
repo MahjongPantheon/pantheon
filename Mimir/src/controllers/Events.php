@@ -85,31 +85,32 @@ class EventsController extends Controller
             throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
-        $combined_data = [];
-
-        foreach ($eventList as $event) {
-            $players = PlayerRegistrationPrimitive::findRegisteredPlayersByEvent($this->_db, $event->getId());
-
-            $localMap = [];
-            if ($event->getIsPrescripted()) {
-                $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $event->getId()));
-            }
-
-            $data = array_map(function (PlayerPrimitive $p) use (&$localMap) {
-                return [
-                    'id'            => $p->getId(),
-                    'display_name'  => $p->getDisplayName(),
-                    'alias'         => $p->getAlias(),
-                    'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
-                    'tenhou_id'     => $p->getTenhouId()
-                ];
-            }, $players);
-
-            $combined_data = array_merge($combined_data, $data);
+        if (count($eventIdList) == 1 && $event->getIsPrescripted()) {
+            $needLocalIds = true;
+        } else {
+            $needLocalIds = false;
         }
 
+        $players = PlayerRegistrationPrimitive::findRegisteredPlayersByEventList($this->_db, $eventIdList);
+        $localMap = [];
+
+        if ($needLocalIds) {
+            $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventIdList[0]));
+        }
+
+        $data = array_map(function (PlayerPrimitive $p) use (&$localMap) {
+            return [
+                'id'            => $p->getId(),
+                'display_name'  => $p->getDisplayName(),
+                'alias'         => $p->getAlias(),
+                'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
+                'tenhou_id'     => $p->getTenhouId()
+            ];
+        }, $players);
+
         $this->_log->addInfo('Successfully received all players for event ids: ' . implode(", ", $eventIdList));
-        return $combined_data;
+
+        return $data;
     }
 
     /**
