@@ -292,26 +292,30 @@ abstract class Controller
         }
     }
 
-    protected function _getAdminCookie($password)
+    protected function _getAdminAuth($password)
     {
         if (Sysconf::SINGLE_MODE) {
             if ($password == Sysconf::SUPER_ADMIN_PASS) {
-                return Sysconf::SUPER_ADMIN_COOKIE;
+                return ['cookie' => Sysconf::SUPER_ADMIN_COOKIE,
+                        'cookie_life' => Sysconf::ADMIN_AUTH()[$eventIdList[0]]['cookie_life']];
             }
         } else {
             // Special password policy for debug mode
             if (Sysconf::DEBUG_MODE && $password == 'password') {
-                return 'debug_mode_cookie';
+                return ['cookie' => 'debug_mode_cookie',
+                        'cookie_life' => Sysconf::ADMIN_AUTH()[$eventIdList[0]]['cookie_life']];
             }
 
-            if (!empty(Sysconf::ADMIN_AUTH()[$this->_eventId]['password'])
-                && $password == Sysconf::ADMIN_AUTH()[$this->_eventId]['password']
-            ) {
-                return Sysconf::ADMIN_AUTH()[$this->_eventId]['cookie'];
+            foreach ($this->_eventIdList as $eventId) {
+                if (!empty(Sysconf::ADMIN_AUTH()[$eventId]['password'])
+                    && $password == Sysconf::ADMIN_AUTH()[$eventId]['password']
+                ) {
+                    return Sysconf::ADMIN_AUTH()[$eventId];
+                }
             }
         }
 
-        return false;
+        return null;
     }
 
     protected function _checkCompatibility($headersArray)
