@@ -50,7 +50,15 @@ abstract class Controller
     /**
      * @var int
      */
+    /* FIXME (PNTN-237): Наверное, надо избавиться от этого поля, и поставить везде, где нельзя
+     * работать с агрегированными эвентами, проверки, что count(_eventIdList) == 1. Либо
+     * сделать какое-то поле, определяющее тип эвента - агрегированный или нет. */
     protected $_eventId;
+
+    /**
+     * @var int
+     */
+    protected $_eventIdList;
 
     /**
      * @var string
@@ -109,12 +117,16 @@ abstract class Controller
         putenv('LC_ALL=' . $locale);
 
         $eidMatches = [];
-        if (empty($path['event']) || !preg_match('#eid(\d+)#is', $path['event'], $eidMatches)) {
+        if (empty($path['event']) || !preg_match('#eid(?<ids>\d+(?:\.\d+)*)#is', $path['event'], $eidMatches)) {
             // TODO: убрать чтобы показать страницу со списком событий
             //throw new Exception('No event id found! Use single-event mode, or choose proper event on main page');
             exit(_t('Please select some event!'));
         }
-        $this->_eventId = intval($eidMatches[1]);
+
+        $ids = explode('.', $eidMatches[1]);
+
+        $this->_eventId = intval($ids[0]);
+        $this->_eventIdList = array_map('intval', $ids);
 
         /** @var HttpClient $client */
         $client = $this->_api->getHttpClient();
@@ -147,7 +159,7 @@ abstract class Controller
             $pageTitle = $this->_pageTitle(); // должно быть после run! чтобы могло использовать полученные данные
             $detector = new MobileDetect();
 
-            $templateEngine = Templater::getInstance($this->_eventId);
+            $templateEngine = Templater::getInstance($this->_eventIdList);
             $add = ($detector->isMobile() && !$detector->isTablet()) ? 'Mobile' : ''; // use full version for tablets
 
             header("Content-type: text/html; charset=utf-8");
@@ -244,7 +256,7 @@ abstract class Controller
             if (Sysconf::SINGLE_MODE) {
                 $re = '#^' . mb_substr($regex, 1) . '/?$#';
             } else {
-                $re = '#^/(?<event>eid\d+)' . $regex . '/?$#';
+                $re = '#^/(?<event>eid\d+(?:\.\d+)*)' . $regex . '/?$#';
             }
 
             if (preg_match($re, $path, $matches)) {
@@ -267,32 +279,43 @@ abstract class Controller
                 return true;
             }
 
-            return !empty($_COOKIE['secret'])
-                && !empty(Sysconf::ADMIN_AUTH()[$this->_eventId]['cookie'])
-                && $_COOKIE['secret'] == Sysconf::ADMIN_AUTH()[$this->_eventId]['cookie'];
+            /* For aggregated events we allow any password of the events it contains. */
+            foreach ($this->_eventIdList as $eventId) {
+                if (!empty($_COOKIE['secret'])
+                        && !empty(Sysconf::ADMIN_AUTH()[$eventId]['cookie'])
+                        && $_COOKIE['secret'] == Sysconf::ADMIN_AUTH()[$eventId]['cookie']) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 
-    protected function _getAdminCookie($password)
+    protected function _getAdminAuth($password)
     {
         if (Sysconf::SINGLE_MODE) {
             if ($password == Sysconf::SUPER_ADMIN_PASS) {
-                return Sysconf::SUPER_ADMIN_COOKIE;
+                return ['cookie' => Sysconf::SUPER_ADMIN_COOKIE,
+                        'cookie_life' => Sysconf::SUPER_ADMIN_COOKIE_LIFE];
             }
         } else {
             // Special password policy for debug mode
             if (Sysconf::DEBUG_MODE && $password == 'password') {
-                return 'debug_mode_cookie';
+                return ['cookie' => 'debug_mode_cookie',
+                        'cookie_life' => Sysconf::DEBUG_MODE_COOKIE_LIFE];
             }
 
-            if (!empty(Sysconf::ADMIN_AUTH()[$this->_eventId]['password'])
-                && $password == Sysconf::ADMIN_AUTH()[$this->_eventId]['password']
-            ) {
-                return Sysconf::ADMIN_AUTH()[$this->_eventId]['cookie'];
+            foreach ($this->_eventIdList as $eventId) {
+                if (!empty(Sysconf::ADMIN_AUTH()[$eventId]['password'])
+                    && $password == Sysconf::ADMIN_AUTH()[$eventId]['password']
+                ) {
+                    return Sysconf::ADMIN_AUTH()[$eventId];
+                }
             }
         }
 
-        return false;
+        return null;
     }
 
     protected function _checkCompatibility($headersArray)

@@ -29,6 +29,8 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         const OVERRIDE_EVENT_ID = 1;
         const SUPER_ADMIN_PASS = 'hjpjdstckjybrb';
         const SUPER_ADMIN_COOKIE = 'kldfmewmd9vbeiogbjsdvjepklsdmnvmn';
+        const SUPER_ADMIN_COOKIE_LIFE = 86400;
+        const DEBUG_MODE_COOKIE_LIFE = 86400;
 
         // Multi-event mode auth settings. Will not work when single mode is active
         // Also this will not work if DEBUG_MODE is set to true: every event will

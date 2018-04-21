@@ -7,9 +7,9 @@ class Templater
 {
     protected static $_rootRenderer;
     protected static $_inlineRenderer;
-    protected static $_eventId;
+    protected static $_eventIdListString;
 
-    public static function getInstance($eventId)
+    public static function getInstance($eventIdList)
     {
         if (!empty(self::$_rootRenderer)) {
             return self::$_rootRenderer;
@@ -23,7 +23,8 @@ class Templater
             )
         ]);
         self::$_inlineRenderer = new Handlebars(); // for block nesting
-        self::$_eventId = $eventId;
+
+        self::$_eventIdListString = implode('.', $eventIdList);
 
         self::$_rootRenderer->addHelper("a", ['Rheda\Templater', '_aHelper']);
         self::$_rootRenderer->addHelper("form", ['Rheda\Templater', '_formHelper']);
@@ -76,7 +77,7 @@ class Templater
     public static function _formHelper($template, $context, $args, $source)
     {
         $form = $args->getNamedArguments();
-        return '<form action="' . Url::make(Url::interpolate($form['action'], $context), self::$_eventId)
+        return '<form action="' . Url::make(Url::interpolate($form['action'], $context), self::$_eventIdListString)
             . (empty($form['method']) ? ' method="get"' : '" method="' . $form['method'] . '"')
             . '>' . self::$_inlineRenderer->render($source, $context) . '</form>';
     }
@@ -84,7 +85,7 @@ class Templater
     public static function _aHelper($template, $context, $args, $source)
     {
         $a = $args->getNamedArguments();
-        return '<a href="' . Url::make(Url::interpolate($a['href'], $context), self::$_eventId) . '"'
+        return '<a href="' . Url::make(Url::interpolate($a['href'], $context), self::$_eventIdListString) . '"'
             . (empty($a['target']) ? '' : ' target="' . $a['target'] . '"')
             . (empty($a['class']) ? '' : ' class="' . $a['class'] . '"')
             . (empty($a['onclick']) ? '' : ' onclick="' . Url::interpolate($a['onclick'], $context) . '"')

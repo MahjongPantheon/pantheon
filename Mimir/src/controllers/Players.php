@@ -175,12 +175,28 @@ class PlayersController extends Controller
      * @throws EntityNotFoundException
      * @return array of statistics
      */
-    public function getStats($playerId, $eventId)
+    public function getStats($playerId, $eventIdList)
     {
-        $this->_log->addInfo('Getting stats for player id #' . $playerId . ' at event id #' . $eventId);
+        if (!is_array($eventIdList) || empty($eventIdList)) {
+            throw new InvalidParametersException('Event id list is not array or array is empty');
+        }
+
+        $this->_log->addInfo('Getting stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
+
+        $eventList = EventPrimitive::findById($this->_db, $eventIdList);
+        if (count($eventList) != count($eventIdList)) {
+            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
+        }
+
+        if (!EventPrimitive::areEventsCompatible($eventList)) {
+            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
+        }
+
         $stats = (new PlayerStatModel($this->_db, $this->_config, $this->_meta))
-            ->getStats($eventId, $playerId);
-        $this->_log->addInfo('Successfully got stats for player id #' . $playerId . ' at event id #' . $eventId);
+            ->getStats($eventIdList, $playerId);
+
+        $this->_log->addInfo('Successfully got stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
+
         return $stats;
     }
 

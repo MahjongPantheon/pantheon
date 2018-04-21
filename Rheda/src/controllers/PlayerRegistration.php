@@ -43,7 +43,7 @@ class PlayerRegistration extends Controller
             $errorMsg = $this->_lastError;
         } else {
             try {
-                $registeredPlayers = $this->_api->execute('getAllPlayers', [$this->_eventId]);
+                $registeredPlayers = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
                 $enrolledPlayers = $this->_api->execute('getAllEnrolled', [$this->_eventId]);
                 usort($enrolledPlayers, $sorter);
                 usort($registeredPlayers, $sorter);

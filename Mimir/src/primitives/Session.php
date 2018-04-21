@@ -254,6 +254,40 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * Find sessions by state (indexed search, paginated)
+     *
+     * @param IDb $db
+     * @param array $eventIdList
+     * @param string|string[] $status
+     * @param integer $offset
+     * @param integer $limit
+     * @param string $orderBy
+     * @param string $order
+     * @throws \Exception
+     * @return SessionPrimitive[]
+     */
+    /* FIXME (PNTN-237): merge with single event implementation. */
+    public static function findByEventListAndStatus(
+        IDb $db,
+        $eventIdList,
+        $status,
+        $offset = 0,
+        $limit = null,
+        $orderBy = 'id',
+        $order = 'desc'
+    ) {
+
+        return self::_findBySeveral(
+            $db,
+            ['status' => (array)$status, 'event_id' => $eventIdList],
+            [
+                'limit' => $limit, 'offset'  => $offset,
+                'order' => $order, 'orderBy' => $orderBy
+            ]
+        );
+    }
+
+    /**
      * Get data of players' seating during all event
      *
      * @param IDb $db
@@ -350,14 +384,14 @@ class SessionPrimitive extends Primitive
      * Total count of played games
      *
      * @param IDb $db
-     * @param $eventId
+     * @param array $eventIdList
      * @param $withStatus
      * @return integer
      */
-    public static function gamesCount(IDb $db, $eventId, $withStatus)
+    public static function getGamesCount(IDb $db, $eventIdList, $withStatus)
     {
         $result = $db->table(self::$_table)
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', $eventIdList)
             ->where('status', $withStatus)
             ->count();
 

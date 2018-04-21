@@ -86,26 +86,26 @@ class EventModel extends Model
     /**
      * Get achievements list
      * @throws AuthFailedException
-     * @param $eventId
+     * @param $eventIdList
      * @return array
      */
-    public function getAchievements($eventId)
+    public function getAchievements($eventIdList)
     {
         if (!$this->checkAdminToken()) {
             throw new AuthFailedException('Only administrators are allowed to view achievements');
         }
 
         return [
-            'bestHand' => AchievementsPrimitive::getBestHandOfEvent($this->_db, $eventId),
-            'bestTsumoist' => AchievementsPrimitive::getBestTsumoistInSingleSession($this->_db, $eventId),
-            'braveSapper' => AchievementsPrimitive::getBraveSappers($this->_db, $eventId),
-            'dieHard' => AchievementsPrimitive::getDieHardData($this->_db, $eventId),
-            'chomboMaster' => AchievementsPrimitive::getChomboMasters($this->_db, $eventId),
-            'dovakin' => AchievementsPrimitive::getDovakins($this->_db, $eventId),
-            'yakuman' => AchievementsPrimitive::getYakumans($this->_db, $eventId),
-            'shithander' => AchievementsPrimitive::getBestShithander($this->_db, $eventId),
-            'bestDealer' => AchievementsPrimitive::getBestDealer($this->_db, $eventId),
-            'bestFu' => AchievementsPrimitive::getMaxFuHand($this->_db, $eventId)
+            'bestHand' => AchievementsPrimitive::getBestHandOfEvent($this->_db, $eventIdList),
+            'bestTsumoist' => AchievementsPrimitive::getBestTsumoistInSingleSession($this->_db, $eventIdList),
+            'braveSapper' => AchievementsPrimitive::getBraveSappers($this->_db, $eventIdList),
+            'dieHard' => AchievementsPrimitive::getDieHardData($this->_db, $eventIdList),
+            'chomboMaster' => AchievementsPrimitive::getChomboMasters($this->_db, $eventIdList),
+            'dovakin' => AchievementsPrimitive::getDovakins($this->_db, $eventIdList),
+            'yakuman' => AchievementsPrimitive::getYakumans($this->_db, $eventIdList),
+            'shithander' => AchievementsPrimitive::getBestShithander($this->_db, $eventIdList),
+            'bestDealer' => AchievementsPrimitive::getBestDealer($this->_db, $eventIdList),
+            'bestFu' => AchievementsPrimitive::getMaxFuHand($this->_db, $eventIdList)
         ];
     }
 

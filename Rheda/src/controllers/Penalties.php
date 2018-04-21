@@ -66,7 +66,7 @@ class Penalties extends Controller
 
         $amounts = [];
         try {
-            $players = $this->_api->execute('getAllPlayers', [$this->_eventId]);
+            $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
             $settings = $this->_api->execute('getGameConfig', [$this->_eventId]);
             for ($i = $settings['minPenalty']; $i <= $settings['maxPenalty']; $i += $settings['penaltyStep']) {
                 $amounts []= [

@@ -119,14 +119,14 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($success);
 
         $statModel = new PlayerStatModel($this->_db, $this->_config, $this->_meta);
-        $stats = $statModel->getStats($this->_event->getId(), '1');
+        $stats = $statModel->getStats([$this->_event->getId()], '1');
         $this->assertEquals(1 + 1, count($stats['rating_history'])); // initial + 1 game
         $this->assertEquals(1, count($stats['score_history']));
         $this->assertGreaterThan(1, count($stats['players_info']));
         $this->assertEquals(1, array_sum($stats['places_summary']));
 
         $eventModel = new EventRatingTableModel($this->_db, $this->_config, $this->_meta);
-        $ratings = $eventModel->getRatingTable($this->_event, 'avg_place', 'asc');
+        $ratings = $eventModel->getRatingTable([$this->_event], 'avg_place', 'asc');
         $this->assertNotEmpty($ratings);
         $this->assertEquals(1, $ratings[0]['games_played']);
         $this->assertEquals(4, $ratings[0]['id']);
