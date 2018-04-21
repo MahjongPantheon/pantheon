@@ -35,6 +35,10 @@ class Penalties extends Controller
         $this->_errors = [];
 
         if ($this->_path['action'] == 'apply') {
+            if (count($this->_eventIdList) > 1) {
+                return true; // to show error in _run
+            }
+
             if (!$this->_adminAuthOk()) {
                 return true; // to show error in _run
             }
@@ -58,6 +62,13 @@ class Penalties extends Controller
 
     protected function _run()
     {
+        if (count($this->_eventIdList) > 1) {
+            return [
+                'error' => _t('Page not supported for aggregated events'),
+                'isAggregated' => true,
+            ];
+        }
+
         if (!$this->_adminAuthOk()) {
             return [
                 'error' => _t('Wrong admin password')

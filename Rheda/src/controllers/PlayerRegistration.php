@@ -39,6 +39,10 @@ class PlayerRegistration extends Controller
             return strcmp($e1['display_name'], $e2['display_name']);
         };
 
+        if (count($this->_eventIdList) > 1) {
+            $this->_lastError = _t("Page not supported for aggregated events");
+        }
+
         if (!empty($this->_lastError)) {
             $errorMsg = $this->_lastError;
         } else {
@@ -60,6 +64,7 @@ class PlayerRegistration extends Controller
 
         return [
             'authorized' => $this->_adminAuthOk(),
+            'isAggregated' => (count($this->_eventIdList) > 1),
             'prescriptedEvent' => $this->_rules->isPrescripted(),
             'lastindex' => count($registeredPlayers) + 2,
             'error' => $errorMsg,
@@ -73,6 +78,11 @@ class PlayerRegistration extends Controller
     protected function _beforeRun()
     {
         if (!empty($_POST['action_type'])) {
+            if (count($this->_eventIdList) > 1) {
+                $this->_lastError = _t("Page not supported for aggregated events");
+                return true;
+            }
+
             if (!$this->_adminAuthOk()) {
                 $this->_lastError = _t("Wrong admin password");
                 return true;

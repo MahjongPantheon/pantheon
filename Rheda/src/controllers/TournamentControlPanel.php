@@ -44,6 +44,10 @@ class TournamentControlPanel extends Controller
     protected function _beforeRun()
     {
         if (!empty($this->_path['action'])) {
+            if (count($this->_eventIdList) > 1) {
+                return true; // to show error in _run
+            }
+
             if (!$this->_adminAuthOk()) {
                 return true; // to show error in _run
             }
@@ -95,6 +99,12 @@ class TournamentControlPanel extends Controller
     protected function _run()
     {
         $formatter = new GameFormatter();
+
+        if (count($this->_eventIdList) > 1) {
+            return [
+                'error' => _t('Page not supported for aggregated events')
+            ];
+        }
 
         if (!$this->_adminAuthOk()) {
             return [
