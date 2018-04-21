@@ -297,13 +297,13 @@ abstract class Controller
         if (Sysconf::SINGLE_MODE) {
             if ($password == Sysconf::SUPER_ADMIN_PASS) {
                 return ['cookie' => Sysconf::SUPER_ADMIN_COOKIE,
-                        'cookie_life' => Sysconf::ADMIN_AUTH()[$eventIdList[0]]['cookie_life']];
+                        'cookie_life' => Sysconf::SUPER_ADMIN_COOKIE_LIFE];
             }
         } else {
             // Special password policy for debug mode
             if (Sysconf::DEBUG_MODE && $password == 'password') {
                 return ['cookie' => 'debug_mode_cookie',
-                        'cookie_life' => Sysconf::ADMIN_AUTH()[$eventIdList[0]]['cookie_life']];
+                        'cookie_life' => Sysconf::DEBUG_MODE_COOKIE_LIFE];
             }
 
             foreach ($this->_eventIdList as $eventId) {
