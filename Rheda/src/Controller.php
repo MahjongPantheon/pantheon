@@ -174,7 +174,8 @@ abstract class Controller
                 'pageTitle' => $pageTitle,
                 'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
                 'isLoggedIn' => $this->_adminAuthOk(),
-                'hideAddReplayButton' => $this->_rules->hideAddReplayButton()
+                'hideAddReplayButton' => $this->_rules->hideAddReplayButton(),
+                'isAggregated' => (count($this->_eventIdList) > 1)
             ]);
         }
 
