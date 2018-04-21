@@ -85,7 +85,7 @@ class EventsController extends Controller
             throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
-        if (count($eventIdList) == 1 && $event->getIsPrescripted()) {
+        if (count($eventIdList) == 1 && $eventList[0]->getIsPrescripted()) {
             $needLocalIds = true;
         } else {
             $needLocalIds = false;
