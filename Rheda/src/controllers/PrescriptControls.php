@@ -37,6 +37,10 @@ class PrescriptControls extends Controller
             'has_errors' => false
         ];
 
+        if (count($this->_eventIdList) > 1) {
+            $this->_lastError = _t("Page not supported for aggregated events");
+        }
+
         if (!empty($this->_lastError)) {
             $eventConfig['check_errors'] = [$this->_lastError];
             $eventConfig['has_errors'] = true;
@@ -50,6 +54,7 @@ class PrescriptControls extends Controller
         }
 
         return [
+            'isAggregated' => (count($this->_eventIdList) > 1),
             'errors' => $eventConfig['check_errors'],
             'has_errors' => count($eventConfig['check_errors']) > 0,
             'prescript' => $eventConfig['prescript'],
@@ -60,6 +65,11 @@ class PrescriptControls extends Controller
     protected function _beforeRun()
     {
         if (!empty($_POST['action'])) {
+            if (count($this->_eventIdList) > 1) {
+                $this->_lastError = _t("Page not supported for aggregated events");
+                return true;
+            }
+
             if (!$this->_adminAuthOk()) {
                 $this->_lastError = _t("Wrong admin password");
                 return true;

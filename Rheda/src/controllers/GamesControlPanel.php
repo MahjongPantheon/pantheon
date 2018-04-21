@@ -37,6 +37,10 @@ class GamesControlPanel extends Controller
     protected function _beforeRun()
     {
         if (!empty($this->_path['action'])) {
+            if (count($this->_eventIdList) > 1) {
+                return true; // to show error in _run
+            }
+
             if (!$this->_adminAuthOk()) {
                 return true; // to show error in _run
             }
@@ -64,6 +68,13 @@ class GamesControlPanel extends Controller
     protected function _run()
     {
         $formatter = new GameFormatter();
+
+        if (count($this->_eventIdList) > 1) {
+            return [
+                'error' => _t('Page not supported for aggregated events'),
+                'isAggregated' => true,
+            ];
+        }
 
         if (!$this->_adminAuthOk()) {
             return [

@@ -27,9 +27,16 @@ class Timer extends Controller
     {
         return _('Timer');
     }
-    
+
     protected function _run()
     {
+        if (count($this->_eventIdList) > 1) {
+            return [
+                'isAggregated' => true,
+                'error' => _t('Page not supported for aggregated events')
+            ];
+        }
+
         $timerState = $this->_api->execute('getTimerState', [$this->_eventId]);
         $currentSeating = $this->_formatSeating($this->_api->execute('getCurrentSeating', [$this->_eventId]));
         $durationWithoutSeating = $this->_rules->gameDuration() - 5;
@@ -70,7 +77,7 @@ class Timer extends Controller
         foreach ($seating as &$player) {
             $player['zone'] = $player['rating'] >= $this->_rules->startRating() ? 'success' : 'danger';
         }
-        
+
         $seating = ArrayHelpers::elm2key($seating, 'session_id', true);
 
         foreach ($seating as $table) {
