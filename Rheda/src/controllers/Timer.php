@@ -33,7 +33,7 @@ class Timer extends Controller
         if (count($this->_eventIdList) > 1) {
             return [
                 'isAggregated' => true,
-                'error' => _t('Page not supported for aggregated events')
+                'error' => _t('Page not available for aggregated events')
             ];
         }
 
