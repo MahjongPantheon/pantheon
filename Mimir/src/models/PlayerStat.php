@@ -32,19 +32,24 @@ class PlayerStatModel extends Model
      * Now it costs 6 indexed queries to DB (should be fast),
      * but be careful about adding some other stats.
      *
-     * @param $eventId
+     * @param $eventIdList
      * @param $playerId
      * @return array
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function getStats($eventId, $playerId)
+    public function getStats($eventIdList, $playerId)
     {
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
-        if (empty($event)) {
-            throw new EntityNotFoundException('Event id#' . $eventId . ' not found in DB');
+        if (!is_array($eventIdList) || empty($eventIdList)) {
+            throw new InvalidParametersException('Event id list is not array or array is empty');
         }
-        $event = $event[0];
+
+        $eventList = EventPrimitive::findById($this->_db, $eventIdList);
+        if (count($eventList) != count($eventIdList)) {
+            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
+        }
+
+        $mainEvent = $eventList[0];
 
         $player = PlayerPrimitive::findById($this->_db, [$playerId]);
         if (empty($player)) {
@@ -52,12 +57,20 @@ class PlayerStatModel extends Model
         }
         $player = $player[0];
 
-        $games = $this->_fetchGamesHistory($event, $player);
+        $games = [];
+        foreach ($eventList as $event) {
+            /* FIXME (PNTN-237): Need to refactor this to avoid accessing DB in a loop. */
+            /* We want to keep keys here, so we use "+" instead of array_merge. */
+            $games = $games + $this->_fetchGamesHistory($event, $player);
+        }
+
+        ksort($games);
+
         $rounds = $this->_fetchRounds($games);
 
         $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($playerId, $games);
         return [
-            'rating_history'        => $this->_getRatingHistorySequence($event, $playerId, $games),
+            'rating_history'        => $this->_getRatingHistorySequence($mainEvent, $playerId, $games),
             'score_history'         => $scoresAndPlayers['scores'],
             'players_info'          => $scoresAndPlayers['players'],
             'places_summary'        => $this->_getPlacesSummary($playerId, $games),

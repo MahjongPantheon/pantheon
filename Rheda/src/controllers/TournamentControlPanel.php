@@ -113,7 +113,7 @@ class TournamentControlPanel extends Controller
         // Api calls. TODO: merge into one? Http pipelining maybe?
         $tables = $this->_api->execute('getTablesState', [$this->_eventId]);
         $tablesFormatted = $formatter->formatTables($tables, $this->_rules->gamesWaitingForTimer());
-        $players = $this->_api->execute('getAllPlayers', [$this->_eventId]);
+        $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
         $timerState = $this->_api->execute('getTimerState', [$this->_eventId]);
 
         $currentStage = $this->_determineStage($tablesFormatted, $players, $timerState);

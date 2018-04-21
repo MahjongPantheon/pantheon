@@ -76,11 +76,11 @@ class RatingTable extends Controller
         }
 
         try {
-            $players = $this->_api->execute('getAllPlayers', [$this->_eventId]);
+            $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
             $players = ArrayHelpers::elm2Key($players, 'id');
 
             $data = $this->_api->execute('getRatingTable', [
-                $this->_eventId,
+                $this->_eventIdList,
                 $orderBy,
                 $order,
                 $this->_adminAuthOk() // show prefinished results only for admins

@@ -333,6 +333,27 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
+     * Create a new history item which is a sum of two other history items.
+     *
+     * @param PlayerHistoryPrimitive $his1
+     * @param PlayerHistoryPrimitive $his2
+     * @return PlayerHistoryPrimitive
+     */
+    public static function makeHistoryItemsSum(PlayerHistoryPrimitive $his1, PlayerHistoryPrimitive $his2)
+    {
+        if ($his1->_db !== $his2->_db) {
+            throw new InvalidParametersException('PlayerHistoryPrimitives should belong to same DB');
+        }
+
+        return (new self($his1->_db))
+            ->setPlayer($his1->getPlayer())
+            ->setSession($his1->getSession())
+            ->_setAvgPlace(($his1->getAvgPlace() + $his2->getAvgPlace()) / 2)
+            ->_setGamesPlayed($his1->getGamesPlayed() + $his2->getGamesPlayed())
+            ->_setRating($his1->getRating() + $his2->getRating());
+    }
+
+    /**
      * @return float
      */
     public function getRating()

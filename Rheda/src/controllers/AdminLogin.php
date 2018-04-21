@@ -33,15 +33,22 @@ class AdminLogin extends Controller
         $error = null;
 
         if (!empty($_POST['secret'])) {
-            if (!$this->_getAdminCookie($_POST['secret'])) {
+            $auth = $this->_getAdminAuth($_POST['secret']);
+
+            if (!$auth) {
                 $error = _t("Wrong admin password");
             } else {
-                $cookieLife = time() + 3600;
-                if (!empty(Sysconf::ADMIN_AUTH()[$this->_eventId]['cookie_life'])) {
-                    $cookieLife = time() + Sysconf::ADMIN_AUTH()[$this->_eventId]['cookie_life'];
+                $cookie = $auth['cookie'];
+
+                if (!empty($auth['cookie_life'])) {
+                    $cookieLife = time() + $auth['cookie_life'];
+                } else {
+                    $cookieLife = time() + 3600;
                 }
-                setcookie('secret', $this->_getAdminCookie($_POST['secret']), $cookieLife, '/');
-                header('Location: ' . Url::make('/login/', $this->_eventId));
+
+                setcookie('secret', $cookie, $cookieLife, '/');
+
+                header('Location: ' . Url::make('/login/', implode('.', $this->_eventIdList)));
             }
         }
 

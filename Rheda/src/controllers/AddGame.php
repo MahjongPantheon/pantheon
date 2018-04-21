@@ -36,7 +36,7 @@ class AddGame extends Controller
         $successfullyAdded = false;
 
         try {
-            $players = $this->_api->execute('getAllPlayers', [$this->_eventId]);
+            $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
             if (!empty($_POST['content'])) {
                 if (!$this->_adminAuthOk()) {
                     $errorMsg = _t("Wrong admin password");

@@ -51,14 +51,14 @@ class AchievementsPrimitive extends Primitive
         // nothing
     }
 
-    public static function getMaxFuHand(IDb $db, $eventId)
+    public static function getMaxFuHand(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('fu')
             ->select('winner_id')
             ->select('display_name')
             ->join('player', ['player.id', '=', 'round.winner_id'])
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', $eventIdList)
             ->whereGt('fu', 0)
             ->orderByDesc('fu')
             ->limit(10)
@@ -84,13 +84,13 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
-    public static function getBestDealer(IDb $db, $eventId)
+    public static function getBestDealer(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('winner_id')
             ->select('round')
             ->select('session_id')
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['ron', 'tsumo'])
             ->orderByAsc('session_id')
             ->orderByAsc('id')
@@ -138,14 +138,14 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
-    public static function getBestShithander(IDb $db, $eventId)
+    public static function getBestShithander(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('winner_id')
             ->select('display_name')
             ->selectExpr('count(*)', 'cnt')
             ->join('player', ['player.id', '=', 'round.winner_id'])
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', $eventIdList)
             ->where('han', 1)
             ->where('fu', 30)
             ->whereRaw('dora is null')
@@ -174,14 +174,14 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
-    public static function getBestHandOfEvent(IDb $db, $eventId)
+    public static function getBestHandOfEvent(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('han')
             ->select('winner_id')
             ->select('display_name')
             ->join('player', ['player.id', '=', 'round.winner_id'])
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', $eventIdList)
             ->orderByDesc('han')
             ->limit(10)
             ->findArray();
@@ -205,14 +205,14 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
-    public static function getChomboMasters(IDb $db, $eventId)
+    public static function getChomboMasters(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('loser_id')
             ->select('display_name')
             ->selectExpr('count(*)', 'cnt')
             ->join('player', ['player.id', '=', 'round.loser_id'])
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', $eventIdList)
             ->where('outcome', 'chombo')
             ->groupBy('loser_id')
             ->groupBy('display_name')
@@ -226,13 +226,13 @@ class AchievementsPrimitive extends Primitive
         }, $rounds);
     }
 
-    public static function getYakumans(IDb $db, $eventId)
+    public static function getYakumans(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('winner_id')
             ->select('display_name')
             ->join('player', ['player.id', '=', 'round.winner_id'])
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['ron', 'tsumo'])
             ->whereLt('han', 0) // yakuman
             ->findArray();
@@ -241,14 +241,14 @@ class AchievementsPrimitive extends Primitive
         }, $rounds);
     }
 
-    public static function getBraveSappers(IDb $db, $eventId)
+    public static function getBraveSappers(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('loser_id')
             ->select('display_name')
             ->selectExpr('count(*)', 'cnt')
             ->join('player', ['player.id', '=', 'round.loser_id'])
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', $eventIdList)
             ->where('outcome', 'ron')
             ->groupBy('loser_id')
             ->groupBy('display_name')
@@ -274,14 +274,14 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
-    public static function getDieHardData(IDb $db, $eventId)
+    public static function getDieHardData(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('loser_id')
             ->select('display_name')
             ->selectExpr('count(*)', 'cnt')
             ->join('player', ['player.id', '=', 'round.loser_id'])
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', $eventIdList)
             ->where('outcome', 'ron')
             ->groupBy('loser_id')
             ->groupBy('display_name')
@@ -309,7 +309,7 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
-    public static function getBestTsumoistInSingleSession(IDb $db, $eventId)
+    public static function getBestTsumoistInSingleSession(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('winner_id')
@@ -317,7 +317,7 @@ class AchievementsPrimitive extends Primitive
             ->select('display_name')
             ->selectExpr('count(*)', 'cnt')
             ->join('player', ['player.id', '=', 'round.winner_id'])
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', $eventIdList)
             ->where('outcome', 'tsumo')
             ->groupBy('winner_id')
             ->groupBy('session_id')
@@ -344,13 +344,13 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
-    public static function getDovakins(IDb $db, $eventId)
+    public static function getDovakins(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('display_name')
             ->select('yaku')
             ->join('player', ['player.id', '=', 'round.winner_id'])
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['tsumo', 'ron'])
             ->findArray();
 

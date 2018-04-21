@@ -52,7 +52,7 @@ class Sortition extends Controller
             ];
         }
 
-        $players = $this->_api->execute('getAllPlayers', [$this->_eventId]);
+        $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
         $players = ArrayHelpers::elm2key($players, 'id');
 
         $seed = hexdec($this->_path['seed']);
