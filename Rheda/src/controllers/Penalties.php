@@ -64,7 +64,7 @@ class Penalties extends Controller
     {
         if (count($this->_eventIdList) > 1) {
             return [
-                'error' => _t('Page not supported for aggregated events'),
+                'error' => _t('Page not available for aggregated events'),
                 'isAggregated' => true,
             ];
         }

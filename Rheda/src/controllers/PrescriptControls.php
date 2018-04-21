@@ -38,7 +38,7 @@ class PrescriptControls extends Controller
         ];
 
         if (count($this->_eventIdList) > 1) {
-            $this->_lastError = _t("Page not supported for aggregated events");
+            $this->_lastError = _t("Page not available for aggregated events");
         }
 
         if (!empty($this->_lastError)) {
@@ -66,7 +66,7 @@ class PrescriptControls extends Controller
     {
         if (!empty($_POST['action'])) {
             if (count($this->_eventIdList) > 1) {
-                $this->_lastError = _t("Page not supported for aggregated events");
+                $this->_lastError = _t("Page not available for aggregated events");
                 return true;
             }
 
