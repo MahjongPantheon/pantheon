@@ -29,7 +29,8 @@ import {
 } from '../interfaces/local';
 import { Player, Table } from '../interfaces/common';
 import { AppState } from '../primitives/appstate';
-import { YakuId } from "../primitives/yaku";
+import { YakuId } from '../primitives/yaku';
+import { environment } from '../../environments/environment';
 
 export function timerFormatter(timer: RTimerState): LTimerState {
   return {
@@ -93,7 +94,7 @@ export function gameConfigFormatter(config: RGameConfig): LGameConfig {
     withAtamahane: !!config.withAtamahane,
     autoSeating: !!config.autoSeating,
     rulesetTitle: config.rulesetTitle,
-    eventStatHost: config.eventStatHost,
+    eventStatHost: environment.guiFix(config.eventStatHost),
     tonpuusen: !!config.tonpuusen,
     startRating: parseInt(config.startRating.toString(), 10),
     riichiGoesToWinner: !!config.riichiGoesToWinner,

@@ -25,5 +25,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://staging.api.mjtop.net/'
+  apiUrl: 'http://staging.api.mjtop.net/',
+  guiFix: (src: string) => src
 };

@@ -18,7 +18,35 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+const defaultUrl = 'https://api.mjtop.net/';
+let url: string;
+let guiFix: (src: string) => string;
+
+// TODO: make this more flexible; left as quick hack
+switch (window.location.host) {
+  case 'm1.mjtop.net':
+    url = 'http://api1.mjtop.net';
+    guiFix = (src: string) => src.replace(/gui\./ig, 'gui1.');
+    break;
+  case 'm2.mjtop.net':
+    url = 'http://api2.mjtop.net';
+    guiFix = (src: string) => src.replace(/gui\./ig, 'gui2.');
+    break;
+  case 'm3.mjtop.net':
+    url = 'http://api3.mjtop.net';
+    guiFix = (src: string) => src.replace(/gui\./ig, 'gui3.');
+    break;
+  case 'm4.mjtop.net':
+    url = 'http://api4.mjtop.net';
+    guiFix = (src: string) => src.replace(/gui\./ig, 'gui4.');
+    break;
+  default:
+    url = defaultUrl;
+    guiFix = (src: string) => src;
+}
+
 export const environment = {
   production: true,
-  apiUrl: 'https://api.mjtop.net/'
+  apiUrl: url,
+  guiFix: guiFix
 };
