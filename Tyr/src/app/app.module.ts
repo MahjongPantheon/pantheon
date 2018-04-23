@@ -51,6 +51,7 @@ import { DescriptionPipe } from './helpers/makeHandDescription.pipe';
 
 import { RiichiApiService } from './services/riichiApi';
 import { I18nService } from './services/i18n';
+import { IDB } from './services/idb';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { I18nService } from './services/i18n';
   ],
   providers: [
     RiichiApiService,
-    I18nService
+    I18nService,
+    IDB
   ],
   bootstrap: [AppComponent]
 })

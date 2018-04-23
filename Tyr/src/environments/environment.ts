@@ -26,5 +26,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://staging.api.mjtop.net/',
-  guiFix: (src: string) => src
+  guiFix: (src: string) => src,
+  keyPrefix: 'tyr',
+  cookieDomain: 'mjtop.net',
 };

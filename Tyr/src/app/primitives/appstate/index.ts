@@ -55,6 +55,7 @@ import {
   winnerHasYakuWithPao
 } from './yaku';
 import { I18nService } from '../../services/i18n';
+import { IDB } from '../../services/idb';
 
 // implementation
 export class AppState {
@@ -80,7 +81,7 @@ export class AppState {
   private _currentOtherTableLastRound: RRoundPaymentsInfo = null;
   public isIos: boolean = false;
 
-  public isUniversalWatcher = () => window.localStorage.getItem('authToken') === '0000000000';
+  public isUniversalWatcher = () => this.storage.get('authToken') === '0000000000';
 
   // preloaders flags
   private _loading: LoadingSet = {
@@ -90,7 +91,7 @@ export class AppState {
     otherTable: false,
   };
 
-  constructor(private zone: NgZone, private api: RiichiApiService, private i18n: I18nService) {
+  constructor(private zone: NgZone, private api: RiichiApiService, private i18n: I18nService, private storage: IDB) {
     this._players = null;
     this._mapIdToPlayer = {};
     this.isIos = !!navigator.userAgent.match(/(iPad|iPhone|iPod)/i);
@@ -121,8 +122,8 @@ export class AppState {
   }
 
   reinit() {
-    this.api.setCredentials(window.localStorage.getItem('authToken'));
-    this._isLoggedIn = !!window.localStorage.getItem('authToken');
+    this.api.setCredentials(this.storage.get('authToken'));
+    this._isLoggedIn = !!this.storage.get('authToken');
     if (!this._isLoggedIn) {
       this._currentScreen = 'login';
     } else {
@@ -132,7 +133,7 @@ export class AppState {
   }
 
   logout() {
-    window.localStorage.removeItem('authToken');
+    this.storage.delete(['authToken']);
     this.reinit();
   }
 
@@ -186,7 +187,7 @@ export class AppState {
       this._loading.games = false;
     }).catch((e) => {
       if (e.code === 401) { // token has rotten
-        window.localStorage.removeItem('authToken');
+        this.storage.delete(['authToken']);
         this._reset();
         this.reinit();
       } else if (isDevMode()) {
