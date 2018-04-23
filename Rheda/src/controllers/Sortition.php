@@ -37,7 +37,7 @@ class Sortition extends Controller
         }
 
         if (empty($this->_path['seed'])) {
-            header('Location: ' . Url::make('/sortition/' . substr(md5(microtime(true)), 3, 5) . '/', $this->_eventId));
+            header('Location: ' . Url::make('/sortition/' . substr(md5(microtime(true)), 3, 5) . '/', $this->_mainEventId));
             return false;
         }
 
@@ -57,18 +57,18 @@ class Sortition extends Controller
 
         $seed = hexdec($this->_path['seed']);
         $sortition = $this->_api->execute('generateSeating', [
-            $this->_eventId,
+            $this->_mainEventId,
             1, // groups
             $seed
         ]);
 
         // Reformat seating for template...
-        
+
         $seating = array_map(function ($player) use (&$players) {
             return [
                 'id' => $player['id'],
                 'rating' => $player['score'],
-                'zone' => $player['score'] >= $this->_rules->startRating() ? 'success' : 'danger',
+                'zone' => $player['score'] >= $this->_mainEventRules->startRating() ? 'success' : 'danger',
                 // TODO; get rid of bootstrap terminology here ^
                 'username' => $players[$player['id']]['display_name']
             ];

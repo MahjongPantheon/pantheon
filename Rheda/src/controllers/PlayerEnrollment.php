@@ -84,7 +84,7 @@ class PlayerEnrollment extends Controller
             }
 
             if (empty($err)) {
-                header('Location: ' . Url::make('/enroll/', $this->_eventId));
+                header('Location: ' . Url::make('/enroll/', $this->_mainEventId));
                 return false;
             }
 
@@ -113,7 +113,7 @@ class PlayerEnrollment extends Controller
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_eventId]);
+            $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_mainEventId]);
             if (!$success) {
                 $errorMsg = _t('Failed to add the player. Check your network connection.');
             }
