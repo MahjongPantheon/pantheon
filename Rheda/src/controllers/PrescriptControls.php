@@ -46,7 +46,7 @@ class PrescriptControls extends Controller
             $eventConfig['has_errors'] = true;
         } else {
             try {
-                $eventConfig = $this->_api->execute('getPrescriptedEventConfig', [$this->_eventId]);
+                $eventConfig = $this->_api->execute('getPrescriptedEventConfig', [$this->_mainEventId]);
             } catch (\Exception $e) {
                 $eventConfig['check_errors'] = [$e->getMessage()];
                 $eventConfig['has_errors'] = true;
@@ -84,7 +84,7 @@ class PrescriptControls extends Controller
             }
 
             if (empty($err)) {
-                header('Location: ' . Url::make('/prescript', $this->_eventId));
+                header('Location: ' . Url::make('/prescript', $this->_mainEventId));
                 return false;
             }
 
@@ -97,7 +97,7 @@ class PrescriptControls extends Controller
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('updatePrescriptedEventConfig', [$this->_eventId, $nextGameIndex, $prescript]);
+            $success = $this->_api->execute('updatePrescriptedEventConfig', [$this->_mainEventId, $nextGameIndex, $prescript]);
             if (!$success) {
                 $errorMsg = _t('Failed to update predefined seating. Check your network connection.');
             }

@@ -48,7 +48,7 @@ class PlayerRegistration extends Controller
         } else {
             try {
                 $registeredPlayers = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
-                $enrolledPlayers = $this->_api->execute('getAllEnrolled', [$this->_eventId]);
+                $enrolledPlayers = $this->_api->execute('getAllEnrolled', [$this->_mainEventId]);
                 usort($enrolledPlayers, $sorter);
                 usort($registeredPlayers, $sorter);
                 $registeredPlayers = array_map(function ($el, $index) {
@@ -65,7 +65,7 @@ class PlayerRegistration extends Controller
         return [
             'authorized' => $this->_adminAuthOk(),
             'isAggregated' => (count($this->_eventIdList) > 1),
-            'prescriptedEvent' => $this->_rules->isPrescripted(),
+            'prescriptedEvent' => $this->_mainEventRules->isPrescripted(),
             'lastindex' => count($registeredPlayers) + 2,
             'error' => $errorMsg,
             'registered' => $registeredPlayers,
@@ -106,7 +106,7 @@ class PlayerRegistration extends Controller
             }
 
             if (empty($err)) {
-                header('Location: ' . Url::make('/reg/', $this->_eventId));
+                header('Location: ' . Url::make('/reg/', $this->_mainEventId));
                 return false;
             }
 
@@ -119,7 +119,7 @@ class PlayerRegistration extends Controller
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('registerPlayerCP', [$userId, $this->_eventId]);
+            $success = $this->_api->execute('registerPlayerCP', [$userId, $this->_mainEventId]);
             if (!$success) {
                 $errorMsg = _t('Failed to register the player. Check your network connection.');
             }
@@ -134,7 +134,7 @@ class PlayerRegistration extends Controller
     {
         $errorMsg = '';
         try {
-            $this->_api->execute('unregisterPlayerCP', [$userId, $this->_eventId]);
+            $this->_api->execute('unregisterPlayerCP', [$userId, $this->_mainEventId]);
         } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
         };
@@ -146,7 +146,7 @@ class PlayerRegistration extends Controller
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_eventId]);
+            $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_mainEventId]);
             if (!$success) {
                 $errorMsg = _t('Failed to enroll the player. Check your network connection.');
             }
@@ -162,7 +162,7 @@ class PlayerRegistration extends Controller
         $errorMsg = '';
         $mapping = json_decode($json, true);
         try {
-            $success = $this->_api->execute('updatePlayersLocalIds', [$this->_eventId, $mapping]);
+            $success = $this->_api->execute('updatePlayersLocalIds', [$this->_mainEventId, $mapping]);
             if (!$success) {
                 $errorMsg = _t('Failed to save local ids mapping. Check your network connection.');
             }

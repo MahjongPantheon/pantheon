@@ -58,7 +58,7 @@ class GamesControlPanel extends Controller
                 return true;
             }
 
-            header('Location: ' . Url::make('/games/', $this->_eventId));
+            header('Location: ' . Url::make('/games/', $this->_mainEventId));
             return false;
         }
 
@@ -89,8 +89,8 @@ class GamesControlPanel extends Controller
         }
 
         // Tables info
-        $tables = $this->_api->execute('getTablesState', [$this->_eventId]);
-        $tablesFormatted = $formatter->formatTables($tables, $this->_rules->gamesWaitingForTimer());
+        $tables = $this->_api->execute('getTablesState', [$this->_mainEventId]);
+        $tablesFormatted = $formatter->formatTables($tables, $this->_mainEventRules->gamesWaitingForTimer());
 
         return [
             'reason' => '',

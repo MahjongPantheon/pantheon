@@ -222,6 +222,21 @@ msgstr ""
 msgid "Confirm the results and finish all games"
 msgstr ""
 
+msgid "Aggregated event"
+msgstr ""
+
+msgid "Best series"
+msgstr ""
+
+msgid "Points of best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Points of last series"
+msgstr ""
+
 msgid "Confirm round cancellation: "
 msgstr ""
 
@@ -247,6 +262,27 @@ msgid "Game details"
 msgstr ""
 
 msgid "Sorry, this page is not available for mobile devices"
+msgstr ""
+
+msgid "Rating table"
+msgstr ""
+
+msgid "Rating table has been hidden by tournament administrator"
+msgstr ""
+
+msgid "These results are visible only for tournament administrator"
+msgstr ""
+
+msgid "Rating points"
+msgstr ""
+
+msgid "Average place"
+msgstr ""
+
+msgid "Average points"
+msgstr ""
+
+msgid "Games played"
 msgstr ""
 
 msgid "Predefined seating configuration"
@@ -277,16 +313,13 @@ msgid ""
 "between games and are defined at Admin actions / Manage players page."
 msgstr ""
 
-msgid "Best series"
+msgid "Admin panel"
 msgstr ""
 
-msgid "Points of best series"
+msgid "Authorized successfully!"
 msgstr ""
 
-msgid "Last series"
-msgstr ""
-
-msgid "Points of last series"
+msgid "Authorize"
 msgstr ""
 
 msgid "Recent games"
@@ -302,36 +335,6 @@ msgid "Later"
 msgstr ""
 
 msgid "Earlier"
-msgstr ""
-
-msgid "Rating table"
-msgstr ""
-
-msgid "Rating table has been hidden by tournament administrator"
-msgstr ""
-
-msgid "These results are visible only for tournament administrator"
-msgstr ""
-
-msgid "Rating points"
-msgstr ""
-
-msgid "Average place"
-msgstr ""
-
-msgid "Average points"
-msgstr ""
-
-msgid "Games played"
-msgstr ""
-
-msgid "Admin panel"
-msgstr ""
-
-msgid "Authorized successfully!"
-msgstr ""
-
-msgid "Authorize"
 msgstr ""
 
 msgid "Personal stats"
@@ -421,7 +424,13 @@ msgstr ""
 msgid "Yaku collected over all time"
 msgstr ""
 
-msgid "%s: personal stats"
+msgid "Pts"
+msgstr ""
+
+msgid "AvPlc"
+msgstr ""
+
+msgid "AvPts"
 msgstr ""
 
 msgid "Statistics"
@@ -448,54 +457,10 @@ msgstr ""
 msgid "Ongoing series:"
 msgstr ""
 
-msgid "Going back in 3 seconds..."
-msgstr ""
-
-msgid "Add new game"
-msgstr ""
-
-msgid "Format:"
-msgstr ""
-
-msgid ""
-"Renchans/honba are calculated automatically. Also points and payments "
-"checks are performed: in case of any inconsistency the alert is displayed."
-msgstr ""
-
-msgid "Player aliases"
-msgstr ""
-
-msgid "Pts"
-msgstr ""
-
-msgid "AvPlc"
-msgstr ""
-
-msgid "AvPts"
-msgstr ""
-
-msgid "Tournament control panel"
-msgstr ""
-
-msgid "Games control panel"
-msgstr ""
-
-msgid "Penalties"
-msgstr ""
-
-msgid "Add player"
-msgstr ""
-
-msgid "Manage players"
+msgid "%s: personal stats"
 msgstr ""
 
 msgid "Achievements"
-msgstr ""
-
-msgid "Timer & seating"
-msgstr ""
-
-msgid "Login"
 msgstr ""
 
 msgid "Achievement"
@@ -593,6 +558,44 @@ msgstr ""
 msgid "Given for collecting a yakuman during tournament."
 msgstr ""
 
+msgid "Tournament control panel"
+msgstr ""
+
+msgid "Games control panel"
+msgstr ""
+
+msgid "Penalties"
+msgstr ""
+
+msgid "Add player"
+msgstr ""
+
+msgid "Manage players"
+msgstr ""
+
+msgid "Timer & seating"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Going back in 3 seconds..."
+msgstr ""
+
+msgid "Add new game"
+msgstr ""
+
+msgid "Format:"
+msgstr ""
+
+msgid ""
+"Renchans/honba are calculated automatically. Also points and payments "
+"checks are performed: in case of any inconsistency the alert is displayed."
+msgstr ""
+
+msgid "Player aliases"
+msgstr ""
+
 msgid "Additional penalties"
 msgstr ""
 
@@ -616,12 +619,6 @@ msgstr ""
 msgid "Apply penalty"
 msgstr ""
 
-msgid "Rating"
-msgstr ""
-
-msgid "Han"
-msgstr ""
-
 msgid "View replay online"
 msgstr ""
 
@@ -641,6 +638,12 @@ msgid "Additional penalties:"
 msgstr ""
 
 msgid "%s - %d points (%s)"
+msgstr ""
+
+msgid "Rating"
+msgstr ""
+
+msgid "Han"
 msgstr ""
 
 msgid ""
@@ -711,21 +714,6 @@ msgstr ""
 msgid "Chombo: %s."
 msgstr ""
 
-msgid "Date & time"
-msgstr ""
-
-msgid "Players"
-msgstr ""
-
-msgid "Details"
-msgstr ""
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr ""
-
-msgid "Full game log:"
-msgstr ""
-
 msgid "All players list"
 msgstr ""
 
@@ -747,6 +735,21 @@ msgid "Real name"
 msgstr ""
 
 msgid "Register"
+msgstr ""
+
+msgid "Date & time"
+msgstr ""
+
+msgid "Players"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Best hand: <b>%s</b> - %s"
+msgstr ""
+
+msgid "Full game log:"
 msgstr ""
 
 msgid "Enter tables, one per line."

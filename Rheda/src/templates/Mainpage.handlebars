@@ -15,12 +15,25 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
 
+
+{{#isAggregated}}
+<h3>{{_t 'Aggregated event'}}</h3>
+<hr>
+{{#eventsInfo}}
+    {{title}}
+    <br>
+    {{description}}
+    <hr>
+{{/eventsInfo}}
+{{/isAggregated}}
+{{^isAggregated}}
 <h3>{{title}}</h3>
 {{#description}}
 <hr>
     {{{description}}}
 {{/description}}
 <br>
+{{/isAggregated}}
 
 {{#hasData}}
     <table class='table table-striped table-condensed'>
