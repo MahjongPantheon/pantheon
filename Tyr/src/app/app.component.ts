@@ -23,6 +23,7 @@ import { AppState } from './primitives/appstate';
 import { Outcome } from './interfaces/common';
 import { RiichiApiService } from './services/riichiApi';
 import { I18nService } from './services/i18n';
+import { IDB } from './services/idb';
 
 @Component({
   selector: 'riichi-app',
@@ -35,18 +36,20 @@ export class AppComponent {
     private appRef: ApplicationRef,
     private zone: NgZone,
     private api: RiichiApiService,
-    private i18n: I18nService
+    private i18n: I18nService,
+    private storage: IDB
   ) {
     this.state = new AppState(
       this.zone,
       this.api,
-      this.i18n
+      this.i18n,
+      this.storage
     );
 
     window.__state = this.state; // for great debug
     this.i18n.init((localeName: string) => {
       this.state.init();
-      window.localStorage.setItem('currentLanguage', localeName);
+      this.storage.set('currentLanguage', localeName);
     }, (error: any) => console.error(error));
   }
 }

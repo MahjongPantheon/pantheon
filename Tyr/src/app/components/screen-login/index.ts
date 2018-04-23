@@ -23,6 +23,7 @@ import { AppState } from '../../primitives/appstate';
 import { RiichiApiService } from '../../services/riichiApi';
 import { Player } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { IDB } from '../../services/idb';
 
 @Component({
   selector: 'screen-login',
@@ -32,7 +33,7 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 export class LoginScreen extends I18nComponent {
   @Input() state: AppState;
   @Input() api: RiichiApiService;
-  constructor(public i18n: I18nService) { super(i18n); }
+  constructor(public i18n: I18nService, private storage: IDB) { super(i18n); }
 
   public _loading: boolean = false;
   public _error: boolean = false;
@@ -46,7 +47,7 @@ export class LoginScreen extends I18nComponent {
     this.api.confirmRegistration(this._pinOrig)
       .then((authToken: string) => {
         this._loading = false;
-        window.localStorage.setItem('authToken', authToken);
+        this.storage.set('authToken', authToken);
         this.state.reinit();
       })
       .catch(() => {
