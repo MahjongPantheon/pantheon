@@ -317,7 +317,8 @@ class GameFormatter
 
     public function formatTables($tables, $waitingForTimer)
     {
-        return array_map(function ($t) use ($waitingForTimer) {
+        $winds = ['東', '南', '西', '北'];
+        return array_map(function ($t) use ($waitingForTimer, &$winds) {
             if ($waitingForTimer) {
                 $t['status'] = 'READY';
             }
@@ -326,10 +327,31 @@ class GameFormatter
             if ($t['status'] == 'finished') {
                 $t['last_round'] = '';
             } else {
-                $t['last_round'] = $this->_formatLastRound($t['last_round'], $t['players']);
+                if (!empty($t['last_round'])) {
+                    $t['last_round'] = $this->_formatLastRound($t['last_round'], $t['players']);
+                }
+            }
+
+            if (!empty($t['rounds'])) {
+                $t['rounds'] = array_map(function($round) use (&$t) {
+                    return $this->_formatLastRound($round, $t['players']);
+                }, $t['rounds']);
+            }
+
+            if (empty($t['current_round']) || $t['current_round'] > 8 || $t['current_round'] < 0) {
+                $t['current_round_wind'] = '-';
+            } else {
+                $t['current_round_wind'] = $winds[floor(($t['current_round'] - 1) / 4)] . (($t['current_round'] - 1) % 4);
             }
 
             $players = ArrayHelpers::elm2Key($t['players'], 'id');
+
+            $t['players'] = array_map(function($p, $idx) use (&$t, &$winds) {
+                $p['current_wind'] = $winds[($t['current_round'] + $idx - 1) % 4];
+                $p['score'] = $t['scores'][$p['id']];
+                return $p;
+            }, $t['players'], array_keys($t['players']));
+
             $t['penalties'] = array_map(function ($p) use (&$players) {
                 $p['who'] = $players[$p['who']]['display_name'];
                 return $p;
