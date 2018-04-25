@@ -112,10 +112,11 @@ class EventModel extends Model
     /**
      * Find out currently playing tables state (for tournaments only)
      * @param integer $eventId
+     * @param bool $includeAllRounds
      * @return array
      * @throws \Exception
      */
-    public function getTablesState($eventId)
+    public function getTablesState($eventId, $includeAllRounds = false)
     {
         $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $eventId);
         $tablesCount = count($reggedPlayers) / 4;
@@ -125,7 +126,7 @@ class EventModel extends Model
             SessionPrimitive::STATUS_INPROGRESS,
             SessionPrimitive::STATUS_PREFINISHED
         ], 0, $tablesCount);
-        return $this->_formatTablesState($lastGames, $reggedPlayers);
+        return $this->_formatTablesState($lastGames, $reggedPlayers, $includeAllRounds);
     }
 
     /**
@@ -198,10 +199,11 @@ class EventModel extends Model
     /**
      * @param SessionPrimitive[] $lastGames
      * @param array $reggedPlayers
+     * @param bool $includeAllRounds
      * @throws \Exception
      * @return array
      */
-    protected function _formatTablesState($lastGames, $reggedPlayers)
+    protected function _formatTablesState($lastGames, $reggedPlayers, $includeAllRounds = false)
     {
         $output = [];
         $playerIdMap = [];
@@ -219,7 +221,8 @@ class EventModel extends Model
                 'hash' => $game->getRepresentationalHash(),
                 'penalties' => $game->getCurrentState()->getPenaltiesLog(),
                 'table_index' => $game->getTableIndex(),
-                'last_round' => $lastRound ? $this->_formatLastRound($lastRound) : [],
+                'last_round' => ($lastRound && !$includeAllRounds) ? $this->_formatLastRound($lastRound) : [],
+                'rounds' => $includeAllRounds ? array_map([$this, '_formatLastRound'], $rounds) : [],
                 'current_round' => $game->getCurrentState()->getRound(),
                 'scores' => $game->getCurrentState()->getScores(),
                 'players' => array_map(function (PlayerPrimitive $p) use (&$playerIdMap) {

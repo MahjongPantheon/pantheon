@@ -1,0 +1,129 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+
+<style>
+  .tables-state hr {
+    margin-top: 3px;
+    margin-bottom: 5px;
+  }
+  .tables-state li {
+    font-size: 16px;
+  }
+  .tables-state strong {
+    font-size: 16px;
+  }
+</style>
+
+<script type="text/javascript">
+  !function () {
+    var initialTime = '{{initialTime}}'.split(':');
+    var minutes = parseInt(initialTime[0]);
+    var seconds = parseInt(initialTime[1]);
+    var redZone = '{{redZone}}' === '1';
+    var yellowZone = '{{yellowZone}}' === '1';
+    var timer;
+
+    $(function () {
+      runTimer();
+      timer = window.setInterval(runTimer, 1000);
+    });
+
+    function formatTime(minutes, seconds) {
+      var addedZero = '';
+      if (seconds < 10) {
+        addedZero = '0';
+      }
+      return minutes + ':' + addedZero + seconds;
+    }
+
+    function checkRedZone(minutes) {
+      if (redZone && minutes < {{redZoneLength}}) {
+        $('#time').css({color: '#f55'});
+      }
+    }
+
+    function checkYellowZone(minutes) {
+      if (yellowZone && minutes < {{yellowZoneLength}}) {
+        $('#time').css({backgroundColor: '#ff5'});
+      }
+    }
+
+    function stopTimer() {
+      window.clearInterval(timer);
+      $('#time').html('{{_t 'No time left!'}}');
+    }
+
+    function runTimer() {
+      if (seconds === 0) {
+        minutes--;
+        seconds = 60; // just in case
+      }
+
+      seconds--;
+      checkRedZone(minutes);
+      checkYellowZone(minutes);
+
+      if (minutes < 0) {
+        stopTimer();
+      } else {
+        $('#time').html(formatTime(minutes, seconds));
+      }
+    }
+  }();
+</script>
+
+<h3>{{_t 'Tables state:'}}</h3>
+<h4>{{_t 'Timer'}}: <span class="timer"><span id="time">{{initialTime}}</span></span></h4>
+<table class="table table-bordered table-striped tables-state">
+  {{#tables}}
+    <tr>
+      <td>
+        #{{table_index}}
+        <hr/>
+        {{_p 'Wind: %s' current_round_wind}}
+        <hr/>
+        <span class="badge {{#finished}}badge-success{{/finished}}{{#prefinished}}badge-warning{{/prefinished}}">{{status}}</span>
+      </td>
+      <td>
+        <table>
+          {{#players}}
+            <tr>
+              <td>{{current_wind}}:</td>
+              <td><b>{{display_name}}</b></td>
+              <td>{{score}}</td>
+            </tr>
+          {{/players}}
+        </table>
+      </td>
+      <td style="font-size: 16px">
+        <strong>{{_t 'Full game log:'}}</strong>
+        <hr/>
+        {{^rounds}}{{_t '(no rounds are played yet)'}}{{/rounds}}
+        <ul>{{#rounds}}
+          <li>{{.}}</li>
+        {{/rounds}}</ul>
+        <hr/>
+        <strong>{{_t 'Penalties:'}}</strong>
+        <ul>
+          {{#penalties}}
+            <li>{{_p '%s - %s points of penalty. Reason: %s' who amount reason}}</li>
+          {{/penalties}}
+        </ul>
+      </td>
+    </tr>
+  {{/tables}}
+</table>
