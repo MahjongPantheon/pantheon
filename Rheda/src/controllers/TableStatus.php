@@ -36,10 +36,17 @@ class TableStatus extends Controller
 
         $errCode = null;
 
-        $tables = $this->_api->execute('getTablesState', [$this->_eventId, true]);
-        $timerState = $this->_api->execute('getTimerState', [$this->_eventId]);
-        $tablesFormatted = $formatter->formatTables($tables, $this->_rules->gamesWaitingForTimer());
+        // Slight cache to avoid huge load
+        $cacheKey = 'tables_status_cache';
+        if (apcu_exists($cacheKey)) {
+            $tablesFormatted = apcu_fetch($cacheKey);
+        } else {
+            $tables = $this->_api->execute('getTablesState', [$this->_mainEventId, true]);
+            $tablesFormatted = $formatter->formatTables($tables, $this->_mainEventRules->gamesWaitingForTimer());
+            apcu_add($cacheKey, $tablesFormatted, 120); // 2 minutes cache
+        }
 
+        $timerState = $this->_api->execute('getTimerState', [$this->_mainEventId]);
         if ($timerState['started'] && $timerState['time_remaining']) {
             $formattedTime = (int)($timerState['time_remaining'] / 60) . ':'
                 . (floor(($timerState['time_remaining'] % 60) / 10) * 10);
@@ -52,11 +59,11 @@ class TableStatus extends Controller
             'tables' => $tablesFormatted,
 
             // timer related
-            'redZoneLength' => $this->_rules->redZone() / 60,
-            'yellowZoneLength' => $this->_rules->yellowZone() / 60,
-            'redZone' => $this->_rules->timerPolicy() === 'redZone',
-            'yellowZone' => $this->_rules->timerPolicy() === 'yellowZone',
-            'gameDuration' => $this->_rules->gameDuration(), // already in minutes
+            'redZoneLength' => $this->_mainEventRules->redZone() / 60,
+            'yellowZoneLength' => $this->_mainEventRules->yellowZone() / 60,
+            'redZone' => $this->_mainEventRules->timerPolicy() === 'redZone',
+            'yellowZone' => $this->_mainEventRules->timerPolicy() === 'yellowZone',
+            'gameDuration' => $this->_mainEventRules->gameDuration(), // already in minutes
             'initialTime' => $formattedTime
         ];
     }
