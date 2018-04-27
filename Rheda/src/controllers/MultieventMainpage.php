@@ -21,7 +21,7 @@ require_once __DIR__ . '/../Controller.php';
 
 class MultieventMainpage extends Controller
 {
-    protected $_mainTemplate = 'Mainpage';
+    protected $_mainTemplate = 'MultieventMainpage';
 
     protected function _pageTitle()
     {

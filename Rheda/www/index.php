@@ -27,4 +27,8 @@ if ($_SERVER['REQUEST_URI'] == '/favicon.ico') {
 }
 
 $controller = \Rheda\Controller::makeInstance($_SERVER['REQUEST_URI']);
-$controller->run();
+if (!empty($controller)) {
+    $controller->run();
+} else {
+    echo '404: Not found';
+}
