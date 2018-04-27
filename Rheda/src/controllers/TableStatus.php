@@ -30,6 +30,30 @@ class TableStatus extends Controller
         return _t('Event tables status');
     }
 
+    protected function _beforeRun()
+    {
+        // Special password policy for debug mode
+        if (Sysconf::DEBUG_MODE) {
+            if ($this->_path['password'] == 'password') {
+                return true;
+            }
+            header('Location: /eid' . $this->_eventId);
+            return false;
+        }
+
+        // This implies admin password is made of some words, and the first word is view page pass.
+        $pw = empty(Sysconf::ADMIN_AUTH()[$this->_eventId]['password'])
+            ? null
+            : explode(' ', Sysconf::ADMIN_AUTH()[$this->_eventId]['password'])[0];
+
+        if (empty($this->_path['password']) || $this->_path['password'] != $pw) {
+            header('Location: /eid' . $this->_eventId);
+            return false;
+        }
+
+        return true;
+    }
+
     protected function _run()
     {
         $formatter = new GameFormatter();

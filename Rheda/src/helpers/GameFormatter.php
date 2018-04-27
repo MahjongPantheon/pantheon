@@ -333,7 +333,7 @@ class GameFormatter
             }
 
             if (!empty($t['rounds'])) {
-                $t['rounds'] = array_map(function($round) use (&$t) {
+                $t['rounds'] = array_map(function ($round) use (&$t) {
                     return $this->_formatLastRound($round, $t['players']);
                 }, $t['rounds']);
             }
@@ -346,7 +346,7 @@ class GameFormatter
 
             $players = ArrayHelpers::elm2Key($t['players'], 'id');
 
-            $t['players'] = array_map(function($p, $idx) use (&$t, &$winds) {
+            $t['players'] = array_map(function ($p, $idx) use (&$t, &$winds) {
                 $p['current_wind'] = $winds[($t['current_round'] + $idx - 1) % 4];
                 $p['score'] = $t['scores'][$p['id']];
                 return $p;
