@@ -137,7 +137,7 @@ class EventModel extends Model
     public function getGlobalTablesState()
     {
         $games = SessionPrimitive::findAllInProgress($this->_db);
-        return $this->_formatTablesState($games);
+        return $this->_formatTablesState($games, []);
     }
 
     /**
