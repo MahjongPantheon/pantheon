@@ -16,9 +16,11 @@
 *}}
 <h3>{{_t 'Predefined seating configuration'}}</h3>
 {{#isAggregated}}
+    <ul>
     {{#errors}}
-        {{.}}
+        <li>{{.}}</li>
     {{/errors}}
+    </ul>
 {{/isAggregated}}
 {{^isAggregated}}
     <div class="row">

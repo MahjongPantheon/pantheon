@@ -34,7 +34,7 @@ class Mainpage extends Controller
             return [
                 'isAggregated' => true,
                 'eventsInfo' => array_values(array_map(function ($rules) {
-                            return ['title' => $rules->eventTitle(), 'description' => $rules->eventDescription()];
+                    return ['title' => $rules->eventTitle(), 'description' => $rules->eventDescription()];
                 }, $this->_rulesList))
             ];
         }
