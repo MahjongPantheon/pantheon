@@ -5,12 +5,12 @@ deps:
 PHONY: build
 build:
 	./node_modules/.bin/ng build --prod --aot --env=prod
-	cd dist && gzip -9 -f *.js *.css
+	cd dist && gzip -k -9 -f *.js *.css
 
 PHONY: cleanup_prebuilts
 cleanup_prebuilts:
-	# clean all generated bundle files except last 20
-	cd ../Tyr-prebuilt && ls -t *bundle* | tail -n +20 | xargs -I {} rm {}
+	# clean all generated bundle files except last 30
+	cd ../Tyr-prebuilt && ls -t *bundle* | tail -n +30 | xargs -I {} rm {}
 
 prebuild:
 	cd dist && \
