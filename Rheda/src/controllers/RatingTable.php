@@ -115,7 +115,7 @@ class RatingTable extends Controller
             $errMsg = $e->getMessage();
         }
 
-        $hideResults = $this->_rules->hideResults();
+        $hideResults = $this->_mainEventRules->hideResults();
         $showAdminWarning = false;
 
         // admin should be able to see results
@@ -129,7 +129,7 @@ class RatingTable extends Controller
             'data'              => $data,
 
             'orderDesc'         => $order == 'desc',
-            'isOnlineTournament' => $this->_rules->isOnline(),
+            'isOnlineTournament' => $this->_mainEventRules->isOnline(),
 
             'orderByRating'     => $orderBy == 'rating',
             'orderByAvgPlace'   => $orderBy == 'avg_place',

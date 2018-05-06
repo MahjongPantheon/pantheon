@@ -40,11 +40,13 @@
         <ul class="navbar-nav">
             <li class="nav-item">{{#a class='nav-link' href='/last/'}}{{_t 'Recent games'}}{{/a}}</li>
             <li class="nav-item">{{#a class='nav-link' href='/stat/'}}{{_t 'Rating table'}}{{/a}}</li>
-            {{#isOnline }}
-              {{^hideAddReplayButton}}
-                <li class="nav-item">{{#a class='nav-link' href='/add-online/'}}{{_t 'Add online game' }}{{/a}}</li>
-              {{/hideAddReplayButton}}
-            {{/isOnline}}
+            {{^isAggregated}}
+                {{#isOnline}}
+                  {{^hideAddReplayButton}}
+                    <li class="nav-item">{{#a class='nav-link' href='/add-online/'}}{{_t 'Add online game' }}{{/a}}</li>
+                  {{/hideAddReplayButton}}
+                {{/isOnline}}
+            {{/isAggregated}}
             {{#isLoggedIn}}
                 <li class="nav-item dropdown">
                     <a href="#"
@@ -55,29 +57,33 @@
                        aria-expanded="false"
                     >{{_t 'Admin actions'}}</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        {{^isOnline}}
-                            {{#isTournament}}
-                                {{#a class='dropdown-item' href='/tourn/'}}{{_t 'Tournament control panel'}}{{/a}}
-                            {{/isTournament}}
-                            {{^isTournament}}
-                                {{#a class='dropdown-item' href='/games/'}}{{_t 'Games control panel'}}{{/a}}
-                            {{/isTournament}}
-                            {{#usePenalty}}
-                                {{#a class='dropdown-item' href='/penalties/'}}{{_t 'Penalties'}}{{/a}}
-                            {{/usePenalty}}
-                        {{/isOnline}}
-                        {{#a class='dropdown-item' href='/enroll/'}}{{_t 'Add player'}}{{/a}}
-                        {{#a class='dropdown-item' href='/reg/'}}{{_t 'Manage players'}}{{/a}}
-                        {{#isPrescripted}}
-                            {{#a class='dropdown-item' href='/prescript'}}{{_t 'Predefined seating'}}{{/a}}
-                        {{/isPrescripted}}
+                        {{^isAggregated}}
+                            {{^isOnline}}
+                                {{#isTournament}}
+                                    {{#a class='dropdown-item' href='/tourn/'}}{{_t 'Tournament control panel'}}{{/a}}
+                                {{/isTournament}}
+                                {{^isTournament}}
+                                    {{#a class='dropdown-item' href='/games/'}}{{_t 'Games control panel'}}{{/a}}
+                                {{/isTournament}}
+                                {{#usePenalty}}
+                                    {{#a class='dropdown-item' href='/penalties/'}}{{_t 'Penalties'}}{{/a}}
+                                {{/usePenalty}}
+                            {{/isOnline}}
+                            {{#a class='dropdown-item' href='/enroll/'}}{{_t 'Add player'}}{{/a}}
+                            {{#a class='dropdown-item' href='/reg/'}}{{_t 'Manage players'}}{{/a}}
+                            {{#isPrescripted}}
+                                {{#a class='dropdown-item' href='/prescript'}}{{_t 'Predefined seating'}}{{/a}}
+                            {{/isPrescripted}}
+                        {{/isAggregated}}
                         {{#a class='dropdown-item' href='/achievements/'}}{{_t 'Achievements'}}{{/a}}
                     </div>
                 </li>
             {{/isLoggedIn}}
-            {{#useTimer}}
-                <li class="nav-item">{{#a class='nav-link' href='/timer/' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}</li>
-            {{/useTimer}}
+            {{^isAggregated}}
+                {{#useTimer}}
+                    <li class="nav-item">{{#a class='nav-link' href='/timer/' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}</li>
+                {{/useTimer}}
+            {{/isAggregated}}
             {{^isLoggedIn}}
                 <li class="nav-item">
                     {{#a class='nav-link' href='/login/'}}{{_t 'Login'}}{{/a}}

@@ -44,6 +44,10 @@ class TournamentControlPanel extends Controller
     protected function _beforeRun()
     {
         if (!empty($this->_path['action'])) {
+            if (count($this->_eventIdList) > 1) {
+                return true; // to show error in _run
+            }
+
             if (!$this->_adminAuthOk()) {
                 return true; // to show error in _run
             }
@@ -51,31 +55,31 @@ class TournamentControlPanel extends Controller
             try {
                 switch ($this->_path['action']) {
                     case 'shuffledSeating':
-                        $this->_api->execute('makeShuffledSeating', [$this->_eventId, 1, mt_rand(100000, 999999)]);
+                        $this->_api->execute('makeShuffledSeating', [$this->_mainEventId, 1, mt_rand(100000, 999999)]);
                         break;
                     case 'intervalSeating':
                         $this->_api->execute(
                             'makeIntervalSeating',
-                            [$this->_eventId, intval($_POST['step'])]
+                            [$this->_mainEventId, intval($_POST['step'])]
                         );
                         break;
                     case 'predefinedSeating':
-                        $this->_api->execute('makePrescriptedSeating', [$this->_eventId, isset($_POST['rndseat']) && $_POST['rndseat'] == 1]);
+                        $this->_api->execute('makePrescriptedSeating', [$this->_mainEventId, isset($_POST['rndseat']) && $_POST['rndseat'] == 1]);
                         break;
                     case 'swissSeating':
-                        $this->_api->execute('makeSwissSeating', [$this->_eventId]);
+                        $this->_api->execute('makeSwissSeating', [$this->_mainEventId]);
                         break;
                     case 'startTimer':
-                        $this->_api->execute('startTimer', [$this->_eventId]);
+                        $this->_api->execute('startTimer', [$this->_mainEventId]);
                         break;
                     case 'dropLastRound':
                         $this->_api->execute('dropLastRound', [$this->_path['hash']]);
                         break;
                     case 'finalizeSessions':
-                        $this->_api->execute('finalizeSessions', [$this->_eventId]);
+                        $this->_api->execute('finalizeSessions', [$this->_mainEventId]);
                         break;
                     case 'toggleHideResults':
-                        $this->_api->execute('toggleHideResults', [$this->_eventId]);
+                        $this->_api->execute('toggleHideResults', [$this->_mainEventId]);
                         break;
                     default:
                         ;
@@ -85,7 +89,7 @@ class TournamentControlPanel extends Controller
                 return true;
             }
 
-            header('Location: ' . Url::make('/tourn/', $this->_eventId));
+            header('Location: ' . Url::make('/tourn/', $this->_mainEventId));
             return false;
         }
 
@@ -95,6 +99,12 @@ class TournamentControlPanel extends Controller
     protected function _run()
     {
         $formatter = new GameFormatter();
+
+        if (count($this->_eventIdList) > 1) {
+            return [
+                'error' => _t('Page not available for aggregated events')
+            ];
+        }
 
         if (!$this->_adminAuthOk()) {
             return [
@@ -111,17 +121,17 @@ class TournamentControlPanel extends Controller
         $errCode = null;
 
         // Api calls. TODO: merge into one? Http pipelining maybe?
-        $tables = $this->_api->execute('getTablesState', [$this->_eventId]);
-        $tablesFormatted = $formatter->formatTables($tables, $this->_rules->gamesWaitingForTimer());
+        $tables = $this->_api->execute('getTablesState', [$this->_mainEventId]);
+        $tablesFormatted = $formatter->formatTables($tables, $this->_mainEventRules->gamesWaitingForTimer());
         $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
-        $timerState = $this->_api->execute('getTimerState', [$this->_eventId]);
+        $timerState = $this->_api->execute('getTimerState', [$this->_mainEventId]);
 
         $currentStage = $this->_determineStage($tablesFormatted, $players, $timerState);
 
         $nextPrescriptedSeating = [];
-        if ($this->_rules->isPrescripted() && $currentStage == self::STAGE_READY_BUT_NOT_STARTED) {
+        if ($this->_mainEventRules->isPrescripted() && $currentStage == self::STAGE_READY_BUT_NOT_STARTED) {
             try {
-                $nextPrescriptedSeating = $this->_api->execute('getNextPrescriptedSeating', [$this->_eventId]);
+                $nextPrescriptedSeating = $this->_api->execute('getNextPrescriptedSeating', [$this->_mainEventId]);
                 if (!empty($nextPrescriptedSeating)) {
                     array_unshift($nextPrescriptedSeating, []); // small hack to start from 1
                 }
@@ -145,9 +155,9 @@ class TournamentControlPanel extends Controller
             'stageSeatingInProgress' => $currentStage == self::STAGE_SEATING_INPROGRESS,
             'stageStarted' => $currentStage == self::STAGE_STARTED,
             'stagePrefinished' => $currentStage == self::STAGE_PREFINISHED,
-            'withAutoSeating' => $this->_rules->autoSeating(),
-            'hideResults' => $this->_rules->hideResults(),
-            'isPrescripted' => $this->_rules->isPrescripted(),
+            'withAutoSeating' => $this->_mainEventRules->autoSeating(),
+            'hideResults' => $this->_mainEventRules->hideResults(),
+            'isPrescripted' => $this->_mainEventRules->isPrescripted(),
             'nextPrescriptedSeating' => $nextPrescriptedSeating,
             'noNextPrescript' => empty($nextPrescriptedSeating)
         ];
@@ -168,13 +178,13 @@ class TournamentControlPanel extends Controller
         if (count($players) % 4 !== 0) {
             return self::STAGE_NOT_READY;
         } else {
-            if ($this->_rules->syncEnd() && $prefinishedTablesCount == count($tables) && $notFinishedTablesCount != 0) {
+            if ($this->_mainEventRules->syncEnd() && $prefinishedTablesCount == count($tables) && $notFinishedTablesCount != 0) {
                 return self::STAGE_PREFINISHED;
             }
-            if ($this->_rules->gamesWaitingForTimer() && $notFinishedTablesCount !== (count($players) / 4)) {
+            if ($this->_mainEventRules->gamesWaitingForTimer() && $notFinishedTablesCount !== (count($players) / 4)) {
                 return self::STAGE_SEATING_INPROGRESS;
             }
-            if ($this->_rules->gamesWaitingForTimer() && $notFinishedTablesCount === (count($players) / 4)) {
+            if ($this->_mainEventRules->gamesWaitingForTimer() && $notFinishedTablesCount === (count($players) / 4)) {
                 return self::STAGE_SEATING_READY;
             }
             if ($notFinishedTablesCount !== 0) {

@@ -41,7 +41,7 @@ class AddGame extends Controller
                 if (!$this->_adminAuthOk()) {
                     $errorMsg = _t("Wrong admin password");
                 } else {
-                    $this->_api->execute('addTextLog', [$this->_eventId, $_POST['content']]);
+                    $this->_api->execute('addTextLog', [$this->_mainEventId, $_POST['content']]);
                     $successfullyAdded = true;
                 }
             }

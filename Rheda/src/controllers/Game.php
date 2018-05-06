@@ -35,7 +35,7 @@ class Game extends Controller
             $gameHash = $this->_path['hash'];
             $gamesData = $this->_api->execute('getGame', [$gameHash]);
             return [
-                'games' => $formatter->formatGamesData($gamesData, $this->_rules),
+                'games' => $formatter->formatGamesData($gamesData, $this->_mainEventRules),
             ];
         } catch (Exception $e) {
             return [
