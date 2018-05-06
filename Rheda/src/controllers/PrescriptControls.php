@@ -37,12 +37,16 @@ class PrescriptControls extends Controller
             'has_errors' => false
         ];
 
+        if (count($this->_eventIdList) > 1) {
+            $this->_lastError = _t("Page not available for aggregated events");
+        }
+
         if (!empty($this->_lastError)) {
             $eventConfig['check_errors'] = [$this->_lastError];
             $eventConfig['has_errors'] = true;
         } else {
             try {
-                $eventConfig = $this->_api->execute('getPrescriptedEventConfig', [$this->_eventId]);
+                $eventConfig = $this->_api->execute('getPrescriptedEventConfig', [$this->_mainEventId]);
             } catch (\Exception $e) {
                 $eventConfig['check_errors'] = [$e->getMessage()];
                 $eventConfig['has_errors'] = true;
@@ -50,6 +54,7 @@ class PrescriptControls extends Controller
         }
 
         return [
+            'isAggregated' => (count($this->_eventIdList) > 1),
             'errors' => $eventConfig['check_errors'],
             'has_errors' => count($eventConfig['check_errors']) > 0,
             'prescript' => $eventConfig['prescript'],
@@ -60,6 +65,11 @@ class PrescriptControls extends Controller
     protected function _beforeRun()
     {
         if (!empty($_POST['action'])) {
+            if (count($this->_eventIdList) > 1) {
+                $this->_lastError = _t("Page not available for aggregated events");
+                return true;
+            }
+
             if (!$this->_adminAuthOk()) {
                 $this->_lastError = _t("Wrong admin password");
                 return true;
@@ -74,7 +84,7 @@ class PrescriptControls extends Controller
             }
 
             if (empty($err)) {
-                header('Location: ' . Url::make('/prescript', $this->_eventId));
+                header('Location: ' . Url::make('/prescript', $this->_mainEventId));
                 return false;
             }
 
@@ -87,7 +97,7 @@ class PrescriptControls extends Controller
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('updatePrescriptedEventConfig', [$this->_eventId, $nextGameIndex, $prescript]);
+            $success = $this->_api->execute('updatePrescriptedEventConfig', [$this->_mainEventId, $nextGameIndex, $prescript]);
             if (!$success) {
                 $errorMsg = _t('Failed to update predefined seating. Check your network connection.');
             }

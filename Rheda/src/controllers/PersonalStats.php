@@ -104,7 +104,7 @@ class PersonalStats extends Controller
 
             $riichiTotal = $data['riichi_summary']['riichi_won'] + $data['riichi_summary']['riichi_lost'];
             $winCount = $data['win_summary']['ron'] + $data['win_summary']['tsumo'];
-            $labelColorThreshold = $this->_rules->subtractStartPoints() ? 0 : $this->_rules->startPoints();
+            $labelColorThreshold = $this->_mainEventRules->subtractStartPoints() ? 0 : $this->_mainEventRules->startPoints();
 
             return [
                 'playerData' => $playerData,

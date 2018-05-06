@@ -34,6 +34,10 @@ class PlayerEnrollment extends Controller
         $errorMsg = '';
         $registeredPlayers = [];
 
+        if (count($this->_eventIdList) > 1) {
+            $this->_lastError = _t("Page not available for aggregated events");
+        }
+
         if (!empty($this->_lastError)) {
             $errorMsg = $this->_lastError;
         } else {
@@ -49,6 +53,7 @@ class PlayerEnrollment extends Controller
         }
 
         return [
+            'isAggregated' => (count($this->_eventIdList) > 1),
             'error' => $errorMsg,
             'everybody' => $registeredPlayers
         ];
@@ -57,6 +62,11 @@ class PlayerEnrollment extends Controller
     protected function _beforeRun()
     {
         if (!empty($_POST['action_type'])) {
+            if (count($this->_eventIdList) > 1) {
+                $this->_lastError = _t("Page not available for aggregated events");
+                return true;
+            }
+
             if (!$this->_adminAuthOk()) {
                 $this->_lastError = _t("Wrong admin password");
                 return true;
@@ -74,7 +84,7 @@ class PlayerEnrollment extends Controller
             }
 
             if (empty($err)) {
-                header('Location: ' . Url::make('/enroll/', $this->_eventId));
+                header('Location: ' . Url::make('/enroll/', $this->_mainEventId));
                 return false;
             }
 
@@ -103,7 +113,7 @@ class PlayerEnrollment extends Controller
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_eventId]);
+            $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_mainEventId]);
             if (!$success) {
                 $errorMsg = _t('Failed to add the player. Check your network connection.');
             }

@@ -35,6 +35,10 @@ class Penalties extends Controller
         $this->_errors = [];
 
         if ($this->_path['action'] == 'apply') {
+            if (count($this->_eventIdList) > 1) {
+                return true; // to show error in _run
+            }
+
             if (!$this->_adminAuthOk()) {
                 return true; // to show error in _run
             }
@@ -43,13 +47,13 @@ class Penalties extends Controller
             $amount = intval($_POST['amount']);
             $reason = $_POST['reason'];
             try {
-                $this->_api->execute('addPenalty', [$this->_eventId, $userId, $amount, $reason]);
+                $this->_api->execute('addPenalty', [$this->_mainEventId, $userId, $amount, $reason]);
             } catch (Exception $e) {
                 $this->_errors []= $e->getMessage();
                 return true;
             }
 
-            header('Location: ' . Url::make('/penalties/', $this->_eventId));
+            header('Location: ' . Url::make('/penalties/', $this->_mainEventId));
             return false;
         }
 
@@ -58,6 +62,13 @@ class Penalties extends Controller
 
     protected function _run()
     {
+        if (count($this->_eventIdList) > 1) {
+            return [
+                'error' => _t('Page not available for aggregated events'),
+                'isAggregated' => true,
+            ];
+        }
+
         if (!$this->_adminAuthOk()) {
             return [
                 'error' => _t('Wrong admin password')
@@ -67,7 +78,7 @@ class Penalties extends Controller
         $amounts = [];
         try {
             $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
-            $settings = $this->_api->execute('getGameConfig', [$this->_eventId]);
+            $settings = $this->_api->execute('getGameConfig', [$this->_mainEventId]);
             for ($i = $settings['minPenalty']; $i <= $settings['maxPenalty']; $i += $settings['penaltyStep']) {
                 $amounts []= [
                     'view' => $i / (float)$settings['ratingDivider'],

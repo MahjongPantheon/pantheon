@@ -34,7 +34,7 @@ class AddOnlineGame extends Controller
 
         try {
             if ($link) {
-                $this->_api->execute('addOnlineReplay', [$this->_eventId, $link]);
+                $this->_api->execute('addOnlineReplay', [$this->_mainEventId, $link]);
                 $successfullyAdded = true;
             }
         } catch (Exception $e) {

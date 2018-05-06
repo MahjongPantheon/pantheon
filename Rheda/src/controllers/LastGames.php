@@ -64,7 +64,7 @@ class LastGames extends Controller
 
         return [
             'noGames' => $gamesData['total_games'] == 0,
-            'games' => $formatter->formatGamesData($gamesData, $this->_rules),
+            'games' => $formatter->formatGamesData($gamesData, $this->_mainEventRules),
             'nextPage' => $currentPage + 1,
             'prevPage' => $currentPage == 1 ? 1 : $currentPage - 1,
             'gamesCount' => $gamesData['total_games'],

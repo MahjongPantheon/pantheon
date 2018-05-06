@@ -30,14 +30,24 @@ class Mainpage extends Controller
 
     protected function _run()
     {
-        if ($this->_rules->seriesLength() == 0) {
+        if (count($this->_eventIdList) > 1) {
             return [
-                'title' => $this->_rules->eventTitle(),
-                'description' => $this->_rules->eventDescription()
+                'isAggregated' => true,
+                'eventsInfo' => array_values(array_map(function ($rules) {
+                    return ['title' => $rules->eventTitle(), 'description' => $rules->eventDescription()];
+                }, $this->_rulesList))
             ];
         }
 
-        $data = $this->_api->execute('getGamesSeries', [$this->_eventId]);
+        /* All code below is for simple non-aggregated events.  */
+        if ($this->_mainEventRules->seriesLength() == 0) {
+            return [
+                'title' => $this->_mainEventRules->eventTitle(),
+                'description' => $this->_mainEventRules->eventDescription()
+            ];
+        }
+
+        $data = $this->_api->execute('getGamesSeries', [$this->_mainEventId]);
 
         $formattedData = [];
         $counter = 1;
@@ -52,7 +62,7 @@ class Mainpage extends Controller
         return [
             'data' => $formattedData,
             'hasData' => true,
-            'title' => $this->_rules->eventTitle()
+            'title' => $this->_mainEventRules->eventTitle()
         ];
     }
 }

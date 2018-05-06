@@ -138,29 +138,36 @@
     }();
 </script>
 
-{{^waiting}}
-    <div class="timer">
-        <span id="time">{{initialTime}}</span>
-    </div>
-{{/waiting}}
-<div class="seating">
-    <hr/>
-    <h3>{{_t 'SEATING'}}</h3>
-    <table class="table table-bordered">
-        <tr>
-            <th>{{_t 'Table #'}}</th>
-            <th>{{_t 'EAST'}}</th>
-            <th>{{_t 'SOUTH'}}</th>
-            <th>{{_t 'WEST'}}</th>
-            <th>{{_t 'NORTH'}}</th>
-        </tr>
-        {{#seating}}
+{{#isAggregated}}
+{{#error}}
+<div class="alert alert-error">{{error}}</div>
+{{/error}}
+{{/isAggregated}}
+{{^isAggregated}}
+    {{^waiting}}
+        <div class="timer">
+            <span id="time">{{initialTime}}</span>
+        </div>
+    {{/waiting}}
+    <div class="seating">
+        <hr/>
+        <h3>{{_t 'SEATING'}}</h3>
+        <table class="table table-bordered">
             <tr>
-                <td>{{index}}</td>
-                {{#players}}
-                    <td>{{display_name}} <span class="badge badge-{{zone}}">{{rating}}</span></td>
-                {{/players}}
+                <th>{{_t 'Table #'}}</th>
+                <th>{{_t 'EAST'}}</th>
+                <th>{{_t 'SOUTH'}}</th>
+                <th>{{_t 'WEST'}}</th>
+                <th>{{_t 'NORTH'}}</th>
             </tr>
-        {{/seating}}
-    </table>
-</div>
+            {{#seating}}
+                <tr>
+                    <td>{{index}}</td>
+                    {{#players}}
+                        <td>{{display_name}} <span class="badge badge-{{zone}}">{{rating}}</span></td>
+                    {{/players}}
+                </tr>
+            {{/seating}}
+        </table>
+    </div>
+{{/isAggregated}}

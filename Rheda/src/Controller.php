@@ -43,20 +43,27 @@ abstract class Controller
     protected $_api;
 
     /**
+     * Main event rules. For aggregated events, these are the rules of the main event.
+     * For simple events, these are the rules of the only used event.
      * @var Config
      */
-    protected $_rules;
+    protected $_mainEventRules;
 
     /**
+     * Rules of each event from eventIdList.
+     * @var Config[]
+     */
+    protected $_rulesList;
+
+    /**
+     * Main event id. For aggregated events, this is the id of the first event in list.
+     * For simple events, this is the id of the only used event.
      * @var int
      */
-    /* FIXME (PNTN-237): Наверное, надо избавиться от этого поля, и поставить везде, где нельзя
-     * работать с агрегированными эвентами, проверки, что count(_eventIdList) == 1. Либо
-     * сделать какое-то поле, определяющее тип эвента - агрегированный или нет. */
-    protected $_eventId;
+    protected $_mainEventId;
 
     /**
-     * @var int
+     * @var array
      */
     protected $_eventIdList;
 
@@ -125,8 +132,8 @@ abstract class Controller
 
         $ids = explode('.', $eidMatches[1]);
 
-        $this->_eventId = intval($ids[0]);
         $this->_eventIdList = array_map('intval', $ids);
+        $this->_mainEventId = $this->_eventIdList[0];
 
         /** @var HttpClient $client */
         $client = $this->_api->getHttpClient();
@@ -140,13 +147,21 @@ abstract class Controller
             $client->withDebug();
         }
 
-        $this->_rules = Config::fromRaw($this->_api->execute('getGameConfig', [$this->_eventId]));
+        $this->_rulesList = [];
+
+        foreach ($this->_eventIdList as $eventId) {
+            $rules = Config::fromRaw($this->_api->execute('getGameConfig', [$eventId]));
+            $this->_rulesList[$eventId] = $rules;
+        }
+
+        $this->_mainEventRules = $this->_rulesList[$this->_mainEventId];
+
         $this->_checkCompatibility($client->getLastHeaders());
     }
 
     public function run()
     {
-        if (empty($this->_rules->rulesetTitle())) {
+        if (empty($this->_mainEventRules->rulesetTitle())) {
             echo _t('<h2>Oops.</h2>Failed to get event configuration!');
             return;
         }
@@ -163,19 +178,32 @@ abstract class Controller
             $add = ($detector->isMobile() && !$detector->isTablet()) ? 'Mobile' : ''; // use full version for tablets
 
             header("Content-type: text/html; charset=utf-8");
-            echo $templateEngine->render($add . 'Layout', [
-                'isOnline' => $this->_rules->isOnline(),
-                'useTimer' => $this->_rules->useTimer(),
-                'isTournament' => !$this->_rules->allowPlayerAppend(),
-                'usePenalty' => $this->_rules->usePenalty(),
-                'syncStart' => $this->_rules->syncStart(),
-                'eventTitle' => $this->_rules->eventTitle(),
-                'isPrescripted' => $this->_rules->isPrescripted(),
-                'pageTitle' => $pageTitle,
-                'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
-                'isLoggedIn' => $this->_adminAuthOk(),
-                'hideAddReplayButton' => $this->_rules->hideAddReplayButton()
-            ]);
+
+            if (count($this->_eventIdList) > 1) {
+                /* Aggregated events. */
+                echo $templateEngine->render($add . 'Layout', [
+                    'eventTitle' => _t("Aggregated event"),
+                    'pageTitle' => $pageTitle,
+                    'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
+                    'isLoggedIn' => $this->_adminAuthOk(),
+                    'isAggregated' => true
+                ]);
+            } else {
+                /* Simple events. */
+                echo $templateEngine->render($add . 'Layout', [
+                    'isOnline' => $this->_mainEventRules->isOnline(),
+                    'useTimer' => $this->_mainEventRules->useTimer(),
+                    'isTournament' => !$this->_mainEventRules->allowPlayerAppend(),
+                    'usePenalty' => $this->_mainEventRules->usePenalty(),
+                    'syncStart' => $this->_mainEventRules->syncStart(),
+                    'eventTitle' => $this->_mainEventRules->eventTitle(),
+                    'isPrescripted' => $this->_mainEventRules->isPrescripted(),
+                    'pageTitle' => $pageTitle,
+                    'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
+                    'isLoggedIn' => $this->_adminAuthOk(),
+                    'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),
+                ]);
+            }
         }
 
         $this->_afterRun();
