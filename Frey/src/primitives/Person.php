@@ -28,6 +28,8 @@ require_once __DIR__ . '/../Primitive.php';
 class PersonPrimitive extends Primitive
 {
     protected static $_table = 'person';
+    const REL_GROUP = 'person_group';
+    const REL_GROUP_UNIQUE_COLUMNS = ['person_id', 'group_id'];
 
     protected static $_fieldsMapping = [
         'id'                => '_id',
@@ -38,6 +40,7 @@ class PersonPrimitive extends Primitive
         'auth_reset_token'  => '_authResetToken',
         'city'              => '_city',
         'tenhou_id'         => '_tenhouId',
+        '::group'           => '_groupIds', // external many-to-many relation
     ];
 
     protected function _getFieldsTransforms()
@@ -51,6 +54,12 @@ class PersonPrimitive extends Primitive
             '_authResetToken' => $this->_stringTransform(true),
             '_city'     => $this->_stringTransform(true),
             '_tenhouId' => $this->_stringTransform(true),
+            '_groupIds'   => $this->_externalManyToManyTransform(
+                self::REL_GROUP,
+                'person_id',
+                'group_id',
+                self::REL_GROUP_UNIQUE_COLUMNS
+            ),
         ];
     }
 
@@ -95,6 +104,16 @@ class PersonPrimitive extends Primitive
      * @var string
      */
     protected $_tenhouId;
+    /**
+     * List of group ids this person belongs to
+     * @var int[]
+     */
+    protected $_groupIds = [];
+    /**
+     * List of group entities
+     * @var GroupPrimitive[]
+     */
+    protected $_groups = null;
 
     /**
      * Find persons by local ids (primary key)
@@ -282,6 +301,49 @@ class PersonPrimitive extends Primitive
     public function setTenhouId(string $tenhouId): PersonPrimitive
     {
         $this->_tenhouId = $tenhouId;
+        return $this;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getGroupIds()
+    {
+        return $this->_groupIds;
+    }
+
+    /**
+     * @return GroupPrimitive[]
+     * @throws EntityNotFoundException
+     * @throws \Exception
+     */
+    public function getGroups()
+    {
+        if ($this->_groups === null) {
+            $this->_groups = GroupPrimitive::findById(
+                $this->_db,
+                $this->_groupIds
+            );
+            if (empty($this->_groups) || count($this->_groups) !== count($this->_groupIds)) {
+                $this->_groups = null;
+                throw new EntityNotFoundException("Not all groups were found in DB (among id#" . implode(',', $this->_groupIds));
+            }
+        }
+
+        return $this->_groups;
+    }
+
+    /**
+     * @param GroupPrimitive[] $groups
+     * @return $this
+     */
+    public function setGroups($groups)
+    {
+        $this->_groups = $groups;
+        $this->_groupIds = array_map(function (GroupPrimitive $group) {
+            return $group->getId();
+        }, $groups);
+
         return $this;
     }
 }
