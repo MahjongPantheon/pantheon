@@ -253,7 +253,7 @@ abstract class Controller
             : self::_multiEventMode($url, $routes);
 
         if (!$controller) {
-            throw new \Exception('No available controller found for this URL');
+            trigger_error('No available controller found for URL: ' . $url);
         }
 
         return $controller;
