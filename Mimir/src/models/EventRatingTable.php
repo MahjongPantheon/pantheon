@@ -129,6 +129,7 @@ class EventRatingTableModel extends Model
             $playerHistoryItemsSummed = array_reverse($playerHistoryItemsSummed);
         }
 
+        /* Aggregated events are always sorted by games to move substitute players to the bottom of the table. */
         if (count($eventList) > 1 || $mainEvent->getSortByGames()) {
             $this->_stableSort(
                 $playerHistoryItemsSummed,
