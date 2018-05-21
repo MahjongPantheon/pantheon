@@ -97,7 +97,6 @@ class EventRatingTableModel extends Model
             $playersHistoryItemsCombined = array_merge($playersHistoryItemsCombined, $playersHistoryItems);
         }
 
-        /*  */
         $playerHistoryItemsSummed = [];
         foreach ($playerItems as $player) {
             $itemsByPlayer = array_values(
@@ -130,7 +129,7 @@ class EventRatingTableModel extends Model
             $playerHistoryItemsSummed = array_reverse($playerHistoryItemsSummed);
         }
 
-        if ($mainEvent->getSortByGames()) {
+        if (count($eventList) > 1 || $mainEvent->getSortByGames()) {
             $this->_stableSort(
                 $playerHistoryItemsSummed,
                 function (PlayerHistoryPrimitive $el1, PlayerHistoryPrimitive $el2) {
