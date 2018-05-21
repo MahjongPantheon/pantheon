@@ -332,6 +332,7 @@ class PlayerHistoryPrimitive extends Primitive
             ->_updateAvgPlaceAndGamesCount($place);
     }
 
+    /* FIXME: change this function to take array of histories as input. */
     /**
      * Create a new history item which is a sum of two other history items.
      *
@@ -348,7 +349,8 @@ class PlayerHistoryPrimitive extends Primitive
         return (new self($his1->_db))
             ->setPlayer($his1->getPlayer())
             ->setSession($his1->getSession())
-            ->_setAvgPlace(($his1->getAvgPlace() + $his2->getAvgPlace()) / 2)
+            ->_setAvgPlace(($his1->getAvgPlace() * $his1->getGamesPlayed() + $his2->getAvgPlace() * $his2->getGamesPlayed())
+                    / ($his1->getGamesPlayed() + $his2->getGamesPlayed()))
             ->_setGamesPlayed($his1->getGamesPlayed() + $his2->getGamesPlayed())
             ->_setRating($his1->getRating() + $his2->getRating());
     }
