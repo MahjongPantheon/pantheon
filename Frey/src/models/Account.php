@@ -67,7 +67,7 @@ class AccountModel extends Model
      * Get personal info by id list.
      * May or may not include private data. This should be decided on controller layer.
      *
-     * @param $ids
+     * @param int[] $ids
      * @param bool $filterPrivateData
      * @return array
      * @throws InvalidParametersException
@@ -75,9 +75,8 @@ class AccountModel extends Model
      */
     public function getPersonalInfo($ids, $filterPrivateData = true)
     {
-        $ids = array_filter(array_map('intval', $ids));
         if (empty($ids)) {
-            throw new InvalidParametersException('Id list does not contain any integer or numeric item', 404);
+            throw new InvalidParametersException('ID list is empty', 404);
         }
 
         $persons = PersonPrimitive::findById($this->_db, $ids);
@@ -88,6 +87,7 @@ class AccountModel extends Model
                 'email' => $filterPrivateData ? null : $person->getEmail(),
                 'phone' => $filterPrivateData ? null : $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
+                'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
             ];
         }, $persons);

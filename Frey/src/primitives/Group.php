@@ -34,7 +34,8 @@ class GroupPrimitive extends Primitive
 
     protected static $_fieldsMapping = [
         'id'            => '_id',
-        'email'         => '_title',
+        'title'         => '_title',
+        'label_color'   => '_labelColor',
         'description'   => '_description',
         '::person'      => '_personIds', // external many-to-many relation
     ];
@@ -44,6 +45,7 @@ class GroupPrimitive extends Primitive
         return [
             '_id'           => $this->_integerTransform(true),
             '_title'        => $this->_stringTransform(),
+            '_labelColor'   => $this->_stringTransform(true),
             '_description'  => $this->_stringTransform(),
             '_personIds'   => $this->_externalManyToManyTransform(
                 self::REL_PERSON,
@@ -64,6 +66,11 @@ class GroupPrimitive extends Primitive
      * @var string
      */
     protected $_title;
+    /**
+     * Group label color (for visual purposes)
+     * @var string
+     */
+    protected $_labelColor;
     /**
      * Brief description
      * @var string
@@ -96,10 +103,19 @@ class GroupPrimitive extends Primitive
         $this->_id = null;
     }
 
+    public function drop()
+    {
+        // First remove all linked dependencies
+        $this->_db->table(self::REL_PERSON)->where('group_id', $this->getId())->deleteMany();
+        $this->_db->table('group_access')->where('group_id', $this->getId())->deleteMany();
+
+        return parent::drop();
+    }
+
     /**
      * @param IDb $db
      * @param $ids
-     * @return static[]
+     * @return GroupPrimitive[]
      * @throws \Exception
      */
     public static function findById(IDb $db, $ids)
@@ -130,6 +146,24 @@ class GroupPrimitive extends Primitive
     public function setTitle(string $title): GroupPrimitive
     {
         $this->_title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLabelColor(): string
+    {
+        return $this->_labelColor;
+    }
+
+    /**
+     * @param string $color
+     * @return GroupPrimitive
+     */
+    public function setLabelColor(string $color): GroupPrimitive
+    {
+        $this->_labelColor = $color;
         return $this;
     }
 

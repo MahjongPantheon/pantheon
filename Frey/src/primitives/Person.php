@@ -408,7 +408,7 @@ class PersonPrimitive extends Primitive
 
     /**
      * @param GroupPrimitive[] $groups
-     * @return $this
+     * @return PersonPrimitive
      */
     public function setGroups($groups)
     {
