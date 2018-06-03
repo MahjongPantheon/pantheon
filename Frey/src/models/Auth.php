@@ -32,6 +32,7 @@ class AuthModel extends Model
      * @param string $password
      * @return string
      * @throws InvalidParametersException
+     * @throws \Exception
      */
     public function requestRegistration(string $email, string $password): string
     {
@@ -39,7 +40,7 @@ class AuthModel extends Model
             throw new InvalidParametersException('Invalid email provided', 401);
         }
 
-        $pw = $this->_makeTokens($password);
+        $pw = $this->makePasswordTokens($password);
 
         $reg = (new RegistrantPrimitive($this->_db))
             ->setEmail($email)
@@ -67,12 +68,23 @@ class AuthModel extends Model
             throw new EntityNotFoundException('Approval code is invalid or already used', 402);
         }
 
+        $alreadyRegistered = PersonPrimitive::findByEmail($this->_db, [$reg[0]->getEmail()]);
+        if (!empty($alreadyRegistered)) {
+            throw new InvalidParametersException('Email is already registered', 410);
+        }
+
         $person = (new PersonPrimitive($this->_db))
             ->setEmail($reg[0]->getEmail())
             ->setAuthSalt($reg[0]->getAuthSalt())
-            ->setAuthHash($reg[0]->getAuthHash());
-        $person->save();
+            ->setAuthHash($reg[0]->getAuthHash())
+            ->setTitle($reg[0]->getEmail()) // temporary value
+            ->setDisabled(false);
 
+        if (!$person->save()) {
+            throw new \Exception('Couldnt save person to DB');
+        }
+
+        $reg[0]->drop();
         return $person->getId();
     }
 
@@ -117,7 +129,7 @@ class AuthModel extends Model
     {
         $person = PersonPrimitive::findById($this->_db, [$id]);
         if (empty($person)) {
-            throw new EntityNotFoundException('Requested person ID is not known to auth system', 403);
+            throw new EntityNotFoundException('Requested person ID is not known to auth system', 405);
         }
 
         return $this->_checkPasswordQuick($clientSideToken, $person[0]->getAuthHash());
@@ -139,14 +151,14 @@ class AuthModel extends Model
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
-            throw new EntityNotFoundException('Email is not known to auth system', 403);
+            throw new EntityNotFoundException('Email is not known to auth system', 406);
         }
 
         if (!$this->_checkPasswordFull($password, $person[0]->getAuthHash(), $person[0]->getAuthSalt())) {
             throw new AuthFailedException('Password is incorrect', 404);
         }
 
-        $pw = $this->_makeTokens($newPassword);
+        $pw = $this->makePasswordTokens($newPassword);
         $person[0]
             ->setEmail($email)
             ->setAuthSalt($pw['salt'])
@@ -169,7 +181,7 @@ class AuthModel extends Model
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
-            throw new EntityNotFoundException('Email is not known to auth system', 403);
+            throw new EntityNotFoundException('Email is not known to auth system', 407);
         }
 
         $person[0]->setAuthResetToken(sha1($email . microtime(true)))->save();
@@ -193,15 +205,15 @@ class AuthModel extends Model
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
-            throw new EntityNotFoundException('Email is not known to auth system', 403);
+            throw new EntityNotFoundException('Email is not known to auth system', 408);
         }
 
         if (empty($resetApprovalCode) || $person[0]->getAuthResetToken() != $resetApprovalCode) {
-            throw new AuthFailedException('Password reset approval code is incorrect.', 404);
+            throw new AuthFailedException('Password reset approval code is incorrect.', 409);
         }
 
         $newGeneratedPassword = crc32(microtime(true) . $email);
-        $pw = $this->_makeTokens($newGeneratedPassword);
+        $pw = $this->makePasswordTokens($newGeneratedPassword);
         $person[0]
             ->setEmail($email)
             ->setAuthSalt($pw['salt'])
@@ -217,7 +229,7 @@ class AuthModel extends Model
      * @param string $password
      * @return array
      */
-    protected function _makeTokens(string $password)
+    public function makePasswordTokens(string $password)
     {
         $salt = sha1(microtime(true));
         $clientHash = $this->_makeClientSideToken($password, $salt);

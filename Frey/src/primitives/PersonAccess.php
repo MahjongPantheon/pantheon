@@ -17,27 +17,25 @@
  */
 namespace Frey;
 
-;
-
 require_once __DIR__ . '/../Primitive.php';
 
 /**
- * Class GroupAccessPrimitive
- * Primitive for ACL rules for group of users
+ * Class PersonAccessPrimitive
+ * Primitive for ACL rules for a single user
  *
  * Low-level model with basic CRUD operations and relations
  * @package Frey
  */
-class GroupAccessPrimitive extends Primitive
+class PersonAccessPrimitive extends Primitive
 {
-    protected static $_table = 'group_access';
+    protected static $_table = 'person_access';
     const TYPE_BOOL = 'bool';
     const TYPE_INT = 'int';
     const TYPE_ENUM = 'enum'; // Type is called enum to prevent filling value fields with arbitrary strings.
 
     protected static $_fieldsMapping = [
         'id'                => '_id',
-        'group_id'          => '_groupId',
+        'person_id'         => '_personId',
         'event_ids'         => '_eventIds',
         'acl_type'          => '_aclType',
         'acl_name'          => '_aclName',
@@ -48,7 +46,7 @@ class GroupAccessPrimitive extends Primitive
     {
         return [
             '_id'        => $this->_integerTransform(true),
-            '_groupId'   => $this->_integerTransform(),
+            '_personId'  => $this->_integerTransform(),
             '_eventIds'  => $this->_csvTransform(),
             '_aclType'   => $this->_stringTransform(),
             '_aclName'   => $this->_stringTransform(),
@@ -62,15 +60,15 @@ class GroupAccessPrimitive extends Primitive
      */
     protected $_id;
     /**
-     * Id of group this rule is applied to
+     * Id of person this rule is applied to
      * @var int
      */
-    protected $_groupId;
+    protected $_personId;
     /**
      * Person this rule is applied to
-     * @var GroupPrimitive
+     * @var PersonPrimitive
      */
-    protected $_group;
+    protected $_person;
     /**
      * Events this rule is applied to. If empty, this means rule is applied system-wide.
      * @var int[]
@@ -119,35 +117,35 @@ class GroupAccessPrimitive extends Primitive
     /**
      * @return int
      */
-    public function getGroupId(): int
+    public function getPersonId(): int
     {
-        return $this->_groupId;
+        return $this->_personId;
     }
 
     /**
      * @throws \Exception
-     * @return GroupPrimitive
+     * @return PersonPrimitive
      */
-    public function getGroup(): GroupPrimitive
+    public function getPerson(): PersonPrimitive
     {
-        if (empty($this->_group)) {
-            $foundGroups = GroupPrimitive::findById($this->_db, [$this->_groupId]);
-            if (empty($foundGroups)) {
-                throw new EntityNotFoundException("Entity GroupPrimitive with id#" . $this->_groupId . ' not found in DB');
+        if (empty($this->_person)) {
+            $foundPersons = PersonPrimitive::findById($this->_db, [$this->_personId]);
+            if (empty($foundPersons)) {
+                throw new EntityNotFoundException("Entity PersonPrimitive with id#" . $this->_personId . ' not found in DB');
             }
-            $this->_group = $foundGroups[0];
+            $this->_person = $foundPersons[0];
         }
-        return $this->_group;
+        return $this->_person;
     }
 
     /**
-     * @param GroupPrimitive $group
-     * @return GroupAccessPrimitive
+     * @param PersonPrimitive $person
+     * @return PersonAccessPrimitive
      */
-    public function setGroup(GroupPrimitive $group): GroupAccessPrimitive
+    public function setPerson(PersonPrimitive $person): PersonAccessPrimitive
     {
-        $this->_group = $group;
-        $this->_groupId = $group->getId();
+        $this->_person = $person;
+        $this->_personId = $person->getId();
         return $this;
     }
 
@@ -161,9 +159,9 @@ class GroupAccessPrimitive extends Primitive
 
     /**
      * @param int[] $eventIds
-     * @return GroupAccessPrimitive
+     * @return PersonAccessPrimitive
      */
-    public function setEventIds($eventIds): GroupAccessPrimitive
+    public function setEventIds($eventIds): PersonAccessPrimitive
     {
         $this->_eventIds = $eventIds;
         return $this;
@@ -179,9 +177,9 @@ class GroupAccessPrimitive extends Primitive
 
     /**
      * @param string $aclType
-     * @return GroupAccessPrimitive
+     * @return PersonAccessPrimitive
      */
-    public function setAclType(string $aclType): GroupAccessPrimitive
+    public function setAclType(string $aclType): PersonAccessPrimitive
     {
         if ($aclType != self::TYPE_BOOL && $aclType != self::TYPE_ENUM && $aclType != self::TYPE_INT) {
             throw new \InvalidArgumentException('Unsupported ACL type: see TYPE_ constants in AccessPrimitive');
@@ -200,9 +198,9 @@ class GroupAccessPrimitive extends Primitive
 
     /**
      * @param string $aclName
-     * @return GroupAccessPrimitive
+     * @return PersonAccessPrimitive
      */
-    public function setAclName(string $aclName): GroupAccessPrimitive
+    public function setAclName(string $aclName): PersonAccessPrimitive
     {
         $this->_aclName = $aclName;
         return $this;
@@ -218,9 +216,9 @@ class GroupAccessPrimitive extends Primitive
 
     /**
      * @param string $aclValue
-     * @return GroupAccessPrimitive
+     * @return PersonAccessPrimitive
      */
-    public function setAclValue(string $aclValue): GroupAccessPrimitive
+    public function setAclValue(string $aclValue): PersonAccessPrimitive
     {
         $this->_aclValue = $aclValue;
         return $this;

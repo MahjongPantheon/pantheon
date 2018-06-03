@@ -42,19 +42,25 @@ class InitFreyVersion1m0 extends AbstractMigration
     {
         $table = $this->table('person');
         $table
-            ->addColumn('email', 'string', ['limit' => 255])
+            ->addColumn('email', 'string', ['limit' => 255,
+                'comment' => 'PERSONAL DATA'])
             ->addColumn('auth_hash', 'string', ['limit' => 255])
             ->addColumn('auth_reset_token', 'string', ['limit' => 255, 'null' => true,
                 'comment' => 'This field stores temporary secure token if user requests changing his password'])
             ->addColumn('auth_salt', 'string', ['limit' => 255,
                 'comment' => 'App-level salt to make client-side permanent token'])
             ->addColumn('title', 'string', ['limit' => 255])
+            ->addColumn('phone', 'string', ['limit' => 255, 'null' => true,
+                'comment' => 'PERSONAL DATA'])
             ->addColumn('city', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('tenhou_id', 'string', ['limit' => 255, 'null' => true])
+            ->addColumn('disabled', 'integer', [''])
 
             ->addIndex('email', ['name' => 'person_email'])
+            ->addIndex('phone', ['name' => 'person_phone'])
             ->addIndex('title', ['name' => 'person_title'])
             ->addIndex('tenhou_id', ['name' => 'person_tenhouid'])
+            ->addIndex('disabled', ['name' => 'person_disabled'])
 
             ->save();
     }
