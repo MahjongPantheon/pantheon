@@ -107,6 +107,19 @@ class GroupAccessPrimitive extends Primitive
     }
 
     /**
+     * Find rules by group id
+     *
+     * @param IDb $db
+     * @param $ids
+     * @return GroupAccessPrimitive[]
+     * @throws \Exception
+     */
+    public static function findByGroup(IDb $db, $ids)
+    {
+        return self::_findBy($db, 'group_id', $ids);
+    }
+
+    /**
      * @return int
      */
     public function getId(): int
