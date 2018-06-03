@@ -142,12 +142,22 @@
               </ul></td>
             </tr>
             <tr>
+              <td><b>{{_t 'Honored donor'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for losing largest amount of score as riichi bets.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#honoredDonor}}
+                  <li>{{name}}: {{_np '%s bet' '%s bets' count count}}</li>
+                {{/honoredDonor}}
+              </ul></td>
+            </tr>
+            <tr>
               <td><b>{{_t 'Just as planned'}}</b></td>
               <td style="width: 30%">{{_t 'Given for collecting largest count of ippatsu during tournament.'}}</td>
               <td>-</td>
               <td><ul>
                 {{#justAsPlanned}}
-                  <li>{{name}}: {{count}}</li>
+                  <li>{{name}}: {{_np '%s ippatsu' '%s ippatsu' count count}}</li>
                 {{/justAsPlanned}}
               </ul></td>
             </tr>
