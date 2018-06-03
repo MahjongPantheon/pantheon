@@ -34,12 +34,14 @@ class PersonPrimitive extends Primitive
     protected static $_fieldsMapping = [
         'id'                => '_id',
         'email'             => '_email',
+        'phone'             => '_phone',
         'title'             => '_title',
         'auth_hash'         => '_authHash',
         'auth_salt'         => '_authSalt',
         'auth_reset_token'  => '_authResetToken',
         'city'              => '_city',
         'tenhou_id'         => '_tenhouId',
+        'disabled'          => '_disabled',
         '::group'           => '_groupIds', // external many-to-many relation
     ];
 
@@ -48,12 +50,14 @@ class PersonPrimitive extends Primitive
         return [
             '_id'       => $this->_integerTransform(true),
             '_email'    => $this->_stringTransform(),
+            '_phone'    => $this->_stringTransform(),
             '_title'    => $this->_stringTransform(),
             '_authHash' => $this->_stringTransform(),
             '_authSalt' => $this->_stringTransform(),
             '_authResetToken' => $this->_stringTransform(true),
             '_city'     => $this->_stringTransform(true),
             '_tenhouId' => $this->_stringTransform(true),
+            '_disabled' => $this->_integerTransform(),
             '_groupIds'   => $this->_externalManyToManyTransform(
                 self::REL_GROUP,
                 'person_id',
@@ -69,10 +73,15 @@ class PersonPrimitive extends Primitive
      */
     protected $_id;
     /**
-     * Person's email. Used both as primary identifier and contact info.
+     * Person's email. Used both as primary login identifier and contact info.
      * @var string
      */
     protected $_email;
+    /**
+     * Person's phone number. Used as contact info.
+     * @var string
+     */
+    protected $_phone;
     /**
      * How person should be called across systems
      * @var string
@@ -104,6 +113,11 @@ class PersonPrimitive extends Primitive
      * @var string
      */
     protected $_tenhouId;
+    /**
+     * If this personal account is disabled
+     * @var int
+     */
+    protected $_disabled;
     /**
      * List of group ids this person belongs to
      * @var int[]
@@ -154,6 +168,29 @@ class PersonPrimitive extends Primitive
         return self::_findBy($db, 'email', $emails);
     }
 
+    /**
+     * Fuzzy search by title (simple pattern search).
+     *
+     * @param IDb $db
+     * @param $query
+     * @return array|null
+     */
+    public static function findByTitleFuzzy(IDb $db, $query)
+    {
+        $query = str_replace(['%', '_'], '', $query);
+        if (mb_strlen($query) <= 2) {
+            return null;
+        }
+
+        $objects = $db->table(self::$_table)
+            ->whereLike('title', '%' . $query . '%')
+            ->findArray();
+
+        return array_map(function($item) use ($db) {
+            return self::_recreateInstance($db, $item);
+        }, $objects);
+    }
+
     protected function _create()
     {
         $person = $this->_db->table(self::$_table)->create();
@@ -193,6 +230,24 @@ class PersonPrimitive extends Primitive
     public function setEmail(string $email): PersonPrimitive
     {
         $this->_email = $email;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone(): string
+    {
+        return $this->_phone;
+    }
+
+    /**
+     * @param string $phone
+     * @return PersonPrimitive
+     */
+    public function setPhone(string $phone): PersonPrimitive
+    {
+        $this->_phone = $phone;
         return $this;
     }
 
@@ -301,6 +356,24 @@ class PersonPrimitive extends Primitive
     public function setTenhouId(string $tenhouId): PersonPrimitive
     {
         $this->_tenhouId = $tenhouId;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getDisabled(): bool
+    {
+        return $this->_disabled == 1;
+    }
+
+    /**
+     * @param bool $disabled
+     * @return PersonPrimitive
+     */
+    public function setDisabled(bool $disabled): PersonPrimitive
+    {
+        $this->_disabled = $disabled ? 1 : 0;
         return $this;
     }
 
