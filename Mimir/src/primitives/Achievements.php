@@ -469,7 +469,7 @@ class AchievementsPrimitive extends Primitive
      */
     public static function getImpossibleWait(IDb $db, $eventIdList)
     {
-        $rounds = $db->table('rounds')
+        $rounds = $db->table('round')
             ->select('loser_id')
             ->select('display_name')
             ->select('riichi')
@@ -492,7 +492,7 @@ class AchievementsPrimitive extends Primitive
                 'name' => $round['display_name'],
                 'hand' => ['han' => $round['han'], 'fu' => $round['han'] > 4 ? null : $round['fu']]
             ];
-        }, array_slice($filteredRounds, 0, 5));
+        }, array_slice($filteredRounds, 0, 10));
     }
 
     /**
@@ -500,10 +500,56 @@ class AchievementsPrimitive extends Primitive
      *
      * @param IDb $db
      * @param $eventIdList
+     * @return array
      */
     public static function getHonoredDonor(IDb $db, $eventIdList)
     {
+        $rounds = $db->table('round')
+            ->select('winner_id')
+            ->select('riichi')
+            ->whereIn('event_id', $eventIdList)
+            ->whereIn('outcome', ['tsumo', 'ron', 'draw'])
+            ->whereNotEqual('riichi', '')
+            ->findArray();
 
+        $counts = [];
+        foreach ($rounds as $round) {
+            $riichi = explode(',', $round['riichi']);
+            foreach ($riichi as $r) {
+                if ($r == $round['winner_id']) {
+                    continue;
+                }
+
+                if (empty($counts[$r])) {
+                    $counts[$r] = 0;
+                }
+
+                $counts[$r] ++;
+            }
+        }
+
+        arsort($counts);
+        $names = $db->table('player')
+            ->select('id')
+            ->select('display_name')
+            ->whereIdIn(array_slice(array_keys($counts), 0, 5))
+            ->findArray();
+
+        $bestDonors = [];
+
+        $namesAssoc = [];
+        foreach ($names as $item) {
+            $namesAssoc[$item['id']] = $item['display_name'];
+        }
+
+        foreach ($counts as $id => $count) {
+            $bestDonors []= ['name' => $namesAssoc[$id], 'count' => $count];
+            if (count($bestDonors) >= 5) {
+                break;
+            }
+        }
+
+        return $bestDonors;
     }
 
     /**
@@ -515,7 +561,7 @@ class AchievementsPrimitive extends Primitive
      */
     public static function getJustAsPlanned(IDb $db, $eventIdList)
     {
-        $rounds = $db->table('rounds')
+        $rounds = $db->table('round')
             ->select('winner_id')
             ->select('display_name')
             ->select('yaku')
