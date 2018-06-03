@@ -119,6 +119,7 @@ class InitFreyVersion1m0 extends AbstractMigration
         $table = $this->table('group');
         $table
             ->addColumn('title', 'string', ['limit' => 255])
+            ->addColumn('label_color', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('description', 'text')
 
             ->save();
