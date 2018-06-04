@@ -483,11 +483,11 @@ class AchievementsPrimitive extends Primitive
             ->limit(100) // limit here for performance reasons
             ->findArray();
 
-        $filteredRounds = array_filter($rounds, function($round) {
+        $filteredRounds = array_filter($rounds, function ($round) {
             return !in_array($round['loser_id'], explode(',', $round['riichi']));
         });
 
-        return array_map(function($round) {
+        return array_map(function ($round) {
             return [
                 'name' => $round['display_name'],
                 'hand' => ['han' => $round['han'], 'fu' => $round['han'] > 4 ? null : $round['fu']]
@@ -570,7 +570,7 @@ class AchievementsPrimitive extends Primitive
             ->whereIn('outcome', ['multiron', 'ron', 'tsumo'])
             ->findArray();
 
-        $filteredRounds = array_filter($rounds, function($round) {
+        $filteredRounds = array_filter($rounds, function ($round) {
             return in_array(Y_IPPATSU, explode(',', $round['yaku']));
         });
 
@@ -585,7 +585,7 @@ class AchievementsPrimitive extends Primitive
 
         arsort($counts);
         return array_map(
-            function($name, $count) {
+            function ($name, $count) {
                 return [
                     'name' => $name,
                     'count' => $count
