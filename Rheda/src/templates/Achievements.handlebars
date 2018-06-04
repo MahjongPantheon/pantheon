@@ -128,6 +128,29 @@
                     {{/yakumans}}
                 </ul></td>
             </tr>
+            <tr>
+              <td><b>{{_t "You can't wait on this"}}</b></td>
+              <td style="width: 30%">{{_t 'Given for feeding into largest hand during tournament (but not while riichi).'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#impossibleWait}}
+                  <li>{{name}}:
+                    {{#hand.fu}}{{_p '%s han, %s fu' hand.han hand.fu}}{{/hand.fu}}
+                    {{^hand.fu}}{{_p '%s han' hand.han}}{{/hand.fu}}
+                  </li>
+                {{/impossibleWait}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'Just as planned'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for collecting largest count of ippatsu during tournament.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#justAsPlanned}}
+                  <li>{{name}}: {{count}}</li>
+                {{/justAsPlanned}}
+              </ul></td>
+            </tr>
         </tbody>
     </table>
 {{/error}}
