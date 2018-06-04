@@ -41,6 +41,11 @@ class AchievementsPrimitive extends Primitive
         return [];
     }
 
+    /**
+     * AchievementsPrimitive constructor.
+     * @param IDb $db
+     * @throws BadActionException
+     */
     public function __construct(IDb $db)
     {
         throw new BadActionException('This primitive is not expected to be instantiated, use static methods instead');
@@ -51,6 +56,13 @@ class AchievementsPrimitive extends Primitive
         // nothing
     }
 
+    /**
+     * Get players who collected hand with maximum fu
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
     public static function getMaxFuHand(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
@@ -84,6 +96,13 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
+    /**
+     * Get players who played most as dealer
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
     public static function getBestDealer(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
@@ -138,6 +157,13 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
+    /**
+     * Get players who collected largest amount of 1/30 hands
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
     public static function getBestShithander(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
@@ -174,6 +200,13 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
+    /**
+     * Get player who collected most expensive hand
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
     public static function getBestHandOfEvent(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
@@ -205,6 +238,13 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
+    /**
+     * Get players who got a chombo
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
     public static function getChomboMasters(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
@@ -226,6 +266,13 @@ class AchievementsPrimitive extends Primitive
         }, $rounds);
     }
 
+    /**
+     * Get players who collected a yakuman
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
     public static function getYakumans(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
@@ -233,7 +280,7 @@ class AchievementsPrimitive extends Primitive
             ->select('display_name')
             ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
-            ->whereIn('outcome', ['ron', 'tsumo'])
+            ->whereIn('outcome', ['ron', 'tsumo', 'multiron'])
             ->whereLt('han', 0) // yakuman
             ->findArray();
         return array_map(function ($round) {
@@ -241,6 +288,13 @@ class AchievementsPrimitive extends Primitive
         }, $rounds);
     }
 
+    /**
+     * Get players who has largest count of feeding into others' hands
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
     public static function getBraveSappers(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
@@ -274,6 +328,13 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
+    /**
+     * Get players who has smallest count of feeding into others' hands
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
     public static function getDieHardData(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
@@ -309,6 +370,13 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
+    /**
+     * Get players with largest tsumo count during single hanchan
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
     public static function getBestTsumoistInSingleSession(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
@@ -344,6 +412,13 @@ class AchievementsPrimitive extends Primitive
         ];
     }
 
+    /**
+     * Get players who collected largest amount of yakuhais
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
     public static function getDovakins(IDb $db, $eventIdList)
     {
         $rounds = $db->table('round')
@@ -351,7 +426,7 @@ class AchievementsPrimitive extends Primitive
             ->select('yaku')
             ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
-            ->whereIn('outcome', ['tsumo', 'ron'])
+            ->whereIn('outcome', ['tsumo', 'ron', 'multiron'])
             ->findArray();
 
         $yakuhaiStats = [];
@@ -383,6 +458,96 @@ class AchievementsPrimitive extends Primitive
 
         arsort($yakuhaiStats);
         return array_slice($yakuhaiStats, 0, 3);
+    }
+
+    /**
+     * Get players who fed into most expensive hand (but not while being riichi)
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
+    public static function getImpossibleWait(IDb $db, $eventIdList)
+    {
+        $rounds = $db->table('rounds')
+            ->select('loser_id')
+            ->select('display_name')
+            ->select('riichi')
+            ->select('han')
+            ->select('fu')
+            ->join('player', ['player.id', '=', 'round.loser_id'])
+            ->whereIn('event_id', $eventIdList)
+            ->whereIn('outcome', ['multiron', 'ron'])
+            ->orderByDesc('han')
+            ->orderByDesc('fu')
+            ->limit(100) // limit here for performance reasons
+            ->findArray();
+
+        $filteredRounds = array_filter($rounds, function($round) {
+            return !in_array($round['loser_id'], explode(',', $round['riichi']));
+        });
+
+        return array_map(function($round) {
+            return [
+                'name' => $round['display_name'],
+                'hand' => ['han' => $round['han'], 'fu' => $round['han'] > 4 ? null : $round['fu']]
+            ];
+        }, array_slice($filteredRounds, 0, 5));
+    }
+
+    /**
+     * Get players who lost largest number of points as riichi bets
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     */
+    public static function getHonoredDonor(IDb $db, $eventIdList)
+    {
+
+    }
+
+    /**
+     * Get players with largest ippatsu count
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
+    public static function getJustAsPlanned(IDb $db, $eventIdList)
+    {
+        $rounds = $db->table('rounds')
+            ->select('winner_id')
+            ->select('display_name')
+            ->select('yaku')
+            ->join('player', ['player.id', '=', 'round.winner_id'])
+            ->whereIn('event_id', $eventIdList)
+            ->whereIn('outcome', ['multiron', 'ron', 'tsumo'])
+            ->findArray();
+
+        $filteredRounds = array_filter($rounds, function($round) {
+            return in_array(Y_IPPATSU, explode(',', $round['yaku']));
+        });
+
+        $counts = [];
+        foreach ($filteredRounds as $round) {
+            if (empty($counts[$round['display_name']])) {
+                $counts[$round['display_name']] = 0;
+            }
+
+            $counts[$round['display_name']] ++;
+        }
+
+        arsort($counts);
+        return array_map(
+            function($name, $count) {
+                return [
+                    'name' => $name,
+                    'count' => $count
+                ];
+            },
+            array_slice(array_keys($counts), 0, 5),
+            array_slice(array_values($counts), 0, 5)
+        );
     }
 
     public function save()
