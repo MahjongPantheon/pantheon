@@ -128,6 +128,39 @@
                     {{/yakumans}}
                 </ul></td>
             </tr>
+            <tr>
+              <td><b>{{_t "This can't be your wait"}}</b></td>
+              <td style="width: 30%">{{_t 'Given for feeding into largest hand during tournament (but not while in riichi).'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#impossibleWait}}
+                  <li>{{name}}:
+                    {{#hand.fu}}{{_p '%s han, %s fu' hand.han hand.fu}}{{/hand.fu}}
+                    {{^hand.fu}}{{_p '%s han' hand.han}}{{/hand.fu}}
+                  </li>
+                {{/impossibleWait}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'Honored donor'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for losing largest amount of points as riichi bets.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#honoredDonor}}
+                  <li>{{name}}: {{_np '%s bet' '%s bets' count count}}</li>
+                {{/honoredDonor}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'Just as planned'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for getting largest number of ippatsu during tournament.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#justAsPlanned}}
+                  <li>{{name}}: {{_np '%s ippatsu' '%s ippatsu' count count}}</li>
+                {{/justAsPlanned}}
+              </ul></td>
+            </tr>
         </tbody>
     </table>
 {{/error}}
