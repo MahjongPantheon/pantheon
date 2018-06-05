@@ -105,7 +105,10 @@ class EventModel extends Model
             'yakuman' => AchievementsPrimitive::getYakumans($this->_db, $eventIdList),
             'shithander' => AchievementsPrimitive::getBestShithander($this->_db, $eventIdList),
             'bestDealer' => AchievementsPrimitive::getBestDealer($this->_db, $eventIdList),
-            'bestFu' => AchievementsPrimitive::getMaxFuHand($this->_db, $eventIdList)
+            'bestFu' => AchievementsPrimitive::getMaxFuHand($this->_db, $eventIdList),
+            'impossibleWait' => AchievementsPrimitive::getImpossibleWait($this->_db, $eventIdList),
+            'honoredDonor' => AchievementsPrimitive::getHonoredDonor($this->_db, $eventIdList),
+            'justAsPlanned' => AchievementsPrimitive::getJustAsPlanned($this->_db, $eventIdList)
         ];
     }
 
