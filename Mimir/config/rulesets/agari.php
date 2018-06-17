@@ -25,7 +25,7 @@ class RulesetAgari extends Ruleset
     protected static $_ruleset = [
         'tenboDivider'          => 1000,
         'ratingDivider'         => 1,
-        'startRating'           => 1500,
+        'startRating'           => 0,
         'oka'                   => 0,
         'startPoints'           => 25000,
         'subtractStartPoints'   => true,
