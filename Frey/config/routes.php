@@ -29,15 +29,35 @@
  *
  */
 return [
-    'hello'              => ['DummyController', 'sayHello'],
+    // client
+    'requestRegistration'  => ['AuthController', 'requestRegistration'],
+    'approveRegistration'  => ['AuthController', 'approveRegistration'],
+    'authorize'            => ['AuthController', 'authorize'],
+    'quickAuthorize'       => ['AuthController', 'quickAuthorize'],
+    'changePassword'       => ['AuthController', 'changePassword'],
+    'requestResetPassword' => ['AuthController', 'requestResetPassword'],
+    'approveResetPassword' => ['AuthController', 'approveResetPassword'],
+    'getAccessRules'       => ['AccessController', 'getAccessRules'],
+    'getRuleValue'         => ['AccessController', 'getRuleValue'],
+    'updatePersonalInfo'   => ['PersonsController', 'updatePersonalInfo'],
+    'getPersonalInfo'      => ['PersonsController', 'getPersonalInfo'],
+    'findByTitle'          => ['PersonsController', 'findByTitle'],
+    'getGroups'            => ['PersonsController', 'getGroups'],
 
-//    // client
-//    'getPlayerIdByIdent' => ['PlayersController', 'getIdByIdent'],
-//    'getPlayerT'         => ['PlayersController', 'getFromToken'],
-//
-//    // admin
-//    'addPlayer'          => ['PlayersController', 'add'],
-//    'updatePlayer'       => ['PlayersController', 'update'],
-//    'getPlayer'          => ['PlayersController', 'get'],
-//    'getEverybody'       => ['PlayersController', 'getAll'], // TODO: get rid
+    // admin
+    'getPersonAccess'        => ['AccessController', 'getPersonAccess'],
+    'getGroupAccess'         => ['AccessController', 'getGroupAccess'],
+    'addRuleForPerson'       => ['AccessController', 'addRuleForPerson'],
+    'addRuleForGroup'        => ['AccessController', 'addRuleForGroup'],
+    'updateRuleForPerson'    => ['AccessController', 'updateRuleForPerson'],
+    'updateRuleForGroup'     => ['AccessController', 'updateRuleForGroup'],
+    'deleteRuleForPerson'    => ['AccessController', 'deleteRuleForPerson'],
+    'deleteRuleForGroup'     => ['AccessController', 'deleteRuleForGroup'],
+    'clearAccessCache'       => ['AccessController', 'clearAccessCache'],
+    'createAccount'          => ['PersonsController', 'createAccount'],
+    'createGroup'            => ['PersonsController', 'createGroup'],
+    'updateGroup'            => ['PersonsController', 'updateGroup'],
+    'deleteGroup'            => ['PersonsController', 'deleteGroup'],
+    'addPersonToGroup'       => ['PersonsController', 'addPersonToGroup'],
+    'removePersonFromGroup'  => ['PersonsController', 'removePersonFromGroup'],
 ];
