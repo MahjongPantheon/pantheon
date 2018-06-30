@@ -40,6 +40,10 @@ class AuthModel extends Model
             throw new InvalidParametersException('Invalid email provided', 401);
         }
 
+        if (strlen($password) < 8) {
+            throw new InvalidParametersException('Password should be 8 or more characters long', 411);
+        }
+
         $pw = $this->makePasswordTokens($password);
 
         $reg = (new RegistrantPrimitive($this->_db))
@@ -81,7 +85,7 @@ class AuthModel extends Model
             ->setDisabled(false);
 
         if (!$person->save()) {
-            throw new \Exception('Couldnt save person to DB');
+            throw new \Exception('Couldn\'t save person to DB');
         }
 
         $reg[0]->drop();
@@ -142,7 +146,7 @@ class AuthModel extends Model
      * @param $email
      * @param $password
      * @param $newPassword
-     * @return mixed
+     * @return string
      * @throws AuthFailedException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -165,7 +169,7 @@ class AuthModel extends Model
             ->setAuthHash($pw['auth_hash'])
             ->save();
 
-        return $pw['client_hash'];
+        return (string)$pw['client_hash'];
     }
 
     /**

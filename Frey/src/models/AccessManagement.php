@@ -49,7 +49,7 @@ class AccessManagementModel extends Model
 
         $persons = PersonPrimitive::findById($this->_db, [$personId]);
         if (empty($persons)) {
-            throw new EntityNotFoundException('Person with id #' . $personId . ' not found in DB');
+            throw new EntityNotFoundException('Person with id #' . $personId . ' not found in DB', 401);
         }
 
         $resultingRules = [];
@@ -67,6 +67,7 @@ class AccessManagementModel extends Model
 
     /**
      * Get single rule for person in event. Hardly relies on cache.
+     * Also counts group rules if person belongs to one or more groups.
      * Typically should not be used when more than one value should be retrieved.
      * Returns null if no data found for provided person/event ids or rule name.
      *
@@ -161,13 +162,13 @@ class AccessManagementModel extends Model
         $existingRules = $this->getPersonAccess($personId, $eventId);
         if (!empty($existingRules[$ruleName])) {
             throw new DuplicateEntityException(
-                'Rule ' . $ruleName . ' already exists for person ' . $personId . ' at event ' . $eventId
+                'Rule ' . $ruleName . ' already exists for person ' . $personId . ' at event ' . $eventId, 402
             );
         }
 
         $persons = PersonPrimitive::findById($this->_db, [$personId]);
         if (empty($persons)) {
-            throw new EntityNotFoundException('Person with id #' . $personId . ' not found in DB');
+            throw new EntityNotFoundException('Person with id #' . $personId . ' not found in DB', 403);
         }
 
         $rule = (new PersonAccessPrimitive($this->_db))
@@ -197,13 +198,13 @@ class AccessManagementModel extends Model
         $existingRules = $this->getGroupAccess($groupId, $eventId);
         if (!empty($existingRules[$ruleName])) {
             throw new DuplicateEntityException(
-                'Rule ' . $ruleName . ' already exists for group ' . $groupId . ' at event ' . $eventId
+                'Rule ' . $ruleName . ' already exists for group ' . $groupId . ' at event ' . $eventId, 404
             );
         }
 
         $groups = GroupPrimitive::findById($this->_db, [$groupId]);
         if (empty($groups)) {
-            throw new EntityNotFoundException('Group with id #' . $groupId . ' not found in DB');
+            throw new EntityNotFoundException('Group with id #' . $groupId . ' not found in DB', 405);
         }
 
         $rule = (new GroupAccessPrimitive($this->_db))
@@ -229,7 +230,7 @@ class AccessManagementModel extends Model
     {
         $rules = PersonAccessPrimitive::findById($this->_db, [$ruleId]);
         if (empty($rules)) {
-            throw new EntityNotFoundException('PersonRule with id #' . $ruleId . ' not found in DB');
+            throw new EntityNotFoundException('PersonRule with id #' . $ruleId . ' not found in DB', 406);
         }
 
         return $rules[0]
@@ -252,7 +253,7 @@ class AccessManagementModel extends Model
     {
         $rules = GroupAccessPrimitive::findById($this->_db, [$ruleId]);
         if (empty($rules)) {
-            throw new EntityNotFoundException('GroupRule with id #' . $ruleId . ' not found in DB');
+            throw new EntityNotFoundException('GroupRule with id #' . $ruleId . ' not found in DB', 407);
         }
 
         return $rules[0]
@@ -272,7 +273,7 @@ class AccessManagementModel extends Model
     {
         $rules = PersonAccessPrimitive::findById($this->_db, [$ruleId]);
         if (empty($rules)) {
-            throw new EntityNotFoundException('PersonRule with id #' . $ruleId . ' not found in DB');
+            throw new EntityNotFoundException('PersonRule with id #' . $ruleId . ' not found in DB', 408);
         }
 
         $rules[0]->drop();
@@ -289,7 +290,7 @@ class AccessManagementModel extends Model
     {
         $rules = GroupAccessPrimitive::findById($this->_db, [$ruleId]);
         if (empty($rules)) {
-            throw new EntityNotFoundException('GroupRule with id #' . $ruleId . ' not found in DB');
+            throw new EntityNotFoundException('GroupRule with id #' . $ruleId . ' not found in DB', 409);
         }
 
         $rules[0]->drop();

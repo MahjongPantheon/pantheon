@@ -58,7 +58,7 @@ class AccountModel extends Model
             ->setPhone($phone)
             ->setTenhouId($tenhouId);
         if (!$person->save()) {
-            throw new \Exception('Couldnt save person to DB', 403);
+            throw new \Exception('Couldn\'t save person to DB', 403);
         }
         return $person->getId();
     }

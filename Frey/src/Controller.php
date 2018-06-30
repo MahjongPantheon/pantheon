@@ -53,4 +53,19 @@ abstract class Controller
             $this->_config->getValue('api.version_minor')
         );
     }
+
+    protected function _logStart($method, $args)
+    {
+        $this->_log->addInfo('[' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: started');
+    }
+
+    protected function _logSuccess($method, $args)
+    {
+        $this->_log->addInfo('[' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: success');
+    }
+
+    protected function _logError($method, $args)
+    {
+        $this->_log->addInfo('[' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: failed');
+    }
 }
