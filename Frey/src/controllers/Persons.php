@@ -78,6 +78,7 @@ class PersonsController extends Controller
     public function updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId)
     {
         $this->_logStart(__METHOD__, [$id, $title, $city, $email, $phone, $tenhouId]);
+        // TODO: check if this is admin or user himself
         $success = $this->_getAccountModel()->updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId);
         $this->_logSuccess(__METHOD__, [$id, $title, $city, $email, $phone, $tenhouId]);
         return $success;
