@@ -56,16 +56,16 @@ abstract class Controller
 
     protected function _logStart($method, $args)
     {
-        $this->_log->addInfo('[' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: started');
+        $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: started');
     }
 
     protected function _logSuccess($method, $args)
     {
-        $this->_log->addInfo('[' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: success');
+        $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: success');
     }
 
     protected function _logError($method, $args)
     {
-        $this->_log->addInfo('[' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: failed');
+        $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: failed');
     }
 }
