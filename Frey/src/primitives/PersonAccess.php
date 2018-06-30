@@ -107,6 +107,17 @@ class PersonAccessPrimitive extends Primitive
     }
 
     /**
+     * @param IDb $db
+     * @param $ids
+     * @return PersonAccessPrimitive[]
+     * @throws \Exception
+     */
+    public static function findById(IDb $db, $ids)
+    {
+        return self::_findBy($db, 'id', $ids);
+    }
+
+    /**
      * Find rules by person id list
      *
      * @param IDb $db
