@@ -37,7 +37,7 @@ class AccessManagementModel extends Model
      *
      * @param int $personId
      * @param int $eventId
-     * @return array|mixed
+     * @return array
      * @throws \Exception
      */
     public function getAccessRules(int $personId, int $eventId)
