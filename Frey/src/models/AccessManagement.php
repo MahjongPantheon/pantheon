@@ -49,31 +49,15 @@ class AccessManagementModel extends Model
 
         $persons = PersonPrimitive::findById($this->_db, [$personId]);
         if (empty($persons)) {
-            throw new \Exception('Person with id #' . $personId . ' not found in DB');
+            throw new EntityNotFoundException('Person with id #' . $personId . ' not found in DB');
         }
-
-        /** @var PersonAccessPrimitive[] $personRules */
-        $personRules = array_filter(
-            PersonAccessPrimitive::findByPerson($this->_db, [$personId]),
-            function (PersonAccessPrimitive $rule) use ($eventId) {
-                return empty($rule->getEventsId()) // system-wide person rules
-                    || in_array($eventId, $rule->getEventsId());
-            }
-        );
-        /** @var GroupAccessPrimitive[] $groupRules */
-        $groupRules = array_filter(
-            GroupAccessPrimitive::findByGroup($this->_db, $persons[0]->getGroupIds()),
-            function (GroupAccessPrimitive $rule) use ($eventId) {
-                return empty($rule->getEventsId()) // system-wide group rules
-                    || in_array($eventId, $rule->getEventsId());
-            }
-        );
 
         $resultingRules = [];
-        foreach ($groupRules as $rule) {
+        foreach ($this->_getGroupAccessRules($persons[0]->getGroupIds(), $eventId) as $rule) {
             $resultingRules[$rule->getAclName()] = $rule->getAclValue();
         }
-        foreach ($personRules as $rule) { // Person rules have higher priority than group rules
+        foreach ($this->_getPersonAccessRules($personId, $eventId) as $rule) {
+            // Person rules have higher priority than group rules
             $resultingRules[$rule->getAclName()] = $rule->getAclValue();
         }
 
@@ -84,6 +68,7 @@ class AccessManagementModel extends Model
     /**
      * Get single rule for person in event. Hardly relies on cache.
      * Typically should not be used when more than one value should be retrieved.
+     * Returns null if no data found for provided person/event ids or rule name.
      *
      * @param $personId
      * @param $eventId
@@ -93,49 +78,255 @@ class AccessManagementModel extends Model
      */
     public function getRuleValue($personId, $eventId, $ruleName)
     {
-        return $this->getAccessRules($personId, $eventId)[$ruleName];
+        $rules = $this->getAccessRules($personId, $eventId);
+        if (empty($rules[$ruleName])) {
+            return null;
+        }
+        return $rules[$ruleName];
     }
 
     //////// Admin methods
 
+    /**
+     * Get access rules for person.
+     * - eventId may be null to get system-wide rules.
+     * - Method results are not cached!
+     *
+     * @param $personId
+     * @param $eventId
+     * @return array
+     * @throws \Exception
+     */
     public function getPersonAccess($personId, $eventId)
     {
+        $rules = $this->_getPersonAccessRules($personId, $eventId);
+        $eventRelatedRules = array_filter($rules, function(PersonAccessPrimitive $rule) use ($eventId) {
+            if (empty($eventId)) { // required to get system-wide rules
+                return true;
+            }
+            return !empty($rule->getEventsId());
+        });
 
+        $resultingRules = [];
+        foreach ($eventRelatedRules as $rule) {
+            $resultingRules[$rule->getAclName()] = $rule->getAclValue();
+        }
+
+        return $resultingRules;
     }
 
+    /**
+     * Get access rules for group.
+     * - eventId may be null to get system-wide rules.
+     * - Method results are not cached!
+     *
+     * @param $groupId
+     * @param $eventId
+     * @return array
+     * @throws \Exception
+     */
     public function getGroupAccess($groupId, $eventId)
     {
+        $rules = $this->_getGroupAccessRules([$groupId], $eventId);
+        $eventRelatedRules = array_filter($rules, function(GroupAccessPrimitive $rule) use ($eventId) {
+            if (empty($eventId)) { // required to get system-wide rules
+                return true;
+            }
+            return !empty($rule->getEventsId());
+        });
 
+        $resultingRules = [];
+        foreach ($eventRelatedRules as $rule) {
+            $resultingRules[$rule->getAclName()] = $rule->getAclValue();
+        }
+
+        return $resultingRules;
     }
 
+    /**
+     * Add new rule for a person.
+     *
+     * @param $ruleName
+     * @param $ruleValue
+     * @param $ruleType   'bool', 'int' or 'enum'
+     * @param $personId
+     * @param $eventId
+     * @return bool  success
+     * @throws DuplicateEntityException
+     * @throws EntityNotFoundException
+     * @throws \Exception
+     */
     public function addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId)
     {
+        $existingRules = $this->getPersonAccess($personId, $eventId);
+        if (!empty($existingRules[$ruleName])) {
+            throw new DuplicateEntityException(
+                'Rule ' . $ruleName . ' already exists for person ' . $personId . ' at event ' . $eventId
+            );
+        }
 
+        $persons = PersonPrimitive::findById($this->_db, [$personId]);
+        if (empty($persons)) {
+            throw new EntityNotFoundException('Person with id #' . $personId . ' not found in DB');
+        }
+
+        $rule = (new PersonAccessPrimitive($this->_db))
+            ->setAclName($ruleName)
+            ->setAclType($ruleType)
+            ->setAclValue($ruleValue)
+            ->setEventIds([$eventId])
+            ->setPerson($persons[0]);
+        return $rule->save();
     }
 
-    public function addRuleForGroup($ruleName, $ruleValue, $ruleType, $personId, $eventId)
+    /**
+     * Add new rule for group.
+     *
+     * @param $ruleName
+     * @param $ruleValue
+     * @param $ruleType   'bool', 'int' or 'enum'
+     * @param $groupId
+     * @param $eventId
+     * @return bool   success
+     * @throws DuplicateEntityException
+     * @throws EntityNotFoundException
+     * @throws \Exception
+     */
+    public function addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId)
     {
+        $existingRules = $this->getGroupAccess($groupId, $eventId);
+        if (!empty($existingRules[$ruleName])) {
+            throw new DuplicateEntityException(
+                'Rule ' . $ruleName . ' already exists for group ' . $groupId . ' at event ' . $eventId
+            );
+        }
 
+        $groups = GroupPrimitive::findById($this->_db, [$groupId]);
+        if (empty($groups)) {
+            throw new EntityNotFoundException('Group with id #' . $groupId . ' not found in DB');
+        }
+
+        $rule = (new GroupAccessPrimitive($this->_db))
+            ->setAclName($ruleName)
+            ->setAclType($ruleType)
+            ->setAclValue($ruleValue)
+            ->setEventIds([$eventId])
+            ->setGroup($groups[0]);
+        return $rule->save();
     }
 
+    /**
+     * Update personal rule value and/or type
+     *
+     * @param $ruleId
+     * @param $ruleValue
+     * @param $ruleType
+     * @return bool   success
+     * @throws EntityNotFoundException
+     * @throws \Exception
+     */
     public function updateRuleForPerson($ruleId, $ruleValue, $ruleType)
     {
+        $rules = PersonAccessPrimitive::findById($this->_db, [$ruleId]);
+        if (empty($rules)) {
+            throw new EntityNotFoundException('PersonRule with id #' . $ruleId . ' not found in DB');
+        }
 
+        return $rules[0]
+            ->setAclType($ruleType)
+            ->setAclValue($ruleValue)
+            ->save();
     }
 
+    /**
+     * Update group rule value and/or type
+     *
+     * @param $ruleId
+     * @param $ruleValue
+     * @param $ruleType
+     * @return bool   success
+     * @throws EntityNotFoundException
+     * @throws \Exception
+     */
     public function updateRuleForGroup($ruleId, $ruleValue, $ruleType)
     {
+        $rules = GroupAccessPrimitive::findById($this->_db, [$ruleId]);
+        if (empty($rules)) {
+            throw new EntityNotFoundException('GroupRule with id #' . $ruleId . ' not found in DB');
+        }
 
+        return $rules[0]
+            ->setAclType($ruleType)
+            ->setAclValue($ruleValue)
+            ->save();
     }
 
+    /**
+     * Drop personal rule by id
+     *
+     * @param $ruleId
+     * @throws EntityNotFoundException
+     * @throws \Exception
+     */
     public function deleteRuleForPerson($ruleId)
     {
+        $rules = PersonAccessPrimitive::findById($this->_db, [$ruleId]);
+        if (empty($rules)) {
+            throw new EntityNotFoundException('PersonRule with id #' . $ruleId . ' not found in DB');
+        }
 
+        $rules[0]->drop();
     }
 
+    /**
+     * Drop group rule by id
+     *
+     * @param $ruleId
+     * @throws EntityNotFoundException
+     * @throws \Exception
+     */
     public function deleteRuleForGroup($ruleId)
     {
+        $rules = GroupAccessPrimitive::findById($this->_db, [$ruleId]);
+        if (empty($rules)) {
+            throw new EntityNotFoundException('GroupRule with id #' . $ruleId . ' not found in DB');
+        }
 
+        $rules[0]->drop();
+    }
+
+    /**
+     * @param $personId
+     * @param $eventId
+     * @return PersonAccessPrimitive[]
+     * @throws \Exception
+     */
+    protected function _getPersonAccessRules($personId, $eventId)
+    {
+        return array_filter(
+            PersonAccessPrimitive::findByPerson($this->_db, [$personId]),
+            function (PersonAccessPrimitive $rule) use ($eventId) {
+                return empty($rule->getEventsId()) // system-wide person rules
+                    || in_array($eventId, $rule->getEventsId());
+            }
+        );
+    }
+
+    /**
+     * @param $groupIds
+     * @param $eventId
+     * @return GroupAccessPrimitive[]
+     * @throws \Exception
+     */
+    protected function _getGroupAccessRules($groupIds, $eventId)
+    {
+        return array_filter(
+            GroupAccessPrimitive::findByGroup($this->_db, $groupIds),
+            function (GroupAccessPrimitive $rule) use ($eventId) {
+                return empty($rule->getEventsId()) // system-wide group rules
+                    || in_array($eventId, $rule->getEventsId());
+            }
+        );
     }
 
     /**
