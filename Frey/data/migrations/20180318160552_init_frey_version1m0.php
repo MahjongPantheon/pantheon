@@ -54,7 +54,7 @@ class InitFreyVersion1m0 extends AbstractMigration
                 'comment' => 'PERSONAL DATA'])
             ->addColumn('city', 'string', ['limit' => 255, 'null' => true])
             ->addColumn('tenhou_id', 'string', ['limit' => 255, 'null' => true])
-            ->addColumn('disabled', 'integer', [''])
+            ->addColumn('disabled', 'integer')
 
             ->addIndex('email', ['name' => 'person_email'])
             ->addIndex('phone', ['name' => 'person_phone'])
@@ -82,7 +82,7 @@ class InitFreyVersion1m0 extends AbstractMigration
             ->addColumn('acl_value', 'string', ['limit' => 255,
                 'comment' => 'ACL value. Has limit of 255 bytes long for performance reasons'])
 
-            ->addIndex('acl_value', ['name' => 'access_acl_value'])
+            ->addIndex('acl_value', ['name' => 'access_acl_value_person'])
             ->addForeignKey('person_id', 'person')
 
             ->save();
@@ -105,8 +105,8 @@ class InitFreyVersion1m0 extends AbstractMigration
             ->addColumn('acl_value', 'string', ['limit' => 255,
                 'comment' => 'ACL value. Has limit of 255 bytes long for performance reasons'])
 
-            ->addIndex('acl_value', ['name' => 'access_acl_value'])
-            ->addForeignKey('person_id', 'person')
+            ->addIndex('acl_value', ['name' => 'access_acl_value_group'])
+            ->addForeignKey('group_id', 'group')
 
             ->save();
     }
