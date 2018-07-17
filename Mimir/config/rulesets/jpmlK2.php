@@ -16,41 +16,46 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Mimir;
-require_once __DIR__ . '/../../src/Ruleset.php';
-require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
+require_once __DIR__ . '/../../src/Ruleset.php';
+
+/**
+ * Kirov tournament rules. Temporary.
+ * @package Mimir
+ */
 class RulesetJpmlK2 extends Ruleset
 {
-    public static $_title = 'jpmlK2';
+    protected static $_title = 'jpmlK2';
     protected static $_ruleset = [
         'tenboDivider'          => 100,
         'ratingDivider'         => 10,
-        'startRating'           => 1500,
+        'startRating'           => 0,
         'oka'                   => 0,
         'startPoints'           => 25000,
         'subtractStartPoints'   => true,
-        'riichiGoesToWinner'    => false,
+        'riichiGoesToWinner'    => true,
+        'doubleronRiichiAtamahane' => true,
+        'doubleronHonbaAtamahane'  => true,
         'extraChomboPayments'   => true,
         'chomboPenalty'         => 0,
         'withAtamahane'         => false,
         'withAbortives'         => true,
-        'withKuitan'            => false,
-        'withKazoe'             => false,
+        'withKuitan'            => true,
+        'withKazoe'             => true,
         'withButtobi'           => true,
-        'withMultiYakumans'     => false,
-        'withNagashiMangan'     => false,
-        'withKiriageMangan'     => true,
+        'withMultiYakumans'     => true,
+        'withNagashiMangan'     => true,
+        'withKiriageMangan'     => false,
         'tonpuusen'             => false,
-        'autoRegisterUsers'     => false,
-        'gameExpirationTime'    => false,
+        'gameExpirationTime'    => 27, // hours, to cover JST difference
         'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
-        'minPenalty'            => 10,
-        'maxPenalty'            => 200,
-        'penaltyStep'           => 10,
-        'timerPolicy'           => 'redZone',
-        'yellowZone'            => 0,
-        'redZone'               => 600, // 10min
         'withLeadingDealerGameOver' => true,
+	'minPenalty'            => 10,
+	'maxPenalty'            => 200,
+	'penaltyStep'           => 10,
+	'timerPolicy'           => 'redZone',
+	'yellowZone'            => 0,
+	'redZone'               => 600, // 10min
         'replacementPlayerFixedPoints' => false,
         'replacementPlayerOverrideUma' => false
     ];
@@ -61,7 +66,7 @@ class RulesetJpmlK2 extends Ruleset
             Y_OPENRIICHI
         ]);
     }
-
+    
     /**
      * @param array $scores
      * @return array
