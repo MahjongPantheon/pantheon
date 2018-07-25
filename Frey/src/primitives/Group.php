@@ -58,7 +58,7 @@ class GroupPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int | null
      */
     protected $_id;
     /**
@@ -124,9 +124,9 @@ class GroupPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int | null
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->_id;
     }

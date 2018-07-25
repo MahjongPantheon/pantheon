@@ -51,7 +51,7 @@ class RegistrantPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int | null
      */
     protected $_id;
     /**
@@ -131,9 +131,9 @@ class RegistrantPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int | null
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->_id;
     }

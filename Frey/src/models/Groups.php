@@ -66,7 +66,7 @@ class GroupsModel extends Model
         }
 
         $groups = GroupPrimitive::findById($this->_db, $ids);
-        return array_map(function(GroupPrimitive $group) {
+        return array_map(function (GroupPrimitive $group) {
             return [
                 'id' => $group->getId(),
                 'title' => $group->getTitle(),
@@ -197,7 +197,7 @@ class GroupsModel extends Model
 
         // Actually we might fetch persons from group too,
         // but we assume that any person has less groups than persons any group might have.
-        $currentGroups = array_filter($persons[0]->getGroups(), function(GroupPrimitive $g) use ($groups) {
+        $currentGroups = array_filter($persons[0]->getGroups(), function (GroupPrimitive $g) use ($groups) {
             return $g->getId() != $groups[0]->getId();
         });
         return $persons[0]->setGroups($currentGroups)->save();

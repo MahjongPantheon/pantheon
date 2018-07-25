@@ -134,6 +134,9 @@ class InitFreyVersion1m0 extends AbstractMigration
         $table
             ->addColumn('person_id', 'integer')
             ->addColumn('group_id', 'integer')
+            ->addColumn('order', 'integer')
+
+            ->addIndex(['person_id', 'group_id'], ['name' => 'person_group_uniq', 'unique' => true])
 
             ->addForeignKey('person_id', 'person')
             ->addForeignKey('group_id', 'group')

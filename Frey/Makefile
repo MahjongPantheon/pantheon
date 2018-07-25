@@ -33,7 +33,7 @@ init_test_db:
 
 clean_test_db:
 	while read p; do \
-		PGPASSWORD=pgpass psql -p5532 -U frey frey_unit -c "DELETE FROM $$p"; \
+		PGPASSWORD=pgpass psql -p5532 -U frey frey_unit -c "DELETE FROM \"$$p\""; \
 		PGPASSWORD=pgpass psql -p5532 -U frey frey_unit -c "ALTER SEQUENCE IF EXISTS $${p}_id_seq RESTART"; \
 	done < ./data/tablelist.txt
 
