@@ -69,7 +69,7 @@ class PersonPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int | null
      */
     protected $_id;
     /**
@@ -173,7 +173,7 @@ class PersonPrimitive extends Primitive
      *
      * @param IDb $db
      * @param $query
-     * @return array|null
+     * @return PersonPrimitive[]|null
      */
     public static function findByTitleFuzzy(IDb $db, $query)
     {
@@ -186,7 +186,7 @@ class PersonPrimitive extends Primitive
             ->whereLike('title', '%' . $query . '%')
             ->findArray();
 
-        return array_map(function($item) use ($db) {
+        return array_map(function ($item) use ($db) {
             return self::_recreateInstance($db, $item);
         }, $objects);
     }
@@ -208,9 +208,9 @@ class PersonPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int | null
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->_id;
     }

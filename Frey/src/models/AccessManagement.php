@@ -101,7 +101,7 @@ class AccessManagementModel extends Model
     public function getPersonAccess($personId, $eventId)
     {
         $rules = $this->_getPersonAccessRules($personId, $eventId);
-        $eventRelatedRules = array_filter($rules, function(PersonAccessPrimitive $rule) use ($eventId) {
+        $eventRelatedRules = array_filter($rules, function (PersonAccessPrimitive $rule) use ($eventId) {
             if (empty($eventId)) { // required to get system-wide rules
                 return true;
             }
@@ -129,7 +129,7 @@ class AccessManagementModel extends Model
     public function getGroupAccess($groupId, $eventId)
     {
         $rules = $this->_getGroupAccessRules([$groupId], $eventId);
-        $eventRelatedRules = array_filter($rules, function(GroupAccessPrimitive $rule) use ($eventId) {
+        $eventRelatedRules = array_filter($rules, function (GroupAccessPrimitive $rule) use ($eventId) {
             if (empty($eventId)) { // required to get system-wide rules
                 return true;
             }
@@ -162,7 +162,8 @@ class AccessManagementModel extends Model
         $existingRules = $this->getPersonAccess($personId, $eventId);
         if (!empty($existingRules[$ruleName])) {
             throw new DuplicateEntityException(
-                'Rule ' . $ruleName . ' already exists for person ' . $personId . ' at event ' . $eventId, 402
+                'Rule ' . $ruleName . ' already exists for person ' . $personId . ' at event ' . $eventId,
+                402
             );
         }
 
@@ -198,7 +199,8 @@ class AccessManagementModel extends Model
         $existingRules = $this->getGroupAccess($groupId, $eventId);
         if (!empty($existingRules[$ruleName])) {
             throw new DuplicateEntityException(
-                'Rule ' . $ruleName . ' already exists for group ' . $groupId . ' at event ' . $eventId, 404
+                'Rule ' . $ruleName . ' already exists for group ' . $groupId . ' at event ' . $eventId,
+                404
             );
         }
 

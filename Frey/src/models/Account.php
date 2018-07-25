@@ -80,7 +80,7 @@ class AccountModel extends Model
         }
 
         $persons = PersonPrimitive::findById($this->_db, $ids);
-        return array_map(function(PersonPrimitive $person) use ($filterPrivateData) {
+        return array_map(function (PersonPrimitive $person) use ($filterPrivateData) {
             return [
                 'id' => $person->getId(),
                 'city' => $person->getCity(),
@@ -150,7 +150,7 @@ class AccountModel extends Model
             throw new InvalidParametersException('Query is too short', 409);
         }
 
-        return array_map(function(PersonPrimitive $person) {
+        return array_map(function (PersonPrimitive $person) {
             return [
                 'id' => $person->getId(),
                 'city' => $person->getCity(),

@@ -56,7 +56,7 @@ class GroupAccessPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int | null
      */
     protected $_id;
     /**
@@ -131,9 +131,9 @@ class GroupAccessPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int | null
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->_id;
     }
