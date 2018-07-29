@@ -1,5 +1,5 @@
 <?php
-/*  Mimir: mahjong games storage
+/*  Frey: ACL & user data storage
  *  Copyright (C) 2018  o.klimenko aka ctizen
  *
  *  This program is free software: you can redistribute it and/or modify
