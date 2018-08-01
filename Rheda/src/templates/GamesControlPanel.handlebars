@@ -33,6 +33,9 @@
     function cancelRoundConfirmation(roundInfo) {
         return window.confirm('{{_t 'Confirm round cancellation: '}}' + roundInfo);
     }
+    function cancelGameConfirmation(list) {
+      return window.confirm('{{_t 'Confirm game cancellation: '}}' + list);
+    }
 </script>
 
 <hr/>
@@ -53,16 +56,27 @@
                 <td><span class="badge {{#finished}}badge-success{{/finished}}">{{status}}</span></td>
             </tr>
             <tr>
-                <td colspan="6" style="font-weight: bold; font-size: 16px">
+                <td colspan="5" style="font-weight: bold; font-size: 16px">
                     {{_t 'Last played round:'}}
                     {{^last_round}}{{_t '(no rounds are played yet)'}}{{/last_round}}
                     {{#last_round}}
                         {{last_round}}
                         {{#a
                             href="/games/dropLastRound/{hash}/"
-                            class="btn btn-large btn-danger actionButton"
+                            class="btn btn-large btn-warning actionButton"
                             onclick="return cancelRoundConfirmation('{roundInfo}')"
                         }}{{_t 'Cancel last played round'}}{{/a}}
+                    {{/last_round}}
+                </td>
+                <td>
+                    {{^last_round}}{{!-- Show cancel game button only if no rounds remaining --}}
+                    {{#gameIsCancellable}}
+                        {{#a
+                            href="/games/cancelGame/{hash}/"
+                            class="btn btn-large btn-danger actionButton"
+                            onclick="return cancelGameConfirmation('{playersFlatList}')"
+                        }}{{_t 'Cancel game'}}{{/a}}
+                    {{/gameIsCancellable}}
                     {{/last_round}}
                 </td>
             </tr>
