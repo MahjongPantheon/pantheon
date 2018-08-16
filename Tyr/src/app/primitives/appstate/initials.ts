@@ -27,7 +27,7 @@ import {
   AppOutcomeChombo,
   AppOutcomeMultiRon
 } from '../../interfaces/app';
-import { Outcome as OutcomeType } from '../../interfaces/common';
+import { Outcome as OutcomeType, Player } from '../../interfaces/common';
 import { getFixedFu } from '../yaku-values';
 
 export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcome {
@@ -39,6 +39,8 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         roundIndex: round,
         loser: null,
         winner: null,
+        winnerIsDealer: false,
+        loserIsDealer: false,
         han: 0,
         fu: 30,
         possibleFu: getFixedFu([], 'ron'),
@@ -54,6 +56,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         selectedOutcome: 'multiron',
         roundIndex: round,
         loser: null,
+        loserIsDealer: false,
         multiRon: 0,
         riichiBets: [],
         wins: {}
@@ -65,6 +68,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         selectedOutcome: 'tsumo',
         roundIndex: round,
         winner: null,
+        winnerIsDealer: false,
         han: 0,
         fu: 30,
         possibleFu: getFixedFu([], 'tsumo'),
@@ -98,7 +102,8 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       const outcomeChombo: AppOutcomeChombo = {
         selectedOutcome: 'chombo',
         roundIndex: round,
-        loser: null
+        loser: null,
+        loserIsDealer: false
       };
       out = outcomeChombo;
       break;
@@ -106,3 +111,4 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
 
   return out;
 }
+
