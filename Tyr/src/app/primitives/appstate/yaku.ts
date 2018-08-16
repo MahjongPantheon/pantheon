@@ -265,7 +265,10 @@ function _excludeYaku(outcome: AppOutcome, winner: number, rawYakuList: YakuId[]
 
     if (
       yaku === YakuId.RENHOU
-      && outcome.selectedOutcome === 'ron'
+      && (
+        outcome.selectedOutcome === 'ron'
+	|| outcome.selectedOutcome === 'multiron'
+      )
       && outcome.winnerIsDealer
     ) {
       return false; // dealer can't win with renhou
@@ -273,16 +276,20 @@ function _excludeYaku(outcome: AppOutcome, winner: number, rawYakuList: YakuId[]
 
     if (
       yaku === YakuId.TENHOU
-      && outcome.selectedOutcome === 'ron'
-      && !outcome.winnerIsDealer
+      && (
+        outcome.selectedOutcome !== 'tsumo'
+        || !outcome.winnerIsDealer
+      )
     ) {
       return false; // non-dealer can't win with tenhou
     }
 
     if (
       yaku === YakuId.CHIHOU
-      && outcome.selectedOutcome === 'ron'
-      && outcome.winnerIsDealer
+      && (
+        outcome.selectedOutcome !== 'tsumo'
+        || outcome.winnerIsDealer
+      )
     ) {
       return false; // dealer can't win with chihou
     }
