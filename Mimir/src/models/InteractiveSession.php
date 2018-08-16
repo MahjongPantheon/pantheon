@@ -118,10 +118,10 @@ class InteractiveSessionModel extends Model
      */
     public function cancelGame($gameHash)
     {
-        $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
         if (!$this->checkAdminToken()) {
             throw new AuthFailedException('Only administrators are allowed to cancel games');
         }
+        $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
         return $session->setStatus(SessionPrimitive::STATUS_CANCELLED)->save();
     }
 

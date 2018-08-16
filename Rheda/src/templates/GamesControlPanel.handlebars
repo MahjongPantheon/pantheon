@@ -69,7 +69,7 @@
                     {{/last_round}}
                 </td>
                 <td>
-                    {{^last_round}}{{!-- Show cancel game button only if no rounds remaining --}}
+                    {{^last_round}}{{!-- Mistake proofing: show cancel game button only if there are no completed rounds --}}
                     {{#gameIsCancellable}}
                         {{#a
                             href="/games/cancelGame/{hash}/"
