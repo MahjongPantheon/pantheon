@@ -352,7 +352,7 @@ class GameFormatter
                 $p['score'] = $t['scores'][$p['id']];
                 return $p;
             }, $t['players'], array_keys($t['players']));
-            $t['playersFlatList'] = implode(', ', array_map(function($p) {
+            $t['playersFlatList'] = implode(', ', array_map(function ($p) {
                 return $p['display_name'];
             }, $t['players']));
 
