@@ -23,11 +23,12 @@ import { AppOutcome } from '../../interfaces/app';
 import { YakuId } from '../yaku';
 import { intersection } from 'lodash';
 
-export function toggleWinner(p: Player, outcome: AppOutcome) {
+export function toggleWinner(p: Player, outcome: AppOutcome, players: Player[]) {
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
       outcome.winner = outcome.winner === p.id ? null : p.id;
+      outcome.winnerIsDealer = outcome.winner !== null && getDealerId(outcome, players) === p.id;
       break;
     case 'draw':
       const pIdx = outcome.tempai.indexOf(p.id);
@@ -47,6 +48,7 @@ export function toggleWinner(p: Player, outcome: AppOutcome) {
       } else {
         outcome.wins[p.id] = { // blank win item
           winner: p.id,
+          winnerIsDealer: getDealerId(outcome, players) === p.id,
           han: 0,
           fu: 0,
           possibleFu: [],
@@ -62,12 +64,13 @@ export function toggleWinner(p: Player, outcome: AppOutcome) {
   }
 }
 
-export function toggleLoser(p: Player, outcome: AppOutcome) {
+export function toggleLoser(p: Player, outcome: AppOutcome, players: Player[]) {
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'multiron':
     case 'chombo':
       outcome.loser = outcome.loser === p.id ? null : p.id;
+      outcome.loserIsDealer = outcome.loser !== null && getDealerId(outcome, players) === p.id;
       break;
     default:
       throw new Error('No losers exist on this outcome');
@@ -178,4 +181,14 @@ export function getDeadhandUsers(outcome: AppOutcome, playerIdMap: PMap): Player
   }
 }
 
+/**
+ * Get id of player who is dealer in this round
+ */
+function getDealerId(outcome: AppOutcome, playersList: Player[]): number {
+  let players = [playersList[0], playersList[1], playersList[2], playersList[3]];
+  for (let i = 1; i < outcome.roundIndex; i++) {
+    players = [players.pop()].concat(players);
+  }
 
+  return players[0].id;
+}

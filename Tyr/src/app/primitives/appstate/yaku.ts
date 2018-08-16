@@ -262,6 +262,31 @@ function _excludeYaku(outcome: AppOutcome, winner: number, rawYakuList: YakuId[]
     ) {
       return false; // disable open hand if one won with riichi
     }
+
+    if (
+      yaku === YakuId.RENHOU
+      && outcome.selectedOutcome === 'ron'
+      && outcome.winnerIsDealer
+    ) {
+      return false; // dealer can't win with renhou
+    }
+
+    if (
+      yaku === YakuId.TENHOU
+      && outcome.selectedOutcome === 'ron'
+      && !outcome.winnerIsDealer
+    ) {
+      return false; // non-dealer can't win with tenhou
+    }
+
+    if (
+      yaku === YakuId.CHIHOU
+      && outcome.selectedOutcome === 'ron'
+      && outcome.winnerIsDealer
+    ) {
+      return false; // dealer can't win with chihou
+    }
+
     return toBeExcluded.indexOf(yaku) === -1;
   });
 }

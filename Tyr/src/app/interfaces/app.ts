@@ -27,7 +27,8 @@ export interface Outcome {
 }
 
 export interface WinProps {
-  winner: number;
+  winner: number; // id of player
+  winnerIsDealer: boolean;
   paoPlayerId?: number;
   han: number;
   fu: number;
@@ -39,13 +40,15 @@ export interface WinProps {
 
 export interface AppOutcomeRon extends Outcome, WinProps {
   selectedOutcome: 'ron';
-  loser: number;
+  loser: number; // id of player
+  loserIsDealer: boolean;
   riichiBets: number[]; // ids of players
 }
 
 export interface AppOutcomeMultiRon extends Outcome {
   selectedOutcome: 'multiron';
-  loser: number;
+  loser: number; // id of player
+  loserIsDealer: boolean;
   multiRon: number;
   wins: { [key: number]: WinProps };
   riichiBets: number[]; // ids of players
@@ -71,7 +74,8 @@ export interface AppOutcomeDraw extends Outcome {
 
 export interface AppOutcomeChombo extends Outcome {
   selectedOutcome: 'chombo';
-  loser: number;
+  loser: number; // id of player
+  loserIsDealer: boolean;
 }
 
 export type AppOutcome
