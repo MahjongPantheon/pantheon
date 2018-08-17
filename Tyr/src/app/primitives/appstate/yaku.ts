@@ -267,7 +267,7 @@ function _excludeYaku(outcome: AppOutcome, winner: number, rawYakuList: YakuId[]
       yaku === YakuId.RENHOU
       && (
         outcome.selectedOutcome === 'ron'
-	|| outcome.selectedOutcome === 'multiron'
+        || outcome.selectedOutcome === 'multiron'
       )
       && outcome.winnerIsDealer
     ) {
