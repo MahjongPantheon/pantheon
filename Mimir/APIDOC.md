@@ -68,7 +68,7 @@ Returns: _array_ of session data
 
 ### getAllPlayers
 Parameters:
-* **$eventId** (_array_) 
+* **$eventIdList** (_array_) 
 
 Returns: _array_ 
 
@@ -274,6 +274,7 @@ Exceptions:
 ### getTablesState
 Parameters:
 * **$eventId** (_integer_) 
+* **$includeAllRounds** (_bool_) 
 
 Returns: _array_ 
 
@@ -386,6 +387,12 @@ Exceptions:
 * _\Exception_ 
 
 ### endGame
+Parameters:
+* **$gameHashcode** (_string_) Hashcode of game
+
+Returns: _bool_ Success?
+
+### cancelGame
 Parameters:
 * **$gameHashcode** (_string_) Hashcode of game
 

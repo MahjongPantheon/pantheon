@@ -66,7 +66,11 @@ class TableStatus extends Controller
             $tablesFormatted = apcu_fetch($cacheKey);
         } else {
             $tables = $this->_api->execute('getTablesState', [$this->_mainEventId, true]);
-            $tablesFormatted = $formatter->formatTables($tables, $this->_mainEventRules->gamesWaitingForTimer());
+            $tablesFormatted = $formatter->formatTables(
+                $tables,
+                $this->_mainEventRules->gamesWaitingForTimer(),
+                $this->_mainEventRules->syncStart()
+            );
             apcu_add($cacheKey, $tablesFormatted, 120); // 2 minutes cache
         }
 

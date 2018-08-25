@@ -71,6 +71,7 @@ return [
     'updatePlayersLocalIds' => ['EventsController', 'updateLocalIds'],
     'startGame'          => ['GamesController', 'start'],
     'endGame'            => ['GamesController', 'end'],
+    'cancelGame'         => ['GamesController', 'cancel'],
     'finalizeSessions'   => ['GamesController', 'finalizeSessions'],
     'addTextLog'         => ['GamesController', 'addTextLog'],
     'dropLastRound'      => ['GamesController', 'dropLastRound'],

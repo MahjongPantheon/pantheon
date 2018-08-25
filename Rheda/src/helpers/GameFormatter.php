@@ -315,15 +315,16 @@ class GameFormatter
 
     // ------------------- Tournament control page formatters -----------------------
 
-    public function formatTables($tables, $waitingForTimer)
+    public function formatTables($tables, $waitingForTimer, $isSyncStart)
     {
         $winds = ['東', '南', '西', '北'];
-        return array_map(function ($t) use ($waitingForTimer, &$winds) {
+        return array_map(function ($t) use ($waitingForTimer, $isSyncStart, &$winds) {
             if ($waitingForTimer) {
                 $t['status'] = 'READY';
             }
             $t['finished'] = $t['status'] == 'finished';
             $t['prefinished'] = $t['status'] == 'prefinished';
+            $t['gameIsCancellable'] = !$isSyncStart && $t['status'] == 'inprogress';
             if ($t['status'] == 'finished') {
                 $t['last_round'] = '';
             } else {
@@ -351,6 +352,9 @@ class GameFormatter
                 $p['score'] = $t['scores'][$p['id']];
                 return $p;
             }, $t['players'], array_keys($t['players']));
+            $t['playersFlatList'] = implode(', ', array_map(function ($p) {
+                return $p['display_name'];
+            }, $t['players']));
 
             $t['penalties'] = array_map(function ($p) use (&$players) {
                 $p['who'] = $players[$p['who']]['display_name'];
