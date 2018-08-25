@@ -108,6 +108,24 @@ class InteractiveSessionModel extends Model
     }
 
     /**
+     * This method cancels the game entirely. Game should not be finished
+     * or prefinished in the moment of cancellation. No other actions are
+     * performed when game is cancelled.
+     *
+     * @param $gameHash
+     * @throws \Exception
+     * @return bool
+     */
+    public function cancelGame($gameHash)
+    {
+        if (!$this->checkAdminToken()) {
+            throw new AuthFailedException('Only administrators are allowed to cancel games');
+        }
+        $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
+        return $session->setStatus(SessionPrimitive::STATUS_CANCELLED)->save();
+    }
+
+    /**
      * Finalize all sessions in event
      *
      * @param $eventId

@@ -146,6 +146,7 @@ class SessionPrimitive extends Primitive
     const STATUS_INPROGRESS = 'inprogress';
     const STATUS_PREFINISHED = 'prefinished';
     const STATUS_FINISHED = 'finished';
+    const STATUS_CANCELLED = 'cancelled';
 
     /**
      * planned / inprogress / prefinished / finished

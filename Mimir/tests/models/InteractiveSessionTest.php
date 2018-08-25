@@ -126,6 +126,33 @@ class SessionModelTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEquals('', $sessionPrimitive[0]->getEndDate());
     }
 
+    public function testCancelGame()
+    {
+        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $hash = $session->startGame(
+            $this->_event->getId(),
+            array_map(function (PlayerPrimitive $p) {
+                return $p->getId();
+            }, $this->_players)
+        );
+
+        $session->addRound($hash, [
+            'round_index' => 1,
+            'honba' => 0,
+            'outcome' => 'draw',
+            'tempai' => '',
+            'riichi' => ''
+        ]);
+
+        $session->cancelGame($hash);
+
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
+        $this->assertEquals(1, count($sessionPrimitive));
+        $this->assertEquals($this->_event->getId(), $sessionPrimitive[0]->getEventId());
+        $this->assertEquals(SessionPrimitive::STATUS_CANCELLED, $sessionPrimitive[0]->getStatus());
+        $this->assertEquals('', $sessionPrimitive[0]->getEndDate());
+    }
+
     public function testAddRoundRon()
     {
         $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);

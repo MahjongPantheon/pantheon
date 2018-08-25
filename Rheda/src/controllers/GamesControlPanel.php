@@ -50,6 +50,9 @@ class GamesControlPanel extends Controller
                     case 'dropLastRound':
                         $this->_api->execute('dropLastRound', [$this->_path['hash']]);
                         break;
+                    case 'cancelGame':
+                        $this->_api->execute('cancelGame', [$this->_path['hash']]);
+                        break;
                     default:
                         ;
                 }
@@ -90,7 +93,11 @@ class GamesControlPanel extends Controller
 
         // Tables info
         $tables = $this->_api->execute('getTablesState', [$this->_mainEventId]);
-        $tablesFormatted = $formatter->formatTables($tables, $this->_mainEventRules->gamesWaitingForTimer());
+        $tablesFormatted = $formatter->formatTables(
+            $tables,
+            $this->_mainEventRules->gamesWaitingForTimer(),
+            $this->_mainEventRules->syncStart()
+        );
 
         return [
             'reason' => '',

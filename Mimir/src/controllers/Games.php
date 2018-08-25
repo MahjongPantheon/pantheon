@@ -96,6 +96,21 @@ class GamesController extends Controller
     }
 
     /**
+     * Cancel game which is in progress now
+     *
+     * @param string $gameHashcode Hashcode of game
+     * @return bool Success?
+     */
+    public function cancel($gameHashcode)
+    {
+        $this->_log->addInfo('Cancelling game # ' . $gameHashcode);
+        $result = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->cancelGame($gameHashcode);
+        $this->_log->addInfo(($result ? 'Successfully cancelled' : 'Failed to cancel') . ' game # ' . $gameHashcode);
+        return $result;
+    }
+
+
+    /**
      * Finalize all pre-finished sessions in interactive tournament
      *
      * @param int $eventId
