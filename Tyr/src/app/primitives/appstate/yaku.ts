@@ -265,11 +265,16 @@ function _excludeYaku(outcome: AppOutcome, winner: number, rawYakuList: YakuId[]
 
     if (
       yaku === YakuId.RENHOU
-      && (
-        outcome.selectedOutcome === 'ron'
-        || outcome.selectedOutcome === 'multiron'
-      )
+      && outcome.selectedOutcome === 'ron'
       && outcome.winnerIsDealer
+    ) {
+      return false; // dealer can't win with renhou
+    }
+
+    if (
+      yaku === YakuId.RENHOU
+      && outcome.selectedOutcome === 'multiron'
+      && outcome.wins[winner].winnerIsDealer
     ) {
       return false; // dealer can't win with renhou
     }
