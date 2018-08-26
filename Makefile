@@ -11,6 +11,18 @@ NC = $(shell echo -e '\033[0m') # No Color
 get_docker_id:
 	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep pantheondev | awk '{print $$1}'))
 
+.PHONY: get_docker_idle_id
+get_docker_idle_id:
+	$(eval IDLE_DOCKER_ID := $(shell docker ps -a | grep pantheondev | awk '{print $$1}'))
+
+.PHONY: get_pgadmin_id
+get_pgadmin_id:
+	$(eval RUNNING_PGADMIN_ID := $(shell docker ps | grep pgadmin4 | grep 5632 | awk '{print $$1}'))
+
+.PHONY: get_pgadmin_idle_id
+get_pgadmin_idle_id:
+	$(eval IDLE_PGADMIN_ID := $(shell docker ps -a | grep pgadmin4 | grep 5632 | awk '{print $$1}'))
+
 .PHONY: deps
 deps: get_docker_id
 	@echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."
@@ -22,54 +34,106 @@ deps: get_docker_id
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make deps'; \
 	fi
 
-.PHONY: container
-container: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" != "" ]; then \
-		echo "${RED}Pantheon container is up, you should stop it before rebuild.${NC}"; \
-	else \
-		echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
-		docker build -t pantheondev . ; \
+.PHONY: kill
+kill: stop get_docker_idle_id get_pgadmin_idle_id
+	@if [ "$(IDLE_DOCKER_ID)" != "" ]; then \
+		docker rm $(IDLE_DOCKER_ID) ; \
+	fi ; \
+	if [ "$(IDLE_PGADMIN_ID)" != "" ]; then \
+		docker rm $(IDLE_PGADMIN_ID) ; \
 	fi
+
+.PHONY: container
+container: kill
+  echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
+  docker build -t pantheondev . ; \
 
 # Alias for conformity
 .PHONY: start
 start: run
 
-.PHONY: run
-run: get_docker_id
+.PHONY: pgadmin_start
+pgadmin_start: get_pgadmin_id get_pgadmin_idle_id
+	@if [ "$(RUNNING_PGADMIN_ID)" != "" ]; then \
+		echo "${YELLOW}Pantheon pgadmin container have already been started.${NC}"; \
+	else \
+		if [ "$(IDLE_PGADMIN_ID)" != "" ]; then \
+			docker start $(IDLE_PGADMIN_ID) ; \
+		else \
+			docker pull dpage/pgadmin4 && \
+			docker run --link=pantheondev -p 5632:80 \
+				-e "PGADMIN_DEFAULT_EMAIL=dev@pantheon.local" \
+				-e "PGADMIN_DEFAULT_PASSWORD=password" \
+				-d dpage/pgadmin4 \
+				pantheonpgadmin; \
+		fi \
+	fi
+
+.PHONY: pgadmin_stop
+pgadmin_stop: get_pgadmin_id
+	@if [ "$(RUNNING_PGADMIN_ID)" = "" ]; then \
+		echo "${RED}Pantheon pgadmin container is not running, can't stop it.${NC}"; \
+	else \
+		echo "${GREEN}Stopping pgadmin container...${NC}"; \
+		docker kill $(RUNNING_PGADMIN_ID); \
+	fi
+
+.PHONY: pantheon_run
+pantheon_run: get_docker_id get_docker_idle_id
 	@if [ "$(RUNNING_DOCKER_ID)" != "" ]; then \
 		echo "${YELLOW}Pantheon containers have already been started.${NC}"; \
 	else \
 		echo "----------------------------------------------------------------------------------"; \
-		echo "${GREEN}Starting container. Don't forget to run 'make stop' to stop it when you're done :)${NC}"; \
-		echo "----------------------------------------------------------------------------------"; \
-		echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
-		echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
-		echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
-		echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
-		echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as angular dev server."; \
-		echo "----------------------------------------------------------------------------------"; \
-		echo " ${GREEN}Run 'make logs' in separate console to view container logs on-line${NC} "; \
-		echo " ${GREEN}Run 'make php_logs' in separate console to view php logs on-line${NC} "; \
-		echo " ${YELLOW}Run 'make shell' in separate console to get into container shell${NC} "; \
-		echo "----------------------------------------------------------------------------------"; \
-		docker run \
-			-d -e LOCAL_USER_ID=$(UID) \
-			-p4001:4001 -p4002:4002 -p4003:4003 -p5532:5532 \
-			-v `pwd`/Tyr:/var/www/html/Tyr:z \
-			-v `pwd`/Mimir:/var/www/html/Mimir:z \
-			-v `pwd`/Rheda:/var/www/html/Rheda:z \
-			pantheondev; \
+  	echo "${GREEN}Starting container. Don't forget to run 'make stop' to stop it when you're done :)${NC}"; \
+  	echo "----------------------------------------------------------------------------------"; \
+  	echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
+  	echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
+  	echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
+  	echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as angular dev server."; \
+  	echo "----------------------------------------------------------------------------------"; \
+  	echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
+  	echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632) of local host"; \
+  	echo "    -> Login to PgAdmin4 as: "; \
+  	echo "    ->     Username: dev@pantheon.local "; \
+  	echo "    ->     Password: password "; \
+  	echo "    -> PgAdmin4 pgsql connection credentials hint: "; \
+  	echo "    ->     Hostname: pantheondev "; \
+  	echo "    ->     Port:     5532 "; \
+  	echo "    ->     Username: mimir "; \
+  	echo "    ->     Password: pgpass "; \
+  	echo "----------------------------------------------------------------------------------"; \
+  	echo " ${GREEN}Run 'make logs' in separate console to view container logs on-line${NC} "; \
+  	echo " ${GREEN}Run 'make php_logs' in separate console to view php logs on-line${NC} "; \
+  	echo " ${YELLOW}Run 'make shell' in separate console to get into container shell${NC} "; \
+  	echo "----------------------------------------------------------------------------------"; \
+		if [ "$(IDLE_DOCKER_ID)" != "" ]; then \
+  		docker start $(IDLE_DOCKER_ID) ; \
+  	else \
+			docker run \
+				-d -e LOCAL_USER_ID=$(UID) \
+				-p 127.0.0.1:4001:4001 -p 127.0.0.1:4002:4002 -p 127.0.0.1:4003:4003 -p 127.0.0.1:5532:5532 \
+				-v `pwd`/Tyr:/var/www/html/Tyr:z \
+				-v `pwd`/Mimir:/var/www/html/Mimir:z \
+				-v `pwd`/Rheda:/var/www/html/Rheda:z \
+				--name=pantheondev \
+				pantheondev; \
+		fi \
 	fi
 
-.PHONY: stop
-stop: get_docker_id
+.PHONY: pantheon_stop
+pantheon_stop: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Pantheon container is not running, can't stop it.${NC}"; \
 	else \
 		echo "${GREEN}Stopping all the party...${NC}"; \
 		docker kill $(RUNNING_DOCKER_ID); \
 	fi
+
+.PHONY: run
+run: pantheon_run pgadmin_start
+
+.PHONY: stop
+stop: pantheon_stop pgadmin_stop
 
 .PHONY: ngdev
 ngdev: get_docker_id
