@@ -1,10 +1,21 @@
+<style>
+  .rules-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .rules-flex-item {
+    flex: 1 1 48%;
+    width: 48%;
+    padding: 5px;
+  }
+</style>
 <div class="rules-flex-container">
-  {{#rules}}
-    <div class="input-group mb-3 rules-flex-item">
-      <div class="input-group-prepend">
-        <span class="input-group-text">{{name}}</span>
-      </div>
-      <input type="text" class="form-control" readonly value="{{value}}">
+  {{#rules}}{{#name}}
+    <div class="rules-flex-item">
+      <label>{{description}}
+        <input type="text" class="form-control" readonly value="{{value}}">
+      </label>
     </div>
-  {{/rules}}
+  {{/name}}{{/rules}}
 </div>
