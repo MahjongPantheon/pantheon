@@ -67,6 +67,19 @@ class Config
     /**
      * @return array
      */
+    public function toArray()
+    {
+        $arr = [];
+        foreach ($this as $k => $v) {
+            $arr[substr($k, 1)] = $v;
+        }
+
+        return $arr;
+    }
+
+    /**
+     * @return array
+     */
     public function allowedYaku()
     {
         return $this->_allowedYaku;

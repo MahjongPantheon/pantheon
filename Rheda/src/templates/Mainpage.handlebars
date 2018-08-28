@@ -17,55 +17,76 @@
 
 
 {{#isAggregated}}
-<h3>{{_t 'Aggregated event'}}</h3>
-<hr>
-{{#eventsInfo}}
+  <h3>{{_t 'Aggregated event'}}</h3>
+  <hr>
+  {{#eventsInfo}}
     {{title}}
     <br>
     {{description}}
     <hr>
-{{/eventsInfo}}
+  {{/eventsInfo}}
 {{/isAggregated}}
 {{^isAggregated}}
-<h3>{{title}}</h3>
-{{#description}}
-<hr>
+  <h3>{{title}}</h3>
+  {{#description}}
+    <hr>
     {{{description}}}
-{{/description}}
-<br>
+  {{/description}}
+
+  <br/><br/>
+  <div id="Rules">
+    <div class="card">
+      <div id="RulesHeading">
+        <span class="mb-0">
+          <button class="btn btn-link collapsed"
+                  data-toggle="collapse" data-target="#RulesOverview"
+                  aria-expanded="false" aria-controls="RulesOverview">
+            {{_t 'Rules overview'}}
+          </button>
+        </span>
+      </div>
+
+      <div id="RulesOverview" class="collapse" aria-labelledby="RulesHeading" data-parent="#Rules">
+        <div class="card-body">
+          {{> partials/RulesOverview }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
 {{/isAggregated}}
 
 {{#hasData}}
-    <table class='table table-striped table-condensed'>
-        <tr>
-            <th>#</th>
-            <th>{{_t 'Player'}}</th>
-            <th>{{_t 'Best series'}}</th>
-            <th>{{_t 'Points of best series'}}</th>
-            <th>{{_t 'Last series'}}</th>
-            <th>{{_t 'Points of last series'}}</th>
-        </tr>
-        {{#data}}
-            <tr>
-                <td>{{_index}}</td>
-                <td>
-                    {{#player}}
-                        {{#a href='/user/{id}/'}}{{display_name}}{{/a}}
-                    {{/player}}
-                </td>
-                <td>
-                    {{#best_series}}
-                        {{#a href='/game/{hash}/'}}{{place}}{{/a}}
-                    {{/best_series}}
-                </td>
-                <td>{{best_series_scores}}</td>
-                <td>
-                    {{#current_series}}
-                        {{#a href='/game/{hash}/'}}{{place}}{{/a}}
-                    {{/current_series}}
-                </td>
-                <td>{{current_series_scores}}</td>
-            </tr>
-        {{/data}}
-    </table>
+  <table class='table table-striped table-condensed'>
+      <tr>
+        <th>#</th>
+        <th>{{_t 'Player'}}</th>
+        <th>{{_t 'Best series'}}</th>
+        <th>{{_t 'Points of best series'}}</th>
+        <th>{{_t 'Last series'}}</th>
+        <th>{{_t 'Points of last series'}}</th>
+      </tr>
+    {{#data}}
+      <tr>
+        <td>{{_index}}</td>
+        <td>
+          {{#player}}
+            {{#a href='/user/{id}/'}}{{display_name}}{{/a}}
+          {{/player}}
+        </td>
+        <td>
+          {{#best_series}}
+            {{#a href='/game/{hash}/'}}{{place}}{{/a}}
+          {{/best_series}}
+        </td>
+        <td>{{best_series_scores}}</td>
+        <td>
+          {{#current_series}}
+            {{#a href='/game/{hash}/'}}{{place}}{{/a}}
+          {{/current_series}}
+        </td>
+        <td>{{current_series_scores}}</td>
+      </tr>
+    {{/data}}
+  </table>
 {{/hasData}}
