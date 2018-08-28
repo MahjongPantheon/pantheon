@@ -1,0 +1,10 @@
+<div class="rules-flex-container">
+  {{#rules}}
+    <div class="input-group mb-3 rules-flex-item">
+      <div class="input-group-prepend">
+        <span class="input-group-text">{{name}}</span>
+      </div>
+      <input type="text" class="form-control" readonly value="{{value}}">
+    </div>
+  {{/rules}}
+</div>

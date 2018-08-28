@@ -41,9 +41,13 @@ class Mainpage extends Controller
 
         /* All code below is for simple non-aggregated events.  */
         if ($this->_mainEventRules->seriesLength() == 0) {
+            $rules = $this->_mainEventRules->toArray();
             return [
                 'title' => $this->_mainEventRules->eventTitle(),
-                'description' => $this->_mainEventRules->eventDescription()
+                'description' => $this->_mainEventRules->eventDescription(),
+                'rules' => array_map(function($key, $value) {
+                    return ['name' => $key, 'value' => $value];
+                }, array_keys($rules), array_values($rules))
             ];
         }
 
