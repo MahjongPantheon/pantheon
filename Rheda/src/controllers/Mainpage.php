@@ -42,11 +42,33 @@ class Mainpage extends Controller
         /* All code below is for simple non-aggregated events.  */
         if ($this->_mainEventRules->seriesLength() == 0) {
             $rules = $this->_mainEventRules->toArray();
+            $ruleDescriptions = Config::getRuleDescriptions();
             return [
                 'title' => $this->_mainEventRules->eventTitle(),
                 'description' => $this->_mainEventRules->eventDescription(),
-                'rules' => array_map(function($key, $value) {
-                    return ['name' => $key, 'value' => $value];
+                'rules' => array_map(function($key, $value) use(&$ruleDescriptions) {
+                    if (
+                        $key == 'allowedYaku' ||
+                        $key == 'tenboDivider' ||
+                        $key == 'ratingDivider' ||
+                        $key == 'gameExpirationTime' ||
+                        $key == 'eventTitle ' ||
+                        $key == 'eventDescription' ||
+                        $key == 'eventStatHost' ||
+                        $key == 'isTextlog' ||
+                        $key == 'gamesStatus' ||
+                        $key == 'hideResults' ||
+                        $key == 'hideAddReplayButton'
+                    ) { // don't display this for now
+                        return null;
+                    }
+                    return [
+                        'name' => $key,
+                        'value' => $value === true || $value === false
+                            ? ($value === true ? _t('yes') : _t('no'))
+                            : $value,
+                        'description' => $ruleDescriptions[$key]
+                    ];
                 }, array_keys($rules), array_values($rules))
             ];
         }
