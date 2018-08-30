@@ -39,9 +39,6 @@ msgstr "Текущая серия"
 msgid "Points of last series"
 msgstr "Очки в текущей серии"
 
-msgid "Game details"
-msgstr "Подробнее об игре"
-
 msgid "Recent games"
 msgstr "Последние игры"
 
@@ -56,6 +53,9 @@ msgstr "Позже"
 
 msgid "Earlier"
 msgstr "Раньше"
+
+msgid "Game details"
+msgstr "Подробнее об игре"
 
 msgid "Personal stats"
 msgstr "Личная статистика"
@@ -147,6 +147,37 @@ msgstr "Стоимость рук"
 msgid "Yaku collected over all time"
 msgstr "Собранные яку (за все время)"
 
+msgid "Add player"
+msgstr "Добавить игрока"
+
+msgid "All players list"
+msgstr "Список всех игроков в системе"
+
+msgid ""
+"Note: if a player is already added to the rating, adding him again will "
+"result in reissuing his PIN code."
+msgstr ""
+"Примечание: если игрок уже добавлен в текущий рейтинг, нажатие на кнопку "
+"добавления будет эквивалентно перевыдаче ПИН-кода."
+
+msgid "Admin actions"
+msgstr "Действия администратора"
+
+msgid "Add to current rating"
+msgstr "Добавить в текущий рейтинг"
+
+msgid "Add new player to the system"
+msgstr "Добавить нового игрока в систему"
+
+msgid "System name"
+msgstr "Системное имя"
+
+msgid "Real name"
+msgstr "Реальное имя"
+
+msgid "Register"
+msgstr "Зарегистрировать"
+
 msgid "Statistics"
 msgstr "Статистика"
 
@@ -171,14 +202,17 @@ msgstr "Очки:"
 msgid "Ongoing series:"
 msgstr "Текущая серия:"
 
-msgid "Rating table"
-msgstr "Рейтинг"
-
 msgid "Add online game"
 msgstr "Добавить онлайн-игру"
 
-msgid "Admin actions"
-msgstr "Действия администратора"
+msgid "The game has been successfully added!"
+msgstr "Игра успешно добавлена!"
+
+msgid "Add game"
+msgstr "Добавить игру"
+
+msgid "Rating table"
+msgstr "Рейтинг"
 
 msgid "Tournament control panel"
 msgstr "Управление турниром"
@@ -188,9 +222,6 @@ msgstr "Управление играми"
 
 msgid "Penalties"
 msgstr "Штрафы"
-
-msgid "Add player"
-msgstr "Добавить игрока"
 
 msgid "Manage players"
 msgstr "Управление игроками"
@@ -206,37 +237,6 @@ msgstr "Таймер и рассадка"
 
 msgid "Login"
 msgstr "Вход"
-
-msgid "All players list"
-msgstr "Список всех игроков в системе"
-
-msgid ""
-"Note: if a player is already added to the rating, adding him again will "
-"result in reissuing his PIN code."
-msgstr ""
-"Примечание: если игрок уже добавлен в текущий рейтинг, нажатие на кнопку "
-"добавления будет эквивалентно перевыдаче ПИН-кода."
-
-msgid "Add to current rating"
-msgstr "Добавить в текущий рейтинг"
-
-msgid "Add new player to the system"
-msgstr "Добавить нового игрока в систему"
-
-msgid "System name"
-msgstr "Системное имя"
-
-msgid "Real name"
-msgstr "Реальное имя"
-
-msgid "Register"
-msgstr "Зарегистрировать"
-
-msgid "The game has been successfully added!"
-msgstr "Игра успешно добавлена!"
-
-msgid "Add game"
-msgstr "Добавить игру"
 
 msgid "Achievement"
 msgstr "Номинация"
@@ -639,25 +639,6 @@ msgstr "Среднее место"
 msgid "Average points"
 msgstr "Средние очки"
 
-msgid "Going back in 3 seconds..."
-msgstr "Идем назад через 3 секунды..."
-
-msgid "Add new game"
-msgstr "Добавить новую игру"
-
-msgid "Format:"
-msgstr "Формат:"
-
-msgid ""
-"Renchans/honba are calculated automatically. Also points and payments checks "
-"are performed: in case of any inconsistency the alert is displayed."
-msgstr ""
-"Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
-"системой, в случае несоответствия будет выдано предупреждение."
-
-msgid "Player aliases"
-msgstr "Алиасы"
-
 msgid "Confirm round cancellation: "
 msgstr "Подтвердите отмену раздачи: "
 
@@ -684,6 +665,25 @@ msgstr "Штрафы:"
 
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr "%s - штраф %s очков. Причина: %s"
+
+msgid "Going back in 3 seconds..."
+msgstr "Идем назад через 3 секунды..."
+
+msgid "Add new game"
+msgstr "Добавить новую игру"
+
+msgid "Format:"
+msgstr "Формат:"
+
+msgid ""
+"Renchans/honba are calculated automatically. Also points and payments checks "
+"are performed: in case of any inconsistency the alert is displayed."
+msgstr ""
+"Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
+"системой, в случае несоответствия будет выдано предупреждение."
+
+msgid "Player aliases"
+msgstr "Алиасы"
 
 msgid "Timer"
 msgstr "Таймер"
@@ -732,19 +732,6 @@ msgstr "Рейтинг"
 
 msgid "Han"
 msgstr "Хан"
-
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-"Скрытие рейтинговой таблицы для игроков может быть полезно для сохранения "
-"интриги в последних ханчанах турнира."
-
-msgid "Rating table is hidden. Show"
-msgstr "Рейтинговая таблица скрыта. Показать"
-
-msgid "Rating table is visible. Hide"
-msgstr "Рейтинговая таблица доступна. Скрыть"
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
 msgstr "<b>%s</b> - %s (<b>%s</b>, пао: <b>%s</b>), якуман!"
@@ -802,6 +789,19 @@ msgstr "Пересдача."
 
 msgid "Chombo: %s."
 msgstr "Чомбо: %s."
+
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+"Скрытие рейтинговой таблицы для игроков может быть полезно для сохранения "
+"интриги в последних ханчанах турнира."
+
+msgid "Rating table is hidden. Show"
+msgstr "Рейтинговая таблица скрыта. Показать"
+
+msgid "Rating table is visible. Hide"
+msgstr "Рейтинговая таблица доступна. Скрыть"
 
 msgid "Additional penalties"
 msgstr "Дополнительные штрафы"
@@ -1258,6 +1258,21 @@ msgstr "Включены ли серии игр"
 
 msgid "If seating for all games is entered in advance"
 msgstr "Задается ли рассадка на все игры заранее"
+
+msgid "If riichi bets left on the table go to winner of the hanchan"
+msgstr "Уходят ли неразыгранные риичи-ставки победителю игры"
+
+msgid "If tanyao in open hand is allowed"
+msgstr "Разрешено ли таняо на открытой руке"
+
+msgid "If all the games should be started simultaneously (tournament mode)"
+msgstr "Должны ли все игры начинаться одновременно (в режиме турнира)"
+
+msgid "If all the games should be finished simultaneously (tournament mode)"
+msgstr "Должны ли все игры заканчиваться одновременно (в режиме турнира)"
+
+msgid "If rating table should first be sorted by number of games played"
+msgstr "Сортировать ли рейтинговую таблицу сначала по числу сыгранных игр"
 
 #~ msgid "You can't wait on this"
 #~ msgstr "Он не может на это ждать"
