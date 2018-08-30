@@ -8,7 +8,7 @@ php:
 
 before_script:
   - make container
-  - make run
+  - make pantheon_run
   - make deps
   - make migrate
 

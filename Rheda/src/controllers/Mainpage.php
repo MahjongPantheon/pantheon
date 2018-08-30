@@ -47,9 +47,8 @@ class Mainpage extends Controller
                 'title' => $this->_mainEventRules->eventTitle(),
                 'description' => $this->_mainEventRules->eventDescription(),
                 'isLoggedIn' => $this->_adminAuthOk(),
-                'rules' => array_map(function($key, $value) use(&$ruleDescriptions) {
-                    if (
-                        $key == 'allowedYaku' ||
+                'rules' => array_map(function ($key, $value) use (&$ruleDescriptions) {
+                    if ($key == 'allowedYaku' ||
                         $key == 'tenboDivider' ||
                         $key == 'ratingDivider' ||
                         $key == 'gameExpirationTime' ||
