@@ -44,9 +44,14 @@ kill: stop get_docker_idle_id get_pgadmin_idle_id
 	fi
 
 .PHONY: container
-container: kill
-  echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
-  docker build -t pantheondev . ; \
+container: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
+		docker build -t pantheondev . ; \
+	else \
+		echo "${RED}Pantheon container is running, you must stop it before rebuild.${NC}"; \
+	fi
+
 
 # Alias for conformity
 .PHONY: start

@@ -14,12 +14,15 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.9\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "Aggregated event"
 msgstr "Агрегированное событие"
+
+msgid "Rules overview"
+msgstr "Обзор правил"
 
 msgid "Player"
 msgstr "Игрок"
@@ -36,9 +39,6 @@ msgstr "Текущая серия"
 msgid "Points of last series"
 msgstr "Очки в текущей серии"
 
-msgid "Game details"
-msgstr "Подробнее об игре"
-
 msgid "Recent games"
 msgstr "Последние игры"
 
@@ -53,6 +53,9 @@ msgstr "Позже"
 
 msgid "Earlier"
 msgstr "Раньше"
+
+msgid "Game details"
+msgstr "Подробнее об игре"
 
 msgid "Personal stats"
 msgstr "Личная статистика"
@@ -144,6 +147,37 @@ msgstr "Стоимость рук"
 msgid "Yaku collected over all time"
 msgstr "Собранные яку (за все время)"
 
+msgid "Add player"
+msgstr "Добавить игрока"
+
+msgid "All players list"
+msgstr "Список всех игроков в системе"
+
+msgid ""
+"Note: if a player is already added to the rating, adding him again will "
+"result in reissuing his PIN code."
+msgstr ""
+"Примечание: если игрок уже добавлен в текущий рейтинг, нажатие на кнопку "
+"добавления будет эквивалентно перевыдаче ПИН-кода."
+
+msgid "Admin actions"
+msgstr "Действия администратора"
+
+msgid "Add to current rating"
+msgstr "Добавить в текущий рейтинг"
+
+msgid "Add new player to the system"
+msgstr "Добавить нового игрока в систему"
+
+msgid "System name"
+msgstr "Системное имя"
+
+msgid "Real name"
+msgstr "Реальное имя"
+
+msgid "Register"
+msgstr "Зарегистрировать"
+
 msgid "Statistics"
 msgstr "Статистика"
 
@@ -168,14 +202,17 @@ msgstr "Очки:"
 msgid "Ongoing series:"
 msgstr "Текущая серия:"
 
-msgid "Rating table"
-msgstr "Рейтинг"
-
 msgid "Add online game"
 msgstr "Добавить онлайн-игру"
 
-msgid "Admin actions"
-msgstr "Действия администратора"
+msgid "The game has been successfully added!"
+msgstr "Игра успешно добавлена!"
+
+msgid "Add game"
+msgstr "Добавить игру"
+
+msgid "Rating table"
+msgstr "Рейтинг"
 
 msgid "Tournament control panel"
 msgstr "Управление турниром"
@@ -185,9 +222,6 @@ msgstr "Управление играми"
 
 msgid "Penalties"
 msgstr "Штрафы"
-
-msgid "Add player"
-msgstr "Добавить игрока"
 
 msgid "Manage players"
 msgstr "Управление игроками"
@@ -204,45 +238,145 @@ msgstr "Таймер и рассадка"
 msgid "Login"
 msgstr "Вход"
 
-msgid "All players list"
-msgstr "Список всех игроков в системе"
+msgid "Achievement"
+msgstr "Номинация"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Value"
+msgstr "Значение"
+
+msgid "Nominees"
+msgstr "Номинанты"
+
+msgid "Best hand"
+msgstr "Лучшая рука"
 
 msgid ""
-"Note: if a player is already added to the rating, adding him again will "
-"result in reissuing his PIN code."
+"Given for collecting the hand with biggest han count (independent of cost)."
+msgstr "Дается за сбор руки с наибольшим число хан (независимо от стоимости)"
+
+msgid "Over 9000 fu"
+msgstr "Over 9000 fu"
+
+msgid "Given for collecting the hand with biggest minipoints (fu) count."
+msgstr "Дается за сбор руки с наибольшим количеством минипойнтов (фу)."
+
+msgid "%s fu"
+msgstr "%s фу"
+
+msgid "I saw them dancing"
+msgstr "Задолбал!"
+
+msgid "Given for collecting the most of tsumo hands during single game."
+msgstr "Дается за сбор максимального числа цумо в рамках одного ханчана."
+
+msgid "Die Hard"
+msgstr "Крепкий орешек"
+
+msgid "Given for smallest count of feeding into ron during the tournament."
+msgstr "Дается за минимальное число набросов в рон за турнир."
+
+msgid "Brave minesweeper"
+msgstr "Бравый сапёр"
+
+msgid "Given for largest count of feeding into ron during the tournament."
+msgstr "Дается за максимальное число набросов в рон за турнир."
+
+msgid "Chombo master"
+msgstr "Чомбо-мастер"
+
+msgid "Given for collecting a chombo during a tournament."
+msgstr "Дается за получение штрафа чомбо на турнире."
+
+msgid "%s: %d chombo penalty"
+msgid_plural "%s: %d chombo penalties"
+msgstr[0] "%s: %d штраф чомбо"
+msgstr[1] "%s: %d штрафа чомбо"
+msgstr[2] "%s: %d штрафов чомбо"
+
+msgid "Guest of honors"
+msgstr "Довакин aka The mother of dragons"
+
+msgid "Given for collecting the most of yakuhais during the tournament."
+msgstr "Дается за сбор максимального числа якухаев за турнир."
+
+msgid "%s: %d yakuhai"
+msgid_plural "%s: %d yakuhais"
+msgstr[0] "%s: %d якухай"
+msgstr[1] "%s: %d якухая"
+msgstr[2] "%s: %d якухаев"
+
+msgid "The great dealer"
+msgstr "Восточный мастер"
+
+msgid "Given for largest count of dealer wins during the tournament."
+msgstr "Дается за максимальное число побед на дилере суммарно за турнир."
+
+msgid "%d win"
+msgid_plural "%d wins"
+msgstr[0] "%d победа"
+msgstr[1] "%d победы"
+msgstr[2] "%d побед"
+
+msgid "The 1k Flash"
+msgstr "Мистер Хэнки"
+
+msgid "Given for the most of 1/30 wins during tournament."
+msgstr "Дается за максимальное число собранных рук в 1/30 за весь турнир."
+
+msgid "%d quickest hand"
+msgid_plural "%d quickest hands"
+msgstr[0] "%d самая быстрая рука"
+msgstr[1] "%d самых быстрых руки"
+msgstr[2] "%d самых быстрых рук"
+
+msgid "Jewelry included"
+msgstr "Якуман-мастер"
+
+msgid "Given for collecting a yakuman during tournament."
+msgstr "Дается за сбор якумана на турнире."
+
+msgid "This can't be your wait"
+msgstr "Он не может на это ждать"
+
+msgid ""
+"Given for feeding into largest hand during tournament (but not while in "
+"riichi)."
 msgstr ""
-"Примечание: если игрок уже добавлен в текущий рейтинг, нажатие на кнопку "
-"добавления будет эквивалентно перевыдаче ПИН-кода."
+"Дается за наброс в наибольшую по стоимости руку за весь турнир (но не из-под "
+"риичи)."
 
-msgid "Add to current rating"
-msgstr "Добавить в текущий рейтинг"
+msgid "%s han, %s fu"
+msgstr "%s хан, %s фу"
 
-msgid "Add new player to the system"
-msgstr "Добавить нового игрока в систему"
+msgid "%s han"
+msgstr "%s хан"
 
-msgid "System name"
-msgstr "Системное имя"
+msgid "Honored donor"
+msgstr "Почетный донор"
 
-msgid "Real name"
-msgstr "Реальное имя"
+msgid "Given for losing largest amount of points as riichi bets."
+msgstr "Дается за потерю максимального числа очков за счет риичи-ставок."
 
-msgid "Register"
-msgstr "Зарегистрировать"
+msgid "%s bet"
+msgid_plural "%s bets"
+msgstr[0] "%s ставка"
+msgstr[1] "%s ставки"
+msgstr[2] "%s ставок"
 
-msgid "The game has been successfully added!"
-msgstr "Игра успешно добавлена!"
+msgid "Just as planned"
+msgstr "Как и планировалось"
 
-msgid "Add game"
-msgstr "Добавить игру"
+msgid "Given for getting largest number of ippatsu during tournament."
+msgstr "Дается за максимальное число побед с иппацу за турнир."
 
-msgid "Admin panel"
-msgstr "Администрирование"
-
-msgid "Authorized successfully!"
-msgstr "Авторизация прошла успешно!"
-
-msgid "Authorize"
-msgstr "Авторизоваться"
+msgid "%s ippatsu"
+msgid_plural "%s ippatsu"
+msgstr[0] "%s иппацу"
+msgstr[1] "%s иппацу"
+msgstr[2] "%s иппацу"
 
 msgid "Something went wrong: %s"
 msgstr "Что-то пошло не так, и вот что именно: %s"
@@ -415,145 +549,14 @@ msgstr "Завершить игры? Отменить раздачу стане�
 msgid "Confirm the results and finish all games"
 msgstr "Утвердить результаты и завершить игры"
 
-msgid "Achievement"
-msgstr "Номинация"
+msgid "Admin panel"
+msgstr "Администрирование"
 
-msgid "Description"
-msgstr "Описание"
+msgid "Authorized successfully!"
+msgstr "Авторизация прошла успешно!"
 
-msgid "Value"
-msgstr "Значение"
-
-msgid "Nominees"
-msgstr "Номинанты"
-
-msgid "Best hand"
-msgstr "Лучшая рука"
-
-msgid ""
-"Given for collecting the hand with biggest han count (independent of cost)."
-msgstr "Дается за сбор руки с наибольшим число хан (независимо от стоимости)"
-
-msgid "Over 9000 fu"
-msgstr "Over 9000 fu"
-
-msgid "Given for collecting the hand with biggest minipoints (fu) count."
-msgstr "Дается за сбор руки с наибольшим количеством минипойнтов (фу)."
-
-msgid "%s fu"
-msgstr "%s фу"
-
-msgid "I saw them dancing"
-msgstr "Задолбал!"
-
-msgid "Given for collecting the most of tsumo hands during single game."
-msgstr "Дается за сбор максимального числа цумо в рамках одного ханчана."
-
-msgid "Die Hard"
-msgstr "Крепкий орешек"
-
-msgid "Given for smallest count of feeding into ron during the tournament."
-msgstr "Дается за минимальное число набросов в рон за турнир."
-
-msgid "Brave minesweeper"
-msgstr "Бравый сапёр"
-
-msgid "Given for largest count of feeding into ron during the tournament."
-msgstr "Дается за максимальное число набросов в рон за турнир."
-
-msgid "Chombo master"
-msgstr "Чомбо-мастер"
-
-msgid "Given for collecting a chombo during a tournament."
-msgstr "Дается за получение штрафа чомбо на турнире."
-
-msgid "%s: %d chombo penalty"
-msgid_plural "%s: %d chombo penalties"
-msgstr[0] "%s: %d штраф чомбо"
-msgstr[1] "%s: %d штрафа чомбо"
-msgstr[2] "%s: %d штрафов чомбо"
-
-msgid "Guest of honors"
-msgstr "Довакин aka The mother of dragons"
-
-msgid "Given for collecting the most of yakuhais during the tournament."
-msgstr "Дается за сбор максимального числа якухаев за турнир."
-
-msgid "%s: %d yakuhai"
-msgid_plural "%s: %d yakuhais"
-msgstr[0] "%s: %d якухай"
-msgstr[1] "%s: %d якухая"
-msgstr[2] "%s: %d якухаев"
-
-msgid "The great dealer"
-msgstr "Восточный мастер"
-
-msgid "Given for largest count of dealer wins during the tournament."
-msgstr "Дается за максимальное число побед на дилере суммарно за турнир."
-
-msgid "%d win"
-msgid_plural "%d wins"
-msgstr[0] "%d победа"
-msgstr[1] "%d победы"
-msgstr[2] "%d побед"
-
-msgid "The 1k Flash"
-msgstr "Мистер Хэнки"
-
-msgid "Given for the most of 1/30 wins during tournament."
-msgstr "Дается за максимальное число собранных рук в 1/30 за весь турнир."
-
-msgid "%d quickest hand"
-msgid_plural "%d quickest hands"
-msgstr[0] "%d самая быстрая рука"
-msgstr[1] "%d самых быстрых руки"
-msgstr[2] "%d самых быстрых рук"
-
-msgid "Jewelry included"
-msgstr "Якуман-мастер"
-
-msgid "Given for collecting a yakuman during tournament."
-msgstr "Дается за сбор якумана на турнире."
-
-msgid "This can't be your wait"
-msgstr "Он не может на это ждать"
-
-msgid ""
-"Given for feeding into largest hand during tournament (but not while in "
-"riichi)."
-msgstr ""
-"Дается за наброс в наибольшую по стоимости руку за весь турнир (но не из-под "
-"риичи)."
-
-msgid "%s han, %s fu"
-msgstr "%s хан, %s фу"
-
-msgid "%s han"
-msgstr "%s хан"
-
-msgid "Honored donor"
-msgstr "Почетный донор"
-
-msgid "Given for losing largest amount of points as riichi bets."
-msgstr "Дается за потерю максимального числа очков за счет риичи-ставок."
-
-msgid "%s bet"
-msgid_plural "%s bets"
-msgstr[0] "%s ставка"
-msgstr[1] "%s ставки"
-msgstr[2] "%s ставок"
-
-msgid "Just as planned"
-msgstr "Как и планировалось"
-
-msgid "Given for getting largest number of ippatsu during tournament."
-msgstr "Дается за максимальное число побед с иппацу за турнир."
-
-msgid "%s ippatsu"
-msgid_plural "%s ippatsu"
-msgstr[0] "%s иппацу"
-msgstr[1] "%s иппацу"
-msgstr[2] "%s иппацу"
+msgid "Authorize"
+msgstr "Авторизоваться"
 
 msgid "Predefined seating configuration"
 msgstr "Конфигурация предопределенной рассадки"
@@ -609,33 +612,6 @@ msgstr "СМ"
 msgid "AvPts"
 msgstr "СО"
 
-msgid "Confirm round cancellation: "
-msgstr "Подтвердите отмену раздачи: "
-
-msgid "Confirm game cancellation: "
-msgstr "Подтвердите отмену игры: "
-
-msgid "Tables state:"
-msgstr "Состояние столов:"
-
-msgid "Last played round:"
-msgstr "Последняя сыгранная раздача:"
-
-msgid "(no rounds are played yet)"
-msgstr "(ни одной раздачи еще не сыграно)"
-
-msgid "Cancel last played round"
-msgstr "Отменить последнюю раздачу"
-
-msgid "Cancel game"
-msgstr "Отменить игру"
-
-msgid "Penalties:"
-msgstr "Штрафы:"
-
-msgid "%s - %s points of penalty. Reason: %s"
-msgstr "%s - штраф %s очков. Причина: %s"
-
 msgid "No time left!"
 msgstr "СТОП!"
 
@@ -662,6 +638,33 @@ msgstr "Среднее место"
 
 msgid "Average points"
 msgstr "Средние очки"
+
+msgid "Confirm round cancellation: "
+msgstr "Подтвердите отмену раздачи: "
+
+msgid "Confirm game cancellation: "
+msgstr "Подтвердите отмену игры: "
+
+msgid "Tables state:"
+msgstr "Состояние столов:"
+
+msgid "Last played round:"
+msgstr "Последняя сыгранная раздача:"
+
+msgid "(no rounds are played yet)"
+msgstr "(ни одной раздачи еще не сыграно)"
+
+msgid "Cancel last played round"
+msgstr "Отменить последнюю раздачу"
+
+msgid "Cancel game"
+msgstr "Отменить игру"
+
+msgid "Penalties:"
+msgstr "Штрафы:"
+
+msgid "%s - %s points of penalty. Reason: %s"
+msgstr "%s - штраф %s очков. Причина: %s"
 
 msgid "Going back in 3 seconds..."
 msgstr "Идем назад через 3 секунды..."
@@ -690,12 +693,6 @@ msgstr "Ветер: %s"
 
 msgid "Full game log:"
 msgstr "Полный лог игры:"
-
-msgid "Rating"
-msgstr "Рейтинг"
-
-msgid "Han"
-msgstr "Хан"
 
 msgid "Date & time"
 msgstr "Дата/время"
@@ -729,6 +726,12 @@ msgstr "Дополнительные штрафы:"
 
 msgid "%s - %d points (%s)"
 msgstr "%s - %d очков (%s)"
+
+msgid "Rating"
+msgstr "Рейтинг"
+
+msgid "Han"
+msgstr "Хан"
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
 msgstr "<b>%s</b> - %s (<b>%s</b>, пао: <b>%s</b>), якуман!"
@@ -800,6 +803,31 @@ msgstr "Рейтинговая таблица скрыта. Показать"
 msgid "Rating table is visible. Hide"
 msgstr "Рейтинговая таблица доступна. Скрыть"
 
+msgid "Additional penalties"
+msgstr "Дополнительные штрафы"
+
+msgid ""
+"A penalty may be applied only to player currently in game. Otherwise error "
+"will occur."
+msgstr ""
+"Штраф может быть назначен только для игрока, который на данный момент "
+"находится в игре. В ином случае будет ошибка."
+
+msgid "Select player"
+msgstr "Выберите игрока"
+
+msgid "Penalty amount"
+msgstr "Размер штрафа"
+
+msgid "Penalty reason"
+msgstr "Причина штрафа"
+
+msgid "Check twice penalty data. You won't be able to cancel the penalty"
+msgstr "Проверьте дважды введенные данные. Отменить штраф будет нельзя."
+
+msgid "Apply penalty"
+msgstr "Применить штраф"
+
 msgid "Players management"
 msgstr "Управление игроками"
 
@@ -836,31 +864,6 @@ msgstr ""
 
 msgid "Save local IDs"
 msgstr "Сохранить локальные ID"
-
-msgid "Additional penalties"
-msgstr "Дополнительные штрафы"
-
-msgid ""
-"A penalty may be applied only to player currently in game. Otherwise error "
-"will occur."
-msgstr ""
-"Штраф может быть назначен только для игрока, который на данный момент "
-"находится в игре. В ином случае будет ошибка."
-
-msgid "Select player"
-msgstr "Выберите игрока"
-
-msgid "Penalty amount"
-msgstr "Размер штрафа"
-
-msgid "Penalty reason"
-msgstr "Причина штрафа"
-
-msgid "Check twice penalty data. You won't be able to cancel the penalty"
-msgstr "Проверьте дважды введенные данные. Отменить штраф будет нельзя."
-
-msgid "Apply penalty"
-msgstr "Применить штраф"
 
 msgid "Enter tables, one per line."
 msgstr "Введите состав столов, один стол - одна строка."
@@ -1144,6 +1147,132 @@ msgstr "Для агрегированных событий страница не
 
 msgid "Event tables status"
 msgstr "Статус столов"
+
+msgid "yes"
+msgstr "да"
+
+msgid "no"
+msgstr "нет"
+
+msgid "Allowed yaku"
+msgstr "Разрешенные яку"
+
+msgid "Points to start with"
+msgstr "Стартовые очки"
+
+msgid "If start points should be subtracted from result"
+msgstr "Должны ли стартовые очки вычитаться из результата"
+
+msgid "If kazoe should be yakuman, not sanbaiman"
+msgstr "Должен ли казоэ быть якуманом, а не санбайманом"
+
+msgid "If 4/30 and 3/60 should be rounded to mangan"
+msgstr "Должны ли руки 4/30 и 3/60 округляться до мангана"
+
+msgid "If abortive draws are allowed"
+msgstr "Разрешены ли пересдачи (абортивные ничьи)"
+
+msgid "If nagashi mangan is allowed"
+msgstr "Разрешен ли нагаши манган"
+
+msgid "If atamahane is enabled"
+msgstr "Включено ли атамаханэ"
+
+msgid "Basic ruleset name"
+msgstr "Имя базового набора правил"
+
+msgid "If games have east rounds only"
+msgstr "Только восточные раунды в играх"
+
+msgid "Rating initial points amount"
+msgstr "Начальные рейтинговые очки"
+
+msgid "If riichi bets on table will go to winner"
+msgstr "Уходят ли неразыгранные риичи-ставки победителю"
+
+msgid "If chombo should be payed in points"
+msgstr "Должно ли быть чомбо выплачено сразу"
+
+msgid "Chombo penalty in rating points"
+msgstr "Штраф чомбо в рейтинговых очках"
+
+msgid "If tanyao counts on open hand"
+msgstr "Засчитывается ли таняо на открытой руке"
+
+msgid "If game ends when any player goes bankrupt"
+msgstr "Заканчивается ли игра, если один из игроков уходит в минус"
+
+msgid "If multiple yakumans are enabled"
+msgstr "Разрешены ли множественные якуманы"
+
+msgid "Minimal arbitrary penalty amount"
+msgstr "Минимальный произвольный штраф"
+
+msgid "Maximal arbitrary penalty amount"
+msgstr "Максимальный произвольный штраф"
+
+msgid "Step of penalty amounts"
+msgstr "Шаг в размерах штрафа"
+
+msgid "Red zone duration"
+msgstr "Длительность красной зоны"
+
+msgid "Yellow zone duration"
+msgstr "Длительность желтой зоны"
+
+msgid "Timer policy"
+msgstr "Политика таймера"
+
+msgid "If automatic seating is allowed"
+msgstr "Включена ли автоматическая рассадка"
+
+msgid "If event is online"
+msgstr "Является ли рейтинг онлайновым"
+
+msgid "Game duration in minutes"
+msgstr "Длительность игры в минутах"
+
+msgid "If game ends when leading dealer wins in last round"
+msgstr "Заканчивается ли игра при победе лидирующего дилера"
+
+msgid "If games should be started simultaneously"
+msgstr "Должны ли все игры начинаться одновременно"
+
+msgid "If games should be finished simultaneously"
+msgstr "Должны ли все игры заканчиваться одновременно"
+
+msgid "If rating table should be sorted by games count first"
+msgstr "Сортировать ли рейтинговую таблицу сначала по числу сыгранных игр"
+
+msgid "If new players are allowed to join in the middle of event"
+msgstr "Допускается ли добавление новых игроков после начала первых игр"
+
+msgid "If timer should be used"
+msgstr "Должен ли быть использован таймер"
+
+msgid "If arbitrary penalties are enabled"
+msgstr "Включены ли произвольные штрафы"
+
+msgid "If game series are enabled"
+msgstr "Включены ли серии игр"
+
+msgid "If seating for all games is entered in advance"
+msgstr "Задается ли рассадка на все игры заранее"
+
+msgid "If riichi bets left on the table go to winner of the hanchan"
+msgstr "Уходят ли неразыгранные риичи-ставки победителю игры"
+
+msgid "If tanyao in open hand is allowed"
+msgstr "Разрешено ли таняо на открытой руке"
+
+msgid "If all the games should be started simultaneously (tournament mode)"
+msgstr "Должны ли все игры начинаться одновременно (в режиме турнира)"
+
+msgid "If all the games should be finished simultaneously (tournament mode)"
+msgstr "Должны ли все игры заканчиваться одновременно (в режиме турнира)"
+
+msgid "If rating table should first be sorted by number of games played"
+msgstr "Сортировать ли рейтинговую таблицу сначала по числу сыгранных игр"
 
 #~ msgid "You can't wait on this"
 #~ msgstr "Он не может на это ждать"
