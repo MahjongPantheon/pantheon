@@ -65,10 +65,10 @@ class Config
             'ratingDivider' => null, // not intended to be shown in rule overview
             'tonpuusen' => _t('If games have east rounds only'),
             'startRating' => _t('Rating initial points amount'),
-            'riichiGoesToWinner' => _t('If riichi bets on table will go to winner'),
+            'riichiGoesToWinner' => _t('If riichi bets left on the table go to winner of the hanchan'),
             'extraChomboPayments' => _t('If chombo should be payed in points'),
             'chomboPenalty' => _t('Chombo penalty in rating points'),
-            'withKuitan' => _t('If tanyao counts on open hand'),
+            'withKuitan' => _t('If tanyao in open hand is allowed'),
             'withButtobi' => _t('If game ends when any player goes bankrupt'),
             'withMultiYakumans' => _t('If multiple yakumans are enabled'),
             'gameExpirationTime' => null, // not intended to be shown in rule overview
@@ -86,9 +86,9 @@ class Config
             'gameDuration' => _t('Game duration in minutes'),
             'withLeadingDealerGameover' => _t('If game ends when leading dealer wins in last round'),
             'isTextlog' => null, // not intended to be shown in rule overview
-            'syncStart' => _t('If games should be started simultaneously'),
-            'syncEnd' => _t('If games should be finished simultaneously'),
-            'sortByGames' => _t('If rating table should be sorted by games count first'),
+            'syncStart' => _t('If all the games should be started simultaneously (tournament mode)'),
+            'syncEnd' => _t('If all the games should be finished simultaneously (tournament mode)'),
+            'sortByGames' => _t('If rating table should first be sorted by number of games played'),
             'allowPlayerAppend' => _t('If new players are allowed to join in the middle of event'),
             'useTimer' => _t('If timer should be used'),
             'usePenalty' => _t('If arbitrary penalties are enabled'),

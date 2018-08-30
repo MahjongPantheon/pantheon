@@ -28,9 +28,6 @@ msgstr ""
 msgid "Points of last series"
 msgstr ""
 
-msgid "Game details"
-msgstr ""
-
 msgid "Recent games"
 msgstr ""
 
@@ -44,6 +41,9 @@ msgid "Later"
 msgstr ""
 
 msgid "Earlier"
+msgstr ""
+
+msgid "Game details"
 msgstr ""
 
 msgid "Personal stats"
@@ -136,6 +136,35 @@ msgstr ""
 msgid "Yaku collected over all time"
 msgstr ""
 
+msgid "Add player"
+msgstr ""
+
+msgid "All players list"
+msgstr ""
+
+msgid ""
+"Note: if a player is already added to the rating, adding him again will "
+"result in reissuing his PIN code."
+msgstr ""
+
+msgid "Admin actions"
+msgstr ""
+
+msgid "Add to current rating"
+msgstr ""
+
+msgid "Add new player to the system"
+msgstr ""
+
+msgid "System name"
+msgstr ""
+
+msgid "Real name"
+msgstr ""
+
+msgid "Register"
+msgstr ""
+
 msgid "Statistics"
 msgstr ""
 
@@ -160,13 +189,16 @@ msgstr ""
 msgid "Ongoing series:"
 msgstr ""
 
-msgid "Rating table"
-msgstr ""
-
 msgid "Add online game"
 msgstr ""
 
-msgid "Admin actions"
+msgid "The game has been successfully added!"
+msgstr ""
+
+msgid "Add game"
+msgstr ""
+
+msgid "Rating table"
 msgstr ""
 
 msgid "Tournament control panel"
@@ -176,9 +208,6 @@ msgid "Games control panel"
 msgstr ""
 
 msgid "Penalties"
-msgstr ""
-
-msgid "Add player"
 msgstr ""
 
 msgid "Manage players"
@@ -194,35 +223,6 @@ msgid "Timer & seating"
 msgstr ""
 
 msgid "Login"
-msgstr ""
-
-msgid "All players list"
-msgstr ""
-
-msgid ""
-"Note: if a player is already added to the rating, adding him again will "
-"result in reissuing his PIN code."
-msgstr ""
-
-msgid "Add to current rating"
-msgstr ""
-
-msgid "Add new player to the system"
-msgstr ""
-
-msgid "System name"
-msgstr ""
-
-msgid "Real name"
-msgstr ""
-
-msgid "Register"
-msgstr ""
-
-msgid "The game has been successfully added!"
-msgstr ""
-
-msgid "Add game"
 msgstr ""
 
 msgid "Achievement"
@@ -585,23 +585,6 @@ msgstr ""
 msgid "Average points"
 msgstr ""
 
-msgid "Going back in 3 seconds..."
-msgstr ""
-
-msgid "Add new game"
-msgstr ""
-
-msgid "Format:"
-msgstr ""
-
-msgid ""
-"Renchans/honba are calculated automatically. Also points and payments "
-"checks are performed: in case of any inconsistency the alert is displayed."
-msgstr ""
-
-msgid "Player aliases"
-msgstr ""
-
 msgid "Confirm round cancellation: "
 msgstr ""
 
@@ -627,6 +610,23 @@ msgid "Penalties:"
 msgstr ""
 
 msgid "%s - %s points of penalty. Reason: %s"
+msgstr ""
+
+msgid "Going back in 3 seconds..."
+msgstr ""
+
+msgid "Add new game"
+msgstr ""
+
+msgid "Format:"
+msgstr ""
+
+msgid ""
+"Renchans/honba are calculated automatically. Also points and payments "
+"checks are performed: in case of any inconsistency the alert is displayed."
+msgstr ""
+
+msgid "Player aliases"
 msgstr ""
 
 msgid "Timer"
@@ -675,17 +675,6 @@ msgid "Rating"
 msgstr ""
 
 msgid "Han"
-msgstr ""
-
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-
-msgid "Rating table is hidden. Show"
-msgstr ""
-
-msgid "Rating table is visible. Hide"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -743,6 +732,17 @@ msgid "Abortive draw."
 msgstr ""
 
 msgid "Chombo: %s."
+msgstr ""
+
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+
+msgid "Rating table is hidden. Show"
+msgstr ""
+
+msgid "Rating table is visible. Hide"
 msgstr ""
 
 msgid "Additional penalties"
@@ -1181,4 +1181,19 @@ msgid "If game series are enabled"
 msgstr ""
 
 msgid "If seating for all games is entered in advance"
+msgstr ""
+
+msgid "If riichi bets left on the table go to winner of the hanchan"
+msgstr ""
+
+msgid "If tanyao in open hand is allowed"
+msgstr ""
+
+msgid "If all the games should be started simultaneously (tournament mode)"
+msgstr ""
+
+msgid "If all the games should be finished simultaneously (tournament mode)"
+msgstr ""
+
+msgid "If rating table should first be sorted by number of games played"
 msgstr ""
