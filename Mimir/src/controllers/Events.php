@@ -386,6 +386,7 @@ class EventsController extends Controller
             'withLeadingDealerGameover' => $rules->withLeadingDealerGameOver(),
             'subtractStartPoints' => $rules->subtractStartPoints(),
             'seriesLength'        => $event[0]->getSeriesLength(),
+            'minGamesCount'        => $event[0]->getMinGamesCount(),
             'gamesStatus'         => $event[0]->getGamesStatus(),
             'hideResults'         => (bool)$event[0]->getHideResults(),
             'hideAddReplayButton' => $hideAddReplayButton,
