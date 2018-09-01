@@ -41,7 +41,7 @@
             <th>{{_t 'Games played'}}</th>
         </tr>
         {{#data}}
-        <tr>
+        <tr class="{{#min_was_played}}row-min-was-played{{/min_was_played}}">
             <td>{{_index}}</td>
             <td>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}{{#if isOnlineTournament}} ({{tenhou_id}}){{/if}}</td>
             <td><span class="badge

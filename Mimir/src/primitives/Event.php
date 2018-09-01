@@ -60,6 +60,7 @@ class EventPrimitive extends Primitive
         'games_status'      => '_gamesStatus',
         'hide_results'      => '_hideResults',
         'is_prescripted'    => '_isPrescripted',
+        'min_games_count'   => '_minGamesCount',
     ];
 
     protected function _getFieldsTransforms()
@@ -89,6 +90,7 @@ class EventPrimitive extends Primitive
             '_seriesLength'       => $this->_integerTransform(),
             '_gamesStatus'        => $this->_stringTransform(true),
             '_hideResults'        => $this->_integerTransform(),
+            '_minGamesCount'      => $this->_integerTransform(),
             '_ruleset'            => [
                 'serialize' => function (Ruleset $rules) {
                     return $rules->title();
@@ -243,6 +245,11 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_seriesLength;
+    /**
+     * How many games should be played in the event
+     * @var integer
+     */
+    protected $_minGamesCount;
     /**
      * Should be rating table hidden or not
      * @var integer
@@ -813,6 +820,24 @@ class EventPrimitive extends Primitive
     public function setSeriesLength($seriesLength)
     {
         $this->_seriesLength = $seriesLength;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getMinGamesCount()
+    {
+        return $this->_minGamesCount;
+    }
+
+    /**
+     * @param integer $minGamesCount
+     * @return EventPrimitive
+     */
+    public function setMinGamesCount($minGamesCount)
+    {
+        $this->_minGamesCount = $minGamesCount;
         return $this;
     }
 
