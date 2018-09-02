@@ -44,6 +44,7 @@ class Config
     protected $_useTimer = false;
     protected $_usePenalty = false;
     protected $_seriesLength = 0;
+    protected $_minGamesCount = 0;
     protected $_gamesStatus = false;
     protected $_hideResults = false;
     protected $_hideAddReplayButton = false;
@@ -414,6 +415,13 @@ class Config
     public function seriesLength()
     {
         return $this->_seriesLength;
+    }
+    /**
+     * @return int
+     */
+    public function minGamesCount()
+    {
+        return $this->_minGamesCount;
     }
     /**
      * @return bool
