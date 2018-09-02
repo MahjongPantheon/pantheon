@@ -1777,14 +1777,6 @@ pre code {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-.row-min-was-played:nth-of-type(even) {
-  background-color: rgba(0, 255, 129, 0.12);
-}
-
-.row-min-was-played:nth-of-type(odd) {
-  background-color: rgba(96, 201, 149, 0.27) !important;
-}
-
 .table-dark.table-hover tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.075);
 }
