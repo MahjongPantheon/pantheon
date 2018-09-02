@@ -111,7 +111,7 @@ class RatingTable extends Controller
                 $el['short_name'] = $this->_makeShortName($el['display_name']);
                 $el['avg_place_less_precision'] = sprintf('%.2f', $el['avg_place']);
                 $el['avg_score_int'] = round($el['avg_score']);
-                $el['min_was_played'] = $minGamesCount == 0 || $minGamesCount <= $el['games_played'];
+                $el['min_was_played'] = $minGamesCount != 0 && $minGamesCount <= $el['games_played'];
                 return $el;
             }, $data);
         } catch (Exception $e) {
