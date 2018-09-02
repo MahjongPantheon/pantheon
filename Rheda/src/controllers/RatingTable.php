@@ -102,13 +102,16 @@ class RatingTable extends Controller
                 ]);
             }, array_values($players)));
 
+            $minGamesCount = $this->_mainEventRules->minGamesCount();
+
             // Assign indexes for table view
             $ctr = 1;
-            $data = array_map(function ($el) use (&$ctr, &$players) {
+            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount) {
                 $el['_index'] = $ctr++;
                 $el['short_name'] = $this->_makeShortName($el['display_name']);
                 $el['avg_place_less_precision'] = sprintf('%.2f', $el['avg_place']);
                 $el['avg_score_int'] = round($el['avg_score']);
+                $el['min_was_played'] = $minGamesCount != 0 && $minGamesCount <= $el['games_played'];
                 return $el;
             }, $data);
         } catch (Exception $e) {
@@ -116,6 +119,7 @@ class RatingTable extends Controller
         }
 
         $hideResults = $this->_mainEventRules->hideResults();
+
         $showAdminWarning = false;
 
         // admin should be able to see results
