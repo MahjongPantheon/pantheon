@@ -229,7 +229,7 @@ class AccessController extends Controller
     {
         $this->_logStart(__METHOD__, [$personId, $eventId]);
         // TODO: check access admin rights here...
-        $success = $this->_getModel()->clearAccessCache($personId, $eventId);
+        $success = AccessManagementModel::clearAccessCache($personId, $eventId);
         $this->_logSuccess(__METHOD__, [$personId, $eventId]);
         return $success;
     }

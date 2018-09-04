@@ -17,7 +17,7 @@
  */
 namespace Frey;
 
-require_once __DIR__ . '/../Primitive.php';
+require_once __DIR__ . '/Access.php';
 
 /**
  * Class PersonAccessPrimitive
@@ -26,12 +26,9 @@ require_once __DIR__ . '/../Primitive.php';
  * Low-level model with basic CRUD operations and relations
  * @package Frey
  */
-class PersonAccessPrimitive extends Primitive
+class PersonAccessPrimitive extends AccessPrimitive
 {
     protected static $_table = 'person_access';
-    const TYPE_BOOL = 'bool';
-    const TYPE_INT = 'int';
-    const TYPE_ENUM = 'enum'; // Type is called enum to prevent filling value fields with arbitrary strings.
 
     protected static $_fieldsMapping = [
         'id'                => '_id',
@@ -55,11 +52,6 @@ class PersonAccessPrimitive extends Primitive
     }
 
     /**
-     * Local id
-     * @var int | null
-     */
-    protected $_id;
-    /**
      * Id of person this rule is applied to
      * @var int
      */
@@ -69,53 +61,6 @@ class PersonAccessPrimitive extends Primitive
      * @var PersonPrimitive
      */
     protected $_person;
-    /**
-     * Events this rule is applied to. If empty, this means rule is applied system-wide.
-     * @var int[]
-     */
-    protected $_eventIds;
-    /**
-     * Data type stored in this cell. Can be boolean, enum or integer
-     * @var string
-     */
-    protected $_aclType;
-    /**
-     * ACL item recognizable name to differentiate this one from others
-     * @var string
-     */
-    protected $_aclName;
-    /**
-     * ACL value. Has limit of 255 bytes long for performance reasons
-     * @var string
-     */
-    protected $_aclValue;
-
-    protected function _create()
-    {
-        $accessRule = $this->_db->table(self::$_table)->create();
-        $success = $this->_save($accessRule);
-        if ($success) {
-            $this->_id = $this->_db->lastInsertId();
-        }
-
-        return $success;
-    }
-
-    protected function _deident()
-    {
-        $this->_id = null;
-    }
-
-    /**
-     * @param IDb $db
-     * @param $ids
-     * @return PersonAccessPrimitive[]
-     * @throws \Exception
-     */
-    public static function findById(IDb $db, $ids)
-    {
-        return self::_findBy($db, 'id', $ids);
-    }
 
     /**
      * Find rules by person id list
@@ -128,14 +73,6 @@ class PersonAccessPrimitive extends Primitive
     public static function findByPerson(IDb $db, $ids)
     {
         return self::_findBy($db, 'person_id', $ids);
-    }
-
-    /**
-     * @return int | null
-     */
-    public function getId()
-    {
-        return $this->_id;
     }
 
     /**
@@ -170,81 +107,6 @@ class PersonAccessPrimitive extends Primitive
     {
         $this->_person = $person;
         $this->_personId = $person->getId();
-        return $this;
-    }
-
-    /**
-     * @return int[]
-     */
-    public function getEventsId()
-    {
-        return $this->_eventIds;
-    }
-
-    /**
-     * @param int[] $eventIds
-     * @return PersonAccessPrimitive
-     */
-    public function setEventIds($eventIds): PersonAccessPrimitive
-    {
-        $this->_eventIds = $eventIds;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAclType(): string
-    {
-        return $this->_aclType;
-    }
-
-    /**
-     * @param string $aclType
-     * @return PersonAccessPrimitive
-     */
-    public function setAclType(string $aclType): PersonAccessPrimitive
-    {
-        if ($aclType != self::TYPE_BOOL && $aclType != self::TYPE_ENUM && $aclType != self::TYPE_INT) {
-            throw new \InvalidArgumentException('Unsupported ACL type: see TYPE_ constants in AccessPrimitive');
-        }
-        $this->_aclType = $aclType;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAclName(): string
-    {
-        return $this->_aclName;
-    }
-
-    /**
-     * @param string $aclName
-     * @return PersonAccessPrimitive
-     */
-    public function setAclName(string $aclName): PersonAccessPrimitive
-    {
-        $this->_aclName = $aclName;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAclValue(): string
-    {
-        return $this->_aclValue;
-    }
-
-    /**
-     * @param string $aclValue
-     * @return PersonAccessPrimitive
-     */
-    public function setAclValue(string $aclValue): PersonAccessPrimitive
-    {
-        $this->_aclValue = $aclValue;
         return $this;
     }
 }

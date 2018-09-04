@@ -152,7 +152,7 @@ class AccessManagementModel extends Model
      * @param $ruleType   'bool', 'int' or 'enum'
      * @param $personId
      * @param $eventId
-     * @return bool  success
+     * @return int|null Rule id
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -172,13 +172,19 @@ class AccessManagementModel extends Model
             throw new EntityNotFoundException('Person with id #' . $personId . ' not found in DB', 403);
         }
 
+        /** @var PersonAccessPrimitive $rule */
         $rule = (new PersonAccessPrimitive($this->_db))
             ->setAclName($ruleName)
             ->setAclType($ruleType)
             ->setAclValue($ruleValue)
             ->setEventIds([$eventId])
             ->setPerson($persons[0]);
-        return $rule->save();
+        $success = $rule->save();
+        if (!$success) {
+            return null;
+        }
+
+        return $rule->getId();
     }
 
     /**
@@ -189,7 +195,7 @@ class AccessManagementModel extends Model
      * @param $ruleType   'bool', 'int' or 'enum'
      * @param $groupId
      * @param $eventId
-     * @return bool   success
+     * @return int|null Rule id
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -209,13 +215,19 @@ class AccessManagementModel extends Model
             throw new EntityNotFoundException('Group with id #' . $groupId . ' not found in DB', 405);
         }
 
+        /** @var GroupAccessPrimitive $rule */
         $rule = (new GroupAccessPrimitive($this->_db))
             ->setAclName($ruleName)
             ->setAclType($ruleType)
             ->setAclValue($ruleValue)
             ->setEventIds([$eventId])
             ->setGroup($groups[0]);
-        return $rule->save();
+        $success = $rule->save();
+        if (!$success) {
+            return null;
+        }
+
+        return $rule->getId();
     }
 
     /**
@@ -341,9 +353,9 @@ class AccessManagementModel extends Model
      * @param $eventId
      * @return bool
      */
-    public function clearAccessCache($personId, $eventId)
+    public static function clearAccessCache($personId, $eventId)
     {
-        return apcu_delete($this->_getAccessCacheKey($personId, $eventId));
+        return apcu_delete(self::_getAccessCacheKey($personId, $eventId));
     }
 
     /**
@@ -353,7 +365,7 @@ class AccessManagementModel extends Model
      * @param $eventId
      * @return string
      */
-    protected function _getAccessCacheKey($personId, $eventId)
+    protected static function _getAccessCacheKey($personId, $eventId)
     {
         return "access_${personId}_${eventId}";
     }
