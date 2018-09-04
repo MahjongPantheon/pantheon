@@ -108,7 +108,7 @@ class AccessController extends Controller
      * @param string $ruleType   'bool', 'int' or 'enum'
      * @param integer $personId
      * @param integer $eventId
-     * @return bool   success
+     * @return integer rule id
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -117,9 +117,11 @@ class AccessController extends Controller
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
         // TODO: check access admin rights here...
-        $success = $this->_getModel()->addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId);
-        $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
-        return $success;
+        $ruleId = $this->_getModel()->addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId);
+        if ($ruleId !== null) {
+            $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
+        }
+        return $ruleId;
     }
 
     /**
@@ -130,7 +132,7 @@ class AccessController extends Controller
      * @param string $ruleType   'bool', 'int' or 'enum'
      * @param integer $groupId
      * @param integer $eventId
-     * @return bool   success
+     * @return integer rule id
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -139,9 +141,11 @@ class AccessController extends Controller
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId, $eventId]);
         // TODO: check access admin rights here...
-        $success = $this->_getModel()->addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId);
-        $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId, $eventId]);
-        return $success;
+        $ruleId = $this->_getModel()->addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId);
+        if ($ruleId !== null) {
+            $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId, $eventId]);
+        }
+        return $ruleId;
     }
 
     /**
