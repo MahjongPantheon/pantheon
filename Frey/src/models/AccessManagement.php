@@ -54,11 +54,17 @@ class AccessManagementModel extends Model
 
         $resultingRules = [];
         foreach ($this->_getGroupAccessRules($persons[0]->getGroupIds(), $eventId) as $rule) {
-            $resultingRules[$rule->getAclName()] = $rule->getAclValue();
+            $systemWideRuleToBeApplied = empty($rule->getEventsId()) && !isset($resultingRules[$rule->getAclName()]);
+            if ($systemWideRuleToBeApplied || !empty($rule->getEventsId()) /* not systemwide rule */) {
+                $resultingRules[$rule->getAclName()] = $rule->getAclValue();
+            }
         }
         foreach ($this->_getPersonAccessRules($personId, $eventId) as $rule) {
             // Person rules have higher priority than group rules
-            $resultingRules[$rule->getAclName()] = $rule->getAclValue();
+            $systemWideRuleToBeApplied = empty($rule->getEventsId()) && !isset($resultingRules[$rule->getAclName()]);
+            if ($systemWideRuleToBeApplied || !empty($rule->getEventsId()) /* not systemwide rule */) {
+                $resultingRules[$rule->getAclName()] = $rule->getAclValue();
+            }
         }
 
         apcu_store($this->_getAccessCacheKey($personId, $eventId), $resultingRules, self::CACHE_TTL_SEC);
