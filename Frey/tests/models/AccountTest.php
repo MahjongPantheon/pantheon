@@ -31,21 +31,17 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateAccount()
     {
-
     }
 
     public function testGetPersonalInfo()
     {
-
     }
 
     public function testUpdatePersonalInfo()
     {
-
     }
 
     public function testFindByTitleFuzzy()
     {
-
     }
 }

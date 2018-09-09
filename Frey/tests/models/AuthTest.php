@@ -219,7 +219,10 @@ class AuthModelTest extends \PHPUnit_Framework_TestCase
         $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
         $model->approveRegistration($approvalCode);
         $authToken = $model->changePassword(
-            'test@test.com', 'greatpassword', 'newpassword');
+            'test@test.com',
+            'greatpassword',
+            'newpassword'
+        );
         $this->assertNotEmpty($authToken);
         // check if password really changed
         $authToken = $model->authorize('test@test.com', 'newpassword');
