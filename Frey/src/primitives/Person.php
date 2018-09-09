@@ -310,7 +310,7 @@ class PersonPrimitive extends Primitive
      */
     public function getAuthResetToken(): string
     {
-        return $this->_authResetToken;
+        return $this->_authResetToken ?: '';
     }
 
     /**

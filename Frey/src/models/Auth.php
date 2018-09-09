@@ -21,6 +21,7 @@ require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/../primitives/Registrant.php';
 require_once __DIR__ . '/../primitives/Person.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
+require_once __DIR__ . '/../exceptions/EntityNotFound.php';
 
 class AuthModel extends Model
 {
@@ -110,7 +111,7 @@ class AuthModel extends Model
             throw new EntityNotFoundException('Email is not known to auth system', 403);
         }
 
-        if (!$this->_checkPasswordFull($password, $person[0]->getAuthHash(), $person[0]->getAuthSalt())) {
+        if (!$this->checkPasswordFull($password, $person[0]->getAuthHash(), $person[0]->getAuthSalt())) {
             throw new AuthFailedException('Password is incorrect', 404);
         }
 
@@ -158,7 +159,7 @@ class AuthModel extends Model
             throw new EntityNotFoundException('Email is not known to auth system', 406);
         }
 
-        if (!$this->_checkPasswordFull($password, $person[0]->getAuthHash(), $person[0]->getAuthSalt())) {
+        if (!$this->checkPasswordFull($password, $person[0]->getAuthHash(), $person[0]->getAuthSalt())) {
             throw new AuthFailedException('Password is incorrect', 404);
         }
 
@@ -265,7 +266,7 @@ class AuthModel extends Model
      * @param $authSalt
      * @return bool
      */
-    protected function _checkPasswordFull($password, $authHash, $authSalt): bool
+    public function checkPasswordFull($password, $authHash, $authSalt): bool
     {
         $clientSideToken = $this->_makeClientSideToken($password, $authSalt);
         return $this->_checkPasswordQuick($clientSideToken, $authHash);
