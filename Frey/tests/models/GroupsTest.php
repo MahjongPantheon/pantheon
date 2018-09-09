@@ -31,21 +31,17 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateGroup()
     {
-
     }
 
     public function testGetGroups()
     {
-
     }
 
     public function testUpdateGroup()
     {
-
     }
 
     public function testDeleteGroup()
     {
-
     }
 }

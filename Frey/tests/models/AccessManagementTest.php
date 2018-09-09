@@ -246,13 +246,16 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $ruleId = $model->addRuleForPerson(
-            'test_rule', 'ololo',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule',
+            'ololo',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $eventId
         );
         $this->assertNotNull($ruleId);
         $this->assertEquals('ololo', $model->getPersonAccess(
-            $this->_person->getId(), $eventId
+            $this->_person->getId(),
+            $eventId
         )['test_rule']);
     }
 
@@ -266,13 +269,17 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $model->addRuleForPerson(
-            'test_rule', 'ololo',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule',
+            'ololo',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $eventId
         );
         $model->addRuleForPerson(
-            'test_rule', 'ololo',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule',
+            'ololo',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $eventId
         );
     }
@@ -286,18 +293,23 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $ruleId = $model->addRuleForPerson(
-            'test_rule', 'ololo',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule',
+            'ololo',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $eventId
         );
 
         $success = $model->updateRuleForPerson(
-            $ruleId, 'trololo', AccessPrimitive::TYPE_ENUM
+            $ruleId,
+            'trololo',
+            AccessPrimitive::TYPE_ENUM
         );
         $this->assertTrue($success);
 
         $this->assertEquals('trololo', $model->getPersonAccess(
-            $this->_person->getId(), $eventId
+            $this->_person->getId(),
+            $eventId
         )['test_rule']);
     }
 
@@ -310,13 +322,16 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $ruleId = $model->addRuleForGroup(
-            'test_rule', 'ololo',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule',
+            'ololo',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $eventId
         );
         $this->assertNotNull($ruleId);
         $this->assertEquals('ololo', $model->getGroupAccess(
-            $this->_group->getId(), $eventId
+            $this->_group->getId(),
+            $eventId
         )['test_rule']);
     }
 
@@ -330,13 +345,17 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $model->addRuleForGroup(
-            'test_rule', 'ololo',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule',
+            'ololo',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $eventId
         );
         $model->addRuleForGroup(
-            'test_rule', 'ololo',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule',
+            'ololo',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $eventId
         );
     }
@@ -350,18 +369,23 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $ruleId = $model->addRuleForGroup(
-            'test_rule', 'ololo',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule',
+            'ololo',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $eventId
         );
 
         $success = $model->updateRuleForGroup(
-            $ruleId, 'trololo', AccessPrimitive::TYPE_ENUM
+            $ruleId,
+            'trololo',
+            AccessPrimitive::TYPE_ENUM
         );
         $this->assertTrue($success);
 
         $this->assertEquals('trololo', $model->getGroupAccess(
-            $this->_group->getId(), $eventId
+            $this->_group->getId(),
+            $eventId
         )['test_rule']);
     }
 
@@ -374,15 +398,18 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $ruleId = $model->addRuleForPerson(
-            'test_rule', 'ololo',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule',
+            'ololo',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $eventId
         );
 
         $model->deleteRuleForPerson($ruleId);
 
         $this->assertEmpty($model->getPersonAccess(
-            $this->_person->getId(), $eventId
+            $this->_person->getId(),
+            $eventId
         ));
     }
 
@@ -395,15 +422,18 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $ruleId = $model->addRuleForGroup(
-            'test_rule', 'ololo',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule',
+            'ololo',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $eventId
         );
 
         $model->deleteRuleForGroup($ruleId);
 
         $this->assertEmpty($model->getGroupAccess(
-            $this->_group->getId(), $eventId
+            $this->_group->getId(),
+            $eventId
         ));
     }
 
@@ -416,27 +446,36 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $model->addRuleForPerson(
-            'test_rule1', 'ololo1',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule1',
+            'ololo1',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForPerson(
-            'test_rule3', 'ololo3',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule3',
+            'ololo3',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule2', 'ololo2',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule2',
+            'ololo2',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule4', 'ololo4',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule4',
+            'ololo4',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $rules = $model->getAccessRules(
-            $this->_person->getId(), $this->_eventId
+            $this->_person->getId(),
+            $this->_eventId
         );
         $this->assertEquals('ololo1', $rules['test_rule1']);
         $this->assertEquals('ololo2', $rules['test_rule2']);
@@ -453,27 +492,36 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $model->addRuleForPerson(
-            'test_rule1', 'ololo1',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule1',
+            'ololo1',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForPerson(
-            'test_rule3', 'ololo3',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule3',
+            'ololo3',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForPerson(
-            'test_rule2', 'ololo2',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule2',
+            'ololo2',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             null
         );
         $model->addRuleForPerson(
-            'test_rule4', 'ololo4',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule4',
+            'ololo4',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             null
         );
         $rules = $model->getAccessRules(
-            $this->_person->getId(), $this->_eventId
+            $this->_person->getId(),
+            $this->_eventId
         );
         $this->assertEquals('ololo1', $rules['test_rule1']);
         $this->assertEquals('ololo2', $rules['test_rule2']);
@@ -490,27 +538,36 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $model->addRuleForGroup(
-            'test_rule1', 'ololo1',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule1',
+            'ololo1',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule3', 'ololo3',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule3',
+            'ololo3',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule2', 'ololo2',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule2',
+            'ololo2',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             null
         );
         $model->addRuleForGroup(
-            'test_rule4', 'ololo4',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule4',
+            'ololo4',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             null
         );
         $rules = $model->getAccessRules(
-            $this->_person->getId(), $this->_eventId
+            $this->_person->getId(),
+            $this->_eventId
         );
         $this->assertEquals('ololo1', $rules['test_rule1']);
         $this->assertEquals('ololo2', $rules['test_rule2']);
@@ -527,27 +584,36 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $model->addRuleForPerson(
-            'test_rule_collide', 'ololo_person',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule_collide',
+            'ololo_person',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForPerson(
-            'test_rule1', 'ololo1',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule1',
+            'ololo1',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule2', 'ololo2',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule2',
+            'ololo2',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule_collide', 'ololo_group',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule_collide',
+            'ololo_group',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $rules = $model->getAccessRules(
-            $this->_person->getId(), $this->_eventId
+            $this->_person->getId(),
+            $this->_eventId
         );
         $this->assertEquals('ololo1', $rules['test_rule1']);
         $this->assertEquals('ololo2', $rules['test_rule2']);
@@ -563,27 +629,36 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $model->addRuleForPerson(
-            'test_rule_collide', 'ololo_event',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule_collide',
+            'ololo_event',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForPerson(
-            'test_rule1', 'ololo1',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule1',
+            'ololo1',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForPerson(
-            'test_rule2', 'ololo2',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule2',
+            'ololo2',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             null
         );
         $model->addRuleForPerson(
-            'test_rule_collide', 'ololo_systemwide',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule_collide',
+            'ololo_systemwide',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             null
         );
         $rules = $model->getAccessRules(
-            $this->_person->getId(), $this->_eventId
+            $this->_person->getId(),
+            $this->_eventId
         );
         $this->assertEquals('ololo1', $rules['test_rule1']);
         $this->assertEquals('ololo2', $rules['test_rule2']);
@@ -599,27 +674,36 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $model->addRuleForGroup(
-            'test_rule_collide', 'ololo_event',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule_collide',
+            'ololo_event',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule1', 'ololo1',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule1',
+            'ololo1',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule2', 'ololo2',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule2',
+            'ololo2',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             null
         );
         $model->addRuleForGroup(
-            'test_rule_collide', 'ololo_systemwide',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule_collide',
+            'ololo_systemwide',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             null
         );
         $rules = $model->getAccessRules(
-            $this->_person->getId(), $this->_eventId
+            $this->_person->getId(),
+            $this->_eventId
         );
         $this->assertEquals('ololo1', $rules['test_rule1']);
         $this->assertEquals('ololo2', $rules['test_rule2']);
@@ -635,47 +719,64 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $model->addRuleForPerson(
-            'test_rule_collide', 'ololo_event_person',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule_collide',
+            'ololo_event_person',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForPerson(
-            'test_rule1', 'ololo1',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule1',
+            'ololo1',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForPerson(
-            'test_rule2', 'ololo2',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule2',
+            'ololo2',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             null
         );
         $model->addRuleForPerson(
-            'test_rule_collide', 'ololo_systemwide1',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule_collide',
+            'ololo_systemwide1',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             null
         );
         $model->addRuleForGroup(
-            'test_rule_collide', 'ololo_event',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule_collide',
+            'ololo_event',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule3', 'ololo3',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule3',
+            'ololo3',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule4', 'ololo4',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule4',
+            'ololo4',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             null
         );
         $model->addRuleForGroup(
-            'test_rule_collide', 'ololo_systemwide2',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule_collide',
+            'ololo_systemwide2',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             null
         );
         $rules = $model->getAccessRules(
-            $this->_person->getId(), $this->_eventId
+            $this->_person->getId(),
+            $this->_eventId
         );
         $this->assertEquals('ololo1', $rules['test_rule1']);
         $this->assertEquals('ololo2', $rules['test_rule2']);
@@ -693,30 +794,47 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         $model->addRuleForPerson(
-            'test_rule_collide', 'ololo_person',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule_collide',
+            'ololo_person',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForPerson(
-            'test_rule1', 'ololo1',
-            AccessPrimitive::TYPE_ENUM, $this->_person->getId(),
+            'test_rule1',
+            'ololo1',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_person->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule2', 'ololo2',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule2',
+            'ololo2',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $model->addRuleForGroup(
-            'test_rule_collide', 'ololo_group',
-            AccessPrimitive::TYPE_ENUM, $this->_group->getId(),
+            'test_rule_collide',
+            'ololo_group',
+            AccessPrimitive::TYPE_ENUM,
+            $this->_group->getId(),
             $this->_eventId
         );
         $this->assertEquals('ololo1', $model->getRuleValue(
-            $this->_person->getId(), $this->_eventId, 'test_rule1'));
+            $this->_person->getId(),
+            $this->_eventId,
+            'test_rule1'
+        ));
         $this->assertEquals('ololo2', $model->getRuleValue(
-            $this->_person->getId(), $this->_eventId, 'test_rule2'));
+            $this->_person->getId(),
+            $this->_eventId,
+            'test_rule2'
+        ));
         $this->assertEquals('ololo_person', $model->getRuleValue(
-            $this->_person->getId(), $this->_eventId, 'test_rule_collide')); // person overrides group
+            $this->_person->getId(),
+            $this->_eventId,
+            'test_rule_collide'
+        )); // person overrides group
     }
 }
