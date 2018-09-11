@@ -202,4 +202,63 @@ class GroupsModel extends Model
         });
         return $persons[0]->setGroups($currentGroups)->save();
     }
+
+    /**
+     * @param $personId
+     * @return array
+     * @throws EntityNotFoundException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function getGroupsOfPerson($personId)
+    {
+        $personId = intval($personId);
+        if (empty($personId)) {
+            throw new InvalidParametersException('Id is empty or non-numeric', 413);
+        }
+
+        $persons = PersonPrimitive::findById($this->_db, [$personId]);
+        if (empty($persons)) {
+            throw new InvalidParametersException('Person id #' . $personId . ' not found in DB', 414);
+        }
+
+        return array_map(function(GroupPrimitive $group) {
+            return [
+                'id' => $group->getId(),
+                'title' => $group->getTitle(),
+                'label_color' => $group->getLabelColor(),
+                'description' => $group->getDescription()
+            ];
+        }, $persons[0]->getGroups());
+
+    }
+
+    /**
+     * @param $groupId
+     * @return array
+     * @throws EntityNotFoundException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function getPersonsOfGroup($groupId)
+    {
+        $groupId = intval($groupId);
+        if (empty($groupId)) {
+            throw new InvalidParametersException('Id is empty or non-numeric', 415);
+        }
+
+        $groups = GroupPrimitive::findById($this->_db, [$groupId]);
+        if (empty($groups)) {
+            throw new InvalidParametersException('Group id #' . $groupId . ' not found in DB', 416);
+        }
+
+        return array_map(function(PersonPrimitive $person) {
+            return [
+                'id' => $person->getId(),
+                'city' => $person->getCity(),
+                'tenhou_id' => $person->getTenhouId(),
+                'title' => $person->getTitle(),
+            ];
+        }, $groups[0]->getPersons());
+    }
 }
