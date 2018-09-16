@@ -60,4 +60,6 @@ return [
     'deleteGroup'            => ['PersonsController', 'deleteGroup'],
     'addPersonToGroup'       => ['PersonsController', 'addPersonToGroup'],
     'removePersonFromGroup'  => ['PersonsController', 'removePersonFromGroup'],
+    'getPersonsOfGroup'      => ['PersonsController', 'getPersonsOfGroup'],
+    'getGroupsOfPerson'      => ['PersonsController', 'getGroupsOfPerson'],
 ];
