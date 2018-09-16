@@ -309,10 +309,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
         $success = $model->removePersonFromGroup($this->_person->getId(), $groupId);
         $this->assertTrue($success);
         $person = PersonPrimitive::findById($this->_db, [$this->_person->getId()])[0]; // updated version of data
-
-        // TODO: we need an ability to remove many-to-many relations!
-
-        //$this->assertEmpty($person->getGroupIds());
+        $this->assertEmpty($person->getGroupIds());
     }
 
     /**

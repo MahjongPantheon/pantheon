@@ -83,20 +83,29 @@ abstract class Primitive
         $result = [];
         $i = 1;
         foreach ($obj as $id) {
-            $result []= [
+            $result [] = [
                 $currentEntityField => $this->getId(),
                 $foreignEntityField => $id,
                 'order' => $i++ // hardcoded column name; usually order matters, so it should exist in every * <-> *
             ];
         }
 
-        if (empty($result)) {
-            return true;
+        // Delete existing relations that are not listed in array of ids
+        $rels = $this->_db->table($connectorTable)
+            ->where($currentEntityField, $this->getId());
+        if (!empty($obj)) {
+            $rels = $rels->whereNotIn($foreignEntityField, $obj);
+        }
+        $rels = $rels->findMany();
+        foreach ($rels as $row) {
+            $row->delete();
         }
 
-        // Delete existing relations
-
-        return $this->_db->upsertQuery($connectorTable, $result, $indexFields);
+        // Update/insert existing entries
+        if (!empty($result)) {
+            return $this->_db->upsertQuery($connectorTable, $result, $indexFields);
+        }
+        return true;
     }
 
     /**
