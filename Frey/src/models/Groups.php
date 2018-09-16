@@ -222,7 +222,7 @@ class GroupsModel extends Model
             throw new InvalidParametersException('Person id #' . $personId . ' not found in DB', 414);
         }
 
-        return array_map(function(GroupPrimitive $group) {
+        return array_map(function (GroupPrimitive $group) {
             return [
                 'id' => $group->getId(),
                 'title' => $group->getTitle(),
@@ -230,7 +230,6 @@ class GroupsModel extends Model
                 'description' => $group->getDescription()
             ];
         }, $persons[0]->getGroups());
-
     }
 
     /**
@@ -252,7 +251,7 @@ class GroupsModel extends Model
             throw new InvalidParametersException('Group id #' . $groupId . ' not found in DB', 416);
         }
 
-        return array_map(function(PersonPrimitive $person) {
+        return array_map(function (PersonPrimitive $person) {
             return [
                 'id' => $person->getId(),
                 'city' => $person->getCity(),

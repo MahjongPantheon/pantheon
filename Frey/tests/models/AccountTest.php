@@ -75,8 +75,12 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(
-            'test@email.com', 'passwd', 'test',
-            'testcity', '111-111-111', 'tid'
+            'test@email.com',
+            'passwd',
+            'test',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
         $this->assertNotEmpty($personId);
         $persons = PersonPrimitive::findById($this->_db, [$personId]);
@@ -92,8 +96,12 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->createAccount(
-            '', 'passwd', 'test',
-            'testcity', '111-111-111', 'tid'
+            '',
+            'passwd',
+            'test',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
     }
 
@@ -106,8 +114,12 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->createAccount(
-            'test@email.com', '', 'test',
-            'testcity', '111-111-111', 'tid'
+            'test@email.com',
+            '',
+            'test',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
     }
 
@@ -120,8 +132,12 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->createAccount(
-            'test@email.com', 'passwd', '',
-            'testcity', '111-111-111', 'tid'
+            'test@email.com',
+            'passwd',
+            '',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
     }
 
@@ -134,8 +150,12 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->createAccount(
-            'testbademail.com', 'passwd', 'test',
-            'testcity', '111-111-111', 'tid'
+            'testbademail.com',
+            'passwd',
+            'test',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
     }
 
@@ -147,8 +167,12 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(
-            'test@email.com', 'passwd', 'test',
-            'testcity', '111-111-111', 'tid'
+            'test@email.com',
+            'passwd',
+            'test',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
         $data = $model->getPersonalInfo([$personId], false);
         $this->assertEquals('test@email.com', $data[0]['email']);
@@ -166,8 +190,12 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(
-            'test@email.com', 'passwd', 'test',
-            'testcity', '111-111-111', 'tid'
+            'test@email.com',
+            'passwd',
+            'test',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
         $data = $model->getPersonalInfo([$personId], true);
         $this->assertEmpty($data[0]['email']);
@@ -205,12 +233,20 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(
-            'test@email.com', 'passwd', 'test',
-            'testcity', '111-111-111', 'tid'
+            'test@email.com',
+            'passwd',
+            'test',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
         $success = $model->updatePersonalInfo(
-            $personId, 'test2', 'testcity2',
-            'test2@email.com', '222-222-222', 'tid2'
+            $personId,
+            'test2',
+            'testcity2',
+            'test2@email.com',
+            '222-222-222',
+            'tid2'
         );
         $this->assertTrue($success);
         $data = $model->getPersonalInfo([$personId], false);
@@ -231,8 +267,12 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->updatePersonalInfo(
-            'kek', 'test2', 'testcity2',
-            'test2@email.com', '222-222-222', 'tid2'
+            'kek',
+            'test2',
+            'testcity2',
+            'test2@email.com',
+            '222-222-222',
+            'tid2'
         );
     }
 
@@ -246,8 +286,12 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->updatePersonalInfo(
-            123, 'test2', 'testcity2',
-            'test2@email.com', '222-222-222', 'tid2'
+            123,
+            'test2',
+            'testcity2',
+            'test2@email.com',
+            '222-222-222',
+            'tid2'
         );
     }
 
@@ -261,12 +305,20 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(
-            'test@email.com', 'passwd', 'test',
-            'testcity', '111-111-111', 'tid'
+            'test@email.com',
+            'passwd',
+            'test',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
         $model->updatePersonalInfo(
-            $personId, '', 'testcity2',
-            'test2@email.com', '222-222-222', 'tid2'
+            $personId,
+            '',
+            'testcity2',
+            'test2@email.com',
+            '222-222-222',
+            'tid2'
         );
     }
 
@@ -280,12 +332,20 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(
-            'test@email.com', 'passwd', 'test',
-            'testcity', '111-111-111', 'tid'
+            'test@email.com',
+            'passwd',
+            'test',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
         $model->updatePersonalInfo(
-            $personId, 'test2', 'testcity2',
-            '', '222-222-222', 'tid2'
+            $personId,
+            'test2',
+            'testcity2',
+            '',
+            '222-222-222',
+            'tid2'
         );
     }
 
@@ -299,12 +359,20 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(
-            'test@email.com', 'passwd', 'test',
-            'testcity', '111-111-111', 'tid'
+            'test@email.com',
+            'passwd',
+            'test',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
         $model->updatePersonalInfo(
-            $personId, 'test2', 'testcity2',
-            'test2bademail.com', '222-222-222', 'tid2'
+            $personId,
+            'test2',
+            'testcity2',
+            'test2bademail.com',
+            '222-222-222',
+            'tid2'
         );
     }
 
@@ -316,8 +384,12 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(
-            'test@email.com', 'passwd', 'easyfindableperson',
-            'testcity', '111-111-111', 'tid'
+            'test@email.com',
+            'passwd',
+            'easyfindableperson',
+            'testcity',
+            '111-111-111',
+            'tid'
         );
 
         $emptyresults = $model->findByTitleFuzzy('watisthis');
