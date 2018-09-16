@@ -18,10 +18,10 @@
 
 return [
     'connection_string' => 'pgsql:host=localhost;port='
-        . getenv('PHINX_DB_PORT', true)
-        . ';dbname=' . getenv('PHINX_DB_NAME', true),
+        . getenv('PHINX_DB_FREY_PORT', true)
+        . ';dbname=' . getenv('PHINX_DB_FREY_NAME', true),
     'credentials' => [
-        'username' => getenv('PHINX_DB_USER'),
-        'password' => getenv('PHINX_DB_PASS')
+        'username' => getenv('PHINX_DB_FREY_USER'),
+        'password' => getenv('PHINX_DB_FREY_PASS')
     ]
 ];
