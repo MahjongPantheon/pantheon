@@ -346,7 +346,7 @@ class PersonPrimitive extends Primitive
      */
     public function getTenhouId(): string
     {
-        return $this->_tenhouId;
+        return $this->_tenhouId ?: '';
     }
 
     /**
@@ -393,13 +393,17 @@ class PersonPrimitive extends Primitive
     public function getGroups()
     {
         if ($this->_groups === null) {
-            $this->_groups = GroupPrimitive::findById(
-                $this->_db,
-                $this->_groupIds
-            );
-            if (empty($this->_groups) || count($this->_groups) !== count($this->_groupIds)) {
-                $this->_groups = null;
-                throw new EntityNotFoundException("Not all groups were found in DB (among id#" . implode(',', $this->_groupIds));
+            if (empty($this->_groupIds)) {
+                $this->_groups = [];
+            } else {
+                $this->_groups = GroupPrimitive::findById(
+                    $this->_db,
+                    $this->_groupIds
+                );
+                if (empty($this->_groups) || count($this->_groups) !== count($this->_groupIds)) {
+                    $this->_groups = null;
+                    throw new EntityNotFoundException("Not all groups were found in DB (among id#" . implode(',', $this->_groupIds));
+                }
             }
         }
 

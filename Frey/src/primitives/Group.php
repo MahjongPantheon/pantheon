@@ -201,13 +201,17 @@ class GroupPrimitive extends Primitive
     public function getPersons()
     {
         if ($this->_persons === null) {
-            $this->_persons = PersonPrimitive::findById(
-                $this->_db,
-                $this->_personIds
-            );
-            if (empty($this->_persons) || count($this->_persons) !== count($this->_personIds)) {
-                $this->_persons = null;
-                throw new EntityNotFoundException("Not all persons were found in DB (among id#" . implode(',', $this->_personIds));
+            if (empty($this->_personIds)) {
+                $this->_persons = [];
+            } else {
+                $this->_persons = PersonPrimitive::findById(
+                    $this->_db,
+                    $this->_personIds
+                );
+                if (empty($this->_persons) || count($this->_persons) !== count($this->_personIds)) {
+                    $this->_persons = null;
+                    throw new EntityNotFoundException("Not all persons were found in DB (among id#" . implode(',', $this->_personIds));
+                }
             }
         }
 
