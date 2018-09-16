@@ -70,13 +70,12 @@ class AccountModel extends Model
      * @param int[] $ids
      * @param bool $filterPrivateData
      * @return array
-     * @throws InvalidParametersException
      * @throws \Exception
      */
     public function getPersonalInfo($ids, $filterPrivateData = true)
     {
         if (empty($ids)) {
-            throw new InvalidParametersException('ID list is empty', 404);
+            return [];
         }
 
         $persons = PersonPrimitive::findById($this->_db, $ids);
