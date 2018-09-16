@@ -213,6 +213,42 @@ class PersonsController extends Controller
     }
 
     /**
+     * List persons of group
+     *
+     * @param int $groupId
+     * @return array
+     * @throws EntityNotFoundException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function getPersonsOfGroup($groupId)
+    {
+        $this->_logStart(__METHOD__, [$groupId]);
+        // TODO: check group admin rights here...
+        $data = $this->_getGroupsModel()->getPersonsOfGroup($groupId);
+        $this->_logSuccess(__METHOD__, [$groupId]);
+        return $data;
+    }
+
+    /**
+     * List groups of person
+     *
+     * @param int $personId
+     * @return array
+     * @throws EntityNotFoundException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function getGroupsOfPerson($personId)
+    {
+        $this->_logStart(__METHOD__, [$personId]);
+        // TODO: check group admin rights here...
+        $data = $this->_getGroupsModel()->getGroupsOfPerson($personId);
+        $this->_logSuccess(__METHOD__, [$personId]);
+        return $data;
+    }
+
+    /**
      * @return AccountModel
      */
     protected function _getAccountModel()

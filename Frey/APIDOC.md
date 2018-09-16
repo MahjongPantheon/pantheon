@@ -320,3 +320,25 @@ Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
 
+### getPersonsOfGroup
+Parameters:
+* **$groupId** (_int_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _EntityNotFoundException_ 
+* _InvalidParametersException_ 
+* _\Exception_ 
+
+### getGroupsOfPerson
+Parameters:
+* **$personId** (_int_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _EntityNotFoundException_ 
+* _InvalidParametersException_ 
+* _\Exception_ 
+
