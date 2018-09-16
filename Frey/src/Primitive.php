@@ -94,7 +94,7 @@ abstract class Primitive
             return true;
         }
 
-        // TODO: what if we need to delete some relations?
+        // Delete existing relations
 
         return $this->_db->upsertQuery($connectorTable, $result, $indexFields);
     }
