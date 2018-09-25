@@ -20,6 +20,8 @@ namespace Frey;
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../models/Account.php';
 require_once __DIR__ . '/../models/Groups.php';
+require_once __DIR__ . '/../exceptions/InvalidParameters.php';
+require_once __DIR__ . '/../exceptions/EntityNotFound.php';
 
 class PersonsController extends Controller
 {

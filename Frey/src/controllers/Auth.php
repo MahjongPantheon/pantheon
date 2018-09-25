@@ -19,6 +19,9 @@ namespace Frey;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../models/Auth.php';
+require_once __DIR__ . '/../exceptions/InvalidParameters.php';
+require_once __DIR__ . '/../exceptions/EntityNotFound.php';
+require_once __DIR__ . '/../exceptions/AuthFailed.php';
 
 class AuthController extends Controller
 {
