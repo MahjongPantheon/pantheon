@@ -54,6 +54,7 @@ abstract class AccessPrimitive extends Primitive
     protected $_aclName;
     /**
      * ACL value. Has limit of 255 bytes long for performance reasons
+     * Should have strict string type for database storage
      * @var string
      */
     protected $_aclValue;
@@ -151,20 +152,42 @@ abstract class AccessPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return string|int|bool
+     * @throws InvalidParametersException
      */
-    public function getAclValue(): string
+    public function getAclValue()
     {
-        return $this->_aclValue;
+        switch ($this->_aclType) {
+            case AccessPrimitive::TYPE_BOOL:
+                return $this->_aclValue == 'true';
+            case AccessPrimitive::TYPE_INT:
+                return intval($this->_aclValue);
+            case AccessPrimitive::TYPE_ENUM:
+                return $this->_aclValue;
+            default:
+                throw new InvalidParametersException('Unsupported ACL type');
+        }
     }
 
     /**
-     * @param string $aclValue
+     * @param string|int|bool $aclValue
+     * @throws InvalidParametersException
      * @return self
      */
-    public function setAclValue(string $aclValue)
+    public function setAclValue($aclValue)
     {
-        $this->_aclValue = $aclValue;
-        return $this;
+        switch ($this->_aclType) {
+            case AccessPrimitive::TYPE_BOOL:
+                $this->_aclValue = (!!$aclValue) ? 'true' : 'false';
+                return $this;
+            case AccessPrimitive::TYPE_INT:
+                $this->_aclValue = (string)intval($aclValue);
+                return $this;
+            case AccessPrimitive::TYPE_ENUM:
+                $this->_aclValue = $aclValue;
+                return $this;
+            default:
+                throw new InvalidParametersException('Unsupported ACL type');
+        }
     }
 }

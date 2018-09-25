@@ -22,6 +22,7 @@ require_once __DIR__ . '/../primitives/Registrant.php';
 require_once __DIR__ . '/../primitives/Person.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../exceptions/EntityNotFound.php';
+require_once __DIR__ . '/../exceptions/AuthFailed.php';
 
 class AuthModel extends Model
 {
@@ -201,7 +202,7 @@ class AuthModel extends Model
      *
      * @param $email
      * @param $resetApprovalCode
-     * @return int
+     * @return string
      * @throws AuthFailedException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -225,7 +226,7 @@ class AuthModel extends Model
             ->setAuthHash($pw['auth_hash'])
             ->save();
 
-        return $newGeneratedPassword;
+        return (string)$newGeneratedPassword;
     }
 
     /**
