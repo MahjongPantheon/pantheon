@@ -26,8 +26,6 @@ require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 
 class AccessManagementModel extends Model
 {
-    const CACHE_TTL_SEC = 10 * 60;
-
     //////// Client usage methods (non-admin)
 
     /**
@@ -42,33 +40,7 @@ class AccessManagementModel extends Model
      */
     public function getAccessRules(int $personId, int $eventId)
     {
-        $rules = apcu_fetch($this->_getAccessCacheKey($personId, $eventId));
-        if ($rules !== false) {
-            return $rules;
-        }
-
-        $persons = PersonPrimitive::findById($this->_db, [$personId]);
-        if (empty($persons)) {
-            throw new EntityNotFoundException('Person with id #' . $personId . ' not found in DB', 401);
-        }
-
-        $resultingRules = [];
-        foreach ($this->_getGroupAccessRules($persons[0]->getGroupIds(), $eventId) as $rule) {
-            $systemWideRuleToBeApplied = empty($rule->getEventsId()) && !isset($resultingRules[$rule->getAclName()]);
-            if ($systemWideRuleToBeApplied || !empty($rule->getEventsId()) /* not systemwide rule */) {
-                $resultingRules[$rule->getAclName()] = $rule->getAclValue();
-            }
-        }
-        foreach ($this->_getPersonAccessRules($personId, $eventId) as $rule) {
-            // Person rules have higher priority than group rules
-            $systemWideRuleToBeApplied = empty($rule->getEventsId()) && !isset($resultingRules[$rule->getAclName()]);
-            if ($systemWideRuleToBeApplied || !empty($rule->getEventsId()) /* not systemwide rule */) {
-                $resultingRules[$rule->getAclName()] = $rule->getAclValue();
-            }
-        }
-
-        apcu_store($this->_getAccessCacheKey($personId, $eventId), $resultingRules, self::CACHE_TTL_SEC);
-        return $resultingRules;
+        return $this->_getAccessRules($personId, $eventId);
     }
 
     /**
@@ -85,11 +57,7 @@ class AccessManagementModel extends Model
      */
     public function getRuleValue($personId, $eventId, $ruleName)
     {
-        $rules = $this->getAccessRules($personId, $eventId);
-        if (empty($rules[$ruleName])) {
-            return null;
-        }
-        return $rules[$ruleName];
+        return $this->_getRuleValue($personId, $eventId, $ruleName);
     }
 
     //////// Admin methods
@@ -183,11 +151,11 @@ class AccessManagementModel extends Model
 
         /** @var PersonAccessPrimitive $rule */
         $rule = (new PersonAccessPrimitive($this->_db))
+            ->setPerson($persons[0])
             ->setAclName($ruleName)
             ->setAclType($ruleType)
             ->setAclValue($ruleValue)
-            ->setEventIds([$eventId])
-            ->setPerson($persons[0]);
+            ->setEventIds([$eventId]);
         $success = $rule->save();
         if (!$success) {
             return null;
@@ -227,11 +195,11 @@ class AccessManagementModel extends Model
 
         /** @var GroupAccessPrimitive $rule */
         $rule = (new GroupAccessPrimitive($this->_db))
+            ->setGroup($groups[0])
             ->setAclName($ruleName)
             ->setAclType($ruleType)
             ->setAclValue($ruleValue)
-            ->setEventIds([$eventId])
-            ->setGroup($groups[0]);
+            ->setEventIds([$eventId]);
         $success = $rule->save();
         if (!$success) {
             return null;
@@ -325,40 +293,6 @@ class AccessManagementModel extends Model
     }
 
     /**
-     * @param $personId
-     * @param $eventId
-     * @return PersonAccessPrimitive[]
-     * @throws \Exception
-     */
-    protected function _getPersonAccessRules($personId, $eventId)
-    {
-        return array_filter(
-            PersonAccessPrimitive::findByPerson($this->_db, [$personId]),
-            function (PersonAccessPrimitive $rule) use ($eventId) {
-                return empty($rule->getEventsId()) // system-wide person rules
-                    || in_array($eventId, $rule->getEventsId());
-            }
-        );
-    }
-
-    /**
-     * @param $groupIds
-     * @param $eventId
-     * @return GroupAccessPrimitive[]
-     * @throws \Exception
-     */
-    protected function _getGroupAccessRules($groupIds, $eventId)
-    {
-        return array_filter(
-            GroupAccessPrimitive::findByGroup($this->_db, $groupIds),
-            function (GroupAccessPrimitive $rule) use ($eventId) {
-                return empty($rule->getEventsId()) // system-wide group rules
-                    || in_array($eventId, $rule->getEventsId());
-            }
-        );
-    }
-
-    /**
      * Clear cache for access rules of person in event.
      * Warning: clearing whole cache is explicitly NOT IMPLEMENTED. When altering groups access rules,
      * it's better to wait for 10mins than cause shitload on DB.
@@ -370,18 +304,6 @@ class AccessManagementModel extends Model
     public function clearAccessCache($personId, $eventId)
     {
         // TODO: check access admin rights here...
-        return apcu_delete(self::_getAccessCacheKey($personId, $eventId));
-    }
-
-    /**
-     * Get apcu cache key for access rules
-     *
-     * @param $personId
-     * @param $eventId
-     * @return string
-     */
-    protected static function _getAccessCacheKey($personId, $eventId)
-    {
-        return "access_${personId}_${eventId}";
+        return apcu_delete(Model::_getAccessCacheKey($personId, $eventId));
     }
 }

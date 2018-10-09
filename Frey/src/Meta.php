@@ -31,6 +31,10 @@ class Meta
      * @var integer
      */
     protected $_requestedVersionMinor;
+    /**
+     * @var integer|null
+     */
+    protected $_currentEventId;
 
     public function __construct($input = null, $cookieInput = null)
     {
@@ -57,6 +61,14 @@ class Meta
             )
             : $input['HTTP_X_AUTH_TOKEN']);
 
+        $this->_currentEventId = (empty($input['HTTP_X_CURRENT_EVENT_ID'])
+            ? (
+            empty($cookieInput['currentEventId'])
+                ? null
+                : $cookieInput['currentEventId']
+            )
+            : $input['HTTP_X_CURRENT_EVENT_ID']);
+
         list($this->_requestedVersionMajor, $this->_requestedVersionMinor) = explode('.', (
             empty($input['HTTP_X_API_VERSION']) ? '1.0' : $input['HTTP_X_API_VERSION']
         ));
@@ -68,6 +80,11 @@ class Meta
     public function getAuthToken()
     {
         return $this->_authToken;
+    }
+
+    public function getCurrentEventId()
+    {
+        return $this->_currentEventId;
     }
 
     public function getRequestedVersion()
