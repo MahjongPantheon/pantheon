@@ -32,18 +32,31 @@ class Meta
      */
     protected $_requestedVersionMinor;
 
-    public function __construct($input = null)
+    public function __construct($input = null, $cookieInput = null)
     {
         if (empty($input)) {
             $input = $_SERVER;
         }
 
-        $this->_fillFrom($input);
+        if (empty($cookieInput)) {
+            $cookieInput = $_COOKIE;
+        }
+
+        $this->_fillFrom($input, $cookieInput);
     }
 
-    protected function _fillFrom($input)
+    protected function _fillFrom($input, $cookieInput)
     {
-        $this->_authToken = (empty($input['HTTP_X_AUTH_TOKEN']) ? '' : $input['HTTP_X_AUTH_TOKEN']);
+        // Rheda and Mimir MUST pass authToken from cookie to Frey as X-Auth-Token header.
+        // External services may choose to use either cookie or header.
+        $this->_authToken = (empty($input['HTTP_X_AUTH_TOKEN'])
+            ? (
+                empty($cookieInput['authToken'])
+                ? ''
+                : $cookieInput['authToken']
+            )
+            : $input['HTTP_X_AUTH_TOKEN']);
+
         list($this->_requestedVersionMajor, $this->_requestedVersionMinor) = explode('.', (
             empty($input['HTTP_X_API_VERSION']) ? '1.0' : $input['HTTP_X_API_VERSION']
         ));
@@ -68,10 +81,5 @@ class Meta
     public function sendVersionHeader($major, $minor)
     {
         header('X-Api-Version: ' . intval($major) . '.' . intval($minor));
-    }
-
-    public function isGlobalWatcher()
-    {
-        return $this->_authToken === '0000000000';
     }
 }
