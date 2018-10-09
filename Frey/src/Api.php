@@ -36,7 +36,7 @@ class Api
         $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
         $this->_config = new Config($cfgPath);
         $this->_db = new Db($this->_config);
-        $this->_meta = new Meta($_SERVER);
+        $this->_meta = new Meta($_SERVER, $_COOKIE);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 
