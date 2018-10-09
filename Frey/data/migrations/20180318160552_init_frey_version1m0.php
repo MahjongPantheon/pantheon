@@ -59,6 +59,7 @@ class InitFreyVersion1m0 extends AbstractMigration
             ->addIndex('email', ['name' => 'person_email'])
             ->addIndex('phone', ['name' => 'person_phone'])
             ->addIndex('title', ['name' => 'person_title'])
+            ->addIndex('auth_hash', ['name' => 'person_authash'])
             ->addIndex('tenhou_id', ['name' => 'person_tenhouid'])
             ->addIndex('disabled', ['name' => 'person_disabled'])
 

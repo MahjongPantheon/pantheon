@@ -70,13 +70,12 @@ class AccountModel extends Model
      * May or may not include private data. This should be decided on controller layer.
      *
      * @param int[] $ids
-     * @param bool $filterPrivateData
      * @return array
      * @throws \Exception
      */
     public function getPersonalInfo($ids)
     {
-        $filterPrivateData = true; // TODO: decide if this is true or false depending on admin auth data
+        $filterPrivateData = false; // TODO: decide if this is true or false depending on admin auth data
         if (empty($ids)) {
             return [];
         }
