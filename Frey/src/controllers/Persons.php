@@ -40,8 +40,6 @@ class PersonsController extends Controller
     public function createAccount($email, $password, $title, $city, $phone, $tenhouId)
     {
         $this->_logStart(__METHOD__, [$email, $password, $title, $city, $phone, $tenhouId]);
-        // TODO: check admin rights here. Auth layer should be present to do this...
-
         $personId = $this->_getAccountModel()
             ->createAccount($email, $password, $title, $city, $phone, $tenhouId);
         $this->_logSuccess(__METHOD__, [$email, $password, $title, $city, $phone, $tenhouId]);
@@ -54,14 +52,12 @@ class PersonsController extends Controller
      *
      * @param array $ids
      * @return array
-     * @throws InvalidParametersException
      * @throws \Exception
      */
     public function getPersonalInfo($ids)
     {
         $this->_logStart(__METHOD__, [$ids]);
-        $isAdmin = true; // TODO: check admin rights here. Auth layer should be present to do this...
-        $personalInfo = $this->_getAccountModel()->getPersonalInfo($ids, !$isAdmin);
+        $personalInfo = $this->_getAccountModel()->getPersonalInfo($ids);
         $this->_logSuccess(__METHOD__, [$ids]);
         return $personalInfo;
     }
@@ -80,7 +76,6 @@ class PersonsController extends Controller
     public function updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId)
     {
         $this->_logStart(__METHOD__, [$id, $title, $city, $email, $phone, $tenhouId]);
-        // TODO: check if this is admin or user himself
         $success = $this->_getAccountModel()->updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId);
         $this->_logSuccess(__METHOD__, [$id, $title, $city, $email, $phone, $tenhouId]);
         return $success;
@@ -117,7 +112,6 @@ class PersonsController extends Controller
     public function createGroup($title, $description, $color)
     {
         $this->_logStart(__METHOD__, [$title, $description, $color]);
-        // TODO: check group admin rights here...
         $groupId = $this->_getGroupsModel()->createGroup($title, $description, $color);
         $this->_logSuccess(__METHOD__, [$title, $description, $color]);
         return $groupId;
@@ -137,7 +131,6 @@ class PersonsController extends Controller
     public function updateGroup($id, $title, $description, $color)
     {
         $this->_logStart(__METHOD__, [$id, $title, $description, $color]);
-        // TODO: check group admin rights here...
         $success = $this->_getGroupsModel()->updateGroup($id, $title, $description, $color);
         $this->_logSuccess(__METHOD__, [$id, $title, $description, $color]);
         return $success;
@@ -170,7 +163,6 @@ class PersonsController extends Controller
     public function deleteGroup($id)
     {
         $this->_logStart(__METHOD__, [$id]);
-        // TODO: check group admin rights here...
         $this->_getGroupsModel()->deleteGroup($id);
         $this->_logSuccess(__METHOD__, [$id]);
         return true;
@@ -189,7 +181,6 @@ class PersonsController extends Controller
     public function addPersonToGroup($personId, $groupId)
     {
         $this->_logStart(__METHOD__, [$personId, $groupId]);
-        // TODO: check group admin rights here...
         $success = $this->_getGroupsModel()->addPersonToGroup($personId, $groupId);
         $this->_logSuccess(__METHOD__, [$personId, $groupId]);
         return $success;
@@ -208,7 +199,6 @@ class PersonsController extends Controller
     public function removePersonFromGroup($personId, $groupId)
     {
         $this->_logStart(__METHOD__, [$personId, $groupId]);
-        // TODO: check group admin rights here...
         $success = $this->_getGroupsModel()->removePersonFromGroup($personId, $groupId);
         $this->_logSuccess(__METHOD__, [$personId, $groupId]);
         return $success;
@@ -226,7 +216,6 @@ class PersonsController extends Controller
     public function getPersonsOfGroup($groupId)
     {
         $this->_logStart(__METHOD__, [$groupId]);
-        // TODO: check group admin rights here...
         $data = $this->_getGroupsModel()->getPersonsOfGroup($groupId);
         $this->_logSuccess(__METHOD__, [$groupId]);
         return $data;
@@ -244,7 +233,6 @@ class PersonsController extends Controller
     public function getGroupsOfPerson($personId)
     {
         $this->_logStart(__METHOD__, [$personId]);
-        // TODO: check group admin rights here...
         $data = $this->_getGroupsModel()->getGroupsOfPerson($personId);
         $this->_logSuccess(__METHOD__, [$personId]);
         return $data;

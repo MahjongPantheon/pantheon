@@ -106,6 +106,7 @@ class AccessManagementModel extends Model
      */
     public function getPersonAccess($personId, $eventId)
     {
+        // TODO: check access admin rights here...
         $rules = $this->_getPersonAccessRules($personId, $eventId);
         $eventRelatedRules = array_filter($rules, function (PersonAccessPrimitive $rule) use ($eventId) {
             if (empty($eventId)) { // required to get system-wide rules
@@ -134,6 +135,7 @@ class AccessManagementModel extends Model
      */
     public function getGroupAccess($groupId, $eventId)
     {
+        // TODO: check access admin rights here...
         $rules = $this->_getGroupAccessRules([$groupId], $eventId);
         $eventRelatedRules = array_filter($rules, function (GroupAccessPrimitive $rule) use ($eventId) {
             if (empty($eventId)) { // required to get system-wide rules
@@ -165,6 +167,7 @@ class AccessManagementModel extends Model
      */
     public function addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId)
     {
+        // TODO: check access admin rights here...
         $existingRules = $this->getPersonAccess($personId, $eventId);
         if (!empty($existingRules[$ruleName])) {
             throw new DuplicateEntityException(
@@ -208,6 +211,7 @@ class AccessManagementModel extends Model
      */
     public function addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId)
     {
+        // TODO: check access admin rights here...
         $existingRules = $this->getGroupAccess($groupId, $eventId);
         if (!empty($existingRules[$ruleName])) {
             throw new DuplicateEntityException(
@@ -248,6 +252,7 @@ class AccessManagementModel extends Model
      */
     public function updateRuleForPerson($ruleId, $ruleValue, $ruleType)
     {
+        // TODO: check access admin rights here...
         $rules = PersonAccessPrimitive::findById($this->_db, [$ruleId]);
         if (empty($rules)) {
             throw new EntityNotFoundException('PersonRule with id #' . $ruleId . ' not found in DB', 406);
@@ -271,6 +276,7 @@ class AccessManagementModel extends Model
      */
     public function updateRuleForGroup($ruleId, $ruleValue, $ruleType)
     {
+        // TODO: check access admin rights here...
         $rules = GroupAccessPrimitive::findById($this->_db, [$ruleId]);
         if (empty($rules)) {
             throw new EntityNotFoundException('GroupRule with id #' . $ruleId . ' not found in DB', 407);
@@ -291,6 +297,7 @@ class AccessManagementModel extends Model
      */
     public function deleteRuleForPerson($ruleId)
     {
+        // TODO: check access admin rights here...
         $rules = PersonAccessPrimitive::findById($this->_db, [$ruleId]);
         if (empty($rules)) {
             throw new EntityNotFoundException('PersonRule with id #' . $ruleId . ' not found in DB', 408);
@@ -308,6 +315,7 @@ class AccessManagementModel extends Model
      */
     public function deleteRuleForGroup($ruleId)
     {
+        // TODO: check access admin rights here...
         $rules = GroupAccessPrimitive::findById($this->_db, [$ruleId]);
         if (empty($rules)) {
             throw new EntityNotFoundException('GroupRule with id #' . $ruleId . ' not found in DB', 409);
@@ -359,8 +367,9 @@ class AccessManagementModel extends Model
      * @param $eventId
      * @return bool
      */
-    public static function clearAccessCache($personId, $eventId)
+    public function clearAccessCache($personId, $eventId)
     {
+        // TODO: check access admin rights here...
         return apcu_delete(self::_getAccessCacheKey($personId, $eventId));
     }
 

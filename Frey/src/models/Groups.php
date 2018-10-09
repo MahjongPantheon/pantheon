@@ -36,6 +36,7 @@ class GroupsModel extends Model
      */
     public function createGroup($title, $description, $color)
     {
+        // TODO: check group admin rights here...
         if (empty($title)) {
             throw new InvalidParametersException('Title is required to be non-empty', 401);
         }
@@ -89,6 +90,7 @@ class GroupsModel extends Model
      */
     public function updateGroup($id, $title, $description, $color)
     {
+        // TODO: check group admin rights here...
         $id = intval($id);
         if (empty($id)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 404);
@@ -119,6 +121,7 @@ class GroupsModel extends Model
      */
     public function deleteGroup($id)
     {
+        // TODO: check group admin rights here...
         $id = intval($id);
         if (empty($id)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 407);
@@ -144,6 +147,7 @@ class GroupsModel extends Model
      */
     public function addPersonToGroup($personId, $groupId)
     {
+        // TODO: check group admin rights here...
         $groupId = intval($groupId);
         $personId = intval($personId);
         if (empty($groupId) || empty($personId)) {
@@ -179,6 +183,7 @@ class GroupsModel extends Model
      */
     public function removePersonFromGroup($personId, $groupId)
     {
+        // TODO: check group admin rights here...
         $groupId = intval($groupId);
         $personId = intval($personId);
         if (empty($groupId) || empty($personId)) {
@@ -212,6 +217,7 @@ class GroupsModel extends Model
      */
     public function getGroupsOfPerson($personId)
     {
+        // TODO: check group admin rights here...
         $personId = intval($personId);
         if (empty($personId)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 413);
@@ -241,6 +247,8 @@ class GroupsModel extends Model
      */
     public function getPersonsOfGroup($groupId)
     {
+
+        // TODO: check group admin rights here...
         $groupId = intval($groupId);
         if (empty($groupId)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 415);
