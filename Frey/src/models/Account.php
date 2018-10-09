@@ -39,6 +39,8 @@ class AccountModel extends Model
      */
     public function createAccount($email, $password, $title, $city, $phone, $tenhouId = null)
     {
+        // TODO: check admin rights here. Auth layer should be present to do this...
+
         if (empty($email) || empty($password) || empty($title)) {
             throw new InvalidParametersException('Some of required fields are empty (email, password, title)', 401);
         }
@@ -72,8 +74,9 @@ class AccountModel extends Model
      * @return array
      * @throws \Exception
      */
-    public function getPersonalInfo($ids, $filterPrivateData = true)
+    public function getPersonalInfo($ids)
     {
+        $filterPrivateData = true; // TODO: decide if this is true or false depending on admin auth data
         if (empty($ids)) {
             return [];
         }
@@ -107,6 +110,7 @@ class AccountModel extends Model
      */
     public function updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId = null)
     {
+        // TODO: check if this is admin or user himself
         $id = intval($id);
         if (empty($id)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 405);

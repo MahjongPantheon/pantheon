@@ -77,7 +77,6 @@ class AccessController extends Controller
     public function getPersonAccess($personId, $eventId)
     {
         $this->_logStart(__METHOD__, [$personId, $eventId]);
-        // TODO: check access admin rights here...
         $rules = $this->_getModel()->getPersonAccess($personId, $eventId);
         $this->_logSuccess(__METHOD__, [$personId, $eventId]);
         return $rules;
@@ -97,7 +96,6 @@ class AccessController extends Controller
     public function getGroupAccess($groupId, $eventId)
     {
         $this->_logStart(__METHOD__, [$groupId, $eventId]);
-        // TODO: check access admin rights here...
         $rules = $this->_getModel()->getGroupAccess($groupId, $eventId);
         $this->_logSuccess(__METHOD__, [$groupId, $eventId]);
         return $rules;
@@ -119,7 +117,6 @@ class AccessController extends Controller
     public function addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId)
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
-        // TODO: check access admin rights here...
         $ruleId = $this->_getModel()->addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId);
         if ($ruleId !== null) {
             $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
@@ -143,7 +140,6 @@ class AccessController extends Controller
     public function addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId)
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId, $eventId]);
-        // TODO: check access admin rights here...
         $ruleId = $this->_getModel()->addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId);
         if ($ruleId !== null) {
             $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId, $eventId]);
@@ -164,7 +160,6 @@ class AccessController extends Controller
     public function updateRuleForPerson($ruleId, $ruleValue, $ruleType)
     {
         $this->_logStart(__METHOD__, [$ruleId, $ruleValue, $ruleType]);
-        // TODO: check access admin rights here...
         $success = $this->_getModel()->updateRuleForPerson($ruleId, $ruleValue, $ruleType);
         $this->_logSuccess(__METHOD__, [$ruleId, $ruleValue, $ruleType]);
         return $success;
@@ -183,7 +178,6 @@ class AccessController extends Controller
     public function updateRuleForGroup($ruleId, $ruleValue, $ruleType)
     {
         $this->_logStart(__METHOD__, [$ruleId, $ruleValue, $ruleType]);
-        // TODO: check access admin rights here...
         $success = $this->_getModel()->updateRuleForGroup($ruleId, $ruleValue, $ruleType);
         $this->_logSuccess(__METHOD__, [$ruleId, $ruleValue, $ruleType]);
         return $success;
@@ -200,7 +194,6 @@ class AccessController extends Controller
     public function deleteRuleForPerson($ruleId)
     {
         $this->_logStart(__METHOD__, [$ruleId]);
-        // TODO: check access admin rights here...
         $this->_getModel()->deleteRuleForPerson($ruleId);
         $this->_logSuccess(__METHOD__, [$ruleId]);
         return true;
@@ -217,7 +210,6 @@ class AccessController extends Controller
     public function deleteRuleForGroup($ruleId)
     {
         $this->_logStart(__METHOD__, [$ruleId]);
-        // TODO: check access admin rights here...
         $this->_getModel()->deleteRuleForGroup($ruleId);
         $this->_logSuccess(__METHOD__, [$ruleId]);
         return true;
@@ -235,8 +227,7 @@ class AccessController extends Controller
     public function clearAccessCache($personId, $eventId)
     {
         $this->_logStart(__METHOD__, [$personId, $eventId]);
-        // TODO: check access admin rights here...
-        $success = AccessManagementModel::clearAccessCache($personId, $eventId);
+        $success = $this->_getModel()->clearAccessCache($personId, $eventId);
         $this->_logSuccess(__METHOD__, [$personId, $eventId]);
         return $success;
     }
