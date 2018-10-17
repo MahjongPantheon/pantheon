@@ -37,3 +37,7 @@ clean_test_db:
 		PGPASSWORD=pgpass psql -p5532 -U frey frey_unit -c "ALTER SEQUENCE IF EXISTS $${p}_id_seq RESTART"; \
 	done < ./data/tablelist.txt
 
+i18n_extract:
+	touch i18n/messages.pot
+	find ./src -iname "*.php" | xargs xgettext -j --no-location --keyword=_t --keyword=_n:1,2 --keyword=_p --keyword=_np:1,2 --from-code=UTF-8 -o i18n/messages.pot
+	chmod a+w i18n/messages.pot

@@ -17,10 +17,10 @@
  */
 namespace Frey;
 
-require_once __DIR__ . '/Config.php';
-require_once __DIR__ . '/Db.php';
-require_once __DIR__ . '/Meta.php';
-require_once __DIR__ . '/ErrorHandler.php';
+require_once __DIR__ . '/helpers/Config.php';
+require_once __DIR__ . '/helpers/Db.php';
+require_once __DIR__ . '/helpers/Meta.php';
+require_once __DIR__ . '/helpers/ErrorHandler.php';
 
 use Monolog\Logger;
 use Monolog\Handler\ErrorLogHandler;

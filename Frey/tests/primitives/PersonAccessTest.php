@@ -19,7 +19,7 @@ namespace Frey;
 
 require_once __DIR__ . '/../../src/primitives/PersonAccess.php';
 require_once __DIR__ . '/../../src/primitives/Person.php';
-require_once __DIR__ . '/../../src/Db.php';
+require_once __DIR__ . '/../../src/helpers/Db.php';
 
 class PersonAccessPrimitiveTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,6 +34,10 @@ class PersonAccessPrimitiveTest extends \PHPUnit_Framework_TestCase
         $this->_person->setTitle('test')->setEmail('test@test.com')->save();
     }
 
+    /**
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
     public function testNewPersonAccess()
     {
         $newPersonAccess = new PersonAccessPrimitive($this->_db);
@@ -58,6 +62,10 @@ class PersonAccessPrimitiveTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, $newPersonAccess->getId());
     }
 
+    /**
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
     public function testFindPersonAccessById()
     {
         $newPersonAccess = new PersonAccessPrimitive($this->_db);
@@ -75,6 +83,10 @@ class PersonAccessPrimitiveTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($newPersonAccess !== $personAccessCopy[0]); // different objects!
     }
 
+    /**
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
     public function testFindPersonAccessByPerson()
     {
         $newGroupAccess = new PersonAccessPrimitive($this->_db);
@@ -92,6 +104,10 @@ class PersonAccessPrimitiveTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($newGroupAccess !== $personAccessCopy[0]); // different objects!
     }
 
+    /**
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
     public function testUpdatePersonAccess()
     {
         $newPersonAccess = new PersonAccessPrimitive($this->_db);

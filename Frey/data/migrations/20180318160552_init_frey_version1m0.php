@@ -83,6 +83,7 @@ class InitFreyVersion1m0 extends AbstractMigration
             ->addColumn('acl_value', 'string', ['limit' => 255,
                 'comment' => 'ACL value. Has limit of 255 bytes long for performance reasons'])
 
+            ->addIndex('acl_name', ['name' => 'access_acl_name_person'])
             ->addIndex('acl_value', ['name' => 'access_acl_value_person'])
             ->addForeignKey('person_id', 'person')
 

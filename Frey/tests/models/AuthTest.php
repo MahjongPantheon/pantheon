@@ -21,9 +21,9 @@ require_once __DIR__ . '/../../src/exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../../src/exceptions/AuthFailed.php';
 require_once __DIR__ . '/../../src/exceptions/EntityNotFound.php';
 require_once __DIR__ . '/../../src/models/Auth.php';
-require_once __DIR__ . '/../../src/Db.php';
-require_once __DIR__ . '/../../src/Config.php';
-require_once __DIR__ . '/../../src/Meta.php';
+require_once __DIR__ . '/../../src/helpers/Db.php';
+require_once __DIR__ . '/../../src/helpers/Config.php';
+require_once __DIR__ . '/../../src/helpers/Meta.php';
 
 class AuthModelTest extends \PHPUnit_Framework_TestCase
 {

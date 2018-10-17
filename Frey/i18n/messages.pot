@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-18 01:22+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Get access rules for a single person"
+msgstr ""
+
+msgid "Get access rules for a single group"
+msgstr ""
+
+msgid "Add new access rule for a person"
+msgstr ""
+
+msgid "Add new access rule for a group"
+msgstr ""
+
+msgid "Add new system-wide access rule for a person"
+msgstr ""
+
+msgid "Add new system-wide access rule for a group"
+msgstr ""
+
+msgid "Modify access rule value for a person"
+msgstr ""
+
+msgid "Modify access rule value for a group"
+msgstr ""
+
+msgid "Delete access rule for a person"
+msgstr ""
+
+msgid "Delete access rule for a group"
+msgstr ""
+
+msgid "Clear access rules cache for a single event"
+msgstr ""
+
+msgid "Create new person account"
+msgstr ""
+
+msgid "Get personal info including private data"
+msgstr ""
+
+msgid "Update personal info of a single person"
+msgstr ""
+
+msgid "Create new group"
+msgstr ""
+
+msgid "Update a group"
+msgstr ""
+
+msgid "Delete a group"
+msgstr ""
+
+msgid "Add person to a group"
+msgstr ""
+
+msgid "Remove person from a group"
+msgstr ""

@@ -18,9 +18,11 @@
 namespace Frey;
 
 require_once __DIR__ . '/../Model.php';
+require_once __DIR__ . '/../helpers/InternalRules.php';
 require_once __DIR__ . '/../models/Auth.php';
 require_once __DIR__ . '/../primitives/Person.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
+require_once __DIR__ . '/../exceptions/AccessDenied.php';
 
 class AccountModel extends Model
 {
@@ -39,7 +41,7 @@ class AccountModel extends Model
      */
     public function createAccount($email, $password, $title, $city, $phone, $tenhouId = null)
     {
-        // TODO: check admin rights here. Auth layer should be present to do this...
+        $this->_checkAccessRights(InternalRules::CREATE_ACCOUNT);
 
         if (empty($email) || empty($password) || empty($title)) {
             throw new InvalidParametersException('Some of required fields are empty (email, password, title)', 401);
@@ -67,7 +69,7 @@ class AccountModel extends Model
 
     /**
      * Get personal info by id list.
-     * May or may not include private data. This should be decided on controller layer.
+     * May or may not include private data.
      *
      * @param int[] $ids
      * @return array
@@ -75,7 +77,14 @@ class AccountModel extends Model
      */
     public function getPersonalInfo($ids)
     {
-        $filterPrivateData = false; // TODO: decide if this is true or false depending on admin auth data
+        $filterPrivateData = false;
+        try {
+            $this->_checkAccessRights(InternalRules::GET_PERSONAL_INFO_WITH_PRIVATE_DATA);
+        } catch (AccessDeniedException $e) {
+            // No access, filter out private data
+            $filterPrivateData = true;
+        }
+
         if (empty($ids)) {
             return [];
         }
@@ -109,7 +118,10 @@ class AccountModel extends Model
      */
     public function updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId = null)
     {
-        // TODO: check if this is admin or user himself
+        if (empty($this->_authorizedPerson) || $this->_authorizedPerson->getId() != $id) {
+            $this->_checkAccessRights(InternalRules::UPDATE_PERSONAL_INFO);
+        }
+
         $id = intval($id);
         if (empty($id)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 405);
