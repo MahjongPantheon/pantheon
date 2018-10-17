@@ -11,7 +11,8 @@ require_once __DIR__ . '/../../src/models/Account.php';
 require_once __DIR__ . '/../../src/models/Groups.php';
 require_once __DIR__ . '/../../src/models/AccessManagement.php';
 require_once __DIR__ . '/../../src/Db.php';
-require_once __DIR__ . '/../../src/Meta.php';
+require_once __DIR__ . '/../../src/helpers/Meta.php';
+require_once __DIR__ . '/../../src/helpers/BootstrapAccess.php';
 
 class BasicSeeder extends AbstractSeed
 {
@@ -35,8 +36,12 @@ class BasicSeeder extends AbstractSeed
         $this->table('player')->getAdapter()->commitTransaction();
 
         list($db, $config) = $this->_getConnection();
-        $groupIds = $this->_seedGroups($db, $config);
-        $personIds = $this->_seedPersons($db, $config, $groupIds);
+        $meta = new \Frey\Meta($_SERVER);
+
+        list($adminId, $adminGroupId) = \Frey\BootstrapAccess::create($db, $config, $meta, 'admin@localhost.localdomain', '123456');
+
+        $groupIds = $this->_seedGroups($db, $config, $meta, $adminGroupId);
+        $personIds = $this->_seedPersons($db, $config, $meta, $groupIds, $adminId);
         $this->_seedGroupAccess($db, $config, $groupIds);
         $this->_seedPersonAccess($db, $config, $personIds);
     }
@@ -44,19 +49,19 @@ class BasicSeeder extends AbstractSeed
     /**
      * @param \Frey\Db $db
      * @param \Frey\Config $config
+     * @param \Frey\Meta $meta
+     * @param $adminGroupId
      * @return array
      * @throws Exception
      * @throws \Frey\InvalidParametersException
      */
-    protected function _seedGroups(\Frey\Db $db, \Frey\Config $config)
+    protected function _seedGroups(\Frey\Db $db, \Frey\Config $config, \Frey\Meta $meta, $adminGroupId)
     {
-        $meta = new \Frey\Meta($_SERVER);
         $model = new \Frey\GroupsModel($db, $config, $meta);
-        $admId = $model->createGroup('Administrators', 'Service administration', 'ff0000');
         $trnId = $model->createGroup('Club leaders', 'Local club leaders', '00ff00');
         $plrId = $model->createGroup('Players', 'Usual players', '0000ff');
         return [
-            'admins' => $admId,
+            'admins' => $adminGroupId,
             'leaders' => $trnId,
             'players' => $plrId
         ];
@@ -65,18 +70,19 @@ class BasicSeeder extends AbstractSeed
     /**
      * @param \Frey\Db $db
      * @param \Frey\Config $config
+     * @param \Frey\Meta $meta
      * @param $groupIds
+     * @param $superAdminId
      * @return array
      * @throws Exception
      * @throws \Frey\EntityNotFoundException
      * @throws \Frey\InvalidParametersException
      */
-    protected function _seedPersons(\Frey\Db $db, \Frey\Config $config, $groupIds)
+    protected function _seedPersons(\Frey\Db $db, \Frey\Config $config, \Frey\Meta $meta, $groupIds, $superAdminId)
     {
-        $meta = new \Frey\Meta($_SERVER);
         $model = new \Frey\AccountModel($db, $config, $meta);
         $groupModel = new \Frey\GroupsModel($db, $config, $meta);
-        $adminIds = [];
+        $adminIds = [$superAdminId];
         $leadersIds = [];
         $playersIds = [];
         for ($i = 0; $i < 3; $i++) {
@@ -124,33 +130,33 @@ class BasicSeeder extends AbstractSeed
         $model = new \Frey\AccessManagementModel($db, $config, $meta);
 
         // admins are system-wide
-        $model->addRuleForGroup(
+        $model->addSystemWideRuleForGroup(
             'canAddEvent', true, \Frey\AccessPrimitive::TYPE_BOOL,
-            $groupIds['admins'], null
+            $groupIds['admins']
         );
-        $model->addRuleForGroup(
+        $model->addSystemWideRuleForGroup(
             'canModifyEvent', true, \Frey\AccessPrimitive::TYPE_BOOL,
-            $groupIds['admins'], null
+            $groupIds['admins']
         );
-        $model->addRuleForGroup(
+        $model->addSystemWideRuleForGroup(
             'canRegisterPlayer', true, \Frey\AccessPrimitive::TYPE_BOOL,
-            $groupIds['admins'], null
+            $groupIds['admins']
         );
-        $model->addRuleForGroup(
+        $model->addSystemWideRuleForGroup(
             'canAddPlayerToEvent', true, \Frey\AccessPrimitive::TYPE_BOOL,
-            $groupIds['admins'], null
+            $groupIds['admins']
         );
-        $model->addRuleForGroup(
+        $model->addSystemWideRuleForGroup(
             'canRemovePlayerFromEvent', true, \Frey\AccessPrimitive::TYPE_BOOL,
-            $groupIds['admins'], null
+            $groupIds['admins']
         );
-        $model->addRuleForGroup(
+        $model->addSystemWideRuleForGroup(
             'canModifyPlayer', true, \Frey\AccessPrimitive::TYPE_BOOL,
-            $groupIds['admins'], null
+            $groupIds['admins']
         );
-        $model->addRuleForGroup(
+        $model->addSystemWideRuleForGroup(
             'canViewEvent', true, \Frey\AccessPrimitive::TYPE_BOOL,
-            $groupIds['admins'], null
+            $groupIds['admins']
         );
 
         // leaders are bound to event usually
@@ -166,15 +172,15 @@ class BasicSeeder extends AbstractSeed
             'canRemovePlayerFromEvent', true, \Frey\AccessPrimitive::TYPE_BOOL,
             $groupIds['leaders'], self::EVENT_ID
         );
-        $model->addRuleForGroup(
+        $model->addSystemWideRuleForGroup(
             'canViewEvent', true, \Frey\AccessPrimitive::TYPE_BOOL,
-            $groupIds['leaders'], null
+            $groupIds['leaders']
         );
 
         // players have no special rights
-        $model->addRuleForGroup(
+        $model->addSystemWideRuleForGroup(
             'canViewEvent', true, \Frey\AccessPrimitive::TYPE_BOOL,
-            $groupIds['players'], null
+            $groupIds['players']
         );
     }
 
@@ -192,13 +198,13 @@ class BasicSeeder extends AbstractSeed
         $model = new \Frey\AccessManagementModel($db, $config, $meta);
 
         // nullify some system-wide rules for last admin
-        $model->addRuleForPerson(
+        $model->addSystemWideRuleForPerson(
             'canAddEvent', false, \Frey\AccessPrimitive::TYPE_BOOL,
-            end($personIds['admins']), null
+            end($personIds['admins'])
         );
-        $model->addRuleForPerson(
+        $model->addSystemWideRuleForPerson(
             'canAddPlayerToEvent', false, \Frey\AccessPrimitive::TYPE_BOOL,
-            end($personIds['admins']), null
+            end($personIds['admins'])
         );
 
         // nullify some event-bound rules for last leader

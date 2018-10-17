@@ -65,9 +65,9 @@ class Meta
             ? (
             empty($cookieInput['currentEventId'])
                 ? null
-                : $cookieInput['currentEventId']
+                : intval($cookieInput['currentEventId'])
             )
-            : $input['HTTP_X_CURRENT_EVENT_ID']);
+            : intval($input['HTTP_X_CURRENT_EVENT_ID']));
 
         list($this->_requestedVersionMajor, $this->_requestedVersionMinor) = explode('.', (
             empty($input['HTTP_X_API_VERSION']) ? '1.0' : $input['HTTP_X_API_VERSION']

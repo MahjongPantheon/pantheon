@@ -18,6 +18,7 @@
 namespace Frey;
 
 require_once __DIR__ . '/../Model.php';
+require_once __DIR__ . '/../helpers/InternalRules.php';
 require_once __DIR__ . '/../primitives/Group.php';
 require_once __DIR__ . '/../primitives/Person.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
@@ -36,7 +37,8 @@ class GroupsModel extends Model
      */
     public function createGroup($title, $description, $color)
     {
-        // TODO: check group admin rights here...
+        $this->_checkAccessRights(InternalRules::CREATE_GROUP);
+
         if (empty($title)) {
             throw new InvalidParametersException('Title is required to be non-empty', 401);
         }
@@ -90,7 +92,8 @@ class GroupsModel extends Model
      */
     public function updateGroup($id, $title, $description, $color)
     {
-        // TODO: check group admin rights here...
+        $this->_checkAccessRights(InternalRules::UPDATE_GROUP);
+
         $id = intval($id);
         if (empty($id)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 404);
@@ -121,7 +124,8 @@ class GroupsModel extends Model
      */
     public function deleteGroup($id)
     {
-        // TODO: check group admin rights here...
+        $this->_checkAccessRights(InternalRules::DELETE_GROUP);
+
         $id = intval($id);
         if (empty($id)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 407);
@@ -147,7 +151,8 @@ class GroupsModel extends Model
      */
     public function addPersonToGroup($personId, $groupId)
     {
-        // TODO: check group admin rights here...
+        $this->_checkAccessRights(InternalRules::ADD_PERSON_TO_GROUP);
+
         $groupId = intval($groupId);
         $personId = intval($personId);
         if (empty($groupId) || empty($personId)) {
@@ -183,7 +188,8 @@ class GroupsModel extends Model
      */
     public function removePersonFromGroup($personId, $groupId)
     {
-        // TODO: check group admin rights here...
+        $this->_checkAccessRights(InternalRules::REMOVE_PERSON_FROM_GROUP);
+
         $groupId = intval($groupId);
         $personId = intval($personId);
         if (empty($groupId) || empty($personId)) {
@@ -217,7 +223,6 @@ class GroupsModel extends Model
      */
     public function getGroupsOfPerson($personId)
     {
-        // TODO: check group admin rights here...
         $personId = intval($personId);
         if (empty($personId)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 413);
@@ -247,8 +252,6 @@ class GroupsModel extends Model
      */
     public function getPersonsOfGroup($groupId)
     {
-
-        // TODO: check group admin rights here...
         $groupId = intval($groupId);
         if (empty($groupId)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 415);

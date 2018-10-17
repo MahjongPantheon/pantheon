@@ -19,7 +19,7 @@ namespace Frey;
 
 require_once __DIR__ . '/../../src/primitives/GroupAccess.php';
 require_once __DIR__ . '/../../src/primitives/Group.php';
-require_once __DIR__ . '/../../src/Db.php';
+require_once __DIR__ . '/../../src/helpers/Db.php';
 
 class GroupAccessPrimitiveTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,6 +34,10 @@ class GroupAccessPrimitiveTest extends \PHPUnit_Framework_TestCase
         $this->_group->setTitle('test')->setDescription('test')->save();
     }
 
+    /**
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
     public function testNewGroupAccess()
     {
         $newGroupAccess = new GroupAccessPrimitive($this->_db);
@@ -58,6 +62,10 @@ class GroupAccessPrimitiveTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, $newGroupAccess->getId());
     }
 
+    /**
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
     public function testFindGroupAccessById()
     {
         $newGroupAccess = new GroupAccessPrimitive($this->_db);
@@ -75,6 +83,10 @@ class GroupAccessPrimitiveTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($newGroupAccess !== $groupAccessCopy[0]); // different objects!
     }
 
+    /**
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
     public function testFindGroupAccessByGroup()
     {
         $newGroupAccess = new GroupAccessPrimitive($this->_db);
@@ -92,6 +104,10 @@ class GroupAccessPrimitiveTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($newGroupAccess !== $groupAccessCopy[0]); // different objects!
     }
 
+    /**
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
     public function testUpdateGroupAccess()
     {
         $newGroupAccess = new GroupAccessPrimitive($this->_db);

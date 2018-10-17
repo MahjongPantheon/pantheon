@@ -18,7 +18,7 @@
 namespace Frey;
 
 require_once __DIR__ . '/../../src/primitives/Registrant.php';
-require_once __DIR__ . '/../../src/Db.php';
+require_once __DIR__ . '/../../src/helpers/Db.php';
 
 class RegistrantPrimitiveTest extends \PHPUnit_Framework_TestCase
 {

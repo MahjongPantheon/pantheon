@@ -17,7 +17,7 @@
  */
 namespace Frey;
 
-require_once __DIR__ . '/../src/Db.php';
+require_once __DIR__ . '/../src/helpers/Db.php';
 use JsonRPC\Client;
 
 /**
@@ -35,14 +35,22 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
      */
     protected $_db;
 
+    const CURRENT_EVENT_ID = 123;
+
+    /**
+     * @throws \Exception
+     */
     public function setUp()
     {
         // Init db! Or bunch of PDOExceptions will appeal
         $this->_db = Db::__getCleanTestingInstance();
 
         $this->_client = new Client('http://localhost:1359');
-        // $this->_client->getHttpClient()->withDebug();
-        $this->_client->getHttpClient()->withHeaders(['X-Auth-Token: 198vdsh904hfbnkjv98whb2iusvd98b29bsdv98svbr9wghj']);
+        $this->_client->getHttpClient()->withHeaders([
+            'X-Auth-Token: 198vdsh904hfbnkjv98whb2iusvd98b29bsdv98svbr9wghj',
+            'X-Current-Event-Id: ' . self::CURRENT_EVENT_ID
+        ]);
+        //$this->_client->getHttpClient()->withDebug();
     }
 
     /**
@@ -274,7 +282,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
     {
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
@@ -299,22 +307,22 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
     {
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
         ]);
 
         $success = $this->_client->execute('updateGroup', [
-            $grpId, 'newtestgrp', 'newtestgrp_description', '654321'
+            $grpId, 'newtestgrp', 'newtestgrp_description', '#654321'
         ]);
-        $this->assertTrue($success);
+        $this->assertTrue(!!$success);
 
         $grp = GroupPrimitive::findById($this->_db, [$grpId]);
         $this->assertNotEmpty($grp);
         $this->assertEquals('newtestgrp', $grp[0]->getTitle());
         $this->assertEquals('newtestgrp_description', $grp[0]->getDescription());
-        $this->assertEquals('654321', $grp[0]->getLabelColor());
+        $this->assertEquals('#654321', $grp[0]->getLabelColor());
     }
 
     /**
@@ -342,7 +350,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
     {
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
@@ -362,7 +370,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
 
 
         $success = $this->_client->execute('addPersonToGroup', [$userId, $grpId]);
-        $this->assertTrue($success);
+        $this->assertTrue(!!$success);
 
         $grp = GroupPrimitive::findById($this->_db, [$grpId]);
         $this->assertNotEmpty($grp[0]->getPersonIds());
@@ -380,7 +388,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
     {
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
@@ -401,7 +409,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
 
         $this->_client->execute('addPersonToGroup', [$userId, $grpId]);
         $success = $this->_client->execute('removePersonFromGroup', [$userId, $grpId]);
-        $this->assertTrue($success);
+        $this->assertTrue(!!$success);
 
         $grp = GroupPrimitive::findById($this->_db, [$grpId]);
         $this->assertEmpty($grp[0]->getPersonIds());
@@ -413,7 +421,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
     {
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
@@ -461,7 +469,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
 
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
@@ -498,7 +506,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
             $email, $password, $title,
             $city, $phone, $tenhouId
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
         $ruleId = $this->_client->execute('addRuleForPerson', [
             'testrule', 'testval', AccessPrimitive::TYPE_ENUM,
@@ -521,12 +529,12 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
     {
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
         $ruleId = $this->_client->execute('addRuleForGroup', [
             'testrule', 'testval', AccessPrimitive::TYPE_ENUM,
@@ -559,7 +567,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
             $email, $password, $title,
             $city, $phone, $tenhouId
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
         $ruleId = $this->_client->execute('addRuleForPerson', [
             'testrule', 'testval', AccessPrimitive::TYPE_ENUM,
@@ -567,7 +575,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $this->_client->execute('updateRuleForPerson', [
-            $ruleId, 123, AccessPrimitive::TYPE_INT
+            $ruleId, self::CURRENT_EVENT_ID, AccessPrimitive::TYPE_INT
         ]);
 
         $rule = PersonAccessPrimitive::findById($this->_db, [$ruleId]);
@@ -585,12 +593,12 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
     {
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
         $ruleId = $this->_client->execute('addRuleForGroup', [
             'testrule', 'testval', AccessPrimitive::TYPE_ENUM,
@@ -624,7 +632,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
             $email, $password, $title,
             $city, $phone, $tenhouId
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
         $ruleId = $this->_client->execute('addRuleForPerson', [
             'testrule', 'testval', AccessPrimitive::TYPE_ENUM,
@@ -644,12 +652,12 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
     {
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
         $ruleId = $this->_client->execute('addRuleForGroup', [
             'testrule', 'testval', AccessPrimitive::TYPE_ENUM,
@@ -679,7 +687,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
             $email, $password, $title,
             $city, $phone, $tenhouId
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
         $ruleIds = [
             $this->_client->execute('addRuleForPerson', [
@@ -693,6 +701,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
         ];
         $rules = PersonAccessPrimitive::findById($this->_db, $ruleIds);
 
+        /** @var array $access */
         $access = $this->_client->execute('getPersonAccess', [$userId, $eventId]);
         $this->assertEquals(2, count($access));
         $this->assertEquals($rules[0]->getAclValue(), $access[$rules[0]->getAclName()]);
@@ -707,12 +716,12 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
     {
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
         $ruleIds = [
             $this->_client->execute('addRuleForGroup', [
@@ -727,6 +736,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
 
         $rules = GroupAccessPrimitive::findById($this->_db, $ruleIds);
 
+        /** @var array $access */
         $access = $this->_client->execute('getGroupAccess', [$grpId, $eventId]);
         $this->assertEquals(2, count($access));
         $this->assertEquals($rules[0]->getAclValue(), $access[$rules[0]->getAclName()]);
@@ -748,41 +758,38 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
             $email, $password, $title,
             $city, $phone, $tenhouId
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
-        $personRuleIds = [
-            $this->_client->execute('addRuleForPerson', [
-                'testrule1', 'testval1', AccessPrimitive::TYPE_ENUM,
-                $userId, $eventId
-            ]),
-            $this->_client->execute('addRuleForPerson', [
-                'testrule2', 'testval2_p', AccessPrimitive::TYPE_ENUM,
-                $userId, $eventId
-            ])
-        ];
+        $this->_client->execute('addRuleForPerson', [
+            'testrule1', 'testval1', AccessPrimitive::TYPE_ENUM,
+            $userId, $eventId
+        ]);
+        $this->_client->execute('addRuleForPerson', [
+            'testrule2', 'testval2_p', AccessPrimitive::TYPE_ENUM,
+            $userId, $eventId
+        ]);
 
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
-        $groupRuleIds = [
-            $this->_client->execute('addRuleForGroup', [
-                'testrule1', 'testval2_g', AccessPrimitive::TYPE_ENUM,
-                $grpId, $eventId
-            ]),
-            $this->_client->execute('addRuleForGroup', [
-                'testrule3', 'testval3', AccessPrimitive::TYPE_ENUM,
-                $grpId, $eventId
-            ])
-        ];
+        $this->_client->execute('addRuleForGroup', [
+            'testrule1', 'testval2_g', AccessPrimitive::TYPE_ENUM,
+            $grpId, $eventId
+        ]);
+        $this->_client->execute('addRuleForGroup', [
+            'testrule3', 'testval3', AccessPrimitive::TYPE_ENUM,
+            $grpId, $eventId
+        ]);
 
         $this->_client->execute('addPersonToGroup', [$userId, $grpId]);
 
+        /** @var array $rules */
         $rules = $this->_client->execute('getAccessRules', [$userId, $eventId]);
         $this->assertEquals(3, count($rules));
         $this->assertEquals('testval1', $rules['testrule1']);
@@ -803,18 +810,16 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
             $email, $password, $title,
             $city, $phone, $tenhouId
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
-        $personRuleIds = [
-            $this->_client->execute('addRuleForPerson', [
-                'testrule1', 'testval1', AccessPrimitive::TYPE_ENUM,
-                $userId, $eventId
-            ]),
-            $this->_client->execute('addRuleForPerson', [
-                'testrule2', 'testval2_p', AccessPrimitive::TYPE_ENUM,
-                $userId, $eventId
-            ])
-        ];
+        $this->_client->execute('addRuleForPerson', [
+            'testrule1', 'testval1', AccessPrimitive::TYPE_ENUM,
+            $userId, $eventId
+        ]);
+        $this->_client->execute('addRuleForPerson', [
+            'testrule2', 'testval2_p', AccessPrimitive::TYPE_ENUM,
+            $userId, $eventId
+        ]);
 
         $title = 'testgrp';
         $description = 'testgrp_description';
@@ -823,18 +828,16 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
-        $groupRuleIds = [
-            $this->_client->execute('addRuleForGroup', [
-                'testrule2', 'testval2_g', AccessPrimitive::TYPE_ENUM,
-                $grpId, $eventId
-            ]),
-            $this->_client->execute('addRuleForGroup', [
-                'testrule3', 'testval3', AccessPrimitive::TYPE_ENUM,
-                $grpId, $eventId
-            ])
-        ];
+        $this->_client->execute('addRuleForGroup', [
+            'testrule2', 'testval2_g', AccessPrimitive::TYPE_ENUM,
+            $grpId, $eventId
+        ]);
+        $this->_client->execute('addRuleForGroup', [
+            'testrule3', 'testval3', AccessPrimitive::TYPE_ENUM,
+            $grpId, $eventId
+        ]);
 
         $this->_client->execute('addPersonToGroup', [$userId, $grpId]);
 
@@ -855,7 +858,7 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
             $email, $password, $title,
             $city, $phone, $tenhouId
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
         $personRuleIds = [
             $this->_client->execute('addRuleForPerson', [
@@ -870,12 +873,12 @@ class RealApiTest extends \PHPUnit_Framework_TestCase
 
         $title = 'testgrp';
         $description = 'testgrp_description';
-        $color = '123456';
+        $color = '#123456';
 
         $grpId = $this->_client->execute('createGroup', [
             $title, $description, $color
         ]);
-        $eventId = 123;
+        $eventId = self::CURRENT_EVENT_ID;
 
         $groupRuleIds = [
             $this->_client->execute('addRuleForGroup', [

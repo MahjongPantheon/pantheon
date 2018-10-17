@@ -148,6 +148,50 @@ class AccessController extends Controller
     }
 
     /**
+     * Add new system-wide rule for a person.
+     *
+     * @param string $ruleName
+     * @param string|integer|boolean $ruleValue
+     * @param string $ruleType   'bool', 'int' or 'enum'
+     * @param integer $personId
+     * @return integer rule id
+     * @throws DuplicateEntityException
+     * @throws EntityNotFoundException
+     * @throws \Exception
+     */
+    public function addSystemWideRuleForPerson($ruleName, $ruleValue, $ruleType, $personId)
+    {
+        $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId]);
+        $ruleId = $this->_getModel()->addSystemWideRuleForPerson($ruleName, $ruleValue, $ruleType, $personId);
+        if ($ruleId !== null) {
+            $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId]);
+        }
+        return $ruleId;
+    }
+
+    /**
+     * Add new system-wide rule for a group.
+     *
+     * @param string $ruleName
+     * @param string|integer|boolean $ruleValue
+     * @param string $ruleType   'bool', 'int' or 'enum'
+     * @param integer $groupId
+     * @return integer rule id
+     * @throws DuplicateEntityException
+     * @throws EntityNotFoundException
+     * @throws \Exception
+     */
+    public function addSystemWideRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId)
+    {
+        $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId]);
+        $ruleId = $this->_getModel()->addSystemWideRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId);
+        if ($ruleId !== null) {
+            $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId]);
+        }
+        return $ruleId;
+    }
+
+    /**
      * Update personal rule value and/or type
      *
      * @param integer $ruleId
@@ -223,6 +267,7 @@ class AccessController extends Controller
      * @param integer $personId
      * @param integer $eventId
      * @return bool
+     * @throws \Exception
      */
     public function clearAccessCache($personId, $eventId)
     {

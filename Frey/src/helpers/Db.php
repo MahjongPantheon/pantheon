@@ -19,9 +19,10 @@ namespace Frey;
 
 use \Idiorm\ORM;
 
-require_once __DIR__ . '/../vendor/ctizen/idiorm/src/idiorm.php';
-require_once __DIR__ . '/../src/interfaces/IDb.php';
-require_once __DIR__ . '/../src/Config.php';
+require_once __DIR__ . '/../../vendor/ctizen/idiorm/src/idiorm.php';
+require_once __DIR__ . '/../../src/interfaces/IDb.php';
+require_once __DIR__ . '/../../src/helpers/Config.php';
+require_once __DIR__ . '/../../src/helpers/BootstrapAccess.php';
 
 /**
  * Class Db
@@ -142,15 +143,28 @@ class Db implements IDb
 
     // For testing purposes
     static protected $__testingInstance = null;
+
+    /**
+     * @return Db|null
+     * @throws \Exception
+     */
     public static function __getCleanTestingInstance()
     {
-        shell_exec('cd ' . __DIR__ . '/../ && make init_test_db && make clean_test_db');
+        shell_exec('cd ' . __DIR__ . '/../../ && make init_test_db && make clean_test_db');
+        $cfg = new Config(__DIR__ . '/../../tests/util/config.php');
 
         if (self::$__testingInstance === null) {
-            $cfg = new Config(__DIR__ . '/../tests/util/config.php');
             self::$_ctr = 0;
             self::$__testingInstance = new self($cfg);
         }
+
+        BootstrapAccess::create(
+            self::$__testingInstance,
+            $cfg,
+            new Meta($_SERVER),
+            'test@local.host',
+            '123456'
+        );
 
         return self::$__testingInstance;
     }

@@ -26,15 +26,16 @@ return [
         ]
     ],
     'admin'     => [
-        'god_token' => '198vdsh904hfbnkjv98whb2iusvd98b29bsdv98svbr9wghj',
         'debug_token' => '2-839489203hf2893'
     ],
     'routes'    => require __DIR__ . '/../../config/routes.php',
     'verbose'   => true,
+    'serverDefaultTimezone' => 'UTC',
     'verboseLog' => __DIR__ . '/../data/verbose.log',
     'trackerUrl' => null,
     'api' => [
         'version_major' => 1,
         'version_minor' => 0
-    ]
+    ],
+    'testing_token' => '198vdsh904hfbnkjv98whb2iusvd98b29bsdv98svbr9wghj',
 ];

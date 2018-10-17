@@ -76,6 +76,16 @@ class PersonAccessPrimitive extends AccessPrimitive
     }
 
     /**
+     * @param IDb $db
+     * @return static[]
+     * @throws \Exception
+     */
+    public static function findSuperAdminId(IDb $db)
+    {
+        return self::_findBy($db, 'acl_name', [InternalRules::IS_SUPER_ADMIN]);
+    }
+
+    /**
      * @return int
      */
     public function getPersonId(): int

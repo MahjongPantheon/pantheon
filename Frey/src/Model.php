@@ -17,6 +17,8 @@
  */
 namespace Frey;
 
+require_once 'exceptions/AccessDenied.php';
+
 abstract class Model
 {
     /**
@@ -45,6 +47,11 @@ abstract class Model
     protected $_currentAccess = [];
 
     /**
+     * @var int[]
+     */
+    protected $_superAdminIds;
+
+    /**
      * Model constructor.
      * @param IDb $db
      * @param Config $config
@@ -57,7 +64,13 @@ abstract class Model
         $this->_config = $config;
         $this->_meta = $meta;
         $this->_authorizedPerson = $this->_fetchAuthorizedPerson();
+
+        if ($this->_meta->getAuthToken() == $this->_config->getValue('testing_token')) {
+            $this->_authorizedPerson = PersonPrimitive::findById($db, $this->_fetchSuperAdminId())[0];
+        }
+
         $this->_currentAccess = $this->_fetchPersonAccess();
+        $this->_superAdminIds = $this->_fetchSuperAdminId();
     }
 
     /**
@@ -94,6 +107,19 @@ abstract class Model
         return $this->_meta->getCurrentEventId() === null
             ? $this->_getSystemWideRules($this->_authorizedPerson->getId())
             : $this->_getAccessRules($this->_authorizedPerson->getId(), $this->_meta->getCurrentEventId());
+    }
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    protected function _fetchSuperAdminId()
+    {
+        /** @var PersonAccessPrimitive[] $access */
+        $access = PersonAccessPrimitive::findSuperAdminId($this->_db);
+        return array_map(function (PersonAccessPrimitive $p) {
+            return $p->getPersonId();
+        }, $access);
     }
 
     //////////////////////////////////////////////////////////////////
@@ -274,5 +300,24 @@ abstract class Model
                 return empty($rule->getEventsId());
             }
         );
+    }
+
+    /**
+     * @param string $key
+     * @param int|null $eventId
+     * @throws AccessDeniedException
+     */
+    protected function _checkAccessRights(string $key, $eventId = null)
+    {
+        if (defined('BOOTSTRAP_MODE')) {
+            // Everything is allowed during setup
+            return;
+        }
+
+        if ((!empty($eventId) && $eventId != $this->_meta->getCurrentEventId())
+            || empty($this->_currentAccess[$key])
+            || $this->_currentAccess[$key] != true) {
+            throw new AccessDeniedException();
+        }
     }
 }

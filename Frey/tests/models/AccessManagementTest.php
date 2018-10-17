@@ -22,9 +22,9 @@ require_once __DIR__ . '/../../src/models/AccessManagement.php';
 require_once __DIR__ . '/../../src/primitives/Person.php';
 require_once __DIR__ . '/../../src/primitives/Group.php';
 require_once __DIR__ . '/../../src/primitives/Access.php';
-require_once __DIR__ . '/../../src/Db.php';
-require_once __DIR__ . '/../../src/Config.php';
-require_once __DIR__ . '/../../src/Meta.php';
+require_once __DIR__ . '/../../src/helpers/Db.php';
+require_once __DIR__ . '/../../src/helpers/Config.php';
+require_once __DIR__ . '/../../src/helpers/Meta.php';
 
 class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
 {
@@ -50,6 +50,9 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
      */
     protected $_eventId;
 
+    /**
+     * @throws \Exception
+     */
     public function setUp()
     {
         $this->_db = Db::__getCleanTestingInstance();
@@ -69,7 +72,8 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
         $this->_group->save();
 
         $this->_eventId = mt_rand(1, 500);
-        AccessManagementModel::clearAccessCache($this->_person->getId(), $this->_eventId);
+        (new AccessManagementModel($this->_db, $this->_config, $this->_meta))
+            ->clearAccessCache($this->_person->getId(), $this->_eventId);
     }
 
     /**
@@ -245,13 +249,22 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     protected function _testAddRuleForPerson($eventId)
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
-        $ruleId = $model->addRuleForPerson(
-            'test_rule',
-            'ololo',
-            AccessPrimitive::TYPE_ENUM,
-            $this->_person->getId(),
-            $eventId
-        );
+        if (empty($eventId)) {
+            $ruleId = $model->addSystemWideRuleForPerson(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_person->getId()
+            );
+        } else {
+            $ruleId = $model->addRuleForPerson(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_person->getId(),
+                $eventId
+            );
+        }
         $this->assertNotNull($ruleId);
         $this->assertEquals('ololo', $model->getPersonAccess(
             $this->_person->getId(),
@@ -260,6 +273,7 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param $eventId
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -268,23 +282,39 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     protected function _testAddDuplicateRuleForPerson($eventId)
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
-        $model->addRuleForPerson(
-            'test_rule',
-            'ololo',
-            AccessPrimitive::TYPE_ENUM,
-            $this->_person->getId(),
-            $eventId
-        );
-        $model->addRuleForPerson(
-            'test_rule',
-            'ololo',
-            AccessPrimitive::TYPE_ENUM,
-            $this->_person->getId(),
-            $eventId
-        );
+        if (empty($eventId)) {
+            $model->addSystemWideRuleForPerson(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_person->getId()
+            );
+            $model->addSystemWideRuleForPerson(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_person->getId()
+            );
+        } else {
+            $model->addRuleForPerson(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_person->getId(),
+                $eventId
+            );
+            $model->addRuleForPerson(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_person->getId(),
+                $eventId
+            );
+        }
     }
 
     /**
+     * @param $eventId
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -292,13 +322,22 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     protected function _testUpdateRuleForPerson($eventId)
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
-        $ruleId = $model->addRuleForPerson(
-            'test_rule',
-            'ololo',
-            AccessPrimitive::TYPE_ENUM,
-            $this->_person->getId(),
-            $eventId
-        );
+        if (empty($eventId)) {
+            $ruleId = $model->addSystemWideRuleForPerson(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_person->getId()
+            );
+        } else {
+            $ruleId = $model->addRuleForPerson(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_person->getId(),
+                $eventId
+            );
+        }
 
         $success = $model->updateRuleForPerson(
             $ruleId,
@@ -314,6 +353,7 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param $eventId
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -321,13 +361,22 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     protected function _testAddRuleForGroup($eventId)
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
-        $ruleId = $model->addRuleForGroup(
-            'test_rule',
-            'ololo',
-            AccessPrimitive::TYPE_ENUM,
-            $this->_group->getId(),
-            $eventId
-        );
+        if (empty($eventId)) {
+            $ruleId = $model->addSystemWideRuleForGroup(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_group->getId()
+            );
+        } else {
+            $ruleId = $model->addRuleForGroup(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_group->getId(),
+                $eventId
+            );
+        }
         $this->assertNotNull($ruleId);
         $this->assertEquals('ololo', $model->getGroupAccess(
             $this->_group->getId(),
@@ -336,6 +385,7 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param $eventId
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -344,23 +394,39 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     protected function _testAddDuplicateRuleForGroup($eventId)
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
-        $model->addRuleForGroup(
-            'test_rule',
-            'ololo',
-            AccessPrimitive::TYPE_ENUM,
-            $this->_group->getId(),
-            $eventId
-        );
-        $model->addRuleForGroup(
-            'test_rule',
-            'ololo',
-            AccessPrimitive::TYPE_ENUM,
-            $this->_group->getId(),
-            $eventId
-        );
+        if (empty($eventId)) {
+            $model->addSystemWideRuleForGroup(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_group->getId()
+            );
+            $model->addSystemWideRuleForGroup(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_group->getId()
+            );
+        } else {
+            $model->addRuleForGroup(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_group->getId(),
+                $eventId
+            );
+            $model->addRuleForGroup(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_group->getId(),
+                $eventId
+            );
+        }
     }
 
     /**
+     * @param $eventId
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -368,13 +434,22 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     protected function _testUpdateRuleForGroup($eventId)
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
-        $ruleId = $model->addRuleForGroup(
-            'test_rule',
-            'ololo',
-            AccessPrimitive::TYPE_ENUM,
-            $this->_group->getId(),
-            $eventId
-        );
+        if (empty($eventId)) {
+            $ruleId = $model->addSystemWideRuleForGroup(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_group->getId()
+            );
+        } else {
+            $ruleId = $model->addRuleForGroup(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_group->getId(),
+                $eventId
+            );
+        }
 
         $success = $model->updateRuleForGroup(
             $ruleId,
@@ -390,6 +465,7 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param $eventId
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -397,13 +473,22 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     protected function _testDeleteRuleForPerson($eventId)
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
-        $ruleId = $model->addRuleForPerson(
-            'test_rule',
-            'ololo',
-            AccessPrimitive::TYPE_ENUM,
-            $this->_person->getId(),
-            $eventId
-        );
+        if (empty($eventId)) {
+            $ruleId = $model->addSystemWideRuleForPerson(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_person->getId()
+            );
+        } else {
+            $ruleId = $model->addRuleForPerson(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_person->getId(),
+                $eventId
+            );
+        }
 
         $model->deleteRuleForPerson($ruleId);
 
@@ -414,6 +499,7 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param $eventId
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -421,13 +507,22 @@ class AccessManagementModelTest extends \PHPUnit_Framework_TestCase
     protected function _testDeleteRuleForGroup($eventId)
     {
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
-        $ruleId = $model->addRuleForGroup(
-            'test_rule',
-            'ololo',
-            AccessPrimitive::TYPE_ENUM,
-            $this->_group->getId(),
-            $eventId
-        );
+        if (empty($eventId)) {
+            $ruleId = $model->addSystemWideRuleForGroup(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_group->getId()
+            );
+        } else {
+            $ruleId = $model->addRuleForGroup(
+                'test_rule',
+                'ololo',
+                AccessPrimitive::TYPE_ENUM,
+                $this->_group->getId(),
+                $eventId
+            );
+        }
 
         $model->deleteRuleForGroup($ruleId);
 

@@ -17,6 +17,8 @@
  */
 namespace Frey;
 
+require_once __DIR__ . '/helpers/i18n.php';
+
 use Monolog\Logger;
 
 abstract class Controller
@@ -41,6 +43,14 @@ abstract class Controller
      */
     protected $_meta;
 
+    /**
+     * Controller constructor.
+     * @param IDb $db
+     * @param Logger $log
+     * @param Config $config
+     * @param Meta $meta
+     * @throws \Exception
+     */
     public function __construct(IDb $db, Logger $log, Config $config, Meta $meta)
     {
         $this->_db = $db;
@@ -52,6 +62,45 @@ abstract class Controller
             $this->_config->getValue('api.version_major'),
             $this->_config->getValue('api.version_minor')
         );
+
+        $locale = 'en_US.UTF-8';
+
+        // i18n support
+        // first step is getting browser language
+        if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        }
+
+        // second step is checking cookie
+        if (isset($_COOKIE['language'])) {
+            $locale = $_COOKIE['language'];
+        }
+
+        // List of locales
+        // https://gcc.gnu.org/onlinedocs/libstdc++/manual/localization.html
+        switch ($locale) {
+            // map common lang ids to more specific
+            case 'ru':
+            case 'ru_RU':
+            case 'ru_UA':
+                $locale = 'ru_RU.UTF-8';
+                break;
+            case 'de':
+            case 'de_DE':
+            case 'de_AT':
+            case 'de_BE':
+            case 'de_CH':
+            case 'de_LU':
+                $locale = 'de_DE.UTF-8';
+                break;
+            default:
+                $locale = 'en_US.UTF-8';
+        }
+
+        if (setlocale(LC_ALL, $locale) === false) {
+            throw new \Exception("Server error: The $locale locale is not installed");
+        }
+        putenv('LC_ALL=' . $locale);
     }
 
     protected function _logStart($method, $args)

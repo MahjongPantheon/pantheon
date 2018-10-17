@@ -158,12 +158,12 @@ class GroupPrimitive extends Primitive
     }
 
     /**
-     * @param string $color
+     * @param string $color Hex color code
      * @return GroupPrimitive
      */
     public function setLabelColor(string $color): GroupPrimitive
     {
-        $this->_labelColor = $color;
+        $this->_labelColor = ($color[0] == '#' ? $color : '#' . $color);
         return $this;
     }
 

@@ -21,9 +21,9 @@ require_once __DIR__ . '/../../src/exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../../src/models/Groups.php';
 require_once __DIR__ . '/../../src/primitives/Person.php';
 require_once __DIR__ . '/../../src/primitives/Group.php';
-require_once __DIR__ . '/../../src/Db.php';
-require_once __DIR__ . '/../../src/Config.php';
-require_once __DIR__ . '/../../src/Meta.php';
+require_once __DIR__ . '/../../src/helpers/Db.php';
+require_once __DIR__ . '/../../src/helpers/Config.php';
+require_once __DIR__ . '/../../src/helpers/Meta.php';
 
 class GroupsModelTest extends \PHPUnit_Framework_TestCase
 {
@@ -64,7 +64,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testCreateGroup()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('Test group', 'Test group description', '123456');
+        $groupId = $model->createGroup('Test group', 'Test group description', '#123456');
         $this->assertNotEmpty($groupId);
 
         $group = GroupPrimitive::findById($this->_db, [$groupId]);
@@ -72,7 +72,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('Test group', $group[0]->getTitle());
         $this->assertEquals('Test group description', $group[0]->getDescription());
-        $this->assertEquals('123456', $group[0]->getLabelColor());
+        $this->assertEquals('#123456', $group[0]->getLabelColor());
     }
 
     /**
@@ -94,8 +94,8 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testGetGroups()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $group1Id = $model->createGroup('Test group 1', 'Test group 1 description', '123456');
-        $group2Id = $model->createGroup('Test group 2', 'Test group 2 description', '654321');
+        $group1Id = $model->createGroup('Test group 1', 'Test group 1 description', '#123456');
+        $group2Id = $model->createGroup('Test group 2', 'Test group 2 description', '#654321');
 
         $groups = $model->getGroups([$group1Id, $group2Id]);
         $this->assertNotEmpty($groups);
@@ -106,8 +106,8 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Test group 2', $groups[1]['title']);
         $this->assertEquals('Test group 1 description', $groups[0]['description']);
         $this->assertEquals('Test group 2 description', $groups[1]['description']);
-        $this->assertEquals('123456', $groups[0]['label_color']);
-        $this->assertEquals('654321', $groups[1]['label_color']);
+        $this->assertEquals('#123456', $groups[0]['label_color']);
+        $this->assertEquals('#654321', $groups[1]['label_color']);
     }
 
     /**
@@ -140,8 +140,8 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testUpdateGroup()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('Test group', 'Test group description', '123456');
-        $success = $model->updateGroup($groupId, 'Updated group', 'Updated description', '654321');
+        $groupId = $model->createGroup('Test group', 'Test group description', '#123456');
+        $success = $model->updateGroup($groupId, 'Updated group', 'Updated description', '#654321');
         $this->assertTrue($success);
 
         $group = GroupPrimitive::findById($this->_db, [$groupId]);
@@ -149,7 +149,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('Updated group', $group[0]->getTitle());
         $this->assertEquals('Updated description', $group[0]->getDescription());
-        $this->assertEquals('654321', $group[0]->getLabelColor());
+        $this->assertEquals('#654321', $group[0]->getLabelColor());
     }
 
     /**
@@ -161,7 +161,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testUpdateGroupBadId()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $model->updateGroup('lol', 'Updated group', 'Updated description', '654321');
+        $model->updateGroup('lol', 'Updated group', 'Updated description', '#654321');
     }
 
     /**
@@ -173,7 +173,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testUpdateGroupIdNotFound()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $model->updateGroup(1234, 'Updated group', 'Updated description', '654321');
+        $model->updateGroup(1234, 'Updated group', 'Updated description', '#654321');
     }
 
     /**
@@ -185,7 +185,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testUpdateGroupBadTitle()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('Test group', 'Test group description', '123456');
+        $groupId = $model->createGroup('Test group', 'Test group description', '#123456');
         $model->updateGroup($groupId, '', '', '');
     }
 
@@ -196,7 +196,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testDeleteGroup()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('Test group', 'Test group description', '123456');
+        $groupId = $model->createGroup('Test group', 'Test group description', '#123456');
         $model->deleteGroup($groupId);
 
         $group = GroupPrimitive::findById($this->_db, [$groupId]);
@@ -235,7 +235,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testAddPersonToGroup()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '123456');
+        $groupId = $model->createGroup('test', 'test', '#123456');
         $success = $model->addPersonToGroup($this->_person->getId(), $groupId);
         $this->assertTrue($success);
         $person = PersonPrimitive::findById($this->_db, [$this->_person->getId()])[0]; // updated version of data
@@ -265,7 +265,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testAddPersonToGroupBadPersonId()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '123456');
+        $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup('lol', $groupId);
     }
 
@@ -292,7 +292,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testAddPersonToGroupPersonIdNotFound()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '123456');
+        $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup(321, $groupId);
     }
 
@@ -304,7 +304,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testRemovePersonFromGroup()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '123456');
+        $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $success = $model->removePersonFromGroup($this->_person->getId(), $groupId);
         $this->assertTrue($success);
@@ -322,7 +322,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testRemovePersonToGroupBadGroupId()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '123456');
+        $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $model->removePersonFromGroup($this->_person->getId(), 'kek');
     }
@@ -337,7 +337,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testRemovePersonToGroupBadPersonId()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '123456');
+        $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $model->removePersonFromGroup('lol', $groupId);
     }
@@ -352,7 +352,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testRemovePersonToGroupGroupIdNotFound()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '123456');
+        $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $model->removePersonFromGroup($this->_person->getId(), 123);
     }
@@ -367,7 +367,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testRemovePersonToGroupPersonIdNotFound()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '123456');
+        $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $model->removePersonFromGroup(312, $groupId);
     }
@@ -380,13 +380,13 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testGetGroupsOfPerson()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'testdescr', '123456');
+        $groupId = $model->createGroup('test', 'testdescr', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $groups = $model->getGroupsOfPerson($this->_person->getId());
         $this->assertEquals(1, count($groups));
         $this->assertEquals($groupId, $groups[0]['id']);
         $this->assertEquals('test', $groups[0]['title']);
-        $this->assertEquals('123456', $groups[0]['label_color']);
+        $this->assertEquals('#123456', $groups[0]['label_color']);
         $this->assertEquals('testdescr', $groups[0]['description']);
     }
 
@@ -424,7 +424,7 @@ class GroupsModelTest extends \PHPUnit_Framework_TestCase
     public function testGetPersonsOfGroup()
     {
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '123456');
+        $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
         $persons = $model->getPersonsOfGroup($groupId);
         $this->assertEquals(1, count($persons));

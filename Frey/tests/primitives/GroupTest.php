@@ -19,7 +19,7 @@ namespace Frey;
 
 require_once __DIR__ . '/../../src/primitives/Group.php';
 require_once __DIR__ . '/../../src/primitives/Person.php';
-require_once __DIR__ . '/../../src/Db.php';
+require_once __DIR__ . '/../../src/helpers/Db.php';
 
 class GroupPrimitiveTest extends \PHPUnit_Framework_TestCase
 {

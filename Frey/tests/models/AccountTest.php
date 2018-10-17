@@ -21,9 +21,9 @@ require_once __DIR__ . '/../../src/exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../../src/models/Account.php';
 require_once __DIR__ . '/../../src/primitives/Person.php';
 require_once __DIR__ . '/../../src/primitives/Group.php';
-require_once __DIR__ . '/../../src/Db.php';
-require_once __DIR__ . '/../../src/Config.php';
-require_once __DIR__ . '/../../src/Meta.php';
+require_once __DIR__ . '/../../src/helpers/Db.php';
+require_once __DIR__ . '/../../src/helpers/Config.php';
+require_once __DIR__ . '/../../src/helpers/Meta.php';
 
 class AccountModelTest extends \PHPUnit_Framework_TestCase
 {
@@ -160,7 +160,6 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @throws InvalidParametersException
      * @throws \Exception
      */
     public function testGetPersonalInfo()
@@ -174,7 +173,7 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
             '111-111-111',
             'tid'
         );
-        $data = $model->getPersonalInfo([$personId], false);
+        $data = $model->getPersonalInfo([$personId]);
         $this->assertEquals('test@email.com', $data[0]['email']);
         $this->assertEquals('test', $data[0]['title']);
         $this->assertEquals('111-111-111', $data[0]['phone']);
@@ -214,7 +213,7 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     public function testGetPersonalInfoEmptyList()
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
-        $persons = $model->getPersonalInfo([], false);
+        $persons = $model->getPersonalInfo([]);
         $this->assertEmpty($persons);
     }
 
@@ -224,7 +223,7 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
     public function testGetPersonalInfoNonexistingIds()
     {
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
-        $persons = $model->getPersonalInfo([123], false);
+        $persons = $model->getPersonalInfo([123]);
         $this->assertEmpty($persons);
     }
 
@@ -252,7 +251,7 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
             'tid2'
         );
         $this->assertTrue($success);
-        $data = $model->getPersonalInfo([$personId], false);
+        $data = $model->getPersonalInfo([$personId]);
         $this->assertEquals('test2@email.com', $data[0]['email']);
         $this->assertEquals('test2', $data[0]['title']);
         $this->assertEquals('222-222-222', $data[0]['phone']);

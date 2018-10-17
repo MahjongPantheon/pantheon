@@ -341,16 +341,16 @@ class PersonPrimitive extends Primitive
      */
     public function getCity(): string
     {
-        return $this->_city;
+        return $this->_city ?: '';
     }
 
     /**
-     * @param string $city
+     * @param string|null $city
      * @return PersonPrimitive
      */
-    public function setCity(string $city): PersonPrimitive
+    public function setCity($city): PersonPrimitive
     {
-        $this->_city = $city;
+        $this->_city = $city ?: '';
         return $this;
     }
 
@@ -363,12 +363,12 @@ class PersonPrimitive extends Primitive
     }
 
     /**
-     * @param string $tenhouId
+     * @param string|null $tenhouId
      * @return PersonPrimitive
      */
-    public function setTenhouId(string $tenhouId): PersonPrimitive
+    public function setTenhouId($tenhouId): PersonPrimitive
     {
-        $this->_tenhouId = $tenhouId;
+        $this->_tenhouId = $tenhouId ?: '';
         return $this;
     }
 
