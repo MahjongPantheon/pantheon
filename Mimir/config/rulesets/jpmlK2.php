@@ -29,7 +29,7 @@ class RulesetJpmlK2 extends Ruleset
     protected static $_ruleset = [
         'tenboDivider'          => 100,
         'ratingDivider'         => 10,
-        'startRating'           => 0,
+        'startRating'           => 1500,
         'oka'                   => 0,
         'startPoints'           => 25000,
         'subtractStartPoints'   => true,
@@ -42,7 +42,7 @@ class RulesetJpmlK2 extends Ruleset
         'withAbortives'         => true,
         'withKuitan'            => true,
         'withKazoe'             => true,
-        'withButtobi'           => true,
+        'withButtobi'           => false,
         'withMultiYakumans'     => true,
         'withNagashiMangan'     => true,
         'withKiriageMangan'     => false,
@@ -66,13 +66,13 @@ class RulesetJpmlK2 extends Ruleset
             Y_OPENRIICHI
         ]);
     }
-    
+
     /**
      * @param array $scores
      * @return array
      */
     public function uma($scores = [])
     {
-        return $this->_equalizeUma($scores, [1 => 10, 5, -5, -10]);
+        return $this->_equalizeUma($scores, [1 => 100, 50, -50, -100]);
     }
 }
