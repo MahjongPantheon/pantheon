@@ -37,9 +37,9 @@ class AuthController extends Controller
      */
     public function requestRegistration($email, $password)
     {
-        $this->_logStart(__METHOD__, [$email, $password]);
+        $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
         $approvalCode = $this->_getModel()->requestRegistration($email, $password);
-        $this->_logSuccess(__METHOD__, [$email, $password]);
+        $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
         return $approvalCode;
     }
 
@@ -72,9 +72,9 @@ class AuthController extends Controller
      */
     public function authorize($email, $password)
     {
-        $this->_logStart(__METHOD__, [$email, $password]);
+        $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
         $clientToken = $this->_getModel()->authorize($email, $password);
-        $this->_logSuccess(__METHOD__, [$email, $password]);
+        $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
         return $clientToken;
     }
 
@@ -90,9 +90,9 @@ class AuthController extends Controller
      */
     public function quickAuthorize($id, $clientSideToken)
     {
-        $this->_logStart(__METHOD__, [$id, $clientSideToken]);
+        $this->_logStart(__METHOD__, [$id, /*$clientSideToken*/'******']);
         $success = $this->_getModel()->quickAuthorize($id, $clientSideToken);
-        $this->_logSuccess(__METHOD__, [$id, $clientSideToken]);
+        $this->_logSuccess(__METHOD__, [$id, /*$clientSideToken*/'******']);
         return $success;
     }
 
@@ -110,9 +110,9 @@ class AuthController extends Controller
      */
     public function changePassword($email, $password, $newPassword)
     {
-        $this->_logStart(__METHOD__, [$email, $password, $newPassword]);
+        $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', /*$newPassword*/'******']);
         $clientToken = $this->_getModel()->changePassword($email, $password, $newPassword);
-        $this->_logSuccess(__METHOD__, [$email, $password, $newPassword]);
+        $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', /*$newPassword*/'******']);
         return $clientToken;
     }
 
@@ -127,9 +127,9 @@ class AuthController extends Controller
      */
     public function requestResetPassword($email)
     {
-        $this->_logStart(__METHOD__, [$email]);
+        $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email)]);
         $resetToken = $this->_getModel()->requestResetPassword($email);
-        $this->_logSuccess(__METHOD__, [$email]);
+        $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email)]);
         return $resetToken;
     }
 
@@ -148,9 +148,9 @@ class AuthController extends Controller
      */
     public function approveResetPassword($email, $resetApprovalCode)
     {
-        $this->_logStart(__METHOD__, [$email, $resetApprovalCode]);
+        $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), $resetApprovalCode]);
         $newPassword = $this->_getModel()->approveResetPassword($email, $resetApprovalCode);
-        $this->_logSuccess(__METHOD__, [$email, $resetApprovalCode]);
+        $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), $resetApprovalCode]);
         return $newPassword;
     }
 
