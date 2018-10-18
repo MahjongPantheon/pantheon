@@ -124,7 +124,6 @@ Parameters:
 Returns: _array_ 
 
 Exceptions:
-* _InvalidParametersException_ 
 * _\Exception_ 
 
 ### findByTitle
@@ -246,6 +245,9 @@ Parameters:
 * **$eventId** (_integer_) 
 
 Returns: _bool_ 
+
+Exceptions:
+* _\Exception_ 
 
 ### createAccount
 Parameters:

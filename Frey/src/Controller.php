@@ -117,4 +117,15 @@ abstract class Controller
     {
         $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: failed');
     }
+
+    protected function _depersonalizeEmail($email)
+    {
+        $parts = explode('@', $email);
+        return implode('@', [
+            substr($parts[0], 0, 5)
+                . str_repeat('*', max(0, strlen($parts[0]) - 5)),
+            str_repeat('*', max(0, strlen($parts[1]) - 6))
+                . substr($parts[1], strlen($parts[1]) - 6, 6)
+        ]);
+    }
 }

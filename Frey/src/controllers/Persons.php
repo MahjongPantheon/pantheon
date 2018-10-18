@@ -39,10 +39,10 @@ class PersonsController extends Controller
      */
     public function createAccount($email, $password, $title, $city, $phone, $tenhouId)
     {
-        $this->_logStart(__METHOD__, [$email, $password, $title, $city, $phone, $tenhouId]);
+        $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $city, /*$phone*/'******', $tenhouId]);
         $personId = $this->_getAccountModel()
             ->createAccount($email, $password, $title, $city, $phone, $tenhouId);
-        $this->_logSuccess(__METHOD__, [$email, $password, $title, $city, $phone, $tenhouId]);
+        $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $city, /*$phone*/'******', $tenhouId]);
         return $personId;
     }
 
@@ -56,9 +56,9 @@ class PersonsController extends Controller
      */
     public function getPersonalInfo($ids)
     {
-        $this->_logStart(__METHOD__, [$ids]);
+        $this->_logStart(__METHOD__, [implode(',', $ids)]);
         $personalInfo = $this->_getAccountModel()->getPersonalInfo($ids);
-        $this->_logSuccess(__METHOD__, [$ids]);
+        $this->_logSuccess(__METHOD__, [implode(',', $ids)]);
         return $personalInfo;
     }
 
@@ -75,9 +75,9 @@ class PersonsController extends Controller
      */
     public function updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId)
     {
-        $this->_logStart(__METHOD__, [$id, $title, $city, $email, $phone, $tenhouId]);
+        $this->_logStart(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
         $success = $this->_getAccountModel()->updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId);
-        $this->_logSuccess(__METHOD__, [$id, $title, $city, $email, $phone, $tenhouId]);
+        $this->_logSuccess(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
         return $success;
     }
 
@@ -146,9 +146,9 @@ class PersonsController extends Controller
      */
     public function getGroups($ids)
     {
-        $this->_logStart(__METHOD__, [$ids]);
+        $this->_logStart(__METHOD__, [implode(',', $ids)]);
         $groups = $this->_getGroupsModel()->getGroups($ids);
-        $this->_logSuccess(__METHOD__, [$ids]);
+        $this->_logSuccess(__METHOD__, [implode(',', $ids)]);
         return $groups;
     }
 
