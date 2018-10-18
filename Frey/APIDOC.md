@@ -3,6 +3,10 @@ Api methods
 -----------
 
 ### requestRegistration
+ Request new registration with given email and password.
+ Approval code is returned. It is intended to be sent to provided email address.
+
+
 Parameters:
 * **$email** (_string_) 
 * **$password** (_string_) 
@@ -14,6 +18,10 @@ Exceptions:
 * _\Exception_ 
 
 ### approveRegistration
+ Approve registration with approval code.
+ Returns new person's ID on success.
+
+
 Parameters:
 * **$approvalCode** (_string_) 
 
@@ -24,6 +32,9 @@ Exceptions:
 * _\Exception_ 
 
 ### authorize
+ Authorize person ant return permanent client-side auth token.
+
+
 Parameters:
 * **$email** (_string_) 
 * **$password** (_string_) 
@@ -36,6 +47,10 @@ Exceptions:
 * _\Exception_ 
 
 ### quickAuthorize
+ Check if client-side token matches stored password hash.
+ Useful for cookie-check.
+
+
 Parameters:
 * **$id** (_integer_) 
 * **$clientSideToken** (_string_) 
@@ -47,6 +62,10 @@ Exceptions:
 * _\Exception_ 
 
 ### changePassword
+ Change password when old password is known.
+ Returns new client-side auth token on success
+
+
 Parameters:
 * **$email** (_string_) 
 * **$password** (_string_) 
@@ -60,6 +79,10 @@ Exceptions:
 * _\Exception_ 
 
 ### requestResetPassword
+ Request password reset.
+ Returns reset approval token, which should be sent over email to user.
+
+
 Parameters:
 * **$email** (_string_) 
 
@@ -70,6 +93,12 @@ Exceptions:
 * _\Exception_ 
 
 ### approveResetPassword
+ Approve password reset.
+ Generates digit-code and uses it as a new password, updates all records
+ and returns the code. Code should be sent to person via email, and person
+ should be asked to change the password immediately.
+
+
 Parameters:
 * **$email** (_string_) 
 * **$resetApprovalCode** (_string_) 
@@ -82,6 +111,11 @@ Exceptions:
 * _\Exception_ 
 
 ### getAccessRules
+ Primary client method, aggregating rules from groups and person.
+ Get array of access rules for person in event.
+ Cached for 10 minutes.
+
+
 Parameters:
 * **$personId** (_integer_) 
 * **$eventId** (_integer_) 
@@ -92,6 +126,12 @@ Exceptions:
 * _\Exception_ 
 
 ### getRuleValue
+ Get single rule for person in event. Hardly relies on cache.
+ Also counts group rules if person belongs to one or more groups.
+ Typically should not be used when more than one value should be retrieved.
+ Returns null if no data found for provided person/event ids or rule name.
+
+
 Parameters:
 * **$personId** (_integer_) 
 * **$eventId** (_integer_) 
@@ -103,6 +143,8 @@ Exceptions:
 * _\Exception_ 
 
 ### updatePersonalInfo
+
+
 Parameters:
 * **$id** (_string_) 
 * **$title** (_string_) 
@@ -118,6 +160,10 @@ Exceptions:
 * _\Exception_ 
 
 ### getPersonalInfo
+ Get personal info by id list.
+ May or may not include private data (depending on admin rights of requesting user).
+
+
 Parameters:
 * **$ids** (_array_) 
 
@@ -127,6 +173,11 @@ Exceptions:
 * _\Exception_ 
 
 ### findByTitle
+ Fuzzy (pattern) search by title.
+ Query should not contain % or _ characters (they will be cut though)
+ Query should be more than 2 characters long.
+
+
 Parameters:
 * **$query** (_string_) 
 
@@ -136,6 +187,9 @@ Exceptions:
 * _InvalidParametersException_ 
 
 ### getGroups
+ Get info of groups by id list
+
+
 Parameters:
 * **$ids** (_array_) 
 
@@ -146,6 +200,12 @@ Exceptions:
 * _\Exception_ 
 
 ### getPersonAccess
+ Get access rules for person.
+ - eventId may be null to get system-wide rules.
+ - Method results are not cached!
+ - To be used in admin panel, but not in client side!
+
+
 Parameters:
 * **$personId** (_integer_) 
 * **$eventId** (_integer|null_) 
@@ -156,6 +216,12 @@ Exceptions:
 * _\Exception_ 
 
 ### getGroupAccess
+ Get access rules for group.
+ - eventId may be null to get system-wide rules.
+ - Method results are not cached!
+ - To be used in admin panel, but not in client side!
+
+
 Parameters:
 * **$groupId** (_integer_) 
 * **$eventId** (_integer|null_) 
@@ -166,6 +232,9 @@ Exceptions:
 * _\Exception_ 
 
 ### addRuleForPerson
+ Add new rule for a person.
+
+
 Parameters:
 * **$ruleName** (_string_) 
 * **$ruleValue** (_string|integer|boolean_) 
@@ -181,6 +250,9 @@ Exceptions:
 * _\Exception_ 
 
 ### addRuleForGroup
+ Add new rule for a group.
+
+
 Parameters:
 * **$ruleName** (_string_) 
 * **$ruleValue** (_string|integer|boolean_) 
@@ -196,6 +268,9 @@ Exceptions:
 * _\Exception_ 
 
 ### updateRuleForPerson
+ Update personal rule value and/or type
+
+
 Parameters:
 * **$ruleId** (_integer_) 
 * **$ruleValue** (_string|integer|boolean_) 
@@ -208,6 +283,9 @@ Exceptions:
 * _\Exception_ 
 
 ### updateRuleForGroup
+ Update group rule value and/or type
+
+
 Parameters:
 * **$ruleId** (_integer_) 
 * **$ruleValue** (_string|integer|boolean_) 
@@ -220,6 +298,9 @@ Exceptions:
 * _\Exception_ 
 
 ### deleteRuleForPerson
+ Drop personal rule by id
+
+
 Parameters:
 * **$ruleId** (_integer_) 
 
@@ -230,6 +311,9 @@ Exceptions:
 * _\Exception_ 
 
 ### deleteRuleForGroup
+ Drop group rule by id
+
+
 Parameters:
 * **$ruleId** (_integer_) 
 
@@ -240,6 +324,11 @@ Exceptions:
 * _\Exception_ 
 
 ### clearAccessCache
+ Clear cache for access rules of person in event.
+ Warning: clearing whole cache is explicitly NOT IMPLEMENTED. When altering groups access rules,
+ it's better to wait for 10mins than cause shitload on DB.
+
+
 Parameters:
 * **$personId** (_integer_) 
 * **$eventId** (_integer_) 
@@ -250,6 +339,9 @@ Exceptions:
 * _\Exception_ 
 
 ### createAccount
+ Create new account by administrator (no email checks).
+
+
 Parameters:
 * **$email** (_string_) 
 * **$password** (_string_) 
@@ -264,6 +356,10 @@ Exceptions:
 * _\Exception_ 
 
 ### createGroup
+ Create new group in admin interface
+ Returns new group id
+
+
 Parameters:
 * **$title** (_string_) 
 * **$description** (_string_) 
@@ -276,6 +372,9 @@ Exceptions:
 * _\Exception_ 
 
 ### updateGroup
+ Update group info in admin interface
+
+
 Parameters:
 * **$id** (_integer_) 
 * **$title** (_string_) 
@@ -289,6 +388,9 @@ Exceptions:
 * _\Exception_ 
 
 ### deleteGroup
+ Delete group and all of its linked dependencies
+
+
 Parameters:
 * **$id** (_integer_) 
 
@@ -299,6 +401,9 @@ Exceptions:
 * _\Exception_ 
 
 ### addPersonToGroup
+ Add person to group
+
+
 Parameters:
 * **$personId** (_integer_) 
 * **$groupId** (_integer_) 
@@ -311,6 +416,9 @@ Exceptions:
 * _\Exception_ 
 
 ### removePersonFromGroup
+ Remove person from group
+
+
 Parameters:
 * **$personId** (_int_) 
 * **$groupId** (_int_) 
@@ -323,6 +431,9 @@ Exceptions:
 * _\Exception_ 
 
 ### getPersonsOfGroup
+ List persons of group
+
+
 Parameters:
 * **$groupId** (_int_) 
 
@@ -334,6 +445,9 @@ Exceptions:
 * _\Exception_ 
 
 ### getGroupsOfPerson
+ List groups of person
+
+
 Parameters:
 * **$personId** (_int_) 
 

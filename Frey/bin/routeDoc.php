@@ -35,6 +35,7 @@ foreach ($routes as $methodName => $callable) {
     $method = $classRefl->getMethod($callable[1]);
     $docComment = explode("\n", $method->getDocComment());
     $doc[$methodName] = [
+        'comment'       => [],
         'params'        => [],
         'exceptions'    => [],
         'return'        => []
@@ -47,6 +48,8 @@ foreach ($routes as $methodName => $callable) {
             $doc[$methodName]['exceptions'] []= $exceptions;
         } else if (preg_match('#@return\s+(?<type>\S+)(\s+(?<comment>.+))?#is', $line, $return)) {
             $doc[$methodName]['return'] = $return;
+        } else if (trim($line) != '/**' && trim($line) != '*/') {
+            $doc[$methodName]['comment'] []= preg_replace('#^\s+\*#', '', $line);
         }
     }
 }
@@ -58,6 +61,11 @@ Api methods
 
 <?php foreach ($doc as $methodName => $method): ?>
 ### <?php echo $methodName; ?>
+
+<?php
+    echo implode("\n", $method['comment']);
+    echo PHP_EOL;
+?>
 
 Parameters:
 <?php
