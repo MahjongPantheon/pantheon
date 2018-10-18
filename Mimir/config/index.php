@@ -21,11 +21,13 @@ $locals = [];
 if (file_exists(__DIR__ . '/local/index.php')) {
     $locals = require __DIR__ . '/local/index.php';
 } else {
-    trigger_error(
-        'Notice: using default config & DB settings. '
-        . 'It\'s fine on developer machine, but wrong on prod server. '
-        . 'You might want to create config/local/* files with production settings.'
-    );
+    if (getenv('IS_DOCKER', true) != '1') {
+        trigger_error(
+            'Notice: using default config & DB settings. '
+            . 'It\'s fine on developer machine, but wrong on prod server. '
+            . 'You might want to create config/local/* files with production settings.'
+        );
+    }
 }
 
 return array_merge([
