@@ -169,19 +169,6 @@ class PersonPrimitive extends Primitive
     }
 
     /**
-     * Find persons by auth hash (indexed search)
-     *
-     * @param IDb $db
-     * @param string[] $hashes
-     * @throws \Exception
-     * @return PersonPrimitive[]
-     */
-    public static function findByAuthHash(IDb $db, $hashes)
-    {
-        return self::_findBy($db, 'auth_hash', $hashes);
-    }
-
-    /**
      * Fuzzy search by title (simple pattern search).
      *
      * @param IDb $db

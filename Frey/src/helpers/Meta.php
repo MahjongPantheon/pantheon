@@ -35,6 +35,10 @@ class Meta
      * @var integer|null
      */
     protected $_currentEventId;
+    /**
+     * @var integer|null
+     */
+    protected $_currentPersonId;
 
     public function __construct($input = null, $cookieInput = null)
     {
@@ -52,14 +56,15 @@ class Meta
     protected function _fillFrom($input, $cookieInput)
     {
         // Rheda and Mimir MUST pass authToken from cookie to Frey as X-Auth-Token header.
+        // Also they MUST pass currentEventId as X-Current-Event-Id and currentPersonId as X-Current-Person-Id.
         // External services may choose to use either cookie or header.
         $this->_authToken = (empty($input['HTTP_X_AUTH_TOKEN'])
             ? (
                 empty($cookieInput['authToken'])
                 ? ''
-                : $cookieInput['authToken']
+                : trim($cookieInput['authToken'])
             )
-            : $input['HTTP_X_AUTH_TOKEN']);
+            : trim($input['HTTP_X_AUTH_TOKEN']));
 
         $this->_currentEventId = (empty($input['HTTP_X_CURRENT_EVENT_ID'])
             ? (
@@ -68,6 +73,14 @@ class Meta
                 : intval($cookieInput['currentEventId'])
             )
             : intval($input['HTTP_X_CURRENT_EVENT_ID']));
+
+        $this->_currentPersonId = (empty($input['HTTP_X_CURRENT_PERSON_ID'])
+            ? (
+            empty($cookieInput['currentPersonId'])
+                ? null
+                : intval($cookieInput['currentPersonId'])
+            )
+            : intval($input['HTTP_X_CURRENT_PERSON_ID']));
 
         list($this->_requestedVersionMajor, $this->_requestedVersionMinor) = explode('.', (
             empty($input['HTTP_X_API_VERSION']) ? '1.0' : $input['HTTP_X_API_VERSION']
@@ -85,6 +98,11 @@ class Meta
     public function getCurrentEventId()
     {
         return $this->_currentEventId;
+    }
+
+    public function getCurrentPersonId()
+    {
+        return $this->_currentPersonId;
     }
 
     public function getRequestedVersion()

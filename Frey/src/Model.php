@@ -65,7 +65,8 @@ abstract class Model
         $this->_meta = $meta;
         $this->_authorizedPerson = $this->_fetchAuthorizedPerson();
 
-        if ($this->_meta->getAuthToken() == $this->_config->getValue('testing_token')) {
+        $testingToken = $this->_config->getValue('testing_token');
+        if (!empty($testingToken) && $this->_meta->getAuthToken() == $testingToken) {
             $this->_authorizedPerson = PersonPrimitive::findById($db, $this->_fetchSuperAdminId())[0];
         }
 
@@ -79,16 +80,16 @@ abstract class Model
      */
     protected function _fetchAuthorizedPerson()
     {
-        if (empty($this->_meta->getAuthToken())) {
+        if (empty($this->_meta->getAuthToken()) || empty($this->_meta->getCurrentPersonId())) {
             return null;
         }
 
-        $persons = PersonPrimitive::findByAuthHash($this->_db, [
-            password_hash($this->_meta->getAuthToken(), PASSWORD_DEFAULT)
-        ]);
+        $persons = PersonPrimitive::findById($this->_db, [$this->_meta->getCurrentPersonId()]);
 
         if (!empty($persons)) {
-            return $persons[0];
+            if (password_verify($this->_meta->getAuthToken(), $persons[0]->getAuthHash())) {
+                return $persons[0];
+            }
         }
 
         return null;
