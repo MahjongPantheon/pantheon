@@ -38,6 +38,7 @@ return array_merge([
     ],
     'db'        => require __DIR__ . '/db.php',
     'routes'    => require __DIR__ . '/routes.php',
+    'freyUrl'   => 'http://localhost:4004', // TODO: change this in your local config!
     'verbose'   => false,
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC',

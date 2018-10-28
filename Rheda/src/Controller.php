@@ -21,6 +21,7 @@ require_once __DIR__ . '/helpers/MobileDetect.php';
 require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/helpers/HttpClient.php';
+require_once __DIR__ . '/helpers/FreyClient.php';
 require_once __DIR__ . '/helpers/i18n.php';
 require_once __DIR__ . '/Templater.php';
 
@@ -72,6 +73,36 @@ abstract class Controller
      */
     protected $_mainTemplate = '';
 
+    /**
+     * @var int
+     */
+    protected $_currentPersonId;
+
+    /**
+     * @var int
+     */
+    protected $_currentEventId;
+
+    /**
+     * @var string
+     */
+    protected $_authToken;
+
+    /**
+     * @var array
+     */
+    protected $_accessRules;
+
+    /**
+     * @var array
+     */
+    protected $_personalData;
+
+    /**
+     * @var FreyClient
+     */
+    protected $_frey;
+
     protected $_useTranslit = false;
 
     public function __construct($url, $path)
@@ -79,6 +110,7 @@ abstract class Controller
         $this->_url = $url;
         $this->_path = $path;
         $this->_api = new \JsonRPC\Client(Sysconf::API_URL(), false, new HttpClient(Sysconf::API_URL()));
+        $this->_frey = new \Rheda\FreyClient(Sysconf::AUTH_API_URL());
 
         // i18n support
         // first step is getting browser language
@@ -123,6 +155,29 @@ abstract class Controller
         }
         putenv('LC_ALL=' . $locale);
 
+        $this->_currentEventId = (empty($input['HTTP_X_CURRENT_EVENT_ID'])
+            ? null
+            : intval($input['HTTP_X_CURRENT_EVENT_ID']));
+
+        $this->_currentPersonId = (empty($input['HTTP_X_CURRENT_PERSON_ID'])
+            ? null
+            : intval($input['HTTP_X_CURRENT_PERSON_ID']));
+
+        if (!empty($this->_currentPersonId)) {
+            if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->_authToken)) {
+                $this->_currentPersonId = null;
+                $this->_authToken = null;
+            } else {
+                $this->_frey->getClient()->getHttpClient()->withHeaders([
+                    'X-Auth-Token: ' . $this->_authToken,
+                    'X-Current-Event-Id: ' . $this->_currentEventId ?: '0',
+                    'X-Current-Person-Id: ' . $this->_currentPersonId
+                ]);
+                $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);
+                $this->_personalData = $this->_frey->getPersonalInfo([$this->_currentPersonId])[0];
+            }
+        }
+
         $eidMatches = [];
         if (empty($path['event']) || !preg_match('#eid(?<ids>\d+(?:\.\d+)*)#is', $path['event'], $eidMatches)) {
             // TODO: убрать чтобы показать страницу со списком событий
@@ -140,7 +195,9 @@ abstract class Controller
 
         $client->withHeaders([
             'X-Debug-Token: aehbntyrey',
-            'X-Auth-Token: ' . Sysconf::API_ADMIN_TOKEN,
+            'X-Auth-Token: ' . $this->_authToken,
+            'X-Current-Event-Id: ' . $this->_currentEventId ?: '0',
+            'X-Current-Person-Id: ' . $this->_currentPersonId ?: '0',
             'X-Api-Version: ' . Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
         ]);
         if (Sysconf::DEBUG_MODE) {
@@ -184,6 +241,7 @@ abstract class Controller
                 echo $templateEngine->render($add . 'Layout', [
                     'eventTitle' => _t("Aggregated event"),
                     'pageTitle' => $pageTitle,
+                    'currentPerson' => $this->_personalData,
                     'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
                     'isLoggedIn' => $this->_adminAuthOk(),
                     'isAggregated' => true
@@ -202,6 +260,7 @@ abstract class Controller
                     'pageTitle' => $pageTitle,
                     'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
                     'isLoggedIn' => $this->_adminAuthOk(),
+                    'currentPerson' => $this->_personalData,
                     'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),
                 ]);
             }
@@ -233,6 +292,9 @@ abstract class Controller
 
     protected function _beforeRun()
     {
+        // To be overridden in child classes.
+        // Return true from here to execute run() and display page.
+        // Return false from here to prevent all other actions (useful for redirects and so on)
         return true;
     }
 
