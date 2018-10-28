@@ -10,7 +10,7 @@ require_once __DIR__ . '/../../src/models/Auth.php';
 require_once __DIR__ . '/../../src/models/Account.php';
 require_once __DIR__ . '/../../src/models/Groups.php';
 require_once __DIR__ . '/../../src/models/AccessManagement.php';
-require_once __DIR__ . '/../../src/Db.php';
+require_once __DIR__ . '/../../src/helpers/Db.php';
 require_once __DIR__ . '/../../src/helpers/Meta.php';
 require_once __DIR__ . '/../../src/helpers/BootstrapAccess.php';
 
@@ -229,6 +229,7 @@ class BasicSeeder extends AbstractSeed
                 'god_token' => '198vdsh904hfbnkjv98whb2iusvd98b29bsdv98svbr9wghj',
                 'debug_token' => '2-839489203hf2893'
             ],
+            'testing_token' => '',
             'routes'    => require __DIR__ . '/../../config/routes.php',
             'verbose'   => false,
             'verboseLog' => '',

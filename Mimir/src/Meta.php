@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+require_once __DIR__ . '/FreyClient.php';
+
 class Meta
 {
     /**
@@ -31,13 +33,30 @@ class Meta
      * @var integer
      */
     protected $_requestedVersionMinor;
+    /**
+     * @var integer|null
+     */
+    protected $_currentEventId;
+    /**
+     * @var integer|null
+     */
+    protected $_currentPersonId;
+    /**
+     * @var FreyClient
+     */
+    protected $_frey;
+    /**
+     * @var array
+     */
+    protected $_accessRules;
 
-    public function __construct($input = null)
+    public function __construct(FreyClient $frey, $input = null)
     {
         if (empty($input)) {
             $input = $_SERVER;
         }
 
+        $this->_frey = $frey;
         $this->_fillFrom($input);
     }
 
@@ -48,6 +67,28 @@ class Meta
             empty($input['HTTP_X_API_VERSION']) ? '1.0' : $input['HTTP_X_API_VERSION']
         ));
 
+        $this->_currentEventId = (empty($input['HTTP_X_CURRENT_EVENT_ID'])
+            ? null
+            : intval($input['HTTP_X_CURRENT_EVENT_ID']));
+
+        $this->_currentPersonId = (empty($input['HTTP_X_CURRENT_PERSON_ID'])
+            ? null
+            : intval($input['HTTP_X_CURRENT_PERSON_ID']));
+
+        if (!empty($this->_currentPersonId)) {
+            if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->getAuthToken())) {
+                $this->_currentPersonId = null;
+                $this->_authToken = null;
+            } else {
+                $this->_frey->getClient()->getHttpClient()->withHeaders([
+                    'X-Auth-Token: ' . $this->_authToken,
+                    'X-Current-Event-Id: ' . $this->_currentEventId ?: '0',
+                    'X-Current-Person-Id: ' . $this->_currentPersonId
+                ]);
+                $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);
+            }
+        }
+
         $this->_requestedVersionMinor = $this->_requestedVersionMinor ? intval($this->_requestedVersionMinor) : 0;
         $this->_requestedVersionMajor = $this->_requestedVersionMajor ? intval($this->_requestedVersionMajor) : 1;
     }
@@ -55,6 +96,15 @@ class Meta
     public function getAuthToken()
     {
         return $this->_authToken;
+    }
+
+    public function getAccessRuleValue($name)
+    {
+        if (!isset($this->_accessRules[$name])) {
+            return null;
+        }
+
+        return $this->_accessRules[$name];
     }
 
     public function getRequestedVersion()

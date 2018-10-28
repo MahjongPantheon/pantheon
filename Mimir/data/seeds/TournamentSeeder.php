@@ -76,7 +76,8 @@ class TournamentSeeder extends AbstractSeed
     protected function _seedGames(\Mimir\Db $db, \Mimir\Config $config, \Mimir\EventPrimitive $event)
     {
         $games = explode("\n\n\n", file_get_contents(__DIR__ . '/../../tests/models/testdata/games.txt'));
-        $meta = new \Mimir\Meta($_SERVER);
+        $freyClient = new \Mimir\FreyClient($config->getValue('freyUrl'));
+        $meta = new \Mimir\Meta($freyClient, $_SERVER);
         $model = new \Mimir\TextmodeSessionModel($db, $config, $meta);
 
         foreach ($games as $log) {
@@ -101,6 +102,7 @@ class TournamentSeeder extends AbstractSeed
             ],
             'routes'    => require __DIR__ . '/../../config/routes.php',
             'verbose'   => false,
+            'freyUrl'   => getenv('FREY_URL'),
             'verboseLog' => '',
             'api' => [
                 'version_major' => 1,

@@ -21,22 +21,42 @@ require_once __DIR__ . '/Config.php';
 require_once __DIR__ . '/Db.php';
 require_once __DIR__ . '/Meta.php';
 require_once __DIR__ . '/ErrorHandler.php';
+require_once __DIR__ . '/FreyClient.php';
 
 use Monolog\Logger;
 use Monolog\Handler\ErrorLogHandler;
+use Rheda\Sysconf;
 
 class Api
 {
+    /**
+     * @var Db
+     */
     protected $_db;
+    /**
+     * @var Logger
+     */
     protected $_syslog;
+    /**
+     * @var Meta
+     */
     protected $_meta;
+    /**
+     * @var Config
+     */
+    protected $_config;
+    /**
+     * @var FreyClient
+     */
+    protected $_frey;
 
     public function __construct($configPath = null)
     {
         $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
         $this->_config = new Config($cfgPath);
         $this->_db = new Db($this->_config);
-        $this->_meta = new Meta($_SERVER);
+        $this->_frey = new FreyClient($this->_config->getValue('freyUrl'));
+        $this->_meta = new Meta($this->_frey, $_SERVER);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 

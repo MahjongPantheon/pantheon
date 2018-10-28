@@ -149,7 +149,7 @@ pantheon_stop: get_docker_id
 	fi
 
 .PHONY: run
-run: pantheon_run pgadmin_start
+run: pantheon_run# pgadmin_start
 
 .PHONY: stop
 stop: pantheon_stop pgadmin_stop

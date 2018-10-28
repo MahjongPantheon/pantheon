@@ -25,6 +25,9 @@ check: lint unit
 apidoc:
 	php bin/routeDoc.php > APIDOC.md
 
+freygen:
+	php ../Frey/bin/clientGen.php Mimir > src/FreyClient.php
+
 autofix:
 	php vendor/bin/phpcbf --config-set default_standard PSR2
 	php vendor/bin/phpcbf --config-set show_warnings 0

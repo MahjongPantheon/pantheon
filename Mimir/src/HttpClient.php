@@ -1,5 +1,5 @@
 <?php
-/*  Rheda: visualizer and control panel
+/*  Mimir: mahjong games storage
  *  Copyright (C) 2016  o.klimenko aka ctizen
  *
  *  Original source: https://github.com/fguillot/JsonRPC
@@ -18,7 +18,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Rheda;
+namespace Mimir;
+
 use JsonRPC\Exception\AccessDeniedException;
 use JsonRPC\Exception\ConnectionFailureException;
 use JsonRPC\Exception\ServerErrorException;
