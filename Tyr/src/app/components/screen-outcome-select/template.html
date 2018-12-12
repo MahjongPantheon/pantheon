@@ -24,6 +24,7 @@
   <button (click)="select('ron');">{{_RON}}</button>
   <button (click)="select('tsumo');">{{_TSUMO}}</button>
   <button (click)="select('draw');">{{_EXHAUSTIVE}}</button>
+  <button *ngIf="nagashiAllowed" (click)="select('nagashi');">{{_NAGASHI_MANGAN}}</button>
 </div>
 <div class="wrap disabledText" *ngIf="!screenEnabled">
   {{_TIMER_NOT_STARTED}}

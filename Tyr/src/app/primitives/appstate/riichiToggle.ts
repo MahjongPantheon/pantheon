@@ -32,11 +32,20 @@ export function toggleRiichi(
     case 'tsumo':
     case 'abort':
     case 'draw':
+    case 'nagashi':
     case 'multiron':
       if (
         outcome.selectedOutcome === 'draw' &&
         outcome.tempai.indexOf(p.id) === -1 &&
         outcome.deadhands.indexOf(p.id) === -1
+      ) {
+        outcome.tempai.push(p.id); // add tempai on riichi click
+      }
+
+      if (
+        outcome.selectedOutcome === 'nagashi' &&
+        outcome.tempai.indexOf(p.id) === -1 &&
+        outcome.riichiBets.indexOf(p.id) === -1
       ) {
         outcome.tempai.push(p.id); // add tempai on riichi click
       }
@@ -77,6 +86,7 @@ export function getRiichiUsers(outcome: AppOutcome, playerIdMap: PMap): Player[]
     case 'ron':
     case 'tsumo':
     case 'draw':
+    case 'nagashi':
     case 'abort':
     case 'multiron':
       return outcome.riichiBets.map((r) => playerIdMap[r]);

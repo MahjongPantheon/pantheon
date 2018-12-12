@@ -25,7 +25,8 @@ import {
   AppOutcomeDraw,
   AppOutcomeAbort,
   AppOutcomeChombo,
-  AppOutcomeMultiRon
+  AppOutcomeMultiRon,
+  AppOutcomeNagashi
 } from '../../interfaces/app';
 import { Outcome as OutcomeType, Player } from '../../interfaces/common';
 import { getFixedFu } from '../yaku-values';
@@ -89,6 +90,16 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       };
       out = outcomeDraw;
       break;
+    case 'nagashi':
+      const outcomeNagashi: AppOutcomeNagashi = {
+        selectedOutcome: 'nagashi',
+        roundIndex: round,
+        riichiBets: [],
+        tempai: [],
+        nagashi: []
+      };
+      out = outcomeNagashi;
+      break;
     case 'abort':
       const outcomeAbort: AppOutcomeAbort = {
         selectedOutcome: 'abort',
@@ -97,7 +108,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         deadhands: []
       };
       out = outcomeAbort;
-      break;
+      break;    
     case 'chombo':
       const outcomeChombo: AppOutcomeChombo = {
         selectedOutcome: 'chombo',

@@ -42,6 +42,14 @@ export function toggleWinner(p: Player, outcome: AppOutcome, players: Player[]) 
         }
       }
       break;
+    case 'nagashi':
+      const tIdx = outcome.tempai.indexOf(p.id);
+      if (tIdx === -1) {
+        outcome.tempai.push(p.id);
+      } else {
+        outcome.tempai.splice(tIdx, 1);
+      }
+      break;
     case 'multiron':
       if (outcome.wins[p.id]) {
         delete outcome.wins[p.id];
@@ -118,6 +126,21 @@ export function toggleDeadhand(p: Player, outcome: AppOutcome) {
   }
 }
 
+export function toggleNagashi(p: Player, outcome: AppOutcome) {
+  switch (outcome.selectedOutcome) {
+    case 'nagashi':
+      const pIdx = outcome.nagashi.indexOf(p.id);
+      if (pIdx === -1) {
+        outcome.nagashi.push(p.id);
+      } else {
+        outcome.nagashi.splice(pIdx, 1);
+      }
+      break;
+    default:
+      throw new Error('No nagashi exist on this outcome');
+  }
+}
+
 export type PMap = { [key: number]: Player };
 
 export function getWinningUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
@@ -134,6 +157,7 @@ export function getWinningUsers(outcome: AppOutcome, playerIdMap: PMap): Player[
       }
       return users;
     case 'draw':
+    case 'nagashi':
       return outcome.tempai.map((t) => playerIdMap[t]);
     default:
       return [];
@@ -176,6 +200,15 @@ export function getDeadhandUsers(outcome: AppOutcome, playerIdMap: PMap): Player
   switch (outcome.selectedOutcome) {
     case 'draw':
       return outcome.deadhands.map((t) => playerIdMap[t]);
+    default:
+      return [];
+  }
+}
+
+export function getNagashiUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
+  switch (outcome.selectedOutcome) {
+    case 'nagashi':
+      return outcome.nagashi.map((t) => playerIdMap[t]);
     default:
       return [];
   }
