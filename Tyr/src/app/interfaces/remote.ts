@@ -66,6 +66,15 @@ export interface RRoundDraw {
   tempai: string; // comma-separated
 }
 
+export interface RRoundNagashi {
+  round_index: number;
+  honba: number;
+  outcome: 'nagashi';
+  riichi: string; // comma-separated
+  tempai: string; // comma-separated
+  nagashi: string; // comma-separated
+}
+
 export interface RRoundAbort {
   round_index: number;
   honba: number;
@@ -87,6 +96,7 @@ export type RRound
   | RRoundDraw
   | RRoundAbort
   | RRoundChombo
+  | RRoundNagashi
   ;
 
 export interface RGameConfig {

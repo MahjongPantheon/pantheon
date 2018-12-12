@@ -308,6 +308,73 @@ class PointsCalc
         return $currentScores;
     }
 
+    public static function nagashi(
+        $currentScores,
+        $currentDealer,
+        $riichiIds,
+        $nagashiIds
+    ) {
+        self::resetPaymentsInfo();
+        if (empty($riichiIds)) {
+            $riichiIds = [];
+        }
+
+        foreach ($riichiIds as $playerId) {
+            $currentScores[$playerId] -= 1000;
+            self::$_lastPaymentsInfo['riichi']['<-' . $playerId] = 1000;
+        }
+
+        if (count($nagashiIds) === 1) {
+            foreach ($currentScores as $playerId => $value) {
+                if ($playerId == $nagashiIds[0]) {
+                    if ($currentDealer == $playerId) {
+                        $currentScores[$playerId] += 12000;
+                    } else {
+                        $currentScores[$playerId] += 8000;
+                    }
+
+                } else {
+                    if ($currentDealer == $playerId) {
+                        $currentScores[$playerId] -= 4000;
+                        self::$_lastPaymentsInfo['direct'][$nagashiIds[0] . '<-' . $playerId] = 4000;
+                    } else {
+                        $currentScores[$playerId] -= 2000;
+                        self::$_lastPaymentsInfo['direct'][$nagashiIds[0] . '<-' . $playerId] = 2000;
+                    }
+                }
+            }
+
+            return $currentScores;
+        }
+
+
+        if (count($nagashiIds) === 2) {
+            foreach ($currentScores as $playerId => $value) {
+                if (in_array($playerId, $nagashiIds)) {
+                    if ($currentDealer == $playerId) {
+                        $currentScores[$playerId] += 12000;
+                    } else {
+                        $currentScores[$playerId] += 8000;
+                    }
+                }
+
+                //each player receives the equivalent of a mangan tsumo
+                foreach ($nagashiIds as $nagashiOwnerId => $value) {
+                    if ($currentDealer == $playerId) {
+                        $currentScores[$playerId] -= 4000;
+                        self::$_lastPaymentsInfo['direct'][$nagashiOwnerId . '<-' . $playerId] = 4000;
+                    } else {
+                        $currentScores[$playerId] -= 2000;
+                        self::$_lastPaymentsInfo['direct'][$nagashiOwnerId . '<-' . $playerId] = 2000;
+                    }
+                }
+            }
+            return $currentScores;
+        }
+
+        throw new InvalidParametersException('More than 2 players have nagashi');
+    }
+
     protected static function _calcPoints(Ruleset $rules, $han, $fu, $tsumo, $dealer)
     {
         if ($han > 0 && $han < 5) {
