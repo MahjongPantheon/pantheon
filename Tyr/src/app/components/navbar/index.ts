@@ -91,6 +91,8 @@ export class NavBarComponent extends I18nComponent {
         return this.i18n._t('Exhaustive draw');
       case 'abort':
         return this.i18n._t('Abortive draw');
+      case 'nagashi':
+        return this.i18n._t('Nagashi mangan');
       case 'chombo':
         return this.i18n._t('Chombo');
       default:
@@ -143,6 +145,8 @@ export class NavBarComponent extends I18nComponent {
               && this.state.getLosingUsers().length === 1;
           case 'chombo':
             return this.state.getLosingUsers().length === 1;
+          case 'nagashi':
+            return this.state.getNagashiUsers().length >=1 ;
         }
         break;
       default:

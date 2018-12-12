@@ -42,7 +42,7 @@ import { TimerData, initTimer, getTimeRemaining, getCurrentTimerZone, timerIsWai
 import {
   toggleLoser, toggleWinner, togglePao,
   getWinningUsers, getLosingUsers, getPaoUsers,
-  getDeadhandUsers, toggleDeadhand
+  getDeadhandUsers, toggleDeadhand, getNagashiUsers, toggleNagashi
 } from './winLoseToggles';
 import { toggleRiichi, getRiichiUsers } from './riichiToggle';
 import { updateOtherTablesList, getOtherTable, getLastRound } from './otherTables';
@@ -333,6 +333,7 @@ export class AppState {
           case 'draw':
           case 'abort':
           case 'chombo':
+          case 'nagashi':
             this._currentScreen = 'confirmation';
             break;
           default: ;
@@ -469,11 +470,13 @@ export class AppState {
   togglePao = (p: Player) => togglePao(p, this._currentOutcome, this._gameConfig.yakuWithPao);
   toggleRiichi = (p: Player) => toggleRiichi(p, this._currentOutcome, (y: YakuId) => this.removeYaku(y));
   toggleDeadhand = (p: Player) => toggleDeadhand(p, this._currentOutcome);
+  toggleNagashi = (p: Player) => toggleNagashi(p, this._currentOutcome);
   getWinningUsers = () => getWinningUsers(this._currentOutcome, this._mapIdToPlayer);
   getLosingUsers = () => getLosingUsers(this._currentOutcome, this._mapIdToPlayer);
   getPaoUsers = () => getPaoUsers(this._currentOutcome, this._mapIdToPlayer);
   getRiichiUsers = () => getRiichiUsers(this._currentOutcome, this._mapIdToPlayer);
   getDeadhandUsers = () => getDeadhandUsers(this._currentOutcome, this._mapIdToPlayer);
+  getNagashiUsers = () => getNagashiUsers(this._currentOutcome, this._mapIdToPlayer);
   setHan = (han: number) => setHan(han, this._currentOutcome, this._multironCurrentWinner);
   setFu = (fu: number) => setFu(fu, this._currentOutcome, this._multironCurrentWinner);
   getHan = () => getHanOf(this._multironCurrentWinner, this._currentOutcome);
