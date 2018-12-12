@@ -50,6 +50,7 @@ class RoundPrimitive extends Primitive
         'riichi'        => '_riichiIds',
         'yaku'          => '_yaku',
         'tempai'        => '_tempaiIds',
+        'nagashi'        => '_nagashiIds',
         'winner_id'     => '_winnerId',
         'loser_id'      => '_loserId',
         'pao_player_id' => '_paoPlayerId',
@@ -68,6 +69,7 @@ class RoundPrimitive extends Primitive
             ],
             '_tempaiIds'   => $this->_csvTransform(),
             '_riichiIds'   => $this->_csvTransform(),
+            '_nagashiIds'  => $this->_csvTransform(),
             '_winnerId'    => $this->_integerTransform(true),
             '_loserId'     => $this->_integerTransform(true),
             '_paoPlayerId' => $this->_integerTransform(true),
@@ -166,6 +168,10 @@ class RoundPrimitive extends Primitive
      * @var PlayerPrimitive[]
      */
     protected $_tempaiUsers = null;
+    /**
+     * @var int[]
+     */
+    protected $_nagashiIds;
     /**
      * comma-separated yaku id list
      * @var string
@@ -683,6 +689,17 @@ class RoundPrimitive extends Primitive
             }
         }
         return $this->_tempaiUsers;
+    }
+
+    /**
+     * @return \int[]
+     */
+    public function getNagashiIds()
+    {
+        if (empty($this->_nagashiIds)) {
+            $this->_nagashiIds = [];
+        }
+        return $this->_nagashiIds;
     }
 
     /**
