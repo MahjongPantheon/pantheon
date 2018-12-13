@@ -257,6 +257,14 @@ class EventFinishedGamesModel extends Model
                     'outcome'       => $round->getOutcome(),
                     'loser_id'      => (int) $round->getLoserId()
                 ];
+            case 'nagashi':
+                return [
+                    'round_index'   => (int) $round->getRoundIndex(),
+                    'outcome'       => $round->getOutcome(),
+                    'riichi_bets'   => implode(',', $round->getRiichiIds()),
+                    'tempai'        => implode(',', $round->getTempaiIds()),
+                    'nagashi'       => implode(',', $round->getNagashiIds())
+                ];
             default:
                 throw new DatabaseException('Wrong outcome detected! This should not happen - DB corrupted?');
         }
