@@ -237,6 +237,7 @@ class GameFormatter
                 'roundTypeAbort'    => $round['outcome'] == 'abort',
                 'roundTypeChombo'   => $round['outcome'] == 'chombo',
                 'roundTypeMultiRon' => $round['outcome'] == 'multiron',
+                'roundTypeNagashi'  => $round['outcome'] == 'nagashi',
 
                 'winnerName'        => isset($round['winner_id']) ? $playersData[$round['winner_id']]['display_name'] : null,
                 'loserName'         => isset($round['loser_id']) ? $playersData[$round['loser_id']]['display_name'] : null,
@@ -248,6 +249,7 @@ class GameFormatter
                 'yakuman'           => isset($round['han']) && $round['han'] < 0,
                 'tempaiPlayers'     => $this->_formatCsvPlayersList($round, 'tempai', $playersData),
                 'riichiPlayers'     => $this->_formatCsvPlayersList($riichiSource, 'riichi_bets', $playersData),
+                'nagashiPlayers'    => $this->_formatCsvPlayersList($round, 'nagashi', $playersData),
 
                 'multiRonWins'      => $this->_formatMultiron($round, $playersData),
                 'doubleRon'         => $round['outcome'] == 'multiron' && count($round['wins']) == 2,
@@ -440,6 +442,24 @@ class GameFormatter
                     );
                 }
 
+                return '';
+            case 'nagashi':
+                if (count($roundData['nagashi']) == 1) {
+                    return _p(
+                        "Nagashi mangan - %s; riichi bets - %s; tenpai - %s",
+                        $players[$roundData['nagashi'][0]]['display_name'],
+                        $namesOf($roundData['riichi']),
+                        $namesOf($roundData['tempai']));
+                }
+
+                if (count($roundData['nagashi']) == 2) {
+                    return _p(
+                        "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s",
+                        $players[$roundData['nagashi'][0]]['display_name'],
+                        $players[$roundData['nagashi'][1]]['display_name'],
+                        $namesOf($roundData['riichi']),
+                        $namesOf($roundData['tempai']));
+                }
                 return '';
             default:
                 return '';

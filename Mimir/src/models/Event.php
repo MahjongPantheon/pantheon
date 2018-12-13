@@ -264,6 +264,7 @@ class EventModel extends Model
             'loser'   => $round->getLoserId(),
             'tempai'  => $round->getTempaiIds(),
             'riichi'  => $round->getRiichiIds(),
+            'nagashi'  => $round->getNagashiIds(),
             'han'     => $round->getHan(),
             'fu'      => $round->getFu()
         ];
