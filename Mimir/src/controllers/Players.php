@@ -600,6 +600,14 @@ class PlayersController extends Controller
                     $sessionState->getScores()
                 );
                 break;
+            case 'nagashi':
+                PointsCalc::nagashi(
+                    $sessionState->getScores(),
+                    $sessionState->getCurrentDealer(),
+                    $round->getRiichiIds(),
+                    $round->getNagashiIds()
+                );
+                break;
         }
 
         return PointsCalc::lastPaymentsInfo();

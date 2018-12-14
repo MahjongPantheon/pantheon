@@ -94,6 +94,7 @@ export class LastRoundScreen extends I18nComponent {
       case 'draw': return this.i18n._t('Exhaustive draw');
       case 'abort': return this.i18n._t('Abortive draw');
       case 'chombo': return this.i18n._t('Chombo');
+      case 'nagashi': return this.i18n._t('Nagashi mangan');
       case 'multiron': return (this._data.winner.length === 2
         ? this.i18n._t('Double ron')
         : this.i18n._t('Triple ron')

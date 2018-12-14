@@ -395,6 +395,7 @@ export class AppState {
           case 'draw':
           case 'abort':
           case 'chombo':
+          case 'nagashi':
             this._currentScreen = 'playersSelect';
             break;
           default: ;
