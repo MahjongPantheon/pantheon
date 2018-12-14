@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-07 23:59+0300\n"
-"PO-Revision-Date: 2018-02-08 00:10+0300\n"
+"POT-Creation-Date: 2018-12-14 21:07+0300\n"
+"PO-Revision-Date: 2018-12-14 23:08+0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -126,7 +126,7 @@ msgid "Abortive draw"
 msgstr "Абортивная ничья"
 
 #: src/app/components/auxiliary-i18n/index.ts:82:12
-#: src/app/components/navbar/index.ts:95:16
+#: src/app/components/navbar/index.ts:97:16
 #: src/app/components/screen-last-round/index.ts:96:29
 #: src/app/components/screen-other-table/index.ts:228:29
 #: src/app/components/screen-yaku-select/index.ts:114:16
@@ -163,46 +163,51 @@ msgid "Double/Triple ron"
 msgstr "Дабл/трипл-рон"
 
 #: src/app/components/auxiliary-i18n/index.ts:97:12
+#: src/app/components/navbar/index.ts:95:16
+msgid "Nagashi mangan"
+msgstr "Нагаши манган"
+
+#: src/app/components/auxiliary-i18n/index.ts:100:12
 msgid "Timer was not started yet. Unable to add a hand."
 msgstr "Таймер еще не запущен. Невозможно добавить раздачу."
 
-#: src/app/components/auxiliary-i18n/index.ts:100:12
+#: src/app/components/auxiliary-i18n/index.ts:103:12
 msgid "There are no games you participate in right now."
 msgstr "На данный момент нет ни одной игры с вашим участием."
 
-#: src/app/components/auxiliary-i18n/index.ts:103:12
+#: src/app/components/auxiliary-i18n/index.ts:106:12
 msgid "Refresh"
 msgstr "Обновить"
 
-#: src/app/components/auxiliary-i18n/index.ts:106:12
+#: src/app/components/auxiliary-i18n/index.ts:109:12
 msgid "Previous game results"
 msgstr "Результаты последней игры"
 
-#: src/app/components/auxiliary-i18n/index.ts:109:12
+#: src/app/components/auxiliary-i18n/index.ts:112:12
 msgid "New game"
 msgstr "Новая игра"
 
-#: src/app/components/auxiliary-i18n/index.ts:112:12
+#: src/app/components/auxiliary-i18n/index.ts:115:12
 msgid "Statistics"
 msgstr "Статистика"
 
-#: src/app/components/auxiliary-i18n/index.ts:115:12
+#: src/app/components/auxiliary-i18n/index.ts:118:12
 msgid "it's you"
 msgstr "это вы"
 
-#: src/app/components/auxiliary-i18n/index.ts:118:12
+#: src/app/components/auxiliary-i18n/index.ts:121:12
 msgid "Table #"
 msgstr "Стол №"
 
-#: src/app/components/auxiliary-i18n/index.ts:121:12
+#: src/app/components/auxiliary-i18n/index.ts:124:12
 msgid "Select preferred language"
 msgstr "Выбор языка"
 
-#: src/app/components/auxiliary-i18n/index.ts:124:12
+#: src/app/components/auxiliary-i18n/index.ts:127:12
 msgid "Log out from system"
 msgstr "Выйти из системы"
 
-#: src/app/components/auxiliary-i18n/index.ts:127:12
+#: src/app/components/auxiliary-i18n/index.ts:130:12
 msgid "User actions"
 msgstr "Действия пользователя"
 
@@ -244,7 +249,7 @@ msgstr "Последняя раздача не найдена."
 msgid "Hello, %1!"
 msgstr "Привет, %1!"
 
-#: src/app/components/screen-settings/index.ts:49:24
+#: src/app/components/screen-settings/index.ts:50:24
 msgid ""
 "Are you sure you want to logout? You will have to get a new pin code to "
 "login again"
@@ -272,15 +277,15 @@ msgstr "%1 хан (%2, дора: %3)"
 msgid "%1 han (%2)"
 msgstr "%1 хан (%2)"
 
-#: src/app/primitives/appstate/index.ts:143:40
+#: src/app/primitives/appstate/index.ts:144:40
 msgid "spectator"
 msgstr "наблюдатель"
 
-#: src/app/primitives/appstate/index.ts:454:14
+#: src/app/primitives/appstate/index.ts:456:14
 msgid "Games overview"
 msgstr "Обзор игр"
 
-#: src/app/primitives/appstate/index.ts:456:65
+#: src/app/primitives/appstate/index.ts:458:65
 msgid "Loading..."
 msgstr "Загрузка..."
 
