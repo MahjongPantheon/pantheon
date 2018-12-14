@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-07 23:59+0300\n"
+"POT-Creation-Date: 2018-12-14 21:07+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -123,7 +123,7 @@ msgid "Abortive draw"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:82:12
-#: src/app/components/navbar/index.ts:95:16
+#: src/app/components/navbar/index.ts:97:16
 #: src/app/components/screen-last-round/index.ts:96:29
 #: src/app/components/screen-other-table/index.ts:228:29
 #: src/app/components/screen-yaku-select/index.ts:114:16
@@ -160,46 +160,51 @@ msgid "Double/Triple ron"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:97:12
-msgid "Timer was not started yet. Unable to add a hand."
+#: src/app/components/navbar/index.ts:95:16
+msgid "Nagashi mangan"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:100:12
-msgid "There are no games you participate in right now."
+msgid "Timer was not started yet. Unable to add a hand."
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:103:12
-msgid "Refresh"
+msgid "There are no games you participate in right now."
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:106:12
-msgid "Previous game results"
+msgid "Refresh"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:109:12
-msgid "New game"
+msgid "Previous game results"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:112:12
-msgid "Statistics"
+msgid "New game"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:115:12
-msgid "it's you"
+msgid "Statistics"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:118:12
-msgid "Table #"
+msgid "it's you"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:121:12
-msgid "Select preferred language"
+msgid "Table #"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:124:12
-msgid "Log out from system"
+msgid "Select preferred language"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:127:12
+msgid "Log out from system"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:130:12
 msgid "User actions"
 msgstr ""
 
@@ -240,7 +245,7 @@ msgstr ""
 msgid "Hello, %1!"
 msgstr ""
 
-#: src/app/components/screen-settings/index.ts:49:24
+#: src/app/components/screen-settings/index.ts:50:24
 msgid "Are you sure you want to logout? You will have to get a new pin code to login again"
 msgstr ""
 
@@ -264,15 +269,15 @@ msgstr ""
 msgid "%1 han (%2)"
 msgstr ""
 
-#: src/app/primitives/appstate/index.ts:143:40
+#: src/app/primitives/appstate/index.ts:144:40
 msgid "spectator"
 msgstr ""
 
-#: src/app/primitives/appstate/index.ts:454:14
+#: src/app/primitives/appstate/index.ts:456:14
 msgid "Games overview"
 msgstr ""
 
-#: src/app/primitives/appstate/index.ts:456:65
+#: src/app/primitives/appstate/index.ts:458:65
 msgid "Loading..."
 msgstr ""
 
