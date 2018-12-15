@@ -336,7 +336,6 @@ class PointsCalc
                     } else {
                         $currentScores[$playerId] += 8000;
                     }
-
                 } else {
                     if ($currentDealer == $nagashiOwnerId || $currentDealer == $playerId) {
                         $currentScores[$playerId] -= 4000;
