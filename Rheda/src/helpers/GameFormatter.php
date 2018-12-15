@@ -449,7 +449,8 @@ class GameFormatter
                         "Nagashi mangan - %s; riichi bets - %s; tenpai - %s",
                         $players[$roundData['nagashi'][0]]['display_name'],
                         $namesOf($roundData['riichi']),
-                        $namesOf($roundData['tempai']));
+                        $namesOf($roundData['tempai'])
+                    );
                 }
 
                 if (count($roundData['nagashi']) == 2) {
@@ -458,7 +459,8 @@ class GameFormatter
                         $players[$roundData['nagashi'][0]]['display_name'],
                         $players[$roundData['nagashi'][1]]['display_name'],
                         $namesOf($roundData['riichi']),
-                        $namesOf($roundData['tempai']));
+                        $namesOf($roundData['tempai'])
+                    );
                 }
                 return '';
             default:
