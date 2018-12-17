@@ -146,7 +146,7 @@ export class NavBarComponent extends I18nComponent {
           case 'chombo':
             return this.state.getLosingUsers().length === 1;
           case 'nagashi':
-            return this.state.getNagashiUsers().length >=1 ;
+            return this.state.getNagashiUsers().length >= 1;
         }
         break;
       default:

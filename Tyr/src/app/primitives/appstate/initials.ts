@@ -108,7 +108,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         deadhands: []
       };
       out = outcomeAbort;
-      break;    
+      break;
     case 'chombo':
       const outcomeChombo: AppOutcomeChombo = {
         selectedOutcome: 'chombo',

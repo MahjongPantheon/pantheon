@@ -128,9 +128,11 @@ export class UserItemComponent extends I18nComponent {
     ) || -1 !== this.state.getWinningUsers().indexOf(this.userData); // and it should not be current winner
   };
 
+
+  //no more than 3 players may have nagashi
   nagashiDisabled = () => {
-    return this.state.getNagashiUsers().length > 1
-    && -1 === this.state.getNagashiUsers().indexOf(this.userData);
+    return this.state.getNagashiUsers().length >= 3
+      && -1 === this.state.getNagashiUsers().indexOf(this.userData);
   }
 
   // riichi & dead hand can't be disabled

@@ -324,8 +324,8 @@ class PointsCalc
             self::$_lastPaymentsInfo['riichi']['<-' . $playerId] = 1000;
         }
 
-        if (count($nagashiIds) > 2) {
-            throw new InvalidParametersException('More than 2 players have nagashi');
+        if (count($nagashiIds) > 3) {
+            throw new InvalidParametersException('More than 3 players have nagashi');
         }
 
         foreach ($nagashiIds as $nagashiOwnerId) {

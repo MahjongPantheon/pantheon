@@ -42,7 +42,7 @@ export function toggleWinner(p: Player, outcome: AppOutcome, players: Player[]) 
         }
       }
       break;
-    case 'nagashi':
+    case 'nagashi': //select tempai players for nagashi
       const tIdx = outcome.tempai.indexOf(p.id);
       if (tIdx === -1) {
         outcome.tempai.push(p.id);
