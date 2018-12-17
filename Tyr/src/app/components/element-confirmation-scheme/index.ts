@@ -173,7 +173,7 @@ export class ConfirmationSchemeComponent {
 
     let direction;
     
-    //multiply nagashi
+    //multiple nagashi
     if (directPayment12==directPayment21 && directPayment12!=0) {      
       return null;
     }

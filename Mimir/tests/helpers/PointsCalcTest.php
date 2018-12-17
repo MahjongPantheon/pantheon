@@ -711,5 +711,15 @@ class PointsTest extends \PHPUnit_Framework_TestCase
             [1 => -9000, 6000, 6000, -5000],
             PointsCalc::nagashi($this->_currentScores, 1, [1,4], [2,3])
         );
+
+        $this->assertEquals(
+            [1 => 4000, 2000, 2000, -8000],
+            PointsCalc::nagashi($this->_currentScores, 1, [], [1,2,3])
+        );
+
+        $this->assertEquals(
+            [1 => -12000, 4000, 4000, 4000],
+            PointsCalc::nagashi($this->_currentScores, 1, [], [2,3,4])
+        );
     }
 }
