@@ -50,7 +50,7 @@ class RoundPrimitive extends Primitive
         'riichi'        => '_riichiIds',
         'yaku'          => '_yaku',
         'tempai'        => '_tempaiIds',
-        'nagashi'        => '_nagashiIds',
+        'nagashi'       => '_nagashiIds',
         'winner_id'     => '_winnerId',
         'loser_id'      => '_loserId',
         'pao_player_id' => '_paoPlayerId',

@@ -289,16 +289,45 @@ class SessionModelTest extends \PHPUnit_Framework_TestCase
             'outcome'   => 'nagashi',
             'riichi'    => '',
             'tempai'    => '',
-            'nagashi'    => '2'
+            'nagashi'   => '1'
         ];
 
         $this->assertTrue($session->addRound($hash, $roundData));
 
         $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
-        $dealerId = $this->_players[1]->getId();
 
         $this->assertEquals(1, $sessionPrimitive->getCurrentState()->getHonba());
-        $this->assertEquals($dealerId, $sessionPrimitive->getCurrentState()->getCurrentDealer());
+        $this->assertEquals(2, $sessionPrimitive->getCurrentState()->getRound());
+        $this->assertEquals(2, $sessionPrimitive->getCurrentState()->getCurrentDealer());
+    }
+
+    public function testAddRoundNagashiWhenDealerTempai()
+    {
+        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $hash = $session->startGame(
+            $this->_event->getId(),
+            array_map(function (PlayerPrimitive $p) {
+                return $p->getId();
+            }, $this->_players)
+        );
+
+        $roundData = [
+            'round_index' => 1,
+            'honba' => 0,
+            'outcome'   => 'nagashi',
+            'riichi'    => '1',
+            'tempai'    => '1',
+            'nagashi'   => '2'
+        ];
+
+        $this->assertTrue($session->addRound($hash, $roundData));
+
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+
+        $this->assertEquals(1, $sessionPrimitive->getCurrentState()->getHonba());
+        $this->assertEquals(1, $sessionPrimitive->getCurrentState()->getRiichiBets());
+        $this->assertEquals(1, $sessionPrimitive->getCurrentState()->getRound());
+        $this->assertEquals(1, $sessionPrimitive->getCurrentState()->getCurrentDealer());
     }
 
     public function testAddPenalty()
