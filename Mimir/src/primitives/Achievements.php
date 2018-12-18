@@ -110,7 +110,7 @@ class AchievementsPrimitive extends Primitive
             ->select('round')
             ->select('session_id')
             ->whereIn('event_id', $eventIdList)
-            ->whereIn('outcome', ['ron', 'tsumo'])
+            ->whereIn('outcome', ['ron', 'tsumo', 'multiron'])
             ->orderByAsc('session_id')
             ->orderByAsc('id')
             ->findArray();
@@ -303,7 +303,7 @@ class AchievementsPrimitive extends Primitive
             ->selectExpr('count(*)', 'cnt')
             ->join('player', ['player.id', '=', 'round.loser_id'])
             ->whereIn('event_id', $eventIdList)
-            ->where('outcome', 'ron')
+            ->whereIn('outcome', ['ron', 'multiron'])
             ->groupBy('loser_id')
             ->groupBy('display_name')
             ->orderByDesc('cnt')
@@ -343,7 +343,7 @@ class AchievementsPrimitive extends Primitive
             ->selectExpr('count(*)', 'cnt')
             ->join('player', ['player.id', '=', 'round.loser_id'])
             ->whereIn('event_id', $eventIdList)
-            ->where('outcome', 'ron')
+            ->whereIn('outcome', ['ron', 'multiron'])
             ->groupBy('loser_id')
             ->groupBy('display_name')
             ->orderByDesc('cnt')
@@ -508,7 +508,7 @@ class AchievementsPrimitive extends Primitive
             ->select('winner_id')
             ->select('riichi')
             ->whereIn('event_id', $eventIdList)
-            ->whereIn('outcome', ['tsumo', 'ron', 'draw'])
+            ->whereIn('outcome', ['tsumo', 'ron', 'draw', "multiron"])
             ->whereNotEqual('riichi', '')
             ->findArray();
 
