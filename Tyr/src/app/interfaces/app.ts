@@ -76,6 +76,7 @@ export interface AppOutcomeNagashi extends Outcome {
   selectedOutcome: 'nagashi';
   riichiBets: number[]; // ids of players
   tempai: number[]; // ids of players
+  deadhands: number[]; // ids of players
   nagashi: number[]; // ids of players
 }
 

@@ -96,6 +96,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         roundIndex: round,
         riichiBets: [],
         tempai: [],
+        deadhands: [],
         nagashi: []
       };
       out = outcomeNagashi;

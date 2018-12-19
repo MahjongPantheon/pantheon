@@ -31,6 +31,7 @@ export function toggleWinner(p: Player, outcome: AppOutcome, players: Player[]) 
       outcome.winnerIsDealer = outcome.winner !== null && getDealerId(outcome, players) === p.id;
       break;
     case 'draw':
+    case 'nagashi': //select tempai players for nagashi or draw
       const pIdx = outcome.tempai.indexOf(p.id);
       if (pIdx === -1) {
         outcome.tempai.push(p.id);
@@ -40,14 +41,6 @@ export function toggleWinner(p: Player, outcome: AppOutcome, players: Player[]) 
         if (rIdx !== -1) { // remove riichi if any
           outcome.riichiBets.splice(rIdx, 1);
         }
-      }
-      break;
-    case 'nagashi': //select tempai players for nagashi
-      const tIdx = outcome.tempai.indexOf(p.id);
-      if (tIdx === -1) {
-        outcome.tempai.push(p.id);
-      } else {
-        outcome.tempai.splice(tIdx, 1);
       }
       break;
     case 'multiron':
@@ -106,6 +99,7 @@ export function togglePao(p: Player, outcome: AppOutcome, yakuWithPao: YakuId[])
 export function toggleDeadhand(p: Player, outcome: AppOutcome) {
   switch (outcome.selectedOutcome) {
     case 'draw':
+    case 'nagashi':
       const pIdx = outcome.deadhands.indexOf(p.id);
       if (pIdx === -1) {
         outcome.deadhands.push(p.id);
@@ -199,6 +193,7 @@ export function getPaoUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
 export function getDeadhandUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
   switch (outcome.selectedOutcome) {
     case 'draw':
+    case 'nagashi':
       return outcome.deadhands.map((t) => playerIdMap[t]);
     default:
       return [];
