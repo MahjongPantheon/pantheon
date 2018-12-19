@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-14 21:07+0300\n"
-"PO-Revision-Date: 2018-12-14 23:08+0500\n"
+"POT-Creation-Date: 2018-12-19 21:17+0300\n"
+"PO-Revision-Date: 2018-12-19 23:18+0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -93,7 +93,7 @@ msgid "Pin code was already used on another device"
 msgstr "Текущий пин-код уже был использован на другом устройстве"
 
 #: src/app/components/auxiliary-i18n/index.ts:61:12
-#: src/app/components/screen-last-round/index.ts:129:23
+#: src/app/components/screen-last-round/index.ts:130:23
 msgid "Unexpected server error"
 msgstr "Неожиданная ошибка сервера"
 
@@ -163,7 +163,7 @@ msgid "Double/Triple ron"
 msgstr "Дабл/трипл-рон"
 
 #: src/app/components/auxiliary-i18n/index.ts:97:12
-#: src/app/components/navbar/index.ts:95:16
+#: src/app/components/screen-last-round/index.ts:97:30
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
@@ -212,23 +212,27 @@ msgid "User actions"
 msgstr "Действия пользователя"
 
 #: src/app/components/navbar/index.ts:75:14
-#: src/app/components/screen-last-round/index.ts:99:11
+#: src/app/components/screen-last-round/index.ts:100:11
 #: src/app/components/screen-other-table/index.ts:231:11
 msgid "Triple ron"
 msgstr "Тройной рон"
 
 #: src/app/components/navbar/index.ts:78:14
-#: src/app/components/screen-last-round/index.ts:98:11
+#: src/app/components/screen-last-round/index.ts:99:11
 #: src/app/components/screen-other-table/index.ts:230:11
 msgid "Double ron"
 msgstr "Двойной рон"
+
+#: src/app/components/navbar/index.ts:95:16
+msgid "Nagashi: select tenpai"
+msgstr "Нагаши: выберите темпай"
 
 #: src/app/components/screen-confirmation/index.ts:69:19
 msgid "Failed to add round. Please try again"
 msgstr "Не удалось добавить раздачу. Попробуйте еще раз."
 
 #: src/app/components/screen-confirmation/index.ts:72:23
-#: src/app/components/screen-last-round/index.ts:127:23
+#: src/app/components/screen-last-round/index.ts:128:23
 msgid "Authentication failed"
 msgstr "Не удалось войти в систему"
 
@@ -237,11 +241,11 @@ msgid "Failed to add round. Was this hand already added by someone else?"
 msgstr ""
 "Не удалось добавить раздачу. Возможно она была уже добавлена кем-то еще?"
 
-#: src/app/components/screen-last-round/index.ts:122:19
+#: src/app/components/screen-last-round/index.ts:123:19
 msgid "Error occured. Try again."
 msgstr "Произошла ошибка. Попробуйте еще раз."
 
-#: src/app/components/screen-last-round/index.ts:124:21
+#: src/app/components/screen-last-round/index.ts:125:21
 msgid "Latest hand wasn't found"
 msgstr "Последняя раздача не найдена."
 
@@ -281,11 +285,11 @@ msgstr "%1 хан (%2)"
 msgid "spectator"
 msgstr "наблюдатель"
 
-#: src/app/primitives/appstate/index.ts:456:14
+#: src/app/primitives/appstate/index.ts:473:14
 msgid "Games overview"
 msgstr "Обзор игр"
 
-#: src/app/primitives/appstate/index.ts:458:65
+#: src/app/primitives/appstate/index.ts:475:65
 msgid "Loading..."
 msgstr "Загрузка..."
 

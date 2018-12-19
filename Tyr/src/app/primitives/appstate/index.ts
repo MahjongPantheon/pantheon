@@ -29,7 +29,7 @@ import { LCurrentGame, LUser, LTimerState, LWinItem, LGameConfig } from '../../i
 import { RSessionOverview, RRoundPaymentsInfo } from '../../interfaces/remote';
 
 export type AppScreen = 'overview' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
-  | 'yakuSelect' | 'confirmation' | 'newGame' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings';
+  | 'yakuSelect' | 'confirmation' | 'newGame' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
 export type LoadingSet = {
   games: boolean,
   overview: boolean,
@@ -319,7 +319,12 @@ export class AppState {
         // data simultaneously.
         break;
       case 'outcomeSelect':
-        this._currentScreen = 'playersSelect';
+        if (this._currentOutcome.selectedOutcome === 'nagashi') {
+          this._currentScreen = 'nagashiSelect';
+        }
+        else {
+          this._currentScreen = 'playersSelect';
+        }
         break;
       case 'playersSelect':
         switch (this._currentOutcome.selectedOutcome) {
@@ -357,6 +362,9 @@ export class AppState {
       case 'paoSelect':
         this._currentScreen = 'confirmation';
         break;
+      case 'nagashiSelect':
+        this._currentScreen = 'playersSelect';
+        break;
       case 'lastResults':
       case 'lastRound':
       case 'confirmation':
@@ -376,7 +384,12 @@ export class AppState {
         this._currentScreen = 'overview';
         break;
       case 'playersSelect':
-        this._currentScreen = 'outcomeSelect';
+        if (this._currentOutcome.selectedOutcome === 'nagashi') {
+          this._currentScreen = 'nagashiSelect';
+        }
+        else {
+          this._currentScreen = 'outcomeSelect';
+        }
         break;
       case 'yakuSelect':
         this._currentScreen = 'playersSelect';
@@ -403,6 +416,9 @@ export class AppState {
         break;
       case 'paoSelect':
         this._currentScreen = 'yakuSelect';
+        break;
+      case 'nagashiSelect':
+        this._currentScreen = 'outcomeSelect';
         break;
       case 'otherTable':
         this._currentScreen = 'otherTablesList';
