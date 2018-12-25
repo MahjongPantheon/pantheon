@@ -102,7 +102,7 @@ export class UserItemComponent extends I18nComponent {
     .indexOf(this.userData);
 
   winDisabled = () => {
-    if (this.state.getOutcome() === 'draw' || this.state.getOutcome() === 'nagashi') {
+    if (-1 !== ['draw', 'nagashi'].indexOf(this.state.getOutcome())) {
       return -1 !== this.state.getDeadhandUsers().indexOf(this.userData)
     }
 
