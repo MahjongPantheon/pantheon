@@ -38,6 +38,10 @@ export class OutcomeSelectScreen extends I18nComponent {
   get multironAllowed() {
     return !this.state.getGameConfig('withAtamahane');
   }
+  
+  get nagashiAllowed() {
+    return this.state.getGameConfig('withNagashiMangan');
+  }
 
   get screenEnabled() {
     return !this.state.isTimerWaiting();

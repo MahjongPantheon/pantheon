@@ -91,6 +91,8 @@ export class NavBarComponent extends I18nComponent {
         return this.i18n._t('Exhaustive draw');
       case 'abort':
         return this.i18n._t('Abortive draw');
+      case 'nagashi':
+        return this.i18n._t('Nagashi: select tenpai');
       case 'chombo':
         return this.i18n._t('Chombo');
       default:
@@ -137,6 +139,7 @@ export class NavBarComponent extends I18nComponent {
             return this.state.getWinningUsers().length === 1;
           case 'draw':
           case 'abort':
+          case 'nagashi':
             return true;
           case 'multiron':
             return this.state.getWinningUsers().length >= 1
@@ -145,6 +148,8 @@ export class NavBarComponent extends I18nComponent {
             return this.state.getLosingUsers().length === 1;
         }
         break;
+      case 'nagashiSelect':
+        return this.state.getNagashiUsers().length >= 1;
       default:
         return true;
     }

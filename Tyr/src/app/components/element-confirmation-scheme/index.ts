@@ -172,6 +172,12 @@ export class ConfirmationSchemeComponent {
     const honbaPayment21 = p.honba && p.honba[player1.id + '<-' + player2.id] || 0;
 
     let direction;
+
+    //multiple nagashi
+    if (directPayment12 == directPayment21 && directPayment12 != 0) {
+      return null;
+    }
+
     if (directPayment12 + riichiPayment12 > 0) {
       return {
         backward: false,

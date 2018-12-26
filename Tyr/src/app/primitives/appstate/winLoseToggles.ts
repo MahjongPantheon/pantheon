@@ -31,6 +31,7 @@ export function toggleWinner(p: Player, outcome: AppOutcome, players: Player[]) 
       outcome.winnerIsDealer = outcome.winner !== null && getDealerId(outcome, players) === p.id;
       break;
     case 'draw':
+    case 'nagashi': //select tempai players for nagashi or draw
       const pIdx = outcome.tempai.indexOf(p.id);
       if (pIdx === -1) {
         outcome.tempai.push(p.id);
@@ -98,6 +99,7 @@ export function togglePao(p: Player, outcome: AppOutcome, yakuWithPao: YakuId[])
 export function toggleDeadhand(p: Player, outcome: AppOutcome) {
   switch (outcome.selectedOutcome) {
     case 'draw':
+    case 'nagashi':
       const pIdx = outcome.deadhands.indexOf(p.id);
       if (pIdx === -1) {
         outcome.deadhands.push(p.id);
@@ -118,6 +120,21 @@ export function toggleDeadhand(p: Player, outcome: AppOutcome) {
   }
 }
 
+export function toggleNagashi(p: Player, outcome: AppOutcome) {
+  switch (outcome.selectedOutcome) {
+    case 'nagashi':
+      const pIdx = outcome.nagashi.indexOf(p.id);
+      if (pIdx === -1) {
+        outcome.nagashi.push(p.id);
+      } else {
+        outcome.nagashi.splice(pIdx, 1);
+      }
+      break;
+    default:
+      throw new Error('No nagashi exist on this outcome');
+  }
+}
+
 export type PMap = { [key: number]: Player };
 
 export function getWinningUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
@@ -134,6 +151,7 @@ export function getWinningUsers(outcome: AppOutcome, playerIdMap: PMap): Player[
       }
       return users;
     case 'draw':
+    case 'nagashi':
       return outcome.tempai.map((t) => playerIdMap[t]);
     default:
       return [];
@@ -175,7 +193,17 @@ export function getPaoUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
 export function getDeadhandUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
   switch (outcome.selectedOutcome) {
     case 'draw':
+    case 'nagashi':
       return outcome.deadhands.map((t) => playerIdMap[t]);
+    default:
+      return [];
+  }
+}
+
+export function getNagashiUsers(outcome: AppOutcome, playerIdMap: PMap): Player[] {
+  switch (outcome.selectedOutcome) {
+    case 'nagashi':
+      return outcome.nagashi.map((t) => playerIdMap[t]);
     default:
       return [];
   }

@@ -214,6 +214,15 @@ export function formatRoundToRemote(state: AppState): RRound {
         riichi: state.getRiichiUsers().map((player) => player.id).join(','),
         tempai: state.getWinningUsers().map((player) => player.id).join(',')
       };
+    case 'nagashi':
+      return {
+        round_index: state.getCurrentRound(),
+        honba: state.getHonba(),
+        outcome: 'nagashi',
+        riichi: state.getRiichiUsers().map((player) => player.id).join(','),
+        tempai: state.getWinningUsers().map((player) => player.id).join(','),
+        nagashi: state.getNagashiUsers().map((player) => player.id).join(',')
+      };
     case 'abort':
       return {
         round_index: state.getCurrentRound(),
