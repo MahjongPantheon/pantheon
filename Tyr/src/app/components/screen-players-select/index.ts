@@ -30,6 +30,7 @@ import { AppState } from '../../primitives/appstate';
 export class PlayersSelectScreen {
   @Input() state: AppState;
   @Input() paoSelectionMode: boolean;
+  @Input() nagashiSelectionMode: boolean;
   outcome() {
     return this.state.getOutcome();
   }
@@ -70,7 +71,7 @@ export class PlayersSelectScreen {
     this.seatKamicha = seating[3];
   }
 
-  handle([player, what]: [Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao']) {
+  handle([player, what]: [Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao' | 'nagashi']) {
     switch (what) {
       case 'win':
         this.state.toggleWinner(player);
@@ -86,6 +87,9 @@ export class PlayersSelectScreen {
         break;
       case 'pao':
         this.state.togglePao(player);
+        break;
+      case 'nagashi':
+        this.state.toggleNagashi(player);
         break;
     }
   }

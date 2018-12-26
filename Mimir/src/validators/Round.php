@@ -32,7 +32,7 @@ class RoundsHelper
      */
     public static function checkRound(SessionPrimitive $game, $roundData)
     {
-        self::_checkOneOf($roundData, 'outcome', ['ron', 'multiron', 'tsumo', 'draw', 'abort', 'chombo']);
+        self::_checkOneOf($roundData, 'outcome', ['ron', 'multiron', 'tsumo', 'draw', 'abort', 'chombo', 'nagashi']);
         self::_checkPlayers($game->getPlayersIds(), $game->getEvent()->getRegisteredPlayersIds());
         $playerIds = implode(',', $game->getPlayersIds());
         $yakuList = $game->getEvent()->getRuleset()->allowedYaku(); // omg :(
@@ -54,6 +54,9 @@ class RoundsHelper
                 break;
             case 'chombo':
                 self::_checkChombo($playerIds, $roundData);
+                break;
+            case 'nagashi':
+                self::_checkNagashi($playerIds, $roundData);
                 break;
         }
     }
@@ -135,6 +138,13 @@ class RoundsHelper
     {
         self::_csvCheckZeroOrMoreOf($roundData, 'riichi', $players);
         self::_csvCheckZeroOrMoreOf($roundData, 'tempai', $players);
+    }
+
+    protected static function _checkNagashi($players, $roundData)
+    {
+        self::_csvCheckZeroOrMoreOf($roundData, 'riichi', $players);
+        self::_csvCheckZeroOrMoreOf($roundData, 'tempai', $players);
+        self::_csvCheckZeroOrMoreOf($roundData, 'nagashi', $players);
     }
 
     protected static function _checkAbortiveDraw($players, $roundData)

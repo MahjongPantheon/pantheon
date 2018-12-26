@@ -38,7 +38,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @var string
      */
-    private $url;
+    protected $url;
 
     /**
      * HTTP client timeout
@@ -46,7 +46,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @var integer
      */
-    private $timeout = 5;
+    protected $timeout = 5;
 
     /**
      * Default HTTP headers to send to the server
@@ -54,7 +54,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @var array
      */
-    private $headers = array(
+    protected $headers = array(
         'User-Agent: JSON-RPC PHP Client <https://github.com/fguillot/JsonRPC>',
         'Content-Type: application/json',
         'Accept: application/json',
@@ -67,7 +67,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @var string
      */
-    private $username;
+    protected $username;
 
     /**
      * Password for authentication
@@ -75,7 +75,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @var string
      */
-    private $password;
+    protected $password;
 
     /**
      * Enable debug output to the php error log
@@ -83,7 +83,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @var boolean
      */
-    private $debug = false;
+    protected $debug = false;
 
     /**
      * Cookies
@@ -91,7 +91,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @var array
      */
-    private $cookies = array();
+    protected $cookies = array();
 
     /**
      * SSL certificates verification
@@ -99,7 +99,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @var boolean
      */
-    private $verifySslCertificate = true;
+    protected $verifySslCertificate = true;
 
     /**
      * SSL client certificate
@@ -107,7 +107,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @var string
      */
-    private $sslLocalCert;
+    protected $sslLocalCert;
 
     /**
      * Callback called before the doing the request
@@ -115,7 +115,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @var Closure
      */
-    private $beforeRequest;
+    protected $beforeRequest;
 
     /**
      * Headers came in last request
@@ -123,7 +123,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @var array
      */
-    private $lastHeaders = [];
+    protected $lastHeaders = [];
 
     /**
      * HttpClient constructor
@@ -336,7 +336,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @param  string   $payload
      * @return resource
      */
-    private function buildContext($payload)
+    protected function buildContext($payload)
     {
         $headers = $this->headers;
 
@@ -383,7 +383,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @access private
      * @param  array $headers
      */
-    private function parseCookies(array $headers)
+    protected function parseCookies(array $headers)
     {
         foreach ($headers as $header) {
             $pos = stripos($header, 'Set-Cookie:');

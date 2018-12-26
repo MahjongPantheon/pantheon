@@ -313,6 +313,9 @@ class SessionState
             case 'chombo':
                 $payments = $this->_updateAfterChombo($round);
                 break;
+            case 'nagashi':
+                $payments = $this->_updateAfterNagashi($round);
+                break;
             default:
                 throw new InvalidParametersException('wrong outcome passed');
         }
@@ -502,6 +505,28 @@ class SessionState
             $this->_penalties[$round->getLoserId()] = 0;
         }
         $this->_penalties[$round->getLoserId()] -= $this->_rules->chomboPenalty();
+        return PointsCalc::lastPaymentsInfo();
+    }
+
+    /**
+     * @param RoundPrimitive $round
+     * @return array
+     */
+    protected function _updateAfterNagashi(RoundPrimitive $round)
+    {
+        $this->_scores = PointsCalc::nagashi(
+            $this->getScores(),
+            $this->getCurrentDealer(),
+            $round->getRiichiIds(),
+            $round->getNagashiIds()
+        );
+
+        $this->_addHonba()
+            ->_addRiichiBets(count($round->getRiichiIds()));
+
+        if (!in_array($this->getCurrentDealer(), $round->getTempaiIds())) {
+            $this->_nextRound();
+        }
         return PointsCalc::lastPaymentsInfo();
     }
 

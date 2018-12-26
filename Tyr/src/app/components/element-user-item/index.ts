@@ -35,12 +35,13 @@ export class UserItemComponent extends I18nComponent {
   @Input() userData: Player;
   @Input() seat: string;
   @Input() paoSelectionMode: boolean;
-  @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao']>();
+  @Input() nagashiSelectionMode: boolean;
+  @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao' | 'nagashi']>();
   constructor(public i18n: I18nService) { super(i18n); }
 
   // helpers
-  showWinButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'draw']
-    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
+  showWinButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'draw', 'nagashi']
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode && !this.nagashiSelectionMode;
 
   showPaoButton = () => {
     if (!this.paoSelectionMode) {
@@ -71,13 +72,16 @@ export class UserItemComponent extends I18nComponent {
   };
 
   showLoseButton = () => -1 !== ['ron', 'multiron', 'chombo']
-    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode && !this.nagashiSelectionMode;
 
-  showRiichiButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'abort', 'draw']
-    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
+  showRiichiButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'abort', 'draw', 'nagashi']
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode && !this.nagashiSelectionMode;
 
-  showDeadButton = () => -1 !== ['draw']
-    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode;
+  showDeadButton = () => -1 !== ['draw', 'nagashi']
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode && !this.nagashiSelectionMode;
+
+  showNagashiButton = () => -1 !== ['nagashi']
+    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode && this.nagashiSelectionMode;
 
   winPressed = () => -1 !== this.state.getWinningUsers()
     .indexOf(this.userData);
@@ -94,8 +98,11 @@ export class UserItemComponent extends I18nComponent {
   deadPressed = () => -1 !== this.state.getDeadhandUsers()
     .indexOf(this.userData);
 
+  nagashiPressed = () => -1 !== this.state.getNagashiUsers()
+    .indexOf(this.userData);
+
   winDisabled = () => {
-    if (this.state.getOutcome() === 'draw') {
+    if (-1 !== ['draw', 'nagashi'].indexOf(this.state.getOutcome())) {
       return -1 !== this.state.getDeadhandUsers().indexOf(this.userData)
     }
 
@@ -118,6 +125,13 @@ export class UserItemComponent extends I18nComponent {
     ) || -1 !== this.state.getWinningUsers().indexOf(this.userData); // and it should not be current winner
   };
 
+
+  //no more than 3 players may have nagashi
+  nagashiDisabled = () => {
+    return this.state.getNagashiUsers().length >= 3
+      && -1 === this.state.getNagashiUsers().indexOf(this.userData);
+  }
+
   // riichi & dead hand can't be disabled
 
   // event handlers
@@ -126,5 +140,6 @@ export class UserItemComponent extends I18nComponent {
   riichiClick = () => this.onEvent.emit([this.userData, 'riichi']);
   deadClick = () => this.onEvent.emit([this.userData, 'dead']);
   paoClick = () => this.onEvent.emit([this.userData, 'pao']);
+  nagashiClick = () => this.nagashiDisabled() ? null : this.onEvent.emit([this.userData, 'nagashi']);
 }
 

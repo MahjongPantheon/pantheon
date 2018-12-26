@@ -308,6 +308,49 @@ class PointsCalc
         return $currentScores;
     }
 
+    public static function nagashi(
+        $currentScores,
+        $currentDealer,
+        $riichiIds,
+        $nagashiIds
+    ) {
+        self::resetPaymentsInfo();
+        if (empty($riichiIds)) {
+            $riichiIds = [];
+        }
+
+        foreach ($riichiIds as $playerId) {
+            $currentScores[$playerId] -= 1000;
+            self::$_lastPaymentsInfo['riichi']['<-' . $playerId] = 1000;
+        }
+
+        if (count($nagashiIds) > 3) {
+            throw new InvalidParametersException('More than 3 players have nagashi');
+        }
+
+        foreach ($nagashiIds as $nagashiOwnerId) {
+            foreach ($currentScores as $playerId => $value) {
+                if ($playerId == $nagashiOwnerId) {
+                    if ($currentDealer == $playerId) {
+                        $currentScores[$playerId] += 12000;
+                    } else {
+                        $currentScores[$playerId] += 8000;
+                    }
+                } else {
+                    if ($currentDealer == $nagashiOwnerId || $currentDealer == $playerId) {
+                        $currentScores[$playerId] -= 4000;
+                        self::$_lastPaymentsInfo['direct'][$nagashiOwnerId . '<-' . $playerId] = 4000;
+                    } else {
+                        $currentScores[$playerId] -= 2000;
+                        self::$_lastPaymentsInfo['direct'][$nagashiOwnerId . '<-' . $playerId] = 2000;
+                    }
+                }
+            }
+        }
+
+        return $currentScores;
+    }
+
     protected static function _calcPoints(Ruleset $rules, $han, $fu, $tsumo, $dealer)
     {
         if ($han > 0 && $han < 5) {

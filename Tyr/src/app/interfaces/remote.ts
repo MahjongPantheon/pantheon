@@ -66,6 +66,15 @@ export interface RRoundDraw {
   tempai: string; // comma-separated
 }
 
+export interface RRoundNagashi {
+  round_index: number;
+  honba: number;
+  outcome: 'nagashi';
+  riichi: string; // comma-separated
+  tempai: string; // comma-separated
+  nagashi: string; // comma-separated
+}
+
 export interface RRoundAbort {
   round_index: number;
   honba: number;
@@ -87,6 +96,7 @@ export type RRound
   | RRoundDraw
   | RRoundAbort
   | RRoundChombo
+  | RRoundNagashi
   ;
 
 export interface RGameConfig {
@@ -202,7 +212,7 @@ export interface RRoundPaymentsInfoSingle {
   round: number;
   riichi: number; // riichis on table
   riichiIds: string[]; // player ids  TODO: why string??
-  outcome: 'ron' | 'tsumo' | 'draw' | 'abort' | 'chombo';
+  outcome: 'ron' | 'tsumo' | 'draw' | 'abort' | 'chombo' | 'nagashi';
   penaltyFor: number | null;
   honba: number;
   scores: number[];

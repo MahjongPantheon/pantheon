@@ -109,6 +109,11 @@
      *ngIf="isScreen('settings')">
   {{_SETTINGS}}
 </div>
+<!-- Navbar for nagashi screen -->
+<div class="outcome-title"
+     *ngIf="isScreen('nagashiSelect')">
+  {{_NAGASHI_MANGAN}}
+</div>
 <!-- Navbar for other tables list -->
 <div class="outcome-title"
      *ngIf="isScreen('otherTablesList')">
@@ -150,4 +155,10 @@
   *ngIf="isScreen('confirmation')"
   class="fwd-button gradient-button"
   (click)="scrollDown()"
+><custom-icon [type]="'next'"></custom-icon></button>
+<button
+  *ngIf="isScreen('nagashiSelect')"
+  [disabled]="!mayGoNext('nagashiSelect')"
+  class="fwd-button gradient-button"
+  (click)="nextScreen()"
 ><custom-icon [type]="'next'"></custom-icon></button>

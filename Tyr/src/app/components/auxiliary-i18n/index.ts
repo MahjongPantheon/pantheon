@@ -92,6 +92,9 @@ export class I18nComponent {
   }
   get _DOUBLE_OR_TRIPLE_RON() {
     return this.i18n._t('Double/Triple ron');
+  }  
+  get _NAGASHI_MANGAN() {
+    return this.i18n._t('Nagashi mangan');
   }
   get _TIMER_NOT_STARTED() {
     return this.i18n._t('Timer was not started yet. Unable to add a hand.');

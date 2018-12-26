@@ -45,6 +45,13 @@
     [class.pressed]="paoPressed()"
     (click)="paoClick()"
   ><span class="pao-label"></span><custom-icon [type]="'down'"></custom-icon></button>
+  <button
+    *ngIf="showNagashiButton()"
+    class="win"
+    [class.pressed]="nagashiPressed()"
+    [class.disabled]="nagashiDisabled()"
+    (click)="nagashiClick()"
+  ><custom-icon [type]="'up'"></custom-icon></button>
 </div>
 <div class="riichi-bet">
   <button
