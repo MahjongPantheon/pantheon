@@ -562,4 +562,84 @@ class SessionModelTest extends \PHPUnit_Framework_TestCase
         list($session) = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
         $this->assertEquals($stateBeforeTsumo, $session->getCurrentState()->toJson()); // restored!
     }
+
+    public function testContinueGameAfterChomboOrAbortiveDrawOnOorasu()
+    {
+        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+
+        $this->_event
+            ->setRuleset(Ruleset::instance('tenhounet'))
+            ->setType('offline');
+        $this->_event->save();
+
+        $hash = $session->startGame(
+            $this->_event->getId(),
+            array_map(function (PlayerPrimitive $p) {
+                return $p->getId();
+            }, $this->_players)
+        );
+
+        $roundDrawData = [
+            'round_index' => 1,
+            'honba' => 0,
+            'outcome'   => 'draw',
+            'riichi'    => '',
+            'tempai'    => ''
+        ];
+
+        $roundTsumoData = [
+            'round_index' => 7,
+            'honba' => 6,
+            'outcome'   => 'tsumo',
+            'riichi'    => '',
+            'winner_id' => 4,
+            'han'       => -1,
+            'fu'        => 30,
+            'multi_ron' => null,
+            'dora'      => 0,
+            'uradora'   => 0,
+            'kandora'   => 0,
+            'kanuradora' => 1,
+            'yaku'      => '32'
+        ];
+
+        $roundChomboData = [
+            'round_index' => 8,
+            'honba' => 0,
+            'outcome'   => 'chombo',
+            'loser_id'  => 2,
+        ];
+
+        $roundAbortData = [
+            'round_index' => 8,
+            'honba' => 0,
+            'outcome'   => 'abort',
+            'riichi'    => ''
+        ];
+
+        $this->assertTrue($session->addRound($hash, $roundDrawData)); // 1e
+        $roundDrawData['round_index'] ++ && $roundDrawData['honba'] ++;
+        $this->assertTrue($session->addRound($hash, $roundDrawData)); // 2e
+        $roundDrawData['round_index'] ++ && $roundDrawData['honba'] ++;
+        $this->assertTrue($session->addRound($hash, $roundDrawData)); // 3e
+        $roundDrawData['round_index'] ++ && $roundDrawData['honba'] ++;
+        $this->assertTrue($session->addRound($hash, $roundDrawData)); // 4e
+        $roundDrawData['round_index'] ++ && $roundDrawData['honba'] ++;
+        $this->assertTrue($session->addRound($hash, $roundDrawData)); // 1s
+        $roundDrawData['round_index'] ++ && $roundDrawData['honba'] ++;
+        $this->assertTrue($session->addRound($hash, $roundDrawData)); // 2s
+        $this->assertTrue($session->addRound($hash, $roundTsumoData)); // 3s, the last dealer is leader with 30k+ points
+
+        $this->assertTrue($session->addRound($hash, $roundChomboData)); //chombo on oorasu
+
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $this->assertEquals(8, $sessionPrimitive->getCurrentState()->getRound());
+        $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
+
+        $this->assertTrue($session->addRound($hash, $roundAbortData)); //abortive draw on oorasu
+
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $this->assertEquals(8, $sessionPrimitive->getCurrentState()->getRound());
+        $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
+    }
 }
