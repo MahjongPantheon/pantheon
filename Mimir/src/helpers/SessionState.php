@@ -62,8 +62,8 @@ class SessionState
      */
     protected $_prematurelyFinished = false;
     /**
-     * True if round has just changed, useful to determine if
-     * current 4e or 4s is first one, no matter what honba count is.
+     * True if round has just changed or outcome was abort or chombo,
+     * useful to determine if current 4e or 4s is first one, no matter what honba count is.
      * (Possible situation: draw in 3s or 3e, so first 4e or 4s has honba).
      * @var boolean
      */
@@ -320,7 +320,9 @@ class SessionState
                 throw new InvalidParametersException('wrong outcome passed');
         }
 
-        $this->_roundJustChanged = ($lastRoundIndex != $this->getRound());
+        $this->_roundJustChanged = ($lastRoundIndex != $this->getRound()
+            || $round->getOutcome() == 'abort'
+            || $round->getOutcome() == 'chombo');
         return $payments; // for dry run
     }
 
