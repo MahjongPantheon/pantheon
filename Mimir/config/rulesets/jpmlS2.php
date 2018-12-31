@@ -16,53 +16,41 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Mimir;
-
 require_once __DIR__ . '/../../src/Ruleset.php';
+require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-/**
- * Class RulesetTenhounet
- * Describes most popular row3-column2 rules
- * @package Mimir
- */
-class RulesetTenhounet extends Ruleset
+class RulesetJpmlS2 extends Ruleset
 {
-    protected static $_title = 'tenhounet';
+    public static $_title = 'jpmlS2';
     protected static $_ruleset = [
-        'tenboDivider'          => 1000,
-        'ratingDivider'         => 1,
+        'tenboDivider'          => 100,
+        'ratingDivider'         => 10,
         'startRating'           => 1500,
-        'oka'                   => 20,
+        'oka'                   => 0,
         'startPoints'           => 25000,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
-        'doubleronRiichiAtamahane' => true,
-        'doubleronHonbaAtamahane'  => true,
         'extraChomboPayments'   => true,
         'chomboPenalty'         => 0,
         'withAtamahane'         => false,
         'withAbortives'         => true,
         'withKuitan'            => true,
         'withKazoe'             => true,
-        'withButtobi'           => true,
+        'withButtobi'           => false,
         'withMultiYakumans'     => true,
         'withNagashiMangan'     => true,
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
-        'gameExpirationTime'    => 87600, // hours, to cover JST difference
+        'autoRegisterUsers'     => false,
+        'gameExpirationTime'    => false,
         'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
-        'withLeadingDealerGameOver' => true,
-        'timerPolicy'           => 'none',
+        'minPenalty'            => 10,
+        'maxPenalty'            => 200,
+        'penaltyStep'           => 10,
+        'timerPolicy'           => 'redZone',
         'yellowZone'            => 0,
-        'redZone'               => 0,
-        'penaltyStep'           => 0,
-        'maxPenalty'            => 0,
-        'minPenalty'            => 0,
-        'uma' => [
-            1 => 15,
-            2 => 5,
-            3 => -5,
-            4 => -15
-        ],
+        'redZone'               => 600, // 10min
+        'withLeadingDealerGameOver' => true,
         'replacementPlayerFixedPoints' => false,
         'replacementPlayerOverrideUma' => false
     ];
@@ -72,5 +60,14 @@ class RulesetTenhounet extends Ruleset
         return YakuMap::listExcept([
             Y_OPENRIICHI
         ]);
+    }
+
+    /**
+     * @param array $scores
+     * @return array
+     */
+    public function uma($scores = [])
+    {
+        return [1 => 150, 50, -50, -150];
     }
 }
