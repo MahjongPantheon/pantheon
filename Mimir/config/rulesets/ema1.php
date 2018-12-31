@@ -16,61 +16,58 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Mimir;
-
 require_once __DIR__ . '/../../src/Ruleset.php';
+require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-/**
- * Class RulesetTenhounet
- * Describes most popular row3-column2 rules
- * @package Mimir
- */
-class RulesetTenhounet extends Ruleset
+class RulesetEma1 extends Ruleset
 {
-    protected static $_title = 'tenhounet';
+    public static $_title = 'ema1';
     protected static $_ruleset = [
-        'tenboDivider'          => 1000,
+        'tenboDivider'          => 1,
         'ratingDivider'         => 1,
-        'startRating'           => 1500,
-        'oka'                   => 20,
-        'startPoints'           => 25000,
+        'startRating'           => 0,
+        'oka'                   => 0,
+        'startPoints'           => 30000,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
-        'doubleronRiichiAtamahane' => true,
-        'doubleronHonbaAtamahane'  => true,
         'extraChomboPayments'   => true,
         'chomboPenalty'         => 0,
         'withAtamahane'         => false,
         'withAbortives'         => true,
         'withKuitan'            => true,
-        'withKazoe'             => true,
-        'withButtobi'           => true,
-        'withMultiYakumans'     => true,
-        'withNagashiMangan'     => true,
+        'withKazoe'             => false,
+        'withButtobi'           => false,
+        'withMultiYakumans'     => false,
+        'withNagashiMangan'     => false,
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
-        'gameExpirationTime'    => 87600, // hours, to cover JST difference
-        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
-        'withLeadingDealerGameOver' => true,
-        'timerPolicy'           => 'none',
-        'yellowZone'            => 0,
+        'gameExpirationTime'    => false,
+        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII],
+        'minPenalty'            => 100,
+        'maxPenalty'            => 20000,
+        'penaltyStep'           => 100,
+        'timerPolicy'           => 'yellowZone',
+        'yellowZone'            => 900, // 15min
         'redZone'               => 0,
-        'penaltyStep'           => 0,
-        'maxPenalty'            => 0,
-        'minPenalty'            => 0,
-        'uma' => [
-            1 => 15,
-            2 => 5,
-            3 => -5,
-            4 => -15
-        ],
-        'replacementPlayerFixedPoints' => false,
-        'replacementPlayerOverrideUma' => false
+        'withLeadingDealerGameOver' => false,
+        'replacementPlayerFixedPoints' => -15000,
+        'replacementPlayerOverrideUma' => -15000
     ];
 
     public function allowedYaku()
     {
         return YakuMap::listExcept([
+            Y_RENHOU,
             Y_OPENRIICHI
         ]);
+    }
+
+    /**
+     * @param array $scores
+     * @return array
+     */
+    public function uma($scores = [])
+    {
+        return $this->_equalizeUma($scores, [1 => 30000, 10000, -10000, -30000]);
     }
 }
