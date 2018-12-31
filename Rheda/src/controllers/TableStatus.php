@@ -37,17 +37,17 @@ class TableStatus extends Controller
             if ($this->_path['password'] == 'password') {
                 return true;
             }
-            header('Location: /eid' . $this->_eventId);
+            header('Location: /eid' . $this->_mainEventId);
             return false;
         }
 
         // This implies admin password is made of some words, and the first word is view page pass.
-        $pw = empty(Sysconf::ADMIN_AUTH()[$this->_eventId]['password'])
+        $pw = empty(Sysconf::ADMIN_AUTH()[$this->_mainEventId]['password'])
             ? null
-            : explode(' ', Sysconf::ADMIN_AUTH()[$this->_eventId]['password'])[0];
+            : explode(' ', Sysconf::ADMIN_AUTH()[$this->_mainEventId]['password'])[0];
 
         if (empty($this->_path['password']) || $this->_path['password'] != $pw) {
-            header('Location: /eid' . $this->_eventId);
+            header('Location: /eid' . $this->_mainEventId);
             return false;
         }
 
