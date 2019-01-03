@@ -62,8 +62,8 @@ class SessionState
      */
     protected $_prematurelyFinished = false;
     /**
-     * True if round has just changed, useful to determine if
-     * current 4e or 4s is first one, no matter what honba count is.
+     * True if round has just changed useful to determine if current 4e or
+     * 4s is first one, no matter what honba count is.
      * (Possible situation: draw in 3s or 3e, so first 4e or 4s has honba).
      * @var boolean
      */
@@ -75,6 +75,13 @@ class SessionState
      * @var boolean
      */
     protected $_yellowZoneAlreadyPlayed = false;
+    /**
+     * Outcome of previously recorded round. Useful to determine if certain rules
+     * should be applied in current case, e.g., agariyame should not be applied on
+     * chombo or abortive draw.
+     * @var string|null
+     */
+    protected $_lastOutcome = null;
 
     public function __construct(Ruleset $rules, $playersIds)
     {
@@ -99,7 +106,7 @@ class SessionState
             if ($key === '_rules') {
                 continue;
             }
-            if (!is_scalar($value) && !is_array($value)) {
+            if (!is_scalar($value) && !is_array($value) && !is_null($value)) {
                 throw new InvalidParametersException('No objects/functions allowed in session state');
             }
             $arr[$key] = $value;
@@ -147,6 +154,10 @@ class SessionState
      */
     protected function _dealerIsLeaderOnOorasu()
     {
+        if ($this->_lastOutcome == 'chombo' || $this->_lastOutcome == 'abort') {
+            return false; // chombo or abortive draw should not finish game
+        }
+
         if ($this->_roundJustChanged) {
             return false; // should play last round at least once!
         }
@@ -321,6 +332,7 @@ class SessionState
         }
 
         $this->_roundJustChanged = ($lastRoundIndex != $this->getRound());
+        $this->_lastOutcome = $round->getOutcome();
         return $payments; // for dry run
     }
 
