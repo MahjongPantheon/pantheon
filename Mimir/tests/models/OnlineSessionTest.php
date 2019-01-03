@@ -206,11 +206,11 @@ class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Mimir\ParseException
-     * @expectedExceptionMessage Replay is older than 27 hours (within JST timezone), so it can't be accepted
+     * @expectedExceptionMessage Replay is older than
      */
     public function testAddExpiredGame()
     {
-        $this->_gameId = date("YmdH", strtotime("-10 days")) . 'gm-00a9-0000-40a46a1c';
+        $this->_gameId = date("YmdH", strtotime("-11 years")) . 'gm-00a9-0000-40a46a1c';
         $this->_gameLink = base64_decode('aHR0cDovL3RlbmhvdS5uZXQv') . '0/?log=' . $this->_gameId;
 
         $this->playersRegistration();

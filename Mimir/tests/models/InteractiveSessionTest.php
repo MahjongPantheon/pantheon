@@ -552,7 +552,7 @@ class SessionModelTest extends \PHPUnit_Framework_TestCase
         /** @var SessionPrimitive $session */
         list($session) = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
         $this->assertEquals(
-            '{"_scores":{"1":29400,"2":32800,"3":29900,"4":27900},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false}',
+            '{"_scores":{"1":29400,"2":32800,"3":29900,"4":27900},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":"tsumo"}',
             $session->getCurrentState()->toJson()
         );
 
