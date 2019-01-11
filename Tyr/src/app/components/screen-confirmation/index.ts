@@ -24,6 +24,7 @@ import { YakuId, yakuMap, sortByViewPriority } from '../../primitives/yaku';
 import { AppState } from '../../primitives/appstate';
 import { RRoundPaymentsInfo } from '../../interfaces/remote';
 import { RiichiApiService } from '../../services/riichiApi';
+import { MetrikaService } from '../../services/metrika';
 import { RemoteError } from '../../services/remoteError';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
@@ -41,30 +42,34 @@ export class ConfirmationScreen extends I18nComponent {
 
   constructor(
     public i18n: I18nService,
-    private api: RiichiApiService
+    private api: RiichiApiService,
+    private metrika: MetrikaService
   ) {
     super(i18n);
   }
 
   ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-confirmation' });
     this._error = '';
     this._dataReady = false;
     this.api.getChangesOverview(this.state)
       .then((overview) => {
+        this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-confirmation', request: 'getChangesOverview' });
         this._data = overview;
         this._dataReady = true;
       })
-      .catch((e) => this.onerror(e));
+      .catch((e) => this.onerror(e, 'getChangesOverview'));
   }
 
   confirm() {
     this._dataReady = false;
     this.api.addRound(this.state)
       .then(() => this.okay())
-      .catch((e) => this.onerror(e));
+      .catch((e) => this.onerror(e, 'addRound'));
   }
 
-  onerror(e) {
+  onerror(e, reqType: string) {
+    this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-confirmation', code: e.code, request: reqType });
     this._dataReady = true;
     this._error = this.i18n._t("Failed to add round. Please try again");
     if (e instanceof RemoteError) {
@@ -77,6 +82,7 @@ export class ConfirmationScreen extends I18nComponent {
   }
 
   okay() {
+    this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-confirmation', request: 'addRound' });
     this._dataReady = false;
     // when finished, appstate goes to overview screen automatically, no need to go to next
     this.state.updateOverview((finished) => finished ? null : this.state.nextScreen());

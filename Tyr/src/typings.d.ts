@@ -29,6 +29,7 @@ declare namespace jasmine {
 
 interface Window {
   __state: any;
+  ym: (counterId: number, funcName: string, param1: any, param2?: any) => void;
 }
 
 interface Navigator {
@@ -36,7 +37,7 @@ interface Navigator {
 }
 
 declare module "*.json" {
-    const value: any;
-    export default value;
+  const value: any;
+  export default value;
 }
 

@@ -55,6 +55,7 @@ import {
   winnerHasYakuWithPao
 } from './yaku';
 import { I18nService } from '../../services/i18n';
+import { MetrikaService } from '../../services/metrika';
 import { IDB } from '../../services/idb';
 
 // implementation
@@ -91,7 +92,13 @@ export class AppState {
     otherTable: false,
   };
 
-  constructor(private zone: NgZone, private api: RiichiApiService, private i18n: I18nService, private storage: IDB) {
+  constructor(
+    private zone: NgZone,
+    private api: RiichiApiService,
+    private i18n: I18nService,
+    private storage: IDB,
+    private metrika: MetrikaService
+  ) {
     this._players = null;
     this._mapIdToPlayer = {};
     this.isIos = !!navigator.userAgent.match(/(iPad|iPhone|iPod)/i);
@@ -143,6 +150,7 @@ export class AppState {
       this._reset();
       this._currentPlayerDisplayName = this.i18n._t('spectator');
       this._currentPlayerId = 0;
+      this.metrika.track(MetrikaService.UNIVERSAL_WATCHER_INITIALIZED);
       return;
     }
 
@@ -160,6 +168,9 @@ export class AppState {
       this._currentPlayerId = playerInfo.id;
       this._gameConfig = gameConfig;
       initYaku(this._gameConfig.withMultiYakumans);
+
+      this.metrika.track(MetrikaService.CONFIG_RECEIVED);
+      this.metrika.setUserId(playerInfo.id);
 
       if (games.length > 0) {
         // TODO: what if games > 1 ? Now it takes first one
@@ -190,8 +201,11 @@ export class AppState {
         this.storage.delete(['authToken']);
         this._reset();
         this.reinit();
-      } else if (isDevMode()) {
-        console.error('Caught error or exception: ', e);
+      } else {
+        if (isDevMode()) {
+          console.error('Caught error or exception: ', e);
+        }
+        this.metrika.track(MetrikaService.REMOTE_ERROR, { code: e.code, message: e.toString() });
       }
     });
   }
@@ -201,8 +215,11 @@ export class AppState {
       return;
     }
     this._loading.overview = true;
+    this.metrika.track(MetrikaService.LOAD_STARTED, { type: 'game-overview' });
     this.api.getGameOverview(this._currentSessionHash)
       .then((overview) => {
+        this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'game-overview', finished: overview.state.finished });
+
         if (overview.state.finished) {
           this._reset();
           this._loading.overview = false;
@@ -228,6 +245,7 @@ export class AppState {
         onReady();
       })
       .catch((error: RemoteError) => {
+        this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'game-overview', code: error.code, message: error.message });
         this._loading.overview = false;
         if (error.code === 404) { // TODO on backend
           this._reset();

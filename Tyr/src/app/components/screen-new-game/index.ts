@@ -21,6 +21,7 @@
 import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
 import { RiichiApiService } from '../../services/riichiApi';
+import { MetrikaService } from '../../services/metrika';
 import { LUser } from '../../interfaces/local';
 import { rand } from '../../helpers/rand';
 import { toNumber, uniq, clone, find, remove } from 'lodash';
@@ -44,6 +45,7 @@ export class NewGameScreen {
   @Input() state: AppState;
   @Input() api: RiichiApiService;
   public _loading: boolean = false;
+  constructor(private metrika: MetrikaService) { }
 
   // These are indexes in _players array
   toimen: number = DEFAULT_ID;
@@ -55,10 +57,12 @@ export class NewGameScreen {
   availablePlayers: LUser[] = [];
 
   ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-new-game' });
     this._loading = true;
 
     this.api.getAllPlayers()
       .then((players) => {
+        this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-new-game', request: 'getAllPlayers' });
         this._loading = false;
 
         this.players = [defaultPlayer].concat(
@@ -72,7 +76,10 @@ export class NewGameScreen {
 
         this.availablePlayers = clone(this.players);
         this._selectCurrentPlayer();
-      });
+      })
+      .catch((e) => this.metrika.track(MetrikaService.LOAD_ERROR, {
+        type: 'screen-new-game', request: 'getAllPlayers', message: e.toString()
+      }));
   }
 
   playersValid(): boolean {
@@ -106,13 +113,13 @@ export class NewGameScreen {
     // don't display already selected players
     this.availablePlayers = clone(this.players);
     for (let playerId of playerIds) {
-      remove(this.availablePlayers, {id: playerId})
+      remove(this.availablePlayers, { id: playerId })
     }
   }
 
   findById(playerId) {
     playerId = toNumber(playerId);
-    return find(this.players, {id: playerId});
+    return find(this.players, { id: playerId });
   }
 
   disableSelect(value) {
@@ -126,9 +133,12 @@ export class NewGameScreen {
 
     this._loading = true;
     this.api.startGame(this._selectedPlayerIds()).then(() => {
+      this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-new-game', request: 'startGame' });
       this.state._reset();
       this.state.updateCurrentGames();
-    });
+    }).catch((e) => this.metrika.track(MetrikaService.LOAD_ERROR, {
+      type: 'screen-new-game', request: 'startGame', message: e.toString()
+    }));
   }
 
   private _selectedPlayerIds(): number[] {

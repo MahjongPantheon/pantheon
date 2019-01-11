@@ -24,6 +24,7 @@ import { YakuId, yakuMap, sortByViewPriority } from '../../primitives/yaku';
 import { AppState } from '../../primitives/appstate';
 import { RRoundPaymentsInfo } from '../../interfaces/remote';
 import { RiichiApiService } from '../../services/riichiApi';
+import { MetrikaService } from '../../services/metrika';
 import { RemoteError } from '../../services/remoteError';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
@@ -41,12 +42,14 @@ export class LastRoundScreen extends I18nComponent {
 
   constructor(
     public i18n: I18nService,
-    private api: RiichiApiService
+    private api: RiichiApiService,
+    private metrika: MetrikaService
   ) {
     super(i18n);
   }
 
   ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-last-round' });
     this._error = '';
     this._dataReady = false;
     this.api.getLastRound()
@@ -54,8 +57,10 @@ export class LastRoundScreen extends I18nComponent {
         if (overview) {
           this._data = overview;
           this._dataReady = true;
+          this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-last-round', request: 'getLastRound' });
         } else {
-          this.onerror(null); // TODO: log it
+          this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-last-round', request: 'getLastRound' });
+          this.onerror(null);
         }
       })
       .catch((e) => this.onerror(e));
@@ -124,6 +129,7 @@ export class LastRoundScreen extends I18nComponent {
     if (!e) {
       this._error = this.i18n._t("Latest hand wasn't found");
     } else if (e instanceof RemoteError) {
+      this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-last-round', request: 'getLastRound' });
       if (e.code === 403) {
         this._error = this.i18n._t("Authentication failed");
       } else {
