@@ -22,6 +22,7 @@ import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { supportedLanguages } from '../../services/i18n';
+import { MetrikaService } from '../../services/metrika';
 import { IDB } from '../../services/idb';
 
 @Component({
@@ -32,10 +33,18 @@ import { IDB } from '../../services/idb';
 export class SettingsScreen extends I18nComponent {
   @Input() state: AppState;
 
-  constructor(public i18n: I18nService, private storage: IDB) { super(i18n); }
+  constructor(
+    public i18n: I18nService,
+    private storage: IDB,
+    private metrika: MetrikaService
+  ) { super(i18n); }
 
   get supportedLanguages(): string[] {
     return supportedLanguages;
+  }
+
+  ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-settings' });
   }
 
   selectLanguage(lang: string) {
@@ -43,11 +52,13 @@ export class SettingsScreen extends I18nComponent {
     this.i18n.init((localeName: string) => {
       // make sure value is valid - set it again in callback
       this.storage.set('currentLanguage', localeName);
+      this.metrika.track(MetrikaService.LANG_CHANGED, { localeName });
     }, (error: any) => console.error(error));
   }
 
   logout() {
     if (window.confirm(this.i18n._t("Are you sure you want to logout? You will have to get a new pin code to login again"))) {
+      this.metrika.track(MetrikaService.LOGOUT, { screen: 'screen-settings' });
       this.state.logout();
     }
   }

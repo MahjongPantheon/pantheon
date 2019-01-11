@@ -19,6 +19,7 @@
  */
 
 import { Component, Input } from '@angular/core';
+import { MetrikaService } from '../../services/metrika';
 import { Outcome, Player } from '../../interfaces/common';
 import { AppState } from '../../primitives/appstate';
 
@@ -35,6 +36,8 @@ export class PlayersSelectScreen {
     return this.state.getOutcome();
   }
 
+  constructor(private metrika: MetrikaService) { }
+
   self: Player;
   shimocha: Player;
   toimen: Player;
@@ -46,6 +49,7 @@ export class PlayersSelectScreen {
   seatKamicha: string;
 
   ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-players-select' });
     let players: Player[] = [].concat(this.state.getPlayers());
     let seating = ['東', '南', '西', '北'];
 

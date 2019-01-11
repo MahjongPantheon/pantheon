@@ -24,4 +24,5 @@ export const environment = {
   guiFix: (src: string) => src,
   keyPrefix: 'tyr',
   cookieDomain: null, // when working on localhost this must be omitted!
+  metrikaId: 101010101, // dummy number for testing
 };

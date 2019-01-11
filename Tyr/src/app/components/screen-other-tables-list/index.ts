@@ -19,6 +19,7 @@
  */
 
 import { Component, Input } from '@angular/core';
+import { MetrikaService } from '../../services/metrika';
 import { AppState } from '../../primitives/appstate';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
@@ -29,9 +30,13 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 })
 export class OtherTablesListScreen extends I18nComponent {
   @Input() state: AppState;
-  constructor(public i18n: I18nService) { super(i18n); }
+  constructor(
+    public i18n: I18nService,
+    private metrika: MetrikaService
+  ) { super(i18n); }
 
   ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-tables-list' });
     this.state.updateOtherTablesList();
   }
 
