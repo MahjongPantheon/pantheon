@@ -50,6 +50,7 @@ import { DefaultsToPipe } from './helpers/defaultsTo.pipe';
 import { DescriptionPipe } from './helpers/makeHandDescription.pipe';
 
 import { RiichiApiService } from './services/riichiApi';
+import { MetrikaService } from './services/metrika';
 import { I18nService } from './services/i18n';
 import { IDB } from './services/idb';
 
@@ -89,6 +90,7 @@ import { IDB } from './services/idb';
   providers: [
     RiichiApiService,
     I18nService,
+    MetrikaService,
     IDB
   ],
   bootstrap: [AppComponent]

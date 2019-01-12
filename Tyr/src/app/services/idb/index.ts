@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { IDBImpl } from './interface';
 import { IDBStorageImpl } from './localstorageImpl';
 import { IDBCookieImpl } from './cookiestorageImpl';
+import { MetrikaService } from '../metrika';
 import { environment } from '../../../environments/environment';
 
 /**
@@ -20,7 +21,7 @@ export class IDB implements IDBImpl {
   private cookieEngine: IDBImpl;
   private activeStorages: IDBImpl[] = [];
 
-  constructor() {
+  constructor(private metrika: MetrikaService) {
     // Assume we always have at least cookies.
     this.cookieEngine = new IDBCookieImpl(environment.keyPrefix, environment.cookieDomain);
     this.activeStorages.push(this.cookieEngine);
@@ -28,6 +29,7 @@ export class IDB implements IDBImpl {
     try { // check is local storage is sane
       localStorage.setItem('testStorageItem', '1');
       if (localStorage.getItem('testStorageItem') !== '1') {
+        this.metrika.track(MetrikaService.LOCAL_ERROR, { message: 'Local storage not supported on device' });
         throw new Error();
       }
       localStorage.removeItem('testStorageItem');
@@ -78,7 +80,7 @@ export class IDB implements IDBImpl {
    * @param {string} key Arbitrary key
    * @return any|null Received value or null if not found
    */
-  public get(key: string): any|null {
+  public get(key: string): any | null {
     let valuePrimary = this.storageEngine.get(key);
     let valueSecondary = this.cookieEngine.get(key);
 

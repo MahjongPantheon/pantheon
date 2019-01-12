@@ -29,4 +29,5 @@ export const environment = {
   guiFix: (src: string) => src,
   keyPrefix: 'tyr',
   cookieDomain: 'mjtop.net',
+  metrikaId: 0,
 };

@@ -21,6 +21,7 @@
 import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
 import { RiichiApiService } from '../../services/riichiApi';
+import { MetrikaService } from '../../services/metrika';
 import { Player } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
@@ -32,7 +33,10 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 export class LastResultsScreen extends I18nComponent {
   @Input() state: AppState;
   @Input() api: RiichiApiService;
-  constructor(public i18n: I18nService) { super(i18n); }
+  constructor(
+    public i18n: I18nService,
+    private metrika: MetrikaService
+  ) { super(i18n); }
 
   public _loading: boolean = true;
   public _noResults: boolean = false;
@@ -43,6 +47,7 @@ export class LastResultsScreen extends I18nComponent {
   kamicha: Player;
 
   ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-last-results' });
     this.api.getLastResults().then((results) => {
       if (!results) {
         this._loading = false;
