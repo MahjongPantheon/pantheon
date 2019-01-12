@@ -21,6 +21,7 @@
 import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
 import { RiichiApiService } from '../../services/riichiApi';
+import { MetrikaService } from '../../services/metrika';
 import { Player } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IDB } from '../../services/idb';
@@ -33,7 +34,11 @@ import { IDB } from '../../services/idb';
 export class LoginScreen extends I18nComponent {
   @Input() state: AppState;
   @Input() api: RiichiApiService;
-  constructor(public i18n: I18nService, private storage: IDB) { super(i18n); }
+  constructor(
+    public i18n: I18nService,
+    private storage: IDB,
+    private metrika: MetrikaService
+  ) { super(i18n); }
 
   public _loading: boolean = false;
   public _error: boolean = false;
@@ -42,15 +47,22 @@ export class LoginScreen extends I18nComponent {
   private _pinView: string = '';
   private _timer = null;
 
+  ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-login' });
+  }
+
   submit() {
+    this.metrika.track(MetrikaService.LOAD_STARTED, { type: 'screen-login', request: 'confirmRegistration' });
     this._loading = true;
     this.api.confirmRegistration(this._pinOrig)
       .then((authToken: string) => {
+        this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-login', request: 'confirmRegistration' });
         this._loading = false;
         this.storage.set('authToken', authToken);
         this.state.reinit();
       })
-      .catch(() => {
+      .catch((e) => {
+        this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-login', request: 'confirmRegistration', message: e.toString() });
         this._loading = false;
         this._error = true;
       });

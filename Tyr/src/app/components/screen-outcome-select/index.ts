@@ -21,6 +21,7 @@
 import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { MetrikaService } from '../../services/metrika';
 
 @Component({
   selector: 'screen-outcome-select',
@@ -29,7 +30,14 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 })
 export class OutcomeSelectScreen extends I18nComponent {
   @Input() state: AppState;
-  constructor(public i18n: I18nService) { super(i18n); }
+  constructor(
+    public i18n: I18nService,
+    private metrika: MetrikaService
+  ) { super(i18n); }
+
+  ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-outcome-select' });
+  }
 
   get abortsAllowed() {
     return this.state.getGameConfig('withAbortives');
@@ -38,7 +46,7 @@ export class OutcomeSelectScreen extends I18nComponent {
   get multironAllowed() {
     return !this.state.getGameConfig('withAtamahane');
   }
-  
+
   get nagashiAllowed() {
     return this.state.getGameConfig('withNagashiMangan');
   }

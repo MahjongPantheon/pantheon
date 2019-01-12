@@ -22,6 +22,7 @@ import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
 import { YakuId, yakuMap } from '../../primitives/yaku';
 import { Player } from '../../interfaces/common';
+import { MetrikaService } from '../../services/metrika';
 import { RRoundPaymentsInfo } from '../../interfaces/remote';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
@@ -34,7 +35,10 @@ export class OtherTableScreen extends I18nComponent {
   @Input() state: AppState;
   @Input() players: Player[];
   @Input() lastRound: RRoundPaymentsInfo;
-  constructor(public i18n: I18nService) { super(i18n); }
+  constructor(
+    public i18n: I18nService,
+    private metrika: MetrikaService
+  ) { super(i18n); }
 
   /**
    * Flag to prevent blinking on manual updates when all data was already loaded
@@ -144,6 +148,7 @@ export class OtherTableScreen extends I18nComponent {
   }
 
   ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-table' });
     this._lastRoundTimer = null;
     this._showLastRound = false;
     this.updatePlayers();

@@ -30,6 +30,7 @@ import { yakuGroups, yakumanGroups, yakuRareGroups, filterAllowed } from './yaku
 import { throttle, keys, pickBy } from 'lodash';
 import { AppState } from '../../primitives/appstate';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { MetrikaService } from '../../services/metrika';
 
 @Component({
   selector: 'screen-yaku-select',
@@ -53,13 +54,17 @@ export class YakuSelectScreen extends I18nComponent {
   _tabsHeight: string = null;
   _currentUser: number = null; // Should be in sync with current multi-ron user in state!
 
-  constructor(public i18n: I18nService) {
+  constructor(
+    public i18n: I18nService,
+    private metrika: MetrikaService
+  ) {
     super(i18n);
     this._viewportHeight = (window.innerHeight - 60) + 'px'; // 60 is height of navbar;
     this._tabsHeight = parseInt((window.innerWidth * 0.10).toString(), 10) + 'px'; // Should equal to margin-left of buttons & scroller-wrap
   }
 
   ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-yaku-select' });
     this._currentUser = this.state.getWinningUsers()[0].id;
     this.state.selectMultiRonUser(this._currentUser);
 

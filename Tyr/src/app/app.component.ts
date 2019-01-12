@@ -22,7 +22,9 @@ import { Component, NgZone, ApplicationRef } from '@angular/core';
 import { AppState } from './primitives/appstate';
 import { Outcome } from './interfaces/common';
 import { RiichiApiService } from './services/riichiApi';
+import { MetrikaService } from './services/metrika';
 import { I18nService } from './services/i18n';
+import { environment } from '../environments/environment';
 import { IDB } from './services/idb';
 
 @Component({
@@ -36,18 +38,45 @@ export class AppComponent {
     private appRef: ApplicationRef,
     private zone: NgZone,
     private api: RiichiApiService,
+    private metrika: MetrikaService,
     private i18n: I18nService,
     private storage: IDB
   ) {
+
+    // Yandex metrika init code; Don't touch :)
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () {
+        (m[i].a = m[i].a || []).push(arguments)
+      };
+      m[i].l = 1 * +(new Date());
+      k = e.createElement(t),
+        a = e.getElementsByTagName(t)[0],
+        k.async = 1,
+        k.src = r,
+        a.parentNode.insertBefore(k, a)
+    })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+    window.ym(environment.metrikaId, "init", {
+      id: environment.metrikaId,
+      defer: true,
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true
+    });
+    // End of Yandex metrika
+
     this.state = new AppState(
       this.zone,
       this.api,
       this.i18n,
-      this.storage
+      this.storage,
+      this.metrika
     );
+
+    this.metrika.track(MetrikaService.APP_INIT);
 
     window.__state = this.state; // for great debug
     this.i18n.init((localeName: string) => {
+      this.metrika.track(MetrikaService.I18N_INIT, { localeName });
       this.state.init();
       this.storage.set('currentLanguage', localeName);
     }, (error: any) => console.error(error));

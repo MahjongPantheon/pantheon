@@ -20,6 +20,7 @@
 
 import { Component, Input } from '@angular/core';
 import { AppState } from '../../primitives/appstate';
+import { MetrikaService } from '../../services/metrika';
 import { Player } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
@@ -34,7 +35,10 @@ export class OverviewScreen extends I18nComponent {
   @Input('loading') _loading: boolean;
   @Input() currentGameHash: string;
   @Input() currentRound: number;
-  constructor(public i18n: I18nService) { super(i18n); }
+  constructor(
+    public i18n: I18nService,
+    private metrika: MetrikaService
+  ) { super(i18n); }
 
   self: Player;
   shimocha: Player;
@@ -50,6 +54,10 @@ export class OverviewScreen extends I18nComponent {
 
   get greeting() {
     return this.i18n._t('Hello, %1!', [this.state.playerName()]);
+  }
+
+  ngOnInit() {
+    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-overview' });
   }
 
   getScore(who) {
