@@ -452,6 +452,7 @@ Returns: _int_ player id
 Exceptions:
 * _MalformedPayloadException_ 
 * _InvalidUserException_ 
+* _AuthFailedException_ 
 
 ### updatePlayer
 Parameters:
@@ -466,6 +467,7 @@ Returns: _int_ player id
 Exceptions:
 * _EntityNotFoundException_ 
 * _MalformedPayloadException_ 
+* _AuthFailedException_ 
 * _\Exception_ 
 
 ### getPlayer
