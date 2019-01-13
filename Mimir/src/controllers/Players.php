@@ -39,11 +39,17 @@ class PlayersController extends Controller
      * @param string $tenhouId tenhou username
      * @throws MalformedPayloadException
      * @throws InvalidUserException
+     * @throws AuthFailedException
      * @return int player id
      */
     public function add($ident, $alias, $displayName, $tenhouId)
     {
         $this->_log->addInfo('Adding new player');
+
+        if (!(new PlayerStatModel($this->_db, $this->_config, $this->_meta))->checkAdminToken()) {
+            throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
+        }
+
         if (empty($ident) || empty($displayName)) {
             throw new MalformedPayloadException('Fields #ident and #displayName should not be empty');
         }
@@ -77,12 +83,18 @@ class PlayersController extends Controller
      * @param string $tenhouId tenhou username (optional)
      * @throws EntityNotFoundException
      * @throws MalformedPayloadException
+     * @throws AuthFailedException
      * @throws \Exception
      * @return int player id
      */
     public function update($id, $ident, $alias, $displayName, $tenhouId)
     {
         $this->_log->addInfo('Updating player id #' . $id);
+
+        if (!(new PlayerStatModel($this->_db, $this->_config, $this->_meta))->checkAdminToken()) {
+            throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
+        }
+
         $player = PlayerPrimitive::findById($this->_db, [$id]);
         if (empty($player)) {
             throw new EntityNotFoundException('No player with id #' . $id . ' found');
