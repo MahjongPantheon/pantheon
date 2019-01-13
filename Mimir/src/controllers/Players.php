@@ -70,11 +70,11 @@ class PlayersController extends Controller
     }
 
     /**
-     * @param int $id player to update
-     * @param string $ident oauth ident, if any
-     * @param string $alias textlog alias for quicker enter
-     * @param string $displayName how to display player in stats
-     * @param string $tenhouId tenhou username
+     * @param int $id player to update (required)
+     * @param string $ident oauth ident (optional)
+     * @param string $alias textlog alias for quicker enter (optional)
+     * @param string $displayName how to display player in stats (optional)
+     * @param string $tenhouId tenhou username (optional)
      * @throws EntityNotFoundException
      * @throws MalformedPayloadException
      * @throws \Exception
@@ -88,15 +88,24 @@ class PlayersController extends Controller
             throw new EntityNotFoundException('No player with id #' . $id . ' found');
         }
 
-        if (empty($ident) || empty($displayName)) {
-            throw new MalformedPayloadException('Fields #ident and #displayName should not be empty');
+        $player = $player[0];
+
+        if (!empty($ident)) {
+            $player->setIdent($ident);
         }
 
-        $player = $player[0]
-            ->setAlias($alias)
-            ->setDisplayName($displayName)
-            ->setIdent($ident)
-            ->setTenhouId($tenhouId);
+        if (!empty($displayName)) {
+            $player->setDisplayName($displayName);
+        }
+
+        if (!empty($alias)) {
+            $player->setAlias($alias);
+        }
+
+        if (!empty($tenhouId)) {
+            $player->setTenhouId($tenhouId);
+        }
+
         $player->save();
 
         $this->_log->addInfo('Successfully updated player id #' . $player->getId());
