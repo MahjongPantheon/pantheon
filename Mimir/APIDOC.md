@@ -321,6 +321,17 @@ Returns: _void_
 Exceptions:
 * _\Exception_ 
 
+### updatePlayerSeatingFlagCP
+Parameters:
+* **$playerId** (_integer_) 
+* **$eventId** (_integer_) 
+* **$ignoreSeating** (_integer_) 
+
+Returns: _void_ 
+
+Exceptions:
+* _\Exception_ 
+
 ### enrollPlayerCP
 Parameters:
 * **$playerId** (_integer_) 
