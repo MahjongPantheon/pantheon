@@ -129,6 +129,15 @@ class EventUserManagementModel extends Model
         $regItem->drop();
     }
 
+    /**
+     * Update ignore_seating flag for registered player
+     *
+     * @param $playerId
+     * @param $eventId
+     * @param $ignoreSeating
+     * @throws \Exception
+     * @return void
+     */
     public function updateSeatingFlag($playerId, $eventId, $ignoreSeating)
     {
         if (!$this->checkAdminToken()) {
