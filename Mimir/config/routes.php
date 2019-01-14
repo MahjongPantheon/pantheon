@@ -64,6 +64,7 @@ return [
     'registerPlayer'     => ['EventsController', 'registerPlayer'],
     'registerPlayerCP'   => ['EventsController', 'registerPlayerAdmin'],
     'unregisterPlayerCP' => ['EventsController', 'unregisterPlayerAdmin'],
+    'updatePlayerSeatingFlagCP' => ['EventsController', 'updatePlayerSeatingFlag'],
     'enrollPlayerCP'     => ['EventsController', 'enrollPlayer'],
     'getAllEnrolled'     => ['EventsController', 'getAllEnrolledPlayers'],
     'getAchievements'    => ['EventsController', 'getAchievements'],
