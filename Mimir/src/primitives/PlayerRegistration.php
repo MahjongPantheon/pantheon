@@ -253,6 +253,16 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
+     * @param int $localId
+     * @return $this
+     */
+    public function setIgnoreSeating($ignoreSeating)
+    {
+        $this->_ignoreSeating = $ignoreSeating;
+        return $this;
+    }
+
+    /**
      * @param IDb $db
      * @param $eventId
      * @return array ['id' => int, 'local_id' => int|null][]
