@@ -243,6 +243,26 @@ class EventsController extends Controller
     }
 
     /**
+     * Update ignore_seating flag for registered player
+     *
+     * @param integer $playerId
+     * @param integer $eventId
+     * @param integer $ignoreSeating
+     * @throws \Exception
+     * @return void
+     */
+    public function updatePlayerSeatingFlag($playerId, $eventId, $ignoreSeating)
+    {
+        $this->_log->addInfo('Update player seating flag id# ' . $playerId . ' for event id# ' . $eventId);
+        (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->updateSeatingFlag(
+            $playerId,
+            $eventId,
+            $ignoreSeating
+        );
+        $this->_log->addInfo('Successfully updated player seating flag id# ' . $playerId . ' for event id# ' . $eventId);
+    }
+
+    /**
      * Enroll player to registration lists. Player should make a self-registration after this, or
      * administrator may approve the player manually, and only after that the player will appear in rating table.
      *

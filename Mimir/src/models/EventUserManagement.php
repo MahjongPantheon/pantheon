@@ -130,6 +130,31 @@ class EventUserManagementModel extends Model
     }
 
     /**
+     * Update ignore_seating flag for registered player
+     *
+     * @param $playerId
+     * @param $eventId
+     * @param $ignoreSeating
+     * @throws \Exception
+     * @return void
+     */
+    public function updateSeatingFlag($playerId, $eventId, $ignoreSeating)
+    {
+        if (!$this->checkAdminToken()) {
+            throw new AuthFailedException('Only administrators are allowed to update player information');
+        }
+
+        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId);
+        if (empty($regItem)) {
+            return;
+        }
+
+        $regItem
+            ->setIgnoreSeating($ignoreSeating)
+            ->save();
+    }
+
+    /**
      * Self-register player to event by pin
      *
      * @param $pin

@@ -321,6 +321,17 @@ Returns: _void_
 Exceptions:
 * _\Exception_ 
 
+### updatePlayerSeatingFlagCP
+Parameters:
+* **$playerId** (_integer_) 
+* **$eventId** (_integer_) 
+* **$ignoreSeating** (_integer_) 
+
+Returns: _void_ 
+
+Exceptions:
+* _\Exception_ 
+
 ### enrollPlayerCP
 Parameters:
 * **$playerId** (_integer_) 
@@ -452,20 +463,22 @@ Returns: _int_ player id
 Exceptions:
 * _MalformedPayloadException_ 
 * _InvalidUserException_ 
+* _AuthFailedException_ 
 
 ### updatePlayer
 Parameters:
-* **$id** (_int_) player to update
-* **$ident** (_string_) oauth ident, if any
-* **$alias** (_string_) textlog alias for quicker enter
-* **$displayName** (_string_) how to display player in stats
-* **$tenhouId** (_string_) tenhou username
+* **$id** (_int_) player to update (required)
+* **$ident** (_string_) oauth ident (optional)
+* **$alias** (_string_) textlog alias for quicker enter (optional)
+* **$displayName** (_string_) how to display player in stats (optional)
+* **$tenhouId** (_string_) tenhou username (optional)
 
 Returns: _int_ player id
 
 Exceptions:
 * _EntityNotFoundException_ 
 * _MalformedPayloadException_ 
+* _AuthFailedException_ 
 * _\Exception_ 
 
 ### getPlayer
