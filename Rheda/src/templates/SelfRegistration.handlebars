@@ -19,11 +19,39 @@
 {{#error}}
     <div class="alert alert-error">{{error}}</div>
 {{/error}}
-
-<form action="" method="post" class="well form-inline">
-    <div class="form-group mx-sm-3">
-        <label for="inputPassword2" class="sr-only">secret</label>
-        <input type="password" class="form-control" id="inputPassword2" name="secret" placeholder="secret">
+<form action="" method="post" class="well">
+    <div class="form-text">
+      {{_t "Please enter your e-mail address and password. We will send authentication link to your email, so you will be able to sign in and fill your personal data"}}
     </div>
-    <button type="submit" class="btn btn-primary">{{_t 'Authorize'}}</button>
+    <hr />
+    <div class="form-group">
+        <label for="email">{{_t 'Your e-mail address'}}</label>
+        <input type="text" class="form-control" id="email" name="email">
+        <small id="emailHelp" class="form-text text-muted">{{_t "Your e-mail will not be shared with anyone else and will not be visible anywhere."}}</small>
+    </div>
+    <div class="form-group">
+        <label for="password">{{_t 'Your password'}}</label>
+        <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <button type="submit" class="btn btn-primary">{{_t 'Register by e-mail'}}</button>
 </form>
+<hr />
+<div id="Policy">
+  <div class="card">
+    <div id="PolicyHeading">
+        <span class="mb-0">
+          <button class="btn btn-link collapsed"
+                  data-toggle="collapse" data-target="#PolicyOverview"
+                  aria-expanded="false" aria-controls="PolicyOverview">
+            {{_t 'Privacy policy overview'}}
+          </button>
+        </span>
+    </div>
+
+    <div id="PolicyOverview" class="collapse" aria-labelledby="PolicyHeading" data-parent="#Policy">
+      <div class="card-body">
+        {{> partials/PrivacyPolicyOverview }}
+      </div>
+    </div>
+  </div>
+</div>
