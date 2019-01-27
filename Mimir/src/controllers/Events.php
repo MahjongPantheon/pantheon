@@ -31,7 +31,6 @@ class EventsController extends Controller
     /**
      * @param string $title
      * @param string $description
-     * @param string $type either 'online' or 'offline' or 'offline_interactive_tournament'
      * @param string $ruleset one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
      * @param int $gameDuration duration of game in this event in minutes
      * @param string $timezone name of timezone, 'Asia/Irkutsk' for example
@@ -39,19 +38,16 @@ class EventsController extends Controller
      * @throws InvalidParametersException
      * @return int
      */
-    public function createEvent($title, $description, $type, $ruleset, $gameDuration, $timezone)
+    public function createEvent($title, $description, $ruleset, $gameDuration, $timezone)
     {
-        $this->_log->addInfo('Creating new [' . $type . '] event with [' . $ruleset . '] rules');
+        $this->_log->addInfo('Creating new event with [' . $ruleset . '] rules');
 
         $event = (new EventPrimitive($this->_db))
             ->setTitle($title)
             ->setDescription($description)
-            ->setType($type)
             ->setGameDuration($gameDuration)
             ->setTimeZone($timezone)
             ->setRuleset(Ruleset::instance($ruleset))
-            // ->setStartTime('')   // TODO
-            // ->setEndTime('')     // TODO
         ;
         $success = $event->save();
         if (!$success) {
