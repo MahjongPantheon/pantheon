@@ -42,8 +42,8 @@ class AuthModel extends Model
             throw new InvalidParametersException('Invalid email provided', 401);
         }
 
-        if (strlen($password) < 8) {
-            throw new InvalidParametersException('Password should be 8 or more characters long', 411);
+        if ($this->_calcPasswordStrength($password) < 14) {
+            throw new InvalidParametersException('Password is too weak', 411);
         }
 
         $pw = $this->makePasswordTokens($password);
@@ -245,6 +245,39 @@ class AuthModel extends Model
             'client_hash' => $clientHash,
             'auth_hash' => $authHash
         ];
+    }
+
+    /**
+     * Calc strength of password by simple algorithm:
+     * - 1 base point for every 2 symbols in password
+     * - Multiply by 2 for every symbol class in password
+     *
+     * So:
+     * - "123456" password will have strength of 3 * 2 = 6 (very weak)
+     * - "Simple123" will have strength of 6 * 2 * 2 * 2 = 48 (normal)
+     * - "thisismypasswordandidontcare" will have strength of 14 * 2 = 28 (below normal)
+     *
+     * Passwords with calculated strength less than 14 should be considered weak.
+     *
+     * @see also Rheda/src/controllers/SelfRegistration.php:_calcPasswordStrength - functions should match!
+     * @param $password
+     * @return float|int
+     */
+    protected function _calcPasswordStrength($password)
+    {
+        $hasLatinSymbols = preg_match('#[a-z]#', $password);
+        $hasUppercaseLatinSymbols = preg_match('#[A-Z]#', $password);
+        $hasDigits = preg_match('#[0-9]#', $password);
+        $hasPunctuation = preg_match('#[-@\#\$%\^&*\(\),\./\\"\']#', $password);
+        $hasOtherSymbols = mb_strlen(preg_replace('#[-a-z0-9@\#\$%\^&*\(\),\./\\"\']#ius', '', $password)) > 0;
+
+        return ceil(mb_strlen($password) / 2)
+            * ($hasDigits ? 2 : 1)
+            * ($hasUppercaseLatinSymbols ? 2 : 1)
+            * ($hasPunctuation ? 2 : 1)
+            * ($hasOtherSymbols ? 2 : 1)
+            * ($hasLatinSymbols ? 2 : 1)
+            ;
     }
 
     /**
