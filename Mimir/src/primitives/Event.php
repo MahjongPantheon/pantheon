@@ -40,9 +40,6 @@ class EventPrimitive extends Primitive
         'end_time'          => '_endTime',
         'game_duration'     => '_gameDuration',
         'last_timer'        => '_lastTimer',
-        'owner_formation'   => '_ownerFormationId',
-        'owner_player'      => '_ownerPlayerId',
-        'type'              => '_type', // DEPRECATED: to be removed in 2.x
         'is_online'         => '_isOnline',
         'is_team'           => '_isTeam',
         'is_textlog'        => '_isTextlog',
@@ -67,15 +64,12 @@ class EventPrimitive extends Primitive
     protected function _getFieldsTransforms()
     {
         return [
-            '_ownerFormationId'   => $this->_integerTransform(true),
-            '_ownerPlayerId'      => $this->_integerTransform(true),
             '_startTime'          => $this->_stringTransform(true),
             '_endTime'            => $this->_stringTransform(true),
             '_gameDuration'       => $this->_integerTransform(true),
             '_lastTimer'          => $this->_integerTransform(true),
             '_id'                 => $this->_integerTransform(true),
             '_lobbyId'            => $this->_integerTransform(true),
-            '_type'               => $this->_stringTransform(), // DEPRECATED: to be removed in 2.x
             '_isOnline'           => $this->_integerTransform(),
             '_isTeam'             => $this->_integerTransform(),
             '_isTextlog'          => $this->_integerTransform(),
@@ -154,32 +148,6 @@ class EventPrimitive extends Primitive
      * @var string
      */
     protected $_timezone;
-    /**
-     * Owner organisation
-     * @var FormationPrimitive|null
-     */
-    protected $_ownerFormation = null;
-    /**
-     * Owner organisation id
-     * @var int
-     */
-    protected $_ownerFormationId;
-    /**
-     * Owner player
-     * @var PlayerPrimitive|null
-     */
-    protected $_ownerPlayer = null;
-    /**
-     * Owner player id
-     * @var int
-     */
-    protected $_ownerPlayerId;
-    /**
-     * Event type: online/offline, tournament/simple, etc
-     * @deprecated to be removed in 2.x
-     * @var int
-     */
-    protected $_type;
     /**
      * should tables start synchronously or not (if not, players may start games when they want)
      * @var int
@@ -478,76 +446,6 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param null|\Mimir\FormationPrimitive $ownerFormation
-     * @return EventPrimitive
-     */
-    public function setOwnerFormation(FormationPrimitive $ownerFormation)
-    {
-        $this->_ownerFormation = $ownerFormation;
-        $this->_ownerFormationId = $ownerFormation->getId();
-        return $this;
-    }
-
-    /**
-     * @throws EntityNotFoundException
-     * @return null|\Mimir\FormationPrimitive
-     */
-    public function getOwnerFormation()
-    {
-        if (!$this->_ownerFormation) {
-            $foundFormations = FormationPrimitive::findById($this->_db, [$this->_ownerFormationId]);
-            if (empty($foundFormations)) {
-                throw new EntityNotFoundException("Entity FormationPrimitive with id#" . $this->_ownerFormationId . ' not found in DB');
-            }
-            $this->_ownerFormation = $foundFormations[0];
-        }
-        return $this->_ownerFormation;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOwnerFormationId()
-    {
-        return $this->_ownerFormationId;
-    }
-
-    /**
-     * @param null|\Mimir\PlayerPrimitive $ownerPlayer
-     * @return EventPrimitive
-     */
-    public function setOwnerPlayer(PlayerPrimitive $ownerPlayer)
-    {
-        $this->_ownerPlayer = $ownerPlayer;
-        $this->_ownerPlayerId = $ownerPlayer->getId();
-        return $this;
-    }
-
-    /**
-     * @throws EntityNotFoundException
-     * @return null|\Mimir\PlayerPrimitive
-     */
-    public function getOwnerPlayer()
-    {
-        if (!$this->_ownerPlayer) {
-            $foundPlayers = PlayerPrimitive::findById($this->_db, [$this->_ownerPlayerId]);
-            if (empty($foundPlayers)) {
-                throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_ownerPlayerId . ' not found in DB');
-            }
-            $this->_ownerPlayer = $foundPlayers[0];
-        }
-        return $this->_ownerPlayer;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOwnerPlayerId()
-    {
-        return $this->_ownerPlayerId;
-    }
-
-    /**
      * @param string $startTime
      * @return EventPrimitive
      */
@@ -581,29 +479,6 @@ class EventPrimitive extends Primitive
     public function getTitle()
     {
         return $this->_title;
-    }
-
-    /**
-     * @param string $type
-     * @deprecated to be removed in 2.x
-     * @return EventPrimitive
-     */
-    public function setType($type)
-    {
-        if ($type == 'online') {
-            $this->setIsOnline(1);
-        }
-        $this->_type = $type;
-        return $this;
-    }
-
-    /**
-     * @deprecated to be removed in 2.x
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->_type;
     }
 
     /**

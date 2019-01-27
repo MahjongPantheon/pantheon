@@ -49,7 +49,6 @@
     <ul class="navbar-nav">
       {{#eventSelected}}
         <li class="nav-item"><a class='nav-link' href='/'>{{_t 'To event list'}}</a></li>
-
         <li class="nav-item">{{#a class='nav-link' href='/last/'}}{{_t 'Recent games'}}{{/a}}</li>
         <li class="nav-item">{{#a class='nav-link' href='/stat/'}}{{_t 'Rating table'}}{{/a}}</li>
         {{#isTeam}}
@@ -102,9 +101,8 @@
         {{/isAggregated}}
       {{/eventSelected}}
       {{^isLoggedIn}}
-        <li class="nav-item">
-          {{#a class='nav-link' href='/login/'}}{{_t 'Login'}}{{/a}}
-        </li>
+        <li class="nav-item"><a class='nav-link' href='/login/'>{{_t 'Login'}}</a></li>
+        <li class="nav-item"><a class='nav-link' href='/register/'>{{_t 'Register'}}</a></li>
       {{/isLoggedIn}}
       <li class="nav-item dropdown language-dropdown">
         <a href="#" class="nav-link dropdown-toggle" id="dropdownMenuButton"

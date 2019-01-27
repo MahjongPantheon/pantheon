@@ -18,7 +18,6 @@
 
 return [ // Omit trailing slashes in keys when possible
     ''                => 'Mainpage', // empty path for mainpage
-    '/login'          => 'AdminLogin',
     '/last'           => 'LastGames',
     '/last/.+'        => 'LastGames',
     '/add'            => 'AddGame',
@@ -65,5 +64,7 @@ return [ // Omit trailing slashes in keys when possible
     // Eventless paths (exclamation mark is a special symbol here)
     '!'                      => 'MultieventMainpage',
     '!/page/(?<page>[0-9]+)' => 'MultieventMainpage',
+    '!/register'             => 'SelfRegistration',
+    '!/login'                => 'AdminLogin',
     '!/favicon.ico'          => 'MultieventMainpage',
 ];

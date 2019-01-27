@@ -2,6 +2,13 @@
 Api methods
 -----------
 
+### getEvents
+Parameters:
+* **$limit** (_integer_) 
+* **$offset** (_integer_) 
+
+Returns: _array_ 
+
 ### getGameConfig
 Parameters:
 * **$eventId** (_integer_) 
@@ -260,7 +267,6 @@ Exceptions:
 Parameters:
 * **$title** (_string_) 
 * **$description** (_string_) 
-* **$type** (_string_) either 'online' or 'offline' or 'offline_interactive_tournament'
 * **$ruleset** (_string_) one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
 * **$gameDuration** (_int_) duration of game in this event in minutes
 * **$timezone** (_string_) name of timezone, 'Asia/Irkutsk' for example
