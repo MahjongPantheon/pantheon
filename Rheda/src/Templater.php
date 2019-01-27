@@ -85,7 +85,14 @@ class Templater
     public static function _aHelper($template, $context, $args, $source)
     {
         $a = $args->getNamedArguments();
-        return '<a href="' . Url::make(Url::interpolate($a['href'], $context), self::$_eventIdListString) . '"'
+        if (!empty($a['id'])) {
+            // id is overridden from template
+            $url = Url::make(Url::interpolate($a['href'], $context), Url::interpolate($a['id'], $context));
+        } else {
+            $url = Url::make(Url::interpolate($a['href'], $context), self::$_eventIdListString);
+        }
+
+        return '<a href="' . $url . '"'
             . (empty($a['target']) ? '' : ' target="' . $a['target'] . '"')
             . (empty($a['title']) ? '' : ' title="' . Url::interpolate($a['title'], $context) . '"')
             . (empty($a['class']) ? '' : ' class="' . $a['class'] . '"')

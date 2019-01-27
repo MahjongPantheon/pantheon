@@ -27,7 +27,7 @@ class Penalties extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Penalties');
+        return _t('Penalties') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _beforeRun()
@@ -47,7 +47,7 @@ class Penalties extends Controller
             $amount = intval($_POST['amount']);
             $reason = $_POST['reason'];
             try {
-                $this->_api->execute('addPenalty', [$this->_mainEventId, $userId, $amount, $reason]);
+                $this->_mimir->execute('addPenalty', [$this->_mainEventId, $userId, $amount, $reason]);
             } catch (Exception $e) {
                 $this->_errors []= $e->getMessage();
                 return true;
@@ -77,8 +77,8 @@ class Penalties extends Controller
 
         $amounts = [];
         try {
-            $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
-            $settings = $this->_api->execute('getGameConfig', [$this->_mainEventId]);
+            $players = $this->_mimir->execute('getAllPlayers', [$this->_eventIdList]);
+            $settings = $this->_mimir->execute('getGameConfig', [$this->_mainEventId]);
             for ($i = $settings['minPenalty']; $i <= $settings['maxPenalty']; $i += $settings['penaltyStep']) {
                 $amounts []= [
                     'view' => $i / (float)$settings['ratingDivider'],

@@ -274,4 +274,45 @@ class EventModel extends Model
 
         return $result;
     }
+
+    /**
+     * Get all events (paginated)
+     *
+     * @param $limit
+     * @param $offset
+     * @return array
+     */
+    public function getAllEvents($limit, $offset)
+    {
+        if ($limit > 100) {
+            $limit = 100;
+        }
+
+        $count = $this->_db->table('event')->count();
+
+        $data = $this->_db->table('event')
+            ->select('id')
+            ->select('title')
+            ->select('description')
+            ->select('is_online')
+            ->select('sync_start')
+            ->orderByDesc('id')
+            ->limit($limit)
+            ->offset($offset)
+            ->findMany();
+
+        return [
+            'total' => $count,
+            'events' => array_map(function($event) {
+                return [
+                    'id' => $event['id'],
+                    'title' => $event['title'],
+                    'description' => $event['description'],
+                    'type' => $event['is_online']
+                        ? 'online'
+                        : ($event['sync_start'] ? 'tournament' : 'local')
+                ];
+            }, $data)
+        ];
+    }
 }

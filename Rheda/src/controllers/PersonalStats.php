@@ -33,15 +33,15 @@ class PersonalStats extends Controller
     protected function _pageTitle()
     {
         // This is called after _run, so proper player name is substituted.
-        return _p('Stats & diagrams: %s', $this->_playerName);
+        return _p('Stats & diagrams: %s', $this->_playerName) . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
     {
         try {
             $currentUser = $this->_path['user'];
-            $playerData = $this->_api->execute('getPlayer', [$currentUser]);
-            $data = $this->_api->execute('getPlayerStats', [$currentUser, $this->_eventIdList]);
+            $playerData = $this->_mimir->execute('getPlayer', [$currentUser]);
+            $data = $this->_mimir->execute('getPlayerStats', [$currentUser, $this->_eventIdList]);
             $this->_playerName = $playerData['display_name'];
 
             $usersMap = [];

@@ -63,6 +63,24 @@ class EventsController extends Controller
     }
 
     /**
+     * List all available events in system (paginated)
+     *
+     * @param integer $limit
+     * @param integer $offset
+     * @return array
+     */
+    public function getEvents($limit, $offset)
+    {
+        $this->_log->addInfo('Listing all events with limit/offset [' . $limit . '/' . $offset . ']');
+
+        $data = (new EventModel($this->_db, $this->_config, $this->_meta))
+            ->getAllEvents($limit, $offset);
+
+        $this->_log->addInfo('Successfully listed all events with limit/offset [' . $limit . '/' . $offset . ']');
+        return $data;
+    }
+
+    /**
      * Get all players registered for event
      *
      * @param array $eventIdList

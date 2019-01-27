@@ -26,7 +26,7 @@ class Sortition extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Seating controls');
+        return _t('Seating controls') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _beforeRun()
@@ -52,11 +52,11 @@ class Sortition extends Controller
             ];
         }
 
-        $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
+        $players = $this->_mimir->execute('getAllPlayers', [$this->_eventIdList]);
         $players = ArrayHelpers::elm2key($players, 'id');
 
         $seed = hexdec($this->_path['seed']);
-        $sortition = $this->_api->execute('generateSeating', [
+        $sortition = $this->_mimir->execute('generateSeating', [
             $this->_mainEventId,
             1, // groups
             $seed

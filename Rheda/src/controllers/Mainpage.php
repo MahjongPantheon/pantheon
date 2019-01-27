@@ -25,7 +25,7 @@ class Mainpage extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Statistics');
+        return _t('Statistics') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
@@ -73,7 +73,7 @@ class Mainpage extends Controller
             ];
         }
 
-        $data = $this->_api->execute('getGamesSeries', [$this->_mainEventId]);
+        $data = $this->_mimir->execute('getGamesSeries', [$this->_mainEventId]);
 
         $formattedData = [];
         $counter = 1;

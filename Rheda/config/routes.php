@@ -17,7 +17,6 @@
  */
 
 return [ // Omit trailing slashes in keys when possible
-    '!'               => 'MultieventMainpage', // special path for multievent mainpage
     ''                => 'Mainpage', // empty path for mainpage
     '/login'          => 'AdminLogin',
     '/last'           => 'LastGames',
@@ -62,5 +61,8 @@ return [ // Omit trailing slashes in keys when possible
     '/achievements'    => 'Achievements',
     '/achievements/(?<achievement>[0-9a-zA-Z]+)' => 'Achievements',
 
-    '!/favicon.ico'    => 'Mainpage' // костылёк ^_^
+    // Eventless paths (exclamation mark is a special symbol here)
+    '!'                      => 'MultieventMainpage',
+    '!/page/(?<page>[0-9]+)' => 'MultieventMainpage',
+    '!/favicon.ico'          => 'MultieventMainpage',
 ];

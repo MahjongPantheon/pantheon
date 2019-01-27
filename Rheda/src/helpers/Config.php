@@ -53,6 +53,55 @@ class Config
     protected $_hideAddReplayButton = false;
     protected $_isPrescripted = false;
 
+    public static $_blankRules = [
+        'allowedYaku' => [],
+        'startPoints' => 0,
+        'subtractStartPoints' => false,
+        'withKazoe' => false,
+        'withKiriageMangan' => false,
+        'withAbortives' => false,
+        'withNagashiMangan' => false,
+        'withAtamahane' => false,
+        'rulesetTitle' => 'blank',
+        'tenboDivider' => 1,
+        'ratingDivider' => 1,
+        'tonpuusen' => false,
+        'startRating' => 0,
+        'riichiGoesToWinner' => false,
+        'extraChomboPayments' => false,
+        'chomboPenalty' => 0,
+        'withKuitan' => false,
+        'withButtobi' => false,
+        'withMultiYakumans' => false,
+        'gameExpirationTime' => 0,
+        'minPenalty' => 0,
+        'maxPenalty' => 0,
+        'penaltyStep' => 1,
+        'eventTitle' => 'Rheda',
+        'eventDescription' => '',
+        'eventStatHost' => '',
+        'redZone' => 0,
+        'yellowZone' => 0,
+        'timerPolicy' => 'none',
+        'autoSeating' => false,
+        'isOnline' => false,
+        'gameDuration' => 0,
+        'withLeadingDealerGameover' => false,
+        'isTextlog' => false,
+        'syncStart' => false,
+        'syncEnd' => false,
+        'sortByGames' => false,
+        'allowPlayerAppend' => false,
+        'useTimer' => false,
+        'usePenalty' => false,
+        'seriesLength' => 0,
+        'gamesStatus' => false,
+        'hideResults' => false,
+        'hideAddReplayButton' => false,
+        'isPrescripted' => false,
+        'minGamesCount' => 0,
+    ];
+
     public static function getRuleDescriptions()
     {
         return [
@@ -103,7 +152,8 @@ class Config
             'gamesStatus' => null, // not intended to be shown in rule overview
             'hideResults' => null, // not intended to be shown in rule overview
             'hideAddReplayButton' => null, // not intended to be shown in rule overview
-            'isPrescripted' => _t('If seating for all games is entered in advance')
+            'isPrescripted' => _t('If seating for all games is entered in advance'),
+            'minGamesCount' => _t('Minimal amount of games to be played for passing to finals')
         ];
     }
 

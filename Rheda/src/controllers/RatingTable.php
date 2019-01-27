@@ -25,7 +25,7 @@ class RatingTable extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Rating table');
+        return _t('Rating table') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
@@ -82,10 +82,10 @@ class RatingTable extends Controller
         $showPlayers = !$withMinGamesCount || empty($_GET['players']) ? 'all' : $_GET['players'];
 
         try {
-            $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
+            $players = $this->_mimir->execute('getAllPlayers', [$this->_eventIdList]);
             $players = ArrayHelpers::elm2Key($players, 'id');
 
-            $data = $this->_api->execute('getRatingTable', [
+            $data = $this->_mimir->execute('getRatingTable', [
                 $this->_eventIdList,
                 $orderBy,
                 $order,

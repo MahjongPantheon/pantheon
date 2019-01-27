@@ -41,7 +41,7 @@ abstract class Controller
     /**
      * @var \JsonRPC\Client
      */
-    protected $_api;
+    protected $_mimir;
 
     /**
      * Main event rules. For aggregated events, these are the rules of the main event.
@@ -66,7 +66,7 @@ abstract class Controller
     /**
      * @var array
      */
-    protected $_eventIdList;
+    protected $_eventIdList = [];
 
     /**
      * @var string
@@ -79,11 +79,6 @@ abstract class Controller
     protected $_currentPersonId;
 
     /**
-     * @var int
-     */
-    protected $_currentEventId;
-
-    /**
      * @var string
      */
     protected $_authToken;
@@ -91,7 +86,7 @@ abstract class Controller
     /**
      * @var array
      */
-    protected $_accessRules;
+    protected $_accessRules = [];
 
     /**
      * @var array
@@ -109,7 +104,7 @@ abstract class Controller
     {
         $this->_url = $url;
         $this->_path = $path;
-        $this->_api = new \JsonRPC\Client(Sysconf::API_URL(), false, new HttpClient(Sysconf::API_URL()));
+        $this->_mimir = new \JsonRPC\Client(Sysconf::API_URL(), false, new HttpClient(Sysconf::API_URL()));
         $this->_frey = new \Rheda\FreyClient(Sysconf::AUTH_API_URL());
 
         // i18n support
@@ -155,13 +150,18 @@ abstract class Controller
         }
         putenv('LC_ALL=' . $locale);
 
-        $this->_currentEventId = (empty($input['HTTP_X_CURRENT_EVENT_ID'])
-            ? null
-            : intval($input['HTTP_X_CURRENT_EVENT_ID']));
-
         $this->_currentPersonId = (empty($input['HTTP_X_CURRENT_PERSON_ID'])
             ? null
             : intval($input['HTTP_X_CURRENT_PERSON_ID']));
+
+        $eidMatches = [];
+        if (empty($path['event']) || !preg_match('#eid(?<ids>\d+(?:\.\d+)*)#is', $path['event'], $eidMatches)) {
+            $this->_mainEventId = null;
+        } else {
+            $ids = explode('.', $eidMatches[1]);
+            $this->_eventIdList = array_map('intval', $ids);
+            $this->_mainEventId = $this->_eventIdList[0];
+        }
 
         if (!empty($this->_currentPersonId)) {
             if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->_authToken)) {
@@ -170,33 +170,25 @@ abstract class Controller
             } else {
                 $this->_frey->getClient()->getHttpClient()->withHeaders([
                     'X-Auth-Token: ' . $this->_authToken,
-                    'X-Current-Event-Id: ' . $this->_currentEventId ?: '0',
+                    'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
                     'X-Current-Person-Id: ' . $this->_currentPersonId
                 ]);
-                $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);
+
+                if (!empty($this->_mainEventId)) {
+                    // TODO: access rules for aggregated events?
+                    $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_mainEventId);
+                }
                 $this->_personalData = $this->_frey->getPersonalInfo([$this->_currentPersonId])[0];
             }
         }
 
-        $eidMatches = [];
-        if (empty($path['event']) || !preg_match('#eid(?<ids>\d+(?:\.\d+)*)#is', $path['event'], $eidMatches)) {
-            // TODO: убрать чтобы показать страницу со списком событий
-            //throw new Exception('No event id found! Use single-event mode, or choose proper event on main page');
-            exit(_t('Please select some event!'));
-        }
-
-        $ids = explode('.', $eidMatches[1]);
-
-        $this->_eventIdList = array_map('intval', $ids);
-        $this->_mainEventId = $this->_eventIdList[0];
-
         /** @var HttpClient $client */
-        $client = $this->_api->getHttpClient();
+        $client = $this->_mimir->getHttpClient();
 
         $client->withHeaders([
             'X-Debug-Token: aehbntyrey',
             'X-Auth-Token: ' . $this->_authToken,
-            'X-Current-Event-Id: ' . $this->_currentEventId ?: '0',
+            'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
             'X-Current-Person-Id: ' . $this->_currentPersonId ?: '0',
             'X-Api-Version: ' . Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
         ]);
@@ -207,11 +199,15 @@ abstract class Controller
         $this->_rulesList = [];
 
         foreach ($this->_eventIdList as $eventId) {
-            $rules = Config::fromRaw($this->_api->execute('getGameConfig', [$eventId]));
-            $this->_rulesList[$eventId] = $rules;
+            $gameConfig = Config::fromRaw($this->_mimir->execute('getGameConfig', [$eventId]));
+            $this->_rulesList[$eventId] = $gameConfig;
         }
 
-        $this->_mainEventRules = $this->_rulesList[$this->_mainEventId];
+        if (!empty($this->_mainEventId)) {
+            $this->_mainEventRules = $this->_rulesList[$this->_mainEventId];
+        } else {
+            $this->_mainEventRules = Config::fromRaw(Config::$_blankRules);
+        }
 
         $this->_checkCompatibility($client->getLastHeaders());
     }
@@ -243,8 +239,9 @@ abstract class Controller
                     'pageTitle' => $pageTitle,
                     'currentPerson' => $this->_personalData,
                     'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
-                    'isLoggedIn' => $this->_adminAuthOk(),
-                    'isAggregated' => true
+                    'userHasAdminRights' => $this->_adminAuthOk(),
+                    'isAggregated' => true,
+                    'isLoggedIn' => false // TODO
                 ]);
             } else {
                 /* Simple events. */
@@ -257,11 +254,13 @@ abstract class Controller
                     'syncStart' => $this->_mainEventRules->syncStart(),
                     'eventTitle' => $this->_mainEventRules->eventTitle(),
                     'isPrescripted' => $this->_mainEventRules->isPrescripted(),
+                    'userHasAdminRights' => $this->_adminAuthOk(),
                     'pageTitle' => $pageTitle,
                     'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
-                    'isLoggedIn' => $this->_adminAuthOk(),
+                    'eventSelected' => $this->_mainEventId,
                     'currentPerson' => $this->_personalData,
                     'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),
+                    'isLoggedIn' => false // TODO
                 ]);
             }
         }
@@ -311,41 +310,13 @@ abstract class Controller
     {
         $routes = require_once __DIR__ . '/../config/routes.php';
 
-        $controller = Sysconf::SINGLE_MODE
-            ? self::_singleEventMode($url, $routes)
-            : self::_multiEventMode($url, $routes);
-
-        if (!$controller) {
-            trigger_error('No available controller found for URL: ' . $url);
-        }
-
-        return $controller;
-    }
-
-    protected static function _singleEventMode($url, $routes)
-    {
         $matches = [];
+        $controllerInstance = null;
         $path = parse_url($url, PHP_URL_PATH);
         foreach ($routes as $regex => $controller) {
-            $re = '#^' . preg_replace('#^!#is', '', $regex) . '/?$#';
-            if (preg_match($re, $path, $matches)) {
-                require_once __DIR__ . "/controllers/{$controller}.php";
-                $matches['event'] = 'eid' . Sysconf::OVERRIDE_EVENT_ID;
-                $wNs = '\\Rheda\\' . $controller;
-                return new $wNs($url, $matches);
-            }
-        }
-
-        return null;
-    }
-
-    protected static function _multiEventMode($url, $routes)
-    {
-        $matches = [];
-        $path = parse_url($url, PHP_URL_PATH);
-        foreach ($routes as $regex => $controller) {
-            if (Sysconf::SINGLE_MODE) {
-                $re = '#^' . mb_substr($regex, 1) . '/?$#';
+            if (!empty($regex) && $regex[0] == '!') {
+                // Eventless paths handling
+                $re = '#^' . substr($regex, 1) . '/?$#';
             } else {
                 $re = '#^/(?<event>eid\d+(?:\.\d+)*)' . $regex . '/?$#';
             }
@@ -353,56 +324,66 @@ abstract class Controller
             if (preg_match($re, $path, $matches)) {
                 require_once __DIR__ . "/controllers/{$controller}.php";
                 $wNs = '\\Rheda\\' . $controller;
-                return new $wNs($url, $matches);
+                $controllerInstance = new $wNs($url, $matches);
+                break;
             }
         }
 
-        return null;
+        if ($path == '/' || empty($path)) { // Multievent mainpage controller (Rheda home page)
+            $controller = $routes['!']; // Special path handling
+            require_once __DIR__ . "/controllers/{$controller}.php";
+            $wNs = '\\Rheda\\' . $controller;
+            $controllerInstance = new $wNs($url, $matches);
+        }
+
+        if (!$controllerInstance) {
+            trigger_error('No available controller found for URL: ' . $url);
+        }
+
+        return $controllerInstance;
     }
 
+    /**
+     * @deprecated
+     * @return bool
+     */
     protected function _adminAuthOk()
     {
-        if (Sysconf::SINGLE_MODE) {
-            return !empty($_COOKIE['secret']) && $_COOKIE['secret'] == Sysconf::SUPER_ADMIN_COOKIE;
-        } else {
-            // Special password policy for debug mode
-            if (Sysconf::DEBUG_MODE && !empty($_COOKIE['secret']) && $_COOKIE['secret'] == 'debug_mode_cookie') {
+        // Special password policy for debug mode
+        if (Sysconf::DEBUG_MODE && !empty($_COOKIE['secret']) && $_COOKIE['secret'] == 'debug_mode_cookie') {
+            return true;
+        }
+
+        /* For aggregated events we allow any password of the events it contains. */
+        foreach ($this->_eventIdList as $eventId) {
+            if (!empty($_COOKIE['secret'])
+                    && !empty(Sysconf::ADMIN_AUTH()[$eventId]['cookie'])
+                    && $_COOKIE['secret'] == Sysconf::ADMIN_AUTH()[$eventId]['cookie']) {
                 return true;
             }
-
-            /* For aggregated events we allow any password of the events it contains. */
-            foreach ($this->_eventIdList as $eventId) {
-                if (!empty($_COOKIE['secret'])
-                        && !empty(Sysconf::ADMIN_AUTH()[$eventId]['cookie'])
-                        && $_COOKIE['secret'] == Sysconf::ADMIN_AUTH()[$eventId]['cookie']) {
-                    return true;
-                }
-            }
-
-            return false;
         }
+
+        return false;
     }
 
+    /**
+     * @deprecated
+     * @param $password
+     * @return array|null
+     */
     protected function _getAdminAuth($password)
     {
-        if (Sysconf::SINGLE_MODE) {
-            if ($password == Sysconf::SUPER_ADMIN_PASS) {
-                return ['cookie' => Sysconf::SUPER_ADMIN_COOKIE,
-                        'cookie_life' => Sysconf::SUPER_ADMIN_COOKIE_LIFE];
-            }
-        } else {
-            // Special password policy for debug mode
-            if (Sysconf::DEBUG_MODE && $password == 'password') {
-                return ['cookie' => 'debug_mode_cookie',
-                        'cookie_life' => Sysconf::DEBUG_MODE_COOKIE_LIFE];
-            }
+        // Special password policy for debug mode
+        if (Sysconf::DEBUG_MODE && $password == 'password') {
+            return ['cookie' => 'debug_mode_cookie',
+                    'cookie_life' => Sysconf::DEBUG_MODE_COOKIE_LIFE];
+        }
 
-            foreach ($this->_eventIdList as $eventId) {
-                if (!empty(Sysconf::ADMIN_AUTH()[$eventId]['password'])
-                    && $password == Sysconf::ADMIN_AUTH()[$eventId]['password']
-                ) {
-                    return Sysconf::ADMIN_AUTH()[$eventId];
-                }
+        foreach ($this->_eventIdList as $eventId) {
+            if (!empty(Sysconf::ADMIN_AUTH()[$eventId]['password'])
+                && $password == Sysconf::ADMIN_AUTH()[$eventId]['password']
+            ) {
+                return Sysconf::ADMIN_AUTH()[$eventId];
             }
         }
 

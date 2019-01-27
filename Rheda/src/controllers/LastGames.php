@@ -25,7 +25,7 @@ class LastGames extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Latest games');
+        return _t('Latest games') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
@@ -50,7 +50,7 @@ class LastGames extends Controller
             $offset = ($currentPage - 1) * $limit;
         }
 
-        $gamesData = $this->_api->execute(
+        $gamesData = $this->_mimir->execute(
             'getLastGames',
             [$this->_eventIdList, $limit, $offset, 'end_date', 'desc']
         );

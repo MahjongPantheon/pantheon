@@ -23,7 +23,7 @@ class AddOnlineGame extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Add online game');
+        return _t('Add online game') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
@@ -34,7 +34,7 @@ class AddOnlineGame extends Controller
 
         try {
             if ($link) {
-                $this->_api->execute('addOnlineReplay', [$this->_mainEventId, $link]);
+                $this->_mimir->execute('addOnlineReplay', [$this->_mainEventId, $link]);
                 $successfullyAdded = true;
             }
         } catch (Exception $e) {

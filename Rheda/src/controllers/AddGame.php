@@ -26,7 +26,7 @@ class AddGame extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Add new game');
+        return _t('Add new game') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
@@ -36,12 +36,12 @@ class AddGame extends Controller
         $successfullyAdded = false;
 
         try {
-            $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
+            $players = $this->_mimir->execute('getAllPlayers', [$this->_eventIdList]);
             if (!empty($_POST['content'])) {
                 if (!$this->_adminAuthOk()) {
                     $errorMsg = _t("Wrong admin password");
                 } else {
-                    $this->_api->execute('addTextLog', [$this->_mainEventId, $_POST['content']]);
+                    $this->_mimir->execute('addTextLog', [$this->_mainEventId, $_POST['content']]);
                     $successfullyAdded = true;
                 }
             }
