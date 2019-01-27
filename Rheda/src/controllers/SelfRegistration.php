@@ -38,10 +38,17 @@ class SelfRegistration extends Controller
 
         $error = null;
 
-
+        if (!empty($_POST['email'])) {
+            return $this->_tryRegisterUser($_POST);
+        }
 
         return [
             'error' => $error
         ];
+    }
+
+    protected function _tryRegisterUser($data)
+    {
+        $this->_frey->requestRegistration($data['email'], $data['password']);
     }
 }
