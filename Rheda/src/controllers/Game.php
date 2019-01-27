@@ -25,7 +25,7 @@ class Game extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Game details');
+        return _t('Game details') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
@@ -33,7 +33,7 @@ class Game extends Controller
         try {
             $formatter = new GameFormatter();
             $gameHash = $this->_path['hash'];
-            $gamesData = $this->_api->execute('getGame', [$gameHash]);
+            $gamesData = $this->_mimir->execute('getGame', [$gameHash]);
             return [
                 'games' => $formatter->formatGamesData($gamesData, $this->_mainEventRules),
                 'singleGamePage' => true,

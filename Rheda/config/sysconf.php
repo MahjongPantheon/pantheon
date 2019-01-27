@@ -24,12 +24,6 @@ if (file_exists(__DIR__ . '/local/index.php')) {
 } else {
     class Sysconf
     {
-        // Single event mode settings; enable SINGLE_MODE and fill others with any non-empty value
-        const SINGLE_MODE = false; // next items won't work until this is false
-        const OVERRIDE_EVENT_ID = 1;
-        const SUPER_ADMIN_PASS = 'hjpjdstckjybrb';
-        const SUPER_ADMIN_COOKIE = 'kldfmewmd9vbeiogbjsdvjepklsdmnvmn';
-        const SUPER_ADMIN_COOKIE_LIFE = 86400;
         const DEBUG_MODE_COOKIE_LIFE = 86400;
 
         // Multi-event mode auth settings. Will not work when single mode is active

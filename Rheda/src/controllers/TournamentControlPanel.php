@@ -38,7 +38,7 @@ class TournamentControlPanel extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Tournament control panel');
+        return _t('Tournament control panel') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _beforeRun()
@@ -55,31 +55,31 @@ class TournamentControlPanel extends Controller
             try {
                 switch ($this->_path['action']) {
                     case 'shuffledSeating':
-                        $this->_api->execute('makeShuffledSeating', [$this->_mainEventId, 1, mt_rand(100000, 999999)]);
+                        $this->_mimir->execute('makeShuffledSeating', [$this->_mainEventId, 1, mt_rand(100000, 999999)]);
                         break;
                     case 'intervalSeating':
-                        $this->_api->execute(
+                        $this->_mimir->execute(
                             'makeIntervalSeating',
                             [$this->_mainEventId, intval($_POST['step'])]
                         );
                         break;
                     case 'predefinedSeating':
-                        $this->_api->execute('makePrescriptedSeating', [$this->_mainEventId, isset($_POST['rndseat']) && $_POST['rndseat'] == 1]);
+                        $this->_mimir->execute('makePrescriptedSeating', [$this->_mainEventId, isset($_POST['rndseat']) && $_POST['rndseat'] == 1]);
                         break;
                     case 'swissSeating':
-                        $this->_api->execute('makeSwissSeating', [$this->_mainEventId]);
+                        $this->_mimir->execute('makeSwissSeating', [$this->_mainEventId]);
                         break;
                     case 'startTimer':
-                        $this->_api->execute('startTimer', [$this->_mainEventId]);
+                        $this->_mimir->execute('startTimer', [$this->_mainEventId]);
                         break;
                     case 'dropLastRound':
-                        $this->_api->execute('dropLastRound', [$this->_path['hash']]);
+                        $this->_mimir->execute('dropLastRound', [$this->_path['hash']]);
                         break;
                     case 'finalizeSessions':
-                        $this->_api->execute('finalizeSessions', [$this->_mainEventId]);
+                        $this->_mimir->execute('finalizeSessions', [$this->_mainEventId]);
                         break;
                     case 'toggleHideResults':
-                        $this->_api->execute('toggleHideResults', [$this->_mainEventId]);
+                        $this->_mimir->execute('toggleHideResults', [$this->_mainEventId]);
                         break;
                     default:
                         ;
@@ -121,27 +121,27 @@ class TournamentControlPanel extends Controller
         $errCode = null;
 
         // Api calls. TODO: merge into one? Http pipelining maybe?
-        $tables = $this->_api->execute('getTablesState', [$this->_mainEventId]);
+        $tables = $this->_mimir->execute('getTablesState', [$this->_mainEventId]);
         $tablesFormatted = $formatter->formatTables(
             $tables,
             $this->_mainEventRules->gamesWaitingForTimer(),
             $this->_mainEventRules->syncStart()
         );
-        $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
+        $players = $this->_mimir->execute('getAllPlayers', [$this->_eventIdList]);
 
         // filter $players who are ignored from seating
         $players = array_values(array_filter($players, function ($player) {
             return !$player['ignore_seating'];
         }));
 
-        $timerState = $this->_api->execute('getTimerState', [$this->_mainEventId]);
+        $timerState = $this->_mimir->execute('getTimerState', [$this->_mainEventId]);
 
         $currentStage = $this->_determineStage($tablesFormatted, $players, $timerState);
 
         $nextPrescriptedSeating = [];
         if ($this->_mainEventRules->isPrescripted() && $currentStage == self::STAGE_READY_BUT_NOT_STARTED) {
             try {
-                $nextPrescriptedSeating = $this->_api->execute('getNextPrescriptedSeating', [$this->_mainEventId]);
+                $nextPrescriptedSeating = $this->_mimir->execute('getNextPrescriptedSeating', [$this->_mainEventId]);
                 if (!empty($nextPrescriptedSeating)) {
                     array_unshift($nextPrescriptedSeating, []); // small hack to start from 1
                 }

@@ -27,7 +27,7 @@ class Achievements extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Achievements');
+        return _t('Achievements') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
@@ -41,7 +41,7 @@ class Achievements extends Controller
         if (!empty($this->_path['achievement'])) {
             $ach = null;
             try {
-                $ach = $this->_api->execute('getAchievements', [$this->_eventIdList, [$this->_path['achievement']]]);
+                $ach = $this->_mimir->execute('getAchievements', [$this->_eventIdList, [$this->_path['achievement']]]);
                 $value = $this->_achValue($ach);
                 if ($this->_path['achievement'] == 'yakumans') {
                     $value = $this->_postProcessYakumans($value);

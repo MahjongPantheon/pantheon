@@ -25,7 +25,7 @@ class Timer extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Timer');
+        return _t('Timer') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
@@ -37,8 +37,8 @@ class Timer extends Controller
             ];
         }
 
-        $timerState = $this->_api->execute('getTimerState', [$this->_mainEventId]);
-        $currentSeating = $this->_formatSeating($this->_api->execute('getCurrentSeating', [$this->_mainEventId]));
+        $timerState = $this->_mimir->execute('getTimerState', [$this->_mainEventId]);
+        $currentSeating = $this->_formatSeating($this->_mimir->execute('getCurrentSeating', [$this->_mainEventId]));
         $durationWithoutSeating = $this->_mainEventRules->gameDuration() - 5;
 
         if ($timerState['started'] && $timerState['time_remaining']) {

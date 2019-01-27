@@ -31,7 +31,7 @@ class GamesControlPanel extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Games control panel');
+        return _t('Games control panel') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _beforeRun()
@@ -48,13 +48,13 @@ class GamesControlPanel extends Controller
             try {
                 switch ($this->_path['action']) {
                     case 'dropLastRound':
-                        $this->_api->execute('dropLastRound', [$this->_path['hash']]);
+                        $this->_mimir->execute('dropLastRound', [$this->_path['hash']]);
                         break;
                     case 'definalize':
                         $this->_api->execute('definalizeGame', [$this->_path['hash']]);
                         break;
                     case 'cancelGame':
-                        $this->_api->execute('cancelGame', [$this->_path['hash']]);
+                        $this->_mimir->execute('cancelGame', [$this->_path['hash']]);
                         break;
                     default:
                         ;
@@ -95,7 +95,7 @@ class GamesControlPanel extends Controller
         }
 
         // Tables info
-        $tables = $this->_api->execute('getTablesState', [$this->_mainEventId]);
+        $tables = $this->_mimir->execute('getTablesState', [$this->_mainEventId]);
         $tablesFormatted = $formatter->formatTables(
             $tables,
             $this->_mainEventRules->gamesWaitingForTimer(),

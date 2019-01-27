@@ -27,7 +27,7 @@ class TableStatus extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Event tables status');
+        return _t('Event tables status') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _beforeRun()
@@ -65,7 +65,7 @@ class TableStatus extends Controller
         if (apcu_exists($cacheKey)) {
             $tablesFormatted = apcu_fetch($cacheKey);
         } else {
-            $tables = $this->_api->execute('getTablesState', [$this->_mainEventId, true]);
+            $tables = $this->_mimir->execute('getTablesState', [$this->_mainEventId, true]);
             $tablesFormatted = $formatter->formatTables(
                 $tables,
                 $this->_mainEventRules->gamesWaitingForTimer(),
@@ -74,7 +74,7 @@ class TableStatus extends Controller
             apcu_add($cacheKey, $tablesFormatted, 120); // 2 minutes cache
         }
 
-        $timerState = $this->_api->execute('getTimerState', [$this->_mainEventId]);
+        $timerState = $this->_mimir->execute('getTimerState', [$this->_mainEventId]);
         if ($timerState['started'] && $timerState['time_remaining']) {
             $formattedTime = (int)($timerState['time_remaining'] / 60) . ':'
                 . (floor(($timerState['time_remaining'] % 60) / 10) * 10);

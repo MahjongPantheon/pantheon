@@ -29,7 +29,7 @@ class PlayerRegistration extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Players registration');
+        return _t('Players registration') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
@@ -46,8 +46,8 @@ class PlayerRegistration extends Controller
             $errorMsg = $this->_lastError;
         } else {
             try {
-                $registeredPlayers = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
-                $enrolledPlayers = $this->_api->execute('getAllEnrolled', [$this->_mainEventId]);
+                $registeredPlayers = $this->_mimir->execute('getAllPlayers', [$this->_eventIdList]);
+                $enrolledPlayers = $this->_mimir->execute('getAllEnrolled', [$this->_mainEventId]);
                 usort($enrolledPlayers, $sorter);
                 usort($registeredPlayers, $sorter);
                 $registeredPlayers = array_map(function ($el, $index) {
@@ -134,7 +134,7 @@ class PlayerRegistration extends Controller
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('registerPlayerCP', [$userId, $this->_mainEventId]);
+            $success = $this->_mimir->execute('registerPlayerCP', [$userId, $this->_mainEventId]);
             if (!$success) {
                 $errorMsg = _t('Failed to register the player. Check your network connection.');
             }
@@ -149,7 +149,7 @@ class PlayerRegistration extends Controller
     {
         $errorMsg = '';
         try {
-            $this->_api->execute('unregisterPlayerCP', [$userId, $this->_mainEventId]);
+            $this->_mimir->execute('unregisterPlayerCP', [$userId, $this->_mainEventId]);
         } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
         };
@@ -161,7 +161,7 @@ class PlayerRegistration extends Controller
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_mainEventId]);
+            $success = $this->_mimir->execute('enrollPlayerCP', [$userId, $this->_mainEventId]);
             if (!$success) {
                 $errorMsg = _t('Failed to enroll the player. Check your network connection.');
             }
@@ -177,7 +177,7 @@ class PlayerRegistration extends Controller
         $errorMsg = '';
         $mapping = json_decode($json, true);
         try {
-            $success = $this->_api->execute('updatePlayersLocalIds', [$this->_mainEventId, $mapping]);
+            $success = $this->_mimir->execute('updatePlayersLocalIds', [$this->_mainEventId, $mapping]);
             if (!$success) {
                 $errorMsg = _t('Failed to save local ids mapping. Check your network connection.');
             }

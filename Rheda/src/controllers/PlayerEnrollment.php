@@ -26,7 +26,7 @@ class PlayerEnrollment extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Enroll players');
+        return _t('Enroll players') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
@@ -42,7 +42,7 @@ class PlayerEnrollment extends Controller
             $errorMsg = $this->_lastError;
         } else {
             try {
-                $registeredPlayers = $this->_api->execute('getEverybody', []);
+                $registeredPlayers = $this->_mimir->execute('getEverybody', []);
                 usort($registeredPlayers, function ($u1, $u2) {
                     return strcmp($u1['display_name'], $u2['display_name']);
                 });
@@ -100,7 +100,7 @@ class PlayerEnrollment extends Controller
             $errorMsg = _t("System name should contain only lowercase latin characters.");
         } else {
             try {
-                $this->_api->execute('addPlayer', [$ident, $ident, $displayName, null]);
+                $this->_mimir->execute('addPlayer', [$ident, $ident, $displayName, null]);
             } catch (Exception $e) {
                 $errorMsg = $e->getMessage();
             };
@@ -113,7 +113,7 @@ class PlayerEnrollment extends Controller
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_mainEventId]);
+            $success = $this->_mimir->execute('enrollPlayerCP', [$userId, $this->_mainEventId]);
             if (!$success) {
                 $errorMsg = _t('Failed to add the player. Check your network connection.');
             }

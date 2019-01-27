@@ -30,6 +30,7 @@
  */
 return [
     // client
+    'getEvents'          => ['EventsController', 'getEvents'],
     'getGameConfig'      => ['EventsController', 'getGameConfig'],
     'getRatingTable'     => ['EventsController', 'getRatingTable'],
     'getLastGames'       => ['EventsController', 'getLastGames'],
