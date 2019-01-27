@@ -17,7 +17,7 @@
 <h3>{{_t 'Additional penalties'}}</h3>
 <br>
 {{#error}}
-    <div class="alert alert-error">{{error}}</div>
+    <div class="alert alert-danger">{{error}}</div>
 {{/error}}
 {{^isAggregated}}
     {{#form action='/penalties/apply/' method='post'}}
