@@ -110,24 +110,24 @@ class RatingTable extends Controller
                         }, array_values($players)));
                         break;
                     case 'min-played':
-                        $filtereData = [];
+                        $filteredData = [];
                         foreach ($data as $item) {
                             if ($item['games_played'] >= $minGamesCount) {
-                                array_push($filtereData, $item);
+                                array_push($filteredData, $item);
                             }
                         }
 
-                        $data = $filtereData;
+                        $data = $filteredData;
                         break;
                     case 'min-not-played':
-                        $filtereData = [];
+                        $filteredData = [];
                         foreach ($data as $item) {
                             if ($item['games_played'] < $minGamesCount) {
-                                array_push($filtereData, $item);
+                                array_push($filteredData, $item);
                             }
                         }
 
-                        $data = $filtereData;
+                        $data = $filteredData;
                         break;
                     default:
                         throw new InvalidParametersException("Parameter players should be either 'all', 'min-played' or 'min-not-played'");
@@ -165,12 +165,12 @@ class RatingTable extends Controller
                     'selected'  => $showPlayers == 'all',
                 ],
                 [
-                    'name'      => _p('Played at least %d games', $minGamesCount),
+                    'name'      => _np('Played at least %d game', 'Played at least %d games', $minGamesCount, $minGamesCount),
                     'value'     => 'min-played',
                     'selected'  => $showPlayers == 'min-played',
                 ],
                 [
-                    'name'      => _p('Played less then %d games', $minGamesCount),
+                    'name'      => _np('Played less then %d game', 'Played less then %d games', $minGamesCount, $minGamesCount),
                     'value'     => 'min-not-played',
                     'selected'  => $showPlayers == 'min-not-played',
                 ],
