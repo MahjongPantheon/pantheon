@@ -38,10 +38,10 @@ class Downloader
         $logUrl = base64_decode("aHR0cDovL2UubWp2LmpwLzAvbG9nL3BsYWluZmlsZXMuY2dpPw==") . $replayHash;
         $fallbackLogUrl = base64_decode("aHR0cDovL2UubWp2LmpwLzAvbG9nL2FyY2hpdmVkLmNnaT8=") . $replayHash;
 
-        $content = @file_get_contents($logUrl);
-        if (!$content) {
-            $content = @file_get_contents($fallbackLogUrl);
-            if (!$content) {
+        list ($content, $code) = $this->_download($logUrl);
+        if (empty($content) || $code != 200) {
+            list ($content, $code) = $this->_download($fallbackLogUrl);
+            if (empty($content) || $code != 200) {
                 throw new DownloadException('Content fetch failed: format changed? Contact maintainer for instructions');
             }
         }
@@ -61,7 +61,7 @@ class Downloader
      */
     public function validateUrl($logUrl)
     {
-        $validDomain = base64_decode('aHR0cDovL3RlbmhvdS5uZXQv');
+        $validDomain = base64_decode('Oi8vdGVuaG91Lm5ldC8=');
         if (strpos($logUrl, $validDomain) === false || strpos($logUrl, 'log=') === false) {
             throw new DownloadException('Invalid replay link');
         }
@@ -79,6 +79,20 @@ class Downloader
         $queryString = parse_url($logUrl, PHP_URL_QUERY);
         parse_str($queryString, $out);
         return $out['log'];
+    }
+
+    protected function _download($url)
+    {
+        $handle = curl_init();
+        curl_setopt($handle, CURLOPT_URL, $url);
+        curl_setopt($handle, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($handle, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($handle, CURLOPT_TIMEOUT, 5);
+        $data = curl_exec($handle);
+        $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
+        return [$data, $httpCode];
     }
 
     /**
