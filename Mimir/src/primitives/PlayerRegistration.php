@@ -81,7 +81,7 @@ class PlayerRegistrationPrimitive extends Primitive
     /**
      * @var string
      */
-    protected $teamName;
+    protected $_teamName;
 
     protected function _create()
     {
@@ -165,7 +165,7 @@ class PlayerRegistrationPrimitive extends Primitive
      */
     public function getTeamName()
     {
-        return $this->teamName;
+        return $this->_teamName;
     }
 
     /**
@@ -282,7 +282,7 @@ class PlayerRegistrationPrimitive extends Primitive
      */
     public function setTeamName($teamName)
     {
-        $this->teamName = $teamName;
+        $this->_teamName = $teamName;
         return $this;
     }
 
