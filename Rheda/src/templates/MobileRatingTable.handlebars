@@ -69,6 +69,10 @@
     {{/showAdminWarning}}
 
     {{^hideResults}}
+        {{#if isCommandTournament}}
+            <p>{{#a href='/stat/team'}}{{_t 'Team table'}}{{/a}}</p>
+        {{/if}}
+
         <table class="table table-striped table-condensed">
             <tr>
                 <th>#</th>
