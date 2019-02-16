@@ -34,6 +34,16 @@
     table tr:nth-child(even) {
         background-color: #ddd;
     }
+    select{
+        width: 100%;
+        padding: 6px 12px;
+        font-size: 16px;
+        color: #495057;
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
 
     .badge {
         display: inline-block;
@@ -57,6 +67,14 @@
     }
 </style>
 
+<script>
+  function onChange(showPlayers) {
+    let href = new URL(location.href);
+    href.searchParams.set('players', showPlayers);
+    location.href=href;
+  }
+</script>
+
 <h2 class="header-title">{{_t 'Rating table'}}</h2>
 
 <div class="main-content">
@@ -72,6 +90,14 @@
         {{#if isTeamTournament}}
             <p>{{#a href='/stat/team'}}{{_t 'Team table'}}{{/a}}</p>
         {{/if}}
+
+      {{#withMinGamesCount}}
+        <select onChange="onChange(this.value)">
+          {{#each showPlayersOptions}}
+            <option value="{{value}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
+          {{/each}}
+        </select>
+      {{/withMinGamesCount}}
 
         <table class="table table-striped table-condensed">
             <tr>
