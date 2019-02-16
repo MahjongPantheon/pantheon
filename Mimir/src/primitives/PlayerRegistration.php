@@ -37,6 +37,7 @@ class PlayerRegistrationPrimitive extends Primitive
         'auth_token'    => '_token',
         'local_id'      => '_localId',
         'ignore_seating' => '_ignoreSeating',
+        'command_name'   => '_commandName',
     ];
 
     protected function _getFieldsTransforms()
@@ -48,6 +49,7 @@ class PlayerRegistrationPrimitive extends Primitive
             '_playerId' => $this->_integerTransform(),
             '_localId' => $this->_integerTransform(true),
             '_ignoreSeating' => $this->_integerTransform(),
+            '_commandName' => $this->_stringTransform(),
         ];
     }
 
@@ -76,6 +78,10 @@ class PlayerRegistrationPrimitive extends Primitive
      * @var int
      */
     protected $_ignoreSeating;
+    /**
+     * @var string
+     */
+    protected $_commandName;
 
     protected function _create()
     {
@@ -152,6 +158,14 @@ class PlayerRegistrationPrimitive extends Primitive
     public function getIgnoreSeating()
     {
         return $this->_ignoreSeating;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCommandName()
+    {
+        return $this->_commandName;
     }
 
     /**
@@ -253,12 +267,22 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
-     * @param int $localId
+     * @param int $ignoreSeating
      * @return $this
      */
     public function setIgnoreSeating($ignoreSeating)
     {
         $this->_ignoreSeating = $ignoreSeating;
+        return $this;
+    }
+
+    /**
+     * @param string $commandName
+     * @return $this
+     */
+    public function setCommandName($commandName)
+    {
+        $this->_commandName = $commandName;
         return $this;
     }
 
@@ -374,6 +398,31 @@ class PlayerRegistrationPrimitive extends Primitive
 
         foreach ($items as $regItem) {
             $map[$regItem->getLocalId()] = $regItem->getPlayerId();
+        }
+        return $map;
+    }
+
+    /**
+     * Finds all players registered to event.
+     * Output array has player player id as key and command name as value.
+     *
+     * @param IDb $db
+     * @param $eventId
+     * @return array [local_id => Player_id, ...]
+     * @throws \Exception
+     */
+    public static function findCommandNameMapByEvent(IDb $db, $eventId)
+    {
+        $map = [];
+        /** @var PlayerRegistrationPrimitive[] $items */
+        $items = self::_findBy($db, 'event_id', [$eventId]);
+
+        foreach ($items as $regItem) {
+            if (!$regItem->getCommandName()) {
+                continue;
+            }
+
+            $map[$regItem->getPlayerId()] = $regItem->getCommandName();
         }
         return $map;
     }

@@ -19,13 +19,13 @@ namespace Rheda;
 
 require_once __DIR__ . '/../helpers/Array.php';
 
-class RatingTable extends Controller
+class TeamTable extends Controller
 {
-    protected $_mainTemplate = 'RatingTable';
+    protected $_mainTemplate = 'TeamTable';
 
     protected function _pageTitle()
     {
-        return _t('Rating table');
+        return _t('Team table');
     }
 
     protected function _run()
@@ -33,47 +33,8 @@ class RatingTable extends Controller
         $errMsg = '';
         $data = null;
 
-        if (!isset($_GET['sort'])) {
-            $_GET['sort'] = '';
-        }
-
-        $order = empty($_GET['order']) ? '' : $_GET['order'];
-        if ($order != 'asc' && $order != 'desc') {
-            $order = '';
-        }
-
-        switch ($_GET['sort']) {
-            case 'rating':
-                $orderBy = $_GET['sort'];
-                if (empty($_GET['order'])) {
-                    $order = 'desc';
-                }
-                break;
-            case 'avg_place':
-                $orderBy = $_GET['sort'];
-                if (empty($_GET['order'])) {
-                    $order = 'asc';
-                }
-                break;
-            case 'avg_score':
-                $orderBy = $_GET['sort'];
-                if (empty($_GET['order'])) {
-                    $order = 'desc';
-                }
-                break;
-            case 'name':
-                $orderBy = $_GET['sort'];
-                if (empty($_GET['order'])) {
-                    $order = 'asc';
-                }
-                break;
-            default:
-                ;
-                $orderBy = 'rating';
-                if (empty($_GET['order'])) {
-                    $order = 'desc';
-                }
-        }
+        $orderBy = 'rating';
+        $order = 'desc';
 
         try {
             $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
@@ -100,32 +61,30 @@ class RatingTable extends Controller
                 return array_merge($el, [
                     'rating'        => '0',
                     'winner_zone'   => true,
-                    'avg_place'     => '0',
-                    'avg_score'     => '0',
-                    'games_played'  => '0'
+                    'games_played'  => '0',
                 ]);
             }, array_values($players)));
 
-            $minGamesCount = $this->_mainEventRules->minGamesCount();
-
-            // Assign indexes for table view
-            $ctr = 1;
-            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount, &$commandNames) {
+            $data = array_map(function ($el) use (&$ctr, &$players, &$commandNames) {
                 $commandName = null;
                 if ($this->_mainEventRules->isCommand()) {
                     $commandName = $commandNames[$el['id']];
                 }
-
-                $el['_index'] = $ctr++;
                 $el['short_name'] = $this->_makeShortName($el['display_name']);
-                $el['avg_place_less_precision'] = sprintf('%.2f', $el['avg_place']);
-                $el['avg_score_int'] = round($el['avg_score']);
-                $el['min_was_played'] = $minGamesCount != 0 && $minGamesCount <= $el['games_played'];
                 $el['command_name'] = $commandName;
                 return $el;
             }, $data);
         } catch (Exception $e) {
             $errMsg = $e->getMessage();
+        }
+
+        # group players by command
+        $commands = [];
+        foreach ($data as $player) {
+            $commands[$player['command_name']]['players'][] = $player;
+            $commands[$player['command_name']]['command_name'] = $player['command_name'];
+            $commands[$player['command_name']]['total_rating'] += $player['rating'];
+            $commands[$player['command_name']]['winner_zone'] = $commands[$player['command_name']]['total_rating'] >= 0;
         }
 
         $hideResults = $this->_mainEventRules->hideResults();
@@ -138,19 +97,15 @@ class RatingTable extends Controller
             $showAdminWarning = true;
         }
 
+        usort($commands, function($a, $b) {
+            return $b['total_rating'] - $a['total_rating'];
+        });
+
         return [
             'error'             => $errMsg,
-            'data'              => $data,
-
-            'orderDesc'         => $order == 'desc',
+            'commands'          => $commands,
 
             'isOnlineTournament'  => $this->_mainEventRules->isOnline(),
-            'isCommandTournament' => $this->_mainEventRules->isCommand(),
-
-            'orderByRating'     => $orderBy == 'rating',
-            'orderByAvgPlace'   => $orderBy == 'avg_place',
-            'orderByAvgScore'   => $orderBy == 'avg_score',
-            'orderByName'       => $orderBy == 'name',
 
             'hideResults'       => $hideResults,
             'showAdminWarning'  => $showAdminWarning,

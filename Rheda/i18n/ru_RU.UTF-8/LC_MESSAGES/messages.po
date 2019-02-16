@@ -1288,5 +1288,14 @@ msgstr "Нагаши манган - %s; риичи - %s; темпай - %s"
 msgid "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s"
 msgstr "Нагаши манган - %s, %s; риичи - %s; темпай - %s"
 
+msgid "If event is command"
+msgstr "Командный евент"
+
+msgid "Team"
+msgstr "Команда"
+
+msgid "Team table"
+msgstr "Командный рейтинг"
+
 #~ msgid "You can't wait on this"
 #~ msgstr "Он не может на это ждать"
