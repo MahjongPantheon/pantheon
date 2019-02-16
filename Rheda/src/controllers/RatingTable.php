@@ -86,10 +86,10 @@ class RatingTable extends Controller
                 $this->_adminAuthOk() // show prefinished results only for admins
             ]);
 
-            $temaNames = [];
+            $teamNames = [];
             if ($this->_mainEventRules->isTeam()) {
-                array_map(function ($el) use (&$players, &$temaNames) {
-                    $temaNames[$el['id']] = $players[$el['id']]['team_name'];
+                array_map(function ($el) use (&$players, &$teamNames) {
+                    $teamNames[$el['id']] = $players[$el['id']]['team_name'];
                 }, $players);
             }
 
@@ -113,10 +113,10 @@ class RatingTable extends Controller
 
             // Assign indexes for table view
             $ctr = 1;
-            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount, &$temaNames) {
+            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount, &$teamNames) {
                 $teamName = null;
                 if ($this->_mainEventRules->isTeam()) {
-                    $teamName = $temaNames[$el['id']];
+                    $teamName = $teamNames[$el['id']];
                 }
 
                 $el['_index'] = $ctr++;
