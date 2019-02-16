@@ -75,6 +75,8 @@ class RatingTable extends Controller
                 }
         }
 
+        $playedGames = 0;
+
         try {
             $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
             $players = ArrayHelpers::elm2Key($players, 'id');
@@ -113,7 +115,7 @@ class RatingTable extends Controller
 
             // Assign indexes for table view
             $ctr = 1;
-            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount, &$teamNames) {
+            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount, &$teamNames, &$playedGames) {
                 $teamName = null;
                 if ($this->_mainEventRules->isTeam()) {
                     $teamName = $teamNames[$el['id']];
@@ -125,10 +127,19 @@ class RatingTable extends Controller
                 $el['avg_score_int'] = round($el['avg_score']);
                 $el['min_was_played'] = $minGamesCount != 0 && $minGamesCount <= $el['games_played'];
                 $el['team_name'] = $teamName;
+
+                $playedGames += $el['games_played'];
+
                 return $el;
             }, $data);
         } catch (Exception $e) {
             $errMsg = $e->getMessage();
+        }
+
+        if ($playedGames == 0 && $this->_mainEventRules->isTeam()) {
+            usort($data, function ($a, $b) {
+                return strcmp($b['team_name'], $a['team_name']);
+            });
         }
 
         $hideResults = $this->_mainEventRules->hideResults();
