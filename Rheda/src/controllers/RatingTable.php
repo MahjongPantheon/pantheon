@@ -87,10 +87,13 @@ class RatingTable extends Controller
             ]);
 
             $commandNames = [];
-            array_map(function ($el) use (&$players, &$commandNames, &$isCommand) {
-                if ($this->_mainEventRules->isCommand()) {
+            if ($this->_mainEventRules->isCommand()) {
+                array_map(function ($el) use (&$players, &$commandNames) {
                     $commandNames[$el['id']] = $players[$el['id']]['command_name'];
-                }
+                }, $players);
+            }
+
+            array_map(function ($el) use (&$players) {
                 // remove from common list - user exists in history
                 unset($players[$el['id']]);
             }, $data);
