@@ -86,10 +86,10 @@ class RatingTable extends Controller
                 $this->_adminAuthOk() // show prefinished results only for admins
             ]);
 
-            $commandNames = [];
-            if ($this->_mainEventRules->isCommand()) {
-                array_map(function ($el) use (&$players, &$commandNames) {
-                    $commandNames[$el['id']] = $players[$el['id']]['command_name'];
+            $temaNames = [];
+            if ($this->_mainEventRules->isTeam()) {
+                array_map(function ($el) use (&$players, &$temaNames) {
+                    $temaNames[$el['id']] = $players[$el['id']]['team_name'];
                 }, $players);
             }
 
@@ -113,10 +113,10 @@ class RatingTable extends Controller
 
             // Assign indexes for table view
             $ctr = 1;
-            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount, &$commandNames) {
-                $commandName = null;
-                if ($this->_mainEventRules->isCommand()) {
-                    $commandName = $commandNames[$el['id']];
+            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount, &$temaNames) {
+                $teamName = null;
+                if ($this->_mainEventRules->isTeam()) {
+                    $teamName = $temaNames[$el['id']];
                 }
 
                 $el['_index'] = $ctr++;
@@ -124,7 +124,7 @@ class RatingTable extends Controller
                 $el['avg_place_less_precision'] = sprintf('%.2f', $el['avg_place']);
                 $el['avg_score_int'] = round($el['avg_score']);
                 $el['min_was_played'] = $minGamesCount != 0 && $minGamesCount <= $el['games_played'];
-                $el['command_name'] = $commandName;
+                $el['team_name'] = $teamName;
                 return $el;
             }, $data);
         } catch (Exception $e) {
@@ -148,7 +148,7 @@ class RatingTable extends Controller
             'orderDesc'         => $order == 'desc',
 
             'isOnlineTournament'  => $this->_mainEventRules->isOnline(),
-            'isCommandTournament' => $this->_mainEventRules->isCommand(),
+            'isTeamTournament'    => $this->_mainEventRules->isTeam(),
 
             'orderByRating'     => $orderBy == 'rating',
             'orderByAvgPlace'   => $orderBy == 'avg_place',

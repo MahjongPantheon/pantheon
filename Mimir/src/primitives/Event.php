@@ -44,7 +44,7 @@ class EventPrimitive extends Primitive
         'owner_player'      => '_ownerPlayerId',
         'type'              => '_type', // DEPRECATED: to be removed in 2.x
         'is_online'         => '_isOnline',
-        'is_command'        => '_isCommand',
+        'is_team'           => '_isTeam',
         'is_textlog'        => '_isTextlog',
         'sync_start'        => '_syncStart',
         'sync_end'          => '_syncEnd',
@@ -77,7 +77,7 @@ class EventPrimitive extends Primitive
             '_lobbyId'            => $this->_integerTransform(true),
             '_type'               => $this->_stringTransform(), // DEPRECATED: to be removed in 2.x
             '_isOnline'           => $this->_integerTransform(),
-            '_isCommand'          => $this->_integerTransform(),
+            '_isTeam'             => $this->_integerTransform(),
             '_isTextlog'          => $this->_integerTransform(),
             '_isPrescripted'      => $this->_integerTransform(),
             '_syncStart'          => $this->_integerTransform(),
@@ -213,10 +213,10 @@ class EventPrimitive extends Primitive
      */
     protected $_isOnline;
     /**
-     * if true, event is treated as command tournament
+     * if true, event is treated as team tournament
      * @var int
      */
-    protected $_isCommand;
+    protected $_isTeam;
     /**
      * if true, timer is shown in mobile app, also timer page is available in administration tools
      * @var int
@@ -698,9 +698,9 @@ class EventPrimitive extends Primitive
     /**
      * @return int
      */
-    public function getIsCommand()
+    public function getIsTeam()
     {
-        return $this->_isCommand;
+        return $this->_isTeam;
     }
 
     /**
@@ -717,12 +717,12 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param int $isCommand
+     * @param int $isTeam
      * @return EventPrimitive
      */
-    public function setIsCommand($isCommand)
+    public function setIsTeam($isTeam)
     {
-        $this->_isCommand = $isCommand;
+        $this->_isTeam = $isTeam;
         return $this;
     }
 

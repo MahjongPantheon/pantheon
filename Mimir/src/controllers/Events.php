@@ -92,23 +92,23 @@ class EventsController extends Controller
 
         $players = PlayerRegistrationPrimitive::findRegisteredPlayersByEventList($this->_db, $eventIdList);
         $localMap = [];
-        $commandNames = [];
+        $teamNames = [];
 
         if ($needLocalIds) {
             $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventIdList[0]));
         }
 
-        if ($eventList[0]->getIsCommand()) {
-            $commandNames = PlayerRegistrationPrimitive::findCommandNameMapByEvent($this->_db, $eventIdList[0]);
+        if ($eventList[0]->getIsTeam()) {
+            $teamNames = PlayerRegistrationPrimitive::findTeamNameMapByEvent($this->_db, $eventIdList[0]);
         }
 
-        $data = array_map(function (PlayerPrimitive $p) use (&$localMap, &$commandNames) {
+        $data = array_map(function (PlayerPrimitive $p) use (&$localMap, &$teamNames) {
             return [
                 'id'            => $p->getId(),
                 'display_name'  => $p->getDisplayName(),
                 'alias'         => $p->getAlias(),
                 'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
-                'command_name'  => empty($commandNames[$p->getId()]) ? null : $commandNames[$p->getId()],
+                'team_name'  => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
                 'tenhou_id'     => $p->getTenhouId()
             ];
         }, $players);
@@ -402,7 +402,7 @@ class EventsController extends Controller
             'gameDuration'        => $event[0]->getGameDuration(), // in minutes!
             'timezone'            => $event[0]->getTimezone(),
             'isOnline'            => (bool)$event[0]->getIsOnline(),
-            'isCommand'           => (bool)$event[0]->getIsCommand(),
+            'isTeam'              => (bool)$event[0]->getIsTeam(),
             'autoSeating'         => (bool)$event[0]->getAutoSeating(),
             'isTextlog'           => (bool)$event[0]->getIsTextlog(),
             'syncStart'           => (bool)$event[0]->getSyncStart(),

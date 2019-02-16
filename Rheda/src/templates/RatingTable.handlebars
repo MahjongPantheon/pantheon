@@ -17,7 +17,7 @@
 <style>
     .row-min-was-played:nth-of-type(even) {
         background-color: rgba(0, 255, 129, 0.12);
-    }    
+    }
     .row-min-was-played:nth-of-type(odd) {
         background-color: rgba(96, 201, 149, 0.27) !important;
     }
@@ -44,7 +44,7 @@
         <tr>
             <th>#</th>
             <th>{{#a href='/stat/?sort=name'}}{{_t 'Player'}}{{/a}}{{#orderByName}}<span class="icon-arrow-up"></span>{{/orderByName}}</th>
-            {{#if isCommandTournament}}
+            {{#if isTeamTournament}}
                 <th>{{_t 'Team'}}</th>
             {{/if}}
             <th>{{#a href='/stat/?sort=rating'}}{{_t 'Rating points'}}{{/a}}{{#orderByRating}}<span class="icon-arrow-down"></span>{{/orderByRating}}</th>
@@ -56,8 +56,8 @@
         <tr class="{{#min_was_played}}row-min-was-played{{/min_was_played}}">
             <td>{{_index}}</td>
             <td>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}{{#if isOnlineTournament}} ({{tenhou_id}}){{/if}}</td>
-            {{#if isCommandTournament}}
-              <td>{{command_name}}</td>
+            {{#if isTeamTournament}}
+              <td>{{team_name}}</td>
             {{/if}}
             <td><span class="badge
                 {{#winner_zone}}badge-success{{/winner_zone}}
