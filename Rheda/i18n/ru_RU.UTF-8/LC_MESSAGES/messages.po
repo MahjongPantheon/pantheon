@@ -19,6 +19,9 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "Game details"
+msgstr "Подробнее об игре"
+
+msgid "Additional penalties"
 msgstr "Дополнительные штрафы"
 
 msgid "Recent games"
@@ -168,6 +171,15 @@ msgstr "Рейтинговые очки"
 msgid "Players"
 msgstr "Игроки"
 
+msgid "Add online game"
+msgstr "Добавить онлайн-игру"
+
+msgid "The game has been successfully added!"
+msgstr "Игра успешно добавлена!"
+
+msgid "Add game"
+msgstr "Добавить игру"
+
 msgid "Add player"
 msgstr "Добавить игрока"
 
@@ -201,15 +213,6 @@ msgstr "Реальное имя"
 
 msgid "Register"
 msgstr "Зарегистрировать"
-
-msgid "Add online game"
-msgstr "Добавить онлайн-игру"
-
-msgid "The game has been successfully added!"
-msgstr "Игра успешно добавлена!"
-
-msgid "Add game"
-msgstr "Добавить игру"
 
 msgid "Rating table"
 msgstr "Рейтинг"
@@ -396,6 +399,58 @@ msgstr[0] "%s иппацу"
 msgstr[1] "%s иппацу"
 msgstr[2] "%s иппацу"
 
+msgid "Going back in 3 seconds..."
+msgstr "Идем назад через 3 секунды..."
+
+msgid "Add new game"
+msgstr "Добавить новую игру"
+
+msgid "Format:"
+msgstr "Формат:"
+
+msgid "Example:"
+msgstr "Пример:"
+
+msgid ""
+"Renchans/honba are calculated automatically. Also points and payments checks "
+"are performed: in case of any inconsistency the alert is displayed."
+msgstr ""
+"Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
+"системой, в случае несоответствия будет выдано предупреждение."
+
+msgid "Player aliases"
+msgstr "Алиасы"
+
+msgid "Predefined seating configuration"
+msgstr "Конфигурация предопределенной рассадки"
+
+msgid "Next session index (starting from 1):"
+msgstr "Номер следующей игры (начиная с 1):"
+
+msgid "Update predefined seating config"
+msgstr "Обновить конфигурацию предопределенной рассадки"
+
+msgid "Found errors:"
+msgstr "Найденные ошибки:"
+
+msgid "No errors found."
+msgstr "Ошибок не найдено."
+
+msgid ""
+"Predefined seating is entered as list of tables, one table per row. New game "
+"session should be indicated as an empty line."
+msgstr ""
+"Предопределенная рассадка вводится как список столов, один стол на строку. "
+"Следующий ханчан должен быть отделен от предыдущего пустой строкой."
+
+msgid ""
+"In this example, two tables play two games. Numbers in seating persist "
+"between games and are defined at Admin actions / Manage players page."
+msgstr ""
+"В этом примере два стола играют два ханчана. Указанные номера сохраняются "
+"между играми и определяются на странице \"Действия администратора\" / "
+"\"Управление игроками\"."
+
 msgid "Something went wrong: %s"
 msgstr "Что-то пошло не так, и вот что именно: %s"
 
@@ -576,41 +631,11 @@ msgstr "Авторизация прошла успешно!"
 msgid "Authorize"
 msgstr "Авторизоваться"
 
-msgid "Predefined seating configuration"
-msgstr "Конфигурация предопределенной рассадки"
-
-msgid "Next session index (starting from 1):"
-msgstr "Номер следующей игры (начиная с 1):"
-
-msgid "Update predefined seating config"
-msgstr "Обновить конфигурацию предопределенной рассадки"
-
-msgid "Found errors:"
-msgstr "Найденные ошибки:"
-
-msgid "No errors found."
-msgstr "Ошибок не найдено."
-
-msgid ""
-"Predefined seating is entered as list of tables, one table per row. New game "
-"session should be indicated as an empty line."
-msgstr ""
-"Предопределенная рассадка вводится как список столов, один стол на строку. "
-"Следующий ханчан должен быть отделен от предыдущего пустой строкой."
-
-msgid "Example:"
-msgstr "Пример:"
-
-msgid ""
-"In this example, two tables play two games. Numbers in seating persist "
-"between games and are defined at Admin actions / Manage players page."
-msgstr ""
-"В этом примере два стола играют два ханчана. Указанные номера сохраняются "
-"между играми и определяются на странице \"Действия администратора\" / "
-"\"Управление игроками\"."
-
 msgid "Sorry, this page is not available for mobile devices"
 msgstr "Извините, эта страница недоступна для мобильных устройств"
+
+msgid "Players management"
+msgstr "Управление игроками"
 
 msgid "%s: personal stats"
 msgstr "%s: личная статистика"
@@ -674,25 +699,6 @@ msgstr "Штрафы:"
 
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr "%s - штраф %s очков. Причина: %s"
-
-msgid "Going back in 3 seconds..."
-msgstr "Идем назад через 3 секунды..."
-
-msgid "Add new game"
-msgstr "Добавить новую игру"
-
-msgid "Format:"
-msgstr "Формат:"
-
-msgid ""
-"Renchans/honba are calculated automatically. Also points and payments checks "
-"are performed: in case of any inconsistency the alert is displayed."
-msgstr ""
-"Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
-"системой, в случае несоответствия будет выдано предупреждение."
-
-msgid "Player aliases"
-msgstr "Алиасы"
 
 msgid "Timer"
 msgstr "Таймер"
@@ -815,9 +821,6 @@ msgstr "Рейтинговая таблица скрыта. Показать"
 msgid "Rating table is visible. Hide"
 msgstr "Рейтинговая таблица доступна. Скрыть"
 
-msgid "Additional penalties"
-msgstr "Дополнительные штрафы"
-
 msgid ""
 "A penalty may be applied only to player currently in game. Otherwise error "
 "will occur."
@@ -839,9 +842,6 @@ msgstr "Проверьте дважды введенные данные. Отм�
 
 msgid "Apply penalty"
 msgstr "Применить штраф"
-
-msgid "Players management"
-msgstr "Управление игроками"
 
 msgid "Pre-registration list (%d)"
 msgstr "Список на утверждение (%d)"
@@ -1296,6 +1296,37 @@ msgstr "Нагаши манган - %s, %s; риичи - %s; темпай - %s"
 
 msgid "Team event"
 msgstr "Командный турнир"
+
+msgid "All players"
+msgstr "Все игроки"
+
+#, php-format
+msgid "Played at least %d games"
+msgid_plural "Played at least %d game"
+msgstr[0] "Сыгравшие хотя бы %d игру"
+msgstr[1] "Сыгравшие хотя бы %d игры"
+msgstr[2] "Сыгравшие хотя бы %d игр"
+
+#, php-format
+msgid "Played less then %d games"
+msgid_plural "Played less then %d game"
+msgstr[0] "Сыгравшие менее %d игры"
+msgstr[1] "Сыгравшие менее %d игр"
+msgstr[2] "Сыгравшие менее %d игр"
+
+#, php-format
+msgid "Played at least %d game"
+msgid_plural "Played at least %d games"
+msgstr[0] "Сыгравшие хотя бы %d игру"
+msgstr[1] "Сыгравшие хотя бы %d игры"
+msgstr[2] "Сыгравшие хотя бы %d игр"
+
+#, php-format
+msgid "Played less then %d game"
+msgid_plural "Played less then %d games"
+msgstr[0] "Сыгравшие менее %d игры"
+msgstr[1] "Сыгравшие менее %d игр"
+msgstr[2] "Сыгравшие менее %d игр"
 
 #~ msgid "You can't wait on this"
 #~ msgstr "Он не может на это ждать"

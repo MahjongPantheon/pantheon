@@ -7,6 +7,27 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgid "Aggregated event"
+msgstr ""
+
+msgid "Rules overview"
+msgstr ""
+
+msgid "Player"
+msgstr ""
+
+msgid "Best series"
+msgstr ""
+
+msgid "Points of best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Points of last series"
+msgstr ""
+
 msgid "Game details"
 msgstr ""
 
@@ -168,9 +189,6 @@ msgid ""
 "result in reissuing his PIN code."
 msgstr ""
 
-msgid "Player"
-msgstr ""
-
 msgid "Admin actions"
 msgstr ""
 
@@ -223,24 +241,6 @@ msgid "Timer & seating"
 msgstr ""
 
 msgid "Login"
-msgstr ""
-
-msgid "Aggregated event"
-msgstr ""
-
-msgid "Rules overview"
-msgstr ""
-
-msgid "Best series"
-msgstr ""
-
-msgid "Points of best series"
-msgstr ""
-
-msgid "Last series"
-msgstr ""
-
-msgid "Points of last series"
 msgstr ""
 
 msgid "Achievement"
@@ -815,44 +815,53 @@ msgstr ""
 msgid "Save local IDs"
 msgstr ""
 
-msgid "Enter tables, one per line."
+msgid "All players"
 msgstr ""
 
-msgid ""
-"Check the box to randomize players seating at each table. Otherwise players "
-"will be placed as you entered in order of e-s-w-n."
+#, php-format
+msgid "Played at least %d game"
+msgid_plural "Played at least %d games"
+msgstr[0] ""
+msgstr[1] ""
+
+#, php-format
+msgid "Played less then %d game"
+msgid_plural "Played less then %d games"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "yes"
 msgstr ""
 
-msgid ""
-"Each number is a player's current place in rating. Here is an example of "
-"seating with step of 4: "
-msgstr ""
-
-msgid "Randomize seating at each table"
-msgstr ""
-
-msgid "Use manual seating for new game?"
-msgstr ""
-
-msgid "Use manual seating"
-msgstr ""
-
-msgid "Finish the games? You won't be able to cancel rounds anymore!"
-msgstr ""
-
-msgid "Hide rating table"
-msgstr ""
-
-msgid "Drawn rounds: %s"
+msgid "no"
 msgstr ""
 
 msgid "Wrong admin password"
 msgstr ""
 
-msgid "Admin login"
+msgid "Enroll players"
+msgstr ""
+
+msgid "Page not available for aggregated events"
+msgstr ""
+
+msgid "System name should contain only lowercase latin characters."
+msgstr ""
+
+msgid "Failed to add the player. Check your network connection."
+msgstr ""
+
+msgid "Seating controls"
 msgstr ""
 
 msgid "Latest games"
+msgstr ""
+
+#, php-format
+msgid "Stats & diagrams: %s"
+msgstr ""
+
+msgid "Yakuhai: total"
 msgstr ""
 
 msgid "Players registration"
@@ -864,23 +873,138 @@ msgstr ""
 msgid "Failed to enroll the player. Check your network connection."
 msgstr ""
 
-#, php-format
-msgid "Stats & diagrams: %s"
+msgid "Failed to save local ids mapping. Check your network connection."
 msgstr ""
 
-msgid "Yakuhai: total"
+msgid "Predefined seating and event status"
 msgstr ""
 
-msgid "Enroll players"
+msgid "Failed to update predefined seating. Check your network connection."
 msgstr ""
 
-msgid "System name should contain only lowercase latin characters."
+msgid "Admin login"
 msgstr ""
 
-msgid "Failed to add the player. Check your network connection."
+msgid ""
+"No seating defined. Check \"Admin actions / Predefined seating\" page to "
+"define seating for tournament"
 msgstr ""
 
-msgid "Seating controls"
+msgid "Event tables status"
+msgstr ""
+
+msgid "Please select some event!"
+msgstr ""
+
+msgid "<h2>Oops.</h2>Failed to get event configuration!"
+msgstr ""
+
+msgid "Allowed yaku"
+msgstr ""
+
+msgid "Points to start with"
+msgstr ""
+
+msgid "If start points should be subtracted from result"
+msgstr ""
+
+msgid "If kazoe should be yakuman, not sanbaiman"
+msgstr ""
+
+msgid "If 4/30 and 3/60 should be rounded to mangan"
+msgstr ""
+
+msgid "If abortive draws are allowed"
+msgstr ""
+
+msgid "If nagashi mangan is allowed"
+msgstr ""
+
+msgid "If atamahane is enabled"
+msgstr ""
+
+msgid "Basic ruleset name"
+msgstr ""
+
+msgid "If games have east rounds only"
+msgstr ""
+
+msgid "Rating initial points amount"
+msgstr ""
+
+msgid "If riichi bets left on the table go to winner of the hanchan"
+msgstr ""
+
+msgid "If chombo should be payed in points"
+msgstr ""
+
+msgid "Chombo penalty in rating points"
+msgstr ""
+
+msgid "If tanyao in open hand is allowed"
+msgstr ""
+
+msgid "If game ends when any player goes bankrupt"
+msgstr ""
+
+msgid "If multiple yakumans are enabled"
+msgstr ""
+
+msgid "Minimal arbitrary penalty amount"
+msgstr ""
+
+msgid "Maximal arbitrary penalty amount"
+msgstr ""
+
+msgid "Step of penalty amounts"
+msgstr ""
+
+msgid "Red zone duration"
+msgstr ""
+
+msgid "Yellow zone duration"
+msgstr ""
+
+msgid "Timer policy"
+msgstr ""
+
+msgid "If automatic seating is allowed"
+msgstr ""
+
+msgid "If event is online"
+msgstr ""
+
+msgid "Team event"
+msgstr ""
+
+msgid "Game duration in minutes"
+msgstr ""
+
+msgid "If game ends when leading dealer wins in last round"
+msgstr ""
+
+msgid "If all the games should be started simultaneously (tournament mode)"
+msgstr ""
+
+msgid "If all the games should be finished simultaneously (tournament mode)"
+msgstr ""
+
+msgid "If rating table should first be sorted by number of games played"
+msgstr ""
+
+msgid "If new players are allowed to join in the middle of event"
+msgstr ""
+
+msgid "If timer should be used"
+msgstr ""
+
+msgid "If arbitrary penalties are enabled"
+msgstr ""
+
+msgid "If game series are enabled"
+msgstr ""
+
+msgid "If seating for all games is entered in advance"
 msgstr ""
 
 msgid "yakuman"
@@ -924,6 +1048,14 @@ msgstr ""
 msgid ""
 "Triple ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); winner #3 "
 "is %s (%s); riichi bets - %s"
+msgstr ""
+
+#, php-format
+msgid "Nagashi mangan - %s; riichi bets - %s; tenpai - %s"
+msgstr ""
+
+#, php-format
+msgid "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s"
 msgstr ""
 
 msgid "Daburu riichi"
@@ -1056,167 +1188,4 @@ msgid "Yakuhai x5"
 msgstr ""
 
 msgid "Open riichi"
-msgstr ""
-
-msgid "Please select some event!"
-msgstr ""
-
-msgid "<h2>Oops.</h2>Failed to get event configuration!"
-msgstr ""
-
-msgid "Failed to save local ids mapping. Check your network connection."
-msgstr ""
-
-msgid "Predefined seating and event status"
-msgstr ""
-
-msgid "Failed to update predefined seating. Check your network connection."
-msgstr ""
-
-msgid ""
-"No seating defined. Check \"Admin actions / Predefined seating\" page to "
-"define seating for tournament"
-msgstr ""
-
-msgid "Page not available for aggregated events"
-msgstr ""
-
-msgid "Event tables status"
-msgstr ""
-
-msgid "yes"
-msgstr ""
-
-msgid "no"
-msgstr ""
-
-msgid "Allowed yaku"
-msgstr ""
-
-msgid "Points to start with"
-msgstr ""
-
-msgid "If start points should be subtracted from result"
-msgstr ""
-
-msgid "If kazoe should be yakuman, not sanbaiman"
-msgstr ""
-
-msgid "If 4/30 and 3/60 should be rounded to mangan"
-msgstr ""
-
-msgid "If abortive draws are allowed"
-msgstr ""
-
-msgid "If nagashi mangan is allowed"
-msgstr ""
-
-msgid "If atamahane is enabled"
-msgstr ""
-
-msgid "Basic ruleset name"
-msgstr ""
-
-msgid "If games have east rounds only"
-msgstr ""
-
-msgid "Rating initial points amount"
-msgstr ""
-
-msgid "If riichi bets on table will go to winner"
-msgstr ""
-
-msgid "If chombo should be payed in points"
-msgstr ""
-
-msgid "Chombo penalty in rating points"
-msgstr ""
-
-msgid "If tanyao counts on open hand"
-msgstr ""
-
-msgid "If game ends when any player goes bankrupt"
-msgstr ""
-
-msgid "If multiple yakumans are enabled"
-msgstr ""
-
-msgid "Minimal arbitrary penalty amount"
-msgstr ""
-
-msgid "Maximal arbitrary penalty amount"
-msgstr ""
-
-msgid "Step of penalty amounts"
-msgstr ""
-
-msgid "Red zone duration"
-msgstr ""
-
-msgid "Yellow zone duration"
-msgstr ""
-
-msgid "Timer policy"
-msgstr ""
-
-msgid "If automatic seating is allowed"
-msgstr ""
-
-msgid "If event is online"
-msgstr ""
-
-msgid "Game duration in minutes"
-msgstr ""
-
-msgid "If game ends when leading dealer wins in last round"
-msgstr ""
-
-msgid "If games should be started simultaneously"
-msgstr ""
-
-msgid "If games should be finished simultaneously"
-msgstr ""
-
-msgid "If rating table should be sorted by games count first"
-msgstr ""
-
-msgid "If new players are allowed to join in the middle of event"
-msgstr ""
-
-msgid "If timer should be used"
-msgstr ""
-
-msgid "If arbitrary penalties are enabled"
-msgstr ""
-
-msgid "If game series are enabled"
-msgstr ""
-
-msgid "If seating for all games is entered in advance"
-msgstr ""
-
-msgid "If riichi bets left on the table go to winner of the hanchan"
-msgstr ""
-
-msgid "If tanyao in open hand is allowed"
-msgstr ""
-
-msgid "If all the games should be started simultaneously (tournament mode)"
-msgstr ""
-
-msgid "If all the games should be finished simultaneously (tournament mode)"
-msgstr ""
-
-msgid "If rating table should first be sorted by number of games played"
-msgstr ""
-
-#, php-format
-msgid "Nagashi mangan - %s; riichi bets - %s; tenpai - %s"
-msgstr ""
-
-#, php-format
-msgid "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s"
-msgstr ""
-
-msgid "Team event"
 msgstr ""
