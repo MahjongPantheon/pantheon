@@ -15,21 +15,6 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
 <style>
-    .rating-flex-title{
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-pack: start;
-      -ms-flex-pack: start;
-      justify-content: flex-start;
-      -webkit-box-align: start;
-      -ms-flex-align: start;
-      align-items: flex-start;
-      margin-top: 5px;
-    }
-    .players-options{
-      margin-left: 40px;
-    }
     .row-min-was-played:nth-of-type(even) {
         background-color: rgba(0, 255, 129, 0.12);
     }    
@@ -38,26 +23,7 @@
     }
 </style>
 
-<script>
-    function onChange(showPlayers) {
-      let href = new URL(location.href);
-      href.searchParams.set('players', showPlayers);
-      location.href=href;
-    }
-</script>
-
-<div class="rating-flex-title">
-  <h3>{{_t 'Rating table'}}</h3>
-  {{#withMinGamesCount}}
-    <div class="players-options">
-      <select class="form-control" size="1" onChange="onChange(this.value)">
-        {{#each showPlayersOptions}}
-          <option value="{{value}}" {{#selected}}selected="selected"{{/selected}}>{{name}}</option>
-        {{/each}}
-      </select>
-    </div>
-  {{/withMinGamesCount}}
-</div>
+<h3>{{_t 'Rating table'}}</h3>
 <br>
 {{#error}}
     <div class="alert alert-error">{{error}}</div>

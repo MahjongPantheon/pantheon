@@ -7,9 +7,6 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgid "Game details"
-msgstr ""
-
 msgid "Additional penalties"
 msgstr ""
 
@@ -33,13 +30,7 @@ msgstr ""
 msgid "Apply penalty"
 msgstr ""
 
-msgid "Add online game"
-msgstr ""
-
-msgid "The game has been successfully added!"
-msgstr ""
-
-msgid "Add game"
+msgid "Game details"
 msgstr ""
 
 msgid "Add player"
@@ -74,6 +65,193 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
+msgid "Add online game"
+msgstr ""
+
+msgid "The game has been successfully added!"
+msgstr ""
+
+msgid "Add game"
+msgstr ""
+
+msgid "Going back in 3 seconds..."
+msgstr ""
+
+msgid "Add new game"
+msgstr ""
+
+msgid "Format:"
+msgstr ""
+
+msgid "Example:"
+msgstr ""
+
+msgid ""
+"Renchans/honba are calculated automatically. Also points and payments "
+"checks are performed: in case of any inconsistency the alert is displayed."
+msgstr ""
+
+msgid "Player aliases"
+msgstr ""
+
+msgid "Achievements"
+msgstr ""
+
+msgid "Achievement"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Nominees"
+msgstr ""
+
+msgid "Best hand"
+msgstr ""
+
+msgid "Given for collecting the hand with biggest han count (independent of cost)."
+msgstr ""
+
+msgid "Over 9000 fu"
+msgstr ""
+
+msgid "Given for collecting the hand with biggest minipoints (fu) count."
+msgstr ""
+
+msgid "%s fu"
+msgstr ""
+
+msgid "I saw them dancing"
+msgstr ""
+
+msgid "Given for collecting the most of tsumo hands during single game."
+msgstr ""
+
+msgid "Die Hard"
+msgstr ""
+
+msgid "Given for smallest count of feeding into ron during the tournament."
+msgstr ""
+
+msgid "Brave minesweeper"
+msgstr ""
+
+msgid "Given for largest count of feeding into ron during the tournament."
+msgstr ""
+
+msgid "Chombo master"
+msgstr ""
+
+msgid "Given for collecting a chombo during a tournament."
+msgstr ""
+
+msgid "%s: %d chombo penalty"
+msgid_plural "%s: %d chombo penalties"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Guest of honors"
+msgstr ""
+
+msgid "Given for collecting the most of yakuhais during the tournament."
+msgstr ""
+
+msgid "%s: %d yakuhai"
+msgid_plural "%s: %d yakuhais"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "The great dealer"
+msgstr ""
+
+msgid "Given for largest count of dealer wins during the tournament."
+msgstr ""
+
+msgid "%d win"
+msgid_plural "%d wins"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "The 1k Flash"
+msgstr ""
+
+msgid "Given for the most of 1/30 wins during tournament."
+msgstr ""
+
+msgid "%d quickest hand"
+msgid_plural "%d quickest hands"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Jewelry included"
+msgstr ""
+
+msgid "Given for collecting a yakuman during tournament."
+msgstr ""
+
+msgid "This can't be your wait"
+msgstr ""
+
+msgid ""
+"Given for feeding into largest hand during tournament (but not while in "
+"riichi)."
+msgstr ""
+
+msgid "%s han, %s fu"
+msgstr ""
+
+msgid "%s han"
+msgstr ""
+
+msgid "Honored donor"
+msgstr ""
+
+msgid "Given for losing largest amount of points as riichi bets."
+msgstr ""
+
+msgid "%s bet"
+msgid_plural "%s bets"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Just as planned"
+msgstr ""
+
+msgid "Given for getting largest number of ippatsu during tournament."
+msgstr ""
+
+msgid "%s ippatsu"
+msgid_plural "%s ippatsu"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Statistics"
+msgstr ""
+
+msgid "Welcome to game statistics system."
+msgstr ""
+
+msgid "Click here to start"
+msgstr ""
+
+msgid "You are viewing the abbreviated statistics for mobile devices."
+msgstr ""
+
+msgid "Player #%d"
+msgstr ""
+
+msgid "Best series:"
+msgstr ""
+
+msgid "Points:"
+msgstr ""
+
+msgid "Ongoing series:"
+msgstr ""
+
 msgid "Predefined seating configuration"
 msgstr ""
 
@@ -94,29 +272,9 @@ msgid ""
 "game session should be indicated as an empty line."
 msgstr ""
 
-msgid "Example:"
-msgstr ""
-
 msgid ""
 "In this example, two tables play two games. Numbers in seating persist "
 "between games and are defined at Admin actions / Manage players page."
-msgstr ""
-
-msgid "Going back in 3 seconds..."
-msgstr ""
-
-msgid "Add new game"
-msgstr ""
-
-msgid "Format:"
-msgstr ""
-
-msgid ""
-"Renchans/honba are calculated automatically. Also points and payments "
-"checks are performed: in case of any inconsistency the alert is displayed."
-msgstr ""
-
-msgid "Player aliases"
 msgstr ""
 
 msgid "Something went wrong: %s"
@@ -269,6 +427,24 @@ msgstr ""
 msgid "Sorry, this page is not available for mobile devices"
 msgstr ""
 
+msgid "Aggregated event"
+msgstr ""
+
+msgid "Rules overview"
+msgstr ""
+
+msgid "Best series"
+msgstr ""
+
+msgid "Points of best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Points of last series"
+msgstr ""
+
 msgid "Players management"
 msgstr ""
 
@@ -303,140 +479,6 @@ msgstr ""
 
 msgid "Save local IDs"
 msgstr ""
-
-msgid "Achievements"
-msgstr ""
-
-msgid "Achievement"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "Value"
-msgstr ""
-
-msgid "Nominees"
-msgstr ""
-
-msgid "Best hand"
-msgstr ""
-
-msgid "Given for collecting the hand with biggest han count (independent of cost)."
-msgstr ""
-
-msgid "Over 9000 fu"
-msgstr ""
-
-msgid "Given for collecting the hand with biggest minipoints (fu) count."
-msgstr ""
-
-msgid "%s fu"
-msgstr ""
-
-msgid "I saw them dancing"
-msgstr ""
-
-msgid "Given for collecting the most of tsumo hands during single game."
-msgstr ""
-
-msgid "Die Hard"
-msgstr ""
-
-msgid "Given for smallest count of feeding into ron during the tournament."
-msgstr ""
-
-msgid "Brave minesweeper"
-msgstr ""
-
-msgid "Given for largest count of feeding into ron during the tournament."
-msgstr ""
-
-msgid "Chombo master"
-msgstr ""
-
-msgid "Given for collecting a chombo during a tournament."
-msgstr ""
-
-msgid "%s: %d chombo penalty"
-msgid_plural "%s: %d chombo penalties"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "Guest of honors"
-msgstr ""
-
-msgid "Given for collecting the most of yakuhais during the tournament."
-msgstr ""
-
-msgid "%s: %d yakuhai"
-msgid_plural "%s: %d yakuhais"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "The great dealer"
-msgstr ""
-
-msgid "Given for largest count of dealer wins during the tournament."
-msgstr ""
-
-msgid "%d win"
-msgid_plural "%d wins"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "The 1k Flash"
-msgstr ""
-
-msgid "Given for the most of 1/30 wins during tournament."
-msgstr ""
-
-msgid "%d quickest hand"
-msgid_plural "%d quickest hands"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "Jewelry included"
-msgstr ""
-
-msgid "Given for collecting a yakuman during tournament."
-msgstr ""
-
-msgid "This can't be your wait"
-msgstr ""
-
-msgid ""
-"Given for feeding into largest hand during tournament (but not while in "
-"riichi)."
-msgstr ""
-
-msgid "%s han, %s fu"
-msgstr ""
-
-msgid "%s han"
-msgstr ""
-
-msgid "Honored donor"
-msgstr ""
-
-msgid "Given for losing largest amount of points as riichi bets."
-msgstr ""
-
-msgid "%s bet"
-msgid_plural "%s bets"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "Just as planned"
-msgstr ""
-
-msgid "Given for getting largest number of ippatsu during tournament."
-msgstr ""
-
-msgid "%s ippatsu"
-msgid_plural "%s ippatsu"
-msgstr[0] ""
-msgstr[1] ""
 
 msgid "No time left!"
 msgstr ""
@@ -477,28 +519,13 @@ msgstr ""
 msgid "Games played"
 msgstr ""
 
-msgid "Statistics"
+msgid "Recent games"
 msgstr ""
 
-msgid "Welcome to game statistics system."
+msgid "No games has been played yet"
 msgstr ""
 
-msgid "Click here to start"
-msgstr ""
-
-msgid "You are viewing the abbreviated statistics for mobile devices."
-msgstr ""
-
-msgid "Player #%d"
-msgstr ""
-
-msgid "Best series:"
-msgstr ""
-
-msgid "Points:"
-msgstr ""
-
-msgid "Ongoing series:"
+msgid "%d - %d (%d total)"
 msgstr ""
 
 msgid "Confirm round cancellation: "
@@ -526,33 +553,6 @@ msgid "Penalties:"
 msgstr ""
 
 msgid "%s - %s points of penalty. Reason: %s"
-msgstr ""
-
-msgid "Aggregated event"
-msgstr ""
-
-msgid "Rules overview"
-msgstr ""
-
-msgid "Best series"
-msgstr ""
-
-msgid "Points of best series"
-msgstr ""
-
-msgid "Last series"
-msgstr ""
-
-msgid "Points of last series"
-msgstr ""
-
-msgid "Recent games"
-msgstr ""
-
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
 msgstr ""
 
 msgid "Admin panel"
@@ -1211,30 +1211,3 @@ msgstr ""
 #, php-format
 msgid "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s"
 msgstr ""
-
-msgid "All players"
-msgstr ""
-
-#, php-format
-msgid "Played at least %d games"
-msgid_plural "Played at least %d game"
-msgstr[0] ""
-msgstr[1] ""
-
-#, php-format
-msgid "Played less then %d games"
-msgid_plural "Played less then %d game"
-msgstr[0] ""
-msgstr[1] ""
-
-#, php-format
-msgid "Played at least %d game"
-msgid_plural "Played at least %d games"
-msgstr[0] ""
-msgstr[1] ""
-
-#, php-format
-msgid "Played less then %d game"
-msgid_plural "Played less then %d games"
-msgstr[0] ""
-msgstr[1] ""

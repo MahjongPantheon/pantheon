@@ -18,9 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-msgid "Game details"
-msgstr "Подробнее об игре"
-
 msgid "Additional penalties"
 msgstr "Дополнительные штрафы"
 
@@ -46,14 +43,8 @@ msgstr "Проверьте дважды введенные данные. Отм�
 msgid "Apply penalty"
 msgstr "Применить штраф"
 
-msgid "Add online game"
-msgstr "Добавить онлайн-игру"
-
-msgid "The game has been successfully added!"
-msgstr "Игра успешно добавлена!"
-
-msgid "Add game"
-msgstr "Добавить игру"
+msgid "Game details"
+msgstr "Подробнее об игре"
 
 msgid "Add player"
 msgstr "Добавить игрока"
@@ -89,6 +80,204 @@ msgstr "Реальное имя"
 msgid "Register"
 msgstr "Зарегистрировать"
 
+msgid "Add online game"
+msgstr "Добавить онлайн-игру"
+
+msgid "The game has been successfully added!"
+msgstr "Игра успешно добавлена!"
+
+msgid "Add game"
+msgstr "Добавить игру"
+
+msgid "Going back in 3 seconds..."
+msgstr "Идем назад через 3 секунды..."
+
+msgid "Add new game"
+msgstr "Добавить новую игру"
+
+msgid "Format:"
+msgstr "Формат:"
+
+msgid "Example:"
+msgstr "Пример:"
+
+msgid ""
+"Renchans/honba are calculated automatically. Also points and payments checks "
+"are performed: in case of any inconsistency the alert is displayed."
+msgstr ""
+"Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
+"системой, в случае несоответствия будет выдано предупреждение."
+
+msgid "Player aliases"
+msgstr "Алиасы"
+
+msgid "Achievements"
+msgstr "Номинации"
+
+msgid "Achievement"
+msgstr "Номинация"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Value"
+msgstr "Значение"
+
+msgid "Nominees"
+msgstr "Номинанты"
+
+msgid "Best hand"
+msgstr "Лучшая рука"
+
+msgid ""
+"Given for collecting the hand with biggest han count (independent of cost)."
+msgstr "Дается за сбор руки с наибольшим число хан (независимо от стоимости)"
+
+msgid "Over 9000 fu"
+msgstr "Over 9000 fu"
+
+msgid "Given for collecting the hand with biggest minipoints (fu) count."
+msgstr "Дается за сбор руки с наибольшим количеством минипойнтов (фу)."
+
+msgid "%s fu"
+msgstr "%s фу"
+
+msgid "I saw them dancing"
+msgstr "Задолбал!"
+
+msgid "Given for collecting the most of tsumo hands during single game."
+msgstr "Дается за сбор максимального числа цумо в рамках одного ханчана."
+
+msgid "Die Hard"
+msgstr "Крепкий орешек"
+
+msgid "Given for smallest count of feeding into ron during the tournament."
+msgstr "Дается за минимальное число набросов в рон за турнир."
+
+msgid "Brave minesweeper"
+msgstr "Бравый сапёр"
+
+msgid "Given for largest count of feeding into ron during the tournament."
+msgstr "Дается за максимальное число набросов в рон за турнир."
+
+msgid "Chombo master"
+msgstr "Чомбо-мастер"
+
+msgid "Given for collecting a chombo during a tournament."
+msgstr "Дается за получение штрафа чомбо на турнире."
+
+msgid "%s: %d chombo penalty"
+msgid_plural "%s: %d chombo penalties"
+msgstr[0] "%s: %d штраф чомбо"
+msgstr[1] "%s: %d штрафа чомбо"
+msgstr[2] "%s: %d штрафов чомбо"
+
+msgid "Guest of honors"
+msgstr "Довакин aka The mother of dragons"
+
+msgid "Given for collecting the most of yakuhais during the tournament."
+msgstr "Дается за сбор максимального числа якухаев за турнир."
+
+msgid "%s: %d yakuhai"
+msgid_plural "%s: %d yakuhais"
+msgstr[0] "%s: %d якухай"
+msgstr[1] "%s: %d якухая"
+msgstr[2] "%s: %d якухаев"
+
+msgid "The great dealer"
+msgstr "Восточный мастер"
+
+msgid "Given for largest count of dealer wins during the tournament."
+msgstr "Дается за максимальное число побед на дилере суммарно за турнир."
+
+msgid "%d win"
+msgid_plural "%d wins"
+msgstr[0] "%d победа"
+msgstr[1] "%d победы"
+msgstr[2] "%d побед"
+
+msgid "The 1k Flash"
+msgstr "Мистер Хэнки"
+
+msgid "Given for the most of 1/30 wins during tournament."
+msgstr "Дается за максимальное число собранных рук в 1/30 за весь турнир."
+
+msgid "%d quickest hand"
+msgid_plural "%d quickest hands"
+msgstr[0] "%d самая быстрая рука"
+msgstr[1] "%d самых быстрых руки"
+msgstr[2] "%d самых быстрых рук"
+
+msgid "Jewelry included"
+msgstr "Якуман-мастер"
+
+msgid "Given for collecting a yakuman during tournament."
+msgstr "Дается за сбор якумана на турнире."
+
+msgid "This can't be your wait"
+msgstr "Он не может на это ждать"
+
+msgid ""
+"Given for feeding into largest hand during tournament (but not while in "
+"riichi)."
+msgstr ""
+"Дается за наброс в наибольшую по стоимости руку за весь турнир (но не из-под "
+"риичи)."
+
+msgid "%s han, %s fu"
+msgstr "%s хан, %s фу"
+
+msgid "%s han"
+msgstr "%s хан"
+
+msgid "Honored donor"
+msgstr "Почетный донор"
+
+msgid "Given for losing largest amount of points as riichi bets."
+msgstr "Дается за потерю максимального числа очков за счет риичи-ставок."
+
+msgid "%s bet"
+msgid_plural "%s bets"
+msgstr[0] "%s ставка"
+msgstr[1] "%s ставки"
+msgstr[2] "%s ставок"
+
+msgid "Just as planned"
+msgstr "Как и планировалось"
+
+msgid "Given for getting largest number of ippatsu during tournament."
+msgstr "Дается за максимальное число побед с иппацу за турнир."
+
+msgid "%s ippatsu"
+msgid_plural "%s ippatsu"
+msgstr[0] "%s иппацу"
+msgstr[1] "%s иппацу"
+msgstr[2] "%s иппацу"
+
+msgid "Statistics"
+msgstr "Статистика"
+
+msgid "Welcome to game statistics system."
+msgstr "Добро пожаловать в систему игровой статистики."
+
+msgid "Click here to start"
+msgstr "Нажмите здесь для начала работы"
+
+msgid "You are viewing the abbreviated statistics for mobile devices."
+msgstr "Вы просматриваете сокращенную статистику для мобильных устройств."
+
+msgid "Player #%d"
+msgstr "Игрок №%d"
+
+msgid "Best series:"
+msgstr "Лучшая серия:"
+
+msgid "Points:"
+msgstr "Очки:"
+
+msgid "Ongoing series:"
+msgstr "Текущая серия:"
+
 msgid "Predefined seating configuration"
 msgstr "Конфигурация предопределенной рассадки"
 
@@ -111,9 +300,6 @@ msgstr ""
 "Предопределенная рассадка вводится как список столов, один стол на строку. "
 "Следующий ханчан должен быть отделен от предыдущего пустой строкой."
 
-msgid "Example:"
-msgstr "Пример:"
-
 msgid ""
 "In this example, two tables play two games. Numbers in seating persist "
 "between games and are defined at Admin actions / Manage players page."
@@ -121,25 +307,6 @@ msgstr ""
 "В этом примере два стола играют два ханчана. Указанные номера сохраняются "
 "между играми и определяются на странице \"Действия администратора\" / "
 "\"Управление игроками\"."
-
-msgid "Going back in 3 seconds..."
-msgstr "Идем назад через 3 секунды..."
-
-msgid "Add new game"
-msgstr "Добавить новую игру"
-
-msgid "Format:"
-msgstr "Формат:"
-
-msgid ""
-"Renchans/honba are calculated automatically. Also points and payments checks "
-"are performed: in case of any inconsistency the alert is displayed."
-msgstr ""
-"Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
-"системой, в случае несоответствия будет выдано предупреждение."
-
-msgid "Player aliases"
-msgstr "Алиасы"
 
 msgid "Something went wrong: %s"
 msgstr "Что-то пошло не так, и вот что именно: %s"
@@ -318,6 +485,24 @@ msgstr "Утвердить результаты и завершить игры"
 msgid "Sorry, this page is not available for mobile devices"
 msgstr "Извините, эта страница недоступна для мобильных устройств"
 
+msgid "Aggregated event"
+msgstr "Агрегированное событие"
+
+msgid "Rules overview"
+msgstr "Обзор правил"
+
+msgid "Best series"
+msgstr "Лучшая серия"
+
+msgid "Points of best series"
+msgstr "Очки в лучшей серии"
+
+msgid "Last series"
+msgstr "Текущая серия"
+
+msgid "Points of last series"
+msgstr "Очки в текущей серии"
+
 msgid "Players management"
 msgstr "Управление игроками"
 
@@ -354,149 +539,6 @@ msgstr ""
 
 msgid "Save local IDs"
 msgstr "Сохранить локальные ID"
-
-msgid "Achievements"
-msgstr "Номинации"
-
-msgid "Achievement"
-msgstr "Номинация"
-
-msgid "Description"
-msgstr "Описание"
-
-msgid "Value"
-msgstr "Значение"
-
-msgid "Nominees"
-msgstr "Номинанты"
-
-msgid "Best hand"
-msgstr "Лучшая рука"
-
-msgid ""
-"Given for collecting the hand with biggest han count (independent of cost)."
-msgstr "Дается за сбор руки с наибольшим число хан (независимо от стоимости)"
-
-msgid "Over 9000 fu"
-msgstr "Over 9000 fu"
-
-msgid "Given for collecting the hand with biggest minipoints (fu) count."
-msgstr "Дается за сбор руки с наибольшим количеством минипойнтов (фу)."
-
-msgid "%s fu"
-msgstr "%s фу"
-
-msgid "I saw them dancing"
-msgstr "Задолбал!"
-
-msgid "Given for collecting the most of tsumo hands during single game."
-msgstr "Дается за сбор максимального числа цумо в рамках одного ханчана."
-
-msgid "Die Hard"
-msgstr "Крепкий орешек"
-
-msgid "Given for smallest count of feeding into ron during the tournament."
-msgstr "Дается за минимальное число набросов в рон за турнир."
-
-msgid "Brave minesweeper"
-msgstr "Бравый сапёр"
-
-msgid "Given for largest count of feeding into ron during the tournament."
-msgstr "Дается за максимальное число набросов в рон за турнир."
-
-msgid "Chombo master"
-msgstr "Чомбо-мастер"
-
-msgid "Given for collecting a chombo during a tournament."
-msgstr "Дается за получение штрафа чомбо на турнире."
-
-msgid "%s: %d chombo penalty"
-msgid_plural "%s: %d chombo penalties"
-msgstr[0] "%s: %d штраф чомбо"
-msgstr[1] "%s: %d штрафа чомбо"
-msgstr[2] "%s: %d штрафов чомбо"
-
-msgid "Guest of honors"
-msgstr "Довакин aka The mother of dragons"
-
-msgid "Given for collecting the most of yakuhais during the tournament."
-msgstr "Дается за сбор максимального числа якухаев за турнир."
-
-msgid "%s: %d yakuhai"
-msgid_plural "%s: %d yakuhais"
-msgstr[0] "%s: %d якухай"
-msgstr[1] "%s: %d якухая"
-msgstr[2] "%s: %d якухаев"
-
-msgid "The great dealer"
-msgstr "Восточный мастер"
-
-msgid "Given for largest count of dealer wins during the tournament."
-msgstr "Дается за максимальное число побед на дилере суммарно за турнир."
-
-msgid "%d win"
-msgid_plural "%d wins"
-msgstr[0] "%d победа"
-msgstr[1] "%d победы"
-msgstr[2] "%d побед"
-
-msgid "The 1k Flash"
-msgstr "Мистер Хэнки"
-
-msgid "Given for the most of 1/30 wins during tournament."
-msgstr "Дается за максимальное число собранных рук в 1/30 за весь турнир."
-
-msgid "%d quickest hand"
-msgid_plural "%d quickest hands"
-msgstr[0] "%d самая быстрая рука"
-msgstr[1] "%d самых быстрых руки"
-msgstr[2] "%d самых быстрых рук"
-
-msgid "Jewelry included"
-msgstr "Якуман-мастер"
-
-msgid "Given for collecting a yakuman during tournament."
-msgstr "Дается за сбор якумана на турнире."
-
-msgid "This can't be your wait"
-msgstr "Он не может на это ждать"
-
-msgid ""
-"Given for feeding into largest hand during tournament (but not while in "
-"riichi)."
-msgstr ""
-"Дается за наброс в наибольшую по стоимости руку за весь турнир (но не из-под "
-"риичи)."
-
-msgid "%s han, %s fu"
-msgstr "%s хан, %s фу"
-
-msgid "%s han"
-msgstr "%s хан"
-
-msgid "Honored donor"
-msgstr "Почетный донор"
-
-msgid "Given for losing largest amount of points as riichi bets."
-msgstr "Дается за потерю максимального числа очков за счет риичи-ставок."
-
-msgid "%s bet"
-msgid_plural "%s bets"
-msgstr[0] "%s ставка"
-msgstr[1] "%s ставки"
-msgstr[2] "%s ставок"
-
-msgid "Just as planned"
-msgstr "Как и планировалось"
-
-msgid "Given for getting largest number of ippatsu during tournament."
-msgstr "Дается за максимальное число побед с иппацу за турнир."
-
-msgid "%s ippatsu"
-msgid_plural "%s ippatsu"
-msgstr[0] "%s иппацу"
-msgstr[1] "%s иппацу"
-msgstr[2] "%s иппацу"
 
 msgid "No time left!"
 msgstr "СТОП!"
@@ -537,29 +579,14 @@ msgstr "Средние очки"
 msgid "Games played"
 msgstr "Сыграно игр"
 
-msgid "Statistics"
-msgstr "Статистика"
+msgid "Recent games"
+msgstr "Последние игры"
 
-msgid "Welcome to game statistics system."
-msgstr "Добро пожаловать в систему игровой статистики."
+msgid "No games has been played yet"
+msgstr "Ни одной игры еще не сыграно"
 
-msgid "Click here to start"
-msgstr "Нажмите здесь для начала работы"
-
-msgid "You are viewing the abbreviated statistics for mobile devices."
-msgstr "Вы просматриваете сокращенную статистику для мобильных устройств."
-
-msgid "Player #%d"
-msgstr "Игрок №%d"
-
-msgid "Best series:"
-msgstr "Лучшая серия:"
-
-msgid "Points:"
-msgstr "Очки:"
-
-msgid "Ongoing series:"
-msgstr "Текущая серия:"
+msgid "%d - %d (%d total)"
+msgstr "%d - %d (всего %d)"
 
 msgid "Confirm round cancellation: "
 msgstr "Подтвердите отмену раздачи: "
@@ -587,33 +614,6 @@ msgstr "Штрафы:"
 
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr "%s - штраф %s очков. Причина: %s"
-
-msgid "Aggregated event"
-msgstr "Агрегированное событие"
-
-msgid "Rules overview"
-msgstr "Обзор правил"
-
-msgid "Best series"
-msgstr "Лучшая серия"
-
-msgid "Points of best series"
-msgstr "Очки в лучшей серии"
-
-msgid "Last series"
-msgstr "Текущая серия"
-
-msgid "Points of last series"
-msgstr "Очки в текущей серии"
-
-msgid "Recent games"
-msgstr "Последние игры"
-
-msgid "No games has been played yet"
-msgstr "Ни одной игры еще не сыграно"
-
-msgid "%d - %d (%d total)"
-msgstr "%d - %d (всего %d)"
 
 msgid "Admin panel"
 msgstr "Администрирование"
@@ -1287,37 +1287,6 @@ msgstr "Нагаши манган - %s; риичи - %s; темпай - %s"
 #, php-format
 msgid "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s"
 msgstr "Нагаши манган - %s, %s; риичи - %s; темпай - %s"
-
-msgid "All players"
-msgstr "Все игроки"
-
-#, php-format
-msgid "Played at least %d games"
-msgid_plural "Played at least %d game"
-msgstr[0] "Сыгравшие хотя бы %d игру"
-msgstr[1] "Сыгравшие хотя бы %d игры"
-msgstr[2] "Сыгравшие хотя бы %d игр"
-
-#, php-format
-msgid "Played less then %d games"
-msgid_plural "Played less then %d game"
-msgstr[0] "Сыгравшие менее %d игры"
-msgstr[1] "Сыгравшие менее %d игр"
-msgstr[2] "Сыгравшие менее %d игр"
-
-#, php-format
-msgid "Played at least %d game"
-msgid_plural "Played at least %d games"
-msgstr[0] "Сыгравшие хотя бы %d игру"
-msgstr[1] "Сыгравшие хотя бы %d игры"
-msgstr[2] "Сыгравшие хотя бы %d игр"
-
-#, php-format
-msgid "Played less then %d game"
-msgid_plural "Played less then %d games"
-msgstr[0] "Сыгравшие менее %d игры"
-msgstr[1] "Сыгравшие менее %d игр"
-msgstr[2] "Сыгравшие менее %d игр"
 
 #~ msgid "You can't wait on this"
 #~ msgstr "Он не может на это ждать"
