@@ -141,6 +141,17 @@ class RatingTable extends Controller
                     default:
                         throw new InvalidParametersException("Parameter players should be either 'all', 'min-played' or 'min-not-played'");
                 }
+            } else {
+                // Merge players who didn't finish yet into rating table
+                $data = array_merge($data, array_map(function ($el) {
+                    return array_merge($el, [
+                        'rating'        => '0',
+                        'winner_zone'   => true,
+                        'avg_place'     => '0',
+                        'avg_score'     => '0',
+                        'games_played'  => '0'
+                    ]);
+                }, array_values($players)));
             }
 
             // Assign indexes for table view
