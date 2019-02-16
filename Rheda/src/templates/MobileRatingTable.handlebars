@@ -61,7 +61,7 @@
 
     .row-min-was-played:nth-of-type(even) {
         background-color: rgba(0, 255, 129, 0.12);
-    }    
+    }
     .row-min-was-played:nth-of-type(odd) {
         background-color: rgba(96, 201, 149, 0.27) !important;
     }
@@ -87,6 +87,10 @@
     {{/showAdminWarning}}
 
     {{^hideResults}}
+        {{#if isTeamTournament}}
+            <p>{{#a href='/stat/team'}}{{_t 'Team table'}}{{/a}}</p>
+        {{/if}}
+
       {{#withMinGamesCount}}
         <select onChange="onChange(this.value)">
           {{#each showPlayersOptions}}
@@ -107,7 +111,12 @@
             {{#data}}
                  <tr class="{{#min_was_played}}row-min-was-played{{/min_was_played}}">
                     <td>{{_index}}</td>
-                    <td>{{#a href='/user/{id}/'}}<nobr>{{short_name}}</nobr>{{/a}}</td>
+                    <td>
+                      {{#a href='/user/{id}/'}}<nobr>{{short_name}}</nobr>{{/a}} {{#if isOnlineTournament}} ({{tenhou_id}}){{/if}}
+                      {{#if isTeamTournament}}
+                        <br>{{team_name}}
+                      {{/if}}
+                    </td>
                     <td class="cn"><span class="badge
                          {{#winner_zone}}success{{/winner_zone}}
                         {{^winner_zone}}danger{{/winner_zone}}

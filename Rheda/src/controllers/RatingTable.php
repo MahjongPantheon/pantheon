@@ -75,6 +75,8 @@ class RatingTable extends Controller
                 }
         }
 
+        $playedGames = 0;
+
         $minGamesCount = $this->_mainEventRules->minGamesCount();
         $withMinGamesCount = $minGamesCount != 0;
         $showPlayers = !$withMinGamesCount || empty($_GET['players']) ? 'all' : $_GET['players'];
@@ -89,6 +91,13 @@ class RatingTable extends Controller
                 $order,
                 $this->_adminAuthOk() // show prefinished results only for admins
             ]);
+
+            $teamNames = [];
+            if ($this->_mainEventRules->isTeam()) {
+                array_map(function ($el) use (&$players, &$teamNames) {
+                    $teamNames[$el['id']] = $players[$el['id']]['team_name'];
+                }, $players);
+            }
 
             array_map(function ($el) use (&$players) {
                 // remove from common list - user exists in history
@@ -132,20 +141,46 @@ class RatingTable extends Controller
                     default:
                         throw new InvalidParametersException("Parameter players should be either 'all', 'min-played' or 'min-not-played'");
                 }
+            } else {
+                // Merge players who didn't finish yet into rating table
+                $data = array_merge($data, array_map(function ($el) {
+                    return array_merge($el, [
+                        'rating'        => '0',
+                        'winner_zone'   => true,
+                        'avg_place'     => '0',
+                        'avg_score'     => '0',
+                        'games_played'  => '0'
+                    ]);
+                }, array_values($players)));
             }
 
             // Assign indexes for table view
             $ctr = 1;
-            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount) {
+            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount, &$teamNames, &$playedGames) {
+                $teamName = null;
+                if ($this->_mainEventRules->isTeam()) {
+                    $teamName = $teamNames[$el['id']];
+                }
+
                 $el['_index'] = $ctr++;
                 $el['short_name'] = $this->_makeShortName($el['display_name']);
                 $el['avg_place_less_precision'] = sprintf('%.2f', $el['avg_place']);
                 $el['avg_score_int'] = round($el['avg_score']);
                 $el['min_was_played'] = $minGamesCount != 0 && $minGamesCount <= $el['games_played'];
+                $el['team_name'] = $teamName;
+
+                $playedGames += $el['games_played'];
+
                 return $el;
             }, $data);
         } catch (Exception $e) {
             $errMsg = $e->getMessage();
+        }
+
+        if ($playedGames == 0 && $this->_mainEventRules->isTeam()) {
+            usort($data, function ($a, $b) {
+                return strcmp($b['team_name'], $a['team_name']);
+            });
         }
 
         $hideResults = $this->_mainEventRules->hideResults();
@@ -181,7 +216,9 @@ class RatingTable extends Controller
             'data'              => $data,
 
             'orderDesc'         => $order == 'desc',
-            'isOnlineTournament' => $this->_mainEventRules->isOnline(),
+
+            'isOnlineTournament'  => $this->_mainEventRules->isOnline(),
+            'isTeamTournament'    => $this->_mainEventRules->isTeam(),
 
             'orderByRating'     => $orderBy == 'rating',
             'orderByAvgPlace'   => $orderBy == 'avg_place',

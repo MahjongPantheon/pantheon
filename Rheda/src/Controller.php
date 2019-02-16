@@ -192,6 +192,7 @@ abstract class Controller
                 /* Simple events. */
                 echo $templateEngine->render($add . 'Layout', [
                     'isOnline' => $this->_mainEventRules->isOnline(),
+                    'isTeam' => $this->_mainEventRules->isTeam(),
                     'useTimer' => $this->_mainEventRules->useTimer(),
                     'isTournament' => !$this->_mainEventRules->allowPlayerAppend(),
                     'usePenalty' => $this->_mainEventRules->usePenalty(),
