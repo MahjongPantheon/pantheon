@@ -97,7 +97,7 @@ class TeamTable extends Controller
             $showAdminWarning = true;
         }
 
-        usort($commands, function($a, $b) {
+        usort($commands, function ($a, $b) {
             return $b['total_rating'] - $a['total_rating'];
         });
 
