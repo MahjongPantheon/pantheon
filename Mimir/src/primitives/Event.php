@@ -44,6 +44,7 @@ class EventPrimitive extends Primitive
         'owner_player'      => '_ownerPlayerId',
         'type'              => '_type', // DEPRECATED: to be removed in 2.x
         'is_online'         => '_isOnline',
+        'is_team'           => '_isTeam',
         'is_textlog'        => '_isTextlog',
         'sync_start'        => '_syncStart',
         'sync_end'          => '_syncEnd',
@@ -76,6 +77,7 @@ class EventPrimitive extends Primitive
             '_lobbyId'            => $this->_integerTransform(true),
             '_type'               => $this->_stringTransform(), // DEPRECATED: to be removed in 2.x
             '_isOnline'           => $this->_integerTransform(),
+            '_isTeam'             => $this->_integerTransform(),
             '_isTextlog'          => $this->_integerTransform(),
             '_isPrescripted'      => $this->_integerTransform(),
             '_syncStart'          => $this->_integerTransform(),
@@ -210,6 +212,11 @@ class EventPrimitive extends Primitive
      * @var int
      */
     protected $_isOnline;
+    /**
+     * if true, event is treated as team tournament
+     * @var int
+     */
+    protected $_isTeam;
     /**
      * if true, timer is shown in mobile app, also timer page is available in administration tools
      * @var int
@@ -689,6 +696,14 @@ class EventPrimitive extends Primitive
     }
 
     /**
+     * @return int
+     */
+    public function getIsTeam()
+    {
+        return $this->_isTeam;
+    }
+
+    /**
      * @param int $isOnline
      * @return EventPrimitive
      */
@@ -698,6 +713,16 @@ class EventPrimitive extends Primitive
         if ($isOnline) {
             $this->_type = 'online'; // DEPRECATED: to be removed in 2.x
         }
+        return $this;
+    }
+
+    /**
+     * @param int $isTeam
+     * @return EventPrimitive
+     */
+    public function setIsTeam($isTeam)
+    {
+        $this->_isTeam = $isTeam;
         return $this;
     }
 

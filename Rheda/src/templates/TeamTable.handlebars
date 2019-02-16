@@ -1,0 +1,89 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<style>
+    .no-stripped {
+      table-layout: fixed;
+      min-width: 400px;
+    }
+
+    .no-stripped tr {
+        background-color: inherit !important;
+    }
+    .no-stripped td {
+        border-top: none !important;
+    }
+    .centered {
+        vertical-align: middle !important;
+        text-align: center;
+    }
+</style>
+
+<h3>{{_t 'Team table'}}</h3>
+<br>
+{{#error}}
+    <div class="alert alert-error">{{error}}</div>
+{{/error}}
+
+{{#hideResults}}
+    <p>{{_t 'Rating table has been hidden by tournament administrator'}}</p>
+{{/hideResults}}
+
+{{#showAdminWarning}}
+    <div class="alert alert-success">
+        <p>{{_t 'These results are visible only for tournament administrator'}}</p>
+    </div>
+{{/showAdminWarning}}
+
+{{^hideResults}}
+    <table class="table table-striped table-condensed">
+        <tr>
+            <th>{{_t 'Team'}}</th>
+            <th class="centered">{{_t 'Rating points'}}</th>
+            <th>{{_t 'Players'}}</th>
+        </tr>
+        {{#each teams}}
+            <tr>
+              <td class="centered"><b>{{this.team_name}}</b></td>
+              <td class="centered">
+                <span class="badge
+                  {{#this.winner_zone}}badge-success{{/this.winner_zone}}
+                  {{^this.winner_zone}}badge-danger{{/this.winner_zone}}
+                ">{{this.total_rating}}</span>
+              </td>
+              <td>
+                  <table class="no-stripped">
+                      <col style="width: 50%" span="2" />
+
+                      {{#each this.players}}
+                        <tr>
+                            <td>
+                              {{#a href='/user/{id}/'}}{{this.display_name}}{{/a}}{{#if isOnlineTournament}} ({{this.tenhou_id}}){{/if}}
+                            </td>
+                            <td>
+                              <span class="badge
+                                {{#this.winner_zone}}badge-success{{/this.winner_zone}}
+                                {{^this.winner_zone}}badge-danger{{/this.winner_zone}}
+                              ">{{this.rating}}</span>
+                            </td>
+                        </tr>
+                      {{/each}}
+                  </table>
+              </td>
+            </tr>
+        {{/each}}
+    </table>
+{{/hideResults}}

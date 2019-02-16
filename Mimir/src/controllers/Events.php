@@ -85,25 +85,30 @@ class EventsController extends Controller
             throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
+        $needLocalIds = false;
         if (count($eventIdList) == 1 && $eventList[0]->getIsPrescripted()) {
             $needLocalIds = true;
-        } else {
-            $needLocalIds = false;
         }
 
         $players = PlayerRegistrationPrimitive::findRegisteredPlayersByEventList($this->_db, $eventIdList);
         $localMap = [];
+        $teamNames = [];
 
         if ($needLocalIds) {
             $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventIdList[0]));
         }
 
-        $data = array_map(function (PlayerPrimitive $p) use (&$localMap) {
+        if ($eventList[0]->getIsTeam()) {
+            $teamNames = PlayerRegistrationPrimitive::findTeamNameMapByEvent($this->_db, $eventIdList[0]);
+        }
+
+        $data = array_map(function (PlayerPrimitive $p) use (&$localMap, &$teamNames) {
             return [
                 'id'            => $p->getId(),
                 'display_name'  => $p->getDisplayName(),
                 'alias'         => $p->getAlias(),
                 'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
+                'team_name'  => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
                 'tenhou_id'     => $p->getTenhouId()
             ];
         }, $players);
@@ -397,6 +402,7 @@ class EventsController extends Controller
             'gameDuration'        => $event[0]->getGameDuration(), // in minutes!
             'timezone'            => $event[0]->getTimezone(),
             'isOnline'            => (bool)$event[0]->getIsOnline(),
+            'isTeam'              => (bool)$event[0]->getIsTeam(),
             'autoSeating'         => (bool)$event[0]->getAutoSeating(),
             'isTextlog'           => (bool)$event[0]->getIsTextlog(),
             'syncStart'           => (bool)$event[0]->getSyncStart(),

@@ -7,39 +7,175 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgid "Aggregated event"
+msgstr ""
+
+msgid "Rules overview"
+msgstr ""
+
+msgid "Player"
+msgstr ""
+
+msgid "Best series"
+msgstr ""
+
+msgid "Points of best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Points of last series"
+msgstr ""
+
 msgid "Game details"
 msgstr ""
 
-msgid "Additional penalties"
+msgid "Recent games"
 msgstr ""
 
-msgid ""
-"A penalty may be applied only to player currently in game. Otherwise error "
-"will occur."
+msgid "No games has been played yet"
 msgstr ""
 
-msgid "Select player"
+msgid "%d - %d (%d total)"
 msgstr ""
 
-msgid "Penalty amount"
+msgid "Later"
 msgstr ""
 
-msgid "Penalty reason"
+msgid "Earlier"
 msgstr ""
 
-msgid "Check twice penalty data. You won't be able to cancel the penalty"
+msgid "Personal stats"
 msgstr ""
 
-msgid "Apply penalty"
+msgid "Player: %s"
 msgstr ""
 
-msgid "Add online game"
+msgid "No stats are available yet"
 msgstr ""
 
-msgid "The game has been successfully added!"
+msgid "Rating graph"
 msgstr ""
 
-msgid "Add game"
+msgid "Common stats"
+msgstr ""
+
+msgid "Games played"
+msgstr ""
+
+msgid "Rounds played"
+msgstr ""
+
+msgid "Rounds won"
+msgstr ""
+
+msgid "Round details:"
+msgstr ""
+
+msgid "Ron wins"
+msgstr ""
+
+msgid "Tsumo wins"
+msgstr ""
+
+msgid "Ron feeds"
+msgstr ""
+
+msgid "because of riichi"
+msgstr ""
+
+msgid "Tsumo losses"
+msgstr ""
+
+msgid "Open hands"
+msgstr ""
+
+msgid "Chombo penalties"
+msgstr ""
+
+msgid "Riichi bets"
+msgstr ""
+
+msgid "bets won"
+msgstr ""
+
+msgid "bets lost"
+msgstr ""
+
+msgid "Places stat:"
+msgstr ""
+
+msgid "1st place"
+msgstr ""
+
+msgid "2nd place"
+msgstr ""
+
+msgid "3rd place"
+msgstr ""
+
+msgid "4th place"
+msgstr ""
+
+msgid "Final game points:"
+msgstr ""
+
+msgid "Minimal"
+msgstr ""
+
+msgid "Maximal"
+msgstr ""
+
+msgid "Average"
+msgstr ""
+
+msgid "Hands value"
+msgstr ""
+
+msgid "Yaku collected over all time"
+msgstr ""
+
+msgid "Statistics"
+msgstr ""
+
+msgid "Welcome to game statistics system."
+msgstr ""
+
+msgid "Click here to start"
+msgstr ""
+
+msgid "You are viewing the abbreviated statistics for mobile devices."
+msgstr ""
+
+msgid "Player #%d"
+msgstr ""
+
+msgid "Best series:"
+msgstr ""
+
+msgid "Points:"
+msgstr ""
+
+msgid "Ongoing series:"
+msgstr ""
+
+msgid "Team table"
+msgstr ""
+
+msgid "Rating table has been hidden by tournament administrator"
+msgstr ""
+
+msgid "These results are visible only for tournament administrator"
+msgstr ""
+
+msgid "Team"
+msgstr ""
+
+msgid "Rating points"
+msgstr ""
+
+msgid "Players"
 msgstr ""
 
 msgid "Add player"
@@ -51,9 +187,6 @@ msgstr ""
 msgid ""
 "Note: if a player is already added to the rating, adding him again will "
 "result in reissuing his PIN code."
-msgstr ""
-
-msgid "Player"
 msgstr ""
 
 msgid "Admin actions"
@@ -74,237 +207,40 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-msgid "Predefined seating configuration"
+msgid "Add online game"
 msgstr ""
 
-msgid "Next session index (starting from 1):"
+msgid "The game has been successfully added!"
 msgstr ""
 
-msgid "Update predefined seating config"
+msgid "Add game"
 msgstr ""
 
-msgid "Found errors:"
+msgid "Rating table"
 msgstr ""
 
-msgid "No errors found."
+msgid "Tournament control panel"
 msgstr ""
 
-msgid ""
-"Predefined seating is entered as list of tables, one table per row. New "
-"game session should be indicated as an empty line."
+msgid "Games control panel"
 msgstr ""
 
-msgid "Example:"
+msgid "Penalties"
 msgstr ""
 
-msgid ""
-"In this example, two tables play two games. Numbers in seating persist "
-"between games and are defined at Admin actions / Manage players page."
-msgstr ""
-
-msgid "Going back in 3 seconds..."
-msgstr ""
-
-msgid "Add new game"
-msgstr ""
-
-msgid "Format:"
-msgstr ""
-
-msgid ""
-"Renchans/honba are calculated automatically. Also points and payments "
-"checks are performed: in case of any inconsistency the alert is displayed."
-msgstr ""
-
-msgid "Player aliases"
-msgstr ""
-
-msgid "Something went wrong: %s"
-msgstr ""
-
-msgid "Something went wrong:"
-msgstr ""
-
-msgid "Unable to generate seating"
-msgstr ""
-
-msgid ""
-"Total count of registered players is not divisible by 4. Use the \"Add "
-"player\" and \"Players management\" pages to add or remove players. Special "
-"replacement player accounts may be used to complete the table."
-msgstr ""
-
-msgid "Ready to generate seating"
-msgstr ""
-
-msgid "Select seating mode and press the appropriate button."
-msgstr ""
-
-msgid "Hide/show rating table"
+msgid "Manage players"
 msgstr ""
 
 msgid "Predefined seating"
 msgstr ""
 
-msgid ""
-"This tournament has predefined seating. See Admin actions / Predefined "
-"seating page for seating configuration. Next seating is listed below."
-msgstr ""
-
-msgid "No seating defined for next game. Looks like the tournament is finished"
-msgstr ""
-
-msgid "Table #"
-msgstr ""
-
-msgid "Randomize winds seating at each table"
-msgstr ""
-
-msgid "Use this seating for new game?"
-msgstr ""
-
-msgid "Use this seating"
-msgstr ""
-
-msgid "Random seating"
-msgstr ""
-
-msgid ""
-"This will randomize players at all tables - useful when making a first game "
-"in tournament."
-msgstr ""
-
-msgid "Use random seating for new game?"
-msgstr ""
-
-msgid "Use random seating"
-msgstr ""
-
-msgid "Swiss seating"
-msgstr ""
-
-msgid ""
-"This seating uses current player rating to place higher ranked players "
-"together, with exception of players who already played on the same table."
-msgstr ""
-
-msgid ""
-"In case of small number of players and large number of games, this seating "
-"will create tables with as few crossings as possible."
-msgstr ""
-
-msgid "Use swiss seating for new game?"
-msgstr ""
-
-msgid "Use swiss seating"
-msgstr ""
-
-msgid "Interval seating"
-msgstr ""
-
-msgid ""
-"Players will be assigned to tables according to current rating table with "
-"selected interval"
-msgstr ""
-
-msgid ""
-"Note that seating starts from the top of rating table, so the rest of "
-"players at bottom will be placed with step 1."
-msgstr ""
-
-msgid ""
-"Example: 3 tables (12 players) with step 2 will be formed as 1-3-5-7, "
-"2-4-6-8 and 9-10-11-12"
-msgstr ""
-
-msgid "Use interval seating for new game?"
-msgstr ""
-
-msgid "Use interval seating"
-msgstr ""
-
-msgid "Tables are being prepared..."
-msgstr ""
-
-msgid "Please wait a while and reload the page."
-msgstr ""
-
-msgid "Start timer and games"
-msgstr ""
-
-msgid "Press next button to start the timer and begin the games."
-msgstr ""
-
-msgid "Start games and timer?"
-msgstr ""
-
-msgid "Start games!"
-msgstr ""
-
-msgid "Reset the timer"
-msgstr ""
-
-msgid ""
-"Pressing this button will reset the timer to its initial value. Be careful: "
-"you should not need this usually."
-msgstr ""
-
-msgid "Really reset the timer?"
-msgstr ""
-
-msgid "Finish all the games"
-msgstr ""
-
-msgid ""
-"After this button is pressed, you won't be able to cancel any rounds, and "
-"all the results will become visible to all players in rating table."
-msgstr ""
-
-msgid "Finish the games? You will not be able to cancel rounds anymore!"
-msgstr ""
-
-msgid "Confirm the results and finish all games"
-msgstr ""
-
-msgid "Sorry, this page is not available for mobile devices"
-msgstr ""
-
-msgid "Players management"
-msgstr ""
-
-msgid "Pre-registration list (%d)"
-msgstr ""
-
-msgid "PIN"
-msgstr ""
-
-msgid "Confirm attendance manually"
-msgstr ""
-
-msgid "Registered players (%d)"
-msgstr ""
-
-msgid "Local id"
-msgstr ""
-
-msgid "Reissue PIN"
-msgstr ""
-
-msgid "Remove"
-msgstr ""
-
-msgid "Remove player %s?"
-msgstr ""
-
-msgid ""
-"This will update current local id mapping. See \"Predefined seating\" page "
-"for details"
-msgstr ""
-
-msgid "Save local IDs"
-msgstr ""
-
 msgid "Achievements"
+msgstr ""
+
+msgid "Timer & seating"
+msgstr ""
+
+msgid "Login"
 msgstr ""
 
 msgid "Achievement"
@@ -438,6 +374,202 @@ msgid_plural "%s ippatsu"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "Something went wrong: %s"
+msgstr ""
+
+msgid "Something went wrong:"
+msgstr ""
+
+msgid "Unable to generate seating"
+msgstr ""
+
+msgid ""
+"Total count of registered players is not divisible by 4. Use the \"Add "
+"player\" and \"Players management\" pages to add or remove players. Special "
+"replacement player accounts may be used to complete the table."
+msgstr ""
+
+msgid "Ready to generate seating"
+msgstr ""
+
+msgid "Select seating mode and press the appropriate button."
+msgstr ""
+
+msgid "Hide/show rating table"
+msgstr ""
+
+msgid ""
+"This tournament has predefined seating. See Admin actions / Predefined "
+"seating page for seating configuration. Next seating is listed below."
+msgstr ""
+
+msgid "No seating defined for next game. Looks like the tournament is finished"
+msgstr ""
+
+msgid "Table #"
+msgstr ""
+
+msgid "Randomize winds seating at each table"
+msgstr ""
+
+msgid "Use this seating for new game?"
+msgstr ""
+
+msgid "Use this seating"
+msgstr ""
+
+msgid "Random seating"
+msgstr ""
+
+msgid ""
+"This will randomize players at all tables - useful when making a first game "
+"in tournament."
+msgstr ""
+
+msgid "Use random seating for new game?"
+msgstr ""
+
+msgid "Use random seating"
+msgstr ""
+
+msgid "Swiss seating"
+msgstr ""
+
+msgid ""
+"This seating uses current player rating to place higher ranked players "
+"together, with exception of players who already played on the same table."
+msgstr ""
+
+msgid ""
+"In case of small number of players and large number of games, this seating "
+"will create tables with as few crossings as possible."
+msgstr ""
+
+msgid "Use swiss seating for new game?"
+msgstr ""
+
+msgid "Use swiss seating"
+msgstr ""
+
+msgid "Interval seating"
+msgstr ""
+
+msgid ""
+"Players will be assigned to tables according to current rating table with "
+"selected interval"
+msgstr ""
+
+msgid ""
+"Note that seating starts from the top of rating table, so the rest of "
+"players at bottom will be placed with step 1."
+msgstr ""
+
+msgid ""
+"Example: 3 tables (12 players) with step 2 will be formed as 1-3-5-7, "
+"2-4-6-8 and 9-10-11-12"
+msgstr ""
+
+msgid "Use interval seating for new game?"
+msgstr ""
+
+msgid "Use interval seating"
+msgstr ""
+
+msgid "Tables are being prepared..."
+msgstr ""
+
+msgid "Please wait a while and reload the page."
+msgstr ""
+
+msgid "Start timer and games"
+msgstr ""
+
+msgid "Press next button to start the timer and begin the games."
+msgstr ""
+
+msgid "Start games and timer?"
+msgstr ""
+
+msgid "Start games!"
+msgstr ""
+
+msgid "Reset the timer"
+msgstr ""
+
+msgid ""
+"Pressing this button will reset the timer to its initial value. Be careful: "
+"you should not need this usually."
+msgstr ""
+
+msgid "Really reset the timer?"
+msgstr ""
+
+msgid "Finish all the games"
+msgstr ""
+
+msgid ""
+"After this button is pressed, you won't be able to cancel any rounds, and "
+"all the results will become visible to all players in rating table."
+msgstr ""
+
+msgid "Finish the games? You will not be able to cancel rounds anymore!"
+msgstr ""
+
+msgid "Confirm the results and finish all games"
+msgstr ""
+
+msgid "Admin panel"
+msgstr ""
+
+msgid "Authorized successfully!"
+msgstr ""
+
+msgid "Authorize"
+msgstr ""
+
+msgid "Predefined seating configuration"
+msgstr ""
+
+msgid "Next session index (starting from 1):"
+msgstr ""
+
+msgid "Update predefined seating config"
+msgstr ""
+
+msgid "Found errors:"
+msgstr ""
+
+msgid "No errors found."
+msgstr ""
+
+msgid ""
+"Predefined seating is entered as list of tables, one table per row. New "
+"game session should be indicated as an empty line."
+msgstr ""
+
+msgid "Example:"
+msgstr ""
+
+msgid ""
+"In this example, two tables play two games. Numbers in seating persist "
+"between games and are defined at Admin actions / Manage players page."
+msgstr ""
+
+msgid "Sorry, this page is not available for mobile devices"
+msgstr ""
+
+msgid "%s: personal stats"
+msgstr ""
+
+msgid "Pts"
+msgstr ""
+
+msgid "AvPlc"
+msgstr ""
+
+msgid "AvPts"
+msgstr ""
+
 msgid "No time left!"
 msgstr ""
 
@@ -456,49 +588,10 @@ msgstr ""
 msgid "NORTH"
 msgstr ""
 
-msgid "Rating table"
-msgstr ""
-
-msgid "Rating table has been hidden by tournament administrator"
-msgstr ""
-
-msgid "These results are visible only for tournament administrator"
-msgstr ""
-
-msgid "Rating points"
-msgstr ""
-
 msgid "Average place"
 msgstr ""
 
 msgid "Average points"
-msgstr ""
-
-msgid "Games played"
-msgstr ""
-
-msgid "Statistics"
-msgstr ""
-
-msgid "Welcome to game statistics system."
-msgstr ""
-
-msgid "Click here to start"
-msgstr ""
-
-msgid "You are viewing the abbreviated statistics for mobile devices."
-msgstr ""
-
-msgid "Player #%d"
-msgstr ""
-
-msgid "Best series:"
-msgstr ""
-
-msgid "Points:"
-msgstr ""
-
-msgid "Ongoing series:"
 msgstr ""
 
 msgid "Confirm round cancellation: "
@@ -528,165 +621,66 @@ msgstr ""
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr ""
 
-msgid "Aggregated event"
+msgid "Going back in 3 seconds..."
 msgstr ""
 
-msgid "Rules overview"
+msgid "Add new game"
 msgstr ""
 
-msgid "Best series"
-msgstr ""
-
-msgid "Points of best series"
-msgstr ""
-
-msgid "Last series"
-msgstr ""
-
-msgid "Points of last series"
-msgstr ""
-
-msgid "Recent games"
-msgstr ""
-
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
-msgstr ""
-
-msgid "Admin panel"
-msgstr ""
-
-msgid "Authorized successfully!"
-msgstr ""
-
-msgid "Authorize"
-msgstr ""
-
-msgid "Personal stats"
-msgstr ""
-
-msgid "Player: %s"
-msgstr ""
-
-msgid "No stats are available yet"
-msgstr ""
-
-msgid "Rating graph"
-msgstr ""
-
-msgid "Common stats"
-msgstr ""
-
-msgid "Rounds played"
-msgstr ""
-
-msgid "Rounds won"
-msgstr ""
-
-msgid "Round details:"
-msgstr ""
-
-msgid "Ron wins"
-msgstr ""
-
-msgid "Tsumo wins"
-msgstr ""
-
-msgid "Ron feeds"
-msgstr ""
-
-msgid "because of riichi"
-msgstr ""
-
-msgid "Tsumo losses"
-msgstr ""
-
-msgid "Open hands"
-msgstr ""
-
-msgid "Chombo penalties"
-msgstr ""
-
-msgid "Riichi bets"
-msgstr ""
-
-msgid "bets won"
-msgstr ""
-
-msgid "bets lost"
-msgstr ""
-
-msgid "Places stat:"
-msgstr ""
-
-msgid "1st place"
-msgstr ""
-
-msgid "2nd place"
-msgstr ""
-
-msgid "3rd place"
-msgstr ""
-
-msgid "4th place"
-msgstr ""
-
-msgid "Final game points:"
-msgstr ""
-
-msgid "Minimal"
-msgstr ""
-
-msgid "Maximal"
-msgstr ""
-
-msgid "Average"
-msgstr ""
-
-msgid "Hands value"
-msgstr ""
-
-msgid "Yaku collected over all time"
-msgstr ""
-
-msgid "Tournament control panel"
-msgstr ""
-
-msgid "Games control panel"
-msgstr ""
-
-msgid "Penalties"
-msgstr ""
-
-msgid "Manage players"
-msgstr ""
-
-msgid "Timer & seating"
-msgstr ""
-
-msgid "Login"
-msgstr ""
-
-msgid "Pts"
-msgstr ""
-
-msgid "AvPlc"
-msgstr ""
-
-msgid "AvPts"
+msgid "Format:"
 msgstr ""
 
 msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
+"Renchans/honba are calculated automatically. Also points and payments "
+"checks are performed: in case of any inconsistency the alert is displayed."
 msgstr ""
 
-msgid "Rating table is hidden. Show"
+msgid "Player aliases"
 msgstr ""
 
-msgid "Rating table is visible. Hide"
+msgid "Timer"
+msgstr ""
+
+msgid "Wind: %s"
+msgstr ""
+
+msgid "Full game log:"
+msgstr ""
+
+msgid "Date & time"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "View replay online"
+msgstr ""
+
+msgid "Best hand: <b>%s</b> - %s"
+msgstr ""
+
+msgid "Ron hands: %d"
+msgstr ""
+
+msgid "Tsumo hands: %d"
+msgstr ""
+
+msgid "Drawn rounds: %d"
+msgstr ""
+
+msgid "Chombo penalties: %s"
+msgstr ""
+
+msgid "Additional penalties:"
+msgstr ""
+
+msgid "%s - %d points (%s)"
+msgstr ""
+
+msgid "Rating"
+msgstr ""
+
+msgid "Han"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -752,101 +746,122 @@ msgstr ""
 msgid "Tenpai: %s."
 msgstr ""
 
-msgid "Date & time"
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
 msgstr ""
 
-msgid "Players"
+msgid "Rating table is hidden. Show"
 msgstr ""
 
-msgid "Details"
+msgid "Rating table is visible. Hide"
 msgstr ""
 
-msgid "View replay online"
-msgstr ""
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr ""
-
-msgid "Ron hands: %d"
-msgstr ""
-
-msgid "Tsumo hands: %d"
-msgstr ""
-
-msgid "Drawn rounds: %d"
-msgstr ""
-
-msgid "Chombo penalties: %s"
-msgstr ""
-
-msgid "Additional penalties:"
-msgstr ""
-
-msgid "%s - %d points (%s)"
-msgstr ""
-
-msgid "Full game log:"
-msgstr ""
-
-msgid "Rating"
-msgstr ""
-
-msgid "Han"
-msgstr ""
-
-msgid "Timer"
-msgstr ""
-
-msgid "Wind: %s"
-msgstr ""
-
-msgid "Later"
-msgstr ""
-
-msgid "Earlier"
-msgstr ""
-
-msgid "%s: personal stats"
-msgstr ""
-
-msgid "Enter tables, one per line."
+msgid "Additional penalties"
 msgstr ""
 
 msgid ""
-"Check the box to randomize players seating at each table. Otherwise players "
-"will be placed as you entered in order of e-s-w-n."
+"A penalty may be applied only to player currently in game. Otherwise error "
+"will occur."
+msgstr ""
+
+msgid "Select player"
+msgstr ""
+
+msgid "Penalty amount"
+msgstr ""
+
+msgid "Penalty reason"
+msgstr ""
+
+msgid "Check twice penalty data. You won't be able to cancel the penalty"
+msgstr ""
+
+msgid "Apply penalty"
+msgstr ""
+
+msgid "Players management"
+msgstr ""
+
+msgid "Pre-registration list (%d)"
+msgstr ""
+
+msgid "PIN"
+msgstr ""
+
+msgid "Confirm attendance manually"
+msgstr ""
+
+msgid "Registered players (%d)"
+msgstr ""
+
+msgid "Local id"
+msgstr ""
+
+msgid "Reissue PIN"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove player %s?"
 msgstr ""
 
 msgid ""
-"Each number is a player's current place in rating. Here is an example of "
-"seating with step of 4: "
+"This will update current local id mapping. See \"Predefined seating\" page "
+"for details"
 msgstr ""
 
-msgid "Randomize seating at each table"
+msgid "Save local IDs"
 msgstr ""
 
-msgid "Use manual seating for new game?"
+msgid "All players"
 msgstr ""
 
-msgid "Use manual seating"
+#, php-format
+msgid "Played at least %d game"
+msgid_plural "Played at least %d games"
+msgstr[0] ""
+msgstr[1] ""
+
+#, php-format
+msgid "Played less then %d game"
+msgid_plural "Played less then %d games"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "yes"
 msgstr ""
 
-msgid "Finish the games? You won't be able to cancel rounds anymore!"
-msgstr ""
-
-msgid "Hide rating table"
-msgstr ""
-
-msgid "Drawn rounds: %s"
+msgid "no"
 msgstr ""
 
 msgid "Wrong admin password"
 msgstr ""
 
-msgid "Admin login"
+msgid "Enroll players"
+msgstr ""
+
+msgid "Page not available for aggregated events"
+msgstr ""
+
+msgid "System name should contain only lowercase latin characters."
+msgstr ""
+
+msgid "Failed to add the player. Check your network connection."
+msgstr ""
+
+msgid "Seating controls"
 msgstr ""
 
 msgid "Latest games"
+msgstr ""
+
+#, php-format
+msgid "Stats & diagrams: %s"
+msgstr ""
+
+msgid "Yakuhai: total"
 msgstr ""
 
 msgid "Players registration"
@@ -858,23 +873,138 @@ msgstr ""
 msgid "Failed to enroll the player. Check your network connection."
 msgstr ""
 
-#, php-format
-msgid "Stats & diagrams: %s"
+msgid "Failed to save local ids mapping. Check your network connection."
 msgstr ""
 
-msgid "Yakuhai: total"
+msgid "Predefined seating and event status"
 msgstr ""
 
-msgid "Enroll players"
+msgid "Failed to update predefined seating. Check your network connection."
 msgstr ""
 
-msgid "System name should contain only lowercase latin characters."
+msgid "Admin login"
 msgstr ""
 
-msgid "Failed to add the player. Check your network connection."
+msgid ""
+"No seating defined. Check \"Admin actions / Predefined seating\" page to "
+"define seating for tournament"
 msgstr ""
 
-msgid "Seating controls"
+msgid "Event tables status"
+msgstr ""
+
+msgid "Please select some event!"
+msgstr ""
+
+msgid "<h2>Oops.</h2>Failed to get event configuration!"
+msgstr ""
+
+msgid "Allowed yaku"
+msgstr ""
+
+msgid "Points to start with"
+msgstr ""
+
+msgid "If start points should be subtracted from result"
+msgstr ""
+
+msgid "If kazoe should be yakuman, not sanbaiman"
+msgstr ""
+
+msgid "If 4/30 and 3/60 should be rounded to mangan"
+msgstr ""
+
+msgid "If abortive draws are allowed"
+msgstr ""
+
+msgid "If nagashi mangan is allowed"
+msgstr ""
+
+msgid "If atamahane is enabled"
+msgstr ""
+
+msgid "Basic ruleset name"
+msgstr ""
+
+msgid "If games have east rounds only"
+msgstr ""
+
+msgid "Rating initial points amount"
+msgstr ""
+
+msgid "If riichi bets left on the table go to winner of the hanchan"
+msgstr ""
+
+msgid "If chombo should be payed in points"
+msgstr ""
+
+msgid "Chombo penalty in rating points"
+msgstr ""
+
+msgid "If tanyao in open hand is allowed"
+msgstr ""
+
+msgid "If game ends when any player goes bankrupt"
+msgstr ""
+
+msgid "If multiple yakumans are enabled"
+msgstr ""
+
+msgid "Minimal arbitrary penalty amount"
+msgstr ""
+
+msgid "Maximal arbitrary penalty amount"
+msgstr ""
+
+msgid "Step of penalty amounts"
+msgstr ""
+
+msgid "Red zone duration"
+msgstr ""
+
+msgid "Yellow zone duration"
+msgstr ""
+
+msgid "Timer policy"
+msgstr ""
+
+msgid "If automatic seating is allowed"
+msgstr ""
+
+msgid "If event is online"
+msgstr ""
+
+msgid "Team event"
+msgstr ""
+
+msgid "Game duration in minutes"
+msgstr ""
+
+msgid "If game ends when leading dealer wins in last round"
+msgstr ""
+
+msgid "If all the games should be started simultaneously (tournament mode)"
+msgstr ""
+
+msgid "If all the games should be finished simultaneously (tournament mode)"
+msgstr ""
+
+msgid "If rating table should first be sorted by number of games played"
+msgstr ""
+
+msgid "If new players are allowed to join in the middle of event"
+msgstr ""
+
+msgid "If timer should be used"
+msgstr ""
+
+msgid "If arbitrary penalties are enabled"
+msgstr ""
+
+msgid "If game series are enabled"
+msgstr ""
+
+msgid "If seating for all games is entered in advance"
 msgstr ""
 
 msgid "yakuman"
@@ -918,6 +1048,14 @@ msgstr ""
 msgid ""
 "Triple ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); winner #3 "
 "is %s (%s); riichi bets - %s"
+msgstr ""
+
+#, php-format
+msgid "Nagashi mangan - %s; riichi bets - %s; tenpai - %s"
+msgstr ""
+
+#, php-format
+msgid "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s"
 msgstr ""
 
 msgid "Daburu riichi"
@@ -1051,190 +1189,3 @@ msgstr ""
 
 msgid "Open riichi"
 msgstr ""
-
-msgid "Please select some event!"
-msgstr ""
-
-msgid "<h2>Oops.</h2>Failed to get event configuration!"
-msgstr ""
-
-msgid "Failed to save local ids mapping. Check your network connection."
-msgstr ""
-
-msgid "Predefined seating and event status"
-msgstr ""
-
-msgid "Failed to update predefined seating. Check your network connection."
-msgstr ""
-
-msgid ""
-"No seating defined. Check \"Admin actions / Predefined seating\" page to "
-"define seating for tournament"
-msgstr ""
-
-msgid "Page not available for aggregated events"
-msgstr ""
-
-msgid "Event tables status"
-msgstr ""
-
-msgid "yes"
-msgstr ""
-
-msgid "no"
-msgstr ""
-
-msgid "Allowed yaku"
-msgstr ""
-
-msgid "Points to start with"
-msgstr ""
-
-msgid "If start points should be subtracted from result"
-msgstr ""
-
-msgid "If kazoe should be yakuman, not sanbaiman"
-msgstr ""
-
-msgid "If 4/30 and 3/60 should be rounded to mangan"
-msgstr ""
-
-msgid "If abortive draws are allowed"
-msgstr ""
-
-msgid "If nagashi mangan is allowed"
-msgstr ""
-
-msgid "If atamahane is enabled"
-msgstr ""
-
-msgid "Basic ruleset name"
-msgstr ""
-
-msgid "If games have east rounds only"
-msgstr ""
-
-msgid "Rating initial points amount"
-msgstr ""
-
-msgid "If riichi bets on table will go to winner"
-msgstr ""
-
-msgid "If chombo should be payed in points"
-msgstr ""
-
-msgid "Chombo penalty in rating points"
-msgstr ""
-
-msgid "If tanyao counts on open hand"
-msgstr ""
-
-msgid "If game ends when any player goes bankrupt"
-msgstr ""
-
-msgid "If multiple yakumans are enabled"
-msgstr ""
-
-msgid "Minimal arbitrary penalty amount"
-msgstr ""
-
-msgid "Maximal arbitrary penalty amount"
-msgstr ""
-
-msgid "Step of penalty amounts"
-msgstr ""
-
-msgid "Red zone duration"
-msgstr ""
-
-msgid "Yellow zone duration"
-msgstr ""
-
-msgid "Timer policy"
-msgstr ""
-
-msgid "If automatic seating is allowed"
-msgstr ""
-
-msgid "If event is online"
-msgstr ""
-
-msgid "Game duration in minutes"
-msgstr ""
-
-msgid "If game ends when leading dealer wins in last round"
-msgstr ""
-
-msgid "If games should be started simultaneously"
-msgstr ""
-
-msgid "If games should be finished simultaneously"
-msgstr ""
-
-msgid "If rating table should be sorted by games count first"
-msgstr ""
-
-msgid "If new players are allowed to join in the middle of event"
-msgstr ""
-
-msgid "If timer should be used"
-msgstr ""
-
-msgid "If arbitrary penalties are enabled"
-msgstr ""
-
-msgid "If game series are enabled"
-msgstr ""
-
-msgid "If seating for all games is entered in advance"
-msgstr ""
-
-msgid "If riichi bets left on the table go to winner of the hanchan"
-msgstr ""
-
-msgid "If tanyao in open hand is allowed"
-msgstr ""
-
-msgid "If all the games should be started simultaneously (tournament mode)"
-msgstr ""
-
-msgid "If all the games should be finished simultaneously (tournament mode)"
-msgstr ""
-
-msgid "If rating table should first be sorted by number of games played"
-msgstr ""
-
-#, php-format
-msgid "Nagashi mangan - %s; riichi bets - %s; tenpai - %s"
-msgstr ""
-
-#, php-format
-msgid "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s"
-msgstr ""
-
-msgid "All players"
-msgstr ""
-
-#, php-format
-msgid "Played at least %d games"
-msgid_plural "Played at least %d game"
-msgstr[0] ""
-msgstr[1] ""
-
-#, php-format
-msgid "Played less then %d games"
-msgid_plural "Played less then %d game"
-msgstr[0] ""
-msgstr[1] ""
-
-#, php-format
-msgid "Played at least %d game"
-msgid_plural "Played at least %d games"
-msgstr[0] ""
-msgstr[1] ""
-
-#, php-format
-msgid "Played less then %d game"
-msgid_plural "Played less then %d games"
-msgstr[0] ""
-msgstr[1] ""
