@@ -44,6 +44,9 @@
         <tr>
             <th>#</th>
             <th>{{#a href='/stat/?sort=name'}}{{_t 'Player'}}{{/a}}{{#orderByName}}<span class="icon-arrow-up"></span>{{/orderByName}}</th>
+            {{#if isCommandTournament}}
+                <th>{{_t 'Team'}}</th>
+            {{/if}}
             <th>{{#a href='/stat/?sort=rating'}}{{_t 'Rating points'}}{{/a}}{{#orderByRating}}<span class="icon-arrow-down"></span>{{/orderByRating}}</th>
             <th>{{#a href='/stat/?sort=avg_place'}}{{_t 'Average place'}}{{/a}}{{#orderByAvgPlace}}<span class="icon-arrow-up"></span>{{/orderByAvgPlace}}</th>
             <th>{{#a href='/stat/?sort=avg_score'}}{{_t 'Average points'}}{{/a}}{{#orderByAvgScore}}<span class="icon-arrow-down"></span>{{/orderByAvgScore}}</th>
@@ -53,6 +56,9 @@
         <tr class="{{#min_was_played}}row-min-was-played{{/min_was_played}}">
             <td>{{_index}}</td>
             <td>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}{{#if isOnlineTournament}} ({{tenhou_id}}){{/if}}</td>
+            {{#if isCommandTournament}}
+              <td>{{command_name}}</td>
+            {{/if}}
             <td><span class="badge
                 {{#winner_zone}}badge-success{{/winner_zone}}
                 {{^winner_zone}}badge-danger{{/winner_zone}}

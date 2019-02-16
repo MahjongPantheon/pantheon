@@ -162,6 +162,14 @@ migrate: get_docker_id
 		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user gosu user bin/phinx migrate -e docker'; \
 	fi
 
+.PHONY: open_container
+open_container: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Pantheon container is not running, can't open it.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh; \
+	fi
+
 .PHONY: seed
 seed: get_docker_id migrate
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \

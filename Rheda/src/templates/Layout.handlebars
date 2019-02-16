@@ -42,6 +42,9 @@
         <ul class="navbar-nav">
             <li class="nav-item">{{#a class='nav-link' href='/last/'}}{{_t 'Recent games'}}{{/a}}</li>
             <li class="nav-item">{{#a class='nav-link' href='/stat/'}}{{_t 'Rating table'}}{{/a}}</li>
+            {{#isCommand}}
+              <li class="nav-item">{{#a class='nav-link' href='/stat/team/'}}{{_t 'Team table'}}{{/a}}</li>
+            {{/isCommand}}
             {{^isAggregated}}
                 {{#isOnline}}
                   {{^hideAddReplayButton}}

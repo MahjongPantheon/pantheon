@@ -83,6 +83,9 @@
                     <td>{{_index}}</td>
                     <td>
                       {{#a href='/user/{id}/'}}<nobr>{{short_name}}</nobr>{{/a}} {{#if isOnlineTournament}} ({{tenhou_id}}){{/if}}
+                      {{#if isCommandTournament}}
+                        <br>{{command_name}}
+                      {{/if}}
                     </td>
                     <td class="cn"><span class="badge
                          {{#winner_zone}}success{{/winner_zone}}
