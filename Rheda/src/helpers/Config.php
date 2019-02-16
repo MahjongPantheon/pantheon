@@ -34,7 +34,7 @@ class Config
     protected $_timerPolicy = 'none';
     protected $_autoSeating = false;
     protected $_isOnline = false;
-    protected $_isCommand = false;
+    protected $_isTeam = false;
     protected $_gameDuration = 0;
     protected $_withLeadingDealerGameover = false;
     protected $_isTextlog = false;
@@ -85,7 +85,7 @@ class Config
             'timerPolicy' => _t('Timer policy'),
             'autoSeating' => _t('If automatic seating is allowed'),
             'isOnline' => _t('If event is online'),
-            'isCommand' => _t('If event is command'),
+            'isTeam' => _t('Team event'),
             'gameDuration' => _t('Game duration in minutes'),
             'withLeadingDealerGameover' => _t('If game ends when leading dealer wins in last round'),
             'isTextlog' => null, // not intended to be shown in rule overview
@@ -358,9 +358,9 @@ class Config
     /**
      * @return bool
      */
-    public function isCommand()
+    public function isTeam()
     {
-        return $this->_isCommand;
+        return $this->_isTeam;
     }
     /**
      * @return bool

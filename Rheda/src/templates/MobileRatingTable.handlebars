@@ -51,7 +51,7 @@
 
     .row-min-was-played:nth-of-type(even) {
         background-color: rgba(0, 255, 129, 0.12);
-    }    
+    }
     .row-min-was-played:nth-of-type(odd) {
         background-color: rgba(96, 201, 149, 0.27) !important;
     }
@@ -69,7 +69,7 @@
     {{/showAdminWarning}}
 
     {{^hideResults}}
-        {{#if isCommandTournament}}
+        {{#if isTeamTournament}}
             <p>{{#a href='/stat/team'}}{{_t 'Team table'}}{{/a}}</p>
         {{/if}}
 
@@ -87,8 +87,8 @@
                     <td>{{_index}}</td>
                     <td>
                       {{#a href='/user/{id}/'}}<nobr>{{short_name}}</nobr>{{/a}} {{#if isOnlineTournament}} ({{tenhou_id}}){{/if}}
-                      {{#if isCommandTournament}}
-                        <br>{{command_name}}
+                      {{#if isTeamTournament}}
+                        <br>{{team_name}}
                       {{/if}}
                     </td>
                     <td class="cn"><span class="badge

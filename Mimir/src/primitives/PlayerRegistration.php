@@ -37,7 +37,7 @@ class PlayerRegistrationPrimitive extends Primitive
         'auth_token'    => '_token',
         'local_id'      => '_localId',
         'ignore_seating' => '_ignoreSeating',
-        'command_name'   => '_commandName',
+        'team_name'     => '_teamName',
     ];
 
     protected function _getFieldsTransforms()
@@ -49,7 +49,7 @@ class PlayerRegistrationPrimitive extends Primitive
             '_playerId' => $this->_integerTransform(),
             '_localId' => $this->_integerTransform(true),
             '_ignoreSeating' => $this->_integerTransform(),
-            '_commandName' => $this->_stringTransform(),
+            '_teamName' => $this->_stringTransform(),
         ];
     }
 
@@ -81,7 +81,7 @@ class PlayerRegistrationPrimitive extends Primitive
     /**
      * @var string
      */
-    protected $_commandName;
+    protected $teamName;
 
     protected function _create()
     {
@@ -163,9 +163,9 @@ class PlayerRegistrationPrimitive extends Primitive
     /**
      * @return string
      */
-    public function getCommandName()
+    public function getTeamName()
     {
-        return $this->_commandName;
+        return $this->teamName;
     }
 
     /**
@@ -277,12 +277,12 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
-     * @param string $commandName
+     * @param string $teamName
      * @return $this
      */
-    public function setCommandName($commandName)
+    public function setTeamName($teamName)
     {
-        $this->_commandName = $commandName;
+        $this->teamName = $teamName;
         return $this;
     }
 
@@ -403,26 +403,26 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
-     * Finds all players registered to event.
-     * Output array has player player id as key and command name as value.
+     * Finds all players registered to event associated with team names they participate in.
+     * Output array has player id as key and team name as value.
      *
      * @param IDb $db
      * @param $eventId
-     * @return array [local_id => Player_id, ...]
+     * @return array [player_id => team name, ...]
      * @throws \Exception
      */
-    public static function findCommandNameMapByEvent(IDb $db, $eventId)
+    public static function findTeamNameMapByEvent(IDb $db, $eventId)
     {
         $map = [];
         /** @var PlayerRegistrationPrimitive[] $items */
         $items = self::_findBy($db, 'event_id', [$eventId]);
 
         foreach ($items as $regItem) {
-            if (!$regItem->getCommandName()) {
+            if (!$regItem->getTeamName()) {
                 continue;
             }
 
-            $map[$regItem->getPlayerId()] = $regItem->getCommandName();
+            $map[$regItem->getPlayerId()] = $regItem->getTeamName();
         }
         return $map;
     }

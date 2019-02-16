@@ -47,10 +47,10 @@ class TeamTable extends Controller
                 $this->_adminAuthOk() // show prefinished results only for admins
             ]);
 
-            $commandNames = [];
-            if ($this->_mainEventRules->isCommand()) {
-                array_map(function ($el) use (&$players, &$commandNames) {
-                    $commandNames[$el['id']] = $players[$el['id']]['command_name'];
+            $teamNames = [];
+            if ($this->_mainEventRules->isTeam()) {
+                array_map(function ($el) use (&$players, &$teamNames) {
+                    $teamNames[$el['id']] = $players[$el['id']]['team_name'];
                 }, $players);
             }
 
@@ -68,26 +68,26 @@ class TeamTable extends Controller
                 ]);
             }, array_values($players)));
 
-            $data = array_map(function ($el) use (&$ctr, &$players, &$commandNames) {
-                $commandName = null;
-                if ($this->_mainEventRules->isCommand()) {
-                    $commandName = $commandNames[$el['id']];
+            $data = array_map(function ($el) use (&$ctr, &$players, &$teamNames) {
+                $teamName = null;
+                if ($this->_mainEventRules->isTeam()) {
+                    $teamName = $teamNames[$el['id']];
                 }
                 $el['short_name'] = $this->_makeShortName($el['display_name']);
-                $el['command_name'] = $commandName;
+                $el['team_name'] = $teamName;
                 return $el;
             }, $data);
         } catch (Exception $e) {
             $errMsg = $e->getMessage();
         }
 
-        # group players by command
-        $commands = [];
+        # group players by team
+        $teams = [];
         foreach ($data as $player) {
-            $commands[$player['command_name']]['players'][] = $player;
-            $commands[$player['command_name']]['command_name'] = $player['command_name'];
-            $commands[$player['command_name']]['total_rating'] += $player['rating'];
-            $commands[$player['command_name']]['winner_zone'] = $commands[$player['command_name']]['total_rating'] >= 0;
+            $teams[$player['team_name']]['players'][] = $player;
+            $teams[$player['team_name']]['team_name'] = $player['team_name'];
+            $teams[$player['team_name']]['total_rating'] += $player['rating'];
+            $teams[$player['team_name']]['winner_zone'] = $teams[$player['team_name']]['total_rating'] >= 0;
         }
 
         $hideResults = $this->_mainEventRules->hideResults();
@@ -100,13 +100,13 @@ class TeamTable extends Controller
             $showAdminWarning = true;
         }
 
-        usort($commands, function ($a, $b) {
+        usort($teams, function ($a, $b) {
             return $b['total_rating'] - $a['total_rating'];
         });
 
         return [
             'error'             => $errMsg,
-            'commands'          => $commands,
+            'teams'             => $teams,
 
             'isOnlineTournament'  => $this->_mainEventRules->isOnline(),
 

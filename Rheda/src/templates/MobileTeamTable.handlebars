@@ -90,9 +90,9 @@
             <th>{{_t 'Pts'}}</th>
             <th>{{_t 'Players'}}</th>
         </tr>
-        {{#each commands}}
+        {{#each teams}}
             <tr>
-              <td class="cn"><b>{{this.command_name}}</b></td>
+              <td class="cn"><b>{{this.team_name}}</b></td>
               <td class="cn">
                 <span class="badge
                   {{#this.winner_zone}}success{{/this.winner_zone}}
@@ -103,7 +103,7 @@
                   <table class="no-stripped table">
                       <col style="width: 50%" span="2" />
 
-                      {{# each this.players}}
+                      {{#each this.players}}
                         <tr>
                             <td class="cn">
                                 <nobr>{{#a href='/user/{id}/'}}{{this.short_name}}{{/a}}</nobr>
