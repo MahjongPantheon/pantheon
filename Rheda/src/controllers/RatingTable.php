@@ -75,6 +75,10 @@ class RatingTable extends Controller
                 }
         }
 
+        $minGamesCount = $this->_mainEventRules->minGamesCount();
+        $withMinGamesCount = $minGamesCount != 0;
+        $showPlayers = !$withMinGamesCount || empty($_GET['players']) ? 'all' : $_GET['players'];
+
         try {
             $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
             $players = ArrayHelpers::elm2Key($players, 'id');
@@ -91,18 +95,44 @@ class RatingTable extends Controller
                 unset($players[$el['id']]);
             }, $data);
 
-            // Merge players who didn't finish yet into rating table
-            $data = array_merge($data, array_map(function ($el) {
-                return array_merge($el, [
-                    'rating'        => '0',
-                    'winner_zone'   => true,
-                    'avg_place'     => '0',
-                    'avg_score'     => '0',
-                    'games_played'  => '0'
-                ]);
-            }, array_values($players)));
+            if ($withMinGamesCount) {
+                switch ($showPlayers) {
+                    case 'all':
+                        // Merge players who didn't finish yet into rating table
+                        $data = array_merge($data, array_map(function ($el) {
+                            return array_merge($el, [
+                                'rating'        => '0',
+                                'winner_zone'   => true,
+                                'avg_place'     => '0',
+                                'avg_score'     => '0',
+                                'games_played'  => '0'
+                            ]);
+                        }, array_values($players)));
+                        break;
+                    case 'min-played':
+                        $filteredData = [];
+                        foreach ($data as $item) {
+                            if ($item['games_played'] >= $minGamesCount) {
+                                array_push($filteredData, $item);
+                            }
+                        }
 
-            $minGamesCount = $this->_mainEventRules->minGamesCount();
+                        $data = $filteredData;
+                        break;
+                    case 'min-not-played':
+                        $filteredData = [];
+                        foreach ($data as $item) {
+                            if ($item['games_played'] < $minGamesCount) {
+                                array_push($filteredData, $item);
+                            }
+                        }
+
+                        $data = $filteredData;
+                        break;
+                    default:
+                        throw new InvalidParametersException("Parameter players should be either 'all', 'min-played' or 'min-not-played'");
+                }
+            }
 
             // Assign indexes for table view
             $ctr = 1;
@@ -128,6 +158,24 @@ class RatingTable extends Controller
             $showAdminWarning = true;
         }
 
+        $showPlayersOptions = [
+                [
+                    'name'      => _t('All players'),
+                    'value'     => 'all',
+                    'selected'  => $showPlayers == 'all',
+                ],
+                [
+                    'name'      => _np('Played at least %d game', 'Played at least %d games', $minGamesCount, $minGamesCount),
+                    'value'     => 'min-played',
+                    'selected'  => $showPlayers == 'min-played',
+                ],
+                [
+                    'name'      => _np('Played less then %d game', 'Played less then %d games', $minGamesCount, $minGamesCount),
+                    'value'     => 'min-not-played',
+                    'selected'  => $showPlayers == 'min-not-played',
+                ],
+            ];
+
         return [
             'error'             => $errMsg,
             'data'              => $data,
@@ -139,6 +187,9 @@ class RatingTable extends Controller
             'orderByAvgPlace'   => $orderBy == 'avg_place',
             'orderByAvgScore'   => $orderBy == 'avg_score',
             'orderByName'       => $orderBy == 'name',
+
+            'withMinGamesCount' => $withMinGamesCount,
+            'showPlayersOptions' => $showPlayersOptions,
 
             'hideResults'       => $hideResults,
             'showAdminWarning'  => $showAdminWarning,
