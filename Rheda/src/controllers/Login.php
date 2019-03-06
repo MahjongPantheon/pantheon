@@ -42,7 +42,7 @@ class Login extends Controller
                 list($id, $authToken) = $this->_frey->authorize($_POST['email'], $_POST['password']);
                 setcookie(Sysconf::COOKIE_TOKEN_KEY, $authToken, time() + 365 * 24 * 3600, '/');
                 setcookie(Sysconf::COOKIE_ID_KEY, $id, time() + 365 * 24 * 3600, '/');
-                header('Location: ' . '/profile/' . $id);
+                header('Location: ' . '/profile');
             } catch (\Exception $ex) {
                 $passwordError = _t('Password is incorrect or account not registered');
             }

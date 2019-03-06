@@ -94,8 +94,8 @@ class AccountModel extends Model
             return [
                 'id' => $person->getId(),
                 'city' => $person->getCity(),
-                'email' => $filterPrivateData ? null : $person->getEmail(),
-                'phone' => $filterPrivateData ? null : $person->getPhone(),
+                'email' => $filterPrivateData && $person->getId() !== $this->_authorizedPerson->getId() ? null : $person->getEmail(),
+                'phone' => $filterPrivateData && $person->getId() !== $this->_authorizedPerson->getId() ? null : $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),

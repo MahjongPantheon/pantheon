@@ -67,6 +67,6 @@ return [ // Omit trailing slashes in keys when possible
     '!/register'             => 'SelfRegistration',
     '!/confirm/(?<code>[0-9a-f]+)' => 'RegistrationConfirm',
     '!/login'                => 'Login',
-    '!/profile/(?<id>\d+)'   => 'Profile',
+    '!/profile'              => 'ProfileEdit',
     '!/favicon.ico'          => 'MultieventMainpage',
 ];
