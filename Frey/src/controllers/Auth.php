@@ -65,7 +65,7 @@ class AuthController extends Controller
      *
      * @param string $email
      * @param string $password
-     * @return string
+     * @return array[id, token]
      * @throws AuthFailedException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -73,9 +73,9 @@ class AuthController extends Controller
     public function authorize($email, $password)
     {
         $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
-        $clientToken = $this->_getModel()->authorize($email, $password);
+        $clientData = $this->_getModel()->authorize($email, $password);
         $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
-        return $clientToken;
+        return $clientData;
     }
 
     /**

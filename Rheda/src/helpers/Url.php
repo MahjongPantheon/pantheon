@@ -33,6 +33,11 @@ class Url
         return '/' . implode('/', $pieces);
     }
 
+    public static function makeConfirmation($approvalCode)
+    {
+        return '/confirm/' . $approvalCode;
+    }
+
     public static function interpolate($str, \Handlebars\Context $context)
     {
         return preg_replace_callback('#{([\w\d]+)}#is', function ($matches) use ($context) {

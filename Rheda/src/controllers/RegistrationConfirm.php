@@ -19,42 +19,41 @@ namespace Rheda;
 
 require_once __DIR__ . '/../helpers/Url.php';
 
-class AdminLogin extends Controller
+class RegistrationConfirm extends Controller
 {
-    protected $_mainTemplate = 'AdminLogin';
+    protected $_mainTemplate = 'RegistrationConfirm';
 
     protected function _pageTitle()
     {
-        return _t('Admin login') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Sign up confirmation');
     }
 
     protected function _run()
     {
-        $error = null;
-
-        if (!empty($_POST['secret'])) {
-            $auth = $this->_getAdminAuth($_POST['secret']);
-
-            if (!$auth) {
-                $error = _t("Wrong admin password");
-            } else {
-                $cookie = $auth['cookie'];
-
-                if (!empty($auth['cookie_life'])) {
-                    $cookieLife = time() + $auth['cookie_life'];
-                } else {
-                    $cookieLife = time() + 3600;
-                }
-
-                setcookie('secret', $cookie, $cookieLife, '/');
-
-                header('Location: ' . Url::make('/login/', implode('.', $this->_eventIdList)));
-            }
+        if ($this->_currentPersonId !== null) {
+            return [
+                'error' => _t("Can't proceed to registration: please log out to create new user")
+            ];
         }
 
-        return [
-            'error' => $error,
-            'isLoggedIn' => $this->_adminAuthOk()
-        ];
+        if (empty($this->_path['code'])) {
+            return [
+                'error' => _t('Confirmation code not found')
+            ];
+        }
+
+        try {
+            $newId = $this->_frey->approveRegistration($this->_path['code']);
+            return [
+                'error' => null,
+                'success' => true,
+                'id' => $newId
+            ];
+        } catch (\Exception $ex) {
+            return [
+                'error' => $ex->getMessage(),
+                'success' => false
+            ];
+        }
     }
 }
