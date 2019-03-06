@@ -131,7 +131,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
         $model->approveRegistration($approvalCode);
-        $authToken = $model->authorize('test@test.com', 'greatpassword');
+        list($id, $authToken) = $model->authorize('test@test.com', 'greatpassword');
         $this->assertNotEmpty($authToken);
     }
 
@@ -178,7 +178,8 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
         $personId = $model->approveRegistration($approvalCode);
-        $authToken = $model->authorize('test@test.com', 'greatpassword');
+        list($id, $authToken) = $model->authorize('test@test.com', 'greatpassword');
+        $this->assertEquals($personId, $id);
         $this->assertTrue($model->quickAuthorize($personId, $authToken));
     }
 
@@ -225,7 +226,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         );
         $this->assertNotEmpty($authToken);
         // check if password really changed
-        $authToken = $model->authorize('test@test.com', 'newpassword');
+        list($id, $authToken) = $model->authorize('test@test.com', 'newpassword');
         $this->assertNotEmpty($authToken);
     }
 
@@ -299,7 +300,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         $newPassword = $model->approveResetPassword('test@test.com', $passwordResetToken);
         $this->assertNotEmpty($newPassword);
         // check if password really changed
-        $authToken = $model->authorize('test@test.com', $newPassword);
+        list($id, $authToken) = $model->authorize('test@test.com', $newPassword);
         $this->assertNotEmpty($authToken);
     }
 

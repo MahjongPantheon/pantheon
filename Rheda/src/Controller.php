@@ -150,9 +150,13 @@ abstract class Controller
         }
         putenv('LC_ALL=' . $locale);
 
-        $this->_currentPersonId = (empty($input['HTTP_X_CURRENT_PERSON_ID'])
+        $this->_currentPersonId = (empty($_COOKIE[Sysconf::COOKIE_ID_KEY])
             ? null
-            : intval($input['HTTP_X_CURRENT_PERSON_ID']));
+            : intval($_COOKIE[Sysconf::COOKIE_ID_KEY]));
+
+        $this->_authToken = (empty($_COOKIE[Sysconf::COOKIE_TOKEN_KEY])
+            ? null
+            : $_COOKIE[Sysconf::COOKIE_TOKEN_KEY]);
 
         $eidMatches = [];
         if (empty($path['event']) || !preg_match('#eid(?<ids>\d+(?:\.\d+)*)#is', $path['event'], $eidMatches)) {

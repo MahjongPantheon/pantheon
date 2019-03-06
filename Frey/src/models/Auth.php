@@ -95,17 +95,17 @@ class AuthModel extends Model
     }
 
     /**
-     * Authorize person ant return permanent client-side auth token.
+     * Authorize person ant return permanent client-side auth token iwth person id.
      * Throws exception if authorization was not successful.
      *
      * @param $email
      * @param $password
-     * @return string
+     * @return array[id, hash]
      * @throws AuthFailedException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function authorize($email, $password): string
+    public function authorize($email, $password)
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
@@ -116,7 +116,10 @@ class AuthModel extends Model
             throw new AuthFailedException('Password is incorrect', 404);
         }
 
-        return $this->_makeClientSideToken($password, $person[0]->getAuthSalt());
+        return [
+            $person[0]->getId(),
+            $this->_makeClientSideToken($password, $person[0]->getAuthSalt())
+        ];
     }
 
     /**

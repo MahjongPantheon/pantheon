@@ -67,8 +67,22 @@ class SelfRegistration extends Controller
             ];
         }
 
-        $approvalCode = $this->_frey->requestRegistration($data['email'], $data['password']);
-        // TODO: send email to user here...
+        try {
+            $approvalCode = $this->_frey->requestRegistration($data['email'], $data['password']);
+            $url = Url::makeConfirmation($approvalCode);
+
+            // TODO: send email to user here...
+            return [
+                'error' => null,
+                'success' => true,
+                'debug_url' => Sysconf::DEBUG_MODE ? $url : null
+            ];
+        } catch (\Exception $ex) {
+            return [
+                'error' => $ex->getMessage(),
+                'success' => false
+            ];
+        }
     }
 
     /**
