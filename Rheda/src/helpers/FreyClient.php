@@ -56,21 +56,21 @@ class FreyClient
      *  Authorize person ant return permanent client-side auth token.
      * @param string $email
      * @param string $password
-     * @returns string
+     * @returns array
      */
-    public function authorize(string $email, string $password): string
+    public function authorize(string $email, string $password): array
     {
-        return (string)$this->_client->execute('authorize', [$email, $password]);
+        return (array)$this->_client->execute('authorize', [$email, $password]);
     }
 
     /**
      *  Check if client-side token matches stored password hash.
      *  Useful for cookie-check.
-     * @param integer $id
+     * @param int $id
      * @param string $clientSideToken
      * @returns bool
      */
-    public function quickAuthorize(integer $id, string $clientSideToken): bool
+    public function quickAuthorize(int $id, string $clientSideToken): bool
     {
         return (bool)$this->_client->execute('quickAuthorize', [$id, $clientSideToken]);
     }
@@ -117,11 +117,11 @@ class FreyClient
      *  Primary client method, aggregating rules from groups and person.
      *  Get array of access rules for person in event.
      *  Cached for 10 minutes.
-     * @param integer $personId
-     * @param integer $eventId
+     * @param int $personId
+     * @param int $eventId
      * @returns array
      */
-    public function getAccessRules(integer $personId, integer $eventId): array
+    public function getAccessRules(int $personId, int $eventId): array
     {
         return (array)$this->_client->execute('getAccessRules', [$personId, $eventId]);
     }
@@ -131,12 +131,12 @@ class FreyClient
      *  Also counts group rules if person belongs to one or more groups.
      *  Typically should not be used when more than one value should be retrieved.
      *  Returns null if no data found for provided person/event ids or rule name.
-     * @param integer $personId
-     * @param integer $eventId
+     * @param int $personId
+     * @param int $eventId
      * @param string $ruleName
      * @returns mixed
      */
-    public function getRuleValue(integer $personId, integer $eventId, string $ruleName)
+    public function getRuleValue(int $personId, int $eventId, string $ruleName)
     {
         return $this->_client->execute('getRuleValue', [$personId, $eventId, $ruleName]);
     }
@@ -193,11 +193,11 @@ class FreyClient
      *  - eventId may be null to get system-wide rules.
      *  - Method results are not cached!
      *  - To be used in admin panel, but not in client side!
-     * @param integer $personId
-     * @param integer|null $eventId
+     * @param int $personId
+     * @param int|null $eventId
      * @returns array
      */
-    public function getPersonAccess(integer $personId, $eventId): array
+    public function getPersonAccess(int $personId, $eventId): array
     {
         return (array)$this->_client->execute('getPersonAccess', [$personId, $eventId]);
     }
@@ -207,11 +207,11 @@ class FreyClient
      *  - eventId may be null to get system-wide rules.
      *  - Method results are not cached!
      *  - To be used in admin panel, but not in client side!
-     * @param integer $groupId
-     * @param integer|null $eventId
+     * @param int $groupId
+     * @param int|null $eventId
      * @returns array
      */
-    public function getGroupAccess(integer $groupId, $eventId): array
+    public function getGroupAccess(int $groupId, $eventId): array
     {
         return (array)$this->_client->execute('getGroupAccess', [$groupId, $eventId]);
     }
@@ -219,35 +219,35 @@ class FreyClient
     /**
      *  Add new rule for a person.
      * @param string $ruleName
-     * @param string|integer|boolean $ruleValue
+     * @param string|int|boolean $ruleValue
      * @param string $ruleType
-     * @param integer $personId
-     * @param integer $eventId
-     * @returns integer
+     * @param int $personId
+     * @param int $eventId
+     * @returns int
      */
-    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, integer $personId, integer $eventId): integer
+    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId): int
     {
-        return (integer)$this->_client->execute('addRuleForPerson', [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
+        return (int)$this->_client->execute('addRuleForPerson', [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
     }
 
     /**
      *  Add new rule for a group.
      * @param string $ruleName
-     * @param string|integer|boolean $ruleValue
+     * @param string|int|boolean $ruleValue
      * @param string $ruleType
-     * @param integer $groupId
-     * @param integer $eventId
-     * @returns integer
+     * @param int $groupId
+     * @param int $eventId
+     * @returns int
      */
-    public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, integer $groupId, integer $eventId): integer
+    public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId): int
     {
-        return (integer)$this->_client->execute('addRuleForGroup', [$ruleName, $ruleValue, $ruleType, $groupId, $eventId]);
+        return (int)$this->_client->execute('addRuleForGroup', [$ruleName, $ruleValue, $ruleType, $groupId, $eventId]);
     }
 
     /**
      *  Update personal rule value and/or type
      * @param integer $ruleId
-     * @param string|integer|boolean $ruleValue
+     * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @returns bool
      */
@@ -258,32 +258,32 @@ class FreyClient
 
     /**
      *  Update group rule value and/or type
-     * @param integer $ruleId
-     * @param string|integer|boolean $ruleValue
+     * @param int $ruleId
+     * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @returns bool
      */
-    public function updateRuleForGroup(integer $ruleId, $ruleValue, string $ruleType): bool
+    public function updateRuleForGroup(int $ruleId, $ruleValue, string $ruleType): bool
     {
         return (bool)$this->_client->execute('updateRuleForGroup', [$ruleId, $ruleValue, $ruleType]);
     }
 
     /**
      *  Drop personal rule by id
-     * @param integer $ruleId
+     * @param int $ruleId
      * @returns bool
      */
-    public function deleteRuleForPerson(integer $ruleId): bool
+    public function deleteRuleForPerson(int $ruleId): bool
     {
         return (bool)$this->_client->execute('deleteRuleForPerson', [$ruleId]);
     }
 
     /**
      *  Drop group rule by id
-     * @param integer $ruleId
+     * @param int $ruleId
      * @returns bool
      */
-    public function deleteRuleForGroup(integer $ruleId): bool
+    public function deleteRuleForGroup(int $ruleId): bool
     {
         return (bool)$this->_client->execute('deleteRuleForGroup', [$ruleId]);
     }
@@ -292,11 +292,11 @@ class FreyClient
      *  Clear cache for access rules of person in event.
      *  Warning: clearing whole cache is explicitly NOT IMPLEMENTED. When altering groups access rules,
      *  it's better to wait for 10mins than cause shitload on DB.
-     * @param integer $personId
-     * @param integer $eventId
+     * @param int $personId
+     * @param int $eventId
      * @returns bool
      */
-    public function clearAccessCache(integer $personId, integer $eventId): bool
+    public function clearAccessCache(int $personId, int $eventId): bool
     {
         return (bool)$this->_client->execute('clearAccessCache', [$personId, $eventId]);
     }
@@ -331,34 +331,34 @@ class FreyClient
 
     /**
      *  Update group info in admin interface
-     * @param integer $id
+     * @param int $id
      * @param string $title
      * @param string $description
      * @param string $color
      * @returns bool
      */
-    public function updateGroup(integer $id, string $title, string $description, string $color): bool
+    public function updateGroup(int $id, string $title, string $description, string $color): bool
     {
         return (bool)$this->_client->execute('updateGroup', [$id, $title, $description, $color]);
     }
 
     /**
      *  Delete group and all of its linked dependencies
-     * @param integer $id
+     * @param int $id
      * @returns bool
      */
-    public function deleteGroup(integer $id): bool
+    public function deleteGroup(int $id): bool
     {
         return (bool)$this->_client->execute('deleteGroup', [$id]);
     }
 
     /**
      *  Add person to group
-     * @param integer $personId
-     * @param integer $groupId
+     * @param int $personId
+     * @param int $groupId
      * @returns bool
      */
-    public function addPersonToGroup(integer $personId, integer $groupId): bool
+    public function addPersonToGroup(int $personId, int $groupId): bool
     {
         return (bool)$this->_client->execute('addPersonToGroup', [$personId, $groupId]);
     }

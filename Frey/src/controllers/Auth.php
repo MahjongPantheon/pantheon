@@ -65,7 +65,7 @@ class AuthController extends Controller
      *
      * @param string $email
      * @param string $password
-     * @return array[id, token]
+     * @return array
      * @throws AuthFailedException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -82,7 +82,7 @@ class AuthController extends Controller
      * Check if client-side token matches stored password hash.
      * Useful for cookie-check.
      *
-     * @param integer $id
+     * @param int $id
      * @param string $clientSideToken
      * @return bool
      * @throws EntityNotFoundException

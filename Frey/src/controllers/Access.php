@@ -30,8 +30,8 @@ class AccessController extends Controller
      * Get array of access rules for person in event.
      * Cached for 10 minutes.
      *
-     * @param integer $personId
-     * @param integer $eventId
+     * @param int $personId
+     * @param int $eventId
      * @return array
      * @throws \Exception
      */
@@ -49,8 +49,8 @@ class AccessController extends Controller
      * Typically should not be used when more than one value should be retrieved.
      * Returns null if no data found for provided person/event ids or rule name.
      *
-     * @param integer $personId
-     * @param integer $eventId
+     * @param int $personId
+     * @param int $eventId
      * @param string $ruleName
      * @return mixed
      * @throws \Exception
@@ -69,8 +69,8 @@ class AccessController extends Controller
      * - Method results are not cached!
      * - To be used in admin panel, but not in client side!
      *
-     * @param integer $personId
-     * @param integer|null $eventId
+     * @param int $personId
+     * @param int|null $eventId
      * @return array
      * @throws \Exception
      */
@@ -88,8 +88,8 @@ class AccessController extends Controller
      * - Method results are not cached!
      * - To be used in admin panel, but not in client side!
      *
-     * @param integer $groupId
-     * @param integer|null $eventId
+     * @param int $groupId
+     * @param int|null $eventId
      * @return array
      * @throws \Exception
      */
@@ -105,11 +105,11 @@ class AccessController extends Controller
      * Add new rule for a person.
      *
      * @param string $ruleName
-     * @param string|integer|boolean $ruleValue
+     * @param string|int|boolean $ruleValue
      * @param string $ruleType   'bool', 'int' or 'enum'
-     * @param integer $personId
-     * @param integer $eventId
-     * @return integer rule id
+     * @param int $personId
+     * @param int $eventId
+     * @return int rule id
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -128,11 +128,11 @@ class AccessController extends Controller
      * Add new rule for a group.
      *
      * @param string $ruleName
-     * @param string|integer|boolean $ruleValue
+     * @param string|int|boolean $ruleValue
      * @param string $ruleType   'bool', 'int' or 'enum'
-     * @param integer $groupId
-     * @param integer $eventId
-     * @return integer rule id
+     * @param int $groupId
+     * @param int $eventId
+     * @return int rule id
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -151,10 +151,10 @@ class AccessController extends Controller
      * Add new system-wide rule for a person.
      *
      * @param string $ruleName
-     * @param string|integer|boolean $ruleValue
+     * @param string|int|boolean $ruleValue
      * @param string $ruleType   'bool', 'int' or 'enum'
-     * @param integer $personId
-     * @return integer rule id
+     * @param int $personId
+     * @return int rule id
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -173,10 +173,10 @@ class AccessController extends Controller
      * Add new system-wide rule for a group.
      *
      * @param string $ruleName
-     * @param string|integer|boolean $ruleValue
+     * @param string|int|boolean $ruleValue
      * @param string $ruleType   'bool', 'int' or 'enum'
-     * @param integer $groupId
-     * @return integer rule id
+     * @param int $groupId
+     * @return int rule id
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -195,7 +195,7 @@ class AccessController extends Controller
      * Update personal rule value and/or type
      *
      * @param integer $ruleId
-     * @param string|integer|boolean $ruleValue
+     * @param string|int|boolean $ruleValue
      * @param string $ruleType   'bool', 'int' or 'enum'
      * @return bool   success
      * @throws EntityNotFoundException
@@ -212,8 +212,8 @@ class AccessController extends Controller
     /**
      * Update group rule value and/or type
      *
-     * @param integer $ruleId
-     * @param string|integer|boolean $ruleValue
+     * @param int $ruleId
+     * @param string|int|boolean $ruleValue
      * @param string $ruleType   'bool', 'int' or 'enum'
      * @return bool   success
      * @throws EntityNotFoundException
@@ -230,7 +230,7 @@ class AccessController extends Controller
     /**
      * Drop personal rule by id
      *
-     * @param integer $ruleId
+     * @param int $ruleId
      * @return bool
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -246,7 +246,7 @@ class AccessController extends Controller
     /**
      * Drop group rule by id
      *
-     * @param integer $ruleId
+     * @param int $ruleId
      * @return bool
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -264,8 +264,8 @@ class AccessController extends Controller
      * Warning: clearing whole cache is explicitly NOT IMPLEMENTED. When altering groups access rules,
      * it's better to wait for 10mins than cause shitload on DB.
      *
-     * @param integer $personId
-     * @param integer $eventId
+     * @param int $personId
+     * @param int $eventId
      * @return bool
      * @throws \Exception
      */

@@ -32,7 +32,8 @@ class ProfileEdit extends Controller
     {
         if ($this->_currentPersonId === null) {
             return [
-                'error' => _t("Can't proceed to profile management: please log in")
+                'error' => _t("Can't proceed to profile management: please log in"),
+                'critical' => true
             ];
         }
 
@@ -48,7 +49,8 @@ class ProfileEdit extends Controller
 
         if (empty($data)) {
             return [
-                'error' => _t("Can't proceed to profile management: failed to fetch personal data")
+                'error' => _t("Can't proceed to profile management: failed to fetch personal data"),
+                'critical' => true
             ];
         }
 
