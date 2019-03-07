@@ -120,7 +120,7 @@ class PersonsController extends Controller
     /**
      * Update group info in admin interface
      *
-     * @param integer $id
+     * @param int $id
      * @param string $title
      * @param string $description
      * @param string $color
@@ -155,7 +155,7 @@ class PersonsController extends Controller
     /**
      * Delete group and all of its linked dependencies
      *
-     * @param integer $id
+     * @param int $id
      * @return bool
      * @throws InvalidParametersException
      * @throws \Exception
@@ -171,8 +171,8 @@ class PersonsController extends Controller
     /**
      * Add person to group
      *
-     * @param integer $personId
-     * @param integer $groupId
+     * @param int $personId
+     * @param int $groupId
      * @return bool  success
      * @throws EntityNotFoundException
      * @throws InvalidParametersException

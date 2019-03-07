@@ -22,66 +22,71 @@
 {{#success}}
   <div class="alert alert-success" role="success">{{success}}</div>
 {{/success}}
-<div class="row">
-  <div class="col-6">
-    <form action="" method="post" class="well">
-      <input type="hidden" name="save" value="1" />
-      <div class="form-group">
-        <label for="email">{{_t 'E-mail address'}}</label>
-        <input type="text" disabled class="form-control" id="email" name="email" value="{{email}}">
-        <small id="emailHelp" class="form-text text-muted">{{_t "Your e-mail will not be shared with anyone else and will not be visible anywhere. If you want to change your e-mail, contact chief administrator."}}</small>
-      </div>
+{{^critical}}
+  <div class="row">
+    <div class="col-6">
+      <form action="" method="post" class="well">
+        <input type="hidden" name="save" value="1"/>
+        <div class="form-group">
+          <label for="email">{{_t 'E-mail address'}}</label>
+          <input type="text" disabled class="form-control" id="email" name="email" value="{{email}}">
+          <small id="emailHelp" class="form-text text-muted">{{_t "Your e-mail will not be shared with anyone else and will not be visible anywhere. If you want to change your e-mail, contact chief administrator."}}</small>
+        </div>
 
-      <div class="form-group">
-        <label for="title">{{_t 'Player name'}}</label>
-        <input type="text" class="form-control{{#error_title}} is-invalid{{/error_title}}" id="title" value="{{title}}"
-               name="title">
-        {{#error_title}}
-          <div class="invalid-feedback">{{error_title}}</div>
-        {{/error_title}}
-        {{^error_title}}
-          <small id="titleHelp" class="form-text text-muted">{{_t "Please enter your real name and surname (if you have it)."}}</small>
-        {{/error_title}}
-      </div>
+        <div class="form-group">
+          <label for="title">{{_t 'Player name'}}</label>
+          <input type="text" class="form-control{{#error_title}} is-invalid{{/error_title}}" id="title"
+                 value="{{title}}"
+                 name="title">
+          {{#error_title}}
+            <div class="invalid-feedback">{{error_title}}</div>
+          {{/error_title}}
+          {{^error_title}}
+            <small id="titleHelp" class="form-text text-muted">{{_t "Please enter your real name and surname (if you have it)."}}</small>
+          {{/error_title}}
+        </div>
 
-      <div class="form-group">
-        <label for="city">{{_t 'City'}}</label>
-        <input type="city" class="form-control{{#error_city}} is-invalid{{/error_city}}" id="city" value="{{city}}"
-               name="city">
-        {{#error_city}}
-          <div class="invalid-feedback">{{error_city}}</div>
-        {{/error_city}}
-        {{^error_city}}
-          <small id="cityHelp" class="form-text text-muted">{{_t "Start typing and select your city from list, or just type it's whole name to add new city"}}</small>
-        {{/error_city}}
-      </div>
+        <div class="form-group">
+          <label for="city">{{_t 'City'}}</label>
+          <input type="city" class="form-control{{#error_city}} is-invalid{{/error_city}}" id="city" value="{{city}}"
+                 name="city">
+          {{#error_city}}
+            <div class="invalid-feedback">{{error_city}}</div>
+          {{/error_city}}
+          {{^error_city}}
+            <small id="cityHelp" class="form-text text-muted">{{_t "Start typing and select your city from list, or just type it's whole name to add new city"}}</small>
+          {{/error_city}}
+        </div>
 
-      <div class="form-group">
-        <label for="phone">{{_t 'Phone'}}</label>
-        <input type="phone" class="form-control{{#error_phone}} is-invalid{{/error_phone}}" id="phone" value="{{phone}}"
-               name="phone">
-        {{#error_phone}}
-          <div class="invalid-feedback">{{error_phone}}</div>
-        {{/error_phone}}
-        {{^error_phone}}
-          <small id="phoneHelp" class="form-text text-muted">{{_t "Your phone may be shown to administrators of tournaments that are not finished yet."}}</small>
-        {{/error_phone}}
-      </div>
+        <div class="form-group">
+          <label for="phone">{{_t 'Phone'}}</label>
+          <input type="phone" class="form-control{{#error_phone}} is-invalid{{/error_phone}}" id="phone"
+                 value="{{phone}}"
+                 name="phone">
+          {{#error_phone}}
+            <div class="invalid-feedback">{{error_phone}}</div>
+          {{/error_phone}}
+          {{^error_phone}}
+            <small id="phoneHelp" class="form-text text-muted">{{_t "Your phone may be shown to administrators of tournaments that are not finished yet."}}</small>
+          {{/error_phone}}
+        </div>
 
-      <div class="form-group">
-        <label for="tenhouid">{{_t 'Tenhou ID (nickname)'}}</label>
-        <input type="tenhouid" class="form-control{{#error_tenhouid}} is-invalid{{/error_tenhouid}}" id="tenhouid" value="{{tenhouid}}"
-               name="tenhouid">
-        {{#error_tenhouid}}
-          <div class="invalid-feedback">{{error_tenhouid}}</div>
-        {{/error_tenhouid}}
-        {{^error_tenhouid}}
-          <small id="tenhouidHelp" class="form-text text-muted">{{_t "Your tenhou ID will be shown publicly. WARNING: this is your tenhou nickname, you should not enter your access code here!"}}</small>
-        {{/error_tenhouid}}
-      </div>
+        <div class="form-group">
+          <label for="tenhouid">{{_t 'Tenhou ID (nickname)'}}</label>
+          <input type="tenhouid" class="form-control{{#error_tenhouid}} is-invalid{{/error_tenhouid}}" id="tenhouid"
+                 value="{{tenhouid}}"
+                 name="tenhouid">
+          {{#error_tenhouid}}
+            <div class="invalid-feedback">{{error_tenhouid}}</div>
+          {{/error_tenhouid}}
+          {{^error_tenhouid}}
+            <small id="tenhouidHelp" class="form-text text-muted">{{_t "Your tenhou ID will be shown publicly. WARNING: this is your tenhou nickname, you should not enter your access code here!"}}</small>
+          {{/error_tenhouid}}
+        </div>
 
-      <button type="submit" class="btn btn-primary">{{_t 'Save'}}</button>
-    </form>
-    <hr/>
+        <button type="submit" class="btn btn-primary">{{_t 'Save'}}</button>
+      </form>
+      <hr/>
+    </div>
   </div>
-</div>
+{{/critical}}
