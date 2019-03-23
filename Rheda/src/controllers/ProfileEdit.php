@@ -37,10 +37,6 @@ class ProfileEdit extends Controller
             ];
         }
 
-        if (!empty($_POST['save'])) {
-            return $this->_saveData($_POST);
-        }
-
         try {
             $data = $this->_frey->getPersonalInfo([$this->_currentPersonId]);
         } catch (\Exception $ex) {
@@ -54,7 +50,9 @@ class ProfileEdit extends Controller
             ];
         }
 
-
+        if (!empty($_POST['save'])) {
+            return $this->_saveData($_POST, $data[0]);
+        }
 
         return [
             'error' => null,
@@ -64,46 +62,37 @@ class ProfileEdit extends Controller
             'city' => $data[0]['city'],
             'email' => $data[0]['email'],
             'phone' => $data[0]['phone'],
-            'tenhouid' => $data[0]['tenhouid'],
+            'tenhouid' => $data[0]['tenhou_id'],
         ];
     }
 
-    protected function _tryRegisterUser($data)
+    protected function _saveData($data, $originalData)
     {
-        $emailError = null;
-        $passwordError = null;
-
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))  {
-            $emailError = _t('E-mail is invalid or not supported. Note that non-latin e-mail domains are not supported.');
-        }
-
-        if ($this->_calcPasswordStrength($data['password']) < 14) {
-            $passwordError = _t('Password is too weak. Try adding some digits, uppercase letters or punctuation to it, or increase its length.');
-        }
-
-        if (!empty($emailError) || !empty($passwordError)) {
-            return [
-                'email' => $data['email'],
-                'error' => _t('Some errors occured, see below'),
-                'error_email' => $emailError,
-                'error_password' => $passwordError
-            ];
-        }
-
         try {
-            $approvalCode = $this->_frey->requestRegistration($data['email'], $data['password']);
-            $url = Url::makeConfirmation($approvalCode);
+            $success = $this->_frey->updatePersonalInfo(
+                $this->_currentPersonId,
+                $data['title'], $data['city'],
+                $originalData['email'], // email is not intended to be changed by user
+                $data['phone'], $data['tenhouid']);
 
-            // TODO: send email to user here...
             return [
-                'error' => null,
-                'success' => true,
-                'debug_url' => Sysconf::DEBUG_MODE ? $url : null
+                'error' => $success ? null : _t('Failed to update personal information: insufficient privileges or server error'),
+                'success' => $success ? _t('Personal information successfully updated') : null,
+                'title' => $data['title'],
+                'city' => $data['city'],
+                'email' => $originalData['email'],
+                'phone' => $data['phone'],
+                'tenhouid' => $data['tenhouid'],
             ];
         } catch (\Exception $ex) {
             return [
                 'error' => $ex->getMessage(),
-                'success' => false
+                'success' => false,
+                'title' => $data['title'],
+                'city' => $data['city'],
+                'email' => $originalData['email'],
+                'phone' => $data['phone'],
+                'tenhouid' => $data['tenhouid'],
             ];
         }
     }

@@ -100,6 +100,11 @@
           {{/useTimer}}
         {{/isAggregated}}
       {{/eventSelected}}
+    </ul>
+    <ul class="navbar-nav justify-content-end" style="position: absolute; right: 0">
+      {{#isLoggedIn}}
+        <li class="nav-item"><a class='nav-link' href='/profile'>{{personalData.title}}</a></li>
+      {{/isLoggedIn}}
       {{^isLoggedIn}}
         <li class="nav-item"><a class='nav-link' href='/login/'>{{_t 'Login'}}</a></li>
         <li class="nav-item"><a class='nav-link' href='/register/'>{{_t 'Register'}}</a></li>
@@ -110,11 +115,11 @@
           {{> partials/LangIcon i18n=1 width=40 style="position: absolute; top: 0"}}
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="?l=en">{{> partials/LangIcon en=1 width=24}}</a>
           <a class="dropdown-item" href="?l=ru">{{> partials/LangIcon ru=1 width=24}}</a>
           <a class="dropdown-item" href="?l=de">{{> partials/LangIcon de=1 width=24}}</a>
-        </div>
+          </div>
       </li>
     </ul>
   </div>

@@ -85,7 +85,11 @@ class Meta
                     'X-Current-Event-Id: ' . $this->_currentEventId ?: '0',
                     'X-Current-Person-Id: ' . $this->_currentPersonId
                 ]);
-                $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);
+                if (!empty($this->_currentEventId)) {
+                    $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);
+                } else {
+                    // TODO: should we fetch common rules for person in this case?
+                }
             }
         }
 
