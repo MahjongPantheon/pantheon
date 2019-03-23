@@ -43,7 +43,6 @@ class TournamentSeeder extends AbstractSeed
         $event = (new \Mimir\EventPrimitive($db))
             ->setTitle('title')
             ->setDescription('desc')
-            ->setType('offline')
             ->setTimezone('Europe/Moscow')
             ->setAllowPlayerAppend(0)
             ->setAutoSeating(1)
