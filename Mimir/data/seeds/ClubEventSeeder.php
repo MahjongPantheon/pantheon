@@ -40,7 +40,6 @@ class ClubEventSeeder extends AbstractSeed
         $event = (new \Mimir\EventPrimitive($db))
             ->setTitle('title')
             ->setDescription('desc')
-            ->setType('offline')
             ->setTimezone('Europe/Moscow')
             ->setAllowPlayerAppend(1)
             ->setAutoSeating(0)
