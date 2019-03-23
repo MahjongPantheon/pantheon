@@ -30,7 +30,7 @@ class AccessController extends Controller
      * Get array of access rules for person in event.
      * Cached for 10 minutes.
      *
-     * @param int $personId
+     * @param int $personIdcurrentEventId
      * @param int $eventId
      * @return array
      * @throws \Exception

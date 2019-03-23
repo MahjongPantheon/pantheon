@@ -250,7 +250,8 @@ abstract class Controller
                     'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
                     'userHasAdminRights' => $this->_adminAuthOk(),
                     'isAggregated' => true,
-                    'isLoggedIn' => false // TODO
+                    'isLoggedIn' => !empty($this->_personalData),
+                    'personalData' => $this->_personalData
                 ]);
             } else {
                 /* Simple events. */
@@ -269,7 +270,8 @@ abstract class Controller
                     'eventSelected' => $this->_mainEventId,
                     'currentPerson' => $this->_personalData,
                     'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),
-                    'isLoggedIn' => false // TODO
+                    'isLoggedIn' => !empty($this->_personalData),
+                    'personalData' => $this->_personalData
                 ]);
             }
         }
