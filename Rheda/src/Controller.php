@@ -168,7 +168,12 @@ abstract class Controller
         }
 
         if (!empty($this->_currentPersonId)) {
-            if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->_authToken)) {
+            $authorized = false;
+            try {
+                $authorized = $this->_frey->quickAuthorize($this->_currentPersonId, $this->_authToken);
+            } catch (\Exception $e) {} // keep false on exception
+
+            if (!$authorized) {
                 $this->_currentPersonId = null;
                 $this->_authToken = null;
             } else {

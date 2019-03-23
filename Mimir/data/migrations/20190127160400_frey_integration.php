@@ -12,6 +12,7 @@ class FreyIntegration extends AbstractMigration
         $table
             ->renameColumn('owner_formation', '__deprecated_owner_formation')
             ->renameColumn('owner_player', '__deprecated_owner_player')
+            ->changeColumn('type', 'string', ['null' => true])
             ->renameColumn('type', '__deprecated_type')
             ->update();
 
