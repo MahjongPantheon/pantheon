@@ -33,7 +33,6 @@ if (file_exists(__DIR__ . '/local/index.php')) {
 return array_merge([
     // ---------- may be overridden in local settings -----------
     'admin'     => [
-        'god_token' => 'CHANGE_ME', // TODO: change this in your local config!
         'debug_token' => 'CHANGE_ME' // TODO: change this in your local config!
     ],
     'db'        => require __DIR__ . '/db.php',

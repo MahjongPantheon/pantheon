@@ -396,24 +396,6 @@ class PlayersController extends Controller
     }
 
     /**
-     * @param string $playerIdent unique identifying string
-     * @throws EntityNotFoundException
-     * @throws \Exception
-     * @return int player id
-     */
-    public function getIdByIdent($playerIdent)
-    {
-        $this->_log->addInfo('Getting id for player #' . $playerIdent);
-        $player = PlayerPrimitive::findByIdent($this->_db, [$playerIdent]);
-        if (empty($player)) {
-            throw new EntityNotFoundException('No player with ident #' . $playerIdent . ' found');
-        }
-
-        $this->_log->addInfo('Successfully got id for player #' . $playerIdent);
-        return $player[0]->getId();
-    }
-
-    /**
      * Get last recorded round for session by hashcode
      *
      * @param string $hashcode

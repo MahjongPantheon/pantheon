@@ -41,6 +41,7 @@ return [
     'getRuleValue'         => ['AccessController', 'getRuleValue'],
     'updatePersonalInfo'   => ['PersonsController', 'updatePersonalInfo'],
     'getPersonalInfo'      => ['PersonsController', 'getPersonalInfo'],
+    'findByTenhouIds'      => ['PersonsController', 'findByTenhouIds'],
     'findByTitle'          => ['PersonsController', 'findByTitle'],
     'getGroups'            => ['PersonsController', 'getGroups'],
 

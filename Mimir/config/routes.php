@@ -38,7 +38,6 @@ return [
     'getGamesSeries'     => ['EventsController', 'getGamesSeries'],
     'getCurrentGames'    => ['PlayersController', 'getCurrentSessions'],
     'getAllPlayers'      => ['EventsController', 'getAllRegisteredPlayers'],
-    'getPlayerIdByIdent' => ['PlayersController', 'getIdByIdent'],
     'getTimerState'      => ['EventsController', 'getTimerState'],
     'getGameOverview'    => ['GamesController', 'getSessionOverview'],
     'getPlayerStats'     => ['PlayersController', 'getStats'],
