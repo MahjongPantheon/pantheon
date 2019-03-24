@@ -57,7 +57,6 @@ class GamesSeriesTest extends \PHPUnit\Framework\TestCase
         $games = explode("\n\n\n", file_get_contents(__DIR__ . '/../models/testdata/games.txt'));
 
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
-        $_SERVER['HTTP_X_AUTH_TOKEN'] = $this->_config->getValue('admin.god_token');
 
         $this->_meta = new Meta($_SERVER);
         $this->_db = Db::__getCleanTestingInstance();

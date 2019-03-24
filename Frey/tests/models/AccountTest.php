@@ -228,6 +228,48 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @throws \Exception
+     */
+    public function testFindByTenhouId()
+    {
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $personId = $model->createAccount(
+            'test@email.com',
+            'passwd',
+            'test',
+            'testcity',
+            '111-111-111',
+            'tid'
+        );
+        $data = $model->findByTenhouId(['tid']);
+        $this->assertEquals('test@email.com', $data[0]['email']);
+        $this->assertEquals('test', $data[0]['title']);
+        $this->assertEquals('111-111-111', $data[0]['phone']);
+        $this->assertEquals('tid', $data[0]['tenhou_id']);
+        $this->assertEquals($personId, $data[0]['id']);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testFindByTenhouIdEmptyList()
+    {
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $persons = $model->findByTenhouId([]);
+        $this->assertEmpty($persons);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testFindByTenhouIdNonexistingIds()
+    {
+        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
+        $persons = $model->findByTenhouId([123]);
+        $this->assertEmpty($persons);
+    }
+
+    /**
      * @throws InvalidParametersException
      * @throws \Exception
      */

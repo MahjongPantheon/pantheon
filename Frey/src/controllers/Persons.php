@@ -63,6 +63,22 @@ class PersonsController extends Controller
     }
 
     /**
+     * Get personal info by tenhou id list.
+     * May or may not include private data (depending on admin rights of requesting user).
+     *
+     * @param array $ids
+     * @return array
+     * @throws \Exception
+     */
+    public function findByTenhouIds($ids)
+    {
+        $this->_logStart(__METHOD__, [implode(',', $ids)]);
+        $personalInfo = $this->_getAccountModel()->findByTenhouId($ids);
+        $this->_logSuccess(__METHOD__, [implode(',', $ids)]);
+        return $personalInfo;
+    }
+
+    /**
      * @param string $id
      * @param string $title
      * @param string $city

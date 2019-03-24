@@ -22,45 +22,16 @@ require_once __DIR__ . '/../Primitive.php';
 /**
  * Class PlayerPrimitive
  *
- * Low-level model with basic CRUD operations and relations
+ * Networked primitive: uses external service as a data source
  * @package Mimir
  */
 class PlayerPrimitive extends Primitive
 {
-    protected static $_table = 'player';
-
-    protected static $_fieldsMapping = [
-        'id'             => '_id',
-        'display_name'   => '_displayName',
-        'ident'          => '_ident',
-        'alias'          => '_alias',
-        'tenhou_id'      => '_tenhouId',
-        'is_replacement' => '_isReplacement'
-    ];
-
-    protected function _getFieldsTransforms()
-    {
-        return [
-            '_id' => $this->_integerTransform(true),
-            '_isReplacement' => $this->_integerTransform()
-        ];
-    }
-
     /**
      * Local id
      * @var int
      */
     protected $_id;
-    /**
-     * oauth ident info, for example
-     * @var string
-     */
-    protected $_ident;
-    /**
-     * alias for text-mode game logs
-     * @var string
-     */
-    protected $_alias;
     /**
      * How to display in state
      * @var string
@@ -73,62 +44,65 @@ class PlayerPrimitive extends Primitive
     protected $_tenhouId;
     /**
      * Is player a substitution player
+     *
+     * TODO: в аккаунтной схеме с заменами будут сложности. Надо что-то придумывать.
+     *
      * @var int
      */
     protected $_isReplacement = 0;
+    /**
+     * Client of auth service
+     * @var FreyClient
+     */
+    protected $_frey;
+
+    public function __construct(FreyClient $frey)
+    {
+        // Parent constructor call omitted intentionally.
+
+        $this->_frey = $frey;
+    }
 
     /**
-     * Find players by local ids (primary key)
+     * Find players by local ids
      *
-     * @param IDb $db
+     * @param FreyClient $frey
      * @param int[] $ids
      * @throws \Exception
      * @return PlayerPrimitive[]
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(FreyClient $frey, $ids)
     {
-        return self::_findBy($db, 'id', $ids);
+        $data = $frey->getPersonalInfo($ids);
+
+        return array_map(function($item) use (&$frey) {
+            return (new PlayerPrimitive($frey))
+                ->setTenhouId($item['tenhou_id'])
+                ->setDisplayName($item['title'])
+                ->_setId($item['id']);
+        }, $data);
     }
 
     /**
-     * Find players by [oauth] idents (indexed search)
-     *
-     * @param IDb $db
-     * @param int[] $idents
-     * @throws \Exception
-     * @return PlayerPrimitive[]
-     */
-    public static function findByIdent(IDb $db, $idents)
-    {
-        return self::_findBy($db, 'ident', $idents);
-    }
-
-    /**
-     * Find players by alias (indexed search)
-     *
-     * @param IDb $db
-     * @param int[] $idents
-     * @throws \Exception
-     * @return PlayerPrimitive[]
-     */
-    public static function findByAlias(IDb $db, $idents)
-    {
-        return self::_findBy($db, 'alias', $idents);
-    }
-
-    /**
-     * Find players by tenhou ids (indexed search)
+     * Find players by tenhou ids
      * Method should maintain sorting of items according to ids order.
      *
-     * @param IDb $db
+     * @param FreyClient $frey
      * @param int[] $ids
      * @throws \Exception
      * @return PlayerPrimitive[]
      */
-    public static function findByTenhouId(IDb $db, $ids)
+    public static function findByTenhouId(FreyClient $frey, $ids)
     {
+        $playersData = $frey->findByTenhouIds($ids);
         /** @var PlayerPrimitive[] $players */
-        $players = self::_findBy($db, 'tenhou_id', $ids);
+        $players = array_map(function($item) use(&$frey) {
+            return (new PlayerPrimitive($frey))
+                ->setTenhouId($item['tenhou_id'])
+                ->setDisplayName($item['title'])
+                ->_setId($item['id']);
+        }, $playersData);
+
         $playersMap = array_combine(
             array_map(function (PlayerPrimitive $player) {
                 return $player->getTenhouId();
@@ -141,15 +115,22 @@ class PlayerPrimitive extends Primitive
         }, $ids));
     }
 
+    /**
+     * @return mixed|void
+     * @throws BadActionException
+     */
     protected function _create()
     {
-        $player = $this->_db->table(self::$_table)->create();
-        $success = $this->_save($player);
-        if ($success) {
-            $this->_id = $this->_db->lastInsertId();
-        }
+        throw new BadActionException('Newtorked Player primitives are considered to be readonly!');
+    }
 
-        return $success;
+    /**
+     * @return bool|void
+     * @throws BadActionException
+     */
+    public function save()
+    {
+        throw new BadActionException('Newtorked Player primitives are considered to be readonly!');
     }
 
     protected function _deident()
@@ -184,39 +165,13 @@ class PlayerPrimitive extends Primitive
     }
 
     /**
-     * @param string $ident
+     * @param int $id
      * @return $this
      */
-    public function setIdent($ident)
+    protected function _setId($id)
     {
-        $this->_ident = $ident;
+        $this->_id = $id;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdent()
-    {
-        return $this->_ident;
-    }
-
-    /**
-     * @param string $alias
-     * @return PlayerPrimitive
-     */
-    public function setAlias($alias)
-    {
-        $this->_alias = $alias;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAlias()
-    {
-        return $this->_alias;
     }
 
     /**

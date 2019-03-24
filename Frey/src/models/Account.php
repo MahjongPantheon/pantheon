@@ -173,4 +173,39 @@ class AccountModel extends Model
             ];
         }, $persons);
     }
+
+    /**
+     * Find accounts by tenhou ids list.
+     * If tenhou id is not found, resulting empty result
+     * is not included into result set at all. Maintaining
+     * positional mapping id -> data is expected at client side.
+     *
+     * @param array $ids
+     * @return array
+     * @throws \Exception
+     */
+    public function findByTenhouId($ids)
+    {
+        $filterPrivateData = false;
+        try {
+            $this->_checkAccessRights(InternalRules::GET_PERSONAL_INFO_WITH_PRIVATE_DATA);
+        } catch (AccessDeniedException $e) {
+            // No access, filter out private data
+            $filterPrivateData = true;
+        }
+
+        $persons = PersonPrimitive::findByTenhouId($this->_db, $ids);
+
+        return array_map(function (PersonPrimitive $person) use ($filterPrivateData) {
+            return [
+                'id' => $person->getId(),
+                'city' => $person->getCity(),
+                'email' => $filterPrivateData && $person->getId() !== $this->_authorizedPerson->getId() ? null : $person->getEmail(),
+                'phone' => $filterPrivateData && $person->getId() !== $this->_authorizedPerson->getId() ? null : $person->getPhone(),
+                'tenhou_id' => $person->getTenhouId(),
+                'groups' => $person->getGroupIds(),
+                'title' => $person->getTitle(),
+            ];
+        }, $persons);
+    }
 }

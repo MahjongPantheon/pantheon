@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+require_once __DIR__ . '/AccessRules.php';
+
 abstract class Model
 {
     /**
@@ -47,6 +49,6 @@ abstract class Model
      */
     public function checkAdminToken()
     {
-        return $this->_meta->getAuthToken() === $this->_config->getValue('admin.god_token');
+        return $this->_meta->getAccessRuleValue(AccessRules::ADMIN_EVENT);
     }
 }

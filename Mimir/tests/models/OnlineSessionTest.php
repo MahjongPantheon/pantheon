@@ -71,7 +71,6 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
     public function setUp()
     {
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
-        $_SERVER['HTTP_X_AUTH_TOKEN'] = $this->_config->getValue('admin.god_token');
 
         $this->_meta = new Meta($_SERVER);
         $this->_db = Db::__getCleanTestingInstance();

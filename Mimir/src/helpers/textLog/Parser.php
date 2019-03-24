@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+// TODO: выпилить!
+
 /*
     Input example:
 

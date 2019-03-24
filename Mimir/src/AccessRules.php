@@ -15,25 +15,11 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+namespace Mimir;
 
-return [
-    'db' => [
-        'connection_string' => 'pgsql:host=localhost;port=' . getenv('PHINX_DB_PORT')
-            . ';dbname=' . getenv('PHINX_DB_NAME_UNIT'),
-        'credentials' => [
-            'username' => getenv('PHINX_DB_USER'),
-            'password' => getenv('PHINX_DB_PASS')
-        ]
-    ],
-    'admin'     => [
-        'debug_token' => '2-839489203hf2893'
-    ],
-    'routes'    => require __DIR__ . '/../../config/routes.php',
-    'verbose'   => true,
-    'verboseLog' => __DIR__ . '/../data/verbose.log',
-    'trackerUrl' => null,
-    'api' => [
-        'version_major' => 1,
-        'version_minor' => 0
-    ]
-];
+// TODO: generate this and all other such files dynamically from some unviersal source.
+
+class AccessRules {
+    const ADD_USER = 'add_user';
+    const ADMIN_EVENT = 'admin_event';
+}
