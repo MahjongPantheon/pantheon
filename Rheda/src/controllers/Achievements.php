@@ -32,7 +32,7 @@ class Achievements extends Controller
 
     protected function _run()
     {
-        if (!$this->_adminAuthOk()) {
+        if (!$this->_userHasAdminRights()) {
             return [
                 'error' => _t("Wrong admin password"),
             ];

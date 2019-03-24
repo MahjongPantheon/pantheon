@@ -89,7 +89,7 @@ class RatingTable extends Controller
                 $this->_eventIdList,
                 $orderBy,
                 $order,
-                $this->_adminAuthOk() // show prefinished results only for admins
+                $this->_userHasAdminRights() // show prefinished results only for admins
             ]);
 
             $teamNames = [];
@@ -195,7 +195,7 @@ class RatingTable extends Controller
         $showAdminWarning = false;
 
         // admin should be able to see results
-        if ($this->_adminAuthOk() && $hideResults) {
+        if ($this->_userHasAdminRights() && $hideResults) {
             $hideResults = false;
             $showAdminWarning = true;
         }

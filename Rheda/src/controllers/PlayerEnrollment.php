@@ -67,7 +67,7 @@ class PlayerEnrollment extends Controller
                 return true;
             }
 
-            if (!$this->_adminAuthOk()) {
+            if (!$this->_userHasAdminRights()) {
                 $this->_lastError = _t("Wrong admin password");
                 return true;
             }

@@ -232,6 +232,20 @@ empty_event: migrate
 		-d '{"jsonrpc": "2.0", "method": "createEvent", "params": ["Test offline", "description", "ema", 90, "Europe/Moscow"], "id": "5db41fc6-5947-423c-a2ca-6e7f7e6a45c0" }' \
 		| php -r 'echo "New event: http://localhost:4002/eid" . json_decode(file_get_contents("php://stdin"))->result . PHP_EOL;'
 
+.PHONY: global_admin
+global_admin: migrate
+		@if [ "${USERID}" = "" ] || [ "${EVENTID}" = "" ]; then \
+			echo "Usage: USERID=[id] EVENTID=[id] make global_admin"; \
+			echo "Event id should be set to clear access cache immediately. It may be omitted if it is not required"; \
+		else \
+			curl -s http://localhost:4004/ \
+				-H 'content-type: application/json' \
+				-d '{"jsonrpc": "2.0", "method": "addSystemWideRuleForPerson", "params": ["admin_event", true, "bool", ${USERID}], "id": "5db41fc6-5947-423c-a2ca-6e7f7e6a45c0" }' && \
+			curl -s http://localhost:4004/ \
+				-H 'content-type: application/json' \
+				-d '{"jsonrpc": "2.0", "method": "clearAccessCache", "params": [${USERID}, ${EVENTID}], "id": "5db41fc6-5947-423c-a2ca-6e7f7e6a45c0" }' ; \
+		fi
+
 .PHONY: check
 check: get_docker_id lint
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user make unit';

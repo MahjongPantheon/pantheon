@@ -41,7 +41,7 @@ class GamesControlPanel extends Controller
                 return true; // to show error in _run
             }
 
-            if (!$this->_adminAuthOk()) {
+            if (!$this->_userHasAdminRights()) {
                 return true; // to show error in _run
             }
 
@@ -82,7 +82,7 @@ class GamesControlPanel extends Controller
             ];
         }
 
-        if (!$this->_adminAuthOk()) {
+        if (!$this->_userHasAdminRights()) {
             return [
                 'reason' => _t('Wrong admin password')
             ];
