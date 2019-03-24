@@ -501,7 +501,7 @@ class RoundPrimitive extends Primitive
     public function getLoser()
     {
         if (!$this->_loser) {
-            $foundUsers = PlayerPrimitive::findById($this->_db, [$this->_loserId]);
+            $foundUsers = PlayerPrimitive::findById($this->_frey, [$this->_loserId]);
             if (empty($foundUsers)) {
                 throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_loserId . ' not found in DB');
             }
@@ -583,7 +583,7 @@ class RoundPrimitive extends Primitive
     {
         if ($this->_riichiUsers === null) {
             $this->_riichiUsers = PlayerPrimitive::findById(
-                $this->_db,
+                $this->_frey,
                 $this->_riichiIds
             );
             if (empty($this->_riichiUsers) || count($this->_riichiUsers) !== count($this->_riichiIds)) {
@@ -680,7 +680,7 @@ class RoundPrimitive extends Primitive
     {
         if ($this->_tempaiUsers === null) {
             $this->_tempaiUsers = PlayerPrimitive::findById(
-                $this->_db,
+                $this->_frey,
                 $this->_tempaiIds
             );
             if (empty($this->_tempaiUsers) || count($this->_tempaiUsers) !== count($this->_tempaiIds)) {
@@ -738,7 +738,7 @@ class RoundPrimitive extends Primitive
     public function getWinner()
     {
         if (!$this->_winner) {
-            $foundUsers = PlayerPrimitive::findById($this->_db, [$this->_winnerId]);
+            $foundUsers = PlayerPrimitive::findById($this->_frey, [$this->_winnerId]);
             if (empty($foundUsers)) {
                 throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_winnerId . ' not found in DB');
             }
@@ -773,7 +773,7 @@ class RoundPrimitive extends Primitive
     public function getPaoPlayer()
     {
         if (!$this->_paoPlayer) {
-            $foundUsers = PlayerPrimitive::findById($this->_db, [$this->_paoPlayerId]);
+            $foundUsers = PlayerPrimitive::findById($this->_frey, [$this->_paoPlayerId]);
             if (empty($foundUsers)) {
                 throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_paoPlayerId . ' not found in DB');
             }

@@ -547,7 +547,7 @@ class SessionPrimitive extends Primitive
     {
         if ($this->_players === null) {
             $this->_players = PlayerPrimitive::findById(
-                $this->_db,
+                $this->_frey,
                 $this->_playersIds
             );
             if (empty($this->_players) || count($this->_players) !== count($this->_playersIds)) {

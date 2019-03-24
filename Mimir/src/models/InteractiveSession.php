@@ -61,7 +61,7 @@ class InteractiveSessionModel extends Model
             throw new InvalidParametersException('Players list is not array');
         }
 
-        $players = PlayerPrimitive::findById($this->_db, $playerIds);
+        $players = PlayerPrimitive::findById($this->_meta->getFreyClient(), $playerIds);
         $players = array_filter(array_map(function ($id) use (&$players) {
             // Re-sort players to match request order - important!
             foreach ($players as $p) {

@@ -356,7 +356,7 @@ class EventsController extends Controller
 
         $enrolled = PlayerEnrollmentPrimitive::findByEvent($this->_db, $eventId);
         $players = PlayerPrimitive::findById(
-            $this->_db,
+            $this->_meta->getFreyClient(),
             array_map(function (PlayerEnrollmentPrimitive $e) {
                 return $e->getPlayerId();
             }, $enrolled)

@@ -53,7 +53,7 @@ class EventUserManagementModel extends Model
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
-        $player = PlayerPrimitive::findById($this->_db, [$playerId]);
+        $player = PlayerPrimitive::findById($this->_meta->getFreyClient(), [$playerId]);
         if (empty($player)) {
             throw new InvalidParametersException('Player id#' . $playerId . ' not found in DB');
         }
@@ -80,7 +80,7 @@ class EventUserManagementModel extends Model
      */
     public function registerPlayer($playerId, $eventId)
     {
-        $player = PlayerPrimitive::findById($this->_db, [$playerId]);
+        $player = PlayerPrimitive::findById($this->_meta->getFreyClient(), [$playerId]);
         if (empty($player)) {
             throw new InvalidParametersException('Player id#' . $playerId . ' not found in DB');
         }
@@ -191,7 +191,7 @@ class EventUserManagementModel extends Model
                 $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_db, $event[0]->getId());
             }
 
-            $player = PlayerPrimitive::findById($this->_db, [$eItem->getPlayerId()]);
+            $player = PlayerPrimitive::findById($this->_meta->getFreyClient(), [$eItem->getPlayerId()]);
             $regItem = (new PlayerRegistrationPrimitive($this->_db))
                 ->setLocalId($nextLocalId)
                 ->setReg($player[0], $event[0]);

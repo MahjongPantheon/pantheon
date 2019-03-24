@@ -176,7 +176,7 @@ class EventSeriesModel extends Model
             return $b['scoresSum'] - $a['scoresSum'];
         });
 
-        $players = EventModel::getPlayersOfGames($this->_db, $games);
+        $players = EventModel::getPlayersOfGames($this->_meta->getFreyClient(), $games);
         $formattedResults = [];
         foreach ($seriesResults as $item) {
             $playerId = $item['playerId'];

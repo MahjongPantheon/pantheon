@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
+
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
 require_once __DIR__ . '/../primitives/Player.php';
@@ -95,7 +97,7 @@ class PlayersController extends Controller
             throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
         }
 
-        $player = PlayerPrimitive::findById($this->_db, [$id]);
+        $player = PlayerPrimitive::findById($this->_meta->getFreyClient(), [$id]);
         if (empty($player)) {
             throw new EntityNotFoundException('No player with id #' . $id . ' found');
         }
@@ -134,7 +136,7 @@ class PlayersController extends Controller
     public function get($id)
     {
         $this->_log->addInfo('Fetching info of player id #' . $id);
-        $player = PlayerPrimitive::findById($this->_db, [$id]);
+        $player = PlayerPrimitive::findById($this->_meta->getFreyClient(), [$id]);
         if (empty($player)) {
             throw new EntityNotFoundException('No player with id #' . $id . ' found');
         }
@@ -158,18 +160,19 @@ class PlayersController extends Controller
     public function getAll()
     {
         $this->_log->addInfo('Fetching info of ALL players');
-        /** @var PlayerPrimitive[] $players */
-        $players = PlayerPrimitive::findAll($this->_db);
-        $this->_log->addInfo('Successfully fetched info of all players');
-        return array_map(function (PlayerPrimitive $p) {
-            return [
-                'id'            => $p->getId(),
-                'alias'         => $p->getAlias(),
-                'display_name'  => $p->getDisplayName(),
-                'ident'         => $p->getIdent(),
-                'tenhou_id'     => $p->getTenhouId()
-            ];
-        }, $players);
+        throw new \Exception('Not implemented yet: TODO');
+//        /** @var PlayerPrimitive[] $players */
+//        $players = PlayerPrimitive::findAll($this->_db);
+//        $this->_log->addInfo('Successfully fetched info of all players');
+//        return array_map(function (PlayerPrimitive $p) {
+//            return [
+//                'id'            => $p->getId(),
+//                'alias'         => $p->getAlias(),
+//                'display_name'  => $p->getDisplayName(),
+//                'ident'         => $p->getIdent(),
+//                'tenhou_id'     => $p->getTenhouId()
+//            ];
+//        }, $players);
     }
 
     /**

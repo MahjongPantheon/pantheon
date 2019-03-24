@@ -128,4 +128,12 @@ class Meta
     {
         return $this->_authToken === '0000000000';
     }
+
+    /**
+     * @return FreyClient
+     */
+    public function getFreyClient()
+    {
+        return $this->_frey;
+    }
 }
