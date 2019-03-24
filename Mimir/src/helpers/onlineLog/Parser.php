@@ -19,6 +19,7 @@ namespace Mimir;
 
 require_once __DIR__ . '/../../exceptions/Parser.php';
 require_once __DIR__ . '/../../helpers/YakuMap.php';
+require_once __DIR__ . '/../../FreyClient.php';
 require_once __DIR__ . '/../../primitives/Round.php';
 require_once __DIR__ . '/../../primitives/PlayerHistory.php';
 
@@ -32,13 +33,18 @@ class OnlineParser
      */
     protected $_players = [];
     protected $_db;
+    /**
+     * @var FreyClient
+     */
+    protected $_frey;
     protected $_riichi = [];
 
     protected $_lastTokenIsAgari = false;
 
-    public function __construct(Db $db)
+    public function __construct(Db $db, FreyClient $frey)
     {
         $this->_db = $db;
+        $this->_frey = $frey;
     }
 
     /**
@@ -212,7 +218,7 @@ class OnlineParser
                 throw new ParseException('"NoName" players are not allowed in replays');
             }
 
-            $players = PlayerPrimitive::findByTenhouId($this->_db, array_keys($this->_players));
+            $players = PlayerPrimitive::findByTenhouId($this->_frey, array_keys($this->_players));
 
             if (count($players) !== count($this->_players)) {
                 $registeredPlayers = array_map(function (PlayerPrimitive $p) {

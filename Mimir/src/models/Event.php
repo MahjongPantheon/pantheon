@@ -258,14 +258,14 @@ class EventModel extends Model
     }
 
     /**
-     * @param IDb $db
+     * @param FreyClient $frey
      * @param SessionPrimitive[] $games
      * @throws \Exception
      * @return array
      */
-    public static function getPlayersOfGames(IDB $db, $games)
+    public static function getPlayersOfGames(FreyClient $frey, $games)
     {
-        $players = PlayerPrimitive::findById($db, array_reduce($games, function ($acc, SessionPrimitive $el) {
+        $players = PlayerPrimitive::findById($frey, array_reduce($games, function ($acc, SessionPrimitive $el) {
             return array_merge($acc, $el->getPlayersIds());
         }, []));
 

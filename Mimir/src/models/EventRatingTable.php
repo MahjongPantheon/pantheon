@@ -212,7 +212,7 @@ class EventRatingTableModel extends Model
         $ids = array_map(function (PlayerHistoryPrimitive $el) {
             return $el->getPlayerId();
         }, $playersHistoryItems);
-        $players = PlayerPrimitive::findById($this->_db, $ids);
+        $players = PlayerPrimitive::findById($this->_meta->getFreyClient(), $ids);
 
         $result = [];
         foreach ($players as $p) {

@@ -51,7 +51,7 @@ class PlayerStatModel extends Model
 
         $mainEvent = $eventList[0];
 
-        $player = PlayerPrimitive::findById($this->_db, [$playerId]);
+        $player = PlayerPrimitive::findById($this->_meta->getFreyClient(), [$playerId]);
         if (empty($player)) {
             throw new EntityNotFoundException('Player id#' . $playerId . ' not found in DB');
         }
@@ -171,7 +171,7 @@ class PlayerStatModel extends Model
                 'display_name'  => $p->getDisplayName(),
                 'tenhou_id'     => $p->getTenhouId(),
             ];
-        }, PlayerPrimitive::findById($this->_db, $playerIds));
+        }, PlayerPrimitive::findById($this->_meta->getFreyClient(), $playerIds));
 
         return $players;
     }

@@ -258,7 +258,9 @@ class PlayerHistoryPrimitive extends Primitive
     public function getPlayer()
     {
         if (empty($this->_player)) {
-            $foundUsers = PlayerPrimitive::findById($this->_db, [$this->_playerId]);
+
+            // TODO: протаскивать Frey во все примитивы?
+            $foundUsers = PlayerPrimitive::findById($this->_frey, [$this->_playerId]);
             if (empty($foundUsers)) {
                 throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_playerId . ' not found in DB');
             }

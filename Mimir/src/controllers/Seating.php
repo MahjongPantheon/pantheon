@@ -259,7 +259,7 @@ class SeatingController extends Controller
             throw new InvalidParametersException('No valid players found in predefined seating');
         }
 
-        $players = PlayerPrimitive::findById($this->_db, $playerIds);
+        $players = PlayerPrimitive::findById($this->_meta->getFreyClient(), $playerIds);
         /** @var PlayerPrimitive[] $playersMap */
         $playersMap = [];
         foreach ($players as $player) {

@@ -76,7 +76,7 @@ class EventFinishedGamesModel extends Model
 
         $result = [
             'games' => [],
-            'players' => EventModel::getPlayersOfGames($this->_db, $games),
+            'players' => EventModel::getPlayersOfGames($this->_meta->getFreyClient(), $games),
             'total_games' => $gamesCount
         ];
 
@@ -102,7 +102,7 @@ class EventFinishedGamesModel extends Model
 
         return [
             'games' => [$this->_formatGameResults($session, $sessionResults, $rounds)],
-            'players' => EventModel::getPlayersOfGames($this->_db, [$session])
+            'players' => EventModel::getPlayersOfGames($this->_meta->getFreyClient(), [$session])
         ];
     }
 

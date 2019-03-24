@@ -288,7 +288,7 @@ class SessionResultsPrimitive extends Primitive
     public function getPlayer()
     {
         if (!$this->_player) {
-            $foundUsers = PlayerPrimitive::findById($this->_db, [$this->_playerId]);
+            $foundUsers = PlayerPrimitive::findById($this->_frey, [$this->_playerId]);
             if (empty($foundUsers)) {
                 throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_playerId . ' not found in DB');
             }
