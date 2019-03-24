@@ -39,7 +39,7 @@ class Penalties extends Controller
                 return true; // to show error in _run
             }
 
-            if (!$this->_adminAuthOk()) {
+            if (!$this->_userHasAdminRights()) {
                 return true; // to show error in _run
             }
 
@@ -69,7 +69,7 @@ class Penalties extends Controller
             ];
         }
 
-        if (!$this->_adminAuthOk()) {
+        if (!$this->_userHasAdminRights()) {
             return [
                 'error' => _t('Wrong admin password')
             ];

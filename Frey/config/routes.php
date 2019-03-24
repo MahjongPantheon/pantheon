@@ -62,4 +62,8 @@ return [
     'removePersonFromGroup'  => ['PersonsController', 'removePersonFromGroup'],
     'getPersonsOfGroup'      => ['PersonsController', 'getPersonsOfGroup'],
     'getGroupsOfPerson'      => ['PersonsController', 'getGroupsOfPerson'],
+
+    // superadmin: this should be covered with some bootstrap authenthication, TODO
+    'addSystemWideRuleForPerson'       => ['AccessController', 'addSystemWideRuleForPerson'],
+    'addSystemWideRuleForGroup'        => ['AccessController', 'addSystemWideRuleForGroup'],
 ];

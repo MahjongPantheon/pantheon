@@ -62,7 +62,7 @@ class PlayerRegistration extends Controller
         }
 
         return [
-            'authorized' => $this->_adminAuthOk(),
+            'authorized' => $this->_userHasAdminRights(),
             'isAggregated' => (count($this->_eventIdList) > 1),
             'prescriptedEvent' => $this->_mainEventRules->isPrescripted(),
             'teamEvent' => $this->_mainEventRules->isTeam(),
@@ -85,7 +85,7 @@ class PlayerRegistration extends Controller
             return true;
         }
 
-        if (!$this->_adminAuthOk()) {
+        if (!$this->_userHasAdminRights()) {
             $this->_lastError = _t("Wrong admin password");
             return true;
         }

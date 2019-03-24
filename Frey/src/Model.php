@@ -310,6 +310,7 @@ abstract class Model
      */
     protected function _checkAccessRights(string $key, $eventId = null)
     {
+        return;
         if (defined('BOOTSTRAP_MODE')) {
             // Everything is allowed during setup
             return;

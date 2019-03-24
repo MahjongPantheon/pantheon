@@ -102,7 +102,7 @@
     </ul>
     <ul class="navbar-nav justify-content-end" style="position: absolute; right: 0">
       {{#isLoggedIn}}
-        <li class="nav-item"><a class='nav-link' href='/profile'>{{personalData.title}}</a></li>
+        <li class="nav-item"><a class='nav-link' href='/profile' title="{{currentPerson.email}} :: {{currentPerson.id}}">{{currentPerson.title}}</a></li>
       {{/isLoggedIn}}
       {{^isLoggedIn}}
         <li class="nav-item"><a class='nav-link' href='/login/'>{{_t 'Login'}}</a></li>

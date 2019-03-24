@@ -23,6 +23,7 @@ require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/helpers/HttpClient.php';
 require_once __DIR__ . '/helpers/FreyClient.php';
 require_once __DIR__ . '/helpers/i18n.php';
+require_once __DIR__ . '/AccessRules.php';
 require_once __DIR__ . '/Templater.php';
 
 abstract class Controller
@@ -248,10 +249,9 @@ abstract class Controller
                     'pageTitle' => $pageTitle,
                     'currentPerson' => $this->_personalData,
                     'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
-                    'userHasAdminRights' => $this->_adminAuthOk(),
+                    'userHasAdminRights' => $this->_userHasAdminRights(),
                     'isAggregated' => true,
-                    'isLoggedIn' => !empty($this->_personalData),
-                    'personalData' => $this->_personalData
+                    'isLoggedIn' => !empty($this->_personalData)
                 ]);
             } else {
                 /* Simple events. */
@@ -264,14 +264,13 @@ abstract class Controller
                     'syncStart' => $this->_mainEventRules->syncStart(),
                     'eventTitle' => $this->_mainEventRules->eventTitle(),
                     'isPrescripted' => $this->_mainEventRules->isPrescripted(),
-                    'userHasAdminRights' => $this->_adminAuthOk(),
+                    'userHasAdminRights' => $this->_userHasAdminRights(),
                     'pageTitle' => $pageTitle,
                     'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
                     'eventSelected' => $this->_mainEventId,
                     'currentPerson' => $this->_personalData,
                     'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),
-                    'isLoggedIn' => !empty($this->_personalData),
-                    'personalData' => $this->_personalData
+                    'isLoggedIn' => !empty($this->_personalData)
                 ]);
             }
         }
@@ -355,50 +354,26 @@ abstract class Controller
     }
 
     /**
-     * @deprecated
      * @return bool
      */
-    protected function _adminAuthOk()
+    protected function _userHasAdminRights()
     {
-        // Special password policy for debug mode
-        if (Sysconf::DEBUG_MODE && !empty($_COOKIE['secret']) && $_COOKIE['secret'] == 'debug_mode_cookie') {
-            return true;
+        if (count($this->_eventIdList) > 1) {
+            return false; // No admins in aggregated events
         }
 
-        /* For aggregated events we allow any password of the events it contains. */
-        foreach ($this->_eventIdList as $eventId) {
-            if (!empty($_COOKIE['secret'])
-                    && !empty(Sysconf::ADMIN_AUTH()[$eventId]['cookie'])
-                    && $_COOKIE['secret'] == Sysconf::ADMIN_AUTH()[$eventId]['cookie']) {
-                return true;
-            }
+        if (empty($this->_mainEventId) || empty($this->_currentPersonId)) {
+            return false;
         }
 
-        return false;
-    }
-
-    /**
-     * @deprecated
-     * @param $password
-     * @return array|null
-     */
-    protected function _getAdminAuth($password)
-    {
-        // Special password policy for debug mode
-        if (Sysconf::DEBUG_MODE && $password == 'password') {
-            return ['cookie' => 'debug_mode_cookie',
-                    'cookie_life' => Sysconf::DEBUG_MODE_COOKIE_LIFE];
+        try {
+            // TODO: split universal admin rule into several atomic rules
+            $isEventAdmin = $this->_frey->getRuleValue($this->_currentPersonId, $this->_mainEventId, AccessRules::ADMIN_EVENT);
+        } catch (\Exception $e) {
+            $isEventAdmin = false;
         }
 
-        foreach ($this->_eventIdList as $eventId) {
-            if (!empty(Sysconf::ADMIN_AUTH()[$eventId]['password'])
-                && $password == Sysconf::ADMIN_AUTH()[$eventId]['password']
-            ) {
-                return Sysconf::ADMIN_AUTH()[$eventId];
-            }
-        }
-
-        return null;
+        return !empty($isEventAdmin);
     }
 
     protected function _checkCompatibility($headersArray)

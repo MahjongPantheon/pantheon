@@ -38,7 +38,7 @@ class AddGame extends Controller
         try {
             $players = $this->_mimir->execute('getAllPlayers', [$this->_eventIdList]);
             if (!empty($_POST['content'])) {
-                if (!$this->_adminAuthOk()) {
+                if (!$this->_userHasAdminRights()) {
                     $errorMsg = _t("Wrong admin password");
                 } else {
                     $this->_mimir->execute('addTextLog', [$this->_mainEventId, $_POST['content']]);

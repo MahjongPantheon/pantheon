@@ -26,18 +26,6 @@ if (file_exists(__DIR__ . '/local/index.php')) {
     {
         const DEBUG_MODE_COOKIE_LIFE = 86400;
 
-        // Multi-event mode auth settings. Will not work when single mode is active
-        // Also this will not work if DEBUG_MODE is set to true: every event will
-        // have admin password 'password' when pantheon is in debug mode
-        public static function ADMIN_AUTH() {
-            return [
-                // event id -> auth
-                // default cookie_life is 3600 (it will be used when cookie_life is not specified for the event)
-                100500 => ['cookie' => 'verysecretcookie', 'password' => 'verysecretpassword'],
-                100501 => ['cookie' => 'verysecretcookie', 'password' => 'verysecretpassword', 'cookie_life' => 7200],
-            ];
-        }
-
         // Common settings
         const API_VERSION_MAJOR = 1;
         const API_VERSION_MINOR = 0;

@@ -46,7 +46,7 @@ class Mainpage extends Controller
             return [
                 'title' => $this->_mainEventRules->eventTitle(),
                 'description' => $this->_mainEventRules->eventDescription(),
-                'isLoggedIn' => $this->_adminAuthOk(),
+                'isLoggedIn' => $this->_userHasAdminRights(),
                 'rules' => array_map(function ($key, $value) use (&$ruleDescriptions) {
                     if ($key == 'allowedYaku' ||
                         $key == 'tenboDivider' ||

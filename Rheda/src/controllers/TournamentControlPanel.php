@@ -48,7 +48,7 @@ class TournamentControlPanel extends Controller
                 return true; // to show error in _run
             }
 
-            if (!$this->_adminAuthOk()) {
+            if (!$this->_userHasAdminRights()) {
                 return true; // to show error in _run
             }
 
@@ -106,7 +106,7 @@ class TournamentControlPanel extends Controller
             ];
         }
 
-        if (!$this->_adminAuthOk()) {
+        if (!$this->_userHasAdminRights()) {
             return [
                 'error' => _t('Wrong admin password')
             ];
