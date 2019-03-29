@@ -27,6 +27,7 @@ apidoc:
 
 freygen:
 	php ../Frey/bin/clientGen.php Mimir > src/FreyClient.php
+	php ../Frey/bin/clientGen.php Mimir interface > src/interfaces/IFreyClient.php
 
 autofix:
 	php vendor/bin/phpcbf --config-set default_standard PSR2
