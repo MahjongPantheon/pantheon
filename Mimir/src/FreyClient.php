@@ -3,13 +3,14 @@
 namespace Mimir;
 
 require_once __DIR__ . '/HttpClient.php'; // TODO: replace with custom jsonrpc httpclient implementation path
+require_once __DIR__ . '/interfaces/IFreyClient.php'; // TODO: replace with custom frey client interface path
 
 /**
  * Class FreyClient
  * THIS IS A GENERATED FILE! DO NOT MODIFY BY HAND, USE bin/clientGen.php
  *
  * @package Mimir */
-class FreyClient
+class FreyClient implements IFreyClient
 {
     /**
     * @var \JsonRPC\Client

@@ -3,13 +3,14 @@
 namespace Rheda;
 
 require_once __DIR__ . '/HttpClient.php'; // TODO: replace with custom jsonrpc httpclient implementation path
+require_once __DIR__ . '/interfaces/IFreyClient.php'; // TODO: replace with custom frey client interface path
 
 /**
  * Class FreyClient
  * THIS IS A GENERATED FILE! DO NOT MODIFY BY HAND, USE bin/clientGen.php
  *
  * @package Rheda */
-class FreyClient
+class FreyClient implements IFreyClient
 {
     /**
     * @var \JsonRPC\Client
@@ -117,13 +118,13 @@ class FreyClient
      *  Primary client method, aggregating rules from groups and person.
      *  Get array of access rules for person in event.
      *  Cached for 10 minutes.
-     * @param int $personId
+     * @param int $personIdcurrentEventId
      * @param int $eventId
      * @returns array
      */
-    public function getAccessRules(int $personId, int $eventId): array
+    public function getAccessRules(int $personIdcurrentEventId, int $eventId): array
     {
-        return (array)$this->_client->execute('getAccessRules', [$personId, $eventId]);
+        return (array)$this->_client->execute('getAccessRules', [$personIdcurrentEventId, $eventId]);
     }
 
     /**
@@ -164,6 +165,17 @@ class FreyClient
     public function getPersonalInfo(array $ids): array
     {
         return (array)$this->_client->execute('getPersonalInfo', [$ids]);
+    }
+
+    /**
+     *  Get personal info by tenhou id list.
+     *  May or may not include private data (depending on admin rights of requesting user).
+     * @param array $ids
+     * @returns array
+     */
+    public function findByTenhouIds(array $ids): array
+    {
+        return (array)$this->_client->execute('findByTenhouIds', [$ids]);
     }
 
     /**
@@ -392,5 +404,31 @@ class FreyClient
     public function getGroupsOfPerson(int $personId): array
     {
         return (array)$this->_client->execute('getGroupsOfPerson', [$personId]);
+    }
+
+    /**
+     *  Add new system-wide rule for a person.
+     * @param string $ruleName
+     * @param string|int|boolean $ruleValue
+     * @param string $ruleType
+     * @param int $personId
+     * @returns int
+     */
+    public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId): int
+    {
+        return (int)$this->_client->execute('addSystemWideRuleForPerson', [$ruleName, $ruleValue, $ruleType, $personId]);
+    }
+
+    /**
+     *  Add new system-wide rule for a group.
+     * @param string $ruleName
+     * @param string|int|boolean $ruleValue
+     * @param string $ruleType
+     * @param int $groupId
+     * @returns int
+     */
+    public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId): int
+    {
+        return (int)$this->_client->execute('addSystemWideRuleForGroup', [$ruleName, $ruleValue, $ruleType, $groupId]);
     }
 }

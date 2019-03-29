@@ -26,6 +26,7 @@ unit_covered: # TODO
 
 freygen:
 	php ../Frey/bin/clientGen.php Rheda > src/helpers/FreyClient.php
+	php ../Frey/bin/clientGen.php Rheda interface > src/interfaces/IFreyClient.php
 
 autofix:
 	php vendor/bin/phpcbf --config-set default_standard PSR2
