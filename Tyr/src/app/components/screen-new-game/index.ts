@@ -55,7 +55,7 @@ export class NewGameScreen {
 
   players: LUser[] = [defaultPlayer];
   availablePlayers: LUser[] = [];
-
+  
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-new-game' });
     this._loading = true;
@@ -63,9 +63,12 @@ export class NewGameScreen {
     this.api.getAllPlayers()
       .then((players) => {
         this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-new-game', request: 'getAllPlayers' });
-        this._loading = false;
+        this._loading = false;        
+      
+        let currentUserIndex = players.findIndex((element) => element.id == this.state.getCurrentPlayerId());        
+        let currentPlayer = players.splice(currentUserIndex,1);
 
-        this.players = [defaultPlayer].concat(
+        this.players = [defaultPlayer].concat(currentPlayer,
           players.sort((a, b) => {
             if (a == b) {
               return 0;
@@ -75,7 +78,6 @@ export class NewGameScreen {
         );
 
         this.availablePlayers = clone(this.players);
-        this._selectCurrentPlayer();
       })
       .catch((e) => this.metrika.track(MetrikaService.LOAD_ERROR, {
         type: 'screen-new-game', request: 'getAllPlayers', message: e.toString()
@@ -152,10 +154,6 @@ export class NewGameScreen {
       toNumber(this.kamicha)
     ];
   }
-
-  private _selectCurrentPlayer() {
-    this.self = this.state.getCurrentPlayerId();
-    this.afterSelect();
-  }
+  
 }
 
