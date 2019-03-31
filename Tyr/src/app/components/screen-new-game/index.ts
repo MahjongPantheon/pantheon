@@ -91,14 +91,12 @@ export class NewGameScreen {
     }
 
     //There must be Current Player
-    // if (playerIds.indexOf(this.state.getCurrentPlayerId()) == -1) {
-    //   return false;
-    // }
-
-    return playerIds.indexOf(this.state.getCurrentPlayerId()) != -1;
-    
+    if (playerIds.indexOf(this.state.getCurrentPlayerId()) == -1) {
+      return false;
+    }
+ 
     // all players should be unique
-    return uniq(playerIds).length == 4;    
+    return uniq(playerIds).length == 4;
   }
 
   /**
