@@ -90,8 +90,15 @@ export class NewGameScreen {
       return false;
     }
 
+    //There must be Current Player
+    // if (playerIds.indexOf(this.state.getCurrentPlayerId()) == -1) {
+    //   return false;
+    // }
+
+    return playerIds.indexOf(this.state.getCurrentPlayerId()) != -1;
+    
     // all players should be unique
-    return uniq(playerIds).length == 4;
+    return uniq(playerIds).length == 4;    
   }
 
   /**
@@ -120,10 +127,6 @@ export class NewGameScreen {
   findById(playerId) {
     playerId = toNumber(playerId);
     return find(this.players, { id: playerId });
-  }
-
-  disableSelect(value) {
-    return value == this.state.getCurrentPlayerId();
   }
 
   startGame() {
