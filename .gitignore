@@ -24,6 +24,7 @@ Tyr/tmp
 Tyr/node_modules
 Tyr/bower_components
 Tyr/.sass-cache
+Tyr/package-lock.json
 Tyr/connect.lock
 Tyr/coverage/*
 Tyr/libpeerconnection.log
