@@ -26,7 +26,7 @@
     <div class="toimen side">
       <div class="wind">西</div>
       <div class="player-replacer">{{findById(toimen).displayName}}</div>
-      <select class="player-selector" [(ngModel)]="toimen" (change)="afterSelect()" [disabled]="disableSelect(toimen)">
+      <select class="player-selector" [(ngModel)]="toimen" (change)="afterSelect()">
         <option
           *ngFor="let player of availablePlayers; let i=index"
           [value]="player.id"
@@ -45,7 +45,7 @@
     <div class="kamicha side">
       <div class="wind">北</div>
       <div class="player-replacer">{{findById(kamicha).displayName}}</div>
-      <select class="player-selector" [(ngModel)]="kamicha" (change)="afterSelect()" [disabled]="disableSelect(kamicha)">
+      <select class="player-selector" [(ngModel)]="kamicha" (change)="afterSelect()">
         <option
           *ngFor="let player of availablePlayers; let i=index"
           [value]="player.id"
@@ -55,7 +55,7 @@
     <div class="shimocha side">
       <div class="wind">南</div>
       <div class="player-replacer">{{findById(shimocha).displayName}}</div>
-      <select class="player-selector" [(ngModel)]="shimocha" (change)="afterSelect()" [disabled]="disableSelect(shimocha)">
+      <select class="player-selector" [(ngModel)]="shimocha" (change)="afterSelect()">
         <option
           *ngFor="let player of availablePlayers; let i=index"
           [value]="player.id"
@@ -68,7 +68,7 @@
     <div class="my side">
       <div class="wind">東</div>
       <div class="player-replacer">{{findById(self).displayName}}</div>
-      <select class="player-selector" [(ngModel)]="self" (change)="afterSelect()" [disabled]="disableSelect(self)">
+      <select class="player-selector" [(ngModel)]="self" (change)="afterSelect()">
         <option
           *ngFor="let player of availablePlayers; let i=index"
           [value]="player.id"
