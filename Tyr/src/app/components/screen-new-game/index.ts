@@ -66,7 +66,7 @@ export class NewGameScreen {
         this._loading = false;        
       
         let currentUserIndex = players.findIndex((element) => element.id == this.state.getCurrentPlayerId());        
-        let currentPlayer = players.splice(currentUserIndex,1);
+        let currentPlayer = players.splice(currentUserIndex, 1);
 
         this.players = [defaultPlayer].concat(currentPlayer,
           players.sort((a, b) => {
