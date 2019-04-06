@@ -588,4 +588,12 @@ class SessionState
         $this->_yellowZoneAlreadyPlayed = $state;
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getLastOutcome()
+    {
+        return $this->_lastOutcome;
+    }
 }

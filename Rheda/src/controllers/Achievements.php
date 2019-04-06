@@ -72,7 +72,8 @@ class Achievements extends Controller
             'shithanderPlayers' => $achievements['shithander']['names'], // string[]
             'impossibleWait' => $achievements['impossibleWait'], // Array<{ name: string, hand: {han: number, fu: number} }>
             'honoredDonor' => $achievements['honoredDonor'], // Array<{ name: string, count: number }>
-            'justAsPlanned' => $achievements['justAsPlanned'], // Array<{ name: string, count: number }>
+            'justAsPlanned' => $achievements['justAsPlanned'], // Array<{ name: string, count: number }>,
+            'minFeedsScore' => $achievements['minFeedsScore'], // Array<{ name: string, score: number }>
         ];
     }
 }
