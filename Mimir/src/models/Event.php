@@ -108,8 +108,131 @@ class EventModel extends Model
             'bestFu' => AchievementsPrimitive::getMaxFuHand($this->_db, $eventIdList),
             'impossibleWait' => AchievementsPrimitive::getImpossibleWait($this->_db, $eventIdList),
             'honoredDonor' => AchievementsPrimitive::getHonoredDonor($this->_db, $eventIdList),
-            'justAsPlanned' => AchievementsPrimitive::getJustAsPlanned($this->_db, $eventIdList)
+            'justAsPlanned' => AchievementsPrimitive::getJustAsPlanned($this->_db, $eventIdList),
+            'minFeedsScore' => $this->getMinFeedsScore($eventIdList)
         ];
+    }
+
+    /**
+     * @param $eventIdList
+     * @return array
+     * @throws \Exception
+     */
+    protected function getMinFeedsScore($eventIdList)
+    {
+        $games = SessionPrimitive::findByEventListAndStatus(
+            $this->_db,
+            $eventIdList,
+            SessionPrimitive::STATUS_FINISHED
+        );
+
+        $sessionIds = array_map(function (SessionPrimitive $el) {
+            return $el->getId();
+        }, $games);
+
+        $rounds = $this->_getRounds($sessionIds); // 1st level: session id, 2nd level: numeric index with no meaning
+        $payments = [];
+        foreach ($games as $session) {
+            $lastRound = null;
+            foreach ($rounds[$session->getId()] as $round) {
+                if ($lastRound === null) {
+                    $lastRound = $round;
+                    continue;
+                }
+
+                $lastSessionState = $round->getLastSessionState();
+                $payments = $this->_addLoserPayment($lastRound, $lastSessionState, $payments);
+                $lastRound = $round;
+            }
+
+            $payments = $this->_addLoserPayment($lastRound, $session->getCurrentState(), $payments);
+        }
+
+        $feedsScores = [];
+        foreach ($payments as $key => $value) {
+            $feedsScores[$key] = $value['sum'] / $value['count'];
+        }
+
+        asort($feedsScores);
+        $players = EventModel::getPlayersOfGames($this->_db, $games);
+
+        return array_map(
+            function ($playerId, $feedsScore) use ($players) {
+                return [
+                    'name'  => $players[$playerId]['display_name'],
+                    'score' => $feedsScore
+                ];
+            },
+            array_slice(array_keys($feedsScores), 0, 5),
+            array_slice(array_values($feedsScores), 0, 5)
+        );
+    }
+
+    /**
+     * @param RoundPrimitive $round
+     * @param SessionState $sessionState
+     * @param [][] $payments
+     * @return array
+     * @throws \Exception
+     */
+    protected function _addLoserPayment($round, $sessionState, $payments)
+    {
+        if (!in_array($sessionState->getLastOutcome(), ['ron', 'multiron'])) {
+            return $payments;
+        }
+
+        $lastSessionState = $round->getLastSessionState();
+        $loserId = $round->getLoserId();
+        $loserHasRiichi = in_array($loserId, $round->getRiichiIds());
+
+        $lastScore = $lastSessionState->getScores()[$loserId];
+        $currentScore = $sessionState->getScores()[$loserId];
+
+        $payment = $lastScore - $currentScore;
+        if ($loserHasRiichi) {
+            $payment -= 1000;
+        }
+
+        if (empty($payments[$loserId])) {
+            $payments[$loserId] = [
+                'sum'   => 0,
+                'count' => 0
+            ];
+        }
+
+        $payments[$loserId]['sum'] += $payment;
+
+        if ($sessionState->getLastOutcome() !== 'multiron') {
+            $payments[$loserId]['count']++;
+        } else {
+            /** @var MultiRoundPrimitive $mRound */
+            $mRound = $round;
+            $rounds = $mRound->rounds();
+            $multiRonCount = $rounds[0]->getMultiRon();
+            $payments[$loserId]['count'] += $multiRonCount;
+        }
+
+        return $payments;
+    }
+
+    /**
+     * @param $sessionIds
+     * @return RoundPrimitive[][]
+     * @throws \Exception
+     */
+    protected function _getRounds($sessionIds)
+    {
+        $rounds = RoundPrimitive::findBySessionIds($this->_db, $sessionIds);
+
+        $result = [];
+        foreach ($rounds as $item) {
+            if (empty($result[$item->getSessionId()])) {
+                $result[$item->getSessionId()] = [];
+            }
+            $result[$item->getSessionId()] []= $item;
+        }
+
+        return $result;
     }
 
     /**
