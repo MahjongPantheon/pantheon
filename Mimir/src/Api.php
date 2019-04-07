@@ -18,6 +18,7 @@
 namespace Mimir;
 
 require_once __DIR__ . '/Config.php';
+require_once __DIR__ . '/DataSource.php';
 require_once __DIR__ . '/Db.php';
 require_once __DIR__ . '/Meta.php';
 require_once __DIR__ . '/ErrorHandler.php';
@@ -56,6 +57,7 @@ class Api
         $this->_config = new Config($cfgPath);
         $this->_db = new Db($this->_config);
         $this->_frey = new FreyClient($this->_config->getValue('freyUrl'));
+        $this->_ds = new DataSource($this->_db, $this->_frey);
         $this->_meta = new Meta($this->_frey, $_SERVER);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
@@ -101,7 +103,7 @@ class Api
             } else {
                 class_exists($route[0]); // this will ensure class existence
                 $className = __NAMESPACE__ . '\\' . $route[0];
-                $ret['instance'] = $runtimeCache[$route[0]] = new $className($this->_db, $this->_syslog, $this->_config, $this->_meta);
+                $ret['instance'] = $runtimeCache[$route[0]] = new $className($this->_ds, $this->_syslog, $this->_config, $this->_meta);
             }
 
             return $ret;

@@ -18,11 +18,12 @@
 namespace Mimir;
 
 require_once __DIR__ . '/../Primitive.php';
+require_once __DIR__ . '/../exceptions/BadAction.php';
 
 /**
  * Class PlayerPrimitive
  *
- * Networked primitive: uses external service as a data source
+ * Networked primitive: uses remote service as a data source
  * @package Mimir
  */
 class PlayerPrimitive extends Primitive
@@ -50,33 +51,31 @@ class PlayerPrimitive extends Primitive
      * @var int
      */
     protected $_isReplacement = 0;
+
     /**
-     * Client of auth service
-     * @var FreyClient
+     * PlayerPrimitive constructor.
+     * @param DataSource $ds
      */
-    protected $_frey;
-
-    public function __construct(FreyClient $frey)
+    public function __construct(DataSource $ds)
     {
-        // Parent constructor call omitted intentionally.
-
-        $this->_frey = $frey;
+        // Parent constructor not called intentionally.
+        $this->_ds = $ds;
     }
 
     /**
      * Find players by local ids
      *
-     * @param FreyClient $frey
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return PlayerPrimitive[]
      */
-    public static function findById(FreyClient $frey, $ids)
+    public static function findById(DataSource $ds, $ids)
     {
-        $data = $frey->getPersonalInfo($ids);
+        $data = $ds->remote()->getPersonalInfo($ids);
 
-        return array_map(function($item) use (&$frey) {
-            return (new PlayerPrimitive($frey))
+        return array_map(function($item) use ($ds) {
+            return (new PlayerPrimitive($ds))
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
                 ->_setId($item['id']);
@@ -87,17 +86,17 @@ class PlayerPrimitive extends Primitive
      * Find players by tenhou ids
      * Method should maintain sorting of items according to ids order.
      *
-     * @param FreyClient $frey
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return PlayerPrimitive[]
      */
-    public static function findByTenhouId(FreyClient $frey, $ids)
+    public static function findByTenhouId(DataSource $ds, $ids)
     {
-        $playersData = $frey->findByTenhouIds($ids);
+        $playersData = $ds->remote()->findByTenhouIds($ids);
         /** @var PlayerPrimitive[] $players */
-        $players = array_map(function($item) use(&$frey) {
-            return (new PlayerPrimitive($frey))
+        $players = array_map(function($item) use($ds) {
+            return (new PlayerPrimitive($ds))
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
                 ->_setId($item['id']);
@@ -121,7 +120,7 @@ class PlayerPrimitive extends Primitive
      */
     protected function _create()
     {
-        throw new BadActionException('Newtorked Player primitives are considered to be readonly!');
+        throw new BadActionException('Networked Player primitives are considered to be readonly!');
     }
 
     /**
@@ -130,7 +129,7 @@ class PlayerPrimitive extends Primitive
      */
     public function save()
     {
-        throw new BadActionException('Newtorked Player primitives are considered to be readonly!');
+        throw new BadActionException('Networked Player primitives are considered to be readonly!');
     }
 
     protected function _deident()

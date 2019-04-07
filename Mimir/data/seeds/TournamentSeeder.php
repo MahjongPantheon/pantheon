@@ -12,23 +12,17 @@ require_once __DIR__ . '/../../src/Ruleset.php';
 
 class TournamentSeeder extends AbstractSeed
 {
+    /**
+     * @throws Exception
+     * @throws \Mimir\InvalidParametersException
+     */
     public function run()
     {
         // Non-phinx-based seeder to avoid rewriting seeds for every schema change
-
-        $tables = file(__DIR__ . '/../tablelist.txt');
-
-        // cleanup. Don't use truncate() - it won't work with FKs
-        foreach ($tables as $t) {
-            $this->table($t)->getAdapter()->execute('DELETE FROM ' . $t);
-        }
-
-        $this->table('player')->getAdapter()->commitTransaction();
-
-        list($db, $config) = $this->_getConnection();
-        $event = $this->_seedEvent($db);
-        $this->_seedPlayers($db, $event);
-        $this->_seedGames($db, $config, $event);
+        list($src, $config) = $this->_getConnection();
+        $event = $this->_seedEvent($src);
+        $idMap = $this->_seedPlayers($src, $event);
+        $this->_seedGames($src, $config, $event, $idMap);
 
         // update event and set syncEnd to true for pre-finished state testing
         $event->setSyncEnd(1)->save();
@@ -38,9 +32,15 @@ class TournamentSeeder extends AbstractSeed
         echo '-----------------------------------------------------------------' . PHP_EOL;
     }
 
-    protected function _seedEvent(\Mimir\Db $db)
+    /**
+     * @param \Mimir\DataSource $ds
+     * @return \Mimir\EventPrimitive
+     * @throws Exception
+     * @throws \Mimir\InvalidParametersException
+     */
+    protected function _seedEvent(\Mimir\DataSource $ds)
     {
-        $event = (new \Mimir\EventPrimitive($db))
+        $event = (new \Mimir\EventPrimitive($ds))
             ->setTitle('title')
             ->setDescription('desc')
             ->setTimezone('Europe/Moscow')
@@ -55,32 +55,59 @@ class TournamentSeeder extends AbstractSeed
         return $event;
     }
 
-    protected function _seedPlayers(\Mimir\Db $db, \Mimir\EventPrimitive $event)
+    protected function _seedPlayers(\Mimir\DataSource $ds, \Mimir\EventPrimitive $event)
     {
+        $idMap = [];
         $playerNames = array_filter(preg_split('#\s#is', file_get_contents(__DIR__ . '/../../tests/models/testdata/players.txt')));
-        array_map(function ($id) use ($db, $event) {
-            $p = (new \Mimir\PlayerPrimitive($db))
-                ->setDisplayName($id)
-                ->setAlias($id)
-                ->setIdent($id)
-                ->setTenhouId($id);
-            $p->save();
-            (new \Mimir\PlayerRegistrationPrimitive($db))
-                ->setReg($p, $event)
+        array_map(function ($id) use ($ds, $event, &$idMap) {
+            $playerId = $ds->remote()->createAccount(
+                'test' . $id . '@test.te',
+                'pwd',
+                'player' . $id,
+                'City of sin',
+                '123-123-123',
+                'TH' . $id
+            );
+            (new \Mimir\PlayerRegistrationPrimitive($ds))
+                ->_setRegRaw($playerId, $event)
                 ->save();
-            return $p;
+            $idMap[$id] = $playerId;
         }, $playerNames);
+        return $idMap;
     }
 
-    protected function _seedGames(\Mimir\Db $db, \Mimir\Config $config, \Mimir\EventPrimitive $event)
+    /**
+     * @param \Mimir\DataSource $ds
+     * @param \Mimir\Config $config
+     * @param \Mimir\EventPrimitive $event
+     * @throws Exception
+     * @throws \Mimir\InvalidParametersException
+     * @throws \Mimir\MalformedPayloadException
+     * @throws \Mimir\ParseException
+     */
+    protected function _seedGames(\Mimir\DataSource $ds, \Mimir\Config $config, \Mimir\EventPrimitive $event, $idMap)
     {
-        $games = explode("\n\n\n", file_get_contents(__DIR__ . '/../../tests/models/testdata/games.txt'));
-        $freyClient = new \Mimir\FreyClient($config->getValue('freyUrl'));
-        $meta = new \Mimir\Meta($freyClient, $_SERVER);
-        $model = new \Mimir\TextmodeSessionModel($db, $config, $meta);
+        $data = '%' . implode("%\n%", explode("\n", file_get_contents(__DIR__ . '/../../tests/models/testdata/games.txt'))) . '%';
+        $games = array_map(function($game) {
+            return preg_replace('#^%|%$#ims', '', str_replace("%\n%", "\n", $game));
+        }, explode("\n%%\n%%\n",
+            preg_replace_callback('#(\s|%)([\d\ ]+)(\s|:|%)#is', function($matches) use ($idMap) {
+                return $matches[1] .
+                    implode(' ',
+                        array_map(
+                            function($id) use ($idMap) { return $idMap[$id]; },
+                            explode(' ', $matches[2])
+                        )
+                    )
+                    . $matches[3];
+            }, $data
+        )));
+
+        $meta = new \Mimir\Meta($ds->remote(), $_SERVER);
+        $model = new \Mimir\TextmodeSessionModel($ds, $config, $meta);
 
         foreach ($games as $log) {
-            $model->addGame($event->getId(), $log);
+            $model->addGame($event->getId(), $log, $idMap);
         }
     }
 
@@ -89,7 +116,7 @@ class TournamentSeeder extends AbstractSeed
         $cfg = new \Mimir\Config([
             'db' => [
                 'connection_string' => 'pgsql:host=localhost;port=' . $_SERVER['PHINX_DB_PORT']
-                                       . ';dbname=' . $_SERVER['PHINX_DB_NAME'],
+                    . ';dbname=' . $_SERVER['PHINX_DB_NAME'],
                 'credentials' => [
                     'username' => $_SERVER['PHINX_DB_USER'],
                     'password' => $_SERVER['PHINX_DB_PASS']
@@ -99,8 +126,8 @@ class TournamentSeeder extends AbstractSeed
                 'debug_token' => '2-839489203hf2893'
             ],
             'routes'    => require __DIR__ . '/../../config/routes.php',
-            'verbose'   => false,
             'freyUrl'   => getenv('FREY_URL'),
+            'verbose'   => false,
             'verboseLog' => '',
             'api' => [
                 'version_major' => 1,
@@ -108,6 +135,8 @@ class TournamentSeeder extends AbstractSeed
             ]
         ]);
 
-        return [new \Mimir\Db($cfg), $cfg];
+        $db = new \Mimir\Db($cfg);
+        $frey = new \Mimir\FreyClient($cfg->getValue('freyUrl'));
+        return [new \Mimir\DataSource($db, $frey), $cfg];
     }
 }

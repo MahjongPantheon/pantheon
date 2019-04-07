@@ -134,22 +134,26 @@ class EventPrescriptPrimitive extends Primitive
     /**
      * Find prescripts by local ids (primary key)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return EventPrescriptPrimitive[]
      */
-    public static function findByEventId(IDb $db, $ids)
+    public static function findByEventId(DataSource $ds, $ids)
     {
-        return self::_findBy($db, 'event_id', $ids);
+        return self::_findBy($ds, 'event_id', $ids);
     }
 
+    /**
+     * @return bool|mixed
+     * @throws \Exception
+     */
     protected function _create()
     {
-        $session = $this->_db->table(self::$_table)->create();
+        $session = $this->_ds->table(self::$_table)->create();
         $success = $this->_save($session);
         if ($success) {
-            $this->_id = $this->_db->lastInsertId();
+            $this->_id = $this->_ds->local()->lastInsertId();
         }
 
         return $success;
@@ -194,7 +198,7 @@ class EventPrescriptPrimitive extends Primitive
     public function getEvent()
     {
         if (!$this->_event) {
-            $foundEvents = EventPrimitive::findById($this->_db, [$this->_eventId]);
+            $foundEvents = EventPrimitive::findById($this->_ds, [$this->_eventId]);
             if (empty($foundEvents)) {
                 throw new EntityNotFoundException("Entity EventPrimitive with id#" . $this->_eventId . ' not found in DB');
             }

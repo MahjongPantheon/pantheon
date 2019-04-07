@@ -46,7 +46,7 @@ class SeatingController extends Controller
         $seating = array_chunk(array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed)), 4);
         $tableIndex = 1;
         foreach ($seating as $table) {
-            (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
+            (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
@@ -77,7 +77,7 @@ class SeatingController extends Controller
         $seating = array_chunk(array_keys(Seating::swissSeating($playersMap, $tables)), 4);
         $tableIndex = 1;
         foreach ($seating as $table) {
-            (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
+            (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
@@ -129,12 +129,12 @@ class SeatingController extends Controller
         $this->_log->addInfo('Creating new interval seating for event #' . $eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
-        $eventList = EventPrimitive::findById($this->_db, [$eventId]);
+        $eventList = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($eventList)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
-        $currentRatingTable = (new EventRatingTableModel($this->_db, $this->_config, $this->_meta))
+        $currentRatingTable = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
             ->getRatingTable($eventList, 'rating', 'desc');
 
         // In rare cases we want to exclude players from seating
@@ -148,7 +148,7 @@ class SeatingController extends Controller
 
         $tableIndex = 1;
         foreach ($seating as $table) {
-            (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
+            (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
@@ -191,12 +191,12 @@ class SeatingController extends Controller
                 $table = Seating::shuffle($table);
             }
 
-            (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
+            (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
         // increment game index when seating is generated
-        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
+        $prescript = EventPrescriptPrimitive::findByEventId($this->_ds, [$eventId]);
         $prescript[0]->setNextGameIndex($prescript[0]->getNextGameIndex() + 1)->save();
 
         $this->_log->addInfo('Created new prescripted seating for event #' . $eventId);
@@ -218,19 +218,19 @@ class SeatingController extends Controller
         $this->_checkIfAllowed($eventId);
         $this->_log->addInfo('Getting next seating for event #' . $eventId);
 
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
-        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
+        $prescript = EventPrescriptPrimitive::findByEventId($this->_ds, [$eventId]);
         if (empty($prescript)) {
             throw new InvalidParametersException('Event prescript for id#' . $eventId . ' not found in DB', 1404);
         }
         $prescriptForSession = $prescript[0]->getNextGameSeating();
         return Seating::makePrescriptedSeating(
             $prescriptForSession,
-            PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventId)
+            PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_ds, $eventId)
         );
     }
 
@@ -259,7 +259,7 @@ class SeatingController extends Controller
             throw new InvalidParametersException('No valid players found in predefined seating');
         }
 
-        $players = PlayerPrimitive::findById($this->_meta->getFreyClient(), $playerIds);
+        $players = PlayerPrimitive::findById($this->_ds, $playerIds);
         /** @var PlayerPrimitive[] $playersMap */
         $playersMap = [];
         foreach ($players as $player) {
@@ -270,7 +270,6 @@ class SeatingController extends Controller
             return array_map(function ($player) use (&$playersMap) {
                 return [
                     'id' => $playersMap[$player['id']]->getId(),
-                    'alias' => $playersMap[$player['id']]->getAlias(),
                     'local_id' => $player['local_id'],
                     'display_name' => $playersMap[$player['id']]->getDisplayName(),
                     'is_replacement' => $playersMap[$player['id']]->getIsReplacement()
@@ -288,7 +287,7 @@ class SeatingController extends Controller
      */
     protected function _updateEventStatus($eventId)
     {
-        list($event) = EventPrimitive::findById($this->_db, [$eventId]);
+        list($event) = EventPrimitive::findById($this->_ds, [$eventId]);
         if ($event->getUseTimer()) {
             $event->setGamesStatus(EventPrimitive::GS_SEATING_READY)->save();
             return false;
@@ -306,11 +305,11 @@ class SeatingController extends Controller
      */
     protected function _checkIfAllowed($eventId)
     {
-        if (!(new EventModel($this->_db, $this->_config, $this->_meta))->checkAdminToken()) {
+        if (!(new EventModel($this->_ds, $this->_config, $this->_meta))->checkAdminToken()) {
             throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
         }
 
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         if (!empty($sessions)) {
             throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }
@@ -326,16 +325,16 @@ class SeatingController extends Controller
     {
         $playersMap = [];
 
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
         // In rare cases we want to exclude players from seating
-        $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_db, $eventId);
+        $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, $eventId);
 
         // First step is adding players that already played games
-        $histories = PlayerHistoryPrimitive::findLastByEvent($this->_db, $eventId);
+        $histories = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventId);
         foreach ($histories as $h) {
             if (!in_array($h->getPlayerId(), $ignoredPlayerIds)) {
                 $playersMap[$h->getPlayerId()] = $h->getRating();
@@ -346,14 +345,14 @@ class SeatingController extends Controller
         // this situation is possible only in online tournament
         // when we added replacement player
         $initialRating = $event[0]->getRuleset()->startRating();
-        $playersReg = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $eventId);
+        $playersReg = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);
         foreach ($playersReg as $player) {
             if (!in_array($player['id'], $ignoredPlayerIds) && !isset($playersMap[$player['id']])) {
                 $playersMap[$player['id']] = $initialRating;
             }
         }
 
-        $seatingInfo = SessionPrimitive::getPlayersSeatingInEvent($this->_db, $eventId);
+        $seatingInfo = SessionPrimitive::getPlayersSeatingInEvent($this->_ds, $eventId);
         $tables = array_chunk(array_map(function ($el) {
             return $el['player_id'];
         }, $seatingInfo), 4);

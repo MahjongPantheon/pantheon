@@ -38,7 +38,7 @@ class OnlineSessionModel extends Model
      */
     public function addGame($eventId, $logUrl, $gameContent = '')
     {
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
@@ -54,7 +54,7 @@ class OnlineSessionModel extends Model
 
         $this->_checkGameExpired($logUrl, $event->getRuleset());
 
-        $addedSession = SessionPrimitive::findByReplayHashAndEvent($this->_db, $eventId, $replayHash);
+        $addedSession = SessionPrimitive::findByReplayHashAndEvent($this->_ds, $eventId, $replayHash);
         if (!empty($addedSession)) {
             throw new InvalidParametersException('This game is already added to the system');
         }
@@ -65,8 +65,8 @@ class OnlineSessionModel extends Model
             $gameContent = $replay['content'];
         }
 
-        $parser = new OnlineParser($this->_db);
-        $session = (new SessionPrimitive($this->_db))
+        $parser = new OnlineParser($this->_ds);
+        $session = (new SessionPrimitive($this->_ds))
             ->setEvent($event)
             ->setReplayHash($replayHash)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS);

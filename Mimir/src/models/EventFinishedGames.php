@@ -49,7 +49,7 @@ class EventFinishedGamesModel extends Model
         }, $eventList);
 
         $games = SessionPrimitive::findByEventListAndStatus(
-            $this->_db,
+            $this->_ds,
             $eventIdList,
             SessionPrimitive::STATUS_FINISHED,
             $offset,
@@ -59,7 +59,7 @@ class EventFinishedGamesModel extends Model
         );
 
         $gamesCount = SessionPrimitive::getGamesCount(
-            $this->_db,
+            $this->_ds,
             $eventIdList,
             SessionPrimitive::STATUS_FINISHED
         );
@@ -76,7 +76,7 @@ class EventFinishedGamesModel extends Model
 
         $result = [
             'games' => [],
-            'players' => EventModel::getPlayersOfGames($this->_meta->getFreyClient(), $games),
+            'players' => EventModel::getPlayersOfGames($this->_ds, $games),
             'total_games' => $gamesCount
         ];
 
@@ -102,7 +102,7 @@ class EventFinishedGamesModel extends Model
 
         return [
             'games' => [$this->_formatGameResults($session, $sessionResults, $rounds)],
-            'players' => EventModel::getPlayersOfGames($this->_meta->getFreyClient(), [$session])
+            'players' => EventModel::getPlayersOfGames($this->_ds, [$session])
         ];
     }
 
@@ -110,6 +110,7 @@ class EventFinishedGamesModel extends Model
      * @param $session SessionPrimitive
      * @param $sessionResults SessionResultsPrimitive[][]
      * @param $rounds RoundPrimitive[][]
+     * @throws \Exception
      * @return array
      */
     protected function _formatGameResults($session, $sessionResults, $rounds)
@@ -138,7 +139,7 @@ class EventFinishedGamesModel extends Model
      */
     protected function _getRounds($sessionIds)
     {
-        $rounds = RoundPrimitive::findBySessionIds($this->_db, $sessionIds);
+        $rounds = RoundPrimitive::findBySessionIds($this->_ds, $sessionIds);
 
         $result = [];
         foreach ($rounds as $item) {
@@ -158,7 +159,7 @@ class EventFinishedGamesModel extends Model
      */
     protected function _getSessionResults($sessionIds)
     {
-        $results = SessionResultsPrimitive::findBySessionId($this->_db, $sessionIds);
+        $results = SessionResultsPrimitive::findBySessionId($this->_ds, $sessionIds);
 
         $result = [];
         foreach ($results as $item) {

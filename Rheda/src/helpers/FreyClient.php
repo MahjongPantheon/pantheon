@@ -3,7 +3,7 @@
 namespace Rheda;
 
 require_once __DIR__ . '/HttpClient.php'; // TODO: replace with custom jsonrpc httpclient implementation path
-require_once __DIR__ . '/interfaces/IFreyClient.php'; // TODO: replace with custom frey client interface path
+require_once __DIR__ . '/../interfaces/IFreyClient.php'; // TODO: replace with custom frey client interface path
 
 /**
  * Class FreyClient

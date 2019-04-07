@@ -65,9 +65,13 @@ class PlayerEnrollmentPrimitive extends Primitive
      */
     protected $_pin;
 
+    /**
+     * @return bool|mixed
+     * @throws \Exception
+     */
     protected function _create()
     {
-        $playerReg = $this->_db->table(self::$_table)->create();
+        $playerReg = $this->_ds->table(self::$_table)->create();
         if (empty($this->_pin)) {
             $this->_pin = mt_rand(100000, 999999);
         }
@@ -75,10 +79,10 @@ class PlayerEnrollmentPrimitive extends Primitive
         try {
             $success = $this->_save($playerReg);
             if ($success) {
-                $this->_id = $this->_db->lastInsertId();
+                $this->_id = $this->_ds->local()->lastInsertId();
             }
         } catch (\PDOException $e) { // duplicate unique key, get existing item
-            $existingItem = self::findByPlayerAndEvent($this->_db, $this->_playerId, $this->_eventId);
+            $existingItem = self::findByPlayerAndEvent($this->_ds, $this->_playerId, $this->_eventId);
             if (!empty($existingItem)) {
                 $this->_id = $existingItem->_id;
                 $this->_eventId = $existingItem->_eventId;
@@ -125,29 +129,29 @@ class PlayerEnrollmentPrimitive extends Primitive
     }
 
     /**
-     * @param IDb $db
+     * @param DataSource $ds
      * @param $playerId
      * @param $eventId
      * @return PlayerEnrollmentPrimitive
      * @throws \Exception
      */
-    public static function findByPlayerAndEvent(IDb $db, $playerId, $eventId)
+    public static function findByPlayerAndEvent(DataSource $ds, $playerId, $eventId)
     {
-        return self::_findBySeveral($db, [
+        return self::_findBySeveral($ds, [
             'player_id' => [$playerId],
             'event_id' => [$eventId]
         ], ['onlyLast' => true]);
     }
 
     /**
-     * @param IDb $db
+     * @param DataSource $ds
      * @param $eventId
      * @return PlayerEnrollmentPrimitive[]
      * @throws \Exception
      */
-    public static function findByEvent(IDb $db, $eventId)
+    public static function findByEvent(DataSource $ds, $eventId)
     {
-        return self::_findBy($db, 'event_id', [$eventId]);
+        return self::_findBy($ds, 'event_id', [$eventId]);
     }
 
     /**
@@ -163,14 +167,14 @@ class PlayerEnrollmentPrimitive extends Primitive
     }
 
     /**
-     * @param IDb $db
+     * @param DataSource $ds
      * @param $pin
      * @return null|PlayerEnrollmentPrimitive
      * @throws \Exception
      */
-    public static function findByPin(IDb $db, $pin)
+    public static function findByPin(DataSource $ds, $pin)
     {
-        $result = self::_findBy($db, 'reg_pin', [$pin]);
+        $result = self::_findBy($ds, 'reg_pin', [$pin]);
         if (empty($result)) {
             return null;
         }

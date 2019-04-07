@@ -52,7 +52,7 @@ class InteractiveSessionModel extends Model
     public function startGame($eventId, $playerIds, $tableIndex = null, $replayHash = null)
     {
         $this->_checkAuth($playerIds, $eventId);
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
@@ -61,7 +61,7 @@ class InteractiveSessionModel extends Model
             throw new InvalidParametersException('Players list is not array');
         }
 
-        $players = PlayerPrimitive::findById($this->_meta->getFreyClient(), $playerIds);
+        $players = PlayerPrimitive::findById($this->_ds, $playerIds);
         $players = array_filter(array_map(function ($id) use (&$players) {
             // Re-sort players to match request order - important!
             foreach ($players as $p) {
@@ -76,7 +76,7 @@ class InteractiveSessionModel extends Model
             throw new InvalidUserException('Some players do not exist in DB, check ids');
         }
 
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $success = $newSession
             ->setEvent($event[0])
             ->setPlayers($players)
@@ -139,7 +139,7 @@ class InteractiveSessionModel extends Model
             throw new AuthFailedException('Only administrators are allowed to finalize sessions');
         }
 
-        $games = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, 'prefinished');
+        $games = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, 'prefinished');
         if (empty($games)) {
             return 0;
         }
@@ -180,7 +180,7 @@ class InteractiveSessionModel extends Model
             throw new InvalidParametersException('This round is already recorded (or other round index/honba mismatch)');
         }
 
-        $round = RoundPrimitive::createFromData($this->_db, $session, $roundData);
+        $round = RoundPrimitive::createFromData($this->_ds, $session, $roundData);
 
         if ($dry) {
             list(, $paymentsInfo) = $session->dryRunUpdateCurrentState($round);
@@ -254,7 +254,7 @@ class InteractiveSessionModel extends Model
             throw new AuthFailedException('Only administrators are allowed to add penalties');
         }
 
-        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         if (empty($session)) {
             throw new InvalidParametersException("Couldn't find session in DB");
         }
@@ -282,7 +282,7 @@ class InteractiveSessionModel extends Model
      */
     protected function _findGame($gameHash, $withStatus)
     {
-        $game = SessionPrimitive::findByRepresentationalHash($this->_db, [$gameHash]);
+        $game = SessionPrimitive::findByRepresentationalHash($this->_ds, [$gameHash]);
         if (empty($game)) {
             throw new InvalidParametersException("Couldn't find session in DB");
         }
@@ -303,7 +303,7 @@ class InteractiveSessionModel extends Model
     protected function _checkAuth($playersIds, $eventId)
     {
         // Check that real session player is trying to enter data
-        $evMdl = new EventUserManagementModel($this->_db, $this->_config, $this->_meta);
+        $evMdl = new EventUserManagementModel($this->_ds, $this->_config, $this->_meta);
         if (!$evMdl->checkToken($playersIds[0], $eventId) &&
             !$evMdl->checkToken($playersIds[1], $eventId) &&
             !$evMdl->checkToken($playersIds[2], $eventId) &&
@@ -328,7 +328,7 @@ class InteractiveSessionModel extends Model
             throw new AuthFailedException('Only administrators are allowed to drop last round');
         }
 
-        $session = SessionPrimitive::findByRepresentationalHash($this->_db, [$gameHash]);
+        $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$gameHash]);
         if (empty($session)) {
             throw new InvalidParametersException("Couldn't find session in DB");
         }
@@ -338,7 +338,7 @@ class InteractiveSessionModel extends Model
                 . 'Can\'t alter finished sessions');
         }
 
-        $rounds = RoundPrimitive::findBySessionIds($this->_db, [$session[0]->getId()]);
+        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$session[0]->getId()]);
         if (empty($rounds)) {
             throw new InvalidParametersException('No recorded rounds found for session id#' . $session[0]->getId());
         }

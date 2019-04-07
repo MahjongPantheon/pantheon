@@ -17,7 +17,7 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/FreyClient.php';
+require_once __DIR__ . '/interfaces/IFreyClient.php';
 
 class Meta
 {
@@ -50,7 +50,7 @@ class Meta
      */
     protected $_accessRules;
 
-    public function __construct(FreyClient $frey, $input = null)
+    public function __construct(IFreyClient $frey, $input = null)
     {
         if (empty($input)) {
             $input = $_SERVER;
@@ -127,13 +127,5 @@ class Meta
     public function isGlobalWatcher()
     {
         return $this->_authToken === '0000000000';
-    }
-
-    /**
-     * @return FreyClient
-     */
-    public function getFreyClient()
-    {
-        return $this->_frey;
     }
 }

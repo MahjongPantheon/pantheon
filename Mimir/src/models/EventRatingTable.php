@@ -71,7 +71,7 @@ class EventRatingTableModel extends Model
             $playersHistoryItems = [];
 
             /* FIXME (PNTN-237): refactor to get rid of accessing DB in a loop. */
-            $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_db, $event->getId());
+            $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $event->getId());
             foreach ($tmpPlayersHistoryItems as $item) {
                 // php kludge: keys should be string, not numeric (to overwrite values)
                 $playersHistoryItems['id' . $item->getPlayerId()] = $item;
@@ -98,11 +98,13 @@ class EventRatingTableModel extends Model
         }
 
         $playerHistoryItemsSummed = [];
+        /** @var PlayerPrimitive $player */
         foreach ($playerItems as $player) {
             $itemsByPlayer = array_values(
                 array_filter(
                     $playersHistoryItemsCombined,
                     function ($v, $k) use ($player) {
+                        /** @var $v PlayerHistoryPrimitive */
                         return $v->getPlayerId() == $player->getId();
                     },
                     ARRAY_FILTER_USE_BOTH
@@ -183,14 +185,14 @@ class EventRatingTableModel extends Model
      */
     protected function _getFakePrefinishedItems(EventPrimitive $event)
     {
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $event->getId(), SessionPrimitive::STATUS_PREFINISHED);
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $event->getId(), SessionPrimitive::STATUS_PREFINISHED);
         $historyItems = [];
 
         foreach ($sessions as $session) {
             $sessionResults = $session->getSessionResults();
             foreach ($sessionResults as $sessionResult) {
                 $historyItems []= PlayerHistoryPrimitive::makeNewHistoryItem(
-                    $this->_db,
+                    $this->_ds,
                     $sessionResult->getPlayer(),
                     $session,
                     $sessionResult->getRatingDelta(),
@@ -212,7 +214,7 @@ class EventRatingTableModel extends Model
         $ids = array_map(function (PlayerHistoryPrimitive $el) {
             return $el->getPlayerId();
         }, $playersHistoryItems);
-        $players = PlayerPrimitive::findById($this->_meta->getFreyClient(), $ids);
+        $players = PlayerPrimitive::findById($this->_ds, $ids);
 
         $result = [];
         foreach ($players as $p) {

@@ -83,6 +83,12 @@ class SessionState
      */
     protected $_lastOutcome = null;
 
+    /**
+     * SessionState constructor.
+     * @param Ruleset $rules
+     * @param $playersIds
+     * @throws InvalidParametersException
+     */
     public function __construct(Ruleset $rules, $playersIds)
     {
         $this->_rules = $rules;
@@ -336,6 +342,7 @@ class SessionState
      * Register new round in current session
      * @param RoundPrimitive|MultiRoundPrimitive $round
      * @throws InvalidParametersException
+     * @throws \Exception
      * @return array
      */
     public function update(RoundPrimitive $round)
@@ -383,6 +390,7 @@ class SessionState
 
     /**
      * @param RoundPrimitive $round
+     * @throws \Exception
      * @return array
      */
     protected function _updateAfterRon(RoundPrimitive $round)
@@ -470,6 +478,7 @@ class SessionState
 
     /**
      * @param RoundPrimitive $round
+     * @throws \Exception
      * @return array
      */
     protected function _updateAfterTsumo(RoundPrimitive $round)
@@ -500,6 +509,7 @@ class SessionState
 
     /**
      * @param RoundPrimitive $round
+     * @throws \Exception
      * @return array
      */
     protected function _updateAfterDraw(RoundPrimitive $round)
@@ -542,6 +552,7 @@ class SessionState
 
     /**
      * @param RoundPrimitive $round
+     * @throws \Exception
      * @return array
      */
     protected function _updateAfterChombo(RoundPrimitive $round)
@@ -562,6 +573,7 @@ class SessionState
 
     /**
      * @param RoundPrimitive $round
+     * @throws \Exception
      * @return array
      */
     protected function _updateAfterNagashi(RoundPrimitive $round)

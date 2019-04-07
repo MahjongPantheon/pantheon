@@ -46,7 +46,7 @@ class EventSeriesModel extends Model
         }
 
         $gamesRaw = SessionPrimitive::findByEventAndStatus(
-            $this->_db,
+            $this->_ds,
             $event->getId(),
             SessionPrimitive::STATUS_FINISHED
         );
@@ -57,7 +57,7 @@ class EventSeriesModel extends Model
         }
 
         // load and group by player all session results
-        $results = SessionResultsPrimitive::findByEventId($this->_db, [$event->getId()]);
+        $results = SessionResultsPrimitive::findByEventId($this->_ds, [$event->getId()]);
         $playersData = [];
         foreach ($results as $item) {
             if (empty($playersData[$item->getPlayerId()])) {
@@ -176,7 +176,7 @@ class EventSeriesModel extends Model
             return $b['scoresSum'] - $a['scoresSum'];
         });
 
-        $players = EventModel::getPlayersOfGames($this->_meta->getFreyClient(), $games);
+        $players = EventModel::getPlayersOfGames($this->_ds, $games);
         $formattedResults = [];
         foreach ($seriesResults as $item) {
             $playerId = $item['playerId'];

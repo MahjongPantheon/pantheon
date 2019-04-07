@@ -106,78 +106,82 @@ class SessionResultsPrimitive extends Primitive
     /**
      * Find sessions by local ids (primary key)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return SessionResultsPrimitive[]
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(DataSource $ds, $ids)
     {
-        return self::_findBy($db, 'id', $ids);
+        return self::_findBy($ds, 'id', $ids);
     }
 
     /**
      * Find session results by event id (foreign key search)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param string[] $eventIds
      * @throws \Exception
      * @return SessionResultsPrimitive[]
      */
-    public static function findByEventId(IDb $db, $eventIds)
+    public static function findByEventId(DataSource $ds, $eventIds)
     {
-        return self::_findBy($db, 'event_id', $eventIds);
+        return self::_findBy($ds, 'event_id', $eventIds);
     }
 
     /**
      * Find session results by session id (foreign key search)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param string[] $sessionIds
      * @throws \Exception
      * @return SessionResultsPrimitive[]
      */
-    public static function findBySessionId(IDb $db, $sessionIds)
+    public static function findBySessionId(DataSource $ds, $sessionIds)
     {
-        return self::_findBy($db, 'session_id', $sessionIds);
+        return self::_findBy($ds, 'session_id', $sessionIds);
     }
 
     /**
      * Find session results by player id (foreign key search)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param string[] $playerIds
      * @throws \Exception
      * @return SessionResultsPrimitive[]
      */
-    public static function findByPlayerId(IDb $db, $playerIds)
+    public static function findByPlayerId(DataSource $ds, $playerIds)
     {
-        return self::_findBy($db, 'player_id', $playerIds);
+        return self::_findBy($ds, 'player_id', $playerIds);
     }
 
     /**
      * Find session results by players and session id
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param $sessionId
      * @param $playerIds
      * @return SessionResultsPrimitive[]
      * @throws \Exception
      */
-    public static function findByPlayersAndSession(IDb $db, $sessionId, $playerIds)
+    public static function findByPlayersAndSession(DataSource $ds, $sessionId, $playerIds)
     {
-        return self::_findBySeveral($db, [
+        return self::_findBySeveral($ds, [
             'player_id' => (array)$playerIds,
             'session_id' => (array)$sessionId
         ]);
     }
 
+    /**
+     * @return bool|mixed
+     * @throws \Exception
+     */
     protected function _create()
     {
-        $sessionReuslts = $this->_db->table(self::$_table)->create();
+        $sessionReuslts = $this->_ds->table(self::$_table)->create();
         $success = $this->_save($sessionReuslts);
         if ($success) {
-            $this->_id = $this->_db->lastInsertId();
+            $this->_id = $this->_ds->local()->lastInsertId();
         }
 
         return $success;
@@ -200,6 +204,7 @@ class SessionResultsPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\EventPrimitive
      */
     public function getEvent()
@@ -233,12 +238,13 @@ class SessionResultsPrimitive extends Primitive
 
     /**
      * @return SessionPrimitive
+     * @throws \Exception
      * @throws EntityNotFoundException
      */
     public function getSession()
     {
         if (!$this->_session) {
-            $foundSessions = SessionPrimitive::findById($this->_db, [$this->_sessionId]);
+            $foundSessions = SessionPrimitive::findById($this->_ds, [$this->_sessionId]);
             if (empty($foundSessions)) {
                 throw new EntityNotFoundException("Entity SessionPrimitive with id#" . $this->_sessionId . ' not found in DB');
             }
@@ -276,12 +282,13 @@ class SessionResultsPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\PlayerPrimitive
      */
     public function getPlayer()
     {
         if (!$this->_player) {
-            $foundUsers = PlayerPrimitive::findById($this->_frey, [$this->_playerId]);
+            $foundUsers = PlayerPrimitive::findById($this->_ds, [$this->_playerId]);
             if (empty($foundUsers)) {
                 throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_playerId . ' not found in DB');
             }

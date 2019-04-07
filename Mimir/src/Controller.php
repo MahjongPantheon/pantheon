@@ -16,15 +16,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Mimir;
+require_once __DIR__ . '/DataSource.php';
 
 use Monolog\Logger;
 
 abstract class Controller
 {
     /**
-     * @var Db
+     * @var DataSource
      */
-    protected $_db;
+    protected $_ds;
 
     /**
      * @var \Monolog\Logger
@@ -41,9 +42,9 @@ abstract class Controller
      */
     protected $_meta;
 
-    public function __construct(IDb $db, Logger $log, Config $config, Meta $meta)
+    public function __construct(DataSource $ds, Logger $log, Config $config, Meta $meta)
     {
-        $this->_db = $db;
+        $this->_ds = $ds;
         $this->_log = $log;
         $this->_config = $config;
         $this->_meta = $meta;

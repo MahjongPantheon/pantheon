@@ -42,10 +42,10 @@ class MultiRoundPrimitive extends RoundPrimitive
         return [];
     }
 
-    public function __construct(IDb $db)
+    public function __construct(DataSource $ds)
     {
         // Should not call parent constructor here
-        $this->_db = $db;
+        $this->_ds = $ds;
     }
 
     /**
@@ -63,15 +63,15 @@ class MultiRoundPrimitive extends RoundPrimitive
     }
 
     /**
-     * @param IDb $db
+     * @param DataSource $ds
      * @param SessionPrimitive $session
      * @param $roundData
      * @return RoundPrimitive|MultiRoundPrimitive
      */
-    public static function createFromData(IDb $db, SessionPrimitive $session, $roundData)
+    public static function createFromData(DataSource $ds, SessionPrimitive $session, $roundData)
     {
         if ($roundData['outcome'] !== 'multiron') {
-            return RoundPrimitive::createFromData($db, $session, $roundData);
+            return RoundPrimitive::createFromData($ds, $session, $roundData);
         }
 
         RoundsHelper::checkRound($session, $roundData);
@@ -81,9 +81,9 @@ class MultiRoundPrimitive extends RoundPrimitive
         $roundData['id'] = null;
         $roundData['end_date'] = date('Y-m-d H:i:s');
 
-        $item = new self($db);
-        $item->_rounds = array_map(function ($round) use (&$roundData, $db) {
-            return (new RoundPrimitive($db))->_restore(array_merge($round, [
+        $item = new self($ds);
+        $item->_rounds = array_map(function ($round) use (&$roundData, $ds) {
+            return (new RoundPrimitive($ds))->_restore(array_merge($round, [
                 'outcome'    => $roundData['outcome'],
                 'multi_ron'  => $roundData['multi_ron'],
                 'loser_id'   => $roundData['loser_id'],
@@ -98,17 +98,21 @@ class MultiRoundPrimitive extends RoundPrimitive
     }
 
     /**
-     * @param IDb $db
+     * @param DataSource $ds
      * @param RoundPrimitive[] $rounds
      * @return MultiRoundPrimitive
      */
-    public static function createFromRounds(IDb $db, $rounds)
+    public static function createFromRounds(DataSource $ds, $rounds)
     {
-        $item = new self($db);
+        $item = new self($ds);
         $item->_rounds = $rounds;
         return $item;
     }
 
+    /**
+     * @return bool
+     * @throws \Exception
+     */
     public function save()
     {
         $success = true;
