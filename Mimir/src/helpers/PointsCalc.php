@@ -35,6 +35,23 @@ class PointsCalc
         return self::$_lastPaymentsInfo;
     }
 
+    /**
+     * @param Ruleset $rules
+     * @param $isDealer
+     * @param $currentScores
+     * @param $winnerId
+     * @param $loserId
+     * @param $han
+     * @param $fu
+     * @param $riichiIds
+     * @param $honba
+     * @param $riichiBetsCount
+     * @param $paoPlayerId
+     * @param null $closestWinner
+     * @param int $totalRiichiInRound
+     * @return mixed
+     * @throws InvalidParametersException
+     */
     public static function ron(
         Ruleset $rules,
         $isDealer,
@@ -109,6 +126,20 @@ class PointsCalc
         return $currentScores;
     }
 
+    /**
+     * @param Ruleset $rules
+     * @param $currentDealer
+     * @param $currentScores
+     * @param $winnerId
+     * @param $han
+     * @param $fu
+     * @param $riichiIds
+     * @param $honba
+     * @param $riichiBetsCount
+     * @param $paoPlayerId
+     * @return mixed
+     * @throws InvalidParametersException
+     */
     public static function tsumo(
         Ruleset $rules,
         $currentDealer,
@@ -194,6 +225,13 @@ class PointsCalc
         return $currentScores;
     }
 
+    /**
+     * @param $currentScores
+     * @param $tempaiIds
+     * @param $riichiIds
+     * @return mixed
+     * @throws InvalidParametersException
+     */
     public static function draw(
         $currentScores,
         $tempaiIds,
@@ -255,6 +293,11 @@ class PointsCalc
         throw new InvalidParametersException('More than 4 players tempai? o_0');
     }
 
+    /**
+     * @param $currentScores
+     * @param $riichiIds
+     * @return mixed
+     */
     public static function abort(
         $currentScores,
         $riichiIds
@@ -272,6 +315,14 @@ class PointsCalc
         return $currentScores;
     }
 
+    /**
+     * @param Ruleset $rules
+     * @param $currentDealer
+     * @param $loserId
+     * @param $currentScores
+     * @return mixed
+     * @throws InvalidParametersException
+     */
     public static function chombo(
         Ruleset $rules,
         $currentDealer,
@@ -308,6 +359,14 @@ class PointsCalc
         return $currentScores;
     }
 
+    /**
+     * @param $currentScores
+     * @param $currentDealer
+     * @param $riichiIds
+     * @param $nagashiIds
+     * @return mixed
+     * @throws InvalidParametersException
+     */
     public static function nagashi(
         $currentScores,
         $currentDealer,

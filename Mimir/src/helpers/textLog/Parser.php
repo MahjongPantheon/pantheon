@@ -17,24 +17,22 @@
  */
 namespace Mimir;
 
-// TODO: выпилить!
-
 /*
     Input example:
 
-    [player][:][(-)?\d{,5}] [player][:][(-)?\d{,5}] [player][:][(-)?\d{,5}] [player][:][(-)?\d{,5}]
-    ron [player] from [player] [5-12]han
-    ron [player] from [player] [1-4]han \d{2,3}fu
-    ron [player] from [player] yakuman
-    tsumo [player] [5-12]han
-    tsumo [player] [1-4]han \d{2,3}fu
-    tsumo [player] yakuman
+    [playerId][:][(-)?\d{,5}] [playerId][:][(-)?\d{,5}] [playerId][:][(-)?\d{,5}] [playerId][:][(-)?\d{,5}]
+    ron [playerId] from [playerId] [5-12]han
+    ron [playerId] from [playerId] [1-4]han \d{2,3}fu
+    ron [playerId] from [playerId] yakuman
+    tsumo [playerId] [5-12]han
+    tsumo [playerId] [1-4]han \d{2,3}fu
+    tsumo [playerId] yakuman
     draw tempai nobody
-    draw tempai [player]
-    draw tempai [player] [player]
-    draw tempai [player] [player] [player]
+    draw tempai [playerId]
+    draw tempai [playerId] [playerId]
+    draw tempai [playerId] [playerId] [playerId]
     draw tempai all
-    chombo [player]
+    chombo [playerId]
 */
 
 require_once __DIR__ . '/Tokenizer.php';
@@ -45,18 +43,24 @@ require_once __DIR__ . '/../../exceptions/Parser.php';
 class TextlogParser
 {
     /**
-     * @var $db
+     * @var DataSource $db
      */
-    protected $_db;
+    protected $_ds;
+
+    /**
+     * @var array
+     */
+    protected $_idMap = [];
 
     /**
      * @var array
      */
     protected $_originalScore = [];
 
-    public function __construct(Db $db)
+    public function __construct(DataSource $ds, $idMap)
     {
-        $this->_db = $db;
+        $this->_ds = $ds;
+        $this->_idMap = $idMap;
     }
 
     /**
@@ -65,6 +69,7 @@ class TextlogParser
      * @return array
      * @throws MalformedPayloadException
      * @throws ParseException
+     * @throws \Exception
      */
     public function parseToSession(SessionPrimitive $session, $gameLog)
     {
@@ -129,6 +134,7 @@ class TextlogParser
      * @param Token[] $statement
      * @return SessionPrimitive
      * @throws ParseException
+     * @throws \Exception
      */
     protected function _fillSession(SessionPrimitive $session, $statement)
     {
@@ -151,7 +157,7 @@ class TextlogParser
                 throw new ParseException("Wrong score line format: {$player} {$delimiter} {$score}", 106);
             }
 
-            $playerItem = PlayerPrimitive::findByAlias($this->_db, [$player->token()]);
+            $playerItem = PlayerPrimitive::findById($this->_ds, [$this->_idMap[$player->token()]]);
             if (empty($playerItem)) {
                 throw new ParseException("No player named '{$player->token()}' exists in our DB", 101);
             }
@@ -187,7 +193,7 @@ class TextlogParser
 
         try {
             return RoundPrimitive::createFromData(
-                $this->_db,
+                $this->_ds,
                 $session,
                 $this->$methodName($statement, $session)
             );
@@ -214,6 +220,7 @@ class TextlogParser
      * @param $session SessionPrimitive
      * @return string comma-separated riichi-players ids
      * @throws ParseException
+     * @throws \Exception
      */
     protected function _getRiichi($tokens, SessionPrimitive $session)
     {
@@ -232,7 +239,7 @@ class TextlogParser
                     if (empty($participants[$v->token()])) {
                         throw new ParseException("Failed to parse riichi statement. Player {$v->token()} not found. Typo?", 107);
                     }
-                    $riichi []= $participants[$v->token()]->getId();
+                    $riichi []= $participants[$v->token()];
                 } else {
                     return implode(',', $riichi);
                 }
@@ -250,6 +257,7 @@ class TextlogParser
      * @param $session SessionPrimitive
      * @return string comma-separated tempai players ids
      * @throws ParseException
+     * @throws \Exception
      */
     protected function _getTempai($tokens, SessionPrimitive $session)
     {
@@ -272,15 +280,13 @@ class TextlogParser
                     if (empty($participants[$v->token()])) {
                         throw new ParseException("Failed to parse tempai statement. Player {$v->token()} not found. Typo?", 117);
                     }
-                    $tempai [] = $participants[$v->token()]->getId();
+                    $tempai [] = $participants[$v->token()];
                     break;
                 case Tokenizer::ALL:
                     if (!empty($tempai)) {
                         throw new ParseException("Failed to parse riichi statement. Unexpected keyword 'all'. Typo?", 119);
                     }
-                    return implode(',', array_map(function (PlayerPrimitive $p) {
-                        return $p->getId();
-                    }, $participants));
+                    return implode(',', $participants);
                 case Tokenizer::NOBODY:
                     if (!empty($tempai)) {
                         throw new ParseException("Failed to parse riichi statement. Unexpected keyword 'nobody'. Typo?", 120);
@@ -300,18 +306,19 @@ class TextlogParser
     /**
      * @param SessionPrimitive $session
      * @return PlayerPrimitive[] [alias => PlayerPrimitive]
+     * @throws \Exception
      */
     protected function _getParticipantsMap(SessionPrimitive $session)
     {
-        // TODO: runtime cache
+        $idMapFlipped = array_flip($this->_idMap);
         return array_combine(
             array_map(
-                function (PlayerPrimitive $player) {
-                    return $player->getAlias();
+                function ($playerId) use ($idMapFlipped) {
+                    return $idMapFlipped[$playerId];
                 },
-                $session->getPlayers()
+                $session->getPlayersIds()
             ),
-            $session->getPlayers()
+            $session->getPlayersIds()
         );
     }
 
@@ -347,7 +354,6 @@ class TextlogParser
      * @param $tokens Token[]
      * @return array
      * @throws ParseException
-     * @throws TokenizerException
      */
     protected function _parseYaku($tokens)
     {
@@ -412,6 +418,7 @@ class TextlogParser
      * @param $session SessionPrimitive
      * @return array
      * @throws ParseException
+     * @throws \Exception
      */
     protected function _parseOutcomeRon($tokens, SessionPrimitive $session)
     {
@@ -432,6 +439,7 @@ class TextlogParser
      * @param $session SessionPrimitive
      * @return array
      * @throws ParseException
+     * @throws \Exception
      */
     protected function _parseOutcomeSingleRon($tokens, SessionPrimitive $session)
     {
@@ -459,8 +467,8 @@ class TextlogParser
         $yakuParsed = $this->_parseYaku($tokens);
         return [
             'outcome'   => 'ron',
-            'winner_id' => $participants[$winner->token()]->getId(),
-            'loser_id'  => $participants[$loser->token()]->getId(),
+            'winner_id' => $participants[$winner->token()],
+            'loser_id'  => $participants[$loser->token()],
             'han'       => $this->_findHan($tokens),
             'fu'        => $this->_findByType($tokens, Tokenizer::FU_COUNT)->clean(),
             'multi_ron' => false,
@@ -478,6 +486,7 @@ class TextlogParser
      * @param $session SessionPrimitive
      * @return array
      * @throws ParseException
+     * @throws \Exception
      */
     protected function _parseOutcomeTsumo($tokens, SessionPrimitive $session)
     {
@@ -496,7 +505,7 @@ class TextlogParser
         $yakuParsed = $this->_parseYaku($tokens);
         return [
             'outcome'   => 'tsumo',
-            'winner_id' => $participants[$winner->token()]->getId(),
+            'winner_id' => $participants[$winner->token()],
             'han'       => $this->_findHan($tokens),
             'fu'        => $this->_findByType($tokens, Tokenizer::FU_COUNT)->clean(),
             'multi_ron' => false,
@@ -513,6 +522,7 @@ class TextlogParser
      * @param $tokens Token[]
      * @param $session SessionPrimitive
      * @return array
+     * @throws \Exception
      */
     protected function _parseOutcomeDraw($tokens, SessionPrimitive $session)
     {
@@ -527,6 +537,7 @@ class TextlogParser
      * @param $tokens Token[]
      * @param $session SessionPrimitive
      * @return array
+     * @throws \Exception
      */
     protected function _parseOutcomeAbort($tokens, SessionPrimitive $session)
     {
@@ -541,6 +552,7 @@ class TextlogParser
      * @param $session SessionPrimitive
      * @return array
      * @throws ParseException
+     * @throws \Exception
      */
     protected function _parseOutcomeChombo($tokens, SessionPrimitive $session)
     {
@@ -557,7 +569,7 @@ class TextlogParser
 
         return [
             'outcome'   => 'chombo',
-            'loser_id'  => $participants[$loser->token()]->getId(),
+            'loser_id'  => $participants[$loser->token()],
         ];
     }
 
@@ -611,6 +623,7 @@ class TextlogParser
      * @param $session SessionPrimitive
      * @return array
      * @throws ParseException
+     * @throws \Exception
      */
     protected function _parseOutcomeMultiRon($tokens, SessionPrimitive $session)
     {
@@ -631,7 +644,7 @@ class TextlogParser
         $resultData = [
             'outcome'   => 'multiron',
             'multi_ron' => count($rons),
-            'loser_id'  => $loser->getId(),
+            'loser_id'  => $loser,
             'wins' => []
         ];
 
@@ -645,7 +658,7 @@ class TextlogParser
 
             $yakuParsed = $this->_parseYaku($ron);
             $resultData['wins'] []= [
-                'winner_id' => $winner->getId(),
+                'winner_id' => $winner,
                 'han'       => $this->_findHan($ron),
                 'fu'        => $this->_findByType($ron, Tokenizer::FU_COUNT)->clean(),
                 'dora'      => $yakuParsed['dora'],

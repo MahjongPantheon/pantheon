@@ -49,16 +49,16 @@ class EventUserManagementModel extends Model
             throw new AuthFailedException('Only administrators are allowed to enroll players to event');
         }
 
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
-        $player = PlayerPrimitive::findById($this->_meta->getFreyClient(), [$playerId]);
+        $player = PlayerPrimitive::findById($this->_ds, [$playerId]);
         if (empty($player)) {
             throw new InvalidParametersException('Player id#' . $playerId . ' not found in DB');
         }
 
-        $regItem = (new PlayerEnrollmentPrimitive($this->_db))
+        $regItem = (new PlayerEnrollmentPrimitive($this->_ds))
             ->setReg($player[0], $event[0]);
         $success = $regItem->save();
 
@@ -80,27 +80,27 @@ class EventUserManagementModel extends Model
      */
     public function registerPlayer($playerId, $eventId)
     {
-        $player = PlayerPrimitive::findById($this->_meta->getFreyClient(), [$playerId]);
+        $player = PlayerPrimitive::findById($this->_ds, [$playerId]);
         if (empty($player)) {
             throw new InvalidParametersException('Player id#' . $playerId . ' not found in DB');
         }
 
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
         $nextLocalId = null;
         if ($event[0]->getIsPrescripted()) {
-            $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_db, $event[0]->getId());
+            $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_ds, $event[0]->getId());
         }
 
-        $regItem = (new PlayerRegistrationPrimitive($this->_db))
+        $regItem = (new PlayerRegistrationPrimitive($this->_ds))
             ->setLocalId($nextLocalId)
             ->setReg($player[0], $event[0]);
         $success = $regItem->save();
 
-        $eItem = PlayerEnrollmentPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId);
+        $eItem = PlayerEnrollmentPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
         if ($success) {
             $eItem->drop();
         }
@@ -121,7 +121,7 @@ class EventUserManagementModel extends Model
             throw new AuthFailedException('Only administrators are allowed to enroll players to event');
         }
 
-        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId);
+        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
         if (empty($regItem)) {
             return;
         }
@@ -144,7 +144,7 @@ class EventUserManagementModel extends Model
             throw new AuthFailedException('Only administrators are allowed to update player information');
         }
 
-        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId);
+        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
         if (empty($regItem)) {
             throw new EntityNotFoundException('Player is not registered for this event');
         }
@@ -173,12 +173,12 @@ class EventUserManagementModel extends Model
             return '0000000000';
         }
 
-        $eItem = PlayerEnrollmentPrimitive::findByPin($this->_db, $pin);
+        $eItem = PlayerEnrollmentPrimitive::findByPin($this->_ds, $pin);
         if ($eItem) {
-            $event = EventPrimitive::findById($this->_db, [$eItem->getEventId()]);
+            $event = EventPrimitive::findById($this->_ds, [$eItem->getEventId()]);
 
             if (!$event[0]->getAllowPlayerAppend()) {
-                $reggedItems = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_db, $eItem->getPlayerId(), $event[0]->getId());
+                $reggedItems = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $eItem->getPlayerId(), $event[0]->getId());
                 // check that games are not started yet
                 if ($event[0]->getLastTimer() && empty($reggedItems)) {
                     // do not allow new players to enter already tournament
@@ -188,11 +188,11 @@ class EventUserManagementModel extends Model
             }
 
             if ($event[0]->getIsPrescripted()) {
-                $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_db, $event[0]->getId());
+                $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_ds, $event[0]->getId());
             }
 
-            $player = PlayerPrimitive::findById($this->_meta->getFreyClient(), [$eItem->getPlayerId()]);
-            $regItem = (new PlayerRegistrationPrimitive($this->_db))
+            $player = PlayerPrimitive::findById($this->_ds, [$eItem->getPlayerId()]);
+            $regItem = (new PlayerRegistrationPrimitive($this->_ds))
                 ->setLocalId($nextLocalId)
                 ->setReg($player[0], $event[0]);
             $success = $regItem->save();
@@ -221,7 +221,7 @@ class EventUserManagementModel extends Model
             throw new AuthFailedException('Only administrators are allowed to update local players\' ids');
         }
 
-        return PlayerRegistrationPrimitive::updateLocalIds($this->_db, $eventId, $idMap);
+        return PlayerRegistrationPrimitive::updateLocalIds($this->_ds, $eventId, $idMap);
     }
 
     /**
@@ -272,6 +272,6 @@ class EventUserManagementModel extends Model
      */
     public function dataFromToken()
     {
-        return PlayerRegistrationPrimitive::findEventAndPlayerByToken($this->_db, $this->_meta->getAuthToken());
+        return PlayerRegistrationPrimitive::findEventAndPlayerByToken($this->_ds, $this->_meta->getAuthToken());
     }
 }

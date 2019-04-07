@@ -44,14 +44,14 @@ class PlayerStatModel extends Model
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
-        $eventList = EventPrimitive::findById($this->_db, $eventIdList);
+        $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
         $mainEvent = $eventList[0];
 
-        $player = PlayerPrimitive::findById($this->_meta->getFreyClient(), [$playerId]);
+        $player = PlayerPrimitive::findById($this->_ds, [$playerId]);
         if (empty($player)) {
             throw new EntityNotFoundException('Player id#' . $playerId . ' not found in DB');
         }
@@ -171,7 +171,7 @@ class PlayerStatModel extends Model
                 'display_name'  => $p->getDisplayName(),
                 'tenhou_id'     => $p->getTenhouId(),
             ];
-        }, PlayerPrimitive::findById($this->_meta->getFreyClient(), $playerIds));
+        }, PlayerPrimitive::findById($this->_ds, $playerIds));
 
         return $players;
     }
@@ -469,7 +469,7 @@ class PlayerStatModel extends Model
             return $session->getId();
         }, $games);
 
-        return RoundPrimitive::findBySessionIds($this->_db, $sessionIds);
+        return RoundPrimitive::findBySessionIds($this->_ds, $sessionIds);
     }
 
     /**
@@ -480,13 +480,13 @@ class PlayerStatModel extends Model
      */
     protected function _fetchGamesHistory(EventPrimitive $event, PlayerPrimitive $player)
     {
-        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_db, $player->getId(), $event->getId());
+        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_ds, $player->getId(), $event->getId());
 
         $sessionIds = array_map(function (SessionPrimitive $s) {
             return $s->getId();
         }, $sessions);
 
-        $sessionResults = SessionResultsPrimitive::findBySessionId($this->_db, $sessionIds);
+        $sessionResults = SessionResultsPrimitive::findBySessionId($this->_ds, $sessionIds);
         $sessions = array_combine($sessionIds, $sessions);
 
         $fullResults = [];

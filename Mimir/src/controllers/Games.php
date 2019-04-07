@@ -41,7 +41,7 @@ class GamesController extends Controller
     public function start($eventId, $players)
     {
         $this->_log->addInfo('Starting game with players id# ' . implode(',', $players));
-        $gameHash = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->startGame($eventId, $players);
+        $gameHash = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))->startGame($eventId, $players);
         $this->_log->addInfo('Successfully started game with players id# ' . implode(',', $players));
         return $gameHash;
     }
@@ -59,7 +59,7 @@ class GamesController extends Controller
     public function startFromToken($players)
     {
         $this->_log->addInfo('Starting new game (by token)');
-        $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
+        $data = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))->dataFromToken();
         if (empty($data)) {
             throw new InvalidParametersException('Invalid player token', 401);
         }
@@ -77,7 +77,7 @@ class GamesController extends Controller
     public function dropLastRound($gameHashcode)
     {
         $this->_log->addInfo('Dropping last round from session #' . $gameHashcode);
-        $success = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->dropLastRound($gameHashcode);
+        $success = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))->dropLastRound($gameHashcode);
         $this->_log->addInfo('Successfully dropped last round from session #' . $gameHashcode);
         return $success;
     }
@@ -102,12 +102,13 @@ class GamesController extends Controller
      * Explicitly force end of interactive game
      *
      * @param string $gameHashcode Hashcode of game
+     * @throws \Exception
      * @return bool Success?
      */
     public function end($gameHashcode)
     {
         $this->_log->addInfo('Finishing game # ' . $gameHashcode);
-        $result = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->endGame($gameHashcode);
+        $result = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))->endGame($gameHashcode);
         $this->_log->addInfo(($result ? 'Successfully finished' : 'Failed to finish') . ' game # ' . $gameHashcode);
         return $result;
     }
@@ -116,12 +117,13 @@ class GamesController extends Controller
      * Cancel game which is in progress now
      *
      * @param string $gameHashcode Hashcode of game
+     * @throws \Exception
      * @return bool Success?
      */
     public function cancel($gameHashcode)
     {
         $this->_log->addInfo('Cancelling game # ' . $gameHashcode);
-        $result = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->cancelGame($gameHashcode);
+        $result = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))->cancelGame($gameHashcode);
         $this->_log->addInfo(($result ? 'Successfully cancelled' : 'Failed to cancel') . ' game # ' . $gameHashcode);
         return $result;
     }
@@ -137,7 +139,7 @@ class GamesController extends Controller
     public function finalizeSessions($eventId)
     {
         $this->_log->addInfo('Finalizing sessions of event # ' . $eventId);
-        $result = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
+        $result = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
             ->finalizeSessions($eventId);
         $this->_log->addInfo(($result ? 'Successfully finalized' : 'Failed to finalize') . ' sessions of event # ' . $eventId);
         return $result;
@@ -156,7 +158,7 @@ class GamesController extends Controller
     public function addRound($gameHashcode, $roundData, $dry = false)
     {
         $this->_log->addInfo('Adding new round to game # ' . $gameHashcode);
-        $result = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->addRound($gameHashcode, $roundData, $dry);
+        $result = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))->addRound($gameHashcode, $roundData, $dry);
         $this->_log->addInfo(($result ? 'Successfully added' : 'Failed to add') . ' new round to game # ' . $gameHashcode);
         return $result;
     }
@@ -174,7 +176,7 @@ class GamesController extends Controller
     public function addPenalty($eventId, $playerId, $amount, $reason)
     {
         $this->_log->addInfo('Adding penalty for player #' . $playerId. ' to event # ' . $eventId);
-        $result = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))
+        $result = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
             ->addPenalty($eventId, $playerId, $amount, $reason);
         $this->_log->addInfo('Successfully added penalty for player #' . $playerId. ' to event # ' . $eventId);
         return $result;
@@ -209,7 +211,7 @@ class GamesController extends Controller
     public function getSessionOverview($gameHashCode)
     {
         $this->_log->addInfo('Getting session overview for game # ' . $gameHashCode);
-        $session = SessionPrimitive::findByRepresentationalHash($this->_db, [$gameHashCode]);
+        $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$gameHashCode]);
         if (empty($session)) {
             throw new InvalidParametersException("Couldn't find session in DB", 404);
         }
@@ -220,8 +222,7 @@ class GamesController extends Controller
             'players' => array_map(function (PlayerPrimitive $player) {
                 return [
                     'id' => $player->getId(),
-                    'display_name' => $player->getDisplayName(),
-                    'ident' => $player->getIdent()
+                    'display_name' => $player->getDisplayName()
                 ];
             }, $session[0]->getPlayers()),
 
@@ -256,7 +257,7 @@ class GamesController extends Controller
     public function addTextLog($eventId, $text)
     {
         $this->_log->addInfo('Saving new game for event id# ' . $eventId);
-        $success = (new TextmodeSessionModel($this->_db, $this->_config, $this->_meta))->addGame($eventId, $text);
+        $success = (new TextmodeSessionModel($this->_ds, $this->_config, $this->_meta))->addGame($eventId, $text);
         $this->_log->addInfo('Successfully saved game for event id# ' . $eventId);
         return $success;
     }
@@ -276,8 +277,8 @@ class GamesController extends Controller
     public function addOnlineReplay($eventId, $link)
     {
         $this->_log->addInfo('Saving new online game for event id# ' . $eventId . ' @ tenhou link ' . $link);
-        $session = (new OnlineSessionModel($this->_db, $this->_config, $this->_meta))->addGame($eventId, $link);
-        $result = (new EventFinishedGamesModel($this->_db, $this->_config, $this->_meta))->getFinishedGame($session);
+        $session = (new OnlineSessionModel($this->_ds, $this->_config, $this->_meta))->addGame($eventId, $link);
+        $result = (new EventFinishedGamesModel($this->_ds, $this->_config, $this->_meta))->getFinishedGame($session);
         $this->_log->addInfo('Successfully saved online game for event id# ' . $eventId . ' @ tenhou link ' . $link);
         return $result;
     }

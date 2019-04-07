@@ -171,7 +171,7 @@ ron player14 from player2 4han 30fu (yakuhai1 dora 3)
 tsumo player2 6han (riichi ippatsu tsumo pinfu dora 2) riichi player32 player2
 
 
-player23:39700 player5: 13600 player12: 26800 player29: 39900
+player23:39700 player5:13600 player12:26800 player29:39900
 tsumo player29 2han 40fu  (yakuhai2)
 draw tempai player23 player5 riichi player5
 tsumo player12 1han 30fu (tanyao) riichi player23

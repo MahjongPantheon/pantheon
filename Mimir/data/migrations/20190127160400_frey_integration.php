@@ -23,5 +23,25 @@ class FreyIntegration extends AbstractMigration
         $this->table('formation_player')
             ->rename('__deprecated_formation_player')
             ->update();
+
+        $this->table('session_player')
+            ->dropForeignKey('player_id');
+
+        $this->table('event_registered_players')
+            ->dropForeignKey('player_id');
+
+        $this->table('event_enrolled_players')
+            ->dropForeignKey('player_id');
+
+        $this->table('round')
+            ->dropForeignKey('pao_player_id')
+            ->dropForeignKey('winner_id')
+            ->dropForeignKey('loser_id');
+
+        $this->table('player_history')
+            ->dropForeignKey('player_id');
+
+        $this->table('session_results')
+            ->dropForeignKey('player_id');
     }
 }

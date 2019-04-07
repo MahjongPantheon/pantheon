@@ -242,45 +242,54 @@ class EventPrimitive extends Primitive
     const GS_SEATING_READY = 'seating_ready';
     const GS_STARTED = 'started';
 
-    public function __construct(IDb $db)
+    /**
+     * EventPrimitive constructor.
+     * @param DataSource $ds
+     * @throws \Exception
+     */
+    public function __construct(DataSource $ds)
     {
-        parent::__construct($db);
+        parent::__construct($ds);
         $this->_startTime = date('Y-m-d H:i:s'); // may be actualized on restore
     }
 
     /**
      * Find events by local ids (primary key)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return EventPrimitive[]
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(DataSource $ds, $ids)
     {
-        return self::_findBy($db, 'id', $ids);
+        return self::_findBy($ds, 'id', $ids);
     }
 
     /**
      * Find events by lobby (indexed search)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param string[] $lobbyList
      * @throws \Exception
      * @return EventPrimitive[]
      */
-    public static function findByLobby(IDb $db, $lobbyList)
+    public static function findByLobby(DataSource $ds, $lobbyList)
     {
         // TODO: All games in lobby are likely to be too much. Make pagination here.
-        return self::_findBy($db, 'lobby_id', $lobbyList);
+        return self::_findBy($ds, 'lobby_id', $lobbyList);
     }
 
+    /**
+     * @return bool|mixed
+     * @throws \Exception
+     */
     protected function _create()
     {
-        $session = $this->_db->table(self::$_table)->create();
+        $session = $this->_ds->table(self::$_table)->create();
         $success = $this->_save($session);
         if ($success) {
-            $this->_id = $this->_db->lastInsertId();
+            $this->_id = $this->_ds->local()->lastInsertId();
         }
 
         return $success;
@@ -702,7 +711,7 @@ class EventPrimitive extends Primitive
     {
         return array_map(function ($el) {
             return $el['id'];
-        }, PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $this->getId()));
+        }, PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $this->getId()));
     }
 
     /**

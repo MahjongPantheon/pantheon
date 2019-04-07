@@ -32,24 +32,20 @@ class OnlineParser
      * @var PlayerPrimitive[]
      */
     protected $_players = [];
-    protected $_db;
-    /**
-     * @var FreyClient
-     */
-    protected $_frey;
+    protected $_ds;
     protected $_riichi = [];
 
     protected $_lastTokenIsAgari = false;
 
-    public function __construct(Db $db, FreyClient $frey)
+    public function __construct(DataSource $ds)
     {
-        $this->_db = $db;
-        $this->_frey = $frey;
+        $this->_ds = $ds;
     }
 
     /**
      * @param SessionPrimitive $session
      * @param $content string game log xml string
+     * @throws \Exception
      * @return array parsed score
      */
     public function parseToSession(SessionPrimitive $session, $content, $withChips = false)
@@ -76,7 +72,7 @@ class OnlineParser
         $scores = [];
         $rounds = [];
         foreach ($this->_roundData as $round) {
-            $savedRound = RoundPrimitive::createFromData($this->_db, $session, $round);
+            $savedRound = RoundPrimitive::createFromData($this->_ds, $session, $round);
             $rounds []= $savedRound;
             $success = $success && $session->updateCurrentState($savedRound);
             $scores []= $session->getCurrentState()->getScores();
@@ -203,6 +199,7 @@ class OnlineParser
      * @param \XMLReader $reader
      * @param SessionPrimitive $session
      * @throws ParseException
+     * @throws \Exception
      */
     protected function _tokenUN(\XMLReader $reader, SessionPrimitive $session)
     {
@@ -218,7 +215,7 @@ class OnlineParser
                 throw new ParseException('"NoName" players are not allowed in replays');
             }
 
-            $players = PlayerPrimitive::findByTenhouId($this->_frey, array_keys($this->_players));
+            $players = PlayerPrimitive::findByTenhouId($this->_ds, array_keys($this->_players));
 
             if (count($players) !== count($this->_players)) {
                 $registeredPlayers = array_map(function (PlayerPrimitive $p) {
@@ -232,7 +229,7 @@ class OnlineParser
             if ($session->getEvent()->getAllowPlayerAppend()) {
                 foreach ($players as $player) {
                     // it is ok to re-register every time, it just will do nothing in db if record exists
-                    (new PlayerRegistrationPrimitive($this->_db))
+                    (new PlayerRegistrationPrimitive($this->_ds))
                         ->setReg($player, $session->getEvent())
                         ->save();
                 }
@@ -398,6 +395,13 @@ class OnlineParser
         $this->_riichi []= $this->_players[array_keys($this->_players)[$player]]->getId();
     }
 
+    /**
+     * @param \XMLReader $reader
+     * @param SessionPrimitive $session
+     * @throws EntityNotFoundException
+     * @throws ParseException
+     * @throws \Exception
+     */
     protected function _tokenGO(\XMLReader $reader, SessionPrimitive $session)
     {
         $eventLobby = $session->getEvent()->getLobbyId();

@@ -12,32 +12,34 @@ require_once __DIR__ . '/../../src/Ruleset.php';
 
 class ClubEventSeeder extends AbstractSeed
 {
+    /**
+     * @throws Exception
+     * @throws \Mimir\InvalidParametersException
+     * @throws \Mimir\MalformedPayloadException
+     * @throws \Mimir\ParseException
+     */
     public function run()
     {
         // Non-phinx-based seeder to avoid rewriting seeds for every schema change
-
-        $tables = file(__DIR__ . '/../tablelist.txt');
-
-        // cleanup. Don't use truncate() - it won't work with FKs
-        foreach ($tables as $t) {
-            $this->table($t)->getAdapter()->execute('DELETE FROM ' . $t);
-        }
-
-        $this->table('player')->getAdapter()->commitTransaction();
-
-        list($db, $config) = $this->_getConnection();
-        $event = $this->_seedEvent($db);
-        $this->_seedPlayers($db, $event);
-        $this->_seedGames($db, $config, $event);
+        list($src, $config) = $this->_getConnection();
+        $event = $this->_seedEvent($src);
+        $idMap = $this->_seedPlayers($src, $event);
+        $this->_seedGames($src, $config, $event, $idMap);
 
         echo '-----------------------------------------------------------------' . PHP_EOL;
         echo "New seeded event link: ' " . getenv('RHEDA_URL') . "/eid{$event->getId()}" . PHP_EOL;
         echo '-----------------------------------------------------------------' . PHP_EOL;
     }
 
-    protected function _seedEvent(\Mimir\Db $db)
+    /**
+     * @param \Mimir\DataSource $src
+     * @return \Mimir\EventPrimitive
+     * @throws Exception
+     * @throws \Mimir\InvalidParametersException
+     */
+    protected function _seedEvent(\Mimir\DataSource $src)
     {
-        $event = (new \Mimir\EventPrimitive($db))
+        $event = (new \Mimir\EventPrimitive($src))
             ->setTitle('title')
             ->setDescription('desc')
             ->setTimezone('Europe/Moscow')
@@ -50,34 +52,64 @@ class ClubEventSeeder extends AbstractSeed
         return $event;
     }
 
-    protected function _seedPlayers(\Mimir\Db $db, \Mimir\EventPrimitive $event)
+    /**
+     * @param \Mimir\DataSource $ds
+     * @param \Mimir\EventPrimitive $event
+     * @return array
+     */
+    protected function _seedPlayers(\Mimir\DataSource $ds, \Mimir\EventPrimitive $event)
     {
+        $idMap = [];
         $playerNames = array_filter(preg_split('#\s#is', file_get_contents(__DIR__ . '/../../tests/models/testdata/players.txt')));
-        array_map(function ($id) use ($db, $event) {
-            $p = (new \Mimir\PlayerPrimitive($db))
-                ->setDisplayName($id)
-                ->setAlias($id)
-                ->setIdent($id)
-                ->setTenhouId($id);
-            $p->save();
-            (new \Mimir\PlayerRegistrationPrimitive($db))
-                ->setReg($p, $event)
+        array_map(function ($id) use ($ds, $event, &$idMap) {
+            $playerId = $ds->remote()->createAccount(
+                'test' . $id . '@test.te',
+                'pwd',
+                'player' . $id,
+                'City of sin',
+                '123-123-123',
+                'TH' . $id
+            );
+            (new \Mimir\PlayerRegistrationPrimitive($ds))
+                ->_setRegRaw($playerId, $event)
                 ->save();
-            return $p;
+            $idMap[$id] = $playerId;
         }, $playerNames);
+        return $idMap;
     }
 
-    protected function _seedGames(\Mimir\Db $db, \Mimir\Config $config, \Mimir\EventPrimitive $event)
+    /**
+     * @param \Mimir\DataSource $ds
+     * @param \Mimir\Config $config
+     * @param \Mimir\EventPrimitive $event
+     * @throws Exception
+     * @throws \Mimir\InvalidParametersException
+     * @throws \Mimir\MalformedPayloadException
+     * @throws \Mimir\ParseException
+     */
+    protected function _seedGames(\Mimir\DataSource $ds, \Mimir\Config $config, \Mimir\EventPrimitive $event, $idMap)
     {
-        $games = explode("\n\n\n", file_get_contents(__DIR__ . '/../../tests/models/testdata/games.txt'));
-        $freyClient = new \Mimir\FreyClient($config->getValue('freyUrl'));
-        $meta = new \Mimir\Meta($freyClient, $_SERVER);
-        $model = new \Mimir\TextmodeSessionModel($db, $config, $meta);
+        $data = '%' . implode("%\n%", explode("\n", file_get_contents(__DIR__ . '/../../tests/models/testdata/games.txt'))) . '%';
+        $games = array_map(function($game) {
+            return preg_replace('#^%|%$#ims', '', str_replace("%\n%", "\n", $game));
+        }, explode("\n%%\n%%\n",
+            preg_replace_callback('#(\s|%)([\d\ ]+)(\s|:|%)#is', function($matches) use ($idMap) {
+                return $matches[1] .
+                    implode(' ',
+                        array_map(
+                            function($id) use ($idMap) { return $idMap[$id]; },
+                            explode(' ', $matches[2])
+                        )
+                    )
+                    . $matches[3];
+            }, $data
+            )));
 
-        $games = array_slice($games, 0, 10); // 10 games is enough, just to speed up seeding
+        $meta = new \Mimir\Meta($ds->remote(), $_SERVER);
+        $model = new \Mimir\TextmodeSessionModel($ds, $config, $meta);
 
         foreach ($games as $log) {
-            $model->addGame($event->getId(), $log);
+            $model->addGame($event->getId(), $log, $idMap);
         }
     }
 
@@ -105,6 +137,8 @@ class ClubEventSeeder extends AbstractSeed
             ]
         ]);
 
-        return [new \Mimir\Db($cfg), $cfg];
+        $db = new \Mimir\Db($cfg);
+        $frey = new \Mimir\FreyClient($cfg->getValue('freyUrl'));
+        return [new \Mimir\DataSource($db, $frey), $cfg];
     }
 }

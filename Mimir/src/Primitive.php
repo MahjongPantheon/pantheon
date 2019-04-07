@@ -16,6 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Mimir;
+require_once __DIR__ . '/DataSource.php';
 
 use Idiorm\ORM;
 
@@ -96,18 +97,19 @@ abstract class Primitive
 
         // TODO: what if we need to delete some relations?
 
-        return $this->_db->upsertQuery($connectorTable, $result, $indexFields);
+        return $this->_ds->local()->upsertQuery($connectorTable, $result, $indexFields);
     }
 
     /**
      * @param $connectorTable
      * @param $currentEntityField
      * @param $foreignEntityField
+     * @throws \Exception
      * @return array (usually array of ids)
      */
     protected function _deserializeManyToMany($connectorTable, $currentEntityField, $foreignEntityField)
     {
-        $items = $this->_db
+        $items = $this->_ds
             ->table($connectorTable)
             ->where($currentEntityField, $this->getId())
             ->findArray();
@@ -194,13 +196,18 @@ abstract class Primitive
     }
 
     /**
-     * @var Db
+     * @var DataSource
      */
-    protected $_db;
+    protected $_ds;
 
-    public function __construct(IDb $db)
+    /**
+     * Primitive constructor.
+     * @param DataSource $ds
+     * @throws \Exception
+     */
+    public function __construct(DataSource $ds)
     {
-        $this->_db = $db;
+        $this->_ds = $ds;
         if (empty(static::$_table)) {
             throw new \Exception('Table name must be set!');
         }
@@ -212,6 +219,7 @@ abstract class Primitive
 
     /**
      * Save instance to db
+     * @throws \Exception
      * @return bool success
      */
     public function save()
@@ -220,7 +228,7 @@ abstract class Primitive
         if (empty($id)) {
             $result = $this->_create();
         } else {
-            $instance = $this->_db->table(static::$_table)->findOne($id);
+            $instance = $this->_ds->table(static::$_table)->findOne($id);
             $result = ($instance ? $this->_save($instance) : $this->_create());
         }
 
@@ -267,11 +275,12 @@ abstract class Primitive
 
     /**
      * Delete item from DB
+     * @throws \Exception
      * @return Primitive
      */
     public function drop()
     {
-        $success = $this->_db->table(static::$_table)
+        $success = $this->_ds->table(static::$_table)
             ->findOne($this->getId())
             ->delete();
 
@@ -326,23 +335,28 @@ abstract class Primitive
         return $this;
     }
 
-    protected static function _recreateInstance(IDb $db, $data)
+    /**
+     * @param DataSource $ds
+     * @param $data
+     * @return static
+     */
+    protected static function _recreateInstance(DataSource $ds, $data)
     {
-        /** @var Model $instance */
-        $instance = new static($db);
+        /** @var Primitive $instance */
+        $instance = new static($ds);
         return $instance->_restore($data);
     }
 
     /**
      * Find items by indexed search
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param string $key
      * @param array $identifiers
      * @throws \Exception
-     * @return Primitive[]
+     * @return static[]
      */
-    protected static function _findBy(IDb $db, $key, $identifiers)
+    protected static function _findBy(DataSource $ds, $key, $identifiers)
     {
         if (!is_array($identifiers)) {
             throw new \Exception("Identifiers should be an array in search by $key");
@@ -352,36 +366,37 @@ abstract class Primitive
             return [];
         }
 
-        $result = $db->table(static::$_table)->whereIn($key, $identifiers)->findArray();
+        $result = $ds->table(static::$_table)->whereIn($key, $identifiers)->findArray();
         if (empty($result)) {
             return [];
         }
 
-        return array_map(function ($data) use ($db) {
-            return self::_recreateInstance($db, $data);
+        return array_map(function ($data) use ($ds) {
+            return self::_recreateInstance($ds, $data);
         }, $result);
     }
 
     /**
-     * @param IDb $db
-     * @return Primitive[]
+     * @param DataSource $ds
+     * @throws \Exception
+     * @return static[]
      */
-    public static function findAll(IDb $db)
+    public static function findAll(DataSource $ds)
     {
-        $result = $db->table(static::$_table)->findArray();
+        $result = $ds->table(static::$_table)->findArray();
         if (empty($result)) {
             return [];
         }
 
-        return array_map(function ($data) use ($db) {
-            return self::_recreateInstance($db, $data);
+        return array_map(function ($data) use ($ds) {
+            return self::_recreateInstance($ds, $data);
         }, $result);
     }
 
     /**
      * Find items by indexed search by several fields
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param array $conditions
      * @param array $params
      *      $params.onlyLast => return only last item (when sorted by primary key)
@@ -390,15 +405,15 @@ abstract class Primitive
      *      $params.order    => asc or desc
      *      $params.orderBy  => field name for results ordering
      * @throws \Exception
-     * @return Primitive|Primitive[]
+     * @return static|static[]
      */
-    protected static function _findBySeveral(IDb $db, $conditions, $params = [])
+    protected static function _findBySeveral(DataSource $ds, $conditions, $params = [])
     {
         if (!is_array($conditions)) {
             throw new \Exception("Conditions should be assoc array: key => [values...]");
         }
 
-        $orm = $db->table(static::$_table);
+        $orm = $ds->table(static::$_table);
         foreach ($conditions as $key => $identifiers) {
             $orm = $orm->whereIn($key, $identifiers);
         }
@@ -419,7 +434,7 @@ abstract class Primitive
             } else {
                 return [];
             }
-            return self::_recreateInstance($db, $item);
+            return self::_recreateInstance($ds, $item);
         }
 
         if (!empty($params['order']) && !empty($params['orderBy'])) {
@@ -436,8 +451,8 @@ abstract class Primitive
             return [];
         }
 
-        return array_map(function ($data) use ($db) {
-            return self::_recreateInstance($db, $data);
+        return array_map(function ($data) use ($ds) {
+            return self::_recreateInstance($ds, $data);
         }, $result);
     }
 }

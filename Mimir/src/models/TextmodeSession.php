@@ -27,21 +27,22 @@ class TextmodeSessionModel extends Model
     /**
      * @param $eventId int
      * @param $gameLog string
+     * @param $idMap array
      * @return bool
      * @throws InvalidParametersException
      * @throws MalformedPayloadException
      * @throws \Exception
      * @throws ParseException
      */
-    public function addGame($eventId, $gameLog)
+    public function addGame($eventId, $gameLog, $idMap)
     {
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
-        $parser = new TextlogParser($this->_db);
-        $session = (new SessionPrimitive($this->_db))
+        $parser = new TextlogParser($this->_ds, $idMap);
+        $session = (new SessionPrimitive($this->_ds))
             ->setEvent($event[0])
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS);
 
@@ -52,7 +53,7 @@ class TextmodeSessionModel extends Model
 
         $calculatedScore = $session->getCurrentState()->getScores();
         $aliases = array_map(function (PlayerPrimitive $p) {
-            return $p->getAlias();
+            return $p->getId();
         }, $session->getPlayers());
 
         if (array_diff($calculatedScore, $originalScore) !== []
