@@ -18,15 +18,24 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export class RemoteError extends Error {
+export class RemoteError {
   private _errcode: number;
+  private _message: string;
 
   constructor(message: string, code: string) {
-    super('[REMOTE]: ' + message);
     this._errcode = parseInt(code, 10);
+    this._message = '[REMOTE]: ' + message;
+  }
+
+  get message() {
+    return this._message;
   }
 
   get code() {
     return this._errcode;
+  }
+
+  ToString() {
+    return '[REMOTE ERRROR] code:' + this.code + ', message: ' + this.message;
   }
 }
