@@ -55,7 +55,7 @@ export class NewGameScreen {
 
   players: LUser[] = [defaultPlayer];
   availablePlayers: LUser[] = [];
-  
+
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-new-game' });
     this._loading = true;
@@ -92,7 +92,7 @@ export class NewGameScreen {
       return false;
     }
 
-    //There must be Current Player
+    // There must be Current Player
     if (playerIds.indexOf(this.state.getCurrentPlayerId()) == -1) {
       return false;
     }
