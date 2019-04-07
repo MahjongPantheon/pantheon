@@ -13,7 +13,7 @@ before_script:
   - make migrate
 
 script:
-- make check
+- make check_covered
 - make prod_build_tyr
 
 after_success:
