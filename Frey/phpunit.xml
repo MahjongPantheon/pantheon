@@ -9,4 +9,9 @@
         <const name="WEB_SERVER_PORT" value="1359" />
         <const name="WEB_SERVER_DOCROOT" value="./www" />
     </php>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
 </phpunit>

@@ -67,6 +67,7 @@ RUN apk update && \
     php7-xmlreader \
     php7-xmlwriter \
     php7-xmlrpc \
+    php7-phpdbg \
     php7-iconv \
     php7-curl \
     php7-ctype \
@@ -79,7 +80,7 @@ RUN curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/do
 RUN npm install -g xgettext-template i18n-stex i18n-po-json i18n-json-po yarn
 RUN touch $PHP_LOGFILE
 RUN chown nobody $PHP_LOGFILE
-    
+
     # Set environments
 RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.d/www.conf && \
     sed -i "s|;*clear_env\s*=\s*no|clear_env = no|g" /etc/php7/php-fpm.d/www.conf && \
@@ -132,6 +133,7 @@ RUN mkdir -p /var/www/html/Tyr
 RUN mkdir -p /var/www/html/Mimir
 RUN mkdir -p /var/www/html/Rheda
 RUN mkdir -p /var/www/html/Frey
+RUN mkdir -p /var/www/html/pantheon
 
 # Entry point
 CMD ["/entrypoint.sh"]

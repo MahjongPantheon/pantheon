@@ -15,7 +15,10 @@ lint:
 	php vendor/bin/phpcs src tests www
 
 unit:
-	php bin/unit.php
+	php bin/unit.php --testdox
+
+unit_covered: lint
+	phpdbg -qrr bin/unit.php  --testdox --coverage-clover=/tmp/coverage-mimir.xml
 
 check: lint unit
 
