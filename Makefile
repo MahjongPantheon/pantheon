@@ -119,6 +119,7 @@ pantheon_run: get_docker_id get_docker_idle_id
 			docker run \
 				-d -e LOCAL_USER_ID=$(UID) \
 				-e COVERALLS_REPO_TOKEN=$(COVERALLS_REPO_TOKEN) \
+				-e COVERALLS_RUN_LOCALLY=1 \
 				-p 127.0.0.1:4001:4001 -p 127.0.0.1:4002:4002 -p 127.0.0.1:4003:4003 -p 127.0.0.1:4004:4004 -p 127.0.0.1:5532:5532 \
 				-v `pwd`/Tyr:/var/www/html/Tyr:z \
 				-v `pwd`/Mimir:/var/www/html/Mimir:z \
@@ -239,9 +240,9 @@ lint: get_docker_id
 
 .PHONY: check_covered
 check_covered: get_docker_id lint
-	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user make unit_covered';
-	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user gosu user make unit_covered';
-	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user gosu user make unit_covered';
+	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Mimir && HOME=/home/user gosu user make unit_covered';
+	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Frey && HOME=/home/user gosu user make unit_covered';
+	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Rheda && HOME=/home/user gosu user make unit_covered';
 	# TODO: checks for Tyr
 	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon && HOME=/home/user gosu user php bin/php-coveralls.phar \
 	            --json_path=/tmp/coverall.json --coverage_clover=/tmp/coverage-*.xml' || true; # suppress error ftw

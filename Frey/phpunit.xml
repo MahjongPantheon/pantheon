@@ -1,17 +1,25 @@
 <phpunit bootstrap="./tests/bootstrap.php" stopOnError="true" stopOnFailure="true" colors="true">
-    <testsuites>
-        <testsuite name="FreyTest">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
-    <php>
-        <const name="WEB_SERVER_HOST" value="localhost" />
-        <const name="WEB_SERVER_PORT" value="1359" />
-        <const name="WEB_SERVER_DOCROOT" value="./www" />
-    </php>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
+  <testsuites>
+    <testsuite name="FreyTest">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
+  <php>
+    <const name="WEB_SERVER_HOST" value="localhost"/>
+    <const name="WEB_SERVER_PORT" value="1359"/>
+    <const name="WEB_SERVER_DOCROOT" value="./www"/>
+  </php>
+  <filter>
+    <whitelist processUncoveredFilesFromWhitelist="true">
+      <directory suffix=".php">src</directory>
+      <exclude>
+        <directory suffix=".php">src/controllers</directory>
+        <directory suffix=".php">src/exceptions</directory>
+        <directory suffix=".php">src/interfaces</directory>
+        <file>src/Api.php</file>
+        <file>src/Controller.php</file>
+        <file>src/ErrorHandler.php</file>
+      </exclude>
+    </whitelist>
+  </filter>
 </phpunit>
