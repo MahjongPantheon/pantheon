@@ -36,6 +36,6 @@ export class RemoteError {
   }
 
   ToString() {
-    return '[REMOTE ERRROR] code:' + this.code + ', message: ' + this.message;
+    return '[REMOTE ERROR] code:' + this.code + ', message: ' + this.message;
   }
 }
