@@ -18,10 +18,11 @@ dev:
 	echo "Running dev server on port 8001..."
 	cd www && php -S localhost:8001 -c ../config/php.dev.ini
 
-unit:
-	php bin/unit.php
+unit: # TODO
+	# php bin/unit.php --testdox
 
-check: lint unit
+unit_covered: # TODO
+	# phpdbg -qrr bin/unit.php --testdox --coverage-clover=/tmp/coverage-rheda.xml
 
 autofix:
 	php vendor/bin/phpcbf --config-set default_standard PSR2
