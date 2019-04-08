@@ -19,45 +19,45 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-class RulesetEma1 extends Ruleset
+// Murmansk
+class RulesetMkrm extends Ruleset
 {
-    public static $_title = 'ema1';
+    public static $_title = 'mkrm';
     protected static $_ruleset = [
-        'tenboDivider'          => 1,
+        'tenboDivider'          => 1000,
         'ratingDivider'         => 1,
         'startRating'           => 0,
         'oka'                   => 0,
-        'startPoints'           => 30000,
+        'startPoints'           => 25000,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
-        'extraChomboPayments'   => false,
-        'chomboPenalty'         => 20000,
+        'extraChomboPayments'   => true,
+        'chomboPenalty'         => 0,
         'withAtamahane'         => false,
-        'withAbortives'         => true, // changed in ema1
+        'withAbortives'         => false,
         'withKuitan'            => true,
-        'withKazoe'             => false,
-        'withButtobi'           => false,
-        'withMultiYakumans'     => false,
-        'withNagashiMangan'     => true, // changed in ema1
+        'withKazoe'             => true,
+        'withButtobi'           => true,
+        'withMultiYakumans'     => true,
+        'withNagashiMangan'     => true,
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
         'gameExpirationTime'    => false,
-        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII],
-        'minPenalty'            => 100,
-        'maxPenalty'            => 20000,
-        'penaltyStep'           => 100,
+        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
+        'minPenalty'            => 0.1,
+        'maxPenalty'            => 20,
+        'penaltyStep'           => 0.1,
         'timerPolicy'           => 'yellowZone',
         'yellowZone'            => 900, // 15min
         'redZone'               => 0,
-        'withLeadingDealerGameOver' => false,
-        'replacementPlayerFixedPoints' => -15000,
-        'replacementPlayerOverrideUma' => -15000
+        'withLeadingDealerGameOver' => true,
+        'replacementPlayerFixedPoints' => -15,
+        'replacementPlayerOverrideUma' => -15
     ];
 
     public function allowedYaku()
     {
         return YakuMap::listExcept([
-            Y_RENHOU,
             Y_OPENRIICHI
         ]);
     }
@@ -68,6 +68,6 @@ class RulesetEma1 extends Ruleset
      */
     public function uma($scores = [])
     {
-        return $this->_equalizeUma($scores, [1 => 15000, 5000, -5000, -15000]);
+        return $this->_equalizeUma($scores, [1 => 20, 10, -10, -20]);
     }
 }
