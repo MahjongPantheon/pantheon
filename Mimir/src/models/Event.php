@@ -86,6 +86,7 @@ class EventModel extends Model
     /**
      * Get achievements list
      * @throws AuthFailedException
+     * @throws \Exception
      * @param $eventIdList
      * @return array
      */
@@ -109,11 +110,18 @@ class EventModel extends Model
             'impossibleWait' => AchievementsPrimitive::getImpossibleWait($this->_db, $eventIdList),
             'honoredDonor' => AchievementsPrimitive::getHonoredDonor($this->_db, $eventIdList),
             'justAsPlanned' => AchievementsPrimitive::getJustAsPlanned($this->_db, $eventIdList),
-            'minFeedsScore' => $this->getMinFeedsScore($eventIdList)
+            'carefulPlanning' => $this->getMinFeedsScore($eventIdList),
+            'doraLord' => AchievementsPrimitive::getMaxAverageDoraCount($this->_db, $eventIdList),
+            'catchEmAll' => AchievementsPrimitive::getMaxDifferentYakuCount($this->_db, $eventIdList),
+            'favoriteAsapinApprentice' => AchievementsPrimitive::getFavoriteAsapinApprentice($this->_db, $eventIdList),
+            'andYourRiichiBet' => $this->getMaxStolenRiichiBetsCount($eventIdList),
+            'prudent' => AchievementsPrimitive::getMinLostRiichiBets($this->_db, $eventIdList),
         ];
     }
 
     /**
+     * Get players who has smallest score (average number) of feeding into others' hands
+     *
      * @param $eventIdList
      * @return array
      * @throws \Exception
@@ -165,6 +173,68 @@ class EventModel extends Model
             },
             array_slice(array_keys($feedsScores), 0, 5),
             array_slice(array_values($feedsScores), 0, 5)
+        );
+    }
+
+    /**
+     * Get players who collected the largest amount of other players' riichi bets during the tournament
+     *
+     * @param $eventIdList
+     * @return array
+     * @throws \Exception
+     */
+    private function getMaxStolenRiichiBetsCount($eventIdList)
+    {
+        $games = SessionPrimitive::findByEventListAndStatus(
+            $this->_db,
+            $eventIdList,
+            SessionPrimitive::STATUS_FINISHED
+        );
+
+        $sessionIds = array_map(function (SessionPrimitive $el) {
+            return $el->getId();
+        }, $games);
+
+        $rounds = RoundPrimitive::findBySessionIds($this->_db, $sessionIds);
+        $filteredRounds = array_filter($rounds, function (RoundPrimitive $round) {
+            return in_array($round->getOutcome(),['ron', 'multiron', 'tsumo'])
+                && $round->getLastSessionState()->getRiichiBets() > 0;
+        });
+
+        $riichiBets = [];
+        foreach ($filteredRounds as $round) {
+            $lastSessionState = $round->getLastSessionState();
+
+            $playerId = null;
+            if ($round->getOutcome() !== 'multiron') {
+                $playerId = $round->getWinnerId();
+            } else {
+                /** @var MultiRoundPrimitive $mRound */
+                $mRound = $round;
+                $rounds = $mRound->rounds();
+
+                $playerId = $rounds[0]->getWinnerId(); //todo incorrect
+            }
+
+            if (empty($riichiBets[$playerId])) {
+                $riichiBets[$playerId] = 0;
+            }
+
+            $riichiBets[$playerId] += $lastSessionState->getRiichiBets();
+        }
+
+        arsort($riichiBets);
+        $players = EventModel::getPlayersOfGames($this->_db, $games);
+
+        return array_map(
+            function ($playerId, $count) use ($players) {
+                return [
+                    'name'  => $players[$playerId]['display_name'],
+                    'count' => $count
+                ];
+            },
+            array_slice(array_keys($riichiBets), 0, 5),
+            array_slice(array_values($riichiBets), 0, 5)
         );
     }
 

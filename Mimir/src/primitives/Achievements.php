@@ -596,6 +596,117 @@ class AchievementsPrimitive extends Primitive
         );
     }
 
+    /**
+     * Get players with largest average count of dora in player's hand
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
+    public static function getMaxAverageDoraCount(IDb $db, $eventIdList)
+    {
+        $rounds = $db->table('round')
+            ->select('winner_id')
+            ->select('display_name')
+            ->selectExpr('sum(dora)*1.0/count(*) as average')
+            ->join('player', ['player.id', '=', 'round.winner_id'])
+            ->whereIn('event_id', $eventIdList)
+            ->whereIn('outcome', ['multiron', 'ron', 'tsumo'])
+            ->groupBy('winner_id')
+            ->groupBy('display_name')
+            ->orderByDesc('average')
+            ->findArray();
+
+        $filteredRounds = array_filter($rounds, function ($round) {
+            return !empty($round['average']);
+        });
+
+        return array_map(
+            function ($round){
+                return [
+                    'name' => $round['display_name'],
+                    'count' => sprintf('%.3f',$round['average'])
+                ];
+            },
+            array_slice($filteredRounds, 0, 5)
+        );
+    }
+
+    /**
+     * Get players with largest amount of unique yaku collected during the tournament
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
+    public static function getMaxDifferentYakuCount(IDb $db, $eventIdList)
+    {
+        $rounds = $db->table('round')
+            ->select('winner_id')
+            ->select('display_name')
+            ->select('yaku')
+            ->join('player', ['player.id', '=', 'round.winner_id'])
+            ->whereIn('event_id', $eventIdList)
+            ->whereIn('outcome', ['multiron', 'ron', 'tsumo'])
+            ->findArray();
+
+        $playersYaku = [];
+        foreach ($rounds as $round) {
+            if (empty($playersYaku[$round['display_name']])) {
+                $playersYaku[$round['display_name']] = [];
+            }
+
+            foreach (explode(',', $round['yaku']) as $yaku) {
+                if (!in_array($yaku, $playersYaku[$round['display_name']])) {
+                   array_push($playersYaku[$round['display_name']], $yaku);
+                }
+            }
+        }
+
+        array_walk($playersYaku, function (&$item) {
+            $item = count($item);
+        });
+
+
+        arsort($playersYaku);
+        return array_map(
+            function ($name, $count) {
+                return [
+                    'name' => $name,
+                    'count' => $count
+                ];
+            },
+            array_slice(array_keys($playersYaku), 0, 5),
+            array_slice(array_values($playersYaku), 0, 5)
+        );
+    }
+
+    /**
+     * Get players with largest amount of points received as ryukoku payments
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
+    public static function getFavoriteAsapinApprentice(IDb $db, $eventIdList)
+    {
+        //todo
+        return null;
+    }
+
+    /**
+     * Get players with losing the smallest percentage of riichi bets
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
+    public static function getMinLostRiichiBets(IDb $db, $eventIdList)
+    {
+        //todo
+        return null;
+    }
+
     public function save()
     {
         // nothing
