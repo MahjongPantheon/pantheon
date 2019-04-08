@@ -38,7 +38,7 @@ class RulesetAgaritourn extends Ruleset
         'withKazoe'             => true,
         'withButtobi'           => false,
         'withMultiYakumans'     => true,
-        'withNagashiMangan'     => false,
+        'withNagashiMangan'     => true,
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
         'gameExpirationTime'    => false,
