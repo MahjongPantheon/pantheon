@@ -73,7 +73,12 @@ class Achievements extends Controller
             'impossibleWait' => $achievements['impossibleWait'], // Array<{ name: string, hand: {han: number, fu: number} }>
             'honoredDonor' => $achievements['honoredDonor'], // Array<{ name: string, count: number }>
             'justAsPlanned' => $achievements['justAsPlanned'], // Array<{ name: string, count: number }>,
-            'minFeedsScore' => $achievements['minFeedsScore'], // Array<{ name: string, score: number }>
+            'carefulPlanning' => $achievements['carefulPlanning'], // Array<{ name: string, score: number }>,
+            'doraLord' => $achievements['doraLord'], // Array<{ name: string, count: number }>,
+            'catchEmAll' => $achievements['catchEmAll'], // Array<{ name: string, count: number }>,
+            'favoriteAsapinApprentice' => $achievements['favoriteAsapinApprentice'], // Array<{ name: string, count: number }>,
+            'andYourRiichiBet' => $achievements['andYourRiichiBet'], // Array<{ name: string, count: number }>,
+            'prudent' => $achievements['prudent'], // Array<{ name: string, count: number }>,
         ];
     }
 }
