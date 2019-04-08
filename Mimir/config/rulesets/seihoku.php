@@ -19,9 +19,9 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-class RulesetEma1 extends Ruleset
+class RulesetSeihoku extends Ruleset
 {
-    public static $_title = 'ema1';
+    public static $_title = 'seihoku';
     protected static $_ruleset = [
         'tenboDivider'          => 1,
         'ratingDivider'         => 1,
@@ -30,26 +30,26 @@ class RulesetEma1 extends Ruleset
         'startPoints'           => 30000,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
-        'extraChomboPayments'   => false,
-        'chomboPenalty'         => 20000,
+        'extraChomboPayments'   => true,
+        'chomboPenalty'         => 0,
         'withAtamahane'         => false,
-        'withAbortives'         => true, // changed in ema1
+        'withAbortives'         => true,
         'withKuitan'            => true,
-        'withKazoe'             => false,
-        'withButtobi'           => false,
-        'withMultiYakumans'     => false,
-        'withNagashiMangan'     => true, // changed in ema1
+        'withKazoe'             => true,
+        'withButtobi'           => true,
+        'withMultiYakumans'     => true,
+        'withNagashiMangan'     => true,
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
         'gameExpirationTime'    => false,
-        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII],
+        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
         'minPenalty'            => 100,
         'maxPenalty'            => 20000,
         'penaltyStep'           => 100,
         'timerPolicy'           => 'yellowZone',
         'yellowZone'            => 900, // 15min
         'redZone'               => 0,
-        'withLeadingDealerGameOver' => false,
+        'withLeadingDealerGameOver' => true,
         'replacementPlayerFixedPoints' => -15000,
         'replacementPlayerOverrideUma' => -15000
     ];
@@ -57,7 +57,6 @@ class RulesetEma1 extends Ruleset
     public function allowedYaku()
     {
         return YakuMap::listExcept([
-            Y_RENHOU,
             Y_OPENRIICHI
         ]);
     }
@@ -68,6 +67,7 @@ class RulesetEma1 extends Ruleset
      */
     public function uma($scores = [])
     {
-        return $this->_equalizeUma($scores, [1 => 15000, 5000, -5000, -15000]);
+        return $this->_equalizeUma($scores, [1 => 25000, 10000, -10000, -25000]);
     }
 }
+

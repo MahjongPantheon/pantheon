@@ -19,9 +19,9 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-class RulesetEma1 extends Ruleset
+class RulesetEma2 extends Ruleset
 {
-    public static $_title = 'ema1';
+    public static $_title = 'ema2';
     protected static $_ruleset = [
         'tenboDivider'          => 1,
         'ratingDivider'         => 1,
@@ -33,12 +33,12 @@ class RulesetEma1 extends Ruleset
         'extraChomboPayments'   => false,
         'chomboPenalty'         => 20000,
         'withAtamahane'         => false,
-        'withAbortives'         => true, // changed in ema1
+        'withAbortives'         => true,
         'withKuitan'            => true,
         'withKazoe'             => false,
         'withButtobi'           => false,
         'withMultiYakumans'     => false,
-        'withNagashiMangan'     => true, // changed in ema1
+        'withNagashiMangan'     => true,
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
         'gameExpirationTime'    => false,
