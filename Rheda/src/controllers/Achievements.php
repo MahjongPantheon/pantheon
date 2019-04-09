@@ -76,7 +76,7 @@ class Achievements extends Controller
             'carefulPlanning' => $achievements['carefulPlanning'], // Array<{ name: string, score: number }>,
             'doraLord' => $achievements['doraLord'], // Array<{ name: string, count: number }>,
             'catchEmAll' => $achievements['catchEmAll'], // Array<{ name: string, count: number }>,
-            'favoriteAsapinApprentice' => $achievements['favoriteAsapinApprentice'], // Array<{ name: string, count: number }>,
+            'favoriteAsapinApprentice' => $achievements['favoriteAsapinApprentice'], // Array<{ name: string, score: number }>,
             'andYourRiichiBet' => $achievements['andYourRiichiBet'], // Array<{ name: string, count: number }>,
             'prudent' => $achievements['prudent'], // Array<{ name: string, count: number }>,
         ];
