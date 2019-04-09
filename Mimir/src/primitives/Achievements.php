@@ -690,8 +690,66 @@ class AchievementsPrimitive extends Primitive
      */
     public static function getFavoriteAsapinApprentice(IDb $db, $eventIdList)
     {
-        //todo
-        return null;
+        $rounds = $db->table('round')
+            ->select('tempai')
+            ->whereIn('event_id', $eventIdList)
+            ->where('outcome', 'draw')
+            ->whereNotEqual('tempai', '')
+            ->findArray();
+
+        $payments = [];
+        foreach ($rounds as $round) {
+            $tempai = explode(',', $round['tempai']);
+            $amount = 0;
+            switch (count($tempai)) {
+                case 1:
+                    $amount = 3000;
+                    break;
+                case 2:
+                    $amount = 1500;
+                    break;
+                case 3:
+                    $amount = 1000;
+                    break;
+                default:
+                    ;
+            }
+
+            foreach($tempai as $playerId) {
+                if (empty($payments[$playerId]))
+                    $payments[$playerId] = 0;
+
+                $payments[$playerId] += $amount;
+            }
+        }
+
+        $filteredPayments = array_filter($payments, function ($payment) {
+            return $payment != 0;
+        });
+
+        arsort($filteredPayments);
+
+        $names = $db->table('player')
+            ->select('id')
+            ->select('display_name')
+            ->whereIdIn(array_slice(array_keys($filteredPayments), 0, 5))
+            ->findArray();
+
+        $namesAssoc = [];
+        foreach ($names as $item) {
+            $namesAssoc[$item['id']] = $item['display_name'];
+        }
+
+        return array_map(
+            function ($playerId, $payment) use ($namesAssoc) {
+                return [
+                    'name' => $namesAssoc[$playerId],
+                    'score' => $payment
+                ];
+            },
+            array_slice(array_keys($filteredPayments), 0, 5),
+            array_slice(array_values($filteredPayments), 0, 5)
+        );
     }
 
     /**
