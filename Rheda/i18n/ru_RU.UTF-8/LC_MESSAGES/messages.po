@@ -14,162 +14,34 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-
-msgid "Game details"
-msgstr "Подробнее об игре"
 
 msgid "Additional penalties"
 msgstr "Дополнительные штрафы"
 
-msgid "Recent games"
-msgstr "Последние игры"
+msgid ""
+"A penalty may be applied only to player currently in game. Otherwise error "
+"will occur."
+msgstr ""
+"Штраф может быть назначен только для игрока, который на данный момент "
+"находится в игре. В ином случае будет ошибка."
 
-msgid "No games has been played yet"
-msgstr "Ни одной игры еще не сыграно"
+msgid "Select player"
+msgstr "Выберите игрока"
 
-msgid "%d - %d (%d total)"
-msgstr "%d - %d (всего %d)"
+msgid "Penalty amount"
+msgstr "Размер штрафа"
 
-msgid "Later"
-msgstr "Позже"
+msgid "Penalty reason"
+msgstr "Причина штрафа"
 
-msgid "Earlier"
-msgstr "Раньше"
+msgid "Check twice penalty data. You won't be able to cancel the penalty"
+msgstr "Проверьте дважды введенные данные. Отменить штраф будет нельзя."
 
-msgid "Personal stats"
-msgstr "Личная статистика"
-
-msgid "Player: %s"
-msgstr "Игрок: %s"
-
-msgid "No stats are available yet"
-msgstr "На данный момент статистика отсутствует"
-
-msgid "Rating graph"
-msgstr "График рейтинга"
-
-msgid "Common stats"
-msgstr "Общая статистика"
-
-msgid "Games played"
-msgstr "Сыграно игр"
-
-msgid "Rounds played"
-msgstr "Сыграно раздач"
-
-msgid "Rounds won"
-msgstr "Выиграно раздач"
-
-msgid "Round details:"
-msgstr "По итогам раздач:"
-
-msgid "Ron wins"
-msgstr "Выигрышей по рон"
-
-msgid "Tsumo wins"
-msgstr "Выигрышей по цумо"
-
-msgid "Ron feeds"
-msgstr "Набросов в рон"
-
-msgid "because of riichi"
-msgstr "в том числе из-за риичи"
-
-msgid "Tsumo losses"
-msgstr "Выплат по цумо"
-
-msgid "Open hands"
-msgstr "Открытых рук"
-
-msgid "Chombo penalties"
-msgstr "Штрафов чомбо"
-
-msgid "Riichi bets"
-msgstr "Ставок риичи"
-
-msgid "bets won"
-msgstr "из их выигранных"
-
-msgid "bets lost"
-msgstr "из них потерянных"
-
-msgid "Places stat:"
-msgstr "Статистика по местам:"
-
-msgid "1st place"
-msgstr "1 место"
-
-msgid "2nd place"
-msgstr "2 место"
-
-msgid "3rd place"
-msgstr "3 место"
-
-msgid "4th place"
-msgstr "4 место"
-
-msgid "Final game points:"
-msgstr "Очки по итогу игры:"
-
-msgid "Minimal"
-msgstr "Минимальные"
-
-msgid "Maximal"
-msgstr "Максимальные"
-
-msgid "Average"
-msgstr "В среднем"
-
-msgid "Hands value"
-msgstr "Стоимость рук"
-
-msgid "Yaku collected over all time"
-msgstr "Собранные яку (за все время)"
-
-msgid "Statistics"
-msgstr "Статистика"
-
-msgid "Welcome to game statistics system."
-msgstr "Добро пожаловать в систему игровой статистики."
-
-msgid "Click here to start"
-msgstr "Нажмите здесь для начала работы"
-
-msgid "You are viewing the abbreviated statistics for mobile devices."
-msgstr "Вы просматриваете сокращенную статистику для мобильных устройств."
-
-msgid "Player #%d"
-msgstr "Игрок №%d"
-
-msgid "Best series:"
-msgstr "Лучшая серия:"
-
-msgid "Points:"
-msgstr "Очки:"
-
-msgid "Ongoing series:"
-msgstr "Текущая серия:"
-
-msgid "Team table"
-msgstr "Командный рейтинг"
-
-msgid "Rating table has been hidden by tournament administrator"
-msgstr "Рейтинговая таблица была скрыта администратором турнира"
-
-msgid "These results are visible only for tournament administrator"
-msgstr "Результаты видны только администратору турнира"
-
-msgid "Team"
-msgstr "Команда"
-
-msgid "Rating points"
-msgstr "Рейтинговые очки"
-
-msgid "Players"
-msgstr "Игроки"
+msgid "Apply penalty"
+msgstr "Применить штраф"
 
 msgid "Add online game"
 msgstr "Добавить онлайн-игру"
@@ -179,6 +51,9 @@ msgstr "Игра успешно добавлена!"
 
 msgid "Add game"
 msgstr "Добавить игру"
+
+msgid "Game details"
+msgstr "Подробнее об игре"
 
 msgid "Add player"
 msgstr "Добавить игрока"
@@ -214,50 +89,30 @@ msgstr "Реальное имя"
 msgid "Register"
 msgstr "Зарегистрировать"
 
-msgid "Rating table"
-msgstr "Рейтинг"
+msgid "Going back in 3 seconds..."
+msgstr "Идем назад через 3 секунды..."
 
-msgid "Tournament control panel"
-msgstr "Управление турниром"
+msgid "Add new game"
+msgstr "Добавить новую игру"
 
-msgid "Games control panel"
-msgstr "Управление играми"
+msgid "Format:"
+msgstr "Формат:"
 
-msgid "Penalties"
-msgstr "Штрафы"
+msgid "Example:"
+msgstr "Пример:"
 
-msgid "Manage players"
-msgstr "Управление игроками"
+msgid ""
+"Renchans/honba are calculated automatically. Also points and payments checks "
+"are performed: in case of any inconsistency the alert is displayed."
+msgstr ""
+"Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
+"системой, в случае несоответствия будет выдано предупреждение."
 
-msgid "Predefined seating"
-msgstr "Предопределенная рассадка"
+msgid "Player aliases"
+msgstr "Алиасы"
 
 msgid "Achievements"
 msgstr "Номинации"
-
-msgid "Timer & seating"
-msgstr "Таймер и рассадка"
-
-msgid "Login"
-msgstr "Вход"
-
-msgid "Aggregated event"
-msgstr "Агрегированное событие"
-
-msgid "Rules overview"
-msgstr "Обзор правил"
-
-msgid "Best series"
-msgstr "Лучшая серия"
-
-msgid "Points of best series"
-msgstr "Очки в лучшей серии"
-
-msgid "Last series"
-msgstr "Текущая серия"
-
-msgid "Points of last series"
-msgstr "Очки в текущей серии"
 
 msgid "Achievement"
 msgstr "Номинация"
@@ -399,57 +254,87 @@ msgstr[0] "%s иппацу"
 msgstr[1] "%s иппацу"
 msgstr[2] "%s иппацу"
 
-msgid "Going back in 3 seconds..."
-msgstr "Идем назад через 3 секунды..."
-
-msgid "Add new game"
-msgstr "Добавить новую игру"
-
-msgid "Format:"
-msgstr "Формат:"
-
-msgid "Example:"
-msgstr "Пример:"
+msgid "Careful planning"
+msgstr "Точный расчет"
 
 msgid ""
-"Renchans/honba are calculated automatically. Also points and payments checks "
-"are performed: in case of any inconsistency the alert is displayed."
-msgstr ""
-"Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
-"системой, в случае несоответствия будет выдано предупреждение."
+"Given for the smallest average cost of opponents hand that player has dealt."
+msgstr "Дается за минимальную среднюю величину наброса."
 
-msgid "Player aliases"
-msgstr "Алиасы"
+msgid "%s points"
+msgstr "%s очков"
 
-msgid "Predefined seating configuration"
-msgstr "Конфигурация предопределенной рассадки"
+msgid "Dora lord"
+msgstr "Повелитель дор"
 
-msgid "Next session index (starting from 1):"
-msgstr "Номер следующей игры (начиная с 1):"
+msgid "Given for the largest average count of dora in player's hand."
+msgstr "Дается за максимальное среднее число дор в руке."
 
-msgid "Update predefined seating config"
-msgstr "Обновить конфигурацию предопределенной рассадки"
+msgid "%s dora"
+msgstr "%s дор"
 
-msgid "Found errors:"
-msgstr "Найденные ошибки:"
-
-msgid "No errors found."
-msgstr "Ошибок не найдено."
+msgid "Gotta Catch'Em All"
+msgstr "Собери их всех"
 
 msgid ""
-"Predefined seating is entered as list of tables, one table per row. New game "
-"session should be indicated as an empty line."
-msgstr ""
-"Предопределенная рассадка вводится как список столов, один стол на строку. "
-"Следующий ханчан должен быть отделен от предыдущего пустой строкой."
+"Given for the largest amount of unique yaku collected during the tournament."
+msgstr "Дается за самое большое число разнообразных яку за турнир."
+
+msgid "%s yaku"
+msgstr "%s яку"
+
+msgid "The favorite apprentice of ASAPIN"
+msgstr "Любимый ученик Асапина"
+
+msgid "Given for the largest amount of points received as ryukoku payments."
+msgstr "Дается за максимальную сумму, полученную за счет темпаев."
+
+msgid "And your riichi bet, please"
+msgstr "И Ваша риичи палочка"
 
 msgid ""
-"In this example, two tables play two games. Numbers in seating persist "
-"between games and are defined at Admin actions / Manage players page."
-msgstr ""
-"В этом примере два стола играют два ханчана. Указанные номера сохраняются "
-"между играми и определяются на странице \"Действия администратора\" / "
-"\"Управление игроками\"."
+"Given for collecting the largest amount of other players' riichi bets during "
+"the tournament."
+msgstr "Дается за сбор максимального числа чужих риичи палочек."
+
+msgid "%s riichi bet"
+msgid_plural "%s riichi bets"
+msgstr[0] "%s риичи палочка"
+msgstr[1] "%s риичи палочки"
+msgstr[2] "%s риичи палочек"
+
+msgid "The Prudent"
+msgstr "Бережливый"
+
+msgid " Given for losing the smallest percentage of riichi bets."
+msgstr "Дается за потерю минимального процента ставок риичи."
+
+msgid "(%d on %s)"
+msgstr "(%d из %s)"
+
+msgid "Statistics"
+msgstr "Статистика"
+
+msgid "Welcome to game statistics system."
+msgstr "Добро пожаловать в систему игровой статистики."
+
+msgid "Click here to start"
+msgstr "Нажмите здесь для начала работы"
+
+msgid "You are viewing the abbreviated statistics for mobile devices."
+msgstr "Вы просматриваете сокращенную статистику для мобильных устройств."
+
+msgid "Player #%d"
+msgstr "Игрок №%d"
+
+msgid "Best series:"
+msgstr "Лучшая серия:"
+
+msgid "Points:"
+msgstr "Очки:"
+
+msgid "Ongoing series:"
+msgstr "Текущая серия:"
 
 msgid "Something went wrong: %s"
 msgstr "Что-то пошло не так, и вот что именно: %s"
@@ -478,6 +363,9 @@ msgstr "Выберите тип рассадки и нажмите соотве�
 
 msgid "Hide/show rating table"
 msgstr "Показать/скрыть рейтинговую таблицу"
+
+msgid "Predefined seating"
+msgstr "Предопределенная рассадка"
 
 msgid ""
 "This tournament has predefined seating. See Admin actions / Predefined "
@@ -622,32 +510,93 @@ msgstr "Завершить игры? Отменить раздачу стане�
 msgid "Confirm the results and finish all games"
 msgstr "Утвердить результаты и завершить игры"
 
-msgid "Admin panel"
-msgstr "Администрирование"
+msgid "Predefined seating configuration"
+msgstr "Конфигурация предопределенной рассадки"
 
-msgid "Authorized successfully!"
-msgstr "Авторизация прошла успешно!"
+msgid "Next session index (starting from 1):"
+msgstr "Номер следующей игры (начиная с 1):"
 
-msgid "Authorize"
-msgstr "Авторизоваться"
+msgid "Update predefined seating config"
+msgstr "Обновить конфигурацию предопределенной рассадки"
+
+msgid "Found errors:"
+msgstr "Найденные ошибки:"
+
+msgid "No errors found."
+msgstr "Ошибок не найдено."
+
+msgid ""
+"Predefined seating is entered as list of tables, one table per row. New game "
+"session should be indicated as an empty line."
+msgstr ""
+"Предопределенная рассадка вводится как список столов, один стол на строку. "
+"Следующий ханчан должен быть отделен от предыдущего пустой строкой."
+
+msgid ""
+"In this example, two tables play two games. Numbers in seating persist "
+"between games and are defined at Admin actions / Manage players page."
+msgstr ""
+"В этом примере два стола играют два ханчана. Указанные номера сохраняются "
+"между играми и определяются на странице \"Действия администратора\" / "
+"\"Управление игроками\"."
 
 msgid "Sorry, this page is not available for mobile devices"
 msgstr "Извините, эта страница недоступна для мобильных устройств"
 
+msgid "Aggregated event"
+msgstr "Агрегированное событие"
+
+msgid "Rules overview"
+msgstr "Обзор правил"
+
+msgid "Best series"
+msgstr "Лучшая серия"
+
+msgid "Points of best series"
+msgstr "Очки в лучшей серии"
+
+msgid "Last series"
+msgstr "Текущая серия"
+
+msgid "Points of last series"
+msgstr "Очки в текущей серии"
+
 msgid "Players management"
 msgstr "Управление игроками"
 
-msgid "%s: personal stats"
-msgstr "%s: личная статистика"
+msgid "Pre-registration list (%d)"
+msgstr "Список на утверждение (%d)"
 
-msgid "Pts"
-msgstr "Очки"
+msgid "PIN"
+msgstr "PIN-код"
 
-msgid "AvPlc"
-msgstr "СМ"
+msgid "Confirm attendance manually"
+msgstr "Потдвердить явку вручную"
 
-msgid "AvPts"
-msgstr "СО"
+msgid "Registered players (%d)"
+msgstr "Окончательно зарегистрированные игроки (%d)"
+
+msgid "Local id"
+msgstr "Локальный ID"
+
+msgid "Reissue PIN"
+msgstr "Перевыдать PIN"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Remove player %s?"
+msgstr "Удалить игрока %s?"
+
+msgid ""
+"This will update current local id mapping. See \"Predefined seating\" page "
+"for details"
+msgstr ""
+"Нажатие на кнопку приведет к обновлению списка соответствия игроков и их "
+"локальных ID. См. подробности на странице \"Предопределенная рассадка\"."
+
+msgid "Save local IDs"
+msgstr "Сохранить локальные ID"
 
 msgid "No time left!"
 msgstr "СТОП!"
@@ -667,11 +616,38 @@ msgstr "ЗАПАД"
 msgid "NORTH"
 msgstr "СЕВЕР"
 
+msgid "Rating table"
+msgstr "Рейтинг"
+
+msgid "Rating table has been hidden by tournament administrator"
+msgstr "Рейтинговая таблица была скрыта администратором турнира"
+
+msgid "These results are visible only for tournament administrator"
+msgstr "Результаты видны только администратору турнира"
+
+msgid "Team"
+msgstr "Команда"
+
+msgid "Rating points"
+msgstr "Рейтинговые очки"
+
 msgid "Average place"
 msgstr "Среднее место"
 
 msgid "Average points"
 msgstr "Средние очки"
+
+msgid "Games played"
+msgstr "Сыграно игр"
+
+msgid "Recent games"
+msgstr "Последние игры"
+
+msgid "No games has been played yet"
+msgstr "Ни одной игры еще не сыграно"
+
+msgid "%d - %d (%d total)"
+msgstr "%d - %d (всего %d)"
 
 msgid "Confirm round cancellation: "
 msgstr "Подтвердите отмену раздачи: "
@@ -700,50 +676,134 @@ msgstr "Штрафы:"
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr "%s - штраф %s очков. Причина: %s"
 
-msgid "Timer"
-msgstr "Таймер"
+msgid "Admin panel"
+msgstr "Администрирование"
 
-msgid "Wind: %s"
-msgstr "Ветер: %s"
+msgid "Authorized successfully!"
+msgstr "Авторизация прошла успешно!"
 
-msgid "Full game log:"
-msgstr "Полный лог игры:"
+msgid "Authorize"
+msgstr "Авторизоваться"
 
-msgid "Date & time"
-msgstr "Дата/время"
+msgid "Personal stats"
+msgstr "Личная статистика"
 
-msgid "Details"
-msgstr "Подробности"
+msgid "Player: %s"
+msgstr "Игрок: %s"
 
-msgid "View replay online"
-msgstr "Посмотреть реплей"
+msgid "No stats are available yet"
+msgstr "На данный момент статистика отсутствует"
 
-msgid "Best hand: <b>%s</b> - %s"
-msgstr "Лучшая рука: <b>%s</b> - %s"
+msgid "Rating graph"
+msgstr "График рейтинга"
 
-msgid "Ron hands: %d"
-msgstr "Выигрышей по рон: %d"
+msgid "Common stats"
+msgstr "Общая статистика"
 
-msgid "Tsumo hands: %d"
-msgstr "Выигрышей по цумо: %d"
+msgid "Rounds played"
+msgstr "Сыграно раздач"
 
-msgid "Drawn rounds: %d"
-msgstr "Ничьих: %d"
+msgid "Rounds won"
+msgstr "Выиграно раздач"
 
-msgid "Chombo penalties: %s"
-msgstr "Штрафов чомбо: %s"
+msgid "Round details:"
+msgstr "По итогам раздач:"
 
-msgid "Additional penalties:"
-msgstr "Дополнительные штрафы:"
+msgid "Ron wins"
+msgstr "Выигрышей по рон"
 
-msgid "%s - %d points (%s)"
-msgstr "%s - %d очков (%s)"
+msgid "Tsumo wins"
+msgstr "Выигрышей по цумо"
 
-msgid "Rating"
-msgstr "Рейтинг"
+msgid "Ron feeds"
+msgstr "Набросов в рон"
 
-msgid "Han"
-msgstr "Хан"
+msgid "because of riichi"
+msgstr "в том числе из-за риичи"
+
+msgid "Tsumo losses"
+msgstr "Выплат по цумо"
+
+msgid "Open hands"
+msgstr "Открытых рук"
+
+msgid "Chombo penalties"
+msgstr "Штрафов чомбо"
+
+msgid "Riichi bets"
+msgstr "Ставок риичи"
+
+msgid "bets won"
+msgstr "из их выигранных"
+
+msgid "bets lost"
+msgstr "из них потерянных"
+
+msgid "Places stat:"
+msgstr "Статистика по местам:"
+
+msgid "1st place"
+msgstr "1 место"
+
+msgid "2nd place"
+msgstr "2 место"
+
+msgid "3rd place"
+msgstr "3 место"
+
+msgid "4th place"
+msgstr "4 место"
+
+msgid "Final game points:"
+msgstr "Очки по итогу игры:"
+
+msgid "Minimal"
+msgstr "Минимальные"
+
+msgid "Maximal"
+msgstr "Максимальные"
+
+msgid "Average"
+msgstr "В среднем"
+
+msgid "Hands value"
+msgstr "Стоимость рук"
+
+msgid "Yaku collected over all time"
+msgstr "Собранные яку (за все время)"
+
+msgid "Team table"
+msgstr "Командный рейтинг"
+
+msgid "Tournament control panel"
+msgstr "Управление турниром"
+
+msgid "Games control panel"
+msgstr "Управление играми"
+
+msgid "Penalties"
+msgstr "Штрафы"
+
+msgid "Manage players"
+msgstr "Управление игроками"
+
+msgid "Timer & seating"
+msgstr "Таймер и рассадка"
+
+msgid "Login"
+msgstr "Вход"
+
+msgid "Players"
+msgstr "Игроки"
+
+msgid "Pts"
+msgstr "Очки"
+
+msgid "AvPlc"
+msgstr "СМ"
+
+msgid "AvPts"
+msgstr "СО"
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
 msgstr "<b>%s</b> - %s (<b>%s</b>, пао: <b>%s</b>), якуман!"
@@ -821,125 +881,91 @@ msgstr "Рейтинговая таблица скрыта. Показать"
 msgid "Rating table is visible. Hide"
 msgstr "Рейтинговая таблица доступна. Скрыть"
 
-msgid ""
-"A penalty may be applied only to player currently in game. Otherwise error "
-"will occur."
-msgstr ""
-"Штраф может быть назначен только для игрока, который на данный момент "
-"находится в игре. В ином случае будет ошибка."
+msgid "Date & time"
+msgstr "Дата/время"
 
-msgid "Select player"
-msgstr "Выберите игрока"
+msgid "Details"
+msgstr "Подробности"
 
-msgid "Penalty amount"
-msgstr "Размер штрафа"
+msgid "View replay online"
+msgstr "Посмотреть реплей"
 
-msgid "Penalty reason"
-msgstr "Причина штрафа"
+msgid "Best hand: <b>%s</b> - %s"
+msgstr "Лучшая рука: <b>%s</b> - %s"
 
-msgid "Check twice penalty data. You won't be able to cancel the penalty"
-msgstr "Проверьте дважды введенные данные. Отменить штраф будет нельзя."
+msgid "Ron hands: %d"
+msgstr "Выигрышей по рон: %d"
 
-msgid "Apply penalty"
-msgstr "Применить штраф"
+msgid "Tsumo hands: %d"
+msgstr "Выигрышей по цумо: %d"
 
-msgid "Pre-registration list (%d)"
-msgstr "Список на утверждение (%d)"
+msgid "Drawn rounds: %d"
+msgstr "Ничьих: %d"
 
-msgid "PIN"
-msgstr "PIN-код"
+msgid "Chombo penalties: %s"
+msgstr "Штрафов чомбо: %s"
 
-msgid "Confirm attendance manually"
-msgstr "Потдвердить явку вручную"
+msgid "Additional penalties:"
+msgstr "Дополнительные штрафы:"
 
-msgid "Registered players (%d)"
-msgstr "Окончательно зарегистрированные игроки (%d)"
+msgid "%s - %d points (%s)"
+msgstr "%s - %d очков (%s)"
 
-msgid "Local id"
-msgstr "Локальный ID"
+msgid "Full game log:"
+msgstr "Полный лог игры:"
 
-msgid "Reissue PIN"
-msgstr "Перевыдать PIN"
+msgid "Rating"
+msgstr "Рейтинг"
 
-msgid "Remove"
-msgstr "Удалить"
+msgid "Han"
+msgstr "Хан"
 
-msgid "Remove player %s?"
-msgstr "Удалить игрока %s?"
+msgid "Timer"
+msgstr "Таймер"
 
-msgid ""
-"This will update current local id mapping. See \"Predefined seating\" page "
-"for details"
-msgstr ""
-"Нажатие на кнопку приведет к обновлению списка соответствия игроков и их "
-"локальных ID. См. подробности на странице \"Предопределенная рассадка\"."
+msgid "Wind: %s"
+msgstr "Ветер: %s"
 
-msgid "Save local IDs"
-msgstr "Сохранить локальные ID"
+msgid "Later"
+msgstr "Позже"
 
-msgid "Enter tables, one per line."
-msgstr "Введите состав столов, один стол - одна строка."
+msgid "Earlier"
+msgstr "Раньше"
 
-msgid ""
-"Check the box to randomize players seating at each table. Otherwise players "
-"will be placed as you entered in order of e-s-w-n."
-msgstr ""
-"Отметьте галочку для перемешивания игроков за столом. Если галочка не "
-"отмечена, игроки будут рассажены за стол согласно вводу в порядке восток-юг-"
-"запад-север."
+msgid "%s: personal stats"
+msgstr "%s: личная статистика"
 
-msgid ""
-"Each number is a player's current place in rating. Here is an example of "
-"seating with step of 4: "
-msgstr ""
-"Каждое число - это номер игрока в текущем рейтинге. Пример рассадки с шагом "
-"4:"
+msgid "All players"
+msgstr "Все игроки"
 
-msgid "Randomize seating at each table"
-msgstr "Перемешать игроков за каждым столом"
+#, php-format
+msgid "Played at least %d game"
+msgid_plural "Played at least %d games"
+msgstr[0] "Сыгравшие хотя бы %d игру"
+msgstr[1] "Сыгравшие хотя бы %d игры"
+msgstr[2] "Сыгравшие хотя бы %d игр"
 
-msgid "Use manual seating for new game?"
-msgstr "Использовать ручную рассадку для следующей игры?"
+#, php-format
+msgid "Played less then %d game"
+msgid_plural "Played less then %d games"
+msgstr[0] "Сыгравшие менее %d игры"
+msgstr[1] "Сыгравшие менее %d игр"
+msgstr[2] "Сыгравшие менее %d игр"
 
-msgid "Use manual seating"
-msgstr "Ручная рассадка"
+msgid "yes"
+msgstr "да"
 
-msgid "Finish the games? You won't be able to cancel rounds anymore!"
-msgstr "Завершить игры? Отменить раздачу станет невозможно!"
-
-msgid "Hide rating table"
-msgstr "Скрыть рейтинговую таблицу"
-
-msgid "Drawn rounds: %s"
-msgstr "Ничьих: %s"
+msgid "no"
+msgstr "нет"
 
 msgid "Wrong admin password"
 msgstr "Неправильный пароль администратора"
 
-msgid "Admin login"
-msgstr "Вход администратора"
-
-msgid "Latest games"
-msgstr "Последние игры"
-
-msgid "Players registration"
-msgstr "Регистрация игроков"
-
-msgid "Failed to register the player. Check your network connection."
-msgstr "Не удалось зарегистрировать игрока. Проверьте сетевое соединение."
-
-msgid "Failed to enroll the player. Check your network connection."
-msgstr "Не удалось добавить игрока. Проверьте сетевое соединение."
-
-#, php-format
-msgid "Stats & diagrams: %s"
-msgstr "Статистика и графики: %s"
-
-msgid "Yakuhai: total"
-msgstr "Якухай: всего"
-
 msgid "Enroll players"
 msgstr "Добавление игроков в рейтинг"
+
+msgid "Page not available for aggregated events"
+msgstr "Для агрегированных событий страница недоступна"
 
 msgid "System name should contain only lowercase latin characters."
 msgstr ""
@@ -950,6 +976,163 @@ msgstr "Не удалось добавить игрока. Проверьте с
 
 msgid "Seating controls"
 msgstr "Управление рассадкой"
+
+msgid "Latest games"
+msgstr "Последние игры"
+
+#, php-format
+msgid "Stats & diagrams: %s"
+msgstr "Статистика и графики: %s"
+
+msgid "Yakuhai: total"
+msgstr "Якухай: всего"
+
+msgid "Players registration"
+msgstr "Регистрация игроков"
+
+msgid "Failed to register the player. Check your network connection."
+msgstr "Не удалось зарегистрировать игрока. Проверьте сетевое соединение."
+
+msgid "Failed to enroll the player. Check your network connection."
+msgstr "Не удалось добавить игрока. Проверьте сетевое соединение."
+
+msgid "Failed to save local ids mapping. Check your network connection."
+msgstr ""
+"Не удалось сохранить соответствие локальных ID. Проверьте сетевое соединение."
+
+msgid "Predefined seating and event status"
+msgstr "Предопределенная рассадка и состояние игр"
+
+msgid "Failed to update predefined seating. Check your network connection."
+msgstr ""
+"Не удалось обновить предопределенную рассадку. Проверьте сетевое соединение."
+
+msgid "Admin login"
+msgstr "Вход администратора"
+
+msgid ""
+"No seating defined. Check \"Admin actions / Predefined seating\" page to "
+"define seating for tournament"
+msgstr ""
+"Рассадка не задана. Зайдите на страницу \"Действия администратора / "
+"Предопределенная рассадка\", чтобы задать рассадку на турнир."
+
+msgid "Event tables status"
+msgstr "Статус столов"
+
+msgid "Please select some event!"
+msgstr "Выберите рейтинг!"
+
+msgid "<h2>Oops.</h2>Failed to get event configuration!"
+msgstr "<h2>Упс.</h2> Не удалось получить конфигурацию рейтинга!"
+
+msgid "Allowed yaku"
+msgstr "Разрешенные яку"
+
+msgid "Points to start with"
+msgstr "Стартовые очки"
+
+msgid "If start points should be subtracted from result"
+msgstr "Должны ли стартовые очки вычитаться из результата"
+
+msgid "If kazoe should be yakuman, not sanbaiman"
+msgstr "Должен ли казоэ быть якуманом, а не санбайманом"
+
+msgid "If 4/30 and 3/60 should be rounded to mangan"
+msgstr "Должны ли руки 4/30 и 3/60 округляться до мангана"
+
+msgid "If abortive draws are allowed"
+msgstr "Разрешены ли пересдачи (абортивные ничьи)"
+
+msgid "If nagashi mangan is allowed"
+msgstr "Разрешен ли нагаши манган"
+
+msgid "If atamahane is enabled"
+msgstr "Включено ли атамаханэ"
+
+msgid "Basic ruleset name"
+msgstr "Имя базового набора правил"
+
+msgid "If games have east rounds only"
+msgstr "Только восточные раунды в играх"
+
+msgid "Rating initial points amount"
+msgstr "Начальные рейтинговые очки"
+
+msgid "If riichi bets left on the table go to winner of the hanchan"
+msgstr "Уходят ли неразыгранные риичи-ставки победителю игры"
+
+msgid "If chombo should be payed in points"
+msgstr "Должно ли быть чомбо выплачено сразу"
+
+msgid "Chombo penalty in rating points"
+msgstr "Штраф чомбо в рейтинговых очках"
+
+msgid "If tanyao in open hand is allowed"
+msgstr "Разрешено ли таняо на открытой руке"
+
+msgid "If game ends when any player goes bankrupt"
+msgstr "Заканчивается ли игра, если один из игроков уходит в минус"
+
+msgid "If multiple yakumans are enabled"
+msgstr "Разрешены ли множественные якуманы"
+
+msgid "Minimal arbitrary penalty amount"
+msgstr "Минимальный произвольный штраф"
+
+msgid "Maximal arbitrary penalty amount"
+msgstr "Максимальный произвольный штраф"
+
+msgid "Step of penalty amounts"
+msgstr "Шаг в размерах штрафа"
+
+msgid "Red zone duration"
+msgstr "Длительность красной зоны"
+
+msgid "Yellow zone duration"
+msgstr "Длительность желтой зоны"
+
+msgid "Timer policy"
+msgstr "Политика таймера"
+
+msgid "If automatic seating is allowed"
+msgstr "Включена ли автоматическая рассадка"
+
+msgid "If event is online"
+msgstr "Является ли рейтинг онлайновым"
+
+msgid "Team event"
+msgstr "Командный турнир"
+
+msgid "Game duration in minutes"
+msgstr "Длительность игры в минутах"
+
+msgid "If game ends when leading dealer wins in last round"
+msgstr "Заканчивается ли игра при победе лидирующего дилера"
+
+msgid "If all the games should be started simultaneously (tournament mode)"
+msgstr "Должны ли все игры начинаться одновременно (в режиме турнира)"
+
+msgid "If all the games should be finished simultaneously (tournament mode)"
+msgstr "Должны ли все игры заканчиваться одновременно (в режиме турнира)"
+
+msgid "If rating table should first be sorted by number of games played"
+msgstr "Сортировать ли рейтинговую таблицу сначала по числу сыгранных игр"
+
+msgid "If new players are allowed to join in the middle of event"
+msgstr "Допускается ли добавление новых игроков после начала первых игр"
+
+msgid "If timer should be used"
+msgstr "Должен ли быть использован таймер"
+
+msgid "If arbitrary penalties are enabled"
+msgstr "Включены ли произвольные штрафы"
+
+msgid "If game series are enabled"
+msgstr "Включены ли серии игр"
+
+msgid "If seating for all games is entered in advance"
+msgstr "Задается ли рассадка на все игры заранее"
 
 msgid "yakuman"
 msgstr "якуман"
@@ -997,6 +1180,14 @@ msgid ""
 msgstr ""
 "Трипл-рон: %s платит; победитель #1 - %s (%s); победитель #2 - %s (%s); "
 "победитель #3 - %s (%s); риичи - %s"
+
+#, php-format
+msgid "Nagashi mangan - %s; riichi bets - %s; tenpai - %s"
+msgstr "Нагаши манган - %s; риичи - %s; темпай - %s"
+
+#, php-format
+msgid "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s"
+msgstr "Нагаши манган - %s, %s; риичи - %s; темпай - %s"
 
 msgid "Daburu riichi"
 msgstr "Дабл риичи"
@@ -1130,203 +1321,68 @@ msgstr "Якухай 5"
 msgid "Open riichi"
 msgstr "Опен риичи"
 
-msgid "Please select some event!"
-msgstr "Выберите рейтинг!"
+#~ msgid "Enter tables, one per line."
+#~ msgstr "Введите состав столов, один стол - одна строка."
 
-msgid "<h2>Oops.</h2>Failed to get event configuration!"
-msgstr "<h2>Упс.</h2> Не удалось получить конфигурацию рейтинга!"
+#~ msgid ""
+#~ "Check the box to randomize players seating at each table. Otherwise "
+#~ "players will be placed as you entered in order of e-s-w-n."
+#~ msgstr ""
+#~ "Отметьте галочку для перемешивания игроков за столом. Если галочка не "
+#~ "отмечена, игроки будут рассажены за стол согласно вводу в порядке восток-"
+#~ "юг-запад-север."
 
-msgid "Failed to save local ids mapping. Check your network connection."
-msgstr ""
-"Не удалось сохранить соответствие локальных ID. Проверьте сетевое соединение."
+#~ msgid ""
+#~ "Each number is a player's current place in rating. Here is an example of "
+#~ "seating with step of 4: "
+#~ msgstr ""
+#~ "Каждое число - это номер игрока в текущем рейтинге. Пример рассадки с "
+#~ "шагом 4:"
 
-msgid "Predefined seating and event status"
-msgstr "Предопределенная рассадка и состояние игр"
+#~ msgid "Randomize seating at each table"
+#~ msgstr "Перемешать игроков за каждым столом"
 
-msgid "Failed to update predefined seating. Check your network connection."
-msgstr ""
-"Не удалось обновить предопределенную рассадку. Проверьте сетевое соединение."
+#~ msgid "Use manual seating for new game?"
+#~ msgstr "Использовать ручную рассадку для следующей игры?"
 
-msgid ""
-"No seating defined. Check \"Admin actions / Predefined seating\" page to "
-"define seating for tournament"
-msgstr ""
-"Рассадка не задана. Зайдите на страницу \"Действия администратора / "
-"Предопределенная рассадка\", чтобы задать рассадку на турнир."
+#~ msgid "Use manual seating"
+#~ msgstr "Ручная рассадка"
 
-msgid "Page not available for aggregated events"
-msgstr "Для агрегированных событий страница недоступна"
+#~ msgid "Finish the games? You won't be able to cancel rounds anymore!"
+#~ msgstr "Завершить игры? Отменить раздачу станет невозможно!"
 
-msgid "Event tables status"
-msgstr "Статус столов"
+#~ msgid "Hide rating table"
+#~ msgstr "Скрыть рейтинговую таблицу"
 
-msgid "yes"
-msgstr "да"
+#~ msgid "Drawn rounds: %s"
+#~ msgstr "Ничьих: %s"
 
-msgid "no"
-msgstr "нет"
+#~ msgid "If riichi bets on table will go to winner"
+#~ msgstr "Уходят ли неразыгранные риичи-ставки победителю"
 
-msgid "Allowed yaku"
-msgstr "Разрешенные яку"
+#~ msgid "If tanyao counts on open hand"
+#~ msgstr "Засчитывается ли таняо на открытой руке"
 
-msgid "Points to start with"
-msgstr "Стартовые очки"
+#~ msgid "If games should be started simultaneously"
+#~ msgstr "Должны ли все игры начинаться одновременно"
 
-msgid "If start points should be subtracted from result"
-msgstr "Должны ли стартовые очки вычитаться из результата"
+#~ msgid "If games should be finished simultaneously"
+#~ msgstr "Должны ли все игры заканчиваться одновременно"
 
-msgid "If kazoe should be yakuman, not sanbaiman"
-msgstr "Должен ли казоэ быть якуманом, а не санбайманом"
+#~ msgid "If rating table should be sorted by games count first"
+#~ msgstr "Сортировать ли рейтинговую таблицу сначала по числу сыгранных игр"
 
-msgid "If 4/30 and 3/60 should be rounded to mangan"
-msgstr "Должны ли руки 4/30 и 3/60 округляться до мангана"
+#~ msgid "Played at least %d games"
+#~ msgid_plural "Played at least %d game"
+#~ msgstr[0] "Сыгравшие хотя бы %d игру"
+#~ msgstr[1] "Сыгравшие хотя бы %d игры"
+#~ msgstr[2] "Сыгравшие хотя бы %d игр"
 
-msgid "If abortive draws are allowed"
-msgstr "Разрешены ли пересдачи (абортивные ничьи)"
-
-msgid "If nagashi mangan is allowed"
-msgstr "Разрешен ли нагаши манган"
-
-msgid "If atamahane is enabled"
-msgstr "Включено ли атамаханэ"
-
-msgid "Basic ruleset name"
-msgstr "Имя базового набора правил"
-
-msgid "If games have east rounds only"
-msgstr "Только восточные раунды в играх"
-
-msgid "Rating initial points amount"
-msgstr "Начальные рейтинговые очки"
-
-msgid "If riichi bets on table will go to winner"
-msgstr "Уходят ли неразыгранные риичи-ставки победителю"
-
-msgid "If chombo should be payed in points"
-msgstr "Должно ли быть чомбо выплачено сразу"
-
-msgid "Chombo penalty in rating points"
-msgstr "Штраф чомбо в рейтинговых очках"
-
-msgid "If tanyao counts on open hand"
-msgstr "Засчитывается ли таняо на открытой руке"
-
-msgid "If game ends when any player goes bankrupt"
-msgstr "Заканчивается ли игра, если один из игроков уходит в минус"
-
-msgid "If multiple yakumans are enabled"
-msgstr "Разрешены ли множественные якуманы"
-
-msgid "Minimal arbitrary penalty amount"
-msgstr "Минимальный произвольный штраф"
-
-msgid "Maximal arbitrary penalty amount"
-msgstr "Максимальный произвольный штраф"
-
-msgid "Step of penalty amounts"
-msgstr "Шаг в размерах штрафа"
-
-msgid "Red zone duration"
-msgstr "Длительность красной зоны"
-
-msgid "Yellow zone duration"
-msgstr "Длительность желтой зоны"
-
-msgid "Timer policy"
-msgstr "Политика таймера"
-
-msgid "If automatic seating is allowed"
-msgstr "Включена ли автоматическая рассадка"
-
-msgid "If event is online"
-msgstr "Является ли рейтинг онлайновым"
-
-msgid "Game duration in minutes"
-msgstr "Длительность игры в минутах"
-
-msgid "If game ends when leading dealer wins in last round"
-msgstr "Заканчивается ли игра при победе лидирующего дилера"
-
-msgid "If games should be started simultaneously"
-msgstr "Должны ли все игры начинаться одновременно"
-
-msgid "If games should be finished simultaneously"
-msgstr "Должны ли все игры заканчиваться одновременно"
-
-msgid "If rating table should be sorted by games count first"
-msgstr "Сортировать ли рейтинговую таблицу сначала по числу сыгранных игр"
-
-msgid "If new players are allowed to join in the middle of event"
-msgstr "Допускается ли добавление новых игроков после начала первых игр"
-
-msgid "If timer should be used"
-msgstr "Должен ли быть использован таймер"
-
-msgid "If arbitrary penalties are enabled"
-msgstr "Включены ли произвольные штрафы"
-
-msgid "If game series are enabled"
-msgstr "Включены ли серии игр"
-
-msgid "If seating for all games is entered in advance"
-msgstr "Задается ли рассадка на все игры заранее"
-
-msgid "If riichi bets left on the table go to winner of the hanchan"
-msgstr "Уходят ли неразыгранные риичи-ставки победителю игры"
-
-msgid "If tanyao in open hand is allowed"
-msgstr "Разрешено ли таняо на открытой руке"
-
-msgid "If all the games should be started simultaneously (tournament mode)"
-msgstr "Должны ли все игры начинаться одновременно (в режиме турнира)"
-
-msgid "If all the games should be finished simultaneously (tournament mode)"
-msgstr "Должны ли все игры заканчиваться одновременно (в режиме турнира)"
-
-msgid "If rating table should first be sorted by number of games played"
-msgstr "Сортировать ли рейтинговую таблицу сначала по числу сыгранных игр"
-
-#, php-format
-msgid "Nagashi mangan - %s; riichi bets - %s; tenpai - %s"
-msgstr "Нагаши манган - %s; риичи - %s; темпай - %s"
-
-#, php-format
-msgid "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s"
-msgstr "Нагаши манган - %s, %s; риичи - %s; темпай - %s"
-
-msgid "Team event"
-msgstr "Командный турнир"
-
-msgid "All players"
-msgstr "Все игроки"
-
-#, php-format
-msgid "Played at least %d games"
-msgid_plural "Played at least %d game"
-msgstr[0] "Сыгравшие хотя бы %d игру"
-msgstr[1] "Сыгравшие хотя бы %d игры"
-msgstr[2] "Сыгравшие хотя бы %d игр"
-
-#, php-format
-msgid "Played less then %d games"
-msgid_plural "Played less then %d game"
-msgstr[0] "Сыгравшие менее %d игры"
-msgstr[1] "Сыгравшие менее %d игр"
-msgstr[2] "Сыгравшие менее %d игр"
-
-#, php-format
-msgid "Played at least %d game"
-msgid_plural "Played at least %d games"
-msgstr[0] "Сыгравшие хотя бы %d игру"
-msgstr[1] "Сыгравшие хотя бы %d игры"
-msgstr[2] "Сыгравшие хотя бы %d игр"
-
-#, php-format
-msgid "Played less then %d game"
-msgid_plural "Played less then %d games"
-msgstr[0] "Сыгравшие менее %d игры"
-msgstr[1] "Сыгравшие менее %d игр"
-msgstr[2] "Сыгравшие менее %d игр"
+#~ msgid "Played less then %d games"
+#~ msgid_plural "Played less then %d game"
+#~ msgstr[0] "Сыгравшие менее %d игры"
+#~ msgstr[1] "Сыгравшие менее %d игр"
+#~ msgstr[2] "Сыгравшие менее %d игр"
 
 #~ msgid "You can't wait on this"
 #~ msgstr "Он не может на это ждать"
