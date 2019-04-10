@@ -108,7 +108,7 @@ class EventModel extends Model
             'bestDealer' => AchievementsPrimitive::getBestDealer($this->_db, $eventIdList),
             'bestFu' => AchievementsPrimitive::getMaxFuHand($this->_db, $eventIdList),
             'impossibleWait' => AchievementsPrimitive::getImpossibleWait($this->_db, $eventIdList),
-            'honoredDonor' => AchievementsPrimitive::getHonoredDonor($this->_db, $eventIdList),
+            'honoredDonor' => $this->getHonoredDonor($eventIdList),
             'justAsPlanned' => AchievementsPrimitive::getJustAsPlanned($this->_db, $eventIdList),
             'carefulPlanning' => $this->getMinFeedsScore($eventIdList),
             'doraLord' => AchievementsPrimitive::getMaxAverageDoraCount($this->_db, $eventIdList),
@@ -117,6 +117,32 @@ class EventModel extends Model
             'andYourRiichiBet' => $this->getMaxStolenRiichiBetsCount($eventIdList),
             'prudent' => $this->getMinLostRiichiBetsPercentage($eventIdList)
         ];
+    }
+
+    /**
+     * Get players who lost largest number of points as riichi bets
+     *
+     * @param $eventIdList
+     * @return array
+     * @throws \Exception
+     */
+    protected function getHonoredDonor($eventIdList)
+    {
+        $riichiStat = $this->_getRiichiStat($eventIdList);
+
+        uasort($riichiStat, function ($a, $b) {
+            return $a['lost'] < $b['lost'] ? 1 : -1;
+        });
+
+        return array_map(
+            function ($item) {
+                return [
+                    'name'  => $item['name'],
+                    'count'  => $item['lost'],
+                ];
+            },
+            array_slice($riichiStat, 0, 5)
+        );
     }
 
     /**
@@ -289,7 +315,7 @@ class EventModel extends Model
                 return [
                     'name'  => $item['name'],
                     'score' => sprintf('%.2f', $item['score']),
-                    'lost'  => strval($item['lost']),
+                    'lost'  => $item['lost'],
                     'total' => $item['total'],
                 ];
             },
