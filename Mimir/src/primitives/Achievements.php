@@ -496,63 +496,6 @@ class AchievementsPrimitive extends Primitive
     }
 
     /**
-     * Get players who lost largest number of points as riichi bets
-     *
-     * @param IDb $db
-     * @param $eventIdList
-     * @return array
-     */
-    public static function getHonoredDonor(IDb $db, $eventIdList)
-    {
-        $rounds = $db->table('round')
-            ->select('winner_id')
-            ->select('riichi')
-            ->whereIn('event_id', $eventIdList)
-            ->whereIn('outcome', ['tsumo', 'ron', 'draw', "multiron"])
-            ->whereNotEqual('riichi', '')
-            ->findArray();
-
-        $counts = [];
-        foreach ($rounds as $round) {
-            $riichi = explode(',', $round['riichi']);
-            foreach ($riichi as $r) {
-                if ($r == $round['winner_id']) {
-                    continue;
-                }
-
-                if (empty($counts[$r])) {
-                    $counts[$r] = 0;
-                }
-
-                $counts[$r] ++;
-            }
-        }
-
-        arsort($counts);
-        $names = $db->table('player')
-            ->select('id')
-            ->select('display_name')
-            ->whereIdIn(array_slice(array_keys($counts), 0, 5))
-            ->findArray();
-
-        $bestDonors = [];
-
-        $namesAssoc = [];
-        foreach ($names as $item) {
-            $namesAssoc[$item['id']] = $item['display_name'];
-        }
-
-        foreach ($counts as $id => $count) {
-            $bestDonors []= ['name' => $namesAssoc[$id], 'count' => $count];
-            if (count($bestDonors) >= 5) {
-                break;
-            }
-        }
-
-        return $bestDonors;
-    }
-
-    /**
      * Get players with largest ippatsu count
      *
      * @param IDb $db
@@ -625,7 +568,7 @@ class AchievementsPrimitive extends Primitive
             function ($round) {
                 return [
                     'name' => $round['display_name'],
-                    'count' => sprintf('%.3f', $round['average'])
+                    'count' => sprintf('%.2f', $round['average'])
                 ];
             },
             array_slice($filteredRounds, 0, 5)
