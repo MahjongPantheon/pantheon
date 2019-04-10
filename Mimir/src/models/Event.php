@@ -193,7 +193,7 @@ class EventModel extends Model
             function ($playerId, $feedsScore) use ($players) {
                 return [
                     'name'  => $players[$playerId]['display_name'],
-                    'score' => $feedsScore
+                    'score' => round($feedsScore)
                 ];
             },
             array_slice(array_keys($feedsScores), 0, 5),
