@@ -101,7 +101,6 @@ class EventModel extends Model
             'bestTsumoist' => AchievementsPrimitive::getBestTsumoistInSingleSession($this->_db, $eventIdList),
             'braveSapper' => AchievementsPrimitive::getBraveSappers($this->_db, $eventIdList),
             'dieHard' => AchievementsPrimitive::getDieHardData($this->_db, $eventIdList),
-            'chomboMaster' => AchievementsPrimitive::getChomboMasters($this->_db, $eventIdList),
             'dovakin' => AchievementsPrimitive::getDovakins($this->_db, $eventIdList),
             'yakuman' => AchievementsPrimitive::getYakumans($this->_db, $eventIdList),
             'shithander' => AchievementsPrimitive::getBestShithander($this->_db, $eventIdList),
