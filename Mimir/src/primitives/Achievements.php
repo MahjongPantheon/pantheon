@@ -622,10 +622,10 @@ class AchievementsPrimitive extends Primitive
         });
 
         return array_map(
-            function ($round){
+            function ($round) {
                 return [
                     'name' => $round['display_name'],
-                    'count' => sprintf('%.3f',$round['average'])
+                    'count' => sprintf('%.3f', $round['average'])
                 ];
             },
             array_slice($filteredRounds, 0, 5)
@@ -658,7 +658,7 @@ class AchievementsPrimitive extends Primitive
 
             foreach (explode(',', $round['yaku']) as $yaku) {
                 if (!in_array($yaku, $playersYaku[$round['display_name']])) {
-                   array_push($playersYaku[$round['display_name']], $yaku);
+                    array_push($playersYaku[$round['display_name']], $yaku);
                 }
             }
         }
@@ -715,9 +715,10 @@ class AchievementsPrimitive extends Primitive
                     ;
             }
 
-            foreach($tempai as $playerId) {
-                if (empty($payments[$playerId]))
+            foreach ($tempai as $playerId) {
+                if (empty($payments[$playerId])) {
                     $payments[$playerId] = 0;
+                }
 
                 $payments[$playerId] += $amount;
             }
@@ -750,19 +751,6 @@ class AchievementsPrimitive extends Primitive
             array_slice(array_keys($filteredPayments), 0, 5),
             array_slice(array_values($filteredPayments), 0, 5)
         );
-    }
-
-    /**
-     * Get players with losing the smallest percentage of riichi bets
-     *
-     * @param IDb $db
-     * @param $eventIdList
-     * @return array
-     */
-    public static function getMinLostRiichiBets(IDb $db, $eventIdList)
-    {
-        //todo
-        return null;
     }
 
     public function save()

@@ -161,6 +161,73 @@
                 {{/justAsPlanned}}
               </ul></td>
             </tr>
+            <tr>
+              <td><b>{{_t 'Careful planning'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for the smallest average cost of opponents hand that player has dealt.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#carefulPlanning}}
+                  <li>{{name}}: {{_p '%s points' score}}</li>
+                {{/carefulPlanning}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'Dora lord'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for the largest average count of dora in player\'s hand.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#doraLord}}
+                  <li>{{name}}: {{_np '%s dora' '%s dora' count count}}</li>
+                {{/doraLord}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'Gotta Catch\'Em All'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for the largest amount of unique yaku collected during the tournament.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#catchEmAll}}
+                  <li>{{name}}: {{_p '%s yaku' count}}</li>
+                {{/catchEmAll}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'The favorite apprentice of ASAPIN'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for the largest amount of points received as ryukoku payments.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#favoriteAsapinApprentice}}
+                  <li>{{name}}: {{_p '%s points' score}}</li>
+                {{/favoriteAsapinApprentice}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'And your riichi bet, please'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for collecting the largest amount of other players\' riichi bets during the tournament.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#andYourRiichiBet}}
+                  <li>{{name}}: {{_np '%s riichi bet' '%s riichi bets' count count}}</li>
+                {{/andYourRiichiBet}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'The Prudent'}}</b></td>
+              <td style="width: 30%">{{_t ' Given for losing the smallest percentage of riichi bets.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#prudent}}
+                  <li>{{name}}: {{score}}%
+                  {{#lost}}
+                    {{_p '(%s on %s)' lost total}}
+                  {{/lost}}
+                  {{^lost}}
+                    {{_p '(0 on %s)' total}}
+                  {{/lost}}
+                  </li>
+                {{/prudent}}
+              </ul></td>
+            </tr>
         </tbody>
     </table>
 {{/error}}
