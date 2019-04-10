@@ -61,7 +61,6 @@ class Achievements extends Controller
             'bestSapperPlayers' => $achievements['braveSapper']['names'], // string[]
             'dieHardValue' => $achievements['dieHard']['feed'],
             'dieHardPlayers' => $achievements['dieHard']['names'], // string[]
-            'chomboMasters' => $achievements['chomboMaster'], // Array<{ name: string, count: number }>
             'dovakins' => $dovakins,
             'yakumans' => $achievements['yakuman'], // string[]
             'bestFuHandValue' => $achievements['bestFu']['fu'],

@@ -239,34 +239,6 @@ class AchievementsPrimitive extends Primitive
     }
 
     /**
-     * Get players who got a chombo
-     *
-     * @param IDb $db
-     * @param $eventIdList
-     * @return array
-     */
-    public static function getChomboMasters(IDb $db, $eventIdList)
-    {
-        $rounds = $db->table('round')
-            ->select('loser_id')
-            ->select('display_name')
-            ->selectExpr('count(*)', 'cnt')
-            ->join('player', ['player.id', '=', 'round.loser_id'])
-            ->whereIn('event_id', $eventIdList)
-            ->where('outcome', 'chombo')
-            ->groupBy('loser_id')
-            ->groupBy('display_name')
-            ->orderByDesc('cnt')
-            ->findArray();
-        return array_map(function ($round) {
-            return [
-                'name' => $round['display_name'],
-                'count' => $round['cnt']
-            ];
-        }, $rounds);
-    }
-
-    /**
      * Get players who collected a yakuman
      *
      * @param IDb $db
