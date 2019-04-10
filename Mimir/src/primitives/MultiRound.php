@@ -339,6 +339,13 @@ class MultiRoundPrimitive extends RoundPrimitive
         throw new InvalidParametersException('MultiRound should not be treated as round');
     }
 
+    public function getWinnerIds()
+    {
+        return array_map(function (RoundPrimitive $round) {
+            return $round->getWinnerId();
+        }, $this->_rounds);
+    }
+
     public function setWinner(PlayerPrimitive $winner)
     {
         throw new InvalidParametersException('MultiRound should not be treated as round');
