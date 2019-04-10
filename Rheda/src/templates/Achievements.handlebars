@@ -177,7 +177,7 @@
               <td>-</td>
               <td><ul>
                 {{#doraLord}}
-                  <li>{{name}}: {{_np '%s dora' '%s dora' count count}}</li>
+                  <li>{{name}}: {{_p '%s dora' count}}</li>
                 {{/doraLord}}
               </ul></td>
             </tr>
@@ -217,14 +217,7 @@
               <td>-</td>
               <td><ul>
                 {{#prudent}}
-                  <li>{{name}}: {{score}}%
-                  {{#lost}}
-                    {{_p '(%s on %s)' lost total}}
-                  {{/lost}}
-                  {{^lost}}
-                    {{_p '(0 on %s)' total}}
-                  {{/lost}}
-                  </li>
+                  <li>{{name}}: {{score}}% {{_p '(%d on %s)' lost total}}</li>
                 {{/prudent}}
               </ul></td>
             </tr>
