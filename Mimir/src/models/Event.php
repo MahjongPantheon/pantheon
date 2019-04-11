@@ -163,7 +163,7 @@ class EventModel extends Model
             return $el->getId();
         }, $games);
 
-        $rounds = $this->_getRounds($sessionIds); // 1st level: session id, 2nd level: numeric index with no meaning
+        $rounds = $this->_getRounds($sessionIds); // key: session id, value: RoundPrimitive[]
         $payments = [];
         foreach ($games as $session) {
             $lastRound = null;
@@ -210,72 +210,24 @@ class EventModel extends Model
      */
     protected function getMaxStolenRiichiBetsCount($eventIdList)
     {
-        $games = SessionPrimitive::findByEventListAndStatus(
-            $this->_db,
-            $eventIdList,
-            SessionPrimitive::STATUS_FINISHED
-        );
+        $riichiStat = $this->_getRiichiStat($eventIdList);
 
-        $sessionIds = array_map(function (SessionPrimitive $el) {
-            return $el->getId();
-        }, $games);
-
-        $rounds = RoundPrimitive::findBySessionIds($this->_db, $sessionIds);
-        $filteredRounds = array_filter($rounds, function (RoundPrimitive $round) {
-            return in_array($round->getOutcome(), ['ron', 'multiron', 'tsumo']);
+        $filteredRiichiStat = array_filter($riichiStat, function ($item) {
+            return $item['stole'] > 0;
         });
 
-        $riichiBets = [];
-        foreach ($filteredRounds as $round) {
-            $lastSessionState = $round->getLastSessionState();
-
-            if ($round->getOutcome() !== 'multiron') {
-                $riichiBets = $this->_addRiichiBets(
-                    $round->getWinnerId(),
-                    $lastSessionState->getRiichiBets(),
-                    $round->getRiichiIds(),
-                    $riichiBets
-                );
-            } else {
-                /** @var MultiRoundPrimitive $mRound */
-                $mRound = $round;
-                $rounds = $mRound->rounds();
-
-                $riichiWinners = PointsCalc::assignRiichiBets(
-                    $rounds,
-                    $mRound->getLoserId(),
-                    $lastSessionState->getRiichiBets(),
-                    $lastSessionState->getHonba(),
-                    $mRound->getSession()
-                );
-
-                foreach ($riichiWinners as $winnerId => $winner) {
-                    $riichiBets = $this->_addRiichiBets(
-                        $winnerId,
-                        $winner['from_table'],
-                        $winner['from_players'],
-                        $riichiBets
-                    );
-                }
-            }
-        }
-
-        $filteredRiichiBets = array_filter($riichiBets, function ($count) {
-            return $count > 0;
+        uasort($filteredRiichiStat, function ($a, $b) {
+            return $a['stole'] < $b['stole'] ? 1 : -1;
         });
-
-        arsort($filteredRiichiBets);
-        $players = EventModel::getPlayersOfGames($this->_db, $games);
 
         return array_map(
-            function ($playerId, $count) use ($players) {
+            function ($item) {
                 return [
-                    'name'  => $players[$playerId]['display_name'],
-                    'count' => $count
+                    'name'  => $item['name'],
+                    'count' => $item['stole'],
                 ];
             },
-            array_slice(array_keys($filteredRiichiBets), 0, 5),
-            array_slice(array_values($filteredRiichiBets), 0, 5)
+            array_slice($filteredRiichiStat, 0, 5)
         );
     }
 
@@ -290,7 +242,7 @@ class EventModel extends Model
     {
         $riichiStat = $this->_getRiichiStat($eventIdList);
 
-        array_walk($riichiStat, function (&$item) {
+        foreach ($riichiStat as &$item) {
             $riichiBetsCount = $item['won'] +  $item['lost'];
 
             $score = $riichiBetsCount !== 0
@@ -299,7 +251,7 @@ class EventModel extends Model
 
             $item['score'] = $score;
             $item['total'] = $riichiBetsCount;
-        });
+        }
 
         uasort($riichiStat, function ($a, $b) {
             return $a['score'] > $b['score'] ? 1 : -1;
@@ -328,6 +280,119 @@ class EventModel extends Model
      * @throws \Exception
      */
     protected function _getRiichiStat($eventIdList)
+    {
+        $games = SessionPrimitive::findByEventListAndStatus(
+            $this->_db,
+            $eventIdList,
+            SessionPrimitive::STATUS_FINISHED
+        );
+
+        $sessionIds = array_map(function (SessionPrimitive $el) {
+            return $el->getId();
+        }, $games);
+
+        $rounds = $this->_getRounds($sessionIds); // key: session id, value: RoundPrimitive[]
+        $players = EventModel::getPlayersOfGames($this->_db, $games);
+
+        $riichiStat = [];
+        foreach ($players as $playerId => $player) {
+            $riichiStat[$playerId] = [
+                'name'  => $player['display_name'],
+                'won'   => 0,
+                'lost'  => 0,
+                'stole' => 0
+            ];
+        }
+
+        foreach ($games as $session) {
+            //todo use riichiGoesToWinner to add stole to winner
+
+            foreach ($rounds[$session->getId()] as $round) {
+                $riichiIds = $round->getRiichiIds();
+
+                if (in_array($round->getOutcome(), ['ron', 'tsumo'])) {
+                    $winnerId = $round->getWinnerId();
+
+                    foreach ($riichiIds as $riichiPlayerId) {
+                        if ($riichiPlayerId == $winnerId) {
+                            $riichiStat[$riichiPlayerId]['won'] ++;
+                        } else {
+                            $riichiStat[$riichiPlayerId]['lost'] ++;
+                        }
+                    }
+                }
+
+                if (in_array($round->getOutcome(), ['draw', 'abort'])) {
+                    foreach ($riichiIds as $riichiPlayerId) {
+                        $riichiStat[$riichiPlayerId]['lost'] ++;
+                    }
+                }
+
+                if ($round->getOutcome() == 'multiron') {
+                    /** @var $round MultiRoundPrimitive */
+                    $riichiIds = $round->getRiichiIds();
+                    $winnerIds = $round->getWinnerIds();
+
+                    foreach ($riichiIds as $playerId) {
+                        if (!in_array($playerId, $winnerIds)) {
+                            $riichiStat[$playerId]['lost'] ++;
+                        }
+                    }
+
+                    $rules = $session->getEvent()->getRuleset();
+                    $lastSessionState = $round->getLastSessionState();
+                    $riichiWinners = PointsCalc::assignRiichiBets(
+                        $round->rounds(),
+                        $round->getLoserId(),
+                        $lastSessionState->getRiichiBets(),
+                        $lastSessionState->getHonba(),
+                        $round->getSession()
+                    );
+
+                    foreach ($riichiWinners as $winnerId => $item) {
+                        $closestWinner = $item['closest_winner'];
+
+                        if ($rules->doubleronRiichiAtamahane() && $closestWinner) {
+                            if ($closestWinner == $winnerId) {
+                                if (in_array($winnerId, $riichiIds)) {
+                                    $riichiStat[$winnerId]['won'] ++;
+                                }
+
+                                $fromOthers = array_filter($riichiIds, function ($playerId) use ($winnerId) {
+                                    return $playerId != $winnerId;
+                                });
+
+                                $riichiStat[$winnerId]['stole'] += count($fromOthers);
+                            } else {
+                                $riichiStat[$winnerId]['lost'] ++;
+                            }
+                        } else {
+                            if (in_array($winnerId, $riichiIds)) {
+                                $riichiStat[$winnerId]['won'] ++;
+                            }
+
+                            $fromOthers = array_filter($item['from_players'], function ($playerId) use ($winnerId) {
+                                return $playerId != $winnerId;
+                            });
+
+                            $riichiStat[$winnerId]['stole'] += count($fromOthers);
+                        }
+
+                        $riichiStat[$winnerId]['stole'] += $item['from_table'];
+                    }
+                }
+            }
+        }
+
+        return $riichiStat;
+    }
+
+    /**
+     * @param $eventIdList
+     * @return array
+     * @throws \Exception
+     */
+    protected function _getRiichiStat1($eventIdList)
     {
         $games = SessionPrimitive::findByEventListAndStatus(
             $this->_db,
