@@ -317,6 +317,39 @@ class PlayersController extends Controller
     }
 
     /**
+     * Get all active events of current user
+     * Output: [[id => ... , title => '...', description => '...'], ...]
+     *
+     * @throws \Exception
+     * @return array
+     */
+    public function getMyEvents()
+    {
+        $this->_log->addInfo('Getting all active events for current user');
+
+        if (empty($this->_meta->getCurrentPersonId())) {
+            throw new InvalidParametersException('No player logged in', 404);
+        }
+        $regs = PlayerRegistrationPrimitive::findByPlayerId($this->_ds, [$this->_meta->getCurrentPersonId()]);
+
+        $events = [];
+        if (!empty($regs)) {
+            $evList = EventPrimitive::findById($this->_ds,
+                array_map(function(PlayerRegistrationPrimitive $pr) { return $pr->getEventId(); }, $regs));
+            $events = array_map(function(EventPrimitive $ev) {
+                return [
+                    'id' => $ev->getId(),
+                    'title' => $ev->getTitle(),
+                    'description' => $ev->getDescription()
+                ];
+            }, $evList);
+        }
+
+        $this->_log->addInfo('Successfully got all active events for current user');
+        return $events;
+    }
+
+    /**
      * Get last recorded round with player in event
      *
      * @param int $playerId

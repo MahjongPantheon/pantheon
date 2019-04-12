@@ -31,6 +31,7 @@
 return [
     // client
     'getEvents'          => ['EventsController', 'getEvents'],
+    'getMyEvents'        => ['PlayersController', 'getMyEvents'],
     'getGameConfig'      => ['EventsController', 'getGameConfig'],
     'getRatingTable'     => ['EventsController', 'getRatingTable'],
     'getLastGames'       => ['EventsController', 'getLastGames'],
@@ -82,8 +83,6 @@ return [
     'definalizeGame'     => ['GamesController', 'definalizeGame'],
     'addPenalty'         => ['GamesController', 'addPenalty'],
     'addPenaltyGame'     => ['GamesController', 'addPenaltyGame'],
-    'addPlayer'          => ['PlayersController', 'add'],
-    'updatePlayer'       => ['PlayersController', 'update'],
     'getPlayer'          => ['PlayersController', 'get'],
     'getEverybody'       => ['PlayersController', 'getAll'], // TODO: get rid
 

@@ -204,6 +204,17 @@ class PlayerRegistrationPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
+     * @param $playerId
+     * @return PlayerRegistrationPrimitive[]
+     * @throws \Exception
+     */
+    public static function findByPlayerId(DataSource $ds, $playerId)
+    {
+        return self::_findBy($ds, 'player_id', [$playerId]);
+    }
+
+    /**
+     * @param DataSource $ds
      * @param $eventId
      * @return int
      * @throws \Exception
