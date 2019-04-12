@@ -119,6 +119,11 @@ class Meta
         ];
     }
 
+    public function getCurrentPersonId()
+    {
+        return $this->_currentPersonId;
+    }
+
     public function sendVersionHeader($major, $minor)
     {
         header('X-Api-Version: ' . intval($major) . '.' . intval($minor));
