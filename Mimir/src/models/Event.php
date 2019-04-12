@@ -305,7 +305,15 @@ class EventModel extends Model
         }
 
         foreach ($games as $session) {
-            //todo use riichiGoesToWinner to add stole to winner
+            $rules = $session->getEvent()->getRuleset();
+            if ($rules->riichiGoesToWinner()) {
+                $firstPlace = array_filter($session->getSessionResults(), function (SessionResultsPrimitive $result) {
+                    return $result->getPlace() === 1;
+                });
+
+                $firstPlacePlayerId = array_values($firstPlace)[0]->getPlayerId();
+                $riichiStat[$firstPlacePlayerId]['stole'] += $session->getCurrentState()->getRiichiBets();
+            }
 
             foreach ($rounds[$session->getId()] as $round) {
                 $riichiIds = $round->getRiichiIds();
@@ -339,7 +347,6 @@ class EventModel extends Model
                         }
                     }
 
-                    $rules = $session->getEvent()->getRuleset();
                     $lastSessionState = $round->getLastSessionState();
                     $riichiWinners = PointsCalc::assignRiichiBets(
                         $round->rounds(),
