@@ -20,6 +20,7 @@ namespace Mimir;
 require_once __DIR__ . '/../models/Event.php';
 require_once __DIR__ . '/../models/EventSeries.php';
 require_once __DIR__ . '/../models/EventUserManagement.php';
+require_once __DIR__ . '/../models/Achievements.php';
 require_once __DIR__ . '/../models/EventFinishedGames.php';
 require_once __DIR__ . '/../models/EventRatingTable.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
@@ -501,7 +502,7 @@ class EventsController extends Controller
             throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
-        $table = (new EventModel($this->_db, $this->_config, $this->_meta))->getAchievements($eventIdList);
+        $table = (new AchievementsModel($this->_db, $this->_config, $this->_meta))->getAchievements($eventIdList);
 
         $this->_log->addInfo('Successfully received achievements list for event ids# ' . implode(", ", $eventIdList));
 
