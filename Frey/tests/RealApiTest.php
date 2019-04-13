@@ -59,7 +59,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testRequestRegistration()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $this->assertInternalType('string', $approvalCode);
     }
@@ -70,7 +70,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testApproveRegistration()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '12345test!678';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
         $this->assertInternalType('int', $userId);
@@ -82,10 +82,11 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testAuthorize()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $this->_client->execute('approveRegistration', [$approvalCode]);
-        $token = $this->_client->execute('authorize', [$email, $password]);
+        list($id, $token) = $this->_client->execute('authorize', [$email, $password]);
+        $this->assertInternalType('integer', $id);
         $this->assertInternalType('string', $token);
     }
 
@@ -93,10 +94,10 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testQuickAuthorize()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
-        $token = $this->_client->execute('authorize', [$email, $password]);
+        list($id, $token) = $this->_client->execute('authorize', [$email, $password]);
 
         $response = $this->_client->execute('quickAuthorize', [$userId, $token]);
         $this->assertInternalType('bool', $response);
@@ -105,21 +106,21 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testChangePassword()
     {
         $email = 'test@test.com';
-        $password = '12345678';
-        $newPassword = '87654321';
+        $password = '1234test!5678';
+        $newPassword = '8765test!4321';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $this->_client->execute('approveRegistration', [$approvalCode]);
         $this->_client->execute('authorize', [$email, $password]);
 
         $this->_client->execute('changePassword', [$email, $password, $newPassword]);
-        $newToken = $this->_client->execute('authorize', [$email, $newPassword]);
+        list($id, $newToken) = $this->_client->execute('authorize', [$email, $newPassword]);
         $this->assertInternalType('string', $newToken);
     }
 
     public function testRequestResetPassword()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $this->_client->execute('approveRegistration', [$approvalCode]);
         $this->_client->execute('authorize', [$email, $password]);
@@ -131,7 +132,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testApproveResetPassword()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $this->_client->execute('approveRegistration', [$approvalCode]);
         $this->_client->execute('authorize', [$email, $password]);
@@ -149,7 +150,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testUpdatePersonalInfo()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
 
@@ -176,7 +177,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testGetPersonalInfo()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
 
@@ -211,7 +212,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testFindByTitle()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
 
@@ -243,7 +244,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testCreateAccount()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $title = 'testuser';
         $city = 'testcity';
         $phone = '123-456-7890';
@@ -496,7 +497,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testAddRuleForPerson()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $title = 'testuser';
         $city = 'testcity';
         $phone = '123-456-7890';
@@ -557,7 +558,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testUpdateRuleForPerson()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $title = 'testuser';
         $city = 'testcity';
         $phone = '123-456-7890';
@@ -622,7 +623,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testDeleteRuleForPerson()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $title = 'testuser';
         $city = 'testcity';
         $phone = '123-456-7890';
@@ -677,7 +678,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testGetPersonAccess()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $title = 'testuser';
         $city = 'testcity';
         $phone = '123-456-7890';
@@ -748,7 +749,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testGetAccessRules()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $title = 'testuser';
         $city = 'testcity';
         $phone = '123-456-7890';
@@ -800,7 +801,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testGetRuleValue()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $title = 'testuser';
         $city = 'testcity';
         $phone = '123-456-7890';
@@ -848,7 +849,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testClearAccessCache()
     {
         $email = 'test@test.com';
-        $password = '12345678';
+        $password = '1234test!5678';
         $title = 'testuser';
         $city = 'testcity';
         $phone = '123-456-7890';

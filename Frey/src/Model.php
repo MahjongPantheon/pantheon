@@ -167,15 +167,15 @@ abstract class Model
 
         $resultingRules = [];
         foreach ($this->_getGroupAccessRules($persons[0]->getGroupIds(), $eventId) as $rule) {
-            $systemWideRuleToBeApplied = empty($rule->getEventsId()) && !isset($resultingRules[$rule->getAclName()]);
-            if ($systemWideRuleToBeApplied || !empty($rule->getEventsId()) /* not systemwide rule */) {
+            $systemWideRuleToBeApplied = empty($rule->getEventId()) && !isset($resultingRules[$rule->getAclName()]);
+            if ($systemWideRuleToBeApplied || !empty($rule->getEventId()) /* not systemwide rule */) {
                 $resultingRules[$rule->getAclName()] = $rule->getAclValue();
             }
         }
         foreach ($this->_getPersonAccessRules($personId, $eventId) as $rule) {
             // Person rules have higher priority than group rules
-            $systemWideRuleToBeApplied = empty($rule->getEventsId()) && !isset($resultingRules[$rule->getAclName()]);
-            if ($systemWideRuleToBeApplied || !empty($rule->getEventsId()) /* not systemwide rule */) {
+            $systemWideRuleToBeApplied = empty($rule->getEventId()) && !isset($resultingRules[$rule->getAclName()]);
+            if ($systemWideRuleToBeApplied || !empty($rule->getEventId()) /* not systemwide rule */) {
                 $resultingRules[$rule->getAclName()] = $rule->getAclValue();
             }
         }
@@ -250,8 +250,8 @@ abstract class Model
         return array_filter(
             PersonAccessPrimitive::findByPerson($this->_db, [$personId]),
             function (PersonAccessPrimitive $rule) use ($eventId) {
-                return empty($rule->getEventsId()) // system-wide person rules
-                    || in_array($eventId, $rule->getEventsId());
+                return empty($rule->getEventId()) // system-wide person rules
+                    || $eventId == $rule->getEventId();
             }
         );
     }
@@ -267,8 +267,8 @@ abstract class Model
         return array_filter(
             GroupAccessPrimitive::findByGroup($this->_db, $groupIds),
             function (GroupAccessPrimitive $rule) use ($eventId) {
-                return empty($rule->getEventsId()) // system-wide group rules
-                    || in_array($eventId, $rule->getEventsId());
+                return empty($rule->getEventId()) // system-wide group rules
+                    || $eventId == $rule->getEventId();
             }
         );
     }
@@ -283,7 +283,7 @@ abstract class Model
         return array_filter(
             PersonAccessPrimitive::findByPerson($this->_db, [$personId]),
             function (PersonAccessPrimitive $rule) {
-                return empty($rule->getEventsId());
+                return empty($rule->getEventId());
             }
         );
     }
@@ -298,7 +298,7 @@ abstract class Model
         return array_filter(
             GroupAccessPrimitive::findByGroup($this->_db, $groupIds),
             function (GroupAccessPrimitive $rule) {
-                return empty($rule->getEventsId());
+                return empty($rule->getEventId());
             }
         );
     }
@@ -310,6 +310,7 @@ abstract class Model
      */
     protected function _checkAccessRights(string $key, $eventId = null)
     {
+        // FIXME
         return;
         if (defined('BOOTSTRAP_MODE')) {
             // Everything is allowed during setup

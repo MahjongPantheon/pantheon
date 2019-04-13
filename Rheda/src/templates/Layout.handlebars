@@ -99,6 +99,9 @@
           {{/useTimer}}
         {{/isAggregated}}
       {{/eventSelected}}
+      {{#isSuperadmin}}
+        <li class="nav-item"><a class='nav-link' href='/privileges'>{{_t 'Rights and privileges'}}</a></li>
+      {{/isSuperadmin}}
     </ul>
     <ul class="navbar-nav justify-content-end" style="position: absolute; right: 0">
       {{#isLoggedIn}}

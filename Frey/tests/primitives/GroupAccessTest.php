@@ -43,16 +43,14 @@ class GroupAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newGroupAccess = new GroupAccessPrimitive($this->_db);
         $newGroupAccess
             ->setGroup($this->_group)
-            ->setEventIds([1, 2, 3])
+            ->setEventId(7)
             ->setAclName('testacl')
             ->setAclType(GroupAccessPrimitive::TYPE_INT)
             ->setAclValue(120);
 
         $this->assertEquals($this->_group->getId(), $newGroupAccess->getGroupId());
         $this->assertEquals($this->_group->getId(), $newGroupAccess->getGroup()->getId());
-        $this->assertEquals(1, $newGroupAccess->getEventsId()[0]);
-        $this->assertEquals(2, $newGroupAccess->getEventsId()[1]);
-        $this->assertEquals(3, $newGroupAccess->getEventsId()[2]);
+        $this->assertEquals(7, $newGroupAccess->getEventId());
         $this->assertEquals('testacl', $newGroupAccess->getAclName());
         $this->assertEquals(GroupAccessPrimitive::TYPE_INT, $newGroupAccess->getAclType());
         $this->assertEquals(120, $newGroupAccess->getAclValue());
@@ -71,7 +69,7 @@ class GroupAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newGroupAccess = new GroupAccessPrimitive($this->_db);
         $newGroupAccess
             ->setGroup($this->_group)
-            ->setEventIds([1,2,3])
+            ->setEventId(7)
             ->setAclName('test')
             ->setAclType(GroupAccessPrimitive::TYPE_INT)
             ->setAclValue(23)
@@ -92,7 +90,7 @@ class GroupAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newGroupAccess = new GroupAccessPrimitive($this->_db);
         $newGroupAccess
             ->setGroup($this->_group)
-            ->setEventIds([1,2,3])
+            ->setEventId(7)
             ->setAclName('test')
             ->setAclType(GroupAccessPrimitive::TYPE_INT)
             ->setAclValue(23)
@@ -113,17 +111,16 @@ class GroupAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newGroupAccess = new GroupAccessPrimitive($this->_db);
         $newGroupAccess
             ->setGroup($this->_group)
-            ->setEventIds([1,2,3])
+            ->setEventId(7)
             ->setAclName('test')
             ->setAclType(GroupAccessPrimitive::TYPE_INT)
             ->setAclValue(23)
             ->save();
 
         $groupAccessCopy = GroupAccessPrimitive::findById($this->_db, [$newGroupAccess->getId()]);
-        $groupAccessCopy[0]->setEventIds([4])->save();
+        $groupAccessCopy[0]->setEventId(8)->save();
 
         $anotherGroupAccessCopy = GroupAccessPrimitive::findById($this->_db, [$newGroupAccess->getId()]);
-        $this->assertEquals(1, count($anotherGroupAccessCopy[0]->getEventsId()));
-        $this->assertEquals(4, $anotherGroupAccessCopy[0]->getEventsId()[0]);
+        $this->assertEquals(8, $anotherGroupAccessCopy[0]->getEventId());
     }
 }

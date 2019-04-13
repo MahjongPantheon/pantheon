@@ -13,7 +13,7 @@ lint:
 	php vendor/bin/phpcs src tests www
 
 unit:
-	php bin/unit.php --testdox
+	php bin/unit.php
 
 unit_covered:
 	phpdbg -qrr bin/unit.php --testdox --coverage-clover=/tmp/coverage-frey.xml

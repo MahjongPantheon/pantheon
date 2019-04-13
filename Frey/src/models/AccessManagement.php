@@ -64,6 +64,56 @@ class AccessManagementModel extends Model
     //////// Admin methods
 
     /**
+     * Get all access rules for person grouped by events. Method results are not cached!
+     *
+     * @param int $personId
+     * @return array
+     * @throws \Exception
+     */
+    public function getAllPersonRules($personId)
+    {
+        $this->_checkAccessRights(InternalRules::GET_ALL_PERSON_RULES);
+
+        $rules = PersonAccessPrimitive::findByPerson($this->_db, [$personId]);
+        $resultingRules = [];
+        foreach ($rules as $rule) {
+            $eventKey = $rule->getEventId() ?? '__global';
+            if (empty($resultingRules[$eventKey])) {
+                $resultingRules[$eventKey] = [];
+            }
+            $resultingRules[$eventKey][$rule->getAclName()] = $rule->getAclValue();
+        }
+
+        return $resultingRules;
+    }
+
+    /**
+     * Get access rules for group.
+     * - eventId may be null to get system-wide rules.
+     * - Method results are not cached!
+     *
+     * @param int $groupId
+     * @return array
+     * @throws \Exception
+     */
+    public function getAllGroupRules($groupId)
+    {
+        $this->_checkAccessRights(InternalRules::GET_ALL_GROUP_RULES);
+
+        $rules = GroupAccessPrimitive::findByGroup($this->_db, [$groupId]);
+        $resultingRules = [];
+        foreach ($rules as $rule) {
+            $eventKey = $rule->getEventId() ?? '__global';
+            if (empty($resultingRules[$eventKey])) {
+                $resultingRules[$eventKey] = [];
+            }
+            $resultingRules[$eventKey][$rule->getAclName()] = $rule->getAclValue();
+        }
+
+        return $resultingRules;
+    }
+
+    /**
      * Get access rules for person.
      * - eventId may be null to get system-wide rules.
      * - Method results are not cached!
@@ -82,7 +132,7 @@ class AccessManagementModel extends Model
             if (empty($eventId)) { // required to get system-wide rules
                 return true;
             }
-            return !empty($rule->getEventsId());
+            return !empty($rule->getEventId());
         });
 
         $resultingRules = [];
@@ -112,7 +162,7 @@ class AccessManagementModel extends Model
             if (empty($eventId)) { // required to get system-wide rules
                 return true;
             }
-            return !empty($rule->getEventsId());
+            return !empty($rule->getEventId());
         });
 
         $resultingRules = [];
@@ -163,7 +213,7 @@ class AccessManagementModel extends Model
             ->setAclName($ruleName)
             ->setAclType($ruleType)
             ->setAclValue($ruleValue)
-            ->setEventIds([$eventId]);
+            ->setEventId($eventId);
         $success = $rule->save();
         if (!$success) {
             return null;
@@ -212,7 +262,7 @@ class AccessManagementModel extends Model
             ->setAclName($ruleName)
             ->setAclType($ruleType)
             ->setAclValue($ruleValue)
-            ->setEventIds([$eventId]);
+            ->setEventId($eventId);
         $success = $rule->save();
         if (!$success) {
             return null;
@@ -334,10 +384,10 @@ class AccessManagementModel extends Model
             throw new EntityNotFoundException('PersonRule with id #' . $ruleId . ' not found in DB', 406);
         }
 
-        if (empty($rules[0]->getEventsId())) { // systemwide
+        if (empty($rules[0]->getEventId())) { // systemwide
             $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_PERSON);
         } else {
-            $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_PERSON, $rules[0]->getEventsId()[0]);
+            $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_PERSON, $rules[0]->getEventId()[0]);
         }
 
         if (InternalRules::isInternal($rules[0]->getAclName()) && $ruleType != $rules[0]->getAclType()) {
@@ -373,10 +423,10 @@ class AccessManagementModel extends Model
             throw new EntityNotFoundException('GroupRule with id #' . $ruleId . ' not found in DB', 407);
         }
 
-        if (empty($rules[0]->getEventsId())) { // systemwide
+        if (empty($rules[0]->getEventId())) { // systemwide
             $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_GROUP);
         } else {
-            $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_GROUP, $rules[0]->getEventsId()[0]);
+            $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_GROUP, $rules[0]->getEventId()[0]);
         }
 
         if (InternalRules::isInternal($rules[0]->getAclName()) && $ruleType != $rules[0]->getAclType()) {
@@ -405,10 +455,10 @@ class AccessManagementModel extends Model
             throw new EntityNotFoundException('PersonRule with id #' . $ruleId . ' not found in DB', 408);
         }
 
-        if (empty($rules[0]->getEventsId())) { // systemwide
+        if (empty($rules[0]->getEventId())) { // systemwide
             $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_PERSON);
         } else {
-            $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_PERSON, $rules[0]->getEventsId()[0]);
+            $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_PERSON, $rules[0]->getEventId()[0]);
         }
 
         if (InternalRules::isInternal($rules[0]->getAclName())) {
@@ -433,10 +483,10 @@ class AccessManagementModel extends Model
             throw new EntityNotFoundException('GroupRule with id #' . $ruleId . ' not found in DB', 409);
         }
 
-        if (empty($rules[0]->getEventsId())) { // systemwide
+        if (empty($rules[0]->getEventId())) { // systemwide
             $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_GROUP);
         } else {
-            $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_GROUP, $rules[0]->getEventsId()[0]);
+            $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_GROUP, $rules[0]->getEventId()[0]);
         }
 
         if (InternalRules::isInternal($rules[0]->getAclName())) {

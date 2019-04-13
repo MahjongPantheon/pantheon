@@ -23,6 +23,8 @@ class InternalRules
 
     const GET_PERSON_ACCESS = '__getPersonAccess';
     const GET_GROUP_ACCESS = '__getGroupAccess';
+    const GET_ALL_PERSON_RULES = '__getAllPersonRules';
+    const GET_ALL_GROUP_RULES = '__getAllGroupRules';
     const ADD_RULE_FOR_PERSON = '__addRuleForPerson';
     const ADD_RULE_FOR_GROUP = '__addRuleForGroup';
     const ADD_SYSTEM_WIDE_RULE_FOR_PERSON = '__addSystemWideRuleForPerson';
@@ -58,6 +60,8 @@ class InternalRules
             self::$_translations = [
                 self::GET_PERSON_ACCESS => _t('Get access rules for a single person'),
                 self::GET_GROUP_ACCESS => _t('Get access rules for a single group'),
+                self::GET_ALL_PERSON_RULES => _t('Get all access rules for a single person'),
+                self::GET_ALL_GROUP_RULES => _t('Get all access rules for a single group'),
                 self::ADD_RULE_FOR_PERSON => _t('Add new access rule for a person'),
                 self::ADD_RULE_FOR_GROUP => _t('Add new access rule for a group'),
                 self::ADD_SYSTEM_WIDE_RULE_FOR_PERSON => _t('Add new system-wide access rule for a person'),

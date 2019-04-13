@@ -43,16 +43,14 @@ class PersonAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPersonAccess = new PersonAccessPrimitive($this->_db);
         $newPersonAccess
             ->setPerson($this->_person)
-            ->setEventIds([1, 2, 3])
+            ->setEventId(7)
             ->setAclName('testacl')
             ->setAclType(PersonAccessPrimitive::TYPE_INT)
             ->setAclValue(120);
 
         $this->assertEquals($this->_person->getId(), $newPersonAccess->getPersonId());
         $this->assertEquals($this->_person->getId(), $newPersonAccess->getPerson()->getId());
-        $this->assertEquals(1, $newPersonAccess->getEventsId()[0]);
-        $this->assertEquals(2, $newPersonAccess->getEventsId()[1]);
-        $this->assertEquals(3, $newPersonAccess->getEventsId()[2]);
+        $this->assertEquals(7, $newPersonAccess->getEventId());
         $this->assertEquals('testacl', $newPersonAccess->getAclName());
         $this->assertEquals(PersonAccessPrimitive::TYPE_INT, $newPersonAccess->getAclType());
         $this->assertEquals(120, $newPersonAccess->getAclValue());
@@ -71,7 +69,7 @@ class PersonAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPersonAccess = new PersonAccessPrimitive($this->_db);
         $newPersonAccess
             ->setPerson($this->_person)
-            ->setEventIds([1,2,3])
+            ->setEventId(7)
             ->setAclName('test')
             ->setAclType(PersonAccessPrimitive::TYPE_INT)
             ->setAclValue(23)
@@ -92,7 +90,7 @@ class PersonAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newGroupAccess = new PersonAccessPrimitive($this->_db);
         $newGroupAccess
             ->setPerson($this->_person)
-            ->setEventIds([1,2,3])
+            ->setEventId(7)
             ->setAclName('test')
             ->setAclType(PersonAccessPrimitive::TYPE_INT)
             ->setAclValue(23)
@@ -113,17 +111,16 @@ class PersonAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPersonAccess = new PersonAccessPrimitive($this->_db);
         $newPersonAccess
             ->setPerson($this->_person)
-            ->setEventIds([1,2,3])
+            ->setEventId(7)
             ->setAclName('test')
             ->setAclType(GroupAccessPrimitive::TYPE_INT)
             ->setAclValue(23)
             ->save();
 
         $personAccessCopy = PersonAccessPrimitive::findById($this->_db, [$newPersonAccess->getId()]);
-        $personAccessCopy[0]->setEventIds([4])->save();
+        $personAccessCopy[0]->setEventId(8)->save();
 
         $anotherPersonAccessCopy = PersonAccessPrimitive::findById($this->_db, [$newPersonAccess->getId()]);
-        $this->assertEquals(1, count($anotherPersonAccessCopy[0]->getEventsId()));
-        $this->assertEquals(4, $anotherPersonAccessCopy[0]->getEventsId()[0]);
+        $this->assertEquals(8, $anotherPersonAccessCopy[0]->getEventId());
     }
 }
