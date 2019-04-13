@@ -69,4 +69,11 @@ return [ // Omit trailing slashes in keys when possible
     '!/login'                => 'Login',
     '!/profile'              => 'ProfileEdit',
     '!/favicon.ico'          => 'MultieventMainpage',
+
+    '!/privileges'                  => 'Privileges',
+    '!/privileges/uid(?<id>\d+)'    => 'PrivilegesOfUser',
+    '!/privileges/eid(?<id>\d+)'    => 'PrivilegesOfEvent',
+    '!/privileges/gid(?<id>\d+)'    => 'PrivilegesOfGroup',
+    '!/groups/uid(?<id>\d+)'        => 'GroupsOfUser',
+    '!/groups/gid(?<id>\d+)'        => 'GroupList',
 ];

@@ -33,7 +33,7 @@ class PersonAccessPrimitive extends AccessPrimitive
     protected static $_fieldsMapping = [
         'id'                => '_id',
         'person_id'         => '_personId',
-        'event_ids'         => '_eventIds',
+        'event_id'          => '_eventId',
         'acl_type'          => '_aclType',
         'acl_name'          => '_aclName',
         'acl_value'         => '_aclValue',
@@ -44,7 +44,7 @@ class PersonAccessPrimitive extends AccessPrimitive
         return [
             '_id'        => $this->_integerTransform(true),
             '_personId'  => $this->_integerTransform(),
-            '_eventIds'  => $this->_csvTransform(),
+            '_eventId'   => $this->_integerTransform(true),
             '_aclType'   => $this->_stringTransform(),
             '_aclName'   => $this->_stringTransform(),
             '_aclValue'  => $this->_stringTransform(),

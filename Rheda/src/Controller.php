@@ -90,6 +90,14 @@ abstract class Controller
     protected $_accessRules = [];
 
     /**
+     * [ 'id' => int,
+     *   'city' => string,
+     *   'email' => string | null,
+     *   'phone' => string | null,
+     *   'tenhou_id' => string,
+     *   'groups' => int[],
+     *   'title' => string
+     * ]
      * @var array
      */
     protected $_personalData;
@@ -270,7 +278,8 @@ abstract class Controller
                     'eventSelected' => $this->_mainEventId,
                     'currentPerson' => $this->_personalData,
                     'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),
-                    'isLoggedIn' => !empty($this->_personalData)
+                    'isLoggedIn' => !empty($this->_personalData),
+                    'isSuperadmin' => true // TODO
                 ]);
             }
         }

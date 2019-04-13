@@ -38,10 +38,10 @@ abstract class AccessPrimitive extends Primitive
      */
     protected $_id;
     /**
-     * Events this rule is applied to. If empty, this means rule is applied system-wide.
-     * @var int[]
+     * Event this rule is applied to. If empty, this means rule is applied system-wide.
+     * @var int
      */
-    protected $_eventIds;
+    protected $_eventId;
     /**
      * Data type stored in this cell. Can be boolean, enum or integer
      * @var string
@@ -95,20 +95,20 @@ abstract class AccessPrimitive extends Primitive
     }
 
     /**
-     * @return int[]
+     * @return int
      */
-    public function getEventsId()
+    public function getEventId()
     {
-        return $this->_eventIds;
+        return $this->_eventId;
     }
 
     /**
-     * @param int[] $eventIds
+     * @param int $eventId
      * @return self
      */
-    public function setEventIds($eventIds)
+    public function setEventId($eventId)
     {
-        $this->_eventIds = $eventIds;
+        $this->_eventId = $eventId;
         return $this;
     }
 
