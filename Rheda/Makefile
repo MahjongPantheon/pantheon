@@ -25,7 +25,7 @@ unit_covered: # TODO
 	# phpdbg -qrr bin/unit.php --testdox --coverage-clover=/tmp/coverage-rheda.xml
 
 freygen:
-	php ../Frey/bin/clientGen.php Rheda > src/helpers/FreyClient.php
+	php ../Frey/bin/clientGen.php Rheda > src/FreyClient.php
 	php ../Frey/bin/clientGen.php Rheda interface > src/interfaces/IFreyClient.php
 
 autofix:

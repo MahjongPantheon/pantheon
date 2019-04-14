@@ -46,8 +46,11 @@ return [
     'getGroups'            => ['PersonsController', 'getGroups'],
 
     // admin
+    'getRulesList'           => ['AccessController', 'getRulesList'],
     'getPersonAccess'        => ['AccessController', 'getPersonAccess'],
     'getGroupAccess'         => ['AccessController', 'getGroupAccess'],
+    'getAllPersonAccess'     => ['AccessController', 'getAllPersonAccess'],
+    'getAllGroupAccess'      => ['AccessController', 'getAllGroupAccess'],
     'addRuleForPerson'       => ['AccessController', 'addRuleForPerson'],
     'addRuleForGroup'        => ['AccessController', 'addRuleForGroup'],
     'updateRuleForPerson'    => ['AccessController', 'updateRuleForPerson'],

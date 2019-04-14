@@ -3,7 +3,7 @@
 namespace Rheda;
 
 require_once __DIR__ . '/HttpClient.php'; // TODO: replace with custom jsonrpc httpclient implementation path
-require_once __DIR__ . '/../interfaces/IFreyClient.php'; // TODO: replace with custom frey client interface path
+require_once __DIR__ . '/interfaces/IFreyClient.php'; // TODO: replace with custom frey client interface path
 
 /**
  * Class FreyClient
@@ -118,13 +118,13 @@ class FreyClient implements IFreyClient
      *  Primary client method, aggregating rules from groups and person.
      *  Get array of access rules for person in event.
      *  Cached for 10 minutes.
-     * @param int $personIdcurrentEventId
+     * @param int $personId
      * @param int $eventId
      * @returns array
      */
-    public function getAccessRules(int $personIdcurrentEventId, int $eventId): array
+    public function getAccessRules(int $personId, int $eventId): array
     {
-        return (array)$this->_client->execute('getAccessRules', [$personIdcurrentEventId, $eventId]);
+        return (array)$this->_client->execute('getAccessRules', [$personId, $eventId]);
     }
 
     /**
@@ -201,6 +201,16 @@ class FreyClient implements IFreyClient
     }
 
     /**
+     *  Get rule list with translations to selected locale
+    
+     * @returns array
+     */
+    public function getRulesList(): array
+    {
+        return (array)$this->_client->execute('getRulesList', []);
+    }
+
+    /**
      *  Get access rules for person.
      *  - eventId may be null to get system-wide rules.
      *  - Method results are not cached!
@@ -226,6 +236,30 @@ class FreyClient implements IFreyClient
     public function getGroupAccess(int $groupId, $eventId): array
     {
         return (array)$this->_client->execute('getGroupAccess', [$groupId, $eventId]);
+    }
+
+    /**
+     *  Get all access rules for person.
+     *  - Method results are not cached!
+     *  - To be used in admin panel, but not in client side!
+     * @param int $personId
+     * @returns array
+     */
+    public function getAllPersonAccess(int $personId): array
+    {
+        return (array)$this->_client->execute('getAllPersonAccess', [$personId]);
+    }
+
+    /**
+     *  Get all access rules for group.
+     *  - Method results are not cached!
+     *  - To be used in admin panel, but not in client side!
+     * @param int $groupId
+     * @returns array
+     */
+    public function getAllGroupAccess(int $groupId): array
+    {
+        return (array)$this->_client->execute('getAllGroupAccess', [$groupId]);
     }
 
     /**

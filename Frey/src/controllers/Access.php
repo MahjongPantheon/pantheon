@@ -30,7 +30,7 @@ class AccessController extends Controller
      * Get array of access rules for person in event.
      * Cached for 10 minutes.
      *
-     * @param int $personIdcurrentEventId
+     * @param int $personId
      * @param int $eventId
      * @return array
      * @throws \Exception
@@ -98,6 +98,40 @@ class AccessController extends Controller
         $this->_logStart(__METHOD__, [$groupId, $eventId]);
         $rules = $this->_getModel()->getGroupAccess($groupId, $eventId);
         $this->_logSuccess(__METHOD__, [$groupId, $eventId]);
+        return $rules;
+    }
+
+    /**
+     * Get all access rules for person.
+     * - Method results are not cached!
+     * - To be used in admin panel, but not in client side!
+     *
+     * @param int $personId
+     * @return array
+     * @throws \Exception
+     */
+    public function getAllPersonAccess($personId)
+    {
+        $this->_logStart(__METHOD__, [$personId]);
+        $rules = $this->_getModel()->getAllPersonRules($personId);
+        $this->_logSuccess(__METHOD__, [$personId]);
+        return $rules;
+    }
+
+    /**
+     * Get all access rules for group.
+     * - Method results are not cached!
+     * - To be used in admin panel, but not in client side!
+     *
+     * @param int $groupId
+     * @return array
+     * @throws \Exception
+     */
+    public function getAllGroupAccess($groupId)
+    {
+        $this->_logStart(__METHOD__, [$groupId]);
+        $rules = $this->_getModel()->getAllGroupRules($groupId);
+        $this->_logSuccess(__METHOD__, [$groupId]);
         return $rules;
     }
 
@@ -275,6 +309,20 @@ class AccessController extends Controller
         $success = $this->_getModel()->clearAccessCache($personId, $eventId);
         $this->_logSuccess(__METHOD__, [$personId, $eventId]);
         return $success;
+    }
+
+    /**
+     * Get rule list with translations to selected locale
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function getRulesList()
+    {
+        $this->_logStart(__METHOD__, []);
+        $rules = InternalRules::getTranslations();
+        $this->_logSuccess(__METHOD__, []);
+        return $rules;
     }
 
     /**
