@@ -85,11 +85,11 @@ public function getClient();
      *  Primary client method, aggregating rules from groups and person.
      *  Get array of access rules for person in event.
      *  Cached for 10 minutes.
-     * @param int $personIdcurrentEventId
+     * @param int $personId
      * @param int $eventId
      * @returns array
     */
-    public function getAccessRules(int $personIdcurrentEventId, int $eventId);
+    public function getAccessRules(int $personId, int $eventId);
 
     /**
      *  Get single rule for person in event. Hardly relies on cache.
@@ -147,6 +147,13 @@ public function getClient();
     public function getGroups(array $ids);
 
     /**
+     *  Get rule list with translations to selected locale
+    
+     * @returns array
+    */
+    public function getRulesList();
+
+    /**
      *  Get access rules for person.
      *  - eventId may be null to get system-wide rules.
      *  - Method results are not cached!
@@ -167,6 +174,24 @@ public function getClient();
      * @returns array
     */
     public function getGroupAccess(int $groupId, $eventId);
+
+    /**
+     *  Get all access rules for person.
+     *  - Method results are not cached!
+     *  - To be used in admin panel, but not in client side!
+     * @param int $personId
+     * @returns array
+    */
+    public function getAllPersonAccess(int $personId);
+
+    /**
+     *  Get all access rules for group.
+     *  - Method results are not cached!
+     *  - To be used in admin panel, but not in client side!
+     * @param int $groupId
+     * @returns array
+    */
+    public function getAllGroupAccess(int $groupId);
 
     /**
      *  Add new rule for a person.

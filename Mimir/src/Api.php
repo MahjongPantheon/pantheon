@@ -62,6 +62,10 @@ class Api
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 
+        $this->_frey->getClient()->getHttpClient()->withHeaders([
+            'X-Locale: ' . $this->_meta->getSelectedLocale(),
+        ]);
+
         // + some custom handler for testing errors
         if ($this->_config->getValue('verbose')) {
             (new ErrorHandler($this->_config, $this->_syslog))->register();

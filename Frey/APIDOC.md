@@ -117,7 +117,7 @@ Exceptions:
 
 
 Parameters:
-* **$personIdcurrentEventId** (_int_) 
+* **$personId** (_int_) 
 * **$eventId** (_int_) 
 
 Returns: _array_ 
@@ -212,6 +212,17 @@ Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
 
+### getRulesList
+ Get rule list with translations to selected locale
+
+
+Parameters:
+
+Returns: _array_ 
+
+Exceptions:
+* _\Exception_ 
+
 ### getPersonAccess
  Get access rules for person.
  - eventId may be null to get system-wide rules.
@@ -238,6 +249,34 @@ Exceptions:
 Parameters:
 * **$groupId** (_int_) 
 * **$eventId** (_int|null_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _\Exception_ 
+
+### getAllPersonAccess
+ Get all access rules for person.
+ - Method results are not cached!
+ - To be used in admin panel, but not in client side!
+
+
+Parameters:
+* **$personId** (_int_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _\Exception_ 
+
+### getAllGroupAccess
+ Get all access rules for group.
+ - Method results are not cached!
+ - To be used in admin panel, but not in client side!
+
+
+Parameters:
+* **$groupId** (_int_) 
 
 Returns: _array_ 
 

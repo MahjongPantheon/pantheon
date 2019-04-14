@@ -21,15 +21,25 @@ require_once __DIR__ . '/../helpers/Url.php';
 
 class PrivilegesOfUser extends Controller
 {
-    protected $_mainTemplate = 'Privileges';
+    protected $_mainTemplate = 'PrivilegesOfUser';
+    protected $_selectedPersonData = null;
 
     protected function _pageTitle()
     {
-        return _p('%s : rights and privileges', $this->_personalData['title']);
+        return _p('%s : rights and privileges', $this->_selectedPersonData['title']);
     }
 
     protected function _run()
     {
-        
+        $rulesList = $this->_frey->getRulesList();
+        $data = $this->_frey->getPersonalInfo([$this->_path['id']]);
+        if (empty($data)) {
+            return ['error' => true, 'message' => _t('Person not found in database')];
+        }
+
+        $this->_selectedPersonData = $data[0];
+        $allAccessData = $this->_frey->getAllPersonAccess($this->_path['id']);
+        print_r($rulesList);
+        print_r($allAccessData);
     }
 }

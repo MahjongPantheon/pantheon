@@ -20,8 +20,8 @@ namespace Rheda;
 require_once __DIR__ . '/helpers/MobileDetect.php';
 require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
-require_once __DIR__ . '/helpers/HttpClient.php';
-require_once __DIR__ . '/helpers/FreyClient.php';
+require_once __DIR__ . '/HttpClient.php';
+require_once __DIR__ . '/FreyClient.php';
 require_once __DIR__ . '/helpers/i18n.php';
 require_once __DIR__ . '/AccessRules.php';
 require_once __DIR__ . '/Templater.php';
@@ -188,6 +188,7 @@ abstract class Controller
             } else {
                 $this->_frey->getClient()->getHttpClient()->withHeaders([
                     'X-Auth-Token: ' . $this->_authToken,
+                    'X-Locale: ' . $locale,
                     'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
                     'X-Current-Person-Id: ' . $this->_currentPersonId
                 ]);
@@ -208,6 +209,7 @@ abstract class Controller
             'X-Auth-Token: ' . $this->_authToken,
             'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
             'X-Current-Person-Id: ' . $this->_currentPersonId ?: '0',
+            'X-Locale: ' . $locale,
             'X-Api-Version: ' . Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
         ]);
         if (Sysconf::DEBUG_MODE) {
@@ -289,6 +291,10 @@ abstract class Controller
 
     protected function _transliterate($data)
     {
+        if (empty($data)) {
+            return $data;
+        }
+
         if ($this->_useTranslit) {
             $tr = \Transliterator::create('Cyrillic-Latin; Latin-ASCII');
             array_walk_recursive($data, function (&$val, $index) use ($tr) {
