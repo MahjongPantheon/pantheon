@@ -62,14 +62,14 @@ class AchievementsModel extends Model
             throw new AuthFailedException('Only administrators are allowed to view achievements');
         }
 
-        $this->_setGames($eventIdList);
-        $this->_setPlayers($this->_games);
+        $this->_games = $this->_getGames($eventIdList);
+        $this->_players = $this->_getPlayers($this->_games);
 
         $sessionIds = array_map(function (SessionPrimitive $el) {
             return $el->getId();
         }, $this->_games);
 
-        $this->_setRounds($sessionIds);
+        $this->_rounds = $this->_getRounds($sessionIds);
         $this->_riichiStat = $this->_calcRiichiStat($this->_games, $this->_players, $this->_rounds);
 
         return [
@@ -393,11 +393,12 @@ class AchievementsModel extends Model
 
     /**
      * @param $eventIdList
+     * @return SessionPrimitive[]
      * @throws \Exception
      */
-    protected function _setGames($eventIdList)
+    protected function _getGames($eventIdList)
     {
-        $this->_games = SessionPrimitive::findByEventListAndStatus(
+        return SessionPrimitive::findByEventListAndStatus(
             $this->_db,
             $eventIdList,
             SessionPrimitive::STATUS_FINISHED
@@ -406,18 +407,20 @@ class AchievementsModel extends Model
 
     /**
      * @param SessionPrimitive[] $games
+     * @return array
      * @throws \Exception
      */
-    protected function _setPlayers($games)
+    protected function _getPlayers($games)
     {
-        $this->_players = EventModel::getPlayersOfGames($this->_db, $games);
+        return EventModel::getPlayersOfGames($this->_db, $games);
     }
 
     /**
      * @param $sessionIds
+     * @return RoundPrimitive[][]
      * @throws \Exception
      */
-    protected function _setRounds($sessionIds)
+    protected function _getRounds($sessionIds)
     {
         $rounds = RoundPrimitive::findBySessionIds($this->_db, $sessionIds);
 
@@ -429,6 +432,6 @@ class AchievementsModel extends Model
             $result[$item->getSessionId()] []= $item;
         }
 
-        $this->_rounds = $result;
+        return $result;
     }
 }
