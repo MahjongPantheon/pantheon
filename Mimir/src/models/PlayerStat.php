@@ -79,7 +79,7 @@ class PlayerStatModel extends Model
             'win_summary'           => $this->_getOutcomeSummary($playerId, $rounds),
             'hands_value_summary'   => $this->_getHanSummary($playerId, $rounds),
             'yaku_summary'          => $this->_getYakuSummary($playerId, $rounds),
-            'riichi_summary'        => $this->_getRiichiSummary($playerId, $rounds)
+            'riichi_summary'        => $this->_getRiichiSummary($mainEvent->getRuleset(), $playerId, $rounds)
         ];
     }
 
@@ -336,9 +336,11 @@ class PlayerStatModel extends Model
      *
      * @param $playerId
      * @param RoundPrimitive[] $rounds
+     * @param Ruleset $rules
      * @return array
+     * @throws \Exception
      */
-    protected function _getRiichiSummary($playerId, $rounds)
+    protected function _getRiichiSummary($rules, $playerId, $rounds)
     {
         $acc = [
             'riichi_won'        => 0,
@@ -369,23 +371,38 @@ class PlayerStatModel extends Model
             }
 
             if ($r->getOutcome() === 'multiron') {
-                $sessionRiichi = [];
                 /** @var $r MultiRoundPrimitive */
-                foreach ($r->rounds() as $round) {
-                    $sessionRiichi = array_merge($sessionRiichi, $round->getRiichiIds() ?: []);
-                }
+                $roundRiichi = $r->getRiichiIds();
+                $roundWinners = $r->getWinnerIds();
 
-                /** @var $r MultiRoundPrimitive */
-                foreach ($r->rounds() as $round) {
-                    if ($round->getWinnerId() == $playerId && in_array($playerId, $sessionRiichi)) {
+                if (in_array($playerId, $roundWinners) && in_array($playerId, $roundRiichi)) {
+                    $lastSessionState = $r->getLastSessionState();
+                    $riichiWinners = PointsCalc::assignRiichiBets(
+                        $r->rounds(),
+                        $r->getLoserId(),
+                        $lastSessionState->getRiichiBets(),
+                        $lastSessionState->getHonba(),
+                        $r->getSession()
+                    );
+
+                    $closestWinner = $riichiWinners[$playerId]['closest_winner'];
+                    if ($rules->doubleronRiichiAtamahane() && $closestWinner) {
+                        if ($closestWinner == $playerId) {
+                            $acc['riichi_won']++;
+                        } else {
+                            $acc['riichi_lost']++;
+                        }
+                    } else {
                         $acc['riichi_won']++;
                     }
-                    if ($round->getWinnerId() != $playerId && in_array($playerId, $sessionRiichi)) {
-                        $acc['riichi_lost']++;
-                    }
-                    if ($r->getLoserId() == $playerId && in_array($playerId, $sessionRiichi)) {
-                        $acc['feed_under_riichi']++;
-                    }
+                }
+
+                if (!in_array($playerId, $roundWinners) && in_array($playerId, $roundRiichi)) {
+                    $acc['riichi_lost']++;
+                }
+
+                if ($r->getLoserId() == $playerId && in_array($playerId, $roundRiichi)) {
+                    $acc['feed_under_riichi']++;
                 }
             }
         }

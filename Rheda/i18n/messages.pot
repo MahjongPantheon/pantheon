@@ -7,175 +7,39 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgid "Aggregated event"
+msgid "Additional penalties"
 msgstr ""
 
-msgid "Rules overview"
+msgid ""
+"A penalty may be applied only to player currently in game. Otherwise error "
+"will occur."
 msgstr ""
 
-msgid "Player"
+msgid "Select player"
 msgstr ""
 
-msgid "Best series"
+msgid "Penalty amount"
 msgstr ""
 
-msgid "Points of best series"
+msgid "Penalty reason"
 msgstr ""
 
-msgid "Last series"
+msgid "Check twice penalty data. You won't be able to cancel the penalty"
 msgstr ""
 
-msgid "Points of last series"
+msgid "Apply penalty"
+msgstr ""
+
+msgid "Add online game"
+msgstr ""
+
+msgid "The game has been successfully added!"
+msgstr ""
+
+msgid "Add game"
 msgstr ""
 
 msgid "Game details"
-msgstr ""
-
-msgid "Recent games"
-msgstr ""
-
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
-msgstr ""
-
-msgid "Later"
-msgstr ""
-
-msgid "Earlier"
-msgstr ""
-
-msgid "Personal stats"
-msgstr ""
-
-msgid "Player: %s"
-msgstr ""
-
-msgid "No stats are available yet"
-msgstr ""
-
-msgid "Rating graph"
-msgstr ""
-
-msgid "Common stats"
-msgstr ""
-
-msgid "Games played"
-msgstr ""
-
-msgid "Rounds played"
-msgstr ""
-
-msgid "Rounds won"
-msgstr ""
-
-msgid "Round details:"
-msgstr ""
-
-msgid "Ron wins"
-msgstr ""
-
-msgid "Tsumo wins"
-msgstr ""
-
-msgid "Ron feeds"
-msgstr ""
-
-msgid "because of riichi"
-msgstr ""
-
-msgid "Tsumo losses"
-msgstr ""
-
-msgid "Open hands"
-msgstr ""
-
-msgid "Chombo penalties"
-msgstr ""
-
-msgid "Riichi bets"
-msgstr ""
-
-msgid "bets won"
-msgstr ""
-
-msgid "bets lost"
-msgstr ""
-
-msgid "Places stat:"
-msgstr ""
-
-msgid "1st place"
-msgstr ""
-
-msgid "2nd place"
-msgstr ""
-
-msgid "3rd place"
-msgstr ""
-
-msgid "4th place"
-msgstr ""
-
-msgid "Final game points:"
-msgstr ""
-
-msgid "Minimal"
-msgstr ""
-
-msgid "Maximal"
-msgstr ""
-
-msgid "Average"
-msgstr ""
-
-msgid "Hands value"
-msgstr ""
-
-msgid "Yaku collected over all time"
-msgstr ""
-
-msgid "Statistics"
-msgstr ""
-
-msgid "Welcome to game statistics system."
-msgstr ""
-
-msgid "Click here to start"
-msgstr ""
-
-msgid "You are viewing the abbreviated statistics for mobile devices."
-msgstr ""
-
-msgid "Player #%d"
-msgstr ""
-
-msgid "Best series:"
-msgstr ""
-
-msgid "Points:"
-msgstr ""
-
-msgid "Ongoing series:"
-msgstr ""
-
-msgid "Team table"
-msgstr ""
-
-msgid "Rating table has been hidden by tournament administrator"
-msgstr ""
-
-msgid "These results are visible only for tournament administrator"
-msgstr ""
-
-msgid "Team"
-msgstr ""
-
-msgid "Rating points"
-msgstr ""
-
-msgid "Players"
 msgstr ""
 
 msgid "Add player"
@@ -187,6 +51,9 @@ msgstr ""
 msgid ""
 "Note: if a player is already added to the rating, adding him again will "
 "result in reissuing his PIN code."
+msgstr ""
+
+msgid "Player"
 msgstr ""
 
 msgid "Admin actions"
@@ -207,40 +74,27 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-msgid "Add online game"
+msgid "Going back in 3 seconds..."
 msgstr ""
 
-msgid "The game has been successfully added!"
+msgid "Add new game"
 msgstr ""
 
-msgid "Add game"
+msgid "Format:"
 msgstr ""
 
-msgid "Rating table"
+msgid "Example:"
 msgstr ""
 
-msgid "Tournament control panel"
+msgid ""
+"Renchans/honba are calculated automatically. Also points and payments "
+"checks are performed: in case of any inconsistency the alert is displayed."
 msgstr ""
 
-msgid "Games control panel"
-msgstr ""
-
-msgid "Penalties"
-msgstr ""
-
-msgid "Manage players"
-msgstr ""
-
-msgid "Predefined seating"
+msgid "Player aliases"
 msgstr ""
 
 msgid "Achievements"
-msgstr ""
-
-msgid "Timer & seating"
-msgstr ""
-
-msgid "Login"
 msgstr ""
 
 msgid "Achievement"
@@ -374,6 +228,85 @@ msgid_plural "%s ippatsu"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "Careful planning"
+msgstr ""
+
+msgid "Given for the smallest average cost of opponents hand that player has dealt."
+msgstr ""
+
+msgid "%s points"
+msgstr ""
+
+msgid "Dora lord"
+msgstr ""
+
+msgid "Given for the largest average count of dora in player's hand."
+msgstr ""
+
+msgid "%s dora"
+msgstr ""
+
+msgid "Gotta Catch'Em All"
+msgstr ""
+
+msgid "Given for the largest amount of unique yaku collected during the tournament."
+msgstr ""
+
+msgid "%s yaku"
+msgstr ""
+
+msgid "The favorite apprentice of ASAPIN"
+msgstr ""
+
+msgid "Given for the largest amount of points received as ryukoku payments."
+msgstr ""
+
+msgid "And your riichi bet, please"
+msgstr ""
+
+msgid ""
+"Given for collecting the largest amount of other players' riichi bets "
+"during the tournament."
+msgstr ""
+
+msgid "%s riichi bet"
+msgid_plural "%s riichi bets"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "The Prudent"
+msgstr ""
+
+msgid " Given for losing the smallest percentage of riichi bets."
+msgstr ""
+
+msgid "(%d on %s)"
+msgstr ""
+
+msgid "Statistics"
+msgstr ""
+
+msgid "Welcome to game statistics system."
+msgstr ""
+
+msgid "Click here to start"
+msgstr ""
+
+msgid "You are viewing the abbreviated statistics for mobile devices."
+msgstr ""
+
+msgid "Player #%d"
+msgstr ""
+
+msgid "Best series:"
+msgstr ""
+
+msgid "Points:"
+msgstr ""
+
+msgid "Ongoing series:"
+msgstr ""
+
 msgid "Something went wrong: %s"
 msgstr ""
 
@@ -396,6 +329,9 @@ msgid "Select seating mode and press the appropriate button."
 msgstr ""
 
 msgid "Hide/show rating table"
+msgstr ""
+
+msgid "Predefined seating"
 msgstr ""
 
 msgid ""
@@ -518,15 +454,6 @@ msgstr ""
 msgid "Confirm the results and finish all games"
 msgstr ""
 
-msgid "Admin panel"
-msgstr ""
-
-msgid "Authorized successfully!"
-msgstr ""
-
-msgid "Authorize"
-msgstr ""
-
 msgid "Predefined seating configuration"
 msgstr ""
 
@@ -547,9 +474,6 @@ msgid ""
 "game session should be indicated as an empty line."
 msgstr ""
 
-msgid "Example:"
-msgstr ""
-
 msgid ""
 "In this example, two tables play two games. Numbers in seating persist "
 "between games and are defined at Admin actions / Manage players page."
@@ -558,16 +482,57 @@ msgstr ""
 msgid "Sorry, this page is not available for mobile devices"
 msgstr ""
 
-msgid "%s: personal stats"
+msgid "Aggregated event"
 msgstr ""
 
-msgid "Pts"
+msgid "Rules overview"
 msgstr ""
 
-msgid "AvPlc"
+msgid "Best series"
 msgstr ""
 
-msgid "AvPts"
+msgid "Points of best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Points of last series"
+msgstr ""
+
+msgid "Players management"
+msgstr ""
+
+msgid "Pre-registration list (%d)"
+msgstr ""
+
+msgid "PIN"
+msgstr ""
+
+msgid "Confirm attendance manually"
+msgstr ""
+
+msgid "Registered players (%d)"
+msgstr ""
+
+msgid "Local id"
+msgstr ""
+
+msgid "Reissue PIN"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove player %s?"
+msgstr ""
+
+msgid ""
+"This will update current local id mapping. See \"Predefined seating\" page "
+"for details"
+msgstr ""
+
+msgid "Save local IDs"
 msgstr ""
 
 msgid "No time left!"
@@ -588,10 +553,37 @@ msgstr ""
 msgid "NORTH"
 msgstr ""
 
+msgid "Rating table"
+msgstr ""
+
+msgid "Rating table has been hidden by tournament administrator"
+msgstr ""
+
+msgid "These results are visible only for tournament administrator"
+msgstr ""
+
+msgid "Team"
+msgstr ""
+
+msgid "Rating points"
+msgstr ""
+
 msgid "Average place"
 msgstr ""
 
 msgid "Average points"
+msgstr ""
+
+msgid "Games played"
+msgstr ""
+
+msgid "Recent games"
+msgstr ""
+
+msgid "No games has been played yet"
+msgstr ""
+
+msgid "%d - %d (%d total)"
 msgstr ""
 
 msgid "Confirm round cancellation: "
@@ -621,66 +613,133 @@ msgstr ""
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr ""
 
-msgid "Going back in 3 seconds..."
+msgid "Admin panel"
 msgstr ""
 
-msgid "Add new game"
+msgid "Authorized successfully!"
 msgstr ""
 
-msgid "Format:"
+msgid "Authorize"
 msgstr ""
 
-msgid ""
-"Renchans/honba are calculated automatically. Also points and payments "
-"checks are performed: in case of any inconsistency the alert is displayed."
+msgid "Personal stats"
 msgstr ""
 
-msgid "Player aliases"
+msgid "Player: %s"
 msgstr ""
 
-msgid "Timer"
+msgid "No stats are available yet"
 msgstr ""
 
-msgid "Wind: %s"
+msgid "Rating graph"
 msgstr ""
 
-msgid "Full game log:"
+msgid "Common stats"
 msgstr ""
 
-msgid "Date & time"
+msgid "Rounds played"
 msgstr ""
 
-msgid "Details"
+msgid "Rounds won"
 msgstr ""
 
-msgid "View replay online"
+msgid "Round details:"
 msgstr ""
 
-msgid "Best hand: <b>%s</b> - %s"
+msgid "Ron wins"
 msgstr ""
 
-msgid "Ron hands: %d"
+msgid "Tsumo wins"
 msgstr ""
 
-msgid "Tsumo hands: %d"
+msgid "Ron feeds"
 msgstr ""
 
-msgid "Drawn rounds: %d"
+msgid "because of riichi"
 msgstr ""
 
-msgid "Chombo penalties: %s"
+msgid "Tsumo losses"
 msgstr ""
 
-msgid "Additional penalties:"
+msgid "Open hands"
 msgstr ""
 
-msgid "%s - %d points (%s)"
+msgid "Chombo penalties"
 msgstr ""
 
-msgid "Rating"
+msgid "Riichi bets"
 msgstr ""
 
-msgid "Han"
+msgid "bets won"
+msgstr ""
+
+msgid "bets lost"
+msgstr ""
+
+msgid "Places stat:"
+msgstr ""
+
+msgid "1st place"
+msgstr ""
+
+msgid "2nd place"
+msgstr ""
+
+msgid "3rd place"
+msgstr ""
+
+msgid "4th place"
+msgstr ""
+
+msgid "Final game points:"
+msgstr ""
+
+msgid "Minimal"
+msgstr ""
+
+msgid "Maximal"
+msgstr ""
+
+msgid "Average"
+msgstr ""
+
+msgid "Hands value"
+msgstr ""
+
+msgid "Yaku collected over all time"
+msgstr ""
+
+msgid "Team table"
+msgstr ""
+
+msgid "Tournament control panel"
+msgstr ""
+
+msgid "Games control panel"
+msgstr ""
+
+msgid "Penalties"
+msgstr ""
+
+msgid "Manage players"
+msgstr ""
+
+msgid "Timer & seating"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Players"
+msgstr ""
+
+msgid "Pts"
+msgstr ""
+
+msgid "AvPlc"
+msgstr ""
+
+msgid "AvPts"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -757,62 +816,58 @@ msgstr ""
 msgid "Rating table is visible. Hide"
 msgstr ""
 
-msgid "Additional penalties"
+msgid "Date & time"
 msgstr ""
 
-msgid ""
-"A penalty may be applied only to player currently in game. Otherwise error "
-"will occur."
+msgid "Details"
 msgstr ""
 
-msgid "Select player"
+msgid "View replay online"
 msgstr ""
 
-msgid "Penalty amount"
+msgid "Best hand: <b>%s</b> - %s"
 msgstr ""
 
-msgid "Penalty reason"
+msgid "Ron hands: %d"
 msgstr ""
 
-msgid "Check twice penalty data. You won't be able to cancel the penalty"
+msgid "Tsumo hands: %d"
 msgstr ""
 
-msgid "Apply penalty"
+msgid "Drawn rounds: %d"
 msgstr ""
 
-msgid "Players management"
+msgid "Chombo penalties: %s"
 msgstr ""
 
-msgid "Pre-registration list (%d)"
+msgid "Additional penalties:"
 msgstr ""
 
-msgid "PIN"
+msgid "%s - %d points (%s)"
 msgstr ""
 
-msgid "Confirm attendance manually"
+msgid "Full game log:"
 msgstr ""
 
-msgid "Registered players (%d)"
+msgid "Rating"
 msgstr ""
 
-msgid "Local id"
+msgid "Han"
 msgstr ""
 
-msgid "Reissue PIN"
+msgid "Timer"
 msgstr ""
 
-msgid "Remove"
+msgid "Wind: %s"
 msgstr ""
 
-msgid "Remove player %s?"
+msgid "Later"
 msgstr ""
 
-msgid ""
-"This will update current local id mapping. See \"Predefined seating\" page "
-"for details"
+msgid "Earlier"
 msgstr ""
 
-msgid "Save local IDs"
+msgid "%s: personal stats"
 msgstr ""
 
 msgid "All players"

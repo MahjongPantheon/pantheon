@@ -239,34 +239,6 @@ class AchievementsPrimitive extends Primitive
     }
 
     /**
-     * Get players who got a chombo
-     *
-     * @param IDb $db
-     * @param $eventIdList
-     * @return array
-     */
-    public static function getChomboMasters(IDb $db, $eventIdList)
-    {
-        $rounds = $db->table('round')
-            ->select('loser_id')
-            ->select('display_name')
-            ->selectExpr('count(*)', 'cnt')
-            ->join('player', ['player.id', '=', 'round.loser_id'])
-            ->whereIn('event_id', $eventIdList)
-            ->where('outcome', 'chombo')
-            ->groupBy('loser_id')
-            ->groupBy('display_name')
-            ->orderByDesc('cnt')
-            ->findArray();
-        return array_map(function ($round) {
-            return [
-                'name' => $round['display_name'],
-                'count' => $round['cnt']
-            ];
-        }, $rounds);
-    }
-
-    /**
      * Get players who collected a yakuman
      *
      * @param IDb $db
@@ -496,63 +468,6 @@ class AchievementsPrimitive extends Primitive
     }
 
     /**
-     * Get players who lost largest number of points as riichi bets
-     *
-     * @param IDb $db
-     * @param $eventIdList
-     * @return array
-     */
-    public static function getHonoredDonor(IDb $db, $eventIdList)
-    {
-        $rounds = $db->table('round')
-            ->select('winner_id')
-            ->select('riichi')
-            ->whereIn('event_id', $eventIdList)
-            ->whereIn('outcome', ['tsumo', 'ron', 'draw', "multiron"])
-            ->whereNotEqual('riichi', '')
-            ->findArray();
-
-        $counts = [];
-        foreach ($rounds as $round) {
-            $riichi = explode(',', $round['riichi']);
-            foreach ($riichi as $r) {
-                if ($r == $round['winner_id']) {
-                    continue;
-                }
-
-                if (empty($counts[$r])) {
-                    $counts[$r] = 0;
-                }
-
-                $counts[$r] ++;
-            }
-        }
-
-        arsort($counts);
-        $names = $db->table('player')
-            ->select('id')
-            ->select('display_name')
-            ->whereIdIn(array_slice(array_keys($counts), 0, 5))
-            ->findArray();
-
-        $bestDonors = [];
-
-        $namesAssoc = [];
-        foreach ($names as $item) {
-            $namesAssoc[$item['id']] = $item['display_name'];
-        }
-
-        foreach ($counts as $id => $count) {
-            $bestDonors []= ['name' => $namesAssoc[$id], 'count' => $count];
-            if (count($bestDonors) >= 5) {
-                break;
-            }
-        }
-
-        return $bestDonors;
-    }
-
-    /**
      * Get players with largest ippatsu count
      *
      * @param IDb $db
@@ -593,6 +508,163 @@ class AchievementsPrimitive extends Primitive
             },
             array_slice(array_keys($counts), 0, 5),
             array_slice(array_values($counts), 0, 5)
+        );
+    }
+
+    /**
+     * Get players with largest average count of dora in player's hand
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
+    public static function getMaxAverageDoraCount(IDb $db, $eventIdList)
+    {
+        $rounds = $db->table('round')
+            ->select('winner_id')
+            ->select('display_name')
+            ->selectExpr('sum(dora)*1.0/count(*) as average')
+            ->join('player', ['player.id', '=', 'round.winner_id'])
+            ->whereIn('event_id', $eventIdList)
+            ->whereIn('outcome', ['multiron', 'ron', 'tsumo'])
+            ->groupBy('winner_id')
+            ->groupBy('display_name')
+            ->orderByDesc('average')
+            ->findArray();
+
+        $filteredRounds = array_filter($rounds, function ($round) {
+            return !empty($round['average']);
+        });
+
+        return array_map(
+            function ($round) {
+                return [
+                    'name' => $round['display_name'],
+                    'count' => sprintf('%.2f', $round['average'])
+                ];
+            },
+            array_slice($filteredRounds, 0, 5)
+        );
+    }
+
+    /**
+     * Get players with largest amount of unique yaku collected during the tournament
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
+    public static function getMaxDifferentYakuCount(IDb $db, $eventIdList)
+    {
+        $rounds = $db->table('round')
+            ->select('winner_id')
+            ->select('display_name')
+            ->select('yaku')
+            ->join('player', ['player.id', '=', 'round.winner_id'])
+            ->whereIn('event_id', $eventIdList)
+            ->whereIn('outcome', ['multiron', 'ron', 'tsumo'])
+            ->findArray();
+
+        $playersYaku = [];
+        foreach ($rounds as $round) {
+            if (empty($playersYaku[$round['display_name']])) {
+                $playersYaku[$round['display_name']] = [];
+            }
+
+            foreach (explode(',', $round['yaku']) as $yaku) {
+                if (!in_array($yaku, $playersYaku[$round['display_name']])) {
+                    array_push($playersYaku[$round['display_name']], $yaku);
+                }
+            }
+        }
+
+        array_walk($playersYaku, function (&$item) {
+            $item = count($item);
+        });
+
+
+        arsort($playersYaku);
+        return array_map(
+            function ($name, $count) {
+                return [
+                    'name' => $name,
+                    'count' => $count
+                ];
+            },
+            array_slice(array_keys($playersYaku), 0, 5),
+            array_slice(array_values($playersYaku), 0, 5)
+        );
+    }
+
+    /**
+     * Get players with largest amount of points received as ryukoku payments
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
+    public static function getFavoriteAsapinApprentice(IDb $db, $eventIdList)
+    {
+        $rounds = $db->table('round')
+            ->select('tempai')
+            ->whereIn('event_id', $eventIdList)
+            ->where('outcome', 'draw')
+            ->whereNotEqual('tempai', '')
+            ->findArray();
+
+        $payments = [];
+        foreach ($rounds as $round) {
+            $tempai = explode(',', $round['tempai']);
+            $amount = 0;
+            switch (count($tempai)) {
+                case 1:
+                    $amount = 3000;
+                    break;
+                case 2:
+                    $amount = 1500;
+                    break;
+                case 3:
+                    $amount = 1000;
+                    break;
+                default:
+                    ;
+            }
+
+            foreach ($tempai as $playerId) {
+                if (empty($payments[$playerId])) {
+                    $payments[$playerId] = 0;
+                }
+
+                $payments[$playerId] += $amount;
+            }
+        }
+
+        $filteredPayments = array_filter($payments, function ($payment) {
+            return $payment != 0;
+        });
+
+        arsort($filteredPayments);
+
+        $names = $db->table('player')
+            ->select('id')
+            ->select('display_name')
+            ->whereIdIn(array_slice(array_keys($filteredPayments), 0, 5))
+            ->findArray();
+
+        $namesAssoc = [];
+        foreach ($names as $item) {
+            $namesAssoc[$item['id']] = $item['display_name'];
+        }
+
+        return array_map(
+            function ($playerId, $payment) use ($namesAssoc) {
+                return [
+                    'name' => $namesAssoc[$playerId],
+                    'score' => $payment
+                ];
+            },
+            array_slice(array_keys($filteredPayments), 0, 5),
+            array_slice(array_values($filteredPayments), 0, 5)
         );
     }
 

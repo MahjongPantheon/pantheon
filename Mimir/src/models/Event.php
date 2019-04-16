@@ -84,35 +84,6 @@ class EventModel extends Model
     }
 
     /**
-     * Get achievements list
-     * @throws AuthFailedException
-     * @param $eventIdList
-     * @return array
-     */
-    public function getAchievements($eventIdList)
-    {
-        if (!$this->checkAdminToken()) {
-            throw new AuthFailedException('Only administrators are allowed to view achievements');
-        }
-
-        return [
-            'bestHand' => AchievementsPrimitive::getBestHandOfEvent($this->_db, $eventIdList),
-            'bestTsumoist' => AchievementsPrimitive::getBestTsumoistInSingleSession($this->_db, $eventIdList),
-            'braveSapper' => AchievementsPrimitive::getBraveSappers($this->_db, $eventIdList),
-            'dieHard' => AchievementsPrimitive::getDieHardData($this->_db, $eventIdList),
-            'chomboMaster' => AchievementsPrimitive::getChomboMasters($this->_db, $eventIdList),
-            'dovakin' => AchievementsPrimitive::getDovakins($this->_db, $eventIdList),
-            'yakuman' => AchievementsPrimitive::getYakumans($this->_db, $eventIdList),
-            'shithander' => AchievementsPrimitive::getBestShithander($this->_db, $eventIdList),
-            'bestDealer' => AchievementsPrimitive::getBestDealer($this->_db, $eventIdList),
-            'bestFu' => AchievementsPrimitive::getMaxFuHand($this->_db, $eventIdList),
-            'impossibleWait' => AchievementsPrimitive::getImpossibleWait($this->_db, $eventIdList),
-            'honoredDonor' => AchievementsPrimitive::getHonoredDonor($this->_db, $eventIdList),
-            'justAsPlanned' => AchievementsPrimitive::getJustAsPlanned($this->_db, $eventIdList)
-        ];
-    }
-
-    /**
      * Find out currently playing tables state (for tournaments only)
      * @param integer $eventId
      * @param bool $includeAllRounds

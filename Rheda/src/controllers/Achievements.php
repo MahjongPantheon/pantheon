@@ -61,7 +61,6 @@ class Achievements extends Controller
             'bestSapperPlayers' => $achievements['braveSapper']['names'], // string[]
             'dieHardValue' => $achievements['dieHard']['feed'],
             'dieHardPlayers' => $achievements['dieHard']['names'], // string[]
-            'chomboMasters' => $achievements['chomboMaster'], // Array<{ name: string, count: number }>
             'dovakins' => $dovakins,
             'yakumans' => $achievements['yakuman'], // string[]
             'bestFuHandValue' => $achievements['bestFu']['fu'],
@@ -72,7 +71,13 @@ class Achievements extends Controller
             'shithanderPlayers' => $achievements['shithander']['names'], // string[]
             'impossibleWait' => $achievements['impossibleWait'], // Array<{ name: string, hand: {han: number, fu: number} }>
             'honoredDonor' => $achievements['honoredDonor'], // Array<{ name: string, count: number }>
-            'justAsPlanned' => $achievements['justAsPlanned'], // Array<{ name: string, count: number }>
+            'justAsPlanned' => $achievements['justAsPlanned'], // Array<{ name: string, count: number }>,
+            'carefulPlanning' => $achievements['carefulPlanning'], // Array<{ name: string, score: number }>,
+            'doraLord' => $achievements['doraLord'], // Array<{ name: string, count: number }>,
+            'catchEmAll' => $achievements['catchEmAll'], // Array<{ name: string, count: number }>,
+            'favoriteAsapinApprentice' => $achievements['favoriteAsapinApprentice'], // Array<{ name: string, score: number }>,
+            'andYourRiichiBet' => $achievements['andYourRiichiBet'], // Array<{ name: string, count: number }>,
+            'prudent' => $achievements['prudent'], // Array<{ name: string, score: number, lost: number, total: number }>,
         ];
     }
 }
