@@ -79,16 +79,6 @@
                 </ul></td>
             </tr>
             <tr>
-                <td><b>{{_t 'Chombo master'}}</b></td>
-                <td style="width: 30%">{{_t 'Given for collecting a chombo during a tournament.'}}</td>
-                <td>-</td>
-                <td><ul>
-                    {{#chomboMasters}}
-                        <li>{{_np '%s: %d chombo penalty' '%s: %d chombo penalties' count name count}}</li>
-                    {{/chomboMasters}}
-                </ul></td>
-            </tr>
-            <tr>
                 <td><b>{{_t 'Guest of honors'}}</b></td>
                 <td style="width: 30%">{{_t 'Given for collecting the most of yakuhais during the tournament.'}}</td>
                 <td>-</td>
@@ -159,6 +149,66 @@
                 {{#justAsPlanned}}
                   <li>{{name}}: {{_np '%s ippatsu' '%s ippatsu' count count}}</li>
                 {{/justAsPlanned}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'Careful planning'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for the smallest average cost of opponents hand that player has dealt.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#carefulPlanning}}
+                  <li>{{name}}: {{_p '%s points' score}}</li>
+                {{/carefulPlanning}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'Dora lord'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for the largest average count of dora in player\'s hand.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#doraLord}}
+                  <li>{{name}}: {{_p '%s dora' count}}</li>
+                {{/doraLord}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'Gotta Catch\'Em All'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for the largest amount of unique yaku collected during the tournament.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#catchEmAll}}
+                  <li>{{name}}: {{_p '%s yaku' count}}</li>
+                {{/catchEmAll}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'The favorite apprentice of ASAPIN'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for the largest amount of points received as ryukoku payments.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#favoriteAsapinApprentice}}
+                  <li>{{name}}: {{_p '%s points' score}}</li>
+                {{/favoriteAsapinApprentice}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'And your riichi bet, please'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for collecting the largest amount of other players\' riichi bets during the tournament.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#andYourRiichiBet}}
+                  <li>{{name}}: {{_np '%s riichi bet' '%s riichi bets' count count}}</li>
+                {{/andYourRiichiBet}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'The Prudent'}}</b></td>
+              <td style="width: 30%">{{_t ' Given for losing the smallest percentage of riichi bets.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#prudent}}
+                  <li>{{name}}: {{score}}% {{_p '(%d on %s)' lost total}}</li>
+                {{/prudent}}
               </ul></td>
             </tr>
         </tbody>
