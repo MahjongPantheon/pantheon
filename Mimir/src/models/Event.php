@@ -316,4 +316,34 @@ class EventModel extends Model
             }, $data)
         ];
     }
+
+    /**
+     * Get events by id list
+     *
+     * @param $idList
+     * @throws \Exception
+     * @return array
+     */
+    public function getEventsById($idList)
+    {
+        $data = $this->_ds->table('event')
+            ->select('id')
+            ->select('title')
+            ->select('description')
+            ->select('is_online')
+            ->select('sync_start')
+            ->whereIdIn($idList)
+            ->findMany();
+
+        return array_map(function($event) {
+            return [
+                'id' => $event['id'],
+                'title' => $event['title'],
+                'description' => $event['description'],
+                'type' => $event['is_online']
+                    ? 'online'
+                    : ($event['sync_start'] ? 'tournament' : 'local')
+            ];
+        }, $data);
+    }
 }

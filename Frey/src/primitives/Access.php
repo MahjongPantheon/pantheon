@@ -58,6 +58,11 @@ abstract class AccessPrimitive extends Primitive
      * @var string
      */
     protected $_aclValue;
+    /**
+     * ACL enum allowed values list
+     * @var array
+     */
+    protected $_allowedValues = [];
 
     protected function _create()
     {
@@ -148,6 +153,24 @@ abstract class AccessPrimitive extends Primitive
     public function setAclName(string $aclName)
     {
         $this->_aclName = $aclName;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllowedValues(): array
+    {
+        return $this->_allowedValues ?: [];
+    }
+
+    /**
+     * @param array $allowedValues
+     * @return self
+     */
+    public function setAllowedValues(array $allowedValues)
+    {
+        $this->_allowedValues = $allowedValues;
         return $this;
     }
 

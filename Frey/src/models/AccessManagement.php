@@ -81,7 +81,10 @@ class AccessManagementModel extends Model
             if (empty($resultingRules[$eventKey])) {
                 $resultingRules[$eventKey] = [];
             }
-            $resultingRules[$eventKey][$rule->getAclName()] = $rule->getAclValue();
+            $resultingRules[$eventKey][$rule->getAclName()] = [
+                'type' => $rule->getAclType(),
+                'value' => $rule->getAclValue()
+            ];
         }
 
         return $resultingRules;

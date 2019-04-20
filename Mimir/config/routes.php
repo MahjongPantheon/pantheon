@@ -31,6 +31,7 @@
 return [
     // client
     'getEvents'          => ['EventsController', 'getEvents'],
+    'getEventsById'      => ['EventsController', 'getEventsById'],
     'getMyEvents'        => ['PlayersController', 'getMyEvents'],
     'getGameConfig'      => ['EventsController', 'getGameConfig'],
     'getRatingTable'     => ['EventsController', 'getRatingTable'],

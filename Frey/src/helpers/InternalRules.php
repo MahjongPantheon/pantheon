@@ -53,6 +53,18 @@ class InternalRules
         return array_keys(self::getTranslations()); // ¯\_(ツ)_/¯
     }
 
+    public static function getRules()
+    {
+        $translations = self::getTranslations();
+        return array_combine(array_keys($translations), array_map(function($value) {
+            return [
+                'default' => 0,
+                'type' => 'bool', // All internal rules are considered to be boolean
+                'title' => $value
+            ];
+        }, array_values($translations)));
+    }
+
     protected static $_translations;
     public static function getTranslations()
     {
