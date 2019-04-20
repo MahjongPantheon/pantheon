@@ -320,7 +320,7 @@ class AccessController extends Controller
     public function getRulesList()
     {
         $this->_logStart(__METHOD__, []);
-        $rules = InternalRules::getTranslations();
+        $rules = InternalRules::getRules();
         $this->_logSuccess(__METHOD__, []);
         return $rules;
     }

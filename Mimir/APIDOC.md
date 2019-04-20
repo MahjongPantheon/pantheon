@@ -15,6 +15,18 @@ Returns: _array_
 Exceptions:
 * _\Exception_ 
 
+### getEventsById
+ List available events by id list
+
+
+Parameters:
+* **$ids** (_array_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _\Exception_ 
+
 ### getMyEvents
  Get all active events of current user
  Output: [[id => ... , title => '...', description => '...'], ...]

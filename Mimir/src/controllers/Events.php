@@ -79,6 +79,24 @@ class EventsController extends Controller
     }
 
     /**
+     * List available events by id list
+     *
+     * @param array $ids
+     * @throws \Exception
+     * @return array
+     */
+    public function getEventsById($ids)
+    {
+        $this->_log->addInfo('Listing events by id [' . implode($ids) . ']');
+        $data = [];
+        if (!empty($ids)) {
+            $data = (new EventModel($this->_ds, $this->_config, $this->_meta))->getEventsById($ids);
+        }
+        $this->_log->addInfo('Successfully listed events by id [' . implode($ids) . ']');
+        return $data;
+    }
+
+    /**
      * Get all players registered for event
      *
      * @param array $eventIdList

@@ -37,6 +37,7 @@ class PersonAccessPrimitive extends AccessPrimitive
         'acl_type'          => '_aclType',
         'acl_name'          => '_aclName',
         'acl_value'         => '_aclValue',
+        'allowed_values'    => '_allowedValues',
     ];
 
     protected function _getFieldsTransforms()
@@ -48,6 +49,7 @@ class PersonAccessPrimitive extends AccessPrimitive
             '_aclType'   => $this->_stringTransform(),
             '_aclName'   => $this->_stringTransform(),
             '_aclValue'  => $this->_stringTransform(),
+            '_allowedValues' => $this->_csvTransform(),
         ];
     }
 

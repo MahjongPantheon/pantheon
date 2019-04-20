@@ -11,6 +11,7 @@ class IntegrateFreyVersion1m0 extends AbstractMigration
         $table = $this->table('person_access');
         $table
             ->removeColumn('event_ids')
+            ->addColumn('allowed_values', 'string')
             ->addColumn('event_id', 'integer', ['null' => true])
             ->addIndex('event_id', ['name' => 'access_event_id_person'])
             ->save();
@@ -18,6 +19,7 @@ class IntegrateFreyVersion1m0 extends AbstractMigration
         $table = $this->table('group_access');
         $table
             ->removeColumn('event_ids')
+            ->addColumn('allowed_values', 'string')
             ->addColumn('event_id', 'integer', ['null' => true])
             ->addIndex('event_id', ['name' => 'access_event_id_group'])
             ->save();

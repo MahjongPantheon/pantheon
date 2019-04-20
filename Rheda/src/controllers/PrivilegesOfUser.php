@@ -39,7 +39,40 @@ class PrivilegesOfUser extends Controller
 
         $this->_selectedPersonData = $data[0];
         $allAccessData = $this->_frey->getAllPersonAccess($this->_path['id']);
-        print_r($rulesList);
-        print_r($allAccessData);
+        /** @var array $events */
+        $events = $this->_mimir->execute('getEventsById', [
+            array_filter(array_keys($allAccessData), function($v) {
+                return $v !='__global';
+            })
+        ]);
+
+        $eventTitles = array_combine(
+            array_map(function($ev) { return $ev['id']; }, $events),
+            array_map(function($ev) { return $ev['title']; }, $events)
+        );
+
+        $rules = array_map(function($eventId) use(&$rulesList, &$allAccessData, &$eventTitles) {
+            return [
+                'id' => $eventId,
+                'title' => $eventId == '__global' ? _t('Global privileges') : $eventTitles[$eventId],
+                'rules' => array_map(function($key, $ruleInfo) use(&$allAccessData, $eventId) {
+                    return [
+                        'key' => $key,
+                        'title' => $ruleInfo['title'],
+                        'type' => $ruleInfo['type'],
+                        'type_bool' => $ruleInfo['type'] == 'bool',
+                        'type_int' => $ruleInfo['type'] == 'int',
+                        'type_enum' => $ruleInfo['type'] == 'enum',
+                        'value' => $allAccessData[$eventId][$key]['value'] ?: $ruleInfo['default']
+                    ];
+                }, array_keys($rulesList), array_values($rulesList))
+            ];
+        }, array_keys($allAccessData));
+
+        return [
+            'error' => false,
+            'personName' => $this->_selectedPersonData['title'],
+            'rules' => $rules
+        ];
     }
 }
