@@ -11,7 +11,7 @@ environments:
         name: %%PHINX_DBPROD_FREY_NAME%%
         user: %%PHINX_DBPROD_FREY_USER%%
         pass: %%PHINX_DBPROD_FREY_PASS%%
-        port: 5432
+        port: %%PHINX_DB_FREY_PORT%%
         charset: utf8
 
     staging:
@@ -20,7 +20,7 @@ environments:
         name: %%PHINX_DB_FREY_NAME%%
         user: %%PHINX_DB_FREY_USER%%
         pass: %%PHINX_DB_FREY_PASS%%
-        port: 5432
+        port: %%PHINX_DB_FREY_PORT%%
         charset: utf8
 
     testing:
