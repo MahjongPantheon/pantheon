@@ -278,6 +278,8 @@ class AchievementsModel extends Model
                             $riichiStat[$riichiPlayerId]['lost'] ++;
                         }
                     }
+
+                    $riichiStat[$winnerId]['stole'] += $round->getLastSessionState()->getRiichiBets();
                 }
 
                 if (in_array($round->getOutcome(), ['draw', 'abort'])) {
