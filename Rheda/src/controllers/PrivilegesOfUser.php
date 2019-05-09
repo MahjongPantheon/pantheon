@@ -29,6 +29,16 @@ class PrivilegesOfUser extends Controller
         return _p('%s : rights and privileges', $this->_selectedPersonData['title']);
     }
 
+    protected function _beforeRun()
+    {
+        if (!empty($_POST['eventId'])) {
+            // save...
+            return false;
+        }
+
+        return true;
+    }
+
     protected function _run()
     {
         $rulesList = $this->_frey->getRulesList();
@@ -39,6 +49,7 @@ class PrivilegesOfUser extends Controller
 
         $this->_selectedPersonData = $data[0];
         $allAccessData = $this->_frey->getAllPersonAccess($this->_path['id']);
+
         /** @var array $events */
         $events = $this->_mimir->execute('getEventsById', [
             array_filter(array_keys($allAccessData), function($v) {
@@ -56,6 +67,7 @@ class PrivilegesOfUser extends Controller
                 'id' => $eventId,
                 'title' => $eventId == '__global' ? _t('Global privileges') : $eventTitles[$eventId],
                 'rules' => array_map(function($key, $ruleInfo) use(&$allAccessData, $eventId) {
+                    $currentValue = $allAccessData[$eventId][$key]['value'] ?: $ruleInfo['default'];
                     return [
                         'key' => $key,
                         'title' => $ruleInfo['title'],
@@ -63,7 +75,14 @@ class PrivilegesOfUser extends Controller
                         'type_bool' => $ruleInfo['type'] == 'bool',
                         'type_int' => $ruleInfo['type'] == 'int',
                         'type_enum' => $ruleInfo['type'] == 'enum',
-                        'value' => $allAccessData[$eventId][$key]['value'] ?: $ruleInfo['default']
+                        'allowed_values' => array_map(function($val) use ($currentValue, $ruleInfo) {
+                            return [
+                                'value' => $val,
+                                'selected' => $val == $currentValue
+                            ];
+                        }, $allAccessData[$eventId][$key]['allowed_values']),
+                        'value' => $currentValue,
+                        'checked' => $ruleInfo['type'] == 'bool' && $currentValue == 'true'
                     ];
                 }, array_keys($rulesList), array_values($rulesList))
             ];
