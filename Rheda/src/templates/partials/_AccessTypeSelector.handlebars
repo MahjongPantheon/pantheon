@@ -1,0 +1,18 @@
+{{#this.type_bool}}
+  <div class="custom-checkbox custom-control">
+    <input name="{{this.key}}" class="custom-control-input"
+           id="{{this.key}}_true"
+           type="checkbox" value="true" {{#checked}}checked="checked"{{/checked}} />
+    <label class="custom-control-label" for="{{this.key}}_true"></label>
+  </div>
+{{/this.type_bool}}
+{{#this.type_int}}
+  <input class="form-control" type="number" value="{{value}}" min="0" name="{{this.key}}" />
+{{/this.type_int}}
+{{#this.type_enum}}
+  <select name="{{this.key}}" class="custom-select">
+  {{#this.allowed_values}}
+    <option value="{{value}}" {{#selected}}selected="selected"{{/selected}}>{{value}}</option>
+  {{/this.allowed_values}}
+  </select>
+{{/this.type_enum}}

@@ -83,7 +83,8 @@ class AccessManagementModel extends Model
             }
             $resultingRules[$eventKey][$rule->getAclName()] = [
                 'type' => $rule->getAclType(),
-                'value' => $rule->getAclValue()
+                'value' => $rule->getAclValue(),
+                'allowed_values' => $rule->getAllowedValues()
             ];
         }
 

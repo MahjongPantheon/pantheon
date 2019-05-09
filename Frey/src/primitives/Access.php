@@ -43,7 +43,7 @@ abstract class AccessPrimitive extends Primitive
      */
     protected $_eventId;
     /**
-     * Data type stored in this cell. Can be boolean, enum or integer
+     * Data type stored in this cell. Can be bool, enum or int
      * @var string
      */
     protected $_aclType;
@@ -60,7 +60,7 @@ abstract class AccessPrimitive extends Primitive
     protected $_aclValue;
     /**
      * ACL enum allowed values list
-     * @var array
+     * @var string[]
      */
     protected $_allowedValues = [];
 
@@ -161,7 +161,14 @@ abstract class AccessPrimitive extends Primitive
      */
     public function getAllowedValues(): array
     {
-        return $this->_allowedValues ?: [];
+        switch ($this->_aclType) {
+            case self::TYPE_BOOL:
+                return ['true', 'false'];
+            case self::TYPE_ENUM:
+                return $this->_allowedValues ?: [];
+            case self::TYPE_INT:
+                return [];
+        }
     }
 
     /**

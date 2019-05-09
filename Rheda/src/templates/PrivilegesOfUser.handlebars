@@ -20,14 +20,20 @@
 {{#rules}}
   <h4>{{title}}</h4>
   <hr />
-  <table class="table table-bordered">
-    {{#rules}}
-      <tr>
-        <td>{{title}}</td>
-        <td>{{type}}</td>
-        // TODO: сделать партиал для выбора значения по типу
-        <td>{{value}}</td>
-      </tr>
-    {{/rules}}
-  </table>
+  <form action="" method="post">
+    <input type="hidden" name="eventId" value="{{eventId}}">
+    <table class="table table-bordered table-hover table-striped">
+      {{#rules}}
+        <tr>
+          <td>{{title}}</td>
+          <td>{{type}}</td>
+          <td>{{> partials/AccessTypeSelector this}}</td>
+        </tr>
+      {{/rules}}
+    </table>
+    <hr />
+    <input class="btn btn-primary" type="submit" value="{{_p 'Save %s' title}}">
+  </form>
+  <hr />
 {{/rules}}
+
