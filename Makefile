@@ -219,10 +219,10 @@ shell: get_docker_id
 
 .PHONY: empty_event
 empty_event: migrate
-		@curl -s ${MIMIR_URL} \
+		@curl -s http://localhost:4001 \
 		-H 'content-type: application/json' \
 		-d '{"jsonrpc": "2.0", "method": "createEvent", "params": ["Test offline", "description", "offline", "ema", 90, "Europe/Moscow"], "id": "5db41fc6-5947-423c-a2ca-6e7f7e6a45c0" }' \
-		| php -r 'echo "New event: $(RHEDA_URL)/eid" . json_decode(file_get_contents("php://stdin"))->result . PHP_EOL;'
+		| php -r 'echo "New event: http://localhost:4002/eid" . json_decode(file_get_contents("php://stdin"))->result . PHP_EOL;'
 
 .PHONY: check
 check: get_docker_id lint
