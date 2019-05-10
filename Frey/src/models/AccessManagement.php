@@ -64,7 +64,8 @@ class AccessManagementModel extends Model
     //////// Admin methods
 
     /**
-     * Get all access rules for person grouped by events. Method results are not cached!
+     * Get all access rules for person grouped by events.
+     * - Method results are not cached!
      *
      * @param int $personId
      * @return array
@@ -82,6 +83,7 @@ class AccessManagementModel extends Model
                 $resultingRules[$eventKey] = [];
             }
             $resultingRules[$eventKey][$rule->getAclName()] = [
+                'id' => $rule->getId(),
                 'type' => $rule->getAclType(),
                 'value' => $rule->getAclValue(),
                 'allowed_values' => $rule->getAllowedValues()
@@ -93,7 +95,6 @@ class AccessManagementModel extends Model
 
     /**
      * Get access rules for group.
-     * - eventId may be null to get system-wide rules.
      * - Method results are not cached!
      *
      * @param int $groupId
@@ -111,7 +112,12 @@ class AccessManagementModel extends Model
             if (empty($resultingRules[$eventKey])) {
                 $resultingRules[$eventKey] = [];
             }
-            $resultingRules[$eventKey][$rule->getAclName()] = $rule->getAclValue();
+            $resultingRules[$eventKey][$rule->getAclName()] = [
+                'id' => $rule->getId(),
+                'type' => $rule->getAclType(),
+                'value' => $rule->getAclValue(),
+                'allowed_values' => $rule->getAllowedValues()
+            ];
         }
 
         return $resultingRules;

@@ -17,23 +17,24 @@
 <h3>{{_p 'Rights and privileges: %s' personName}}</h3>
 <br>
 
+<script type="text/javascript">
+  $(window).on('bundleLoaded', function() {
+    registerAccessTypeSelectors();
+  })
+</script>
+
 {{#rules}}
   <h4>{{title}}</h4>
   <hr />
-  <form action="" method="post">
-    <input type="hidden" name="eventId" value="{{eventId}}">
-    <table class="table table-bordered table-hover table-striped">
-      {{#rules}}
-        <tr>
-          <td>{{title}}</td>
-          <td>{{type}}</td>
-          <td>{{> partials/AccessTypeSelector this}}</td>
-        </tr>
-      {{/rules}}
-    </table>
-    <hr />
-    <input class="btn btn-primary" type="submit" value="{{_p 'Save %s' title}}">
-  </form>
+  <table class="table table-bordered table-hover table-striped">
+    {{#rules}}
+      <tr>
+        <td>{{title}}</td>
+        <td>{{type}}</td>
+        <td>{{> partials/AccessTypeSelector this}}</td>
+      </tr>
+    {{/rules}}
+  </table>
   <hr />
 {{/rules}}
 

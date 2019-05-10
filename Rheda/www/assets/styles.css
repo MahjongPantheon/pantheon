@@ -138,3 +138,7 @@ body {
     max-width: 200px;
 }
 
+.access-rule-value-selector .icon {
+  display: none; /* default */
+}
+

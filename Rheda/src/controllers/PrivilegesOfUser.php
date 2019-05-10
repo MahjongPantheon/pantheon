@@ -67,8 +67,18 @@ class PrivilegesOfUser extends Controller
                 'id' => $eventId,
                 'title' => $eventId == '__global' ? _t('Global privileges') : $eventTitles[$eventId],
                 'rules' => array_map(function($key, $ruleInfo) use(&$allAccessData, $eventId) {
-                    $currentValue = $allAccessData[$eventId][$key]['value'] ?: $ruleInfo['default'];
+                    $currentValue = isset($allAccessData[$eventId][$key]['value'])
+                        ? $allAccessData[$eventId][$key]['value']
+                        : $ruleInfo['default'];
+                    $ruleId = isset($allAccessData[$eventId][$key]['id'])
+                        ? $allAccessData[$eventId][$key]['id']
+                        : null;
+                    $allowedValues = isset($allAccessData[$eventId][$key]['allowed_values'])
+                        ? $allAccessData[$eventId][$key]['allowed_values']
+                        : [];
+
                     return [
+                        'id' => $ruleId,
                         'key' => $key,
                         'title' => $ruleInfo['title'],
                         'type' => $ruleInfo['type'],
@@ -80,7 +90,7 @@ class PrivilegesOfUser extends Controller
                                 'value' => $val,
                                 'selected' => $val == $currentValue
                             ];
-                        }, $allAccessData[$eventId][$key]['allowed_values']),
+                        }, $allowedValues),
                         'value' => $currentValue,
                         'checked' => $ruleInfo['type'] == 'bool' && $currentValue == 'true'
                     ];
