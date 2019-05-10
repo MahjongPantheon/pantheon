@@ -1,18 +1,36 @@
-{{#this.type_bool}}
-  <div class="custom-checkbox custom-control">
-    <input name="{{this.key}}" class="custom-control-input"
-           id="{{this.key}}_true"
-           type="checkbox" value="true" {{#checked}}checked="checked"{{/checked}} />
-    <label class="custom-control-label" for="{{this.key}}_true"></label>
-  </div>
-{{/this.type_bool}}
-{{#this.type_int}}
-  <input class="form-control" type="number" value="{{value}}" min="0" name="{{this.key}}" />
-{{/this.type_int}}
-{{#this.type_enum}}
-  <select name="{{this.key}}" class="custom-select">
-  {{#this.allowed_values}}
-    <option value="{{value}}" {{#selected}}selected="selected"{{/selected}}>{{value}}</option>
-  {{/this.allowed_values}}
-  </select>
-{{/this.type_enum}}
+<div class="access-rule-value-selector"
+     data-id="{{this.id}}"
+     data-type="{{this.type}}">
+  {{#this.type_bool}}
+    <div class="custom-checkbox custom-control">
+      <input name="{{this.key}}"
+             class="custom-control-input ctrl"
+             id="ar_{{this.id}}"
+             type="checkbox"
+             {{#checked}}checked="checked"{{/checked}} />
+      <label class="custom-control-label"
+             for="ar_{{this.id}}"></label>
+    </div>
+  {{/this.type_bool}}
+  {{#this.type_int}}
+    <input class="form-control ctrl"
+           id="ar_{{this.id}}"
+           type="number"
+           value="{{value}}"
+           min="0"
+           name="{{this.key}}" />
+  {{/this.type_int}}
+  {{#this.type_enum}}
+    <select name="{{this.key}}"
+            id="ar_{{this.id}}"
+            class="custom-select ctrl">
+    {{#this.allowed_values}}
+      <option value="{{value}}"
+              {{#selected}}selected="selected"{{/selected}}>{{value}}</option>
+    {{/this.allowed_values}}
+    </select>
+  {{/this.type_enum}}
+  <i class="icon progress">wip</i>
+  <i class="icon ok">ok</i>
+  <i class="icon fail">fail</i>
+</div>

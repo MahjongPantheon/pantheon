@@ -75,4 +75,6 @@ return [ // Omit trailing slashes in keys when possible
     '!/privileges/gid(?<id>\d+)'    => 'PrivilegesOfGroup',
     '!/groups/uid(?<id>\d+)'        => 'GroupsOfUser',
     '!/groups/gid(?<id>\d+)'        => 'GroupList',
+
+    '!/privileges/ajax'             => 'PrivilegesAjax',
 ];
