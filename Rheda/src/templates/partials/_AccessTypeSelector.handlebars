@@ -2,11 +2,12 @@
      data-id="{{this.id}}"
      data-type="{{this.type}}">
   {{#this.type_bool}}
-    <div class="custom-checkbox custom-control">
+    <div class="custom-checkbox custom-control centered-content">
       <input name="{{this.key}}"
              class="custom-control-input ctrl"
              id="ar_{{this.id}}"
              type="checkbox"
+             {{#this.disabled}}disabled{{/this.disabled}}
              {{#checked}}checked="checked"{{/checked}} />
       <label class="custom-control-label"
              for="ar_{{this.id}}"></label>
@@ -18,11 +19,13 @@
            type="number"
            value="{{value}}"
            min="0"
+           {{#this.disabled}}disabled{{/this.disabled}}
            name="{{this.key}}" />
   {{/this.type_int}}
   {{#this.type_enum}}
     <select name="{{this.key}}"
             id="ar_{{this.id}}"
+            {{#this.disabled}}disabled{{/this.disabled}}
             class="custom-select ctrl">
     {{#this.allowed_values}}
       <option value="{{value}}"

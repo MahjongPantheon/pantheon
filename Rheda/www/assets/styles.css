@@ -138,6 +138,10 @@ body {
     max-width: 200px;
 }
 
+.centered-content {
+  text-align: center;
+}
+
 .access-rule-value-selector .icon {
   display: none; /* default */
 }

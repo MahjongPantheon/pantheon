@@ -26,9 +26,26 @@
 {{#rules}}
   <h4>{{title}}</h4>
   <hr />
-  <table class="table table-bordered table-hover table-striped">
+  <table class="table table-bordered table-hover table-striped access-list">
+    <tr class="centered-content">
+      <th>{{_t "Customize"}}</th>
+      <th>{{_t "Title"}}</th>
+      <th>{{_t "Type"}}</th>
+      <th>{{_t "Value"}}</th>
+    </tr>
     {{#rules}}
-      <tr>
+      <tr class="customize {{#overridden}}overridden{{/overridden}}">
+        <td>
+          <div class="custom-control custom-switch centered-content">
+          <input name="{{overrideKey}}"
+                 class="custom-control-input"
+                 id="aro_{{id}}"
+                 type="checkbox"
+                 {{#overridden}}checked="checked"{{/overridden}} />
+          <label class="custom-control-label"
+                 for="aro_{{this.id}}"></label>
+          </div>
+        </td>
         <td>{{title}}</td>
         <td>{{type}}</td>
         <td>{{> partials/AccessTypeSelector this}}</td>
