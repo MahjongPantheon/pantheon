@@ -181,9 +181,9 @@
 
 ////////////////////////// Access rules ajax management ///////////////////////////////
 
-  var ICON_PROGRESS = 'progress';
-  var ICON_OK = 'ok';
-  var ICON_FAIL = 'fail';
+  var ICON_PROGRESS = 'icon-access-save-progress';
+  var ICON_OK = 'icon-access-save-success';
+  var ICON_FAIL = 'icon-access-save-fail';
 
   /**
    * Call this on document ready in those pages which contain _AccessTypeSelector partial
