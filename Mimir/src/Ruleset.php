@@ -120,10 +120,15 @@ abstract class Ruleset
         return static::$_ruleset['uma'];
     }
 
+    /**
+     * oka is an ante every player pays upfront, and the winner takes its all.
+     * so if oka is 20000, every player puts 5000 in the "oka-pot" and the
+     * gets it all, so he profits 15000 as he payed 5000 himself too.
+     */
     public function oka($place)
     {
         if ($place === 1) {
-            return static::$_ruleset['oka'];
+            return ((static::$_ruleset['oka'])*0,75)) ;
         } else {
             return -(static::$_ruleset['oka'] / 4);
         }
