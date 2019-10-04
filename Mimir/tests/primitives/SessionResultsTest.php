@@ -121,7 +121,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit_Framework_TestCase
     public function testOkaRule()
     {
         $this->_ruleset->setRule('startPoints', 25000);
-        $this->_ruleset->setRule('oka', 20000);
+        $this->_ruleset->setRule('oka', 20);
 
         $result = (new SessionResultsPrimitive($this->_db))
             ->setPlayer($this->_players[0])
@@ -133,7 +133,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit_Framework_TestCase
             );
         $result->save();
 
-        $this->assertEquals(30000, $result->getRatingDelta());
+        $this->assertEquals(30, $result->getRatingDelta());
 
         $result = (new SessionResultsPrimitive($this->_db))
             ->setPlayer($this->_players[1])
