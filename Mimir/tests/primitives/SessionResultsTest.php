@@ -133,7 +133,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit_Framework_TestCase
             );
         $result->save();
 
-        $this->assertEquals(15000, $result->getRatingDelta());
+        $this->assertEquals(30000, $result->getRatingDelta());
 
         $result = (new SessionResultsPrimitive($this->_db))
             ->setPlayer($this->_players[1])
