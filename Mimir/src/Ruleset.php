@@ -128,7 +128,7 @@ abstract class Ruleset
     public function oka($place)
     {
         if ($place === 1) {
-            return ((static::$_ruleset['oka'])*0,75)) ;
+            return ((static::$_ruleset['oka'])*0.75) ;
         } else {
             return -(static::$_ruleset['oka'] / 4);
         }
