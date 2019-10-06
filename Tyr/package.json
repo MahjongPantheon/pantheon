@@ -28,7 +28,7 @@
     "i18n-dialect": "1.0.8",
     "i18n-proto": "^1.0.5",
     "i18n-stex": "https://github.com/ctizen/stex.git",
-    "lodash": "4.17.4",
+    "lodash": "4.17.13",
     "rxjs": "5.5.0",
     "ts-helpers": "1.1.2",
     "zone.js": "0.8.18"
