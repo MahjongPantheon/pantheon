@@ -28,5 +28,5 @@
 }
 .content {
   min-height:100%;
-  background-color: #006800;
+  background-color: var(--main-bg-color);
 }

@@ -67,26 +67,39 @@ table {
   border-spacing: 0;
 }
 
+/* ------------ Common colors -------------------*/
+:root {
+  --main-bg-color: #2C632C;
+  --main-button-bg-color: #865931;
+  --main-text-color: #C6C7C4;
+  --main-border-color: #9B8573;
+
+  --main-bg-color-lite: #8BA98B;
+  --main-button-bg-color-lite: #BDA48E;
+  --main-text-color-lite: #DFE0DE;
+  --main-border-color-lite: #C8BCB2;
+}
+
 /* ------------ Application-wide styles ------------ */
 html,
 body {
   overflow: hidden;
-  font-family: 'ptsans', arial, sans-serif;
+  font-family: 'Open Sans Condensed', arial, sans-serif;
 }
 button {
-  box-shadow:inset 0 7px 11px -2px #7a481d;
-  background-color: #926d65;
+  box-shadow:inset 0 -7px 12px -7px var(--main-button-bg-color-lite);
+  background-color: var(--main-button-bg-color);
   border-radius: 7px;
-  border: 2px solid #B9CBB9;
+  border: 2px solid var(--main-border-color);
   display: inline-block;
   cursor: pointer;
-  color: #ffffff;
+  color: var(--main-text-color);
   font-size: 15px;
   font-weight: bold;
   padding: 7px 23px;
   text-decoration: none;
-  text-shadow: 0 -1px 0 #566963;
-  font-family: 'ptsans', arial, sans-serif;
+  text-shadow: 0 -1px 0 var(--main-button-bg-color);
+  font-family: 'Open Sans Condensed', arial, sans-serif;
 }
 button:active {
   position:relative;
@@ -106,15 +119,13 @@ button:active {
 }
 
 .gradient-button {
-  background: #999;
   padding: 5px;
-  border: solid #2c374c 2px;
+  border: solid var(--main-border-color) 2px;
   text-decoration: none;
 }
 
 .gradient-button:disabled {
   opacity: 0.5;
-  background: #666;
 }
 
 /* ---- Riichi-bet preloader :) ----- */
