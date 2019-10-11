@@ -20,7 +20,7 @@
 
 import { Injectable } from '@angular/core';
 import { isDevMode } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { RemoteError } from './remoteError';
 import {
   RRound,
@@ -48,14 +48,19 @@ import {
   tablesStateFormatter
 } from './formatters';
 import { AppState } from '../primitives/appstate';
-import 'rxjs/add/operator/toPromise';
 import config from '../config';
 import { environment } from '../../environments/environment';
+
+type GenericResponse = {
+  error?: { message: string, code: any },
+  headers: any,
+  result: any
+};
 
 @Injectable()
 export class RiichiApiService {
   private _authToken: string = null;
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
   setCredentials(token: string) {
     this._authToken = token;
   }
@@ -133,10 +138,10 @@ export class RiichiApiService {
   /////////////////////////////////////////////////////////////////////////////////////
 
   private _jsonRpcRequest<RET_TYPE>(methodName: string, ...params: any[]): Promise<RET_TYPE> {
-    const commonHeaders = new Headers({
+    const commonHeaders = new HttpHeaders({
       'Content-type': 'application/json',
-      'X-Auth-Token': this._authToken,
-      'X-Api-Version': config.apiVersion.map((v) => v.toString()).join('.')
+      'X-Api-Version': config.apiVersion.map((v) => v.toString()).join('.'),
+      'X-Auth-Token': this._authToken || '',
     });
     const jsonRpcBody = {
       jsonrpc: "2.0",
@@ -148,17 +153,16 @@ export class RiichiApiService {
     return this.http
       .post(environment.apiUrl, jsonRpcBody, { headers: commonHeaders })
       .toPromise()
-      .then<RET_TYPE>((response) => {
-        this._checkCompatibility(response.headers.get('x-api-version')); // for some reason headers are lowercase
-        const json = response.json();
-        if (json.error) {
+      .then<RET_TYPE>((response: GenericResponse) => {
+        if (response.error) {
           if (isDevMode()) {
-            console.error(json.error.message);
+            console.error(response.error.message);
           }
-          throw new RemoteError(json.error.message, json.error.code);
+          throw new RemoteError(response.error.message, response.error.code.toString());
         }
 
-        return json.result; // TODO: runtime checks of object structure
+        // this._checkCompatibility(response.headers.get('x-api-version')); // for some reason headers are lowercase
+        return response.result; // TODO: runtime checks of object structure
       });
   }
 
