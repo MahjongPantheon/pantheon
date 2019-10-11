@@ -159,7 +159,7 @@ export class YakuSelectScreen extends I18nComponent {
   // -------------------------------
   // ---- View & scroll related ----
   // -------------------------------
-  @ViewChild('scroller') scroller: ElementRef;
+  @ViewChild('scroller', {static: false}) scroller: ElementRef;
   @ViewChildren('scrlink') links: QueryList<ElementRef>;
   private _simpleLink: HTMLAnchorElement;
 
