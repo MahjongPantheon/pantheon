@@ -143,11 +143,10 @@
 }
 
 .newgame-button {
-  width: 100%;
-  background-color: #ccc;
+  width: 94%;
   font-size: 24px;
   flex: 1;
-  margin: 5px 0;
+  margin: 5px auto;
   padding: 10px 0;
 }
 
