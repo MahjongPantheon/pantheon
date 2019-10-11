@@ -21,42 +21,42 @@
 <div class="win-lose">
   <button
     *ngIf="showWinButton()"
-    class="win"
+    class="discolored win"
     [class.pressed]="winPressed()"
     [class.disabled]="winDisabled()"
     (click)="winClick()"
-  ><custom-icon [type]="'up'"></custom-icon></button>
+  ><custom-icon [type]="'up'" [resize]="36"></custom-icon></button>
   <button
     *ngIf="showLoseButton()"
-    class="lose"
+    class="discolored lose"
     [class.pressed]="losePressed()"
     [class.disabled]="loseDisabled()"
     (click)="loseClick()"
-  ><custom-icon [type]="'down'"></custom-icon></button>
+  ><custom-icon [type]="'down'" [resize]="36"></custom-icon></button>
   <button
     *ngIf="showDeadButton()"
-    class="dead"
+    class="discolored dead"
     [class.pressed]="deadPressed()"
     (click)="deadClick()"
-  ><custom-icon [type]="'dead'"></custom-icon></button>
+  ><custom-icon [type]="'dead'" [resize]="36"></custom-icon><br/>dead hand</button>
   <button
     *ngIf="showPaoButton()"
-    class="lose"
+    class="discolored lose"
     [class.pressed]="paoPressed()"
     (click)="paoClick()"
-  ><span class="pao-label"></span><custom-icon [type]="'down'"></custom-icon></button>
+  ><span class="pao-label"></span><custom-icon [type]="'down'" [resize]="36"></custom-icon></button>
   <button
     *ngIf="showNagashiButton()"
-    class="win"
+    class="discolored win"
     [class.pressed]="nagashiPressed()"
     [class.disabled]="nagashiDisabled()"
     (click)="nagashiClick()"
-  ><custom-icon [type]="'up'"></custom-icon></button>
+  ><custom-icon [type]="'up'" [resize]="36"></custom-icon></button>
 </div>
 <div class="riichi-bet">
   <button
     *ngIf="showRiichiButton()"
-    class="riichi-bet-button"
+    class="discolored riichi-bet-button"
     [class.pressed]="riichiPressed()"
     (click)="riichiClick()"
   ><span [class.hidden]="riichiPressed()">{{_NO_RIICHI}}</span></button>

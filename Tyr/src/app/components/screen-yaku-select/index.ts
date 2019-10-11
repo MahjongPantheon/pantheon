@@ -59,7 +59,7 @@ export class YakuSelectScreen extends I18nComponent {
     private metrika: MetrikaService
   ) {
     super(i18n);
-    this._viewportHeight = (window.innerHeight - 60) + 'px'; // 60 is height of navbar;
+    this._viewportHeight = (window.innerHeight - 50) + 'px'; // 50 is height of navbar;
     this._tabsHeight = parseInt((window.innerWidth * 0.10).toString(), 10) + 'px'; // Should equal to margin-left of buttons & scroller-wrap
   }
 

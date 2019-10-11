@@ -19,7 +19,15 @@
  */
 
 :host {
-  color: #9B9E92;
+  color: var(--main-text-color);
+}
+
+#round-index-bg {
+  fill: var(--secondary-bg-color);
+}
+
+#round-index-text {
+  fill: var(--secondary-text-color);
 }
 
 svg {

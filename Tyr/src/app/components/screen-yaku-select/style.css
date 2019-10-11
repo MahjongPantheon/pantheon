@@ -19,20 +19,28 @@
  */
 
 .scroller-wrap {
-    position: absolute;
-    top: 130px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: scroll;
+  position: absolute;
+  top: calc(var(--navbar-height) + var(--yaku-bar-height));
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: scroll;
 }
 
 .buttons {
-  height: 70px;
+  height: var(--yaku-bar-height);
   display: flex;
   flex-wrap: wrap;
-  background-color: #000;
-  background: linear-gradient(to bottom, #000000 0%,#000000 97%,#000000 97%,#888888 97%,#888888 100%,#888888 100%)
+  background-color: var(--navbar-bg-color);
+  background: linear-gradient(
+    to bottom,
+    var(--navbar-bg-color) 0%,
+    var(--navbar-bg-color) 97%,
+    var(--navbar-bg-color) 97%,
+    var(--main-border-color) 97%,
+    var(--main-border-color) 100%,
+    var(--main-border-color) 100%
+  )
 }
 
 .scroller-wrap.multiron, .buttons.multiron {
@@ -40,42 +48,44 @@
 }
 
 .buttons > button {
-    flex: 1 0 auto;
-    margin: 5px 5px 0 5px;
-    border: 2px solid transparent;
-    border-bottom: none;
-    background-color: transparent;
-    outline: none;
+  padding: 0;
+  flex: 1 0 auto;
+  margin: 5px 5px 0 5px;
+  border: 2px solid transparent;
+  border-bottom: none;
+  background-color: transparent;
+  outline: none;
+  box-shadow: none;
 }
 
 .buttons > button.pressed {
-    background-color: #444;
-    border: 2px solid #888;
-    border-bottom: none;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+  background-color: var(--navbar-bg-color);
+  border: 2px solid var(--main-border-color);
+  border-bottom: none;
+  border-radius: 15px 15px 0 0;
+  box-shadow: none;
 }
 
 .yaku-row:nth-of-type(7n) {
-    background-color: #666;
+    background-color: #444;
 }
 .yaku-row:nth-of-type(7n+1) {
-    background-color: #363;
+    background-color: #242;
 }
 .yaku-row:nth-of-type(7n+2) {
-    background-color: #336;
+    background-color: #224;
 }
 .yaku-row:nth-of-type(7n+3) {
-    background-color: #663;
+    background-color: #442;
 }
 .yaku-row:nth-of-type(7n+4) {
-    background-color: #636;
+    background-color: #424;
 }
 .yaku-row:nth-of-type(7n+5) {
-    background-color: #366;
+    background-color: #244;
 }
 .yaku-row:nth-of-type(7n+6) {
-  background-color: #633;
+  background-color: #422;
 }
 
 .yaku-row {
@@ -84,13 +94,13 @@
 }
 
 hr {
-    color: #666;
-    border: #666;
+    color: var(--main-border-color);
+    border: var(--main-border-color);
     margin-bottom: 40px;
 }
 
 .outcome-indicator {
-  color: #ccc;
+  color: var(--main-text-color);
   line-height: 64px;
   font-size: 32px;
   padding: 0 16px;
@@ -98,9 +108,9 @@ hr {
 
 .player-tabs {
   position: fixed;
-  top: 60px;
-  background-color: #449;
-  color: #aaa;
+  top: var(--navbar-height);
+  background-color: var(--secondary-bg-color);
+  color: var(--secondary-text-color);
   font-size: 20px;
   display: flex;
   flex-direction: row-reverse;
@@ -119,8 +129,8 @@ hr {
 }
 
 .player-tabs > div.selected {
-  background-color: #98b;
-  color: #fff;
+  background-color: var(--secondary-bg-color-active);
+  font-weight: bold;
 }
 
 .player-tabs .name {
@@ -134,11 +144,12 @@ hr {
 
 .player-tabs .score {
   flex: 0;
-  background-color: #000;
+  background-color: var(--secondary-button-bg-color);
+  color: var(--main-text-color);
   padding: 0 6px;
 }
 
 .player-tabs > div.selected .score {
-  background-color: #555;
-  color: #fff;
+  background-color: var(--secondary-button-bg-color);
+  color: var(--main-text-color);
 }

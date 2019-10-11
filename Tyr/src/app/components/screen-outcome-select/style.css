@@ -18,24 +18,22 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.wrap { 
+.wrap {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 
   position: absolute;
-  top: 60px;
+  top: var(--navbar-height);
   left: 0;
   right: 0;
   bottom: 0;
 }
 
 button {
-  width: 100%;
-  background-color: #ccc;
   font-size: 30px;
   flex: 1;
-  margin: 5px 0;
+  margin: var(--margin-size) var(--margin-size);
 }
 
 button:after {
@@ -45,7 +43,6 @@ button:after {
 }
 
 .disabledText {
-  color: #ccc;
   font-size: 20px;
   text-align: center;
 }

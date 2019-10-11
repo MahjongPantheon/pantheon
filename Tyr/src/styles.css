@@ -67,10 +67,11 @@ table {
   border-spacing: 0;
 }
 
-/* ------------ Common colors -------------------*/
+/* ------------ Common vars -------------------*/
 :root {
   --main-bg-color: #2C632C;
   --main-button-bg-color: #865931;
+  --main-button-bg-color-hl: #8e6036;
   --main-text-color: #C6C7C4;
   --main-border-color: #9B8573;
 
@@ -78,6 +79,26 @@ table {
   --main-button-bg-color-lite: #BDA48E;
   --main-text-color-lite: #DFE0DE;
   --main-border-color-lite: #C8BCB2;
+
+  --secondary-bg-color: #8AA399;
+  --secondary-bg-color-active: #BFCCC7;
+  --secondary-text-color: #183618;
+
+  --secondary-button-bg-color: #2B4162;
+
+  --navbar-height: 50px;
+  --navbar-bg-color: #183618;
+  --yaku-bar-height: 70px;
+
+  --margin-size: 5px;
+
+  --emergency-color: rgb(179, 0, 27);
+  --warning-color: rgb(221, 215, 141);
+  --safe-color: rgb(44, 99, 44);
+
+  --emergency-color-semi: rgba(179, 0, 27, 0.2);
+  --warning-color-semi: rgba(221, 215, 141, 0.2);
+  --safe-color-semi: rgba(44, 99, 44, 0.2);
 }
 
 /* ------------ Application-wide styles ------------ */
@@ -86,25 +107,55 @@ body {
   overflow: hidden;
   font-family: 'Open Sans Condensed', arial, sans-serif;
 }
+
+/* Buttons */
+
 button {
-  box-shadow:inset 0 -7px 12px -7px var(--main-button-bg-color-lite);
-  background-color: var(--main-button-bg-color);
-  border-radius: 7px;
-  border: 2px solid var(--main-border-color);
+  background: linear-gradient(
+    to bottom,
+    var(--main-button-bg-color) 0%,
+    var(--main-button-bg-color-hl) 50%,
+    var(--main-button-bg-color) 51%,
+    var(--main-button-bg-color) 100%
+  );
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 5px;
+  box-shadow: 6px 6px 13px 0 var(--secondary-text-color);
+  border: none;
   display: inline-block;
   cursor: pointer;
   color: var(--main-text-color);
   font-size: 15px;
-  font-weight: bold;
-  padding: 7px 23px;
+  padding: 6px 15px;
   text-decoration: none;
-  text-shadow: 0 -1px 0 var(--main-button-bg-color);
+  text-shadow: 0 1px 0 var(--navbar-bg-color);
+  outline: none;
   font-family: 'Open Sans Condensed', arial, sans-serif;
 }
+
 button:active {
-  position:relative;
-  top:1px;
+  position: relative;
+  top: 1px;
+  box-shadow: 2px 2px 3px 0 var(--secondary-text-color);
 }
+
+button:disabled {
+  box-shadow: none;
+}
+
+button.discolored {
+  background: transparent;
+  box-shadow: none;
+  text-shadow: none;
+  min-height: unset;
+  color: var(--secondary-text-color);
+}
+
+button.discolored:active {
+  box-shadow: none;
+}
+
 .preloader {
   position: absolute;
   font-size: 100px;
@@ -119,8 +170,7 @@ button:active {
 }
 
 .gradient-button {
-  padding: 5px;
-  border: solid var(--main-border-color) 2px;
+  padding: 2px;
   text-decoration: none;
 }
 

@@ -38,7 +38,7 @@
           class="start-button"
           (click)="startGame()"
           [class.disabled]="!playersValid()"
-      >✓</button>
+      ><custom-icon [type]="'check'"></custom-icon></button>
     </div>
   </div>
   <div class="ka-shi">
@@ -76,7 +76,7 @@
       </select>
     </div>
     <div class="edge-block">
-      <button class="rand-button" (click)="randomize()">🔃</button>
+      <button class="rand-button" (click)="randomize()"><custom-icon [type]="'reload'"></custom-icon></button>
     </div>
   </div>
 </div>
