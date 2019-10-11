@@ -25,12 +25,12 @@
   <div *ngFor="let table of state.getOtherTables()" class="table">
     <ul class="playerList">
       <li *ngFor="let player of table.players">
-        {{player.displayName}}: {{player.score}}
+        <b>{{player.displayName}}</b>: {{player.score}}
       </li>
     </ul>
     <button class="viewTable" (click)="viewTable(table.hash)">
       {{table.currentRound | formatRound}}
-      <custom-icon [type]="'view'" resize="36"></custom-icon>
+      <custom-icon [type]="'view'" [resize]="36"></custom-icon>
     </button>
   </div>
 </div>

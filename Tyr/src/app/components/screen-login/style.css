@@ -20,7 +20,7 @@
 
 :host {
     position: absolute;
-    top: 60px;
+    top: var(--navbar-height);
     left: 0;
     bottom: 0;
     right: 0;

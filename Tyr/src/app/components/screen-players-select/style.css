@@ -20,7 +20,7 @@
 
 :host {
     position: absolute;
-    top: 60px;
+    top: var(--navbar-height);
     left: 0;
     bottom: 0;
     right: 0;
@@ -56,7 +56,6 @@
     align-self: center;
     padding: 3px;
     text-align: center;
-    background-color: #72b370;
 
     display: flex;
     flex-direction: column;
