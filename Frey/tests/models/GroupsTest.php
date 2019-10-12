@@ -25,7 +25,7 @@ require_once __DIR__ . '/../../src/helpers/Db.php';
 require_once __DIR__ . '/../../src/helpers/Config.php';
 require_once __DIR__ . '/../../src/helpers/Meta.php';
 
-class GroupsModelTest extends \PHPUnit_Framework_TestCase
+class GroupsModelTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
     /**

@@ -26,6 +26,7 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
   selector: 'yaku-item-button',
   template: `
     <button 
+      class="discolored"
       (click)="yakuClick()"
       [class.special]="yaku.id < 0"      
       [class.pressed]="pressed"

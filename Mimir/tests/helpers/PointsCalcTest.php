@@ -20,7 +20,7 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/helpers/PointsCalc.php';
 require_once __DIR__ . '/../util/MockRuleset.php';
 
-class PointsTest extends \PHPUnit_Framework_TestCase
+class PointsTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var MockRuleset

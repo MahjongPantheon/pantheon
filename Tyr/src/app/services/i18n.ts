@@ -3,7 +3,7 @@ import { TranslationProvider, TranslationController } from 'i18n-dialect';
 import { TranslationJson } from 'i18n-proto';
 
 // TODO: exclude from primary bundle
-import * as langRu from '../../i18n/ru.json';
+import langRu from '../../i18n/ru.json';
 import { IDB } from './idb';
 export const supportedLanguages = [
   'en', 'ru'

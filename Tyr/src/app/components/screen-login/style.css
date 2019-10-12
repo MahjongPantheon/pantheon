@@ -20,7 +20,7 @@
 
 :host {
     position: absolute;
-    top: 60px;
+    top: var(--navbar-height);
     left: 0;
     bottom: 0;
     right: 0;
@@ -64,15 +64,9 @@
 
 button {
   flex: 1 33%;
-  flex-shrink: 1;
   padding: 0;
   font-size: 50px;
-  width: 33%;
-  height: 25%;
-  background-color: #ccc;
-  border: 2px outset;
-}
-
-button:active {
-  border: 2px inset;
+  width: 29%;
+  margin: 2% 0 0 3%;
+  height: 20%;
 }

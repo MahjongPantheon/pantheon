@@ -50,11 +50,12 @@
 
   <!-- Round index -->
   <path
+    id="round-index-bg"
     d="m70,78l-30,-30l0,60l60,0l0,-60l-60,0l30,30z"
-    fill="#686"
     stroke-width="1.5"/>
-  
+
   <text
+    id="round-index-text"
     xml:space="preserve"
     text-anchor="middle"
     font-size="36"
@@ -137,42 +138,42 @@
     width="100"
     height="10"
   ></use>
-  
+
   <!-- Chombo markers -->
   <text
     *ngIf="shimochaChombo"
     xml:space="preserve"
     text-anchor="middle"
-    font-size="30"
-    y="250"
-    x="230"
+    font-size="50"
+    y="220"
+    x="220"
   >☹</text>
-  
+
   <text
     *ngIf="selfChombo"
     xml:space="preserve"
     text-anchor="middle"
-    font-size="30"
+    font-size="50"
     y="350"
-    x="110"
+    x="140"
   >☹</text>
-  
+
   <text
     *ngIf="kamichaChombo"
     xml:space="preserve"
     text-anchor="middle"
-    font-size="30"
-    y="170"
-    x="50"
+    font-size="50"
+    y="220"
+    x="60"
   >☹</text>
-  
+
   <text
     *ngIf="toimenChombo"
     xml:space="preserve"
     text-anchor="middle"
-    font-size="30"
+    font-size="50"
     y="70"
-    x="170"
+    x="140"
   >☹</text>
 
   <!-- Pao markers -->
@@ -180,38 +181,42 @@
     *ngIf="shimochaPao"
     xml:space="preserve"
     text-anchor="middle"
-    font-size="30"
-    y="250"
+    font-size="15"
+    font-weight="bold"
+    y="260"
     x="230"
-  >🤦‍</text>
-  
+  >pao‍!</text>
+
   <text
     *ngIf="selfPao"
     xml:space="preserve"
     text-anchor="middle"
-    font-size="30"
+    font-size="15"
+    font-weight="bold"
     y="350"
     x="110"
-  >🤦‍</text>
-  
+  >pao‍!</text>
+
   <text
     *ngIf="kamichaPao"
     xml:space="preserve"
     text-anchor="middle"
-    font-size="30"
+    font-size="15"
+    font-weight="bold"
     y="170"
     x="50"
-  >🤦‍</text>
-  
+  >pao!</text>
+
   <text
     *ngIf="toimenPao"
     xml:space="preserve"
     text-anchor="middle"
-    font-size="30"
+    font-size="15"
+    font-weight="bold"
     y="70"
     x="170"
-  >🤦‍</text>
-  
+  >pao!</text>
+
   <!-- cross-lines -->
   <use
     *ngIf="leftRightPayment"
@@ -219,23 +224,23 @@
     xlink:href="#curve-left-right"
     stroke="black"
     stroke-width="1.5"/>
-  
+
   <use
     *ngIf="topBottomPayment"
     class="curve"
     xlink:href="#curve-top-bottom"
-    stroke="black"      
+    stroke="black"
     stroke-width="1.5"/>
-  
+
   <!-- edge-to-edge curves -->
   <use
     *ngIf="topLeftPayment"
     class="curve"
     xlink:href="#curve-top-left"
-    stroke="black"  
+    stroke="black"
     stroke-width="1.5"
     fill="none"/>
-  
+
   <use
     *ngIf="topRightPayment"
     class="curve"
@@ -243,7 +248,7 @@
     stroke-width="1.5"
     stroke="black"
     fill="none"/>
-  
+
   <use
     *ngIf="bottomLeftPayment"
     class="curve"
@@ -260,7 +265,7 @@
     stroke="black"
     fill="none"/>
 
-  
+
   <!-- text on curves -->
   <text
     transform="rotate(-45 100,150) "
@@ -270,7 +275,7 @@
     text-anchor="middle"
     *ngIf="topLeftPayment"
   >{{topLeftPayment.title}}</text>
-  
+
   <use
     xlink:href="#riichi-stick"
     *ngIf="topLeftPayment && topLeftPayment.riichi"
@@ -281,7 +286,7 @@
     height="5"
     transform="rotate(135 130,145)"
   ></use>
-  
+
   <text
     transform="rotate(45 180,140) "
     x="180"
@@ -301,7 +306,7 @@
     height="5"
     transform="rotate(45 160,145)"
   ></use>
-  
+
   <text
     transform="rotate(45 90,260)"
     x="90"
@@ -310,7 +315,7 @@
     text-anchor="middle"
     *ngIf="bottomLeftPayment"
   >{{bottomLeftPayment.title}}</text>
-  
+
   <use
     xlink:href="#riichi-stick"
     *ngIf="bottomLeftPayment && bottomLeftPayment.riichi"
@@ -321,7 +326,7 @@
     height="5"
     transform="rotate(45 90,215)"
   ></use>
-  
+
   <text
     transform="rotate(-45 180,240) "
     x="180"
@@ -350,7 +355,7 @@
     text-anchor="middle"dy="-5"
     *ngIf="topBottomPayment"
   >{{topBottomPayment.title}}</text>
-  
+
   <use
     xlink:href="#riichi-stick"
     *ngIf="topBottomPayment && topBottomPayment.riichi"
@@ -369,7 +374,7 @@
     text-anchor="middle"dy="-5"
     *ngIf="leftRightPayment"
   >{{leftRightPayment.title}}</text>
-  
+
   <use
     xlink:href="#riichi-stick"
     *ngIf="leftRightPayment && leftRightPayment.riichi"
@@ -380,9 +385,9 @@
     height="5"
   ></use>
 
-  
+
   <!-- arrow-head triangles -->
-  
+
   <path
     *ngIf="topLeftPayment && topLeftPayment.backward"
     d="m130,45l-3,13l6,0l-3,-13z"
@@ -396,7 +401,7 @@
     d="m150,45l-3,13l6,0l-3,-13z"
     stroke-width="1.5"/>
 
-  
+
   <path
     *ngIf="bottomLeftPayment && bottomLeftPayment.backward"
     d="m130,355l-3,-13l6,0l-3,13z"
@@ -410,7 +415,7 @@
     d="m150,355l-3,-13l6,0l-3,13z"
     stroke-width="1.5"/>
 
-  
+
   <path
     *ngIf="topLeftPayment && !topLeftPayment.backward"
     transform="rotate(-25 45,190)"
@@ -426,7 +431,7 @@
     d="m45,208l13,3l0,-6l-13,3z"
     stroke-width="1.5"/>
 
-  
+
   <path
     *ngIf="topRightPayment && !topRightPayment.backward"
     transform="rotate(25 235,190)"

@@ -92,7 +92,7 @@ export class I18nComponent {
   }
   get _DOUBLE_OR_TRIPLE_RON() {
     return this.i18n._t('Double/Triple ron');
-  }  
+  }
   get _NAGASHI_MANGAN() {
     return this.i18n._t('Nagashi mangan');
   }
@@ -114,9 +114,6 @@ export class I18nComponent {
   get _STATISTICS() {
     return this.i18n._t('Statistics');
   }
-  get _ITS_YOU() {
-    return this.i18n._t("it's you");
-  }
   get _TABLE_NUM() {
     return this.i18n._t('Table #');
   }
@@ -128,5 +125,17 @@ export class I18nComponent {
   }
   get _USER_ACTIONS() {
     return this.i18n._t('User actions');
+  }
+  get _TOTAL() {
+    return this.i18n._t('Total: ');
+  }
+  get _TOTAL_HAN() {
+    return this.i18n._t(' han');
+  }
+  get _TOTAL_FU() {
+    return this.i18n._t(' fu');
+  }
+  get _TOTAL_YAKUMAN() {
+    return this.i18n._t('Yakuman!');
   }
 }

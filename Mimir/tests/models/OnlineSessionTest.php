@@ -33,7 +33,7 @@ require_once __DIR__ . '/../../src/helpers/onlineLog/Downloader.php';
  * Class SessionTest: integration test suite
  * @package Mimir
  */
-class OnlineSessionModelTest extends \PHPUnit_Framework_TestCase
+class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Db

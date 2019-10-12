@@ -20,7 +20,7 @@
 
 :host {
   position: absolute;
-  top: 60px;
+  top: var(--navbar-height);
   left: 0;
   bottom: 0;
   right: 0;
@@ -56,17 +56,19 @@
   align-self: center;
   padding: 3px;
   text-align: center;
-  background-color: #72b370;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   position: relative;
+
+  background-color: var(--secondary-bg-color);
+  border-radius: 7px;
 }
 
 .side.selected {
-  background-color: #7072b3;
+  background-color: var(--secondary-bg-color-active);
 }
 
 .edge-block {
@@ -74,7 +76,7 @@
   width: 20%;
   align-self: center;
   text-align: center;
-  color: #72b370;
+  color: var(--secondary-bg-color);
 }
 
 .edge-block.stretched-content {
@@ -109,23 +111,24 @@
   font-size: 32px;
   text-align: center;
   flex: 3;
-  color: #ccc;
+  color: var(--main-text-color);
 }
 
 /* timer */
 .timer {
-  display: flex;
-  align-items: center;
+  border-radius: 7px;
+  padding: 10px 0;
   font-size: 30px;
 }
 
 .timer.redZone {
-  background-color: #900;
+  color: var(--main-text-color);
+  background-color: var(--emergency-color);
 }
 
 .timer.yellowZone {
-  color: #333;
-  background-color: #aa0;
+  color: var(--main-button-bg-color);
+  background-color: var(--warning-color);
 }
 
 /* players blocks */
@@ -143,19 +146,21 @@
 }
 
 .newgame-button {
-  width: 100%;
-  background-color: #ccc;
+  width: 94%;
   font-size: 24px;
   flex: 1;
-  margin: 5px 0;
-  padding: 10px 0;
+  margin: 5px auto;
+  padding: 1px 0;
 }
 
 .table-index {
-  margin-top: 10px;
   text-align: center;
   padding: 5px;
-  background: #232;
+  width: 80%;
+  border-radius: 7px;
+  background: var(--navbar-bg-color);
+  position: absolute;
+  bottom: 0;
 }
 
 .table-index span {
@@ -165,9 +170,11 @@
 
 .chombo {
   position: absolute;
+  border-radius: 4px;
   right: 4px;
-  top: 45%;
-  background-color: #f66;
+  bottom: 4px;
+  color: var(--main-text-color);
+  background-color: var(--emergency-color);
   font-size: 22px;
   padding: 3px;
 }

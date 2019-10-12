@@ -26,7 +26,7 @@ require_once __DIR__ . '/../../../src/primitives/PlayerRegistration.php';
  * Class TextlogParserTest
  * @package Mimir
  */
-class TextlogParserTest extends \PHPUnit_Framework_TestCase
+class TextlogParserTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Db

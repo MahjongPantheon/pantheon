@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2018 
+# Copyright (C) 2019 
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-19 21:17+0300\n"
+"POT-Creation-Date: 2019-10-12 17:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,7 @@ msgid "Pin code was already used on another device"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:61:12
-#: src/app/components/screen-last-round/index.ts:130:23
+#: src/app/components/screen-last-round/index.ts:136:23
 msgid "Unexpected server error"
 msgstr ""
 
@@ -116,41 +116,41 @@ msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:79:12
 #: src/app/components/navbar/index.ts:93:16
-#: src/app/components/screen-last-round/index.ts:95:28
-#: src/app/components/screen-other-table/index.ts:227:28
-#: src/app/components/screen-yaku-select/index.ts:112:16
+#: src/app/components/screen-last-round/index.ts:100:28
+#: src/app/components/screen-other-table/index.ts:232:28
+#: src/app/components/screen-yaku-select/index.ts:117:16
 msgid "Abortive draw"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:82:12
 #: src/app/components/navbar/index.ts:97:16
-#: src/app/components/screen-last-round/index.ts:96:29
-#: src/app/components/screen-other-table/index.ts:228:29
-#: src/app/components/screen-yaku-select/index.ts:114:16
+#: src/app/components/screen-last-round/index.ts:101:29
+#: src/app/components/screen-other-table/index.ts:233:29
+#: src/app/components/screen-yaku-select/index.ts:119:16
 msgid "Chombo"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:85:12
 #: src/app/components/navbar/index.ts:91:16
-#: src/app/components/screen-last-round/index.ts:94:27
-#: src/app/components/screen-other-table/index.ts:226:27
-#: src/app/components/screen-yaku-select/index.ts:110:16
+#: src/app/components/screen-last-round/index.ts:99:27
+#: src/app/components/screen-other-table/index.ts:231:27
+#: src/app/components/screen-yaku-select/index.ts:115:16
 msgid "Exhaustive draw"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:88:12
 #: src/app/components/navbar/index.ts:85:16
-#: src/app/components/screen-last-round/index.ts:92:26
-#: src/app/components/screen-other-table/index.ts:224:26
-#: src/app/components/screen-yaku-select/index.ts:106:16
+#: src/app/components/screen-last-round/index.ts:97:26
+#: src/app/components/screen-other-table/index.ts:229:26
+#: src/app/components/screen-yaku-select/index.ts:111:16
 msgid "Ron"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:91:12
 #: src/app/components/navbar/index.ts:89:16
-#: src/app/components/screen-last-round/index.ts:93:28
-#: src/app/components/screen-other-table/index.ts:225:28
-#: src/app/components/screen-yaku-select/index.ts:108:16
+#: src/app/components/screen-last-round/index.ts:98:28
+#: src/app/components/screen-other-table/index.ts:230:28
+#: src/app/components/screen-yaku-select/index.ts:113:16
 msgid "Tsumo"
 msgstr ""
 
@@ -160,7 +160,7 @@ msgid "Double/Triple ron"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:97:12
-#: src/app/components/screen-last-round/index.ts:97:30
+#: src/app/components/screen-last-round/index.ts:102:30
 msgid "Nagashi mangan"
 msgstr ""
 
@@ -189,34 +189,46 @@ msgid "Statistics"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:118:12
-msgid "it's you"
-msgstr ""
-
-#: src/app/components/auxiliary-i18n/index.ts:121:12
 msgid "Table #"
 msgstr ""
 
-#: src/app/components/auxiliary-i18n/index.ts:124:12
+#: src/app/components/auxiliary-i18n/index.ts:121:12
 msgid "Select preferred language"
 msgstr ""
 
-#: src/app/components/auxiliary-i18n/index.ts:127:12
+#: src/app/components/auxiliary-i18n/index.ts:124:12
 msgid "Log out from system"
 msgstr ""
 
-#: src/app/components/auxiliary-i18n/index.ts:130:12
+#: src/app/components/auxiliary-i18n/index.ts:127:12
 msgid "User actions"
 msgstr ""
 
+#: src/app/components/auxiliary-i18n/index.ts:130:12
+msgid "Total: "
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:133:12
+msgid " han"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:136:12
+msgid " fu"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:139:12
+msgid "Yakuman!"
+msgstr ""
+
 #: src/app/components/navbar/index.ts:75:14
-#: src/app/components/screen-last-round/index.ts:100:11
-#: src/app/components/screen-other-table/index.ts:231:11
+#: src/app/components/screen-last-round/index.ts:105:11
+#: src/app/components/screen-other-table/index.ts:236:11
 msgid "Triple ron"
 msgstr ""
 
 #: src/app/components/navbar/index.ts:78:14
-#: src/app/components/screen-last-round/index.ts:99:11
-#: src/app/components/screen-other-table/index.ts:230:11
+#: src/app/components/screen-last-round/index.ts:104:11
+#: src/app/components/screen-other-table/index.ts:235:11
 msgid "Double ron"
 msgstr ""
 
@@ -224,32 +236,32 @@ msgstr ""
 msgid "Nagashi: select tenpai"
 msgstr ""
 
-#: src/app/components/screen-confirmation/index.ts:69:19
+#: src/app/components/screen-confirmation/index.ts:74:19
 msgid "Failed to add round. Please try again"
 msgstr ""
 
-#: src/app/components/screen-confirmation/index.ts:72:23
-#: src/app/components/screen-last-round/index.ts:128:23
+#: src/app/components/screen-confirmation/index.ts:77:23
+#: src/app/components/screen-last-round/index.ts:134:23
 msgid "Authentication failed"
 msgstr ""
 
-#: src/app/components/screen-confirmation/index.ts:74:23
+#: src/app/components/screen-confirmation/index.ts:79:23
 msgid "Failed to add round. Was this hand already added by someone else?"
 msgstr ""
 
-#: src/app/components/screen-last-round/index.ts:123:19
+#: src/app/components/screen-last-round/index.ts:128:19
 msgid "Error occured. Try again."
 msgstr ""
 
-#: src/app/components/screen-last-round/index.ts:125:21
+#: src/app/components/screen-last-round/index.ts:130:21
 msgid "Latest hand wasn't found"
 msgstr ""
 
-#: src/app/components/screen-overview/index.ts:52:12
+#: src/app/components/screen-overview/index.ts:56:12
 msgid "Hello, %1!"
 msgstr ""
 
-#: src/app/components/screen-settings/index.ts:50:24
+#: src/app/components/screen-settings/index.ts:60:24
 msgid "Are you sure you want to logout? You will have to get a new pin code to login again"
 msgstr ""
 
@@ -273,15 +285,15 @@ msgstr ""
 msgid "%1 han (%2)"
 msgstr ""
 
-#: src/app/primitives/appstate/index.ts:144:40
+#: src/app/primitives/appstate/index.ts:151:40
 msgid "spectator"
 msgstr ""
 
-#: src/app/primitives/appstate/index.ts:473:14
+#: src/app/primitives/appstate/index.ts:491:14
 msgid "Games overview"
 msgstr ""
 
-#: src/app/primitives/appstate/index.ts:475:65
+#: src/app/primitives/appstate/index.ts:493:65
 msgid "Loading..."
 msgstr ""
 

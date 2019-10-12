@@ -22,7 +22,7 @@
   font-size: 20px;
   overflow: scroll;
   position: absolute;
-  top: 60px;
+  top: var(--navbar-height);
   left: 0;
   right: 0;
   bottom: 0;
@@ -31,16 +31,21 @@
 .table {
   display: flex;
   padding: 10px;
-  color: #ccc;
+  color: var(--main-text-color);
 }
 
 .playerList {
   flex: 1;
 }
 
+.playerList b {
+  font-weight: bold;
+}
+
 button.viewTable {
   font-size: 26px;
+  font-weight: normal;
   flex: 0.25;
   width: 100%;
-  background-color: #ccc;
+  padding: 1px 6px;
 }
