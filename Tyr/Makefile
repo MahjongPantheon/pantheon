@@ -4,7 +4,7 @@ deps:
 
 PHONY: build
 build:
-	./node_modules/.bin/ng build --prod --aot --configuration=prod
+	./node_modules/.bin/ng build --prod --aot --configuration=production
 	cd dist && gzip -k -9 -f *.js *.css
 
 PHONY: cleanup_prebuilts
