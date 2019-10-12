@@ -20,7 +20,7 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/Db.php';
 
-class PlayerPrimitiveTest extends \PHPUnit_Framework_TestCase
+class PlayerPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
     public function setUp()

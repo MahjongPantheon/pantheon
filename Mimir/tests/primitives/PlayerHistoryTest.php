@@ -25,7 +25,7 @@ require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/PlayerHistory.php';
 require_once __DIR__ . '/../../src/Db.php';
 
-class PlayerHistoryPrimitiveTest extends \PHPUnit_Framework_TestCase
+class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
     /**

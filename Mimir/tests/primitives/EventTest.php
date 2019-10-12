@@ -23,7 +23,7 @@ require_once __DIR__ . '/../../src/primitives/Formation.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/Db.php';
 
-class EventPrimitiveTest extends \PHPUnit_Framework_TestCase
+class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
     public function setUp()

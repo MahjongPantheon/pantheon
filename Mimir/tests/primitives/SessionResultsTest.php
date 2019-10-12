@@ -26,7 +26,7 @@ require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../util/MockRuleset.php';
 require_once __DIR__ . '/../../src/Db.php';
 
-class SessionResultsPrimitiveTest extends \PHPUnit_Framework_TestCase
+class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
     /**

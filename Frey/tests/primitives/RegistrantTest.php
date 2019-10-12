@@ -20,7 +20,7 @@ namespace Frey;
 require_once __DIR__ . '/../../src/primitives/Registrant.php';
 require_once __DIR__ . '/../../src/helpers/Db.php';
 
-class RegistrantPrimitiveTest extends \PHPUnit_Framework_TestCase
+class RegistrantPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
     public function setUp()

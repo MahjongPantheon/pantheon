@@ -20,7 +20,7 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../config/rulesets/jpmlA.php';
 
-class JPMLARulesetTest extends \PHPUnit_Framework_TestCase
+class JPMLARulesetTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var RulesetJpmlA
