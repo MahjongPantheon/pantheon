@@ -19,7 +19,7 @@ namespace Mimir;
 
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-class YakuMapTest extends \PHPUnit_Framework_TestCase
+class YakuMapTest extends \PHPUnit\Framework\TestCase
 {
     public function testFromTenhou()
     {

@@ -20,11 +20,10 @@
 
 import { Injectable } from '@angular/core';
 import { isDevMode } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { RemoteError } from './remoteError';
 
 import { Table } from '../interfaces/common';
-import 'rxjs/add/operator/toPromise';
 import config from '../config';
 import { environment } from '../../environments/environment';
 
@@ -33,7 +32,7 @@ export class MetrikaService {
   private _eventId: number = null;
   private _metrikaId: number = null;
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
     this._metrikaId = environment.metrikaId;
   }
 

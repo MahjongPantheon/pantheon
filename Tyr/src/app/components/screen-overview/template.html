@@ -21,6 +21,7 @@
   <div class="inline-preloader"></div>
 </div>
 <div class="riichi-table" *ngIf="!currentGameHash && !_loading">
+  <br />
   <div class="centered not-found">
     {{greeting}}
   </div>
@@ -33,7 +34,7 @@
   <button class="newgame-button" (click)="newGame()" *ngIf="showNewGame">{{_NEW_GAME}}</button>
   <button class="newgame-button" (click)="gotoStat()" *ngIf="showStatButton"
           style="background-color: #333; color: #ccc; border: none; text-decoration: underline">
-    {{_STATISTICS}} <custom-icon type="newtab" style="position: absolute; right: 14px; fill: #ccc"></custom-icon>
+    {{_STATISTICS}} <custom-icon [type]="'newtab'" style="position: absolute; right: 14px; fill: #ccc"></custom-icon>
   </button>
 </div>
 <div class="riichi-table" *ngIf="currentGameHash && !_loading">
@@ -56,11 +57,11 @@
       <div class="chombo" *ngIf="toimen.penalties != 0">{{getChomboCount('toimen')}}</div>
     </div>
     <div class="edge-block stretched-content">
-      <div class="timer" [class.redZone]="redZone" [class.yellowZone]="yellowZone">
+      <div class="timer" [class.redZone]="redZone" [class.yellowZone]="yellowZone" style="flex: 0">
         {{timeRemaining}}
       </div>
       <button class="newgame-button" (click)="reloadOverview()">
-        <custom-icon type="reload" resize="40"></custom-icon>
+        <custom-icon [type]="'reload'" [resize]="40"></custom-icon>
       </button>
     </div>
   </div>
@@ -79,8 +80,7 @@
     </div>
   </div>
   <div class="centered">
-    <div class="edge-block">
-      <div>{{_ITS_YOU}} →</div>
+    <div class="edge-block" style="position: relative">
       <div class="table-index" *ngIf="!!this.state.getTableIndex()">
         {{_TABLE_NUM}}
         <span>{{this.state.getTableIndex()}}</span>
@@ -94,7 +94,7 @@
     </div>
     <div class="edge-block stretched-content">
       <button class="newgame-button" (click)="viewLastRound()">
-        <custom-icon type="previous" resize="40"></custom-icon>
+        <custom-icon [type]="'previous'" [resize]="40"></custom-icon>
       </button>
     </div>
   </div>

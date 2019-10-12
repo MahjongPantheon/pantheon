@@ -19,7 +19,7 @@
  */
 
 .page-wrap {
-  padding: 60px 0 0 0;
+  padding: var(--navbar-height) 0 0 0;
   position: absolute;
   top:0;
   bottom:0;
@@ -28,5 +28,5 @@
 }
 .content {
   min-height:100%;
-  background-color: #006800;
+  background-color: var(--main-bg-color);
 }

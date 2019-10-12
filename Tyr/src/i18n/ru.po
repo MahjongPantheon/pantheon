@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-19 21:17+0300\n"
-"PO-Revision-Date: 2018-12-19 23:18+0500\n"
+"POT-Creation-Date: 2019-10-12 17:16+0300\n"
+"PO-Revision-Date: 2019-10-12 17:17+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -93,7 +93,7 @@ msgid "Pin code was already used on another device"
 msgstr "Текущий пин-код уже был использован на другом устройстве"
 
 #: src/app/components/auxiliary-i18n/index.ts:61:12
-#: src/app/components/screen-last-round/index.ts:130:23
+#: src/app/components/screen-last-round/index.ts:136:23
 msgid "Unexpected server error"
 msgstr "Неожиданная ошибка сервера"
 
@@ -119,41 +119,41 @@ msgstr "Ни один стол сейчас не играет"
 
 #: src/app/components/auxiliary-i18n/index.ts:79:12
 #: src/app/components/navbar/index.ts:93:16
-#: src/app/components/screen-last-round/index.ts:95:28
-#: src/app/components/screen-other-table/index.ts:227:28
-#: src/app/components/screen-yaku-select/index.ts:112:16
+#: src/app/components/screen-last-round/index.ts:100:28
+#: src/app/components/screen-other-table/index.ts:232:28
+#: src/app/components/screen-yaku-select/index.ts:117:16
 msgid "Abortive draw"
 msgstr "Абортивная ничья"
 
 #: src/app/components/auxiliary-i18n/index.ts:82:12
 #: src/app/components/navbar/index.ts:97:16
-#: src/app/components/screen-last-round/index.ts:96:29
-#: src/app/components/screen-other-table/index.ts:228:29
-#: src/app/components/screen-yaku-select/index.ts:114:16
+#: src/app/components/screen-last-round/index.ts:101:29
+#: src/app/components/screen-other-table/index.ts:233:29
+#: src/app/components/screen-yaku-select/index.ts:119:16
 msgid "Chombo"
 msgstr "Чомбо"
 
 #: src/app/components/auxiliary-i18n/index.ts:85:12
 #: src/app/components/navbar/index.ts:91:16
-#: src/app/components/screen-last-round/index.ts:94:27
-#: src/app/components/screen-other-table/index.ts:226:27
-#: src/app/components/screen-yaku-select/index.ts:110:16
+#: src/app/components/screen-last-round/index.ts:99:27
+#: src/app/components/screen-other-table/index.ts:231:27
+#: src/app/components/screen-yaku-select/index.ts:115:16
 msgid "Exhaustive draw"
 msgstr "Ничья"
 
 #: src/app/components/auxiliary-i18n/index.ts:88:12
 #: src/app/components/navbar/index.ts:85:16
-#: src/app/components/screen-last-round/index.ts:92:26
-#: src/app/components/screen-other-table/index.ts:224:26
-#: src/app/components/screen-yaku-select/index.ts:106:16
+#: src/app/components/screen-last-round/index.ts:97:26
+#: src/app/components/screen-other-table/index.ts:229:26
+#: src/app/components/screen-yaku-select/index.ts:111:16
 msgid "Ron"
 msgstr "Рон"
 
 #: src/app/components/auxiliary-i18n/index.ts:91:12
 #: src/app/components/navbar/index.ts:89:16
-#: src/app/components/screen-last-round/index.ts:93:28
-#: src/app/components/screen-other-table/index.ts:225:28
-#: src/app/components/screen-yaku-select/index.ts:108:16
+#: src/app/components/screen-last-round/index.ts:98:28
+#: src/app/components/screen-other-table/index.ts:230:28
+#: src/app/components/screen-yaku-select/index.ts:113:16
 msgid "Tsumo"
 msgstr "Цумо"
 
@@ -163,7 +163,7 @@ msgid "Double/Triple ron"
 msgstr "Дабл/трипл-рон"
 
 #: src/app/components/auxiliary-i18n/index.ts:97:12
-#: src/app/components/screen-last-round/index.ts:97:30
+#: src/app/components/screen-last-round/index.ts:102:30
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
@@ -192,34 +192,46 @@ msgid "Statistics"
 msgstr "Статистика"
 
 #: src/app/components/auxiliary-i18n/index.ts:118:12
-msgid "it's you"
-msgstr "это вы"
-
-#: src/app/components/auxiliary-i18n/index.ts:121:12
 msgid "Table #"
 msgstr "Стол №"
 
-#: src/app/components/auxiliary-i18n/index.ts:124:12
+#: src/app/components/auxiliary-i18n/index.ts:121:12
 msgid "Select preferred language"
 msgstr "Выбор языка"
 
-#: src/app/components/auxiliary-i18n/index.ts:127:12
+#: src/app/components/auxiliary-i18n/index.ts:124:12
 msgid "Log out from system"
 msgstr "Выйти из системы"
 
-#: src/app/components/auxiliary-i18n/index.ts:130:12
+#: src/app/components/auxiliary-i18n/index.ts:127:12
 msgid "User actions"
 msgstr "Действия пользователя"
 
+#: src/app/components/auxiliary-i18n/index.ts:130:12
+msgid "Total: "
+msgstr "Всего: "
+
+#: src/app/components/auxiliary-i18n/index.ts:133:12
+msgid " han"
+msgstr " хан"
+
+#: src/app/components/auxiliary-i18n/index.ts:136:12
+msgid " fu"
+msgstr " фу"
+
+#: src/app/components/auxiliary-i18n/index.ts:139:12
+msgid "Yakuman!"
+msgstr "Якуман!"
+
 #: src/app/components/navbar/index.ts:75:14
-#: src/app/components/screen-last-round/index.ts:100:11
-#: src/app/components/screen-other-table/index.ts:231:11
+#: src/app/components/screen-last-round/index.ts:105:11
+#: src/app/components/screen-other-table/index.ts:236:11
 msgid "Triple ron"
 msgstr "Тройной рон"
 
 #: src/app/components/navbar/index.ts:78:14
-#: src/app/components/screen-last-round/index.ts:99:11
-#: src/app/components/screen-other-table/index.ts:230:11
+#: src/app/components/screen-last-round/index.ts:104:11
+#: src/app/components/screen-other-table/index.ts:235:11
 msgid "Double ron"
 msgstr "Двойной рон"
 
@@ -227,39 +239,39 @@ msgstr "Двойной рон"
 msgid "Nagashi: select tenpai"
 msgstr "Нагаши: выберите темпай"
 
-#: src/app/components/screen-confirmation/index.ts:69:19
+#: src/app/components/screen-confirmation/index.ts:74:19
 msgid "Failed to add round. Please try again"
-msgstr "Не удалось добавить раздачу. Попробуйте еще раз."
+msgstr "Не удалось добавить раздачу. Попробуйте еще раз"
 
-#: src/app/components/screen-confirmation/index.ts:72:23
-#: src/app/components/screen-last-round/index.ts:128:23
+#: src/app/components/screen-confirmation/index.ts:77:23
+#: src/app/components/screen-last-round/index.ts:134:23
 msgid "Authentication failed"
 msgstr "Не удалось войти в систему"
 
-#: src/app/components/screen-confirmation/index.ts:74:23
+#: src/app/components/screen-confirmation/index.ts:79:23
 msgid "Failed to add round. Was this hand already added by someone else?"
 msgstr ""
 "Не удалось добавить раздачу. Возможно она была уже добавлена кем-то еще?"
 
-#: src/app/components/screen-last-round/index.ts:123:19
+#: src/app/components/screen-last-round/index.ts:128:19
 msgid "Error occured. Try again."
 msgstr "Произошла ошибка. Попробуйте еще раз."
 
-#: src/app/components/screen-last-round/index.ts:125:21
+#: src/app/components/screen-last-round/index.ts:130:21
 msgid "Latest hand wasn't found"
-msgstr "Последняя раздача не найдена."
+msgstr "Последняя раздача не найдена"
 
-#: src/app/components/screen-overview/index.ts:52:12
+#: src/app/components/screen-overview/index.ts:56:12
 msgid "Hello, %1!"
 msgstr "Привет, %1!"
 
-#: src/app/components/screen-settings/index.ts:50:24
+#: src/app/components/screen-settings/index.ts:60:24
 msgid ""
 "Are you sure you want to logout? You will have to get a new pin code to "
 "login again"
 msgstr ""
 "Вы уверены, что хотите выйти? Чтобы войти заново, вам потребуется новый пин-"
-"код."
+"код"
 
 #: src/app/helpers/makeHandDescription.pipe.ts:38:14
 msgid "%1 (%2)"
@@ -281,15 +293,15 @@ msgstr "%1 хан (%2, дора: %3)"
 msgid "%1 han (%2)"
 msgstr "%1 хан (%2)"
 
-#: src/app/primitives/appstate/index.ts:144:40
+#: src/app/primitives/appstate/index.ts:151:40
 msgid "spectator"
 msgstr "наблюдатель"
 
-#: src/app/primitives/appstate/index.ts:473:14
+#: src/app/primitives/appstate/index.ts:491:14
 msgid "Games overview"
 msgstr "Обзор игр"
 
-#: src/app/primitives/appstate/index.ts:475:65
+#: src/app/primitives/appstate/index.ts:493:65
 msgid "Loading..."
 msgstr "Загрузка..."
 
@@ -300,7 +312,7 @@ msgid ""
 "winner"
 msgstr ""
 "Если вы хотите выбрать яку риичи, вернитесь назад и отметьте ставку риичи "
-"для выигравшего."
+"для выигравшего"
 
 #: src/app/primitives/yaku.ts:76:34 src/app/primitives/yaku.ts:77:39
 msgid "Opened hand"
@@ -505,3 +517,6 @@ msgstr "Ренхо"
 #: src/app/primitives/yaku.ts:334:34 src/app/primitives/yaku.ts:335:39
 msgid "Open riichi"
 msgstr "Опен риичи"
+
+#~ msgid "it's you"
+#~ msgstr "это вы"

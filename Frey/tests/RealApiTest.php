@@ -24,7 +24,7 @@ use JsonRPC\Client;
  * Class RealApiTest: integration test suite
  * @package Frey
  */
-class RealApiTest extends \PHPUnit_Framework_TestCase
+class RealApiTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Client

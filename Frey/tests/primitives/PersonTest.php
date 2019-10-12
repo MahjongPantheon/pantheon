@@ -21,7 +21,7 @@ require_once __DIR__ . '/../../src/primitives/Person.php';
 require_once __DIR__ . '/../../src/primitives/Group.php';
 require_once __DIR__ . '/../../src/helpers/Db.php';
 
-class PersonPrimitiveTest extends \PHPUnit_Framework_TestCase
+class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
     public function setUp()

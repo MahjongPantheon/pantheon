@@ -23,12 +23,12 @@
   *ngIf="!isScreen('overview')"
   [disabled]="isScreen('lastResults', 'login')"
   (click)="prevScreen()"
-><custom-icon [type]="'prev'"></custom-icon></button>
+><custom-icon [type]="'previous'"></custom-icon></button>
 <button
   class="back-button gradient-button"
   *ngIf="isScreen('overview')"
   (click)="openSettings()"
-><custom-icon [type]="'settings'" resize="36"></custom-icon></button>
+><custom-icon [type]="'settings'"></custom-icon></button>
 <!-- Navbar for yaku select screen -->
 <div
   class="round-summary with-selectors"
@@ -68,11 +68,11 @@
 <div class="round-summary"
   *ngIf="isScreen('confirmation')">
   <div class="confirmation">
-    Total:
+    {{_TOTAL}}
     <span *ngIf="isMultiron()">{{multironTitle()}}</span>
-    <span *ngIf="!isMultiron() && han() > 0">{{han() + selectedDora | yakuman}} han</span>
-    <span *ngIf="!isMultiron() && han() < 0">Yakuman!</span>
-    <span *ngIf="!isMultiron() && han() > 0 && han() + selectedDora < 5">{{selectedFu}} fu</span>
+    <span *ngIf="!isMultiron() && han() > 0">{{han() + selectedDora | yakuman}}{{_TOTAL_HAN}}</span>
+    <span *ngIf="!isMultiron() && han() < 0">{{_TOTAL_YAKUMAN}}</span>
+    <span *ngIf="!isMultiron() && han() > 0 && han() + selectedDora < 5"> {{selectedFu}}{{_TOTAL_FU}}</span>
   </div>
 </div>
 <!-- Navbar for start screen -->
@@ -145,7 +145,7 @@
   class="fwd-button gradient-button"
   (click)="nextScreen()"
   [disabled]="!state.getHashcode()"
-><custom-icon [type]="'write'"></custom-icon></button>
+><custom-icon [type]="'write'" [resize]="40"></custom-icon></button>
 <button
   *ngIf="isScreen('outcomeSelect')"
   disabled="disabled"

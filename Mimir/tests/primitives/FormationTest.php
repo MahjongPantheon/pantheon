@@ -21,7 +21,7 @@ require_once __DIR__ . '/../../src/primitives/Formation.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/Db.php';
 
-class FormationPrimitiveTest extends \PHPUnit_Framework_TestCase
+class FormationPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
     /**

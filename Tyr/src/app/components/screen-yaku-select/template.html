@@ -22,14 +22,17 @@
   [class.multiron]="showTabs()">
   <div class="outcome-indicator">{{outcome()}}</div>
   <button
+      class="discolored"
       (click)="showSimple()"
       [class.pressed]="this.selectedSimple"
   ><custom-icon [type]="'common'" [resize]="36"></custom-icon></button>
   <button
+      class="discolored"
       (click)="showRare()"
       [class.pressed]="this.selectedRare"
   ><custom-icon [type]="'rare'" [resize]="36"></custom-icon></button>
   <button
+      class="discolored"
       (click)="showYakuman()"
       [class.pressed]="this.selectedYakuman"
   ><custom-icon [type]="'yman'" [resize]="36"></custom-icon></button>

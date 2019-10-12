@@ -20,7 +20,7 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/validators/Round.php';
 require_once __DIR__ . '/../../src/Db.php';
 
-class RoundsHelperTest extends \PHPUnit_Framework_TestCase
+class RoundsHelperTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
     public function setUp()
@@ -91,7 +91,8 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
         $data = '';
         $possibleVals = [1, 2, 3];
-        $checkYaku->invokeArgs(null, [$data, $possibleVals]); // no exception == ok
+        $checkYaku->invokeArgs(null, [$data, $possibleVals]);
+        $this->assertTrue(true); // no exception == ok
     }
 
     public function testCheckYakuAllowed()
@@ -101,7 +102,8 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
 
         $data = '1,3';
         $possibleVals = [1, 2, 3];
-        $checkYaku->invokeArgs(null, [$data, $possibleVals]); // no exception == ok
+        $checkYaku->invokeArgs(null, [$data, $possibleVals]);
+        $this->assertTrue(true); // no exception == ok
     }
 
     public function testCheckRonValid()
@@ -125,7 +127,8 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
                 'kandora'   => 0,
                 'kanuradora' => 0
             ]
-        ]); // no exception == ok
+        ]);
+        $this->assertTrue(true); // no exception == ok
     }
 
     public function testCheckMultiRonValid()
@@ -163,7 +166,8 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
                     ]
                 ]
             ]
-        ]); // no exception == ok
+        ]);
+        $this->assertTrue(true); // no exception == ok
     }
 
     public function testCheckTsumoValid()
@@ -185,7 +189,8 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
                 'kandora'   => 0,
                 'kanuradora' => 0
             ]
-        ]); // no exception == ok
+        ]);
+        $this->assertTrue(true); // no exception == ok
     }
 
     public function testCheckDrawValid()
@@ -199,7 +204,8 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
                 'riichi'    => '1',
                 'tempai'    => '1,2'
             ]
-        ]); // no exception == ok
+        ]);
+        $this->assertTrue(true); // no exception == ok
     }
 
     public function testCheckAbortiveDrawValid()
@@ -212,7 +218,8 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
             [
                 'riichi'    => '1'
             ]
-        ]); // no exception == ok
+        ]);
+        $this->assertTrue(true); // no exception == ok
     }
 
     public function testCheckChomboValid()
@@ -225,7 +232,8 @@ class RoundsHelperTest extends \PHPUnit_Framework_TestCase
             [
                 'loser_id'  => 2
             ]
-        ]); // no exception == ok
+        ]);
+        $this->assertTrue(true); // no exception == ok
     }
 
     // Negative tests

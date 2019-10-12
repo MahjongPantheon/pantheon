@@ -29,7 +29,7 @@ require_once __DIR__ . '/../../src/Meta.php';
  * Class SessionTest: integration test suite
  * @package Mimir
  */
-class SessionModelTest extends \PHPUnit_Framework_TestCase
+class SessionModelTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Db

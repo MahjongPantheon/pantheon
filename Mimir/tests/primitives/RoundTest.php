@@ -24,7 +24,7 @@ require_once __DIR__ . '/../../src/primitives/Event.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/Db.php';
 
-class RoundPrimitiveTest extends \PHPUnit_Framework_TestCase
+class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
     /**

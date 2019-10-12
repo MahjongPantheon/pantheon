@@ -19,7 +19,7 @@ namespace Mimir;
 
 require_once __DIR__ . '/../../src/helpers/Seating.php';
 
-class SeatingTest extends \PHPUnit_Framework_TestCase
+class SeatingTest extends \PHPUnit\Framework\TestCase
 {
     public function testMakeIntersectionsTable()
     {

@@ -20,7 +20,7 @@ dev:
 	./node_modules/.bin/ng serve
 
 docker:
-	./node_modules/.bin/ng serve --env=docker
+	./node_modules/.bin/ng serve --configuration=docker
 
 PHONY: i18n_extract
 i18n_extract:

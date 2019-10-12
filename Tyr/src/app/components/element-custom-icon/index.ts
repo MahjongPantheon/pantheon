@@ -19,17 +19,19 @@
  */
 
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { icons } from './icons';
 
 @Component({
   selector: 'custom-icon',
-  template: `<i style='display: inline-block'
+  template: `<i class="custom-tyr-icon-wrap" style='display: inline-block'
         [innerHTML]="content"
         [style.transform]="transforms"
         [style.width]="resize + 'px'" 
         [style.height]="resize + 'px'"
-      ></i>`
+      ></i>`,
+  styleUrls: ['style.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CustomIconComponent {
   @Input() type: string;
