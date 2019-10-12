@@ -19,10 +19,9 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-// Moscow riichi marathon
-class RulesetMarathon extends Ruleset
+class RulesetEma4 extends Ruleset
 {
-    public static $_title = 'marathon';
+    public static $_title = 'ema4';
     protected static $_ruleset = [
         'tenboDivider'          => 1,
         'ratingDivider'         => 1,
@@ -33,24 +32,24 @@ class RulesetMarathon extends Ruleset
         'riichiGoesToWinner'    => true,
         'extraChomboPayments'   => false,
         'chomboPenalty'         => 20000,
-        'withAtamahane'         => true,
-        'withAbortives'         => true,
+        'withAtamahane'         => false,
+        'withAbortives'         => false,
         'withKuitan'            => true,
-        'withKazoe'             => true,
+        'withKazoe'             => false,
         'withButtobi'           => false,
-        'withMultiYakumans'     => true,
-        'withNagashiMangan'     => true,
+        'withMultiYakumans'     => false,
+        'withNagashiMangan'     => false,
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
         'gameExpirationTime'    => false,
-        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
+        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII],
         'minPenalty'            => 100,
         'maxPenalty'            => 20000,
         'penaltyStep'           => 100,
-        'timerPolicy'           => 'redZone',
-        'yellowZone'            => 300, // 15min
-        'redZone'               => 300,
-        'withLeadingDealerGameOver' => true,
+        'timerPolicy'           => 'yellowZone',
+        'yellowZone'            => 900, // 15min
+        'redZone'               => 0,
+        'withLeadingDealerGameOver' => false,
         'replacementPlayerFixedPoints' => -15000,
         'replacementPlayerOverrideUma' => -15000
     ];
@@ -58,6 +57,7 @@ class RulesetMarathon extends Ruleset
     public function allowedYaku()
     {
         return YakuMap::listExcept([
+            Y_RENHOU,
             Y_OPENRIICHI
         ]);
     }
@@ -68,7 +68,6 @@ class RulesetMarathon extends Ruleset
      */
     public function uma($scores = [])
     {
-        return $this->_equalizeUma($scores, [1 => 30000, 10000, -10000, -30000]);
+        return [1 => 15000, 5000, 0, -20000];
     }
 }
-

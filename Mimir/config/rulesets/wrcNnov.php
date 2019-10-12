@@ -19,38 +19,37 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-// Moscow riichi marathon
-class RulesetMarathon extends Ruleset
+class RulesetWrcNnov extends Ruleset
 {
-    public static $_title = 'marathon';
+    public static $_title = 'wrcNnov';
     protected static $_ruleset = [
-        'tenboDivider'          => 1,
-        'ratingDivider'         => 1,
+        'tenboDivider'          => 100,
+        'ratingDivider'         => 10,
         'startRating'           => 0,
-        'oka'                   => 0,
-        'startPoints'           => 30000,
+        'oka'                   => 200,
+        'startPoints'           => 25000,
         'subtractStartPoints'   => true,
-        'riichiGoesToWinner'    => true,
-        'extraChomboPayments'   => false,
-        'chomboPenalty'         => 20000,
+        'riichiGoesToWinner'    => false,
+        'extraChomboPayments'   => true,
+        'chomboPenalty'         => 0,
         'withAtamahane'         => true,
         'withAbortives'         => true,
         'withKuitan'            => true,
         'withKazoe'             => true,
-        'withButtobi'           => false,
+        'withButtobi'           => true,
         'withMultiYakumans'     => true,
         'withNagashiMangan'     => true,
-        'withKiriageMangan'     => false,
+        'withKiriageMangan'     => true,
         'tonpuusen'             => false,
         'gameExpirationTime'    => false,
         'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
-        'minPenalty'            => 100,
-        'maxPenalty'            => 20000,
-        'penaltyStep'           => 100,
+        'minPenalty'            => 10,
+        'maxPenalty'            => 200,
+        'penaltyStep'           => 10,
         'timerPolicy'           => 'redZone',
-        'yellowZone'            => 300, // 15min
-        'redZone'               => 300,
-        'withLeadingDealerGameOver' => true,
+        'yellowZone'            => 0,
+        'redZone'               => 300, // 5min
+        'withLeadingDealerGameOver' => false,
         'replacementPlayerFixedPoints' => -15000,
         'replacementPlayerOverrideUma' => -15000
     ];
@@ -58,7 +57,7 @@ class RulesetMarathon extends Ruleset
     public function allowedYaku()
     {
         return YakuMap::listExcept([
-            Y_OPENRIICHI
+            //Y_OPENRIICHI
         ]);
     }
 
@@ -68,7 +67,6 @@ class RulesetMarathon extends Ruleset
      */
     public function uma($scores = [])
     {
-        return $this->_equalizeUma($scores, [1 => 30000, 10000, -10000, -30000]);
+        return $this->_equalizeUma($scores, [1 => 150, 50, -50, -150]);
     }
 }
-
