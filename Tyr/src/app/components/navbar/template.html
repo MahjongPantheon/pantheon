@@ -72,7 +72,7 @@
     <span *ngIf="isMultiron()">{{multironTitle()}}</span>
     <span *ngIf="!isMultiron() && han() > 0">{{han() + selectedDora | yakuman}}{{_TOTAL_HAN}}</span>
     <span *ngIf="!isMultiron() && han() < 0">{{_TOTAL_YAKUMAN}}</span>
-    <span *ngIf="!isMultiron() && han() > 0 && han() + selectedDora < 5">{{selectedFu}}{{_TOTAL_FU}}</span>
+    <span *ngIf="!isMultiron() && han() > 0 && han() + selectedDora < 5"> {{selectedFu}}{{_TOTAL_FU}}</span>
   </div>
 </div>
 <!-- Navbar for start screen -->
