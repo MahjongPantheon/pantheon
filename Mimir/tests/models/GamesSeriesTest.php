@@ -28,7 +28,7 @@ require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
 require_once __DIR__ . '/../../src/models/TextmodeSession.php';
 
-class GamesSeriesTest extends \PHPUnit_Framework_TestCase
+class GamesSeriesTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Db
@@ -93,6 +93,7 @@ class GamesSeriesTest extends \PHPUnit_Framework_TestCase
     public function testGetGamesSeries()
     {
         $data = (new EventSeriesModel($this->_db, $this->_config, $this->_meta))->getGamesSeries($this->_event);
+        //$this->assertNotEmpty($data);
 
         $referenceData = [
             27 => [

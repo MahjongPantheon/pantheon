@@ -24,7 +24,7 @@ require_once __DIR__ . '/../../src/primitives/Event.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/Db.php';
 
-class SessionPrimitiveTest extends \PHPUnit_Framework_TestCase
+class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Db

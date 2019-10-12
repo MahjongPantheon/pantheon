@@ -20,7 +20,7 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../config/rulesets/ema.php';
 
-class EmaRulesetTest extends \PHPUnit_Framework_TestCase
+class EmaRulesetTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var RulesetEma

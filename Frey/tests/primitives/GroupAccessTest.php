@@ -21,7 +21,7 @@ require_once __DIR__ . '/../../src/primitives/GroupAccess.php';
 require_once __DIR__ . '/../../src/primitives/Group.php';
 require_once __DIR__ . '/../../src/helpers/Db.php';
 
-class GroupAccessPrimitiveTest extends \PHPUnit_Framework_TestCase
+class GroupAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
     /** @var GroupPrimitive */
