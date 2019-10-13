@@ -24,6 +24,8 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { supportedLanguages } from '../../services/i18n';
 import { MetrikaService } from '../../services/metrika';
 import { IDB } from '../../services/idb';
+import { ThemeService } from '../../services/themes/service';
+import { Theme } from '../../themes/interface';
 
 @Component({
   selector: 'screen-settings',
@@ -36,11 +38,16 @@ export class SettingsScreen extends I18nComponent {
   constructor(
     public i18n: I18nService,
     private storage: IDB,
-    private metrika: MetrikaService
+    private metrika: MetrikaService,
+    private themeService: ThemeService
   ) { super(i18n); }
 
   get supportedLanguages(): string[] {
     return supportedLanguages;
+  }
+
+  get supportedThemes(): Theme[] {
+    return this.themeService.themes;
   }
 
   ngOnInit() {
@@ -54,6 +61,13 @@ export class SettingsScreen extends I18nComponent {
       this.storage.set('currentLanguage', localeName);
       this.metrika.track(MetrikaService.LANG_CHANGED, { localeName });
     }, (error: any) => console.error(error));
+  }
+
+  selectTheme(theme: string) {
+    if (this.themeService.themeExists(theme)) {
+      this.storage.set('currentTheme', theme);
+      this.themeService.setTheme(theme);
+    }
   }
 
   logout() {

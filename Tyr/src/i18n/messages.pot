@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-12 17:16+0300\n"
+"POT-Creation-Date: 2019-10-13 14:27+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -197,26 +197,30 @@ msgid "Select preferred language"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:124:12
-msgid "Log out from system"
+msgid "Select preferred color scheme"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:127:12
-msgid "User actions"
+msgid "Log out from system"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:130:12
-msgid "Total: "
+msgid "User actions"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:133:12
-msgid " han"
+msgid "Total: "
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:136:12
-msgid " fu"
+msgid " han"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:139:12
+msgid " fu"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:142:12
 msgid "Yakuman!"
 msgstr ""
 
@@ -261,7 +265,7 @@ msgstr ""
 msgid "Hello, %1!"
 msgstr ""
 
-#: src/app/components/screen-settings/index.ts:60:24
+#: src/app/components/screen-settings/index.ts:74:24
 msgid "Are you sure you want to logout? You will have to get a new pin code to login again"
 msgstr ""
 

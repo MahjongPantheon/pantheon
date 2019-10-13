@@ -53,6 +53,9 @@ import { RiichiApiService } from './services/riichiApi';
 import { MetrikaService } from './services/metrika';
 import { I18nService } from './services/i18n';
 import { IDB } from './services/idb';
+import { ThemeModule } from './services/themes/module';
+import { defaultTheme } from './themes/default';
+import { someTheme } from './themes/someTheme';
 
 @NgModule({
   declarations: [
@@ -85,7 +88,11 @@ import { IDB } from './services/idb';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ThemeModule.forRoot({
+      themes: [defaultTheme, someTheme],
+      active: 'defaultTheme'
+    })
   ],
   providers: [
     RiichiApiService,

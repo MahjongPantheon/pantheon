@@ -25,11 +25,20 @@
   padding: 10px 5px;
   outline: none;
   flex: 1;
-  display: flex;
   justify-content: center;
   margin: 0 var(--margin-size);
 }
 
 .settings-container .buttons button > * {
   flex: 1;
+}
+
+.previewBox {
+  flex: none !important;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  margin: 1px;
+  float: right;
 }
