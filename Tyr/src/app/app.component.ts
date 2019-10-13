@@ -20,12 +20,12 @@
 
 import { Component, NgZone, ApplicationRef } from '@angular/core';
 import { AppState } from './primitives/appstate';
-import { Outcome } from './interfaces/common';
 import { RiichiApiService } from './services/riichiApi';
 import { MetrikaService } from './services/metrika';
 import { I18nService } from './services/i18n';
 import { environment } from '../environments/environment';
 import { IDB } from './services/idb';
+import { ThemeService } from './services/themes/service';
 
 @Component({
   selector: 'riichi-app',
@@ -40,7 +40,8 @@ export class AppComponent {
     private api: RiichiApiService,
     private metrika: MetrikaService,
     private i18n: I18nService,
-    private storage: IDB
+    private storage: IDB,
+    private themeService: ThemeService
   ) {
 
     // Yandex metrika init code; Don't touch :)
@@ -73,6 +74,11 @@ export class AppComponent {
     );
 
     this.metrika.track(MetrikaService.APP_INIT);
+
+    const userTheme = this.storage.get('currentTheme');
+    if (userTheme && this.themeService.themeExists(userTheme)) {
+      this.themeService.setTheme(userTheme);
+    }
 
     window.__state = this.state; // for great debug
     this.i18n.init((localeName: string) => {
