@@ -60,7 +60,7 @@
   color: var(--main-text-color);
 }
 
-.round-summary > * {
+.round-summary .confirmation {
   flex: 1;
   text-align: center;
   line-height: 2.3;
@@ -69,12 +69,6 @@
 }
 
 /* ---------------------------- */
-
-
-.with-selectors > * {
-  flex: initial;
-}
-
 
 /* Container used for styling the custom select, the buttom class below adds the
  * bg gradient, corners, etc. */
@@ -155,40 +149,43 @@ or ( ( -moz-appearance: none ) and ( mask-type: alpha ) ) {
 
 .with-selectors {
   display: flex;
-}
-
-.with-selectors .separator {
-  width: 5%;
-  line-height: 2.9;
-}
-
-.with-selectors .yaku-han-count {
-  width: 20%
-}
-
-.with-selectors .dora-han-count {
-  width: 35%;
-}
-
-.with-selectors .fu-count {
-  width: 35%;
+  justify-content: space-between;
+  align-content: end;
+  align-items: center;
 }
 
 .yaku-han-count, .dora-han-count, .fu-count {
+  width: 30%;
+  position: relative;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+}
+
+.separator {
+  width: 5%;
 }
 
 .with-selectors .title {
-  height: 20%;
+  position: absolute;
   font-size: 14px;
-  margin-top: -5px;
+  left: 0;
+  right: 0;
+  top: -8px;
+  text-align: center;
 }
-.with-selectors .value {
-  height: 80%;
-  margin-top: 10px;
+
+.with-selectors .custom-select {
+  display: block;
+  height: 100%;
+  top: unset;
+}
+
+.custom-select.noafter {
+  font-size: 20px;
+  padding: 0.5em 1em 0em 1em;
 }
 
 .with-selectors .value select {
   font-size: 20px;
+  line-height: 1;
 }

@@ -23,7 +23,7 @@ export const darkBlueTheme: Theme = {
     '--navbar-bg-color': '#4b4b4b',
 
     '--emergency-color': 'rgb(179, 0, 27)',
-    '--warning-color': 'rgb(221, 215, 141)',
+    '--warning-color': '#4b4b4b',
     '--safe-color': 'rgb(44, 99, 44)',
 
     '--emergency-color-semi': '#e6b6bc',
