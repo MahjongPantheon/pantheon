@@ -19,93 +19,93 @@
  */
 
 :host {
-  position: absolute;
-  top: var(--navbar-height);
-  left: 0;
-  bottom: 0;
-  right: 0;
+    position: absolute;
+    top: var(--navbar-height);
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .riichi-table {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: stretch;
-  flex-direction: column;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: stretch;
+    flex-direction: column;
 }
 
 .ka-shi {
-  flex: 1;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
 }
 
 .centered {
-  flex: 1;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  padding: 0 10px;
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    padding: 0 10px;
 }
 
 .side {
-  height: 80%;
-  width: 40%;
-  align-self: center;
-  padding: 3px;
-  text-align: center;
-  border-radius: 7px;
-  background-color: var(--secondary-bg-color);
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+    height: 80%;
+    width: 40%;
+    align-self: center;
+    padding: 3px;
+    text-align: center;
+    border-radius: 7px;
+    background-color: var(--secondary-bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--secondary-text-color);
 }
 
 .edge-block {
-  height: 80%;
-  width: 20%;
-  align-self: center;
-  text-align: center;
+    height: 80%;
+    width: 20%;
+    align-self: center;
+    text-align: center;
 }
 
 .displayName {
-  font-size: 28px;
+    font-size: 28px;
 }
 
 .points {
-  font-size: 36px;
+    font-size: 36px;
 }
 
 .ok-button {
-  width: 100%;
-  font-size: 40px;
-  padding: inherit;
-  flex: 1;
-  height: 100%;
+    width: 100%;
+    font-size: 40px;
+    padding: inherit;
+    flex: 1;
+    height: 100%;
 }
 
 .not-found {
-  font-size: 32px;
-  text-align: center;
-  margin-top: 20%;
-  color: var(--main-text-color);
+    font-size: 32px;
+    text-align: center;
+    margin-top: 20%;
+    color: var(--main-text-color);
 }
 
 .ratingDelta {
-  font-size: 20px;
-  padding: 5px;
-  border-radius: 4px;
-  color: var(--main-text-color);
-  background-color: var(--emergency-color);
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 4px;
+    color: var(--main-text-color);
+    background-color: var(--emergency-color);
 }
 
 .ratingDelta.success {
-  background-color: var(--safe-color);
+    background-color: var(--safe-color);
 }
 
 .ratingDelta.success::before {
-  content: '+';
+    content: '+';
 }

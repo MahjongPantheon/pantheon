@@ -19,88 +19,90 @@
  */
 
 :host {
-  position: absolute;
-  top: var(--navbar-height);
-  left: 0;
-  bottom: 0;
-  right: 0;
+    position: absolute;
+    top: var(--navbar-height);
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .riichi-table {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: stretch;
-  flex-direction: column;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: stretch;
+    flex-direction: column;
 }
 
 .ka-shi {
-  flex: 1;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
 }
 
 .centered {
-  flex: 1;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-  padding: 0 10px;
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    padding: 0 10px;
 }
 
 .side {
-  height: 80%;
-  width: 47%;
-  align-self: center;
-  padding: 3px;
-  text-align: center;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: var(--secondary-bg-color);
-  border-radius: 7px;
+    height: 80%;
+    width: 47%;
+    align-self: center;
+    padding: 3px;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--secondary-bg-color);
+    border-radius: 7px;
+    color: var(--secondary-text-color);
 }
 
 .edge-block {
-  height: 80%;
-  width: 20%;
-  align-self: center;
-  text-align: center;
-  color: var(--secondary-bg-color);
+    height: 80%;
+    width: 20%;
+    align-self: center;
+    text-align: center;
+    color: var(--main-text-color);
 }
 
 .edge-block button {
-  padding: inherit;
+    padding: inherit;
 }
 
 .player-replacer {
-  position: relative;
-  text-align: center;
-  font-size: 28px;
-  top: 45%;
+    position: relative;
+    text-align: center;
+    font-size: 28px;
+    top: 45%;
 }
 
 .player-selector {
-  height: 100%;
-  opacity: 0.01;
-  position: relative;
-  top: -18px;
-  left: -5px;
+    height: 100%;
+    opacity: 0.01;
+    position: relative;
+    top: -18px;
+    left: -5px;
 }
 
 .wind {
-  position: absolute;
-  font-size: 32px;
+    position: absolute;
+    font-size: 32px;
 }
 
-.rand-button, .start-button {
-  width: 100%;
-  font-size: 42px;
-  flex: 1;
-  height: 100%;
+.rand-button,
+.start-button {
+    width: 100%;
+    font-size: 42px;
+    flex: 1;
+    height: 100%;
 }
 
 .start-button.disabled {
-  opacity: 0.4;
+    opacity: 0.4;
 }
