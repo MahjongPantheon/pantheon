@@ -72,6 +72,8 @@ table {
   --navbar-height: 50px;
   --yaku-bar-height: 70px;
   --margin-size: 5px;
+  --light-color: #efefef;
+  --dark-color: #000;
 
   /* ----------- theme defaults hardcode ---------*/
   --main-bg-color: #2C632C;
@@ -123,7 +125,7 @@ button {
   user-select: none;
   min-height: 50px;
   border-radius: var(--button-border-radius);
-  box-shadow: 6px 6px 13px 0 var(--secondary-text-color);
+  box-shadow: var(--button-box-shadow);
   border: none;
   display: inline-block;
   cursor: pointer;
@@ -139,7 +141,7 @@ button {
 button:active {
   position: relative;
   top: 1px;
-  box-shadow: 2px 2px 3px 0 var(--secondary-text-color);
+  box-shadow: var(--button-active-box-shadow);
 }
 
 button:disabled {
@@ -151,7 +153,7 @@ button.discolored {
   box-shadow: none;
   text-shadow: none;
   min-height: unset;
-  color: var(--secondary-text-color);
+  color: var(--dark-color);
 }
 
 button.discolored:active {
