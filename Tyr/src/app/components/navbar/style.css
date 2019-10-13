@@ -35,6 +35,11 @@
   font-size: 20px;
 }
 
+.tournament-title {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .back-button,.fwd-button {
   font-size: 25px;
   line-height: 10px;
