@@ -44,6 +44,7 @@
   font-size: 25px;
   line-height: 10px;
   min-width: 50px;
+  min-height: 50px;
 }
 
 .fwd-button-container {

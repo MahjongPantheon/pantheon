@@ -4,7 +4,7 @@ export const seaWaveTheme: Theme = {
   name: 'seaWaveTheme',
   humanReadableTitle: 'Sea wave theme',
   properties: {
-    '--main-bg-color': '#092435',
+    '--main-bg-color': '#0b3956',
     '--main-button-bg-color': '#4a92a8',
     '--main-button-bg-color-hl': '#4a92a8',
     '--main-text-color': 'white',
@@ -24,11 +24,11 @@ export const seaWaveTheme: Theme = {
     '--navbar-bg-color': '#261a2b',
 
     '--emergency-color': 'rgb(179, 0, 27)',
-    '--warning-color': 'rgb(255, 245, 122)',
+    '--warning-color': 'rgb(249, 246, 143)',
     '--safe-color': 'rgb(44, 99, 44)',
 
     '--emergency-color-semi': 'rgba(179, 0, 27, 0.2)',
-    '--warning-color-semi': 'rgba(255, 245, 122, 0.2)',
+    '--warning-color-semi': 'rgba(249, 246, 143, 0.2)',
     '--safe-color-semi': 'rgba(44, 99, 44, 0.2)',
 
     '--button-background-style': 'linear-gradient(to bottom, var(--main-button-bg-color) 0%, var(--main-button-bg-color-hl) 50%, var(--main-button-bg-color) 51%, var(--main-button-bg-color) 100%)',

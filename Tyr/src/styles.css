@@ -219,7 +219,7 @@ button {
     background: var(--button-background-style);
     min-width: 50px;
     user-select: none;
-    min-height: 50px;
+    min-height: 40px;
     border-radius: var(--button-border-radius);
     box-shadow: var(--button-box-shadow);
     border: var(--button-border);
