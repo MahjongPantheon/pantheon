@@ -19,65 +19,65 @@
  */
 
 :host {
-  color: #ccc;
-  font-size: 32px;
+    color: var(--main-text-color);
+    font-size: 32px;
 }
 
 .wrap {
-  overflow: scroll;
-  position: absolute;
-  top: var(--navbar-height);
-  left: 0;
-  right: 0;
-  bottom: 0;
+    overflow: scroll;
+    position: absolute;
+    top: var(--navbar-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
-.wrap > * {
-  margin-bottom: 5px;
+.wrap>* {
+    margin-bottom: 5px;
 }
 
 .header-title {
-  text-align: center;
-  font-size: 40px;
-  padding: 5px 0;
-  background-color: #474;
+    text-align: center;
+    font-size: 40px;
+    padding: 5px 0;
+    background-color: #474;
 }
 
 .table-info {
-  font-size: 18px;
-  margin: 4px 16px;
+    font-size: 18px;
+    margin: 4px 16px;
 }
 
 .table-info tr td:first-child {
-  padding-right: 10px;
+    padding-right: 10px;
 }
 
 .table-info .round-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
 }
 
 .outcome-name {
-  flex: 1;
-  padding-right: 20px;
+    flex: 1;
+    padding-right: 20px;
 }
 
 .tenbou {
-  flex: 1;
+    flex: 1;
 }
 
 .indicator {
-  padding-left: 10px;
-  flex: 0.5;
+    padding-left: 10px;
+    flex: 0.5;
 }
 
 .table-info ul li b {
-  color: #fff;
+    color: #fff;
 }
 
 .table-info ul li .yaku-list {
-  color: #aaa;
-  font-style: italic;
+    color: #aaa;
+    font-style: italic;
 }

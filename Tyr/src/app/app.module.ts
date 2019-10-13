@@ -56,6 +56,7 @@ import { IDB } from './services/idb';
 import { ThemeModule } from './services/themes/module';
 import { defaultTheme } from './themes/default';
 import { seaWaveTheme } from './themes/seaWaveTheme';
+import { pinkPantherTheme } from './themes/pinkPantherTheme';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,7 @@ import { seaWaveTheme } from './themes/seaWaveTheme';
     FormsModule,
     HttpClientModule,
     ThemeModule.forRoot({
-      themes: [defaultTheme, seaWaveTheme],
+      themes: [defaultTheme, seaWaveTheme, pinkPantherTheme],
       active: 'defaultTheme'
     })
   ],
