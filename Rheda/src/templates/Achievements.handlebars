@@ -202,13 +202,23 @@
               </ul></td>
             </tr>
             <tr>
-              <td><b>{{_t 'The Prudent'}}</b></td>
-              <td style="width: 30%">{{_t ' Given for losing the smallest percentage of riichi bets.'}}</td>
+              <td><b>{{_t 'The Covetous Knight'}}</b></td>
+              <td style="width: 30%">{{_t ' Given for losing the smallest count of riichi bets.'}}</td>
               <td>-</td>
               <td><ul>
-                {{#prudent}}
-                  <li>{{name}}: {{score}}% {{_p '(%d on %s)' lost total}}</li>
-                {{/prudent}}
+                {{#covetousKnight}}
+                    <li>{{name}}: {{_np '%d riichi bet' '%d riichi bet' count count}}</li>
+                {{/covetousKnight}}
+              </ul></td>
+            </tr>
+            <tr>
+              <td><b>{{_t 'Ninja'}}</b></td>
+              <td style="width: 30%">{{_t 'Given for getting largest number of damaten during tournament.'}}</td>
+              <td>-</td>
+              <td><ul>
+                {{#ninja}}
+                    <li>{{name}}: {{_np '%d win' '%d wins' count count}}</li>
+                {{/ninja}}
               </ul></td>
             </tr>
         </tbody>

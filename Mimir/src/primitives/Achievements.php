@@ -572,6 +572,7 @@ class AchievementsPrimitive extends Primitive
             }
 
             foreach (explode(',', $round['yaku']) as $yaku) {
+            //todo convert yakuhai2,3,4 to yakuhai1
                 if (!in_array($yaku, $playersYaku[$round['display_name']])) {
                     array_push($playersYaku[$round['display_name']], $yaku);
                 }
@@ -665,6 +666,51 @@ class AchievementsPrimitive extends Primitive
             },
             array_slice(array_keys($filteredPayments), 0, 5),
             array_slice(array_values($filteredPayments), 0, 5)
+        );
+    }
+
+    /**
+     * Get players with largest damaten count
+     *
+     * @param IDb $db
+     * @param $eventIdList
+     * @return array
+     */
+    public static function getNinja(IDb $db, $eventIdList)
+    {
+        $rounds = $db->table('round')
+            ->select('winner_id')
+            ->select('display_name')
+            ->select('riichi')
+            ->join('player', ['player.id', '=', 'round.winner_id'])
+            ->whereIn('event_id', $eventIdList)
+            ->whereIn('outcome', ['multiron', 'ron', 'tsumo'])
+            ->where('open_hand', 0)
+            ->findArray();
+
+        $filteredRounds = array_filter($rounds, function ($round) {
+            return !in_array($round['winner_id'], explode(',', $round['riichi']));
+        });
+
+        $counts = [];
+        foreach ($filteredRounds as $round) {
+            if (empty($counts[$round['display_name']])) {
+                $counts[$round['display_name']] = 0;
+            }
+
+            $counts[$round['display_name']] ++;
+        }
+
+        arsort($counts);
+        return array_map(
+            function ($name, $count) {
+                return [
+                    'name' => $name,
+                    'count' => $count
+                ];
+            },
+            array_slice(array_keys($counts), 0, 5),
+            array_slice(array_values($counts), 0, 5)
         );
     }
 
