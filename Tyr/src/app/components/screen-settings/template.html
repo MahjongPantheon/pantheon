@@ -6,11 +6,16 @@
     </ng-template>
   </div>
   <div class="label">{{_SELECT_THEME}}</div>
-  <div class="buttons">
+  <div class="buttons" style="flex-direction: column">
     <ng-template ngFor let-theme [ngForOf]="supportedThemes" let-i="theme">
       <button (click)="selectTheme(theme.name)">
         {{theme.humanReadableTitle}}
-      </button>
+        <span class="previewBox" [style.background-color]="theme.properties['--main-bg-color']"></span>
+        <span class="previewBox" [style.background-color]="theme.properties['--main-button-bg-color']"></span>
+        <span class="previewBox" [style.background-color]="theme.properties['--main-text-color']"></span>
+        <span class="previewBox" [style.background-color]="theme.properties['--secondary-bg-color']"></span>
+        <span class="previewBox" [style.background-color]="theme.properties['--secondary-text-color']"></span>
+      </button><br />
     </ng-template>
   </div>
   <div class="label">{{_USER_ACTIONS}}</div>
