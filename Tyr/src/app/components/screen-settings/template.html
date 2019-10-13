@@ -5,6 +5,14 @@
       <button (click)="selectLanguage(lang)"><custom-icon [type]="'flag-' + lang" [resize]="40"></custom-icon></button>
     </ng-template>
   </div>
+  <div class="label">{{_SELECT_THEME}}</div>
+  <div class="buttons">
+    <ng-template ngFor let-theme [ngForOf]="supportedThemes" let-i="theme">
+      <button (click)="selectTheme(theme.name)">
+        {{theme.humanReadableTitle}}
+      </button>
+    </ng-template>
+  </div>
   <div class="label">{{_USER_ACTIONS}}</div>
   <div class="buttons">
     <button (click)="logout()">{{_LOGOUT}}</button>
