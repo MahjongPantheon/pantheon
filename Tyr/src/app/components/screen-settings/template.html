@@ -5,6 +5,7 @@
       <button (click)="selectLanguage(lang)"><custom-icon [type]="'flag-' + lang" [resize]="40"></custom-icon></button>
     </ng-template>
   </div>
+  <br />
   <div class="label">{{_SELECT_THEME}}</div>
   <div class="buttons" style="flex-direction: column">
     <ng-template ngFor let-theme [ngForOf]="supportedThemes" let-i="theme">

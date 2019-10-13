@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-12 17:16+0300\n"
-"PO-Revision-Date: 2019-10-12 17:17+0300\n"
+"POT-Creation-Date: 2019-10-13 14:27+0300\n"
+"PO-Revision-Date: 2019-10-13 14:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -200,26 +200,30 @@ msgid "Select preferred language"
 msgstr "Выбор языка"
 
 #: src/app/components/auxiliary-i18n/index.ts:124:12
+msgid "Select preferred color scheme"
+msgstr "Выбор цветовой схемы"
+
+#: src/app/components/auxiliary-i18n/index.ts:127:12
 msgid "Log out from system"
 msgstr "Выйти из системы"
 
-#: src/app/components/auxiliary-i18n/index.ts:127:12
+#: src/app/components/auxiliary-i18n/index.ts:130:12
 msgid "User actions"
 msgstr "Действия пользователя"
 
-#: src/app/components/auxiliary-i18n/index.ts:130:12
+#: src/app/components/auxiliary-i18n/index.ts:133:12
 msgid "Total: "
 msgstr "Всего: "
 
-#: src/app/components/auxiliary-i18n/index.ts:133:12
+#: src/app/components/auxiliary-i18n/index.ts:136:12
 msgid " han"
 msgstr " хан"
 
-#: src/app/components/auxiliary-i18n/index.ts:136:12
+#: src/app/components/auxiliary-i18n/index.ts:139:12
 msgid " fu"
 msgstr " фу"
 
-#: src/app/components/auxiliary-i18n/index.ts:139:12
+#: src/app/components/auxiliary-i18n/index.ts:142:12
 msgid "Yakuman!"
 msgstr "Якуман!"
 
@@ -265,7 +269,7 @@ msgstr "Последняя раздача не найдена"
 msgid "Hello, %1!"
 msgstr "Привет, %1!"
 
-#: src/app/components/screen-settings/index.ts:60:24
+#: src/app/components/screen-settings/index.ts:74:24
 msgid ""
 "Are you sure you want to logout? You will have to get a new pin code to "
 "login again"
