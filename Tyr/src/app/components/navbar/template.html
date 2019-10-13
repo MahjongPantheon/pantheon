@@ -123,42 +123,44 @@
      *ngIf="isScreen('otherTable')">
   {{_TABLE_VIEW}}
 </div>
-<button
-  *ngIf="isScreen('playersSelect')"
-  [disabled]="!mayGoNext('playersSelect')"
-  class="fwd-button gradient-button"
-  (click)="nextScreen()"
-><custom-icon [type]="'next'"></custom-icon></button>
-<button
-  *ngIf="isScreen('paoSelect')"
-  class="fwd-button gradient-button"
-  (click)="nextScreen()"
-><custom-icon [type]="'next'"></custom-icon></button>
-<button
-  *ngIf="isScreen('yakuSelect')"
-  [disabled]="!mayGoNext('yakuSelect')"
-  class="fwd-button gradient-button"
-  (click)="nextScreen()"
-><custom-icon [type]="'next'"></custom-icon></button>
-<button
-  *ngIf="isScreen('overview')"
-  class="fwd-button gradient-button"
-  (click)="nextScreen()"
-  [disabled]="!state.getHashcode()"
-><custom-icon [type]="'write'" [resize]="40"></custom-icon></button>
-<button
-  *ngIf="isScreen('outcomeSelect')"
-  disabled="disabled"
-  class="fwd-button gradient-button"
-><custom-icon [type]="'next'"></custom-icon></button>
-<button
-  *ngIf="isScreen('confirmation')"
-  class="fwd-button gradient-button"
-  (click)="scrollDown()"
-><custom-icon [type]="'next'"></custom-icon></button>
-<button
-  *ngIf="isScreen('nagashiSelect')"
-  [disabled]="!mayGoNext('nagashiSelect')"
-  class="fwd-button gradient-button"
-  (click)="nextScreen()"
-><custom-icon [type]="'next'"></custom-icon></button>
+<div class="fwd-button-container">
+  <button
+    *ngIf="isScreen('playersSelect')"
+    [disabled]="!mayGoNext('playersSelect')"
+    class="fwd-button gradient-button"
+    (click)="nextScreen()"
+  ><custom-icon [type]="'next'"></custom-icon></button>
+  <button
+    *ngIf="isScreen('paoSelect')"
+    class="fwd-button gradient-button"
+    (click)="nextScreen()"
+  ><custom-icon [type]="'next'"></custom-icon></button>
+  <button
+    *ngIf="isScreen('yakuSelect')"
+    [disabled]="!mayGoNext('yakuSelect')"
+    class="fwd-button gradient-button"
+    (click)="nextScreen()"
+  ><custom-icon [type]="'next'"></custom-icon></button>
+  <button
+    *ngIf="isScreen('overview')"
+    class="fwd-button gradient-button"
+    (click)="nextScreen()"
+    [disabled]="!state.getHashcode()"
+  ><custom-icon [type]="'write'" [resize]="40"></custom-icon></button>
+  <button
+    *ngIf="isScreen('outcomeSelect')"
+    disabled="disabled"
+    class="fwd-button gradient-button"
+  ><custom-icon [type]="'next'"></custom-icon></button>
+  <button
+    *ngIf="isScreen('confirmation')"
+    class="fwd-button gradient-button"
+    (click)="scrollDown()"
+  ><custom-icon [type]="'next'"></custom-icon></button>
+  <button
+    *ngIf="isScreen('nagashiSelect')"
+    [disabled]="!mayGoNext('nagashiSelect')"
+    class="fwd-button gradient-button"
+    (click)="nextScreen()"
+  ><custom-icon [type]="'next'"></custom-icon></button>
+</div>

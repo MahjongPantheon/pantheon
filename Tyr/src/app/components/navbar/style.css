@@ -24,6 +24,8 @@
   height: var(--navbar-height);
   margin-top: calc(var(--navbar-height) * -1);
   background-color: var(--navbar-bg-color);
+  justify-content: space-between;
+  align-items: center;
 }
 
 .tournament-title, .outcome-title {
@@ -31,14 +33,20 @@
   color: var(--main-text-color);
   text-align: center;
   font-size: 20px;
-  display: table;
-  margin-bottom: auto;
-  margin-top: auto;
+}
+
+.tournament-title {
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .back-button,.fwd-button {
   font-size: 25px;
   line-height: 10px;
+  min-width: 50px;
+}
+
+.fwd-button-container {
   min-width: 50px;
 }
 
