@@ -276,6 +276,7 @@ class AchievementsModel extends Model
                             $riichiStat[$riichiPlayerId]['won'] ++;
                         } else {
                             $riichiStat[$riichiPlayerId]['lost'] ++;
+                            $riichiStat[$winnerId]['stole'] ++;
                         }
                     }
 
