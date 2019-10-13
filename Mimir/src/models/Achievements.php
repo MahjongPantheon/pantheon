@@ -90,7 +90,8 @@ class AchievementsModel extends Model
             'catchEmAll' => AchievementsPrimitive::getMaxDifferentYakuCount($this->_db, $eventIdList),
             'favoriteAsapinApprentice' => AchievementsPrimitive::getFavoriteAsapinApprentice($this->_db, $eventIdList),
             'andYourRiichiBet' => $this->_getMaxStolenRiichiBetsCount(),
-            'prudent' => $this->_getMinLostRiichiBetsPercentage()
+            'covetousKnight' => $this->_getMinLostRiichiBetsCount(),
+            'ninja' => AchievementsPrimitive::getNinja($this->_db, $eventIdList)
         ];
     }
 
@@ -194,44 +195,27 @@ class AchievementsModel extends Model
     }
 
     /**
-     * Get players with losing the smallest percentage of riichi bets
+     * Get players with losing the smallest riichi bets count
      *
      * @return array
      * @throws \Exception
      */
-    protected function _getMinLostRiichiBetsPercentage()
+    protected function _getMinLostRiichiBetsCount()
     {
         $riichiStat = $this->_riichiStat;
 
-        foreach ($riichiStat as &$item) {
-            $riichiBetsCount = $item['won'] +  $item['lost'];
-
-            $score = $riichiBetsCount !== 0
-                ? $item['lost'] / $riichiBetsCount * 100
-                : -1;
-
-            $item['score'] = $score;
-            $item['total'] = $riichiBetsCount;
-        }
-
         uasort($riichiStat, function ($a, $b) {
-            return $a['score'] > $b['score'] ? 1 : -1;
-        });
-
-        $lostPercentages = array_filter($riichiStat, function ($item) {
-            return $item['score'] !== -1;
+            return $a['lost'] > $b['lost'] ? 1 : -1;
         });
 
         return array_map(
             function ($item) {
                 return [
                     'name'  => $item['name'],
-                    'score' => sprintf('%.2f', $item['score']),
-                    'lost'  => $item['lost'],
-                    'total' => $item['total'],
+                    'count'  => $item['lost'],
                 ];
             },
-            array_slice($lostPercentages, 0, 5)
+            array_slice($riichiStat, 0, 100)
         );
     }
 
