@@ -57,6 +57,7 @@ import { ThemeModule } from './services/themes/module';
 import { defaultTheme } from './themes/default';
 import { seaWaveTheme } from './themes/seaWaveTheme';
 import { pinkPantherTheme } from './themes/pinkPantherTheme';
+import { darkBlueTheme } from './themes/darkBlue';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,7 @@ import { pinkPantherTheme } from './themes/pinkPantherTheme';
     FormsModule,
     HttpClientModule,
     ThemeModule.forRoot({
-      themes: [defaultTheme, seaWaveTheme, pinkPantherTheme],
+      themes: [defaultTheme, seaWaveTheme, pinkPantherTheme, darkBlueTheme],
       active: 'defaultTheme'
     })
   ],
