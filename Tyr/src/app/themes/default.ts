@@ -30,5 +30,20 @@ export const defaultTheme: Theme = {
     '--emergency-color-semi': 'rgba(179, 0, 27, 0.2)',
     '--warning-color-semi': 'rgba(221, 215, 141, 0.2)',
     '--safe-color-semi': 'rgba(44, 99, 44, 0.2)',
+
+    '--button-background-style': 'linear-gradient(to bottom, var(--main-button-bg-color) 0%, var(--main-button-bg-color-hl) 50%, var(--main-button-bg-color) 51%, var(--main-button-bg-color) 100%)',
+
+    '--button-border-radius': '5px',
+    '--button-box-shadow': '6px 6px 13px 0 var(--secondary-text-color)',
+    '--button-border': 'none',
+    '--button-text-color': 'var(--main-text-color)',
+    '--button-font-size': '15px',
+    '--button-padding': '6px 15px',
+    '--button-text-decoration': 'none',
+    '--button-text-shadow': '0 1px 0 var(--navbar-bg-color)',
+
+    '--button-active-box-shadow': '2px 2px 3px 0 var(--secondary-text-color)',
+    '--button-active-border': 'none',
+    '--button-active-text-color': 'var(--main-text-color)',
   }
 };
