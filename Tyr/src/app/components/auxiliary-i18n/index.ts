@@ -120,6 +120,9 @@ export class I18nComponent {
   get _SELECT_LANGUAGE() {
     return this.i18n._t('Select preferred language');
   }
+  get _SELECT_THEME() {
+    return this.i18n._t('Select preferred color scheme');
+  }
   get _LOGOUT() {
     return this.i18n._t('Log out from system');
   }
