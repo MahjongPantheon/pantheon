@@ -55,7 +55,8 @@ import { I18nService } from './services/i18n';
 import { IDB } from './services/idb';
 import { ThemeModule } from './services/themes/module';
 import { defaultTheme } from './themes/default';
-import { someTheme } from './themes/someTheme';
+import { seaWaveTheme } from './themes/seaWaveTheme';
+import { pinkPantherTheme } from './themes/pinkPantherTheme';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,7 @@ import { someTheme } from './themes/someTheme';
     FormsModule,
     HttpClientModule,
     ThemeModule.forRoot({
-      themes: [defaultTheme, someTheme],
+      themes: [defaultTheme, seaWaveTheme, pinkPantherTheme],
       active: 'defaultTheme'
     })
   ],

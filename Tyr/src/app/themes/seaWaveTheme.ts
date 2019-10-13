@@ -1,13 +1,13 @@
 import { Theme } from './interface';
 
-export const someTheme: Theme = {
-  name: 'someTheme',
-  humanReadableTitle: 'Non-default theme',
+export const seaWaveTheme: Theme = {
+  name: 'seaWaveTheme',
+  humanReadableTitle: 'Sea wave theme',
   properties: {
-    '--main-bg-color': '#632C2C',
-    '--main-button-bg-color': '#865931',
-    '--main-button-bg-color-hl': '#8e6036',
-    '--main-text-color': '#C6C7C4',
+    '--main-bg-color': '#092435',
+    '--main-button-bg-color': '#4a92a8',
+    '--main-button-bg-color-hl': '#4a92a8',
+    '--main-text-color': 'white',
     '--main-border-color': '#9B8573',
 
     '--main-bg-color-lite': '#8BA98B',
@@ -15,20 +15,20 @@ export const someTheme: Theme = {
     '--main-text-color-lite': '#DFE0DE',
     '--main-border-color-lite': '#C8BCB2',
 
-    '--secondary-bg-color': '#8AA399',
-    '--secondary-bg-color-active': '#BFCCC7',
+    '--secondary-bg-color': '#a0c5cf',
+    '--secondary-bg-color-active': '#e6eceb',
     '--secondary-text-color': '#183618',
 
     '--secondary-button-bg-color': '#2B4162',
 
-    '--navbar-bg-color': '#183618',
+    '--navbar-bg-color': '#261a2b',
 
     '--emergency-color': 'rgb(179, 0, 27)',
-    '--warning-color': 'rgb(221, 215, 141)',
+    '--warning-color': 'rgb(255, 245, 122)',
     '--safe-color': 'rgb(44, 99, 44)',
 
     '--emergency-color-semi': 'rgba(179, 0, 27, 0.2)',
-    '--warning-color-semi': 'rgba(221, 215, 141, 0.2)',
+    '--warning-color-semi': 'rgba(255, 245, 122, 0.2)',
     '--safe-color-semi': 'rgba(44, 99, 44, 0.2)',
 
     '--button-background-style': 'linear-gradient(to bottom, var(--main-button-bg-color) 0%, var(--main-button-bg-color-hl) 50%, var(--main-button-bg-color) 51%, var(--main-button-bg-color) 100%)',

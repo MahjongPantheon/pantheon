@@ -56,10 +56,10 @@
     align-self: center;
     padding: 3px;
     text-align: center;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    color: var(--secondary-text-color);
 }
 
 .edge-block {
@@ -76,29 +76,38 @@
 
 .edge-block {
     text-align: center;
-    color: #72b370;
+    color: var(--main-text-color);
 }
 
+
 /* round info */
+
 .round-info {
     line-height: 20px;
     font-size: 20px;
 }
-.honba-count, .riichi-count {
+
+.honba-count,
+.riichi-count {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.honba-count > span, .riichi-count > span {
+
+.honba-count>span,
+.riichi-count>span {
     flex: 1;
     text-align: right;
 }
+
 .round-index {
     font-size: 30px;
     margin: 20px 0;
 }
 
+
 /* timer */
+
 .timer {
     display: flex;
     align-items: center;
