@@ -572,7 +572,10 @@ class AchievementsPrimitive extends Primitive
             }
 
             foreach (explode(',', $round['yaku']) as $yaku) {
-            //todo convert yakuhai2,3,4 to yakuhai1
+                if (in_array($yaku, [Y_YAKUHAI2, Y_YAKUHAI3, Y_YAKUHAI4, Y_YAKUHAI5])) {
+                    $yaku = Y_YAKUHAI1;
+                }
+
                 if (!in_array($yaku, $playersYaku[$round['display_name']])) {
                     array_push($playersYaku[$round['display_name']], $yaku);
                 }
