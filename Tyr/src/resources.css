@@ -40,7 +40,7 @@
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 3px;
-    border: solid #fff 1px;
+    border: solid var(--tenbou-border-color) 1px;
     text-decoration: none;
 }
 .tenbou.riichi {
