@@ -59,7 +59,7 @@
 }
 
 .buttons > button.pressed {
-  background-color: var(--navbar-bg-color);
+  background-color: var(--screen-yaku-select-bg-color);
   border: 2px solid var(--main-border-color);
   border-bottom: none;
   border-radius: 15px 15px 0 0;
@@ -67,30 +67,31 @@
 }
 
 .yaku-row:nth-of-type(7n) {
-    background-color: #444;
+    background-color: var(--yaku-row-bg-color-0);
 }
 .yaku-row:nth-of-type(7n+1) {
-    background-color: #242;
+  background-color: var(--yaku-row-bg-color-1);
 }
 .yaku-row:nth-of-type(7n+2) {
-    background-color: #224;
+  background-color: var(--yaku-row-bg-color-2);
 }
 .yaku-row:nth-of-type(7n+3) {
-    background-color: #442;
+  background-color: var(--yaku-row-bg-color-3);
 }
 .yaku-row:nth-of-type(7n+4) {
-    background-color: #424;
+  background-color: var(--yaku-row-bg-color-4);
 }
 .yaku-row:nth-of-type(7n+5) {
-    background-color: #244;
+  background-color: var(--yaku-row-bg-color-5);
 }
 .yaku-row:nth-of-type(7n+6) {
-  background-color: #422;
+  background-color: var(--yaku-row-bg-color-6);
 }
 
 .yaku-row {
     display: flex;
     flex-wrap: wrap;
+    padding: var(--yaku-row-padding);
 }
 
 hr {
