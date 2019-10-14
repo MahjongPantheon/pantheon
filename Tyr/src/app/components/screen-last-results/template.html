@@ -30,20 +30,26 @@
   <div class="centered">
     <div class="toimen side">
       <div class="displayName">{{toimen.displayName}}</div>
-      <div class="points">{{toimen.score}}</div>
-      <div class="ratingDelta" [class.success]="toimen.ratingDelta >= 0">{{toimen.ratingDelta}}</div>
+      <div class="points-wrap">
+        <div class="points">{{toimen.score}}</div>
+        <div class="ratingDelta" [class.success]="toimen.ratingDelta >= 0">{{toimen.ratingDelta}}</div>
+      </div>
     </div>
   </div>
   <div class="ka-shi">
     <div class="kamicha side">
       <div class="displayName">{{kamicha.displayName}}</div>
-      <div class="points">{{kamicha.score}}</div>
-      <div class="ratingDelta" [class.success]="kamicha.ratingDelta >= 0">{{kamicha.ratingDelta}}</div>
+      <div class="points-wrap">
+        <div class="points">{{kamicha.score}}</div>
+        <div class="ratingDelta" [class.success]="kamicha.ratingDelta >= 0">{{kamicha.ratingDelta}}</div>
+      </div>
     </div>
     <div class="shimocha side">
       <div class="displayName">{{shimocha.displayName}}</div>
-      <div class="points">{{shimocha.score}}</div>
-      <div class="ratingDelta" [class.success]="shimocha.ratingDelta >= 0">{{shimocha.ratingDelta}}</div>
+      <div class="points-wrap">
+        <div class="points">{{shimocha.score}}</div>
+        <div class="ratingDelta" [class.success]="shimocha.ratingDelta >= 0">{{shimocha.ratingDelta}}</div>
+      </div>
     </div>
   </div>
   <div class="centered">
@@ -52,8 +58,10 @@
     </div>
     <div class="my side">
       <div class="displayName">{{self.displayName}}</div>
-      <div class="points">{{self.score}}</div>
-      <div class="ratingDelta" [class.success]="self.ratingDelta >= 0">{{self.ratingDelta}}</div>
+      <div class="points-wrap">
+        <div class="points">{{self.score}}</div>
+        <div class="ratingDelta" [class.success]="self.ratingDelta >= 0">{{self.ratingDelta}}</div>
+      </div>
     </div>
     <div class="edge-block">
       <button class="ok-button" (click)="nextScreen()">✓</button>

@@ -151,7 +151,7 @@ or ( ( -moz-appearance: none ) and ( mask-type: alpha ) ) {
 .with-selectors {
   display: flex;
   justify-content: space-between;
-  align-content: end;
+  align-content: flex-end;
   align-items: center;
 }
 

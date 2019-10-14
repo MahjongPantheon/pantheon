@@ -258,6 +258,27 @@ button.discolored:active {
     box-shadow: none;
 }
 
+/* Small screens media queries */
+
+@media only screen and (max-width: 330px) {
+  button {
+    min-height: 30px;
+  }
+}
+
+/* Landscape media queries */
+@media only screen and (orientation : landscape) {
+  button {
+    min-height: 30px;
+  }
+}
+
+@media only screen and (orientation : landscape) and (max-height: 330px) {
+  button {
+    min-height: 30px;
+  }
+}
+
 .preloader {
     position: absolute;
     font-size: 100px;

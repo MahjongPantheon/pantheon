@@ -72,11 +72,16 @@
 }
 
 .displayName {
-    font-size: 28px;
+    font-size: 18px;
 }
 
 .points {
-    font-size: 36px;
+  font-size: 30px;
+  flex: 1;
+}
+
+.points-wrap {
+  display: block;
 }
 
 .ok-button {
@@ -95,11 +100,12 @@
 }
 
 .ratingDelta {
-    font-size: 20px;
-    padding: 5px;
-    border-radius: 4px;
-    color: var(--main-text-color);
-    background-color: var(--emergency-color);
+  flex: 1;
+  font-size: 20px;
+  padding: 5px;
+  border-radius: 4px;
+  color: var(--main-text-color);
+  background-color: var(--emergency-color);
 }
 
 .ratingDelta.success {
@@ -108,4 +114,25 @@
 
 .ratingDelta.success::before {
     content: '+';
+}
+
+/* Landscape media queries */
+@media only screen and (orientation : landscape) {
+  .points-wrap {
+    flex-wrap: nowrap;
+    display: flex;
+  }
+  .ratingDelta {
+    flex: 0;
+  }
+}
+
+@media only screen and (orientation : landscape) and (max-height: 330px) {
+  .points-wrap {
+    flex-wrap: nowrap;
+    display: flex;
+  }
+  .ratingDelta {
+    flex: 0;
+  }
 }
