@@ -33,7 +33,7 @@
   <button class="newgame-button" (click)="lastResults()" *ngIf="!isUniversalWatcher">{{_PREV_GAME_RESULTS}}</button>
   <button class="newgame-button" (click)="newGame()" *ngIf="showNewGame">{{_NEW_GAME}}</button>
   <button class="newgame-button" (click)="gotoStat()" *ngIf="showStatButton"
-          style="background-color: #333; border: none; text-decoration: underline; color: var(--button-text-color)">
+          style="border: none; text-decoration: underline;">
     {{_STATISTICS}} <custom-icon [type]="'newtab'" style="position: absolute; right: 14px; fill: var(--button-text-color)"></custom-icon>
   </button>
 </div>

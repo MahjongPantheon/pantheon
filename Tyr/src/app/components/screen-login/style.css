@@ -48,8 +48,8 @@
   border: 1px solid #ccc;
   font-size: 40px;
   text-align: center;
-  color: #ccc;
-  background-color: #575;
+  color: var(--main-text-color);
+  background-color: var(--navbar-bg-color);
 }
 
 .pin.error {

@@ -45,5 +45,18 @@ export const pinkPantherTheme: Theme = {
     '--button-active-box-shadow': '2px 2px 3px 0 var(--secondary-text-color)',
     '--button-active-border': 'none',
     '--button-active-text-color': 'var(--main-text-color)',
+    '--tenbou-border-color': '#fff',
+
+    '--yaku-item-button-margin': '7px',
+    '--yaku-row-padding': '0',
+    '--yaku-item-button-border': '4px',
+    '--screen-yaku-select-bg-color': 'var(--navbar-bg-color)',
+    '--yaku-row-bg-color-0': '#444',
+    '--yaku-row-bg-color-1': '#242',
+    '--yaku-row-bg-color-2': '#224',
+    '--yaku-row-bg-color-3': '#442',
+    '--yaku-row-bg-color-4': '#424',
+    '--yaku-row-bg-color-5': '#244',
+    '--yaku-row-bg-color-6': '#422',
   }
 };

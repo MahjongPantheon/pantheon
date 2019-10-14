@@ -20,6 +20,7 @@
 
 :host {
   margin: 7px;
+  margin: var(--yaku-item-button-margin);
   flex: 1 0 auto;
   align-self: stretch;
 }
@@ -33,7 +34,7 @@ button {
   font-size: 28px;
   padding: 15px 5px;
   opacity: 0.6;
-  border: solid 4px var(--main-border-color);
+  border: solid var(--yaku-item-button-border) var(--main-border-color);
   outline: none;
   border-radius: 12px;
 }
