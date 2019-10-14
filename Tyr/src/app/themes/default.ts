@@ -4,7 +4,7 @@ export const defaultTheme: Theme = {
   name: 'defaultTheme',
   humanReadableTitle: 'Default theme',
   properties: {
-    '--main-bg-color': '#2C632C',
+    '--main-bg-color': '#2b6519',
     '--main-button-bg-color': '#ccc',
     '--main-button-bg-color-hl': '#ccc',
     '--main-text-color': '#e8e8e8',
