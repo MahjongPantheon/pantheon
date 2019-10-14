@@ -77,7 +77,8 @@ class Achievements extends Controller
             'catchEmAll' => $achievements['catchEmAll'], // Array<{ name: string, count: number }>,
             'favoriteAsapinApprentice' => $achievements['favoriteAsapinApprentice'], // Array<{ name: string, score: number }>,
             'andYourRiichiBet' => $achievements['andYourRiichiBet'], // Array<{ name: string, count: number }>,
-            'prudent' => $achievements['prudent'], // Array<{ name: string, score: number, lost: number, total: number }>,
+            'covetousKnight' => $achievements['covetousKnight'], // Array<{ name: string, count: number }>,
+            'ninja' => $achievements['ninja'], // Array<{ name: string, count: number }>,
         ];
     }
 }
