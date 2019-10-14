@@ -30,6 +30,7 @@ export const darkBlueTheme: Theme = {
     '--warning-color-semi': '#c5c2c2',
     '--safe-color-semi': '#afd8af',
 
+    '--badge-text-color': 'var(--main-text-color)',
     '--button-background-style': 'var(--main-button-bg-color)',
 
     '--button-border-radius': '5px',

@@ -104,7 +104,7 @@
   font-size: 20px;
   padding: 5px;
   border-radius: 4px;
-  color: var(--main-text-color);
+  color: var(--badge-text-color);
   background-color: var(--emergency-color);
 }
 
