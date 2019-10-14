@@ -91,6 +91,7 @@
 .yaku-row {
     display: flex;
     flex-wrap: wrap;
+    padding: var(--yaku-row-padding);
 }
 
 hr {

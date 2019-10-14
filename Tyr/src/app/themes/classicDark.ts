@@ -1,11 +1,11 @@
 import { Theme } from './interface';
 
-export const darkBlueTheme: Theme = {
-  name: 'darkBlue',
-  humanReadableTitle: 'Dark blue theme',
+export const classicDarkTheme: Theme = {
+  name: 'classicDark',
+  humanReadableTitle: 'Classic dark theme',
   properties: {
-    '--main-bg-color': '#282c34',
-    '--main-button-bg-color': '#865931',
+    '--main-bg-color': '#2a2a2a',
+    '--main-button-bg-color': 'var(--navbar-bg-color)',
     '--main-text-color': '#C6C7C4',
     '--main-border-color': '#9B8573',
 
@@ -20,14 +20,14 @@ export const darkBlueTheme: Theme = {
 
     '--secondary-button-bg-color': '#2B4162',
 
-    '--navbar-bg-color': '#4b4b4b',
+    '--navbar-bg-color': '#686868',
 
     '--emergency-color': 'rgb(179, 0, 27)',
     '--warning-color': '#4b4b4b',
     '--safe-color': 'rgb(44, 99, 44)',
 
     '--emergency-color-semi': '#e6b6bc',
-    '--warning-color-semi': '#c5c2c2',
+    '--warning-color-semi': '#c3c3c3',
     '--safe-color-semi': '#afd8af',
 
     '--button-background-style': 'var(--main-button-bg-color)',
@@ -44,18 +44,18 @@ export const darkBlueTheme: Theme = {
     '--button-active-box-shadow': 'none',
     '--button-active-border': 'none',
     '--button-active-text-color': 'var(--main-text-color)',
-    '--tenbou-border-color': '#fff',
+    '--tenbou-border-color': 'var(--main-text-color)',
 
-    '--yaku-item-button-margin': '7px',
-    '--yaku-row-padding': '0',
-    '--yaku-item-button-border': '4px',
-    '--screen-yaku-select-bg-color': 'var(--navbar-bg-color)',
-    '--yaku-row-bg-color-0': '#444',
-    '--yaku-row-bg-color-1': '#242',
-    '--yaku-row-bg-color-2': '#224',
-    '--yaku-row-bg-color-3': '#442',
-    '--yaku-row-bg-color-4': '#424',
-    '--yaku-row-bg-color-5': '#244',
-    '--yaku-row-bg-color-6': '#422',
+    '--yaku-item-button-margin': '2px',
+    '--yaku-row-padding': '2px 4px',
+    '--yaku-item-button-border': '2px',
+    '--screen-yaku-select-bg-color': 'var(--main-bg-color)',
+    '--yaku-row-bg-color-0': 'var(--main-bg-color)',
+    '--yaku-row-bg-color-1': 'var(--main-bg-color)',
+    '--yaku-row-bg-color-2': 'var(--main-bg-color)',
+    '--yaku-row-bg-color-3': 'var(--main-bg-color)',
+    '--yaku-row-bg-color-4': 'var(--main-bg-color)',
+    '--yaku-row-bg-color-5': 'var(--main-bg-color)',
+    '--yaku-row-bg-color-6': 'var(--main-bg-color)',
   }
 };
