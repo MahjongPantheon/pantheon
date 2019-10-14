@@ -47,10 +47,12 @@ export const defaultTheme: Theme = {
     '--button-active-text-color': 'var(--secondary-text-color)',
     '--timer-yellow-zone-color': 'var(--secondary-text-color)',
     '--light-color': '#dddddd',
-
-    '--screen-yaku-select-bg-color': 'var(--navbar-bg-color)',
-
     '--tenbou-border-color': '#fff',
+
+    '--yaku-item-button-margin': '7px',
+    '--yaku-row-padding': '0',
+    '--yaku-item-button-border': '4px',
+    '--screen-yaku-select-bg-color': 'var(--navbar-bg-color)',
     '--yaku-row-bg-color-0': '#444',
     '--yaku-row-bg-color-1': '#242',
     '--yaku-row-bg-color-2': '#224',
