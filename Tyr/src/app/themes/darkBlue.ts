@@ -44,5 +44,16 @@ export const darkBlueTheme: Theme = {
     '--button-active-box-shadow': 'none',
     '--button-active-border': 'none',
     '--button-active-text-color': 'var(--main-text-color)',
+
+    '--screen-yaku-select-bg-color': 'var(--navbar-bg-color)',
+
+    '--tenbou-border-color': '#fff',
+    '--yaku-row-bg-color-0': '#444',
+    '--yaku-row-bg-color-1': '#242',
+    '--yaku-row-bg-color-2': '#224',
+    '--yaku-row-bg-color-3': '#442',
+    '--yaku-row-bg-color-4': '#424',
+    '--yaku-row-bg-color-5': '#244',
+    '--yaku-row-bg-color-6': '#422',
   }
 };
