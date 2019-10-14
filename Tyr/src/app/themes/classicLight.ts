@@ -30,6 +30,7 @@ export const classicLightTheme: Theme = {
     '--warning-color-semi': '#eae8e6',
     '--safe-color-semi': '#cceacc',
 
+    '--badge-text-color': '#f7f3ef',
     '--button-background-style': 'var(--main-button-bg-color)',
 
     '--button-border-radius': '5px',
