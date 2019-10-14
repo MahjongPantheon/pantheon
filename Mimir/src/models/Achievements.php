@@ -215,7 +215,7 @@ class AchievementsModel extends Model
                     'count'  => $item['lost'],
                 ];
             },
-            array_slice($riichiStat, 0, 100)
+            array_slice($riichiStat, 0, 5)
         );
     }
 
