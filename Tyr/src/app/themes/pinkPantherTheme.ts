@@ -31,6 +31,7 @@ export const pinkPantherTheme: Theme = {
     '--warning-color-semi': 'rgba(249, 246, 143, 0.2)',
     '--safe-color-semi': 'rgba(44, 99, 44, 0.2)',
 
+    '--badge-text-color': 'var(--main-text-color)',
     '--button-background-style': 'linear-gradient(to bottom, var(--main-button-bg-color) 0%, var(--main-button-bg-color-hl) 50%, var(--main-button-bg-color) 51%, var(--main-button-bg-color) 100%)',
 
     '--button-border-radius': '5px',

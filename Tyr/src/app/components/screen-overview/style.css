@@ -156,11 +156,11 @@
 }
 
 .newgame-button {
-    width: 94%;
     font-size: 24px;
     flex: 1;
     margin: 5px 5px;
     padding: 1px 0;
+    position: relative;
 }
 
 .table-index {
