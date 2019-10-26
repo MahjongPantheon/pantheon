@@ -14,213 +14,270 @@
 *  You should have received a copy of the GNU General Public License
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
-<h3>{{_t 'Achievements'}}</h3>
+
+<style>
+  .achievements-page .paragraph-title {
+    font-size: 14px;
+    display: block;
+    border-bottom: 1px solid #ccc;
+    color: #999;
+    margin-top: 12px;
+    margin-bottom: 6px;
+  }
+
+  .achievements-page .value {
+    font-size: 26px;
+  }
+</style>
 
 {{#error}}
     <div class="alert alert-error" style="white-space: pre">{{error}}</div>
 {{/error}}
 {{^error}}
-    <table class="table table-striped">
-        <tbody>
-            <tr>
-                <th>{{_t 'Achievement'}}</th>
-                <th style="width: 30%">{{_t 'Description'}}</th>
-                <th>{{_t 'Value'}}</th>
-                <th>{{_t 'Nominees'}}</th>
-            </tr>
-            <tr>
-                <td><b>{{_t 'Best hand'}}</b></td>
-                <td style="width: 30%">{{_t 'Given for collecting the hand with biggest han count (independent of cost).'}}</td>
-                <td>{{bestHandValue}}</td>
-                <td><ul>
-                    {{#bestHandPlayers}}
-                        <li>{{.}}</li>
-                    {{/bestHandPlayers}}
-                </ul></td>
-            </tr>
-            <tr>
-                <td><b>{{_t 'Over 9000 fu'}}</b></td>
-                <td style="width: 30%">{{_t 'Given for collecting the hand with biggest minipoints (fu) count.'}}</td>
-                <td>{{_p '%s fu' bestFuHandValue}}</td>
-                <td><ul>
-                    {{#bestFuHandPlayers}}
-                        <li>{{.}}</li>
-                    {{/bestFuHandPlayers}}
-                </ul></td>
-            </tr>
-            <tr>
-                <td><b>{{_t 'I saw them dancing'}}</b></td>
-                <td style="width: 30%">{{_t 'Given for collecting the most of tsumo hands during single game.'}}</td>
-                <td>{{bestTsumoCount}}</td>
-                <td><ul>
-                    {{#bestTsumoPlayers}}
-                        <li>{{.}}</li>
-                    {{/bestTsumoPlayers}}
-                </ul></td>
-            </tr>
-            <tr>
-                <td><b>{{_t 'Die Hard' }}</b></td>
-                <td style="width: 30%">{{_t 'Given for smallest count of feeding into ron during the tournament.'}}</td>
-                <td>{{dieHardValue}}</td>
-                <td><ul>
-                    {{#dieHardPlayers}}
-                        <li>{{.}}</li>
-                    {{/dieHardPlayers}}
-                </ul></td>
-            </tr>
-            <tr>
-                <td><b>{{_t 'Brave minesweeper'}}</b></td>
-                <td style="width: 30%">{{_t 'Given for largest count of feeding into ron during the tournament.'}}</td>
-                <td>{{bestSapperValue}}</td>
-                <td><ul>
-                    {{#bestSapperPlayers}}
-                        <li>{{.}}</li>
-                    {{/bestSapperPlayers}}
-                </ul></td>
-            </tr>
-            <tr>
-                <td><b>{{_t 'Guest of honors'}}</b></td>
-                <td style="width: 30%">{{_t 'Given for collecting the most of yakuhais during the tournament.'}}</td>
-                <td>-</td>
-                <td><ul>
-                    {{#dovakins}}
-                        <li>{{_np "%s: %d yakuhai" "%s: %d yakuhais" count name count}}</li>
-                    {{/dovakins}}
-                </ul></td>
-            </tr>
-            <tr>
-                <td><b>{{_t 'The great dealer'}}</b></td>
-                <td style="width: 30%">{{_t 'Given for largest count of dealer wins during the tournament.'}}</td>
-                <td>{{_np '%d win' '%d wins' bestDealerRenchans bestDealerRenchans}}</td>
-                <td><ul>
-                    {{#bestDealerPlayers}}
-                        <li>{{.}}</li>
-                    {{/bestDealerPlayers}}
-                </ul></td>
-            </tr>
-            <tr>
-                <td><b>{{_t 'The 1k Flash'}}</b></td>
-                <td style="width: 30%">{{_t 'Given for the most of 1/30 wins during tournament.'}}</td>
-                <td>{{_np '%d quickest hand' '%d quickest hands' shithandsCount shithandsCount}}</td>
-                <td><ul>
-                    {{#shithanderPlayers}}
-                        <li>{{.}}</li>
-                    {{/shithanderPlayers}}
-                </ul></td>
-            </tr>
-            <tr>
-                <td><b>{{_t 'Jewelry included'}}</b></td>
-                <td style="width: 30%">{{_t 'Given for collecting a yakuman during tournament.'}}</td>
-                <td>-</td>
-                <td><ul>
-                    {{#yakumans}}
-                        <li>{{.}}</li>
-                    {{/yakumans}}
-                </ul></td>
-            </tr>
-            <tr>
-              <td><b>{{_t "This can't be your wait"}}</b></td>
-              <td style="width: 30%">{{_t 'Given for feeding into largest hand during tournament (but not while in riichi).'}}</td>
-              <td>-</td>
-              <td><ul>
-                {{#impossibleWait}}
-                  <li>{{name}}:
-                    {{#hand.fu}}{{_p '%s han, %s fu' hand.han hand.fu}}{{/hand.fu}}
-                    {{^hand.fu}}{{_p '%s han' hand.han}}{{/hand.fu}}
-                  </li>
-                {{/impossibleWait}}
-              </ul></td>
-            </tr>
-            <tr>
-              <td><b>{{_t 'Honored donor'}}</b></td>
-              <td style="width: 30%">{{_t 'Given for losing largest amount of points as riichi bets.'}}</td>
-              <td>-</td>
-              <td><ul>
-                {{#honoredDonor}}
-                  <li>{{name}}: {{_np '%s bet' '%s bets' count count}}</li>
-                {{/honoredDonor}}
-              </ul></td>
-            </tr>
-            <tr>
-              <td><b>{{_t 'Just as planned'}}</b></td>
-              <td style="width: 30%">{{_t 'Given for getting largest number of ippatsu during tournament.'}}</td>
-              <td>-</td>
-              <td><ul>
-                {{#justAsPlanned}}
-                  <li>{{name}}: {{_np '%s ippatsu' '%s ippatsu' count count}}</li>
-                {{/justAsPlanned}}
-              </ul></td>
-            </tr>
-            <tr>
-              <td><b>{{_t 'Careful planning'}}</b></td>
-              <td style="width: 30%">{{_t 'Given for the smallest average cost of opponents hand that player has dealt.'}}</td>
-              <td>-</td>
-              <td><ul>
-                {{#carefulPlanning}}
-                  <li>{{name}}: {{_p '%s points' score}}</li>
-                {{/carefulPlanning}}
-              </ul></td>
-            </tr>
-            <tr>
-              <td><b>{{_t 'Dora lord'}}</b></td>
-              <td style="width: 30%">{{_t 'Given for the largest average count of dora in player\'s hand.'}}</td>
-              <td>-</td>
-              <td><ul>
-                {{#doraLord}}
-                  <li>{{name}}: {{_p '%s dora' count}}</li>
-                {{/doraLord}}
-              </ul></td>
-            </tr>
-            <tr>
-              <td><b>{{_t 'Gotta Catch\'Em All'}}</b></td>
-              <td style="width: 30%">{{_t 'Given for the largest amount of unique yaku collected during the tournament.'}}</td>
-              <td>-</td>
-              <td><ul>
-                {{#catchEmAll}}
-                  <li>{{name}}: {{_p '%s yaku' count}}</li>
-                {{/catchEmAll}}
-              </ul></td>
-            </tr>
-            <tr>
-              <td><b>{{_t 'The favorite apprentice of ASAPIN'}}</b></td>
-              <td style="width: 30%">{{_t 'Given for the largest amount of points received as ryukoku payments.'}}</td>
-              <td>-</td>
-              <td><ul>
-                {{#favoriteAsapinApprentice}}
-                  <li>{{name}}: {{_p '%s points' score}}</li>
-                {{/favoriteAsapinApprentice}}
-              </ul></td>
-            </tr>
-            <tr>
-              <td><b>{{_t 'And your riichi bet, please'}}</b></td>
-              <td style="width: 30%">{{_t 'Given for collecting the largest amount of other players\' riichi bets during the tournament.'}}</td>
-              <td>-</td>
-              <td><ul>
-                {{#andYourRiichiBet}}
-                  <li>{{name}}: {{_np '%s riichi bet' '%s riichi bets' count count}}</li>
-                {{/andYourRiichiBet}}
-              </ul></td>
-            </tr>
-            <tr>
-              <td><b>{{_t 'The Covetous Knight'}}</b></td>
-              <td style="width: 30%">{{_t 'Given for losing the smallest number of riichi bets.'}}</td>
-              <td>-</td>
-              <td><ul>
-                {{#covetousKnight}}
-                    <li>{{name}}: {{_np '%d riichi bet' '%d riichi bets' count count}}</li>
-                {{/covetousKnight}}
-              </ul></td>
-            </tr>
-            <tr>
-              <td><b>{{_t 'Ninja'}}</b></td>
-              <td style="width: 30%">{{_t 'Given for winning the largest number of hands with damaten.'}}</td>
-              <td>-</td>
-              <td><ul>
-                {{#ninja}}
-                    <li>{{name}}: {{_np '%d win' '%d wins' count count}}</li>
-                {{/ninja}}
-              </ul></td>
-            </tr>
-        </tbody>
-    </table>
+<div class="achievements-page">
+  {{#bestHand}}
+    <h3>{{_t 'Achievement'}} - {{bestHand.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{bestHand.description}}</div>
+    <div class="paragraph-title">{{_t 'Value'}}</div>
+    <div class="value">{{bestHand.val.han}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#bestHand.val.names}}
+        <li>{{.}}</li>
+      {{/bestHand.val.names}}
+    </ul></div>
+  {{/bestHand}}
+
+  {{#bestFu}}
+    <h3>{{_t 'Achievement'}} - {{bestFu.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{bestFu.description}}</div>
+    <div class="paragraph-title">{{_t 'Value'}}</div>
+    <div class="value">{{_p '%s fu' bestFu.val.fu}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#bestFu.val.names}}
+        <li>{{.}}</li>
+      {{/bestFu.val.names}}
+    </ul></div>
+  {{/bestFu}}
+
+  {{#bestTsumoist}}
+    <h3>{{_t 'Achievement'}} - {{bestTsumoist.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{bestTsumoist.description}}</div>
+    <div class="paragraph-title">{{_t 'Value'}}</div>
+    <div class="value">{{bestTsumoist.val.tsumo}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#bestTsumoist.val.names}}
+        <li>{{.}}</li>
+      {{/bestTsumoist.val.names}}
+    </ul></div>
+  {{/bestTsumoist}}
+
+  {{#dieHard}}
+    <h3>{{_t 'Achievement'}} - {{dieHard.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{dieHard.description}}</div>
+    <div class="paragraph-title">{{_t 'Value'}}</div>
+    <div class="value">{{dieHard.val.feed}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#dieHard.val.names}}
+        <li>{{.}}</li>
+      {{/dieHard.val.names}}
+    </ul></div>
+  {{/dieHard}}
+
+  {{#braveSapper}}
+    <h3>{{_t 'Achievement'}} - {{braveSapper.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{braveSapper.description}}</div>
+    <div class="paragraph-title">{{_t 'Value'}}</div>
+    <div class="value">{{braveSapper.val.feed}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#braveSapper.val.names}}
+        <li>{{.}}</li>
+      {{/braveSapper.val.names}}
+    </ul></div>
+  {{/braveSapper}}
+
+  {{#dovakins}}
+    <h3>{{_t 'Achievement'}} - {{dovakins.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{dovakins.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#dovakins.val}}
+        <li>{{_np "%s: %d yakuhai" "%s: %d yakuhais" count name count}}</li>
+      {{/dovakins.val}}
+    </ul></div>
+  {{/dovakins}}
+
+  {{#bestDealer}}
+    <h3>{{_t 'Achievement'}} - {{bestDealer.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{bestDealer.description}}</div>
+    <div class="paragraph-title">{{_t 'Value'}}</div>
+    <div class="value">{{_np '%d win' '%d wins' bestDealer.val.bestWinCount bestDealer.val.bestWinCount}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#bestDealer.val.names}}
+        <li>{{.}}</li>
+      {{/bestDealer.val.names}}
+    </ul></div>
+  {{/bestDealer}}
+
+  {{#shithander}}
+    <h3>{{_t 'Achievement'}} - {{shithander.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{shithander.description}}</div>
+    <div class="paragraph-title">{{_t 'Value'}}</div>
+    <div class="value">{{_np '%d quickest hand' '%d quickest hands' shithander.val.handsCount shithander.val.handsCount}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#shithander.val.names}}
+        <li>{{.}}</li>
+      {{/shithander.val.names}}
+    </ul></div>
+  {{/shithander}}
+
+  {{#yakumans}}
+    <h3>{{_t 'Achievement'}} - {{yakumans.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{yakumans.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#yakumans.val}}
+        <li>{{.}}</li>
+      {{/yakumans.val}}
+    </ul></div>
+  {{/yakumans}}
+
+  {{#impossibleWait}}
+    <h3>{{_t 'Achievement'}} - {{impossibleWait.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{impossibleWait.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#impossibleWait.val}}
+        <li>{{name}}:
+          {{#hand.fu}}{{_p '%s han, %s fu' hand.han hand.fu}}{{/hand.fu}}
+          {{^hand.fu}}{{_p '%s han' hand.han}}{{/hand.fu}}
+        </li>
+      {{/impossibleWait.val}}
+    </ul></div>
+  {{/impossibleWait}}
+
+  {{#honoredDonor}}
+    <h3>{{_t 'Achievement'}} - {{honoredDonor.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{honoredDonor.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#honoredDonor.val}}
+        <li>{{name}}: {{_np '%s bet' '%s bets' count count}}</li>
+      {{/honoredDonor.val}}
+    </ul></div>
+  {{/honoredDonor}}
+
+  {{#justAsPlanned}}
+    <h3>{{_t 'Achievement'}} - {{justAsPlanned.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{justAsPlanned.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#justAsPlanned.val}}
+        <li>{{name}}: {{_np '%s ippatsu' '%s ippatsu' count count}}</li>
+      {{/justAsPlanned.val}}
+    </ul></div>
+  {{/justAsPlanned}}
+
+  {{#carefulPlanning}}
+    <h3>{{_t 'Achievement'}} - {{carefulPlanning.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{carefulPlanning.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#carefulPlanning.val}}
+        <li>{{name}}: {{_p '%s points' score}}</li>
+      {{/carefulPlanning.val}}
+    </ul></div>
+  {{/carefulPlanning}}
+
+  {{#doraLord}}
+    <h3>{{_t 'Achievement'}} - {{doraLord.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{doraLord.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#doraLord.val}}
+        <li>{{name}}: {{_p '%s dora' count}}</li>
+      {{/doraLord.val}}
+    </ul></div>
+  {{/doraLord}}
+
+  {{#catchEmAll}}
+    <h3>{{_t 'Achievement'}} - {{catchEmAll.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{catchEmAll.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#catchEmAll.val}}
+        <li>{{name}}: {{_p '%s yaku' count}}</li>
+      {{/catchEmAll.val}}
+    </ul></div>
+  {{/catchEmAll}}
+
+  {{#favoriteAsapinApprentice}}
+    <h3>{{_t 'Achievement'}} - {{favoriteAsapinApprentice.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{favoriteAsapinApprentice.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#favoriteAsapinApprentice.val}}
+        <li>{{name}}: {{_p '%s points' score}}</li>
+      {{/favoriteAsapinApprentice.val}}
+    </ul></div>
+  {{/favoriteAsapinApprentice}}
+
+  {{#andYourRiichiBet}}
+    <h3>{{_t 'Achievement'}} - {{andYourRiichiBet.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{andYourRiichiBet.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#andYourRiichiBet.val}}
+        <li>{{name}}: {{_np '%s riichi bet' '%s riichi bets' count count}}</li>
+      {{/andYourRiichiBet.val}}
+    </ul></div>
+  {{/andYourRiichiBet}}
+
+  {{#covetousKnight}}
+    <h3>{{_t 'Achievement'}} - {{covetousKnight.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{covetousKnight.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#covetousKnight.val}}
+        <li>{{name}}: {{_np '%d riichi bet' '%d riichi bets' count count}}</li>
+      {{/covetousKnight.val}}
+    </ul></div>
+  {{/covetousKnight}}
+
+  {{#ninja}}
+    <h3>{{_t 'Achievement'}} - {{ninja.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{ninja.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#ninja.val}}
+        <li>{{name}}: {{_np '%d win' '%d wins' count count}}</li>
+      {{/ninja.val}}
+    </ul></div>
+  {{/ninja}}
+</div>
 {{/error}}

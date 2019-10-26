@@ -87,6 +87,7 @@ class Templater
         $a = $args->getNamedArguments();
         return '<a href="' . Url::make(Url::interpolate($a['href'], $context), self::$_eventIdListString) . '"'
             . (empty($a['target']) ? '' : ' target="' . $a['target'] . '"')
+            . (empty($a['title']) ? '' : ' title="' . Url::interpolate($a['title'], $context) . '"')
             . (empty($a['class']) ? '' : ' class="' . $a['class'] . '"')
             . (empty($a['onclick']) ? '' : ' onclick="' . Url::interpolate($a['onclick'], $context) . '"')
             . '>' . self::$_inlineRenderer->render($source, $context) . '</a>';
