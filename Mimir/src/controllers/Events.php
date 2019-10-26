@@ -478,14 +478,31 @@ class EventsController extends Controller
     }
 
     /**
+     * @return array
+     * @throws AuthFailedException
+     */
+    public function getAchievementsList()
+    {
+        $this->_log->addInfo('Getting achievements code list');
+
+        $list = (new AchievementsModel($this->_db, $this->_config, $this->_meta))
+            ->getAchievementsList();
+
+        $this->_log->addInfo('Successfully received achievements code list');
+
+        return $list;
+    }
+
+    /**
      * Get achievements list for event
      *
      * @param array $eventIdList
+     * @param array $achievementsList
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
      */
-    public function getAchievements($eventIdList)
+    public function getAchievements($eventIdList, $achievementsList)
     {
         if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
@@ -502,7 +519,8 @@ class EventsController extends Controller
             throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
-        $table = (new AchievementsModel($this->_db, $this->_config, $this->_meta))->getAchievements($eventIdList);
+        $table = (new AchievementsModel($this->_db, $this->_config, $this->_meta))
+            ->getAchievements($eventIdList, $achievementsList);
 
         $this->_log->addInfo('Successfully received achievements list for event ids# ' . implode(", ", $eventIdList));
 

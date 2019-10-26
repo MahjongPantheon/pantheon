@@ -68,6 +68,7 @@ return [
     'enrollPlayerCP'     => ['EventsController', 'enrollPlayer'],
     'getAllEnrolled'     => ['EventsController', 'getAllEnrolledPlayers'],
     'getAchievements'    => ['EventsController', 'getAchievements'],
+    'getAchievementsList'    => ['EventsController', 'getAchievementsList'],
     'toggleHideResults'  => ['EventsController', 'toggleHideResults'],
     'updatePlayersLocalIds' => ['EventsController', 'updateLocalIds'],
     'startGame'          => ['GamesController', 'start'],
