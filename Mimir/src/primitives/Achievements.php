@@ -255,9 +255,10 @@ class AchievementsPrimitive extends Primitive
             ->whereIn('outcome', ['ron', 'tsumo', 'multiron'])
             ->whereLt('han', 0) // yakuman
             ->findArray();
-        return array_map(function ($round) {
+        $players = array_map(function ($round) {
             return $round['display_name'];
         }, $rounds);
+        return empty($players) ? 'No yakumans!' : $players;
     }
 
     /**
@@ -429,7 +430,12 @@ class AchievementsPrimitive extends Primitive
         }
 
         arsort($yakuhaiStats);
-        return array_slice($yakuhaiStats, 0, 3);
+        $arr = array_slice($yakuhaiStats, 0, 3);
+        $retval = [];
+        foreach ($arr as $k => $v) {
+            $retval []= ['count' => $v, 'name' => $k];
+        }
+        return $retval;
     }
 
     /**

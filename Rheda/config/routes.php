@@ -59,6 +59,7 @@ return [ // Omit trailing slashes in keys when possible
     '/penalties'       => 'Penalties',
     '/penalties/(?<action>apply)' => 'Penalties',
     '/achievements'    => 'Achievements',
+    '/achievements/(?<achievement>[0-9a-zA-Z]+)' => 'Achievements',
 
     '!/favicon.ico'    => 'Mainpage' // костылёк ^_^
 ];
