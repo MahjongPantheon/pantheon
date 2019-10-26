@@ -15,6 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 namespace Rheda;
 
 require_once __DIR__ . '/../helpers/Array.php';
@@ -36,49 +37,109 @@ class Achievements extends Controller
             ];
         }
 
-        $achievements = null;
-        try {
-            $achievements = $this->_api->execute('getAchievements', [$this->_eventIdList]);
-        } catch (Exception $e) {
-            return [
-                'error' => $e->getMessage()
-            ];
+        if (!empty($this->_path['achievement'])) {
+            $ach = null;
+            try {
+                $ach = $this->_api->execute('getAchievements', [$this->_eventIdList, [$this->_path['achievement']]]);
+                return $this->_achValue($ach);
+            } catch (Exception $e) {
+                return [
+                    'error' => $e->getMessage()
+                ];
+            }
+        } else {
+            $this->_mainTemplate = 'AchievementsList';
+            return ['achs' => $this->_achList()];
         }
+    }
 
-        $dovakins = [];
-        foreach ($achievements['dovakin'] as $k => $v) {
-            $dovakins []= ['name' => $k, 'count' => $v];
-        }
+    protected function _achList()
+    {
+        $names = [
+            'bestHand' => _t('Best hand'),
+            'bestFu' => _t('Over 9000 fu'),
+            'bestTsumoist' => _t('I saw them dancing'),
+            'dieHard' => _t('Die Hard'),
+            'braveSapper' => _t('Brave minesweeper'),
+            'dovakins' => _t('Guest of honors'),
+            'bestDealer' => _t('The great dealer'),
+            'shithander' => _t('The 1k Flash'),
+            'yakumans' => _t('Jewelry included'),
+            'impossibleWait' => _t("This can't be your wait"),
+            'honoredDonor' => _t('Honored donor'),
+            'justAsPlanned' => _t('Just as planned'),
+            'carefulPlanning' => _t('Careful planning'),
+            'doraLord' => _t('Dora lord'),
+            'catchEmAll' => _t('Gotta Catch\'Em All'),
+            'favoriteAsapinApprentice' => _t('The favorite apprentice of ASAPIN'),
+            'andYourRiichiBet' => _t('And your riichi bet, please'),
+            'covetousKnight' => _t('The Covetous Knight'),
+            'ninja' => _t('Ninja')
+        ];
 
-        // This tautology has meaning of template format definition
+        $descriptions = [
+            'bestHand' => _t('Given for collecting the hand with biggest han count (independent of cost).'),
+            'bestFu' => _t('Given for collecting the hand with biggest minipoints (fu) count.'),
+            'bestTsumoist' => _t('Given for collecting the most of tsumo hands during single game.'),
+            'dieHard' => _t('Given for smallest count of feeding into ron during the tournament.'),
+            'braveSapper' => _t('Given for largest count of feeding into ron during the tournament.'),
+            'dovakins' => _t('Given for collecting the most of yakuhais during the tournament.'),
+            'bestDealer' => _t('Given for largest count of dealer wins during the tournament.'),
+            'shithander' => _t('Given for the most of 1/30 wins during tournament.'),
+            'yakumans' => _t('Given for collecting a yakuman during tournament.'),
+            'impossibleWait' => _t('Given for feeding into largest hand during tournament (but not while in riichi).'),
+            'honoredDonor' => _t('Given for losing largest amount of points as riichi bets.'),
+            'justAsPlanned' => _t('Given for getting largest number of ippatsu during tournament.'),
+            'carefulPlanning' => _t('Given for the smallest average cost of opponents hand that player has dealt.'),
+            'doraLord' => _t('Given for the largest average count of dora in player\'s hand.'),
+            'catchEmAll' => _t('Given for the largest amount of unique yaku collected during the tournament.'),
+            'favoriteAsapinApprentice' => _t('Given for the largest amount of points received as ryukoku payments.'),
+            'andYourRiichiBet' => _t('Given for collecting the largest amount of other players\' riichi bets during the tournament.'),
+            'covetousKnight' => _t('Given for losing the smallest number of riichi bets.'),
+            'ninja' => _t('Given for winning the largest number of hands with damaten.'),
+        ];
+
+        return array_map(function ($name, $value) use ($descriptions) {
+            return ['code' => $name, 'name' => $value, 'description' => $descriptions[$name]];
+        }, array_keys($names), array_values($names));
+    }
+
+
+
+    protected function _achValue($ach)
+    {
+        $desc = $this->_achList();
         return [
             'error' => null,
-            'bestHandValue' => $achievements['bestHand']['han'],
-            'bestHandPlayers' => $achievements['bestHand']['names'], // string[]
-            'bestTsumoCount' => $achievements['bestTsumoist']['tsumo'],
-            'bestTsumoPlayers' => $achievements['bestTsumoist']['names'], // string[]
-            'bestSapperValue' => $achievements['braveSapper']['feed'],
-            'bestSapperPlayers' => $achievements['braveSapper']['names'], // string[]
-            'dieHardValue' => $achievements['dieHard']['feed'],
-            'dieHardPlayers' => $achievements['dieHard']['names'], // string[]
-            'dovakins' => $dovakins,
-            'yakumans' => $achievements['yakuman'], // string[]
-            'bestFuHandValue' => $achievements['bestFu']['fu'],
-            'bestFuHandPlayers' => $achievements['bestFu']['names'], // string[]
-            'bestDealerRenchans' => $achievements['bestDealer']['bestWinCount'],
-            'bestDealerPlayers' => $achievements['bestDealer']['names'], // string[]
-            'shithandsCount' => $achievements['shithander']['handsCount'],
-            'shithanderPlayers' => $achievements['shithander']['names'], // string[]
-            'impossibleWait' => $achievements['impossibleWait'], // Array<{ name: string, hand: {han: number, fu: number} }>
-            'honoredDonor' => $achievements['honoredDonor'], // Array<{ name: string, count: number }>
-            'justAsPlanned' => $achievements['justAsPlanned'], // Array<{ name: string, count: number }>,
-            'carefulPlanning' => $achievements['carefulPlanning'], // Array<{ name: string, score: number }>,
-            'doraLord' => $achievements['doraLord'], // Array<{ name: string, count: number }>,
-            'catchEmAll' => $achievements['catchEmAll'], // Array<{ name: string, count: number }>,
-            'favoriteAsapinApprentice' => $achievements['favoriteAsapinApprentice'], // Array<{ name: string, score: number }>,
-            'andYourRiichiBet' => $achievements['andYourRiichiBet'], // Array<{ name: string, count: number }>,
-            'covetousKnight' => $achievements['covetousKnight'], // Array<{ name: string, count: number }>,
-            'ninja' => $achievements['ninja'], // Array<{ name: string, count: number }>,
+            'bestHand' => $this->_getValue($ach, 'bestHand', $desc), // { han: number, names: string[] }
+            'bestTsumoist' => $this->_getValue($ach, 'bestTsumoist', $desc), // { tsumo: number, names: string[] }
+            'braveSapper' => $this->_getValue($ach, 'braveSapper', $desc), // { feed: number, names: string[] }
+            'dieHard' => $this->_getValue($ach, 'dieHard', $desc), // { feed: number, names: string[] }
+            'dovakins' => $this->_getValue($ach, 'dovakins', $desc), // { name: string, count: number }[],
+            'yakumans' => $this->_getValue($ach, 'yakumans', $desc), // string[]
+            'bestFu' => $this->_getValue($ach, 'bestFu', $desc), // { fu: number, names: string[] }
+            'bestDealer' => $this->_getValue($ach, 'bestDealer', $desc), // { bestWinCount: number, names: string[] }
+            'shithander' => $this->_getValue($ach, 'shithander', $desc), // { handsCount: number, names: string[] }
+            'impossibleWait' => $this->_getValue($ach, 'impossibleWait', $desc), // { name: string, hand: {han: number, fu: number}}[]
+            'honoredDonor' => $this->_getValue($ach, 'honoredDonor', $desc), // { name: string, count: number }[]
+            'justAsPlanned' => $this->_getValue($ach, 'justAsPlanned', $desc), // { name: string, count: number }[],
+            'carefulPlanning' => $this->_getValue($ach, 'carefulPlanning', $desc), // { name: string, score: number }[],
+            'doraLord' => $this->_getValue($ach, 'doraLord', $desc), // { name: string, count: number }[],
+            'catchEmAll' => $this->_getValue($ach, 'catchEmAll', $desc), // { name: string, count: number }[],
+            'favoriteAsapinApprentice' => $this->_getValue($ach, 'favoriteAsapinApprentice', $desc), // { name: string, score: number }[],
+            'andYourRiichiBet' => $this->_getValue($ach, 'andYourRiichiBet', $desc), // { name: string, count: number }[],
+            'covetousKnight' => $this->_getValue($ach, 'covetousKnight', $desc), // { name: string, count: number }[],
+            'ninja' => $this->_getValue($ach, 'ninja', $desc), // { name: string, count: number }[],
         ];
+    }
+
+    protected function _getValue($achievements, $key, $desc)
+    {
+        $d = array_filter($desc, function ($el) use ($key) {
+            return $el['code'] == $key;
+        });
+        return empty($achievements[$key])
+            ? null
+            : array_merge(['val' => $achievements[$key]], reset($d));
     }
 }
