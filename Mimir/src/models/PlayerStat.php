@@ -123,8 +123,10 @@ class PlayerStatModel extends Model
             /** @var SessionPrimitive $session */
             $session = $game['session'];
 
-            return array_map(function ($playerId) use (&$results) {
+            return array_map(function ($playerId) use (&$results, &$session) {
                 return [
+                    'session_hash'  => (string) $session->getRepresentationalHash(),
+                    'event_id'      => (int) $session->getEventId(),
                     'player_id'     => (int) $playerId,
                     'score'         => (int) $results[$playerId]->getScore(),
                     'rating_delta'  => (float) $results[$playerId]->getRatingDelta(),
