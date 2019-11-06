@@ -65,12 +65,21 @@ function plotRating (points, games, currentUser, playersMap, labelColorThreshold
     $('#chart_rating').bind('jqplotDataClick',
         function (ev, seriesIndex, pointIndex) {
             var g = games[gamesIdx[pointIndex - 1]];
+            if (!g) {
+              return '';
+            }
             var players = [];
             var outcome = '';
             var own = '';
             var score;
             var winds = ['東', '南', '西', '北'];
             players.push('<div class="rating-chart-details">');
+
+            var gameHash = g[0]['session_hash'];
+            var eventId = g[0]['event_id'];
+            var url = '/eid' + eventId + '/game/' + gameHash;
+            players.push('<div class="player-item"><a href="' + url + '">' + i18n._GAME_DETAILS + '</a></div>');
+
             for (var i = 0; i < 4; i++) {
                 outcome = g[i].rating_delta < labelColorThreshold ? 'important' : 'success';
                 own = g[i].player_id == currentUser ? 'own' : '';
@@ -89,7 +98,6 @@ function plotRating (points, games, currentUser, playersMap, labelColorThreshold
                     '</div></div>'
                 );
             }
-            players.push('</table>');
             $('#chart_rating_info').html(players.join(''));
         }
     );
