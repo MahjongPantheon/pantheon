@@ -30,7 +30,18 @@ class LastGames extends Controller
 
     protected function _run()
     {
-        $limit = 10;
+        $isTournament = !$this->_mainEventRules->allowPlayerAppend();
+        if ($isTournament) {
+            $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
+            $numberOfPlayers = count($players);
+            $limit = intval($numberOfPlayers / 4);
+            if ($limit > 40) {
+                $limit = 40;
+            }
+        } else {
+            $limit = 10;
+        }
+
         $offset = 0;
         $currentPage = 1;
 
