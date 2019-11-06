@@ -53,6 +53,9 @@ function plotRating (points, games, currentUser, playersMap, labelColorThreshold
                 sizeAdjust: 7,
                 tooltipContentEditor: function (str, seriesIndex, pointIndex) {
                     var g = games[gamesIdx[pointIndex - 1]];
+                    if (!g) {
+                      return '';
+                    }
                     var players = [];
                     var outcome = '';
                     var own = '';
@@ -84,6 +87,18 @@ function plotRating (points, games, currentUser, playersMap, labelColorThreshold
                     smooth: true
                 }
             }
+        }
+    );
+
+    $('#chart_rating').bind('jqplotDataClick',
+        function (ev, seriesIndex, pointIndex) {
+            var g = games[gamesIdx[pointIndex - 1]];
+            if (!g) {
+              return '';
+            }
+            var gameHash = g[0]['session_hash'];
+            var eventId = g[0]['event_id'];
+            window.location = '/eid' + eventId + '/game/' + gameHash;
         }
     );
 }
