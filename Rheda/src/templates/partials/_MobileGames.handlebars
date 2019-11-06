@@ -41,3 +41,12 @@
         </div>
     {{/games}}
 </div>
+
+{{#singleGamePage}}
+    <script>
+        // automatically expand game results if we are on the signle game page from a mobile device
+        $(document).ready(function () {
+            mobileGameToggleDetails($('.results').get(0));
+        });
+    </script>
+{{/singleGamePage}}
