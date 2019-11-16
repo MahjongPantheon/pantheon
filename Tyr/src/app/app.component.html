@@ -26,6 +26,7 @@
     <screen-login
       *ngIf="state.currentScreen() === 'login'"
       [state]="state"
+      [loading]="state.isLoading('login')"
       [api]="api"
     ></screen-login>
     <screen-overview

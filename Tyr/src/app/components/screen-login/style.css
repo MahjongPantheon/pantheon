@@ -37,8 +37,34 @@
   height: 40px;
   color: #ccc;
   font-size: 26px;
-  text-align: center;
   margin-top: 20px;
+}
+
+.hint_errors {
+  font-size: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.hint_errors > * {
+  flex: 1;
+  margin: 3% 3%;
+}
+
+.hint_errors ul, .hint_errors ul li {
+  list-style-type: circle;
+  margin: 3% 3%;
+}
+
+.hint_errors ul {
+  margin-left: 20px;
+}
+
+.hint_errors button {
+  width: initial;
+  line-height: 40px;
+  padding: 3%;
 }
 
 .pin {
@@ -50,6 +76,19 @@
   text-align: center;
   color: var(--main-text-color);
   background-color: var(--navbar-bg-color);
+  display: flex;
+}
+
+.pin > div {
+  flex: 1;
+}
+
+.pin > button {
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  font-size: 10px;
+  flex: 0;
 }
 
 .pin.error {
