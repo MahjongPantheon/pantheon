@@ -17,24 +17,33 @@
     You should have received a copy of the GNU General Public License
     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div class="riichi-table" *ngIf="_loading">
+<div class="riichi-table" *ngIf="loading">
   <div class="inline-preloader"></div>
 </div>
 <div class="riichi-table" *ngIf="_error">
-  <div class="hint">
-    {{_LOGIN_FAILED_REASONS_ARE}}
+  <div class="hint_errors">
+    <div>{{_LOGIN_FAILED_REASONS_ARE}}</div>
     <ul>
       <li>{{_TOURN_GAMES_ALREADY_STARTED}}</li>
       <li>{{_PIN_ALREADY_USED}}</li>
       <li>{{_UNEXPECTED_ERROR}}</li>
     </ul>
-    {{_CONTACT_ADMINISTRATOR}}
+    <div>{{_CONTACT_ADMINISTRATOR}}</div>
+    <button (click)="reset()">OK</button>
   </div>
 </div>
-<div class="riichi-table" *ngIf="!_loading && !_error">
-  <div class="hint">{{_ENTER_PIN}}</div>
-  <div class="pin" [class.error]="_error">{{_pinView}}</div>
-  <div class="pinkbd">
+<div class="riichi-table" *ngIf="!loading && !_error">
+  <div class="hint" style="text-align: center">{{_ENTER_PIN}}</div>
+  <div *ngIf="_qrdata.length > 0">{{_qrdata}}</div>
+  <div class="pin" [class.error]="_error">
+    <div>{{_pinView}}</div>
+    <button (click)="scanQr()"><custom-icon [type]="'qrcode'" [resize]="40"></custom-icon></button>
+  </div>
+  <div *ngIf="_qrMode">
+    <div *ngIf="_loadingQrMessageShown">{{_LOADING_VIDEO}}</div>
+    <canvas #cnv style="width:100%"></canvas>
+  </div>
+  <div *ngIf="!_qrMode" class="pinkbd">
     <button (click)="press('1')">1</button><button (click)="press('2')">2</button><button (click)="press('3')">3</button>
     <button (click)="press('4')">4</button><button (click)="press('5')">5</button><button (click)="press('6')">6</button>
     <button (click)="press('7')">7</button><button (click)="press('8')">8</button><button (click)="press('9')">9</button>
