@@ -79,7 +79,8 @@ class PlayerStatModel extends Model
             'win_summary'           => $this->_getOutcomeSummary($playerId, $rounds),
             'hands_value_summary'   => $this->_getHanSummary($playerId, $rounds),
             'yaku_summary'          => $this->_getYakuSummary($playerId, $rounds),
-            'riichi_summary'        => $this->_getRiichiSummary($mainEvent->getRuleset(), $playerId, $rounds)
+            'riichi_summary'        => $this->_getRiichiSummary($mainEvent->getRuleset(), $playerId, $rounds),
+            'average_dora_count'    => $this->_getAverageDoraCount($playerId, $rounds),
         ];
     }
 
@@ -101,7 +102,8 @@ class PlayerStatModel extends Model
                     return $rating;
                 },
                 $games
-            )
+            ),
+            'is_numeric'
         );
         array_unshift($ratingHistory, $event->getRuleset()->startRating());
         return $ratingHistory;
@@ -410,6 +412,39 @@ class PlayerStatModel extends Model
         }
 
         return $acc;
+    }
+
+    /**
+     * Get average dora count for player
+     *
+     * @param $playerId
+     * @param RoundPrimitive[] $rounds
+     * @param Ruleset $rules
+     * @return float
+     * @throws \Exception
+     */
+    protected function _getAverageDoraCount($playerId, $rounds)
+    {
+        $doraCount = 0;
+        $roundsCount = 0;
+        foreach ($rounds as $r) {
+            if (($r->getOutcome() === 'ron' || $r->getOutcome() === 'tsumo') && ($r->getWinnerId() == $playerId)) {
+                $doraCount += $r->getDora();
+                $roundsCount += 1;
+            }
+
+            if ($r->getOutcome() === 'multiron') {
+                foreach ($r->rounds() as $round) {
+                    if ($round->getWinnerId() == $playerId) {
+                        $doraCount += $round->getDora();
+                        $roundsCount += 1;
+                        break;
+                    }
+                }
+            }
+        }
+        $average = $doraCount / $roundsCount;
+        return sprintf('%.2f', $average);
     }
 
     /**
