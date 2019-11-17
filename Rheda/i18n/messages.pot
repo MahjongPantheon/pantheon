@@ -126,9 +126,6 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-msgid "Sorry, this page is not available for mobile devices"
-msgstr ""
-
 msgid "Aggregated event"
 msgstr ""
 
@@ -148,6 +145,24 @@ msgid "Last series"
 msgstr ""
 
 msgid "Points of last series"
+msgstr ""
+
+msgid "Sorry, this page is not available for mobile devices"
+msgstr ""
+
+msgid "Rating table has been hidden by tournament administrator"
+msgstr ""
+
+msgid "These results are visible only for tournament administrator"
+msgstr ""
+
+msgid "Pts"
+msgstr ""
+
+msgid "AvPlc"
+msgstr ""
+
+msgid "AvPts"
 msgstr ""
 
 msgid "Statistics"
@@ -172,21 +187,6 @@ msgid "Points:"
 msgstr ""
 
 msgid "Ongoing series:"
-msgstr ""
-
-msgid "Rating table has been hidden by tournament administrator"
-msgstr ""
-
-msgid "These results are visible only for tournament administrator"
-msgstr ""
-
-msgid "Pts"
-msgstr ""
-
-msgid "AvPlc"
-msgstr ""
-
-msgid "AvPts"
 msgstr ""
 
 msgid "Team"
