@@ -18,9 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-msgid " Given for losing the smallest percentage of riichi bets."
-msgstr "Дается за потерю минимального процента ставок риичи."
-
 msgid "%d - %d (%d total)"
 msgstr "%d - %d (всего %d)"
 
@@ -38,8 +35,9 @@ msgstr[0] "%d самая быстрая рука"
 msgstr[1] "%d самых быстрых руки"
 msgstr[2] "%d самых быстрых рук"
 
+#, fuzzy
 msgid "%d riichi bet"
-msgid_plural "%d riichi bet"
+msgid_plural "%d riichi bets"
 msgstr[0] "%d риичи палочка"
 msgstr[1] "%d риичи палочки"
 msgstr[2] "%d риичи палочек"
@@ -92,12 +90,6 @@ msgstr[2] "%s риичи палочек"
 msgid "%s yaku"
 msgstr "%s яку"
 
-msgid "%s: %d chombo penalty"
-msgid_plural "%s: %d chombo penalties"
-msgstr[0] "%s: %d штраф чомбо"
-msgstr[1] "%s: %d штрафа чомбо"
-msgstr[2] "%s: %d штрафов чомбо"
-
 msgid "%s: %d yakuhai"
 msgid_plural "%s: %d yakuhais"
 msgstr[0] "%s: %d якухай"
@@ -106,9 +98,6 @@ msgstr[2] "%s: %d якухаев"
 
 msgid "%s: personal stats"
 msgstr "%s: личная статистика"
-
-msgid "(%d on %s)"
-msgstr "(%d из %s)"
 
 msgid "(no rounds are played yet)"
 msgstr "(ни одной раздачи еще не сыграно)"
@@ -316,9 +305,6 @@ msgstr "Чинрото"
 msgid "Chombo (%s)"
 msgstr "Чомбо (%s)"
 
-msgid "Chombo master"
-msgstr "Чомбо-мастер"
-
 msgid "Chombo penalties"
 msgstr "Штрафов чомбо"
 
@@ -468,9 +454,6 @@ msgstr "Управление играми"
 
 msgid "Games played"
 msgstr "Сыграно игр"
-
-msgid "Given for collecting a chombo during a tournament."
-msgstr "Дается за получение штрафа чомбо на турнире."
 
 msgid "Given for collecting a yakuman during tournament."
 msgstr "Дается за сбор якумана на турнире."
@@ -1146,9 +1129,6 @@ msgstr "Мистер Хэнки"
 msgid "The Covetous Knight"
 msgstr "Скупой рыцарь"
 
-msgid "The Prudent"
-msgstr "Бережливый"
-
 msgid "The favorite apprentice of ASAPIN"
 msgstr "Любимый ученик Асапина"
 
@@ -1330,9 +1310,6 @@ msgstr "из них потерянных"
 msgid "bets won"
 msgstr "из их выигранных"
 
-msgid "new text"
-msgstr ""
-
 msgid "no"
 msgstr "нет"
 
@@ -1342,6 +1319,18 @@ msgstr "якуман"
 msgid "yes"
 msgstr "да"
 
+#~ msgid " Given for losing the smallest percentage of riichi bets."
+#~ msgstr "Дается за потерю минимального процента ставок риичи."
+
+#~ msgid "%s: %d chombo penalty"
+#~ msgid_plural "%s: %d chombo penalties"
+#~ msgstr[0] "%s: %d штраф чомбо"
+#~ msgstr[1] "%s: %d штрафа чомбо"
+#~ msgstr[2] "%s: %d штрафов чомбо"
+
+#~ msgid "(%d on %s)"
+#~ msgstr "(%d из %s)"
+
 #~ msgid ""
 #~ "Check the box to randomize players seating at each table. Otherwise "
 #~ "players will be placed as you entered in order of e-s-w-n."
@@ -1349,6 +1338,9 @@ msgstr "да"
 #~ "Отметьте галочку для перемешивания игроков за столом. Если галочка не "
 #~ "отмечена, игроки будут рассажены за стол согласно вводу в порядке восток-"
 #~ "юг-запад-север."
+
+#~ msgid "Chombo master"
+#~ msgstr "Чомбо-мастер"
 
 #~ msgid "Drawn rounds: %s"
 #~ msgstr "Ничьих: %s"
@@ -1365,6 +1357,9 @@ msgstr "да"
 
 #~ msgid "Finish the games? You won't be able to cancel rounds anymore!"
 #~ msgstr "Завершить игры? Отменить раздачу станет невозможно!"
+
+#~ msgid "Given for collecting a chombo during a tournament."
+#~ msgstr "Дается за получение штрафа чомбо на турнире."
 
 #~ msgid "Hide rating table"
 #~ msgstr "Скрыть рейтинговую таблицу"
@@ -1398,6 +1393,9 @@ msgstr "да"
 
 #~ msgid "Randomize seating at each table"
 #~ msgstr "Перемешать игроков за каждым столом"
+
+#~ msgid "The Prudent"
+#~ msgstr "Бережливый"
 
 #~ msgid "Use manual seating"
 #~ msgstr "Ручная рассадка"

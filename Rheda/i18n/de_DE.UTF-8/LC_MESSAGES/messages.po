@@ -17,10 +17,6 @@ msgstr ""
 "X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#, fuzzy
-msgid " Given for losing the smallest percentage of riichi bets."
-msgstr "Gegeben für die größte Anzahl von Dielersiegen während des Turniers."
-
 msgid "%d - %d (%d total)"
 msgstr "%d - %d (%d gesamt)"
 
@@ -39,7 +35,7 @@ msgstr[1] "%d schnellste Hände"
 
 #, fuzzy
 msgid "%d riichi bet"
-msgid_plural "%d riichi bet"
+msgid_plural "%d riichi bets"
 msgstr[0] "Riichi Einlage"
 msgstr[1] "Riichi Einlage"
 
@@ -93,11 +89,6 @@ msgstr[1] "Riichi Einlage"
 msgid "%s yaku"
 msgstr "%s: %d yakuhai"
 
-msgid "%s: %d chombo penalty"
-msgid_plural "%s: %d chombo penalties"
-msgstr[0] "%s: %d Chombo-Strafe"
-msgstr[1] "%s:%d Chombo-Strafen"
-
 msgid "%s: %d yakuhai"
 msgid_plural "%s: %d yakuhais"
 msgstr[0] "%s: %d yakuhai"
@@ -105,9 +96,6 @@ msgstr[1] "%s: %d yakuhais"
 
 msgid "%s: personal stats"
 msgstr "%s: persönliche Statistiken"
-
-msgid "(%d on %s)"
-msgstr ""
 
 msgid "(no rounds are played yet)"
 msgstr "(Es wurden noch keine Runden gespielt)"
@@ -319,9 +307,6 @@ msgstr "Chinroutou"
 msgid "Chombo (%s)"
 msgstr "Chombo (%s)"
 
-msgid "Chombo master"
-msgstr "Chombo Meister"
-
 msgid "Chombo penalties"
 msgstr "Chombo Strafen"
 
@@ -483,9 +468,6 @@ msgstr "Spiele Bedienfeld"
 
 msgid "Games played"
 msgstr "Spiele gespielt"
-
-msgid "Given for collecting a chombo during a tournament."
-msgstr "Gegeben für das Sammeln eines Chombo während eines Turniers."
 
 msgid "Given for collecting a yakuman during tournament."
 msgstr "Gegeben für das Sammeln eines Yakuman während des Turniers."
@@ -1167,9 +1149,6 @@ msgstr "Der 1k Blitz"
 msgid "The Covetous Knight"
 msgstr ""
 
-msgid "The Prudent"
-msgstr ""
-
 msgid "The favorite apprentice of ASAPIN"
 msgstr ""
 
@@ -1347,9 +1326,6 @@ msgstr "Einlage verloren"
 msgid "bets won"
 msgstr "Einlage gewonnen"
 
-msgid "new text"
-msgstr ""
-
 msgid "no"
 msgstr ""
 
@@ -1360,6 +1336,16 @@ msgstr "yakuman"
 msgid "yes"
 msgstr "Spielern"
 
+#, fuzzy
+#~ msgid " Given for losing the smallest percentage of riichi bets."
+#~ msgstr ""
+#~ "Gegeben für die größte Anzahl von Dielersiegen während des Turniers."
+
+#~ msgid "%s: %d chombo penalty"
+#~ msgid_plural "%s: %d chombo penalties"
+#~ msgstr[0] "%s: %d Chombo-Strafe"
+#~ msgstr[1] "%s:%d Chombo-Strafen"
+
 #~ msgid ""
 #~ "Check the box to randomize players seating at each table. Otherwise "
 #~ "players will be placed as you entered in order of e-s-w-n."
@@ -1367,6 +1353,9 @@ msgstr "Spielern"
 #~ "Aktivieren Sie das Kontrollkästchen, um die Sitzplätze der Spieler an "
 #~ "jedem Tisch zu randomisieren. Ansonsten werden die Spieler so platziert, "
 #~ "wie Sie es in der Reihenfolge von e-s-w-n eingegeben haben."
+
+#~ msgid "Chombo master"
+#~ msgstr "Chombo Meister"
 
 #~ msgid "Drawn rounds: %s"
 #~ msgstr "Unentschieden Runden"
@@ -1381,6 +1370,9 @@ msgstr "Spielern"
 
 #~ msgid "Finish the games? You won't be able to cancel rounds anymore!"
 #~ msgstr "Beenden Sie die Spiele? Sie können keine Runden mehr stornieren!"
+
+#~ msgid "Given for collecting a chombo during a tournament."
+#~ msgstr "Gegeben für das Sammeln eines Chombo während eines Turniers."
 
 #~ msgid "Hide rating table"
 #~ msgstr "Bewertungstabelle ausblenden"
