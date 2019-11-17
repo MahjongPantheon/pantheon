@@ -76,6 +76,6 @@
     [class.selected]="user.id === this.state.getCurrentMultiRonUser()"
   >
     <div class="name">{{user.displayName}}</div>
-    <div class="score">{{han(user.id)}}<span *ngIf="showFuOf(user.id)">/{{this.state.getFuOf(user.id)}}</span></div>
+    <div class="score">{{han(user.id) | yakuman}}<span *ngIf="showFuOf(user.id)">/{{this.state.getFuOf(user.id)}}</span></div>
   </div>
 </div>
