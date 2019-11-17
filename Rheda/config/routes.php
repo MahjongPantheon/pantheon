@@ -29,6 +29,7 @@ return [ // Omit trailing slashes in keys when possible
     '/game'           => 'Game',
     '/game/(?<hash>[0-9a-f]+)' => 'Game',
     '/reg'            => 'PlayerRegistration',
+    '/reg/(?<print>print)' => 'PlayerRegistration',
     '/enroll'         => 'PlayerEnrollment',
     '/stat/team'      => 'TeamTable',
     '/stat'           => 'RatingTable',

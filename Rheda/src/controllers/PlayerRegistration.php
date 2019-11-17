@@ -17,6 +17,8 @@
  */
 namespace Rheda;
 
+use \chillerlan\QRCode\QRCode;
+use \chillerlan\QRCode\QROptions;
 require_once __DIR__ . '/../helpers/Url.php';
 
 class PlayerRegistration extends Controller
@@ -38,10 +40,6 @@ class PlayerRegistration extends Controller
         $sorter = function ($e1, $e2) {
             return strcmp($e1['display_name'], $e2['display_name']);
         };
-
-        if (count($this->_eventIdList) > 1) {
-            $this->_lastError = _t("Page not available for aggregated events");
-        }
 
         if (!empty($this->_lastError)) {
             $errorMsg = $this->_lastError;
@@ -70,6 +68,7 @@ class PlayerRegistration extends Controller
             'error' => $errorMsg,
             'registered' => $registeredPlayers,
             'enrolled' => $enrolledPlayers,
+            'showPrint' => count($enrolledPlayers) > 0,
             'registeredCount' => count($registeredPlayers),
             'enrolledCount' => count($enrolledPlayers)
         ];
@@ -77,17 +76,22 @@ class PlayerRegistration extends Controller
 
     protected function _beforeRun()
     {
+        if (count($this->_eventIdList) > 1) {
+            $this->_lastError = _t("Page not available for aggregated events");
+            return true;
+        }
+
+        if (!$this->_adminAuthOk()) {
+            $this->_lastError = _t("Wrong admin password");
+            return true;
+        }
+
+        if (!empty($this->_path['print'])) {
+            $this->_printCards();
+            return false; // just print our cards and exit
+        }
+
         if (!empty($_POST['action_type'])) {
-            if (count($this->_eventIdList) > 1) {
-                $this->_lastError = _t("Page not available for aggregated events");
-                return true;
-            }
-
-            if (!$this->_adminAuthOk()) {
-                $this->_lastError = _t("Wrong admin password");
-                return true;
-            }
-
             switch ($_POST['action_type']) {
                 case 'event_reg':
                     $err = $this->_registerUserForEvent($_POST['id']);
@@ -171,5 +175,54 @@ class PlayerRegistration extends Controller
         }
 
         return $errorMsg;
+    }
+
+    protected function _printCards()
+    {
+        /** @var array $enrolledPlayers */
+        $enrolledPlayers = $this->_api->execute('getAllEnrolled', [$this->_mainEventId]);
+        $host = Sysconf::MOBILE_CLIENT_URL();
+
+        $options = new QROptions([
+            'version'    => 5,
+            'outputType' => QRCode::OUTPUT_MARKUP_SVG,
+            'eccLevel'   => QRCode::ECC_L,
+        ]);
+
+        // invoke a fresh QRCode instance
+        $qrcode = new QRCode($options);
+
+        $origFile = file_get_contents(__DIR__ . '/../../www/assets/printcard.svg');
+
+        $i = 0;
+        $data = implode(PHP_EOL, array_map(function($playerEntry) use($host, $qrcode, $origFile, &$i) {
+            $xIdx = $i % 2;
+            $yIdx = ceil($i / 2);
+            $xOffset = 20 + $xIdx * 88;
+            $yOffset = 20 + $yIdx * 55;
+            $i++;
+
+            $qrlink = $host . '/' . $playerEntry['pin'] . '_' . dechex(crc32($playerEntry['pin']));
+            return str_replace(
+                ['%name', '%pin', '%host', '%qr', '%xoffset', '%yoffset'],
+                [
+                    $playerEntry['display_name'],
+                    $playerEntry['pin'],
+                    $host,
+                    str_replace('<svg', '<svg width="32" height="32" x="54" y="18"', $qrcode->render($qrlink)),
+                    $xOffset . 'mm',
+                    $yOffset . 'mm'
+                ],
+                $origFile
+            );
+        }, $enrolledPlayers));
+
+        header('Content-type: image/svg+xml');
+        echo <<<SVG
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" width="210.03mm" height="297.02mm" x="10mm">
+  $data
+</svg>
+SVG;
     }
 }
