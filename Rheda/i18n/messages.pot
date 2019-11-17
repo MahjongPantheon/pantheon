@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
@@ -10,7 +10,33 @@ msgstr "Content-Type: text/plain; charset=utf-8\n"
 msgid "Achievements"
 msgstr ""
 
-msgid "Game details"
+msgid "The game has been successfully added!"
+msgstr ""
+
+msgid "Going back in 3 seconds..."
+msgstr ""
+
+msgid "Add new game"
+msgstr ""
+
+msgid "Format:"
+msgstr ""
+
+msgid "Example:"
+msgstr ""
+
+msgid ""
+"Renchans/honba are calculated automatically. Also points and payments "
+"checks are performed: in case of any inconsistency the alert is displayed."
+msgstr ""
+
+msgid "Add game"
+msgstr ""
+
+msgid "Player aliases"
+msgstr ""
+
+msgid "Add online game"
 msgstr ""
 
 msgid "Admin panel"
@@ -20,6 +46,9 @@ msgid "Authorized successfully!"
 msgstr ""
 
 msgid "Authorize"
+msgstr ""
+
+msgid "Game details"
 msgstr ""
 
 msgid "Confirm round cancellation: "
@@ -52,13 +81,22 @@ msgstr ""
 msgid "Recent games"
 msgstr ""
 
+msgid "No games has been played yet"
+msgstr ""
+
+msgid "%d - %d (%d total)"
+msgstr ""
+
+msgid "Later"
+msgstr ""
+
+msgid "Earlier"
+msgstr ""
+
 msgid "Rating table"
 msgstr ""
 
 msgid "Team table"
-msgstr ""
-
-msgid "Add online game"
 msgstr ""
 
 msgid "Admin actions"
@@ -88,32 +126,6 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-msgid "The game has been successfully added!"
-msgstr ""
-
-msgid "Going back in 3 seconds..."
-msgstr ""
-
-msgid "Add new game"
-msgstr ""
-
-msgid "Format:"
-msgstr ""
-
-msgid "Example:"
-msgstr ""
-
-msgid ""
-"Renchans/honba are calculated automatically. Also points and payments "
-"checks are performed: in case of any inconsistency the alert is displayed."
-msgstr ""
-
-msgid "Add game"
-msgstr ""
-
-msgid "Player aliases"
-msgstr ""
-
 msgid "Aggregated event"
 msgstr ""
 
@@ -133,18 +145,6 @@ msgid "Last series"
 msgstr ""
 
 msgid "Points of last series"
-msgstr ""
-
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
-msgstr ""
-
-msgid "Later"
-msgstr ""
-
-msgid "Earlier"
 msgstr ""
 
 msgid "Sorry, this page is not available for mobile devices"
@@ -195,10 +195,59 @@ msgstr ""
 msgid "Players"
 msgstr ""
 
+msgid "Additional penalties"
+msgstr ""
+
+msgid ""
+"A penalty may be applied only to player currently in game. Otherwise error "
+"will occur."
+msgstr ""
+
+msgid "Select player"
+msgstr ""
+
+msgid "Penalty amount"
+msgstr ""
+
+msgid "Penalty reason"
+msgstr ""
+
+msgid "Check twice penalty data. You won't be able to cancel the penalty"
+msgstr ""
+
+msgid "Apply penalty"
+msgstr ""
+
+msgid "All players list"
+msgstr ""
+
+msgid ""
+"Note: if a player is already added to the rating, adding him again will "
+"result in reissuing his PIN code."
+msgstr ""
+
+msgid "Add to current rating"
+msgstr ""
+
+msgid "Add new player to the system"
+msgstr ""
+
+msgid "System name"
+msgstr ""
+
+msgid "Real name"
+msgstr ""
+
+msgid "Register"
+msgstr ""
+
 msgid "Players management"
 msgstr ""
 
 msgid "Pre-registration list (%d)"
+msgstr ""
+
+msgid "Print PINs and QR codes"
 msgstr ""
 
 msgid "PIN"
@@ -230,64 +279,6 @@ msgstr ""
 msgid "Save local IDs"
 msgstr ""
 
-msgid "All players list"
-msgstr ""
-
-msgid ""
-"Note: if a player is already added to the rating, adding him again will "
-"result in reissuing his PIN code."
-msgstr ""
-
-msgid "Add to current rating"
-msgstr ""
-
-msgid "Add new player to the system"
-msgstr ""
-
-msgid "System name"
-msgstr ""
-
-msgid "Real name"
-msgstr ""
-
-msgid "Register"
-msgstr ""
-
-msgid "Rating points"
-msgstr ""
-
-msgid "Average place"
-msgstr ""
-
-msgid "Average points"
-msgstr ""
-
-msgid "Games played"
-msgstr ""
-
-msgid "Additional penalties"
-msgstr ""
-
-msgid ""
-"A penalty may be applied only to player currently in game. Otherwise error "
-"will occur."
-msgstr ""
-
-msgid "Select player"
-msgstr ""
-
-msgid "Penalty amount"
-msgstr ""
-
-msgid "Penalty reason"
-msgstr ""
-
-msgid "Check twice penalty data. You won't be able to cancel the penalty"
-msgstr ""
-
-msgid "Apply penalty"
-msgstr ""
-
 msgid "Predefined seating configuration"
 msgstr ""
 
@@ -313,6 +304,18 @@ msgid ""
 "between games and are defined at Admin actions / Manage players page."
 msgstr ""
 
+msgid "Rating points"
+msgstr ""
+
+msgid "Average place"
+msgstr ""
+
+msgid "Average points"
+msgstr ""
+
+msgid "Games played"
+msgstr ""
+
 msgid "No time left!"
 msgstr ""
 
@@ -323,6 +326,24 @@ msgid "Wind: %s"
 msgstr ""
 
 msgid "Full game log:"
+msgstr ""
+
+msgid "SEATING"
+msgstr ""
+
+msgid "Table #"
+msgstr ""
+
+msgid "EAST"
+msgstr ""
+
+msgid "SOUTH"
+msgstr ""
+
+msgid "WEST"
+msgstr ""
+
+msgid "NORTH"
 msgstr ""
 
 msgid "Personal stats"
@@ -469,18 +490,6 @@ msgstr ""
 msgid "Tenpai: %s."
 msgstr ""
 
-msgid "Rating"
-msgstr ""
-
-msgid "Hands value"
-msgstr ""
-
-msgid "Han"
-msgstr ""
-
-msgid "Yaku collected over all time"
-msgstr ""
-
 msgid "Date & time"
 msgstr ""
 
@@ -511,22 +520,27 @@ msgstr ""
 msgid "%s - %d points (%s)"
 msgstr ""
 
-msgid "SEATING"
+msgid "Rating"
 msgstr ""
 
-msgid "Table #"
+msgid "Hands value"
 msgstr ""
 
-msgid "EAST"
+msgid "Han"
 msgstr ""
 
-msgid "SOUTH"
+msgid "Yaku collected over all time"
 msgstr ""
 
-msgid "WEST"
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
 msgstr ""
 
-msgid "NORTH"
+msgid "Rating table is hidden. Show"
+msgstr ""
+
+msgid "Rating table is visible. Hide"
 msgstr ""
 
 msgid "Achievement"
@@ -593,17 +607,6 @@ msgid "Player: %s"
 msgstr ""
 
 msgid "Rating graph"
-msgstr ""
-
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-
-msgid "Rating table is hidden. Show"
-msgstr ""
-
-msgid "Rating table is visible. Hide"
 msgstr ""
 
 msgid "Something went wrong: %s"

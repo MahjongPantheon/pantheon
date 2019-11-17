@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-17 09:01+0300\n"
+"POT-Creation-Date: 2019-11-17 17:50+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -224,6 +224,10 @@ msgstr ""
 msgid "Yakuman!"
 msgstr ""
 
+#: src/app/components/auxiliary-i18n/index.ts:145:12
+msgid "Loading capturing tools..."
+msgstr ""
+
 #: src/app/components/navbar/index.ts:75:14
 #: src/app/components/screen-last-round/index.ts:105:11
 #: src/app/components/screen-other-table/index.ts:236:11
@@ -289,15 +293,15 @@ msgstr ""
 msgid "%1 han (%2)"
 msgstr ""
 
-#: src/app/primitives/appstate/index.ts:151:40
+#: src/app/primitives/appstate/index.ts:205:40
 msgid "spectator"
 msgstr ""
 
-#: src/app/primitives/appstate/index.ts:491:14
+#: src/app/primitives/appstate/index.ts:545:14
 msgid "Games overview"
 msgstr ""
 
-#: src/app/primitives/appstate/index.ts:493:65
+#: src/app/primitives/appstate/index.ts:547:65
 msgid "Loading..."
 msgstr ""
 
