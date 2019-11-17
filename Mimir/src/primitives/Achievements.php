@@ -250,13 +250,17 @@ class AchievementsPrimitive extends Primitive
         $rounds = $db->table('round')
             ->select('winner_id')
             ->select('display_name')
+            ->select('yaku')
             ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['ron', 'tsumo', 'multiron'])
             ->whereLt('han', 0) // yakuman
             ->findArray();
         $players = array_map(function ($round) {
-            return $round['display_name'];
+            return [
+                'name' => $round['display_name'],
+                'yaku' => $round['yaku']
+            ];
         }, $rounds);
         return empty($players) ? 'No yakumans!' : $players;
     }
