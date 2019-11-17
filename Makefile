@@ -280,8 +280,9 @@ prod_build_tyr: get_docker_id # this is for automated travis builds, don't run i
 .PHONY: i18n_extract
 i18n_extract: get_docker_id
 	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user gosu user make i18n_extract';
-	# TODO: tyr i18n
+	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make i18n_extract';
 
 .PHONY: i18n_compile
 i18n_compile: get_docker_id
 	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user gosu user make i18n_compile';
+	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make i18n_update';
