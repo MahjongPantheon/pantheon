@@ -19,6 +19,7 @@
 namespace Rheda;
 
 require_once __DIR__ . '/../helpers/Array.php';
+include_once __DIR__ . "/../helpers/YakuMap.php";
 
 class Achievements extends Controller
 {
@@ -41,7 +42,11 @@ class Achievements extends Controller
             $ach = null;
             try {
                 $ach = $this->_api->execute('getAchievements', [$this->_eventIdList, [$this->_path['achievement']]]);
-                return $this->_achValue($ach);
+                $value = $this->_achValue($ach);
+                if ($this->_path['achievement'] == 'yakumans') {
+                    $value = $this->_postProcessYakumans($value);
+                }
+                return $value;
             } catch (Exception $e) {
                 return [
                     'error' => $e->getMessage()
@@ -141,5 +146,19 @@ class Achievements extends Controller
         return empty($achievements[$key])
             ? null
             : array_merge(['val' => $achievements[$key]], reset($d));
+    }
+
+    protected function _formatYakumanString($yakumanID)
+    {
+        return Yaku::getMap()[$yakumanID];
+    }
+
+    protected function _postProcessYakumans($value)
+    {
+        $value['yakumans']['val'] = array_map(function ($value) {
+            $value['yaku'] = $this->_formatYakumanString($value['yaku']);
+            return $value;
+        }, $value['yakumans']['val']);
+        return $value;
     }
 }
