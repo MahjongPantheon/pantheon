@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
@@ -583,11 +583,6 @@ msgstr ""
 
 msgid "%s yaku"
 msgstr ""
-
-msgid "%s riichi bet"
-msgid_plural "%s riichi bets"
-msgstr[0] ""
-msgstr[1] ""
 
 msgid "%d riichi bet"
 msgid_plural "%d riichi bets"

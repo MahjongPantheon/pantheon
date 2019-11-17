@@ -35,7 +35,6 @@ msgstr[0] "%d самая быстрая рука"
 msgstr[1] "%d самых быстрых руки"
 msgstr[2] "%d самых быстрых рук"
 
-#, fuzzy
 msgid "%d riichi bet"
 msgid_plural "%d riichi bets"
 msgstr[0] "%d риичи палочка"
@@ -80,12 +79,6 @@ msgstr[2] "%s иппацу"
 
 msgid "%s points"
 msgstr "%s очков"
-
-msgid "%s riichi bet"
-msgid_plural "%s riichi bets"
-msgstr[0] "%s риичи палочка"
-msgstr[1] "%s риичи палочки"
-msgstr[2] "%s риичи палочек"
 
 msgid "%s yaku"
 msgstr "%s яку"
