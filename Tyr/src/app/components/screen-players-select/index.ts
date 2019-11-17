@@ -36,7 +36,9 @@ export class PlayersSelectScreen {
     return this.state.getOutcome();
   }
 
-  constructor(private metrika: MetrikaService) { }
+  constructor(
+    private metrika: MetrikaService
+  ) { }
 
   self: Player;
   shimocha: Player;

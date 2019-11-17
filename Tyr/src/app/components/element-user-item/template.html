@@ -20,44 +20,44 @@
 <div class="displayName">{{userData.displayName}}</div>
 <div class="win-lose">
   <button
-    *ngIf="showWinButton()"
+    *ngIf="showWinButton"
     class="discolored win"
-    [class.pressed]="winPressed()"
-    [class.disabled]="winDisabled()"
+    [class.pressed]="winPressed"
+    [class.disabled]="winDisabled"
     (click)="winClick()"
   ><custom-icon [type]="'up'" [resize]="36"></custom-icon></button>
   <button
-    *ngIf="showLoseButton()"
+    *ngIf="showLoseButton"
     class="discolored lose"
-    [class.pressed]="losePressed()"
-    [class.disabled]="loseDisabled()"
+    [class.pressed]="losePressed"
+    [class.disabled]="loseDisabled"
     (click)="loseClick()"
   ><custom-icon [type]="'down'" [resize]="36"></custom-icon></button>
   <button
-    *ngIf="showDeadButton()"
+    *ngIf="showDeadButton"
     class="discolored dead"
-    [class.pressed]="deadPressed()"
-    (click)="deadClick()"
+    [class.pressed]="deadPressed"
+    (click)="deadClick"
   ><custom-icon [type]="'dead'" [resize]="36"></custom-icon><br/>dead hand</button>
   <button
-    *ngIf="showPaoButton()"
+    *ngIf="showPaoButton"
     class="discolored lose"
-    [class.pressed]="paoPressed()"
-    (click)="paoClick()"
+    [class.pressed]="paoPressed"
+    (click)="paoClick"
   ><span class="pao-label"></span><custom-icon [type]="'down'" [resize]="36"></custom-icon></button>
   <button
-    *ngIf="showNagashiButton()"
+    *ngIf="showNagashiButton"
     class="discolored win"
-    [class.pressed]="nagashiPressed()"
-    [class.disabled]="nagashiDisabled()"
+    [class.pressed]="nagashiPressed"
+    [class.disabled]="nagashiDisabled"
     (click)="nagashiClick()"
   ><custom-icon [type]="'up'" [resize]="36"></custom-icon></button>
 </div>
 <div class="riichi-bet">
   <button
-    *ngIf="showRiichiButton()"
+    *ngIf="showRiichiButton"
     class="discolored riichi-bet-button"
-    [class.pressed]="riichiPressed()"
+    [class.pressed]="riichiPressed"
     (click)="riichiClick()"
-  ><span [class.hidden]="riichiPressed()">{{_NO_RIICHI}}</span></button>
+  ><span [class.hidden]="riichiPressed">{{_NO_RIICHI}}</span></button>
 </div>
