@@ -27,7 +27,7 @@ i18n_extract:
 	./node_modules/.bin/stex -s '**/*.ts' -o src/i18n/messages.pot.json
 	./node_modules/.bin/jsonpo -s src/i18n/messages.pot.json -o src/i18n/messages.pot --printOccurences
 	rm src/i18n/messages.pot.json
-	msgmerge -s -U ./src/i18n/ru.po ./src/i18n/messages.pot
+	msgmerge -s -U ./src/i18n/ru.po ./src/i18n/messages.pot --backup=none
 
 PHONY: i18n_update
 i18n_update:

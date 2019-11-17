@@ -19,6 +19,7 @@ namespace Rheda;
 
 use \chillerlan\QRCode\QRCode;
 use \chillerlan\QRCode\QROptions;
+
 require_once __DIR__ . '/../helpers/Url.php';
 
 class PlayerRegistration extends Controller
@@ -195,7 +196,7 @@ class PlayerRegistration extends Controller
         $origFile = file_get_contents(__DIR__ . '/../../www/assets/printcard.svg');
 
         $i = 0;
-        $data = implode(PHP_EOL, array_map(function($playerEntry) use($host, $qrcode, $origFile, &$i) {
+        $data = implode(PHP_EOL, array_map(function ($playerEntry) use ($host, $qrcode, $origFile, &$i) {
             $xIdx = $i % 2;
             $yIdx = ceil($i / 2);
             $xOffset = 20 + $xIdx * 88;
