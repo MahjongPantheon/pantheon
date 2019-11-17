@@ -148,9 +148,15 @@ class Achievements extends Controller
             : array_merge(['val' => $achievements[$key]], reset($d));
     }
 
-    protected function _formatYakumanString($yakumanID)
+    protected function _formatYakumanString($yakumanIDs)
     {
-        return Yaku::getMap()[$yakumanID];
+        $list = array_map(
+            function ($yaku) {
+                return Yaku::getMap()[$yaku];
+            },
+            explode(',', $yakumanIDs)
+        );
+        return implode(', ', $list);
     }
 
     protected function _postProcessYakumans($value)
