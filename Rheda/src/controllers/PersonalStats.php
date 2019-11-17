@@ -131,6 +131,7 @@ class PersonalStats extends Controller
                     'riichiWon'         => $data['riichi_summary']['riichi_won'],
                     'riichiLost'        => $data['riichi_summary']['riichi_lost'],
                     'riichiTotal'       => $riichiTotal,
+                    'averageDoraCount'  => $data['average_dora_count'],
 
                     'minScores'     => number_format($scoresSummary['min_scores'], 0, '.', ','),
                     'maxScores'     => number_format($scoresSummary['max_scores'], 0, '.', ','),
