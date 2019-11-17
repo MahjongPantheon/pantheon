@@ -126,6 +126,9 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+msgid "Sorry, this page is not available for mobile devices"
+msgstr ""
+
 msgid "Aggregated event"
 msgstr ""
 
@@ -145,9 +148,6 @@ msgid "Last series"
 msgstr ""
 
 msgid "Points of last series"
-msgstr ""
-
-msgid "Sorry, this page is not available for mobile devices"
 msgstr ""
 
 msgid "Statistics"
@@ -598,7 +598,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 msgid "%d riichi bet"
-msgid_plural "%d riichi bet"
+msgid_plural "%d riichi bets"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -749,64 +749,97 @@ msgstr ""
 msgid "Confirm the results and finish all games"
 msgstr ""
 
-msgid "new text"
+msgid "Please select some event!"
+msgstr ""
+
+msgid "<h2>Oops.</h2>Failed to get event configuration!"
+msgstr ""
+
+msgid "Wrong admin password"
 msgstr ""
 
 msgid "Best hand"
 msgstr ""
 
-msgid "Given for collecting the hand with biggest han count (independent of cost)."
-msgstr ""
-
 msgid "Over 9000 fu"
-msgstr ""
-
-msgid "Given for collecting the hand with biggest minipoints (fu) count."
 msgstr ""
 
 msgid "I saw them dancing"
 msgstr ""
 
-msgid "Given for collecting the most of tsumo hands during single game."
-msgstr ""
-
 msgid "Die Hard"
-msgstr ""
-
-msgid "Given for smallest count of feeding into ron during the tournament."
 msgstr ""
 
 msgid "Brave minesweeper"
 msgstr ""
 
-msgid "Given for largest count of feeding into ron during the tournament."
-msgstr ""
-
 msgid "Guest of honors"
-msgstr ""
-
-msgid "Given for collecting the most of yakuhais during the tournament."
 msgstr ""
 
 msgid "The great dealer"
 msgstr ""
 
-msgid "Given for largest count of dealer wins during the tournament."
-msgstr ""
-
 msgid "The 1k Flash"
-msgstr ""
-
-msgid "Given for the most of 1/30 wins during tournament."
 msgstr ""
 
 msgid "Jewelry included"
 msgstr ""
 
-msgid "Given for collecting a yakuman during tournament."
+msgid "This can't be your wait"
 msgstr ""
 
-msgid "This can't be your wait"
+msgid "Honored donor"
+msgstr ""
+
+msgid "Just as planned"
+msgstr ""
+
+msgid "Careful planning"
+msgstr ""
+
+msgid "Dora lord"
+msgstr ""
+
+msgid "Gotta Catch'Em All"
+msgstr ""
+
+msgid "The favorite apprentice of ASAPIN"
+msgstr ""
+
+msgid "And your riichi bet, please"
+msgstr ""
+
+msgid "The Covetous Knight"
+msgstr ""
+
+msgid "Ninja"
+msgstr ""
+
+msgid "Given for collecting the hand with biggest han count (independent of cost)."
+msgstr ""
+
+msgid "Given for collecting the hand with biggest minipoints (fu) count."
+msgstr ""
+
+msgid "Given for collecting the most of tsumo hands during single game."
+msgstr ""
+
+msgid "Given for smallest count of feeding into ron during the tournament."
+msgstr ""
+
+msgid "Given for largest count of feeding into ron during the tournament."
+msgstr ""
+
+msgid "Given for collecting the most of yakuhais during the tournament."
+msgstr ""
+
+msgid "Given for largest count of dealer wins during the tournament."
+msgstr ""
+
+msgid "Given for the most of 1/30 wins during tournament."
+msgstr ""
+
+msgid "Given for collecting a yakuman during tournament."
 msgstr ""
 
 msgid ""
@@ -814,43 +847,22 @@ msgid ""
 "riichi)."
 msgstr ""
 
-msgid "Honored donor"
-msgstr ""
-
 msgid "Given for losing largest amount of points as riichi bets."
-msgstr ""
-
-msgid "Just as planned"
 msgstr ""
 
 msgid "Given for getting largest number of ippatsu during tournament."
 msgstr ""
 
-msgid "Careful planning"
-msgstr ""
-
 msgid "Given for the smallest average cost of opponents hand that player has dealt."
-msgstr ""
-
-msgid "Dora lord"
 msgstr ""
 
 msgid "Given for the largest average count of dora in player's hand."
 msgstr ""
 
-msgid "Gotta Catch'Em All"
-msgstr ""
-
 msgid "Given for the largest amount of unique yaku collected during the tournament."
 msgstr ""
 
-msgid "The favorite apprentice of ASAPIN"
-msgstr ""
-
 msgid "Given for the largest amount of points received as ryukoku payments."
-msgstr ""
-
-msgid "And your riichi bet, please"
 msgstr ""
 
 msgid ""
@@ -858,52 +870,20 @@ msgid ""
 "during the tournament."
 msgstr ""
 
-msgid "The Covetous Knight"
-msgstr ""
-
 msgid "Given for losing the smallest number of riichi bets."
-msgstr ""
-
-msgid "Ninja"
 msgstr ""
 
 msgid "Given for winning the largest number of hands with damaten."
 msgstr ""
 
-msgid "Chombo master"
+msgid "Admin login"
 msgstr ""
 
-msgid "Given for collecting a chombo during a tournament."
+msgid "Page not available for aggregated events"
 msgstr ""
 
-msgid "%s: %d chombo penalty"
-msgid_plural "%s: %d chombo penalties"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "The Prudent"
+msgid "Latest games"
 msgstr ""
-
-msgid " Given for losing the smallest percentage of riichi bets."
-msgstr ""
-
-msgid "(%d on %s)"
-msgstr ""
-
-msgid "All players"
-msgstr ""
-
-#, php-format
-msgid "Played at least %d game"
-msgid_plural "Played at least %d games"
-msgstr[0] ""
-msgstr[1] ""
-
-#, php-format
-msgid "Played less then %d game"
-msgid_plural "Played less then %d games"
-msgstr[0] ""
-msgstr[1] ""
 
 msgid "yes"
 msgstr ""
@@ -911,32 +891,20 @@ msgstr ""
 msgid "no"
 msgstr ""
 
-msgid "Wrong admin password"
+#, php-format
+msgid "Stats & diagrams: %s"
+msgstr ""
+
+msgid "Yakuhai: total"
 msgstr ""
 
 msgid "Enroll players"
-msgstr ""
-
-msgid "Page not available for aggregated events"
 msgstr ""
 
 msgid "System name should contain only lowercase latin characters."
 msgstr ""
 
 msgid "Failed to add the player. Check your network connection."
-msgstr ""
-
-msgid "Seating controls"
-msgstr ""
-
-msgid "Latest games"
-msgstr ""
-
-#, php-format
-msgid "Stats & diagrams: %s"
-msgstr ""
-
-msgid "Yakuhai: total"
 msgstr ""
 
 msgid "Players registration"
@@ -957,21 +925,30 @@ msgstr ""
 msgid "Failed to update predefined seating. Check your network connection."
 msgstr ""
 
-msgid "Admin login"
+msgid "All players"
 msgstr ""
 
-msgid ""
-"No seating defined. Check \"Admin actions / Predefined seating\" page to "
-"define seating for tournament"
+#, php-format
+msgid "Played at least %d game"
+msgid_plural "Played at least %d games"
+msgstr[0] ""
+msgstr[1] ""
+
+#, php-format
+msgid "Played less then %d game"
+msgid_plural "Played less then %d games"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Seating controls"
 msgstr ""
 
 msgid "Event tables status"
 msgstr ""
 
-msgid "Please select some event!"
-msgstr ""
-
-msgid "<h2>Oops.</h2>Failed to get event configuration!"
+msgid ""
+"No seating defined. Check \"Admin actions / Predefined seating\" page to "
+"define seating for tournament"
 msgstr ""
 
 msgid "Allowed yaku"
