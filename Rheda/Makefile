@@ -30,7 +30,14 @@ autofix:
 	php vendor/bin/phpcbf src www --ignore=www/assets/*
 
 i18n_extract:
-	touch i18n/messages.pot
-	find ./src -iname "*.php" | xargs xgettext -j --no-location --keyword=_t --keyword=_n:1,2 --keyword=_p --keyword=_np:1,2 --from-code=UTF-8 -o i18n/messages.pot
-	find ./src -iname "*.handlebars" | xargs xgettext-template -L Handlebars --no-location=1 --from-code=UTF-8 --keyword=_t --keyword=_n:1,2 --keyword=_p --keyword=_np:1,2 -j -o i18n/messages.pot
+	rm ./i18n/messages.pot
+	touch ./i18n/messages.pot
+	find ./src -iname "*.php" -print0 | sort -z | xargs -r0 xgettext -j --no-location --keyword=_t --keyword=_n:1,2 --keyword=_p --keyword=_np:1,2 --from-code=UTF-8 -o i18n/messages.pot
+	find ./src -iname "*.handlebars" -print0 | sort -z | xargs -r0 xgettext-template -L Handlebars --no-location=1 --from-code=UTF-8 --keyword=_t --keyword=_n:1,2 --keyword=_p --keyword=_np:1,2 -j -o i18n/messages.pot
 	chmod a+w i18n/messages.pot
+	msgmerge -s -U ./i18n/de_DE.UTF-8/LC_MESSAGES/messages.po ./i18n/messages.pot
+	msgmerge -s -U ./i18n/ru_RU.UTF-8/LC_MESSAGES/messages.po ./i18n/messages.pot
+
+i18n_compile:
+	msgfmt ./i18n/de_DE.UTF-8/LC_MESSAGES/messages.po -o ./i18n/de_DE.UTF-8/LC_MESSAGES/messages.mo
+	msgfmt ./i18n/ru_RU.UTF-8/LC_MESSAGES/messages.po -o ./i18n/ru_RU.UTF-8/LC_MESSAGES/messages.mo

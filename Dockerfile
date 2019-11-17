@@ -43,6 +43,7 @@ RUN apk update && \
     curl \
     make \
     gettext \
+    gettext-dev \
     git \
     nginx \
     postgresql \

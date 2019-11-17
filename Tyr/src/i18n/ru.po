@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-13 14:27+0300\n"
+"POT-Creation-Date: 2019-11-17 09:01+0300\n"
 "PO-Revision-Date: 2019-10-13 14:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,102 +20,33 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: src/app/components/auxiliary-i18n/index.ts:7:12
-msgid "no riichi"
-msgstr "нет риичи"
+#: src/app/components/auxiliary-i18n/index.ts:139:12
+msgid " fu"
+msgstr " фу"
 
-#: src/app/components/auxiliary-i18n/index.ts:10:12
-msgid "Yaku"
-msgstr "Яку"
+#: src/app/components/auxiliary-i18n/index.ts:136:12
+msgid " han"
+msgstr " хан"
 
-#: src/app/components/auxiliary-i18n/index.ts:13:12
-msgid "Dora"
-msgstr "Дора"
+#: src/app/helpers/makeHandDescription.pipe.ts:38:14
+msgid "%1 (%2)"
+msgstr "%1 (%2)"
 
-#: src/app/components/auxiliary-i18n/index.ts:16:12
-msgid "Fu"
-msgstr "Фу"
+#: src/app/helpers/makeHandDescription.pipe.ts:70:14
+msgid "%1 han (%2)"
+msgstr "%1 хан (%2)"
 
-#: src/app/components/auxiliary-i18n/index.ts:19:12
-msgid "Settings"
-msgstr "Настройки"
+#: src/app/helpers/makeHandDescription.pipe.ts:62:14
+msgid "%1 han (%2, dora: %3)"
+msgstr "%1 хан (%2, дора: %3)"
 
-#: src/app/components/auxiliary-i18n/index.ts:22:12
-msgid "Latest results"
-msgstr "Последние результаты"
+#: src/app/helpers/makeHandDescription.pipe.ts:54:14
+msgid "%1 han, %2 fu (%3)"
+msgstr "%1 хан, %2 фу (%3)"
 
-#: src/app/components/auxiliary-i18n/index.ts:25:12
-msgid "Previous hand"
-msgstr "Предыдущая раздача"
-
-#: src/app/components/auxiliary-i18n/index.ts:28:12
-msgid "Login"
-msgstr "Войти"
-
-#: src/app/components/auxiliary-i18n/index.ts:31:12
-msgid "Yakuman: select pao"
-msgstr "Якуман: выберите пао"
-
-#: src/app/components/auxiliary-i18n/index.ts:34:12
-msgid "Other playing tables"
-msgstr "Другие столы"
-
-#: src/app/components/auxiliary-i18n/index.ts:37:12
-msgid "View table"
-msgstr "Просмотр стола"
-
-#: src/app/components/auxiliary-i18n/index.ts:40:12
-msgid "OK"
-msgstr "ОК"
-
-#: src/app/components/auxiliary-i18n/index.ts:43:12
-msgid "Looks fine"
-msgstr "Все ОК"
-
-#: src/app/components/auxiliary-i18n/index.ts:46:12
-msgid "Save"
-msgstr "Сохранить"
-
-#: src/app/components/auxiliary-i18n/index.ts:49:12
-msgid "There's no games you've already played."
-msgstr "Еще нет ни одной сыгранной игры с вашим участием."
-
-#: src/app/components/auxiliary-i18n/index.ts:52:12
-msgid "Login attempt has failed. Possible reasons are:"
-msgstr "Попытка входа в систему не удалась. Возможные причины:"
-
-#: src/app/components/auxiliary-i18n/index.ts:55:12
-msgid "Tournament games already started and you wasn't registered"
-msgstr "Турнир уже начался и вы не успели зарегистрироваться до начала"
-
-#: src/app/components/auxiliary-i18n/index.ts:58:12
-msgid "Pin code was already used on another device"
-msgstr "Текущий пин-код уже был использован на другом устройстве"
-
-#: src/app/components/auxiliary-i18n/index.ts:61:12
-#: src/app/components/screen-last-round/index.ts:136:23
-msgid "Unexpected server error"
-msgstr "Неожиданная ошибка сервера"
-
-#: src/app/components/auxiliary-i18n/index.ts:64:12
-msgid "Contact to the tournament administrator for further instructions."
-msgstr "Обратитесь к администратору турнира для дальнейших инструкций."
-
-#: src/app/components/auxiliary-i18n/index.ts:67:12
-msgid "Enter pin code"
-msgstr "Введите пин-код"
-
-#: src/app/components/auxiliary-i18n/index.ts:70:12
-msgid "Tenpai: "
-msgstr "Темпай: "
-
-#: src/app/components/auxiliary-i18n/index.ts:73:12
-msgid "Noten: "
-msgstr "Нотен: "
-
-#: src/app/components/auxiliary-i18n/index.ts:76:12
-msgid "There are no tables playing right now"
-msgstr "Ни один стол сейчас не играет"
+#: src/app/helpers/makeHandDescription.pipe.ts:45:14
+msgid "%1 han, %2 fu (%3, dora: %4)"
+msgstr "%1 хан, %2 фу (%3, дора: %4)"
 
 #: src/app/components/auxiliary-i18n/index.ts:79:12
 #: src/app/components/navbar/index.ts:93:16
@@ -125,6 +56,43 @@ msgstr "Ни один стол сейчас не играет"
 msgid "Abortive draw"
 msgstr "Абортивная ничья"
 
+#: src/app/components/screen-settings/index.ts:74:24
+msgid ""
+"Are you sure you want to logout? You will have to get a new pin code to "
+"login again"
+msgstr ""
+"Вы уверены, что хотите выйти? Чтобы войти заново, вам потребуется новый пин-"
+"код"
+
+#: src/app/components/screen-confirmation/index.ts:77:23
+#: src/app/components/screen-last-round/index.ts:134:23
+msgid "Authentication failed"
+msgstr "Не удалось войти в систему"
+
+#: src/app/primitives/yaku.ts:322:34 src/app/primitives/yaku.ts:323:39
+msgid "Chankan"
+msgstr "Чанкан"
+
+#: src/app/primitives/yaku.ts:214:34 src/app/primitives/yaku.ts:215:39
+msgid "Chanta"
+msgstr "Чанта"
+
+#: src/app/primitives/yaku.ts:310:34 src/app/primitives/yaku.ts:311:39
+msgid "Chiihou"
+msgstr "Чихо"
+
+#: src/app/primitives/yaku.ts:256:34 src/app/primitives/yaku.ts:257:39
+msgid "Chiitoitsu"
+msgstr "Чиитойцу"
+
+#: src/app/primitives/yaku.ts:238:34 src/app/primitives/yaku.ts:239:39
+msgid "Chinitsu"
+msgstr "Чиницу"
+
+#: src/app/primitives/yaku.ts:226:34 src/app/primitives/yaku.ts:227:39
+msgid "Chinroutou"
+msgstr "Чинрото"
+
 #: src/app/components/auxiliary-i18n/index.ts:82:12
 #: src/app/components/navbar/index.ts:97:16
 #: src/app/components/screen-last-round/index.ts:101:29
@@ -132,6 +100,53 @@ msgstr "Абортивная ничья"
 #: src/app/components/screen-yaku-select/index.ts:119:16
 msgid "Chombo"
 msgstr "Чомбо"
+
+#: src/app/primitives/yaku.ts:244:34 src/app/primitives/yaku.ts:245:39
+msgid "Chuuren poutou"
+msgstr "Чууренпото"
+
+#: src/app/components/auxiliary-i18n/index.ts:64:12
+msgid "Contact to the tournament administrator for further instructions."
+msgstr "Обратитесь к администратору турнира для дальнейших инструкций."
+
+#: src/app/primitives/yaku.ts:275:39
+msgid "Daburu"
+msgstr "Дабури"
+
+#: src/app/primitives/yaku.ts:274:34
+msgid "Daburu riichi"
+msgstr "Дабл-риичи"
+
+#: src/app/primitives/yaku.ts:184:34 src/app/primitives/yaku.ts:185:39
+msgid "Daisangen"
+msgstr "Дайсанген"
+
+#: src/app/primitives/yaku.ts:196:34 src/app/primitives/yaku.ts:197:39
+msgid "Daisuushii"
+msgstr "Дайсуши"
+
+#: src/app/components/auxiliary-i18n/index.ts:13:12
+msgid "Dora"
+msgstr "Дора"
+
+#: src/app/components/navbar/index.ts:78:14
+#: src/app/components/screen-last-round/index.ts:104:11
+#: src/app/components/screen-other-table/index.ts:235:11
+msgid "Double ron"
+msgstr "Двойной рон"
+
+#: src/app/components/auxiliary-i18n/index.ts:94:12
+#: src/app/components/navbar/index.ts:87:16
+msgid "Double/Triple ron"
+msgstr "Дабл/трипл-рон"
+
+#: src/app/components/auxiliary-i18n/index.ts:67:12
+msgid "Enter pin code"
+msgstr "Введите пин-код"
+
+#: src/app/components/screen-last-round/index.ts:128:19
+msgid "Error occured. Try again."
+msgstr "Произошла ошибка. Попробуйте еще раз."
 
 #: src/app/components/auxiliary-i18n/index.ts:85:12
 #: src/app/components/navbar/index.ts:91:16
@@ -141,173 +156,46 @@ msgstr "Чомбо"
 msgid "Exhaustive draw"
 msgstr "Ничья"
 
-#: src/app/components/auxiliary-i18n/index.ts:88:12
-#: src/app/components/navbar/index.ts:85:16
-#: src/app/components/screen-last-round/index.ts:97:26
-#: src/app/components/screen-other-table/index.ts:229:26
-#: src/app/components/screen-yaku-select/index.ts:111:16
-msgid "Ron"
-msgstr "Рон"
-
-#: src/app/components/auxiliary-i18n/index.ts:91:12
-#: src/app/components/navbar/index.ts:89:16
-#: src/app/components/screen-last-round/index.ts:98:28
-#: src/app/components/screen-other-table/index.ts:230:28
-#: src/app/components/screen-yaku-select/index.ts:113:16
-msgid "Tsumo"
-msgstr "Цумо"
-
-#: src/app/components/auxiliary-i18n/index.ts:94:12
-#: src/app/components/navbar/index.ts:87:16
-msgid "Double/Triple ron"
-msgstr "Дабл/трипл-рон"
-
-#: src/app/components/auxiliary-i18n/index.ts:97:12
-#: src/app/components/screen-last-round/index.ts:102:30
-msgid "Nagashi mangan"
-msgstr "Нагаши манган"
-
-#: src/app/components/auxiliary-i18n/index.ts:100:12
-msgid "Timer was not started yet. Unable to add a hand."
-msgstr "Таймер еще не запущен. Невозможно добавить раздачу."
-
-#: src/app/components/auxiliary-i18n/index.ts:103:12
-msgid "There are no games you participate in right now."
-msgstr "На данный момент нет ни одной игры с вашим участием."
-
-#: src/app/components/auxiliary-i18n/index.ts:106:12
-msgid "Refresh"
-msgstr "Обновить"
-
-#: src/app/components/auxiliary-i18n/index.ts:109:12
-msgid "Previous game results"
-msgstr "Результаты последней игры"
-
-#: src/app/components/auxiliary-i18n/index.ts:112:12
-msgid "New game"
-msgstr "Новая игра"
-
-#: src/app/components/auxiliary-i18n/index.ts:115:12
-msgid "Statistics"
-msgstr "Статистика"
-
-#: src/app/components/auxiliary-i18n/index.ts:118:12
-msgid "Table #"
-msgstr "Стол №"
-
-#: src/app/components/auxiliary-i18n/index.ts:121:12
-msgid "Select preferred language"
-msgstr "Выбор языка"
-
-#: src/app/components/auxiliary-i18n/index.ts:124:12
-msgid "Select preferred color scheme"
-msgstr "Выбор цветовой схемы"
-
-#: src/app/components/auxiliary-i18n/index.ts:127:12
-msgid "Log out from system"
-msgstr "Выйти из системы"
-
-#: src/app/components/auxiliary-i18n/index.ts:130:12
-msgid "User actions"
-msgstr "Действия пользователя"
-
-#: src/app/components/auxiliary-i18n/index.ts:133:12
-msgid "Total: "
-msgstr "Всего: "
-
-#: src/app/components/auxiliary-i18n/index.ts:136:12
-msgid " han"
-msgstr " хан"
-
-#: src/app/components/auxiliary-i18n/index.ts:139:12
-msgid " fu"
-msgstr " фу"
-
-#: src/app/components/auxiliary-i18n/index.ts:142:12
-msgid "Yakuman!"
-msgstr "Якуман!"
-
-#: src/app/components/navbar/index.ts:75:14
-#: src/app/components/screen-last-round/index.ts:105:11
-#: src/app/components/screen-other-table/index.ts:236:11
-msgid "Triple ron"
-msgstr "Тройной рон"
-
-#: src/app/components/navbar/index.ts:78:14
-#: src/app/components/screen-last-round/index.ts:104:11
-#: src/app/components/screen-other-table/index.ts:235:11
-msgid "Double ron"
-msgstr "Двойной рон"
-
-#: src/app/components/navbar/index.ts:95:16
-msgid "Nagashi: select tenpai"
-msgstr "Нагаши: выберите темпай"
-
 #: src/app/components/screen-confirmation/index.ts:74:19
 msgid "Failed to add round. Please try again"
 msgstr "Не удалось добавить раздачу. Попробуйте еще раз"
-
-#: src/app/components/screen-confirmation/index.ts:77:23
-#: src/app/components/screen-last-round/index.ts:134:23
-msgid "Authentication failed"
-msgstr "Не удалось войти в систему"
 
 #: src/app/components/screen-confirmation/index.ts:79:23
 msgid "Failed to add round. Was this hand already added by someone else?"
 msgstr ""
 "Не удалось добавить раздачу. Возможно она была уже добавлена кем-то еще?"
 
-#: src/app/components/screen-last-round/index.ts:128:19
-msgid "Error occured. Try again."
-msgstr "Произошла ошибка. Попробуйте еще раз."
-
-#: src/app/components/screen-last-round/index.ts:130:21
-msgid "Latest hand wasn't found"
-msgstr "Последняя раздача не найдена"
-
-#: src/app/components/screen-overview/index.ts:56:12
-msgid "Hello, %1!"
-msgstr "Привет, %1!"
-
-#: src/app/components/screen-settings/index.ts:74:24
-msgid ""
-"Are you sure you want to logout? You will have to get a new pin code to "
-"login again"
-msgstr ""
-"Вы уверены, что хотите выйти? Чтобы войти заново, вам потребуется новый пин-"
-"код"
-
-#: src/app/helpers/makeHandDescription.pipe.ts:38:14
-msgid "%1 (%2)"
-msgstr "%1 (%2)"
-
-#: src/app/helpers/makeHandDescription.pipe.ts:45:14
-msgid "%1 han, %2 fu (%3, dora: %4)"
-msgstr "%1 хан, %2 фу (%3, дора: %4)"
-
-#: src/app/helpers/makeHandDescription.pipe.ts:54:14
-msgid "%1 han, %2 fu (%3)"
-msgstr "%1 хан, %2 фу (%3)"
-
-#: src/app/helpers/makeHandDescription.pipe.ts:62:14
-msgid "%1 han (%2, dora: %3)"
-msgstr "%1 хан (%2, дора: %3)"
-
-#: src/app/helpers/makeHandDescription.pipe.ts:70:14
-msgid "%1 han (%2)"
-msgstr "%1 хан (%2)"
-
-#: src/app/primitives/appstate/index.ts:151:40
-msgid "spectator"
-msgstr "наблюдатель"
+#: src/app/components/auxiliary-i18n/index.ts:16:12
+msgid "Fu"
+msgstr "Фу"
 
 #: src/app/primitives/appstate/index.ts:491:14
 msgid "Games overview"
 msgstr "Обзор игр"
 
-#: src/app/primitives/appstate/index.ts:493:65
-msgid "Loading..."
-msgstr "Загрузка..."
+#: src/app/primitives/yaku.ts:292:34 src/app/primitives/yaku.ts:293:39
+msgid "Haitei"
+msgstr "Хайтей"
+
+#: src/app/components/screen-overview/index.ts:56:12
+msgid "Hello, %1!"
+msgstr "Привет, %1!"
+
+#: src/app/primitives/yaku.ts:232:34 src/app/primitives/yaku.ts:233:39
+msgid "Honitsu"
+msgstr "Хоницу"
+
+#: src/app/primitives/yaku.ts:88:34 src/app/primitives/yaku.ts:89:39
+msgid "Honroutou"
+msgstr "Хонрото"
+
+#: src/app/primitives/yaku.ts:317:39
+msgid "Houtei"
+msgstr "Хотей"
+
+#: src/app/primitives/yaku.ts:316:34
+msgid "Houtei raoyui"
+msgstr "Хотей раоюй"
 
 #: src/app/primitives/appstate/yaku.ts:87:11
 #: src/app/primitives/appstate/yaku.ts:100:11
@@ -318,17 +206,142 @@ msgstr ""
 "Если вы хотите выбрать яку риичи, вернитесь назад и отметьте ставку риичи "
 "для выигравшего"
 
+#: src/app/primitives/yaku.ts:124:34 src/app/primitives/yaku.ts:125:39
+msgid "Iipeikou"
+msgstr "Иипейко"
+
+#: src/app/primitives/yaku.ts:280:34 src/app/primitives/yaku.ts:281:39
+msgid "Ippatsu"
+msgstr "Иппацу"
+
+#: src/app/primitives/yaku.ts:148:34 src/app/primitives/yaku.ts:149:39
+msgid "Ittsu"
+msgstr "Иццу"
+
+#: src/app/primitives/yaku.ts:220:34 src/app/primitives/yaku.ts:221:39
+msgid "Junchan"
+msgstr "Джунчан"
+
+#: src/app/primitives/yaku.ts:262:34 src/app/primitives/yaku.ts:263:39
+msgid "Kokushi musou"
+msgstr "Кокушимусо"
+
+#: src/app/components/screen-last-round/index.ts:130:21
+msgid "Latest hand wasn't found"
+msgstr "Последняя раздача не найдена"
+
+#: src/app/components/auxiliary-i18n/index.ts:22:12
+msgid "Latest results"
+msgstr "Последние результаты"
+
+#: src/app/primitives/appstate/index.ts:493:65
+msgid "Loading..."
+msgstr "Загрузка..."
+
+#: src/app/components/auxiliary-i18n/index.ts:127:12
+msgid "Log out from system"
+msgstr "Выйти из системы"
+
+#: src/app/components/auxiliary-i18n/index.ts:28:12
+msgid "Login"
+msgstr "Войти"
+
+#: src/app/components/auxiliary-i18n/index.ts:52:12
+msgid "Login attempt has failed. Possible reasons are:"
+msgstr "Попытка входа в систему не удалась. Возможные причины:"
+
+#: src/app/components/auxiliary-i18n/index.ts:43:12
+msgid "Looks fine"
+msgstr "Все ОК"
+
+#: src/app/primitives/yaku.ts:286:34 src/app/primitives/yaku.ts:287:39
+msgid "Menzentsumo"
+msgstr "Мензенцумо"
+
+#: src/app/components/auxiliary-i18n/index.ts:97:12
+#: src/app/components/screen-last-round/index.ts:102:30
+msgid "Nagashi mangan"
+msgstr "Нагаши манган"
+
+#: src/app/components/navbar/index.ts:95:16
+msgid "Nagashi: select tenpai"
+msgstr "Нагаши: выберите темпай"
+
+#: src/app/components/auxiliary-i18n/index.ts:112:12
+msgid "New game"
+msgstr "Новая игра"
+
+#: src/app/components/auxiliary-i18n/index.ts:73:12
+msgid "Noten: "
+msgstr "Нотен: "
+
+#: src/app/components/auxiliary-i18n/index.ts:40:12
+msgid "OK"
+msgstr "ОК"
+
+#: src/app/primitives/yaku.ts:334:34 src/app/primitives/yaku.ts:335:39
+msgid "Open riichi"
+msgstr "Опен риичи"
+
 #: src/app/primitives/yaku.ts:76:34 src/app/primitives/yaku.ts:77:39
 msgid "Opened hand"
 msgstr "Открытая рука"
 
-#: src/app/primitives/yaku.ts:82:34 src/app/primitives/yaku.ts:83:39
-msgid "Toitoi"
-msgstr "Тойтой"
+#: src/app/components/auxiliary-i18n/index.ts:34:12
+msgid "Other playing tables"
+msgstr "Другие столы"
 
-#: src/app/primitives/yaku.ts:88:34 src/app/primitives/yaku.ts:89:39
-msgid "Honroutou"
-msgstr "Хонрото"
+#: src/app/components/auxiliary-i18n/index.ts:58:12
+msgid "Pin code was already used on another device"
+msgstr "Текущий пин-код уже был использован на другом устройстве"
+
+#: src/app/primitives/yaku.ts:118:34 src/app/primitives/yaku.ts:119:39
+msgid "Pinfu"
+msgstr "Пин-фу"
+
+#: src/app/components/auxiliary-i18n/index.ts:109:12
+msgid "Previous game results"
+msgstr "Результаты последней игры"
+
+#: src/app/components/auxiliary-i18n/index.ts:25:12
+msgid "Previous hand"
+msgstr "Предыдущая раздача"
+
+#: src/app/components/auxiliary-i18n/index.ts:106:12
+msgid "Refresh"
+msgstr "Обновить"
+
+#: src/app/primitives/yaku.ts:328:34 src/app/primitives/yaku.ts:329:39
+msgid "Renhou"
+msgstr "Ренхо"
+
+#: src/app/primitives/yaku.ts:268:34 src/app/primitives/yaku.ts:269:39
+msgid "Riichi"
+msgstr "Риичи"
+
+#: src/app/primitives/yaku.ts:299:39
+msgid "Rinshan"
+msgstr "Риншан"
+
+#: src/app/primitives/yaku.ts:298:34
+msgid "Rinshan kaihou"
+msgstr "Риншан кайхо"
+
+#: src/app/components/auxiliary-i18n/index.ts:88:12
+#: src/app/components/navbar/index.ts:85:16
+#: src/app/components/screen-last-round/index.ts:97:26
+#: src/app/components/screen-other-table/index.ts:229:26
+#: src/app/components/screen-yaku-select/index.ts:111:16
+msgid "Ron"
+msgstr "Рон"
+
+#: src/app/primitives/yaku.ts:130:34 src/app/primitives/yaku.ts:131:39
+msgid "Ryanpeikou"
+msgstr "Рянпейко"
+
+#: src/app/primitives/yaku.ts:250:34 src/app/primitives/yaku.ts:251:39
+msgid "Ryuuiisou"
+msgstr "Рюисо"
 
 #: src/app/primitives/yaku.ts:94:34 src/app/primitives/yaku.ts:95:39
 msgid "Sanankou"
@@ -338,26 +351,6 @@ msgstr "Сананко"
 msgid "Sankantsu"
 msgstr "Санканцу"
 
-#: src/app/primitives/yaku.ts:106:34 src/app/primitives/yaku.ts:107:39
-msgid "Suukantsu"
-msgstr "Сууканцу"
-
-#: src/app/primitives/yaku.ts:112:34 src/app/primitives/yaku.ts:113:39
-msgid "Suuankou"
-msgstr "Сууанко"
-
-#: src/app/primitives/yaku.ts:118:34 src/app/primitives/yaku.ts:119:39
-msgid "Pinfu"
-msgstr "Пин-фу"
-
-#: src/app/primitives/yaku.ts:124:34 src/app/primitives/yaku.ts:125:39
-msgid "Iipeikou"
-msgstr "Иипейко"
-
-#: src/app/primitives/yaku.ts:130:34 src/app/primitives/yaku.ts:131:39
-msgid "Ryanpeikou"
-msgstr "Рянпейко"
-
 #: src/app/primitives/yaku.ts:136:34 src/app/primitives/yaku.ts:137:39
 msgid "Sanshoku"
 msgstr "Саншоку"
@@ -366,161 +359,169 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: src/app/primitives/yaku.ts:148:34 src/app/primitives/yaku.ts:149:39
-msgid "Ittsu"
-msgstr "Иццу"
+#: src/app/components/auxiliary-i18n/index.ts:46:12
+msgid "Save"
+msgstr "Сохранить"
 
-#: src/app/primitives/yaku.ts:154:34
-msgid "Yakuhai x1"
-msgstr "Якухай 1"
+#: src/app/components/auxiliary-i18n/index.ts:124:12
+msgid "Select preferred color scheme"
+msgstr "Выбор цветовой схемы"
 
-#: src/app/primitives/yaku.ts:155:39
-msgid "Yakuhai"
-msgstr "Якухай"
+#: src/app/components/auxiliary-i18n/index.ts:121:12
+msgid "Select preferred language"
+msgstr "Выбор языка"
 
-#: src/app/primitives/yaku.ts:160:34
-msgid "Yakuhai x2"
-msgstr "Якухай 2"
-
-#: src/app/primitives/yaku.ts:161:39
-msgid "x2"
-msgstr "х2"
-
-#: src/app/primitives/yaku.ts:166:34
-msgid "Yakuhai x3"
-msgstr "Якухай 3"
-
-#: src/app/primitives/yaku.ts:167:39
-msgid "x3"
-msgstr "х3"
-
-#: src/app/primitives/yaku.ts:172:34
-msgid "Yakuhai x4"
-msgstr "Якухай 4"
-
-#: src/app/primitives/yaku.ts:173:39
-msgid "x4"
-msgstr "х4"
+#: src/app/components/auxiliary-i18n/index.ts:19:12
+msgid "Settings"
+msgstr "Настройки"
 
 #: src/app/primitives/yaku.ts:178:34 src/app/primitives/yaku.ts:179:39
 msgid "Shousangen"
 msgstr "Шосанген"
 
-#: src/app/primitives/yaku.ts:184:34 src/app/primitives/yaku.ts:185:39
-msgid "Daisangen"
-msgstr "Дайсанген"
-
 #: src/app/primitives/yaku.ts:190:34 src/app/primitives/yaku.ts:191:39
 msgid "Shousuushii"
 msgstr "Шосуши"
 
-#: src/app/primitives/yaku.ts:196:34 src/app/primitives/yaku.ts:197:39
-msgid "Daisuushii"
-msgstr "Дайсуши"
+#: src/app/components/auxiliary-i18n/index.ts:115:12
+msgid "Statistics"
+msgstr "Статистика"
 
-#: src/app/primitives/yaku.ts:202:34 src/app/primitives/yaku.ts:203:39
-msgid "Tsuuiisou"
-msgstr "Цуисо"
+#: src/app/primitives/yaku.ts:112:34 src/app/primitives/yaku.ts:113:39
+msgid "Suuankou"
+msgstr "Сууанко"
+
+#: src/app/primitives/yaku.ts:106:34 src/app/primitives/yaku.ts:107:39
+msgid "Suukantsu"
+msgstr "Сууканцу"
+
+#: src/app/components/auxiliary-i18n/index.ts:118:12
+msgid "Table #"
+msgstr "Стол №"
 
 #: src/app/primitives/yaku.ts:208:34 src/app/primitives/yaku.ts:209:39
 msgid "Tanyao"
 msgstr "Тан-яо"
 
-#: src/app/primitives/yaku.ts:214:34 src/app/primitives/yaku.ts:215:39
-msgid "Chanta"
-msgstr "Чанта"
-
-#: src/app/primitives/yaku.ts:220:34 src/app/primitives/yaku.ts:221:39
-msgid "Junchan"
-msgstr "Джунчан"
-
-#: src/app/primitives/yaku.ts:226:34 src/app/primitives/yaku.ts:227:39
-msgid "Chinroutou"
-msgstr "Чинрото"
-
-#: src/app/primitives/yaku.ts:232:34 src/app/primitives/yaku.ts:233:39
-msgid "Honitsu"
-msgstr "Хоницу"
-
-#: src/app/primitives/yaku.ts:238:34 src/app/primitives/yaku.ts:239:39
-msgid "Chinitsu"
-msgstr "Чиницу"
-
-#: src/app/primitives/yaku.ts:244:34 src/app/primitives/yaku.ts:245:39
-msgid "Chuuren poutou"
-msgstr "Чууренпото"
-
-#: src/app/primitives/yaku.ts:250:34 src/app/primitives/yaku.ts:251:39
-msgid "Ryuuiisou"
-msgstr "Рюисо"
-
-#: src/app/primitives/yaku.ts:256:34 src/app/primitives/yaku.ts:257:39
-msgid "Chiitoitsu"
-msgstr "Чиитойцу"
-
-#: src/app/primitives/yaku.ts:262:34 src/app/primitives/yaku.ts:263:39
-msgid "Kokushi musou"
-msgstr "Кокушимусо"
-
-#: src/app/primitives/yaku.ts:268:34 src/app/primitives/yaku.ts:269:39
-msgid "Riichi"
-msgstr "Риичи"
-
-#: src/app/primitives/yaku.ts:274:34
-msgid "Daburu riichi"
-msgstr "Дабл-риичи"
-
-#: src/app/primitives/yaku.ts:275:39
-msgid "Daburu"
-msgstr "Дабури"
-
-#: src/app/primitives/yaku.ts:280:34 src/app/primitives/yaku.ts:281:39
-msgid "Ippatsu"
-msgstr "Иппацу"
-
-#: src/app/primitives/yaku.ts:286:34 src/app/primitives/yaku.ts:287:39
-msgid "Menzentsumo"
-msgstr "Мензенцумо"
-
-#: src/app/primitives/yaku.ts:292:34 src/app/primitives/yaku.ts:293:39
-msgid "Haitei"
-msgstr "Хайтей"
-
-#: src/app/primitives/yaku.ts:298:34
-msgid "Rinshan kaihou"
-msgstr "Риншан кайхо"
-
-#: src/app/primitives/yaku.ts:299:39
-msgid "Rinshan"
-msgstr "Риншан"
-
 #: src/app/primitives/yaku.ts:304:34 src/app/primitives/yaku.ts:305:39
 msgid "Tenhou"
 msgstr "Тенхо"
 
-#: src/app/primitives/yaku.ts:310:34 src/app/primitives/yaku.ts:311:39
-msgid "Chiihou"
-msgstr "Чихо"
+#: src/app/components/auxiliary-i18n/index.ts:70:12
+msgid "Tenpai: "
+msgstr "Темпай: "
 
-#: src/app/primitives/yaku.ts:316:34
-msgid "Houtei raoyui"
-msgstr "Хотей раоюй"
+#: src/app/components/auxiliary-i18n/index.ts:103:12
+msgid "There are no games you participate in right now."
+msgstr "На данный момент нет ни одной игры с вашим участием."
 
-#: src/app/primitives/yaku.ts:317:39
-msgid "Houtei"
-msgstr "Хотей"
+#: src/app/components/auxiliary-i18n/index.ts:76:12
+msgid "There are no tables playing right now"
+msgstr "Ни один стол сейчас не играет"
 
-#: src/app/primitives/yaku.ts:322:34 src/app/primitives/yaku.ts:323:39
-msgid "Chankan"
-msgstr "Чанкан"
+#: src/app/components/auxiliary-i18n/index.ts:49:12
+msgid "There's no games you've already played."
+msgstr "Еще нет ни одной сыгранной игры с вашим участием."
 
-#: src/app/primitives/yaku.ts:328:34 src/app/primitives/yaku.ts:329:39
-msgid "Renhou"
-msgstr "Ренхо"
+#: src/app/components/auxiliary-i18n/index.ts:100:12
+msgid "Timer was not started yet. Unable to add a hand."
+msgstr "Таймер еще не запущен. Невозможно добавить раздачу."
 
-#: src/app/primitives/yaku.ts:334:34 src/app/primitives/yaku.ts:335:39
-msgid "Open riichi"
-msgstr "Опен риичи"
+#: src/app/primitives/yaku.ts:82:34 src/app/primitives/yaku.ts:83:39
+msgid "Toitoi"
+msgstr "Тойтой"
+
+#: src/app/components/auxiliary-i18n/index.ts:133:12
+msgid "Total: "
+msgstr "Всего: "
+
+#: src/app/components/auxiliary-i18n/index.ts:55:12
+msgid "Tournament games already started and you wasn't registered"
+msgstr "Турнир уже начался и вы не успели зарегистрироваться до начала"
+
+#: src/app/components/navbar/index.ts:75:14
+#: src/app/components/screen-last-round/index.ts:105:11
+#: src/app/components/screen-other-table/index.ts:236:11
+msgid "Triple ron"
+msgstr "Тройной рон"
+
+#: src/app/components/auxiliary-i18n/index.ts:91:12
+#: src/app/components/navbar/index.ts:89:16
+#: src/app/components/screen-last-round/index.ts:98:28
+#: src/app/components/screen-other-table/index.ts:230:28
+#: src/app/components/screen-yaku-select/index.ts:113:16
+msgid "Tsumo"
+msgstr "Цумо"
+
+#: src/app/primitives/yaku.ts:202:34 src/app/primitives/yaku.ts:203:39
+msgid "Tsuuiisou"
+msgstr "Цуисо"
+
+#: src/app/components/auxiliary-i18n/index.ts:61:12
+#: src/app/components/screen-last-round/index.ts:136:23
+msgid "Unexpected server error"
+msgstr "Неожиданная ошибка сервера"
+
+#: src/app/components/auxiliary-i18n/index.ts:130:12
+msgid "User actions"
+msgstr "Действия пользователя"
+
+#: src/app/components/auxiliary-i18n/index.ts:37:12
+msgid "View table"
+msgstr "Просмотр стола"
+
+#: src/app/components/auxiliary-i18n/index.ts:10:12
+msgid "Yaku"
+msgstr "Яку"
+
+#: src/app/primitives/yaku.ts:155:39
+msgid "Yakuhai"
+msgstr "Якухай"
+
+#: src/app/primitives/yaku.ts:154:34
+msgid "Yakuhai x1"
+msgstr "Якухай 1"
+
+#: src/app/primitives/yaku.ts:160:34
+msgid "Yakuhai x2"
+msgstr "Якухай 2"
+
+#: src/app/primitives/yaku.ts:166:34
+msgid "Yakuhai x3"
+msgstr "Якухай 3"
+
+#: src/app/primitives/yaku.ts:172:34
+msgid "Yakuhai x4"
+msgstr "Якухай 4"
+
+#: src/app/components/auxiliary-i18n/index.ts:142:12
+msgid "Yakuman!"
+msgstr "Якуман!"
+
+#: src/app/components/auxiliary-i18n/index.ts:31:12
+msgid "Yakuman: select pao"
+msgstr "Якуман: выберите пао"
+
+#: src/app/components/auxiliary-i18n/index.ts:7:12
+#, fuzzy
+msgid "no riichi"
+msgstr "нет риичи"
+
+#: src/app/primitives/appstate/index.ts:151:40
+msgid "spectator"
+msgstr "наблюдатель"
+
+#: src/app/primitives/yaku.ts:161:39
+msgid "x2"
+msgstr "х2"
+
+#: src/app/primitives/yaku.ts:167:39
+msgid "x3"
+msgstr "х3"
+
+#: src/app/primitives/yaku.ts:173:39
+msgid "x4"
+msgstr "х4"
 
 #~ msgid "it's you"
 #~ msgstr "это вы"
