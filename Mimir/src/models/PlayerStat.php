@@ -101,7 +101,7 @@ class PlayerStatModel extends Model
                     return $rating;
                 },
                 $games
-            )
+            ), 'is_numeric'
         );
         array_unshift($ratingHistory, $event->getRuleset()->startRating());
         return $ratingHistory;
