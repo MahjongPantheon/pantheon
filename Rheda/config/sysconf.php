@@ -53,6 +53,10 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         public static function API_URL() {
             return getenv('MIMIR_URL');
         }
+
+        public static function MOBILE_CLIENT_URL() {
+            return getenv('TYR_URL');
+        }
     }
 }
 

@@ -27,7 +27,12 @@
 {{^isAggregated}}
     {{#authorized}}
         <hr />
-        <h4>{{_p 'Pre-registration list (%d)' enrolledCount}}</h4>
+        <h4>{{_p 'Pre-registration list (%d)' enrolledCount}}
+          {{#showPrint}}
+            {{#a href='/reg/print' class='btn btn-primary'}}Print PINs and QR codes{{/a}}
+          {{/showPrint}}
+        </h4>
+
         <table class="table table-condensed table-striped">
             <tr>
                 <th>{{_t 'Player'}}</th>
