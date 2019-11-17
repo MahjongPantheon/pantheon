@@ -33,7 +33,6 @@ msgid_plural "%d quickest hands"
 msgstr[0] "%d schnellste Hand"
 msgstr[1] "%d schnellste Hände"
 
-#, fuzzy
 msgid "%d riichi bet"
 msgid_plural "%d riichi bets"
 msgstr[0] "Riichi Einlage"
@@ -78,12 +77,6 @@ msgstr[1] "Ippatsu"
 #, fuzzy
 msgid "%s points"
 msgstr "%s - %d Punkte (%s)"
-
-#, fuzzy
-msgid "%s riichi bet"
-msgid_plural "%s riichi bets"
-msgstr[0] "Riichi Einlage"
-msgstr[1] "Riichi Einlage"
 
 #, fuzzy
 msgid "%s yaku"
