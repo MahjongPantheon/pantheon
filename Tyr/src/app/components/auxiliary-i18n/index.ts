@@ -141,4 +141,7 @@ export class I18nComponent {
   get _TOTAL_YAKUMAN() {
     return this.i18n._t('Yakuman!');
   }
+  get _LOADING_VIDEO() {
+    return this.i18n._t('Loading capturing tools...');
+  }
 }

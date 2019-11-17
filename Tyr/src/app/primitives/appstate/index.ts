@@ -18,15 +18,15 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Outcome, AppOutcome } from '../../interfaces/app';
+import { AppOutcome } from '../../interfaces/app';
 import { NgZone, isDevMode } from '@angular/core';
-import { getHan, getFixedFu } from '../yaku-values';
 import { Outcome as OutcomeType, Player, Table } from '../../interfaces/common';
 import { YakuId } from '../yaku';
 import { RiichiApiService } from '../../services/riichiApi';
 import { RemoteError } from '../../services/remoteError';
 import { LCurrentGame, LUser, LTimerState, LWinItem, LGameConfig } from '../../interfaces/local';
 import { RSessionOverview, RRoundPaymentsInfo } from '../../interfaces/remote';
+const crc32 = require('crc/crc32').default;
 
 export type AppScreen = 'overview' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
   | 'yakuSelect' | 'confirmation' | 'newGame' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
@@ -34,7 +34,8 @@ export type LoadingSet = {
   games: boolean,
   overview: boolean,
   otherTables: boolean,
-  otherTable: boolean
+  otherTable: boolean,
+  login: boolean,
 };
 
 // functional modules
@@ -90,6 +91,7 @@ export class AppState {
     overview: false,
     otherTables: false,
     otherTable: false,
+    login: false,
   };
 
   constructor(
@@ -115,9 +117,32 @@ export class AppState {
   }
 
   init() {
+    let loc = window.location.pathname.replace(/^\//, '');
+    if (loc.length > 0) {
+      let [pin, crc] = loc.split('_');
+      if (crc32(pin).toString(16).toLowerCase() === crc.toLowerCase()) {
+        window.history.pushState({}, '', '/'); // to remove pathname
+        this.storage.delete(['authToken']);
+        this._currentScreen = 'login';
+        this.loginWithPin(pin)
+          .then(() => {
+            this.init(); // Should not enter endless loop because path should be empty here.
+          })
+          .catch((e) => {
+            console.error(e);
+            this.metrika.track(MetrikaService.LOAD_ERROR, {
+              type: 'state-init-login',
+              request: 'confirmRegistration',
+              message: e.toString()
+            });
+          });
+        return;
+      }
+    }
+
     this.reinit();
     // initial push to make some history to return to
-    window.history.pushState({}, '');
+    window.history.pushState({}, '', '/');
     window.onpopstate = (e: PopStateEvent): any => {
       this.zone.run(() => {
         // Any history pop we do as BACK event!
@@ -126,6 +151,35 @@ export class AppState {
         window.history.pushState({}, '');
       });
     };
+  }
+
+  loginWithPin(pin: string) {
+    this._loading.login = true;
+    let retriesCount = 0;
+    return new Promise<string>((resolve, reject) => {
+      const runWithRetry = () => {
+        this.api.confirmRegistration(pin)
+          .then((authToken: string) => {
+            retriesCount = 0;
+            this._loading.login = false;
+            this.storage.set('authToken', authToken);
+            resolve(authToken);
+          })
+          .catch((e) => {
+            retriesCount++;
+            if (retriesCount < 5) {
+              setTimeout(runWithRetry, 500);
+              return;
+            }
+
+            retriesCount = 0;
+            this._loading.login = false;
+            reject(e);
+          });
+      };
+
+      runWithRetry();
+    });
   }
 
   reinit() {

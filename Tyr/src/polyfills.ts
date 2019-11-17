@@ -18,6 +18,8 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+(window as any).global = window;
+
 // This file includes polyfills needed by Angular 2 and is loaded before
 // the app. You can add your own extra polyfills to this file.
 import 'core-js/es/symbol';
