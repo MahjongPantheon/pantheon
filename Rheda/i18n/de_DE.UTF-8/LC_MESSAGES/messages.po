@@ -253,6 +253,9 @@ msgstr "Durchschnittlicher Platz"
 msgid "Average points"
 msgstr "Durchschnittliche Punkte"
 
+msgid "Avg. dora count in hand"
+msgstr ""
+
 msgid "Basic ruleset name"
 msgstr ""
 
