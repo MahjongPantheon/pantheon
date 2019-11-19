@@ -421,8 +421,8 @@ msgstr "из их выигранных"
 msgid "bets lost"
 msgstr "из них потерянных"
 
-msgid "Avg. dora count in hand"
-msgstr "Ср. количество дор в руке"
+msgid "Dora count (avg.)"
+msgstr "Количество дор (ср.)"
 
 msgid "Places stat:"
 msgstr "Статистика по местам:"

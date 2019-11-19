@@ -419,7 +419,7 @@ msgstr "Einlage gewonnen"
 msgid "bets lost"
 msgstr "Einlage verloren"
 
-msgid "Avg. dora count in hand"
+msgid "Dora count (avg.)"
 msgstr ""
 
 msgid "Places stat:"

@@ -80,7 +80,7 @@ class PlayerStatModel extends Model
             'hands_value_summary'   => $this->_getHanSummary($playerId, $rounds),
             'yaku_summary'          => $this->_getYakuSummary($playerId, $rounds),
             'riichi_summary'        => $this->_getRiichiSummary($mainEvent->getRuleset(), $playerId, $rounds),
-            'average_dora_count'    => $this->_getAverageDoraCount($playerId, $rounds),
+            'dora_stat'             => $this->_getDoraStat($playerId, $rounds),
         ];
     }
 
@@ -420,10 +420,10 @@ class PlayerStatModel extends Model
      * @param $playerId
      * @param RoundPrimitive[] $rounds
      * @param Ruleset $rules
-     * @return float
+     * @return []
      * @throws \Exception
      */
-    protected function _getAverageDoraCount($playerId, $rounds)
+    protected function _getDoraStat($playerId, $rounds)
     {
         $doraCount = 0;
         $roundsCount = 0;
@@ -444,7 +444,10 @@ class PlayerStatModel extends Model
             }
         }
         $average = $doraCount / $roundsCount;
-        return sprintf('%.2f', $average);
+        return [
+            'count' => $doraCount,
+            'average' => sprintf('%.2f', $average),
+        ];
     }
 
     /**
