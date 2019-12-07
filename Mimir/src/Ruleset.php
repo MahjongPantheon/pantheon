@@ -139,6 +139,11 @@ abstract class Ruleset
         return static::$_ruleset['startPoints'];
     }
 
+    public function goalPoints()
+    {
+        return static::$_ruleset['goalPoints'];
+    }
+
     public function subtractStartPoints()
     {
         return static::$_ruleset['subtractStartPoints'];

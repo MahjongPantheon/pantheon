@@ -5,6 +5,7 @@ class Config
 {
     protected $_allowedYaku = [];
     protected $_startPoints = 0;
+    protected $_goalPoints = 0;
     protected $_subtractStartPoints = false;
     protected $_withKazoe = false;
     protected $_withKiriageMangan = false;
@@ -56,6 +57,7 @@ class Config
         return [
             'allowedYaku' => _t('Allowed yaku'),
             'startPoints' => _t('Points to start with'),
+            'goalPoints' => _t('Points to end game'),
             'subtractStartPoints' => _t('If start points should be subtracted from result'),
             'withKazoe' => _t('If kazoe should be yakuman, not sanbaiman'),
             'withKiriageMangan' => _t('If 4/30 and 3/60 should be rounded to mangan'),
@@ -144,6 +146,13 @@ class Config
     public function startPoints()
     {
         return $this->_startPoints;
+    }
+    /**
+     * @return int
+     */
+    public function goalPoints()
+    {
+        return $this->_goalPoints;
     }
     /**
      * @return bool

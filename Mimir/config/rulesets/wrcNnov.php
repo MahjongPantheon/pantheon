@@ -28,6 +28,7 @@ class RulesetWrcNnov extends Ruleset
         'startRating'           => 0,
         'oka'                   => 200,
         'startPoints'           => 25000,
+        'goalPoints'            => 0,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => false,
         'extraChomboPayments'   => true,
