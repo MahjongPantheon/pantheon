@@ -123,7 +123,8 @@ class EventRatingTableModel extends Model
             array_push($playerHistoryItemsSummed, $newItem);
         }
 
-        $this->_sortItems($orderBy, $playerItems, $playerHistoryItemsSummed);
+        $startRating = $mainEvent->getRuleset()->startRating();
+        $this->_sortItems($startRating, $orderBy, $playerItems, $playerHistoryItemsSummed);
 
         if ($order === 'desc') {
             $playerHistoryItemsSummed = array_reverse($playerHistoryItemsSummed);
@@ -145,7 +146,7 @@ class EventRatingTableModel extends Model
 
         // TODO: среднеквадратичное отклонение
 
-        $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $mainEvent) {
+        $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $mainEvent, $startRating) {
             return [
                 'id'            => (int)$el->getPlayerId(),
                 'display_name'  => $playerItems[$el->getPlayerId()]->getDisplayName(),
@@ -163,7 +164,7 @@ class EventRatingTableModel extends Model
                 'avg_place'     => round($el->getAvgPlace(), 4),
                 'avg_score'     => $el->getGamesPlayed() == 0
                     ? 0
-                    : round(($el->getRating() - $mainEvent->getRuleset()->startRating()) / $el->getGamesPlayed(), 4),
+                    : round($el->getAvgScore($startRating), 4),
                 'games_played'  => (int)$el->getGamesPlayed()
             ];
         }, $playerHistoryItemsSummed);
@@ -227,7 +228,7 @@ class EventRatingTableModel extends Model
      * @param PlayerHistoryPrimitive[] $playersHistoryItems
      * @throws InvalidParametersException
      */
-    protected function _sortItems($orderBy, &$playerItems, &$playersHistoryItems)
+    protected function _sortItems($startRating, $orderBy, &$playerItems, &$playersHistoryItems)
     {
         switch ($orderBy) {
             case 'name':
@@ -275,15 +276,11 @@ class EventRatingTableModel extends Model
                 usort($playersHistoryItems, function (
                     PlayerHistoryPrimitive $el1,
                     PlayerHistoryPrimitive $el2
-                ) {
-                    if (abs(
-                        ($el1->getRating() / $el1->getGamesPlayed()) -
-                            ($el2->getRating() / $el2->getGamesPlayed())
-                    ) < 0.0001) {
+                ) use ($startRating) {
+                    if (abs($el1->getAvgScore($startRating) - $el2->getAvgScore($startRating)) < 0.0001) {
                         return $el2->getAvgPlace() - $el1->getAvgPlace(); // lower avg place is better, so invert
                     }
-                    if (($el1->getRating() / $el1->getGamesPlayed()) -
-                        ($el2->getRating() / $el2->getGamesPlayed()) < 0) { // higher rating is better
+                    if ($el1->getAvgScore($startRating) - $el2->getAvgScore($startRating) < 0) { // higher rating is better
                         return -1;  // usort casts return result to int, so pass explicit int here.
                     } else {
                         return 1;
