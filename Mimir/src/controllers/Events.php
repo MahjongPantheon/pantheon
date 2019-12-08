@@ -369,6 +369,8 @@ class EventsController extends Controller
         $data = [
             'allowedYaku'         => array_values($rules->allowedYaku()),
             'startPoints'         => $rules->startPoints(),
+            'goalPoints'          => $rules->goalPoints(),
+            'playAdditionalRounds' => $rules->playAdditionalRounds(),
             'withKazoe'           => $rules->withKazoe(),
             'withKiriageMangan'   => $rules->withKiriageMangan(),
             'withAbortives'       => $rules->withAbortives(),

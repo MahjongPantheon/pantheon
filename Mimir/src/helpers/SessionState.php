@@ -167,7 +167,33 @@ class SessionState
         }
 
         $scores = array_values($this->getScores());
-        return (end($scores) === max($scores));
+        $dealerScores = end($scores);
+        return ($dealerScores === max($scores) && $dealerScores > $this->_rules->goalPoints());
+    }
+
+    /**
+     * @return bool
+     */
+    protected function _lastPossibleRoundWasPlayed()
+    {
+        $roundsCount = $this->_rules->tonpuusen() ? 4 : 8;
+
+        if ($this->getRound() <= $roundsCount) {
+            return false;
+        }
+
+        if ($this->_lastOutcome == 'chombo') {
+            return false; // chombo should not finish game
+        }
+
+        $additionalRounds = $this->_rules->playAdditionalRounds() ? 4 : 0;
+        $maxPossibleRound = $roundsCount + $additionalRounds;
+        if ($this->getRound() > $maxPossibleRound) {
+            return true;
+        }
+
+        $scores = array_values($this->getScores());
+        return max($scores) > $this->_rules->goalPoints();
     }
 
     /**
@@ -184,7 +210,7 @@ class SessionState
      */
     public function isFinished()
     {
-        return $this->getRound() > ($this->_rules->tonpuusen() ? 4 : 8)
+        return $this->_lastPossibleRoundWasPlayed()
             || $this->_prematurelyFinished
             || ($this->_rules->withButtobi() && $this->_buttobi())
             || ($this->_rules->withLeadingDealerGameOver() && $this->_dealerIsLeaderOnOorasu())
