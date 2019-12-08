@@ -32,6 +32,7 @@ class MockRuleset extends Ruleset
         'oka'                   => 0,
         'startPoints'           => 30000,
         'goalPoints'            => 0,
+        'playAdditionalRounds'  => false,
         'riichiGoesToWinner'    => true,
         'extraChomboPayments'   => false,
         'chomboPenalty'         => 20000,

@@ -58,6 +58,7 @@ class Config
             'allowedYaku' => _t('Allowed yaku'),
             'startPoints' => _t('Points to start with'),
             'goalPoints' => _t('Points to end game'),
+            'playAdditionalRounds' => _t('Play additional rounds'),
             'subtractStartPoints' => _t('If start points should be subtracted from result'),
             'withKazoe' => _t('If kazoe should be yakuman, not sanbaiman'),
             'withKiriageMangan' => _t('If 4/30 and 3/60 should be rounded to mangan'),

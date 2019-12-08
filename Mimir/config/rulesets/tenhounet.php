@@ -34,6 +34,7 @@ class RulesetTenhounet extends Ruleset
         'oka'                   => 20,
         'startPoints'           => 25000,
         'goalPoints'            => 30000,
+        'playAdditionalRounds'  => true,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
         'doubleronRiichiAtamahane' => true,
