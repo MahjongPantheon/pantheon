@@ -799,6 +799,33 @@ class SessionPrimitive extends Primitive
      */
     public function getSessionResults()
     {
+        $placesMap = SessionResultsPrimitive::calcPlacesMap($this->getCurrentState()->getScores(), $this->getPlayersIds());
+        // Split riichi bets in case of bump
+        $scores = array_map(function ($el) {
+            return $el['score'];
+        }, array_values($placesMap));
+
+        $firstPlacesCount = 1;
+        if ($scores[1] === $scores[0]) {
+            $firstPlacesCount = 2;
+            if ($scores[2] === $scores[1]) {
+                $firstPlacesCount = 3;
+                if ($scores[3] === $scores[2]) { // oh wow lol
+                    $firstPlacesCount = 4;
+                }
+            }
+        }
+
+        $riichiBetAmount = 100 * floor(($this->getCurrentState()->getRiichiBets() * 10.) / $firstPlacesCount);
+
+        foreach ($this->getPlayers() as $player) {
+            if ($this->getEvent()->getRuleset()->riichiGoesToWinner()) {
+                if ($placesMap[$player->getId()]['place'] <= $firstPlacesCount) {
+                    $this->getCurrentState()->giveRiichiBetsToPlayer($player->getId(), $riichiBetAmount);
+                }
+            }
+        }
+
         return array_map(function (PlayerPrimitive $player) {
             return (new SessionResultsPrimitive($this->_db))
                 ->setPlayer($player)
