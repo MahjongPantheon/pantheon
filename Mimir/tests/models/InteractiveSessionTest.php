@@ -778,4 +778,77 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($sessionPrimitive->getCurrentState()->getScores()[4] > 30000);
         $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
     }
+
+    public function testRiichiSplitForThreePlayers()
+    {
+        $this->_event
+            ->setRuleset(Ruleset::instance('ema'))
+            ->setType('offline');
+        $this->_event->save();
+
+        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $playerIds = array_map(function (PlayerPrimitive $p) {
+            return $p->getId();
+        }, $this->_players);
+        $hash = $session->startGame($this->_event->getId(), $playerIds);
+
+        $roundData = [
+            'round_index' => 1,
+            'honba' => 0,
+            'outcome'   => 'draw',
+            'riichi'    => '',
+            'tempai'    => ''
+        ];
+
+        $this->assertTrue($session->addRound($hash, $roundData)); // 1e
+        $roundData['round_index'] ++ && $roundData['honba'] ++;
+
+        $this->assertTrue($session->addRound($hash, $roundData)); // 2e
+        $roundData['round_index'] ++ && $roundData['honba'] ++;
+
+        $this->assertTrue($session->addRound($hash, $roundData)); // 3e
+        $roundData['round_index'] ++ && $roundData['honba'] ++;
+
+        $this->assertTrue($session->addRound($hash, $roundData)); // 4e
+        $roundData['round_index'] ++ && $roundData['honba'] ++;
+
+        $this->assertTrue($session->addRound($hash, $roundData)); // 1s
+        $roundData['round_index'] ++ && $roundData['honba'] ++;
+
+        // One renchan round
+        $roundData['tempai'] = implode(',', $playerIds);
+        $roundData['riichi'] = '' . $playerIds[1];
+        $this->assertTrue($session->addRound($hash, $roundData)); // 1s again after all tempai with one riichi
+        $roundData['honba'] ++;
+        $roundData['tempai'] = '';
+        $roundData['riichi'] = '';
+
+        $this->assertTrue($session->addRound($hash, $roundData)); // 2s
+        $roundData['round_index'] ++ && $roundData['honba'] ++;
+
+        $this->assertTrue($session->addRound($hash, $roundData)); // 3s
+        $roundData['round_index'] ++ && $roundData['honba'] ++;
+
+        $this->assertTrue($session->addRound($hash, $roundData)); // 4s, should auto-finish here
+
+        $caught = false;
+        try {
+            $session->endGame($hash); // Try to finish again
+        } catch (BadActionException $e) {
+            // We do try/catch here to avoid catching same exception from
+            // upper clauses, as it might give some false positives in that case.
+            $caught = true;
+        }
+
+        $this->assertTrue($caught, "Game should be already finished");
+
+        // Check that results exist in db
+        $results = SessionResultsPrimitive::findByEventId($this->_db, [$this->_event->getId()]);
+        $this->assertEquals(4, count($results));
+
+        $this->assertEquals(5300, $results[0]->getRatingDelta());
+        $this->assertEquals(-16000, $results[1]->getRatingDelta()); // the guy who did riichi
+        $this->assertEquals(5300, $results[2]->getRatingDelta());
+        $this->assertEquals(5300, $results[3]->getRatingDelta());
+    }
 }
