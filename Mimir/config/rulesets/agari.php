@@ -29,6 +29,7 @@ class RulesetAgari extends Ruleset
         'oka'                   => 0,
         'startPoints'           => 25000,
         'goalPoints'            => 0,
+        'playAdditionalRounds'  => false,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
         'extraChomboPayments'   => true,

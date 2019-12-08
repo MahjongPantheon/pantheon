@@ -34,6 +34,7 @@ class RulesetOnline extends Ruleset
         'oka'                   => 0,
         'startPoints'           => 30000,
         'goalPoints'            => 0,
+        'playAdditionalRounds'  => false,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
         'doubleronRiichiAtamahane' => true,

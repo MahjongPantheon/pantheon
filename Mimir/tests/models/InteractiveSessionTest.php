@@ -751,13 +751,6 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     protected function _checkAbortAndChomboShouldNotEndGame($session, $hash, $roundIndex, $honba)
     {
-        $roundChomboData = [
-            'round_index' => $roundIndex,
-            'honba' => $honba,
-            'outcome'   => 'chombo',
-            'loser_id'  => 1,
-        ];
-
         $roundAbortData = [
             'round_index' => $roundIndex,
             'honba' => $honba,
@@ -765,17 +758,24 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'riichi'    => ''
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundChomboData));
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
-
-        $this->assertEquals($roundIndex, $sessionPrimitive->getCurrentState()->getRound());
-        $this->assertTrue($sessionPrimitive->getCurrentState()->getScores()[4] > 30000);
-        $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
+        $roundChomboData = [
+            'round_index' => $roundIndex,
+            'honba' => $honba + 1,
+            'outcome'   => 'chombo',
+            'loser_id'  => 1,
+        ];
 
         $this->assertTrue($session->addRound($hash, $roundAbortData));
         $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
 
         $this->assertEquals($roundIndex, $sessionPrimitive->getCurrentState()->getRound());
+        $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
+
+        $this->assertTrue($session->addRound($hash, $roundChomboData));
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+
+        $this->assertEquals($roundIndex, $sessionPrimitive->getCurrentState()->getRound());
+        $this->assertTrue($sessionPrimitive->getCurrentState()->getScores()[4] > 30000);
         $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
     }
 }

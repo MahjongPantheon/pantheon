@@ -182,11 +182,11 @@ class SessionState
             return false;
         }
 
-        if ($this->_lastOutcome == 'chombo' || $this->_lastOutcome == 'abort') {
-            return false; // chombo or abortive draw should not finish game
+        if ($this->_lastOutcome == 'chombo') {
+            return false; // chombo should not finish game
         }
 
-        $additionalRounds = $this->_rules->goalPoints() === 0 ? 0 : 4;
+        $additionalRounds = $this->_rules->playAdditionalRounds() ? 4 : 0;
         $maxPossibleRound = $roundsCount + $additionalRounds;
         if ($this->getRound() > $maxPossibleRound) {
             return true;
