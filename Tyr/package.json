@@ -52,6 +52,7 @@
     "karma-jasmine": "2.0.1",
     "karma-remap-istanbul": "0.6.0",
     "protractor": "5.4.2",
+    "redux": "^4.0.4",
     "ts-node": "8.4.1",
     "tslint": "5.20.0",
     "typescript": "3.5.3",

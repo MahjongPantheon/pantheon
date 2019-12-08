@@ -148,6 +148,7 @@ export class OtherTableScreen extends I18nComponent {
   }
 
   ngOnInit() {
+    this.state.updateOtherTable(this.currentGameHash);
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-table' });
     this._lastRoundTimer = null;
     this._showLastRound = false;

@@ -36,6 +36,7 @@ export class OtherTablesListScreen extends I18nComponent {
   ) { super(i18n); }
 
   ngOnInit() {
+    this.state.updateCurrentGames(); // update games list to prevent players in game from watching games
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-tables-list' });
     this.state.updateOtherTablesList();
   }

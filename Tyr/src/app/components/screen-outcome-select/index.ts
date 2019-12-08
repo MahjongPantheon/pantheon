@@ -36,6 +36,10 @@ export class OutcomeSelectScreen extends I18nComponent {
   ) { super(i18n); }
 
   ngOnInit() {
+    this.state.updateCurrentGames(); // update state before entering new data to prevent "Wrong round" errors.
+    // This still prevents errors when simultaneous submission happens, because two or more players update
+    // their data first, and only then add new data. This will lead to error if more than one player enter
+    // data simultaneously.
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-outcome-select' });
   }
 
