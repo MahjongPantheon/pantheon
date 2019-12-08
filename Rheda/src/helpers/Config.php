@@ -6,6 +6,7 @@ class Config
     protected $_allowedYaku = [];
     protected $_startPoints = 0;
     protected $_goalPoints = 0;
+    protected $_playAdditionalRounds = false;
     protected $_subtractStartPoints = false;
     protected $_withKazoe = false;
     protected $_withKiriageMangan = false;
@@ -154,6 +155,13 @@ class Config
     public function goalPoints()
     {
         return $this->_goalPoints;
+    }
+    /**
+     * @return bool
+     */
+    public function playAdditionalRounds()
+    {
+        return $this->_playAdditionalRounds;
     }
     /**
      * @return bool
