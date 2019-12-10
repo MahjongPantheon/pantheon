@@ -778,4 +778,55 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($sessionPrimitive->getCurrentState()->getScores()[4] > 30000);
         $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
     }
+
+    public function testRiichiSplitForThreePlayers()
+    {
+        $this->_event
+            ->setRuleset(Ruleset::instance('ema'))
+            ->setType('offline');
+        $this->_event->save();
+
+        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $playerIds = array_map(function (PlayerPrimitive $p) {
+            return $p->getId();
+        }, $this->_players);
+        $hash = $session->startGame($this->_event->getId(), $playerIds);
+
+        $roundIndex = 1;
+        $drawCount = 4; // 1e -> 1s
+        $this->_addDrawRounds($session, $hash, $roundIndex, $drawCount);
+        $roundIndex += $drawCount;
+
+        // One renchan round
+        $this->assertTrue($session->addRound($hash, [
+            'round_index' => $roundIndex,
+            'honba' => 4,
+            'outcome'   => 'draw',
+            'riichi'    => '' . $playerIds[1],
+            'tempai'    => implode(',', $playerIds)
+        ])); // 1s again after all tempai with one riichi
+
+        $drawCount = 4; // 1s -> 1w (end game)
+        $this->_addDrawRounds($session, $hash, $roundIndex, $drawCount, 5);
+
+        $caught = false;
+        try {
+            $session->endGame($hash); // Try to finish again
+        } catch (BadActionException $e) {
+            // We do try/catch here to avoid catching same exception from
+            // upper clauses, as it might give some false positives in that case.
+            $caught = true;
+        }
+
+        $this->assertTrue($caught, "Game should be already finished");
+
+        // Check that results exist in db
+        $results = SessionResultsPrimitive::findByEventId($this->_db, [$this->_event->getId()]);
+        $this->assertEquals(4, count($results));
+
+        $this->assertEquals(5300, $results[0]->getRatingDelta());
+        $this->assertEquals(-16000, $results[1]->getRatingDelta()); // the guy who did riichi
+        $this->assertEquals(5300, $results[2]->getRatingDelta());
+        $this->assertEquals(5300, $results[3]->getRatingDelta());
+    }
 }
