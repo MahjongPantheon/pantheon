@@ -362,9 +362,13 @@ class SessionState
         return $payments; // for dry run
     }
 
-    public function giveRiichiBetsToPlayer($id)
+    /**
+     * @param $id
+     * @param int $betAmount - may not always be 1000, e.g. in cases of split
+     */
+    public function giveRiichiBetsToPlayer($id, $betAmount = 1000)
     {
-        $this->_scores[$id] += $this->getRiichiBets() * 1000;
+        $this->_scores[$id] += $this->getRiichiBets() * $betAmount;
     }
 
     /**
