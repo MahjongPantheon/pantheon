@@ -792,44 +792,22 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         }, $this->_players);
         $hash = $session->startGame($this->_event->getId(), $playerIds);
 
-        $roundData = [
-            'round_index' => 1,
-            'honba' => 0,
-            'outcome'   => 'draw',
-            'riichi'    => '',
-            'tempai'    => ''
-        ];
-
-        $this->assertTrue($session->addRound($hash, $roundData)); // 1e
-        $roundData['round_index'] ++ && $roundData['honba'] ++;
-
-        $this->assertTrue($session->addRound($hash, $roundData)); // 2e
-        $roundData['round_index'] ++ && $roundData['honba'] ++;
-
-        $this->assertTrue($session->addRound($hash, $roundData)); // 3e
-        $roundData['round_index'] ++ && $roundData['honba'] ++;
-
-        $this->assertTrue($session->addRound($hash, $roundData)); // 4e
-        $roundData['round_index'] ++ && $roundData['honba'] ++;
-
-        $this->assertTrue($session->addRound($hash, $roundData)); // 1s
-        $roundData['round_index'] ++ && $roundData['honba'] ++;
+        $roundIndex = 1;
+        $drawCount = 4; // 1e -> 1s
+        $this->_addDrawRounds($session, $hash, $roundIndex, $drawCount);
+        $roundIndex += $drawCount;
 
         // One renchan round
-        $roundData['tempai'] = implode(',', $playerIds);
-        $roundData['riichi'] = '' . $playerIds[1];
-        $this->assertTrue($session->addRound($hash, $roundData)); // 1s again after all tempai with one riichi
-        $roundData['honba'] ++;
-        $roundData['tempai'] = '';
-        $roundData['riichi'] = '';
+        $this->assertTrue($session->addRound($hash, [
+            'round_index' => $roundIndex,
+            'honba' => 4,
+            'outcome'   => 'draw',
+            'riichi'    => '' . $playerIds[1],
+            'tempai'    => implode(',', $playerIds)
+        ])); // 1s again after all tempai with one riichi
 
-        $this->assertTrue($session->addRound($hash, $roundData)); // 2s
-        $roundData['round_index'] ++ && $roundData['honba'] ++;
-
-        $this->assertTrue($session->addRound($hash, $roundData)); // 3s
-        $roundData['round_index'] ++ && $roundData['honba'] ++;
-
-        $this->assertTrue($session->addRound($hash, $roundData)); // 4s, should auto-finish here
+        $drawCount = 4; // 1s -> 1w (end game)
+        $this->_addDrawRounds($session, $hash, $roundIndex, $drawCount, 5);
 
         $caught = false;
         try {
