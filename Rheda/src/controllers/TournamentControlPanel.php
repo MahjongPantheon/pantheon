@@ -130,9 +130,9 @@ class TournamentControlPanel extends Controller
         $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
 
         // filter $players who are ignored from seating
-        $players = array_filter($players, function ($player) {
+        $players = array_values(array_filter($players, function ($player) {
             return !$player['ignore_seating'];
-        });
+        }));
 
         $timerState = $this->_api->execute('getTimerState', [$this->_mainEventId]);
 
