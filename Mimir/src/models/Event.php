@@ -93,9 +93,9 @@ class EventModel extends Model
     public function getTablesState($eventId, $includeAllRounds = false)
     {
         $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $eventId);
-        $reggedPlayers = array_filter($reggedPlayers, function ($el) {
+        $reggedPlayers = array_values(array_filter($reggedPlayers, function ($el) {
             return !$el['ignore_seating'];
-        });
+        }));
         $tablesCount = count($reggedPlayers) / 4;
 
         $lastGames = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, [
