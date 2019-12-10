@@ -137,6 +137,13 @@ class SeatingController extends Controller
         $currentRatingTable = (new EventRatingTableModel($this->_db, $this->_config, $this->_meta))
             ->getRatingTable($eventList, 'rating', 'desc');
 
+        // In rare cases we want to exclude players from seating
+        $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_db, $eventId);
+        // array_values required: array_filter maintains numeric keys!
+        $currentRatingTable = array_values(array_filter($currentRatingTable, function ($player) use (&$ignoredPlayerIds) {
+            return !in_array($player['id'], $ignoredPlayerIds);
+        }));
+
         $seating = Seating::makeIntervalSeating($currentRatingTable, $step, true);
 
         $tableIndex = 1;

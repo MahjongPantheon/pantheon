@@ -103,6 +103,9 @@ class PlayerRegistration extends Controller
                 case 'reenroll':
                     $err = $this->_reenrollUserForEvent($_POST['id']);
                     break;
+                case 'update_ignore_seating':
+                    $err = $this->_updateIgnoreSeating($_POST['id'], $_POST['ignore']);
+                    break;
                 case 'save_local_ids':
                     $err = $this->_saveLocalIds($_POST['map_json']);
                     break;
@@ -170,6 +173,21 @@ class PlayerRegistration extends Controller
             $success = $this->_api->execute('updatePlayersLocalIds', [$this->_mainEventId, $mapping]);
             if (!$success) {
                 $errorMsg = _t('Failed to save local ids mapping. Check your network connection.');
+            }
+        } catch (\Exception $e) {
+            $errorMsg = $e->getMessage();
+        }
+
+        return $errorMsg;
+    }
+
+    protected function _updateIgnoreSeating($playerId, $ignore)
+    {
+        $errorMsg = '';
+        try {
+            $success = $this->_api->execute('updatePlayerSeatingFlagCP', [$playerId, $this->_mainEventId, $ignore ? 1 : 0]);
+            if (!$success) {
+                $errorMsg = _t('Failed to save ignore seating flag. Check your network connection.');
             }
         } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
