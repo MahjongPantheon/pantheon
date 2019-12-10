@@ -93,6 +93,9 @@ class EventModel extends Model
     public function getTablesState($eventId, $includeAllRounds = false)
     {
         $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $eventId);
+        $reggedPlayers = array_filter($reggedPlayers, function ($el) {
+            return !$el['ignore_seating'];
+        });
         $tablesCount = count($reggedPlayers) / 4;
 
         $lastGames = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, [
@@ -202,7 +205,8 @@ class EventModel extends Model
                 'players' => array_map(function (PlayerPrimitive $p) use (&$playerIdMap) {
                     return [
                         'id' => $p->getId(),
-                        'local_id' => $playerIdMap[$p->getId()],
+                        // may be empty for excluded players in non-prescripted event, so it's fine.
+                        'local_id' => empty($playerIdMap[$p->getId()]) ? 0 : $playerIdMap[$p->getId()],
                         'display_name' => $p->getDisplayName()
                     ];
                 }, $game->getPlayers())

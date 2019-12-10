@@ -289,20 +289,25 @@ class PlayerRegistrationPrimitive extends Primitive
     /**
      * @param IDb $db
      * @param $eventId
-     * @return array ['id' => int, 'local_id' => int|null][]
+     * @return array ['id' => int, 'local_id' => int|null, 'ignore_seating' => int][]
      * @throws \Exception
      */
     public static function findRegisteredPlayersIdsByEvent(IDb $db, $eventId)
     {
         return array_map(function (PlayerRegistrationPrimitive $p) {
-            return ['id' => $p->_playerId, 'local_id' => $p->_localId];
+            return ['id' => $p->_playerId, 'local_id' => $p->_localId, 'ignore_seating' => $p->_ignoreSeating];
         }, self::_findBy($db, 'event_id', [$eventId]));
     }
 
+    /**
+     * @param IDb $db
+     * @param array|integer $eventId
+     * @return integer[]
+     */
     public static function findIgnoredPlayersIdsByEvent(IDb $db, $eventId)
     {
         $result = $db->table(static::$_table)
-            ->where('event_id', $eventId)
+            ->whereIn('event_id', (array)$eventId)
             ->where('ignore_seating', 1)
             ->findArray();
 
