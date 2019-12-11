@@ -60,27 +60,22 @@ msgstr ""
 msgid "%s fu"
 msgstr "%s fu"
 
-#, fuzzy
 msgid "%s han"
-msgstr "%d han"
+msgstr "%s han"
 
-#, fuzzy
 msgid "%s han, %s fu"
-msgstr "%d han, %d fu"
+msgstr "%s han, %s fu"
 
-#, fuzzy
 msgid "%s ippatsu"
 msgid_plural "%s ippatsu"
-msgstr[0] "Ippatsu"
+msgstr[0] "%s ippatsu"
 msgstr[1] "Ippatsu"
 
-#, fuzzy
 msgid "%s points"
-msgstr "%s - %d Punkte (%s)"
+msgstr ""
 
-#, fuzzy
 msgid "%s yaku"
-msgstr "%s: %d yakuhai"
+msgstr ""
 
 msgid "%s: %d yakuhai"
 msgid_plural "%s: %d yakuhais"
@@ -209,7 +204,6 @@ msgstr ""
 msgid "Aggregated event"
 msgstr ""
 
-#, fuzzy
 msgid "All players"
 msgstr "Alle Spielerliste"
 
@@ -267,9 +261,8 @@ msgstr "Beste Serie:"
 msgid "Brave minesweeper"
 msgstr "Mutiger Minensucher"
 
-#, fuzzy
 msgid "Cancel game"
-msgstr "Letzte Spiele"
+msgstr ""
 
 msgid "Cancel last played round"
 msgstr "Letzte gespielte Runde abbrechen"
@@ -309,9 +302,8 @@ msgstr "Chombo Strafen"
 msgid "Chombo penalties: %s"
 msgstr "Chombo Strafen"
 
-#, fuzzy
 msgid "Chombo penalty in rating points"
-msgstr "Chombo Strafen"
+msgstr ""
 
 msgid "Chombo: %s."
 msgstr "Chombo: %s."
@@ -328,9 +320,8 @@ msgstr "Gemeinsame Statistiken"
 msgid "Confirm attendance manually"
 msgstr "Bestätigen die Anwesenheit manuell"
 
-#, fuzzy
 msgid "Confirm game cancellation: "
-msgstr "Runde Stornierung bestätigen: "
+msgstr ""
 
 msgid "Confirm round cancellation: "
 msgstr "Runde Stornierung bestätigen: "
@@ -385,9 +376,8 @@ msgstr "Vorhin"
 msgid "Enroll players"
 msgstr "Einschreiben Spieler"
 
-#, fuzzy
 msgid "Event tables status"
-msgstr "Tischstatistiken:"
+msgstr ""
 
 msgid "Example:"
 msgstr "Beispiel:"
@@ -395,6 +385,9 @@ msgstr "Beispiel:"
 msgid ""
 "Example: 3 tables (12 players) with step 2 will be formed as 1-3-5-7, "
 "2-4-6-8 and 9-10-11-12"
+msgstr ""
+
+msgid "Exclude from seating"
 msgstr ""
 
 msgid "Exhaustive draw (everybody noten)."
@@ -422,17 +415,14 @@ msgstr ""
 "Der Spieler konnte nicht registriert werden. Überprüfen Sie Ihre "
 "Netzwerkverbindung."
 
-#, fuzzy
+msgid "Failed to save ignore seating flag. Check your network connection."
+msgstr ""
+
 msgid "Failed to save local ids mapping. Check your network connection."
 msgstr ""
-"Der Spieler konnte nicht addieren werden. Überprüfen Sie Ihre "
-"Netzwerkverbindung."
 
-#, fuzzy
 msgid "Failed to update predefined seating. Check your network connection."
 msgstr ""
-"Der Spieler konnte nicht addieren werden. Überprüfen Sie Ihre "
-"Netzwerkverbindung."
 
 msgid "Final game points:"
 msgstr "Endspiel Punkte:"
@@ -440,7 +430,6 @@ msgstr "Endspiel Punkte:"
 msgid "Finish all the games"
 msgstr "Beende alle Spiele"
 
-#, fuzzy
 msgid "Finish the games? You will not be able to cancel rounds anymore!"
 msgstr "Beenden Sie die Spiele? Sie können keine Runden mehr stornieren!"
 
@@ -477,11 +466,10 @@ msgstr ""
 msgid "Given for collecting the hand with biggest minipoints (fu) count."
 msgstr "Gegeben für das Sammeln der Hand mit den größten Minipunkten (fu)."
 
-#, fuzzy
 msgid ""
 "Given for collecting the largest amount of other players' riichi bets during "
 "the tournament."
-msgstr "Gegen für das Sammeln der meisten Yakuhais während des Turniers."
+msgstr ""
 
 msgid "Given for collecting the most of tsumo hands during single game."
 msgstr ""
@@ -490,15 +478,13 @@ msgstr ""
 msgid "Given for collecting the most of yakuhais during the tournament."
 msgstr "Gegen für das Sammeln der meisten Yakuhais während des Turniers."
 
-#, fuzzy
 msgid ""
 "Given for feeding into largest hand during tournament (but not while in "
 "riichi)."
-msgstr "Gegeben für die größte Anzahl für Ron bezahle während des Turniers."
+msgstr ""
 
-#, fuzzy
 msgid "Given for getting largest number of ippatsu during tournament."
-msgstr "Gegeben für das Sammeln eines Yakuman während des Turniers."
+msgstr ""
 
 msgid "Given for largest count of dealer wins during the tournament."
 msgstr "Gegeben für die größte Anzahl von Dielersiegen während des Turniers."
@@ -506,29 +492,24 @@ msgstr "Gegeben für die größte Anzahl von Dielersiegen während des Turniers.
 msgid "Given for largest count of feeding into ron during the tournament."
 msgstr "Gegeben für die größte Anzahl für Ron bezahle während des Turniers."
 
-#, fuzzy
 msgid "Given for losing largest amount of points as riichi bets."
-msgstr "Gegeben für die größte Anzahl von Dielersiegen während des Turniers."
+msgstr ""
 
-#, fuzzy
 msgid "Given for losing the smallest number of riichi bets."
-msgstr "Gegeben für die größte Anzahl von Dielersiegen während des Turniers."
+msgstr ""
 
 msgid "Given for smallest count of feeding into ron during the tournament."
 msgstr "Gegeben für die größte Anzahl für Ron bezahle während des Turniers."
 
-#, fuzzy
 msgid "Given for the largest amount of points received as ryukoku payments."
-msgstr "Gegeben für die größte Anzahl von Dielersiegen während des Turniers."
+msgstr ""
 
-#, fuzzy
 msgid ""
 "Given for the largest amount of unique yaku collected during the tournament."
-msgstr "Gegeben für die größte Anzahl von Dielersiegen während des Turniers."
+msgstr ""
 
-#, fuzzy
 msgid "Given for the largest average count of dora in player's hand."
-msgstr "Gegeben für die größte Anzahl von Dielersiegen während des Turniers."
+msgstr ""
 
 msgid "Given for the most of 1/30 wins during tournament."
 msgstr "Gegeben für die meisten 1/30 Siege während des Turniers."
@@ -537,9 +518,8 @@ msgid ""
 "Given for the smallest average cost of opponents hand that player has dealt."
 msgstr ""
 
-#, fuzzy
 msgid "Given for winning the largest number of hands with damaten."
-msgstr "Gegeben für das Sammeln eines Yakuman während des Turniers."
+msgstr ""
 
 msgid "Going back in 3 seconds..."
 msgstr "Zurück in 3 Sekunden ..."
@@ -559,9 +539,8 @@ msgstr "Han"
 msgid "Hands value"
 msgstr "Hände Wert"
 
-#, fuzzy
 msgid "Hide/show rating table"
-msgstr "Bewertungstabelle ausblenden"
+msgstr ""
 
 msgid ""
 "Hiding rating table for all players may be useful to keep everybody "
@@ -667,9 +646,11 @@ msgid ""
 "between games and are defined at Admin actions / Manage players page."
 msgstr ""
 
-#, fuzzy
+msgid "Include into seating"
+msgstr ""
+
 msgid "Interval seating"
-msgstr "Manuelle Sitzgelegenheiten verwenden"
+msgstr ""
 
 msgid "Ippatsu"
 msgstr "Ippatsu"
@@ -795,9 +776,8 @@ msgstr "Über 9000 fu"
 msgid "PIN"
 msgstr "PIN"
 
-#, fuzzy
 msgid "Page not available for aggregated events"
-msgstr "Entschuldigung, diese Seite ist nicht für Mobilgeräte verfügbar"
+msgstr ""
 
 msgid "Penalties"
 msgstr "Strafen"
@@ -873,13 +853,11 @@ msgstr "Punkte der besten Serie"
 msgid "Points of last series"
 msgstr "Punkte der letzten Serie"
 
-#, fuzzy
 msgid "Points to end game"
-msgstr "Punkte der besten Serie"
+msgstr ""
 
-#, fuzzy
 msgid "Points to start with"
-msgstr "Punkte der besten Serie"
+msgstr ""
 
 msgid "Points:"
 msgstr "Punkte:"
@@ -887,9 +865,8 @@ msgstr "Punkte:"
 msgid "Pre-registration list (%d)"
 msgstr "Vorregistrierungsliste (%d)"
 
-#, fuzzy
 msgid "Predefined seating"
-msgstr "Manuelle Sitzgelegenheiten verwenden"
+msgstr ""
 
 msgid "Predefined seating and event status"
 msgstr ""
@@ -924,7 +901,6 @@ msgstr "PNK"
 msgid "Random seating"
 msgstr "Zufällige Sitzplätze"
 
-#, fuzzy
 msgid "Randomize winds seating at each table"
 msgstr "Randomize Sitzplätze an jedem Tisch"
 
@@ -934,7 +910,6 @@ msgstr "Bewertung"
 msgid "Rating graph"
 msgstr "Bewertungsdiagramm"
 
-#, fuzzy
 msgid "Rating initial points amount"
 msgstr "Bewertungspunkte"
 
@@ -1076,9 +1051,8 @@ msgstr "Shou sangen"
 msgid "Shou suushii"
 msgstr "Shou suushii"
 
-#, fuzzy
 msgid "Something went wrong:"
-msgstr "Etwas ist schief gelaufen:%s"
+msgstr ""
 
 msgid "Something went wrong: %s"
 msgstr "Etwas ist schief gelaufen:%s"
@@ -1102,7 +1076,6 @@ msgstr "Statistik"
 msgid "Stats & diagrams: %s"
 msgstr "Statistiken und Diagramme: %s"
 
-#, fuzzy
 msgid "Step of penalty amounts"
 msgstr "Strafbetrag"
 
@@ -1139,9 +1112,8 @@ msgstr ""
 msgid "Team event"
 msgstr ""
 
-#, fuzzy
 msgid "Team table"
-msgstr "Bewertungstabelle"
+msgstr ""
 
 msgid "Tenhou"
 msgstr "Tenhou"
@@ -1248,35 +1220,29 @@ msgstr "Sitzplätze können nicht generiert werden"
 msgid "Update predefined seating config"
 msgstr ""
 
-#, fuzzy
 msgid "Use interval seating"
-msgstr "Manuelle Sitzgelegenheiten verwenden"
+msgstr ""
 
-#, fuzzy
 msgid "Use interval seating for new game?"
-msgstr "Verwenden Sie manuelles Sitzen für neues Spiel?"
+msgstr ""
 
-#, fuzzy
 msgid "Use random seating"
-msgstr "Zufällige Sitzplätze"
+msgstr ""
 
 msgid "Use random seating for new game?"
 msgstr "Verwenden Sie zufällige Sitzplätze für neues Spiel?"
 
-#, fuzzy
 msgid "Use swiss seating"
 msgstr "Schweizer Sitzplätze"
 
 msgid "Use swiss seating for new game?"
 msgstr "Verwenden Sie Schweizer Sitzplätze für neues Spiel?"
 
-#, fuzzy
 msgid "Use this seating"
-msgstr "Schweizer Sitzplätze"
+msgstr ""
 
-#, fuzzy
 msgid "Use this seating for new game?"
-msgstr "Verwenden Sie Schweizer Sitzplätze für neues Spiel?"
+msgstr ""
 
 msgid "Value"
 msgstr "Wert"
@@ -1338,9 +1304,8 @@ msgstr ""
 msgid "yakuman"
 msgstr "yakuman"
 
-#, fuzzy
 msgid "yes"
-msgstr "Spielern"
+msgstr ""
 
 #, fuzzy
 #~ msgid " Given for losing the smallest percentage of riichi bets."
