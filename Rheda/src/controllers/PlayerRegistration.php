@@ -65,6 +65,8 @@ class PlayerRegistration extends Controller
             'authorized' => $this->_adminAuthOk(),
             'isAggregated' => (count($this->_eventIdList) > 1),
             'prescriptedEvent' => $this->_mainEventRules->isPrescripted(),
+            // === non-prescripted tournaments
+            'canUseSeatingIgnore' => $this->_mainEventRules->syncStart() && !$this->_mainEventRules->isPrescripted(),
             'lastindex' => count($registeredPlayers) + 2,
             'error' => $errorMsg,
             'registered' => $registeredPlayers,
