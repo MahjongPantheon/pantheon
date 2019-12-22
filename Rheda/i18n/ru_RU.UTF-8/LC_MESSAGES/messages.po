@@ -246,9 +246,6 @@ msgstr "Среднее место"
 msgid "Average points"
 msgstr "Средние очки"
 
-msgid "Avg. dora count in hand"
-msgstr "Ср. количество дор в руке"
-
 msgid "Basic ruleset name"
 msgstr "Имя базового набора правил"
 
@@ -354,6 +351,9 @@ msgstr "Подробности"
 
 msgid "Die Hard"
 msgstr "Крепкий орешек"
+
+msgid "Dora count (avg.)"
+msgstr "Количество дор (ср.)"
 
 msgid "Dora lord"
 msgstr "Повелитель дор"
@@ -1346,6 +1346,9 @@ msgstr "да"
 
 #~ msgid "(%d on %s)"
 #~ msgstr "(%d из %s)"
+
+#~ msgid "Avg. dora count in hand"
+#~ msgstr "Ср. количество дор в руке"
 
 #~ msgid ""
 #~ "Check the box to randomize players seating at each table. Otherwise "
