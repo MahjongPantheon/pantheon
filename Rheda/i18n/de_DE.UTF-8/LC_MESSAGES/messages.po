@@ -240,9 +240,6 @@ msgstr "Durchschnittlicher Platz"
 msgid "Average points"
 msgstr "Durchschnittliche Punkte"
 
-msgid "Avg. dora count in hand"
-msgstr ""
-
 msgid "Basic ruleset name"
 msgstr ""
 
@@ -349,6 +346,9 @@ msgstr "Einzelheiten"
 
 msgid "Die Hard"
 msgstr "Stirb langsam"
+
+msgid "Dora count (avg.)"
+msgstr ""
 
 msgid "Dora lord"
 msgstr ""

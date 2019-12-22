@@ -39,6 +39,9 @@ msgstr ""
 msgid "Player aliases"
 msgstr ""
 
+msgid "Game details"
+msgstr ""
+
 msgid "Admin panel"
 msgstr ""
 
@@ -46,9 +49,6 @@ msgid "Authorized successfully!"
 msgstr ""
 
 msgid "Authorize"
-msgstr ""
-
-msgid "Game details"
 msgstr ""
 
 msgid "Confirm round cancellation: "
@@ -403,7 +403,7 @@ msgstr ""
 msgid "bets lost"
 msgstr ""
 
-msgid "Avg. dora count in hand"
+msgid "Dora count (avg.)"
 msgstr ""
 
 msgid "Places stat:"
