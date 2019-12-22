@@ -28,6 +28,8 @@ class RulesetJpmlA extends Ruleset
         'startRating'           => 0,
         'oka'                   => 0,
         'startPoints'           => 30000,
+        'goalPoints'            => 0,
+        'playAdditionalRounds'  => false,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => false,
         'extraChomboPayments'   => false,

@@ -62,6 +62,9 @@
                 {{#prescriptedEvent}}
                     <th>{{_t 'Local id'}}</th>
                 {{/prescriptedEvent}}
+                {{#canUseSeatingIgnore}}
+                    <th>{{_t 'Exclude from seating'}}</th>
+                {{/canUseSeatingIgnore}}
             </tr>
         {{#registered}}
             <tr>
@@ -81,6 +84,22 @@
                 {{#prescriptedEvent}}
                     <td><input type="text" tabindex="{{index}}" value="{{local_id}}" class="local-id-selector form-control" data-player-id="{{id}}" /></td>
                 {{/prescriptedEvent}}
+                {{#canUseSeatingIgnore}}
+                <td>
+                    <form action="" method="post">
+                        <input type="hidden" name="action_type" value="update_ignore_seating" />
+                        <input type="hidden" name="id" value="{{id}}" />
+                        {{#ignore_seating}}
+                            <input type="hidden" name="ignore" value="0" />
+                            <input class="btn btn-large btn-success" type="submit" value="{{_t 'Include into seating'}}" />
+                        {{/ignore_seating}}
+                        {{^ignore_seating}}
+                            <input type="hidden" name="ignore" value="1" />
+                            <input class="btn btn-large btn-warning" type="submit" value="{{_t 'Exclude from seating'}}" />
+                        {{/ignore_seating}}
+                    </form>
+                </td>
+                {{/canUseSeatingIgnore}}
             </tr>
         {{/registered}}
         </table>

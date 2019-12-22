@@ -385,6 +385,15 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
+     * @param $startRating
+     * @return float
+     */
+    public function getAvgScore($startRating)
+    {
+        return ($this->getRating() - $startRating) / $this->getGamesPlayed();
+    }
+
+    /**
      * @return float
      */
     public function getGamesPlayed()
