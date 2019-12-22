@@ -13,6 +13,12 @@ msgstr ""
 msgid "The game has been successfully added!"
 msgstr ""
 
+msgid "Add online game"
+msgstr ""
+
+msgid "Add game"
+msgstr ""
+
 msgid "Going back in 3 seconds..."
 msgstr ""
 
@@ -30,13 +36,7 @@ msgid ""
 "checks are performed: in case of any inconsistency the alert is displayed."
 msgstr ""
 
-msgid "Add game"
-msgstr ""
-
 msgid "Player aliases"
-msgstr ""
-
-msgid "Add online game"
 msgstr ""
 
 msgid "Admin panel"
@@ -262,6 +262,9 @@ msgstr ""
 msgid "Local id"
 msgstr ""
 
+msgid "Exclude from seating"
+msgstr ""
+
 msgid "Reissue PIN"
 msgstr ""
 
@@ -269,6 +272,9 @@ msgid "Remove"
 msgstr ""
 
 msgid "Remove player %s?"
+msgstr ""
+
+msgid "Include into seating"
 msgstr ""
 
 msgid ""
@@ -920,6 +926,9 @@ msgstr ""
 msgid "Failed to save local ids mapping. Check your network connection."
 msgstr ""
 
+msgid "Failed to save ignore seating flag. Check your network connection."
+msgstr ""
+
 msgid "Predefined seating and event status"
 msgstr ""
 
@@ -956,6 +965,12 @@ msgid "Allowed yaku"
 msgstr ""
 
 msgid "Points to start with"
+msgstr ""
+
+msgid "Points to end game"
+msgstr ""
+
+msgid "Play additional rounds"
 msgstr ""
 
 msgid "If start points should be subtracted from result"

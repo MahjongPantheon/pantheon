@@ -95,6 +95,8 @@ class EventsController extends Controller
         $localMap = [];
         $teamNames = [];
 
+        $ignoredPlayers = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_db, $eventIdList);
+
         if ($needLocalIds) {
             $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventIdList[0]));
         }
@@ -103,14 +105,15 @@ class EventsController extends Controller
             $teamNames = PlayerRegistrationPrimitive::findTeamNameMapByEvent($this->_db, $eventIdList[0]);
         }
 
-        $data = array_map(function (PlayerPrimitive $p) use (&$localMap, &$teamNames) {
+        $data = array_map(function (PlayerPrimitive $p) use (&$localMap, &$teamNames, &$ignoredPlayers) {
             return [
                 'id'            => $p->getId(),
                 'display_name'  => $p->getDisplayName(),
                 'alias'         => $p->getAlias(),
                 'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
                 'team_name'  => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
-                'tenhou_id'     => $p->getTenhouId()
+                'tenhou_id'     => $p->getTenhouId(),
+                'ignore_seating' => in_array($p->getId(), $ignoredPlayers)
             ];
         }, $players);
 
@@ -255,17 +258,18 @@ class EventsController extends Controller
      * @param integer $eventId
      * @param integer $ignoreSeating
      * @throws \Exception
-     * @return void
+     * @return bool
      */
     public function updatePlayerSeatingFlag($playerId, $eventId, $ignoreSeating)
     {
         $this->_log->addInfo('Update player seating flag id# ' . $playerId . ' for event id# ' . $eventId);
-        (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->updateSeatingFlag(
+        $result = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->updateSeatingFlag(
             $playerId,
             $eventId,
             $ignoreSeating
         );
         $this->_log->addInfo('Successfully updated player seating flag id# ' . $playerId . ' for event id# ' . $eventId);
+        return $result;
     }
 
     /**
@@ -369,6 +373,8 @@ class EventsController extends Controller
         $data = [
             'allowedYaku'         => array_values($rules->allowedYaku()),
             'startPoints'         => $rules->startPoints(),
+            'goalPoints'          => $rules->goalPoints(),
+            'playAdditionalRounds' => $rules->playAdditionalRounds(),
             'withKazoe'           => $rules->withKazoe(),
             'withKiriageMangan'   => $rules->withKiriageMangan(),
             'withAbortives'       => $rules->withAbortives(),

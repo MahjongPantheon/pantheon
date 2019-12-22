@@ -136,7 +136,7 @@ class EventUserManagementModel extends Model
      * @param $eventId
      * @param $ignoreSeating
      * @throws \Exception
-     * @return void
+     * @return bool
      */
     public function updateSeatingFlag($playerId, $eventId, $ignoreSeating)
     {
@@ -146,10 +146,10 @@ class EventUserManagementModel extends Model
 
         $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId);
         if (empty($regItem)) {
-            return;
+            throw new EntityNotFoundException('Player is not registered for this event');
         }
 
-        $regItem
+        return $regItem
             ->setIgnoreSeating($ignoreSeating)
             ->save();
     }

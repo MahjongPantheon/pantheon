@@ -337,12 +337,8 @@ class SessionResultsPrimitive extends Primitive
             }
         }
 
-        $this->_place = $this->_calcPlace($results->getScores(), $playerIds);
-
-        if ($rules->riichiGoesToWinner() && $this->_place === 1) {
-            $this->_score += $results->getRiichiBets() * 1000;
-            $results->giveRiichiBetsToPlayer($this->_playerId);
-        }
+        $placesMap = self::calcPlacesMap($results->getScores(), $playerIds);
+        $this->_place = $placesMap[$this->_playerId]['place'];
 
         $this->_ratingDelta = $this->_calcRatingDelta($rules, $results->getScores());
 
@@ -362,7 +358,7 @@ class SessionResultsPrimitive extends Primitive
      * @param $scores
      * @return array
      */
-    protected function _sort($playersSeq, $scores)
+    protected static function _sort($playersSeq, $scores)
     {
         $map = array_combine(
             array_values($playersSeq),
@@ -391,11 +387,11 @@ class SessionResultsPrimitive extends Primitive
      *
      * @param $scoreList
      * @param $originalPlayersSequence
-     * @return int
+     * @return array
      */
-    protected function _calcPlace($scoreList, $originalPlayersSequence)
+    public static function calcPlacesMap($scoreList, $originalPlayersSequence)
     {
-        $playersMap = $this->_sort($originalPlayersSequence, $scoreList);
+        $playersMap = self::_sort($originalPlayersSequence, $scoreList);
 
         $i = 1;
         foreach ($playersMap as $k => $v) {
@@ -405,7 +401,7 @@ class SessionResultsPrimitive extends Primitive
             ];
         }
 
-        return $playersMap[$this->_playerId]['place'];
+        return $playersMap;
     }
 
     /**

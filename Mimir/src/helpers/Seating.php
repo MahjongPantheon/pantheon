@@ -571,7 +571,7 @@ class Seating
         $tables = [];
         $currentTable = [];
 
-        // These guys from bottom counld not be placed with desired interval, so they play with interval 1
+        // These guys from bottom could not be placed with desired interval, so they play with interval 1
         $playersToSeatWithNoInterval = 4 * ((count($currentRatingTable) / 4) % $step);
         // These guys from top should be placed as required
         $playersPossibleToSeatWithInterval = count($currentRatingTable) - $playersToSeatWithNoInterval;
