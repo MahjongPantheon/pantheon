@@ -78,6 +78,7 @@ RUN apk update && \
 RUN curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" && \
     chmod +x /usr/local/bin/gosu
 
+RUN npm config set unsafe-perm true
 RUN npm install -g xgettext-template i18n-stex i18n-po-json i18n-json-po yarn
 RUN touch $PHP_LOGFILE
 RUN chown nobody $PHP_LOGFILE
