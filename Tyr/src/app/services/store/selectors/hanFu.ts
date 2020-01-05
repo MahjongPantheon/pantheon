@@ -18,52 +18,25 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Player } from '../../interfaces/common';
-import { AppOutcome } from '../../interfaces/app';
+import {IAppState} from "../interfaces";
 
-
-export function setHan(han: number, outcome: AppOutcome, mrWinner: number) {
-  switch (outcome.selectedOutcome) {
-    case 'ron':
-    case 'tsumo':
-      outcome.han = han;
-      break;
-    case 'multiron':
-      outcome.wins[mrWinner].han = han;
-      break;
-    default:
-      throw new Error('No yaku may exist on this outcome');
-  }
-}
-
-export function setFu(fu: number, outcome: AppOutcome, mrWinner: number) {
-  switch (outcome.selectedOutcome) {
-    case 'ron':
-    case 'tsumo':
-      outcome.fu = fu;
-      break;
-    case 'multiron':
-      outcome.wins[mrWinner].fu = fu;
-      break;
-    default:
-      throw new Error('No yaku may exist on this outcome');
-  }
-}
-
-export function getHanOf(user: number, outcome: AppOutcome) {
+export function getHan(state: IAppState, user?: number) {
+  const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
       return outcome.han;
     case 'multiron':
-      return outcome.wins[user].han;
+      return outcome.wins[user || state.multironCurrentWinner].han;
     default:
       return 0;
   }
 }
 
-export function getFuOf(user: number, outcome: AppOutcome) {
-  let han: number, fu: number;
+export function getFu(state: IAppState, user?: number) {
+  const outcome = state.currentOutcome;
+  let han: number;
+  let fu: number;
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
@@ -75,8 +48,8 @@ export function getFuOf(user: number, outcome: AppOutcome) {
       }
       return fu;
     case 'multiron':
-      fu = outcome.wins[user].fu;
-      han = outcome.wins[user].han + outcome.wins[user].dora;
+      fu = outcome.wins[user || state.multironCurrentWinner].fu;
+      han = outcome.wins[user || state.multironCurrentWinner].han + outcome.wins[user || state.multironCurrentWinner].dora;
       if (han >= 5) {
         fu = 0;
       }
@@ -86,15 +59,28 @@ export function getFuOf(user: number, outcome: AppOutcome) {
   }
 }
 
-export function getPossibleFu(outcome: AppOutcome, mrWinner: number) {
+export function getPossibleFu(state: IAppState) {
+  const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
       return outcome.possibleFu;
     case 'multiron':
-      return outcome.wins[mrWinner].possibleFu;
+      return outcome.wins[state.multironCurrentWinner].possibleFu;
     default:
       return [];
   }
 }
 
+export function getDoraOf(state: IAppState, user?: number) {
+  const outcome = state.currentOutcome;
+  switch (outcome.selectedOutcome) {
+    case 'ron':
+    case 'tsumo':
+      return outcome.dora;
+    case 'multiron':
+      return outcome.wins[user || state.multironCurrentWinner].dora;
+    default:
+      return 0;
+  }
+}

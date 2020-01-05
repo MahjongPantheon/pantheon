@@ -69,6 +69,55 @@ export enum YakuId {
   OPENRIICHI = 44
 }
 
+export interface YakuMap<T> {
+  [YakuId.__OPENHAND]: T;
+  [YakuId.TOITOI]: T;
+  [YakuId.HONROTO]: T;
+  [YakuId.SANANKOU]: T;
+  [YakuId.SANSHOKUDOUKOU]: T;
+  [YakuId.SANKANTSU]: T;
+  [YakuId.SUUKANTSU]: T;
+  [YakuId.SUUANKOU]: T;
+  [YakuId.PINFU]: T;
+  [YakuId.IIPEIKOU]: T;
+  [YakuId.RYANPEIKOU]: T;
+  [YakuId.SANSHOKUDOUJUN]: T;
+  [YakuId.ITTSU]: T;
+  [YakuId.YAKUHAI1]: T;
+  [YakuId.YAKUHAI2]: T;
+  [YakuId.YAKUHAI3]: T;
+  [YakuId.YAKUHAI4]: T;
+  [YakuId.YAKUHAI5]: T;
+  [YakuId.SHOSANGEN]: T;
+  [YakuId.DAISANGEN]: T;
+  [YakuId.SHOSUUSHII]: T;
+  [YakuId.DAISUUSHII]: T;
+  [YakuId.TSUUIISOU]: T;
+  [YakuId.TANYAO]: T;
+  [YakuId.CHANTA]: T;
+  [YakuId.JUNCHAN]: T;
+  [YakuId.CHINROTO]: T;
+  [YakuId.HONITSU]: T;
+  [YakuId.CHINITSU]: T;
+  [YakuId.CHUURENPOUTO]: T;
+  [YakuId.RYUUIISOU]: T;
+  [YakuId.CHIITOITSU]: T;
+  [YakuId.KOKUSHIMUSOU]: T;
+  [YakuId.RIICHI]: T;
+  [YakuId.DOUBLERIICHI]: T;
+  [YakuId.IPPATSU]: T;
+  [YakuId.MENZENTSUMO]: T;
+  [YakuId.HAITEI]: T;
+  [YakuId.RINSHANKAIHOU]: T;
+  [YakuId.TENHOU]: T;
+  [YakuId.CHIHOU]: T;
+  [YakuId.HOUTEI]: T;
+  [YakuId.CHANKAN]: T;
+  [YakuId.RENHOU]: T;
+  [YakuId.OPENRIICHI]: T;
+}
+
+// Sequence of yaku here is very important for packing and unpacking, see yaku-compat.ts
 export const yakuList: Yaku[] = [
   {
     id: YakuId.__OPENHAND,

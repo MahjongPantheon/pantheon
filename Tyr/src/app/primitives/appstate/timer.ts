@@ -62,30 +62,3 @@ export function initTimer(state: LTimerState) {
   }, 1000);
 }
 
-export function getTimeRemaining(): number {
-  return timerData.timeRemaining;
-}
-
-export function timerIsWaiting(): boolean {
-  return timerData.waiting;
-}
-
-export function getCurrentTimerZone(state: AppState, yellowZoneAlreadyPlayed: boolean) {
-  let zoneLength;
-  switch (state.getGameConfig('timerPolicy')) {
-    case 'redZone':
-      zoneLength = state.getGameConfig('redZone');
-      if (zoneLength && (state.getTimeRemaining() < zoneLength) && !timerData.waiting) {
-        return 'redZone';
-      }
-      break;
-    case 'yellowZone':
-      zoneLength = state.getGameConfig('yellowZone');
-      if (zoneLength && (state.getTimeRemaining() < zoneLength) && !timerData.waiting) {
-        return yellowZoneAlreadyPlayed ? 'redZone' : 'yellowZone';
-      }
-      break;
-    default: ;
-  }
-  return 'none';
-}

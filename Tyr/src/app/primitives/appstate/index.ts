@@ -155,31 +155,6 @@ export class AppState {
 
   loginWithPin(pin: string) {
     this._loading.login = true;
-    let retriesCount = 0;
-    return new Promise<string>((resolve, reject) => {
-      const runWithRetry = () => {
-        this.api.confirmRegistration(pin)
-          .then((authToken: string) => {
-            retriesCount = 0;
-            this._loading.login = false;
-            this.storage.set('authToken', authToken);
-            resolve(authToken);
-          })
-          .catch((e) => {
-            retriesCount++;
-            if (retriesCount < 5) {
-              setTimeout(runWithRetry, 500);
-              return;
-            }
-
-            retriesCount = 0;
-            this._loading.login = false;
-            reject(e);
-          });
-      };
-
-      runWithRetry();
-    });
   }
 
   reinit() {
@@ -320,40 +295,6 @@ export class AppState {
   nextScreen() {}
   prevScreen() {}
 
-  getWins(): LWinItem[] {
-    switch (this._currentOutcome.selectedOutcome) {
-      case 'multiron':
-        let wins: LWinItem[] = [];
-        for (let i in this._currentOutcome.wins) {
-          let v = this._currentOutcome.wins[i];
-          wins.push({
-            winner: v.winner,
-            han: v.han,
-            fu: v.fu,
-            dora: v.dora,
-            paoPlayerId: v.paoPlayerId,
-            uradora: 0,
-            kandora: 0,
-            kanuradora: 0,
-            yaku: v.yaku,
-            openHand: v.openHand
-          });
-        }
-        return wins;
-      default:
-        return [];
-    }
-  }
-
-  getMultiRonCount() {
-    switch (this._currentOutcome.selectedOutcome) {
-      case 'multiron':
-        return this._currentOutcome.multiRon;
-      default:
-        return 0;
-    }
-  }
-
   selectMultiRonUser(playerId: number) {
     if (this._currentOutcome.selectedOutcome !== 'multiron') {
       return;
@@ -361,59 +302,30 @@ export class AppState {
     this._multironCurrentWinner = playerId;
   }
   getCurrentMultiRonUser = () => this._multironCurrentWinner;
-  getEventTitle = () => {
-    if (this.isUniversalWatcher()) {
-      return this.i18n._t('Games overview');
-    } else {
-      return this._gameConfig && this._gameConfig.eventTitle || this.i18n._t('Loading...');
-    }
-  };
-  getGameConfig = (key) => this._gameConfig && this._gameConfig[key];
-  winnerHasYakuWithPao = () => winnerHasYakuWithPao(this._currentOutcome, this._gameConfig);
   getTableIndex = () => this._tableIndex;
   playerName = () => this._currentPlayerDisplayName;
   currentScreen = () => this._currentScreen;
-  getOutcome = () => this._currentOutcome && this._currentOutcome.selectedOutcome;
   getHashcode = () => this._currentSessionHash;
+
   toggleWinner = (p: Player) => toggleWinner(p, this._currentOutcome, this._players);
   toggleLoser = (p: Player) => toggleLoser(p, this._currentOutcome, this._players);
   togglePao = (p: Player) => togglePao(p, this._currentOutcome, this._gameConfig.yakuWithPao);
   toggleRiichi = (p: Player) => toggleRiichi(p, this._currentOutcome, (y: YakuId) => this.removeYaku(y));
   toggleDeadhand = (p: Player) => toggleDeadhand(p, this._currentOutcome);
   toggleNagashi = (p: Player) => toggleNagashi(p, this._currentOutcome);
-  getWinningUsers = () => getWinningUsers(this._currentOutcome, this._mapIdToPlayer);
-  getLosingUsers = () => getLosingUsers(this._currentOutcome, this._mapIdToPlayer);
-  getPaoUsers = () => getPaoUsers(this._currentOutcome, this._mapIdToPlayer);
-  getRiichiUsers = () => getRiichiUsers(this._currentOutcome, this._mapIdToPlayer);
-  getDeadhandUsers = () => getDeadhandUsers(this._currentOutcome, this._mapIdToPlayer);
-  getNagashiUsers = () => getNagashiUsers(this._currentOutcome, this._mapIdToPlayer);
+
   setHan = (han: number) => setHan(han, this._currentOutcome, this._multironCurrentWinner);
   setFu = (fu: number) => setFu(fu, this._currentOutcome, this._multironCurrentWinner);
-  getHan = () => getHanOf(this._multironCurrentWinner, this._currentOutcome);
-  getHanOf = (user: number) => getHanOf(user, this._currentOutcome);
-  getFu = () => getFuOf(this._multironCurrentWinner, this._currentOutcome);
-  getFuOf = (user: number) => getFuOf(user, this._currentOutcome);
-  getPossibleFu = () => getPossibleFu(this._currentOutcome, this._multironCurrentWinner);
   setDora = (dora: number) => setDora(dora, this._currentOutcome, this._multironCurrentWinner);
-  getDora = () => getDoraOf(this._multironCurrentWinner, this._currentOutcome);
-  getDoraOf = (user: number) => getDoraOf(user, this._currentOutcome);
-  getUradora = () => 0; // TODO
-  getKandora = () => 0; // TODO
-  getKanuradora = () => 0; // TODO
+
   getPlayers = (): Player[] => this._players;
   getRiichi = () => this._riichiOnTable;
   getHonba = () => this._honba;
   getCurrentRound = () => this._currentRound;
   getCurrentPlayerId = () => this._currentPlayerId;
+
   initBlankOutcome = (outcome: OutcomeType) => this._currentOutcome = initBlankOutcome(this._currentRound, outcome);
-  hasYaku = (id: YakuId) => hasYaku(this._currentOutcome, id, this._multironCurrentWinner);
-  getRequiredYaku = () => getRequiredYaku(this._currentOutcome, this._multironCurrentWinner);
-  getSelectedYaku = () => getSelectedYaku(this._currentOutcome, this._multironCurrentWinner);
-  yakumanInYaku = () => yakumanInYaku(this._currentOutcome, this._multironCurrentWinner);
-  addYaku = (id: YakuId, bypassChecks: boolean = false): void => addYaku(this._currentOutcome, id, this._multironCurrentWinner, this.i18n, bypassChecks);
-  removeYaku = (id: YakuId): void => removeYaku(this._currentOutcome, id, this._multironCurrentWinner, this.i18n);
-  getAllowedYaku = (): YakuId[] => getAllowedYaku(this._currentOutcome, this._multironCurrentWinner);
-  getTimeRemaining = () => getTimeRemaining();
+
   getCurrentTimerZone = () => getCurrentTimerZone(this, this._yellowZoneAlreadyPlayed);
   isTimerWaiting = () => timerIsWaiting();
 

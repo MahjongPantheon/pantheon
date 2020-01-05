@@ -1,8 +1,9 @@
 import { AppOutcome } from "../../interfaces/app";
-import { Player, Table } from "../../interfaces/common";
+import {Player, Table, Yaku} from "../../interfaces/common";
 import { LGameConfig } from "../../interfaces/local";
 import { RRoundPaymentsInfo, RSessionOverview } from "../../interfaces/remote";
 import { AppScreen } from "../../primitives/appstate";
+import {Graph} from "../../primitives/graph";
 
 export type AppScreen = 'overview' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
   | 'yakuSelect' | 'confirmation' | 'newGame' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
@@ -13,6 +14,13 @@ export type LoadingSet = {
   otherTables: boolean,
   otherTable: boolean,
   login: boolean,
+};
+
+export type TimerData = {
+  timeRemaining: number;
+  lastUpdateTimeRemaining: number;
+  lastUpdateTimestamp: number;
+  waiting: boolean;
 };
 
 export interface IAppState {
@@ -38,4 +46,8 @@ export interface IAppState {
   currentOtherTableLastRound: RRoundPaymentsInfo;
   isIos: boolean;
   loading: LoadingSet;
+  timer: TimerData;
+  yakuList: Graph<Yaku>;
+
+  isUniversalWatcher: boolean;
 }
