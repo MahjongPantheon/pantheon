@@ -19,9 +19,9 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-class RulesetSeihoku extends Ruleset
+class RulesetEma6 extends Ruleset
 {
-    public static $_title = 'seihoku';
+    public static $_title = 'ema6';
     protected static $_ruleset = [
         'tenboDivider'          => 1,
         'ratingDivider'         => 1,
@@ -37,14 +37,14 @@ class RulesetSeihoku extends Ruleset
         'withAtamahane'         => false,
         'withAbortives'         => true,
         'withKuitan'            => true,
-        'withKazoe'             => true,
-        'withButtobi'           => true,
-        'withMultiYakumans'     => true,
-        'withNagashiMangan'     => true,
+        'withKazoe'             => false,
+        'withButtobi'           => false,
+        'withMultiYakumans'     => false,
+        'withNagashiMangan'     => false,
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
         'gameExpirationTime'    => false,
-        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
+        'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII],
         'minPenalty'            => 100,
         'maxPenalty'            => 20000,
         'penaltyStep'           => 100,
@@ -59,6 +59,7 @@ class RulesetSeihoku extends Ruleset
     public function allowedYaku()
     {
         return YakuMap::listExcept([
+            Y_RENHOU,
             Y_OPENRIICHI
         ]);
     }
@@ -69,7 +70,6 @@ class RulesetSeihoku extends Ruleset
      */
     public function uma($scores = [])
     {
-        return $this->_equalizeUma($scores, [1 => 25000, 10000, -10000, -25000]);
+        return $this->_equalizeUma($scores, [1 => 30000, 10000, -10000, -30000]);
     }
 }
-
