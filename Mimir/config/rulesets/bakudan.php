@@ -19,9 +19,9 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-class RulesetSeihoku extends Ruleset
+class RulesetBakudan extends Ruleset
 {
-    public static $_title = 'seihoku';
+    public static $_title = 'bakudan';
     protected static $_ruleset = [
         'tenboDivider'          => 1,
         'ratingDivider'         => 1,
@@ -51,7 +51,7 @@ class RulesetSeihoku extends Ruleset
         'timerPolicy'           => 'yellowZone',
         'yellowZone'            => 900, // 15min
         'redZone'               => 0,
-        'withLeadingDealerGameOver' => false,
+        'withLeadingDealerGameOver' => true,
         'replacementPlayerFixedPoints' => -15000,
         'replacementPlayerOverrideUma' => -15000
     ];
@@ -69,7 +69,7 @@ class RulesetSeihoku extends Ruleset
      */
     public function uma($scores = [])
     {
-        return $this->_equalizeUma($scores, [1 => 25000, 10000, -10000, -25000]);
+        return $this->_equalizeUma($scores, [1 => 15000, 5000, -5000, -15000]);
     }
 }
 
