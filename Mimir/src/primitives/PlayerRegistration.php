@@ -102,6 +102,7 @@ class PlayerRegistrationPrimitive extends Primitive
                 $this->_eventId = $existingItem->_eventId;
                 $this->_playerId = $existingItem->_playerId;
                 $this->_localId = $existingItem->_localId;
+                $this->_teamName = $existingItem->_teamName;
                 $this->_token = sha1('PlayerReg' . microtime()); // Token to be updated on every re-issue!
                 $this->save();
                 $success = true;
