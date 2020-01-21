@@ -71,6 +71,7 @@ return [
     'getAchievementsList'    => ['EventsController', 'getAchievementsList'],
     'toggleHideResults'  => ['EventsController', 'toggleHideResults'],
     'updatePlayersLocalIds' => ['EventsController', 'updateLocalIds'],
+    'updatePlayersTeams' => ['EventsController', 'updateTeamNames'],
     'startGame'          => ['GamesController', 'start'],
     'endGame'            => ['GamesController', 'end'],
     'cancelGame'         => ['GamesController', 'cancel'],

@@ -65,6 +65,7 @@ class PlayerRegistration extends Controller
             'authorized' => $this->_adminAuthOk(),
             'isAggregated' => (count($this->_eventIdList) > 1),
             'prescriptedEvent' => $this->_mainEventRules->isPrescripted(),
+            'teamEvent' => $this->_mainEventRules->isTeam(),
             // === non-prescripted tournaments
             'canUseSeatingIgnore' => $this->_mainEventRules->syncStart() && !$this->_mainEventRules->isPrescripted(),
             'lastindex' => count($registeredPlayers) + 2,
@@ -110,6 +111,9 @@ class PlayerRegistration extends Controller
                     break;
                 case 'save_local_ids':
                     $err = $this->_saveLocalIds($_POST['map_json']);
+                    break;
+                case 'save_teams':
+                    $err = $this->_saveTeams($_POST['map_json']);
                     break;
                 default:
                     ;
@@ -175,6 +179,22 @@ class PlayerRegistration extends Controller
             $success = $this->_api->execute('updatePlayersLocalIds', [$this->_mainEventId, $mapping]);
             if (!$success) {
                 $errorMsg = _t('Failed to save local ids mapping. Check your network connection.');
+            }
+        } catch (\Exception $e) {
+            $errorMsg = $e->getMessage();
+        }
+
+        return $errorMsg;
+    }
+
+    protected function _saveTeams($json)
+    {
+        $errorMsg = '';
+        $mapping = json_decode($json, true);
+        try {
+            $success = $this->_api->execute('updatePlayersTeams', [$this->_mainEventId, $mapping]);
+            if (!$success) {
+                $errorMsg = _t('Failed to save teams mapping. Check your network connection.');
             }
         } catch (\Exception $e) {
             $errorMsg = $e->getMessage();

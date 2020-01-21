@@ -107,7 +107,9 @@ class Db implements IDb
     {
         $data = array_map(function ($dataset) {
             foreach ($dataset as $k => $v) {
-                if (is_integer($v)) {
+                if (is_null($v)) {
+                    $dataset[$k] = 'NULL';
+                } else if (is_integer($v)) {
                     $dataset[$k] = intval($v);
                 } else if (is_numeric($v)) {
                     $dataset[$k] = doubleval($v);
@@ -135,7 +137,7 @@ class Db implements IDb
 
         // Postgresql >= 9.5
         return ORM::rawExecute("
-            INSERT INTO {$table} ({$fields}) VALUES {$values} 
+            INSERT INTO {$table} ({$fields}) VALUES {$values}
             ON CONFLICT ({$tableUniqueFields}) DO UPDATE SET {$assignments}
         ");
     }

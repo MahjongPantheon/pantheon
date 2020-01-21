@@ -312,6 +312,24 @@ class EventsController extends Controller
     }
 
     /**
+     * Update team names for events with teams.
+     *
+     * @param integer $eventId
+     * @param array $teamNameMap Mapping of player_id => team_name
+     * @return bool
+     * @throws AuthFailedException
+     * @throws \Exception
+     */
+    public function updateTeamNames($eventId, $teamNameMap)
+    {
+        $this->_log->addInfo('Updating players\' teams for event id# ' . $eventId);
+        $success = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))
+            ->updateTeamNames($eventId, $teamNameMap);
+        $this->_log->addInfo('Successfully updated players\' teams for event id# ' . $eventId);
+        return $success;
+    }
+
+    /**
      * Get all players enrolled for event
      *
      * @param integer $eventId

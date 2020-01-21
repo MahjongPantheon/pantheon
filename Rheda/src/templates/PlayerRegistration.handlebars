@@ -62,6 +62,9 @@
                 {{#prescriptedEvent}}
                     <th>{{_t 'Local id'}}</th>
                 {{/prescriptedEvent}}
+                {{#teamEvent}}
+                    <th>{{_t 'Team name'}}</th>
+                {{/teamEvent}}
                 {{#canUseSeatingIgnore}}
                     <th>{{_t 'Exclude from seating'}}</th>
                 {{/canUseSeatingIgnore}}
@@ -84,6 +87,9 @@
                 {{#prescriptedEvent}}
                     <td><input type="text" tabindex="{{index}}" value="{{local_id}}" class="local-id-selector form-control" data-player-id="{{id}}" /></td>
                 {{/prescriptedEvent}}
+                {{#teamEvent}}
+                    <td><input type="text" tabindex="{{index}}" value="{{team_name}}" class="team-name-selector form-control" data-player-id="{{id}}" /></td>
+                {{/teamEvent}}
                 {{#canUseSeatingIgnore}}
                 <td>
                     <form action="" method="post">
@@ -115,5 +121,17 @@
                         class="btn btn-primary" /></div>
             </form>
         {{/prescriptedEvent}}
+        {{#teamEvent}}
+            <hr />
+            <form action="" method="post" id="teams_form">
+                <input type="hidden" name="action_type" value="save_teams" />
+                <input type="hidden" name="map_json" value="" id="teams_map_json" />
+                <div>{{_t 'This will update current teams mapping. See "Team table" page for details'}}</div>
+                <div><input tabindex="{{lastindex}}" type="button"
+                        value="{{_t 'Save teams list'}}"
+                        onclick="saveTeamNames('team-name-selector', 'teams_map_json', 'teams_form')"
+                        class="btn btn-dark" /></div>
+            </form>
+        {{/teamEvent}}
     {{/authorized}}
 {{/isAggregated}}
