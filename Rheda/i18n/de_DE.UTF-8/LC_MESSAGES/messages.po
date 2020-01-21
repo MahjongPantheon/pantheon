@@ -421,6 +421,12 @@ msgstr ""
 msgid "Failed to save local ids mapping. Check your network connection."
 msgstr ""
 
+#, fuzzy
+msgid "Failed to save teams mapping. Check your network connection."
+msgstr ""
+"Der Spieler konnte nicht addieren werden. Überprüfen Sie Ihre "
+"Netzwerkverbindung."
+
 msgid "Failed to update predefined seating. Check your network connection."
 msgstr ""
 
@@ -1036,6 +1042,9 @@ msgstr "Sanshoku dokou"
 msgid "Save local IDs"
 msgstr ""
 
+msgid "Save teams list"
+msgstr ""
+
 msgid "Seating controls"
 msgstr "Sitzsteuerungen"
 
@@ -1112,6 +1121,10 @@ msgstr ""
 msgid "Team event"
 msgstr ""
 
+#, fuzzy
+msgid "Team name"
+msgstr "Echter Name"
+
 msgid "Team table"
 msgstr ""
 
@@ -1160,6 +1173,10 @@ msgstr ""
 msgid ""
 "This will update current local id mapping. See \"Predefined seating\" page "
 "for details"
+msgstr ""
+
+msgid ""
+"This will update current teams mapping. See \"Team table\" page for details"
 msgstr ""
 
 msgid "Timer"
