@@ -138,3 +138,6 @@ body {
 .local-id-selector {
     width: 100px;
 }
+.team-name-selector {
+    max-width: 200px;
+}
