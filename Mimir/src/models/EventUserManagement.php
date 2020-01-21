@@ -225,6 +225,24 @@ class EventUserManagementModel extends Model
     }
 
     /**
+     * Update players' team mapping for team event
+     *
+     * @param $eventId
+     * @param $teamMap
+     * @return bool
+     * @throws AuthFailedException
+     * @throws \Exception
+     */
+    public function updateTeamNames($eventId, $teamMap)
+    {
+        if (!$this->checkAdminToken()) {
+            throw new AuthFailedException('Only administrators are allowed to update players\' teams');
+        }
+
+        return PlayerRegistrationPrimitive::updateTeamNames($this->_db, $eventId, $teamMap);
+    }
+
+    /**
      * Checks if token is ok.
      * Reads token value from X-Auth-Token request header
      *

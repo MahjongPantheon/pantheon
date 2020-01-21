@@ -102,6 +102,7 @@ class PlayerRegistrationPrimitive extends Primitive
                 $this->_eventId = $existingItem->_eventId;
                 $this->_playerId = $existingItem->_playerId;
                 $this->_localId = $existingItem->_localId;
+                $this->_teamName = $existingItem->_teamName;
                 $this->_token = sha1('PlayerReg' . microtime()); // Token to be updated on every re-issue!
                 $this->save();
                 $success = true;
@@ -238,7 +239,38 @@ class PlayerRegistrationPrimitive extends Primitive
                 'event_id'      => $eventId,
                 'player_id'     => $regItem->getPlayerId(),
                 'auth_token'    => $regItem->getToken(),
-                'local_id'      => $idMap[$regItem->getPlayerId()]
+                'local_id'      => $idMap[$regItem->getPlayerId()],
+                'team_name'     => empty($regItem->getTeamName()) ? '' : $regItem->getTeamName()
+            ];
+        }
+        return $db->upsertQuery(self::$_table, $upsertData, ['id']);
+    }
+
+    /**
+     * Update players' team mapping for team event
+     *
+     * @param IDb $db
+     * @param $eventId
+     * @param $idMap
+     * @throws \Exception
+     * @return boolean
+     */
+    public static function updateTeamNames(IDb $db, $eventId, $idMap)
+    {
+        $regs = self::findByEventId($db, $eventId);
+        $upsertData = [];
+        foreach ($regs as $regItem) {
+            if (empty($idMap[$regItem->getPlayerId()])) {
+                continue;
+            }
+
+            $upsertData []= [
+                'id'            => $regItem->getId(),
+                'event_id'      => $eventId,
+                'player_id'     => $regItem->getPlayerId(),
+                'auth_token'    => $regItem->getToken(),
+                'local_id'      => empty($regItem->getLocalId()) ? null : $regItem->getLocalId(),
+                'team_name'     => $idMap[$regItem->getPlayerId()]
             ];
         }
         return $db->upsertQuery(self::$_table, $upsertData, ['id']);
