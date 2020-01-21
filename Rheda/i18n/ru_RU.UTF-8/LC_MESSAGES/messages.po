@@ -425,6 +425,9 @@ msgid "Failed to save local ids mapping. Check your network connection."
 msgstr ""
 "Не удалось сохранить соответствие локальных ID. Проверьте сетевое соединение."
 
+msgid "Failed to save teams mapping. Check your network connection."
+msgstr "Не удалось сохранить имена команд. Проверьте сетевое соединение."
+
 msgid "Failed to update predefined seating. Check your network connection."
 msgstr ""
 "Не удалось обновить предопределенную рассадку. Проверьте сетевое соединение."
@@ -1053,6 +1056,9 @@ msgstr "Саншоку доко"
 msgid "Save local IDs"
 msgstr "Сохранить локальные ID"
 
+msgid "Save teams list"
+msgstr "Сохранить список команд"
+
 msgid "Seating controls"
 msgstr "Управление рассадкой"
 
@@ -1130,6 +1136,9 @@ msgstr "Команда"
 msgid "Team event"
 msgstr "Командный турнир"
 
+msgid "Team name"
+msgstr "Команда"
+
 msgid "Team table"
 msgstr "Командный рейтинг"
 
@@ -1189,6 +1198,12 @@ msgid ""
 msgstr ""
 "Нажатие на кнопку приведет к обновлению списка соответствия игроков и их "
 "локальных ID. См. подробности на странице \"Предопределенная рассадка\"."
+
+msgid ""
+"This will update current teams mapping. See \"Team table\" page for details"
+msgstr ""
+"Нажатие на кнопку приведет к обновлению списка соответствия игроков и их "
+"команд. См. подробности на странице \"Командный рейтинг\"."
 
 msgid "Timer"
 msgstr "Таймер"

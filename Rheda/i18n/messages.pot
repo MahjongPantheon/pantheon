@@ -10,13 +10,16 @@ msgstr "Content-Type: text/plain; charset=utf-8\n"
 msgid "Achievements"
 msgstr ""
 
+msgid "Admin panel"
+msgstr ""
+
+msgid "Authorized successfully!"
+msgstr ""
+
+msgid "Authorize"
+msgstr ""
+
 msgid "The game has been successfully added!"
-msgstr ""
-
-msgid "Add online game"
-msgstr ""
-
-msgid "Add game"
 msgstr ""
 
 msgid "Going back in 3 seconds..."
@@ -36,61 +39,16 @@ msgid ""
 "checks are performed: in case of any inconsistency the alert is displayed."
 msgstr ""
 
+msgid "Add game"
+msgstr ""
+
 msgid "Player aliases"
 msgstr ""
 
-msgid "Game details"
-msgstr ""
-
-msgid "Admin panel"
-msgstr ""
-
-msgid "Authorized successfully!"
-msgstr ""
-
-msgid "Authorize"
-msgstr ""
-
-msgid "Confirm round cancellation: "
-msgstr ""
-
-msgid "Confirm game cancellation: "
-msgstr ""
-
-msgid "Tables state:"
-msgstr ""
-
-msgid "Last played round:"
-msgstr ""
-
-msgid "(no rounds are played yet)"
-msgstr ""
-
-msgid "Cancel last played round"
-msgstr ""
-
-msgid "Cancel game"
-msgstr ""
-
-msgid "Penalties:"
-msgstr ""
-
-msgid "%s - %s points of penalty. Reason: %s"
+msgid "Add online game"
 msgstr ""
 
 msgid "Recent games"
-msgstr ""
-
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
-msgstr ""
-
-msgid "Later"
-msgstr ""
-
-msgid "Earlier"
 msgstr ""
 
 msgid "Rating table"
@@ -126,6 +84,36 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+msgid "Game details"
+msgstr ""
+
+msgid "Confirm round cancellation: "
+msgstr ""
+
+msgid "Confirm game cancellation: "
+msgstr ""
+
+msgid "Tables state:"
+msgstr ""
+
+msgid "Last played round:"
+msgstr ""
+
+msgid "(no rounds are played yet)"
+msgstr ""
+
+msgid "Cancel last played round"
+msgstr ""
+
+msgid "Cancel game"
+msgstr ""
+
+msgid "Penalties:"
+msgstr ""
+
+msgid "%s - %s points of penalty. Reason: %s"
+msgstr ""
+
 msgid "Aggregated event"
 msgstr ""
 
@@ -148,6 +136,33 @@ msgid "Points of last series"
 msgstr ""
 
 msgid "Sorry, this page is not available for mobile devices"
+msgstr ""
+
+msgid "No games has been played yet"
+msgstr ""
+
+msgid "%d - %d (%d total)"
+msgstr ""
+
+msgid "Later"
+msgstr ""
+
+msgid "Earlier"
+msgstr ""
+
+msgid "Rating table has been hidden by tournament administrator"
+msgstr ""
+
+msgid "These results are visible only for tournament administrator"
+msgstr ""
+
+msgid "Pts"
+msgstr ""
+
+msgid "AvPlc"
+msgstr ""
+
+msgid "AvPts"
 msgstr ""
 
 msgid "Statistics"
@@ -174,25 +189,63 @@ msgstr ""
 msgid "Ongoing series:"
 msgstr ""
 
-msgid "Rating table has been hidden by tournament administrator"
-msgstr ""
-
-msgid "These results are visible only for tournament administrator"
-msgstr ""
-
-msgid "Pts"
-msgstr ""
-
-msgid "AvPlc"
-msgstr ""
-
-msgid "AvPts"
-msgstr ""
-
 msgid "Team"
 msgstr ""
 
 msgid "Players"
+msgstr ""
+
+msgid "Players management"
+msgstr ""
+
+msgid "Pre-registration list (%d)"
+msgstr ""
+
+msgid "Print PINs and QR codes"
+msgstr ""
+
+msgid "PIN"
+msgstr ""
+
+msgid "Confirm attendance manually"
+msgstr ""
+
+msgid "Registered players (%d)"
+msgstr ""
+
+msgid "Local id"
+msgstr ""
+
+msgid "Team name"
+msgstr ""
+
+msgid "Exclude from seating"
+msgstr ""
+
+msgid "Reissue PIN"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove player %s?"
+msgstr ""
+
+msgid "Include into seating"
+msgstr ""
+
+msgid ""
+"This will update current local id mapping. See \"Predefined seating\" page "
+"for details"
+msgstr ""
+
+msgid "Save local IDs"
+msgstr ""
+
+msgid "This will update current teams mapping. See \"Team table\" page for details"
+msgstr ""
+
+msgid "Save teams list"
 msgstr ""
 
 msgid "Additional penalties"
@@ -241,48 +294,16 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-msgid "Players management"
+msgid "Rating points"
 msgstr ""
 
-msgid "Pre-registration list (%d)"
+msgid "Average place"
 msgstr ""
 
-msgid "Print PINs and QR codes"
+msgid "Average points"
 msgstr ""
 
-msgid "PIN"
-msgstr ""
-
-msgid "Confirm attendance manually"
-msgstr ""
-
-msgid "Registered players (%d)"
-msgstr ""
-
-msgid "Local id"
-msgstr ""
-
-msgid "Exclude from seating"
-msgstr ""
-
-msgid "Reissue PIN"
-msgstr ""
-
-msgid "Remove"
-msgstr ""
-
-msgid "Remove player %s?"
-msgstr ""
-
-msgid "Include into seating"
-msgstr ""
-
-msgid ""
-"This will update current local id mapping. See \"Predefined seating\" page "
-"for details"
-msgstr ""
-
-msgid "Save local IDs"
+msgid "Games played"
 msgstr ""
 
 msgid "Predefined seating configuration"
@@ -308,18 +329,6 @@ msgstr ""
 msgid ""
 "In this example, two tables play two games. Numbers in seating persist "
 "between games and are defined at Admin actions / Manage players page."
-msgstr ""
-
-msgid "Rating points"
-msgstr ""
-
-msgid "Average place"
-msgstr ""
-
-msgid "Average points"
-msgstr ""
-
-msgid "Games played"
 msgstr ""
 
 msgid "No time left!"
@@ -538,17 +547,6 @@ msgstr ""
 msgid "Yaku collected over all time"
 msgstr ""
 
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-
-msgid "Rating table is hidden. Show"
-msgstr ""
-
-msgid "Rating table is visible. Hide"
-msgstr ""
-
 msgid "Achievement"
 msgstr ""
 
@@ -756,6 +754,17 @@ msgstr ""
 msgid "Confirm the results and finish all games"
 msgstr ""
 
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+
+msgid "Rating table is hidden. Show"
+msgstr ""
+
+msgid "Rating table is visible. Hide"
+msgstr ""
+
 msgid "Please select some event!"
 msgstr ""
 
@@ -924,6 +933,9 @@ msgid "Failed to enroll the player. Check your network connection."
 msgstr ""
 
 msgid "Failed to save local ids mapping. Check your network connection."
+msgstr ""
+
+msgid "Failed to save teams mapping. Check your network connection."
 msgstr ""
 
 msgid "Failed to save ignore seating flag. Check your network connection."
