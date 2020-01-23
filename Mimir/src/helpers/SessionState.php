@@ -364,11 +364,11 @@ class SessionState
 
     /**
      * @param $id
-     * @param int $betAmount - may not always be 1000, e.g. in cases of split
+     * @param int $betAmount - total points amount gathered as riichi bets. May be fractional (of 1000)!
      */
-    public function giveRiichiBetsToPlayer($id, $betAmount = 1000)
+    public function giveRiichiBetsToPlayer($id, $betAmount)
     {
-        $this->_scores[$id] += $this->getRiichiBets() * $betAmount;
+        $this->_scores[$id] += $betAmount;
     }
 
     /**
