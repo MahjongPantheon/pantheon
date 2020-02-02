@@ -80,6 +80,18 @@ export class AppComponent {
       this.themeService.setTheme(userTheme);
     }
 
+    if (this.state.isIos) {
+      document.addEventListener(
+        'dblclick',
+        (e: any) => {
+          e.preventDefault()
+          e.stopPropagation();
+          return false;
+        },
+        {passive: false}
+      );
+    }
+
     window.__state = this.state; // for great debug
     this.i18n.init((localeName: string) => {
       this.metrika.track(MetrikaService.I18N_INIT, { localeName });
