@@ -181,6 +181,12 @@ class RatingTable extends Controller
             usort($data, function ($a, $b) {
                 return strcmp($b['team_name'], $a['team_name']);
             });
+
+            $ctr = 1;
+            $data = array_map(function ($el) use (&$ctr) {
+                $el['_index'] = $ctr++;
+                return $el;
+            }, $data);
         }
 
         $hideResults = $this->_mainEventRules->hideResults();

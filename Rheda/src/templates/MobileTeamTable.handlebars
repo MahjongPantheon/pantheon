@@ -86,12 +86,14 @@
 <div class="main-content">
     <table class="table table-striped table-condensed">
         <tr>
+            <th>#</th>
             <th>{{_t 'Team'}}</th>
             <th>{{_t 'Pts'}}</th>
             <th>{{_t 'Players'}}</th>
         </tr>
         {{#each teams}}
             <tr>
+              <td class="cn">{{_index}}</td>
               <td class="cn"><b>{{this.team_name}}</b></td>
               <td class="cn">
                 <span class="badge
