@@ -51,12 +51,14 @@
 {{^hideResults}}
     <table class="table table-striped table-condensed">
         <tr>
+            <th>#</th>
             <th>{{_t 'Team'}}</th>
             <th class="centered">{{_t 'Rating points'}}</th>
             <th>{{_t 'Players'}}</th>
         </tr>
         {{#each teams}}
             <tr>
+              <td class="centered">{{_index}}</td>
               <td class="centered"><b>{{this.team_name}}</b></td>
               <td class="centered">
                 <span class="badge

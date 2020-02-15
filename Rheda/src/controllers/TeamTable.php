@@ -104,6 +104,12 @@ class TeamTable extends Controller
             return $b['total_rating'] - $a['total_rating'];
         });
 
+        $ctr = 1;
+        $teams = array_map(function ($el) use (&$ctr) {
+            $el['_index'] = $ctr++;
+            return $el;
+        }, $teams);
+
         return [
             'error'             => $errMsg,
             'teams'             => $teams,
