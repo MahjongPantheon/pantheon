@@ -120,7 +120,6 @@ export function modifyDrawOutcome(state: IAppState, fields: DrawOutcomeProps): I
   }
 }
 
-
 export function addYakuToProps(
   winProps: WinProps,
   selectedOutcome: AppOutcome['selectedOutcome'],

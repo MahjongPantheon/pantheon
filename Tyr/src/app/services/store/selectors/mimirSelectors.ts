@@ -6,9 +6,10 @@ import {AppOutcome} from "../../../interfaces/app";
 import {intersection} from "lodash";
 import {unpack} from "../../../primitives/yaku-compat";
 
+// TODO: memoize all
 export function mimirSelector(state: IAppState) {}
 
-function getWins(state: IAppState): LWinItem[] {
+export function getWins(state: IAppState): LWinItem[] {
   switch (state.currentOutcome.selectedOutcome) {
     case 'multiron':
       let wins: LWinItem[] = [];
@@ -23,7 +24,7 @@ function getWins(state: IAppState): LWinItem[] {
           uradora: 0,
           kandora: 0,
           kanuradora: 0,
-          yaku: v.yaku,
+          yaku: unpack(v.yaku),
           openHand: v.openHand
         });
       }
@@ -33,7 +34,7 @@ function getWins(state: IAppState): LWinItem[] {
   }
 }
 
-function getMultiRonCount(state: IAppState): number {
+export function getMultiRonCount(state: IAppState): number {
   switch (state.currentOutcome.selectedOutcome) {
     case 'multiron':
       return state.currentOutcome.multiRon;
@@ -42,7 +43,7 @@ function getMultiRonCount(state: IAppState): number {
   }
 }
 
-function getEventTitle(state: IAppState): string {
+export function getEventTitle(state: IAppState): string {
   if (state.isUniversalWatcher) {
     return i18n._t('Games overview');
   } else {
@@ -50,11 +51,11 @@ function getEventTitle(state: IAppState): string {
   }
 }
 
-function getGameConfig(state:IAppState, key: string) {
+export function getGameConfig(state:IAppState, key: string) {
   return state.gameConfig && state.gameConfig[key];
 }
 
-function winnerHasYakuWithPao(state: IAppState): boolean {
+export function winnerHasYakuWithPao(state: IAppState): boolean {
   const outcome: AppOutcome = state.currentOutcome;
   const gameConfig: LGameConfig = state.gameConfig;
   if (!outcome) {
@@ -74,61 +75,58 @@ function winnerHasYakuWithPao(state: IAppState): boolean {
   }
 }
 
-function getOutcome(state: IAppState) {
+export function getOutcome(state: IAppState) {
   return state.currentOutcome && state.currentOutcome.selectedOutcome;
 }
 
-
-type PMap = { [key: number]: Player };
-
-function getWinningUsers(state: IAppState, playerIdMap: PMap): Player[] {
+export function getWinningUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
       return outcome.winner
-        ? [playerIdMap[outcome.winner]]
+        ? [state.players.find((val) => val.id === outcome.winner)]
         : [];
     case 'multiron':
       let users = [];
       for (let w in outcome.wins) {
-        users.push(playerIdMap[outcome.wins[w].winner]);
+        users.push(state.players.find((val) => val.id === outcome.wins[w].winner));
       }
       return users;
     case 'draw':
     case 'nagashi':
-      return outcome.tempai.map((t) => playerIdMap[t]);
+      return outcome.tempai.map((t) => state.players.find((val) => val.id === t));
     default:
       return [];
   }
 }
 
-function getLosingUsers(state: IAppState, playerIdMap: PMap): Player[] {
+export function getLosingUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'multiron':
     case 'chombo':
       return outcome.loser
-        ? [playerIdMap[outcome.loser]]
+        ? [state.players.find((val) => val.id === outcome.loser)]
         : [];
     default:
       return [];
   }
 }
 
-function getPaoUsers(state: IAppState, playerIdMap: PMap): Player[] {
+export function getPaoUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
       return outcome.paoPlayerId
-        ? [playerIdMap[outcome.paoPlayerId]]
+        ? [state.players.find((val) => val.id === outcome.paoPlayerId)]
         : [];
     case 'multiron':
       return Object.keys(outcome.wins).reduce<Player[]>((acc, playerId) => {
         if (outcome.wins[playerId].paoPlayerId) {
-          acc.push(playerIdMap[outcome.wins[playerId].paoPlayerId]);
+          acc.push(state.players.find((val) => val.id === outcome.wins[playerId].paoPlayerId));
         }
         return acc;
       }, []);
@@ -137,43 +135,42 @@ function getPaoUsers(state: IAppState, playerIdMap: PMap): Player[] {
   }
 }
 
-function getDeadhandUsers(state: IAppState, playerIdMap: PMap): Player[] {
+export function getDeadhandUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'draw':
     case 'nagashi':
-      return outcome.deadhands.map((t) => playerIdMap[t]);
+      return outcome.deadhands.map((t) => state.players.find((val) => val.id === t));
     default:
       return [];
   }
 }
 
-function getNagashiUsers(state: IAppState, playerIdMap: PMap): Player[] {
+export function getNagashiUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'nagashi':
-      return outcome.nagashi.map((t) => playerIdMap[t]);
+      return outcome.nagashi.map((t) => state.players.find((val) => val.id === t));
     default:
       return [];
   }
 }
 
 // TODO: this should be done in UI - check
-function hasYaku(state: IAppState, id: YakuId) {
+export function hasYaku(state: IAppState, id: YakuId) {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
-      return -1 !== outcome.yaku.indexOf(id);
+      return -1 !== unpack(outcome.yaku).indexOf(id);
     case 'multiron':
-      return -1 !== outcome.wins[state.multironCurrentWinner].yaku.indexOf(id);
+      return -1 !== unpack(outcome.wins[state.multironCurrentWinner].yaku).indexOf(id);
     default:
       return false;
   }
 }
 
-
-function getRiichiUsers(state: IAppState, playerIdMap: PMap): Player[] {
+export function getRiichiUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
@@ -182,7 +179,7 @@ function getRiichiUsers(state: IAppState, playerIdMap: PMap): Player[] {
     case 'nagashi':
     case 'abort':
     case 'multiron':
-      return outcome.riichiBets.map((r) => playerIdMap[r]);
+      return outcome.riichiBets.map((r) => state.players.find((val) => val.id === r));
     default:
       return [];
   }
