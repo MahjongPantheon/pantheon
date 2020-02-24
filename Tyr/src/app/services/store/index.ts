@@ -10,21 +10,32 @@ import { outcomeReducer } from "./reducers/outcomeReducer";
 import {metrika} from "./middlewares/metrika";
 import {history} from "./middlewares/history";
 import {MetrikaService} from "../metrika";
+import {timerReducer} from "./reducers/timer";
+import {timerMw} from "./middlewares/timer";
+import {TimerStorage} from "./interfaces";
 
 @Injectable()
 export class Store {
   private onUpdate: (state) => void;
   private store: ReduxStore;
+  private readonly timerSt: TimerStorage;
 
   constructor(client: HttpClient) {
+    this.timerSt = {
+      timer: null,
+      setInterval: window.setInterval,
+      clearInterval: window.clearInterval
+    };
     this.store = createStore(combineReducers({
       screenManageReducer,
       outcomeReducer,
-      mimirReducer
+      mimirReducer,
+      timerReducer
     }), applyMiddleware(
       mimirClient(new RiichiApiService(client)),
       metrika(new MetrikaService(client)),
-      history()
+      history(),
+      timerMw(this.timerSt)
     ));
   }
 

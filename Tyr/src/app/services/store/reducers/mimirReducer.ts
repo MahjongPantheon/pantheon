@@ -72,8 +72,8 @@ export function mimirReducer(
         yakuList: makeYakuGraph(action.payload.gameConfig.withMultiYakumans),
         timer: {
           ...state.timer,
-          timeRemaining: action.payload.timerState.timeRemaining || 0,
-          lastUpdateTimeRemaining: action.payload.timerState.timeRemaining || 0,
+          secondsRemaining: action.payload.timerState.timeRemaining || 0,
+          lastUpdateSecondsRemaining: action.payload.timerState.timeRemaining || 0,
           lastUpdateTimestamp: Math.round((new Date()).getTime() / 1000),
           waiting: action.payload.timerState.waitingForTimer
         },

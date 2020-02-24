@@ -44,6 +44,8 @@ export const GET_OTHER_TABLE_FAIL = 'GET_OTHER_TABLE_FAIL';
 export const GET_LAST_ROUND_INIT = 'GET_LAST_ROUND_INIT';
 export const GET_LAST_ROUND_SUCCESS = 'GET_LAST_ROUND_SUCCESS';
 export const GET_LAST_ROUND_FAIL = 'GET_LAST_ROUND_FAIL';
+export const SET_TIMER = 'SET_TIMER';
+export const UPDATE_TIMER_DATA = 'UPDATE_TIMER_DATA';
 
 interface ResetStateAction {
   type: typeof RESET_STATE;
@@ -237,6 +239,21 @@ interface GetLastRoundActionFail {
   type: typeof GET_LAST_ROUND_FAIL;
   payload: RemoteError;
 }
+interface SetTimerAction {
+  type: typeof SET_TIMER;
+  payload: {
+    waiting: boolean;
+    secondsRemaining: number;
+  }
+}
+interface UpdateTimerDataAction {
+  type: typeof UPDATE_TIMER_DATA;
+  payload: {
+    waiting: boolean;
+    secondsRemaining: number;
+    lastUpdateTimestamp?: number;
+  }
+}
 
 export type AppActionTypes =
   | ResetStateAction
@@ -272,6 +289,8 @@ export type AppActionTypes =
   | GetOtherTablesListActionFail
   | GetLastRoundActionSuccess
   | GetLastRoundActionFail
+  | SetTimerAction
+  | UpdateTimerDataAction
   ;
 
 export type AppAsyncActions =

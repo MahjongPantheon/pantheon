@@ -17,8 +17,8 @@ export type LoadingSet = {
 };
 
 export type TimerData = {
-  timeRemaining: number;
-  lastUpdateTimeRemaining: number;
+  secondsRemaining: number;
+  lastUpdateSecondsRemaining: number;
   lastUpdateTimestamp: number;
   waiting: boolean;
 };
@@ -50,4 +50,10 @@ export interface IAppState {
   yakuList: Graph<Yaku>;
 
   isUniversalWatcher: boolean;
+}
+
+export type TimerStorage = {
+  timer: number | null;
+  setInterval: (callback: () => any, milliseconds: number) => number;
+  clearInterval: (handle: number) => void;
 }
