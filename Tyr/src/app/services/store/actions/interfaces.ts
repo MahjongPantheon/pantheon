@@ -5,6 +5,7 @@ import { LCurrentGame, LGameConfig, LTimerState, LUser } from "../../../interfac
 import {RRoundPaymentsInfoMulti, RRoundPaymentsInfoSingle, RSessionOverview} from "../../../interfaces/remote";
 import {Table} from "../../../interfaces/common";
 
+export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
 export const START_NEW_GAME = 'START_NEW_GAME';
 export const SHOW_LAST_RESULTS = 'SHOW_LAST_RESULTS';
@@ -46,6 +47,10 @@ export const GET_LAST_ROUND_SUCCESS = 'GET_LAST_ROUND_SUCCESS';
 export const GET_LAST_ROUND_FAIL = 'GET_LAST_ROUND_FAIL';
 export const SET_TIMER = 'SET_TIMER';
 export const UPDATE_TIMER_DATA = 'UPDATE_TIMER_DATA';
+
+interface InitStateAction {
+  type: typeof INIT_STATE;
+}
 
 interface ResetStateAction {
   type: typeof RESET_STATE;
@@ -256,6 +261,7 @@ interface UpdateTimerDataAction {
 }
 
 export type AppActionTypes =
+  | InitStateAction
   | ResetStateAction
   | StartNewGameAction
   | ShowLastResultsAction

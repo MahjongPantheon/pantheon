@@ -18,14 +18,16 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, NgZone, ApplicationRef } from '@angular/core';
-import { AppState } from './primitives/appstate';
-import { RiichiApiService } from './services/riichiApi';
-import { MetrikaService } from './services/metrika';
-import { I18nService } from './services/i18n';
-import { environment } from '../environments/environment';
-import { IDB } from './services/idb';
-import { ThemeService } from './services/themes/service';
+import {ApplicationRef, Component, NgZone} from '@angular/core';
+import {RiichiApiService} from './services/riichiApi';
+import {MetrikaService} from './services/metrika';
+import {I18nService} from './services/i18n';
+import {IDB} from './services/idb';
+import {ThemeService} from './services/themes/service';
+import {Store} from "./services/store";
+import {HttpClient} from "@angular/common/http";
+import {INIT_STATE} from "./services/store/actions/interfaces";
+import {IAppState} from "./services/store/interfaces";
 
 @Component({
   selector: 'riichi-app',
@@ -33,25 +35,20 @@ import { ThemeService } from './services/themes/service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public state: AppState;
+  public store: Store;
+  public state: IAppState;
   constructor(
     private appRef: ApplicationRef,
     private zone: NgZone,
     private api: RiichiApiService,
     private metrika: MetrikaService,
+    private http: HttpClient,
     private i18n: I18nService,
     private storage: IDB,
     private themeService: ThemeService
   ) {
 
-    this.state = new AppState(
-      this.zone,
-      this.api,
-      this.i18n,
-      this.storage,
-      this.metrika
-    );
-
+    this.store = new Store(this.http);
     this.metrika.track(MetrikaService.APP_INIT);
 
     const userTheme = this.storage.get('currentTheme');
@@ -59,11 +56,11 @@ export class AppComponent {
       this.themeService.setTheme(userTheme);
     }
 
-    if (this.state.isIos) {
+    if (this.store.redux.getState().isIos) {
       document.addEventListener(
         'dblclick',
         (e: any) => {
-          e.preventDefault()
+          e.preventDefault();
           e.stopPropagation();
           return false;
         },
@@ -71,10 +68,14 @@ export class AppComponent {
       );
     }
 
-    window.__state = this.state; // for great debug
+    this.store.subscribe((newState: IAppState) => {
+      this.state = newState;
+      this.appRef.tick(); // trigger full change detection
+    });
+
     this.i18n.init((localeName: string) => {
       this.metrika.track(MetrikaService.I18N_INIT, { localeName });
-      this.state.init();
+      this.store.dispatch({ type: INIT_STATE });
       this.storage.set('currentLanguage', localeName);
     }, (error: any) => console.error(error));
   }

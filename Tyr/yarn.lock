@@ -2659,6 +2659,11 @@ deep-is@~0.1.3:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
 
+deepclone@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/deepclone/-/deepclone-1.0.2.tgz#1f38ec4d9214134997d03f92c7856fa97442bb74"
+  integrity sha1-HzjsTZIUE0mX0D+Sx4VvqXRCu3Q=
+
 default-gateway@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/default-gateway/-/default-gateway-4.2.0.tgz#167104c7500c2115f6dd69b0a536bb8ed720552b"
