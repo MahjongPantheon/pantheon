@@ -1,10 +1,10 @@
 import {Dispatch, Store as ReduxStore} from "redux";
-import {AppActionsAll, SET_TIMER, UPDATE_TIMER_DATA} from "../actions/interfaces";
+import {AppActionTypes, SET_TIMER, UPDATE_TIMER_DATA} from "../actions/interfaces";
 import {IAppState, TimerStorage} from "../interfaces";
 
 const now = () => Math.round((new Date()).getTime() / 1000);
 
-export const timerMw = (timerStorage: TimerStorage) => (store: ReduxStore<IAppState>) => (next: Dispatch<AppActionsAll>) => (action: AppActionsAll) => {
+export const timerMw = (timerStorage: TimerStorage) => (store: ReduxStore<IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
     case SET_TIMER:
       if (action.payload.waiting) {

@@ -20,8 +20,16 @@
 
 import { Component, Input } from '@angular/core';
 import { MetrikaService } from '../../services/metrika';
-import { Outcome, Player } from '../../interfaces/common';
-import { AppState } from '../../primitives/appstate';
+import { Player } from '../../interfaces/common';
+import {IAppState} from "../../services/store/interfaces";
+import {Dispatch} from "redux";
+import {
+  AppActionTypes,
+  TOGGLE_DEADHAND,
+  TOGGLE_LOSER, TOGGLE_NAGASHI, TOGGLE_PAO,
+  TOGGLE_RIICHI,
+  TOGGLE_WINNER
+} from "../../services/store/actions/interfaces";
 
 @Component({
   selector: 'screen-players-select',
@@ -29,11 +37,11 @@ import { AppState } from '../../primitives/appstate';
   styleUrls: ['style.css']
 })
 export class PlayersSelectScreen {
-  @Input() state: AppState;
-  @Input() paoSelectionMode: boolean;
-  @Input() nagashiSelectionMode: boolean;
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
+
   outcome() {
-    return this.state.getOutcome();
+    return this.state.currentOutcome;
   }
 
   constructor(
@@ -52,10 +60,10 @@ export class PlayersSelectScreen {
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-players-select' });
-    let players: Player[] = [].concat(this.state.getPlayers());
+    let players: Player[] = [].concat(this.state.players);
     let seating = ['東', '南', '西', '北'];
 
-    const current = this.state.getCurrentPlayerId();
+    const current = this.state.currentPlayerId;
 
     for (let i = 0; i < 4; i++) {
       if (players[0].id === current) {
@@ -80,22 +88,22 @@ export class PlayersSelectScreen {
   handle([player, what]: [Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao' | 'nagashi']) {
     switch (what) {
       case 'win':
-        this.state.toggleWinner(player);
+        this.dispatch({ type: TOGGLE_WINNER, payload: player.id });
         break;
       case 'lose':
-        this.state.toggleLoser(player);
+        this.dispatch({ type: TOGGLE_LOSER, payload: player.id });
         break;
       case 'riichi':
-        this.state.toggleRiichi(player);
+        this.dispatch({ type: TOGGLE_RIICHI, payload: player.id });
         break;
       case 'dead':
-        this.state.toggleDeadhand(player);
+        this.dispatch({ type: TOGGLE_DEADHAND, payload: player.id });
         break;
       case 'pao':
-        this.state.togglePao(player);
+        this.dispatch({ type: TOGGLE_PAO, payload: { id: player.id, yakuWithPao: this.state.gameConfig.yakuWithPao } });
         break;
       case 'nagashi':
-        this.state.toggleNagashi(player);
+        this.dispatch({ type: TOGGLE_NAGASHI, payload: player.id });
         break;
     }
   }

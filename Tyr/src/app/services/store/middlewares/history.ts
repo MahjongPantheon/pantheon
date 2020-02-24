@@ -1,6 +1,6 @@
 import {Dispatch, Store as ReduxStore} from "redux";
 import {
-  AppActionsAll,
+  AppActionTypes,
   CONFIRM_REGISTRATION_FAIL,
   GET_GAME_OVERVIEW_FAIL,
   GET_GAME_OVERVIEW_INIT,
@@ -10,7 +10,7 @@ import {
 } from "../actions/interfaces";
 import {MetrikaService} from "../../metrika";
 
-export const history = (/* HistoryService ? */) => (store: ReduxStore) => (next: Dispatch<AppActionsAll>) => (action: AppActionsAll) => {
+export const history = (/* HistoryService ? */) => (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
 
     default:

@@ -18,11 +18,21 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
-import { AppState } from '../../primitives/appstate';
-import { MetrikaService } from '../../services/metrika';
-import { Player } from '../../interfaces/common';
-import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import {Component, Input} from '@angular/core';
+import {MetrikaService} from '../../services/metrika';
+import {Player} from '../../interfaces/common';
+import {I18nComponent, I18nService} from '../auxiliary-i18n';
+import {IAppState} from "../../services/store/interfaces";
+import {Dispatch} from "redux";
+import {
+  AppActionTypes,
+  SHOW_LAST_RESULTS,
+  SHOW_LAST_ROUND,
+  SHOW_OTHER_TABLES_LIST,
+  START_NEW_GAME,
+  UPDATE_CURRENT_GAMES_INIT
+} from "../../services/store/actions/interfaces";
+import {getCurrentTimerZone} from "../../services/store/selectors/mimirSelectors";
 
 @Component({
   selector: 'screen-overview',
@@ -30,11 +40,8 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
   styleUrls: ['style.css']
 })
 export class OverviewScreen extends I18nComponent {
-  @Input() state: AppState;
-  @Input() players: [Player, Player, Player, Player];
-  @Input('loading') _loading: boolean;
-  @Input() currentGameHash: string;
-  @Input() currentRound: number;
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
   constructor(
     public i18n: I18nService,
     private metrika: MetrikaService
@@ -53,7 +60,7 @@ export class OverviewScreen extends I18nComponent {
   _diffedBy: string = null;
 
   get greeting() {
-    return this.i18n._t('Hello, %1!', [this.state.playerName()]);
+    return this.i18n._t('Hello, %1!', [this.state.currentPlayerDisplayName]);
   }
 
   ngOnInit() {
@@ -75,60 +82,60 @@ export class OverviewScreen extends I18nComponent {
   getChomboCount(who) {
     return Math.abs(
       (this[who].penalties || 0) /
-      this.state.getGameConfig('chomboPenalty')
+      this.state.gameConfig.chomboPenalty
     ) || '';
   }
 
   get timeRemaining() {
-    if (!this.state.getGameConfig('useTimer')) {
+    if (!this.state.gameConfig.useTimer) {
       return '';
     }
 
-    if (this.state.isTimerWaiting()) {
+    if (this.state.timer.waiting) {
       return '⏳';
     }
 
-    let min = Math.floor(this.state.getTimeRemaining() / 60);
-    let sec = this.state.getTimeRemaining() % 60;
+    let min = Math.floor(this.state.timer.secondsRemaining / 60);
+    let sec = this.state.timer.secondsRemaining % 60;
     return min.toString() + ':' + (
       (sec < 10) ? ("0" + sec.toString()) : sec.toString()
     );
   }
 
   get redZone() {
-    return this.state.getGameConfig('useTimer') && this.state.getCurrentTimerZone() === 'redZone';
+    return this.state.gameConfig.useTimer && getCurrentTimerZone(this.state) === 'redZone';
   }
 
   get yellowZone() {
-    return this.state.getGameConfig('useTimer') && this.state.getCurrentTimerZone() === 'yellowZone';
+    return this.state.gameConfig.useTimer && getCurrentTimerZone(this.state) === 'yellowZone';
   }
 
   get showNewGame(): boolean {
-    return !this.state.getGameConfig('autoSeating') && !this.isUniversalWatcher;
+    return !this.state.gameConfig.autoSeating && !this.isUniversalWatcher;
   }
 
   get showStatButton(): boolean {
-    return !!this.state.getGameConfig('eventStatHost') && !this.isUniversalWatcher;
+    return !!this.state.gameConfig.eventStatHost && !this.isUniversalWatcher;
   }
 
   newGame() {
-    this.state.newGame();
+    this.dispatch({ type: START_NEW_GAME })
   }
 
   lastResults() {
-    this.state.showLastResults();
+    this.dispatch({ type: SHOW_LAST_RESULTS });
   }
 
   gotoStat() {
-    window.open(`http://${this.state.getGameConfig('eventStatHost')}/last/`);
+    window.open(`https://${this.state.gameConfig.eventStatHost}/last/`);
   }
 
   reloadOverview() {
-    this.state.updateCurrentGames();
+    this.dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
   }
 
   viewLastRound() {
-    this.state.showLastRound();
+    this.dispatch({ type: SHOW_LAST_ROUND });
   }
 
   playerClick(who: string) {
@@ -140,21 +147,21 @@ export class OverviewScreen extends I18nComponent {
   }
 
   otherTables() {
-    this.state.showOtherTablesList();
+    this.dispatch({ type: SHOW_OTHER_TABLES_LIST });
   }
 
   ngOnChanges() {
-    if (!this.players || this.players.length !== 4) {
+    if (!this.state.players || this.state.players.length !== 4) {
       return;
     }
 
-    let players: Player[] = [].concat(this.players);
+    let players: Player[] = [].concat(this.state.players);
     let seating = ['東', '南', '西', '北'];
-    for (let i = 1; i < this.currentRound; i++) {
+    for (let i = 1; i < this.state.currentRound; i++) {
       seating = [seating.pop()].concat(seating);
     }
 
-    const current = this.state.getCurrentPlayerId();
+    const current = this.state.currentPlayerId;
     for (let i = 0; i < 4; i++) {
       if (players[0].id === current) {
         break;
@@ -176,7 +183,7 @@ export class OverviewScreen extends I18nComponent {
   }
 
   get isUniversalWatcher() {
-    return this.state.isUniversalWatcher();
+    return this.state.isUniversalWatcher;
   }
 }
 

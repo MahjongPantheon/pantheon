@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {createStore, combineReducers, applyMiddleware, Store as ReduxStore, Action, compose} from 'redux';
-import {AppActionsAll, AppActionTypes} from "./actions/interfaces";
+import {AppActionTypes, AppActionTypes1} from "./actions/interfaces";
 import { screenManageReducer } from "./reducers/screenManageReducer";
 import { mimirClient } from './middlewares/mimirClient';
 import { RiichiApiService } from "../riichiApi";
@@ -49,7 +49,7 @@ export class Store {
     this.store.subscribe(() => this.onUpdate(this.store.getState()));
   }
 
-  public dispatch(action: AppActionTypes) {
+  public dispatch(action: AppActionTypes1) {
     this.store.dispatch(action);
   }
 

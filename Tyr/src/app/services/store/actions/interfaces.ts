@@ -1,9 +1,14 @@
 import { YakuId } from "../../../primitives/yaku";
-import { AnyAction } from "redux";
 import { RemoteError } from "../../remoteError";
-import { LCurrentGame, LGameConfig, LTimerState, LUser } from "../../../interfaces/local";
-import {RRoundPaymentsInfoMulti, RRoundPaymentsInfoSingle, RSessionOverview} from "../../../interfaces/remote";
-import {Table} from "../../../interfaces/common";
+import {LCurrentGame, LGameConfig, LTimerState, LUser, LUserWithScore} from "../../../interfaces/local";
+import {
+  RRoundPaymentsInfo,
+  RRoundPaymentsInfoMulti,
+  RRoundPaymentsInfoSingle,
+  RSessionOverview
+} from "../../../interfaces/remote";
+import {Table,  Outcome} from "../../../interfaces/common";
+import {IAppState} from "../interfaces";
 
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
@@ -42,11 +47,31 @@ export const GET_OTHER_TABLES_LIST_FAIL = 'GET_OTHER_TABLES_LIST_FAIL';
 export const GET_OTHER_TABLE_INIT = 'GET_OTHER_TABLE_INIT';
 export const GET_OTHER_TABLE_SUCCESS = 'GET_OTHER_TABLE_SUCCESS';
 export const GET_OTHER_TABLE_FAIL = 'GET_OTHER_TABLE_FAIL';
+export const GET_OTHER_TABLE_LAST_ROUND_INIT = 'GET_OTHER_TABLE_LAST_ROUND_INIT';
+export const GET_OTHER_TABLE_LAST_ROUND_SUCCESS = 'GET_OTHER_TABLE_LAST_ROUND_SUCCESS';
+export const GET_OTHER_TABLE_LAST_ROUND_FAIL = 'GET_OTHER_TABLE_LAST_ROUND_FAIL';
 export const GET_LAST_ROUND_INIT = 'GET_LAST_ROUND_INIT';
 export const GET_LAST_ROUND_SUCCESS = 'GET_LAST_ROUND_SUCCESS';
 export const GET_LAST_ROUND_FAIL = 'GET_LAST_ROUND_FAIL';
 export const SET_TIMER = 'SET_TIMER';
 export const UPDATE_TIMER_DATA = 'UPDATE_TIMER_DATA';
+export const GET_CHANGES_OVERVIEW_INIT = 'GET_CHANGES_OVERVIEW_INIT';
+export const GET_CHANGES_OVERVIEW_SUCCESS = 'GET_CHANGES_OVERVIEW_SUCCESS';
+export const GET_CHANGES_OVERVIEW_FAIL = 'GET_CHANGES_OVERVIEW_FAIL';
+export const GET_LAST_RESULTS_INIT = 'GET_LAST_RESULTS_INIT';
+export const GET_LAST_RESULTS_SUCCESS = 'GET_LAST_RESULTS_SUCCESS';
+export const GET_LAST_RESULTS_FAIL = 'GET_LAST_RESULTS_FAIL';
+export const GET_ALL_PLAYERS_INIT = 'GET_ALL_PLAYERS_INIT';
+export const GET_ALL_PLAYERS_SUCCESS = 'GET_ALL_PLAYERS_SUCCESS';
+export const GET_ALL_PLAYERS_FAIL = 'GET_ALL_PLAYERS_FAIL';
+export const START_GAME_INIT = 'START_GAME_INIT';
+export const START_GAME_SUCCESS = 'START_GAME_SUCCESS';
+export const START_GAME_FAIL = 'START_GAME_FAIL';
+export const ADD_ROUND_INIT = 'ADD_GAME_INIT';
+export const ADD_ROUND_SUCCESS = 'ADD_GAME_SUCCESS';
+export const ADD_ROUND_FAIL = 'ADD_GAME_FAIL';
+export const INIT_BLANK_OUTCOME = 'INIT_BLANK_OUTCOME';
+export const SELECT_MULTIRON_WINNER = 'SELECT_MULTIRON_WINNER';
 
 interface InitStateAction {
   type: typeof INIT_STATE;
@@ -158,7 +183,6 @@ interface ToggleNagashiAction {
 
 interface ConfirmRegistrationActionInit {
   type: typeof CONFIRM_REGISTRATION_INIT;
-  async: true;
   payload: string;
 }
 interface ConfirmRegistrationActionSuccess {
@@ -175,7 +199,6 @@ interface SetCredentialsAction {
 }
 interface UpdateCurrentGamesActionInit {
   type: typeof UPDATE_CURRENT_GAMES_INIT;
-  async: true;
 }
 interface UpdateCurrentGamesActionSuccess {
   type: typeof UPDATE_CURRENT_GAMES_SUCCESS;
@@ -192,7 +215,6 @@ interface UpdateCurrentGamesActionFail {
 }
 interface GetGameOverviewActionInit {
   type: typeof GET_GAME_OVERVIEW_INIT;
-  async: true;
   payload: string;
 }
 interface GetGameOverviewActionSuccess {
@@ -206,9 +228,8 @@ interface GetGameOverviewActionFail {
 interface ForceLogoutAction {
   type: typeof FORCE_LOGOUT;
 }
-interface GetOtherTablesListAction {
+interface GetOtherTablesListActionInit {
   type: typeof GET_OTHER_TABLES_LIST_INIT;
-  async: true;
 }
 interface GetOtherTablesListActionSuccess {
   type: typeof GET_OTHER_TABLES_LIST_SUCCESS;
@@ -218,9 +239,8 @@ interface GetOtherTablesListActionFail {
   type: typeof GET_OTHER_TABLES_LIST_FAIL;
   payload: RemoteError;
 }
-interface GetOtherTableAction {
+interface GetOtherTableActionInit {
   type: typeof GET_OTHER_TABLE_INIT;
-  async: true;
   payload: string;
 }
 interface GetOtherTableActionSuccess {
@@ -231,9 +251,20 @@ interface GetOtherTableActionFail {
   type: typeof GET_OTHER_TABLE_FAIL;
   payload: RemoteError;
 }
-interface GetLastRoundAction {
+interface GetOtherTableLastRoundActionInit {
+  type: typeof GET_OTHER_TABLE_LAST_ROUND_INIT;
+  payload: string;
+}
+interface GetOtherTableLastRoundActionSuccess {
+  type: typeof GET_OTHER_TABLE_LAST_ROUND_SUCCESS;
+  payload: RRoundPaymentsInfoSingle | RRoundPaymentsInfoMulti;
+}
+interface GetOtherTableLastRoundActionFail {
+  type: typeof GET_OTHER_TABLE_LAST_ROUND_FAIL;
+  payload: RemoteError;
+}
+interface GetLastRoundActionInit {
   type: typeof GET_LAST_ROUND_INIT;
-  async: true;
   payload: string;
 }
 interface GetLastRoundActionSuccess {
@@ -258,6 +289,88 @@ interface UpdateTimerDataAction {
     secondsRemaining: number;
     lastUpdateTimestamp?: number;
   }
+}
+
+interface GetChangesOverviewActionInit {
+  type: typeof GET_CHANGES_OVERVIEW_INIT;
+  payload: IAppState;
+}
+
+interface GetChangesOverviewActionSuccess {
+  type: typeof GET_CHANGES_OVERVIEW_SUCCESS;
+  payload: RRoundPaymentsInfo;
+}
+
+interface GetChangesOverviewActionFail {
+  type: typeof GET_CHANGES_OVERVIEW_FAIL;
+  payload: RemoteError;
+}
+
+interface GetLastResultsActionInit {
+  type: typeof GET_LAST_RESULTS_INIT;
+}
+
+interface GetLastResultsActionSuccess {
+  type: typeof GET_LAST_RESULTS_SUCCESS;
+  payload: LUserWithScore[];
+}
+
+interface GetLastResultsActionFail {
+  type: typeof GET_LAST_RESULTS_FAIL;
+  payload: RemoteError;
+}
+
+interface GetAllPlayersActionInit {
+  type: typeof GET_ALL_PLAYERS_INIT;
+}
+
+interface GetAllPlayersActionSuccess {
+  type: typeof GET_ALL_PLAYERS_SUCCESS;
+  payload: LUser[];
+}
+
+interface GetAllPlayersActionFail {
+  type: typeof GET_ALL_PLAYERS_FAIL;
+  payload: RemoteError;
+}
+
+interface StartGameActionInit {
+  type: typeof START_GAME_INIT;
+  payload: number[];
+}
+
+interface StartGameActionSuccess {
+  type: typeof START_GAME_SUCCESS;
+  payload: string;
+}
+
+interface StartGameActionFail {
+  type: typeof START_GAME_FAIL;
+  payload: RemoteError;
+}
+
+interface AddRoundActionInit {
+  type: typeof ADD_ROUND_INIT;
+  payload: IAppState;
+}
+
+interface AddRoundActionSuccess {
+  type: typeof ADD_ROUND_SUCCESS;
+}
+
+interface AddRoundActionFail {
+  type: typeof ADD_ROUND_FAIL;
+  payload: RemoteError;
+}
+
+interface InitBlankOutcomeAction {
+  type: typeof INIT_BLANK_OUTCOME;
+  payload: Outcome;
+}
+
+interface SelectMultironWinnerAction {
+  type: typeof SELECT_MULTIRON_WINNER;
+  payload: number;
 }
 
 export type AppActionTypes =
@@ -297,19 +410,31 @@ export type AppActionTypes =
   | GetLastRoundActionFail
   | SetTimerAction
   | UpdateTimerDataAction
-  ;
-
-export type AppAsyncActions =
+  | GetChangesOverviewActionSuccess
+  | GetChangesOverviewActionFail
+  | GetLastResultsActionSuccess
+  | GetLastResultsActionFail
+  | GetAllPlayersActionSuccess
+  | GetAllPlayersActionFail
+  | StartGameActionSuccess
+  | StartGameActionFail
   | ConfirmRegistrationActionInit
   | UpdateCurrentGamesActionInit
   | GetGameOverviewActionInit
-  | GetOtherTableAction
-  | GetOtherTablesListAction
-  | GetLastRoundAction
+  | GetOtherTableActionInit
+  | GetOtherTablesListActionInit
+  | GetOtherTableLastRoundActionInit
+  | GetOtherTableLastRoundActionSuccess
+  | GetOtherTableLastRoundActionFail
+  | GetLastRoundActionInit
+  | GetChangesOverviewActionInit
+  | GetLastResultsActionInit
+  | GetAllPlayersActionInit
+  | StartGameActionInit
+  | AddRoundActionInit
+  | AddRoundActionSuccess
+  | AddRoundActionFail
+  | InitBlankOutcomeAction
+  | SelectMultironWinnerAction
   ;
 
-export type AppActionsAll = AppActionTypes | AppAsyncActions;
-
-export function isAsyncAction(action: AnyAction): action is AppAsyncActions {
-  return action.async === true;
-}

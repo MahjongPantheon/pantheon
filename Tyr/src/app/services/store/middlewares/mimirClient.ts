@@ -1,26 +1,49 @@
-import { Dispatch, Store as ReduxStore } from 'redux';
+import {Dispatch, Store as ReduxStore} from 'redux';
 import {
-  AppActionsAll,
+  ADD_ROUND_FAIL,
+  ADD_ROUND_INIT,
+  ADD_ROUND_SUCCESS,
+  AppActionTypes,
   CONFIRM_REGISTRATION_FAIL,
   CONFIRM_REGISTRATION_INIT,
   CONFIRM_REGISTRATION_SUCCESS,
   FORCE_LOGOUT,
+  GET_ALL_PLAYERS_FAIL,
+  GET_ALL_PLAYERS_INIT,
+  GET_ALL_PLAYERS_SUCCESS,
+  GET_CHANGES_OVERVIEW_FAIL,
+  GET_CHANGES_OVERVIEW_INIT,
+  GET_CHANGES_OVERVIEW_SUCCESS,
   GET_GAME_OVERVIEW_FAIL,
   GET_GAME_OVERVIEW_INIT,
-  GET_GAME_OVERVIEW_SUCCESS, GET_LAST_ROUND_FAIL,
-  GET_LAST_ROUND_INIT, GET_LAST_ROUND_SUCCESS, GET_OTHER_TABLE_FAIL,
-  GET_OTHER_TABLE_INIT, GET_OTHER_TABLE_SUCCESS, GET_OTHER_TABLES_LIST_FAIL,
-  GET_OTHER_TABLES_LIST_INIT, GET_OTHER_TABLES_LIST_SUCCESS,
+  GET_GAME_OVERVIEW_SUCCESS,
+  GET_LAST_RESULTS_FAIL,
+  GET_LAST_RESULTS_INIT,
+  GET_LAST_RESULTS_SUCCESS,
+  GET_LAST_ROUND_FAIL,
+  GET_LAST_ROUND_INIT,
+  GET_LAST_ROUND_SUCCESS,
+  GET_OTHER_TABLE_FAIL,
+  GET_OTHER_TABLE_INIT, GET_OTHER_TABLE_LAST_ROUND_INIT,
+  GET_OTHER_TABLE_SUCCESS,
+  GET_OTHER_TABLES_LIST_FAIL,
+  GET_OTHER_TABLES_LIST_INIT,
+  GET_OTHER_TABLES_LIST_SUCCESS,
+  RESET_STATE,
   SET_CREDENTIALS,
+  START_GAME_FAIL,
+  START_GAME_INIT,
+  START_GAME_SUCCESS,
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS
 } from "../actions/interfaces";
-import { RiichiApiService } from "../../riichiApi";
-import { LCurrentGame, LGameConfig, LTimerState, LUser } from "../../../interfaces/local";
-import { RemoteError } from "../../remoteError";
+import {RiichiApiService} from "../../riichiApi";
+import {LCurrentGame, LGameConfig, LTimerState, LUser} from "../../../interfaces/local";
+import {RemoteError} from "../../remoteError";
+import {IAppState} from "../interfaces";
 
-export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) => (next: Dispatch<AppActionsAll>) => (action: AppActionsAll) => {
+export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
     case CONFIRM_REGISTRATION_INIT:
       loginWithRetry(action.payload, api, next);
@@ -41,8 +64,24 @@ export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) => (ne
     case GET_OTHER_TABLE_INIT:
       getOtherTable(action.payload, api, next);
       break;
+    case GET_OTHER_TABLE_LAST_ROUND_INIT:
     case GET_LAST_ROUND_INIT:
       getLastRound(action.payload, api, next);
+      break;
+    case GET_CHANGES_OVERVIEW_INIT:
+      getChangesOverview(action.payload, api, next);
+      break;
+    case GET_LAST_RESULTS_INIT:
+      getLastResults(api, next);
+      break;
+    case GET_ALL_PLAYERS_INIT:
+      getAllPlayers(api, next);
+      break;
+    case START_GAME_INIT:
+      startGame(action.payload, api, next, store.dispatch);
+      break;
+    case ADD_ROUND_INIT:
+      addRound(action.payload, api, next, store.dispatch);
       break;
     default:
       return next(action);
@@ -125,4 +164,45 @@ function getLastRound(sessionHash: string, api: RiichiApiService, dispatch: Disp
   api.getLastRound(sessionHash)
     .then((paymentsInfo) => dispatch({ type: GET_LAST_ROUND_SUCCESS, payload: paymentsInfo }))
     .catch((e) => dispatch({ type: GET_LAST_ROUND_FAIL, payload: e }));
+}
+
+function getChangesOverview(state: IAppState, api: RiichiApiService, dispatch: Dispatch) {
+  dispatch({ type: GET_CHANGES_OVERVIEW_INIT });
+  api.getChangesOverview(state)
+    .then((overview) => dispatch({ type: GET_CHANGES_OVERVIEW_SUCCESS, payload: overview }))
+    .catch((e) => dispatch({ type: GET_CHANGES_OVERVIEW_FAIL, payload: e }));
+}
+
+function addRound(state: IAppState, api: RiichiApiService, dispatch: Dispatch, dispatchToStore: Dispatch) {
+  dispatch({ type: ADD_ROUND_INIT });
+  api.addRound(state)
+    .then(() => {
+      dispatch({ type: ADD_ROUND_SUCCESS });
+      dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: state.currentSessionHash });
+    }).catch((e) => dispatch({ type: ADD_ROUND_FAIL, payload: e }));
+}
+
+function getLastResults(api: RiichiApiService, dispatch: Dispatch) {
+  dispatch({ type: GET_LAST_RESULTS_INIT });
+  api.getLastResults()
+    .then((results) => dispatch({ type: GET_LAST_RESULTS_SUCCESS, payload: results }))
+    .catch((e) => dispatch({ type: GET_LAST_RESULTS_FAIL, payload: e }));
+}
+
+function getAllPlayers(api: RiichiApiService, dispatch: Dispatch) {
+  dispatch({ type: GET_ALL_PLAYERS_INIT });
+  api.getAllPlayers()
+    .then((results) => dispatch({ type: GET_ALL_PLAYERS_SUCCESS, payload: results }))
+    .catch((e) => dispatch({ type: GET_ALL_PLAYERS_FAIL, payload: e }));
+}
+
+function startGame(playerIds: number[], api: RiichiApiService, dispatch: Dispatch, dispatchToStore: Dispatch) {
+  dispatch({ type: START_GAME_INIT });
+  api.startGame(playerIds)
+    .then((results) => {
+      dispatchToStore({ type: START_GAME_SUCCESS, payload: results });
+      dispatchToStore({ type: RESET_STATE });
+      dispatchToStore({ type: UPDATE_CURRENT_GAMES_INIT });
+    })
+    .catch((e) => dispatch({ type: START_GAME_FAIL, payload: e }));
 }

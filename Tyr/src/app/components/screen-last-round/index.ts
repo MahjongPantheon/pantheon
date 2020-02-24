@@ -27,6 +27,9 @@ import { RiichiApiService } from '../../services/riichiApi';
 import { MetrikaService } from '../../services/metrika';
 import { RemoteError } from '../../services/remoteError';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import {IAppState} from "../../services/store/interfaces";
+import {Dispatch} from "redux";
+import {AppActionTypes, GET_LAST_ROUND_INIT} from "../../services/store/actions/interfaces";
 
 @Component({
   selector: 'screen-last-round',
@@ -34,7 +37,8 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
   styleUrls: ['style.css']
 })
 export class LastRoundScreen extends I18nComponent {
-  @Input() state: AppState;
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
   public _dataReady: boolean;
   public _data: RRoundPaymentsInfo;
   public confirmed: boolean = false;
@@ -42,7 +46,6 @@ export class LastRoundScreen extends I18nComponent {
 
   constructor(
     public i18n: I18nService,
-    private api: RiichiApiService,
     private metrika: MetrikaService
   ) {
     super(i18n);
@@ -52,18 +55,9 @@ export class LastRoundScreen extends I18nComponent {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-last-round' });
     this._error = '';
     this._dataReady = false;
-    this.api.getLastRound()
-      .then((overview) => {
-        if (overview) {
-          this._data = overview;
-          this._dataReady = true;
-          this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-last-round', request: 'getLastRound' });
-        } else {
-          this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-last-round', request: 'getLastRound' });
-          this.onerror(null);
-        }
-      })
-      .catch((e) => this.onerror(e));
+
+    this.dispatch({ type: GET_LAST_ROUND_INIT, payload: this.state.currentSessionHash, async: true });
+    // this._data = overview; // TODO ##1: this should be taken from state!
   }
 
   getWins(): Array<{ winner: string, han: number, fu: number, dora: number, yakuList: string }> {

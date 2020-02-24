@@ -1,10 +1,10 @@
 import {initialState} from "../state";
-import {AppActionsAll, UPDATE_TIMER_DATA} from "../actions/interfaces";
+import {AppActionTypes, UPDATE_TIMER_DATA} from "../actions/interfaces";
 import {IAppState} from "../interfaces";
 
 export function timerReducer(
   state = initialState,
-  action: AppActionsAll
+  action: AppActionTypes
 ): IAppState {
   switch (action.type) {
     case UPDATE_TIMER_DATA:

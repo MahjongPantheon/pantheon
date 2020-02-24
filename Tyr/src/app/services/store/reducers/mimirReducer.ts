@@ -1,6 +1,6 @@
 import {initialState} from "../state";
 import {
-  AppActionsAll,
+  AppActionTypes,
   CONFIRM_REGISTRATION_FAIL,
   CONFIRM_REGISTRATION_INIT,
   CONFIRM_REGISTRATION_SUCCESS, UPDATE_CURRENT_GAMES_FAIL, UPDATE_CURRENT_GAMES_INIT, UPDATE_CURRENT_GAMES_SUCCESS
@@ -10,7 +10,7 @@ import {makeYakuGraph} from "../../../primitives/yaku-compat";
 
 export function mimirReducer(
   state = initialState,
-  action: AppActionsAll
+  action: AppActionTypes
 ): IAppState {
   switch (action.type) {
     case CONFIRM_REGISTRATION_INIT:

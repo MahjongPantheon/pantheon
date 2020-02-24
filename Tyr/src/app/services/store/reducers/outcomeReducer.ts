@@ -1,7 +1,7 @@
-import { initialState } from "../state";
+import {initBlankOutcome, initialState} from "../state";
 import {
-  ADD_YAKU,
-  AppActionTypes,
+  ADD_YAKU, AppActionTypes,
+  INIT_BLANK_OUTCOME,
   REMOVE_YAKU,
   SET_DORA_COUNT,
   SET_FU_COUNT,
@@ -21,11 +21,11 @@ import {
   modifyWinOutcome,
   removeYakuFromProps
 } from "./util";
-import { getRequiredYaku } from "../../../primitives/appstate/yaku";
 import { AppOutcome } from "../../../interfaces/app";
 import { Player } from "../../../interfaces/common";
 import { intersection } from "lodash";
 import { unpack } from "../../../primitives/yaku-compat";
+import { getRequiredYaku } from "../selectors/yaku";
 
 /**
  * Get id of player who is dealer in this round
@@ -45,6 +45,11 @@ export function outcomeReducer(
 ): IAppState {
   let winProps;
   switch (action.type) {
+    case INIT_BLANK_OUTCOME:
+      return {
+        ...state,
+        currentOutcome: initBlankOutcome(state.currentRound, action.payload)
+      };
     case SET_DORA_COUNT:
       return modifyWinOutcome(state, { 'dora': action.payload.count }, () => action.payload.winner);
     case SET_FU_COUNT:
@@ -99,7 +104,7 @@ export function outcomeReducer(
 
       return modifyWinOutcome(state, winProps, () => action.payload.winner);
     case REMOVE_YAKU:
-      if (getRequiredYaku(state.currentOutcome, action.payload.winner).indexOf(action.payload.id) !== -1) {
+      if (getRequiredYaku(state).indexOf(action.payload.id) !== -1) {
         // do not allow to disable required yaku
         return state;
       }

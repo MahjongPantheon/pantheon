@@ -18,15 +18,19 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
-import { Yaku, Player } from '../../interfaces/common';
-import { YakuId, yakuMap, sortByViewPriority } from '../../primitives/yaku';
-import { AppState } from '../../primitives/appstate';
-import { RRoundPaymentsInfo } from '../../interfaces/remote';
-import { RiichiApiService } from '../../services/riichiApi';
-import { MetrikaService } from '../../services/metrika';
-import { RemoteError } from '../../services/remoteError';
-import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import {Component, Input} from '@angular/core';
+import {RRoundPaymentsInfo} from '../../interfaces/remote';
+import {MetrikaService} from '../../services/metrika';
+import {RemoteError} from '../../services/remoteError';
+import {I18nComponent, I18nService} from '../auxiliary-i18n';
+import {IAppState} from "../../services/store/interfaces";
+import {Dispatch} from "redux";
+import {
+  ADD_ROUND_INIT,
+  AppActionTypes,
+  GET_CHANGES_OVERVIEW_INIT,
+  GET_GAME_OVERVIEW_INIT
+} from "../../services/store/actions/interfaces";
 
 @Component({
   selector: 'screen-confirmation',
@@ -34,7 +38,8 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
   styleUrls: ['style.css']
 })
 export class ConfirmationScreen extends I18nComponent {
-  @Input() state: AppState;
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
   public _dataReady: boolean;
   public _data: RRoundPaymentsInfo;
   public confirmed: boolean = false;
@@ -42,7 +47,6 @@ export class ConfirmationScreen extends I18nComponent {
 
   constructor(
     public i18n: I18nService,
-    private api: RiichiApiService,
     private metrika: MetrikaService
   ) {
     super(i18n);
@@ -52,20 +56,12 @@ export class ConfirmationScreen extends I18nComponent {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-confirmation' });
     this._error = '';
     this._dataReady = false;
-    this.api.getChangesOverview(this.state)
-      .then((overview) => {
-        this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-confirmation', request: 'getChangesOverview' });
-        this._data = overview;
-        this._dataReady = true;
-      })
-      .catch((e) => this.onerror(e, 'getChangesOverview'));
+    this.dispatch({ type: GET_CHANGES_OVERVIEW_INIT, payload: this.state });
   }
 
   confirm() {
     this._dataReady = false;
-    this.api.addRound(this.state)
-      .then(() => this.okay())
-      .catch((e) => this.onerror(e, 'addRound'));
+    this.dispatch({ type: ADD_ROUND_INIT, payload: this.state });
   }
 
   onerror(e, reqType: string) {
@@ -84,7 +80,8 @@ export class ConfirmationScreen extends I18nComponent {
   okay() {
     this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-confirmation', request: 'addRound' });
     this._dataReady = false;
+    this.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: this.state.currentSessionHash });
     // when finished, appstate goes to overview screen automatically, no need to go to next
-    this.state.updateOverview((finished) => finished ? null : this.state.nextScreen());
+    // this.state.updateOverview((finished) => finished ? null : this.state.nextScreen()); // TODO
   }
 }

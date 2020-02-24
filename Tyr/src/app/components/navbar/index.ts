@@ -19,8 +19,29 @@
  */
 
 import { Component, Input } from '@angular/core';
-import { AppState } from '../../primitives/appstate';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { IAppState } from "../../services/store/interfaces";
+import { Dispatch } from "redux";
+import {
+  AppActionTypes,
+  GOTO_NEXT_SCREEN,
+  GOTO_PREV_SCREEN,
+  OPEN_SETTINGS, SET_DORA_COUNT, SET_FU_COUNT
+} from "../../services/store/actions/interfaces";
+import {
+  doraOptions,
+  fuOptions,
+  selectedFu,
+  selectedDora,
+  isMultiron,
+  multironTitle,
+  outcome,
+  han,
+  tournamentTitle,
+  mayGoNextFromYakuSelect,
+  mayGoNextFromPlayersSelect,
+  mayGoNextFromNagashiSelect
+} from "../../services/store/selectors/navbarSelectors";
 
 @Component({
   selector: 'nav-bar',
@@ -28,154 +49,47 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
   styleUrls: ['./style.css']
 })
 export class NavBarComponent extends I18nComponent {
-  @Input() state: AppState;
-  @Input() screen: AppState['_currentScreen'];
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
 
   constructor(public i18n: I18nService) { super(i18n); }
 
-  get doraOptions() {
-    if (this.state.yakumanInYaku()) {
-      return [0];
-    }
-
-    if (this.state.getGameConfig('rulesetTitle') === 'jpmlA') {
-      // TODO: make withUradora/withKandora config items and use them, not title!
-      return [0, 1, 2, 3, 4];
-    }
-
-    return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
-  }
-
-  get fuOptions() {
-    return this.state.getPossibleFu();
-  }
-
-  get selectedFu() {
-    return this.state.getFu();
-  }
-
-  set selectedFu(fu: any) {
-    this.state.setFu(parseInt(fu, 10));
-  }
-
-  get selectedDora() {
-    return this.state.getDora();
-  }
-
-  set selectedDora(dora: any) {
-    this.state.setDora(parseInt(dora, 10));
-  }
-
-  isMultiron() {
-    return this.state.getOutcome() === 'multiron';
-  }
-
-  multironTitle() {
-    if (this.state.getOutcome() === 'multiron' && this.state.getMultiRonCount() === 3) {
-      return this.i18n._t('Triple ron');
-    }
-    if (this.state.getOutcome() === 'multiron' && this.state.getMultiRonCount() === 2) {
-      return this.i18n._t('Double ron');
-    }
-  }
-
-  outcome() {
-    switch (this.state.getOutcome()) {
-      case 'ron':
-        return this.i18n._t('Ron');
-      case 'multiron':
-        return this.i18n._t('Double/Triple ron');
-      case 'tsumo':
-        return this.i18n._t('Tsumo');
-      case 'draw':
-        return this.i18n._t('Exhaustive draw');
-      case 'abort':
-        return this.i18n._t('Abortive draw');
-      case 'nagashi':
-        return this.i18n._t('Nagashi: select tenpai');
-      case 'chombo':
-        return this.i18n._t('Chombo');
-      default:
-        return '';
-    }
-  }
-
-  showHanFu() {
-    return ['ron', 'multiron', 'tsumo']
-      .indexOf(this.state.getOutcome()) !== -1;
-  }
-
-  han(): number {
-    return this.state.getHan();
-  }
-
-  overrideFu(): number {
-    return this.state.getFu();
-  }
-
   isScreen(...screens: string[]): boolean {
-    return screens.indexOf(this.screen) !== -1;
+    return screens.indexOf(this.state.currentScreen) !== -1;
   }
 
-  mayGoNext(screen): boolean {
-    switch (screen) {
-      case 'yakuSelect':
-        switch (this.state.getOutcome()) {
-          case 'ron':
-          case 'tsumo':
-            return this.state.getHan() != 0;
-          case 'multiron':
-            return this.state.getWinningUsers().reduce((acc, user) => {
-              return acc && (this.state.getHanOf(user.id) != 0);
-            }, true);
-        }
-        return false;
-      case 'playersSelect':
-        switch (this.state.getOutcome()) {
-          case 'ron':
-            return this.state.getWinningUsers().length === 1
-              && this.state.getLosingUsers().length === 1;
-          case 'tsumo':
-            return this.state.getWinningUsers().length === 1;
-          case 'draw':
-          case 'abort':
-          case 'nagashi':
-            return true;
-          case 'multiron':
-            return this.state.getWinningUsers().length >= 1
-              && this.state.getLosingUsers().length === 1;
-          case 'chombo':
-            return this.state.getLosingUsers().length === 1;
-        }
-        break;
-      case 'nagashiSelect':
-        return this.state.getNagashiUsers().length >= 1;
-      default:
-        return true;
-    }
-  }
+  get doraOptions() { return doraOptions(this.state); }
+  get fuOptions() { return fuOptions(this.state); }
+  get selectedFu() { return selectedFu(this.state); }
+  get selectedDora() { return selectedDora(this.state); }
+  get isMultiron() { return isMultiron(this.state); }
+  get multironTitle() { return multironTitle(this.state); }
+  get outcome() { return outcome(this.state); }
+  get han(): number { return han(this.state); }
+  get tournamentTitle(): string { return tournamentTitle(this.state); }
+  get mayGoNextFromYakuSelect() { return mayGoNextFromYakuSelect(this.state); }
+  get mayGoNextFromPlayersSelect() { return mayGoNextFromPlayersSelect(this.state); }
+  get mayGoNextFromNagashiSelect() { return mayGoNextFromNagashiSelect(this.state); }
 
   scrollDown() {
     document.querySelector('.scroller-wrap').scrollTop = document.querySelector('.scroller-wrap').scrollHeight;
   }
 
-  tournamentTitle(): string {
-    return this.state.getEventTitle();
+  set selectedDora(dora: any) {
+    this.dispatch({ type: SET_DORA_COUNT, payload: {
+      count: parseInt(dora, 10),
+      winner: this.state.multironCurrentWinner
+    }});
   }
 
-  prevScreen() {
-    this.state.prevScreen();
+  set selectedFu(fu: any) {
+    this.dispatch({ type: SET_FU_COUNT, payload: {
+      count: parseInt(fu, 10),
+      winner: this.state.multironCurrentWinner
+    }});
   }
 
-  nextScreen() {
-    this.state.nextScreen();
-  }
-
-  openSettings() {
-    this.state.openSettings();
-  }
-
-  onFuSelect(fu) {
-    // TODO: wat?
-  }
+  prevScreen() { this.dispatch({ type: GOTO_PREV_SCREEN }); }
+  nextScreen() { this.dispatch({ type: GOTO_NEXT_SCREEN }); }
+  openSettings() { this.dispatch({ type: OPEN_SETTINGS }); }
 }

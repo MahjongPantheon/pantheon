@@ -5,6 +5,7 @@ import {YakuId} from "../../../primitives/yaku";
 import {AppOutcome} from "../../../interfaces/app";
 import {intersection} from "lodash";
 import {unpack} from "../../../primitives/yaku-compat";
+import {AppState} from "../../../primitives/appstate";
 
 // TODO: memoize all
 export function mimirSelector(state: IAppState) {}
@@ -185,3 +186,22 @@ export function getRiichiUsers(state: IAppState): Player[] {
   }
 }
 
+export function getCurrentTimerZone(state: IAppState) {
+  let zoneLength;
+  switch (state.gameConfig.timerPolicy) {
+    case 'redZone':
+      zoneLength = state.gameConfig.redZone;
+      if (zoneLength && (state.timer.secondsRemaining < zoneLength) && !state.timer.waiting) {
+        return 'redZone';
+      }
+      break;
+    case 'yellowZone':
+      zoneLength = state.gameConfig.yellowZone;
+      if (zoneLength && (state.timer.secondsRemaining < zoneLength) && !state.timer.waiting) {
+        return state.yellowZoneAlreadyPlayed ? 'redZone' : 'yellowZone';
+      }
+      break;
+    default:
+  }
+  return 'none';
+}

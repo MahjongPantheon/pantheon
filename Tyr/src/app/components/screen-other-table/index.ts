@@ -18,13 +18,19 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
-import { AppState } from '../../primitives/appstate';
-import { YakuId, yakuMap } from '../../primitives/yaku';
-import { Player } from '../../interfaces/common';
-import { MetrikaService } from '../../services/metrika';
-import { RRoundPaymentsInfo } from '../../interfaces/remote';
-import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import {Component, Input} from '@angular/core';
+import {YakuId, yakuMap} from '../../primitives/yaku';
+import {Player} from '../../interfaces/common';
+import {MetrikaService} from '../../services/metrika';
+import {RRoundPaymentsInfo} from '../../interfaces/remote';
+import {I18nComponent, I18nService} from '../auxiliary-i18n';
+import {IAppState} from "../../services/store/interfaces";
+import {Dispatch} from "redux";
+import {
+  AppActionTypes,
+  GET_OTHER_TABLE_INIT,
+  GET_OTHER_TABLE_LAST_ROUND_INIT
+} from "../../services/store/actions/interfaces";
 
 @Component({
   selector: 'screen-other-table',
@@ -32,9 +38,8 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
   styleUrls: ['style.css']
 })
 export class OtherTableScreen extends I18nComponent {
-  @Input() state: AppState;
-  @Input() players: Player[];
-  @Input() lastRound: RRoundPaymentsInfo;
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
   constructor(
     public i18n: I18nService,
     private metrika: MetrikaService
@@ -51,7 +56,7 @@ export class OtherTableScreen extends I18nComponent {
 
   get lastRoundInfo() {
     if (this._showLastRound) {
-      return this.lastRound;
+      return this.state.currentOtherTableLastRound;
     }
 
     return null;
@@ -71,15 +76,15 @@ export class OtherTableScreen extends I18nComponent {
   _currentPlayer: number = 0;
 
   get currentGameHash() {
-    return this.state.getCurrentOtherTableHash();
+    return this.state.currentOtherTableHash;
   }
 
   get currentTable() {
-    return this.state.getCurrentOtherTable().state;
+    return this.state.currentOtherTable.state;
   }
 
   get _loading() {
-    return !this._dataUpdated && this.state.isLoading('otherTable');
+    return !this._dataUpdated && this.state.loading.otherTable;
   }
 
   getScore(who) {
@@ -97,20 +102,19 @@ export class OtherTableScreen extends I18nComponent {
   getChomboCount(who) {
     return Math.abs(
       (this[who].penalties || 0) /
-      this.state.getGameConfig('chomboPenalty')
+      this.state.gameConfig.chomboPenalty
     ) || '';
   }
 
   reloadOverview() {
-    this.state.updateOtherTable(this.currentGameHash);
+    this.dispatch({ type: GET_OTHER_TABLE_INIT, payload: this.currentGameHash });
   }
 
   viewLastRound() {
-    this.state.updateOtherTableLastRound(this.currentGameHash, () => {
-      this._showLastRound = true;
-      clearTimeout(this._lastRoundTimer);
-      this._lastRoundTimer = setTimeout(() => this._showLastRound = false, 8000);
-    });
+    this.dispatch({ type: GET_OTHER_TABLE_LAST_ROUND_INIT, payload: this.currentGameHash });
+    // TODO
+    // clearTimeout(this._lastRoundTimer);
+    // this._lastRoundTimer = setTimeout(() => this._showLastRound = false, 8000);
   }
 
   rotateTable(dir: boolean) {
@@ -132,11 +136,11 @@ export class OtherTableScreen extends I18nComponent {
 
   ngOnChanges() {
     if (
-      this.lastRound &&
+      this.state.currentOtherTableLastRound &&
       this._lastRoundLocal &&
-      this._lastRoundLocal.penaltyFor !== this.lastRound.penaltyFor &&
-      this._lastRoundLocal.honba !== this.lastRound.honba &&
-      this._lastRoundLocal.round !== this.lastRound.round
+      this._lastRoundLocal.penaltyFor !== this.state.currentOtherTableLastRound.penaltyFor &&
+      this._lastRoundLocal.honba !== this.state.currentOtherTableLastRound.honba &&
+      this._lastRoundLocal.round !== this.state.currentOtherTableLastRound.round
     ) {
       clearTimeout(this._lastRoundTimer);
       this._showLastRound = true;
@@ -144,11 +148,11 @@ export class OtherTableScreen extends I18nComponent {
     }
 
     this.updatePlayers();
-    this._lastRoundLocal = this.lastRound;
+    this._lastRoundLocal = this.state.currentOtherTableLastRound;
   }
 
   ngOnInit() {
-    this.state.updateOtherTable(this.currentGameHash);
+    this.dispatch({ type: GET_OTHER_TABLE_INIT, payload: this.currentGameHash });
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-table' });
     this._lastRoundTimer = null;
     this._showLastRound = false;
@@ -162,14 +166,14 @@ export class OtherTableScreen extends I18nComponent {
   }
 
   private updatePlayers() {
-    if (!this.players || this.players.length !== 4) {
+    if (!this.state.currentOtherTablePlayers || this.state.currentOtherTablePlayers.length !== 4) {
       this._dataUpdated = false;
       return;
     }
 
     this._dataUpdated = true;
 
-    let players: Player[] = [].concat(this.players);
+    let players: Player[] = [].concat(this.state.currentOtherTablePlayers);
     let seating = ['東', '南', '西', '北'];
     for (let i = 1; i < this.currentTable.round; i++) {
       seating = [seating.pop()].concat(seating);
@@ -282,7 +286,7 @@ export class OtherTableScreen extends I18nComponent {
   }
 
   private _getPlayerName(playerId: number): string {
-    let players = this.players;
+    let players = this.state.currentOtherTablePlayers;
     for (let i in players) {
       if (players[i].id == playerId) {
         return players[i].displayName;
@@ -292,7 +296,7 @@ export class OtherTableScreen extends I18nComponent {
   }
 
   private _getLoserName() {
-    for (let i in this.lastRound.payments.direct) {
+    for (let i in this.state.currentOtherTableLastRound.payments.direct) {
       return this._getPlayerName(parseInt(i.split('<-')[1], 10));
     }
   }

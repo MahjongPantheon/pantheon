@@ -31,6 +31,12 @@ import { throttle, keys, pickBy } from 'lodash';
 import { AppState } from '../../primitives/appstate';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { MetrikaService } from '../../services/metrika';
+import {IAppState} from "../../services/store/interfaces";
+import {Dispatch} from "redux";
+import {ADD_YAKU, AppActionTypes, REMOVE_YAKU, SELECT_MULTIRON_WINNER} from "../../services/store/actions/interfaces";
+import {getWinningUsers, hasYaku} from "../../services/store/selectors/mimirSelectors";
+import {getDora, getHan} from "../../services/store/selectors/hanFu";
+import {getAllowedYaku, getRequiredYaku, getSelectedYaku} from "../../services/store/selectors/yaku";
 
 @Component({
   selector: 'screen-yaku-select',
@@ -38,7 +44,8 @@ import { MetrikaService } from '../../services/metrika';
   styleUrls: ['style.css']
 })
 export class YakuSelectScreen extends I18nComponent {
-  @Input() state: AppState;
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
   yakuList: {
     [id: number]: Array<{
       anchor: string;
@@ -65,47 +72,47 @@ export class YakuSelectScreen extends I18nComponent {
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-yaku-select' });
-    this._currentUser = this.state.getWinningUsers()[0].id;
-    this.state.selectMultiRonUser(this._currentUser);
+    this._currentUser = getWinningUsers(this.state)[0].id;
+    this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: this._currentUser });
 
-    for (let user of this.state.getWinningUsers()) {
+    for (let user of getWinningUsers(this.state)) {
       this.yakuList[user.id] = [
-        { anchor: 'simple', groups: filterAllowed(yakuGroups, this.state.getGameConfig('allowedYaku')) },
-        { anchor: 'rare', groups: filterAllowed(yakuRareGroups, this.state.getGameConfig('allowedYaku')) },
-        { anchor: 'yakuman', groups: filterAllowed(yakumanGroups, this.state.getGameConfig('allowedYaku')) }
+        { anchor: 'simple', groups: filterAllowed(yakuGroups, this.state.gameConfig.allowedYaku) },
+        { anchor: 'rare', groups: filterAllowed(yakuRareGroups, this.state.gameConfig.allowedYaku) },
+        { anchor: 'yakuman', groups: filterAllowed(yakumanGroups, this.state.gameConfig.allowedYaku) }
       ];
     }
 
-    if (this.state.getOutcome() === 'tsumo') {
-      this.state.addYaku(YakuId.MENZENTSUMO);
+    if (this.state.currentOutcome.selectedOutcome === 'tsumo') {
+      this.dispatch({ type: ADD_YAKU, payload: { id: YakuId.MENZENTSUMO, winner: this._currentUser} });
     }
     this._enableRequiredYaku();
     this._disableIncompatibleYaku();
   }
 
   showFuOf(id: number) {
-    let han = this.state.getHanOf(id);
-    let dora = this.state.getDoraOf(id);
+    let han = getHan(this.state, id);
+    let dora = getDora(this.state, id);
     return han > 0 && han + dora < 5
   }
 
   han(id: number) {
-    return this.state.getHanOf(id) + this.state.getDoraOf(id);
+    return getHan(this.state, id) + getDora(this.state, id);
   }
 
   showTabs() {
-    return this.state.getWinningUsers().length > 1;
+    return getWinningUsers(this.state).length > 1;
   }
 
   selectMultiRonUser(id: number) {
     this._currentUser = id;
-    this.state.selectMultiRonUser(this._currentUser);
+    this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: id });
     this._enableRequiredYaku();
     this._disableIncompatibleYaku();
   }
 
   outcome() {
-    switch (this.state.getOutcome()) {
+    switch (this.state.currentOutcome.selectedOutcome) {
       case 'ron':
       case 'multiron':
         return this.i18n._t('Ron');
@@ -122,24 +129,24 @@ export class YakuSelectScreen extends I18nComponent {
     }
   }
 
-  yakuSelect(evt) {
-    if (this.state.hasYaku(evt.id)) {
-      this.state.removeYaku(evt.id);
+  yakuSelect(evt: { id: number }) {
+    if (hasYaku(this.state, evt.id)) {
+      this.dispatch({ type: REMOVE_YAKU, payload: { id: evt.id } });
     } else {
-      this.state.addYaku(evt.id);
+      this.dispatch({ type: ADD_YAKU, payload: { id: evt.id } });
     }
     this._enableRequiredYaku();
     this._disableIncompatibleYaku();
   }
 
   _disableIncompatibleYaku() {
-    const allowedYaku = this.state.getAllowedYaku();
+    const allowedYaku = getAllowedYaku(this.state);
     this.disabledYaku[this._currentUser] = {};
 
     for (let yGroup of this.yakuList[this._currentUser]) {
       for (let yRow of yGroup.groups) {
         for (let yaku of yRow) {
-          if (allowedYaku.indexOf(yaku.id) === -1 && !this.state.hasYaku(yaku.id)) {
+          if (allowedYaku.indexOf(yaku.id) === -1 && !hasYaku(this.state, yaku.id)) {
             this.disabledYaku[this._currentUser][yaku.id] = true;
           }
         }
@@ -148,12 +155,14 @@ export class YakuSelectScreen extends I18nComponent {
   }
 
   _enableRequiredYaku() {
-    const requiredYaku = this.state.getRequiredYaku();
-    requiredYaku.forEach((y) => this.state.addYaku(y, true));
+    const requiredYaku = getRequiredYaku(this.state);
+    requiredYaku.forEach((y) => {
+      this.dispatch({ type: ADD_YAKU, payload: { id: y } });
+    });
   }
 
   isSelected(id: YakuId) {
-    return this.state.getSelectedYaku().indexOf(id) !== -1;
+    return getSelectedYaku(this.state).indexOf(id) !== -1;
   }
 
   // -------------------------------

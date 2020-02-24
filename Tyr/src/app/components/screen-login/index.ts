@@ -25,6 +25,9 @@ import { MetrikaService } from '../../services/metrika';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IDB } from '../../services/idb';
 import jsQR from 'jsqr';
+import {IAppState} from "../../services/store/interfaces";
+import {Dispatch} from "redux";
+import {AppActionTypes} from "../../services/store/actions/interfaces";
 const crc32 = require('crc/crc32').default;
 
 @Component({
@@ -44,8 +47,8 @@ export class LoginScreen extends I18nComponent implements OnInit {
   private _timer = null;
   private _video: HTMLVideoElement | null = null;
 
-  @Input() state: AppState;
-  @Input() api: RiichiApiService;
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
   @Input() loading: boolean;
   @ViewChild('cnv', {static: false}) canvas: ElementRef;
 

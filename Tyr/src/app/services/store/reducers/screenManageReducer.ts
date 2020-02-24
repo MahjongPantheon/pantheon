@@ -1,7 +1,7 @@
 import {AppScreen, IAppState} from '../interfaces';
 import { initialState } from "../state";
 import {
-  AppActionTypes,
+  AppActionTypes1,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   OPEN_SETTINGS,
@@ -16,7 +16,7 @@ import { winnerHasYakuWithPao } from "../util";
 
 export function screenManageReducer(
   state = initialState,
-  action: AppActionTypes
+  action: AppActionTypes1
 ): IAppState {
   switch (action.type) {
     case RESET_STATE:

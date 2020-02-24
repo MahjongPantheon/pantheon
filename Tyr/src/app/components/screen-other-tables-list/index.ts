@@ -18,10 +18,17 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
-import { MetrikaService } from '../../services/metrika';
-import { AppState } from '../../primitives/appstate';
-import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import {Component, Input} from '@angular/core';
+import {MetrikaService} from '../../services/metrika';
+import {I18nComponent, I18nService} from '../auxiliary-i18n';
+import {IAppState} from "../../services/store/interfaces";
+import {Dispatch} from "redux";
+import {
+  AppActionTypes,
+  GET_OTHER_TABLES_LIST_INIT,
+  SHOW_OTHER_TABLE,
+  UPDATE_CURRENT_GAMES_INIT
+} from "../../services/store/actions/interfaces";
 
 @Component({
   selector: 'screen-other-tables-list',
@@ -29,20 +36,21 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
   styleUrls: ['style.css']
 })
 export class OtherTablesListScreen extends I18nComponent {
-  @Input() state: AppState;
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
   constructor(
     public i18n: I18nService,
     private metrika: MetrikaService
   ) { super(i18n); }
 
   ngOnInit() {
-    this.state.updateCurrentGames(); // update games list to prevent players in game from watching games
+    this.dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-tables-list' });
-    this.state.updateOtherTablesList();
+    this.dispatch({ type: GET_OTHER_TABLES_LIST_INIT });
   }
 
   viewTable(hash: string) {
-    this.state.showOtherTable(hash);
+    this.dispatch({ type: SHOW_OTHER_TABLE, payload: { hash } });
   }
 }
 

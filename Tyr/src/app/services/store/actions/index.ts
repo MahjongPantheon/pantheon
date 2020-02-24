@@ -1,5 +1,5 @@
 import {
-  AppActionTypes,
+  AppActionTypes1,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   OPEN_SETTINGS,
@@ -11,37 +11,37 @@ import {
   START_NEW_GAME
 } from './interfaces';
 
-export function resetState(): AppActionTypes {
+export function resetState(): AppActionTypes1 {
   return {
     type: RESET_STATE
   };
 }
 
-export function startNewGame(): AppActionTypes {
+export function startNewGame(): AppActionTypes1 {
   return {
     type: START_NEW_GAME
   };
 }
 
-export function showLastResults(): AppActionTypes {
+export function showLastResults(): AppActionTypes1 {
   return {
     type: SHOW_LAST_RESULTS
   };
 }
 
-export function showLastRound(): AppActionTypes {
+export function showLastRound(): AppActionTypes1 {
   return {
     type: SHOW_LAST_ROUND
   };
 }
 
-export function showOtherTablesList(): AppActionTypes {
+export function showOtherTablesList(): AppActionTypes1 {
   return {
     type: SHOW_OTHER_TABLES_LIST
   };
 }
 
-export function showOtherTable(hash: string): AppActionTypes {
+export function showOtherTable(hash: string): AppActionTypes1 {
   return {
     type: SHOW_OTHER_TABLE,
     payload: {
@@ -50,19 +50,19 @@ export function showOtherTable(hash: string): AppActionTypes {
   };
 }
 
-export function openSettings(): AppActionTypes {
+export function openSettings(): AppActionTypes1 {
   return {
     type: OPEN_SETTINGS
   };
 }
 
-export function gotoNextScreen(): AppActionTypes {
+export function gotoNextScreen(): AppActionTypes1 {
   return {
     type: GOTO_NEXT_SCREEN
   };
 }
 
-export function gotoPrevScreen(): AppActionTypes {
+export function gotoPrevScreen(): AppActionTypes1 {
   return {
     type: GOTO_PREV_SCREEN
   };

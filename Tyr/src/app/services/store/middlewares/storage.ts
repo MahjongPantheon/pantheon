@@ -1,13 +1,13 @@
 import {Dispatch, Store as ReduxStore} from "redux";
 import {
-  AppActionsAll,
+  AppActionTypes,
   CONFIRM_REGISTRATION_INIT,
   CONFIRM_REGISTRATION_SUCCESS,
   FORCE_LOGOUT
 } from "../actions/interfaces";
 import {IDBImpl} from "../../idb/interface";
 
-export const storageMw = (storage: IDBImpl) => (store: ReduxStore) => (next: Dispatch<AppActionsAll>) => (action: AppActionsAll) => {
+export const storageMw = (storage: IDBImpl) => (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
     case CONFIRM_REGISTRATION_SUCCESS:
       storage.set('authToken', action.payload);

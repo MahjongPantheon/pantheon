@@ -72,7 +72,7 @@ export function getPossibleFu(state: IAppState) {
   }
 }
 
-export function getDoraOf(state: IAppState, user?: number) {
+export function getDora(state: IAppState, user?: number) {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':

@@ -18,13 +18,14 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
-import { AppState } from '../../primitives/appstate';
-import { RiichiApiService } from '../../services/riichiApi';
-import { MetrikaService } from '../../services/metrika';
-import { LUser } from '../../interfaces/local';
-import { rand } from '../../helpers/rand';
-import { toNumber, uniq, clone, find, remove } from 'lodash';
+import {Component, Input} from '@angular/core';
+import {MetrikaService} from '../../services/metrika';
+import {LUser} from '../../interfaces/local';
+import {rand} from '../../helpers/rand';
+import {clone, find, remove, toNumber, uniq} from 'lodash';
+import {IAppState} from "../../services/store/interfaces";
+import {Dispatch} from "redux";
+import {AppActionTypes, GET_ALL_PLAYERS_INIT, START_GAME_INIT} from "../../services/store/actions/interfaces";
 
 const DEFAULT_ID = -1;
 
@@ -42,8 +43,8 @@ const defaultPlayer: LUser = {
   styleUrls: ['style.css']
 })
 export class NewGameScreen {
-  @Input() state: AppState;
-  @Input() api: RiichiApiService;
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
   public _loading: boolean = false;
   constructor(private metrika: MetrikaService) { }
 
@@ -53,35 +54,33 @@ export class NewGameScreen {
   kamicha: number = DEFAULT_ID;
   self: number = DEFAULT_ID; // Self is always considered east!
 
-  players: LUser[] = [defaultPlayer];
   availablePlayers: LUser[] = [];
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-new-game' });
     this._loading = true;
+    this.dispatch({ type: GET_ALL_PLAYERS_INIT });
+    // TODO: on success
+    // this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-new-game', request: 'getAllPlayers' });
+    // TODO: on error
+    // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-new-game', request: 'getAllPlayers', message: e.toString() }));
+  }
 
-    this.api.getAllPlayers()
-      .then((players) => {
-        this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-new-game', request: 'getAllPlayers' });
-        this._loading = false;        
-      
-        let currentUserIndex = players.findIndex((element) => element.id == this.state.getCurrentPlayerId());        
-        let currentPlayer = players.splice(currentUserIndex, 1);
+  // TODO: memoize
+  get players() {
+    const players = this.state.allPlayers; // TODO: take from proper place
 
-        this.players = [defaultPlayer].concat(currentPlayer,
-          players.sort((a, b) => {
-            if (a == b) {
-              return 0;
-            }
-            return (a.displayName < b.displayName ? -1 : 1);
-          })
-        );
+    let currentUserIndex = players.findIndex((element) => element.id == this.state.currentPlayerId);
+    let currentPlayer = players.splice(currentUserIndex, 1);
 
-        this.availablePlayers = clone(this.players);
+    return [defaultPlayer].concat(currentPlayer,
+      players.sort((a, b) => {
+        if (a == b) {
+          return 0;
+        }
+        return (a.displayName < b.displayName ? -1 : 1);
       })
-      .catch((e) => this.metrika.track(MetrikaService.LOAD_ERROR, {
-        type: 'screen-new-game', request: 'getAllPlayers', message: e.toString()
-      }));
+    );
   }
 
   playersValid(): boolean {
@@ -93,10 +92,10 @@ export class NewGameScreen {
     }
 
     // There must be Current Player
-    if (playerIds.indexOf(this.state.getCurrentPlayerId()) == -1) {
+    if (playerIds.indexOf(this.state.currentPlayerId) == -1) {
       return false;
     }
- 
+
     // all players should be unique
     return uniq(playerIds).length == 4;
   }
@@ -134,14 +133,9 @@ export class NewGameScreen {
       return;
     }
 
-    this._loading = true;
-    this.api.startGame(this._selectedPlayerIds()).then(() => {
-      this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-new-game', request: 'startGame' });
-      this.state._reset();
-      this.state.updateCurrentGames();
-    }).catch((e) => this.metrika.track(MetrikaService.LOAD_ERROR, {
-      type: 'screen-new-game', request: 'startGame', message: e.toString()
-    }));
+    this.dispatch({ type: START_GAME_INIT, payload: this._selectedPlayerIds() });
+    // TODO: on fail
+    // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-new-game', request: 'startGame', message: e.toString() });
   }
 
   private _selectedPlayerIds(): number[] {
@@ -154,6 +148,6 @@ export class NewGameScreen {
       toNumber(this.kamicha)
     ];
   }
-  
+
 }
 

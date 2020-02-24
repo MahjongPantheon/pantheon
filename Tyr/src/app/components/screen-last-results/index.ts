@@ -24,6 +24,9 @@ import { RiichiApiService } from '../../services/riichiApi';
 import { MetrikaService } from '../../services/metrika';
 import { Player } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import {IAppState} from "../../services/store/interfaces";
+import {Dispatch} from "redux";
+import {AppActionTypes, GOTO_NEXT_SCREEN} from "../../services/store/actions/interfaces";
 
 @Component({
   selector: 'screen-last-results',
@@ -31,8 +34,8 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
   styleUrls: ['style.css']
 })
 export class LastResultsScreen extends I18nComponent {
-  @Input() state: AppState;
-  @Input() api: RiichiApiService;
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
   constructor(
     public i18n: I18nService,
     private metrika: MetrikaService
@@ -48,31 +51,33 @@ export class LastResultsScreen extends I18nComponent {
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-last-results' });
-    this.api.getLastResults().then((results) => {
-      if (!results) {
-        this._loading = false;
-        this._noResults = true;
-        return;
-      }
-
-      const current = this.state.getCurrentPlayerId();
-      for (let i = 0; i < 4; i++) {
-        if (results[0].id === current) {
-          break;
-        }
-
-        results = results.slice(1).concat(results[0]);
-      }
-
-      this.self = results[0];
-      this.shimocha = results[1];
-      this.toimen = results[2];
-      this.kamicha = results[3];
-      this._loading = false;
-    });
+    this.dispatch({ type: GET_LAST_RESULTS_INIT });
   }
+  //
+  // formatState() {
+  //   // TODO ##1: this is from old then() handler, we should use data from state in new code
+  //   if (!results) {
+  //     this._loading = false;
+  //     this._noResults = true;
+  //     return;
+  //   }
+  //
+  //   const current = this.state.getCurrentPlayerId();
+  //   for (let i = 0; i < 4; i++) {
+  //     if (results[0].id === current) {
+  //       break;
+  //     }
+  //
+  //     results = results.slice(1).concat(results[0]);
+  //   }
+  //
+  //   this.self = results[0];
+  //   this.shimocha = results[1];
+  //   this.toimen = results[2];
+  //   this.kamicha = results[3];
+  // }
 
   nextScreen() {
-    this.state.nextScreen();
+    this.dispatch({ type: GOTO_NEXT_SCREEN });
   }
 }
