@@ -29,7 +29,7 @@ is displayed, try adding `sudo` before `make`._
 4. Now you can use `make logs` and `make php_logs` to view all logs in real-time. Also you may use `make shell` to get
 to container shell, if you want to. Notice that killing php-fpm, postgres or nginx will ruin the container entirely.
 Use Dockerfile to alter their configuration.
-5. `make stop` to stop the container.
+5. `make stop` to shutdown the container.
 
 To create new empty event, run `make empty_event` - and you will be able to access event with printed link. Admin
 password for every generated empty event is `password`.
