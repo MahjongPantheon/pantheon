@@ -24,11 +24,12 @@ _Note: on some linux distros almost every docker-related command should be run a
 is displayed, try adding `sudo` before `make`._
 
 1. `make container` to build a pantheon container (this should be done every time Dockerfile is changed).
-2. `make run` to run the container and do all preparations inside of it (this should be done after each container shutdown).
+2. `make start` to run the container and do all preparations inside of it (this should be done after each container shutdown).
 3. `make dev` to install dependencies for all projects, run database migrations and start all servers.
 4. Now you can use `make logs` and `make php_logs` to view all logs in real-time. Also you may use `make shell` to get
 to container shell, if you want to. Notice that killing php-fpm, postgres or nginx will ruin the container entirely.
 Use Dockerfile to alter their configuration.
+5. `make stop` to stop the container.
 
 To create new empty event, run `make empty_event` - and you will be able to access event with printed link. Admin
 password for every generated empty event is `password`.
@@ -41,6 +42,7 @@ Default ports for services are:
 - 4003 for **Tyr** mobile interface (http://localhost:4003/)
 - 4004 for **Frey** user management backend, also JSON RPC (http://localhost:4004/)
 - 5532 for PostgreSQL connections - use pgAdmin3/4 or any other client to access your databases.
+- 5632 for  **PGAdmin** interface (http://localhost:5632/)
 
 ### Pull requests
 
