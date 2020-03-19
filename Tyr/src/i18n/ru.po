@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-21 18:45+0300\n"
-"PO-Revision-Date: 2019-12-11 01:37+0300\n"
+"PO-Revision-Date: 2020-03-20 10:25+0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 2.1.1\n"
+"X-Generator: Poedit 2.2.4\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -71,27 +71,27 @@ msgstr "Не удалось войти в систему"
 
 #: src/app/primitives/yaku.ts:322:34 src/app/primitives/yaku.ts:323:39
 msgid "Chankan"
-msgstr "Чанкан"
+msgstr "Ограбление конга"
 
 #: src/app/primitives/yaku.ts:214:34 src/app/primitives/yaku.ts:215:39
 msgid "Chanta"
-msgstr "Чанта"
+msgstr "Внешняя рука"
 
 #: src/app/primitives/yaku.ts:310:34 src/app/primitives/yaku.ts:311:39
 msgid "Chiihou"
-msgstr "Чихо"
+msgstr "Благословение"
 
 #: src/app/primitives/yaku.ts:256:34 src/app/primitives/yaku.ts:257:39
 msgid "Chiitoitsu"
-msgstr "Чиитойцу"
+msgstr "Семь пар"
 
 #: src/app/primitives/yaku.ts:238:34 src/app/primitives/yaku.ts:239:39
 msgid "Chinitsu"
-msgstr "Чиницу"
+msgstr "Полное изобилие"
 
 #: src/app/primitives/yaku.ts:226:34 src/app/primitives/yaku.ts:227:39
 msgid "Chinroutou"
-msgstr "Чинрото"
+msgstr "Все терминальные"
 
 #: src/app/components/auxiliary-i18n/index.ts:82:12
 #: src/app/components/navbar/index.ts:97:16
@@ -103,7 +103,7 @@ msgstr "Чомбо"
 
 #: src/app/primitives/yaku.ts:244:34 src/app/primitives/yaku.ts:245:39
 msgid "Chuuren poutou"
-msgstr "Чууренпото"
+msgstr "Девять врат"
 
 #: src/app/components/auxiliary-i18n/index.ts:64:12
 msgid "Contact to the tournament administrator for further instructions."
@@ -115,15 +115,15 @@ msgstr "Дабури"
 
 #: src/app/primitives/yaku.ts:274:34
 msgid "Daburu riichi"
-msgstr "Дабл-риичи"
+msgstr "Дважды просящая рука"
 
 #: src/app/primitives/yaku.ts:184:34 src/app/primitives/yaku.ts:185:39
 msgid "Daisangen"
-msgstr "Дайсанген"
+msgstr "Большие три дракона"
 
 #: src/app/primitives/yaku.ts:196:34 src/app/primitives/yaku.ts:197:39
 msgid "Daisuushii"
-msgstr "Дайсуши"
+msgstr "Большие четыре ветра"
 
 #: src/app/components/auxiliary-i18n/index.ts:13:12
 msgid "Dora"
@@ -175,7 +175,7 @@ msgstr "Обзор игр"
 
 #: src/app/primitives/yaku.ts:292:34 src/app/primitives/yaku.ts:293:39
 msgid "Haitei"
-msgstr "Хайтей"
+msgstr "Последняя кость со стены"
 
 #: src/app/components/screen-overview/index.ts:56:12
 msgid "Hello, %1!"
@@ -183,11 +183,11 @@ msgstr "Привет, %1!"
 
 #: src/app/primitives/yaku.ts:232:34 src/app/primitives/yaku.ts:233:39
 msgid "Honitsu"
-msgstr "Хоницу"
+msgstr "Пол-изобилия"
 
 #: src/app/primitives/yaku.ts:88:34 src/app/primitives/yaku.ts:89:39
 msgid "Honroutou"
-msgstr "Хонрото"
+msgstr "Все терминальные и благородные"
 
 #: src/app/primitives/yaku.ts:317:39
 msgid "Houtei"
@@ -195,7 +195,7 @@ msgstr "Хотей"
 
 #: src/app/primitives/yaku.ts:316:34
 msgid "Houtei raoyui"
-msgstr "Хотей раоюй"
+msgstr "Последний снос"
 
 #: src/app/primitives/appstate/yaku.ts:87:11
 #: src/app/primitives/appstate/yaku.ts:100:11
@@ -208,23 +208,23 @@ msgstr ""
 
 #: src/app/primitives/yaku.ts:124:34 src/app/primitives/yaku.ts:125:39
 msgid "Iipeikou"
-msgstr "Иипейко"
+msgstr "Чистое двойное чоу"
 
 #: src/app/primitives/yaku.ts:280:34 src/app/primitives/yaku.ts:281:39
 msgid "Ippatsu"
-msgstr "Иппацу"
+msgstr "Первый круг"
 
 #: src/app/primitives/yaku.ts:148:34 src/app/primitives/yaku.ts:149:39
 msgid "Ittsu"
-msgstr "Иццу"
+msgstr "Чистый ряд"
 
 #: src/app/primitives/yaku.ts:220:34 src/app/primitives/yaku.ts:221:39
 msgid "Junchan"
-msgstr "Джунчан"
+msgstr "Внешняя терминальная рука"
 
 #: src/app/primitives/yaku.ts:262:34 src/app/primitives/yaku.ts:263:39
 msgid "Kokushi musou"
-msgstr "Кокушимусо"
+msgstr "Тринадцать сирот"
 
 #: src/app/components/screen-last-round/index.ts:130:21
 msgid "Latest hand wasn't found"
@@ -260,7 +260,7 @@ msgstr "Все ОК"
 
 #: src/app/primitives/yaku.ts:286:34 src/app/primitives/yaku.ts:287:39
 msgid "Menzentsumo"
-msgstr "Мензенцумо"
+msgstr "Полностью закрытая рука"
 
 #: src/app/components/auxiliary-i18n/index.ts:97:12
 #: src/app/components/screen-last-round/index.ts:102:30
@@ -301,7 +301,7 @@ msgstr "Текущий пин-код уже был использован на �
 
 #: src/app/primitives/yaku.ts:118:34 src/app/primitives/yaku.ts:119:39
 msgid "Pinfu"
-msgstr "Пин-фу"
+msgstr "Идеальная плоская рука"
 
 #: src/app/components/auxiliary-i18n/index.ts:109:12
 msgid "Previous game results"
@@ -321,7 +321,7 @@ msgstr "Ренхо"
 
 #: src/app/primitives/yaku.ts:268:34 src/app/primitives/yaku.ts:269:39
 msgid "Riichi"
-msgstr "Риичи"
+msgstr "Просящая рука"
 
 #: src/app/primitives/yaku.ts:299:39
 msgid "Rinshan"
@@ -329,7 +329,7 @@ msgstr "Риншан"
 
 #: src/app/primitives/yaku.ts:298:34
 msgid "Rinshan kaihou"
-msgstr "Риншан кайхо"
+msgstr "Выигрыш замещающей костью"
 
 #: src/app/components/auxiliary-i18n/index.ts:88:12
 #: src/app/components/navbar/index.ts:85:16
@@ -341,27 +341,27 @@ msgstr "Рон"
 
 #: src/app/primitives/yaku.ts:130:34 src/app/primitives/yaku.ts:131:39
 msgid "Ryanpeikou"
-msgstr "Рянпейко"
+msgstr "Двойное чистое двойное чоу"
 
 #: src/app/primitives/yaku.ts:250:34 src/app/primitives/yaku.ts:251:39
 msgid "Ryuuiisou"
-msgstr "Рюисо"
+msgstr "Все зеленые"
 
 #: src/app/primitives/yaku.ts:94:34 src/app/primitives/yaku.ts:95:39
 msgid "Sanankou"
-msgstr "Сананко"
+msgstr "Три закрытых панга"
 
 #: src/app/primitives/yaku.ts:100:34 src/app/primitives/yaku.ts:101:39
 msgid "Sankantsu"
-msgstr "Санканцу"
+msgstr "Три конга"
 
 #: src/app/primitives/yaku.ts:136:34 src/app/primitives/yaku.ts:137:39
 msgid "Sanshoku"
-msgstr "Саншоку"
+msgstr "Смешанное тройное чоу"
 
 #: src/app/primitives/yaku.ts:142:34 src/app/primitives/yaku.ts:143:39
 msgid "Sanshoku doukou"
-msgstr "Саншоку доко"
+msgstr "Тройной панг"
 
 #: src/app/components/auxiliary-i18n/index.ts:46:12
 msgid "Save"
@@ -381,11 +381,11 @@ msgstr "Настройки"
 
 #: src/app/primitives/yaku.ts:178:34 src/app/primitives/yaku.ts:179:39
 msgid "Shousangen"
-msgstr "Шосанген"
+msgstr "Малые три дракона"
 
 #: src/app/primitives/yaku.ts:190:34 src/app/primitives/yaku.ts:191:39
 msgid "Shousuushii"
-msgstr "Шосуши"
+msgstr "Малые четыре ветра"
 
 #: src/app/components/auxiliary-i18n/index.ts:115:12
 msgid "Statistics"
@@ -393,11 +393,11 @@ msgstr "Статистика"
 
 #: src/app/primitives/yaku.ts:112:34 src/app/primitives/yaku.ts:113:39
 msgid "Suuankou"
-msgstr "Сууанко"
+msgstr "Четыре закрытых панга"
 
 #: src/app/primitives/yaku.ts:106:34 src/app/primitives/yaku.ts:107:39
 msgid "Suukantsu"
-msgstr "Сууканцу"
+msgstr "Четыре конга"
 
 #: src/app/components/auxiliary-i18n/index.ts:118:12
 msgid "Table #"
@@ -405,11 +405,11 @@ msgstr "Стол №"
 
 #: src/app/primitives/yaku.ts:208:34 src/app/primitives/yaku.ts:209:39
 msgid "Tanyao"
-msgstr "Тан-яо"
+msgstr "Все простые"
 
 #: src/app/primitives/yaku.ts:304:34 src/app/primitives/yaku.ts:305:39
 msgid "Tenhou"
-msgstr "Тенхо"
+msgstr "Божественное благословение"
 
 #: src/app/components/auxiliary-i18n/index.ts:70:12
 msgid "Tenpai: "
@@ -433,7 +433,7 @@ msgstr "Таймер еще не запущен. Невозможно добав
 
 #: src/app/primitives/yaku.ts:82:34 src/app/primitives/yaku.ts:83:39
 msgid "Toitoi"
-msgstr "Тойтой"
+msgstr "Все панги"
 
 #: src/app/components/auxiliary-i18n/index.ts:133:12
 msgid "Total: "
@@ -459,7 +459,7 @@ msgstr "Цумо"
 
 #: src/app/primitives/yaku.ts:202:34 src/app/primitives/yaku.ts:203:39
 msgid "Tsuuiisou"
-msgstr "Цуисо"
+msgstr "Все благородные"
 
 #: src/app/components/auxiliary-i18n/index.ts:61:12
 #: src/app/components/screen-last-round/index.ts:136:23
@@ -480,23 +480,23 @@ msgstr "Яку"
 
 #: src/app/primitives/yaku.ts:155:39
 msgid "Yakuhai"
-msgstr "Якухай"
+msgstr "Панг ценных"
 
 #: src/app/primitives/yaku.ts:154:34
 msgid "Yakuhai x1"
-msgstr "Якухай 1"
+msgstr "Панг ценных 1"
 
 #: src/app/primitives/yaku.ts:160:34
 msgid "Yakuhai x2"
-msgstr "Якухай 2"
+msgstr "Панг ценных 2"
 
 #: src/app/primitives/yaku.ts:166:34
 msgid "Yakuhai x3"
-msgstr "Якухай 3"
+msgstr "Панг ценных 3"
 
 #: src/app/primitives/yaku.ts:172:34
 msgid "Yakuhai x4"
-msgstr "Якухай 4"
+msgstr "Панг ценных 4"
 
 #: src/app/components/auxiliary-i18n/index.ts:142:12
 msgid "Yakuman!"
