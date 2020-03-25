@@ -19,9 +19,7 @@
  */
 
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {RRoundPaymentsInfo} from '../../interfaces/remote';
 import {MetrikaService} from '../../services/metrika';
-import {RemoteError} from '../../services/remoteError';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
 import {IAppState} from "../../services/store/interfaces";
 import {Dispatch} from "redux";
@@ -31,6 +29,7 @@ import {
   GET_CHANGES_OVERVIEW_INIT,
   GET_GAME_OVERVIEW_INIT
 } from "../../services/store/actions/interfaces";
+import {isLoading} from "../../services/store/selectors/screenConfirmationSelectors";
 
 @Component({
   selector: 'screen-confirmation',
@@ -41,8 +40,7 @@ import {
 export class ConfirmationScreen extends I18nComponent {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
-  public _dataReady: boolean;
-  public _data: RRoundPaymentsInfo;
+
   public confirmed: boolean = false;
   public _error: string = '';
 
@@ -53,34 +51,19 @@ export class ConfirmationScreen extends I18nComponent {
     super(i18n);
   }
 
+  get _loading() { return isLoading(this.state); }
+
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-confirmation' });
-    this._error = '';
-    this._dataReady = false;
     this.dispatch({ type: GET_CHANGES_OVERVIEW_INIT, payload: this.state });
   }
 
   confirm() {
-    this._dataReady = false;
     this.dispatch({ type: ADD_ROUND_INIT, payload: this.state });
-  }
-
-  onerror(e, reqType: string) {
-    this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-confirmation', code: e.code, request: reqType });
-    this._dataReady = true;
-    this._error = this.i18n._t("Failed to add round. Please try again");
-    if (e instanceof RemoteError) {
-      if (e.code === 403) {
-        this._error = this.i18n._t("Authentication failed");
-      } else {
-        this._error = this.i18n._t('Failed to add round. Was this hand already added by someone else?');
-      }
-    }
   }
 
   okay() {
     this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-confirmation', request: 'addRound' });
-    this._dataReady = false;
     this.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: this.state.currentSessionHash });
     // when finished, appstate goes to overview screen automatically, no need to go to next
     // this.state.updateOverview((finished) => finished ? null : this.state.nextScreen()); // TODO

@@ -142,14 +142,26 @@ export function mimirReducer(
           ...state.loading,
           overview: false
         },
-        changesOverview: action.payload
+        changesOverview: action.payload,
+        changesOverviewError: null
       };
     case GET_CHANGES_OVERVIEW_FAIL:
+      // TODO: metrika
+      //this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-confirmation', code: e.code, request: reqType });
+      let error = (action.payload.code === 403
+        ? this.i18n._t("Authentication failed")
+        : this.i18n._t('Failed to add round. Was this hand already added by someone else?')
+      );
       return {
         ...state,
         loading: {
           ...state.loading,
           overview: false // TODO: what about error?
+        },
+        changesOverview: null,
+        changesOverviewError: {
+          message: error,
+          details: action.payload
         }
       };
     case GET_LAST_ROUND_INIT:
@@ -158,7 +170,9 @@ export function mimirReducer(
         loading: {
           ...state.loading,
           overview: true
-        }
+        },
+        changesOverviewError: null,
+        changesOverview: null
       };
     case GET_LAST_ROUND_SUCCESS:
       return {

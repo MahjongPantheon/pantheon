@@ -4,6 +4,7 @@ import {LGameConfig, LUser} from "../../interfaces/local";
 import { RRoundPaymentsInfo, RSessionOverview } from "../../interfaces/remote";
 import { AppScreen } from "../../primitives/appstate";
 import {Graph} from "../../primitives/graph";
+import {RemoteError} from "../remoteError";
 
 export type AppScreen = 'overview' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
   | 'yakuSelect' | 'confirmation' | 'newGame' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
@@ -15,6 +16,7 @@ export type LoadingSet = {
   otherTable: boolean;
   login: boolean;
   players: boolean;
+  addRound: boolean;
 };
 
 export type TimerData = {
@@ -52,6 +54,10 @@ export interface IAppState {
 
   allPlayers?: LUser[];
   changesOverview?: RRoundPaymentsInfo; // Confirmation of current round data after dry run
+  changesOverviewError?: {
+    details: RemoteError;
+    message: string;
+  };
   lastRoundOverview?: RRoundPaymentsInfo; // Data of previous round
 
   isUniversalWatcher: boolean;

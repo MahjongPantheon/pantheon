@@ -19,20 +19,20 @@
 -->
 <div
   class="inline-preloader"
-  *ngIf="!_dataReady"></div>
-<div class="wrap scroller-wrap" *ngIf="_dataReady && _error">
+  *ngIf="_loading"></div>
+<div class="wrap scroller-wrap" *ngIf="!_loading && _error">
   <div style="text-align: center; padding: 30% 0;">{{_error}}</div>
   <button class="allok" style="width: 100%" (click)="okay()">{{_OK}}</button>
 </div>
-<div class="wrap scroller-wrap" *ngIf="_dataReady && !_error">
+<div class="wrap scroller-wrap" *ngIf="!_loading && !_error">
   <confirmation-scheme
-      *ngIf="_dataReady"
+      *ngIf="!_loading"
       [state]="this.state"
       [overview]="this.state.changesOverview"
   ></confirmation-scheme>
   <div
     class="confirmation-controls"
-    *ngIf="_dataReady"
+    *ngIf="!_loading"
   >
     <button
         class="allok"
