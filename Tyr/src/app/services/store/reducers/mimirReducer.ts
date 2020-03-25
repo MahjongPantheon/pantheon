@@ -19,11 +19,13 @@ import {
 } from "../actions/interfaces";
 import {IAppState} from "../interfaces";
 import {makeYakuGraph} from "../../../primitives/yaku-compat";
+import {RemoteError} from "../../remoteError";
 
 export function mimirReducer(
   state = initialState,
   action: AppActionTypes
 ): IAppState {
+  let error;
   switch (action.type) {
     case CONFIRM_REGISTRATION_INIT:
       return {
@@ -148,7 +150,7 @@ export function mimirReducer(
     case GET_CHANGES_OVERVIEW_FAIL:
       // TODO: metrika
       //this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-confirmation', code: e.code, request: reqType });
-      let error = (action.payload.code === 403
+      error = (action.payload.code === 403
         ? this.i18n._t("Authentication failed")
         : this.i18n._t('Failed to add round. Was this hand already added by someone else?')
       );
@@ -171,8 +173,8 @@ export function mimirReducer(
           ...state.loading,
           overview: true
         },
-        changesOverviewError: null,
-        changesOverview: null
+        lastRoundOverview: null,
+        lastRoundOverviewError: null
       };
     case GET_LAST_ROUND_SUCCESS:
       return {
@@ -181,14 +183,34 @@ export function mimirReducer(
           ...state.loading,
           overview: false
         },
-        lastRoundOverview: action.payload
+        lastRoundOverview: action.payload,
+        lastRoundOverviewError: null
       };
     case GET_LAST_ROUND_FAIL:
+      // TODO: i18n!!!1111
+      error = this.i18n._t('Error occured. Try again.');
+      if (!action.payload) {
+        error = this.i18n._t("Latest hand wasn't found");
+      } else if (action.payload instanceof RemoteError) {
+        // TODO
+        // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-last-round', request: 'getLastRound' });
+        if (action.payload.code === 403) {
+          error = this.i18n._t("Authentication failed");
+        } else {
+          error = this.i18n._t('Unexpected server error');
+        }
+      }
+
       return {
         ...state,
         loading: {
           ...state.loading,
-          overview: false // TODO: what about error?
+          overview: false
+        },
+        lastRoundOverview: null,
+        lastRoundOverviewError: {
+          details: action.payload,
+          message: error
         }
       };
     case GET_LAST_RESULTS_INIT:

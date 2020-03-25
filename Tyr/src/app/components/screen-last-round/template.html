@@ -26,14 +26,14 @@
 <div class="wrap scroller-wrap" *ngIf="_dataReady && !_error">
   <div class="table-info">
     <div class="round-info">
-      <div class="outcome-name">{{getOutcomeName()}}</div>
+      <div class="outcome-name">{{outcomeName}}</div>
       <span class="tenbou riichi"></span>
-      <div class="indicator">{{_data.riichi}}</div>
+      <div class="indicator">{{state.lastRoundOverview.riichi}}</div>
       <span class="tenbou honba"></span>
-      <div class="indicator">{{_data.honba}}</div>
+      <div class="indicator">{{state.lastRoundOverview.honba}}</div>
     </div>
-    <ul *ngIf="_data.outcome == 'ron' || _data.outcome == 'tsumo' || _data.outcome == 'multiron'">
-      <li *ngFor="let win of getWins()">
+    <ul *ngIf="state.lastRoundOverview.outcome == 'ron' || state.lastRoundOverview.outcome == 'tsumo' || state.lastRoundOverview.outcome == 'multiron'">
+      <li *ngFor="let win of wins">
         <b>{{win.winner}}</b>: {{win | makeHandDescription}}
       </li>
     </ul>
@@ -41,7 +41,7 @@
   <!-- Payments scheme -->
   <confirmation-scheme
       *ngIf="_dataReady"
-      [state]="this.state"
-      [overview]="this.state.lastRoundOverview"
+      [state]="state"
+      [overview]="state.lastRoundOverview"
   ></confirmation-scheme>
 </div>
