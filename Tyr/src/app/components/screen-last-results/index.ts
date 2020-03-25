@@ -18,15 +18,15 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import { AppState } from '../../primitives/appstate';
-import { RiichiApiService } from '../../services/riichiApi';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MetrikaService } from '../../services/metrika';
 import { Player } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
-import {IAppState} from "../../services/store/interfaces";
-import {Dispatch} from "redux";
-import {AppActionTypes, GET_LAST_RESULTS_INIT, GOTO_NEXT_SCREEN} from "../../services/store/actions/interfaces";
+import { IAppState } from "../../services/store/interfaces";
+import { Dispatch } from "redux";
+import { AppActionTypes, GET_LAST_RESULTS_INIT, GOTO_NEXT_SCREEN } from "../../services/store/actions/interfaces";
+import { getKamicha, getSelf, getShimocha, getToimen } from "../../services/store/selectors/lastResultsSelectors";
+import {LUserWithScore} from "../../interfaces/local";
 
 @Component({
   selector: 'screen-last-results',
@@ -42,41 +42,18 @@ export class LastResultsScreen extends I18nComponent {
     private metrika: MetrikaService
   ) { super(i18n); }
 
-  public _loading: boolean = true;
-  public _noResults: boolean = false;
+  get _loading(): boolean { return this.state.loading.overview };
+  get _noResults(): boolean { return !this.state.lastResults };
 
-  self: Player;
-  shimocha: Player;
-  toimen: Player;
-  kamicha: Player;
+  get self(): LUserWithScore { return getSelf(this.state, this.state.lastResults); }
+  get shimocha(): LUserWithScore { return getShimocha(this.state, this.state.lastResults); }
+  get toimen(): LUserWithScore { return getToimen(this.state, this.state.lastResults); }
+  get kamicha(): LUserWithScore { return getKamicha(this.state, this.state.lastResults); }
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-last-results' });
     this.dispatch({ type: GET_LAST_RESULTS_INIT });
   }
-  //
-  // formatState() {
-  //   // TODO ##1: this is from old then() handler, we should use data from state in new code
-  //   if (!results) {
-  //     this._loading = false;
-  //     this._noResults = true;
-  //     return;
-  //   }
-  //
-  //   const current = this.state.getCurrentPlayerId();
-  //   for (let i = 0; i < 4; i++) {
-  //     if (results[0].id === current) {
-  //       break;
-  //     }
-  //
-  //     results = results.slice(1).concat(results[0]);
-  //   }
-  //
-  //   this.self = results[0];
-  //   this.shimocha = results[1];
-  //   this.toimen = results[2];
-  //   this.kamicha = results[3];
-  // }
 
   nextScreen() {
     this.dispatch({ type: GOTO_NEXT_SCREEN });

@@ -9,7 +9,7 @@ import {
   GET_ALL_PLAYERS_SUCCESS,
   GET_CHANGES_OVERVIEW_FAIL,
   GET_CHANGES_OVERVIEW_INIT,
-  GET_CHANGES_OVERVIEW_SUCCESS,
+  GET_CHANGES_OVERVIEW_SUCCESS, GET_LAST_RESULTS_FAIL, GET_LAST_RESULTS_INIT, GET_LAST_RESULTS_SUCCESS,
   GET_LAST_ROUND_FAIL,
   GET_LAST_ROUND_INIT,
   GET_LAST_ROUND_SUCCESS,
@@ -189,6 +189,39 @@ export function mimirReducer(
         loading: {
           ...state.loading,
           overview: false // TODO: what about error?
+        }
+      };
+    case GET_LAST_RESULTS_INIT:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          overview: true
+        },
+        lastResults: null,
+        lastResultsError: null
+      };
+    case GET_LAST_RESULTS_SUCCESS:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          overview: false
+        },
+        lastResults: action.payload,
+        lastResultsError: null
+      };
+    case GET_LAST_RESULTS_FAIL:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          overview: false
+        },
+        lastResults: null,
+        lastResultsError: {
+          details: action.payload,
+          message: action.payload.message
         }
       };
   }

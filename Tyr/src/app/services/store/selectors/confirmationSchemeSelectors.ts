@@ -1,7 +1,7 @@
-import { Player } from "../../interfaces/common";
-import { IAppState } from "../../services/store/interfaces";
+import { Player } from "../../../interfaces/common";
+import { IAppState } from "../interfaces";
 import { memoize } from 'lodash';
-import {RRoundPaymentsInfo} from "../../interfaces/remote";
+import { RRoundPaymentsInfo } from "../../../interfaces/remote";
 
 export type PaymentInfo = {
   backward: boolean;

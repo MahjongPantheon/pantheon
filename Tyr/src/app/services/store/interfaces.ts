@@ -1,6 +1,6 @@
 import { AppOutcome } from "../../interfaces/app";
 import {Player, Table, Yaku} from "../../interfaces/common";
-import {LGameConfig, LUser} from "../../interfaces/local";
+import {LGameConfig, LUser, LUserWithScore} from "../../interfaces/local";
 import { RRoundPaymentsInfo, RSessionOverview } from "../../interfaces/remote";
 import { AppScreen } from "../../primitives/appstate";
 import {Graph} from "../../primitives/graph";
@@ -24,6 +24,11 @@ export type TimerData = {
   lastUpdateSecondsRemaining: number;
   lastUpdateTimestamp: number;
   waiting: boolean;
+};
+
+export type ErrorState = {
+  details: RemoteError;
+  message: string;
 };
 
 export interface IAppState {
@@ -53,12 +58,18 @@ export interface IAppState {
   yakuList: Graph<Yaku>;
 
   allPlayers?: LUser[];
-  changesOverview?: RRoundPaymentsInfo; // Confirmation of current round data after dry run
-  changesOverviewError?: {
-    details: RemoteError;
-    message: string;
-  };
-  lastRoundOverview?: RRoundPaymentsInfo; // Data of previous round
+
+  // Confirmation / changes overview after dry run
+  changesOverview?: RRoundPaymentsInfo;
+  changesOverviewError?: ErrorState;
+
+  // View last round of current table
+  lastRoundOverview?: RRoundPaymentsInfo;
+  lastRoundOverviewError?: ErrorState;
+
+  // Previous game results
+  lastResults?: LUserWithScore[];
+  lastResultsError?: ErrorState;
 
   isUniversalWatcher: boolean;
 }
