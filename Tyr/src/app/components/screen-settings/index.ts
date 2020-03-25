@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { AppState } from '../../primitives/appstate';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { supportedLanguages } from '../../services/i18n';
@@ -30,6 +30,7 @@ import { Theme } from '../../themes/interface';
 @Component({
   selector: 'screen-settings',
   templateUrl: './template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./style.css']
 })
 export class SettingsScreen extends I18nComponent {

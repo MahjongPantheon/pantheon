@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { MetrikaService } from '../../services/metrika';
 import { Player } from '../../interfaces/common';
 import {IAppState} from "../../services/store/interfaces";
@@ -34,6 +34,7 @@ import {
 @Component({
   selector: 'screen-players-select',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class PlayersSelectScreen {

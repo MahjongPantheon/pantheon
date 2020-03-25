@@ -19,7 +19,7 @@
  */
 
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
 import { icons } from './icons';
 
 @Component({
@@ -27,10 +27,11 @@ import { icons } from './icons';
   template: `<i class="custom-tyr-icon-wrap" style='display: inline-block'
         [innerHTML]="content"
         [style.transform]="transforms"
-        [style.width]="resize + 'px'" 
+        [style.width]="resize + 'px'"
         [style.height]="resize + 'px'"
       ></i>`,
   styleUrls: ['style.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
 export class CustomIconComponent {

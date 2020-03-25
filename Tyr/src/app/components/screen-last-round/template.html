@@ -41,8 +41,7 @@
   <!-- Payments scheme -->
   <confirmation-scheme
       *ngIf="_dataReady"
-      [players]="this.state.getPlayers()"
-      [currentPlayerId]="this.state.getCurrentPlayerId()"
-      [overview]="_data"
+      [state]="this.state"
+      [overview]="this.state.lastRoundOverview"
   ></confirmation-scheme>
 </div>

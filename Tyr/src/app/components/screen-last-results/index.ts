@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { AppState } from '../../primitives/appstate';
 import { RiichiApiService } from '../../services/riichiApi';
 import { MetrikaService } from '../../services/metrika';
@@ -26,11 +26,12 @@ import { Player } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import {IAppState} from "../../services/store/interfaces";
 import {Dispatch} from "redux";
-import {AppActionTypes, GOTO_NEXT_SCREEN} from "../../services/store/actions/interfaces";
+import {AppActionTypes, GET_LAST_RESULTS_INIT, GOTO_NEXT_SCREEN} from "../../services/store/actions/interfaces";
 
 @Component({
   selector: 'screen-last-results',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class LastResultsScreen extends I18nComponent {

@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {MetrikaService} from '../../services/metrika';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
 import {IAppState} from "../../services/store/interfaces";
@@ -33,6 +33,7 @@ import {
 @Component({
   selector: 'screen-other-tables-list',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class OtherTablesListScreen extends I18nComponent {

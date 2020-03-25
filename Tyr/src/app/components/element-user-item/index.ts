@@ -19,7 +19,7 @@
  */
 
 import {
-  Component, Input, Output, EventEmitter
+  Component, Input, Output, EventEmitter, ChangeDetectionStrategy
 } from '@angular/core';
 import { Player } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
@@ -44,6 +44,7 @@ import {
 @Component({
   selector: 'user-item',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class UserItemComponent extends I18nComponent {

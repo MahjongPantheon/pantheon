@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {MetrikaService} from '../../services/metrika';
 import {Player} from '../../interfaces/common';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
@@ -37,6 +37,7 @@ import {getCurrentTimerZone} from "../../services/store/selectors/mimirSelectors
 @Component({
   selector: 'screen-overview',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class OverviewScreen extends I18nComponent {

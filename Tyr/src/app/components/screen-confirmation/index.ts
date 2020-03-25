@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {RRoundPaymentsInfo} from '../../interfaces/remote';
 import {MetrikaService} from '../../services/metrika';
 import {RemoteError} from '../../services/remoteError';
@@ -35,6 +35,7 @@ import {
 @Component({
   selector: 'screen-confirmation',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class ConfirmationScreen extends I18nComponent {

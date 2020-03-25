@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {YakuId, yakuMap} from '../../primitives/yaku';
 import {Player} from '../../interfaces/common';
 import {MetrikaService} from '../../services/metrika';
@@ -35,6 +35,7 @@ import {
 @Component({
   selector: 'screen-other-table',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class OtherTableScreen extends I18nComponent {

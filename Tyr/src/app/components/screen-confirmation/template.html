@@ -27,9 +27,8 @@
 <div class="wrap scroller-wrap" *ngIf="_dataReady && !_error">
   <confirmation-scheme
       *ngIf="_dataReady"
-      [players]="this.state.players"
-      [currentPlayerId]="this.state.currentPlayerId"
-      [overview]="_data"
+      [state]="this.state"
+      [overview]="this.state.changesOverview"
   ></confirmation-scheme>
   <div
     class="confirmation-controls"

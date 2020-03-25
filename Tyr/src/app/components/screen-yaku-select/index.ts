@@ -22,7 +22,7 @@ import {
   Component,
   ViewChild, ViewChildren,
   QueryList, ElementRef,
-  Input
+  Input, ChangeDetectionStrategy
 } from '@angular/core';
 import { Yaku } from '../../interfaces/common';
 import { YakuId } from '../../primitives/yaku';
@@ -41,6 +41,7 @@ import {getAllowedYaku, getRequiredYaku, getSelectedYaku} from "../../services/s
 @Component({
   selector: 'screen-yaku-select',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class YakuSelectScreen extends I18nComponent {

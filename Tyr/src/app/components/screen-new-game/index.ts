@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {MetrikaService} from '../../services/metrika';
 import {LUser} from '../../interfaces/local';
 import {rand} from '../../helpers/rand';
@@ -40,6 +40,7 @@ const defaultPlayer: LUser = {
 @Component({
   selector: 'screen-new-game',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class NewGameScreen {
@@ -66,9 +67,9 @@ export class NewGameScreen {
     // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-new-game', request: 'getAllPlayers', message: e.toString() }));
   }
 
-  // TODO: memoize
+  // TODO: memoize selector
   get players() {
-    const players = this.state.allPlayers; // TODO: take from proper place
+    const players = this.state.allPlayers || []; // TODO: take from proper place
 
     let currentUserIndex = players.findIndex((element) => element.id == this.state.currentPlayerId);
     let currentPlayer = players.splice(currentUserIndex, 1);

@@ -1,6 +1,6 @@
 import { AppOutcome } from "../../interfaces/app";
 import {Player, Table, Yaku} from "../../interfaces/common";
-import { LGameConfig } from "../../interfaces/local";
+import {LGameConfig, LUser} from "../../interfaces/local";
 import { RRoundPaymentsInfo, RSessionOverview } from "../../interfaces/remote";
 import { AppScreen } from "../../primitives/appstate";
 import {Graph} from "../../primitives/graph";
@@ -9,11 +9,12 @@ export type AppScreen = 'overview' | 'outcomeSelect' | 'playersSelect' | 'otherT
   | 'yakuSelect' | 'confirmation' | 'newGame' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
 
 export type LoadingSet = {
-  games: boolean,
-  overview: boolean,
-  otherTables: boolean,
-  otherTable: boolean,
-  login: boolean,
+  games: boolean;
+  overview: boolean;
+  otherTables: boolean;
+  otherTable: boolean;
+  login: boolean;
+  players: boolean;
 };
 
 export type TimerData = {
@@ -29,7 +30,7 @@ export interface IAppState {
   currentOutcome: AppOutcome;
   currentRound: number;
   currentPlayerDisplayName: string;
-  currentPlayerId;
+  currentPlayerId: number;
   players: [Player, Player, Player, Player]; // e-s-w-n
   mapIdToPlayer: { [key: number]: Player };
   riichiOnTable: number;
@@ -48,6 +49,10 @@ export interface IAppState {
   loading: LoadingSet;
   timer: TimerData;
   yakuList: Graph<Yaku>;
+
+  allPlayers?: LUser[];
+  changesOverview?: RRoundPaymentsInfo; // Confirmation of current round data after dry run
+  lastRoundOverview?: RRoundPaymentsInfo; // Data of previous round
 
   isUniversalWatcher: boolean;
 }

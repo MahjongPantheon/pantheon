@@ -3,7 +3,19 @@ import {
   AppActionTypes,
   CONFIRM_REGISTRATION_FAIL,
   CONFIRM_REGISTRATION_INIT,
-  CONFIRM_REGISTRATION_SUCCESS, UPDATE_CURRENT_GAMES_FAIL, UPDATE_CURRENT_GAMES_INIT, UPDATE_CURRENT_GAMES_SUCCESS
+  CONFIRM_REGISTRATION_SUCCESS,
+  GET_ALL_PLAYERS_FAIL,
+  GET_ALL_PLAYERS_INIT,
+  GET_ALL_PLAYERS_SUCCESS,
+  GET_CHANGES_OVERVIEW_FAIL,
+  GET_CHANGES_OVERVIEW_INIT,
+  GET_CHANGES_OVERVIEW_SUCCESS,
+  GET_LAST_ROUND_FAIL,
+  GET_LAST_ROUND_INIT,
+  GET_LAST_ROUND_SUCCESS,
+  UPDATE_CURRENT_GAMES_FAIL,
+  UPDATE_CURRENT_GAMES_INIT,
+  UPDATE_CURRENT_GAMES_SUCCESS
 } from "../actions/interfaces";
 import {IAppState} from "../interfaces";
 import {makeYakuGraph} from "../../../primitives/yaku-compat";
@@ -88,6 +100,81 @@ export function mimirReducer(
         loading: {
           ...state.loading,
           games: false // TODO: what about error?
+        }
+      };
+    case GET_ALL_PLAYERS_INIT:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          players: true
+        }
+      };
+    case GET_ALL_PLAYERS_SUCCESS:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          players: false
+        },
+        allPlayers: action.payload
+      };
+    case GET_ALL_PLAYERS_FAIL:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          players: false // TODO: what about error?
+        }
+      };
+    case GET_CHANGES_OVERVIEW_INIT:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          overview: true
+        }
+      };
+    case GET_CHANGES_OVERVIEW_SUCCESS:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          overview: false
+        },
+        changesOverview: action.payload
+      };
+    case GET_CHANGES_OVERVIEW_FAIL:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          overview: false // TODO: what about error?
+        }
+      };
+    case GET_LAST_ROUND_INIT:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          overview: true
+        }
+      };
+    case GET_LAST_ROUND_SUCCESS:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          overview: false
+        },
+        lastRoundOverview: action.payload
+      };
+    case GET_LAST_ROUND_FAIL:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          overview: false // TODO: what about error?
         }
       };
   }

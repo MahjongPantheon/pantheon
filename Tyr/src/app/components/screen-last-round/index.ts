@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { Yaku, Player } from '../../interfaces/common';
 import { YakuId, yakuMap, sortByViewPriority } from '../../primitives/yaku';
 import { AppState } from '../../primitives/appstate';
@@ -34,6 +34,7 @@ import {AppActionTypes, GET_LAST_ROUND_INIT} from "../../services/store/actions/
 @Component({
   selector: 'screen-last-round',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class LastRoundScreen extends I18nComponent {

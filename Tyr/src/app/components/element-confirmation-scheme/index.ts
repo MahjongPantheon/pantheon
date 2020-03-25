@@ -18,201 +18,67 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Player } from '../../interfaces/common';
-import { AppState } from '../../primitives/appstate';
-import { RRoundPaymentsInfo } from '../../interfaces/remote';
-
-export type PaymentInfo = {
-  backward: boolean;
-  title: string;
-  riichi: boolean;
-};
+import { IAppState } from "../../services/store/interfaces";
+import {
+  getBottomLeftPayment, getBottomRightPayment,
+  getChomboKamicha,
+  getChomboSelf,
+  getChomboShimocha,
+  getChomboToimen, getIfAnyPaymentsOccured, getKamicha, getLeftRightPayment, getPaoKamicha, getPaoSelf,
+  getPaoShimocha, getPaoToimen, getRiichiKamicha, getRiichiSelf, getRiichiShimocha, getRiichiToimen,
+  getRound, getSeatKamicha, getSeatSelf, getSeatShimocha, getSeatToimen,
+  getSelf, getShimocha, getToimen, getTopBottomPayment, getTopLeftPayment, getTopRightPayment, PaymentInfo
+} from "../../services/store/selectors/confirmationSchemeSelectors";
+import { RRoundPaymentsInfo } from "../../interfaces/remote";
 
 @Component({
   selector: 'confirmation-scheme',
   templateUrl: 'template.svg.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class ConfirmationSchemeComponent {
-  @Input() players: Player[];
-  @Input() currentPlayerId: number;
+  @Input() state: IAppState;
+
+  // this is also contained in state, BUT! there are more than one
+  // and we can choose what exactly overview do we want to render.
   @Input() overview: RRoundPaymentsInfo;
 
-  get round(): number {
-    return this.overview.round;
-  }
+  get round(): number { return getRound(this.state); }
 
-  self: Player;
-  shimocha: Player;
-  toimen: Player;
-  kamicha: Player;
-  seatSelf: string;
-  seatShimocha: string;
-  seatToimen: string;
-  seatKamicha: string;
+  get self(): Player { return getSelf(this.state, this.overview); }
+  get shimocha(): Player { return getShimocha(this.state, this.overview); }
+  get toimen(): Player { return getToimen(this.state, this.overview); }
+  get kamicha(): Player { return getKamicha(this.state, this.overview); }
 
-  shimochaChombo: boolean = false;
-  toimenChombo: boolean = false;
-  kamichaChombo: boolean = false;
-  selfChombo: boolean = false;
+  get seatSelf(): string { return getSeatSelf(this.state, this.overview); }
+  get seatShimocha(): string { return getSeatShimocha(this.state, this.overview); }
+  get seatToimen(): string { return getSeatToimen(this.state, this.overview); }
+  get seatKamicha(): string { return getSeatKamicha(this.state, this.overview); }
 
-  shimochaPao: boolean = false;
-  toimenPao: boolean = false;
-  kamichaPao: boolean = false;
-  selfPao: boolean = false;
+  get shimochaChombo(): boolean { return getChomboShimocha(this.state, this.overview); }
+  get toimenChombo(): boolean { return getChomboToimen(this.state, this.overview); }
+  get kamichaChombo(): boolean { return getChomboKamicha(this.state, this.overview); }
+  get selfChombo(): boolean { return getChomboSelf(this.state, this.overview); }
 
-  shimochaRiichi: boolean = false;
-  toimenRiichi: boolean = false;
-  kamichaRiichi: boolean = false;
-  selfRiichi: boolean = false;
+  get shimochaPao(): boolean { return getPaoShimocha(this.state, this.overview); }
+  get toimenPao(): boolean { return getPaoToimen(this.state, this.overview); }
+  get kamichaPao(): boolean { return getPaoKamicha(this.state, this.overview); }
+  get selfPao(): boolean { return getPaoSelf(this.state, this.overview); }
 
-  topLeftPayment?: PaymentInfo;
-  topRightPayment?: PaymentInfo;
-  topBottomPayment?: PaymentInfo;
-  bottomLeftPayment?: PaymentInfo;
-  bottomRightPayment?: PaymentInfo;
-  leftRightPayment?: PaymentInfo;
-  noPayments: boolean = true;
+  get shimochaRiichi(): boolean { return getRiichiShimocha(this.state, this.overview); }
+  get toimenRiichi(): boolean { return getRiichiToimen(this.state, this.overview); }
+  get kamichaRiichi(): boolean { return getRiichiKamicha(this.state, this.overview); }
+  get selfRiichi(): boolean { return getRiichiSelf(this.state, this.overview); }
 
-  ngOnInit() {
-    let seating = ['東', '南', '西', '北'];
-    for (let i = 1; i < this.overview.round; i++) {
-      seating = [seating.pop()].concat(seating);
-    }
+  get topLeftPayment(): PaymentInfo { return getTopLeftPayment(this.state, this.overview); }
+  get topRightPayment(): PaymentInfo { return getTopRightPayment(this.state, this.overview); }
+  get topBottomPayment(): PaymentInfo { return getTopBottomPayment(this.state, this.overview); }
+  get bottomLeftPayment(): PaymentInfo { return getBottomLeftPayment(this.state, this.overview); }
+  get bottomRightPayment(): PaymentInfo { return getBottomRightPayment(this.state, this.overview); }
+  get leftRightPayment(): PaymentInfo { return getLeftRightPayment(this.state, this.overview); }
 
-    let players: Player[] = [].concat(this.players);
-    const current = this.currentPlayerId;
-
-    for (var roundOffset = 0; roundOffset < 4; roundOffset++) {
-      if (players[0].id === current) {
-        break;
-      }
-
-      players = players.slice(1).concat(players[0]);
-      seating = seating.slice(1).concat(seating[0]);
-    }
-
-    this.self = players[0];
-    this.shimocha = players[1];
-    this.toimen = players[2];
-    this.kamicha = players[3];
-
-    this.seatSelf = seating[0];
-    this.seatShimocha = seating[1];
-    this.seatToimen = seating[2];
-    this.seatKamicha = seating[3];
-
-    this.updatePayments(roundOffset);
-
-    // update riichi
-    this.overview.riichiIds
-      .map((id: string) => parseInt(id, 10)) // TODO: get it out to formatters
-      .map((id: number) => {
-        switch (id) {
-          case this.self.id:
-            this.selfRiichi = true;
-            break;
-          case this.toimen.id:
-            this.toimenRiichi = true;
-            break;
-          case this.shimocha.id:
-            this.shimochaRiichi = true;
-            break;
-          case this.kamicha.id:
-            this.kamichaRiichi = true;
-            break;
-        }
-      });
-
-    // update chombo
-    if (this.overview.outcome === 'chombo') {
-      switch (this.overview.penaltyFor) {
-        case this.self.id:
-          this.selfChombo = true;
-          break;
-        case this.kamicha.id:
-          this.kamichaChombo = true;
-          break;
-        case this.toimen.id:
-          this.toimenChombo = true;
-          break;
-        case this.shimocha.id:
-          this.shimochaChombo = true;
-          break;
-      }
-    }
-
-    // update pao
-    if (['ron', 'tsumo', 'multiron'].indexOf(this.overview.outcome) !== -1) {
-      switch (this.overview.paoPlayer) {
-        case this.self.id:
-          this.selfPao = true;
-          break;
-        case this.kamicha.id:
-          this.kamichaPao = true;
-          break;
-        case this.toimen.id:
-          this.toimenPao = true;
-          break;
-        case this.shimocha.id:
-          this.shimochaPao = true;
-          break;
-      }
-    }
-  }
-
-  _getPayment(player1: Player, player2: Player) {
-    const p = this.overview.payments;
-    const directPayment12 = p.direct && p.direct[player2.id + '<-' + player1.id] || 0;
-    const directPayment21 = p.direct && p.direct[player1.id + '<-' + player2.id] || 0;
-    const riichiPayment12 = p.riichi && p.riichi[player2.id + '<-' + player1.id] || 0;
-    const riichiPayment21 = p.riichi && p.riichi[player1.id + '<-' + player2.id] || 0;
-    const honbaPayment12 = p.honba && p.honba[player2.id + '<-' + player1.id] || 0;
-    const honbaPayment21 = p.honba && p.honba[player1.id + '<-' + player2.id] || 0;
-
-    let direction;
-
-    //multiple nagashi
-    if (directPayment12 == directPayment21 && directPayment12 != 0) {
-      return null;
-    }
-
-    if (directPayment12 + riichiPayment12 > 0) {
-      return {
-        backward: false,
-        riichi: riichiPayment12 > 0,
-        title: [directPayment12, honbaPayment12]
-          .filter(e => !!e)
-          .join(' + ')
-      };
-    } else if (directPayment21 + riichiPayment21 > 0) {
-      return {
-        backward: true,
-        riichi: riichiPayment21 > 0,
-        title: [directPayment21, honbaPayment21]
-          .filter(e => !!e)
-          .join(' + ')
-      };
-    } else {
-      return null;
-    }
-  }
-
-  updatePayments(offset) {
-    this.topLeftPayment = this._getPayment(this.toimen, this.kamicha);
-    this.topRightPayment = this._getPayment(this.toimen, this.shimocha);
-    this.topBottomPayment = this._getPayment(this.toimen, this.self);
-    this.bottomLeftPayment = this._getPayment(this.self, this.kamicha);
-    this.bottomRightPayment = this._getPayment(this.self, this.shimocha);
-    this.leftRightPayment = this._getPayment(this.kamicha, this.shimocha);
-    this.noPayments
-      = !this.topLeftPayment
-      && !this.topRightPayment
-      && !this.topBottomPayment
-      && !this.bottomLeftPayment
-      && !this.bottomLeftPayment
-      && !this.leftRightPayment
-      ;
-  }
+  get noPayments(): boolean { return !getIfAnyPaymentsOccured(this.state, this.overview); }
 }
