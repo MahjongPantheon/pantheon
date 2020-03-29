@@ -75,6 +75,8 @@ export interface IAppState {
   newGameSelectedUsers?: LUser[];
   newGameStartError?: ErrorState;
 
+  overviewDiffBy?: 'self' | 'shimocha' | 'toimen' | 'kamicha';
+
   isUniversalWatcher: boolean;
 }
 

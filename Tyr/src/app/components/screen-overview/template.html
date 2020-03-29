@@ -17,10 +17,10 @@
     You should have received a copy of the GNU General Public License
     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div class="riichi-table" *ngIf="_loading">
+<div class="riichi-table" *ngIf="state.loading.overview">
   <div class="inline-preloader"></div>
 </div>
-<div class="riichi-table" *ngIf="!currentGameHash && !_loading">
+<div class="riichi-table" *ngIf="!state.currentSessionHash && !state.loading.overview">
   <br />
   <div class="centered not-found">
     {{greeting}}
@@ -28,33 +28,33 @@
   <div class="centered not-found">
     {{_NO_YOUR_GAMES_NOW}}
   </div>
-  <button class="newgame-button" (click)="reloadOverview()" *ngIf="!isUniversalWatcher">{{_REFRESH_PAGE}}</button>
+  <button class="newgame-button" (click)="reloadOverview()" *ngIf="!state.isUniversalWatcher">{{_REFRESH_PAGE}}</button>
   <button class="newgame-button" (click)="otherTables()">{{_OTHER_TABLES}}</button>
-  <button class="newgame-button" (click)="lastResults()" *ngIf="!isUniversalWatcher">{{_PREV_GAME_RESULTS}}</button>
+  <button class="newgame-button" (click)="lastResults()" *ngIf="!state.isUniversalWatcher">{{_PREV_GAME_RESULTS}}</button>
   <button class="newgame-button" (click)="newGame()" *ngIf="showNewGame">{{_NEW_GAME}}</button>
   <button class="newgame-button" (click)="gotoStat()" *ngIf="showStatButton"
           style="border: none; text-decoration: underline;">
     {{_STATISTICS}} <custom-icon [type]="'newtab'" style="position: absolute; right: 14px; fill: var(--button-text-color)"></custom-icon>
   </button>
 </div>
-<div class="riichi-table" *ngIf="currentGameHash && !_loading">
+<div class="riichi-table" *ngIf="state.currentSessionHash && !state.loading.overview">
   <div class="centered">
     <div class="edge-block round-info">
-      <div class="round-index">{{state.getCurrentRound() | formatRound}}</div>
+      <div class="round-index">{{state.currentRound | formatRound}}</div>
       <div class="honba-count">
         <span class="tenbou honba"></span>
-        <span>{{state.getHonba()}}</span>
+        <span>{{state.honba}}</span>
       </div>
       <div class="riichi-count">
         <span class="tenbou riichi"></span>
-        <span>{{state.getRiichi()}}</span>
+        <span>{{state.riichiOnTable}}</span>
       </div>
     </div>
-    <div class="toimen side" (click)="playerClick('toimen')" [class.selected]="_diffedBy === 'toimen'">
+    <div class="toimen side" (click)="playerClick('toimen')" [class.selected]="state.overviewDiffBy === 'toimen'">
       <div class="displayName">{{toimen.displayName}}</div>
       <div class="wind">{{seatToimen}}</div>
-      <div class="points">{{getScore('toimen')}}</div>
-      <div class="chombo" *ngIf="toimen.penalties != 0">{{getChomboCount('toimen')}}</div>
+      <div class="points">{{scoreToimen}}</div>
+      <div class="chombo" *ngIf="toimen.penalties != 0">{{chomboToimen}}</div>
     </div>
     <div class="edge-block stretched-content">
       <div class="timer" [class.redZone]="redZone" [class.yellowZone]="yellowZone" style="flex: 0">
@@ -66,31 +66,31 @@
     </div>
   </div>
   <div class="ka-shi">
-    <div class="kamicha side" (click)="playerClick('kamicha')" [class.selected]="_diffedBy === 'kamicha'">
+    <div class="kamicha side" (click)="playerClick('kamicha')" [class.selected]="state.overviewDiffBy === 'kamicha'">
       <div class="displayName">{{kamicha.displayName}}</div>
       <div class="wind">{{seatKamicha}}</div>
-      <div class="points">{{getScore('kamicha')}}</div>
-      <div class="chombo" *ngIf="kamicha.penalties != 0">{{getChomboCount('kamicha')}}</div>
+      <div class="points">{{scoreKamicha}}</div>
+      <div class="chombo" *ngIf="kamicha.penalties != 0">{{chomboKamicha}}</div>
     </div>
-    <div class="shimocha side" (click)="playerClick('shimocha')" [class.selected]="_diffedBy === 'shimocha'">
+    <div class="shimocha side" (click)="playerClick('shimocha')" [class.selected]="state.overviewDiffBy === 'shimocha'">
       <div class="displayName">{{shimocha.displayName}}</div>
       <div class="wind">{{seatShimocha}}</div>
-      <div class="points">{{getScore('shimocha')}}</div>
-      <div class="chombo" *ngIf="shimocha.penalties != 0">{{getChomboCount('shimocha')}}</div>
+      <div class="points">{{scoreShimocha}}</div>
+      <div class="chombo" *ngIf="shimocha.penalties != 0">{{chomboShimocha}}</div>
     </div>
   </div>
   <div class="centered">
     <div class="edge-block" style="position: relative">
-      <div class="table-index" *ngIf="!!this.state.getTableIndex()">
+      <div class="table-index" *ngIf="!!this.state.tableIndex">
         {{_TABLE_NUM}}
-        <span>{{this.state.getTableIndex()}}</span>
+        <span>{{this.state.tableIndex}}</span>
       </div>
     </div>
-    <div class="my side" (click)="playerClick('self')" [class.selected]="_diffedBy === 'self'">
+    <div class="my side" (click)="playerClick('self')" [class.selected]="state.overviewDiffBy === 'self'">
       <div class="displayName">{{self.displayName}}</div>
       <div class="wind">{{seatSelf}}</div>
-      <div class="points">{{getScore('self')}}</div>
-      <div class="chombo" *ngIf="self.penalties != 0">{{getChomboCount('self')}}</div>
+      <div class="points">{{scoreSelf}}</div>
+      <div class="chombo" *ngIf="self.penalties != 0">{{chomboSelf}}</div>
     </div>
     <div class="edge-block stretched-content">
       <button class="newgame-button" (click)="viewLastRound()">

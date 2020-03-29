@@ -77,6 +77,7 @@ export const SELECT_NEWGAME_PLAYER_SELF = 'SELECT_NEWGAME_PLAYER_SELF';
 export const SELECT_NEWGAME_PLAYER_SHIMOCHA = 'SELECT_NEWGAME_PLAYER_SHIMOCHA';
 export const SELECT_NEWGAME_PLAYER_TOIMEN = 'SELECT_NEWGAME_PLAYER_TOIMEN';
 export const SELECT_NEWGAME_PLAYER_KAMICHA = 'SELECT_NEWGAME_PLAYER_KAMICHA';
+export const TOGGLE_OVERVIEW_DIFFBY = 'TOGGLE_OVERVIEW_DIFFBY';
 
 interface InitStateAction {
   type: typeof INIT_STATE;
@@ -402,6 +403,11 @@ interface SelectNewgameKamichaAction {
   payload: number;
 }
 
+interface ToggleOverviewDiffbyAction {
+  type: typeof TOGGLE_OVERVIEW_DIFFBY;
+  payload: IAppState['overviewDiffBy'];
+}
+
 export type AppActionTypes =
   | InitStateAction
   | ResetStateAction
@@ -470,5 +476,6 @@ export type AppActionTypes =
   | SelectNewgameSelfAction
   | SelectNewgameShimochaAction
   | SelectNewgameToimenAction
+  | ToggleOverviewDiffbyAction
   ;
 

@@ -1,4 +1,3 @@
-import { Player } from "../../../interfaces/common";
 import { IAppState } from "../interfaces";
 import { memoize } from 'lodash';
 import { LUserWithScore } from "../../../interfaces/local";
