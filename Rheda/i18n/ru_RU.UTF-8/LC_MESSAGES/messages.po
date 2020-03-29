@@ -283,7 +283,7 @@ msgid "Check twice penalty data. You won't be able to cancel the penalty"
 msgstr "Проверьте дважды введенные данные. Отменить штраф будет нельзя."
 
 msgid "Chihou"
-msgstr "Благословение"
+msgstr "Земное благословение"
 
 msgid "Chiitoitsu"
 msgstr "Семь пар"
@@ -1030,7 +1030,7 @@ msgid "Rules overview"
 msgstr "Обзор правил"
 
 msgid "Ryan peikou"
-msgstr "Двойное чистое двойное чоу"
+msgstr "Дважды чистое двойное чоу"
 
 msgid "Ryuu iisou"
 msgstr "Все зеленые"
@@ -1143,7 +1143,7 @@ msgid "Team table"
 msgstr "Командный рейтинг"
 
 msgid "Tenhou"
-msgstr "Божественное благословение"
+msgstr "Небесное благословение"
 
 msgid "Tenpai: %s."
 msgstr "Темпай: %s."
