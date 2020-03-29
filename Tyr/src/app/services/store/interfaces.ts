@@ -58,6 +58,7 @@ export interface IAppState {
   yakuList: Graph<Yaku>;
 
   allPlayers?: LUser[];
+  allPlayersError?: ErrorState;
 
   // Confirmation / changes overview after dry run
   changesOverview?: RRoundPaymentsInfo;
@@ -70,6 +71,9 @@ export interface IAppState {
   // Previous game results
   lastResults?: LUserWithScore[];
   lastResultsError?: ErrorState;
+
+  newGameSelectedUsers?: LUser[];
+  newGameStartError?: ErrorState;
 
   isUniversalWatcher: boolean;
 }

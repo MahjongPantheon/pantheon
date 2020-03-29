@@ -31,6 +31,7 @@ import {
 import { Outcome as OutcomeType } from '../../interfaces/common';
 import { getFixedFu } from '../../primitives/yaku-values';
 import { IAppState } from "./interfaces";
+import {defaultPlayer} from "./selectors/screenNewGameSelectors";
 
 export const initialState: IAppState = {
   currentScreen: 'overview',
@@ -62,7 +63,11 @@ export const initialState: IAppState = {
     otherTables: false,
     otherTable: false,
     login: false,
-  }
+    players: false,
+    addRound: false
+  },
+
+  newGameSelectedUsers: [defaultPlayer, defaultPlayer, defaultPlayer, defaultPlayer]
 };
 
 export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcome {

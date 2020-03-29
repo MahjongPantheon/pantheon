@@ -72,6 +72,11 @@ export const ADD_ROUND_SUCCESS = 'ADD_GAME_SUCCESS';
 export const ADD_ROUND_FAIL = 'ADD_GAME_FAIL';
 export const INIT_BLANK_OUTCOME = 'INIT_BLANK_OUTCOME';
 export const SELECT_MULTIRON_WINNER = 'SELECT_MULTIRON_WINNER';
+export const RANDOMIZE_NEWGAME_PLAYERS = 'RANDOMIZE_NEWGAME_PLAYERS';
+export const SELECT_NEWGAME_PLAYER_SELF = 'SELECT_NEWGAME_PLAYER_SELF';
+export const SELECT_NEWGAME_PLAYER_SHIMOCHA = 'SELECT_NEWGAME_PLAYER_SHIMOCHA';
+export const SELECT_NEWGAME_PLAYER_TOIMEN = 'SELECT_NEWGAME_PLAYER_TOIMEN';
+export const SELECT_NEWGAME_PLAYER_KAMICHA = 'SELECT_NEWGAME_PLAYER_KAMICHA';
 
 interface InitStateAction {
   type: typeof INIT_STATE;
@@ -373,6 +378,30 @@ interface SelectMultironWinnerAction {
   payload: number;
 }
 
+interface RandomizeNewgamePlayersAction {
+  type: typeof RANDOMIZE_NEWGAME_PLAYERS;
+}
+
+interface SelectNewgameSelfAction {
+  type: typeof SELECT_NEWGAME_PLAYER_SELF;
+  payload: number;
+}
+
+interface SelectNewgameShimochaAction {
+  type: typeof SELECT_NEWGAME_PLAYER_SHIMOCHA;
+  payload: number;
+}
+
+interface SelectNewgameToimenAction {
+  type: typeof SELECT_NEWGAME_PLAYER_TOIMEN;
+  payload: number;
+}
+
+interface SelectNewgameKamichaAction {
+  type: typeof SELECT_NEWGAME_PLAYER_KAMICHA;
+  payload: number;
+}
+
 export type AppActionTypes =
   | InitStateAction
   | ResetStateAction
@@ -436,5 +465,10 @@ export type AppActionTypes =
   | AddRoundActionFail
   | InitBlankOutcomeAction
   | SelectMultironWinnerAction
+  | RandomizeNewgamePlayersAction
+  | SelectNewgameKamichaAction
+  | SelectNewgameSelfAction
+  | SelectNewgameShimochaAction
+  | SelectNewgameToimenAction
   ;
 

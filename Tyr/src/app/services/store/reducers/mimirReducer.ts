@@ -9,10 +9,21 @@ import {
   GET_ALL_PLAYERS_SUCCESS,
   GET_CHANGES_OVERVIEW_FAIL,
   GET_CHANGES_OVERVIEW_INIT,
-  GET_CHANGES_OVERVIEW_SUCCESS, GET_LAST_RESULTS_FAIL, GET_LAST_RESULTS_INIT, GET_LAST_RESULTS_SUCCESS,
+  GET_CHANGES_OVERVIEW_SUCCESS,
+  GET_LAST_RESULTS_FAIL,
+  GET_LAST_RESULTS_INIT,
+  GET_LAST_RESULTS_SUCCESS,
   GET_LAST_ROUND_FAIL,
   GET_LAST_ROUND_INIT,
   GET_LAST_ROUND_SUCCESS,
+  RANDOMIZE_NEWGAME_PLAYERS,
+  SELECT_NEWGAME_PLAYER_KAMICHA,
+  SELECT_NEWGAME_PLAYER_SELF,
+  SELECT_NEWGAME_PLAYER_SHIMOCHA,
+  SELECT_NEWGAME_PLAYER_TOIMEN,
+  START_GAME_FAIL,
+  START_GAME_INIT,
+  START_GAME_SUCCESS,
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS
@@ -20,12 +31,17 @@ import {
 import {IAppState} from "../interfaces";
 import {makeYakuGraph} from "../../../primitives/yaku-compat";
 import {RemoteError} from "../../remoteError";
+import {MetrikaService} from "../../metrika";
+import {modifyArray} from "./util";
+import {defaultPlayer} from "../selectors/screenNewGameSelectors";
+import {rand} from "../../../helpers/rand";
 
 export function mimirReducer(
   state = initialState,
   action: AppActionTypes
 ): IAppState {
   let error;
+  let player;
   switch (action.type) {
     case CONFIRM_REGISTRATION_INIT:
       return {
@@ -105,29 +121,40 @@ export function mimirReducer(
         }
       };
     case GET_ALL_PLAYERS_INIT:
+      // TODO
+      // this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-new-game' });
       return {
         ...state,
         loading: {
           ...state.loading,
           players: true
-        }
+        },
+        allPlayers: null,
+        allPlayersError: null
       };
     case GET_ALL_PLAYERS_SUCCESS:
+      // TODO
+      // this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-new-game', request: 'getAllPlayers' });
       return {
         ...state,
         loading: {
           ...state.loading,
           players: false
         },
-        allPlayers: action.payload
+        allPlayers: action.payload,
+        allPlayersError: null
       };
     case GET_ALL_PLAYERS_FAIL:
+      // TODO
+      // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-new-game', request: 'getAllPlayers', message: e.toString() }));
       return {
         ...state,
         loading: {
           ...state.loading,
-          players: false // TODO: what about error?
-        }
+          players: false
+        },
+        allPlayers: null,
+        allPlayersError: { details: action.payload, message: action.payload.message }
       };
     case GET_CHANGES_OVERVIEW_INIT:
       return {
@@ -246,5 +273,68 @@ export function mimirReducer(
           message: action.payload.message
         }
       };
+    case START_GAME_INIT:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          games: true
+        },
+        newGameStartError: null
+      };
+    case START_GAME_SUCCESS:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          games: false
+        },
+        newGameStartError: null
+      };
+    case START_GAME_FAIL:
+      // TODO
+      // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-new-game', request: 'startGame', message: e.toString() });
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          games: false
+        },
+        newGameStartError: {
+          details: action.payload,
+          message: action.payload.message
+        }
+      };
+    case RANDOMIZE_NEWGAME_PLAYERS:
+      const newArr = rand([].concat(state.newGameSelectedUsers));
+      return {
+        ...state,
+        newGameSelectedUsers: newArr
+      };
+    case SELECT_NEWGAME_PLAYER_SELF:
+      player = state.allPlayers.find((p) => p.id === action.payload) || defaultPlayer;
+      return {
+        ...state,
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers, 0, player)
+      };
+    case SELECT_NEWGAME_PLAYER_SHIMOCHA:
+      player = state.allPlayers.find((p) => p.id === action.payload) || defaultPlayer;
+      return {
+        ...state,
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers, 1, player)
+      };
+    case SELECT_NEWGAME_PLAYER_TOIMEN:
+      player = state.allPlayers.find((p) => p.id === action.payload) || defaultPlayer;
+      return {
+        ...state,
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers, 2, player)
+      };
+    case SELECT_NEWGAME_PLAYER_KAMICHA:
+      player = state.allPlayers.find((p) => p.id === action.payload) || defaultPlayer;
+      return {
+        ...state,
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers, 3, player)
+      };
+
   }
 }

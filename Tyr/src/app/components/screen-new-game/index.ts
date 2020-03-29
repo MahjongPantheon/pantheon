@@ -20,22 +20,19 @@
 
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {MetrikaService} from '../../services/metrika';
-import {LUser} from '../../interfaces/local';
-import {rand} from '../../helpers/rand';
-import {clone, find, remove, toNumber, uniq} from 'lodash';
 import {IAppState} from "../../services/store/interfaces";
 import {Dispatch} from "redux";
-import {AppActionTypes, GET_ALL_PLAYERS_INIT, START_GAME_INIT} from "../../services/store/actions/interfaces";
-
-const DEFAULT_ID = -1;
-
-const defaultPlayer: LUser = {
-  displayName: '--- ? ---',
-  id: DEFAULT_ID,
-  tenhouId: null,
-  ident: null,
-  alias: null
-};
+import {
+  AppActionTypes,
+  GET_ALL_PLAYERS_INIT,
+  RANDOMIZE_NEWGAME_PLAYERS,
+  SELECT_NEWGAME_PLAYER_KAMICHA,
+  SELECT_NEWGAME_PLAYER_SELF,
+  SELECT_NEWGAME_PLAYER_SHIMOCHA,
+  SELECT_NEWGAME_PLAYER_TOIMEN,
+  START_GAME_INIT
+} from "../../services/store/actions/interfaces";
+import {getPlayers, playersValid} from "../../services/store/selectors/screenNewGameSelectors";
 
 @Component({
   selector: 'screen-new-game',
@@ -46,109 +43,33 @@ const defaultPlayer: LUser = {
 export class NewGameScreen {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
-  public _loading: boolean = false;
-  constructor(private metrika: MetrikaService) { }
 
-  // These are indexes in _players array
-  toimen: number = DEFAULT_ID;
-  shimocha: number = DEFAULT_ID;
-  kamicha: number = DEFAULT_ID;
-  self: number = DEFAULT_ID; // Self is always considered east!
+  get _loading() { return this.state.loading.players; }
+  get players() { return getPlayers(this.state); }
 
-  availablePlayers: LUser[] = [];
+  get self() { return this.state.newGameSelectedUsers && this.state.newGameSelectedUsers[0]; }
+  get shimocha() { return this.state.newGameSelectedUsers && this.state.newGameSelectedUsers[1]; }
+  get toimen() { return this.state.newGameSelectedUsers && this.state.newGameSelectedUsers[2]; }
+  get kamicha() { return this.state.newGameSelectedUsers && this.state.newGameSelectedUsers[3]; }
+
+  get playersValid() { return playersValid(this.state); }
 
   ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-new-game' });
-    this._loading = true;
     this.dispatch({ type: GET_ALL_PLAYERS_INIT });
-    // TODO: on success
-    // this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-new-game', request: 'getAllPlayers' });
-    // TODO: on error
-    // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-new-game', request: 'getAllPlayers', message: e.toString() }));
   }
 
-  // TODO: memoize selector
-  get players() {
-    const players = this.state.allPlayers || []; // TODO: take from proper place
-
-    let currentUserIndex = players.findIndex((element) => element.id == this.state.currentPlayerId);
-    let currentPlayer = players.splice(currentUserIndex, 1);
-
-    return [defaultPlayer].concat(currentPlayer,
-      players.sort((a, b) => {
-        if (a == b) {
-          return 0;
-        }
-        return (a.displayName < b.displayName ? -1 : 1);
-      })
-    );
-  }
-
-  playersValid(): boolean {
-    let playerIds = this._selectedPlayerIds();
-
-    // all players should have initialized ids
-    if (playerIds.indexOf(DEFAULT_ID) != -1) {
-      return false;
-    }
-
-    // There must be Current Player
-    if (playerIds.indexOf(this.state.currentPlayerId) == -1) {
-      return false;
-    }
-
-    // all players should be unique
-    return uniq(playerIds).length == 4;
-  }
-
-  /**
-   * randomize seating
-   */
-  randomize() {
-    let randomized = rand(this._selectedPlayerIds());
-
-    this.toimen = randomized[0];
-    this.kamicha = randomized[1];
-    this.self = randomized[2];
-    this.shimocha = randomized[3];
-  }
-
-  afterSelect() {
-    let playerIds = this._selectedPlayerIds();
-    remove(playerIds, (id) => id == DEFAULT_ID);
-
-    // don't display already selected players
-    this.availablePlayers = clone(this.players);
-    for (let playerId of playerIds) {
-      remove(this.availablePlayers, { id: playerId })
-    }
-  }
-
-  findById(playerId) {
-    playerId = toNumber(playerId);
-    return find(this.players, { id: playerId });
-  }
+  randomize() { this.dispatch( { type: RANDOMIZE_NEWGAME_PLAYERS } ); }
+  selectSelf(id: string) { this.dispatch( { type: SELECT_NEWGAME_PLAYER_SELF, payload: parseInt(id, 10) } ); }
+  selectShimocha(id: string) { this.dispatch( { type: SELECT_NEWGAME_PLAYER_SHIMOCHA, payload: parseInt(id, 10) } ); }
+  selectToimen(id: string) { this.dispatch( { type: SELECT_NEWGAME_PLAYER_TOIMEN, payload: parseInt(id, 10) } ); }
+  selectKamicha(id: string) { this.dispatch( { type: SELECT_NEWGAME_PLAYER_KAMICHA, payload: parseInt(id, 10) } ); }
 
   startGame() {
-    if (!this.playersValid()) {
+    if (!this.playersValid) {
       return;
     }
 
-    this.dispatch({ type: START_GAME_INIT, payload: this._selectedPlayerIds() });
-    // TODO: on fail
-    // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-new-game', request: 'startGame', message: e.toString() });
+    this.dispatch({ type: START_GAME_INIT, payload: this.state.newGameSelectedUsers.map((p) => p.id) });
   }
-
-  private _selectedPlayerIds(): number[] {
-    // we had to convert ids to the int
-    // to be able properly validate selected players
-    return [
-      toNumber(this.self),
-      toNumber(this.shimocha),
-      toNumber(this.toimen),
-      toNumber(this.kamicha)
-    ];
-  }
-
 }
 
