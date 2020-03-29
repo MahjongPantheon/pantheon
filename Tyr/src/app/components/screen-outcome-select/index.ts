@@ -53,22 +53,6 @@ export class OutcomeSelectScreen extends I18nComponent {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-outcome-select' });
   }
 
-  get abortsAllowed() {
-    return this.state.gameConfig.withAbortives;
-  }
-
-  get multironAllowed() {
-    return !this.state.gameConfig.withAtamahane;
-  }
-
-  get nagashiAllowed() {
-    return this.state.gameConfig.withNagashiMangan;
-  }
-
-  get screenEnabled() {
-    return !this.state.timer.waiting
-  }
-
   select(outcome: Outcome) {
     this.dispatch({ type: INIT_BLANK_OUTCOME, payload: outcome });
     this.dispatch({ type: GOTO_NEXT_SCREEN });

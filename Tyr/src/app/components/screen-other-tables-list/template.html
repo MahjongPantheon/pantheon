@@ -19,10 +19,10 @@
 -->
 
 <div class="wrap scroller-wrap">
-  <div class="table" *ngIf="state.getOtherTables().length === 0">
+  <div class="table" *ngIf="state.otherTablesList.length === 0">
     {{_NO_TABLES_PLAYING_NOW}}
   </div>
-  <div *ngFor="let table of state.getOtherTables()" class="table">
+  <div *ngFor="let table of state.otherTablesList" class="table">
     <ul class="playerList">
       <li *ngFor="let player of table.players">
         <b>{{player.displayName}}</b>: {{player.score}}

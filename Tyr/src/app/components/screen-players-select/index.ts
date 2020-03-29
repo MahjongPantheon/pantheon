@@ -30,6 +30,13 @@ import {
   TOGGLE_RIICHI,
   TOGGLE_WINNER
 } from "../../services/store/actions/interfaces";
+import {
+  getKamicha, getSeatKamicha,
+  getSeatSelf, getSeatShimocha, getSeatToimen,
+  getSelf,
+  getShimocha,
+  getToimen
+} from "../../services/store/selectors/overviewSelectors";
 
 @Component({
   selector: 'screen-players-select',
@@ -41,49 +48,15 @@ export class PlayersSelectScreen {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
 
-  outcome() {
-    return this.state.currentOutcome;
-  }
+  constructor(private metrika: MetrikaService) { }
 
-  constructor(
-    private metrika: MetrikaService
-  ) { }
-
-  self: Player;
-  shimocha: Player;
-  toimen: Player;
-  kamicha: Player;
-
-  seatSelf: string;
-  seatShimocha: string;
-  seatToimen: string;
-  seatKamicha: string;
+  get self(): Player { return getSelf(this.state, this.state.players); }
+  get shimocha(): Player { return getShimocha(this.state, this.state.players); }
+  get toimen(): Player { return getToimen(this.state, this.state.players); }
+  get kamicha(): Player { return getKamicha(this.state, this.state.players); }
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-players-select' });
-    let players: Player[] = [].concat(this.state.players);
-    let seating = ['東', '南', '西', '北'];
-
-    const current = this.state.currentPlayerId;
-
-    for (let i = 0; i < 4; i++) {
-      if (players[0].id === current) {
-        break;
-      }
-
-      players = players.slice(1).concat(players[0]);
-      seating = seating.slice(1).concat(seating[0]);
-    }
-
-    this.self = players[0];
-    this.shimocha = players[1];
-    this.toimen = players[2];
-    this.kamicha = players[3];
-
-    this.seatSelf = seating[0];
-    this.seatShimocha = seating[1];
-    this.seatToimen = seating[2];
-    this.seatKamicha = seating[3];
   }
 
   handle([player, what]: [Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao' | 'nagashi']) {
