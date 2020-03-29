@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-21 18:45+0300\n"
-"PO-Revision-Date: 2020-03-20 10:25+0500\n"
+"PO-Revision-Date: 2020-03-29 20:59+0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -79,7 +79,7 @@ msgstr "Внешняя рука"
 
 #: src/app/primitives/yaku.ts:310:34 src/app/primitives/yaku.ts:311:39
 msgid "Chiihou"
-msgstr "Благословение"
+msgstr "Земное благословение"
 
 #: src/app/primitives/yaku.ts:256:34 src/app/primitives/yaku.ts:257:39
 msgid "Chiitoitsu"
@@ -341,7 +341,7 @@ msgstr "Рон"
 
 #: src/app/primitives/yaku.ts:130:34 src/app/primitives/yaku.ts:131:39
 msgid "Ryanpeikou"
-msgstr "Двойное чистое двойное чоу"
+msgstr "Дважды чистое двойное чоу"
 
 #: src/app/primitives/yaku.ts:250:34 src/app/primitives/yaku.ts:251:39
 msgid "Ryuuiisou"
@@ -409,7 +409,7 @@ msgstr "Все простые"
 
 #: src/app/primitives/yaku.ts:304:34 src/app/primitives/yaku.ts:305:39
 msgid "Tenhou"
-msgstr "Божественное благословение"
+msgstr "Небесное благословение"
 
 #: src/app/components/auxiliary-i18n/index.ts:70:12
 msgid "Tenpai: "
