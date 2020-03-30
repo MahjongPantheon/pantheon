@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {createStore, combineReducers, applyMiddleware, Store as ReduxStore, Action, compose} from 'redux';
-import {AppActionTypes, AppActionTypes1} from "./actions/interfaces";
+import { createStore, combineReducers, applyMiddleware, Store as ReduxStore, compose } from 'redux';
 import { screenManageReducer } from "./reducers/screenManageReducer";
 import { mimirClient } from './middlewares/mimirClient';
 import { RiichiApiService } from "../riichiApi";
 import { mimirReducer } from "./reducers/mimirReducer";
 import { outcomeReducer } from "./reducers/outcomeReducer";
-import {metrika} from "./middlewares/metrika";
-import {history} from "./middlewares/history";
-import {MetrikaService} from "../metrika";
-import {timerReducer} from "./reducers/timerReducer";
-import {timerMw} from "./middlewares/timer";
-import {IAppState, TimerStorage} from "./interfaces";
-import {commonReducer} from "./reducers/commonReducer";
+import { metrika } from "./middlewares/metrika";
+import { history } from "./middlewares/history";
+import { MetrikaService } from "../metrika";
+import { timerReducer } from "./reducers/timerReducer";
+import { timerMw } from "./middlewares/timer";
+import { IAppState, TimerStorage } from "./interfaces";
+import { commonReducer } from "./reducers/commonReducer";
+import { yaku } from "./middlewares/yaku";
+import { AppActionTypes } from "./actions/interfaces";
 
 @Injectable()
 export class Store {
@@ -38,7 +39,8 @@ export class Store {
       mimirClient(new RiichiApiService(client)),
       metrika(new MetrikaService(client)),
       history(),
-      timerMw(this.timerSt)
+      timerMw(this.timerSt),
+      yaku
     );
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     this.store = createStore(reducer, composeEnhancers(middleware)) as unknown as ReduxStore<IAppState>; // TODO: proper types
@@ -49,7 +51,7 @@ export class Store {
     this.store.subscribe(() => this.onUpdate(this.store.getState()));
   }
 
-  public dispatch(action: AppActionTypes1) {
+  public dispatch(action: AppActionTypes) {
     this.store.dispatch(action);
   }
 

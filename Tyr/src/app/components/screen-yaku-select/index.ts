@@ -35,8 +35,10 @@ import {IAppState} from "../../services/store/interfaces";
 import {Dispatch} from "redux";
 import {ADD_YAKU, AppActionTypes, REMOVE_YAKU, SELECT_MULTIRON_WINNER} from "../../services/store/actions/interfaces";
 import {getWinningUsers, hasYaku} from "../../services/store/selectors/mimirSelectors";
-import {getDora, getHan} from "../../services/store/selectors/hanFu";
+import {getDora, getFu, getHan} from "../../services/store/selectors/hanFu";
 import {getAllowedYaku, getRequiredYaku, getSelectedYaku} from "../../services/store/selectors/yaku";
+import {getDisabledYaku, getYakuList, shouldShowTabs} from "../../services/store/selectors/screenYakuSelectors";
+import {getOutcomeName} from "../../services/store/selectors/lastRoundSelectors";
 
 @Component({
   selector: 'screen-yaku-select',
@@ -47,87 +49,32 @@ import {getAllowedYaku, getRequiredYaku, getSelectedYaku} from "../../services/s
 export class YakuSelectScreen extends I18nComponent {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
-  yakuList: {
-    [id: number]: Array<{
-      anchor: string;
-      groups: Yaku[][]
-    }>
-  } = {};
-  disabledYaku: {
-    [id: number]: {
-      [key: number]: boolean
-    }
-  } = {};
-  _viewportHeight: string = null;
-  _tabsHeight: string = null;
-  _currentUser: number = null; // Should be in sync with current multi-ron user in state!
 
-  constructor(
-    public i18n: I18nService,
-    private metrika: MetrikaService
-  ) {
+  get winningUsers() { return getWinningUsers(this.state); }
+  get outcome() { return getOutcomeName(this.state, true); }
+  get shouldShowTabs() { return shouldShowTabs(this.state); }
+  get yakuList() { return getYakuList(this.state); }
+  get disabledYaku() { return getDisabledYaku(this.state); }
+  get currentMultironUser() { return this.state.multironCurrentWinner; }
+  fu(id: number) { return getFu(this.state, id); }
+  han(id: number) { return getHan(this.state, id) + getDora(this.state, id); }
+  isSelected(id: YakuId) { return getSelectedYaku(this.state).indexOf(id) !== -1; }
+
+  constructor(public i18n: I18nService, private metrika: MetrikaService) {
     super(i18n);
-    this._viewportHeight = (window.innerHeight - 50) + 'px'; // 50 is height of navbar;
-    this._tabsHeight = parseInt((window.innerWidth * 0.10).toString(), 10) + 'px'; // Should equal to margin-left of buttons & scroller-wrap
+    this._initView();
   }
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-yaku-select' });
-    this._currentUser = getWinningUsers(this.state)[0].id;
-    this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: this._currentUser });
-
-    for (let user of getWinningUsers(this.state)) {
-      this.yakuList[user.id] = [
-        { anchor: 'simple', groups: filterAllowed(yakuGroups, this.state.gameConfig.allowedYaku) },
-        { anchor: 'rare', groups: filterAllowed(yakuRareGroups, this.state.gameConfig.allowedYaku) },
-        { anchor: 'yakuman', groups: filterAllowed(yakumanGroups, this.state.gameConfig.allowedYaku) }
-      ];
-    }
-
+    this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: getWinningUsers(this.state)[0].id }); // sets winner for ron/tsumo too
     if (this.state.currentOutcome.selectedOutcome === 'tsumo') {
-      this.dispatch({ type: ADD_YAKU, payload: { id: YakuId.MENZENTSUMO, winner: this._currentUser} });
+      this.dispatch({ type: ADD_YAKU, payload: { id: YakuId.MENZENTSUMO, winner: getWinningUsers(this.state)[0].id} });
     }
-    this._enableRequiredYaku();
-    this._disableIncompatibleYaku();
-  }
-
-  showFuOf(id: number) {
-    let han = getHan(this.state, id);
-    let dora = getDora(this.state, id);
-    return han > 0 && han + dora < 5
-  }
-
-  han(id: number) {
-    return getHan(this.state, id) + getDora(this.state, id);
-  }
-
-  showTabs() {
-    return getWinningUsers(this.state).length > 1;
   }
 
   selectMultiRonUser(id: number) {
-    this._currentUser = id;
     this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: id });
-    this._enableRequiredYaku();
-    this._disableIncompatibleYaku();
-  }
-
-  outcome() {
-    switch (this.state.currentOutcome.selectedOutcome) {
-      case 'ron':
-      case 'multiron':
-        return this.i18n._t('Ron');
-      case 'tsumo':
-        return this.i18n._t('Tsumo');
-      case 'draw':
-        return this.i18n._t('Exhaustive draw');
-      case 'abort':
-        return this.i18n._t('Abortive draw');
-      case 'chombo':
-        return this.i18n._t('Chombo');
-      default:
-        return '';
-    }
   }
 
   yakuSelect(evt: { id: number }) {
@@ -136,34 +83,6 @@ export class YakuSelectScreen extends I18nComponent {
     } else {
       this.dispatch({ type: ADD_YAKU, payload: { id: evt.id } });
     }
-    this._enableRequiredYaku();
-    this._disableIncompatibleYaku();
-  }
-
-  _disableIncompatibleYaku() {
-    const allowedYaku = getAllowedYaku(this.state);
-    this.disabledYaku[this._currentUser] = {};
-
-    for (let yGroup of this.yakuList[this._currentUser]) {
-      for (let yRow of yGroup.groups) {
-        for (let yaku of yRow) {
-          if (allowedYaku.indexOf(yaku.id) === -1 && !hasYaku(this.state, yaku.id)) {
-            this.disabledYaku[this._currentUser][yaku.id] = true;
-          }
-        }
-      }
-    }
-  }
-
-  _enableRequiredYaku() {
-    const requiredYaku = getRequiredYaku(this.state);
-    requiredYaku.forEach((y) => {
-      this.dispatch({ type: ADD_YAKU, payload: { id: y } });
-    });
-  }
-
-  isSelected(id: YakuId) {
-    return getSelectedYaku(this.state).indexOf(id) !== -1;
   }
 
   // -------------------------------
@@ -179,9 +98,16 @@ export class YakuSelectScreen extends I18nComponent {
   selectedRare: boolean = false;
   selectedYakuman: boolean = false;
 
-  updateAfterScroll() {
-    throttle(() => this._updateAfterScroll(), 16)();
+  _viewportHeight: string = null;
+  _tabsHeight: string = null;
+
+  private _initView() {
+    this._viewportHeight = (window.innerHeight - 50) + 'px'; // 50 is height of navbar;
+    this._tabsHeight = parseInt((window.innerWidth * 0.10).toString(), 10) + 'px'; // Should equal to margin-left of buttons & scroller-wrap
   }
+
+  private _updateAfterScrollThrottled = throttle(() => this._updateAfterScroll(), 16);
+  updateAfterScroll() { this._updateAfterScrollThrottled(); }
 
   private _makeLinks() {
     if (this._simpleLink) {

@@ -5,12 +5,9 @@ import {YakuId} from "../../../primitives/yaku";
 import {AppOutcome} from "../../../interfaces/app";
 import {intersection} from "lodash";
 import {unpack} from "../../../primitives/yaku-compat";
-import {AppState} from "../../../primitives/appstate";
+import { memoize } from "lodash";
 
-// TODO: memoize all
-export function mimirSelector(state: IAppState) {}
-
-export function getWins(state: IAppState): LWinItem[] {
+function _getWins(state: IAppState): LWinItem[] {
   switch (state.currentOutcome.selectedOutcome) {
     case 'multiron':
       let wins: LWinItem[] = [];
@@ -35,6 +32,8 @@ export function getWins(state: IAppState): LWinItem[] {
   }
 }
 
+export const getWins = memoize(_getWins);
+
 export function getMultiRonCount(state: IAppState): number {
   switch (state.currentOutcome.selectedOutcome) {
     case 'multiron':
@@ -44,6 +43,7 @@ export function getMultiRonCount(state: IAppState): number {
   }
 }
 
+// TODO: i18n
 export function getEventTitle(state: IAppState): string {
   if (state.isUniversalWatcher) {
     return i18n._t('Games overview');
@@ -56,7 +56,7 @@ export function getGameConfig(state:IAppState, key: string) {
   return state.gameConfig && state.gameConfig[key];
 }
 
-export function winnerHasYakuWithPao(state: IAppState): boolean {
+function _winnerHasYakuWithPao(state: IAppState): boolean {
   const outcome: AppOutcome = state.currentOutcome;
   const gameConfig: LGameConfig = state.gameConfig;
   if (!outcome) {
@@ -76,11 +76,13 @@ export function winnerHasYakuWithPao(state: IAppState): boolean {
   }
 }
 
+export const winnerHasYakuWithPao = memoize(_winnerHasYakuWithPao);
+
 export function getOutcome(state: IAppState) {
   return state.currentOutcome && state.currentOutcome.selectedOutcome;
 }
 
-export function getWinningUsers(state: IAppState): Player[] {
+function _getWinningUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
@@ -102,7 +104,9 @@ export function getWinningUsers(state: IAppState): Player[] {
   }
 }
 
-export function getLosingUsers(state: IAppState): Player[] {
+export const getWinningUsers = memoize(_getWinningUsers);
+
+function _getLosingUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
@@ -116,7 +120,9 @@ export function getLosingUsers(state: IAppState): Player[] {
   }
 }
 
-export function getPaoUsers(state: IAppState): Player[] {
+export const getLosingUsers = memoize(_getLosingUsers);
+
+function _getPaoUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
@@ -136,7 +142,9 @@ export function getPaoUsers(state: IAppState): Player[] {
   }
 }
 
-export function getDeadhandUsers(state: IAppState): Player[] {
+export const getPaoUsers = memoize(_getPaoUsers);
+
+function _getDeadhandUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'draw':
@@ -147,7 +155,9 @@ export function getDeadhandUsers(state: IAppState): Player[] {
   }
 }
 
-export function getNagashiUsers(state: IAppState): Player[] {
+export const getDeadhandUsers = memoize(_getDeadhandUsers);
+
+function _getNagashiUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'nagashi':
@@ -157,8 +167,10 @@ export function getNagashiUsers(state: IAppState): Player[] {
   }
 }
 
+export const getNagashiUsers = memoize(_getNagashiUsers);
+
 // TODO: this should be done in UI - check
-export function hasYaku(state: IAppState, id: YakuId) {
+function _hasYaku(state: IAppState, id: YakuId) {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
@@ -171,7 +183,9 @@ export function hasYaku(state: IAppState, id: YakuId) {
   }
 }
 
-export function getRiichiUsers(state: IAppState): Player[] {
+export const hasYaku = memoize(_hasYaku);
+
+function _getRiichiUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
@@ -186,7 +200,9 @@ export function getRiichiUsers(state: IAppState): Player[] {
   }
 }
 
-export function getCurrentTimerZone(state: IAppState) {
+export const getRiichiUsers = memoize(_getRiichiUsers);
+
+function _getCurrentTimerZone(state: IAppState) {
   let zoneLength;
   switch (state.gameConfig.timerPolicy) {
     case 'redZone':
@@ -205,3 +221,5 @@ export function getCurrentTimerZone(state: IAppState) {
   }
   return 'none';
 }
+
+export const getCurrentTimerZone = memoize(_getCurrentTimerZone);

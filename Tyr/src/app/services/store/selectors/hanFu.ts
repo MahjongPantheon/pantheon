@@ -19,8 +19,9 @@
  */
 
 import {IAppState} from "../interfaces";
+import { memoize } from "lodash";
 
-export function getHan(state: IAppState, user?: number) {
+function _getHan(state: IAppState, user?: number) {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
@@ -33,7 +34,9 @@ export function getHan(state: IAppState, user?: number) {
   }
 }
 
-export function getFu(state: IAppState, user?: number) {
+export const getHan = memoize(_getHan);
+
+function _getFu(state: IAppState, user?: number) {
   const outcome = state.currentOutcome;
   let han: number;
   let fu: number;
@@ -59,7 +62,9 @@ export function getFu(state: IAppState, user?: number) {
   }
 }
 
-export function getPossibleFu(state: IAppState) {
+export const getFu = memoize(_getFu);
+
+function _getPossibleFu(state: IAppState) {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
@@ -72,7 +77,9 @@ export function getPossibleFu(state: IAppState) {
   }
 }
 
-export function getDora(state: IAppState, user?: number) {
+export const getPossibleFu = memoize(_getPossibleFu);
+
+function _getDora(state: IAppState, user?: number) {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {
     case 'ron':
@@ -84,3 +91,5 @@ export function getDora(state: IAppState, user?: number) {
       return 0;
   }
 }
+
+export const getDora = memoize(_getDora);
