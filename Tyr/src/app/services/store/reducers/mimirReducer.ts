@@ -24,6 +24,8 @@ import {
   START_GAME_FAIL,
   START_GAME_INIT,
   START_GAME_SUCCESS,
+  TABLE_ROTATE_CLOCKWISE,
+  TABLE_ROTATE_COUNTERCLOCKWISE,
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS
@@ -31,7 +33,6 @@ import {
 import {IAppState} from "../interfaces";
 import {makeYakuGraph} from "../../../primitives/yaku-compat";
 import {RemoteError} from "../../remoteError";
-import {MetrikaService} from "../../metrika";
 import {modifyArray} from "./util";
 import {defaultPlayer} from "../selectors/screenNewGameSelectors";
 import {rand} from "../../../helpers/rand";
@@ -335,6 +336,15 @@ export function mimirReducer(
         ...state,
         newGameSelectedUsers: modifyArray(state.newGameSelectedUsers, 3, player)
       };
-
+    case TABLE_ROTATE_CLOCKWISE:
+      return {
+        ...state,
+        overviewViewShift: ((state.overviewViewShift || 0) + 3) % 4
+      };
+    case TABLE_ROTATE_COUNTERCLOCKWISE:
+    return {
+      ...state,
+      overviewViewShift: ((state.overviewViewShift || 0) + 1) % 4
+    };
   }
 }

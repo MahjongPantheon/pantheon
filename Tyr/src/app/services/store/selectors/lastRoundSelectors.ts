@@ -1,9 +1,10 @@
 import { IAppState } from "../interfaces";
 import { YakuId, yakuMap } from "../../../primitives/yaku";
+import {RRound, RRoundPaymentsInfo} from "../../../interfaces/remote";
 
 // TODO: to common selectors
-export function getOutcomeName(state: IAppState, noMultiRon: boolean = false) {
-  switch (state.lastRoundOverview.outcome) {
+export function getOutcomeName(info: RRoundPaymentsInfo, noMultiRon: boolean = false) {
+  switch (info.outcome) {
     case 'ron': return this.i18n._t('Ron');
     case 'tsumo': return this.i18n._t('Tsumo');
     case 'draw': return this.i18n._t('Exhaustive draw');
@@ -12,7 +13,7 @@ export function getOutcomeName(state: IAppState, noMultiRon: boolean = false) {
     case 'nagashi': return this.i18n._t('Nagashi mangan');
     case 'multiron': return noMultiRon
       ? this.i18n._t('Ron')
-      : (state.lastRoundOverview.winner.length === 2
+      : (info.winner.length === 2
         ? this.i18n._t('Double ron')
         : this.i18n._t('Triple ron')
       );

@@ -1,7 +1,7 @@
 import {Dispatch, Store as ReduxStore} from "redux";
 import {
   AppActionTypes,
-  CONFIRM_REGISTRATION_FAIL,
+  CONFIRM_REGISTRATION_FAIL, FORCE_LOGOUT,
   GET_GAME_OVERVIEW_FAIL,
   GET_GAME_OVERVIEW_INIT,
   GET_GAME_OVERVIEW_SUCCESS,
@@ -43,6 +43,11 @@ export const metrika = (metrika: MetrikaService) => (store: ReduxStore) => (next
         type: 'game-overview',
         code: action.payload.code,
         message: action.payload.message
+      });
+      break;
+    case FORCE_LOGOUT:
+      this.metrika.track(MetrikaService.LOGOUT, {
+        screen: 'screen-settings'
       });
       break;
     default:

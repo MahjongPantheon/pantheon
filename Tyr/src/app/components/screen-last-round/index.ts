@@ -38,7 +38,7 @@ export class LastRoundScreen extends I18nComponent {
 
   get _dataReady(): boolean { return !!this.state.lastRoundOverview; };
   get _error(): string { return this.state.lastRoundOverviewError && this.state.lastRoundOverviewError.message };
-  get outcomeName(): string { return getOutcomeName(this.state); };
+  get outcomeName(): string { return getOutcomeName(this.state.lastRoundOverview); };
   get wins() { return getWins(this.state); }
 
   public confirmed: boolean = false;

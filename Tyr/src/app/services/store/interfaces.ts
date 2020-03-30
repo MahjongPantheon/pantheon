@@ -49,6 +49,7 @@ export interface IAppState {
   yellowZoneAlreadyPlayed;
   otherTablesList: Table[];
   currentOtherTable: RSessionOverview;
+  currentOtherTableIndex: number;
   currentOtherTableHash: string | null;
   currentOtherTablePlayers: Player[];
   currentOtherTableLastRound: RRoundPaymentsInfo;
@@ -76,8 +77,13 @@ export interface IAppState {
   newGameStartError?: ErrorState;
 
   overviewDiffBy?: 'self' | 'shimocha' | 'toimen' | 'kamicha';
+  overviewViewShift?: number;
 
   isUniversalWatcher: boolean;
+  settings: {
+    currentLang: string;
+    currentTheme: string;
+  }
 }
 
 export type TimerStorage = {

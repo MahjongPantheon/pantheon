@@ -19,7 +19,6 @@
  */
 
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {YakuId, yakuMap} from '../../primitives/yaku';
 import {Player} from '../../interfaces/common';
 import {MetrikaService} from '../../services/metrika';
 import {RRoundPaymentsInfo} from '../../interfaces/remote';
@@ -29,8 +28,24 @@ import {Dispatch} from "redux";
 import {
   AppActionTypes,
   GET_OTHER_TABLE_INIT,
-  GET_OTHER_TABLE_LAST_ROUND_INIT
+  GET_OTHER_TABLE_LAST_ROUND_INIT, TABLE_ROTATE_CLOCKWISE, TABLE_ROTATE_COUNTERCLOCKWISE, TOGGLE_OVERVIEW_DIFFBY
 } from "../../services/store/actions/interfaces";
+import {
+  getChomboKamicha,
+  getChomboSelf, getChomboShimocha, getChomboToimen,
+  getKamicha, getScoreKamicha, getScoreSelf, getScoreShimocha, getScoreToimen, getSeatKamicha,
+  getSeatSelf, getSeatShimocha, getSeatToimen,
+  getSelf,
+  getShimocha,
+  getToimen
+} from "../../services/store/selectors/overviewSelectors";
+import {getOutcomeName} from "../../services/store/selectors/lastRoundSelectors";
+import {
+  getNotenPlayers, getPenalty,
+  getRiichiPlayers,
+  getTempaiPlayers,
+  getWins
+} from "../../services/store/selectors/otherTableSelectors";
 
 @Component({
   selector: 'screen-other-table',
@@ -41,6 +56,7 @@ import {
 export class OtherTableScreen extends I18nComponent {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
+
   constructor(
     public i18n: I18nService,
     private metrika: MetrikaService
@@ -63,77 +79,43 @@ export class OtherTableScreen extends I18nComponent {
     return null;
   }
 
-  self: Player;
-  shimocha: Player;
-  toimen: Player;
-  kamicha: Player;
+  get self(): Player { return getSelf(this.state, this.state.currentOtherTablePlayers); }
+  get shimocha(): Player { return getShimocha(this.state, this.state.currentOtherTablePlayers); }
+  get toimen(): Player { return getToimen(this.state, this.state.currentOtherTablePlayers); }
+  get kamicha(): Player { return getKamicha(this.state, this.state.currentOtherTablePlayers); }
 
-  seatSelf: string;
-  seatShimocha: string;
-  seatToimen: string;
-  seatKamicha: string;
+  get seatSelf(): string { return getSeatSelf(this.state, this.state.currentOtherTablePlayers); }
+  get seatShimocha(): string { return getSeatShimocha(this.state, this.state.currentOtherTablePlayers); }
+  get seatToimen(): string { return getSeatToimen(this.state, this.state.currentOtherTablePlayers); }
+  get seatKamicha(): string { return getSeatKamicha(this.state, this.state.currentOtherTablePlayers); }
 
-  _diffedBy: string = null;
-  _currentPlayer: number = 0;
+  get scoreSelf(): string { return getScoreSelf(this.state, this.state.currentOtherTablePlayers); }
+  get scoreShimocha(): string { return getScoreShimocha(this.state, this.state.currentOtherTablePlayers); }
+  get scoreToimen(): string { return getScoreToimen(this.state, this.state.currentOtherTablePlayers); }
+  get scoreKamicha(): string { return getScoreKamicha(this.state, this.state.currentOtherTablePlayers); }
 
-  get currentGameHash() {
-    return this.state.currentOtherTableHash;
-  }
+  get chomboSelf(): string { return getChomboSelf(this.state, this.state.currentOtherTablePlayers); }
+  get chomboShimocha(): string { return getChomboShimocha(this.state, this.state.currentOtherTablePlayers); }
+  get chomboToimen(): string { return getChomboToimen(this.state, this.state.currentOtherTablePlayers); }
+  get chomboKamicha(): string { return getChomboKamicha(this.state, this.state.currentOtherTablePlayers); }
 
-  get currentTable() {
-    return this.state.currentOtherTable.state;
-  }
+  get _loading() { return !this._dataUpdated && this.state.loading.otherTable; }
+  get currentGameHash() { return this.state.currentOtherTableHash; }
+  get currentTable() { return this.state.currentOtherTable.state; }
+  get outcomeName() { return getOutcomeName(this.state.currentOtherTableLastRound); }
 
-  get _loading() {
-    return !this._dataUpdated && this.state.loading.otherTable;
-  }
-
-  getScore(who) {
-    let score = this[who].score;
-    if (!this._diffedBy) {
-      return score;
-    }
-
-    if (this._diffedBy && this._diffedBy !== who) {
-      score -= this[this._diffedBy].score;
-    }
-    return (score > 0 && this._diffedBy !== who) ? '+' + score : score;
-  }
-
-  getChomboCount(who) {
-    return Math.abs(
-      (this[who].penalties || 0) /
-      this.state.gameConfig.chomboPenalty
-    ) || '';
-  }
-
-  reloadOverview() {
-    this.dispatch({ type: GET_OTHER_TABLE_INIT, payload: this.currentGameHash });
-  }
-
+  reloadOverview() { this.dispatch({ type: GET_OTHER_TABLE_INIT, payload: this.currentGameHash }); }
   viewLastRound() {
     this.dispatch({ type: GET_OTHER_TABLE_LAST_ROUND_INIT, payload: this.currentGameHash });
-    // TODO
-    // clearTimeout(this._lastRoundTimer);
-    // this._lastRoundTimer = setTimeout(() => this._showLastRound = false, 8000);
+    clearTimeout(this._lastRoundTimer);
+    this._lastRoundTimer = setTimeout(() => this._showLastRound = false, 8000);
   }
 
   rotateTable(dir: boolean) {
-    if (dir) { // counter-clockwise
-      this._currentPlayer = (this._currentPlayer + 1) % 4;
-    } else { // clockwise
-      this._currentPlayer = (this._currentPlayer + 3) % 4;
-    }
-    this.updatePlayers();
+    this.dispatch({ type: dir ? TABLE_ROTATE_COUNTERCLOCKWISE : TABLE_ROTATE_CLOCKWISE });
   }
 
-  playerClick(who: string) {
-    if (this._diffedBy === who) {
-      this._diffedBy = null;
-    } else {
-      this._diffedBy = who;
-    }
-  }
+  playerClick(who: IAppState['overviewDiffBy']) { this.dispatch( { type: TOGGLE_OVERVIEW_DIFFBY, payload: who }); }
 
   ngOnChanges() {
     if (
@@ -148,7 +130,6 @@ export class OtherTableScreen extends I18nComponent {
       this._lastRoundTimer = setTimeout(() => this._showLastRound = false, 8000);
     }
 
-    this.updatePlayers();
     this._lastRoundLocal = this.state.currentOtherTableLastRound;
   }
 
@@ -157,7 +138,6 @@ export class OtherTableScreen extends I18nComponent {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-table' });
     this._lastRoundTimer = null;
     this._showLastRound = false;
-    this.updatePlayers();
     this._updateInterval = setInterval(() => this._dataUpdated && this.reloadOverview(), 5000);
   }
 
@@ -166,141 +146,13 @@ export class OtherTableScreen extends I18nComponent {
     clearTimeout(this._lastRoundTimer);
   }
 
-  private updatePlayers() {
-    if (!this.state.currentOtherTablePlayers || this.state.currentOtherTablePlayers.length !== 4) {
-      this._dataUpdated = false;
-      return;
-    }
+  /// last round sub-screen related
 
-    this._dataUpdated = true;
-
-    let players: Player[] = [].concat(this.state.currentOtherTablePlayers);
-    let seating = ['東', '南', '西', '北'];
-    for (let i = 1; i < this.currentTable.round; i++) {
-      seating = [seating.pop()].concat(seating);
-    }
-
-    for (let i = 0; i < 4; i++) {
-      if (this._currentPlayer === i) {
-        break;
-      }
-
-      players = players.slice(1).concat(players[0]);
-      seating = seating.slice(1).concat(seating[0]);
-    }
-
-    this.self = players[0];
-    this.shimocha = players[1];
-    this.toimen = players[2];
-    this.kamicha = players[3];
-
-    this.seatSelf = seating[0];
-    this.seatShimocha = seating[1];
-    this.seatToimen = seating[2];
-    this.seatKamicha = seating[3];
-  }
-
-  /// last round related
-
-  getWins(): Array<{ winner: string, loser: string, han: number, fu: number, dora: number, yakuList: string }> {
-    switch (this._lastRoundLocal.outcome) {
-      case 'ron':
-      case 'tsumo':
-        return [{
-          winner: this._getPlayerName(this._lastRoundLocal.winner),
-          loser: this._getLoserName(),
-          yakuList: this._getYakuList(this._lastRoundLocal.yaku),
-          han: this._lastRoundLocal.han,
-          fu: this._lastRoundLocal.fu,
-          dora: this._lastRoundLocal.dora
-        }];
-      case 'multiron':
-        let wins = [];
-        for (let idx in this._lastRoundLocal.winner) {
-          wins.push({
-            winner: this._getPlayerName(this._lastRoundLocal.winner[idx]),
-            loser: this._getLoserName(),
-            yakuList: this._getYakuList(this._lastRoundLocal.yaku[idx]),
-            han: this._lastRoundLocal.han[idx],
-            fu: this._lastRoundLocal.fu[idx],
-            dora: this._lastRoundLocal.dora[idx]
-          });
-        }
-        return wins;
-    }
-  }
-
-  getOutcomeName() {
-    switch (this._lastRoundLocal.outcome) {
-      case 'ron': return this.i18n._t('Ron');
-      case 'tsumo': return this.i18n._t('Tsumo');
-      case 'draw': return this.i18n._t('Exhaustive draw');
-      case 'abort': return this.i18n._t('Abortive draw');
-      case 'chombo': return this.i18n._t('Chombo');
-      case 'multiron': return (this._lastRoundLocal.winner.length === 2
-        ? this.i18n._t('Double ron')
-        : this.i18n._t('Triple ron')
-      );
-    }
-  }
-
-  getPenalty() {
-    if (this._lastRoundLocal.outcome !== 'chombo') {
-      return;
-    }
-    return this._getPlayerName(this._lastRoundLocal.penaltyFor);
-  }
-
-  getTempaiPlayers() {
-    if (this._lastRoundLocal.outcome !== 'draw') {
-      return;
-    }
-
-    return Object.keys(this._lastRoundLocal.payments.direct)
-      .map((i) => parseInt(i.split('<-')[0], 10))
-      .filter((value, index, self) => self.indexOf(value) === index)
-      .map((i) => this._getPlayerName(i))
-      .join(', ');
-  }
-
-  getNotenPlayers() {
-    if (this._lastRoundLocal.outcome !== 'draw') {
-      return;
-    }
-    return Object.keys(this._lastRoundLocal.payments.direct)
-      .map((i) => parseInt(i.split('<-')[1], 10))
-      .filter((value, index, self) => self.indexOf(value) === index)
-      .map((i) => this._getPlayerName(i))
-      .join(', ');
-  }
-
-  getRiichiPlayers() {
-    return this._lastRoundLocal.riichiIds.map(
-      (p) => this._getPlayerName(parseInt(p, 10))
-    ).join(', ');
-  }
-
-  private _getYakuList(str: string) {
-    const yakuIds: YakuId[] = str.split(',').map((y) => parseInt(y, 10));
-    const yakuNames: string[] = yakuIds.map((y) => yakuMap[y].name(this.i18n).toLowerCase());
-    return yakuNames.join(', ');
-  }
-
-  private _getPlayerName(playerId: number): string {
-    let players = this.state.currentOtherTablePlayers;
-    for (let i in players) {
-      if (players[i].id == playerId) {
-        return players[i].displayName;
-      }
-    }
-    return '';
-  }
-
-  private _getLoserName() {
-    for (let i in this.state.currentOtherTableLastRound.payments.direct) {
-      return this._getPlayerName(parseInt(i.split('<-')[1], 10));
-    }
-  }
+  get penalty() { return getPenalty(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
+  get wins() { return getWins(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
+  get tempaiPlayers() { return getTempaiPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
+  get notenPlayers() { return getNotenPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
+  get riichiPlayers() { return getRiichiPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
 }
 
 

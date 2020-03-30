@@ -10,7 +10,7 @@ function _getSeating(state: IAppState, playersList: Player[]) {
   }
 
   let roundOffset = 0;
-  for (; roundOffset < 4; roundOffset++) {
+  for (; roundOffset < 4 + (state.overviewViewShift || 0); roundOffset++) {
     if (players[0].id === state.currentPlayerId) {
       break;
     }

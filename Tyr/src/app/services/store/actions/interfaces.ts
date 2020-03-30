@@ -78,6 +78,11 @@ export const SELECT_NEWGAME_PLAYER_SHIMOCHA = 'SELECT_NEWGAME_PLAYER_SHIMOCHA';
 export const SELECT_NEWGAME_PLAYER_TOIMEN = 'SELECT_NEWGAME_PLAYER_TOIMEN';
 export const SELECT_NEWGAME_PLAYER_KAMICHA = 'SELECT_NEWGAME_PLAYER_KAMICHA';
 export const TOGGLE_OVERVIEW_DIFFBY = 'TOGGLE_OVERVIEW_DIFFBY';
+export const TABLE_ROTATE_COUNTERCLOCKWISE = 'TABLE_ROTATE_COUNTERCLOCKWISE';
+export const TABLE_ROTATE_CLOCKWISE = 'TABLE_ROTATE_CLOCKWISE';
+export const SETTINGS_SAVE_THEME = 'SETTINGS_SAVE_THEME';
+export const SETTINGS_SAVE_LANG = 'SETTINGS_SAVE_LANG';
+export const UPDATE_STATE_SETTINGS = 'UPDATE_STATE_SETTINGS';
 
 interface InitStateAction {
   type: typeof INIT_STATE;
@@ -408,6 +413,29 @@ interface ToggleOverviewDiffbyAction {
   payload: IAppState['overviewDiffBy'];
 }
 
+interface TableRotateClockwiseAction {
+  type: typeof TABLE_ROTATE_CLOCKWISE;
+}
+
+interface TableRotateCounterclockwiseAction {
+  type: typeof TABLE_ROTATE_COUNTERCLOCKWISE;
+}
+
+interface SettingsSaveThemeAction {
+  type: typeof SETTINGS_SAVE_THEME;
+  payload: string;
+}
+
+interface SettingsSaveLangAction {
+  type: typeof SETTINGS_SAVE_LANG;
+  payload: string;
+}
+
+interface UpdateStateSettingsAction {
+  type: typeof UPDATE_STATE_SETTINGS;
+  payload: { [key: string]: any } | undefined;
+}
+
 export type AppActionTypes =
   | InitStateAction
   | ResetStateAction
@@ -477,5 +505,10 @@ export type AppActionTypes =
   | SelectNewgameShimochaAction
   | SelectNewgameToimenAction
   | ToggleOverviewDiffbyAction
+  | TableRotateClockwiseAction
+  | TableRotateCounterclockwiseAction
+  | SettingsSaveLangAction
+  | SettingsSaveThemeAction
+  | UpdateStateSettingsAction
   ;
 

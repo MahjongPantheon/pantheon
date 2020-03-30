@@ -51,7 +51,7 @@ export class YakuSelectScreen extends I18nComponent {
   @Input() dispatch: Dispatch<AppActionTypes>;
 
   get winningUsers() { return getWinningUsers(this.state); }
-  get outcome() { return getOutcomeName(this.state, true); }
+  get outcome() { return getOutcomeName(this.state.lastRoundOverview, true); }
   get shouldShowTabs() { return shouldShowTabs(this.state); }
   get yakuList() { return getYakuList(this.state); }
   get disabledYaku() { return getDisabledYaku(this.state); }

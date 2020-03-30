@@ -15,6 +15,9 @@ import { IAppState, TimerStorage } from "./interfaces";
 import { commonReducer } from "./reducers/commonReducer";
 import { yaku } from "./middlewares/yaku";
 import { AppActionTypes } from "./actions/interfaces";
+import {persistentMw} from "./middlewares/persistent";
+import {IDB} from "../idb";
+import {isMetadataError} from "@angular/compiler-cli";
 
 @Injectable()
 export class Store {
@@ -35,11 +38,14 @@ export class Store {
       mimirReducer,
       timerReducer
     });
+    const metrikaService = new MetrikaService(client);
+    const idb = new IDB(metrikaService);
     const middleware = applyMiddleware(
       mimirClient(new RiichiApiService(client)),
-      metrika(new MetrikaService(client)),
+      metrika(metrikaService),
       history(),
       timerMw(this.timerSt),
+      persistentMw(idb),
       yaku
     );
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

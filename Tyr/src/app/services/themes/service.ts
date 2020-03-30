@@ -2,6 +2,14 @@ import { Injectable, Inject, EventEmitter } from '@angular/core';
 import { THEMES, ACTIVE_THEME } from './symbols';
 import { Theme } from '../../themes/interface';
 
+/*
+Сервис надо переделать следующим образом:
+- Убрать директиву
+- Навесить на <html> (либо на корневой компонент, что наверное даже более логично) класс с именем темы
+- Менять этот класс согласно текущей теме в стейте
+- Сами темы сделать простыми перечислениями переменных - можно ли это сделать в зависимости от класса на корневом элементе??
+ */
+
 @Injectable()
 export class ThemeService {
 
