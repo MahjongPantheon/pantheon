@@ -193,7 +193,7 @@ class SessionState
         }
 
         $scores = array_values($this->getScores());
-        return max($scores) > $this->_rules->goalPoints();
+        return max($scores) >= $this->_rules->goalPoints();
     }
 
     /**
