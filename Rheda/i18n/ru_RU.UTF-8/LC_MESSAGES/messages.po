@@ -14,7 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
@@ -274,25 +274,25 @@ msgid "Careful planning"
 msgstr "Точный расчет"
 
 msgid "Chan kan"
-msgstr "Ограбление конга"
+msgstr "Чанкан"
 
 msgid "Chanta"
-msgstr "Внешняя рука"
+msgstr "Чанта"
 
 msgid "Check twice penalty data. You won't be able to cancel the penalty"
 msgstr "Проверьте дважды введенные данные. Отменить штраф будет нельзя."
 
 msgid "Chihou"
-msgstr "Земное благословение"
+msgstr "Чихо"
 
 msgid "Chiitoitsu"
-msgstr "Семь пар"
+msgstr "Чиитойцу"
 
 msgid "Chinitsu"
-msgstr "Полное изобилие"
+msgstr "Чиницу"
 
 msgid "Chinroutou"
-msgstr "Все терминальные"
+msgstr "Чинрото"
 
 #, php-format
 msgid "Chombo (%s)"
@@ -311,7 +311,7 @@ msgid "Chombo: %s."
 msgstr "Чомбо: %s."
 
 msgid "Chuuren pooto"
-msgstr "Девять врат"
+msgstr "Чууренпото"
 
 msgid "Click here to start"
 msgstr "Нажмите здесь для начала работы"
@@ -332,13 +332,13 @@ msgid "Confirm the results and finish all games"
 msgstr "Утвердить результаты и завершить игры"
 
 msgid "Daburu riichi"
-msgstr "Дважды просящая рука"
+msgstr "Дабл риичи"
 
 msgid "Dai sangen"
-msgstr "Большие три дракона"
+msgstr "Дайсанген"
 
 msgid "Dai suushii"
-msgstr "Большие четыре ветра"
+msgstr "Дайсуши"
 
 msgid "Date & time"
 msgstr "Дата/время"
@@ -538,7 +538,7 @@ msgid "Guest of honors"
 msgstr "Довакин aka The mother of dragons"
 
 msgid "Haitei"
-msgstr "Последняя кость со стены"
+msgstr "Хайтей"
 
 msgid "Han"
 msgstr "Хан"
@@ -557,16 +557,16 @@ msgstr ""
 "интриги в последних ханчанах турнира."
 
 msgid "Honitsu"
-msgstr "Пол-изобилия"
+msgstr "Хоницу"
 
 msgid "Honored donor"
 msgstr "Почетный донор"
 
 msgid "Honroutou"
-msgstr "Все терминальные и благородные"
+msgstr "Хонрото"
 
 msgid "Houtei"
-msgstr "Последний снос"
+msgstr "Хотей"
 
 msgid "I saw them dancing"
 msgstr "Задолбал!"
@@ -641,7 +641,7 @@ msgid "If timer should be used"
 msgstr "Должен ли быть использован таймер"
 
 msgid "Iipeikou"
-msgstr "Чистое двойное чоу"
+msgstr "Иипейко"
 
 msgid ""
 "In case of small number of players and large number of games, this seating "
@@ -666,22 +666,22 @@ msgid "Interval seating"
 msgstr "Интервальная рассадка"
 
 msgid "Ippatsu"
-msgstr "Первый круг"
+msgstr "Иппацу"
 
 msgid "Itsu"
-msgstr "Чистый ряд"
+msgstr "Иццу"
 
 msgid "Jewelry included"
 msgstr "Якуман-мастер"
 
 msgid "Junchan"
-msgstr "Внешняя терминальная рука"
+msgstr "Джунчан"
 
 msgid "Just as planned"
 msgstr "Как и планировалось"
 
 msgid "Kokushi musou"
-msgstr "Тринадцать сирот"
+msgstr "Кокуши мусо"
 
 msgid "Last played round:"
 msgstr "Последняя сыгранная раздача:"
@@ -711,7 +711,7 @@ msgid "Maximal arbitrary penalty amount"
 msgstr "Максимальный произвольный штраф"
 
 msgid "Menzen tsumo"
-msgstr "Полностью закрытая рука"
+msgstr "Мендзен цумо"
 
 msgid "Minimal"
 msgstr "Минимальные"
@@ -813,7 +813,7 @@ msgid "Personal stats"
 msgstr "Личная статистика"
 
 msgid "Pinfu"
-msgstr "Идеальная плоская рука"
+msgstr "Пин-фу"
 
 msgid "Places stat:"
 msgstr "Статистика по местам:"
@@ -993,7 +993,7 @@ msgid "Reset the timer"
 msgstr "Сбросить таймер"
 
 msgid "Riichi"
-msgstr "Просящая рука"
+msgstr "Риичи"
 
 msgid "Riichi bets"
 msgstr "Ставок риичи"
@@ -1002,7 +1002,7 @@ msgid "Riichi bets: %s"
 msgstr "Ставок риичи: %s"
 
 msgid "Rinshan kaihou"
-msgstr "Выигрыш замещающей костью"
+msgstr "Риншан кайхо"
 
 #, php-format
 msgid "Ron (%s from %s) %s; riichi bets - %s"
@@ -1030,10 +1030,10 @@ msgid "Rules overview"
 msgstr "Обзор правил"
 
 msgid "Ryan peikou"
-msgstr "Дважды чистое двойное чоу"
+msgstr "Рянпейко"
 
 msgid "Ryuu iisou"
-msgstr "Все зеленые"
+msgstr "Рюисо"
 
 msgid "SEATING"
 msgstr "РАССАДКА"
@@ -1042,16 +1042,16 @@ msgid "SOUTH"
 msgstr "ЮГ"
 
 msgid "San ankou"
-msgstr "Три закрытых панга"
+msgstr "Сананко"
 
 msgid "San kantsu"
-msgstr "Три конга"
+msgstr "Санканцу"
 
 msgid "Sanshoku"
-msgstr "Смешанное тройное чоу"
+msgstr "Саншоку"
 
 msgid "Sanshoku dokou"
-msgstr "Тройной панг"
+msgstr "Саншоку доко"
 
 msgid "Save local IDs"
 msgstr "Сохранить локальные ID"
@@ -1069,10 +1069,10 @@ msgid "Select seating mode and press the appropriate button."
 msgstr "Выберите тип рассадки и нажмите соответствующую кнопку."
 
 msgid "Shou sangen"
-msgstr "Малые три дракона"
+msgstr "Шосанген"
 
 msgid "Shou suushii"
-msgstr "Малые четыре ветра"
+msgstr "Шосуши"
 
 msgid "Something went wrong:"
 msgstr "Что-то пошло не так, и вот что именно:"
@@ -1103,10 +1103,10 @@ msgid "Step of penalty amounts"
 msgstr "Шаг в размерах штрафа"
 
 msgid "Suu ankou"
-msgstr "Четыре закрытых панга"
+msgstr "Сууанко"
 
 msgid "Suu kantsu"
-msgstr "Четыре конга"
+msgstr "Сууканцу"
 
 msgid "Swiss seating"
 msgstr "Швейцарская рассадка"
@@ -1128,7 +1128,7 @@ msgid "Tables state:"
 msgstr "Состояние столов:"
 
 msgid "Tanyao"
-msgstr "Все простые"
+msgstr "Таняо"
 
 msgid "Team"
 msgstr "Команда"
@@ -1143,7 +1143,7 @@ msgid "Team table"
 msgstr "Командный рейтинг"
 
 msgid "Tenhou"
-msgstr "Небесное благословение"
+msgstr "Тенхо"
 
 msgid "Tenpai: %s."
 msgstr "Темпай: %s."
@@ -1215,7 +1215,7 @@ msgid "Timer policy"
 msgstr "Политика таймера"
 
 msgid "Toi-toi"
-msgstr "Все панги"
+msgstr "Тойтой"
 
 msgid ""
 "Total count of registered players is not divisible by 4. Use the \"Add player"
@@ -1255,7 +1255,7 @@ msgid "Tsumo wins"
 msgstr "Выигрышей по цумо"
 
 msgid "Tsuu iisou"
-msgstr "Все благородные"
+msgstr "Цуисо"
 
 msgid "Unable to generate seating"
 msgstr "Невозможно сгенерировать рассадку"
@@ -1309,22 +1309,22 @@ msgid "Yaku collected over all time"
 msgstr "Собранные яку (за все время)"
 
 msgid "Yakuhai x1"
-msgstr "Панг ценных 1"
+msgstr "Якухай 1"
 
 msgid "Yakuhai x2"
-msgstr "Панг ценных 2"
+msgstr "Якухай 2"
 
 msgid "Yakuhai x3"
-msgstr "Панг ценных 3"
+msgstr "Якухай 3"
 
 msgid "Yakuhai x4"
-msgstr "Панг ценных 4"
+msgstr "Якухай 4"
 
 msgid "Yakuhai x5"
-msgstr "Панг ценных 5"
+msgstr "Якухай 5"
 
 msgid "Yakuhai: total"
-msgstr "Ветер: всего"
+msgstr "Якухай: всего"
 
 msgid "Yellow zone duration"
 msgstr "Длительность желтой зоны"
