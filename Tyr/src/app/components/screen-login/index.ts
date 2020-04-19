@@ -26,7 +26,11 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IDB } from '../../services/idb';
 import { IAppState } from '../../services/store/interfaces';
 import { Dispatch } from 'redux';
-import { AppActionTypes } from '../../services/store/actions/interfaces';
+import {
+  AppActionTypes,
+  CONFIRM_REGISTRATION_INIT,
+  RESET_REGISTRATION_ERROR
+} from '../../services/store/actions/interfaces';
 import { QrService } from '../../services/qr';
 
 @Component({
@@ -47,7 +51,7 @@ export class LoginScreen extends I18nComponent implements OnInit {
 
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
-  @Input() loading: boolean;
+
   @ViewChild('cnv', {static: false}) canvas: ElementRef;
 
   constructor(
@@ -68,33 +72,14 @@ export class LoginScreen extends I18nComponent implements OnInit {
     });
   }
 
-  submit() {
-    this.metrika.track(MetrikaService.LOAD_STARTED, { type: 'screen-login', request: 'confirmRegistration' });
-    this.state.loginWithPin(this._pinOrig)
-      .then(() => {
-        this._error = false;
-        this.metrika.track(MetrikaService.LOAD_SUCCESS, {
-          type: 'screen-login',
-          request: 'confirmRegistration'
-        });
-        this.state.reinit();
-      }).catch((e) => {
-        this._error = true;
-        this.metrika.track(MetrikaService.LOAD_ERROR, {
-          type: 'screen-login',
-          request: 'confirmRegistration',
-          message: e.toString()
-        });
-      });
-  }
+  submit() { this.dispatch({ type: CONFIRM_REGISTRATION_INIT, payload: this._pinOrig }); }
 
   reset() {
-    this._error = false;
+    this.dispatch({ type: RESET_REGISTRATION_ERROR });
     this._pinOrig = this._pinView = '';
   }
 
   press(digit: string) {
-    this._error = false;
     if (this._pinOrig.length > 10) {
       return;
     }

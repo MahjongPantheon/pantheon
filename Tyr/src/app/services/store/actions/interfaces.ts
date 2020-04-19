@@ -33,6 +33,7 @@ export const TOGGLE_NAGASHI = 'TOGGLE_NAGASHI';
 export const CONFIRM_REGISTRATION_INIT = 'CONFIRM_REGISTRATION_INIT';
 export const CONFIRM_REGISTRATION_SUCCESS = 'CONFIRM_REGISTRATION_SUCCESS';
 export const CONFIRM_REGISTRATION_FAIL = 'CONFIRM_REGISTRATION_FAIL';
+export const RESET_REGISTRATION_ERROR = 'RESET_REGISTRATION_ERROR';
 export const SET_CREDENTIALS = 'SET_CREDENTIALS_INIT';
 export const UPDATE_CURRENT_GAMES_INIT = 'GET_CURRENT_GAMES_INIT';
 export const UPDATE_CURRENT_GAMES_SUCCESS = 'GET_CURRENT_GAMES_SUCCESS';
@@ -203,6 +204,9 @@ interface ConfirmRegistrationActionSuccess {
 interface ConfirmRegistrationActionFail {
   type: typeof CONFIRM_REGISTRATION_FAIL;
   payload: RemoteError;
+}
+interface ResetRegistrationErrorAction {
+  type: typeof RESET_REGISTRATION_ERROR;
 }
 interface SetCredentialsAction {
   type: typeof SET_CREDENTIALS;
@@ -458,6 +462,7 @@ export type AppActionTypes =
   | ToggleDeadhandAction
   | ToggleNagashiAction
   | ConfirmRegistrationActionSuccess
+  | ResetRegistrationErrorAction
   | UpdateCurrentGamesActionSuccess
   | GetGameOverviewActionSuccess
   | ConfirmRegistrationActionFail

@@ -57,9 +57,7 @@ export class Store {
     this.store.subscribe(() => this.onUpdate(this.store.getState()));
   }
 
-  public dispatch(action: AppActionTypes) {
-    this.store.dispatch(action);
-  }
+  get dispatch() { return this.store.dispatch; }
 
   public get redux(): ReduxStore<IAppState> {
     return this.store;

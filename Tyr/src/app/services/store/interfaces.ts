@@ -84,6 +84,8 @@ export interface IAppState {
     currentLang: string;
     currentTheme: string;
   }
+
+  loginError?: ErrorState;
 }
 
 export type TimerStorage = {

@@ -16,7 +16,7 @@ import {
   GET_LAST_ROUND_FAIL,
   GET_LAST_ROUND_INIT,
   GET_LAST_ROUND_SUCCESS,
-  RANDOMIZE_NEWGAME_PLAYERS,
+  RANDOMIZE_NEWGAME_PLAYERS, RESET_REGISTRATION_ERROR,
   SELECT_NEWGAME_PLAYER_KAMICHA,
   SELECT_NEWGAME_PLAYER_SELF,
   SELECT_NEWGAME_PLAYER_SHIMOCHA,
@@ -50,7 +50,8 @@ export function mimirReducer(
         loading: {
           ...state.loading,
           login: true
-        }
+        },
+        loginError: null
       };
     case CONFIRM_REGISTRATION_SUCCESS:
       return {
@@ -60,7 +61,8 @@ export function mimirReducer(
           login: false
         },
         isLoggedIn: true,
-        currentScreen: 'overview'
+        currentScreen: 'overview',
+        loginError: null
       };
     case CONFIRM_REGISTRATION_FAIL:
       return {
@@ -70,7 +72,13 @@ export function mimirReducer(
           login: false
         },
         isLoggedIn: false,
-        currentScreen: 'login' // TODO: what about error?
+        currentScreen: 'login',
+        loginError: { details: action.payload, message: action.payload.message }
+      };
+    case RESET_REGISTRATION_ERROR:
+      return {
+        ...state,
+        loginError: null
       };
     case UPDATE_CURRENT_GAMES_INIT:
       return {

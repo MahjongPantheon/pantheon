@@ -20,75 +20,76 @@
 <div themable class="page-wrap">
   <nav-bar
     [state]="state"
-    [screen]="state.currentScreen()"
+    [dispatch]="store.dispatch"
   ></nav-bar>
   <div class="content">
     <screen-login
-      *ngIf="state.currentScreen() === 'login'"
+      *ngIf="state.currentScreen === 'login'"
       [state]="state"
-      [loading]="state.isLoading('login')"
-      [api]="api"
+      [dispatch]="store.dispatch"
     ></screen-login>
     <screen-overview
-      *ngIf="state.currentScreen() === 'overview'"
+      *ngIf="state.currentScreen === 'overview'"
       [state]="state"
-      [players]="state.getPlayers()"
-      [loading]="state.isLoading('overview', 'games')"
-      [currentGameHash]="state.getHashcode()"
-      [currentRound]="state.getCurrentRound()"
+      [dispatch]="store.dispatch"
     ></screen-overview>
     <screen-new-game
-      *ngIf="state.currentScreen() === 'newGame'"
+      *ngIf="state.currentScreen === 'newGame'"
       [state]="state"
-      [api]="api"
+      [dispatch]="store.dispatch"
     ></screen-new-game>
     <screen-last-results
-      *ngIf="state.currentScreen() === 'lastResults'"
+      *ngIf="state.currentScreen === 'lastResults'"
       [state]="state"
-      [api]="api"
+      [dispatch]="store.dispatch"
     ></screen-last-results>
     <screen-outcome-select
-      *ngIf="state.currentScreen() === 'outcomeSelect'"
+      *ngIf="state.currentScreen === 'outcomeSelect'"
       [state]="state"
+      [dispatch]="store.dispatch"
     ></screen-outcome-select>
     <screen-players-select
-      *ngIf="state.currentScreen() === 'playersSelect'"
+      *ngIf="state.currentScreen === 'playersSelect'"
       [state]="state"
+      [dispatch]="store.dispatch"
     ></screen-players-select>
     <screen-yaku-select
-      *ngIf="state.currentScreen() === 'yakuSelect'"
+      *ngIf="state.currentScreen === 'yakuSelect'"
       [state]="state"
+      [dispatch]="store.dispatch"
     ></screen-yaku-select>
     <screen-players-select
-      *ngIf="state.currentScreen() === 'paoSelect'"
-      [paoSelectionMode]="true"
+      *ngIf="state.currentScreen === 'paoSelect'"
       [state]="state"
+      [dispatch]="store.dispatch"
     ></screen-players-select>
     <screen-players-select
-      *ngIf="state.currentScreen() === 'nagashiSelect'"
-      [nagashiSelectionMode]="true"
+      *ngIf="state.currentScreen === 'nagashiSelect'"
       [state]="state"
+      [dispatch]="store.dispatch"
     ></screen-players-select>
     <screen-confirmation
-      *ngIf="state.currentScreen() === 'confirmation'"
+      *ngIf="state.currentScreen === 'confirmation'"
       [state]="state"
+      [dispatch]="store.dispatch"
     ></screen-confirmation>
     <screen-last-round
-      *ngIf="state.currentScreen() === 'lastRound'"
+      *ngIf="state.currentScreen === 'lastRound'"
       [state]="state"
+      [dispatch]="store.dispatch"
     ></screen-last-round>
     <screen-other-tables-list
-      *ngIf="state.currentScreen() === 'otherTablesList'"
+      *ngIf="state.currentScreen === 'otherTablesList'"
       [state]="state"
+      [dispatch]="store.dispatch"
     ></screen-other-tables-list>
     <screen-other-table
-      *ngIf="state.currentScreen() === 'otherTable'"
+      *ngIf="state.currentScreen === 'otherTable'"
       [state]="state"
-      [players]="state.getCurrentOtherTablePlayers()"
-      [lastRound]="state.getCurrentOtherTableLastRound()"
+      [dispatch]="store.dispatch"
     ></screen-other-table>
     <screen-settings
-      *ngIf="state.currentScreen() === 'settings'"
+      *ngIf="state.currentScreen === 'settings'"
       [state]="state"
     ></screen-settings>
   </div>
