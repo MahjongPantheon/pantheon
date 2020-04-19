@@ -21,15 +21,15 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {MetrikaService} from '../../services/metrika';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
-import {IAppState} from "../../services/store/interfaces";
-import {Dispatch} from "redux";
+import {IAppState} from '../../services/store/interfaces';
+import {Dispatch} from 'redux';
 import {
   ADD_ROUND_INIT,
   AppActionTypes,
   GET_CHANGES_OVERVIEW_INIT,
   GET_GAME_OVERVIEW_INIT
-} from "../../services/store/actions/interfaces";
-import {isLoading} from "../../services/store/selectors/screenConfirmationSelectors";
+} from '../../services/store/actions/interfaces';
+import {isLoading} from '../../services/store/selectors/screenConfirmationSelectors';
 
 @Component({
   selector: 'screen-confirmation',
@@ -41,8 +41,8 @@ export class ConfirmationScreen extends I18nComponent {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
 
-  public confirmed: boolean = false;
-  public _error: string = '';
+  public confirmed = false;
+  public _error = '';
 
   constructor(
     public i18n: I18nService,

@@ -24,14 +24,14 @@ import {supportedLanguages} from '../../services/i18n';
 import {MetrikaService} from '../../services/metrika';
 import {ThemeService} from '../../services/themes/service';
 import {Theme} from '../../themes/interface';
-import {IAppState} from "../../services/store/interfaces";
-import {Dispatch} from "redux";
+import {IAppState} from '../../services/store/interfaces';
+import {Dispatch} from 'redux';
 import {
   AppActionTypes,
   FORCE_LOGOUT,
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_THEME
-} from "../../services/store/actions/interfaces";
+} from '../../services/store/actions/interfaces';
 
 @Component({
   selector: 'screen-settings',
@@ -78,7 +78,7 @@ export class SettingsScreen extends I18nComponent {
   }
 
   logout() {
-    if (window.confirm(this.i18n._t("Are you sure you want to logout? You will have to get a new pin code to login again"))) {
+    if (window.confirm(this.i18n._t('Are you sure you want to logout? You will have to get a new pin code to login again'))) {
       this.dispatch({ type: FORCE_LOGOUT });
     }
   }

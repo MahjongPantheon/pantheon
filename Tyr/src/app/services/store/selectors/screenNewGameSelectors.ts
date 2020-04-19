@@ -1,5 +1,5 @@
-import { IAppState } from "../interfaces";
-import { LUser } from "../../../interfaces/local";
+import { IAppState } from '../interfaces';
+import { LUser } from '../../../interfaces/local';
 import { memoize, uniq } from 'lodash';
 
 const DEFAULT_ID = -1;

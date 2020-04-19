@@ -1,4 +1,4 @@
-import {initBlankOutcome, initialState} from "../state";
+import {initBlankOutcome, initialState} from '../state';
 import {
   ADD_YAKU, AppActionTypes,
   INIT_BLANK_OUTCOME,
@@ -11,8 +11,8 @@ import {
   TOGGLE_PAO,
   TOGGLE_RIICHI,
   TOGGLE_WINNER
-} from "../actions/interfaces";
-import { IAppState } from "../interfaces";
+} from '../actions/interfaces';
+import { IAppState } from '../interfaces';
 import {
   addYakuToProps,
   modifyDrawOutcome,
@@ -20,12 +20,12 @@ import {
   modifyMultiwin,
   modifyWinOutcome,
   removeYakuFromProps
-} from "./util";
-import { AppOutcome } from "../../../interfaces/app";
-import { Player } from "../../../interfaces/common";
-import { intersection } from "lodash";
-import { unpack } from "../../../primitives/yaku-compat";
-import { getRequiredYaku } from "../selectors/yaku";
+} from './util';
+import { AppOutcome } from '../../../interfaces/app';
+import { Player } from '../../../interfaces/common';
+import { intersection } from 'lodash';
+import { unpack } from '../../../primitives/yaku-compat';
+import { getRequiredYaku } from '../selectors/yaku';
 
 /**
  * Get id of player who is dealer in this round
@@ -77,8 +77,8 @@ export function outcomeReducer(
       */
 
       switch (state.currentOutcome.selectedOutcome) {
-        case "ron":
-        case "tsumo":
+        case 'ron':
+        case 'tsumo':
           winProps = addYakuToProps(
             state.currentOutcome,
             state.currentOutcome.selectedOutcome,
@@ -88,7 +88,7 @@ export function outcomeReducer(
             return state;
           }
           break;
-        case "multiron":
+        case 'multiron':
           winProps = addYakuToProps(
             state.currentOutcome.wins[action.payload.winner],
             state.currentOutcome.selectedOutcome,
@@ -110,8 +110,8 @@ export function outcomeReducer(
       }
 
       switch (state.currentOutcome.selectedOutcome) {
-        case "ron":
-        case "tsumo":
+        case 'ron':
+        case 'tsumo':
           winProps = removeYakuFromProps(
             state.currentOutcome,
             state.currentOutcome.selectedOutcome,
@@ -121,7 +121,7 @@ export function outcomeReducer(
             return state;
           }
           break;
-        case "multiron":
+        case 'multiron':
           winProps = removeYakuFromProps(
             state.currentOutcome.wins[action.payload.winner],
             state.currentOutcome.selectedOutcome,

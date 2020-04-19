@@ -1,11 +1,11 @@
-import {IAppState} from "../interfaces";
-import {LGameConfig, LWinItem} from "../../../interfaces/local";
-import {Player} from "../../../interfaces/common";
-import {YakuId} from "../../../primitives/yaku";
-import {AppOutcome} from "../../../interfaces/app";
-import {intersection} from "lodash";
-import {unpack} from "../../../primitives/yaku-compat";
-import { memoize } from "lodash";
+import {IAppState} from '../interfaces';
+import {LGameConfig, LWinItem} from '../../../interfaces/local';
+import {Player} from '../../../interfaces/common';
+import {YakuId} from '../../../primitives/yaku';
+import {AppOutcome} from '../../../interfaces/app';
+import {intersection} from 'lodash';
+import {unpack} from '../../../primitives/yaku-compat';
+import { memoize } from 'lodash';
 
 function _getWins(state: IAppState): LWinItem[] {
   switch (state.currentOutcome.selectedOutcome) {
@@ -52,7 +52,7 @@ export function getEventTitle(state: IAppState): string {
   }
 }
 
-export function getGameConfig(state:IAppState, key: string) {
+export function getGameConfig(state: IAppState, key: string) {
   return state.gameConfig && state.gameConfig[key];
 }
 

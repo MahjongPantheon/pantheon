@@ -1,13 +1,13 @@
 import deepclone from 'deepclone';
-import {initialState} from "../state";
+import {initialState} from '../state';
 import {
   AppActionTypes,
   INIT_STATE,
   SELECT_MULTIRON_WINNER,
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_THEME, UPDATE_STATE_SETTINGS
-} from "../actions/interfaces";
-import {IAppState} from "../interfaces";
+} from '../actions/interfaces';
+import {IAppState} from '../interfaces';
 
 export function commonReducer(
   state = initialState,

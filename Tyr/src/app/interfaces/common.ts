@@ -21,15 +21,15 @@
 import { YakuId } from '../primitives/yaku';
 import { I18nService } from '../services/i18n';
 
-export type Outcome = "ron" | "tsumo" | "draw" | "abort" | "chombo" | "multiron" | "nagashi";
+export type Outcome = 'ron' | 'tsumo' | 'draw' | 'abort' | 'chombo' | 'multiron' | 'nagashi';
 
 export interface Yaku {
   id: YakuId;
   name: (i18n: I18nService) => string;
   shortName: (i18n: I18nService) => string;
   yakuman: boolean;
-  //valueMelded: number; // TODO
-  //valueConcealed: number;
+  // valueMelded: number; // TODO
+  // valueConcealed: number;
   disabled?: boolean;
 }
 

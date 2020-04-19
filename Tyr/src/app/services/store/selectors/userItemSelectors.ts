@@ -1,5 +1,5 @@
-import {intersection} from "lodash";
-import {unpack} from "../../../primitives/yaku-compat";
+import {intersection} from 'lodash';
+import {unpack} from '../../../primitives/yaku-compat';
 import {
   getDeadhandUsers,
   getLosingUsers,
@@ -7,8 +7,8 @@ import {
   getPaoUsers,
   getRiichiUsers,
   getWinningUsers
-} from "./mimirSelectors";
-import {IAppState} from "../interfaces";
+} from './mimirSelectors';
+import {IAppState} from '../interfaces';
 
 export function showWinButton(state: IAppState) {
   return -1 !== ['ron', 'multiron', 'tsumo', 'draw', 'nagashi']

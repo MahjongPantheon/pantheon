@@ -1,9 +1,9 @@
-import { IAppState } from "../interfaces";
-import { YakuId, yakuMap } from "../../../primitives/yaku";
-import {RRound, RRoundPaymentsInfo} from "../../../interfaces/remote";
+import { IAppState } from '../interfaces';
+import { YakuId, yakuMap } from '../../../primitives/yaku';
+import {RRound, RRoundPaymentsInfo} from '../../../interfaces/remote';
 
 // TODO: to common selectors
-export function getOutcomeName(info: RRoundPaymentsInfo, noMultiRon: boolean = false) {
+export function getOutcomeName(info: RRoundPaymentsInfo, noMultiRon = false) {
   switch (info.outcome) {
     case 'ron': return this.i18n._t('Ron');
     case 'tsumo': return this.i18n._t('Tsumo');

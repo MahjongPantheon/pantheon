@@ -1,4 +1,4 @@
-import {initialState} from "../state";
+import {initialState} from '../state';
 import {
   AppActionTypes,
   CONFIRM_REGISTRATION_FAIL,
@@ -29,13 +29,13 @@ import {
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS
-} from "../actions/interfaces";
-import {IAppState} from "../interfaces";
-import {makeYakuGraph} from "../../../primitives/yaku-compat";
-import {RemoteError} from "../../remoteError";
-import {modifyArray} from "./util";
-import {defaultPlayer} from "../selectors/screenNewGameSelectors";
-import {rand} from "../../../helpers/rand";
+} from '../actions/interfaces';
+import {IAppState} from '../interfaces';
+import {makeYakuGraph} from '../../../primitives/yaku-compat';
+import {RemoteError} from '../../remoteError';
+import {modifyArray} from './util';
+import {defaultPlayer} from '../selectors/screenNewGameSelectors';
+import {rand} from '../../../helpers/rand';
 
 export function mimirReducer(
   state = initialState,
@@ -185,9 +185,9 @@ export function mimirReducer(
       };
     case GET_CHANGES_OVERVIEW_FAIL:
       // TODO: metrika
-      //this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-confirmation', code: e.code, request: reqType });
+      // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-confirmation', code: e.code, request: reqType });
       error = (action.payload.code === 403
-        ? this.i18n._t("Authentication failed")
+        ? this.i18n._t('Authentication failed')
         : this.i18n._t('Failed to add round. Was this hand already added by someone else?')
       );
       return {
@@ -226,12 +226,12 @@ export function mimirReducer(
       // TODO: i18n!!!1111
       error = this.i18n._t('Error occured. Try again.');
       if (!action.payload) {
-        error = this.i18n._t("Latest hand wasn't found");
+        error = this.i18n._t('Latest hand wasn\'t found');
       } else if (action.payload instanceof RemoteError) {
         // TODO
         // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-last-round', request: 'getLastRound' });
         if (action.payload.code === 403) {
-          error = this.i18n._t("Authentication failed");
+          error = this.i18n._t('Authentication failed');
         } else {
           error = this.i18n._t('Unexpected server error');
         }

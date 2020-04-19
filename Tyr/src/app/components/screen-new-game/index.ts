@@ -20,8 +20,8 @@
 
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {MetrikaService} from '../../services/metrika';
-import {IAppState} from "../../services/store/interfaces";
-import {Dispatch} from "redux";
+import {IAppState} from '../../services/store/interfaces';
+import {Dispatch} from 'redux';
 import {
   AppActionTypes,
   GET_ALL_PLAYERS_INIT,
@@ -31,8 +31,8 @@ import {
   SELECT_NEWGAME_PLAYER_SHIMOCHA,
   SELECT_NEWGAME_PLAYER_TOIMEN,
   START_GAME_INIT
-} from "../../services/store/actions/interfaces";
-import {getPlayers, playersValid} from "../../services/store/selectors/screenNewGameSelectors";
+} from '../../services/store/actions/interfaces';
+import {getPlayers, playersValid} from '../../services/store/selectors/screenNewGameSelectors';
 
 @Component({
   selector: 'screen-new-game',

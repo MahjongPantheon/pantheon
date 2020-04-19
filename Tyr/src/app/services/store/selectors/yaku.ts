@@ -19,9 +19,9 @@
  */
 
 import { getAllowedYaku as getAllowedYakuCompat, limits, unpack } from '../../../primitives/yaku-compat';
-import {IAppState} from "../interfaces";
-import {YakuId} from "../../../primitives/yaku";
-import {WinProps} from "../../../interfaces/app";
+import {IAppState} from '../interfaces';
+import {YakuId} from '../../../primitives/yaku';
+import {WinProps} from '../../../interfaces/app';
 
 export function getRequiredYaku(state: IAppState): YakuId[] {
   const outcome = state.currentOutcome;

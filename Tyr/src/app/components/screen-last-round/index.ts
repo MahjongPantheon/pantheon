@@ -21,10 +21,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MetrikaService } from '../../services/metrika';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
-import { IAppState } from "../../services/store/interfaces";
-import { Dispatch } from "redux";
-import { AppActionTypes, GET_LAST_ROUND_INIT } from "../../services/store/actions/interfaces";
-import { getOutcomeName, getWins } from "../../services/store/selectors/lastRoundSelectors";
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
+import { AppActionTypes, GET_LAST_ROUND_INIT } from '../../services/store/actions/interfaces';
+import { getOutcomeName, getWins } from '../../services/store/selectors/lastRoundSelectors';
 
 @Component({
   selector: 'screen-last-round',
@@ -41,7 +41,7 @@ export class LastRoundScreen extends I18nComponent {
   get outcomeName(): string { return getOutcomeName(this.state.lastRoundOverview); };
   get wins() { return getWins(this.state); }
 
-  public confirmed: boolean = false;
+  public confirmed = false;
 
   constructor(
     public i18n: I18nService,

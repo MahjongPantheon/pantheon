@@ -24,10 +24,10 @@ import {MetrikaService} from './services/metrika';
 import {I18nService} from './services/i18n';
 import {IDB} from './services/idb';
 import {ThemeService} from './services/themes/service';
-import {Store} from "./services/store";
-import {HttpClient} from "@angular/common/http";
-import {INIT_STATE} from "./services/store/actions/interfaces";
-import {IAppState} from "./services/store/interfaces";
+import {Store} from './services/store';
+import {HttpClient} from '@angular/common/http';
+import {INIT_STATE} from './services/store/actions/interfaces';
+import {IAppState} from './services/store/interfaces';
 
 @Component({
   selector: 'riichi-app',

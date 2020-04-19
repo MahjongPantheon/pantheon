@@ -19,8 +19,6 @@
  */
 
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { AppState } from '../../primitives/appstate';
-import { RiichiApiService } from '../../services/riichiApi';
 import { MetrikaService } from '../../services/metrika';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IDB } from '../../services/idb';

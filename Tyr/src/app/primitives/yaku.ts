@@ -122,266 +122,266 @@ export const yakuList: Yaku[] = [
   {
     id: YakuId.__OPENHAND,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Opened hand"),
-    shortName: (i18n: I18nService) => i18n._t("Opened hand"),
+    name: (i18n: I18nService) => i18n._t('Opened hand'),
+    shortName: (i18n: I18nService) => i18n._t('Opened hand'),
   },
   {
     id: YakuId.TOITOI,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Toitoi"),
-    shortName: (i18n: I18nService) => i18n._t("Toitoi"),
+    name: (i18n: I18nService) => i18n._t('Toitoi'),
+    shortName: (i18n: I18nService) => i18n._t('Toitoi'),
   },
   {
     id: YakuId.HONROTO,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Honroutou"),
-    shortName: (i18n: I18nService) => i18n._t("Honroutou")
+    name: (i18n: I18nService) => i18n._t('Honroutou'),
+    shortName: (i18n: I18nService) => i18n._t('Honroutou')
   },
   {
     id: YakuId.SANANKOU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Sanankou"),
-    shortName: (i18n: I18nService) => i18n._t("Sanankou")
+    name: (i18n: I18nService) => i18n._t('Sanankou'),
+    shortName: (i18n: I18nService) => i18n._t('Sanankou')
   },
   {
     id: YakuId.SANKANTSU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Sankantsu"),
-    shortName: (i18n: I18nService) => i18n._t("Sankantsu")
+    name: (i18n: I18nService) => i18n._t('Sankantsu'),
+    shortName: (i18n: I18nService) => i18n._t('Sankantsu')
   },
   {
     id: YakuId.SUUKANTSU,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Suukantsu"),
-    shortName: (i18n: I18nService) => i18n._t("Suukantsu")
+    name: (i18n: I18nService) => i18n._t('Suukantsu'),
+    shortName: (i18n: I18nService) => i18n._t('Suukantsu')
   },
   {
     id: YakuId.SUUANKOU,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Suuankou"),
-    shortName: (i18n: I18nService) => i18n._t("Suuankou")
+    name: (i18n: I18nService) => i18n._t('Suuankou'),
+    shortName: (i18n: I18nService) => i18n._t('Suuankou')
   },
   {
     id: YakuId.PINFU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Pinfu"),
-    shortName: (i18n: I18nService) => i18n._t("Pinfu")
+    name: (i18n: I18nService) => i18n._t('Pinfu'),
+    shortName: (i18n: I18nService) => i18n._t('Pinfu')
   },
   {
     id: YakuId.IIPEIKOU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Iipeikou"),
-    shortName: (i18n: I18nService) => i18n._t("Iipeikou")
+    name: (i18n: I18nService) => i18n._t('Iipeikou'),
+    shortName: (i18n: I18nService) => i18n._t('Iipeikou')
   },
   {
     id: YakuId.RYANPEIKOU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Ryanpeikou"),
-    shortName: (i18n: I18nService) => i18n._t("Ryanpeikou")
+    name: (i18n: I18nService) => i18n._t('Ryanpeikou'),
+    shortName: (i18n: I18nService) => i18n._t('Ryanpeikou')
   },
   {
     id: YakuId.SANSHOKUDOUJUN,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Sanshoku"),
-    shortName: (i18n: I18nService) => i18n._t("Sanshoku")
+    name: (i18n: I18nService) => i18n._t('Sanshoku'),
+    shortName: (i18n: I18nService) => i18n._t('Sanshoku')
   },
   {
     id: YakuId.SANSHOKUDOUKOU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Sanshoku doukou"),
-    shortName: (i18n: I18nService) => i18n._t("Sanshoku doukou")
+    name: (i18n: I18nService) => i18n._t('Sanshoku doukou'),
+    shortName: (i18n: I18nService) => i18n._t('Sanshoku doukou')
   },
   {
     id: YakuId.ITTSU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Ittsu"),
-    shortName: (i18n: I18nService) => i18n._t("Ittsu")
+    name: (i18n: I18nService) => i18n._t('Ittsu'),
+    shortName: (i18n: I18nService) => i18n._t('Ittsu')
   },
   {
     id: YakuId.YAKUHAI1,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Yakuhai x1"),
-    shortName: (i18n: I18nService) => i18n._t("Yakuhai")
+    name: (i18n: I18nService) => i18n._t('Yakuhai x1'),
+    shortName: (i18n: I18nService) => i18n._t('Yakuhai')
   },
   {
     id: YakuId.YAKUHAI2,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Yakuhai x2"),
-    shortName: (i18n: I18nService) => i18n._t("x2")
+    name: (i18n: I18nService) => i18n._t('Yakuhai x2'),
+    shortName: (i18n: I18nService) => i18n._t('x2')
   },
   {
     id: YakuId.YAKUHAI3,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Yakuhai x3"),
-    shortName: (i18n: I18nService) => i18n._t("x3")
+    name: (i18n: I18nService) => i18n._t('Yakuhai x3'),
+    shortName: (i18n: I18nService) => i18n._t('x3')
   },
   {
     id: YakuId.YAKUHAI4,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Yakuhai x4"),
-    shortName: (i18n: I18nService) => i18n._t("x4")
+    name: (i18n: I18nService) => i18n._t('Yakuhai x4'),
+    shortName: (i18n: I18nService) => i18n._t('x4')
   },
   {
     id: YakuId.SHOSANGEN,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Shousangen"),
-    shortName: (i18n: I18nService) => i18n._t("Shousangen")
+    name: (i18n: I18nService) => i18n._t('Shousangen'),
+    shortName: (i18n: I18nService) => i18n._t('Shousangen')
   },
   {
     id: YakuId.DAISANGEN,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Daisangen"),
-    shortName: (i18n: I18nService) => i18n._t("Daisangen")
+    name: (i18n: I18nService) => i18n._t('Daisangen'),
+    shortName: (i18n: I18nService) => i18n._t('Daisangen')
   },
   {
     id: YakuId.SHOSUUSHII,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Shousuushii"),
-    shortName: (i18n: I18nService) => i18n._t("Shousuushii")
+    name: (i18n: I18nService) => i18n._t('Shousuushii'),
+    shortName: (i18n: I18nService) => i18n._t('Shousuushii')
   },
   {
     id: YakuId.DAISUUSHII,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Daisuushii"),
-    shortName: (i18n: I18nService) => i18n._t("Daisuushii")
+    name: (i18n: I18nService) => i18n._t('Daisuushii'),
+    shortName: (i18n: I18nService) => i18n._t('Daisuushii')
   },
   {
     id: YakuId.TSUUIISOU,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Tsuuiisou"),
-    shortName: (i18n: I18nService) => i18n._t("Tsuuiisou")
+    name: (i18n: I18nService) => i18n._t('Tsuuiisou'),
+    shortName: (i18n: I18nService) => i18n._t('Tsuuiisou')
   },
   {
     id: YakuId.TANYAO,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Tanyao"),
-    shortName: (i18n: I18nService) => i18n._t("Tanyao")
+    name: (i18n: I18nService) => i18n._t('Tanyao'),
+    shortName: (i18n: I18nService) => i18n._t('Tanyao')
   },
   {
     id: YakuId.CHANTA,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Chanta"),
-    shortName: (i18n: I18nService) => i18n._t("Chanta")
+    name: (i18n: I18nService) => i18n._t('Chanta'),
+    shortName: (i18n: I18nService) => i18n._t('Chanta')
   },
   {
     id: YakuId.JUNCHAN,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Junchan"),
-    shortName: (i18n: I18nService) => i18n._t("Junchan")
+    name: (i18n: I18nService) => i18n._t('Junchan'),
+    shortName: (i18n: I18nService) => i18n._t('Junchan')
   },
   {
     id: YakuId.CHINROTO,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Chinroutou"),
-    shortName: (i18n: I18nService) => i18n._t("Chinroutou")
+    name: (i18n: I18nService) => i18n._t('Chinroutou'),
+    shortName: (i18n: I18nService) => i18n._t('Chinroutou')
   },
   {
     id: YakuId.HONITSU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Honitsu"),
-    shortName: (i18n: I18nService) => i18n._t("Honitsu")
+    name: (i18n: I18nService) => i18n._t('Honitsu'),
+    shortName: (i18n: I18nService) => i18n._t('Honitsu')
   },
   {
     id: YakuId.CHINITSU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Chinitsu"),
-    shortName: (i18n: I18nService) => i18n._t("Chinitsu")
+    name: (i18n: I18nService) => i18n._t('Chinitsu'),
+    shortName: (i18n: I18nService) => i18n._t('Chinitsu')
   },
   {
     id: YakuId.CHUURENPOUTO,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Chuuren poutou"),
-    shortName: (i18n: I18nService) => i18n._t("Chuuren poutou")
+    name: (i18n: I18nService) => i18n._t('Chuuren poutou'),
+    shortName: (i18n: I18nService) => i18n._t('Chuuren poutou')
   },
   {
     id: YakuId.RYUUIISOU,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Ryuuiisou"),
-    shortName: (i18n: I18nService) => i18n._t("Ryuuiisou")
+    name: (i18n: I18nService) => i18n._t('Ryuuiisou'),
+    shortName: (i18n: I18nService) => i18n._t('Ryuuiisou')
   },
   {
     id: YakuId.CHIITOITSU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Chiitoitsu"),
-    shortName: (i18n: I18nService) => i18n._t("Chiitoitsu")
+    name: (i18n: I18nService) => i18n._t('Chiitoitsu'),
+    shortName: (i18n: I18nService) => i18n._t('Chiitoitsu')
   },
   {
     id: YakuId.KOKUSHIMUSOU,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Kokushi musou"),
-    shortName: (i18n: I18nService) => i18n._t("Kokushi musou")
+    name: (i18n: I18nService) => i18n._t('Kokushi musou'),
+    shortName: (i18n: I18nService) => i18n._t('Kokushi musou')
   },
   {
     id: YakuId.RIICHI,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Riichi"),
-    shortName: (i18n: I18nService) => i18n._t("Riichi")
+    name: (i18n: I18nService) => i18n._t('Riichi'),
+    shortName: (i18n: I18nService) => i18n._t('Riichi')
   },
   {
     id: YakuId.DOUBLERIICHI,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Daburu riichi"),
-    shortName: (i18n: I18nService) => i18n._t("Daburu")
+    name: (i18n: I18nService) => i18n._t('Daburu riichi'),
+    shortName: (i18n: I18nService) => i18n._t('Daburu')
   },
   {
     id: YakuId.IPPATSU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Ippatsu"),
-    shortName: (i18n: I18nService) => i18n._t("Ippatsu")
+    name: (i18n: I18nService) => i18n._t('Ippatsu'),
+    shortName: (i18n: I18nService) => i18n._t('Ippatsu')
   },
   {
     id: YakuId.MENZENTSUMO,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Menzentsumo"),
-    shortName: (i18n: I18nService) => i18n._t("Menzentsumo")
+    name: (i18n: I18nService) => i18n._t('Menzentsumo'),
+    shortName: (i18n: I18nService) => i18n._t('Menzentsumo')
   },
   {
     id: YakuId.HAITEI,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Haitei"),
-    shortName: (i18n: I18nService) => i18n._t("Haitei")
+    name: (i18n: I18nService) => i18n._t('Haitei'),
+    shortName: (i18n: I18nService) => i18n._t('Haitei')
   },
   {
     id: YakuId.RINSHANKAIHOU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Rinshan kaihou"),
-    shortName: (i18n: I18nService) => i18n._t("Rinshan")
+    name: (i18n: I18nService) => i18n._t('Rinshan kaihou'),
+    shortName: (i18n: I18nService) => i18n._t('Rinshan')
   },
   {
     id: YakuId.TENHOU,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Tenhou"),
-    shortName: (i18n: I18nService) => i18n._t("Tenhou")
+    name: (i18n: I18nService) => i18n._t('Tenhou'),
+    shortName: (i18n: I18nService) => i18n._t('Tenhou')
   },
   {
     id: YakuId.CHIHOU,
     yakuman: true,
-    name: (i18n: I18nService) => i18n._t("Chiihou"),
-    shortName: (i18n: I18nService) => i18n._t("Chiihou")
+    name: (i18n: I18nService) => i18n._t('Chiihou'),
+    shortName: (i18n: I18nService) => i18n._t('Chiihou')
   },
   {
     id: YakuId.HOUTEI,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Houtei raoyui"),
-    shortName: (i18n: I18nService) => i18n._t("Houtei")
+    name: (i18n: I18nService) => i18n._t('Houtei raoyui'),
+    shortName: (i18n: I18nService) => i18n._t('Houtei')
   },
   {
     id: YakuId.CHANKAN,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Chankan"),
-    shortName: (i18n: I18nService) => i18n._t("Chankan")
+    name: (i18n: I18nService) => i18n._t('Chankan'),
+    shortName: (i18n: I18nService) => i18n._t('Chankan')
   },
   {
     id: YakuId.RENHOU,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Renhou"),
-    shortName: (i18n: I18nService) => i18n._t("Renhou")
+    name: (i18n: I18nService) => i18n._t('Renhou'),
+    shortName: (i18n: I18nService) => i18n._t('Renhou')
   },
   {
     id: YakuId.OPENRIICHI,
     yakuman: false,
-    name: (i18n: I18nService) => i18n._t("Open riichi"),
-    shortName: (i18n: I18nService) => i18n._t("Open riichi")
+    name: (i18n: I18nService) => i18n._t('Open riichi'),
+    shortName: (i18n: I18nService) => i18n._t('Open riichi')
   },
 ];
 

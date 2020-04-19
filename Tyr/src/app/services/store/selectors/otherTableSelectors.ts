@@ -1,7 +1,7 @@
-import {YakuId, yakuMap} from "../../../primitives/yaku";
-import {RRoundPaymentsInfo} from "../../../interfaces/remote";
-import { memoize } from "lodash";
-import {Player} from "../../../interfaces/common";
+import {YakuId, yakuMap} from '../../../primitives/yaku';
+import {RRoundPaymentsInfo} from '../../../interfaces/remote';
+import { memoize } from 'lodash';
+import {Player} from '../../../interfaces/common';
 
 // Other table's last round sub-screen specific selectors
 

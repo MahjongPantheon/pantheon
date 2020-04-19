@@ -1,14 +1,14 @@
-import { YakuId } from "../../../primitives/yaku";
-import { RemoteError } from "../../remoteError";
-import {LCurrentGame, LGameConfig, LTimerState, LUser, LUserWithScore} from "../../../interfaces/local";
+import { YakuId } from '../../../primitives/yaku';
+import { RemoteError } from '../../remoteError';
+import {LCurrentGame, LGameConfig, LTimerState, LUser, LUserWithScore} from '../../../interfaces/local';
 import {
   RRoundPaymentsInfo,
   RRoundPaymentsInfoMulti,
   RRoundPaymentsInfoSingle,
   RSessionOverview
-} from "../../../interfaces/remote";
-import {Table,  Outcome} from "../../../interfaces/common";
-import {IAppState} from "../interfaces";
+} from '../../../interfaces/remote';
+import {Table,  Outcome} from '../../../interfaces/common';
+import {IAppState} from '../interfaces';
 
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';

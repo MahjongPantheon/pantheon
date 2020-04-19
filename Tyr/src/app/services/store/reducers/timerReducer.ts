@@ -1,6 +1,6 @@
-import {initialState} from "../state";
-import {AppActionTypes, UPDATE_TIMER_DATA} from "../actions/interfaces";
-import {IAppState} from "../interfaces";
+import {initialState} from '../state';
+import {AppActionTypes, UPDATE_TIMER_DATA} from '../actions/interfaces';
+import {IAppState} from '../interfaces';
 
 export function timerReducer(
   state = initialState,

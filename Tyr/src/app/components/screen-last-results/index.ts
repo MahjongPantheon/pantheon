@@ -22,11 +22,11 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MetrikaService } from '../../services/metrika';
 import { Player } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
-import { IAppState } from "../../services/store/interfaces";
-import { Dispatch } from "redux";
-import { AppActionTypes, GET_LAST_RESULTS_INIT, GOTO_NEXT_SCREEN } from "../../services/store/actions/interfaces";
-import { getKamicha, getSelf, getShimocha, getToimen } from "../../services/store/selectors/lastResultsSelectors";
-import {LUserWithScore} from "../../interfaces/local";
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
+import { AppActionTypes, GET_LAST_RESULTS_INIT, GOTO_NEXT_SCREEN } from '../../services/store/actions/interfaces';
+import { getKamicha, getSelf, getShimocha, getToimen } from '../../services/store/selectors/lastResultsSelectors';
+import {LUserWithScore} from '../../interfaces/local';
 
 @Component({
   selector: 'screen-last-results',

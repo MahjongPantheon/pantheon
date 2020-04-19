@@ -37,12 +37,12 @@ import {
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS
-} from "../actions/interfaces";
-import {RiichiApiService} from "../../riichiApi";
-import {LCurrentGame, LGameConfig, LTimerState, LUser} from "../../../interfaces/local";
-import {RemoteError} from "../../remoteError";
-import {IAppState} from "../interfaces";
-import {MetrikaService} from "../../metrika";
+} from '../actions/interfaces';
+import {RiichiApiService} from '../../riichiApi';
+import {LCurrentGame, LGameConfig, LTimerState, LUser} from '../../../interfaces/local';
+import {RemoteError} from '../../remoteError';
+import {IAppState} from '../interfaces';
+import {MetrikaService} from '../../metrika';
 
 export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {

@@ -1,6 +1,6 @@
-import { IAppState } from "../interfaces";
+import { IAppState } from '../interfaces';
 import { memoize } from 'lodash';
-import { LUserWithScore } from "../../../interfaces/local";
+import { LUserWithScore } from '../../../interfaces/local';
 
 function _getSeating(state: IAppState, playersList: LUserWithScore[]) {
   let players: LUserWithScore[] = [].concat(playersList);

@@ -1,10 +1,10 @@
-import { AppOutcome } from "../../interfaces/app";
-import {Player, Table, Yaku} from "../../interfaces/common";
-import {LGameConfig, LUser, LUserWithScore} from "../../interfaces/local";
-import { RRoundPaymentsInfo, RSessionOverview } from "../../interfaces/remote";
-import { AppScreen } from "../../primitives/appstate";
-import {Graph} from "../../primitives/graph";
-import {RemoteError} from "../remoteError";
+import { AppOutcome } from '../../interfaces/app';
+import {Player, Table, Yaku} from '../../interfaces/common';
+import {LGameConfig, LUser, LUserWithScore} from '../../interfaces/local';
+import { RRoundPaymentsInfo, RSessionOverview } from '../../interfaces/remote';
+import { AppScreen } from '../../primitives/appstate';
+import {Graph} from '../../primitives/graph';
+import {RemoteError} from '../remoteError';
 
 export type AppScreen = 'overview' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
   | 'yakuSelect' | 'confirmation' | 'newGame' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';

@@ -23,7 +23,7 @@ import {
 } from '@angular/core';
 import { Player } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
-import { IAppState } from "../../services/store/interfaces";
+import { IAppState } from '../../services/store/interfaces';
 import {
   paoPressed,
   showDeadButton,
@@ -39,7 +39,7 @@ import {
   winDisabled,
   loseDisabled,
   nagashiDisabled
-} from "../../services/store/selectors/userItemSelectors";
+} from '../../services/store/selectors/userItemSelectors';
 
 @Component({
   selector: 'user-item',

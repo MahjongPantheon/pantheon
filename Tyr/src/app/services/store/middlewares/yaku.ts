@@ -1,6 +1,6 @@
-import { Dispatch, Store as ReduxStore } from "redux";
-import { ADD_YAKU, AppActionTypes, REMOVE_YAKU, SELECT_MULTIRON_WINNER } from "../actions/interfaces";
-import { getRequiredYaku } from "../selectors/yaku";
+import { Dispatch, Store as ReduxStore } from 'redux';
+import { ADD_YAKU, AppActionTypes, REMOVE_YAKU, SELECT_MULTIRON_WINNER } from '../actions/interfaces';
+import { getRequiredYaku } from '../selectors/yaku';
 
 export const yaku = (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {

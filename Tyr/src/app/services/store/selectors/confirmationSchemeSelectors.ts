@@ -1,7 +1,7 @@
-import { Player } from "../../../interfaces/common";
-import { IAppState } from "../interfaces";
+import { Player } from '../../../interfaces/common';
+import { IAppState } from '../interfaces';
 import { memoize } from 'lodash';
-import { RRoundPaymentsInfo } from "../../../interfaces/remote";
+import { RRoundPaymentsInfo } from '../../../interfaces/remote';
 
 export type PaymentInfo = {
   backward: boolean;
@@ -62,7 +62,7 @@ function _getPayment(state: IAppState, overview: RRoundPaymentsInfo, player1: Pl
   const honbaPayment12 = p.honba && p.honba[player2.id + '<-' + player1.id] || 0;
   const honbaPayment21 = p.honba && p.honba[player1.id + '<-' + player2.id] || 0;
 
-  //multiple nagashi
+  // multiple nagashi
   if (directPayment12 == directPayment21 && directPayment12 != 0) {
     return null;
   }

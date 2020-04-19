@@ -30,8 +30,8 @@ import {
 } from '../../interfaces/app';
 import { Outcome as OutcomeType } from '../../interfaces/common';
 import { getFixedFu } from '../../primitives/yaku-values';
-import { IAppState } from "./interfaces";
-import {defaultPlayer} from "./selectors/screenNewGameSelectors";
+import { IAppState } from './interfaces';
+import {defaultPlayer} from './selectors/screenNewGameSelectors';
 
 export const initialState: IAppState = {
   currentScreen: 'overview',

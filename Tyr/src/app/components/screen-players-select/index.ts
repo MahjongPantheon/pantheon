@@ -21,22 +21,22 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { MetrikaService } from '../../services/metrika';
 import { Player } from '../../interfaces/common';
-import {IAppState} from "../../services/store/interfaces";
-import {Dispatch} from "redux";
+import {IAppState} from '../../services/store/interfaces';
+import {Dispatch} from 'redux';
 import {
   AppActionTypes,
   TOGGLE_DEADHAND,
   TOGGLE_LOSER, TOGGLE_NAGASHI, TOGGLE_PAO,
   TOGGLE_RIICHI,
   TOGGLE_WINNER
-} from "../../services/store/actions/interfaces";
+} from '../../services/store/actions/interfaces';
 import {
   getKamicha, getSeatKamicha,
   getSeatSelf, getSeatShimocha, getSeatToimen,
   getSelf,
   getShimocha,
   getToimen
-} from "../../services/store/selectors/overviewSelectors";
+} from '../../services/store/selectors/overviewSelectors';
 
 @Component({
   selector: 'screen-players-select',

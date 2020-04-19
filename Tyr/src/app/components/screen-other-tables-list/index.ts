@@ -21,14 +21,14 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {MetrikaService} from '../../services/metrika';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
-import {IAppState} from "../../services/store/interfaces";
-import {Dispatch} from "redux";
+import {IAppState} from '../../services/store/interfaces';
+import {Dispatch} from 'redux';
 import {
   AppActionTypes,
   GET_OTHER_TABLES_LIST_INIT,
   SHOW_OTHER_TABLE,
   UPDATE_CURRENT_GAMES_INIT
-} from "../../services/store/actions/interfaces";
+} from '../../services/store/actions/interfaces';
 
 @Component({
   selector: 'screen-other-tables-list',

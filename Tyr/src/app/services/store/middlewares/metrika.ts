@@ -1,4 +1,4 @@
-import {Dispatch, Store as ReduxStore} from "redux";
+import {Dispatch, Store as ReduxStore} from 'redux';
 import {
   AppActionTypes,
   CONFIRM_REGISTRATION_FAIL, FORCE_LOGOUT,
@@ -7,8 +7,8 @@ import {
   GET_GAME_OVERVIEW_SUCCESS,
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_SUCCESS
-} from "../actions/interfaces";
-import {MetrikaService} from "../../metrika";
+} from '../actions/interfaces';
+import {MetrikaService} from '../../metrika';
 
 export const metrika = (metrika: MetrikaService) => (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {

@@ -24,21 +24,18 @@ import {
   QueryList, ElementRef,
   Input, ChangeDetectionStrategy
 } from '@angular/core';
-import { Yaku } from '../../interfaces/common';
 import { YakuId } from '../../primitives/yaku';
-import { yakuGroups, yakumanGroups, yakuRareGroups, filterAllowed } from './yaku-lists';
 import { throttle, keys, pickBy } from 'lodash';
-import { AppState } from '../../primitives/appstate';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { MetrikaService } from '../../services/metrika';
-import {IAppState} from "../../services/store/interfaces";
-import {Dispatch} from "redux";
-import {ADD_YAKU, AppActionTypes, REMOVE_YAKU, SELECT_MULTIRON_WINNER} from "../../services/store/actions/interfaces";
-import {getWinningUsers, hasYaku} from "../../services/store/selectors/mimirSelectors";
-import {getDora, getFu, getHan} from "../../services/store/selectors/hanFu";
-import {getAllowedYaku, getRequiredYaku, getSelectedYaku} from "../../services/store/selectors/yaku";
-import {getDisabledYaku, getYakuList, shouldShowTabs} from "../../services/store/selectors/screenYakuSelectors";
-import {getOutcomeName} from "../../services/store/selectors/lastRoundSelectors";
+import {IAppState} from '../../services/store/interfaces';
+import {Dispatch} from 'redux';
+import {ADD_YAKU, AppActionTypes, REMOVE_YAKU, SELECT_MULTIRON_WINNER} from '../../services/store/actions/interfaces';
+import {getWinningUsers, hasYaku} from '../../services/store/selectors/mimirSelectors';
+import {getDora, getFu, getHan} from '../../services/store/selectors/hanFu';
+import {getAllowedYaku, getRequiredYaku, getSelectedYaku} from '../../services/store/selectors/yaku';
+import {getDisabledYaku, getYakuList, shouldShowTabs} from '../../services/store/selectors/screenYakuSelectors';
+import {getOutcomeName} from '../../services/store/selectors/lastRoundSelectors';
 
 @Component({
   selector: 'screen-yaku-select',
@@ -47,8 +44,6 @@ import {getOutcomeName} from "../../services/store/selectors/lastRoundSelectors"
   styleUrls: ['style.css']
 })
 export class YakuSelectScreen extends I18nComponent {
-  @Input() state: IAppState;
-  @Input() dispatch: Dispatch<AppActionTypes>;
 
   get winningUsers() { return getWinningUsers(this.state); }
   get outcome() { return getOutcomeName(this.state.lastRoundOverview, true); }
@@ -56,6 +51,26 @@ export class YakuSelectScreen extends I18nComponent {
   get yakuList() { return getYakuList(this.state); }
   get disabledYaku() { return getDisabledYaku(this.state); }
   get currentMultironUser() { return this.state.multironCurrentWinner; }
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
+
+  // -------------------------------
+  // ---- View & scroll related ----
+  // -------------------------------
+  @ViewChild('scroller', {static: false}) scroller: ElementRef;
+  @ViewChildren('scrlink') links: QueryList<ElementRef>;
+  private _simpleLink: HTMLAnchorElement;
+
+  private _rareLink: HTMLAnchorElement;
+  private _yakumanLink: HTMLAnchorElement;
+  selectedSimple = true;
+  selectedRare = false;
+  selectedYakuman = false;
+
+  _viewportHeight: string = null;
+  _tabsHeight: string = null;
+
+  private _updateAfterScrollThrottled = throttle(() => this._updateAfterScroll(), 16);
   fu(id: number) { return getFu(this.state, id); }
   han(id: number) { return getHan(this.state, id) + getDora(this.state, id); }
   isSelected(id: YakuId) { return getSelectedYaku(this.state).indexOf(id) !== -1; }
@@ -85,28 +100,10 @@ export class YakuSelectScreen extends I18nComponent {
     }
   }
 
-  // -------------------------------
-  // ---- View & scroll related ----
-  // -------------------------------
-  @ViewChild('scroller', {static: false}) scroller: ElementRef;
-  @ViewChildren('scrlink') links: QueryList<ElementRef>;
-  private _simpleLink: HTMLAnchorElement;
-
-  private _rareLink: HTMLAnchorElement;
-  private _yakumanLink: HTMLAnchorElement;
-  selectedSimple: boolean = true;
-  selectedRare: boolean = false;
-  selectedYakuman: boolean = false;
-
-  _viewportHeight: string = null;
-  _tabsHeight: string = null;
-
   private _initView() {
     this._viewportHeight = (window.innerHeight - 50) + 'px'; // 50 is height of navbar;
     this._tabsHeight = parseInt((window.innerWidth * 0.10).toString(), 10) + 'px'; // Should equal to margin-left of buttons & scroller-wrap
   }
-
-  private _updateAfterScrollThrottled = throttle(() => this._updateAfterScroll(), 16);
   updateAfterScroll() { this._updateAfterScrollThrottled(); }
 
   private _makeLinks() {

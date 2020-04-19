@@ -1,6 +1,6 @@
-import { IAppState } from "../interfaces";
+import { IAppState } from '../interfaces';
 import { memoize } from 'lodash';
-import { Player } from "../../../interfaces/common";
+import { Player } from '../../../interfaces/common';
 
 function _getSeating(state: IAppState, playersList: Player[]) {
   let players: Player[] = [].concat(playersList);
@@ -56,7 +56,7 @@ function _getTimeRemaining(state: IAppState) {
   let min = Math.floor(state.timer.secondsRemaining / 60);
   let sec = state.timer.secondsRemaining % 60;
   return min.toString() + ':' + (
-    (sec < 10) ? ("0" + sec.toString()) : sec.toString()
+    (sec < 10) ? ('0' + sec.toString()) : sec.toString()
   );
 }
 

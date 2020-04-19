@@ -1,6 +1,6 @@
-import {Dispatch, Store as ReduxStore} from "redux";
-import {AppActionTypes, SET_TIMER, UPDATE_TIMER_DATA} from "../actions/interfaces";
-import {IAppState, TimerStorage} from "../interfaces";
+import {Dispatch, Store as ReduxStore} from 'redux';
+import {AppActionTypes, SET_TIMER, UPDATE_TIMER_DATA} from '../actions/interfaces';
+import {IAppState, TimerStorage} from '../interfaces';
 
 const now = () => Math.round((new Date()).getTime() / 1000);
 

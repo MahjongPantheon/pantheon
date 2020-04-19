@@ -1,7 +1,7 @@
-import { AppOutcome } from "../../interfaces/app";
-import { LGameConfig } from "../../interfaces/local";
-import { intersection } from "lodash";
-import {unpack} from "../../primitives/yaku-compat";
+import { AppOutcome } from '../../interfaces/app';
+import { LGameConfig } from '../../interfaces/local';
+import { intersection } from 'lodash';
+import {unpack} from '../../primitives/yaku-compat';
 
 export function winnerHasYakuWithPao(outcome: AppOutcome, gameConfig: LGameConfig): boolean {
   if (!outcome) {

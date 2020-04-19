@@ -36,8 +36,8 @@ import { icons } from './icons';
 })
 export class CustomIconComponent {
   @Input() type: string;
-  @Input() resize: number = 28;
-  @Input() mirror: boolean = false;
+  @Input() resize = 28;
+  @Input() mirror = false;
   content: SafeHtml = '';
 
   get transforms() {

@@ -1,13 +1,13 @@
-import { IAppState } from "../interfaces";
-import { AppOutcome, DrawOutcomeProps, LoseOutcomeProps, WinOutcomeProps, WinProps } from "../../../interfaces/app";
-import { YakuId } from "../../../primitives/yaku";
-import { addYakuToList, limits, pack, unpack } from "../../../primitives/yaku-compat";
-import { getFixedFu, getHan } from "../../../primitives/yaku-values";
+import { IAppState } from '../interfaces';
+import { AppOutcome, DrawOutcomeProps, LoseOutcomeProps, WinOutcomeProps, WinProps } from '../../../interfaces/app';
+import { YakuId } from '../../../primitives/yaku';
+import { addYakuToList, limits, pack, unpack } from '../../../primitives/yaku-compat';
+import { getFixedFu, getHan } from '../../../primitives/yaku-values';
 
 export function modifyWinOutcome(state: IAppState, fields: WinOutcomeProps, winnerIdGetter?: () => number): IAppState {
   switch (state.currentOutcome.selectedOutcome) {
-    case "ron":
-    case "tsumo":
+    case 'ron':
+    case 'tsumo':
       return {
         ...state,
         currentOutcome: {
@@ -15,7 +15,7 @@ export function modifyWinOutcome(state: IAppState, fields: WinOutcomeProps, winn
           ...fields
         } as AppOutcome // hacked, ts does not understand this :(
       };
-    case "multiron":
+    case 'multiron':
       return {
         ...state,
         currentOutcome: {
@@ -36,9 +36,9 @@ export function modifyWinOutcome(state: IAppState, fields: WinOutcomeProps, winn
 
 export function modifyLoseOutcome(state: IAppState, fields: LoseOutcomeProps): IAppState {
   switch (state.currentOutcome.selectedOutcome) {
-    case "ron":
-    case "multiron":
-    case "chombo":
+    case 'ron':
+    case 'multiron':
+    case 'chombo':
       return {
         ...state,
         currentOutcome: {
@@ -58,7 +58,7 @@ export function modifyLoseOutcome(state: IAppState, fields: LoseOutcomeProps): I
  * @param winnerIsDealer
  * @param remove  do not replace, but remove the entry
  */
-export function modifyMultiwin(state: IAppState, winnerId: number, winnerIsDealer: boolean, remove: boolean = false): IAppState {
+export function modifyMultiwin(state: IAppState, winnerId: number, winnerIsDealer: boolean, remove = false): IAppState {
   if (state.currentOutcome.selectedOutcome !== 'multiron') {
     throw new Error('Wrong outcome modifier used');
   }
@@ -105,9 +105,9 @@ export function modifyMultiwin(state: IAppState, winnerId: number, winnerIsDeale
 
 export function modifyDrawOutcome(state: IAppState, fields: DrawOutcomeProps): IAppState {
   switch (state.currentOutcome.selectedOutcome) {
-    case "abort":
-    case "draw":
-    case "nagashi":
+    case 'abort':
+    case 'draw':
+    case 'nagashi':
       return {
         ...state,
         currentOutcome: {

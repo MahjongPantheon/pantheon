@@ -21,15 +21,15 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
 import {MetrikaService} from '../../services/metrika';
-import {IAppState} from "../../services/store/interfaces";
+import {IAppState} from '../../services/store/interfaces';
 import {
   AppActionTypes,
   GOTO_NEXT_SCREEN,
   INIT_BLANK_OUTCOME,
   UPDATE_CURRENT_GAMES_INIT
-} from "../../services/store/actions/interfaces";
-import {Outcome} from "../../interfaces/common";
-import {Dispatch} from "redux";
+} from '../../services/store/actions/interfaces';
+import {Outcome} from '../../interfaces/common';
+import {Dispatch} from 'redux';
 
 @Component({
   selector: 'screen-outcome-select',

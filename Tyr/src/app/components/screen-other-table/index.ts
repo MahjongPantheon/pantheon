@@ -23,13 +23,13 @@ import {Player} from '../../interfaces/common';
 import {MetrikaService} from '../../services/metrika';
 import {RRoundPaymentsInfo} from '../../interfaces/remote';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
-import {IAppState} from "../../services/store/interfaces";
-import {Dispatch} from "redux";
+import {IAppState} from '../../services/store/interfaces';
+import {Dispatch} from 'redux';
 import {
   AppActionTypes,
   GET_OTHER_TABLE_INIT,
   GET_OTHER_TABLE_LAST_ROUND_INIT, TABLE_ROTATE_CLOCKWISE, TABLE_ROTATE_COUNTERCLOCKWISE, TOGGLE_OVERVIEW_DIFFBY
-} from "../../services/store/actions/interfaces";
+} from '../../services/store/actions/interfaces';
 import {
   getChomboKamicha,
   getChomboSelf, getChomboShimocha, getChomboToimen,
@@ -38,14 +38,14 @@ import {
   getSelf,
   getShimocha,
   getToimen
-} from "../../services/store/selectors/overviewSelectors";
-import {getOutcomeName} from "../../services/store/selectors/lastRoundSelectors";
+} from '../../services/store/selectors/overviewSelectors';
+import {getOutcomeName} from '../../services/store/selectors/lastRoundSelectors';
 import {
   getNotenPlayers, getPenalty,
   getRiichiPlayers,
   getTempaiPlayers,
   getWins
-} from "../../services/store/selectors/otherTableSelectors";
+} from '../../services/store/selectors/otherTableSelectors';
 
 @Component({
   selector: 'screen-other-table',
@@ -54,22 +54,6 @@ import {
   styleUrls: ['style.css']
 })
 export class OtherTableScreen extends I18nComponent {
-  @Input() state: IAppState;
-  @Input() dispatch: Dispatch<AppActionTypes>;
-
-  constructor(
-    public i18n: I18nService,
-    private metrika: MetrikaService
-  ) { super(i18n); }
-
-  /**
-   * Flag to prevent blinking on manual updates when all data was already loaded
-   */
-  private _dataUpdated = false;
-  private _updateInterval: NodeJS.Timer;
-  private _lastRoundLocal: RRoundPaymentsInfo;
-  private _showLastRound: boolean = false;
-  private _lastRoundTimer: NodeJS.Timer;
 
   get lastRoundInfo() {
     if (this._showLastRound) {
@@ -103,6 +87,30 @@ export class OtherTableScreen extends I18nComponent {
   get currentGameHash() { return this.state.currentOtherTableHash; }
   get currentTable() { return this.state.currentOtherTable.state; }
   get outcomeName() { return getOutcomeName(this.state.currentOtherTableLastRound); }
+
+  /// last round sub-screen related
+
+  get penalty() { return getPenalty(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
+  get wins() { return getWins(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
+  get tempaiPlayers() { return getTempaiPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
+  get notenPlayers() { return getNotenPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
+  get riichiPlayers() { return getRiichiPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
+
+  /**
+   * Flag to prevent blinking on manual updates when all data was already loaded
+   */
+  private _dataUpdated = false;
+  private _updateInterval: NodeJS.Timer;
+  private _lastRoundLocal: RRoundPaymentsInfo;
+  private _showLastRound = false;
+  private _lastRoundTimer: NodeJS.Timer;
+
+  constructor(
+    public i18n: I18nService,
+    private metrika: MetrikaService
+  ) { super(i18n); }
 
   reloadOverview() { this.dispatch({ type: GET_OTHER_TABLE_INIT, payload: this.currentGameHash }); }
   viewLastRound() {
@@ -145,14 +153,6 @@ export class OtherTableScreen extends I18nComponent {
     clearInterval(this._updateInterval);
     clearTimeout(this._lastRoundTimer);
   }
-
-  /// last round sub-screen related
-
-  get penalty() { return getPenalty(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
-  get wins() { return getWins(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
-  get tempaiPlayers() { return getTempaiPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
-  get notenPlayers() { return getNotenPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
-  get riichiPlayers() { return getRiichiPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
 }
 
 

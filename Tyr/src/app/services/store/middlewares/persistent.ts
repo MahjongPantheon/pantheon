@@ -1,4 +1,4 @@
-import {Dispatch, Store as ReduxStore} from "redux";
+import {Dispatch, Store as ReduxStore} from 'redux';
 import {
   AppActionTypes,
   CONFIRM_REGISTRATION_INIT,
@@ -7,8 +7,8 @@ import {
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_THEME,
   UPDATE_STATE_SETTINGS
-} from "../actions/interfaces";
-import {IDBImpl} from "../../idb/interface";
+} from '../actions/interfaces';
+import {IDBImpl} from '../../idb/interface';
 
 export const persistentMw = (storage: IDBImpl) => (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {

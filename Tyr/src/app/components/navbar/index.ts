@@ -20,14 +20,14 @@
 
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
-import { IAppState } from "../../services/store/interfaces";
-import { Dispatch } from "redux";
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
 import {
   AppActionTypes,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   OPEN_SETTINGS, SET_DORA_COUNT, SET_FU_COUNT
-} from "../../services/store/actions/interfaces";
+} from '../../services/store/actions/interfaces';
 import {
   doraOptions,
   fuOptions,
@@ -41,7 +41,7 @@ import {
   mayGoNextFromYakuSelect,
   mayGoNextFromPlayersSelect,
   mayGoNextFromNagashiSelect
-} from "../../services/store/selectors/navbarSelectors";
+} from '../../services/store/selectors/navbarSelectors';
 
 @Component({
   selector: 'nav-bar',

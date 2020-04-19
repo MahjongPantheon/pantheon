@@ -46,13 +46,13 @@ export class I18nComponent {
     return this.i18n._t('Save');
   }
   get _NO_GAMES_PLAYED() {
-    return this.i18n._t("There's no games you've already played.");
+    return this.i18n._t('There\'s no games you\'ve already played.');
   }
   get _LOGIN_FAILED_REASONS_ARE() {
     return this.i18n._t('Login attempt has failed. Possible reasons are:');
   }
   get _TOURN_GAMES_ALREADY_STARTED() {
-    return this.i18n._t("Tournament games already started and you wasn't registered");
+    return this.i18n._t('Tournament games already started and you wasn\'t registered');
   }
   get _PIN_ALREADY_USED() {
     return this.i18n._t('Pin code was already used on another device');

@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { createStore, combineReducers, applyMiddleware, Store as ReduxStore, compose } from 'redux';
-import { screenManageReducer } from "./reducers/screenManageReducer";
+import { screenManageReducer } from './reducers/screenManageReducer';
 import { mimirClient } from './middlewares/mimirClient';
-import { RiichiApiService } from "../riichiApi";
-import { mimirReducer } from "./reducers/mimirReducer";
-import { outcomeReducer } from "./reducers/outcomeReducer";
-import { metrika } from "./middlewares/metrika";
-import { history } from "./middlewares/history";
-import { MetrikaService } from "../metrika";
-import { timerReducer } from "./reducers/timerReducer";
-import { timerMw } from "./middlewares/timer";
-import { IAppState, TimerStorage } from "./interfaces";
-import { commonReducer } from "./reducers/commonReducer";
-import { yaku } from "./middlewares/yaku";
-import { AppActionTypes } from "./actions/interfaces";
-import {persistentMw} from "./middlewares/persistent";
-import {IDB} from "../idb";
-import {isMetadataError} from "@angular/compiler-cli";
+import { RiichiApiService } from '../riichiApi';
+import { mimirReducer } from './reducers/mimirReducer';
+import { outcomeReducer } from './reducers/outcomeReducer';
+import { metrika } from './middlewares/metrika';
+import { history } from './middlewares/history';
+import { MetrikaService } from '../metrika';
+import { timerReducer } from './reducers/timerReducer';
+import { timerMw } from './middlewares/timer';
+import { IAppState, TimerStorage } from './interfaces';
+import { commonReducer } from './reducers/commonReducer';
+import { yaku } from './middlewares/yaku';
+import { AppActionTypes } from './actions/interfaces';
+import {persistentMw} from './middlewares/persistent';
+import {IDB} from '../idb';
+import {isMetadataError} from '@angular/compiler-cli';
 
 @Injectable()
 export class Store {

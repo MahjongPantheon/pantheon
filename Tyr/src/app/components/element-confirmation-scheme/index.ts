@@ -20,7 +20,7 @@
 
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Player } from '../../interfaces/common';
-import { IAppState } from "../../services/store/interfaces";
+import { IAppState } from '../../services/store/interfaces';
 import {
   getBottomLeftPayment, getBottomRightPayment,
   getChomboKamicha,
@@ -30,8 +30,8 @@ import {
   getPaoShimocha, getPaoToimen, getRiichiKamicha, getRiichiSelf, getRiichiShimocha, getRiichiToimen,
   getRound, getSeatKamicha, getSeatSelf, getSeatShimocha, getSeatToimen,
   getSelf, getShimocha, getToimen, getTopBottomPayment, getTopLeftPayment, getTopRightPayment, PaymentInfo
-} from "../../services/store/selectors/confirmationSchemeSelectors";
-import { RRoundPaymentsInfo } from "../../interfaces/remote";
+} from '../../services/store/selectors/confirmationSchemeSelectors';
+import { RRoundPaymentsInfo } from '../../interfaces/remote';
 
 @Component({
   selector: 'confirmation-scheme',

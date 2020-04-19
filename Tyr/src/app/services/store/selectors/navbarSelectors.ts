@@ -1,7 +1,7 @@
-import {IAppState} from "../interfaces";
-import {yakumanInYaku} from "./yaku";
-import {getFu, getHan, getPossibleFu} from "./hanFu";
-import {getEventTitle, getLosingUsers, getNagashiUsers, getWinningUsers} from "./mimirSelectors";
+import {IAppState} from '../interfaces';
+import {yakumanInYaku} from './yaku';
+import {getFu, getHan, getPossibleFu} from './hanFu';
+import {getEventTitle, getLosingUsers, getNagashiUsers, getWinningUsers} from './mimirSelectors';
 
 export function doraOptions(state: IAppState) {
   if (yakumanInYaku(state)) {
@@ -25,7 +25,7 @@ export function selectedFu(state: IAppState) {
 }
 
 export function selectedDora(state: IAppState) {
-  switch(state.currentOutcome.selectedOutcome) {
+  switch (state.currentOutcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
       return state.currentOutcome.dora;

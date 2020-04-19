@@ -22,8 +22,8 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {MetrikaService} from '../../services/metrika';
 import {Player} from '../../interfaces/common';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
-import {IAppState} from "../../services/store/interfaces";
-import {Dispatch} from "redux";
+import {IAppState} from '../../services/store/interfaces';
+import {Dispatch} from 'redux';
 import {
   AppActionTypes,
   SHOW_LAST_RESULTS,
@@ -31,8 +31,8 @@ import {
   SHOW_OTHER_TABLES_LIST,
   START_NEW_GAME, TOGGLE_OVERVIEW_DIFFBY,
   UPDATE_CURRENT_GAMES_INIT
-} from "../../services/store/actions/interfaces";
-import {getCurrentTimerZone} from "../../services/store/selectors/mimirSelectors";
+} from '../../services/store/actions/interfaces';
+import {getCurrentTimerZone} from '../../services/store/selectors/mimirSelectors';
 import {
   getChomboKamicha,
   getChomboSelf, getChomboShimocha, getChomboToimen,
@@ -41,7 +41,7 @@ import {
   getSelf,
   getShimocha, getTimeRemaining,
   getToimen
-} from "../../services/store/selectors/overviewSelectors";
+} from '../../services/store/selectors/overviewSelectors';
 
 @Component({
   selector: 'screen-overview',

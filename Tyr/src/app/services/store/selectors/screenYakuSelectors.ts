@@ -1,14 +1,14 @@
-import {getWinningUsers, hasYaku} from "./mimirSelectors";
-import {IAppState} from "../interfaces";
-import {Yaku} from "../../../interfaces/common";
+import {getWinningUsers, hasYaku} from './mimirSelectors';
+import {IAppState} from '../interfaces';
+import {Yaku} from '../../../interfaces/common';
 import {
   filterAllowed,
   yakuGroups,
   yakumanGroups,
   yakuRareGroups
-} from "../../../components/screen-yaku-select/yaku-lists";
-import { memoize } from "lodash";
-import {getAllowedYaku} from "./yaku";
+} from '../../../components/screen-yaku-select/yaku-lists';
+import { memoize } from 'lodash';
+import {getAllowedYaku} from './yaku';
 
 export const shouldShowTabs = (state: IAppState) => getWinningUsers(state).length > 1;
 

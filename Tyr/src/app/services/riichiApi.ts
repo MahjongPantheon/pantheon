@@ -47,7 +47,7 @@ import {
 } from './formatters';
 import config from '../config';
 import { environment } from '../../environments/environment';
-import {IAppState} from "./store/interfaces";
+import {IAppState} from './store/interfaces';
 
 type GenericResponse = {
   error?: { message: string, code: any },
@@ -142,7 +142,7 @@ export class RiichiApiService {
       'X-Auth-Token': this._authToken || '',
     });
     const jsonRpcBody = {
-      jsonrpc: "2.0",
+      jsonrpc: '2.0',
       method: methodName,
       params: params,
       id: Math.round(1000000 * Math.random()) // TODO: bind request to response?

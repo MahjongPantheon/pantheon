@@ -526,7 +526,7 @@ for (let yaku of yakuList) {
   nodes[yaku.id] = { id: yaku.id, data: yaku };
 }
 
-export function makeYakuGraph(multiYakumans: boolean = false) {
+export function makeYakuGraph(multiYakumans = false) {
   let yakuGraph = new Graph<Yaku>();
   for (let yaku of yakuList) {
     yakuGraph.addNode(nodes[yaku.id]);

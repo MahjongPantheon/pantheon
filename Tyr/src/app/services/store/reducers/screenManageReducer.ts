@@ -1,5 +1,5 @@
 import {AppScreen, IAppState} from '../interfaces';
-import { initialState } from "../state";
+import { initialState } from '../state';
 import {
   AppActionTypes1,
   GOTO_NEXT_SCREEN,
@@ -11,8 +11,8 @@ import {
   SHOW_OTHER_TABLE,
   SHOW_OTHER_TABLES_LIST,
   START_NEW_GAME
-} from "../actions/interfaces";
-import { winnerHasYakuWithPao } from "../util";
+} from '../actions/interfaces';
+import { winnerHasYakuWithPao } from '../util';
 
 export function screenManageReducer(
   state = initialState,
