@@ -60,6 +60,7 @@ import { pinkPantherTheme } from './themes/pinkPantherTheme';
 import { darkBlueTheme } from './themes/darkBlue';
 import { classicDarkTheme } from './themes/classicDark';
 import { classicLightTheme } from './themes/classicLight';
+import { QrService } from './services/qr';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { classicLightTheme } from './themes/classicLight';
     RiichiApiService,
     I18nService,
     MetrikaService,
+    QrService,
     IDB
   ],
   bootstrap: [AppComponent]
