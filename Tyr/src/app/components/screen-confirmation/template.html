@@ -26,14 +26,10 @@
 </div>
 <div class="wrap scroller-wrap" *ngIf="!_loading && !_error">
   <confirmation-scheme
-      *ngIf="!_loading"
-      [state]="this.state"
-      [overview]="this.state.changesOverview"
+      [state]="state"
+      [overview]="state.changesOverview"
   ></confirmation-scheme>
-  <div
-    class="confirmation-controls"
-    *ngIf="!_loading"
-  >
+  <div class="confirmation-controls">
     <button
         class="allok"
         (click)="confirmed=!confirmed"

@@ -3,6 +3,28 @@ import { AppOutcome, DrawOutcomeProps, LoseOutcomeProps, WinOutcomeProps, WinPro
 import { YakuId } from '../../../primitives/yaku';
 import { addYakuToList, limits, pack, unpack } from '../../../primitives/yaku-compat';
 import { getFixedFu, getHan } from '../../../primitives/yaku-values';
+import { Graph } from '../../../primitives/graph';
+import { Yaku } from '../../../interfaces/common';
+
+/**
+ * Should be used only for common win props, like riichiBets! For all other things modifyWinOutcome should be used.
+ * @param state
+ * @param fields
+ */
+export function modifyWinOutcomeCommons(state: IAppState, fields: WinOutcomeProps): IAppState {
+  switch (state.currentOutcome.selectedOutcome) {
+    case 'ron':
+    case 'tsumo':
+    case 'multiron':
+      return {
+        ...state,
+        currentOutcome: {
+          ...state.currentOutcome,
+          ...fields
+        } as AppOutcome // hacked, ts does not understand this :(
+      };
+  }
+}
 
 export function modifyWinOutcome(state: IAppState, fields: WinOutcomeProps, winnerIdGetter?: () => number): IAppState {
   switch (state.currentOutcome.selectedOutcome) {
@@ -123,7 +145,9 @@ export function modifyDrawOutcome(state: IAppState, fields: DrawOutcomeProps): I
 export function addYakuToProps(
   winProps: WinProps,
   selectedOutcome: AppOutcome['selectedOutcome'],
-  yakuId: YakuId
+  yakuId: YakuId,
+  enabledYaku: YakuId[],
+  yakuGraph: Graph<Yaku>
 ): WinProps | null {
 
   let yakuList = unpack(winProps.yaku);
@@ -139,7 +163,7 @@ export function addYakuToProps(
     };
   }
 
-  yakuList = addYakuToList(yakuId, yakuList);
+  yakuList = addYakuToList(yakuGraph, yakuId, enabledYaku);
 
   if (selectedOutcome === 'tsumo') {
     if (

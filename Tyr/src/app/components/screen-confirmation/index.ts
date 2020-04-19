@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {MetrikaService} from '../../services/metrika';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
 import {IAppState} from '../../services/store/interfaces';
@@ -37,25 +37,39 @@ import {isLoading} from '../../services/store/selectors/screenConfirmationSelect
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class ConfirmationScreen extends I18nComponent {
+export class ConfirmationScreen extends I18nComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
 
+  public _initialized = false;
   public confirmed = false;
-  public _error = '';
 
   constructor(
     public i18n: I18nService,
-    private metrika: MetrikaService
+    private metrika: MetrikaService,
+    private ref: ChangeDetectorRef
   ) {
     super(i18n);
   }
 
-  get _loading() { return isLoading(this.state); }
+  get _loading() { return !this._initialized || isLoading(this.state); }
+  get _error() {
+    if (!this.state.changesOverviewError) {
+      return null;
+    }
+    return (this.state.changesOverviewError.details.code === 403
+        ? this.i18n._t('Authentication failed')
+        : this.i18n._t('Failed to add round. Was this hand already added by someone else?')
+    );
+  }
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-confirmation' });
     this.dispatch({ type: GET_CHANGES_OVERVIEW_INIT, payload: this.state });
+    setTimeout(() => {
+      this._initialized = true;
+      this.ref.markForCheck();
+    }, 0);
   }
 
   confirm() {

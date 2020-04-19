@@ -31,6 +31,7 @@
     "i18n-stex": "https://github.com/ctizen/stex.git",
     "jsqr": "^1.2.0",
     "lodash": "4.17.15",
+    "reduce-reducers": "^1.0.4",
     "rxjs": "6.5.3",
     "ts-helpers": "1.1.2",
     "tslib": "^1.10.0",

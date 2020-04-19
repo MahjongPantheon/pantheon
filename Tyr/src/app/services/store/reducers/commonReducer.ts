@@ -1,16 +1,16 @@
 import deepclone from 'deepclone';
-import {initialState} from '../state';
+import { initialState } from '../state';
 import {
   AppActionTypes,
   INIT_STATE,
   SELECT_MULTIRON_WINNER,
   SETTINGS_SAVE_LANG,
-  SETTINGS_SAVE_THEME, UPDATE_STATE_SETTINGS
+  SETTINGS_SAVE_THEME, TOGGLE_OVERVIEW_DIFFBY, UPDATE_STATE_SETTINGS
 } from '../actions/interfaces';
-import {IAppState} from '../interfaces';
+import { IAppState } from '../interfaces';
 
 export function commonReducer(
-  state = initialState,
+  state,
   action: AppActionTypes
 ): IAppState {
   switch (action.type) {
@@ -46,5 +46,12 @@ export function commonReducer(
           currentTheme: action.payload['currentTheme']
         }
       };
+    case TOGGLE_OVERVIEW_DIFFBY:
+      return {
+        ...state,
+        overviewDiffBy: state.overviewDiffBy === action.payload ? null : action.payload
+      };
+    default:
+      return state;
   }
 }

@@ -1,7 +1,6 @@
-import {AppScreen, IAppState} from '../interfaces';
-import { initialState } from '../state';
+import { AppScreen, IAppState } from '../interfaces';
 import {
-  AppActionTypes1,
+  AppActionTypes,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   OPEN_SETTINGS,
@@ -15,8 +14,8 @@ import {
 import { winnerHasYakuWithPao } from '../util';
 
 export function screenManageReducer(
-  state = initialState,
-  action: AppActionTypes1
+  state,
+  action: AppActionTypes
 ): IAppState {
   switch (action.type) {
     case RESET_STATE:
@@ -36,62 +35,39 @@ export function screenManageReducer(
         riichiOnTable: 0,
         honba: 0,
         currentSessionHash: null,
-        multironCurrentWinner: null
+        multironCurrentWinner: null,
+        gameOverviewReady: true
       };
     case START_NEW_GAME:
-      if (state.currentScreen !== 'overview') {
-        return state;
-      }
-
       return {
         ...state,
         currentScreen: 'newGame'
       };
     case SHOW_LAST_RESULTS:
-      if (state.currentScreen !== 'overview') {
-        return state;
-      }
-
       return {
         ...state,
         currentScreen: 'lastResults'
       };
     case SHOW_LAST_ROUND:
-      if (state.currentScreen !== 'overview') {
-        return state;
-      }
-
       return {
         ...state,
         currentScreen: 'lastRound'
       };
     case SHOW_OTHER_TABLE:
-      if (state.currentScreen !== 'otherTablesList') {
-        return state;
-      }
-
       return {
         ...state,
         currentScreen: 'otherTable',
         currentOtherTableHash: action.payload.hash
       };
     case SHOW_OTHER_TABLES_LIST:
-      if (state.currentScreen !== 'overview') {
-        return state;
-      }
-
       return {
         ...state,
         currentScreen: 'otherTablesList'
       };
     case OPEN_SETTINGS:
-      if (state.currentScreen !== 'overview') {
-        return state;
-      }
-
       return {
         ...state,
-        currentScreen: 'otherTable'
+        currentScreen: 'settings'
       };
     case GOTO_NEXT_SCREEN:
       let nextScreen: AppScreen = state.currentScreen;

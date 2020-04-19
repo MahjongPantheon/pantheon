@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { createStore, combineReducers, applyMiddleware, Store as ReduxStore, compose } from 'redux';
+import { createStore, applyMiddleware, Store as ReduxStore, compose } from 'redux';
 import { screenManageReducer } from './reducers/screenManageReducer';
 import { mimirClient } from './middlewares/mimirClient';
 import { RiichiApiService } from '../riichiApi';
@@ -14,10 +14,11 @@ import { timerMw } from './middlewares/timer';
 import { IAppState, TimerStorage } from './interfaces';
 import { commonReducer } from './reducers/commonReducer';
 import { yaku } from './middlewares/yaku';
-import { AppActionTypes } from './actions/interfaces';
-import {persistentMw} from './middlewares/persistent';
-import {IDB} from '../idb';
-import {isMetadataError} from '@angular/compiler-cli';
+import { persistentMw } from './middlewares/persistent';
+import { IDB } from '../idb';
+import reduceReducers from 'reduce-reducers';
+import { initialState } from './state';
+import { logging } from './middlewares/logging';
 
 @Injectable()
 export class Store {
@@ -31,24 +32,27 @@ export class Store {
       setInterval: window.setInterval,
       clearInterval: window.clearInterval
     };
-    const reducer = combineReducers({
+    const reducer = reduceReducers(initialState,
       commonReducer,
       screenManageReducer,
       outcomeReducer,
       mimirReducer,
       timerReducer
-    });
+    );
     const metrikaService = new MetrikaService(client);
     const idb = new IDB(metrikaService);
     const middleware = applyMiddleware(
+      logging(`⇨ [middlewares]`),
       mimirClient(new RiichiApiService(client)),
       metrika(metrikaService),
       history(),
       timerMw(this.timerSt),
       persistentMw(idb),
-      yaku
+      yaku,
+      logging(`⇨ [reducers]`),
     );
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) || compose;
     this.store = createStore(reducer, composeEnhancers(middleware)) as unknown as ReduxStore<IAppState>; // TODO: proper types
   }
 

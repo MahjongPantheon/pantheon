@@ -13,5 +13,8 @@ export const yaku = (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (
       requiredYaku.forEach((y) => {
         store.dispatch({ type: ADD_YAKU, payload: { id: y } });
       });
+      break;
+    default:
+      return next(action);
   }
 };

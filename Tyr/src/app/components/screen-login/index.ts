@@ -18,7 +18,15 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { MetrikaService } from '../../services/metrika';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IDB } from '../../services/idb';
@@ -56,12 +64,16 @@ export class LoginScreen extends I18nComponent implements OnInit {
     public i18n: I18nService,
     private storage: IDB,
     private metrika: MetrikaService,
-    private qr: QrService
+    private qr: QrService,
+    private ref: ChangeDetectorRef
   ) { super(i18n); }
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-login' });
-    this.qr.onReadyStateChange((loading) => this._loadingQrMessageShown = loading);
+    this.qr.onReadyStateChange((loading) => {
+      this._loadingQrMessageShown = loading;
+      this.ref.markForCheck();
+    });
     this.qr.onPinReceived((pin) => {
       this._pinOrig = pin;
       this._pinView = '*'.repeat(this._pinOrig.length);
@@ -73,8 +85,8 @@ export class LoginScreen extends I18nComponent implements OnInit {
   submit() { this.dispatch({ type: CONFIRM_REGISTRATION_INIT, payload: this._pinOrig }); }
 
   reset() {
-    this.dispatch({ type: RESET_REGISTRATION_ERROR });
     this._pinOrig = this._pinView = '';
+    this.dispatch({ type: RESET_REGISTRATION_ERROR });
   }
 
   press(digit: string) {

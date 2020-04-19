@@ -71,10 +71,10 @@ export function getAllowedYaku(state: IAppState): YakuId[] {
     case 'ron':
       yakuList = unpack(outcome.yaku);
       return _excludeYaku(
-        outcome,
+        state,
         outcome.winner,
         yakuList,
-        getAllowedYakuCompat(yakuList),
+        getAllowedYakuCompat(state.yakuList, yakuList),
         [
           YakuId.MENZENTSUMO,
           YakuId.HAITEI,
@@ -85,10 +85,10 @@ export function getAllowedYaku(state: IAppState): YakuId[] {
     case 'tsumo':
       yakuList = unpack(outcome.yaku);
       return _excludeYaku(
-        outcome,
+        state,
         outcome.winner,
         yakuList,
-        getAllowedYakuCompat(yakuList),
+        getAllowedYakuCompat(state.yakuList, yakuList),
         [
           YakuId.HOUTEI,
           YakuId.CHANKAN,
@@ -98,10 +98,10 @@ export function getAllowedYaku(state: IAppState): YakuId[] {
     case 'multiron':
       yakuList = unpack(outcome.wins[state.multironCurrentWinner].yaku);
       return _excludeYaku(
-        outcome,
+        state,
         state.multironCurrentWinner,
         yakuList,
-        getAllowedYakuCompat(yakuList),
+        getAllowedYakuCompat(state.yakuList, yakuList),
         [
           YakuId.MENZENTSUMO,
           YakuId.HAITEI,

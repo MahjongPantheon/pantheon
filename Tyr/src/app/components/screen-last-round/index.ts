@@ -18,13 +18,14 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MetrikaService } from '../../services/metrika';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IAppState } from '../../services/store/interfaces';
 import { Dispatch } from 'redux';
 import { AppActionTypes, GET_LAST_ROUND_INIT } from '../../services/store/actions/interfaces';
-import { getOutcomeName, getWins } from '../../services/store/selectors/lastRoundSelectors';
+import { getOutcomeName } from '../../services/store/selectors/commonSelectors';
+import { getWins } from '../../services/store/selectors/otherTableSelectors';
 
 @Component({
   selector: 'screen-last-round',
@@ -32,14 +33,29 @@ import { getOutcomeName, getWins } from '../../services/store/selectors/lastRoun
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class LastRoundScreen extends I18nComponent {
+export class LastRoundScreenComponent extends I18nComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
 
-  get _dataReady(): boolean { return !!this.state.lastRoundOverview; };
-  get _error(): string { return this.state.lastRoundOverviewError && this.state.lastRoundOverviewError.message };
-  get outcomeName(): string { return getOutcomeName(this.state.lastRoundOverview); };
-  get wins() { return getWins(this.state); }
+  get _dataReady(): boolean { return !this.state.loading.overview; };
+  get outcomeName(): string { return getOutcomeName(this.i18n, this.state.lastRoundOverview); };
+  get wins() { return getWins(this.state.lastRoundOverview, this.state.players, this.i18n); }
+  get _error(): string {
+    if (!this.state.lastRoundOverviewErrorCode) {
+      return null;
+    }
+
+    switch (this.state.lastRoundOverviewErrorCode) {
+      case 403:
+        return this.i18n._t('Authentication failed');
+      case 404:
+        return this.i18n._t('Latest hand wasn\'t found');
+      case 418:
+        return this.i18n._t('Error occured. Try again.');
+      default:
+        return this.i18n._t('Unexpected server error');
+    }
+  };
 
   public confirmed = false;
 

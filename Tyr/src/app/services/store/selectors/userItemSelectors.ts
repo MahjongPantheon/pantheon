@@ -9,6 +9,7 @@ import {
   getWinningUsers
 } from './mimirSelectors';
 import {IAppState} from '../interfaces';
+import {Player} from "../../../interfaces/common";
 
 export function showWinButton(state: IAppState) {
   return -1 !== ['ron', 'multiron', 'tsumo', 'draw', 'nagashi']
@@ -63,58 +64,58 @@ export function showNagashiButton(state: IAppState) {
     .indexOf(state.currentOutcome.selectedOutcome) && state.currentScreen !== 'paoSelect' && state.currentScreen === 'nagashiSelect';
 }
 
-export function winPressed(state: IAppState) {
-  return -1 !== getWinningUsers(state).indexOf(this.userData);
+export function winPressed(state: IAppState, userData: Player) {
+  return -1 !== getWinningUsers(state).indexOf(userData);
 }
 
-export function losePressed(state: IAppState) {
-  return -1 !== getLosingUsers(state).indexOf(this.userData);
+export function losePressed(state: IAppState, userData: Player) {
+  return -1 !== getLosingUsers(state).indexOf(userData);
 }
 
-export function paoPressed(state: IAppState) {
-  return -1 !== getPaoUsers(state).indexOf(this.userData);
+export function paoPressed(state: IAppState, userData: Player) {
+  return -1 !== getPaoUsers(state).indexOf(userData);
 }
 
-export function riichiPressed(state: IAppState) {
-  return -1 !== getRiichiUsers(state).indexOf(this.userData);
+export function riichiPressed(state: IAppState, userData: Player) {
+  return -1 !== getRiichiUsers(state).indexOf(userData);
 }
 
-export function deadPressed(state: IAppState) {
-  return -1 !== getDeadhandUsers(state).indexOf(this.userData);
+export function deadPressed(state: IAppState, userData: Player) {
+  return -1 !== getDeadhandUsers(state).indexOf(userData);
 }
 
-export function nagashiPressed(state: IAppState) {
-  return -1 !== getNagashiUsers(state).indexOf(this.userData);
+export function nagashiPressed(state: IAppState, userData: Player) {
+  return -1 !== getNagashiUsers(state).indexOf(userData);
 }
 
-export function winDisabled(state: IAppState) {
+export function winDisabled(state: IAppState, userData: Player) {
   if (-1 !== ['draw', 'nagashi'].indexOf(state.currentOutcome.selectedOutcome)) {
-    return -1 !== getDeadhandUsers(state).indexOf(this.userData)
+    return -1 !== getDeadhandUsers(state).indexOf(userData)
   }
 
   if (state.currentOutcome.selectedOutcome === 'multiron') {
-    return -1 !== getLosingUsers(state).indexOf(this.userData)
+    return -1 !== getLosingUsers(state).indexOf(userData)
   }
 
   // for ron/tsumo winner is only one
   return (
     getWinningUsers(state).length > 0
-    && -1 === getWinningUsers(state).indexOf(this.userData)
-  ) || -1 !== getLosingUsers(state).indexOf(this.userData); // and it should not be current loser
+    && -1 === getWinningUsers(state).indexOf(userData)
+  ) || -1 !== getLosingUsers(state).indexOf(userData); // and it should not be current loser
 }
 
 // for ron/multiron/chombo - loser is only one
-export function loseDisabled(state: IAppState) {
+export function loseDisabled(state: IAppState, userData: Player) {
   return (
     getLosingUsers(state).length > 0
-    && -1 === getLosingUsers(state).indexOf(this.userData)
-  ) || -1 !== getWinningUsers(state).indexOf(this.userData); // and it should not be current winner
+    && -1 === getLosingUsers(state).indexOf(userData)
+  ) || -1 !== getWinningUsers(state).indexOf(userData); // and it should not be current winner
 }
 
 // no more than 3 players may have nagashi
-export function nagashiDisabled(state: IAppState) {
+export function nagashiDisabled(state: IAppState, userData: Player) {
   return getNagashiUsers(state).length >= 3
-    && -1 === getNagashiUsers(state).indexOf(this.userData);
+    && -1 === getNagashiUsers(state).indexOf(userData);
 }
 
 // riichi & dead hand can't be disabled

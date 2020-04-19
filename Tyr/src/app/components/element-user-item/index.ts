@@ -61,15 +61,15 @@ export class UserItemComponent extends I18nComponent {
   get showRiichiButton() { return showRiichiButton(this.state); }
   get showDeadButton() { return showDeadButton(this.state); }
   get showNagashiButton() { return showNagashiButton(this.state); }
-  get winPressed() { return winPressed(this.state); }
-  get losePressed() { return losePressed(this.state); }
-  get paoPressed() { return paoPressed(this.state); }
-  get riichiPressed() { return riichiPressed(this.state); }
-  get deadPressed() { return deadPressed(this.state); }
-  get nagashiPressed() { return nagashiPressed(this.state); }
-  get winDisabled() { return winDisabled(this.state); }
-  get loseDisabled() { return loseDisabled(this.state); }
-  get nagashiDisabled() { return nagashiDisabled(this.state); }
+  get winPressed() { return winPressed(this.state, this.userData); }
+  get losePressed() { return losePressed(this.state, this.userData); }
+  get paoPressed() { return paoPressed(this.state, this.userData); }
+  get riichiPressed() { return riichiPressed(this.state, this.userData); }
+  get deadPressed() { return deadPressed(this.state, this.userData); }
+  get nagashiPressed() { return nagashiPressed(this.state, this.userData); }
+  get winDisabled() { return winDisabled(this.state, this.userData); }
+  get loseDisabled() { return loseDisabled(this.state, this.userData); }
+  get nagashiDisabled() { return nagashiDisabled(this.state, this.userData); }
 
   // event handlers
   winClick = () => this.winDisabled ? null : this.onEvent.emit([this.userData, 'win']);

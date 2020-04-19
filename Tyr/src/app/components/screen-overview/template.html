@@ -17,10 +17,10 @@
     You should have received a copy of the GNU General Public License
     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div class="riichi-table" *ngIf="state.loading.overview">
+<div class="riichi-table" *ngIf="loading">
   <div class="inline-preloader"></div>
 </div>
-<div class="riichi-table" *ngIf="!state.currentSessionHash && !state.loading.overview">
+<div class="riichi-table" *ngIf="!state.currentSessionHash && !loading">
   <br />
   <div class="centered not-found">
     {{greeting}}
@@ -37,7 +37,7 @@
     {{_STATISTICS}} <custom-icon [type]="'newtab'" style="position: absolute; right: 14px; fill: var(--button-text-color)"></custom-icon>
   </button>
 </div>
-<div class="riichi-table" *ngIf="state.currentSessionHash && !state.loading.overview">
+<div class="riichi-table" *ngIf="state.currentSessionHash && !loading">
   <div class="centered">
     <div class="edge-block round-info">
       <div class="round-index">{{state.currentRound | formatRound}}</div>

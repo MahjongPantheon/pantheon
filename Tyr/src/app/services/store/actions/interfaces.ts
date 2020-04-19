@@ -12,6 +12,7 @@ import {IAppState} from '../interfaces';
 
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
+export const STARTUP_WITH_AUTH = 'STARTUP_WITH_AUTH';
 export const START_NEW_GAME = 'START_NEW_GAME';
 export const SHOW_LAST_RESULTS = 'SHOW_LAST_RESULTS';
 export const SHOW_LAST_ROUND = 'SHOW_LAST_ROUND';
@@ -34,10 +35,10 @@ export const CONFIRM_REGISTRATION_INIT = 'CONFIRM_REGISTRATION_INIT';
 export const CONFIRM_REGISTRATION_SUCCESS = 'CONFIRM_REGISTRATION_SUCCESS';
 export const CONFIRM_REGISTRATION_FAIL = 'CONFIRM_REGISTRATION_FAIL';
 export const RESET_REGISTRATION_ERROR = 'RESET_REGISTRATION_ERROR';
-export const SET_CREDENTIALS = 'SET_CREDENTIALS_INIT';
-export const UPDATE_CURRENT_GAMES_INIT = 'GET_CURRENT_GAMES_INIT';
-export const UPDATE_CURRENT_GAMES_SUCCESS = 'GET_CURRENT_GAMES_SUCCESS';
-export const UPDATE_CURRENT_GAMES_FAIL = 'GET_CURRENT_GAMES_FAIL';
+export const SET_CREDENTIALS = 'SET_CREDENTIALS';
+export const UPDATE_CURRENT_GAMES_INIT = 'UPDATE_CURRENT_GAMES_INIT';
+export const UPDATE_CURRENT_GAMES_SUCCESS = 'UPDATE_CURRENT_GAMES_SUCCESS';
+export const UPDATE_CURRENT_GAMES_FAIL = 'UPDATE_CURRENT_GAMES_FAIL';
 export const GET_GAME_OVERVIEW_INIT = 'GET_GAME_OVERVIEW_INIT';
 export const GET_GAME_OVERVIEW_SUCCESS = 'GET_GAME_OVERVIEW_SUCCESS';
 export const GET_GAME_OVERVIEW_FAIL = 'GET_GAME_OVERVIEW_FAIL';
@@ -91,6 +92,11 @@ interface InitStateAction {
 
 interface ResetStateAction {
   type: typeof RESET_STATE;
+}
+
+interface StartupWithAuthAction {
+  type: typeof STARTUP_WITH_AUTH;
+  payload: string;
 }
 
 interface StartNewGameAction {
@@ -443,6 +449,7 @@ interface UpdateStateSettingsAction {
 export type AppActionTypes =
   | InitStateAction
   | ResetStateAction
+  | StartupWithAuthAction
   | StartNewGameAction
   | ShowLastResultsAction
   | ShowLastRoundAction

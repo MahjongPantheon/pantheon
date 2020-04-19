@@ -37,11 +37,11 @@ import {
   multironTitle,
   outcome,
   han,
-  tournamentTitle,
   mayGoNextFromYakuSelect,
   mayGoNextFromPlayersSelect,
   mayGoNextFromNagashiSelect
 } from '../../services/store/selectors/navbarSelectors';
+import { getEventTitle } from '../../services/store/selectors/mimirSelectors';
 
 @Component({
   selector: 'nav-bar',
@@ -64,10 +64,10 @@ export class NavBarComponent extends I18nComponent {
   get selectedFu() { return selectedFu(this.state); }
   get selectedDora() { return selectedDora(this.state); }
   get isMultiron() { return isMultiron(this.state); }
-  get multironTitle() { return multironTitle(this.state); }
-  get outcome() { return outcome(this.state); }
+  get multironTitle() { return multironTitle(this.i18n, this.state); }
+  get outcome() { return outcome(this.i18n, this.state); }
   get han(): number { return han(this.state); }
-  get tournamentTitle(): string { return tournamentTitle(this.state); }
+  get tournamentTitle(): string { return getEventTitle(this.i18n, this.state); }
   get mayGoNextFromYakuSelect() { return mayGoNextFromYakuSelect(this.state); }
   get mayGoNextFromPlayersSelect() { return mayGoNextFromPlayersSelect(this.state); }
   get mayGoNextFromNagashiSelect() { return mayGoNextFromNagashiSelect(this.state); }

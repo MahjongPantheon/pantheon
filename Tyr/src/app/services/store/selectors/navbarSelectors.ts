@@ -2,6 +2,7 @@ import {IAppState} from '../interfaces';
 import {yakumanInYaku} from './yaku';
 import {getFu, getHan, getPossibleFu} from './hanFu';
 import {getEventTitle, getLosingUsers, getNagashiUsers, getWinningUsers} from './mimirSelectors';
+import {I18nService} from "../../i18n";
 
 export function doraOptions(state: IAppState) {
   if (yakumanInYaku(state)) {
@@ -41,7 +42,7 @@ export function isMultiron(state: IAppState) {
 }
 
 // TODO: not really a selector
-export function multironTitle(state: IAppState) {
+export function multironTitle(i18n: I18nService, state: IAppState) {
   if (state.currentOutcome.selectedOutcome === 'multiron' && state.currentOutcome.multiRon === 3) {
     return i18n._t('Triple ron');
   }
@@ -51,7 +52,7 @@ export function multironTitle(state: IAppState) {
 }
 
 // TODO: not really a selector
-export function outcome(state: IAppState) {
+export function outcome(i18n: I18nService, state: IAppState) {
   switch (state.currentOutcome.selectedOutcome) {
     case 'ron':
       return i18n._t('Ron');
@@ -74,10 +75,6 @@ export function outcome(state: IAppState) {
 
 export function han(state: IAppState): number {
   return getHan(state);
-}
-
-export function tournamentTitle(state: IAppState): string {
-  return getEventTitle(state);
 }
 
 export function mayGoNextFromYakuSelect(state: IAppState) {

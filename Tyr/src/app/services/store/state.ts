@@ -31,9 +31,15 @@ import {
 import { Outcome as OutcomeType } from '../../interfaces/common';
 import { getFixedFu } from '../../primitives/yaku-values';
 import { IAppState } from './interfaces';
-import {defaultPlayer} from './selectors/screenNewGameSelectors';
+import { defaultPlayer } from './selectors/screenNewGameSelectors';
 
 export const initialState: IAppState = {
+  currentOtherTableIndex: 0,
+  isUniversalWatcher: false,
+  settings: { currentLang: 'en', currentTheme: 'default' },
+  timer: undefined,
+  yakuList: undefined,
+
   currentScreen: 'overview',
   currentSessionHash: null,
   currentOutcome: null,
@@ -58,7 +64,7 @@ export const initialState: IAppState = {
 
   // preloaders flags
   loading: {
-    games: true,
+    games: false,
     overview: false,
     otherTables: false,
     otherTable: false,
@@ -67,7 +73,8 @@ export const initialState: IAppState = {
     addRound: false
   },
 
-  newGameSelectedUsers: [defaultPlayer, defaultPlayer, defaultPlayer, defaultPlayer]
+  newGameSelectedUsers: [defaultPlayer, defaultPlayer, defaultPlayer, defaultPlayer],
+  gameOverviewReady: false,
 };
 
 export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcome {

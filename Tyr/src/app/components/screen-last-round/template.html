@@ -17,13 +17,11 @@
     You should have received a copy of the GNU General Public License
     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div
-  class="inline-preloader"
-  *ngIf="!_dataReady"></div>
+<div class="inline-preloader" *ngIf="!_dataReady"></div>
 <div class="wrap scroller-wrap" *ngIf="_dataReady && _error">
   <div style="text-align: center; padding: 30% 0;">{{_error}}</div>
 </div>
-<div class="wrap scroller-wrap" *ngIf="_dataReady && !_error">
+<div class="wrap scroller-wrap" *ngIf="_dataReady && !!state.lastRoundOverview && !_error">
   <div class="table-info">
     <div class="round-info">
       <div class="outcome-name">{{outcomeName}}</div>

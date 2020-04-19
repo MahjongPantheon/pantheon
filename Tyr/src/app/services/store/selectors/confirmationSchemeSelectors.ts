@@ -63,7 +63,7 @@ function _getPayment(state: IAppState, overview: RRoundPaymentsInfo, player1: Pl
   const honbaPayment21 = p.honba && p.honba[player1.id + '<-' + player2.id] || 0;
 
   // multiple nagashi
-  if (directPayment12 == directPayment21 && directPayment12 != 0) {
+  if (directPayment12 === directPayment21 && directPayment12 !== 0) {
     return null;
   }
 

@@ -42,12 +42,12 @@ import {RiichiApiService} from '../../riichiApi';
 import {LCurrentGame, LGameConfig, LTimerState, LUser} from '../../../interfaces/local';
 import {RemoteError} from '../../remoteError';
 import {IAppState} from '../interfaces';
-import {MetrikaService} from '../../metrika';
 
-export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
+export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) =>
+  (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
     case CONFIRM_REGISTRATION_INIT:
-      loginWithRetry(action.payload, api, next);
+      loginWithRetry(action.payload, api, store.dispatch, next);
       break;
     case SET_CREDENTIALS:
       api.setCredentials(action.payload);
@@ -56,7 +56,10 @@ export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) => (ne
       updateCurrentGames(api, next, store.dispatch);
       break;
     case GET_GAME_OVERVIEW_INIT:
-      // TODO: check session hash in store; bailout if none
+      if (!action.payload) {
+        store.dispatch({ type: RESET_STATE });
+        return;
+      }
       getGameOverview(action.payload, api, next);
       break;
     case GET_OTHER_TABLES_LIST_INIT:
@@ -89,8 +92,8 @@ export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) => (ne
   }
 };
 
-function loginWithRetry(pin: string, api: RiichiApiService, dispatch: Dispatch) {
-  dispatch({ type: CONFIRM_REGISTRATION_INIT });
+function loginWithRetry(pin: string, api: RiichiApiService, dispatch: Dispatch, next: Dispatch) {
+  next({ type: CONFIRM_REGISTRATION_INIT });
   // this.metrika.track(MetrikaService.LOAD_STARTED, { type: 'screen-login', request: 'confirmRegistration' });
 
   let retriesCount = 0;
@@ -149,11 +152,11 @@ function updateCurrentGames(api: RiichiApiService, dispatchNext: Dispatch, dispa
   });
 }
 
-function getGameOverview(currentSessionHash: string, api: RiichiApiService, dispatch: Dispatch) {
-  dispatch({ type: GET_GAME_OVERVIEW_INIT });
+function getGameOverview(currentSessionHash: string, api: RiichiApiService, next: Dispatch) {
+  next({ type: GET_GAME_OVERVIEW_INIT });
   api.getGameOverview(currentSessionHash)
-    .then((overview) => dispatch({ type: GET_GAME_OVERVIEW_SUCCESS, payload: overview }))
-    .catch((error: RemoteError) => dispatch({ type: GET_GAME_OVERVIEW_FAIL, payload: error }));
+    .then((overview) => next({ type: GET_GAME_OVERVIEW_SUCCESS, payload: overview }))
+    .catch((error: RemoteError) => next({ type: GET_GAME_OVERVIEW_FAIL, payload: error }));
 }
 
 function getOtherTable(sessionHash: string, api: RiichiApiService, dispatch: Dispatch) {

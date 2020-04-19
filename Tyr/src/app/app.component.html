@@ -91,6 +91,7 @@
     <screen-settings
       *ngIf="state.currentScreen === 'settings'"
       [state]="state"
+      [dispatch]="store.dispatch"
     ></screen-settings>
   </div>
 </div>

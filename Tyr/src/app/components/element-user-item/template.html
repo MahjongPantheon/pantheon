@@ -37,13 +37,13 @@
     *ngIf="showDeadButton"
     class="discolored dead"
     [class.pressed]="deadPressed"
-    (click)="deadClick"
+    (click)="deadClick()"
   ><custom-icon [type]="'dead'" [resize]="36"></custom-icon><br/>dead hand</button>
   <button
     *ngIf="showPaoButton"
     class="discolored lose"
     [class.pressed]="paoPressed"
-    (click)="paoClick"
+    (click)="paoClick()"
   ><span class="pao-label"></span><custom-icon [type]="'down'" [resize]="36"></custom-icon></button>
   <button
     *ngIf="showNagashiButton"

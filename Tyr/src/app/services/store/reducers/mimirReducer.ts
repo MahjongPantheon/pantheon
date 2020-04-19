@@ -1,4 +1,3 @@
-import {initialState} from '../state';
 import {
   AppActionTypes,
   CONFIRM_REGISTRATION_FAIL,
@@ -10,6 +9,8 @@ import {
   GET_CHANGES_OVERVIEW_FAIL,
   GET_CHANGES_OVERVIEW_INIT,
   GET_CHANGES_OVERVIEW_SUCCESS,
+  GET_GAME_OVERVIEW_SUCCESS,
+  GET_GAME_OVERVIEW_FAIL,
   GET_LAST_RESULTS_FAIL,
   GET_LAST_RESULTS_INIT,
   GET_LAST_RESULTS_SUCCESS,
@@ -28,17 +29,21 @@ import {
   TABLE_ROTATE_COUNTERCLOCKWISE,
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
-  UPDATE_CURRENT_GAMES_SUCCESS
+  UPDATE_CURRENT_GAMES_SUCCESS,
+  GET_GAME_OVERVIEW_INIT,
+  GET_OTHER_TABLES_LIST_INIT,
+  GET_OTHER_TABLES_LIST_SUCCESS,
+  GET_OTHER_TABLES_LIST_FAIL,
 } from '../actions/interfaces';
-import {IAppState} from '../interfaces';
-import {makeYakuGraph} from '../../../primitives/yaku-compat';
-import {RemoteError} from '../../remoteError';
-import {modifyArray} from './util';
-import {defaultPlayer} from '../selectors/screenNewGameSelectors';
-import {rand} from '../../../helpers/rand';
+import { IAppState } from '../interfaces';
+import { makeYakuGraph } from '../../../primitives/yaku-compat';
+import { RemoteError } from '../../remoteError';
+import { modifyArray } from './util';
+import { defaultPlayer } from '../selectors/screenNewGameSelectors';
+import { rand } from '../../../helpers/rand';
 
 export function mimirReducer(
-  state = initialState,
+  state: IAppState,
   action: AppActionTypes
 ): IAppState {
   let error;
@@ -89,19 +94,22 @@ export function mimirReducer(
         }
       };
     case UPDATE_CURRENT_GAMES_SUCCESS:
-      if (!action.payload.games[0]) {
-        return state; // TODO: some error handling for this case; no games - or game ended just now
-      }
+      // if (!action.payload.games[0]) {
+      //   return state; // TODO: some error handling for this case; no games - or game ended just now
+      // }
 
-      let players = action.payload.games[0].players;
       let mapIdToPlayer = {};
-      for (let p of players) {
-        mapIdToPlayer[p.id] = p;
+      let players = null;
+      if (action.payload.games[0]) {
+        players = action.payload.games[0].players;
+        for (let p of players) {
+          mapIdToPlayer[p.id] = p;
+        }
       }
 
       return {
         ...state,
-        currentScreen: 'overview', // TODO check this
+        // currentScreen: 'overview',
         gameConfig: action.payload.gameConfig,
         currentPlayerId: action.payload.playerInfo.id,
         currentPlayerDisplayName: action.payload.playerInfo.displayName,
@@ -186,10 +194,6 @@ export function mimirReducer(
     case GET_CHANGES_OVERVIEW_FAIL:
       // TODO: metrika
       // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-confirmation', code: e.code, request: reqType });
-      error = (action.payload.code === 403
-        ? this.i18n._t('Authentication failed')
-        : this.i18n._t('Failed to add round. Was this hand already added by someone else?')
-      );
       return {
         ...state,
         loading: {
@@ -198,7 +202,7 @@ export function mimirReducer(
         },
         changesOverview: null,
         changesOverviewError: {
-          message: error,
+          message: action.payload.message,
           details: action.payload
         }
       };
@@ -210,31 +214,36 @@ export function mimirReducer(
           overview: true
         },
         lastRoundOverview: null,
-        lastRoundOverviewError: null
+        lastRoundOverviewErrorCode: null
       };
     case GET_LAST_ROUND_SUCCESS:
-      return {
-        ...state,
-        loading: {
-          ...state.loading,
-          overview: false
-        },
-        lastRoundOverview: action.payload,
-        lastRoundOverviewError: null
-      };
+      if (action.payload) {
+        return {
+          ...state,
+          loading: {
+            ...state.loading,
+            overview: false
+          },
+          lastRoundOverview: action.payload,
+          lastRoundOverviewErrorCode: null
+        };
+      } else {
+        return {
+          ...state,
+          loading: {
+            ...state.loading,
+            overview: false
+          },
+          lastRoundOverview: null,
+          lastRoundOverviewErrorCode: 404
+        };
+      }
     case GET_LAST_ROUND_FAIL:
-      // TODO: i18n!!!1111
-      error = this.i18n._t('Error occured. Try again.');
+      let code = 418;
       if (!action.payload) {
-        error = this.i18n._t('Latest hand wasn\'t found');
+        error = 404;
       } else if (action.payload instanceof RemoteError) {
-        // TODO
-        // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-last-round', request: 'getLastRound' });
-        if (action.payload.code === 403) {
-          error = this.i18n._t('Authentication failed');
-        } else {
-          error = this.i18n._t('Unexpected server error');
-        }
+        error = action.payload.code;
       }
 
       return {
@@ -244,10 +253,7 @@ export function mimirReducer(
           overview: false
         },
         lastRoundOverview: null,
-        lastRoundOverviewError: {
-          details: action.payload,
-          message: error
-        }
+        lastRoundOverviewErrorCode: code
       };
     case GET_LAST_RESULTS_INIT:
       return {
@@ -350,9 +356,57 @@ export function mimirReducer(
         overviewViewShift: ((state.overviewViewShift || 0) + 3) % 4
       };
     case TABLE_ROTATE_COUNTERCLOCKWISE:
-    return {
-      ...state,
-      overviewViewShift: ((state.overviewViewShift || 0) + 1) % 4
-    };
+      return {
+        ...state,
+        overviewViewShift: ((state.overviewViewShift || 0) + 1) % 4
+      };
+    case GET_GAME_OVERVIEW_INIT:
+      return {
+        ...state,
+        gameOverviewReady: false
+      };
+    case GET_GAME_OVERVIEW_SUCCESS:
+      return {
+        ...state,
+        gameOverviewReady: true
+      };
+    case GET_GAME_OVERVIEW_FAIL:
+      return {
+        ...state,
+        currentScreen: 'login'
+      };
+    case GET_OTHER_TABLES_LIST_INIT:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          otherTables: true
+        },
+        otherTablesListError: null
+      };
+    case GET_OTHER_TABLES_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          otherTables: false
+        },
+        otherTablesList: action.payload,
+        otherTablesListError: null
+      };
+    case GET_OTHER_TABLES_LIST_FAIL:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          otherTables: false
+        },
+        otherTablesListError: {
+          message: action.payload.message,
+          details: action.payload
+        }
+      };
+    default:
+      return state;
   }
 }

@@ -35,7 +35,7 @@ import {getWinningUsers, hasYaku} from '../../services/store/selectors/mimirSele
 import {getDora, getFu, getHan} from '../../services/store/selectors/hanFu';
 import {getAllowedYaku, getRequiredYaku, getSelectedYaku} from '../../services/store/selectors/yaku';
 import {getDisabledYaku, getYakuList, shouldShowTabs} from '../../services/store/selectors/screenYakuSelectors';
-import {getOutcomeName} from '../../services/store/selectors/lastRoundSelectors';
+import { getOutcomeName } from '../../services/store/selectors/commonSelectors';
 
 @Component({
   selector: 'screen-yaku-select',
@@ -46,7 +46,7 @@ import {getOutcomeName} from '../../services/store/selectors/lastRoundSelectors'
 export class YakuSelectScreen extends I18nComponent {
 
   get winningUsers() { return getWinningUsers(this.state); }
-  get outcome() { return getOutcomeName(this.state.lastRoundOverview, true); }
+  get outcome() { return getOutcomeName(this.i18n, this.state.lastRoundOverview, true); }
   get shouldShowTabs() { return shouldShowTabs(this.state); }
   get yakuList() { return getYakuList(this.state); }
   get disabledYaku() { return getDisabledYaku(this.state); }

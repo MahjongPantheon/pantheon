@@ -32,10 +32,10 @@ import { YakuSelectScreen } from './components/screen-yaku-select';
 import { ConfirmationScreen } from './components/screen-confirmation';
 import { NewGameScreen } from './components/screen-new-game';
 import { LastResultsScreen } from './components/screen-last-results';
-import { LastRoundScreen } from './components/screen-last-round';
+import { LastRoundScreenComponent } from './components/screen-last-round';
 import { LoginScreen } from './components/screen-login';
 import { OtherTablesListScreen } from './components/screen-other-tables-list';
-import { OtherTableScreen } from './components/screen-other-table';
+import { OtherTableScreenComponent } from './components/screen-other-table';
 import { SettingsScreen } from './components/screen-settings';
 
 import { UserItemComponent } from './components/element-user-item';
@@ -73,10 +73,10 @@ import { QrService } from './services/qr';
     ConfirmationScreen,
     NewGameScreen,
     LastResultsScreen,
-    LastRoundScreen,
+    LastRoundScreenComponent,
     OtherTablesListScreen,
     LoginScreen,
-    OtherTableScreen,
+    OtherTableScreenComponent,
     SettingsScreen,
 
     UserItemComponent,

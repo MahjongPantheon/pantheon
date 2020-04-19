@@ -33,6 +33,7 @@ Tyr/testem.log
 Tyr/typings
 Tyr/e2e/*.js
 Tyr/e2e/*.map
+Tyr/yarn-error.log
 
 Frey/config/local/*
 Frey/vendor/

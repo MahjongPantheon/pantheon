@@ -145,7 +145,7 @@
     *ngIf="isScreen('overview')"
     class="fwd-button gradient-button"
     (click)="nextScreen()"
-    [disabled]="!state.getHashcode()"
+    [disabled]="!state.currentSessionHash"
   ><custom-icon [type]="'write'" [resize]="40"></custom-icon></button>
   <button
     *ngIf="isScreen('outcomeSelect')"

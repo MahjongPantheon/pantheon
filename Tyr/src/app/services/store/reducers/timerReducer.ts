@@ -1,9 +1,8 @@
-import {initialState} from '../state';
-import {AppActionTypes, UPDATE_TIMER_DATA} from '../actions/interfaces';
-import {IAppState} from '../interfaces';
+import { AppActionTypes, UPDATE_TIMER_DATA } from '../actions/interfaces';
+import { IAppState } from '../interfaces';
 
 export function timerReducer(
-  state = initialState,
+  state,
   action: AppActionTypes
 ): IAppState {
   switch (action.type) {
@@ -20,5 +19,7 @@ export function timerReducer(
             : state.timer.lastUpdateSecondsRemaining
         }
       };
+    default:
+      return state;
   }
 }

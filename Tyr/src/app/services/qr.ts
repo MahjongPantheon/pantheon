@@ -62,7 +62,7 @@ export class QrService {
 
     const tick = () => {
       this._onReadyStateChange(true);
-      if (this._video.readyState === this._video.HAVE_ENOUGH_DATA) {
+      if (this._video && this._video.readyState === this._video.HAVE_ENOUGH_DATA) {
         this._onReadyStateChange(false);
         canvasElement.hidden = false;
         canvasElement.height = this._video.videoHeight;

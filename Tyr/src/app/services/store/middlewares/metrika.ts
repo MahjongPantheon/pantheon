@@ -10,43 +10,43 @@ import {
 } from '../actions/interfaces';
 import {MetrikaService} from '../../metrika';
 
-export const metrika = (metrika: MetrikaService) => (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
+export const metrika = (ms: MetrikaService) => (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
     case CONFIRM_REGISTRATION_FAIL:
-      metrika.track(MetrikaService.LOAD_ERROR, {
+      ms.track(MetrikaService.LOAD_ERROR, {
         type: 'state-init-login',
         request: 'confirmRegistration',
         message: action.payload.toString()
       });
       break;
     case UPDATE_CURRENT_GAMES_SUCCESS:
-      metrika.setUserId(action.payload.playerInfo.id);
-      metrika.track(MetrikaService.CONFIG_RECEIVED);
+      ms.setUserId(action.payload.playerInfo.id);
+      ms.track(MetrikaService.CONFIG_RECEIVED);
       break;
     case UPDATE_CURRENT_GAMES_FAIL:
-      metrika.track(MetrikaService.REMOTE_ERROR, {
+      ms.track(MetrikaService.REMOTE_ERROR, {
         code: action.payload.code,
         message: action.payload.toString()
       });
       break;
     case GET_GAME_OVERVIEW_INIT:
-      metrika.track(MetrikaService.LOAD_STARTED, { type: 'game-overview' });
+      ms.track(MetrikaService.LOAD_STARTED, { type: 'game-overview' });
       break;
     case GET_GAME_OVERVIEW_SUCCESS:
-      this.metrika.track(MetrikaService.LOAD_SUCCESS, {
+      ms.track(MetrikaService.LOAD_SUCCESS, {
         type: 'game-overview',
         finished: store.getState().finished // TODO: check param
       });
       break;
     case GET_GAME_OVERVIEW_FAIL:
-      this.metrika.track(MetrikaService.LOAD_ERROR, {
+      ms.track(MetrikaService.LOAD_ERROR, {
         type: 'game-overview',
         code: action.payload.code,
         message: action.payload.message
       });
       break;
     case FORCE_LOGOUT:
-      this.metrika.track(MetrikaService.LOGOUT, {
+      ms.track(MetrikaService.LOGOUT, {
         screen: 'screen-settings'
       });
       break;

@@ -1,17 +1,21 @@
-import {IAppState} from '../interfaces';
-import {LGameConfig, LWinItem} from '../../../interfaces/local';
-import {Player} from '../../../interfaces/common';
-import {YakuId} from '../../../primitives/yaku';
-import {AppOutcome} from '../../../interfaces/app';
-import {intersection} from 'lodash';
-import {unpack} from '../../../primitives/yaku-compat';
+import { IAppState } from '../interfaces';
+import { LGameConfig, LWinItem } from '../../../interfaces/local';
+import { Player } from '../../../interfaces/common';
+import { YakuId } from '../../../primitives/yaku';
+import { AppOutcome } from '../../../interfaces/app';
+import { intersection } from 'lodash';
+import { unpack } from '../../../primitives/yaku-compat';
 import { memoize } from 'lodash';
+import { I18nService } from '../../i18n';
 
 function _getWins(state: IAppState): LWinItem[] {
   switch (state.currentOutcome.selectedOutcome) {
     case 'multiron':
       let wins: LWinItem[] = [];
       for (let i in state.currentOutcome.wins) {
+        if (!state.currentOutcome.wins.hasOwnProperty(i)) {
+          continue;
+        }
         let v = state.currentOutcome.wins[i];
         wins.push({
           winner: v.winner,
@@ -43,8 +47,7 @@ export function getMultiRonCount(state: IAppState): number {
   }
 }
 
-// TODO: i18n
-export function getEventTitle(state: IAppState): string {
+export function getEventTitle(i18n: I18nService, state: IAppState): string {
   if (state.isUniversalWatcher) {
     return i18n._t('Games overview');
   } else {
@@ -93,6 +96,9 @@ function _getWinningUsers(state: IAppState): Player[] {
     case 'multiron':
       let users = [];
       for (let w in outcome.wins) {
+        if (!outcome.wins.hasOwnProperty(w)) {
+          continue;
+        }
         users.push(state.players.find((val) => val.id === outcome.wins[w].winner));
       }
       return users;

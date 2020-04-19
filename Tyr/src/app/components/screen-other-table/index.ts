@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {Player} from '../../interfaces/common';
 import {MetrikaService} from '../../services/metrika';
 import {RRoundPaymentsInfo} from '../../interfaces/remote';
@@ -39,7 +39,7 @@ import {
   getShimocha,
   getToimen
 } from '../../services/store/selectors/overviewSelectors';
-import {getOutcomeName} from '../../services/store/selectors/lastRoundSelectors';
+import { getOutcomeName } from '../../services/store/selectors/commonSelectors';
 import {
   getNotenPlayers, getPenalty,
   getRiichiPlayers,
@@ -53,7 +53,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class OtherTableScreen extends I18nComponent {
+export class OtherTableScreenComponent extends I18nComponent implements OnChanges, OnInit, OnDestroy {
 
   get lastRoundInfo() {
     if (this._showLastRound) {
@@ -86,12 +86,12 @@ export class OtherTableScreen extends I18nComponent {
   get _loading() { return !this._dataUpdated && this.state.loading.otherTable; }
   get currentGameHash() { return this.state.currentOtherTableHash; }
   get currentTable() { return this.state.currentOtherTable.state; }
-  get outcomeName() { return getOutcomeName(this.state.currentOtherTableLastRound); }
+  get outcomeName() { return getOutcomeName(this.i18n, this.state.currentOtherTableLastRound); }
 
   /// last round sub-screen related
 
   get penalty() { return getPenalty(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
-  get wins() { return getWins(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
+  get wins() { return getWins(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers, this.i18n); }
   get tempaiPlayers() { return getTempaiPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
   get notenPlayers() { return getNotenPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
   get riichiPlayers() { return getRiichiPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }

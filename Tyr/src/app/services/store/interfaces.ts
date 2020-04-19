@@ -2,7 +2,6 @@ import { AppOutcome } from '../../interfaces/app';
 import {Player, Table, Yaku} from '../../interfaces/common';
 import {LGameConfig, LUser, LUserWithScore} from '../../interfaces/local';
 import { RRoundPaymentsInfo, RSessionOverview } from '../../interfaces/remote';
-import { AppScreen } from '../../primitives/appstate';
 import {Graph} from '../../primitives/graph';
 import {RemoteError} from '../remoteError';
 
@@ -47,7 +46,6 @@ export interface IAppState {
   gameConfig: LGameConfig;
   tableIndex: number;
   yellowZoneAlreadyPlayed;
-  otherTablesList: Table[];
   currentOtherTable: RSessionOverview;
   currentOtherTableIndex: number;
   currentOtherTableHash: string | null;
@@ -67,7 +65,7 @@ export interface IAppState {
 
   // View last round of current table
   lastRoundOverview?: RRoundPaymentsInfo;
-  lastRoundOverviewError?: ErrorState;
+  lastRoundOverviewErrorCode?: number;
 
   // Previous game results
   lastResults?: LUserWithScore[];
@@ -75,6 +73,9 @@ export interface IAppState {
 
   newGameSelectedUsers?: LUser[];
   newGameStartError?: ErrorState;
+
+  otherTablesList: Table[];
+  otherTablesListError?: ErrorState;
 
   overviewDiffBy?: 'self' | 'shimocha' | 'toimen' | 'kamicha';
   overviewViewShift?: number;
@@ -86,6 +87,8 @@ export interface IAppState {
   }
 
   loginError?: ErrorState;
+
+  gameOverviewReady: boolean;
 }
 
 export type TimerStorage = {

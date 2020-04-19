@@ -1,4 +1,4 @@
-import {initBlankOutcome, initialState} from '../state';
+import { initBlankOutcome } from '../state';
 import {
   ADD_YAKU, AppActionTypes,
   INIT_BLANK_OUTCOME,
@@ -18,7 +18,7 @@ import {
   modifyDrawOutcome,
   modifyLoseOutcome,
   modifyMultiwin,
-  modifyWinOutcome,
+  modifyWinOutcome, modifyWinOutcomeCommons,
   removeYakuFromProps
 } from './util';
 import { AppOutcome } from '../../../interfaces/app';
@@ -40,10 +40,11 @@ function getDealerId(outcome: AppOutcome, playersList: Player[]): number {
 }
 
 export function outcomeReducer(
-  state = initialState,
+  state,
   action: AppActionTypes
 ): IAppState {
   let winProps;
+  let playerId;
   switch (action.type) {
     case INIT_BLANK_OUTCOME:
       return {
@@ -82,7 +83,9 @@ export function outcomeReducer(
           winProps = addYakuToProps(
             state.currentOutcome,
             state.currentOutcome.selectedOutcome,
-            action.payload.id
+            action.payload.id,
+            state.gameConfig.allowedYaku,
+            state.yakuList
           );
           if (!winProps) {
             return state;
@@ -92,7 +95,9 @@ export function outcomeReducer(
           winProps = addYakuToProps(
             state.currentOutcome.wins[action.payload.winner],
             state.currentOutcome.selectedOutcome,
-            action.payload.id
+            action.payload.id,
+            state.gameConfig.allowedYaku,
+            state.yakuList
           );
           if (!winProps) {
             return state;
@@ -138,37 +143,41 @@ export function outcomeReducer(
       return modifyWinOutcome(state, winProps, () => action.payload.winner);
     case TOGGLE_RIICHI:
       const outcome = state.currentOutcome;
-      const playerId = action.payload;
+      playerId = action.payload;
+      if (outcome.selectedOutcome === 'chombo') {
+        return state;
+      }
 
-      switch (outcome.selectedOutcome) {
-        case 'ron':
-        case 'tsumo':
-        case 'abort':
-        case 'draw':
-        case 'nagashi':
-        case 'multiron':
-          const riichiList = outcome.riichiBets.indexOf(playerId) === -1
-            ? [ ...outcome.riichiBets, playerId ]
-            : outcome.riichiBets.filter((id) => id !== playerId);
+      const riichiList = outcome.riichiBets.indexOf(playerId) === -1
+        ? [ ...outcome.riichiBets, playerId ]
+        : outcome.riichiBets.filter((id) => id !== playerId);
 
-          // add tempai on riichi click
-          if (
-            (
-              outcome.selectedOutcome === 'draw' &&
-              outcome.tempai.indexOf(playerId) === -1 &&
-              outcome.deadhands.indexOf(playerId) === -1
-            ) || (
-              outcome.selectedOutcome === 'nagashi' &&
-              outcome.tempai.indexOf(playerId) === -1
-            )
-          ) {
-            return modifyDrawOutcome(state, {
-              tempai: [ ...outcome.tempai, playerId ],
-              riichiBets: riichiList
-            });
-          }
+      // Custom logic which disables tempai and/or riichi
+      if (
+        (
+          outcome.selectedOutcome === 'draw' &&
+          outcome.tempai.indexOf(playerId) === -1 &&
+          outcome.deadhands.indexOf(playerId) === -1
+        ) || (
+          outcome.selectedOutcome === 'nagashi' &&
+          outcome.tempai.indexOf(playerId) === -1
+        ) || (
+          outcome.selectedOutcome === 'abort' &&
+          outcome.tempai.indexOf(playerId) === -1
+        )
+      ) {
+        return modifyDrawOutcome(state, {
+          tempai: [ ...outcome.tempai, playerId ],
+          riichiBets: riichiList
+        });
+      }
 
-          return modifyDrawOutcome(state, { riichiBets: riichiList });
+      if (outcome.selectedOutcome === 'ron' || outcome.selectedOutcome === 'tsumo' || outcome.selectedOutcome === 'multiron') {
+        return modifyWinOutcomeCommons(state, { riichiBets: riichiList });
+      } else if (outcome.selectedOutcome === 'draw' || outcome.selectedOutcome === 'nagashi' || outcome.selectedOutcome === 'abort') {
+        return modifyDrawOutcome(state, {
+          riichiBets: riichiList
+        });
       }
 
       return state;
@@ -221,6 +230,7 @@ export function outcomeReducer(
           throw new Error('No losers exist on this outcome');
       }
     case TOGGLE_PAO:
+      playerId = action.payload;
       switch (state.currentOutcome.selectedOutcome) {
         case 'ron':
         case 'tsumo':
@@ -231,11 +241,11 @@ export function outcomeReducer(
           });
         case 'multiron':
           let newState = state;
-          for (let playerId in state.currentOutcome.wins) {
-            if (intersection(unpack(state.currentOutcome.wins[playerId].yaku), action.payload.yakuWithPao).length !== 0) {
+          for (let pId in state.currentOutcome.wins) {
+            if (intersection(unpack(state.currentOutcome.wins[pId].yaku), action.payload.yakuWithPao).length !== 0) {
               newState = modifyWinOutcome(newState, {
-                paoPlayerId: state.currentOutcome.wins[playerId].paoPlayerId === action.payload.id ? null : action.payload.id
-              }, () => parseInt(playerId.toString()));
+                paoPlayerId: state.currentOutcome.wins[pId].paoPlayerId === action.payload.id ? null : action.payload.id
+              }, () => parseInt(playerId.toString(), 10));
             }
           }
           return newState;

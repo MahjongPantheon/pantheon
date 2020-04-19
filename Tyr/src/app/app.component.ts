@@ -18,16 +18,16 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ApplicationRef, Component, NgZone} from '@angular/core';
-import {RiichiApiService} from './services/riichiApi';
-import {MetrikaService} from './services/metrika';
-import {I18nService} from './services/i18n';
-import {IDB} from './services/idb';
-import {ThemeService} from './services/themes/service';
-import {Store} from './services/store';
-import {HttpClient} from '@angular/common/http';
-import {INIT_STATE} from './services/store/actions/interfaces';
-import {IAppState} from './services/store/interfaces';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { RiichiApiService } from './services/riichiApi';
+import { MetrikaService } from './services/metrika';
+import { I18nService } from './services/i18n';
+import { IDB } from './services/idb';
+import { ThemeService } from './services/themes/service';
+import { Store } from './services/store';
+import { HttpClient } from '@angular/common/http';
+import { INIT_STATE, STARTUP_WITH_AUTH } from './services/store/actions/interfaces';
+import { IAppState } from './services/store/interfaces';
 
 @Component({
   selector: 'riichi-app',
@@ -38,7 +38,7 @@ export class AppComponent {
   public store: Store;
   public state: IAppState;
   constructor(
-    private appRef: ApplicationRef,
+    private ref: ChangeDetectorRef,
     private zone: NgZone,
     private api: RiichiApiService,
     private metrika: MetrikaService,
@@ -49,6 +49,7 @@ export class AppComponent {
   ) {
 
     this.store = new Store(this.http);
+    this.state = this.store.redux.getState();
     this.metrika.track(MetrikaService.APP_INIT);
 
     const userTheme = this.storage.get('currentTheme');
@@ -70,12 +71,14 @@ export class AppComponent {
 
     this.store.subscribe((newState: IAppState) => {
       this.state = newState;
-      this.appRef.tick(); // trigger full change detection
+      this.ref.markForCheck(); // trigger full change detection
     });
 
     this.i18n.init((localeName: string) => {
       this.metrika.track(MetrikaService.I18N_INIT, { localeName });
       this.store.dispatch({ type: INIT_STATE });
+      this.api.setCredentials(this.storage.get('authToken') || '');
+      this.store.dispatch({ type: STARTUP_WITH_AUTH, payload: this.storage.get('authToken') || '' });
       this.storage.set('currentLanguage', localeName);
     }, (error: any) => console.error(error));
   }
