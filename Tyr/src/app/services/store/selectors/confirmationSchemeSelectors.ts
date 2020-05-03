@@ -1,6 +1,6 @@
 import { Player } from '../../../interfaces/common';
 import { IAppState } from '../interfaces';
-import { memoize } from 'lodash';
+import { memoize } from '../../../helpers/memoize';
 import { RRoundPaymentsInfo } from '../../../interfaces/remote';
 
 export type PaymentInfo = {

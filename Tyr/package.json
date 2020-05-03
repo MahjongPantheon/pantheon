@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "8.2.10",
     "@angular/platform-server": "8.2.10",
     "@angular/router": "8.2.10",
+    "@starryinternet/map-memo": "^2.1.2",
     "@types/lodash": "4.14.144",
     "core-js": "3.2.1",
     "crc": "^3.8.0",

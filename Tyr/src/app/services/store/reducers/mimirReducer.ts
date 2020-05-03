@@ -33,7 +33,7 @@ import {
   GET_GAME_OVERVIEW_INIT,
   GET_OTHER_TABLES_LIST_INIT,
   GET_OTHER_TABLES_LIST_SUCCESS,
-  GET_OTHER_TABLES_LIST_FAIL,
+  GET_OTHER_TABLES_LIST_FAIL, ADD_ROUND_INIT, ADD_ROUND_SUCCESS, ADD_ROUND_FAIL,
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
 import { makeYakuGraph } from '../../../primitives/yaku-compat';
@@ -41,6 +41,7 @@ import { RemoteError } from '../../remoteError';
 import { modifyArray } from './util';
 import { defaultPlayer } from '../selectors/screenNewGameSelectors';
 import { rand } from '../../../helpers/rand';
+import { Player } from '../../../interfaces/common';
 
 export function mimirReducer(
   state: IAppState,
@@ -368,7 +369,22 @@ export function mimirReducer(
     case GET_GAME_OVERVIEW_SUCCESS:
       return {
         ...state,
-        gameOverviewReady: true
+        gameOverviewReady: true,
+        tableIndex: action.payload.table_index,
+        players: [...action.payload.players.map((pl) => {
+          return <Player>{
+            id: pl.id,
+            alias: '',
+            displayName: pl.display_name,
+            score: action.payload.state.scores[pl.id] || 0,
+            penalties: action.payload.state.penalties[pl.id] || 0
+          };
+        })] as [Player, Player, Player, Player],
+        currentRound: action.payload.state.round,
+        riichiOnTable: action.payload.state.riichi,
+        honba: action.payload.state.honba,
+        yellowZoneAlreadyPlayed: action.payload.state.yellowZoneAlreadyPlayed,
+        // TODO: action.payload.state.finished & action.payload.state.dealer - for what?
       };
     case GET_GAME_OVERVIEW_FAIL:
       return {
@@ -404,6 +420,35 @@ export function mimirReducer(
         otherTablesListError: {
           message: action.payload.message,
           details: action.payload
+        }
+      };
+    case ADD_ROUND_INIT:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          addRound: true
+        }
+      };
+    case ADD_ROUND_SUCCESS:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          addRound: false
+        },
+        currentScreen: 'overview'
+      };
+    case ADD_ROUND_FAIL:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          addRound: false
+        },
+        changesOverviewError: {
+          details: action.payload,
+          message: action.payload.message
         }
       };
     default:

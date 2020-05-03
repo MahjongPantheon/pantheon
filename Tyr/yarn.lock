@@ -893,6 +893,11 @@
     semver "6.3.0"
     semver-intersect "1.4.0"
 
+"@starryinternet/map-memo@^2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@starryinternet/map-memo/-/map-memo-2.1.2.tgz#e83e0f24450de520ee135c08c84e05f67bba8256"
+  integrity sha512-wm1cKdawu6f+RCWF2Dtng9DfyhNA1edjmalE2LpFkZ+tC5qQG/qhl/W9qq8VTxeeVPmqkBboqqAQ0x0CoOZJxw==
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"

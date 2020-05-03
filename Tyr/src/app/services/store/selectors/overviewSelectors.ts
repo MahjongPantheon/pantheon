@@ -1,5 +1,5 @@
 import { IAppState } from '../interfaces';
-import { memoize } from 'lodash';
+import { memoize } from '../../../helpers/memoize';
 import { Player } from '../../../interfaces/common';
 
 function _getSeating(state: IAppState, playersList: Player[]) {
@@ -43,7 +43,8 @@ function _getScores(s: IAppState, o: Player[]) {
 
 const getScores = memoize(_getScores);
 
-// TODO: из-за постоянных обновлений таймера в стейте селекторы могут работать не столь эффективно. Нужно делать остальные селекторы более специальными.
+// TODO: из-за постоянных обновлений таймера в стейте селекторы могут работать не столь эффективно.
+//  Нужно делать остальные селекторы более специальными.
 function _getTimeRemaining(state: IAppState) {
   if (!state.gameConfig.useTimer) {
     return '';

@@ -19,7 +19,7 @@
  */
 
 import {IAppState} from '../interfaces';
-import { memoize } from 'lodash';
+import { memoize } from '../../../helpers/memoize';
 
 function _getHan(state: IAppState, user?: number) {
   const outcome = state.currentOutcome;

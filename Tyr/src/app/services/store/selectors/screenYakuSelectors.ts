@@ -7,7 +7,7 @@ import {
   yakumanGroups,
   yakuRareGroups
 } from '../../../components/screen-yaku-select/yaku-lists';
-import { memoize } from 'lodash';
+import { memoize } from '../../../helpers/memoize';
 import {getAllowedYaku} from './yaku';
 
 export const shouldShowTabs = (state: IAppState) => getWinningUsers(state).length > 1;

@@ -5,7 +5,7 @@ import { YakuId } from '../../../primitives/yaku';
 import { AppOutcome } from '../../../interfaces/app';
 import { intersection } from 'lodash';
 import { unpack } from '../../../primitives/yaku-compat';
-import { memoize } from 'lodash';
+import { memoize } from '../../../helpers/memoize';
 import { I18nService } from '../../i18n';
 
 function _getWins(state: IAppState): LWinItem[] {

@@ -1,6 +1,6 @@
 import { YakuId, yakuMap } from '../../../primitives/yaku';
 import { RRoundPaymentsInfo } from '../../../interfaces/remote';
-import { memoize } from 'lodash';
+import { memoize } from '../../../helpers/memoize';
 import { Player } from '../../../interfaces/common';
 import { I18nService } from '../../i18n';
 

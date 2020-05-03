@@ -1,6 +1,7 @@
 import { IAppState } from '../interfaces';
 import { LUser } from '../../../interfaces/local';
-import { memoize, uniq } from 'lodash';
+import { uniq } from 'lodash';
+import { memoize } from '../../../helpers/memoize';
 
 const DEFAULT_ID = -1;
 export const defaultPlayer: Readonly<LUser> = {

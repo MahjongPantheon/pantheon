@@ -32,6 +32,8 @@ $api = new Api($configPath);
 $api->registerImplAutoloading();
 date_default_timezone_set($api->getDefaultServerTimezone());
 
+// TODO: check out zend/laminas jsonrpc impl at https://docs.laminas.dev/laminas-json-server/server/
+
 foreach ($api->getMethods() as $proc => $method) {
 //    $api->log("Registered proc: $proc ({$method['className']}::{$method['method']})" . PHP_EOL);
     $server

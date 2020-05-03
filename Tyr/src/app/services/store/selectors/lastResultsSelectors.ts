@@ -1,5 +1,5 @@
 import { IAppState } from '../interfaces';
-import { memoize } from 'lodash';
+import { memoize } from '../../../helpers/memoize';
 import { LUserWithScore } from '../../../interfaces/local';
 
 function _getSeating(state: IAppState, playersList: LUserWithScore[]) {
