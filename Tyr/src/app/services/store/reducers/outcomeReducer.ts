@@ -1,7 +1,9 @@
-import { initBlankOutcome } from '../state';
+import {initBlankOutcome} from '../state';
 import {
-  ADD_YAKU, AppActionTypes,
+  ADD_YAKU,
+  AppActionTypes,
   INIT_BLANK_OUTCOME,
+  INIT_REQUIRED_YAKU,
   REMOVE_YAKU,
   SET_DORA_COUNT,
   SET_FU_COUNT,
@@ -12,20 +14,22 @@ import {
   TOGGLE_RIICHI,
   TOGGLE_WINNER
 } from '../actions/interfaces';
-import { IAppState } from '../interfaces';
+import {IAppState} from '../interfaces';
 import {
   addYakuToProps,
   modifyDrawOutcome,
   modifyLoseOutcome,
   modifyMultiwin,
-  modifyWinOutcome, modifyWinOutcomeCommons,
+  modifyWinOutcome,
+  modifyWinOutcomeCommons,
   removeYakuFromProps
 } from './util';
-import { AppOutcome } from '../../../interfaces/app';
-import { Player } from '../../../interfaces/common';
-import { intersection } from 'lodash';
-import { unpack } from '../../../primitives/yaku-compat';
-import { getRequiredYaku } from '../selectors/yaku';
+import {AppOutcome} from '../../../interfaces/app';
+import {Player} from '../../../interfaces/common';
+import {intersection} from 'lodash';
+import {unpack} from '../../../primitives/yaku-compat';
+import {getRequiredYaku} from '../selectors/yaku';
+import {YakuId} from '../../../primitives/yaku';
 
 /**
  * Get id of player who is dealer in this round
@@ -39,8 +43,47 @@ function getDealerId(outcome: AppOutcome, playersList: Player[]): number {
   return players[0].id;
 }
 
+function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: number, clearOriginalList = false) {
+  let stateUpdated = state;
+  let winProps;
+  yakuToAdd.forEach((yId) => {
+    switch (stateUpdated.currentOutcome.selectedOutcome) {
+      case 'ron':
+      case 'tsumo':
+        winProps = addYakuToProps(
+          stateUpdated.currentOutcome,
+          stateUpdated.currentOutcome.selectedOutcome,
+          yId,
+          stateUpdated.gameConfig.allowedYaku,
+          stateUpdated.yakuList
+        );
+        if (!winProps) {
+          return;
+        }
+        break;
+      case 'multiron':
+        winProps = addYakuToProps(
+          stateUpdated.currentOutcome.wins[targetPlayer],
+          stateUpdated.currentOutcome.selectedOutcome,
+          yId,
+          stateUpdated.gameConfig.allowedYaku,
+          stateUpdated.yakuList
+        );
+        if (!winProps) {
+          return;
+        }
+        break;
+      default:
+        return;
+    }
+
+    stateUpdated = modifyWinOutcome(stateUpdated, winProps, () => targetPlayer);
+  });
+  return stateUpdated;
+}
+
 export function outcomeReducer(
-  state,
+  state: IAppState,
   action: AppActionTypes
 ): IAppState {
   let winProps;
@@ -56,58 +99,21 @@ export function outcomeReducer(
     case SET_FU_COUNT:
       return modifyWinOutcome(state, { 'fu': action.payload.count }, () => action.payload.winner);
     case ADD_YAKU:
-      // TODO: riichi and double-riichi checks; should be done in UI
-      /*
-       if (!bypassChecks && id === YakuId.RIICHI && props.yaku.indexOf(YakuId.RIICHI) === -1) {
-          alert(i18n._t('If you want to select a riichi, return back and press riichi button for the winner'));
-          return false;
-        }
-
-        if (
-          !bypassChecks &&
-          id === YakuId.DOUBLERIICHI && (
-            outcome.selectedOutcome === 'ron' ||
-            outcome.selectedOutcome === 'tsumo' ||
-            outcome.selectedOutcome === 'multiron'
-          ) &&
-          outcome.riichiBets.indexOf(props.winner) === -1
-        ) {
-          alert(i18n._t('If you want to select a riichi, return back and press riichi button for the winner'));
-          return false;
-        }
-      */
-
+      return addYakuList(state, [action.payload.id].concat(getRequiredYaku(state)), action.payload.winner);
+    case INIT_REQUIRED_YAKU:
       switch (state.currentOutcome.selectedOutcome) {
         case 'ron':
         case 'tsumo':
-          winProps = addYakuToProps(
-            state.currentOutcome,
-            state.currentOutcome.selectedOutcome,
-            action.payload.id,
-            state.gameConfig.allowedYaku,
-            state.yakuList
-          );
-          if (!winProps) {
-            return state;
-          }
-          break;
+          return addYakuList(state, getRequiredYaku(state), state.multironCurrentWinner, true);
         case 'multiron':
-          winProps = addYakuToProps(
-            state.currentOutcome.wins[action.payload.winner],
-            state.currentOutcome.selectedOutcome,
-            action.payload.id,
-            state.gameConfig.allowedYaku,
-            state.yakuList
-          );
-          if (!winProps) {
-            return state;
-          }
-          break;
+          let stateModified = state;
+          Object.keys(state.currentOutcome.wins).forEach((pId) => {
+            stateModified = addYakuList(stateModified, getRequiredYaku(state), parseInt(pId, 10), true);
+          });
+          return stateModified;
         default:
           return state;
       }
-
-      return modifyWinOutcome(state, winProps, () => action.payload.winner);
     case REMOVE_YAKU:
       if (getRequiredYaku(state).indexOf(action.payload.id) !== -1) {
         // do not allow to disable required yaku
@@ -160,9 +166,6 @@ export function outcomeReducer(
           outcome.deadhands.indexOf(playerId) === -1
         ) || (
           outcome.selectedOutcome === 'nagashi' &&
-          outcome.tempai.indexOf(playerId) === -1
-        ) || (
-          outcome.selectedOutcome === 'abort' &&
           outcome.tempai.indexOf(playerId) === -1
         )
       ) {

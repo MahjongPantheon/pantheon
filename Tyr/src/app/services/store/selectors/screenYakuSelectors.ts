@@ -40,15 +40,15 @@ type DisabledYakuList = {
 
 function _getDisabledYaku(state: IAppState): DisabledYakuList {
   const yakuList = getYakuList(state);
-  const allowedYaku = getAllowedYaku(this.state);
-  const users = getWinningUsers(this.state);
+  const allowedYaku = getAllowedYaku(state);
+  const users = getWinningUsers(state);
 
   return users.reduce((acc: DisabledYakuList, p) => {
     acc[p.id] = {};
     for (let yGroup of yakuList[p.id]) {
       for (let yRow of yGroup.groups) {
         for (let yaku of yRow) {
-          if (allowedYaku.indexOf(yaku.id) === -1 && !hasYaku(this.state, yaku.id)) {
+          if (allowedYaku.indexOf(yaku.id) === -1 && !hasYaku(state, yaku.id)) {
             acc[p.id][yaku.id] = true;
           }
         }

@@ -13,12 +13,13 @@ import { timerReducer } from './reducers/timerReducer';
 import { timerMw } from './middlewares/timer';
 import { IAppState, TimerStorage } from './interfaces';
 import { commonReducer } from './reducers/commonReducer';
-import { yaku } from './middlewares/yaku';
 import { persistentMw } from './middlewares/persistent';
 import { IDB } from '../idb';
 import reduceReducers from 'reduce-reducers';
 import { initialState } from './state';
 import { logging } from './middlewares/logging';
+import { I18nService } from '../i18n';
+import { yaku } from './middlewares/yaku';
 
 @Injectable()
 export class Store {
@@ -26,7 +27,7 @@ export class Store {
   private store: ReduxStore<IAppState>;
   private readonly timerSt: TimerStorage;
 
-  constructor(client: HttpClient) {
+  constructor(client: HttpClient, i18n: I18nService) {
     this.timerSt = {
       timer: null,
       setInterval: window.setInterval,
@@ -48,7 +49,7 @@ export class Store {
       history(),
       timerMw(this.timerSt),
       persistentMw(idb),
-      yaku,
+      yaku(i18n),
       logging(`⇨ [reducers]`),
     );
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&

@@ -2,7 +2,7 @@ import {IAppState} from '../interfaces';
 import {yakumanInYaku} from './yaku';
 import {getFu, getHan, getPossibleFu} from './hanFu';
 import {getEventTitle, getLosingUsers, getNagashiUsers, getWinningUsers} from './mimirSelectors';
-import {I18nService} from "../../i18n";
+import {I18nService} from '../../i18n';
 
 export function doraOptions(state: IAppState) {
   if (yakumanInYaku(state)) {
@@ -31,6 +31,9 @@ export function selectedDora(state: IAppState) {
     case 'tsumo':
       return state.currentOutcome.dora;
     case 'multiron':
+      if (!state.multironCurrentWinner) {
+        return 0; // data not yet loaded
+      }
       return state.currentOutcome.wins[state.multironCurrentWinner].dora;
     default:
       return null;

@@ -48,7 +48,7 @@ export class AppComponent {
     private themeService: ThemeService
   ) {
 
-    this.store = new Store(this.http);
+    this.store = new Store(this.http, this.i18n);
     this.state = this.store.redux.getState();
     this.metrika.track(MetrikaService.APP_INIT);
 

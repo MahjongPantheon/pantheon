@@ -25,10 +25,11 @@ import {WinProps} from '../../../interfaces/app';
 
 export function getRequiredYaku(state: IAppState): YakuId[] {
   const outcome = state.currentOutcome;
+  const existingYaku: YakuId[] = getSelectedYaku(state);
   switch (outcome.selectedOutcome) {
     case 'ron':
       if (outcome.riichiBets.indexOf(outcome.winner) !== -1) {
-        return [YakuId.RIICHI];
+        return [YakuId.RIICHI].filter((y) => !existingYaku.includes(y));
       }
       break;
     case 'tsumo':
@@ -36,12 +37,12 @@ export function getRequiredYaku(state: IAppState): YakuId[] {
         return [
           YakuId.RIICHI,
           YakuId.MENZENTSUMO
-        ];
+        ].filter((y) => !existingYaku.includes(y));
       }
       break;
     case 'multiron':
       if (outcome.riichiBets.indexOf(state.multironCurrentWinner) !== -1) {
-        return [YakuId.RIICHI];
+        return [YakuId.RIICHI].filter((y) => !existingYaku.includes(y));
       }
       break;
     default:
@@ -56,9 +57,9 @@ export function getSelectedYaku(state: IAppState): YakuId[] {
   switch (outcome.selectedOutcome) {
     case 'ron':
     case 'tsumo':
-      return [].concat(outcome.yaku);
+      return unpack(outcome.yaku);
     case 'multiron':
-      return [].concat(outcome.wins[state.multironCurrentWinner].yaku);
+      return unpack(outcome.wins[state.multironCurrentWinner].yaku);
     default:
       return [];
   }
@@ -192,6 +193,9 @@ export function yakumanInYaku(state: IAppState): boolean {
     case 'tsumo':
       return _hasYakumanInYakuList(outcome);
     case 'multiron':
+      if (!state.multironCurrentWinner) {
+        return false; // data not loaded yet
+      }
       let props = outcome.wins[state.multironCurrentWinner];
       return _hasYakumanInYakuList(props);
     default:

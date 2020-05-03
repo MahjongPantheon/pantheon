@@ -1,10 +1,10 @@
-import { IAppState } from '../interfaces';
-import { AppOutcome, DrawOutcomeProps, LoseOutcomeProps, WinOutcomeProps, WinProps } from '../../../interfaces/app';
-import { YakuId } from '../../../primitives/yaku';
-import { addYakuToList, limits, pack, unpack } from '../../../primitives/yaku-compat';
-import { getFixedFu, getHan } from '../../../primitives/yaku-values';
-import { Graph } from '../../../primitives/graph';
-import { Yaku } from '../../../interfaces/common';
+import {IAppState} from '../interfaces';
+import {AppOutcome, DrawOutcomeProps, LoseOutcomeProps, WinOutcomeProps, WinProps} from '../../../interfaces/app';
+import {YakuId, yakuList} from '../../../primitives/yaku';
+import {addYakuToList, limits, pack, unpack} from '../../../primitives/yaku-compat';
+import {getFixedFu, getHan} from '../../../primitives/yaku-values';
+import {Graph} from '../../../primitives/graph';
+import {Yaku} from '../../../interfaces/common';
 
 /**
  * Should be used only for common win props, like riichiBets! For all other things modifyWinOutcome should be used.
@@ -142,6 +142,42 @@ export function modifyDrawOutcome(state: IAppState, fields: DrawOutcomeProps): I
   }
 }
 
+type YakuModException = (outcome: AppOutcome['selectedOutcome'], winProps: WinProps, yakuList: YakuId[], yakuId: YakuId) => YakuId[];
+
+const yakuModExceptions: YakuModException[] = [
+  function ensureTsumoIfRiichi(outcome: AppOutcome['selectedOutcome'], winProps: WinProps, yList: YakuId[], yakuId: YakuId) {
+    if (outcome === 'tsumo') {
+      if ((yList.includes(YakuId.RIICHI) || yList.includes(YakuId.DOUBLERIICHI)) && !yList.includes(YakuId.MENZENTSUMO)) {
+        yList.push(YakuId.MENZENTSUMO);
+      }
+    }
+    return yList;
+  },
+  function tsumoOpenHandMutex(outcome: AppOutcome['selectedOutcome'], winProps: WinProps, yList: YakuId[], yakuId: YakuId) {
+    // Remove open hand if we checked tsumo, and vice versa
+    if (outcome === 'tsumo') {
+      if (yakuId === YakuId.MENZENTSUMO) {
+        const pIdx = yList.indexOf(YakuId.__OPENHAND);
+        if (pIdx !== -1) {
+          yList.splice(pIdx, 1);
+        }
+        if (yList.indexOf(YakuId.MENZENTSUMO) === -1) {
+          yList.push(YakuId.__OPENHAND);
+        }
+      } else if (yakuId === YakuId.__OPENHAND) {
+        const pIdx = yList.indexOf(YakuId.MENZENTSUMO);
+        if (pIdx !== -1) {
+          yList.splice(pIdx, 1);
+        }
+        if (yList.indexOf(YakuId.__OPENHAND) === -1) {
+          yList.push(YakuId.MENZENTSUMO);
+        }
+      }
+    }
+    return yList;
+  }
+];
+
 export function addYakuToProps(
   winProps: WinProps,
   selectedOutcome: AppOutcome['selectedOutcome'],
@@ -150,8 +186,8 @@ export function addYakuToProps(
   yakuGraph: Graph<Yaku>
 ): WinProps | null {
 
-  let yakuList = unpack(winProps.yaku);
-  if (yakuList[yakuId]) {
+  let yList = unpack(winProps.yaku);
+  if (yList.indexOf(yakuId) !== -1) {
     return null;
   }
 
@@ -163,27 +199,15 @@ export function addYakuToProps(
     };
   }
 
-  yakuList = addYakuToList(yakuGraph, yakuId, enabledYaku);
+  yList = addYakuToList(yakuGraph, yakuId, yList);
+  yList = yakuModExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId), yList);
 
-  if (selectedOutcome === 'tsumo') {
-    if (
-      (yakuId === YakuId.MENZENTSUMO && yakuList.indexOf(YakuId.__OPENHAND) !== -1) ||
-      (yakuId === YakuId.__OPENHAND && yakuList.indexOf(YakuId.MENZENTSUMO) !== -1)
-    ) {
-      // Remove open hand if we checked tsumo, and vice versa
-      const pIdx = yakuList.indexOf(yakuId);
-      if (pIdx !== -1) {
-        yakuList.splice(pIdx, 1);
-      }
-    }
-  }
-
-  const packedList = pack(yakuList);
+  const packedList = pack(yList);
 
   if (winProps.yaku !== packedList) {
     let fu = winProps.fu;
-    const han = getHan(yakuList);
-    const possibleFu = getFixedFu(yakuList, selectedOutcome);
+    const han = getHan(yList);
+    const possibleFu = getFixedFu(yList, selectedOutcome);
     if (
       -1 === possibleFu.indexOf(winProps.fu) ||
       yakuId === YakuId.__OPENHAND // if open hand added, 40 fu must become 30 by default
@@ -209,22 +233,24 @@ export function removeYakuFromProps(
   yakuId: YakuId
 ): WinProps | null {
 
-  let yakuList = unpack(winProps.yaku);
-  if (!yakuList[yakuId]) {
+  let yList = unpack(winProps.yaku);
+  if (yList.indexOf(yakuId) === -1) {
     return null;
   }
 
-  const pIdx = yakuList.indexOf(yakuId);
+  const pIdx = yList.indexOf(yakuId);
   if (pIdx !== -1) {
-    yakuList.splice(pIdx, 1);
+    yList.splice(pIdx, 1);
   }
 
-  const packedList = pack(yakuList);
+  yList = yakuModExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId), yList);
+
+  const packedList = pack(yList);
 
   if (winProps.yaku !== packedList) {
     let fu = winProps.fu;
-    const han = getHan(yakuList);
-    const possibleFu = getFixedFu(yakuList, selectedOutcome);
+    const han = getHan(yList);
+    const possibleFu = getFixedFu(yList, selectedOutcome);
     if (possibleFu.indexOf(fu) === -1) {
       fu = possibleFu[0];
     }

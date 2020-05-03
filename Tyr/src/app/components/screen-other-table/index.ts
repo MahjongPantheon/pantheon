@@ -86,7 +86,11 @@ export class OtherTableScreenComponent extends I18nComponent implements OnChange
   get _loading() { return !this._dataUpdated && this.state.loading.otherTable; }
   get currentGameHash() { return this.state.currentOtherTableHash; }
   get currentTable() { return this.state.currentOtherTable.state; }
-  get outcomeName() { return getOutcomeName(this.i18n, this.state.currentOtherTableLastRound); }
+  get outcomeName() { return getOutcomeName(
+    this.i18n,
+    this.state.currentOtherTableLastRound.outcome,
+    this.state.currentOtherTableLastRound.outcome === 'multiron' ? this.state.currentOtherTableLastRound.winner.length : 0
+  ); }
 
   /// last round sub-screen related
 

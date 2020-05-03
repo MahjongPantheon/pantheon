@@ -19,7 +19,7 @@ export function commonReducer(
     case SELECT_MULTIRON_WINNER:
       return {
         ...state,
-        multironCurrentWinner: action.payload
+        multironCurrentWinner: action.payload.winner
       };
     case SETTINGS_SAVE_THEME:
       return {

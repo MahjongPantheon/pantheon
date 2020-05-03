@@ -19,23 +19,33 @@
  */
 
 import {
+  ChangeDetectionStrategy,
   Component,
-  ViewChild, ViewChildren,
-  QueryList, ElementRef,
-  Input, ChangeDetectionStrategy
+  ElementRef,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
 } from '@angular/core';
-import { YakuId } from '../../primitives/yaku';
-import { throttle, keys, pickBy } from 'lodash';
-import { I18nComponent, I18nService } from '../auxiliary-i18n';
-import { MetrikaService } from '../../services/metrika';
+import {YakuId} from '../../primitives/yaku';
+import {throttle} from 'lodash';
+import {I18nComponent, I18nService} from '../auxiliary-i18n';
+import {MetrikaService} from '../../services/metrika';
 import {IAppState} from '../../services/store/interfaces';
 import {Dispatch} from 'redux';
-import {ADD_YAKU, AppActionTypes, REMOVE_YAKU, SELECT_MULTIRON_WINNER} from '../../services/store/actions/interfaces';
+import {
+  ADD_YAKU,
+  AppActionTypes,
+  INIT_REQUIRED_YAKU,
+  REMOVE_YAKU,
+  SELECT_MULTIRON_WINNER
+} from '../../services/store/actions/interfaces';
 import {getWinningUsers, hasYaku} from '../../services/store/selectors/mimirSelectors';
 import {getDora, getFu, getHan} from '../../services/store/selectors/hanFu';
-import {getAllowedYaku, getRequiredYaku, getSelectedYaku} from '../../services/store/selectors/yaku';
+import {getSelectedYaku} from '../../services/store/selectors/yaku';
 import {getDisabledYaku, getYakuList, shouldShowTabs} from '../../services/store/selectors/screenYakuSelectors';
-import { getOutcomeName } from '../../services/store/selectors/commonSelectors';
+import {getOutcomeName} from '../../services/store/selectors/commonSelectors';
 
 @Component({
   selector: 'screen-yaku-select',
@@ -43,10 +53,14 @@ import { getOutcomeName } from '../../services/store/selectors/commonSelectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class YakuSelectScreen extends I18nComponent {
-
+export class YakuSelectScreen extends I18nComponent implements OnInit {
   get winningUsers() { return getWinningUsers(this.state); }
-  get outcome() { return getOutcomeName(this.i18n, this.state.lastRoundOverview, true); }
+  get outcome() { return getOutcomeName(
+    this.i18n,
+    this.state.currentOutcome.selectedOutcome,
+    this.state.currentOutcome.selectedOutcome === 'multiron' ? this.state.currentOutcome.multiRon : 0,
+    true
+  ); }
   get shouldShowTabs() { return shouldShowTabs(this.state); }
   get yakuList() { return getYakuList(this.state); }
   get disabledYaku() { return getDisabledYaku(this.state); }
@@ -82,21 +96,23 @@ export class YakuSelectScreen extends I18nComponent {
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-yaku-select' });
-    this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: getWinningUsers(this.state)[0].id }); // sets winner for ron/tsumo too
+    // next action sets winner for ron/tsumo too
+    this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: getWinningUsers(this.state)[0].id } });
+    this.dispatch({ type: INIT_REQUIRED_YAKU });
     if (this.state.currentOutcome.selectedOutcome === 'tsumo') {
-      this.dispatch({ type: ADD_YAKU, payload: { id: YakuId.MENZENTSUMO, winner: getWinningUsers(this.state)[0].id} });
+      this.dispatch({ type: ADD_YAKU, payload: { id: YakuId.MENZENTSUMO, winner: getWinningUsers(this.state)[0].id } });
     }
   }
 
   selectMultiRonUser(id: number) {
-    this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: id });
+    this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: id } });
   }
 
   yakuSelect(evt: { id: number }) {
     if (hasYaku(this.state, evt.id)) {
-      this.dispatch({ type: REMOVE_YAKU, payload: { id: evt.id } });
+      this.dispatch({ type: REMOVE_YAKU, payload: { id: evt.id, winner: this.state.multironCurrentWinner } });
     } else {
-      this.dispatch({ type: ADD_YAKU, payload: { id: evt.id } });
+      this.dispatch({ type: ADD_YAKU, payload: { id: evt.id, winner: this.state.multironCurrentWinner } });
     }
   }
 

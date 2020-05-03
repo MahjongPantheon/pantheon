@@ -28,7 +28,11 @@ function _getHan(state: IAppState, user?: number) {
     case 'tsumo':
       return outcome.han;
     case 'multiron':
-      return outcome.wins[user || state.multironCurrentWinner].han;
+      const selected = user || state.multironCurrentWinner;
+      if (!selected) {
+        return 0; // data not loaded yet
+      }
+      return outcome.wins[selected].han;
     default:
       return 0;
   }
@@ -51,8 +55,12 @@ function _getFu(state: IAppState, user?: number) {
       }
       return fu;
     case 'multiron':
-      fu = outcome.wins[user || state.multironCurrentWinner].fu;
-      han = outcome.wins[user || state.multironCurrentWinner].han + outcome.wins[user || state.multironCurrentWinner].dora;
+      const selected = user || state.multironCurrentWinner;
+      if (!selected) {
+        return 0; // data not loaded yet
+      }
+      fu = outcome.wins[selected].fu;
+      han = outcome.wins[selected].han + outcome.wins[selected].dora;
       if (han >= 5) {
         fu = 0;
       }
@@ -71,6 +79,9 @@ function _getPossibleFu(state: IAppState) {
     case 'tsumo':
       return outcome.possibleFu;
     case 'multiron':
+      if (!state.multironCurrentWinner) {
+        return []; // data not loaded yet
+      }
       return outcome.wins[state.multironCurrentWinner].possibleFu;
     default:
       return [];
@@ -86,7 +97,11 @@ function _getDora(state: IAppState, user?: number) {
     case 'tsumo':
       return outcome.dora;
     case 'multiron':
-      return outcome.wins[user || state.multironCurrentWinner].dora;
+      const selected = user || state.multironCurrentWinner;
+      if (!selected) {
+        return []; // data not loaded yet
+      }
+      return outcome.wins[selected].dora;
     default:
       return 0;
   }

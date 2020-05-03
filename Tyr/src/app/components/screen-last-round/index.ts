@@ -38,7 +38,11 @@ export class LastRoundScreenComponent extends I18nComponent implements OnInit {
   @Input() dispatch: Dispatch<AppActionTypes>;
 
   get _dataReady(): boolean { return !this.state.loading.overview; };
-  get outcomeName(): string { return getOutcomeName(this.i18n, this.state.lastRoundOverview); };
+  get outcomeName(): string { return getOutcomeName(
+    this.i18n,
+    this.state.lastRoundOverview.outcome,
+    this.state.lastRoundOverview.outcome === 'multiron' ? this.state.lastRoundOverview.winner.length : 0
+  ); };
   get wins() { return getWins(this.state.lastRoundOverview, this.state.players, this.i18n); }
   get _error(): string {
     if (!this.state.lastRoundOverviewErrorCode) {

@@ -88,6 +88,7 @@ const suppressingYaku = [
   [Y.YAKUHAI4, Y.YAKUHAI2],
   [Y.YAKUHAI4, Y.YAKUHAI1],
   [Y.JUNCHAN, Y.CHANTA],
+  [Y.CHINITSU, Y.HONITSU],
   [Y.CHIITOITSU, Y.IIPEIKOU],
   [Y.RYANPEIKOU, Y.CHIITOITSU],
   [Y.DOUBLERIICHI, Y.RIICHI],
@@ -99,12 +100,14 @@ const suppressingYaku = [
   [Y.__OPENHAND, Y.IIPEIKOU],
   [Y.__OPENHAND, Y.IPPATSU],
   [Y.__OPENHAND, Y.KOKUSHIMUSOU],
-  //  [Y.__OPENHAND, Y.MENZENTSUMO], // TODO: this is handled on upper level by disabling buttons
   [Y.__OPENHAND, Y.OPENRIICHI],
   [Y.__OPENHAND, Y.PINFU],
   [Y.__OPENHAND, Y.RIICHI],
   [Y.__OPENHAND, Y.RYANPEIKOU],
   [Y.__OPENHAND, Y.SUUANKOU],
+
+  // [Y.__OPENHAND, Y.MENZENTSUMO], // Note: do not uncomment, this is handled on upper level by disabling buttons
+  // [Y.MENZENTSUMO, Y.__OPENHAND], // Note: do not uncomment, this is handled on upper level by disabling buttons
 ].concat(limits.map(
   (limit) => yakuSuppressedByLimits.map(
     (yaku) => [limit, yaku]
@@ -174,6 +177,7 @@ const combinableYaku = [
   [Y.HONROTO, Y.CHIITOITSU],
   [Y.HONROTO, Y.RIICHI],
   [Y.HONROTO, Y.DOUBLERIICHI],
+  [Y.HONROTO, Y.MENZENTSUMO],
   [Y.HONROTO, Y.IPPATSU],
   [Y.HONROTO, Y.HAITEI],
   [Y.HONROTO, Y.RINSHANKAIHOU],
@@ -199,6 +203,8 @@ const combinableYaku = [
   [Y.SANANKOU, Y.HOUTEI],
   [Y.SANANKOU, Y.CHANKAN],
   [Y.SANANKOU, Y.OPENRIICHI],
+  [Y.SANANKOU, Y.CHANTA],
+  [Y.SANANKOU, Y.JUNCHAN],
 
   [Y.SANSHOKUDOUKOU, Y.SANKANTSU],
   [Y.SANSHOKUDOUKOU, Y.YAKUHAI1],
@@ -232,6 +238,8 @@ const combinableYaku = [
   [Y.SANKANTSU, Y.RINSHANKAIHOU],
   [Y.SANKANTSU, Y.HOUTEI],
   [Y.SANKANTSU, Y.CHANKAN],
+  [Y.SANKANTSU, Y.CHANTA],
+  [Y.SANKANTSU, Y.JUNCHAN],
   [Y.SANKANTSU, Y.OPENRIICHI],
 
   [Y.PINFU, Y.IIPEIKOU],
@@ -270,6 +278,7 @@ const combinableYaku = [
   [Y.IIPEIKOU, Y.HOUTEI],
   [Y.IIPEIKOU, Y.CHANKAN],
   [Y.IIPEIKOU, Y.OPENRIICHI],
+  [Y.IIPEIKOU, Y.SHOSANGEN],
 
   [Y.RYANPEIKOU, Y.TANYAO],
   [Y.RYANPEIKOU, Y.CHANTA],
@@ -282,7 +291,6 @@ const combinableYaku = [
   [Y.RYANPEIKOU, Y.MENZENTSUMO],
   [Y.RYANPEIKOU, Y.HAITEI],
   [Y.RYANPEIKOU, Y.HOUTEI],
-  [Y.RYANPEIKOU, Y.CHANKAN],
   [Y.RYANPEIKOU, Y.OPENRIICHI],
 
   [Y.SANSHOKUDOUJUN, Y.YAKUHAI1],
@@ -439,7 +447,6 @@ const combinableYaku = [
   [Y.CHIITOITSU, Y.MENZENTSUMO],
   [Y.CHIITOITSU, Y.HAITEI],
   [Y.CHIITOITSU, Y.HOUTEI],
-  [Y.CHIITOITSU, Y.CHANKAN],
   [Y.CHIITOITSU, Y.OPENRIICHI],
 
   [Y.RIICHI, Y.IPPATSU],
@@ -560,9 +567,9 @@ export function makeYakuGraph(multiYakumans = false) {
   - Причина отсечения конкретного яку - отсутствие прямого ребра с уже выбарнными яку. Можно выводить где-то.
 */
 
-export function addYakuToList(yakuGraph: Graph<Yaku>, yaku: Y, enabledYaku: Y[]): Y[] {
+export function addYakuToList(yakuGraph: Graph<Yaku>, yaku: Y, selectedYaku: Y[]): Y[] {
   return yakuGraph.tryAddAllowedNode(
-    enabledYaku.map((id) => nodes[id]),
+    selectedYaku.map((id) => nodes[id]),
     nodes[yaku]
   ).map((node) => node.data.id);
 }

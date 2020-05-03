@@ -24,6 +24,7 @@ export const GOTO_PREV_SCREEN = 'GOTO_PREV_SCREEN';
 export const SET_DORA_COUNT = 'SET_DORA_COUNT';
 export const SET_FU_COUNT = 'SET_FU_COUNT';
 export const ADD_YAKU = 'ADD_YAKU';
+export const INIT_REQUIRED_YAKU = 'INIT_REQUIRED_YAKU';
 export const REMOVE_YAKU = 'REMOVE_YAKU';
 export const TOGGLE_RIICHI = 'TOGGLE_RIICHI';
 export const TOGGLE_WINNER = 'TOGGLE_WINNER';
@@ -156,6 +157,10 @@ interface AddYakuAction {
     id: YakuId,
     winner?: number
   };
+}
+
+interface InitRequiredYakuAction {
+  type: typeof INIT_REQUIRED_YAKU;
 }
 
 interface RemoveYakuAction {
@@ -391,7 +396,9 @@ interface InitBlankOutcomeAction {
 
 interface SelectMultironWinnerAction {
   type: typeof SELECT_MULTIRON_WINNER;
-  payload: number;
+  payload: {
+    winner: number;
+  };
 }
 
 interface RandomizeNewgamePlayersAction {
@@ -462,6 +469,7 @@ export type AppActionTypes =
   | SetFuCountAction
   | AddYakuAction
   | RemoveYakuAction
+  | InitRequiredYakuAction
   | ToggleRiichiAction
   | ToggleWinnerAction
   | ToggleLoserAction
