@@ -4,7 +4,7 @@
         <div class="results" onclick="mobileGameToggleDetails(this)">
             {{#players}}
                 <div class="player-item">
-                    <div class="username">{{wind}} <strong>{{display_name}}</strong></div>
+                    <div class="username">{{wind}} <strong>{{display_name}}</strong>{{#if isOnlineTournament}} ({{tenhou_id}}){{/if}}</div>
                     <div class="score">{{score}} <span class='badge {{label}}'>{{rating_delta}}</span></div>
                 </div>
             {{/players}}
