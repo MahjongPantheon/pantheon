@@ -115,8 +115,8 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->playersRegistration();
 
         $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
-        $success = $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
-        $this->assertTrue($success);
+        $result = $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
+        $this->assertIsObject($result);
 
         $statModel = new PlayerStatModel($this->_db, $this->_config, $this->_meta);
         $stats = $statModel->getStats([$this->_event->getId()], '1');
@@ -158,8 +158,8 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->playersRegistration();
 
         $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
-        $success = $session->addGame($this->_event->getId(), $this->_gameLink, $gameContent);
-        $this->assertTrue($success);
+        $result = $session->addGame($this->_event->getId(), $this->_gameLink, $gameContent);
+        $this->assertIsObject($result);
     }
 
     // Negative tests
@@ -228,8 +228,8 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->playersRegistration();
 
         $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
-        $success = $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
-        $this->assertTrue($success);
+        $result = $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
+        $this->assertIsObject($result);
 
         $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
     }

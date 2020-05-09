@@ -251,7 +251,7 @@ class GamesController extends Controller
      *
      * @param int $eventId
      * @param string $link
-     * @return bool
+     * @return array
      * @throws InvalidParametersException
      * @throws \Exception
      * @throws ParseException
@@ -259,8 +259,9 @@ class GamesController extends Controller
     public function addOnlineReplay($eventId, $link)
     {
         $this->_log->addInfo('Saving new online game for event id# ' . $eventId);
-        $success = (new OnlineSessionModel($this->_db, $this->_config, $this->_meta))->addGame($eventId, $link);
+        $session = (new OnlineSessionModel($this->_db, $this->_config, $this->_meta))->addGame($eventId, $link);
+        $result = (new EventFinishedGamesModel($this->_db, $this->_config, $this->_meta))->getFinishedGame($session);
         $this->_log->addInfo('Successfully saved online game for event id# ' . $eventId);
-        return $success;
+        return $result;
     }
 }
