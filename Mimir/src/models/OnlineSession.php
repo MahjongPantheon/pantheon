@@ -31,7 +31,7 @@ class OnlineSessionModel extends Model
      * @param $eventId int
      * @param $logUrl string
      * @param $gameContent string
-     * @return bool
+     * @return SessionPrimitive
      * @throws InvalidParametersException
      * @throws \Exception
      * @throws ParseException
@@ -81,6 +81,9 @@ class OnlineSessionModel extends Model
         }
 
         $success = $success && $session->finish();
+        if (!$success) {
+            throw new \Exception("Wasn't able to properly save the game.");
+        }
 
         $calculatedScore = $session->getCurrentState()->getScores();
         if (array_diff($calculatedScore, $originalScore) !== []
@@ -90,7 +93,7 @@ class OnlineSessionModel extends Model
                 . print_r($calculatedScore, 1), 225);
         }
 
-        return $success;
+        return $session;
     }
 
     /**
