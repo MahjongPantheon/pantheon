@@ -83,6 +83,7 @@ class LastGames extends Controller
             'end' => $end,
             'hasNextButton' => $hasNextButton,
             'hasPreviousButton' => $hasPreviousButton,
+            'isOnlineTournament' => $this->_mainEventRules->isOnline()
         ];
     }
 }

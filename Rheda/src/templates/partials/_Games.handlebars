@@ -12,7 +12,10 @@
                 {{#players}}
                     <tr class="user-item-row">
                         <td class="wind-cell">{{wind}}</td>
-                        <td><b>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</b></td>
+                        <td>
+                          <b>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</b>
+                          {{#if isOnlineTournament}}<div>{{tenhou_id}}</div>{{/if}}
+                        </td>
                         <td>
                             <div class='badge badge-{{label}}'>{{rating_delta}}</div>
                             <div class="score">{{score}}</div>
