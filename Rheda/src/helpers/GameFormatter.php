@@ -36,6 +36,7 @@ class GameFormatter
             foreach ($game['players'] as $playerId) {
                 $finalScore = $game['final_results'][$playerId];
                 $players []= $this->_enrichWithInitials([
+                    'tenhou_id' => $gamesData['players'][$playerId]['tenhou_id'],
                     'display_name' => $gamesData['players'][$playerId]['display_name'],
                     'score' => number_format($finalScore['score'], 0, '.', ','),
                     'label' => ($finalScore['rating_delta'] > $labelColorThreshold

@@ -37,6 +37,7 @@ class Game extends Controller
             return [
                 'games' => $formatter->formatGamesData($gamesData, $this->_mainEventRules),
                 'singleGamePage' => true,
+                'isOnlineTournament' => $this->_mainEventRules->isOnline()
             ];
         } catch (Exception $e) {
             return [
