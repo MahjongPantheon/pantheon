@@ -55,7 +55,8 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
           stateUpdated.currentOutcome.selectedOutcome,
           yId,
           stateUpdated.gameConfig.allowedYaku,
-          stateUpdated.yakuList
+          stateUpdated.yakuList,
+          stateUpdated.currentOutcome.riichiBets
         );
         if (!winProps) {
           return;
@@ -67,7 +68,8 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
           stateUpdated.currentOutcome.selectedOutcome,
           yId,
           stateUpdated.gameConfig.allowedYaku,
-          stateUpdated.yakuList
+          stateUpdated.yakuList,
+          stateUpdated.currentOutcome.riichiBets
         );
         if (!winProps) {
           return;
@@ -126,7 +128,8 @@ export function outcomeReducer(
           winProps = removeYakuFromProps(
             state.currentOutcome,
             state.currentOutcome.selectedOutcome,
-            action.payload.id
+            action.payload.id,
+            state.currentOutcome.riichiBets
           );
           if (!winProps) {
             return state;
@@ -136,7 +139,8 @@ export function outcomeReducer(
           winProps = removeYakuFromProps(
             state.currentOutcome.wins[action.payload.winner],
             state.currentOutcome.selectedOutcome,
-            action.payload.id
+            action.payload.id,
+            state.currentOutcome.riichiBets
           );
           if (!winProps) {
             return state;

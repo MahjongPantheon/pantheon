@@ -142,10 +142,16 @@ export function modifyDrawOutcome(state: IAppState, fields: DrawOutcomeProps): I
   }
 }
 
-type YakuModException = (outcome: AppOutcome['selectedOutcome'], winProps: WinProps, yakuList: YakuId[], yakuId: YakuId) => YakuId[];
+type YakuModException = (
+  outcome: AppOutcome['selectedOutcome'],
+  winProps: WinProps,
+  yakuList: YakuId[],
+  yakuId: YakuId,
+  riichiBets: number[]
+) => YakuId[];
 
-const yakuModExceptions: YakuModException[] = [
-  function ensureTsumoIfRiichi(outcome: AppOutcome['selectedOutcome'], winProps: WinProps, yList: YakuId[], yakuId: YakuId) {
+const yakuModAfterExceptions: YakuModException[] = [
+  function ensureTsumoIfRiichi(outcome, winProps, yList) {
     if (outcome === 'tsumo') {
       if ((yList.includes(YakuId.RIICHI) || yList.includes(YakuId.DOUBLERIICHI)) && !yList.includes(YakuId.MENZENTSUMO)) {
         yList.push(YakuId.MENZENTSUMO);
@@ -153,7 +159,7 @@ const yakuModExceptions: YakuModException[] = [
     }
     return yList;
   },
-  function tsumoOpenHandMutex(outcome: AppOutcome['selectedOutcome'], winProps: WinProps, yList: YakuId[], yakuId: YakuId) {
+  function tsumoOpenHandMutex(outcome, winProps, yList, yakuId) {
     // Remove open hand if we checked tsumo, and vice versa
     if (outcome === 'tsumo') {
       if (yakuId === YakuId.MENZENTSUMO) {
@@ -178,12 +184,24 @@ const yakuModExceptions: YakuModException[] = [
   }
 ];
 
+const yakuModBeforeExceptions: YakuModException[] = [
+  function doubleRiichiSelect(outcome, winProps, yList, yakuId, riichiBets) {
+    if (yakuId === YakuId.DOUBLERIICHI && riichiBets.includes(winProps.winner)) {
+      if (yList.includes(YakuId.DOUBLERIICHI) && !yList.includes(YakuId.RIICHI)) {
+        yList.push(YakuId.RIICHI);
+      }
+    }
+    return yList;
+  }
+];
+
 export function addYakuToProps(
   winProps: WinProps,
   selectedOutcome: AppOutcome['selectedOutcome'],
   yakuId: YakuId,
   enabledYaku: YakuId[],
-  yakuGraph: Graph<Yaku>
+  yakuGraph: Graph<Yaku>,
+  riichiPlayers: number[]
 ): WinProps | null {
 
   let yList = unpack(winProps.yaku);
@@ -199,8 +217,9 @@ export function addYakuToProps(
     };
   }
 
+  yList = yakuModBeforeExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers), yList);
   yList = addYakuToList(yakuGraph, yakuId, yList);
-  yList = yakuModExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId), yList);
+  yList = yakuModAfterExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers), yList);
 
   const packedList = pack(yList);
 
@@ -230,7 +249,8 @@ export function addYakuToProps(
 export function removeYakuFromProps(
   winProps: WinProps,
   selectedOutcome: AppOutcome['selectedOutcome'],
-  yakuId: YakuId
+  yakuId: YakuId,
+  riichiPlayers: number[]
 ): WinProps | null {
 
   let yList = unpack(winProps.yaku);
@@ -238,12 +258,14 @@ export function removeYakuFromProps(
     return null;
   }
 
+  yList = yakuModBeforeExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers), yList);
+
   const pIdx = yList.indexOf(yakuId);
   if (pIdx !== -1) {
     yList.splice(pIdx, 1);
   }
 
-  yList = yakuModExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId), yList);
+  yList = yakuModAfterExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers), yList);
 
   const packedList = pack(yList);
 
