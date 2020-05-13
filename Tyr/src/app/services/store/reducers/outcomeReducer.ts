@@ -43,7 +43,7 @@ function getDealerId(outcome: AppOutcome, playersList: Player[]): number {
   return players[0].id;
 }
 
-function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: number, clearOriginalList = false) {
+function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: number) {
   let stateUpdated = state;
   let winProps;
   yakuToAdd.forEach((yId) => {
@@ -106,11 +106,11 @@ export function outcomeReducer(
       switch (state.currentOutcome.selectedOutcome) {
         case 'ron':
         case 'tsumo':
-          return addYakuList(state, getRequiredYaku(state), state.multironCurrentWinner, true);
+          return addYakuList(state, getRequiredYaku(state), state.multironCurrentWinner);
         case 'multiron':
           let stateModified = state;
           Object.keys(state.currentOutcome.wins).forEach((pId) => {
-            stateModified = addYakuList(stateModified, getRequiredYaku(state), parseInt(pId, 10), true);
+            stateModified = addYakuList(stateModified, getRequiredYaku(state, parseInt(pId, 10)), parseInt(pId, 10));
           });
           return stateModified;
         default:

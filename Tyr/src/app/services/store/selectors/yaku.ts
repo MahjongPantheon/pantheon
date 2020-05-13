@@ -23,7 +23,7 @@ import {IAppState} from '../interfaces';
 import {YakuId} from '../../../primitives/yaku';
 import {WinProps} from '../../../interfaces/app';
 
-export function getRequiredYaku(state: IAppState): YakuId[] {
+export function getRequiredYaku(state: IAppState, currentWinner?: number): YakuId[] {
   const outcome = state.currentOutcome;
   const existingYaku: YakuId[] = getSelectedYaku(state);
   switch (outcome.selectedOutcome) {
@@ -41,7 +41,7 @@ export function getRequiredYaku(state: IAppState): YakuId[] {
       }
       break;
     case 'multiron':
-      if (outcome.riichiBets.indexOf(state.multironCurrentWinner) !== -1) {
+      if (outcome.riichiBets.indexOf(currentWinner || state.multironCurrentWinner) !== -1) {
         return [YakuId.RIICHI].filter((y) => !existingYaku.includes(y));
       }
       break;
