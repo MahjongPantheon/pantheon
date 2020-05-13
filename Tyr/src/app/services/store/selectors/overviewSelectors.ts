@@ -43,7 +43,7 @@ function _getScores(s: IAppState, o: Player[]) {
 
 const getScores = memoize(_getScores);
 
-// TODO: из-за постоянных обновлений таймера в стейте селекторы могут работать не столь эффективно.
+// TODO ##2: из-за постоянных обновлений таймера в стейте селекторы могут работать не столь эффективно.
 //  Нужно делать остальные селекторы более специальными.
 function _getTimeRemaining(state: IAppState) {
   if (!state.gameConfig.useTimer) {

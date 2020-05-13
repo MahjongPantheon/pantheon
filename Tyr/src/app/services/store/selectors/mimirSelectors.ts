@@ -175,7 +175,6 @@ function _getNagashiUsers(state: IAppState): Player[] {
 
 export const getNagashiUsers = memoize(_getNagashiUsers);
 
-// TODO: this should be done in UI - check
 function _hasYaku(state: IAppState, id: YakuId) {
   const outcome = state.currentOutcome;
   switch (outcome.selectedOutcome) {

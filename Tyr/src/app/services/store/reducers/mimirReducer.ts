@@ -96,7 +96,7 @@ export function mimirReducer(
       };
     case UPDATE_CURRENT_GAMES_SUCCESS:
       // if (!action.payload.games[0]) {
-      //   return state; // TODO: some error handling for this case; no games - or game ended just now
+      //   return state; // TODO ##1: some error handling for this case; no games - or game ended just now
       // }
 
       let mapIdToPlayer = {};
@@ -135,11 +135,11 @@ export function mimirReducer(
         ...state,
         loading: {
           ...state.loading,
-          games: false // TODO: what about error?
+          games: false // TODO ##1: what about error?
         }
       };
     case GET_ALL_PLAYERS_INIT:
-      // TODO
+      // TODO ##1
       // this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-new-game' });
       return {
         ...state,
@@ -151,7 +151,7 @@ export function mimirReducer(
         allPlayersError: null
       };
     case GET_ALL_PLAYERS_SUCCESS:
-      // TODO
+      // TODO ##1
       // this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-new-game', request: 'getAllPlayers' });
       return {
         ...state,
@@ -163,7 +163,7 @@ export function mimirReducer(
         allPlayersError: null
       };
     case GET_ALL_PLAYERS_FAIL:
-      // TODO
+      // TODO ##1
       // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-new-game', request: 'getAllPlayers', message: e.toString() }));
       return {
         ...state,
@@ -193,13 +193,13 @@ export function mimirReducer(
         changesOverviewError: null
       };
     case GET_CHANGES_OVERVIEW_FAIL:
-      // TODO: metrika
+      // TODO ##1: metrika
       // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-confirmation', code: e.code, request: reqType });
       return {
         ...state,
         loading: {
           ...state.loading,
-          overview: false // TODO: what about error?
+          overview: false // TODO ##1: what about error?
         },
         changesOverview: null,
         changesOverviewError: {
@@ -308,7 +308,7 @@ export function mimirReducer(
         newGameStartError: null
       };
     case START_GAME_FAIL:
-      // TODO
+      // TODO ##1
       // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-new-game', request: 'startGame', message: e.toString() });
       return {
         ...state,
