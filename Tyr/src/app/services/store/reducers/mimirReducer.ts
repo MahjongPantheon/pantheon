@@ -18,7 +18,8 @@ import {
   GET_LAST_ROUND_FAIL,
   GET_LAST_ROUND_INIT,
   GET_LAST_ROUND_SUCCESS,
-  RANDOMIZE_NEWGAME_PLAYERS, RESET_REGISTRATION_ERROR,
+  RANDOMIZE_NEWGAME_PLAYERS,
+  RESET_REGISTRATION_ERROR,
   SELECT_NEWGAME_PLAYER_KAMICHA,
   SELECT_NEWGAME_PLAYER_SELF,
   SELECT_NEWGAME_PLAYER_SHIMOCHA,
@@ -34,7 +35,12 @@ import {
   GET_GAME_OVERVIEW_INIT,
   GET_OTHER_TABLES_LIST_INIT,
   GET_OTHER_TABLES_LIST_SUCCESS,
-  GET_OTHER_TABLES_LIST_FAIL, ADD_ROUND_INIT, ADD_ROUND_SUCCESS, ADD_ROUND_FAIL,
+  GET_OTHER_TABLES_LIST_FAIL,
+  ADD_ROUND_INIT,
+  ADD_ROUND_SUCCESS,
+  ADD_ROUND_FAIL,
+  GET_OTHER_TABLE_INIT,
+  GET_OTHER_TABLE_SUCCESS, GET_OTHER_TABLE_FAIL,
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
 import { makeYakuGraph } from '../../../primitives/yaku-compat';
@@ -217,10 +223,11 @@ export function mimirReducer(
           overview: true
         },
         lastRoundOverview: null,
+        currentOtherTableLastRound: null,
         lastRoundOverviewErrorCode: null
       };
     case GET_LAST_ROUND_SUCCESS:
-      if (action.payload) {
+      if (action.payload) { // check for success: in some cases we can get 404 for this request
         return {
           ...state,
           loading: {
@@ -370,21 +377,7 @@ export function mimirReducer(
       return {
         ...state,
         gameOverviewReady: true,
-        tableIndex: action.payload.table_index,
-        players: [...action.payload.players.map((pl) => {
-          return <Player>{
-            id: pl.id,
-            alias: '',
-            displayName: pl.display_name,
-            score: action.payload.state.scores[pl.id] || 0,
-            penalties: action.payload.state.penalties[pl.id] || 0
-          };
-        })] as [Player, Player, Player, Player],
-        currentRound: action.payload.state.round,
-        riichiOnTable: action.payload.state.riichi,
-        honba: action.payload.state.honba,
-        yellowZoneAlreadyPlayed: action.payload.state.yellowZoneAlreadyPlayed,
-        // TODO: action.payload.state.finished & action.payload.state.dealer - for what?
+        ...(action.payload)
       };
     case GET_GAME_OVERVIEW_FAIL:
       return {
@@ -418,6 +411,50 @@ export function mimirReducer(
           otherTables: false
         },
         otherTablesListError: {
+          message: action.payload.message,
+          details: action.payload
+        }
+      };
+    case GET_OTHER_TABLE_INIT:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          otherTable: true
+        },
+        currentOtherTable: null,
+        currentOtherTableHash: action.payload,
+        currentOtherTableIndex: 0,
+        currentOtherTableLastRound: null,
+        currentOtherTablePlayers: [],
+        otherTableError: null
+      };
+    case GET_OTHER_TABLE_SUCCESS:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          otherTable: false
+        },
+        currentOtherTable: action.payload,
+        currentOtherTableIndex: action.payload.tableIndex,
+        // currentOtherTableLastRound: action.payload, // TODO wat
+        currentOtherTablePlayers: action.payload.players,
+        otherTableError: null
+      };
+    case GET_OTHER_TABLE_FAIL:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          otherTable: false
+        },
+        currentOtherTable: null,
+        currentOtherTableHash: null,
+        currentOtherTableIndex: 0,
+        currentOtherTableLastRound: null,
+        currentOtherTablePlayers: [],
+        otherTableError: {
           message: action.payload.message,
           details: action.payload
         }

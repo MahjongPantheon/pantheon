@@ -25,10 +25,10 @@
   <button class="allok" style="width: 100%" (click)="okay()">{{_OK}}</button>
 </div>
 <div class="wrap scroller-wrap" *ngIf="!_loading && !_error">
-  <confirmation-scheme
+  <round-preview-scheme
       [state]="state"
-      [overview]="state.changesOverview"
-  ></confirmation-scheme>
+      [purpose]="'confirmation'"
+  ></round-preview-scheme>
   <div class="confirmation-controls">
     <button
         class="allok"

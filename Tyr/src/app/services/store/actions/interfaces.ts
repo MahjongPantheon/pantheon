@@ -1,11 +1,18 @@
 import { YakuId } from '../../../primitives/yaku';
 import { RemoteError } from '../../remoteError';
-import {LCurrentGame, LGameConfig, LTimerState, LUser, LUserWithScore} from '../../../interfaces/local';
+import {
+  LCurrentGame,
+  LGameConfig,
+  LSessionOverview,
+  LTimerState,
+  LUser,
+  LUserWithScore
+} from '../../../interfaces/local';
 import {
   RRoundPaymentsInfo,
   RRoundPaymentsInfoMulti,
   RRoundPaymentsInfoSingle,
-  RSessionOverview, SessionState
+  SessionState
 } from '../../../interfaces/remote';
 import {Table,  Outcome} from '../../../interfaces/common';
 import {IAppState} from '../interfaces';
@@ -48,6 +55,7 @@ export const GET_OTHER_TABLES_LIST_INIT = 'GET_OTHER_TABLES_LIST_INIT';
 export const GET_OTHER_TABLES_LIST_SUCCESS = 'GET_OTHER_TABLES_LIST_SUCCESS';
 export const GET_OTHER_TABLES_LIST_FAIL = 'GET_OTHER_TABLES_LIST_FAIL';
 export const GET_OTHER_TABLE_INIT = 'GET_OTHER_TABLE_INIT';
+export const GET_OTHER_TABLE_RELOAD = 'GET_OTHER_TABLE_RELOAD';
 export const GET_OTHER_TABLE_SUCCESS = 'GET_OTHER_TABLE_SUCCESS';
 export const GET_OTHER_TABLE_FAIL = 'GET_OTHER_TABLE_FAIL';
 export const GET_OTHER_TABLE_LAST_ROUND_INIT = 'GET_OTHER_TABLE_LAST_ROUND_INIT';
@@ -245,7 +253,7 @@ interface GetGameOverviewActionInit {
 }
 interface GetGameOverviewActionSuccess {
   type: typeof GET_GAME_OVERVIEW_SUCCESS;
-  payload: RSessionOverview;
+  payload: LSessionOverview;
 }
 interface GetGameOverviewActionFail {
   type: typeof GET_GAME_OVERVIEW_FAIL;
@@ -269,9 +277,12 @@ interface GetOtherTableActionInit {
   type: typeof GET_OTHER_TABLE_INIT;
   payload: string;
 }
+interface GetOtherTableActionReload {
+  type: typeof GET_OTHER_TABLE_RELOAD;
+}
 interface GetOtherTableActionSuccess {
   type: typeof GET_OTHER_TABLE_SUCCESS;
-  payload: RSessionOverview;
+  payload: LSessionOverview;
 }
 interface GetOtherTableActionFail {
   type: typeof GET_OTHER_TABLE_FAIL;
@@ -506,6 +517,7 @@ export type AppActionTypes =
   | UpdateCurrentGamesActionInit
   | GetGameOverviewActionInit
   | GetOtherTableActionInit
+  | GetOtherTableActionReload
   | GetOtherTablesListActionInit
   | GetOtherTableLastRoundActionInit
   | GetOtherTableLastRoundActionSuccess

@@ -36,7 +36,7 @@ function _getWins(state: IAppState): LWinItem[] {
   }
 }
 
-export const getWins = memoize(_getWins);
+export const getWins: typeof _getWins = memoize(_getWins);
 
 export function getMultiRonCount(state: IAppState): number {
   switch (state.currentOutcome.selectedOutcome) {
@@ -79,7 +79,7 @@ function _winnerHasYakuWithPao(state: IAppState): boolean {
   }
 }
 
-export const winnerHasYakuWithPao = memoize(_winnerHasYakuWithPao);
+export const winnerHasYakuWithPao: typeof _winnerHasYakuWithPao = memoize(_winnerHasYakuWithPao);
 
 export function getOutcome(state: IAppState) {
   return state.currentOutcome && state.currentOutcome.selectedOutcome;
@@ -110,7 +110,7 @@ function _getWinningUsers(state: IAppState): Player[] {
   }
 }
 
-export const getWinningUsers = memoize(_getWinningUsers);
+export const getWinningUsers: typeof _getWinningUsers = memoize(_getWinningUsers);
 
 function _getLosingUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
@@ -126,7 +126,7 @@ function _getLosingUsers(state: IAppState): Player[] {
   }
 }
 
-export const getLosingUsers = memoize(_getLosingUsers);
+export const getLosingUsers: typeof _getLosingUsers = memoize(_getLosingUsers);
 
 function _getPaoUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
@@ -148,7 +148,7 @@ function _getPaoUsers(state: IAppState): Player[] {
   }
 }
 
-export const getPaoUsers = memoize(_getPaoUsers);
+export const getPaoUsers: typeof _getPaoUsers = memoize(_getPaoUsers);
 
 function _getDeadhandUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
@@ -161,7 +161,7 @@ function _getDeadhandUsers(state: IAppState): Player[] {
   }
 }
 
-export const getDeadhandUsers = memoize(_getDeadhandUsers);
+export const getDeadhandUsers: typeof _getDeadhandUsers = memoize(_getDeadhandUsers);
 
 function _getNagashiUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
@@ -173,7 +173,7 @@ function _getNagashiUsers(state: IAppState): Player[] {
   }
 }
 
-export const getNagashiUsers = memoize(_getNagashiUsers);
+export const getNagashiUsers: typeof _getNagashiUsers = memoize(_getNagashiUsers);
 
 function _hasYaku(state: IAppState, id: YakuId) {
   const outcome = state.currentOutcome;
@@ -188,7 +188,7 @@ function _hasYaku(state: IAppState, id: YakuId) {
   }
 }
 
-export const hasYaku = memoize(_hasYaku);
+export const hasYaku: typeof _hasYaku = memoize(_hasYaku);
 
 function _getRiichiUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
@@ -205,7 +205,7 @@ function _getRiichiUsers(state: IAppState): Player[] {
   }
 }
 
-export const getRiichiUsers = memoize(_getRiichiUsers);
+export const getRiichiUsers: typeof _getRiichiUsers = memoize(_getRiichiUsers);
 
 function _getCurrentTimerZone(state: IAppState) {
   let zoneLength;
@@ -227,4 +227,4 @@ function _getCurrentTimerZone(state: IAppState) {
   return 'none';
 }
 
-export const getCurrentTimerZone = memoize(_getCurrentTimerZone);
+export const getCurrentTimerZone: typeof _getCurrentTimerZone = memoize(_getCurrentTimerZone);

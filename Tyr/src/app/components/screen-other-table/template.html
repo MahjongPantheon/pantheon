@@ -20,41 +20,6 @@
 <div class="riichi-table" *ngIf="_loading">
   <div class="inline-preloader"></div>
 </div>
-<div class="round-results-overlay" *ngIf="lastRoundInfo">&nbsp;</div>
-<div class="round-results-window" *ngIf="lastRoundInfo">
-  <h3>{{outcomeName}}</h3>
-  <div class="table-info">
-    <div class="round-info">
-      <span class="tenbou riichi"></span>
-      <div class="indicator">{{this.state.currentOtherTableLastRound.riichi}}</div>
-      <span class="tenbou honba"></span>
-      <div class="indicator">{{this.state.currentOtherTableLastRound.honba}}</div>
-    </div>
-    <hr />
-    <div *ngIf="lastRoundInfo.outcome == 'chombo'">
-      {{penalty}}
-    </div>
-    <div *ngIf="lastRoundInfo.outcome == 'draw'">
-      {{_TENPAI}}{{tempaiPlayers}}
-      <br>
-      {{_NOTEN}}{{notenPlayers}}
-    </div>
-    <!-- abortive draws have no info to output -->
-    <ul *ngIf="lastRoundInfo.outcome == 'ron' || lastRoundInfo.outcome == 'tsumo' || lastRoundInfo.outcome == 'multiron'" class="wins-list">
-      <li *ngFor="let win of wins">
-        <b>{{win.winner}}</b>
-        &larr;
-        <span class="loser" *ngIf="lastRoundInfo.outcome == 'ron' || lastRoundInfo.outcome == 'multiron'">({{win.loser}})</span>
-        <span class="loser" *ngIf="lastRoundInfo.outcome == 'tsumo'">(tsumo)</span>
-        <br>
-        {{win | makeHandDescription}}
-      </li>
-    </ul>
-    <div *ngIf="lastRoundInfo.riichiIds.length > 0">
-      Riichi: {{riichiPlayers}}
-    </div>
-  </div>
-</div>
 <div class="riichi-table" *ngIf="!_loading">
   <div class="centered">
     <div class="edge-block round-info">

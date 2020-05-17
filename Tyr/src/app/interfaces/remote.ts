@@ -208,6 +208,7 @@ export type RCurrentGames = {
 }[];
 
 export interface RRoundPaymentsInfoSingle {
+  sessionHash?: string;
   dealer: number; // player id
   round: number;
   riichi: number; // riichis on table
@@ -234,6 +235,7 @@ export interface RRoundPaymentsInfoSingle {
 }
 
 export interface RRoundPaymentsInfoMulti {
+  sessionHash?: string;
   dealer: number; // player id
   round: number;
   riichi: number; // riichis on table

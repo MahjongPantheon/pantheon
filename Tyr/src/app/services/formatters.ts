@@ -21,11 +21,11 @@
 import {
   RCurrentGames, RRound, RUserInfo,
   RAllPlayersInEvent, RPlayerData,
-  RTimerState, RGameConfig, RTablesState
+  RTimerState, RGameConfig, RTablesState, RSessionOverview
 } from '../interfaces/remote';
 import {
   LCurrentGame, LUser, LUserWithScore,
-  LTimerState, LGameConfig
+  LTimerState, LGameConfig, LSessionOverview
 } from '../interfaces/local';
 import { Player, Table } from '../interfaces/common';
 import { YakuId } from '../primitives/yaku';
@@ -41,6 +41,28 @@ import {
 import {IAppState} from './store/interfaces';
 import {getDora, getFu, getHan} from './store/selectors/hanFu';
 import {getSelectedYaku} from './store/selectors/yaku';
+
+export function gameOverviewFormatter(overview: RSessionOverview): LSessionOverview {
+  return {
+    tableIndex: overview.table_index,
+    players: [...overview.players.map((pl) => {
+      return {
+        ident: '', // TODO: workaround
+        tenhouId: '', // TODO: workaround
+        ratingDelta: 0, // TODO: workaround
+        id: pl.id,
+        alias: '',
+        displayName: pl.display_name,
+        score: overview.state.scores[pl.id] || 0,
+        penalties: overview.state.penalties[pl.id] || 0
+      };
+    })] as [LUserWithScore, LUserWithScore, LUserWithScore, LUserWithScore],
+    currentRound: overview.state.round,
+    riichiOnTable: overview.state.riichi,
+    honba: overview.state.honba,
+    yellowZoneAlreadyPlayed: overview.state.yellowZoneAlreadyPlayed,
+  }
+}
 
 export function timerFormatter(timer: RTimerState): LTimerState {
   return {

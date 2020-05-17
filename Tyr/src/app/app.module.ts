@@ -41,7 +41,7 @@ import { SettingsScreen } from './components/screen-settings';
 import { UserItemComponent } from './components/element-user-item';
 import { YakuItemButtonComponent } from './components/element-yaku-item-button';
 import { NavBarComponent } from './components/navbar';
-import { ConfirmationSchemeComponent } from './components/element-confirmation-scheme';
+import { RoundPreviewSchemeComponent } from './components/element-round-preview-scheme';
 import { CustomIconComponent } from './components/element-custom-icon';
 
 import { YakumanPipe } from './helpers/yakuman.pipe';
@@ -82,7 +82,7 @@ import { QrService } from './services/qr';
     UserItemComponent,
     YakuItemButtonComponent,
     NavBarComponent,
-    ConfirmationSchemeComponent,
+    RoundPreviewSchemeComponent,
     CustomIconComponent,
 
     YakumanPipe,

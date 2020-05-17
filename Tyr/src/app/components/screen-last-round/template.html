@@ -37,9 +37,9 @@
     </ul>
   </div>
   <!-- Payments scheme -->
-  <confirmation-scheme
+  <round-preview-scheme
       *ngIf="_dataReady"
       [state]="state"
-      [overview]="state.lastRoundOverview"
-  ></confirmation-scheme>
+      [purpose]="_purpose"
+  ></round-preview-scheme>
 </div>

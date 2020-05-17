@@ -32,6 +32,7 @@ import {
   LUser,
   LUserWithScore,
   LTimerState,
+  LSessionOverview,
   LGameConfig
 } from '../interfaces/local';
 import { Table } from '../interfaces/common';
@@ -43,7 +44,8 @@ import {
   lastResultsFormatter,
   timerFormatter,
   gameConfigFormatter,
-  tablesStateFormatter
+  tablesStateFormatter,
+  gameOverviewFormatter
 } from './formatters';
 import config from '../config';
 import { environment } from '../../environments/environment';
@@ -91,7 +93,8 @@ export class RiichiApiService {
   }
 
   getGameOverview(sessionHashcode: string) {
-    return this._jsonRpcRequest<RSessionOverview>('getGameOverview', sessionHashcode);
+    return this._jsonRpcRequest<RSessionOverview>('getGameOverview', sessionHashcode)
+      .then<LSessionOverview>(gameOverviewFormatter);
   }
 
   getCurrentGames(): Promise<LCurrentGame[]> {
@@ -118,7 +121,11 @@ export class RiichiApiService {
     if (!sessionHashcode) {
       return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundT');
     } else {
-      return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundByHash', sessionHashcode);
+      return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundByHash', sessionHashcode)
+        .then((result) => {
+          result.sessionHash = sessionHashcode;
+          return result;
+        });
     }
   }
 

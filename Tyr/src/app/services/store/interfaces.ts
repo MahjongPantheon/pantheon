@@ -1,7 +1,7 @@
 import { AppOutcome } from '../../interfaces/app';
 import {Player, Table, Yaku} from '../../interfaces/common';
-import {LGameConfig, LUser, LUserWithScore} from '../../interfaces/local';
-import { RRoundPaymentsInfo, RSessionOverview } from '../../interfaces/remote';
+import {LGameConfig, LSessionOverview, LUser, LUserWithScore} from '../../interfaces/local';
+import { RRoundPaymentsInfo } from '../../interfaces/remote';
 import {Graph} from '../../primitives/graph';
 import {RemoteError} from '../remoteError';
 
@@ -46,7 +46,6 @@ export interface IAppState {
   gameConfig: LGameConfig;
   tableIndex: number;
   yellowZoneAlreadyPlayed;
-  currentOtherTable: RSessionOverview;
   currentOtherTableIndex: number;
   currentOtherTableHash: string | null;
   currentOtherTablePlayers: Player[];
@@ -76,6 +75,9 @@ export interface IAppState {
 
   otherTablesList: Table[];
   otherTablesListError?: ErrorState;
+
+  currentOtherTable: LSessionOverview;
+  otherTableError?: ErrorState;
 
   overviewDiffBy?: 'self' | 'shimocha' | 'toimen' | 'kamicha';
   overviewViewShift?: number;

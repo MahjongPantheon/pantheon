@@ -24,7 +24,7 @@ import {
   GET_LAST_ROUND_INIT,
   GET_LAST_ROUND_SUCCESS,
   GET_OTHER_TABLE_FAIL,
-  GET_OTHER_TABLE_INIT, GET_OTHER_TABLE_LAST_ROUND_INIT,
+  GET_OTHER_TABLE_INIT, GET_OTHER_TABLE_LAST_ROUND_INIT, GET_OTHER_TABLE_RELOAD,
   GET_OTHER_TABLE_SUCCESS,
   GET_OTHER_TABLES_LIST_FAIL,
   GET_OTHER_TABLES_LIST_INIT,
@@ -67,6 +67,9 @@ export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) =>
       break;
     case GET_OTHER_TABLE_INIT:
       getOtherTable(action.payload, api, next);
+      break;
+    case GET_OTHER_TABLE_RELOAD:
+      getOtherTableReload(store.getState().currentOtherTableHash, api, next);
       break;
     case GET_OTHER_TABLE_LAST_ROUND_INIT:
     case GET_LAST_ROUND_INIT:
@@ -164,7 +167,14 @@ function getGameOverview(currentSessionHash: string, api: RiichiApiService, next
 }
 
 function getOtherTable(sessionHash: string, api: RiichiApiService, dispatch: Dispatch) {
-  dispatch({ type: GET_OTHER_TABLE_INIT });
+  dispatch({ type: GET_OTHER_TABLE_INIT, payload: sessionHash });
+  api.getGameOverview(sessionHash)
+    .then((table) => dispatch({ type: GET_OTHER_TABLE_SUCCESS, payload: table }))
+    .catch((e) => dispatch({ type: GET_OTHER_TABLE_FAIL, payload: e }));
+}
+
+function getOtherTableReload(sessionHash: string, api: RiichiApiService, dispatch: Dispatch) {
+  dispatch({ type: GET_OTHER_TABLE_RELOAD });
   api.getGameOverview(sessionHash)
     .then((table) => dispatch({ type: GET_OTHER_TABLE_SUCCESS, payload: table }))
     .catch((e) => dispatch({ type: GET_OTHER_TABLE_FAIL, payload: e }));

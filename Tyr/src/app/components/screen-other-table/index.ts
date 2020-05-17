@@ -18,30 +18,43 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Player} from '../../interfaces/common';
 import {MetrikaService} from '../../services/metrika';
-import {RRoundPaymentsInfo} from '../../interfaces/remote';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
 import {IAppState} from '../../services/store/interfaces';
 import {Dispatch} from 'redux';
 import {
   AppActionTypes,
   GET_OTHER_TABLE_INIT,
-  GET_OTHER_TABLE_LAST_ROUND_INIT, TABLE_ROTATE_CLOCKWISE, TABLE_ROTATE_COUNTERCLOCKWISE, TOGGLE_OVERVIEW_DIFFBY
+  GET_OTHER_TABLE_RELOAD,
+  SHOW_LAST_ROUND,
+  TABLE_ROTATE_CLOCKWISE,
+  TABLE_ROTATE_COUNTERCLOCKWISE,
+  TOGGLE_OVERVIEW_DIFFBY
 } from '../../services/store/actions/interfaces';
 import {
   getChomboKamicha,
-  getChomboSelf, getChomboShimocha, getChomboToimen,
-  getKamicha, getScoreKamicha, getScoreSelf, getScoreShimocha, getScoreToimen, getSeatKamicha,
-  getSeatSelf, getSeatShimocha, getSeatToimen,
+  getChomboSelf,
+  getChomboShimocha,
+  getChomboToimen,
+  getKamicha,
+  getScoreKamicha,
+  getScoreSelf,
+  getScoreShimocha,
+  getScoreToimen,
+  getSeatKamicha,
+  getSeatSelf,
+  getSeatShimocha,
+  getSeatToimen,
   getSelf,
   getShimocha,
   getToimen
 } from '../../services/store/selectors/overviewSelectors';
-import { getOutcomeName } from '../../services/store/selectors/commonSelectors';
+import {getOutcomeName} from '../../services/store/selectors/commonSelectors';
 import {
-  getNotenPlayers, getPenalty,
+  getNotenPlayers,
+  getPenalty,
   getRiichiPlayers,
   getTempaiPlayers,
   getWins
@@ -53,16 +66,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class OtherTableScreenComponent extends I18nComponent implements OnChanges, OnInit, OnDestroy {
-
-  get lastRoundInfo() {
-    if (this._showLastRound) {
-      return this.state.currentOtherTableLastRound;
-    }
-
-    return null;
-  }
-
+export class OtherTableScreenComponent extends I18nComponent implements OnInit {
   get self(): Player { return getSelf(this.state, this.state.currentOtherTablePlayers); }
   get shimocha(): Player { return getShimocha(this.state, this.state.currentOtherTablePlayers); }
   get toimen(): Player { return getToimen(this.state, this.state.currentOtherTablePlayers); }
@@ -83,9 +87,18 @@ export class OtherTableScreenComponent extends I18nComponent implements OnChange
   get chomboToimen(): string { return getChomboToimen(this.state, this.state.currentOtherTablePlayers); }
   get chomboKamicha(): string { return getChomboKamicha(this.state, this.state.currentOtherTablePlayers); }
 
-  get _loading() { return !this._dataUpdated && this.state.loading.otherTable; }
-  get currentGameHash() { return this.state.currentOtherTableHash; }
-  get currentTable() { return this.state.currentOtherTable.state; }
+  get _loading() {
+    return this.state.loading.otherTable
+      || this.state.currentOtherTablePlayers.length === 0
+      || !this.state.currentOtherTable;
+  }
+  get currentTable() {
+    return {
+      round: this.state.currentOtherTable.currentRound,
+      honba: this.state.currentOtherTable.honba,
+      riichi: this.state.currentOtherTable.riichiOnTable
+    };
+  }
   get outcomeName() { return getOutcomeName(
     this.i18n,
     this.state.currentOtherTableLastRound.outcome,
@@ -102,25 +115,17 @@ export class OtherTableScreenComponent extends I18nComponent implements OnChange
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
 
-  /**
-   * Flag to prevent blinking on manual updates when all data was already loaded
-   */
-  private _dataUpdated = false;
-  private _updateInterval: NodeJS.Timer;
-  private _lastRoundLocal: RRoundPaymentsInfo;
-  private _showLastRound = false;
-  private _lastRoundTimer: NodeJS.Timer;
-
   constructor(
     public i18n: I18nService,
     private metrika: MetrikaService
   ) { super(i18n); }
 
-  reloadOverview() { this.dispatch({ type: GET_OTHER_TABLE_INIT, payload: this.currentGameHash }); }
+  reloadOverview() {
+    this.dispatch({ type: GET_OTHER_TABLE_RELOAD });
+  }
+
   viewLastRound() {
-    this.dispatch({ type: GET_OTHER_TABLE_LAST_ROUND_INIT, payload: this.currentGameHash });
-    clearTimeout(this._lastRoundTimer);
-    this._lastRoundTimer = setTimeout(() => this._showLastRound = false, 8000);
+    this.dispatch({ type: SHOW_LAST_ROUND });
   }
 
   rotateTable(dir: boolean) {
@@ -129,33 +134,9 @@ export class OtherTableScreenComponent extends I18nComponent implements OnChange
 
   playerClick(who: IAppState['overviewDiffBy']) { this.dispatch( { type: TOGGLE_OVERVIEW_DIFFBY, payload: who }); }
 
-  ngOnChanges() {
-    if (
-      this.state.currentOtherTableLastRound &&
-      this._lastRoundLocal &&
-      this._lastRoundLocal.penaltyFor !== this.state.currentOtherTableLastRound.penaltyFor &&
-      this._lastRoundLocal.honba !== this.state.currentOtherTableLastRound.honba &&
-      this._lastRoundLocal.round !== this.state.currentOtherTableLastRound.round
-    ) {
-      clearTimeout(this._lastRoundTimer);
-      this._showLastRound = true;
-      this._lastRoundTimer = setTimeout(() => this._showLastRound = false, 8000);
-    }
-
-    this._lastRoundLocal = this.state.currentOtherTableLastRound;
-  }
-
   ngOnInit() {
-    this.dispatch({ type: GET_OTHER_TABLE_INIT, payload: this.currentGameHash });
+    this.dispatch({ type: GET_OTHER_TABLE_INIT, payload: this.state.currentOtherTableHash });
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-table' });
-    this._lastRoundTimer = null;
-    this._showLastRound = false;
-    this._updateInterval = setInterval(() => this._dataUpdated && this.reloadOverview(), 5000);
-  }
-
-  ngOnDestroy() {
-    clearInterval(this._updateInterval);
-    clearTimeout(this._lastRoundTimer);
   }
 }
 

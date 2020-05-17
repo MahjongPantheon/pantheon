@@ -24,7 +24,7 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IAppState } from '../../services/store/interfaces';
 import { Dispatch } from 'redux';
 import { AppActionTypes, GET_LAST_ROUND_INIT } from '../../services/store/actions/interfaces';
-import { getOutcomeName } from '../../services/store/selectors/commonSelectors';
+import {RoundPreviewSchemePurpose, getOutcomeName} from '../../services/store/selectors/commonSelectors';
 import { getWins } from '../../services/store/selectors/otherTableSelectors';
 
 @Component({
@@ -38,6 +38,13 @@ export class LastRoundScreenComponent extends I18nComponent implements OnInit {
   @Input() dispatch: Dispatch<AppActionTypes>;
 
   get _dataReady(): boolean { return !this.state.loading.overview; };
+  get _purpose(): RoundPreviewSchemePurpose {
+    if (this.state.currentSessionHash) {
+      return 'lastround';
+    } else {
+      return 'otherlastround';
+    }
+  };
   get outcomeName(): string { return getOutcomeName(
     this.i18n,
     this.state.lastRoundOverview.outcome,
@@ -61,8 +68,6 @@ export class LastRoundScreenComponent extends I18nComponent implements OnInit {
     }
   };
 
-  public confirmed = false;
-
   constructor(
     public i18n: I18nService,
     private metrika: MetrikaService
@@ -72,6 +77,6 @@ export class LastRoundScreenComponent extends I18nComponent implements OnInit {
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-last-round' });
-    this.dispatch({ type: GET_LAST_ROUND_INIT, payload: this.state.currentSessionHash });
+    this.dispatch({ type: GET_LAST_ROUND_INIT, payload: this.state.currentSessionHash || this.state.currentOtherTableHash });
   }
 }
