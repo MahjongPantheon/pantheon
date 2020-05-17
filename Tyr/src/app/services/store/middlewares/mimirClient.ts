@@ -30,7 +30,7 @@ import {
   GET_OTHER_TABLES_LIST_INIT,
   GET_OTHER_TABLES_LIST_SUCCESS,
   RESET_STATE,
-  SET_CREDENTIALS,
+  SET_CREDENTIALS, SET_TIMER,
   START_GAME_FAIL,
   START_GAME_INIT,
   START_GAME_SUCCESS,
@@ -143,6 +143,10 @@ function updateCurrentGames(api: RiichiApiService, dispatchNext: Dispatch, dispa
     if (games.length > 0) {
       dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: games[0].hashcode } );
     }
+    dispatchToStore({ type: SET_TIMER, payload: {
+      waiting: timerState.waitingForTimer,
+      secondsRemaining: timerState.timeRemaining
+    }});
   }).catch((e) => {
     if (e.code === 401) { // token has rotten
       dispatchToStore({ type: FORCE_LOGOUT });

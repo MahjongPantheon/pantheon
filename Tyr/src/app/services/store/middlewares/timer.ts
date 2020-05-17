@@ -20,8 +20,14 @@ export const timerMw = (timerStorage: TimerStorage) => (store: ReduxStore<IAppSt
         }
 
         timerStorage.timer = timerStorage.setInterval(() => {
+          const gameEnded = !store.getState().currentSessionHash;
+          const timerNotRequired = !store.getState().gameConfig.useTimer;
+          if (gameEnded || timerNotRequired) {
+            timerStorage.clearInterval(timerStorage.timer);
+            return;
+          }
           // Calc delta to support mobile suspending with js timers stopping
-          let delta = (now() - store.getState().timer.lastUpdateTimestamp) + 1; // +1 to subtract a passed second
+          let delta = (now() - store.getState().timer.lastUpdateTimestamp);
           let timeRemaining = store.getState().timer.lastUpdateSecondsRemaining - delta;
           if (timeRemaining <= 0) {
             // timer is finished
