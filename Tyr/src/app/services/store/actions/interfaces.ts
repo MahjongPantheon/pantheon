@@ -5,7 +5,7 @@ import {
   RRoundPaymentsInfo,
   RRoundPaymentsInfoMulti,
   RRoundPaymentsInfoSingle,
-  RSessionOverview
+  RSessionOverview, SessionState
 } from '../../../interfaces/remote';
 import {Table,  Outcome} from '../../../interfaces/common';
 import {IAppState} from '../interfaces';
@@ -382,6 +382,7 @@ interface AddRoundActionInit {
 
 interface AddRoundActionSuccess {
   type: typeof ADD_ROUND_SUCCESS;
+  payload: SessionState;
 }
 
 interface AddRoundActionFail {

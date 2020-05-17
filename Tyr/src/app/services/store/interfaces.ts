@@ -80,6 +80,8 @@ export interface IAppState {
   overviewDiffBy?: 'self' | 'shimocha' | 'toimen' | 'kamicha';
   overviewViewShift?: number;
 
+  updateCurrentGamesError?: ErrorState;
+
   isUniversalWatcher: boolean;
   settings: {
     currentLang: string;

@@ -1,3 +1,4 @@
+import deepclone from 'deepclone';
 import {
   AppActionTypes,
   CONFIRM_REGISTRATION_FAIL,
@@ -42,6 +43,7 @@ import { modifyArray } from './util';
 import { defaultPlayer } from '../selectors/screenNewGameSelectors';
 import { rand } from '../../../helpers/rand';
 import { Player } from '../../../interfaces/common';
+import { initialState } from '../state';
 
 export function mimirReducer(
   state: IAppState,
@@ -95,9 +97,14 @@ export function mimirReducer(
         }
       };
     case UPDATE_CURRENT_GAMES_SUCCESS:
-      // if (!action.payload.games[0]) {
-      //   return state; // TODO ##1: some error handling for this case; no games - or game ended just now
-      // }
+      if (!action.payload.games[0]) {
+        state = {
+          ...state,
+          currentScreen: ['otherTablesList', 'otherTable', 'lastResults'].includes(state.currentScreen)
+            ? state.currentScreen
+            : 'overview'
+        };
+      }
 
       let mapIdToPlayer = {};
       let players = null;
@@ -110,7 +117,6 @@ export function mimirReducer(
 
       return {
         ...state,
-        // currentScreen: 'overview',
         gameConfig: action.payload.gameConfig,
         currentPlayerId: action.payload.playerInfo.id,
         currentPlayerDisplayName: action.payload.playerInfo.displayName,
@@ -135,12 +141,14 @@ export function mimirReducer(
         ...state,
         loading: {
           ...state.loading,
-          games: false // TODO ##1: what about error?
+          games: false
+        },
+        updateCurrentGamesError: { // Stored for conformity, but is not displayed anywhere now.
+          details: action.payload,
+          message: action.payload.message
         }
       };
     case GET_ALL_PLAYERS_INIT:
-      // TODO ##1
-      // this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-new-game' });
       return {
         ...state,
         loading: {
@@ -151,8 +159,6 @@ export function mimirReducer(
         allPlayersError: null
       };
     case GET_ALL_PLAYERS_SUCCESS:
-      // TODO ##1
-      // this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-new-game', request: 'getAllPlayers' });
       return {
         ...state,
         loading: {
@@ -163,8 +169,6 @@ export function mimirReducer(
         allPlayersError: null
       };
     case GET_ALL_PLAYERS_FAIL:
-      // TODO ##1
-      // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-new-game', request: 'getAllPlayers', message: e.toString() }));
       return {
         ...state,
         loading: {
@@ -193,13 +197,11 @@ export function mimirReducer(
         changesOverviewError: null
       };
     case GET_CHANGES_OVERVIEW_FAIL:
-      // TODO ##1: metrika
-      // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-confirmation', code: e.code, request: reqType });
       return {
         ...state,
         loading: {
           ...state.loading,
-          overview: false // TODO ##1: what about error?
+          overview: false
         },
         changesOverview: null,
         changesOverviewError: {
@@ -308,8 +310,6 @@ export function mimirReducer(
         newGameStartError: null
       };
     case START_GAME_FAIL:
-      // TODO ##1
-      // this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-new-game', request: 'startGame', message: e.toString() });
       return {
         ...state,
         loading: {
@@ -431,6 +431,22 @@ export function mimirReducer(
         }
       };
     case ADD_ROUND_SUCCESS:
+      if (action.payload._isFinished) {
+        const cleanState = deepclone(initialState);
+        cleanState.gameConfig = state.gameConfig;
+        return {
+          ...cleanState,
+          currentScreen: 'lastResults',
+          gameConfig: state.gameConfig,
+          currentPlayerDisplayName: state.currentPlayerDisplayName,
+          currentPlayerId: state.currentPlayerId,
+          isLoggedIn: state.isLoggedIn,
+          isIos: state.isIos,
+          yakuList: state.yakuList,
+          isUniversalWatcher: state.isUniversalWatcher,
+          settings: state.settings
+        };
+      }
       return {
         ...state,
         loading: {

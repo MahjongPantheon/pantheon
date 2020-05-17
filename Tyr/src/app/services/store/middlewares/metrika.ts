@@ -1,10 +1,16 @@
 import {Dispatch, Store as ReduxStore} from 'redux';
 import {
   AppActionTypes,
-  CONFIRM_REGISTRATION_FAIL, FORCE_LOGOUT,
+  CONFIRM_REGISTRATION_FAIL,
+  FORCE_LOGOUT,
+  GET_ALL_PLAYERS_FAIL,
+  GET_ALL_PLAYERS_INIT,
+  GET_ALL_PLAYERS_SUCCESS,
+  GET_CHANGES_OVERVIEW_FAIL,
   GET_GAME_OVERVIEW_FAIL,
   GET_GAME_OVERVIEW_INIT,
   GET_GAME_OVERVIEW_SUCCESS,
+  START_GAME_FAIL,
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_SUCCESS
 } from '../actions/interfaces';
@@ -48,6 +54,36 @@ export const metrika = (ms: MetrikaService) => (store: ReduxStore) => (next: Dis
     case FORCE_LOGOUT:
       ms.track(MetrikaService.LOGOUT, {
         screen: 'screen-settings'
+      });
+      break;
+    case GET_ALL_PLAYERS_INIT:
+      ms.track(MetrikaService.SCREEN_ENTER, {
+        screen: 'screen-new-game'
+      });
+      break;
+    case GET_ALL_PLAYERS_SUCCESS:
+      ms.track(MetrikaService.LOAD_SUCCESS, {
+        type: 'screen-new-game', request: 'getAllPlayers'
+      });
+      break;
+    case GET_ALL_PLAYERS_FAIL:
+      ms.track(MetrikaService.LOAD_ERROR, {
+        type: 'screen-new-game',
+        request: 'getAllPlayers', message: action.payload.toString()
+      });
+      break;
+    case GET_CHANGES_OVERVIEW_FAIL:
+      ms.track(MetrikaService.LOAD_ERROR, {
+        type: 'screen-confirmation',
+        code: action.payload.code,
+        request: 'getChangesOverview'
+      });
+      break;
+    case START_GAME_FAIL:
+      ms.track(MetrikaService.LOAD_ERROR, {
+        type: 'screen-new-game',
+        request: 'startGame',
+        message: action.payload.toString()
       });
       break;
     default:

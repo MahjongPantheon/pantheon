@@ -190,8 +190,11 @@ function getChangesOverview(state: IAppState, api: RiichiApiService, dispatch: D
 function addRound(state: IAppState, api: RiichiApiService, dispatch: Dispatch, dispatchToStore: Dispatch) {
   dispatch({ type: ADD_ROUND_INIT });
   api.addRound(state)
-    .then(() => {
-      dispatch({ type: ADD_ROUND_SUCCESS });
+    .then((data) => {
+      if (!data) {
+        dispatch({ type: ADD_ROUND_FAIL, payload: { code: 500, message: 'Server error occurred while saving the game' } });
+      }
+      dispatch({ type: ADD_ROUND_SUCCESS, payload: data });
       dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: state.currentSessionHash });
     }).catch((e) => dispatch({ type: ADD_ROUND_FAIL, payload: e }));
 }

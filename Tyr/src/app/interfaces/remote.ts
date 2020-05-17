@@ -260,3 +260,62 @@ export interface RRoundPaymentsInfoMulti {
 }
 
 export type RRoundPaymentsInfo = RRoundPaymentsInfoSingle | RRoundPaymentsInfoMulti;
+
+export interface SessionState {
+  /**
+   * @param int[] { player_id => score }
+   */
+  _scores: { [key: string]: number };
+  /**
+   * @param int[] { player_id => penalty_score }
+   */
+  _penalties: { [key: string]: number };
+  /**
+   * @param array
+   */
+  _extraPenaltyLog: string[];
+  /**
+   * @param int
+   */
+  _round: number;
+  /**
+   * @param int
+   */
+  _honba: number;
+  /**
+   * Count of riichi bets on table from previous rounds
+   * @param int
+   */
+  _riichiBets: number;
+  /**
+   * True if game has been finished prematurely (e.g. by timeout)
+   * @param boolean
+   */
+  _prematurelyFinished: boolean;
+  /**
+   * True if round has just changed useful to determine if current 4e or
+   * 4s is first one, no matter what honba count is.
+   * (Possible situation: draw in 3s or 3e, so first 4e or 4s has honba).
+   * @param boolean
+   */
+  _roundJustChanged: boolean;
+  /**
+   * True if timer policy refers to "yellow zone" rule AND first game in
+   * yellow zone was already recorded. In fact, this is a "red zone" flag,
+   * which means that hanchan will be finished when next round is recorded.
+   * @param boolean
+   */
+  _yellowZoneAlreadyPlayed: boolean;
+  /**
+   * Outcome of previously recorded round. Useful to determine if certain rules
+   * should be applied in current case, e.g., agariyame should not be applied on
+   * chombo or abortive draw.
+   * @param string|null
+   */
+  _lastOutcome: string | null;
+  /**
+   * Is game finished
+   * @param boolean
+   */
+  _isFinished: boolean;
+}

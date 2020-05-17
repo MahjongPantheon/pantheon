@@ -25,7 +25,7 @@ import { RemoteError } from './remoteError';
 import {
   RTimerState, RGameConfig, RSessionOverview, RCurrentGames,
   RUserInfo, RAllPlayersInEvent, RLastResults,
-  RRoundPaymentsInfo, RTablesState
+  RRoundPaymentsInfo, RTablesState, SessionState
 } from '../interfaces/remote';
 import {
   LCurrentGame,
@@ -125,7 +125,7 @@ export class RiichiApiService {
   addRound(state: IAppState) {
     const gameHashcode: string = state.currentSessionHash;
     const roundData = formatRoundToRemote(state);
-    return this._jsonRpcRequest<boolean>('addRound', gameHashcode, roundData, false);
+    return this._jsonRpcRequest<boolean | SessionState>('addRound', gameHashcode, roundData, false);
   }
 
   getTablesState() {
