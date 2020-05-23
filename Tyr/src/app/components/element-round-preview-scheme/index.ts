@@ -22,16 +22,37 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Player } from '../../interfaces/common';
 import { IAppState } from '../../services/store/interfaces';
 import {
-  getBottomLeftPayment, getBottomRightPayment,
+  getBottomLeftPayment,
+  getBottomRightPayment,
   getChomboKamicha,
   getChomboSelf,
   getChomboShimocha,
-  getChomboToimen, getIfAnyPaymentsOccured, getKamicha, getLeftRightPayment, getPaoKamicha, getPaoSelf,
-  getPaoShimocha, getPaoToimen, getRiichiKamicha, getRiichiSelf, getRiichiShimocha, getRiichiToimen,
-  getRound, getSeatKamicha, getSeatSelf, getSeatShimocha, getSeatToimen,
-  getSelf, getShimocha, getToimen, getTopBottomPayment, getTopLeftPayment, getTopRightPayment, PaymentInfo
+  getChomboToimen,
+  getIfAnyPaymentsOccured,
+  getKamicha,
+  getLeftRightPayment,
+  getPaoKamicha,
+  getPaoSelf,
+  getPaoShimocha,
+  getPaoToimen,
+  getRiichiKamicha,
+  getRiichiSelf,
+  getRiichiShimocha,
+  getRiichiToimen,
+  getRound,
+  getSeatKamicha,
+  getSeatSelf,
+  getSeatShimocha,
+  getSeatToimen,
+  getSelf,
+  getShimocha,
+  getToimen,
+  getTopBottomPayment,
+  getTopLeftPayment,
+  getTopRightPayment,
+  PaymentInfo,
+  RoundPreviewSchemePurpose
 } from '../../services/store/selectors/roundPreviewSchemeSelectors';
-import { RoundPreviewSchemePurpose } from '../../services/store/selectors/commonSelectors';
 
 @Component({
   selector: 'round-preview-scheme',

@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {Player} from '../../interfaces/common';
 import {MetrikaService} from '../../services/metrika';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
@@ -38,27 +38,26 @@ import {
   getChomboSelf,
   getChomboShimocha,
   getChomboToimen,
-  getKamicha,
   getScoreKamicha,
   getScoreSelf,
   getScoreShimocha,
   getScoreToimen,
-  getSeatKamicha,
-  getSeatSelf,
-  getSeatShimocha,
-  getSeatToimen,
-  getSelf,
-  getShimocha,
-  getToimen
 } from '../../services/store/selectors/overviewSelectors';
 import {getOutcomeName} from '../../services/store/selectors/commonSelectors';
 import {
-  getNotenPlayers,
   getPenalty,
-  getRiichiPlayers,
-  getTempaiPlayers,
   getWins
 } from '../../services/store/selectors/otherTableSelectors';
+import {
+  getSelf,
+  getShimocha,
+  getToimen,
+  getKamicha,
+  getSeatSelf,
+  getSeatShimocha,
+  getSeatToimen,
+  getSeatKamicha
+} from 'app/services/store/selectors/roundPreviewSchemeSelectors';
 
 @Component({
   selector: 'screen-other-table',
@@ -67,15 +66,15 @@ import {
   styleUrls: ['style.css']
 })
 export class OtherTableScreenComponent extends I18nComponent implements OnInit {
-  get self(): Player { return getSelf(this.state, this.state.currentOtherTablePlayers); }
-  get shimocha(): Player { return getShimocha(this.state, this.state.currentOtherTablePlayers); }
-  get toimen(): Player { return getToimen(this.state, this.state.currentOtherTablePlayers); }
-  get kamicha(): Player { return getKamicha(this.state, this.state.currentOtherTablePlayers); }
+  get self(): Player { return getSelf(this.state, 'other_overview'); }
+  get shimocha(): Player { return getShimocha(this.state, 'other_overview'); }
+  get toimen(): Player { return getToimen(this.state, 'other_overview'); }
+  get kamicha(): Player { return getKamicha(this.state, 'other_overview'); }
 
-  get seatSelf(): string { return getSeatSelf(this.state, this.state.currentOtherTablePlayers); }
-  get seatShimocha(): string { return getSeatShimocha(this.state, this.state.currentOtherTablePlayers); }
-  get seatToimen(): string { return getSeatToimen(this.state, this.state.currentOtherTablePlayers); }
-  get seatKamicha(): string { return getSeatKamicha(this.state, this.state.currentOtherTablePlayers); }
+  get seatSelf(): string { return getSeatSelf(this.state, 'other_overview'); }
+  get seatShimocha(): string { return getSeatShimocha(this.state, 'other_overview'); }
+  get seatToimen(): string { return getSeatToimen(this.state, 'other_overview'); }
+  get seatKamicha(): string { return getSeatKamicha(this.state, 'other_overview'); }
 
   get scoreSelf(): string { return getScoreSelf(this.state, this.state.currentOtherTablePlayers); }
   get scoreShimocha(): string { return getScoreShimocha(this.state, this.state.currentOtherTablePlayers); }
@@ -89,6 +88,7 @@ export class OtherTableScreenComponent extends I18nComponent implements OnInit {
 
   get _loading() {
     return this.state.loading.otherTable
+      || this.state.loading.overview
       || this.state.currentOtherTablePlayers.length === 0
       || !this.state.currentOtherTable;
   }
@@ -99,19 +99,11 @@ export class OtherTableScreenComponent extends I18nComponent implements OnInit {
       riichi: this.state.currentOtherTable.riichiOnTable
     };
   }
-  get outcomeName() { return getOutcomeName(
-    this.i18n,
-    this.state.currentOtherTableLastRound.outcome,
-    this.state.currentOtherTableLastRound.outcome === 'multiron' ? this.state.currentOtherTableLastRound.winner.length : 0
-  ); }
 
   /// last round sub-screen related
 
-  get penalty() { return getPenalty(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
-  get wins() { return getWins(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers, this.i18n); }
-  get tempaiPlayers() { return getTempaiPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
-  get notenPlayers() { return getNotenPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
-  get riichiPlayers() { return getRiichiPlayers(this.state.currentOtherTableLastRound, this.state.currentOtherTablePlayers); }
+  get penalty() { return getPenalty(this.state.lastRoundOverview, this.state.currentOtherTablePlayers); }
+  get wins() { return getWins(this.state.lastRoundOverview, this.state.currentOtherTablePlayers, this.i18n); }
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
 
@@ -139,5 +131,3 @@ export class OtherTableScreenComponent extends I18nComponent implements OnInit {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-table' });
   }
 }
-
-

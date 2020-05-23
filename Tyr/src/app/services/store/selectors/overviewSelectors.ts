@@ -23,32 +23,6 @@ function _getTimeRemaining(state: IAppState) {
 
 export const getTimeRemaining = memoize(_getTimeRemaining);
 
-export const getSelf = (s: IAppState, o: Player[]) => getSeating(
-  s.currentRound, s.overviewViewShift, s.currentPlayerId, o
-).players[0];
-export const getShimocha = (s: IAppState, o: Player[]) => getSeating(
-  s.currentRound, s.overviewViewShift, s.currentPlayerId, o
-).players[1];
-export const getToimen = (s: IAppState, o: Player[]) => getSeating(
-  s.currentRound, s.overviewViewShift, s.currentPlayerId, o
-).players[2];
-export const getKamicha = (s: IAppState, o: Player[]) => getSeating(
-  s.currentRound, s.overviewViewShift, s.currentPlayerId, o
-).players[3];
-
-export const getSeatSelf = (s: IAppState, o: Player[]) => getSeating(
-  s.currentRound, s.overviewViewShift, s.currentPlayerId, o
-).seating[0];
-export const getSeatShimocha = (s: IAppState, o: Player[]) => getSeating(
-  s.currentRound, s.overviewViewShift, s.currentPlayerId, o
-).seating[1];
-export const getSeatToimen = (s: IAppState, o: Player[]) => getSeating(
-  s.currentRound, s.overviewViewShift, s.currentPlayerId, o
-).seating[2];
-export const getSeatKamicha = (s: IAppState, o: Player[]) => getSeating(
-  s.currentRound, s.overviewViewShift, s.currentPlayerId, o
-).seating[3];
-
 export const getScoreSelf = (s: IAppState, o: Player[]) => getScores(s, o).scores[0];
 export const getScoreShimocha = (s: IAppState, o: Player[]) => getScores(s, o).scores[1];
 export const getScoreToimen = (s: IAppState, o: Player[]) => getScores(s, o).scores[2];

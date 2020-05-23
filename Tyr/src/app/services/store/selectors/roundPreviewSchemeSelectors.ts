@@ -1,8 +1,11 @@
 import { Player } from '../../../interfaces/common';
 import { IAppState } from '../interfaces';
 import { memoize } from '../../../helpers/memoize';
-import { RoundPreviewSchemePurpose as Csp, getSeating } from './commonSelectors';
+import { getSeating } from './commonSelectors';
 import { getPaoUsers, getRiichiUsers } from './mimirSelectors';
+
+export type RoundPreviewSchemePurpose = 'overview' | 'other_overview' | 'confirmation' | 'lastround' | 'otherlastround';
+type Csp = RoundPreviewSchemePurpose; // alias for shorter name
 
 export type PaymentInfo = {
   backward: boolean;
@@ -23,13 +26,13 @@ function _getPayment(state: IAppState, purpose: Csp, player1: Player, player2: P
   let overview;
   switch (purpose) {
     case 'lastround':
+    case 'otherlastround':
+    case 'other_overview':
       overview = state.lastRoundOverview;
       break;
     case 'confirmation':
+    case 'overview':
       overview = state.changesOverview;
-      break;
-    case 'otherlastround':
-      overview = state.currentOtherTableLastRound;
       break;
   }
   const p = overview.payments;
@@ -70,6 +73,9 @@ const getPayment = memoize(_getPayment);
 const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort => {
   switch (purpose) {
     case 'lastround':
+      if (!s.lastRoundOverview) {
+        return null;
+      }
       return {
         round: s.lastRoundOverview.round,
         currentPlayerId: s.currentPlayerId,
@@ -78,24 +84,48 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort => 
         penaltyFor: s.lastRoundOverview.penaltyFor,
         paoPlayer: s.lastRoundOverview.paoPlayer
       };
+    case 'overview':
+      return {
+        round: s.currentRound,
+        currentPlayerId: s.currentPlayerId,
+        players: s.players,
+        riichiBets: [],
+        penaltyFor: null,
+        paoPlayer: null
+      };
     case 'confirmation':
+      if (!s.currentOutcome) {
+        return null;
+      }
       const [pao] = getPaoUsers(s);
       return {
         round: s.currentRound,
         currentPlayerId: s.currentPlayerId,
         players: s.players,
         riichiBets: getRiichiUsers(s).map((p) => p.id.toString()),
-        penaltyFor: s.lastRoundOverview.penaltyFor,
+        penaltyFor: s.currentOutcome.selectedOutcome === 'chombo' && s.currentOutcome.loser,
         paoPlayer: pao && pao.id
       }
-    case 'otherlastround':
+    case 'other_overview':
       return {
-        round: s.currentOtherTableLastRound.round,
-        currentPlayerId: s.currentOtherTablePlayers[0].id,
+        round: s.currentOtherTable.currentRound,
+        currentPlayerId: s.currentOtherTablePlayers[(s.overviewViewShift || 0) % 4].id,
         players: s.currentOtherTablePlayers as [Player, Player, Player, Player],
-        riichiBets: s.currentOtherTableLastRound.riichiIds,
-        penaltyFor: s.currentOtherTableLastRound.penaltyFor,
-        paoPlayer: s.currentOtherTableLastRound.paoPlayer
+        riichiBets: [],
+        penaltyFor: null,
+        paoPlayer: null
+      }
+    case 'otherlastround':
+      if (!s.lastRoundOverview) {
+        return null;
+      }
+      return {
+        round: s.lastRoundOverview.round,
+        currentPlayerId: s.currentOtherTablePlayers[(s.overviewViewShift || 0) % 4].id,
+        players: s.currentOtherTablePlayers as [Player, Player, Player, Player],
+        riichiBets: s.lastRoundOverview.riichiIds,
+        penaltyFor: s.lastRoundOverview.penaltyFor,
+        paoPlayer: s.lastRoundOverview.paoPlayer
       }
   }
 };

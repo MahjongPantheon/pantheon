@@ -18,11 +18,11 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MetrikaService } from '../../services/metrika';
 import { Player } from '../../interfaces/common';
-import {IAppState} from '../../services/store/interfaces';
-import {Dispatch} from 'redux';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
 import {
   AppActionTypes,
   TOGGLE_DEADHAND,
@@ -30,13 +30,7 @@ import {
   TOGGLE_RIICHI,
   TOGGLE_WINNER
 } from '../../services/store/actions/interfaces';
-import {
-  getKamicha, getSeatKamicha,
-  getSeatSelf, getSeatShimocha, getSeatToimen,
-  getSelf,
-  getShimocha,
-  getToimen
-} from '../../services/store/selectors/overviewSelectors';
+import { getSelf, getShimocha, getToimen, getKamicha } from '../../services/store/selectors/roundPreviewSchemeSelectors';
 
 @Component({
   selector: 'screen-players-select',
@@ -44,16 +38,16 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class PlayersSelectScreen {
+export class PlayersSelectScreenComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
 
   constructor(private metrika: MetrikaService) { }
 
-  get self(): Player { return getSelf(this.state, this.state.players); }
-  get shimocha(): Player { return getShimocha(this.state, this.state.players); }
-  get toimen(): Player { return getToimen(this.state, this.state.players); }
-  get kamicha(): Player { return getKamicha(this.state, this.state.players); }
+  get self(): Player { return getSelf(this.state, 'overview'); }
+  get shimocha(): Player { return getShimocha(this.state, 'overview'); }
+  get toimen(): Player { return getToimen(this.state, 'overview'); }
+  get kamicha(): Player { return getKamicha(this.state, 'overview'); }
 
   ngOnInit() {
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-players-select' });

@@ -49,7 +49,6 @@ export interface IAppState {
   currentOtherTableIndex: number;
   currentOtherTableHash: string | null;
   currentOtherTablePlayers: Player[];
-  currentOtherTableLastRound: RRoundPaymentsInfo;
   isIos: boolean;
   loading: LoadingSet;
   timer: TimerData;

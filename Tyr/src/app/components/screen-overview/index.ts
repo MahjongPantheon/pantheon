@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {MetrikaService} from '../../services/metrika';
 import {Player} from '../../interfaces/common';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
@@ -36,12 +36,13 @@ import {getCurrentTimerZone} from '../../services/store/selectors/mimirSelectors
 import {
   getChomboKamicha,
   getChomboSelf, getChomboShimocha, getChomboToimen,
-  getKamicha, getScoreKamicha, getScoreSelf, getScoreShimocha, getScoreToimen, getSeatKamicha,
-  getSeatSelf, getSeatShimocha, getSeatToimen,
-  getSelf,
-  getShimocha, getTimeRemaining,
-  getToimen
+  getScoreKamicha, getScoreSelf, getScoreShimocha,
+  getScoreToimen, getTimeRemaining
 } from '../../services/store/selectors/overviewSelectors';
+import {
+  getSelf, getShimocha, getToimen, getKamicha,
+  getSeatSelf, getSeatShimocha, getSeatToimen, getSeatKamicha
+} from 'app/services/store/selectors/roundPreviewSchemeSelectors';
 
 @Component({
   selector: 'screen-overview',
@@ -49,7 +50,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class OverviewScreen extends I18nComponent {
+export class OverviewScreenComponent extends I18nComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
 
@@ -60,15 +61,15 @@ export class OverviewScreen extends I18nComponent {
 
   get loading(): boolean { return this.state.loading.overview ||  this.state.loading.games || !this.state.gameOverviewReady; }
 
-  get self(): Player { return getSelf(this.state, this.state.players); }
-  get shimocha(): Player { return getShimocha(this.state, this.state.players); }
-  get toimen(): Player { return getToimen(this.state, this.state.players); }
-  get kamicha(): Player { return getKamicha(this.state, this.state.players); }
+  get self(): Player { return getSelf(this.state, 'overview'); }
+  get shimocha(): Player { return getShimocha(this.state, 'overview'); }
+  get toimen(): Player { return getToimen(this.state, 'overview'); }
+  get kamicha(): Player { return getKamicha(this.state, 'overview'); }
 
-  get seatSelf(): string { return getSeatSelf(this.state, this.state.players); }
-  get seatShimocha(): string { return getSeatShimocha(this.state, this.state.players); }
-  get seatToimen(): string { return getSeatToimen(this.state, this.state.players); }
-  get seatKamicha(): string { return getSeatKamicha(this.state, this.state.players); }
+  get seatSelf(): string { return getSeatSelf(this.state, 'overview'); }
+  get seatShimocha(): string { return getSeatShimocha(this.state, 'overview'); }
+  get seatToimen(): string { return getSeatToimen(this.state, 'overview'); }
+  get seatKamicha(): string { return getSeatKamicha(this.state, 'overview'); }
 
   get scoreSelf(): string { return getScoreSelf(this.state, this.state.players); }
   get scoreShimocha(): string { return getScoreShimocha(this.state, this.state.players); }

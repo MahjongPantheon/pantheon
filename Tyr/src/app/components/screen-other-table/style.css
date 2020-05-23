@@ -33,7 +33,6 @@
     justify-content: center;
     align-items: stretch;
     flex-direction: column;
-    color: var(--main-text-color);
 }
 
 .ka-shi {
@@ -57,13 +56,13 @@
     align-self: center;
     padding: 3px;
     text-align: center;
-    border-radius: 7px;
-    background-color: var(--secondary-bg-color);
-    color: var(--secondary-text-color);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
+    background-color: var(--secondary-bg-color);
+    border-radius: 7px;
+    color: var(--secondary-text-color);
 }
 
 .side.selected {
@@ -75,6 +74,7 @@
     width: 20%;
     align-self: center;
     text-align: center;
+    color: var(--main-text-color);
 }
 
 .edge-block.stretched-content {
@@ -159,16 +159,20 @@
     width: 100%;
     font-size: 24px;
     flex: 1;
-    margin: 5px 0;
+    margin: 5px 5px;
+    line-height: 1;
     padding: 10px 0;
-    line-height: 1px;
+    position: relative;
 }
 
 .table-index {
-    margin-top: 10px;
     text-align: center;
     padding: 5px;
-    background: #232;
+    width: 80%;
+    border-radius: 7px;
+    background: var(--navbar-bg-color);
+    position: absolute;
+    bottom: 0;
 }
 
 .table-index span {
@@ -187,61 +191,23 @@
     padding: 3px;
 }
 
-.round-results-overlay {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: 5;
-}
+/* Small screens media queries */
 
-.round-results-window {
-    position: absolute;
-    margin: auto;
-    width: 80%;
-    height: 50%;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-color: var(--main-bg-color-lite);
-    color: var(--secondary-text-color);
-    box-shadow: 0 0 20px 0px;
-    z-index: 6;
+@media only screen and (max-width: 330px) {
+  .not-found {
+    font-size: 24px;
+  }
+  .newgame-button {
     font-size: 20px;
-    line-height: 1.4;
+  }
 }
 
-.round-results-window h3 {
-    display: block;
-    background-color: var(--main-button-bg-color);
-    color: var(--main-text-color);
-    padding: 10px;
-    text-align: center;
-    font-size: 25px;
-}
-
-.round-results-window .table-info {
-    padding: 10px;
-}
-
-.round-results-window .round-info {
-    display: flex;
-}
-
-.round-results-window .round-info div {
-    flex: 0.5;
-    padding-left: 10px;
-}
-
-.round-results-window .round-info span {
-    margin-top: 5px;
-    flex: 1;
-}
-
-.wins-list {
+@media only screen and (orientation : landscape) and (max-height: 330px) {
+  .not-found {
+    font-size: 24px;
+    flex: none;
+  }
+  .newgame-button {
     font-size: 20px;
+  }
 }

@@ -59,7 +59,6 @@ export const initialState: IAppState = {
   currentOtherTable: null,
   currentOtherTableHash: null,
   currentOtherTablePlayers: [],
-  currentOtherTableLastRound: null,
   isIos: false,
 
   // preloaders flags

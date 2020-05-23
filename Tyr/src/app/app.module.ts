@@ -25,9 +25,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
-import { OverviewScreen } from './components/screen-overview';
+import { OverviewScreenComponent } from './components/screen-overview';
 import { OutcomeSelectScreen } from './components/screen-outcome-select';
-import { PlayersSelectScreen } from './components/screen-players-select';
+import { PlayersSelectScreenComponent } from './components/screen-players-select';
 import { YakuSelectScreen } from './components/screen-yaku-select';
 import { ConfirmationScreen } from './components/screen-confirmation';
 import { NewGameScreen } from './components/screen-new-game';
@@ -66,9 +66,9 @@ import { QrService } from './services/qr';
   declarations: [
     AppComponent,
 
-    OverviewScreen,
+    OverviewScreenComponent,
     OutcomeSelectScreen,
-    PlayersSelectScreen,
+    PlayersSelectScreenComponent,
     YakuSelectScreen,
     ConfirmationScreen,
     NewGameScreen,

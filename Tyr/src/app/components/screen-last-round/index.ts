@@ -24,8 +24,9 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IAppState } from '../../services/store/interfaces';
 import { Dispatch } from 'redux';
 import { AppActionTypes, GET_LAST_ROUND_INIT } from '../../services/store/actions/interfaces';
-import {RoundPreviewSchemePurpose, getOutcomeName} from '../../services/store/selectors/commonSelectors';
+import { getOutcomeName } from '../../services/store/selectors/commonSelectors';
 import { getWins } from '../../services/store/selectors/otherTableSelectors';
+import { RoundPreviewSchemePurpose } from '../../services/store/selectors/roundPreviewSchemeSelectors';
 
 @Component({
   selector: 'screen-last-round',

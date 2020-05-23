@@ -223,7 +223,6 @@ export function mimirReducer(
           overview: true
         },
         lastRoundOverview: null,
-        currentOtherTableLastRound: null,
         lastRoundOverviewErrorCode: null
       };
     case GET_LAST_ROUND_SUCCESS:
@@ -425,7 +424,7 @@ export function mimirReducer(
         currentOtherTable: null,
         currentOtherTableHash: action.payload,
         currentOtherTableIndex: 0,
-        currentOtherTableLastRound: null,
+        lastRoundOverview: null,
         currentOtherTablePlayers: [],
         otherTableError: null
       };
@@ -452,7 +451,7 @@ export function mimirReducer(
         currentOtherTable: null,
         currentOtherTableHash: null,
         currentOtherTableIndex: 0,
-        currentOtherTableLastRound: null,
+        lastRoundOverview: null,
         currentOtherTablePlayers: [],
         otherTableError: {
           message: action.payload.message,

@@ -21,8 +21,6 @@ export function getOutcomeName(i18n: I18nService, outcome: AppOutcome['selectedO
   }
 }
 
-export type RoundPreviewSchemePurpose = 'confirmation' | 'lastround' | 'otherlastround';
-
 function _getSeating(
   round: number,
   overviewShift: number,
