@@ -26,17 +26,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 import { OverviewScreenComponent } from './components/screen-overview';
-import { OutcomeSelectScreen } from './components/screen-outcome-select';
+import { OutcomeSelectScreenComponent } from './components/screen-outcome-select';
 import { PlayersSelectScreenComponent } from './components/screen-players-select';
-import { YakuSelectScreen } from './components/screen-yaku-select';
-import { ConfirmationScreen } from './components/screen-confirmation';
-import { NewGameScreen } from './components/screen-new-game';
-import { LastResultsScreen } from './components/screen-last-results';
+import { YakuSelectScreenComponent } from './components/screen-yaku-select';
+import { ConfirmationScreenComponent } from './components/screen-confirmation';
+import { NewGameScreenComponent } from './components/screen-new-game';
+import { LastResultsScreenComponent } from './components/screen-last-results';
 import { LastRoundScreenComponent } from './components/screen-last-round';
-import { LoginScreen } from './components/screen-login';
-import { OtherTablesListScreen } from './components/screen-other-tables-list';
+import { LoginScreenComponent } from './components/screen-login';
+import { OtherTablesListScreenComponent } from './components/screen-other-tables-list';
 import { OtherTableScreenComponent } from './components/screen-other-table';
-import { SettingsScreen } from './components/screen-settings';
+import { SettingsScreenComponent } from './components/screen-settings';
 
 import { UserItemComponent } from './components/element-user-item';
 import { YakuItemButtonComponent } from './components/element-yaku-item-button';
@@ -67,17 +67,17 @@ import { QrService } from './services/qr';
     AppComponent,
 
     OverviewScreenComponent,
-    OutcomeSelectScreen,
+    OutcomeSelectScreenComponent,
     PlayersSelectScreenComponent,
-    YakuSelectScreen,
-    ConfirmationScreen,
-    NewGameScreen,
-    LastResultsScreen,
+    YakuSelectScreenComponent,
+    ConfirmationScreenComponent,
+    NewGameScreenComponent,
+    LastResultsScreenComponent,
     LastRoundScreenComponent,
-    OtherTablesListScreen,
-    LoginScreen,
+    OtherTablesListScreenComponent,
+    LoginScreenComponent,
     OtherTableScreenComponent,
-    SettingsScreen,
+    SettingsScreenComponent,
 
     UserItemComponent,
     YakuItemButtonComponent,

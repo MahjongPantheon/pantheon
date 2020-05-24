@@ -45,7 +45,7 @@ import { QrService } from '../../services/qr';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class LoginScreen extends I18nComponent implements OnInit {
+export class LoginScreenComponent extends I18nComponent implements OnInit {
   public _error = false;
 
   public _qrMode = false;

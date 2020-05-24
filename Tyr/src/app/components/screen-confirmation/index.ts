@@ -37,7 +37,7 @@ import {isLoading} from '../../services/store/selectors/screenConfirmationSelect
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class ConfirmationScreen extends I18nComponent implements OnInit {
+export class ConfirmationScreenComponent extends I18nComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
 

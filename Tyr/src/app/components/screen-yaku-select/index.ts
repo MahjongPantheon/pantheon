@@ -53,7 +53,7 @@ import {getOutcomeName} from '../../services/store/selectors/commonSelectors';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class YakuSelectScreen extends I18nComponent implements OnInit {
+export class YakuSelectScreenComponent extends I18nComponent implements OnInit {
   get winningUsers() { return getWinningUsers(this.state); }
   get outcome() { return getOutcomeName(
     this.i18n,

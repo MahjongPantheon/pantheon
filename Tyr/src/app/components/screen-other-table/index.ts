@@ -18,12 +18,12 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {Player} from '../../interfaces/common';
-import {MetrikaService} from '../../services/metrika';
-import {I18nComponent, I18nService} from '../auxiliary-i18n';
-import {IAppState} from '../../services/store/interfaces';
-import {Dispatch} from 'redux';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { Player } from '../../interfaces/common';
+import { MetrikaService } from '../../services/metrika';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
 import {
   AppActionTypes,
   GET_OTHER_TABLE_INIT,
@@ -43,7 +43,6 @@ import {
   getScoreShimocha,
   getScoreToimen,
 } from '../../services/store/selectors/overviewSelectors';
-import {getOutcomeName} from '../../services/store/selectors/commonSelectors';
 import {
   getPenalty,
   getWins
@@ -65,7 +64,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class OtherTableScreenComponent extends I18nComponent implements OnInit {
+export class OtherTableScreenComponent extends I18nComponent implements OnInit, OnDestroy {
   get self(): Player { return getSelf(this.state, 'other_overview'); }
   get shimocha(): Player { return getShimocha(this.state, 'other_overview'); }
   get toimen(): Player { return getToimen(this.state, 'other_overview'); }
@@ -86,8 +85,11 @@ export class OtherTableScreenComponent extends I18nComponent implements OnInit {
   get chomboToimen(): string { return getChomboToimen(this.state, this.state.currentOtherTablePlayers); }
   get chomboKamicha(): string { return getChomboKamicha(this.state, this.state.currentOtherTablePlayers); }
 
+  // Extra property to avoid multiple blinking on init
+  protected _initialized = false;
   get _loading() {
-    return this.state.loading.otherTable
+    return !this._initialized
+      || this.state.loading.otherTable
       || this.state.loading.overview
       || this.state.currentOtherTablePlayers.length === 0
       || !this.state.currentOtherTable;
@@ -106,15 +108,13 @@ export class OtherTableScreenComponent extends I18nComponent implements OnInit {
   get wins() { return getWins(this.state.lastRoundOverview, this.state.currentOtherTablePlayers, this.i18n); }
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
+  private _timer;
 
   constructor(
     public i18n: I18nService,
-    private metrika: MetrikaService
+    private metrika: MetrikaService,
+    private ref: ChangeDetectorRef
   ) { super(i18n); }
-
-  reloadOverview() {
-    this.dispatch({ type: GET_OTHER_TABLE_RELOAD });
-  }
 
   viewLastRound() {
     this.dispatch({ type: SHOW_LAST_ROUND });
@@ -129,5 +129,14 @@ export class OtherTableScreenComponent extends I18nComponent implements OnInit {
   ngOnInit() {
     this.dispatch({ type: GET_OTHER_TABLE_INIT, payload: this.state.currentOtherTableHash });
     this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-table' });
+    this._timer = setInterval(() => this.dispatch({ type: GET_OTHER_TABLE_RELOAD }), 5000 + (300 * Math.random()));
+    setTimeout(() => {
+      this._initialized = true;
+      this.ref.markForCheck();
+    }, 0);
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this._timer);
   }
 }

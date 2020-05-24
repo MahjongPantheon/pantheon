@@ -1,5 +1,8 @@
 import deepclone from 'deepclone';
 import {
+  ADD_ROUND_FAIL,
+  ADD_ROUND_INIT,
+  ADD_ROUND_SUCCESS,
   AppActionTypes,
   CONFIRM_REGISTRATION_FAIL,
   CONFIRM_REGISTRATION_INIT,
@@ -10,14 +13,22 @@ import {
   GET_CHANGES_OVERVIEW_FAIL,
   GET_CHANGES_OVERVIEW_INIT,
   GET_CHANGES_OVERVIEW_SUCCESS,
-  GET_GAME_OVERVIEW_SUCCESS,
   GET_GAME_OVERVIEW_FAIL,
+  GET_GAME_OVERVIEW_INIT,
+  GET_GAME_OVERVIEW_SUCCESS,
   GET_LAST_RESULTS_FAIL,
   GET_LAST_RESULTS_INIT,
   GET_LAST_RESULTS_SUCCESS,
   GET_LAST_ROUND_FAIL,
   GET_LAST_ROUND_INIT,
   GET_LAST_ROUND_SUCCESS,
+  GET_OTHER_TABLE_FAIL,
+  GET_OTHER_TABLE_INIT,
+  GET_OTHER_TABLE_SUCCESS,
+  GET_OTHER_TABLES_LIST_FAIL,
+  GET_OTHER_TABLES_LIST_INIT,
+  GET_OTHER_TABLES_LIST_RELOAD,
+  GET_OTHER_TABLES_LIST_SUCCESS,
   RANDOMIZE_NEWGAME_PLAYERS,
   RESET_REGISTRATION_ERROR,
   SELECT_NEWGAME_PLAYER_KAMICHA,
@@ -32,24 +43,14 @@ import {
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS,
-  GET_GAME_OVERVIEW_INIT,
-  GET_OTHER_TABLES_LIST_INIT,
-  GET_OTHER_TABLES_LIST_SUCCESS,
-  GET_OTHER_TABLES_LIST_FAIL,
-  ADD_ROUND_INIT,
-  ADD_ROUND_SUCCESS,
-  ADD_ROUND_FAIL,
-  GET_OTHER_TABLE_INIT,
-  GET_OTHER_TABLE_SUCCESS, GET_OTHER_TABLE_FAIL,
 } from '../actions/interfaces';
-import { IAppState } from '../interfaces';
-import { makeYakuGraph } from '../../../primitives/yaku-compat';
-import { RemoteError } from '../../remoteError';
-import { modifyArray } from './util';
-import { defaultPlayer } from '../selectors/screenNewGameSelectors';
-import { rand } from '../../../helpers/rand';
-import { Player } from '../../../interfaces/common';
-import { initialState } from '../state';
+import {IAppState} from '../interfaces';
+import {makeYakuGraph} from '../../../primitives/yaku-compat';
+import {RemoteError} from '../../remoteError';
+import {modifyArray} from './util';
+import {defaultPlayer} from '../selectors/screenNewGameSelectors';
+import {rand} from '../../../helpers/rand';
+import {initialState} from '../state';
 
 export function mimirReducer(
   state: IAppState,

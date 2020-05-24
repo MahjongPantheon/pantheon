@@ -59,7 +59,7 @@ export class OverviewScreenComponent extends I18nComponent implements OnInit {
     private metrika: MetrikaService
   ) { super(i18n); }
 
-  get loading(): boolean { return this.state.loading.overview ||  this.state.loading.games || !this.state.gameOverviewReady; }
+  get _loading(): boolean { return this.state.loading.overview ||  this.state.loading.games || !this.state.gameOverviewReady; }
 
   get self(): Player { return getSelf(this.state, 'overview'); }
   get shimocha(): Player { return getShimocha(this.state, 'overview'); }

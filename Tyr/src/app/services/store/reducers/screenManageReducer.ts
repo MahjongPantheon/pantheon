@@ -137,11 +137,17 @@ export function screenManageReducer(
       let prevScreen: AppScreen = state.currentScreen;
       switch (state.currentScreen) {
         case 'outcomeSelect':
-        case 'lastRound':
         case 'otherTablesList':
         case 'settings':
         case 'newGame':
           prevScreen = 'overview';
+          break;
+        case 'lastRound':
+          if (state.currentSessionHash) {
+            prevScreen = 'overview';
+          } else {
+            prevScreen = 'otherTable';
+          }
           break;
         case 'playersSelect':
           if (state.currentOutcome.selectedOutcome === 'nagashi') {

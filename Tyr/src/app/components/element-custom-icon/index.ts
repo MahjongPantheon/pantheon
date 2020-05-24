@@ -19,7 +19,7 @@
  */
 
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {ChangeDetectionStrategy, Component, Input, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import { icons } from './icons';
 
 @Component({
@@ -34,7 +34,7 @@ import { icons } from './icons';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class CustomIconComponent {
+export class CustomIconComponent implements OnInit {
   @Input() type: string;
   @Input() resize = 28;
   @Input() mirror = false;

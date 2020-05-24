@@ -27,7 +27,7 @@ import {
   GET_OTHER_TABLE_INIT, GET_OTHER_TABLE_LAST_ROUND_INIT, GET_OTHER_TABLE_RELOAD,
   GET_OTHER_TABLE_SUCCESS,
   GET_OTHER_TABLES_LIST_FAIL,
-  GET_OTHER_TABLES_LIST_INIT,
+  GET_OTHER_TABLES_LIST_INIT, GET_OTHER_TABLES_LIST_RELOAD,
   GET_OTHER_TABLES_LIST_SUCCESS,
   RESET_STATE,
   SET_CREDENTIALS, SET_TIMER,
@@ -64,6 +64,9 @@ export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) =>
       break;
     case GET_OTHER_TABLES_LIST_INIT:
       getOtherTablesList(api, next);
+      break;
+    case GET_OTHER_TABLES_LIST_RELOAD:
+      getOtherTablesListReload(api, next);
       break;
     case GET_OTHER_TABLE_INIT:
       getOtherTable(action.payload, api, next);
@@ -182,6 +185,13 @@ function getOtherTableReload(sessionHash: string, api: RiichiApiService, dispatc
 
 function getOtherTablesList(api: RiichiApiService, dispatch: Dispatch) {
   dispatch({ type: GET_OTHER_TABLES_LIST_INIT });
+  api.getTablesState()
+    .then((tables) => dispatch({ type: GET_OTHER_TABLES_LIST_SUCCESS, payload: tables }))
+    .catch((e) => dispatch({ type: GET_OTHER_TABLES_LIST_FAIL, payload: e }));
+}
+
+function getOtherTablesListReload(api: RiichiApiService, dispatch: Dispatch) {
+  dispatch({ type: GET_OTHER_TABLES_LIST_RELOAD });
   api.getTablesState()
     .then((tables) => dispatch({ type: GET_OTHER_TABLES_LIST_SUCCESS, payload: tables }))
     .catch((e) => dispatch({ type: GET_OTHER_TABLES_LIST_FAIL, payload: e }));

@@ -38,7 +38,7 @@ export class LastRoundScreenComponent extends I18nComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
 
-  get _dataReady(): boolean { return !this.state.loading.overview; };
+  get _loading(): boolean { return this.state.loading.overview; };
   get _purpose(): RoundPreviewSchemePurpose {
     if (this.state.currentSessionHash) {
       return 'lastround';

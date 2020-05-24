@@ -52,6 +52,7 @@ export const GET_GAME_OVERVIEW_SUCCESS = 'GET_GAME_OVERVIEW_SUCCESS';
 export const GET_GAME_OVERVIEW_FAIL = 'GET_GAME_OVERVIEW_FAIL';
 export const FORCE_LOGOUT = 'FORCE_LOGOUT';
 export const GET_OTHER_TABLES_LIST_INIT = 'GET_OTHER_TABLES_LIST_INIT';
+export const GET_OTHER_TABLES_LIST_RELOAD = 'GET_OTHER_TABLES_LIST_RELOAD';
 export const GET_OTHER_TABLES_LIST_SUCCESS = 'GET_OTHER_TABLES_LIST_SUCCESS';
 export const GET_OTHER_TABLES_LIST_FAIL = 'GET_OTHER_TABLES_LIST_FAIL';
 export const GET_OTHER_TABLE_INIT = 'GET_OTHER_TABLE_INIT';
@@ -264,6 +265,9 @@ interface ForceLogoutAction {
 }
 interface GetOtherTablesListActionInit {
   type: typeof GET_OTHER_TABLES_LIST_INIT;
+}
+interface GetOtherTablesListActionReload {
+  type: typeof GET_OTHER_TABLES_LIST_RELOAD;
 }
 interface GetOtherTablesListActionSuccess {
   type: typeof GET_OTHER_TABLES_LIST_SUCCESS;
@@ -519,6 +523,7 @@ export type AppActionTypes =
   | GetOtherTableActionInit
   | GetOtherTableActionReload
   | GetOtherTablesListActionInit
+  | GetOtherTablesListActionReload
   | GetOtherTableLastRoundActionInit
   | GetOtherTableLastRoundActionSuccess
   | GetOtherTableLastRoundActionFail

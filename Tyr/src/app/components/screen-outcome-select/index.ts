@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {I18nComponent, I18nService} from '../auxiliary-i18n';
 import {MetrikaService} from '../../services/metrika';
 import {IAppState} from '../../services/store/interfaces';
@@ -37,7 +37,7 @@ import {Dispatch} from 'redux';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class OutcomeSelectScreen extends I18nComponent {
+export class OutcomeSelectScreenComponent extends I18nComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
   constructor(
