@@ -51,5 +51,5 @@ export const environment = {
   keyPrefix: 'tyr',
   cookieDomain: 'mjtop.net',
   guiFix: guiFix,
-  metrikaId: 51878708,
+  metrikaId: 64318630,
 };
