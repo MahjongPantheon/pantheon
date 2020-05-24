@@ -7,7 +7,7 @@ setup_git() {
 
 commit_built_tyr() {
   git checkout master
-  git add Tyr-prebuilt
+  git add Tyr-dist
   git commit --message "[TYR] Travis build: $TRAVIS_BUILD_NUMBER"
 }
 

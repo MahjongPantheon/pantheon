@@ -10,11 +10,11 @@ build:
 PHONY: cleanup_prebuilts
 cleanup_prebuilts:
 	# clean all generated bundle files except last 30
-	cd ../Tyr-prebuilt && ls -t *bundle* | tail -n +30 | xargs -I {} rm {}
+	cd ../Tyr-dist && ls -t *bundle* | tail -n +30 | xargs -I {} rm {}
 
 prebuild:
 	cd dist && \
-	cp -R * ../../Tyr-prebuilt/
+	cp -R * ../../Tyr-dist/
 
 dev:
 	./node_modules/.bin/ng serve
