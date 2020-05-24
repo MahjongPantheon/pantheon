@@ -18,82 +18,55 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
-import { MetrikaService } from '../../services/metrika';
-import { Outcome, Player } from '../../interfaces/common';
-import { AppState } from '../../primitives/appstate';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Player } from '../../interfaces/common';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
+import {
+  AppActionTypes,
+  TOGGLE_DEADHAND,
+  TOGGLE_LOSER, TOGGLE_NAGASHI, TOGGLE_PAO,
+  TOGGLE_RIICHI,
+  TOGGLE_WINNER, TRACK_SCREEN_ENTER
+} from '../../services/store/actions/interfaces';
+import { getSelf, getShimocha, getToimen, getKamicha } from '../../services/store/selectors/roundPreviewSchemeSelectors';
 
 @Component({
   selector: 'screen-players-select',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class PlayersSelectScreen {
-  @Input() state: AppState;
-  @Input() paoSelectionMode: boolean;
-  @Input() nagashiSelectionMode: boolean;
-  outcome() {
-    return this.state.getOutcome();
-  }
+export class PlayersSelectScreenComponent implements OnInit {
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
 
-  constructor(private metrika: MetrikaService) { }
+  get self(): Player { return getSelf(this.state, 'overview'); }
+  get shimocha(): Player { return getShimocha(this.state, 'overview'); }
+  get toimen(): Player { return getToimen(this.state, 'overview'); }
+  get kamicha(): Player { return getKamicha(this.state, 'overview'); }
 
-  self: Player;
-  shimocha: Player;
-  toimen: Player;
-  kamicha: Player;
-
-  seatSelf: string;
-  seatShimocha: string;
-  seatToimen: string;
-  seatKamicha: string;
-
-  ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-players-select' });
-    let players: Player[] = [].concat(this.state.getPlayers());
-    let seating = ['東', '南', '西', '北'];
-
-    const current = this.state.getCurrentPlayerId();
-
-    for (let i = 0; i < 4; i++) {
-      if (players[0].id === current) {
-        break;
-      }
-
-      players = players.slice(1).concat(players[0]);
-      seating = seating.slice(1).concat(seating[0]);
-    }
-
-    this.self = players[0];
-    this.shimocha = players[1];
-    this.toimen = players[2];
-    this.kamicha = players[3];
-
-    this.seatSelf = seating[0];
-    this.seatShimocha = seating[1];
-    this.seatToimen = seating[2];
-    this.seatKamicha = seating[3];
-  }
+  ngOnInit() { this.dispatch({ type: TRACK_SCREEN_ENTER, payload: 'screen-players-select' }); }
 
   handle([player, what]: [Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao' | 'nagashi']) {
     switch (what) {
       case 'win':
-        this.state.toggleWinner(player);
+        this.dispatch({ type: TOGGLE_WINNER, payload: player.id });
         break;
       case 'lose':
-        this.state.toggleLoser(player);
+        this.dispatch({ type: TOGGLE_LOSER, payload: player.id });
         break;
       case 'riichi':
-        this.state.toggleRiichi(player);
+        this.dispatch({ type: TOGGLE_RIICHI, payload: player.id });
         break;
       case 'dead':
-        this.state.toggleDeadhand(player);
+        this.dispatch({ type: TOGGLE_DEADHAND, payload: player.id });
         break;
       case 'pao':
-        this.state.togglePao(player);
+        this.dispatch({ type: TOGGLE_PAO, payload: { id: player.id, yakuWithPao: this.state.gameConfig.yakuWithPao } });
         break;
       case 'nagashi':
-        this.state.toggleNagashi(player);
+        this.dispatch({ type: TOGGLE_NAGASHI, payload: player.id });
         break;
     }
   }

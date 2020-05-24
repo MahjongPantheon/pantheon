@@ -18,128 +18,65 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component, Input, Output, EventEmitter, ChangeDetectionStrategy
+} from '@angular/core';
 import { Player } from '../../interfaces/common';
-import { AppState } from '../../primitives/appstate';
-import { intersection } from 'lodash';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { IAppState } from '../../services/store/interfaces';
+import {
+  paoPressed,
+  showDeadButton,
+  showLoseButton, showNagashiButton,
+  showPaoButton,
+  showRiichiButton,
+  showWinButton,
+  winPressed,
+  losePressed,
+  riichiPressed,
+  deadPressed,
+  nagashiPressed,
+  winDisabled,
+  loseDisabled,
+  nagashiDisabled
+} from '../../services/store/selectors/userItemSelectors';
 
 @Component({
   selector: 'user-item',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-
 export class UserItemComponent extends I18nComponent {
-  @Input() state: AppState;
+  @Input() state: IAppState;
   @Input() userData: Player;
-  @Input() seat: string;
-  @Input() paoSelectionMode: boolean;
-  @Input() nagashiSelectionMode: boolean;
   @Output() onEvent = new EventEmitter<[Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao' | 'nagashi']>();
-  constructor(public i18n: I18nService) { super(i18n); }
+  constructor(
+    public i18n: I18nService
+  ) { super(i18n); }
 
-  // helpers
-  showWinButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'draw', 'nagashi']
-    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode && !this.nagashiSelectionMode;
-
-  showPaoButton = () => {
-    if (!this.paoSelectionMode) {
-      return false;
-    }
-
-    switch (this.state.getOutcome()) {
-      case 'ron':
-      case 'tsumo':
-        // no pao for current winner or loser
-        return this.state.getWinningUsers().indexOf(this.userData) === -1 &&
-          this.state.getLosingUsers().indexOf(this.userData) === -1;
-      case 'multiron':
-        // no pao for loser and winner with yakuman
-        if (this.state.getLosingUsers().indexOf(this.userData) !== -1) {
-          return false;
-        }
-        for (let win of this.state.getWins()) {
-          if (
-            win.winner === this.userData.id &&
-            intersection(win.yaku, this.state.getGameConfig('yakuWithPao')).length !== 0
-          ) {
-            return false;
-          }
-        }
-        return true;
-    }
-  };
-
-  showLoseButton = () => -1 !== ['ron', 'multiron', 'chombo']
-    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode && !this.nagashiSelectionMode;
-
-  showRiichiButton = () => -1 !== ['ron', 'multiron', 'tsumo', 'abort', 'draw', 'nagashi']
-    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode && !this.nagashiSelectionMode;
-
-  showDeadButton = () => -1 !== ['draw', 'nagashi']
-    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode && !this.nagashiSelectionMode;
-
-  showNagashiButton = () => -1 !== ['nagashi']
-    .indexOf(this.state.getOutcome()) && !this.paoSelectionMode && this.nagashiSelectionMode;
-
-  winPressed = () => -1 !== this.state.getWinningUsers()
-    .indexOf(this.userData);
-
-  losePressed = () => -1 !== this.state.getLosingUsers()
-    .indexOf(this.userData);
-
-  paoPressed = () => -1 !== this.state.getPaoUsers()
-    .indexOf(this.userData);
-
-  riichiPressed = () => -1 !== this.state.getRiichiUsers()
-    .indexOf(this.userData);
-
-  deadPressed = () => -1 !== this.state.getDeadhandUsers()
-    .indexOf(this.userData);
-
-  nagashiPressed = () => -1 !== this.state.getNagashiUsers()
-    .indexOf(this.userData);
-
-  winDisabled = () => {
-    if (-1 !== ['draw', 'nagashi'].indexOf(this.state.getOutcome())) {
-      return -1 !== this.state.getDeadhandUsers().indexOf(this.userData)
-    }
-
-    if (this.state.getOutcome() === 'multiron') {
-      return -1 !== this.state.getLosingUsers().indexOf(this.userData)
-    }
-
-    // for ron/tsumo winner is only one
-    return (
-      this.state.getWinningUsers().length > 0
-      && -1 === this.state.getWinningUsers().indexOf(this.userData)
-    ) || -1 !== this.state.getLosingUsers().indexOf(this.userData); // and it should not be current loser
-  };
-
-  // for ron/multiron/chombo - loser is only one
-  loseDisabled = () => {
-    return (
-      this.state.getLosingUsers().length > 0
-      && -1 === this.state.getLosingUsers().indexOf(this.userData)
-    ) || -1 !== this.state.getWinningUsers().indexOf(this.userData); // and it should not be current winner
-  };
-
-
-  //no more than 3 players may have nagashi
-  nagashiDisabled = () => {
-    return this.state.getNagashiUsers().length >= 3
-      && -1 === this.state.getNagashiUsers().indexOf(this.userData);
-  }
-
-  // riichi & dead hand can't be disabled
+  get showWinButton() { return showWinButton(this.state); }
+  get showPaoButton() { return showPaoButton(this.state); }
+  get showLoseButton() { return showLoseButton(this.state); }
+  get showRiichiButton() { return showRiichiButton(this.state); }
+  get showDeadButton() { return showDeadButton(this.state); }
+  get showNagashiButton() { return showNagashiButton(this.state); }
+  get winPressed() { return winPressed(this.state, this.userData); }
+  get losePressed() { return losePressed(this.state, this.userData); }
+  get paoPressed() { return paoPressed(this.state, this.userData); }
+  get riichiPressed() { return riichiPressed(this.state, this.userData); }
+  get deadPressed() { return deadPressed(this.state, this.userData); }
+  get nagashiPressed() { return nagashiPressed(this.state, this.userData); }
+  get winDisabled() { return winDisabled(this.state, this.userData); }
+  get loseDisabled() { return loseDisabled(this.state, this.userData); }
+  get nagashiDisabled() { return nagashiDisabled(this.state, this.userData); }
 
   // event handlers
-  winClick = () => this.winDisabled() ? null : this.onEvent.emit([this.userData, 'win']);
-  loseClick = () => this.loseDisabled() ? null : this.onEvent.emit([this.userData, 'lose']);
+  winClick = () => this.winDisabled ? null : this.onEvent.emit([this.userData, 'win']);
+  loseClick = () => this.loseDisabled ? null : this.onEvent.emit([this.userData, 'lose']);
   riichiClick = () => this.onEvent.emit([this.userData, 'riichi']);
   deadClick = () => this.onEvent.emit([this.userData, 'dead']);
   paoClick = () => this.onEvent.emit([this.userData, 'pao']);
-  nagashiClick = () => this.nagashiDisabled() ? null : this.onEvent.emit([this.userData, 'nagashi']);
+  nagashiClick = () => this.nagashiDisabled ? null : this.onEvent.emit([this.userData, 'nagashi']);
 }
 

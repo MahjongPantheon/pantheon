@@ -19,7 +19,7 @@
  */
 
 import { Outcome as OutcomeType } from './common';
-import { YakuId } from '../primitives/yaku';
+import { YakuId, YakuMap } from '../primitives/yaku';
 
 export interface Outcome {
   selectedOutcome: OutcomeType;
@@ -33,7 +33,7 @@ export interface WinProps {
   han: number;
   fu: number;
   possibleFu: number[];
-  yaku: YakuId[];
+  yaku: string; // packed positional string
   dora: number;
   openHand: boolean;
 }
@@ -69,7 +69,7 @@ export interface AppOutcomeDraw extends Outcome {
   selectedOutcome: 'draw';
   riichiBets: number[]; // ids of players
   tempai: number[]; // ids of players
-  deadhands: number[]; // ids of players 
+  deadhands: number[]; // ids of players
 }
 
 export interface AppOutcomeNagashi extends Outcome {
@@ -96,4 +96,6 @@ export type AppOutcome
   | AppOutcomeNagashi
   ;
 
-
+export type WinOutcomeProps = Partial<AppOutcomeMultiRon | AppOutcomeRon | AppOutcomeTsumo>;
+export type LoseOutcomeProps = Partial<AppOutcomeMultiRon | AppOutcomeRon | AppOutcomeChombo>;
+export type DrawOutcomeProps = Partial<AppOutcomeAbort | AppOutcomeDraw | AppOutcomeNagashi>;

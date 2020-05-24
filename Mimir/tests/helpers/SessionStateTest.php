@@ -77,6 +77,9 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
         $this->_session->save();
 
         $this->_ruleset = new MockRuleset();
+        $this->_ruleset->setRule('tonpuusen', false);
+        $this->_ruleset->setRule('withButtobi', false);
+        $this->_ruleset->setRule('withLeadingDealerGameOver', false);
         $this->_ruleset->setRule('startPoints', 30000);
         $this->_ruleset->setRule('withKiriageMangan', false);
         $this->_state = new SessionState($this->_ruleset, array_map(function (PlayerPrimitive $player) {
@@ -620,7 +623,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
     public function testSessionStateToJson()
     {
         $this->assertEquals(
-            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":null}',
+            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":null,"_isFinished":false}',
             $this->_state->toJson()
         );
 
@@ -632,14 +635,14 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
         $this->_state->update($round);
 
         $this->assertEquals(
-            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":1,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":"draw"}',
+            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":1,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":"draw","_isFinished":false}',
             $this->_state->toJson()
         );
     }
 
     public function testSessionStateFromJson()
     {
-        $json1 = '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":null}';
+        $json1 = '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":null,"_isFinished":false}';
 
         $state = SessionState::fromJson(
             $this->_ruleset,

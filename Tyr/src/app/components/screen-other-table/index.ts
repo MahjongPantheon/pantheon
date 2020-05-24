@@ -18,283 +18,122 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
-import { AppState } from '../../primitives/appstate';
-import { YakuId, yakuMap } from '../../primitives/yaku';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Player } from '../../interfaces/common';
-import { MetrikaService } from '../../services/metrika';
-import { RRoundPaymentsInfo } from '../../interfaces/remote';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
+import {
+  AppActionTypes,
+  GET_OTHER_TABLE_INIT,
+  GET_OTHER_TABLE_RELOAD,
+  SHOW_LAST_ROUND,
+  TABLE_ROTATE_CLOCKWISE,
+  TABLE_ROTATE_COUNTERCLOCKWISE,
+  TOGGLE_OVERVIEW_DIFFBY
+} from '../../services/store/actions/interfaces';
+import {
+  getChomboKamicha,
+  getChomboSelf,
+  getChomboShimocha,
+  getChomboToimen,
+  getScoreKamicha,
+  getScoreSelf,
+  getScoreShimocha,
+  getScoreToimen,
+} from '../../services/store/selectors/overviewSelectors';
+import {
+  getPenalty,
+  getWins
+} from '../../services/store/selectors/otherTableSelectors';
+import {
+  getSelf,
+  getShimocha,
+  getToimen,
+  getKamicha,
+  getSeatSelf,
+  getSeatShimocha,
+  getSeatToimen,
+  getSeatKamicha
+} from 'app/services/store/selectors/roundPreviewSchemeSelectors';
 
 @Component({
   selector: 'screen-other-table',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class OtherTableScreen extends I18nComponent {
-  @Input() state: AppState;
-  @Input() players: Player[];
-  @Input() lastRound: RRoundPaymentsInfo;
+export class OtherTableScreenComponent extends I18nComponent implements OnInit, OnDestroy {
+  get self(): Player { return getSelf(this.state, 'other_overview'); }
+  get shimocha(): Player { return getShimocha(this.state, 'other_overview'); }
+  get toimen(): Player { return getToimen(this.state, 'other_overview'); }
+  get kamicha(): Player { return getKamicha(this.state, 'other_overview'); }
+
+  get seatSelf(): string { return getSeatSelf(this.state, 'other_overview'); }
+  get seatShimocha(): string { return getSeatShimocha(this.state, 'other_overview'); }
+  get seatToimen(): string { return getSeatToimen(this.state, 'other_overview'); }
+  get seatKamicha(): string { return getSeatKamicha(this.state, 'other_overview'); }
+
+  get scoreSelf(): string { return getScoreSelf(this.state, this.state.currentOtherTablePlayers); }
+  get scoreShimocha(): string { return getScoreShimocha(this.state, this.state.currentOtherTablePlayers); }
+  get scoreToimen(): string { return getScoreToimen(this.state, this.state.currentOtherTablePlayers); }
+  get scoreKamicha(): string { return getScoreKamicha(this.state, this.state.currentOtherTablePlayers); }
+
+  get chomboSelf(): string { return getChomboSelf(this.state, this.state.currentOtherTablePlayers); }
+  get chomboShimocha(): string { return getChomboShimocha(this.state, this.state.currentOtherTablePlayers); }
+  get chomboToimen(): string { return getChomboToimen(this.state, this.state.currentOtherTablePlayers); }
+  get chomboKamicha(): string { return getChomboKamicha(this.state, this.state.currentOtherTablePlayers); }
+
+  // Extra property to avoid multiple blinking on init
+  protected _initialized = false;
+  get _loading() {
+    return !this._initialized
+      || this.state.loading.otherTable
+      || this.state.loading.overview
+      || this.state.currentOtherTablePlayers.length === 0
+      || !this.state.currentOtherTable;
+  }
+  get currentTable() {
+    return {
+      round: this.state.currentOtherTable.currentRound,
+      honba: this.state.currentOtherTable.honba,
+      riichi: this.state.currentOtherTable.riichiOnTable
+    };
+  }
+
+  /// last round sub-screen related
+
+  get penalty() { return getPenalty(this.state.lastRoundOverview, this.state.currentOtherTablePlayers); }
+  get wins() { return getWins(this.state.lastRoundOverview, this.state.currentOtherTablePlayers, this.i18n); }
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
+  private _timer;
+
   constructor(
     public i18n: I18nService,
-    private metrika: MetrikaService
+    private ref: ChangeDetectorRef
   ) { super(i18n); }
 
-  /**
-   * Flag to prevent blinking on manual updates when all data was already loaded
-   */
-  private _dataUpdated = false;
-  private _updateInterval: NodeJS.Timer;
-  private _lastRoundLocal: RRoundPaymentsInfo;
-  private _showLastRound: boolean = false;
-  private _lastRoundTimer: NodeJS.Timer;
-
-  get lastRoundInfo() {
-    if (this._showLastRound) {
-      return this.lastRound;
-    }
-
-    return null;
-  }
-
-  self: Player;
-  shimocha: Player;
-  toimen: Player;
-  kamicha: Player;
-
-  seatSelf: string;
-  seatShimocha: string;
-  seatToimen: string;
-  seatKamicha: string;
-
-  _diffedBy: string = null;
-  _currentPlayer: number = 0;
-
-  get currentGameHash() {
-    return this.state.getCurrentOtherTableHash();
-  }
-
-  get currentTable() {
-    return this.state.getCurrentOtherTable().state;
-  }
-
-  get _loading() {
-    return !this._dataUpdated && this.state.isLoading('otherTable');
-  }
-
-  getScore(who) {
-    let score = this[who].score;
-    if (!this._diffedBy) {
-      return score;
-    }
-
-    if (this._diffedBy && this._diffedBy !== who) {
-      score -= this[this._diffedBy].score;
-    }
-    return (score > 0 && this._diffedBy !== who) ? '+' + score : score;
-  }
-
-  getChomboCount(who) {
-    return Math.abs(
-      (this[who].penalties || 0) /
-      this.state.getGameConfig('chomboPenalty')
-    ) || '';
-  }
-
-  reloadOverview() {
-    this.state.updateOtherTable(this.currentGameHash);
-  }
-
   viewLastRound() {
-    this.state.updateOtherTableLastRound(this.currentGameHash, () => {
-      this._showLastRound = true;
-      clearTimeout(this._lastRoundTimer);
-      this._lastRoundTimer = setTimeout(() => this._showLastRound = false, 8000);
-    });
+    this.dispatch({ type: SHOW_LAST_ROUND });
   }
 
   rotateTable(dir: boolean) {
-    if (dir) { // counter-clockwise
-      this._currentPlayer = (this._currentPlayer + 1) % 4;
-    } else { // clockwise
-      this._currentPlayer = (this._currentPlayer + 3) % 4;
-    }
-    this.updatePlayers();
+    this.dispatch({ type: dir ? TABLE_ROTATE_COUNTERCLOCKWISE : TABLE_ROTATE_CLOCKWISE });
   }
 
-  playerClick(who: string) {
-    if (this._diffedBy === who) {
-      this._diffedBy = null;
-    } else {
-      this._diffedBy = who;
-    }
-  }
-
-  ngOnChanges() {
-    if (
-      this.lastRound &&
-      this._lastRoundLocal &&
-      this._lastRoundLocal.penaltyFor !== this.lastRound.penaltyFor &&
-      this._lastRoundLocal.honba !== this.lastRound.honba &&
-      this._lastRoundLocal.round !== this.lastRound.round
-    ) {
-      clearTimeout(this._lastRoundTimer);
-      this._showLastRound = true;
-      this._lastRoundTimer = setTimeout(() => this._showLastRound = false, 8000);
-    }
-
-    this.updatePlayers();
-    this._lastRoundLocal = this.lastRound;
-  }
+  playerClick(who: IAppState['overviewDiffBy']) { this.dispatch( { type: TOGGLE_OVERVIEW_DIFFBY, payload: who }); }
 
   ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-table' });
-    this._lastRoundTimer = null;
-    this._showLastRound = false;
-    this.updatePlayers();
-    this._updateInterval = setInterval(() => this._dataUpdated && this.reloadOverview(), 5000);
+    this.dispatch({ type: GET_OTHER_TABLE_INIT, payload: this.state.currentOtherTableHash });
+    this._timer = setInterval(() => this.dispatch({ type: GET_OTHER_TABLE_RELOAD }), 5000 + (300 * Math.random()));
+    setTimeout(() => {
+      this._initialized = true;
+      this.ref.markForCheck();
+    }, 0);
   }
 
-  ngOnDestroy() {
-    clearInterval(this._updateInterval);
-    clearTimeout(this._lastRoundTimer);
-  }
-
-  private updatePlayers() {
-    if (!this.players || this.players.length !== 4) {
-      this._dataUpdated = false;
-      return;
-    }
-
-    this._dataUpdated = true;
-
-    let players: Player[] = [].concat(this.players);
-    let seating = ['東', '南', '西', '北'];
-    for (let i = 1; i < this.currentTable.round; i++) {
-      seating = [seating.pop()].concat(seating);
-    }
-
-    for (let i = 0; i < 4; i++) {
-      if (this._currentPlayer === i) {
-        break;
-      }
-
-      players = players.slice(1).concat(players[0]);
-      seating = seating.slice(1).concat(seating[0]);
-    }
-
-    this.self = players[0];
-    this.shimocha = players[1];
-    this.toimen = players[2];
-    this.kamicha = players[3];
-
-    this.seatSelf = seating[0];
-    this.seatShimocha = seating[1];
-    this.seatToimen = seating[2];
-    this.seatKamicha = seating[3];
-  }
-
-  /// last round related
-
-  getWins(): Array<{ winner: string, loser: string, han: number, fu: number, dora: number, yakuList: string }> {
-    switch (this._lastRoundLocal.outcome) {
-      case 'ron':
-      case 'tsumo':
-        return [{
-          winner: this._getPlayerName(this._lastRoundLocal.winner),
-          loser: this._getLoserName(),
-          yakuList: this._getYakuList(this._lastRoundLocal.yaku),
-          han: this._lastRoundLocal.han,
-          fu: this._lastRoundLocal.fu,
-          dora: this._lastRoundLocal.dora
-        }];
-      case 'multiron':
-        let wins = [];
-        for (let idx in this._lastRoundLocal.winner) {
-          wins.push({
-            winner: this._getPlayerName(this._lastRoundLocal.winner[idx]),
-            loser: this._getLoserName(),
-            yakuList: this._getYakuList(this._lastRoundLocal.yaku[idx]),
-            han: this._lastRoundLocal.han[idx],
-            fu: this._lastRoundLocal.fu[idx],
-            dora: this._lastRoundLocal.dora[idx]
-          });
-        }
-        return wins;
-    }
-  }
-
-  getOutcomeName() {
-    switch (this._lastRoundLocal.outcome) {
-      case 'ron': return this.i18n._t('Ron');
-      case 'tsumo': return this.i18n._t('Tsumo');
-      case 'draw': return this.i18n._t('Exhaustive draw');
-      case 'abort': return this.i18n._t('Abortive draw');
-      case 'chombo': return this.i18n._t('Chombo');
-      case 'multiron': return (this._lastRoundLocal.winner.length === 2
-        ? this.i18n._t('Double ron')
-        : this.i18n._t('Triple ron')
-      );
-    }
-  }
-
-  getPenalty() {
-    if (this._lastRoundLocal.outcome !== 'chombo') {
-      return;
-    }
-    return this._getPlayerName(this._lastRoundLocal.penaltyFor);
-  }
-
-  getTempaiPlayers() {
-    if (this._lastRoundLocal.outcome !== 'draw') {
-      return;
-    }
-
-    return Object.keys(this._lastRoundLocal.payments.direct)
-      .map((i) => parseInt(i.split('<-')[0], 10))
-      .filter((value, index, self) => self.indexOf(value) === index)
-      .map((i) => this._getPlayerName(i))
-      .join(', ');
-  }
-
-  getNotenPlayers() {
-    if (this._lastRoundLocal.outcome !== 'draw') {
-      return;
-    }
-    return Object.keys(this._lastRoundLocal.payments.direct)
-      .map((i) => parseInt(i.split('<-')[1], 10))
-      .filter((value, index, self) => self.indexOf(value) === index)
-      .map((i) => this._getPlayerName(i))
-      .join(', ');
-  }
-
-  getRiichiPlayers() {
-    return this._lastRoundLocal.riichiIds.map(
-      (p) => this._getPlayerName(parseInt(p, 10))
-    ).join(', ');
-  }
-
-  private _getYakuList(str: string) {
-    const yakuIds: YakuId[] = str.split(',').map((y) => parseInt(y, 10));
-    const yakuNames: string[] = yakuIds.map((y) => yakuMap[y].name(this.i18n).toLowerCase());
-    return yakuNames.join(', ');
-  }
-
-  private _getPlayerName(playerId: number): string {
-    let players = this.players;
-    for (let i in players) {
-      if (players[i].id == playerId) {
-        return players[i].displayName;
-      }
-    }
-    return '';
-  }
-
-  private _getLoserName() {
-    for (let i in this.lastRound.payments.direct) {
-      return this._getPlayerName(parseInt(i.split('<-')[1], 10));
-    }
+  ngOnDestroy(): void {
+    clearInterval(this._timer);
   }
 }
-
-

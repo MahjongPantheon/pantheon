@@ -220,13 +220,22 @@ class InteractiveSessionModel extends Model
 
             if (is_array($result['paoPlayer'])) {
                 // pao player may be only one
-                $result['paoPlayer'] = reset(array_filter($result['paoPlayer'])) or null;
+                $paoPlayers = array_filter($result['paoPlayer']);
+                $result['paoPlayer'] = reset($paoPlayers) or null;
             }
 
             return $result;
         }
 
-        return $round->save() && $session->updateCurrentState($round) && $this->_trackUpdate($gameHashcode);
+        $success = $round->save();
+        if ($success) {
+            $data = $session->updateCurrentState($round);
+            if ($data) {
+                $this->_trackUpdate($gameHashcode);
+                return $data;
+            }
+        }
+        return false;
     }
 
     /**

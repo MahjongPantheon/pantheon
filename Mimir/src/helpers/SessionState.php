@@ -101,6 +101,15 @@ class SessionState
      */
     public function toJson()
     {
+        return json_encode($this->toArray());
+    }
+
+    /**
+     * @throws InvalidParametersException
+     * @return array
+     */
+    public function toArray()
+    {
         $arr = [];
         foreach ($this as $key => $value) {
             if ($key === '_rules') {
@@ -111,7 +120,8 @@ class SessionState
             }
             $arr[$key] = $value;
         }
-        return json_encode($arr);
+        $arr['_isFinished'] = $this->isFinished();
+        return $arr;
     }
 
     /**

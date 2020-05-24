@@ -28,8 +28,53 @@ import {
   AppOutcomeMultiRon,
   AppOutcomeNagashi
 } from '../../interfaces/app';
-import { Outcome as OutcomeType, Player } from '../../interfaces/common';
-import { getFixedFu } from '../yaku-values';
+import { Outcome as OutcomeType } from '../../interfaces/common';
+import { getFixedFu } from '../../primitives/yaku-values';
+import { IAppState } from './interfaces';
+import { defaultPlayer } from './selectors/screenNewGameSelectors';
+
+export const initialState: IAppState = {
+  currentOtherTableIndex: 0,
+  isUniversalWatcher: false,
+  settings: { currentLang: 'en', currentTheme: 'default' },
+  timer: undefined,
+  yakuList: undefined,
+
+  currentScreen: 'overview',
+  currentSessionHash: null,
+  currentOutcome: null,
+  currentRound: 1,
+  currentPlayerDisplayName: null,
+  currentPlayerId: null,
+  players: null, // e-s-w-n,
+  mapIdToPlayer: {},
+  riichiOnTable: 0,
+  honba: 0,
+  multironCurrentWinner: null,
+  isLoggedIn: false,
+  gameConfig: null,
+  tableIndex: null,
+  yellowZoneAlreadyPlayed: false,
+  otherTablesList: [],
+  currentOtherTable: null,
+  currentOtherTableHash: null,
+  currentOtherTablePlayers: [],
+  isIos: false,
+
+  // preloaders flags
+  loading: {
+    games: false,
+    overview: false,
+    otherTables: false,
+    otherTable: false,
+    login: false,
+    players: false,
+    addRound: false
+  },
+
+  newGameSelectedUsers: [defaultPlayer, defaultPlayer, defaultPlayer, defaultPlayer],
+  gameOverviewReady: false,
+};
 
 export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcome {
   let out: AppOutcome;
@@ -45,7 +90,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         han: 0,
         fu: 30,
         possibleFu: getFixedFu([], 'ron'),
-        yaku: [],
+        yaku: '', // empty string is ok for empty yaku list
         riichiBets: [],
         dora: 0,
         openHand: false
@@ -73,7 +118,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         han: 0,
         fu: 30,
         possibleFu: getFixedFu([], 'tsumo'),
-        yaku: [],
+        yaku: '', // empty string is ok for empty yaku list
         riichiBets: [],
         dora: 0,
         openHand: false

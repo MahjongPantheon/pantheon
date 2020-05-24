@@ -18,21 +18,22 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import { Yaku } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 
 @Component({
   selector: 'yaku-item-button',
   template: `
-    <button 
+    <button
       class="discolored"
       (click)="yakuClick()"
-      [class.special]="yaku.id < 0"      
+      [class.special]="yaku.id < 0"
       [class.pressed]="pressed"
       [disabled]="disabled"
       >{{yaku.name(i18n)}}</button>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
 export class YakuItemButtonComponent extends I18nComponent {

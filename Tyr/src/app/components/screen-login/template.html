@@ -17,10 +17,10 @@
     You should have received a copy of the GNU General Public License
     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div class="riichi-table" *ngIf="loading">
+<div class="riichi-table" *ngIf="state.loading.login">
   <div class="inline-preloader"></div>
 </div>
-<div class="riichi-table" *ngIf="_error">
+<div class="riichi-table" *ngIf="!!state.loginError">
   <div class="hint_errors">
     <div>{{_LOGIN_FAILED_REASONS_ARE}}</div>
     <ul>
@@ -32,10 +32,9 @@
     <button (click)="reset()">OK</button>
   </div>
 </div>
-<div class="riichi-table" *ngIf="!loading && !_error">
+<div class="riichi-table" *ngIf="!state.loading.login && !state.loginError">
   <div class="hint" style="text-align: center">{{_ENTER_PIN}}</div>
-  <div *ngIf="_qrdata.length > 0">{{_qrdata}}</div>
-  <div class="pin" [class.error]="_error">
+  <div class="pin">
     <div>{{_pinView}}</div>
     <button (click)="scanQr()"><custom-icon [type]="'qrcode'" [resize]="40"></custom-icon></button>
   </div>

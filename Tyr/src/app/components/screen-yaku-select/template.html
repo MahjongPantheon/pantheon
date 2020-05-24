@@ -19,33 +19,33 @@
 -->
 <div
   class="buttons"
-  [class.multiron]="showTabs()">
-  <div class="outcome-indicator">{{outcome()}}</div>
+  [class.multiron]="shouldShowTabs">
+  <div class="outcome-indicator">{{outcome}}</div>
   <button
       class="discolored"
       (click)="showSimple()"
-      [class.pressed]="this.selectedSimple"
+      [class.pressed]="selectedSimple"
   ><custom-icon [type]="'common'" [resize]="36"></custom-icon></button>
   <button
       class="discolored"
       (click)="showRare()"
-      [class.pressed]="this.selectedRare"
+      [class.pressed]="selectedRare"
   ><custom-icon [type]="'rare'" [resize]="36"></custom-icon></button>
   <button
       class="discolored"
       (click)="showYakuman()"
-      [class.pressed]="this.selectedYakuman"
+      [class.pressed]="selectedYakuman"
   ><custom-icon [type]="'yman'" [resize]="36"></custom-icon></button>
 </div>
 <div
   class="scroller-wrap"
-  [class.multiron]="showTabs()"
+  [class.multiron]="shouldShowTabs"
   (scroll)="updateAfterScroll()"
   #scroller>
   <div class="yakuList">
     <div
       class="yaku-set"
-      *ngFor="let data of yakuList[this._currentUser]"
+      *ngFor="let data of yakuList[currentMultironUser]"
       >
       <a href="" [name]="data.anchor" #scrlink></a>
       <div
@@ -56,7 +56,7 @@
           *ngFor="let yaku of yakuRow"
           [yaku]="yaku"
           [pressed]="isSelected(yaku.id)"
-          [disabled]="this.disabledYaku[this._currentUser][yaku.id]"
+          [disabled]="disabledYaku[currentMultironUser][yaku.id]"
           (onClick)="yakuSelect($event)"
           ></yaku-item-button>
       </div>
@@ -66,16 +66,16 @@
 </div>
 <div
   class="player-tabs"
-  *ngIf="showTabs()"
+  *ngIf="shouldShowTabs"
   [style.width]="_viewportHeight"
   [style.height]="_tabsHeight"
 >
   <div
-    *ngFor="let user of this.state.getWinningUsers()"
+    *ngFor="let user of winningUsers"
     (click)="selectMultiRonUser(user.id)"
-    [class.selected]="user.id === this.state.getCurrentMultiRonUser()"
+    [class.selected]="user.id === currentMultironUser"
   >
     <div class="name">{{user.displayName}}</div>
-    <div class="score">{{han(user.id) | yakuman}}<span *ngIf="showFuOf(user.id)">/{{this.state.getFuOf(user.id)}}</span></div>
+    <div class="score">{{han(user.id) | yakuman}}<span *ngIf="fu(user.id)">/{{fu(user.id)}}</span></div>
   </div>
 </div>

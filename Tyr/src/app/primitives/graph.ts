@@ -77,7 +77,7 @@ export class Graph<T> {
   }
 
   /**
-   * Add new node to list checking if node can be added, 
+   * Add new node to list checking if node can be added,
    * if there are any nodes to be excluded after current node is added.
    */
   tryAddAllowedNode(nodeList: Node<T>[], node: Node<T>) {

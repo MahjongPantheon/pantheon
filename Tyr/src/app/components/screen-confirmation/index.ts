@@ -18,73 +18,57 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
-import { Yaku, Player } from '../../interfaces/common';
-import { YakuId, yakuMap, sortByViewPriority } from '../../primitives/yaku';
-import { AppState } from '../../primitives/appstate';
-import { RRoundPaymentsInfo } from '../../interfaces/remote';
-import { RiichiApiService } from '../../services/riichiApi';
-import { MetrikaService } from '../../services/metrika';
-import { RemoteError } from '../../services/remoteError';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
+import {
+  ADD_ROUND_INIT,
+  AppActionTypes,
+  GET_CHANGES_OVERVIEW_INIT,
+  GET_GAME_OVERVIEW_INIT
+} from '../../services/store/actions/interfaces';
+import { isLoading } from '../../services/store/selectors/screenConfirmationSelectors';
 
 @Component({
   selector: 'screen-confirmation',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class ConfirmationScreen extends I18nComponent {
-  @Input() state: AppState;
-  public _dataReady: boolean;
-  public _data: RRoundPaymentsInfo;
-  public confirmed: boolean = false;
-  public _error: string = '';
+export class ConfirmationScreenComponent extends I18nComponent implements OnInit {
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
+
+  public _initialized = false;
+  public confirmed = false;
 
   constructor(
     public i18n: I18nService,
-    private api: RiichiApiService,
-    private metrika: MetrikaService
+    private ref: ChangeDetectorRef
   ) {
     super(i18n);
   }
 
-  ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-confirmation' });
-    this._error = '';
-    this._dataReady = false;
-    this.api.getChangesOverview(this.state)
-      .then((overview) => {
-        this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-confirmation', request: 'getChangesOverview' });
-        this._data = overview;
-        this._dataReady = true;
-      })
-      .catch((e) => this.onerror(e, 'getChangesOverview'));
-  }
-
-  confirm() {
-    this._dataReady = false;
-    this.api.addRound(this.state)
-      .then(() => this.okay())
-      .catch((e) => this.onerror(e, 'addRound'));
-  }
-
-  onerror(e, reqType: string) {
-    this.metrika.track(MetrikaService.LOAD_ERROR, { type: 'screen-confirmation', code: e.code, request: reqType });
-    this._dataReady = true;
-    this._error = this.i18n._t("Failed to add round. Please try again");
-    if (e instanceof RemoteError) {
-      if (e.code === 403) {
-        this._error = this.i18n._t("Authentication failed");
-      } else {
-        this._error = this.i18n._t('Failed to add round. Was this hand already added by someone else?');
-      }
+  get _loading() { return !this._initialized || isLoading(this.state); }
+  get _error() {
+    if (!this.state.changesOverviewError) {
+      return null;
     }
+    return (this.state.changesOverviewError.details.code === 403
+        ? this.i18n._t('Authentication failed')
+        : this.i18n._t('Failed to add round. Was this hand already added by someone else?')
+    );
   }
 
-  okay() {
-    this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-confirmation', request: 'addRound' });
-    this._dataReady = false;
-    // when finished, appstate goes to overview screen automatically, no need to go to next
-    this.state.updateOverview((finished) => finished ? null : this.state.nextScreen());
+  ngOnInit() {
+    this.dispatch({ type: GET_CHANGES_OVERVIEW_INIT, payload: this.state });
+    setTimeout(() => {
+      this._initialized = true;
+      this.ref.markForCheck();
+    }, 0);
   }
+
+  confirm() { this.dispatch({ type: ADD_ROUND_INIT, payload: this.state }); }
+  okay() { this.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: this.state.currentSessionHash }); }
 }

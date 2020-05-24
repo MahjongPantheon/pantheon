@@ -649,7 +649,8 @@ class SessionPrimitive extends Primitive
      * WARNING: This should be called strictly AFTER round is saved to DB!
      *
      * @param RoundPrimitive $round
-     * @return bool
+     * @return bool|array
+     * @throws InvalidParametersException|EntityNotFoundException
      */
     public function updateCurrentState(RoundPrimitive $round)
     {
@@ -696,8 +697,8 @@ class SessionPrimitive extends Primitive
                     ) < time()
                 );
 
+                // should finish game if it's in red zone, except case when chombo was made
                 if ($isInRedZone && $round->getOutcome() !== 'chombo') {
-                    // should not finish game if chombo was made
                     $this->getCurrentState()->forceFinish();
                 }
 
@@ -717,7 +718,7 @@ class SessionPrimitive extends Primitive
                 }
         }
 
-        return $success;
+        return $success ? $this->getCurrentState()->toArray() : false;
     }
 
     /**

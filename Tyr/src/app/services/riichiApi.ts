@@ -23,17 +23,16 @@ import { isDevMode } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { RemoteError } from './remoteError';
 import {
-  RRound,
-  RRoundRon, RRoundTsumo, RRoundDraw, RRoundAbort, RRoundChombo,
   RTimerState, RGameConfig, RSessionOverview, RCurrentGames,
   RUserInfo, RAllPlayersInEvent, RLastResults,
-  RRoundPaymentsInfo, RTablesState
+  RRoundPaymentsInfo, RTablesState, SessionState
 } from '../interfaces/remote';
 import {
   LCurrentGame,
   LUser,
   LUserWithScore,
   LTimerState,
+  LSessionOverview,
   LGameConfig
 } from '../interfaces/local';
 import { Table } from '../interfaces/common';
@@ -45,11 +44,12 @@ import {
   lastResultsFormatter,
   timerFormatter,
   gameConfigFormatter,
-  tablesStateFormatter
+  tablesStateFormatter,
+  gameOverviewFormatter
 } from './formatters';
-import { AppState } from '../primitives/appstate';
 import config from '../config';
 import { environment } from '../../environments/environment';
+import {IAppState} from './store/interfaces';
 
 type GenericResponse = {
   error?: { message: string, code: any },
@@ -93,7 +93,8 @@ export class RiichiApiService {
   }
 
   getGameOverview(sessionHashcode: string) {
-    return this._jsonRpcRequest<RSessionOverview>('getGameOverview', sessionHashcode);
+    return this._jsonRpcRequest<RSessionOverview>('getGameOverview', sessionHashcode)
+      .then<LSessionOverview>(gameOverviewFormatter);
   }
 
   getCurrentGames(): Promise<LCurrentGame[]> {
@@ -110,8 +111,8 @@ export class RiichiApiService {
     return this._jsonRpcRequest<string>('registerPlayer', pin);
   }
 
-  getChangesOverview(state: AppState) {
-    const gameHashcode: string = state.getHashcode();
+  getChangesOverview(state: IAppState) {
+    const gameHashcode: string = state.currentSessionHash;
     const roundData = formatRoundToRemote(state);
     return this._jsonRpcRequest<RRoundPaymentsInfo>('addRound', gameHashcode, roundData, true);
   }
@@ -120,14 +121,18 @@ export class RiichiApiService {
     if (!sessionHashcode) {
       return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundT');
     } else {
-      return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundByHash', sessionHashcode);
+      return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundByHash', sessionHashcode)
+        .then((result) => {
+          result.sessionHash = sessionHashcode;
+          return result;
+        });
     }
   }
 
-  addRound(state: AppState) {
-    const gameHashcode: string = state.getHashcode();
+  addRound(state: IAppState) {
+    const gameHashcode: string = state.currentSessionHash;
     const roundData = formatRoundToRemote(state);
-    return this._jsonRpcRequest<boolean>('addRound', gameHashcode, roundData, false);
+    return this._jsonRpcRequest<boolean | SessionState>('addRound', gameHashcode, roundData, false);
   }
 
   getTablesState() {
@@ -144,7 +149,7 @@ export class RiichiApiService {
       'X-Auth-Token': this._authToken || '',
     });
     const jsonRpcBody = {
-      jsonrpc: "2.0",
+      jsonrpc: '2.0',
       method: methodName,
       params: params,
       id: Math.round(1000000 * Math.random()) // TODO: bind request to response?
@@ -161,21 +166,7 @@ export class RiichiApiService {
           throw new RemoteError(response.error.message, response.error.code.toString());
         }
 
-        // this._checkCompatibility(response.headers.get('x-api-version')); // for some reason headers are lowercase
         return response.result; // TODO: runtime checks of object structure
       });
-  }
-
-  private _checkCompatibility(versionString) {
-    const [major, minor] = (versionString || '').split('.').map((v) => parseInt(v, 10));
-    const [localMajor, localMinor] = config.apiVersion;
-    if (major !== localMajor) {
-      console.error('API major version mismatch. Update your app or API instance!');
-      throw new Error('Critical: API major version mismatch');
-    }
-
-    if (minor > localMinor && isDevMode()) {
-      console.warn('API minor version mismatch. Consider updating if possible');
-    }
   }
 }

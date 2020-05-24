@@ -25,23 +25,23 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
-import { OverviewScreen } from './components/screen-overview';
-import { OutcomeSelectScreen } from './components/screen-outcome-select';
-import { PlayersSelectScreen } from './components/screen-players-select';
-import { YakuSelectScreen } from './components/screen-yaku-select';
-import { ConfirmationScreen } from './components/screen-confirmation';
-import { NewGameScreen } from './components/screen-new-game';
-import { LastResultsScreen } from './components/screen-last-results';
-import { LastRoundScreen } from './components/screen-last-round';
-import { LoginScreen } from './components/screen-login';
-import { OtherTablesListScreen } from './components/screen-other-tables-list';
-import { OtherTableScreen } from './components/screen-other-table';
-import { SettingsScreen } from './components/screen-settings';
+import { OverviewScreenComponent } from './components/screen-overview';
+import { OutcomeSelectScreenComponent } from './components/screen-outcome-select';
+import { PlayersSelectScreenComponent } from './components/screen-players-select';
+import { YakuSelectScreenComponent } from './components/screen-yaku-select';
+import { ConfirmationScreenComponent } from './components/screen-confirmation';
+import { NewGameScreenComponent } from './components/screen-new-game';
+import { LastResultsScreenComponent } from './components/screen-last-results';
+import { LastRoundScreenComponent } from './components/screen-last-round';
+import { LoginScreenComponent } from './components/screen-login';
+import { OtherTablesListScreenComponent } from './components/screen-other-tables-list';
+import { OtherTableScreenComponent } from './components/screen-other-table';
+import { SettingsScreenComponent } from './components/screen-settings';
 
 import { UserItemComponent } from './components/element-user-item';
 import { YakuItemButtonComponent } from './components/element-yaku-item-button';
 import { NavBarComponent } from './components/navbar';
-import { ConfirmationSchemeComponent } from './components/element-confirmation-scheme';
+import { RoundPreviewSchemeComponent } from './components/element-round-preview-scheme';
 import { CustomIconComponent } from './components/element-custom-icon';
 
 import { YakumanPipe } from './helpers/yakuman.pipe';
@@ -60,28 +60,29 @@ import { pinkPantherTheme } from './themes/pinkPantherTheme';
 import { darkBlueTheme } from './themes/darkBlue';
 import { classicDarkTheme } from './themes/classicDark';
 import { classicLightTheme } from './themes/classicLight';
+import { QrService } from './services/qr';
 
 @NgModule({
   declarations: [
     AppComponent,
 
-    OverviewScreen,
-    OutcomeSelectScreen,
-    PlayersSelectScreen,
-    YakuSelectScreen,
-    ConfirmationScreen,
-    NewGameScreen,
-    LastResultsScreen,
-    LastRoundScreen,
-    OtherTablesListScreen,
-    LoginScreen,
-    OtherTableScreen,
-    SettingsScreen,
+    OverviewScreenComponent,
+    OutcomeSelectScreenComponent,
+    PlayersSelectScreenComponent,
+    YakuSelectScreenComponent,
+    ConfirmationScreenComponent,
+    NewGameScreenComponent,
+    LastResultsScreenComponent,
+    LastRoundScreenComponent,
+    OtherTablesListScreenComponent,
+    LoginScreenComponent,
+    OtherTableScreenComponent,
+    SettingsScreenComponent,
 
     UserItemComponent,
     YakuItemButtonComponent,
     NavBarComponent,
-    ConfirmationSchemeComponent,
+    RoundPreviewSchemeComponent,
     CustomIconComponent,
 
     YakumanPipe,
@@ -102,6 +103,7 @@ import { classicLightTheme } from './themes/classicLight';
     RiichiApiService,
     I18nService,
     MetrikaService,
+    QrService,
     IDB
   ],
   bootstrap: [AppComponent]

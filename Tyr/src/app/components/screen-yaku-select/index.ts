@@ -19,142 +19,53 @@
  */
 
 import {
+  ChangeDetectionStrategy,
   Component,
-  ViewChild, ViewChildren,
-  QueryList, ElementRef,
-  Input
+  ElementRef,
+  Input,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
 } from '@angular/core';
-import { Yaku } from '../../interfaces/common';
 import { YakuId } from '../../primitives/yaku';
-import { yakuGroups, yakumanGroups, yakuRareGroups, filterAllowed } from './yaku-lists';
-import { throttle, keys, pickBy } from 'lodash';
-import { AppState } from '../../primitives/appstate';
+import { throttle } from 'lodash';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
-import { MetrikaService } from '../../services/metrika';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
+import {
+  ADD_YAKU,
+  AppActionTypes,
+  INIT_REQUIRED_YAKU,
+  REMOVE_YAKU,
+  SELECT_MULTIRON_WINNER, TRACK_SCREEN_ENTER
+} from '../../services/store/actions/interfaces';
+import { getWinningUsers, hasYaku } from '../../services/store/selectors/mimirSelectors';
+import { getDora, getFu, getHan } from '../../services/store/selectors/hanFu';
+import { getSelectedYaku } from '../../services/store/selectors/yaku';
+import { getDisabledYaku, getYakuList, shouldShowTabs } from '../../services/store/selectors/screenYakuSelectors';
+import { getOutcomeName } from '../../services/store/selectors/commonSelectors';
 
 @Component({
   selector: 'screen-yaku-select',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class YakuSelectScreen extends I18nComponent {
-  @Input() state: AppState;
-  yakuList: {
-    [id: number]: Array<{
-      anchor: string;
-      groups: Yaku[][]
-    }>
-  } = {};
-  disabledYaku: {
-    [id: number]: {
-      [key: number]: boolean
-    }
-  } = {};
-  _viewportHeight: string = null;
-  _tabsHeight: string = null;
-  _currentUser: number = null; // Should be in sync with current multi-ron user in state!
-
-  constructor(
-    public i18n: I18nService,
-    private metrika: MetrikaService
-  ) {
-    super(i18n);
-    this._viewportHeight = (window.innerHeight - 50) + 'px'; // 50 is height of navbar;
-    this._tabsHeight = parseInt((window.innerWidth * 0.10).toString(), 10) + 'px'; // Should equal to margin-left of buttons & scroller-wrap
-  }
-
-  ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-yaku-select' });
-    this._currentUser = this.state.getWinningUsers()[0].id;
-    this.state.selectMultiRonUser(this._currentUser);
-
-    for (let user of this.state.getWinningUsers()) {
-      this.yakuList[user.id] = [
-        { anchor: 'simple', groups: filterAllowed(yakuGroups, this.state.getGameConfig('allowedYaku')) },
-        { anchor: 'rare', groups: filterAllowed(yakuRareGroups, this.state.getGameConfig('allowedYaku')) },
-        { anchor: 'yakuman', groups: filterAllowed(yakumanGroups, this.state.getGameConfig('allowedYaku')) }
-      ];
-    }
-
-    if (this.state.getOutcome() === 'tsumo') {
-      this.state.addYaku(YakuId.MENZENTSUMO);
-    }
-    this._enableRequiredYaku();
-    this._disableIncompatibleYaku();
-  }
-
-  showFuOf(id: number) {
-    let han = this.state.getHanOf(id);
-    let dora = this.state.getDoraOf(id);
-    return han > 0 && han + dora < 5
-  }
-
-  han(id: number) {
-    return this.state.getHanOf(id) + this.state.getDoraOf(id);
-  }
-
-  showTabs() {
-    return this.state.getWinningUsers().length > 1;
-  }
-
-  selectMultiRonUser(id: number) {
-    this._currentUser = id;
-    this.state.selectMultiRonUser(this._currentUser);
-    this._enableRequiredYaku();
-    this._disableIncompatibleYaku();
-  }
-
-  outcome() {
-    switch (this.state.getOutcome()) {
-      case 'ron':
-      case 'multiron':
-        return this.i18n._t('Ron');
-      case 'tsumo':
-        return this.i18n._t('Tsumo');
-      case 'draw':
-        return this.i18n._t('Exhaustive draw');
-      case 'abort':
-        return this.i18n._t('Abortive draw');
-      case 'chombo':
-        return this.i18n._t('Chombo');
-      default:
-        return '';
-    }
-  }
-
-  yakuSelect(evt) {
-    if (this.state.hasYaku(evt.id)) {
-      this.state.removeYaku(evt.id);
-    } else {
-      this.state.addYaku(evt.id);
-    }
-    this._enableRequiredYaku();
-    this._disableIncompatibleYaku();
-  }
-
-  _disableIncompatibleYaku() {
-    const allowedYaku = this.state.getAllowedYaku();
-    this.disabledYaku[this._currentUser] = {};
-
-    for (let yGroup of this.yakuList[this._currentUser]) {
-      for (let yRow of yGroup.groups) {
-        for (let yaku of yRow) {
-          if (allowedYaku.indexOf(yaku.id) === -1 && !this.state.hasYaku(yaku.id)) {
-            this.disabledYaku[this._currentUser][yaku.id] = true;
-          }
-        }
-      }
-    }
-  }
-
-  _enableRequiredYaku() {
-    const requiredYaku = this.state.getRequiredYaku();
-    requiredYaku.forEach((y) => this.state.addYaku(y, true));
-  }
-
-  isSelected(id: YakuId) {
-    return this.state.getSelectedYaku().indexOf(id) !== -1;
-  }
+export class YakuSelectScreenComponent extends I18nComponent implements OnInit {
+  get winningUsers() { return getWinningUsers(this.state); }
+  get outcome() { return getOutcomeName(
+    this.i18n,
+    this.state.currentOutcome.selectedOutcome,
+    this.state.currentOutcome.selectedOutcome === 'multiron' ? this.state.currentOutcome.multiRon : 0,
+    true
+  ); }
+  get shouldShowTabs() { return shouldShowTabs(this.state); }
+  get yakuList() { return getYakuList(this.state); }
+  get disabledYaku() { return getDisabledYaku(this.state); }
+  get currentMultironUser() { return this.state.multironCurrentWinner; }
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
 
   // -------------------------------
   // ---- View & scroll related ----
@@ -165,13 +76,50 @@ export class YakuSelectScreen extends I18nComponent {
 
   private _rareLink: HTMLAnchorElement;
   private _yakumanLink: HTMLAnchorElement;
-  selectedSimple: boolean = true;
-  selectedRare: boolean = false;
-  selectedYakuman: boolean = false;
+  selectedSimple = true;
+  selectedRare = false;
+  selectedYakuman = false;
 
-  updateAfterScroll() {
-    throttle(() => this._updateAfterScroll(), 16)();
+  _viewportHeight: string = null;
+  _tabsHeight: string = null;
+
+  private _updateAfterScrollThrottled = throttle(() => this._updateAfterScroll(), 16);
+  fu(id: number) { return getFu(this.state, id); }
+  han(id: number) { return getHan(this.state, id) + getDora(this.state, id); }
+  isSelected(id: YakuId) { return getSelectedYaku(this.state).indexOf(id) !== -1; }
+
+  constructor(public i18n: I18nService) {
+    super(i18n);
+    this._initView();
   }
+
+  ngOnInit() {
+    this.dispatch({ type: TRACK_SCREEN_ENTER, payload: 'screen-yaku-select' });
+    // next action sets winner for ron/tsumo too
+    this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: getWinningUsers(this.state)[0].id } });
+    this.dispatch({ type: INIT_REQUIRED_YAKU });
+    if (this.state.currentOutcome.selectedOutcome === 'tsumo') {
+      this.dispatch({ type: ADD_YAKU, payload: { id: YakuId.MENZENTSUMO, winner: getWinningUsers(this.state)[0].id } });
+    }
+  }
+
+  selectMultiRonUser(id: number) {
+    this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: id } });
+  }
+
+  yakuSelect(evt: { id: number }) {
+    if (hasYaku(this.state, evt.id)) {
+      this.dispatch({ type: REMOVE_YAKU, payload: { id: evt.id, winner: this.state.multironCurrentWinner } });
+    } else {
+      this.dispatch({ type: ADD_YAKU, payload: { id: evt.id, winner: this.state.multironCurrentWinner } });
+    }
+  }
+
+  private _initView() {
+    this._viewportHeight = (window.innerHeight - 50) + 'px'; // 50 is height of navbar;
+    this._tabsHeight = parseInt((window.innerWidth * 0.10).toString(), 10) + 'px'; // Should equal to margin-left of buttons & scroller-wrap
+  }
+  updateAfterScroll() { this._updateAfterScrollThrottled(); }
 
   private _makeLinks() {
     if (this._simpleLink) {

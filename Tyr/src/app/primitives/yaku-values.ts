@@ -79,7 +79,7 @@ handValues.forEach((item) => {
   }
 });
 
-export function getFixedFu(yakuList: Y[], outcome: "ron" | "tsumo" | "multiron" | "chombo" | "draw" | "abort" | "nagashi"): number[] {
+export function getFixedFu(yakuList: Y[], outcome: 'ron' | 'tsumo' | 'multiron' | 'chombo' | 'draw' | 'abort' | 'nagashi'): number[] {
   if (yakuList.indexOf(Y.CHIITOITSU) !== -1) {
     return [25];
   }

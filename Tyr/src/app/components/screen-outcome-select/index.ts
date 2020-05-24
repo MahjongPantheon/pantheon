@@ -18,46 +18,40 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
-import { AppState } from '../../primitives/appstate';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
-import { MetrikaService } from '../../services/metrika';
+import { IAppState } from '../../services/store/interfaces';
+import {
+  AppActionTypes,
+  GOTO_NEXT_SCREEN,
+  INIT_BLANK_OUTCOME, TRACK_SCREEN_ENTER,
+  UPDATE_CURRENT_GAMES_INIT
+} from '../../services/store/actions/interfaces';
+import { Outcome } from '../../interfaces/common';
+import { Dispatch } from 'redux';
 
 @Component({
   selector: 'screen-outcome-select',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class OutcomeSelectScreen extends I18nComponent {
-  @Input() state: AppState;
-  constructor(
-    public i18n: I18nService,
-    private metrika: MetrikaService
-  ) { super(i18n); }
+export class OutcomeSelectScreenComponent extends I18nComponent implements OnInit {
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
+  constructor(public i18n: I18nService) { super(i18n); }
 
   ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-outcome-select' });
+    this.dispatch({ type: TRACK_SCREEN_ENTER, payload: 'screen-outcome-select' });
+    this.dispatch({ type: UPDATE_CURRENT_GAMES_INIT }); // update state before entering new data to prevent "Wrong round" errors.
+    // This still prevents errors when simultaneous submission happens, because two or more players update
+    // their data first, and only then add new data. This will lead to error if more than one player enter
+    // data simultaneously.
   }
 
-  get abortsAllowed() {
-    return this.state.getGameConfig('withAbortives');
-  }
-
-  get multironAllowed() {
-    return !this.state.getGameConfig('withAtamahane');
-  }
-
-  get nagashiAllowed() {
-    return this.state.getGameConfig('withNagashiMangan');
-  }
-
-  get screenEnabled() {
-    return !this.state.isTimerWaiting();
-  }
-
-  select(outcome) {
-    this.state.initBlankOutcome(outcome);
-    this.state.nextScreen();
+  select(outcome: Outcome) {
+    this.dispatch({ type: INIT_BLANK_OUTCOME, payload: outcome });
+    this.dispatch({ type: GOTO_NEXT_SCREEN });
   }
 }
 

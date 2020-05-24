@@ -18,75 +18,77 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import { AppState } from '../../primitives/appstate';
-import { RiichiApiService } from '../../services/riichiApi';
-import { MetrikaService } from '../../services/metrika';
-import { I18nComponent, I18nService } from '../auxiliary-i18n';
-import { IDB } from '../../services/idb';
-import jsQR from 'jsqr';
-const crc32 = require('crc/crc32').default;
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {I18nComponent, I18nService} from '../auxiliary-i18n';
+import {IDB} from '../../services/idb';
+import {IAppState} from '../../services/store/interfaces';
+import {Dispatch} from 'redux';
+import {
+  AppActionTypes,
+  CONFIRM_REGISTRATION_INIT,
+  RESET_REGISTRATION_ERROR,
+  TRACK_SCREEN_ENTER
+} from '../../services/store/actions/interfaces';
+import {QrService} from '../../services/qr';
 
 @Component({
   selector: 'screen-login',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class LoginScreen extends I18nComponent implements OnInit {
+export class LoginScreenComponent extends I18nComponent implements OnInit {
   public _error = false;
 
   public _qrMode = false;
   public _loadingQrMessageShown = true;
-  public _qrdata = '';
 
   private _pinOrig = '';
   private _pinView = '';
   private _timer = null;
-  private _video: HTMLVideoElement | null = null;
 
-  @Input() state: AppState;
-  @Input() api: RiichiApiService;
-  @Input() loading: boolean;
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
+
   @ViewChild('cnv', {static: false}) canvas: ElementRef;
 
   constructor(
     public i18n: I18nService,
     private storage: IDB,
-    private metrika: MetrikaService
+    private qr: QrService,
+    private ref: ChangeDetectorRef
   ) { super(i18n); }
 
-
   ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-login' });
+    this.dispatch({ type: TRACK_SCREEN_ENTER, payload: 'screen-login' });
+    this.qr.onReadyStateChange((loading) => {
+      this._loadingQrMessageShown = loading;
+      this.ref.markForCheck();
+    });
+    this.qr.onPinReceived((pin) => {
+      this._pinOrig = pin;
+      this._pinView = '*'.repeat(this._pinOrig.length);
+      this._qrMode = false;
+      this.submit();
+    });
   }
 
-  submit() {
-    this.metrika.track(MetrikaService.LOAD_STARTED, { type: 'screen-login', request: 'confirmRegistration' });
-    this.state.loginWithPin(this._pinOrig)
-      .then(() => {
-        this._error = false;
-        this.metrika.track(MetrikaService.LOAD_SUCCESS, {
-          type: 'screen-login',
-          request: 'confirmRegistration'
-        });
-        this.state.reinit();
-      }).catch((e) => {
-        this._error = true;
-        this.metrika.track(MetrikaService.LOAD_ERROR, {
-          type: 'screen-login',
-          request: 'confirmRegistration',
-          message: e.toString()
-        });
-      });
-  }
+  submit() { this.dispatch({ type: CONFIRM_REGISTRATION_INIT, payload: this._pinOrig }); }
 
   reset() {
-    this._error = false;
     this._pinOrig = this._pinView = '';
+    this.dispatch({ type: RESET_REGISTRATION_ERROR });
   }
 
   press(digit: string) {
-    this._error = false;
     if (this._pinOrig.length > 10) {
       return;
     }
@@ -113,85 +115,11 @@ export class LoginScreen extends I18nComponent implements OnInit {
 
   scanQr() {
     if (this._qrMode) {
-      this._stopVideo();
-      this._video.pause();
-      this._video = null;
+      this.qr.forceStop();
       this._qrMode = false;
     } else {
       this._qrMode = true;
-      setTimeout(this._scanQr.bind(this), 0);
+      setTimeout(() => this.qr.scanQr(this.canvas.nativeElement), 0);
     }
   }
-
-  _stopVideo() {
-    if (!this._video) {
-      return;
-    }
-
-    (this._video.srcObject as MediaStream).getTracks().forEach(function(track) {
-      track.stop();
-    });
-  }
-
-  _scanQr() {
-    this._video = document.createElement('video');
-    let canvasElement: HTMLCanvasElement = this.canvas.nativeElement;
-    let canvas = canvasElement.getContext('2d');
-
-    // Use facingMode: environment to attempt to get the front camera on phones
-    navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: 'environment' } })
-      .then((stream) => {
-        this._video.srcObject = stream;
-        this._video.setAttribute('playsinline', 'true'); // required to tell iOS safari we don't want fullscreen
-        this._video.play();
-        requestAnimationFrame(tick);
-      });
-
-    const tick = () => {
-      this._loadingQrMessageShown = true;
-      if (this._video.readyState === this._video.HAVE_ENOUGH_DATA) {
-        this._loadingQrMessageShown = false;
-        canvasElement.hidden = false;
-        canvasElement.height = this._video.videoHeight;
-        canvasElement.width = this._video.videoWidth;
-        canvas.drawImage(this._video, 0, 0, canvasElement.width, canvasElement.height);
-        let imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-        let code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: 'dontInvert',
-        });
-
-        if (code) {
-          let pincode = '';
-          let data = code.data.match(/^https?:\/\/(.*?)\/(\d+)_([\da-f]+)$/i);
-          if (data) {
-            if (data[1].split(':')[0] === 'localhost') { // local debug
-              pincode = data[2];
-            } else {
-              if (
-                data[1].split(':')[0] === location.host &&
-                  crc32(data[2]).toString(16).toLowerCase() === data[3].toLowerCase()
-              ) {
-                pincode = data[2];
-              }
-            }
-          }
-
-          if (pincode.length > 0) {
-            this._pinOrig = pincode;
-            this._pinView = '*'.repeat(this._pinOrig.length);
-            this._qrMode = false;
-            this._stopVideo();
-            this._video.pause();
-            this.submit();
-            return;
-          }
-        } else {
-          this._qrdata = '';
-        }
-      }
-      requestAnimationFrame(tick);
-    }
-  }
-
 }

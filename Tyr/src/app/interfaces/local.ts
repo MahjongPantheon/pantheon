@@ -62,6 +62,15 @@ export interface LWinItem {
   yaku: YakuId[];
 }
 
+export interface LSessionOverview {
+  currentRound: number;
+  riichiOnTable: number;
+  honba: number;
+  yellowZoneAlreadyPlayed: boolean;
+  tableIndex: number;
+  players: [LUserWithScore, LUserWithScore, LUserWithScore, LUserWithScore];
+}
+
 export interface LGameConfig {
   yakuWithPao: YakuId[];
   allowedYaku: YakuId[];

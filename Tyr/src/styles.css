@@ -318,6 +318,11 @@ button.discolored:active {
 
 /* ---- Riichi-bet preloader :) ----- */
 
+@keyframes appear-slow {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 .inline-preloader {
     position: absolute;
     left: 0;
@@ -333,6 +338,10 @@ button.discolored:active {
     background-color: #ccc;
     border: 1px solid #333;
     border-radius: 4px;
+    opacity: 0;
+    animation-name: appear-slow;
+    animation-duration: 0.5s;
+    animation-delay: 0.2s;
 }
 
 .inline-preloader:after {

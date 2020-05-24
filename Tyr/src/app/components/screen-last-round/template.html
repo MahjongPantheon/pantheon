@@ -17,32 +17,29 @@
     You should have received a copy of the GNU General Public License
     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div
-  class="inline-preloader"
-  *ngIf="!_dataReady"></div>
-<div class="wrap scroller-wrap" *ngIf="_dataReady && _error">
+<div class="inline-preloader" *ngIf="_loading"></div>
+<div class="wrap scroller-wrap" *ngIf="!_loading && _error">
   <div style="text-align: center; padding: 30% 0;">{{_error}}</div>
 </div>
-<div class="wrap scroller-wrap" *ngIf="_dataReady && !_error">
+<div class="wrap scroller-wrap" *ngIf="!_loading && !!state.lastRoundOverview && !_error">
   <div class="table-info">
     <div class="round-info">
-      <div class="outcome-name">{{getOutcomeName()}}</div>
+      <div class="outcome-name">{{outcomeName}}</div>
       <span class="tenbou riichi"></span>
-      <div class="indicator">{{_data.riichi}}</div>
+      <div class="indicator">{{state.lastRoundOverview.riichi}}</div>
       <span class="tenbou honba"></span>
-      <div class="indicator">{{_data.honba}}</div>
+      <div class="indicator">{{state.lastRoundOverview.honba}}</div>
     </div>
-    <ul *ngIf="_data.outcome == 'ron' || _data.outcome == 'tsumo' || _data.outcome == 'multiron'">
-      <li *ngFor="let win of getWins()">
+    <ul *ngIf="state.lastRoundOverview.outcome == 'ron' || state.lastRoundOverview.outcome == 'tsumo' || state.lastRoundOverview.outcome == 'multiron'">
+      <li *ngFor="let win of wins">
         <b>{{win.winner}}</b>: {{win | makeHandDescription}}
       </li>
     </ul>
   </div>
   <!-- Payments scheme -->
-  <confirmation-scheme
-      *ngIf="_dataReady"
-      [players]="this.state.getPlayers()"
-      [currentPlayerId]="this.state.getCurrentPlayerId()"
-      [overview]="_data"
-  ></confirmation-scheme>
+  <round-preview-scheme
+      *ngIf="!_loading"
+      [state]="state"
+      [purpose]="_purpose"
+  ></round-preview-scheme>
 </div>

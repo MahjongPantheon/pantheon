@@ -180,7 +180,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'yaku'      => '2'
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundData));
+        $this->assertNotEmpty($session->addRound($hash, $roundData));
     }
 
     public function testAddRoundTsumo()
@@ -209,7 +209,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'yaku'      => '3'
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundData));
+        $this->assertNotEmpty($session->addRound($hash, $roundData));
     }
 
     public function testAddRoundDraw()
@@ -230,7 +230,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'tempai'    => ''
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundData));
+        $this->assertNotEmpty($session->addRound($hash, $roundData));
     }
 
     public function testAddRoundAbortiveDraw()
@@ -250,7 +250,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'riichi'    => ''
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundData));
+        $this->assertNotEmpty($session->addRound($hash, $roundData));
     }
 
     public function testAddRoundChombo()
@@ -270,7 +270,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'loser_id'  => 2,
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundData));
+        $this->assertNotEmpty($session->addRound($hash, $roundData));
     }
 
     public function testAddRoundNagashi()
@@ -292,7 +292,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'nagashi'   => '1'
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundData));
+        $this->assertNotEmpty($session->addRound($hash, $roundData));
 
         $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
 
@@ -320,7 +320,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'nagashi'   => '2'
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundData));
+        $this->assertNotEmpty($session->addRound($hash, $roundData));
 
         $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
 
@@ -456,21 +456,21 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'tempai'    => ''
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundData)); // 1e
+        $this->assertNotEmpty($session->addRound($hash, $roundData)); // 1e
         $roundData['round_index'] ++ && $roundData['honba'] ++;
-        $this->assertTrue($session->addRound($hash, $roundData)); // 2e
+        $this->assertNotEmpty($session->addRound($hash, $roundData)); // 2e
         $roundData['round_index'] ++ && $roundData['honba'] ++;
-        $this->assertTrue($session->addRound($hash, $roundData)); // 3e
+        $this->assertNotEmpty($session->addRound($hash, $roundData)); // 3e
         $roundData['round_index'] ++ && $roundData['honba'] ++;
-        $this->assertTrue($session->addRound($hash, $roundData)); // 4e
+        $this->assertNotEmpty($session->addRound($hash, $roundData)); // 4e
         $roundData['round_index'] ++ && $roundData['honba'] ++;
-        $this->assertTrue($session->addRound($hash, $roundData)); // 1s
+        $this->assertNotEmpty($session->addRound($hash, $roundData)); // 1s
         $roundData['round_index'] ++ && $roundData['honba'] ++;
-        $this->assertTrue($session->addRound($hash, $roundData)); // 2s
+        $this->assertNotEmpty($session->addRound($hash, $roundData)); // 2s
         $roundData['round_index'] ++ && $roundData['honba'] ++;
-        $this->assertTrue($session->addRound($hash, $roundData)); // 3s
+        $this->assertNotEmpty($session->addRound($hash, $roundData)); // 3s
         $roundData['round_index'] ++ && $roundData['honba'] ++;
-        $this->assertTrue($session->addRound($hash, $roundData)); // 4s, should auto-finish here
+        $this->assertNotEmpty($session->addRound($hash, $roundData)); // 4s, should auto-finish here
 
         $caught = false;
         try {
@@ -525,7 +525,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'riichi'    => '1,3',
             'tempai'    => '1,3'
         ];
-        $this->assertTrue($sessionMdl->addRound($hash, $round1Data)); // here it should be 28500/30500/28500/30500 with 2 riichi on bet
+        $this->assertNotEmpty($sessionMdl->addRound($hash, $round1Data)); // here it should be 28500/30500/28500/30500 with 2 riichi on bet
 
         // save current state for check
         /** @var SessionPrimitive $session */
@@ -547,16 +547,16 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'kanuradora' => 1,
             'yaku'      => '3'
         ];
-        $this->assertTrue($sessionMdl->addRound($hash, $round2Data));
+        $this->assertNotEmpty($sessionMdl->addRound($hash, $round2Data));
 
         /** @var SessionPrimitive $session */
         list($session) = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
         $this->assertEquals(
-            '{"_scores":{"1":29400,"2":32800,"3":29900,"4":27900},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":"tsumo"}',
+            '{"_scores":{"1":29400,"2":32800,"3":29900,"4":27900},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":"tsumo","_isFinished":false}',
             $session->getCurrentState()->toJson()
         );
 
-        $this->assertTrue($sessionMdl->dropLastRound($hash));
+        $this->assertNotEmpty($sessionMdl->dropLastRound($hash));
 
         /** @var SessionPrimitive $session */
         list($session) = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
@@ -595,7 +595,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'yaku'      => '32'
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundYakumanData)); //1e -> 2e
+        $this->assertNotEmpty($session->addRound($hash, $roundYakumanData)); //1e -> 2e
 
         $roundIndex = 2;
         $drawCount = 6; // 2e -> 4s
@@ -637,7 +637,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'yaku'      => '36' //menzentsumo
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundTsumoData)); // 1e -> 2e
+        $this->assertNotEmpty($session->addRound($hash, $roundTsumoData)); // 1e -> 2e
 
         $roundIndex = 2;
         $drawCount = 7; // 2e -> 1w
@@ -726,7 +726,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(10, $sessionPrimitive->getCurrentState()->getRound());
         $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
 
-        $this->assertTrue($session->addRound($hash, $roundYakumanData)); //2e -> 3e
+        $this->assertNotEmpty($session->addRound($hash, $roundYakumanData)); //2e -> 3e
 
         $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
         $this->assertEquals(11, $sessionPrimitive->getCurrentState()->getRound());
@@ -744,7 +744,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         ];
 
         for ($i = 0; $i < $drawCount; $i++) {
-            $this->assertTrue($session->addRound($hash, $roundDrawData));
+            $this->assertNotEmpty($session->addRound($hash, $roundDrawData));
             $roundDrawData['round_index'] ++ && $roundDrawData['honba'] ++;
         }
     }
@@ -765,13 +765,13 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'loser_id'  => 1,
         ];
 
-        $this->assertTrue($session->addRound($hash, $roundAbortData));
+        $this->assertNotEmpty($session->addRound($hash, $roundAbortData));
         $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
 
         $this->assertEquals($roundIndex, $sessionPrimitive->getCurrentState()->getRound());
         $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
 
-        $this->assertTrue($session->addRound($hash, $roundChomboData));
+        $this->assertNotEmpty($session->addRound($hash, $roundChomboData));
         $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
 
         $this->assertEquals($roundIndex, $sessionPrimitive->getCurrentState()->getRound());
@@ -798,7 +798,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $roundIndex += $drawCount;
 
         // One renchan round
-        $this->assertTrue($session->addRound($hash, [
+        $this->assertNotEmpty($session->addRound($hash, [
             'round_index' => $roundIndex,
             'honba' => 4,
             'outcome'   => 'draw',

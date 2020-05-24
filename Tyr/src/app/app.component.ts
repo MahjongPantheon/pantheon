@@ -18,14 +18,16 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, NgZone, ApplicationRef } from '@angular/core';
-import { AppState } from './primitives/appstate';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { RiichiApiService } from './services/riichiApi';
 import { MetrikaService } from './services/metrika';
 import { I18nService } from './services/i18n';
-import { environment } from '../environments/environment';
 import { IDB } from './services/idb';
 import { ThemeService } from './services/themes/service';
+import { Store } from './services/store';
+import { HttpClient } from '@angular/common/http';
+import { INIT_STATE, STARTUP_WITH_AUTH } from './services/store/actions/interfaces';
+import { IAppState } from './services/store/interfaces';
 
 @Component({
   selector: 'riichi-app',
@@ -33,25 +35,21 @@ import { ThemeService } from './services/themes/service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public state: AppState;
+  public store: Store;
+  public state: IAppState;
   constructor(
-    private appRef: ApplicationRef,
+    private ref: ChangeDetectorRef,
     private zone: NgZone,
     private api: RiichiApiService,
     private metrika: MetrikaService,
+    private http: HttpClient,
     private i18n: I18nService,
     private storage: IDB,
     private themeService: ThemeService
   ) {
 
-    this.state = new AppState(
-      this.zone,
-      this.api,
-      this.i18n,
-      this.storage,
-      this.metrika
-    );
-
+    this.store = new Store(this.http, this.i18n);
+    this.state = this.store.redux.getState();
     this.metrika.track(MetrikaService.APP_INIT);
 
     const userTheme = this.storage.get('currentTheme');
@@ -59,11 +57,11 @@ export class AppComponent {
       this.themeService.setTheme(userTheme);
     }
 
-    if (this.state.isIos) {
+    if (this.store.redux.getState().isIos) {
       document.addEventListener(
         'dblclick',
         (e: any) => {
-          e.preventDefault()
+          e.preventDefault();
           e.stopPropagation();
           return false;
         },
@@ -71,10 +69,16 @@ export class AppComponent {
       );
     }
 
-    window.__state = this.state; // for great debug
+    this.store.subscribe((newState: IAppState) => {
+      this.state = newState;
+      this.ref.markForCheck(); // trigger full change detection
+    });
+
     this.i18n.init((localeName: string) => {
       this.metrika.track(MetrikaService.I18N_INIT, { localeName });
-      this.state.init();
+      this.store.dispatch({ type: INIT_STATE });
+      this.api.setCredentials(this.storage.get('authToken') || '');
+      this.store.dispatch({ type: STARTUP_WITH_AUTH, payload: this.storage.get('authToken') || '' });
       this.storage.set('currentLanguage', localeName);
     }, (error: any) => console.error(error));
   }

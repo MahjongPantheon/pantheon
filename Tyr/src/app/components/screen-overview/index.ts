@@ -18,165 +18,83 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Component, Input } from '@angular/core';
-import { AppState } from '../../primitives/appstate';
-import { MetrikaService } from '../../services/metrika';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Player } from '../../interfaces/common';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
+import {
+  AppActionTypes,
+  SHOW_LAST_RESULTS,
+  SHOW_LAST_ROUND,
+  SHOW_OTHER_TABLES_LIST,
+  START_NEW_GAME, TOGGLE_OVERVIEW_DIFFBY, TRACK_SCREEN_ENTER,
+  UPDATE_CURRENT_GAMES_INIT
+} from '../../services/store/actions/interfaces';
+import { getCurrentTimerZone } from '../../services/store/selectors/mimirSelectors';
+import {
+  getChomboKamicha,
+  getChomboSelf, getChomboShimocha, getChomboToimen,
+  getScoreKamicha, getScoreSelf, getScoreShimocha,
+  getScoreToimen, getTimeRemaining
+} from '../../services/store/selectors/overviewSelectors';
+import {
+  getSelf, getShimocha, getToimen, getKamicha,
+  getSeatSelf, getSeatShimocha, getSeatToimen, getSeatKamicha
+} from 'app/services/store/selectors/roundPreviewSchemeSelectors';
 
 @Component({
   selector: 'screen-overview',
   templateUrl: 'template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class OverviewScreen extends I18nComponent {
-  @Input() state: AppState;
-  @Input() players: [Player, Player, Player, Player];
-  @Input('loading') _loading: boolean;
-  @Input() currentGameHash: string;
-  @Input() currentRound: number;
-  constructor(
-    public i18n: I18nService,
-    private metrika: MetrikaService
-  ) { super(i18n); }
+export class OverviewScreenComponent extends I18nComponent implements OnInit {
+  @Input() state: IAppState;
+  @Input() dispatch: Dispatch<AppActionTypes>;
+  constructor(public i18n: I18nService) { super(i18n); }
 
-  self: Player;
-  shimocha: Player;
-  toimen: Player;
-  kamicha: Player;
+  get _loading(): boolean { return this.state.loading.overview ||  this.state.loading.games || !this.state.gameOverviewReady; }
 
-  seatSelf: string;
-  seatShimocha: string;
-  seatToimen: string;
-  seatKamicha: string;
+  get self(): Player { return getSelf(this.state, 'overview'); }
+  get shimocha(): Player { return getShimocha(this.state, 'overview'); }
+  get toimen(): Player { return getToimen(this.state, 'overview'); }
+  get kamicha(): Player { return getKamicha(this.state, 'overview'); }
 
-  _diffedBy: string = null;
+  get seatSelf(): string { return getSeatSelf(this.state, 'overview'); }
+  get seatShimocha(): string { return getSeatShimocha(this.state, 'overview'); }
+  get seatToimen(): string { return getSeatToimen(this.state, 'overview'); }
+  get seatKamicha(): string { return getSeatKamicha(this.state, 'overview'); }
 
-  get greeting() {
-    return this.i18n._t('Hello, %1!', [this.state.playerName()]);
-  }
+  get scoreSelf(): string { return getScoreSelf(this.state, this.state.players); }
+  get scoreShimocha(): string { return getScoreShimocha(this.state, this.state.players); }
+  get scoreToimen(): string { return getScoreToimen(this.state, this.state.players); }
+  get scoreKamicha(): string { return getScoreKamicha(this.state, this.state.players); }
 
-  ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-overview' });
-  }
+  get chomboSelf(): string { return getChomboSelf(this.state, this.state.players); }
+  get chomboShimocha(): string { return getChomboShimocha(this.state, this.state.players); }
+  get chomboToimen(): string { return getChomboToimen(this.state, this.state.players); }
+  get chomboKamicha(): string { return getChomboKamicha(this.state, this.state.players); }
 
-  getScore(who) {
-    let score = this[who].score;
-    if (!this._diffedBy) {
-      return score;
-    }
+  get timeRemaining() { return getTimeRemaining(this.state); }
 
-    if (this._diffedBy && this._diffedBy !== who) {
-      score -= this[this._diffedBy].score;
-    }
-    return (score > 0 && this._diffedBy !== who) ? '+' + score : score;
-  }
+  get redZone() { return this.state.gameConfig.useTimer && getCurrentTimerZone(this.state) === 'redZone'; }
+  get yellowZone() { return this.state.gameConfig.useTimer && getCurrentTimerZone(this.state) === 'yellowZone'; }
+  get showNewGame(): boolean { return !this.state.gameConfig.autoSeating && !this.state.isUniversalWatcher; }
+  get showStatButton(): boolean { return !!this.state.gameConfig.eventStatHost && !this.state.isUniversalWatcher; }
 
-  getChomboCount(who) {
-    return Math.abs(
-      (this[who].penalties || 0) /
-      this.state.getGameConfig('chomboPenalty')
-    ) || '';
-  }
+  get greeting() { return this.i18n._t('Hello, %1!', [this.state.currentPlayerDisplayName]); }
 
-  get timeRemaining() {
-    if (!this.state.getGameConfig('useTimer')) {
-      return '';
-    }
-
-    if (this.state.isTimerWaiting()) {
-      return '⏳';
-    }
-
-    let min = Math.floor(this.state.getTimeRemaining() / 60);
-    let sec = this.state.getTimeRemaining() % 60;
-    return min.toString() + ':' + (
-      (sec < 10) ? ("0" + sec.toString()) : sec.toString()
-    );
-  }
-
-  get redZone() {
-    return this.state.getGameConfig('useTimer') && this.state.getCurrentTimerZone() === 'redZone';
-  }
-
-  get yellowZone() {
-    return this.state.getGameConfig('useTimer') && this.state.getCurrentTimerZone() === 'yellowZone';
-  }
-
-  get showNewGame(): boolean {
-    return !this.state.getGameConfig('autoSeating') && !this.isUniversalWatcher;
-  }
-
-  get showStatButton(): boolean {
-    return !!this.state.getGameConfig('eventStatHost') && !this.isUniversalWatcher;
-  }
-
-  newGame() {
-    this.state.newGame();
-  }
-
-  lastResults() {
-    this.state.showLastResults();
-  }
+  ngOnInit() { this.dispatch({ type: TRACK_SCREEN_ENTER, payload: 'screen-overview' }); }
+  newGame() { this.dispatch({ type: START_NEW_GAME }); }
+  lastResults() { this.dispatch({ type: SHOW_LAST_RESULTS }); }
+  reloadOverview() { this.dispatch({ type: UPDATE_CURRENT_GAMES_INIT }); }
+  viewLastRound() { this.dispatch({ type: SHOW_LAST_ROUND }); }
+  playerClick(who: IAppState['overviewDiffBy']) { this.dispatch( { type: TOGGLE_OVERVIEW_DIFFBY, payload: who }); }
+  otherTables() { this.dispatch({ type: SHOW_OTHER_TABLES_LIST }); }
 
   gotoStat() {
-    window.open(`http://${this.state.getGameConfig('eventStatHost')}/last/`);
-  }
-
-  reloadOverview() {
-    this.state.updateCurrentGames();
-  }
-
-  viewLastRound() {
-    this.state.showLastRound();
-  }
-
-  playerClick(who: string) {
-    if (this._diffedBy === who) {
-      this._diffedBy = null;
-    } else {
-      this._diffedBy = who;
-    }
-  }
-
-  otherTables() {
-    this.state.showOtherTablesList();
-  }
-
-  ngOnChanges() {
-    if (!this.players || this.players.length !== 4) {
-      return;
-    }
-
-    let players: Player[] = [].concat(this.players);
-    let seating = ['東', '南', '西', '北'];
-    for (let i = 1; i < this.currentRound; i++) {
-      seating = [seating.pop()].concat(seating);
-    }
-
-    const current = this.state.getCurrentPlayerId();
-    for (let i = 0; i < 4; i++) {
-      if (players[0].id === current) {
-        break;
-      }
-
-      players = players.slice(1).concat(players[0]);
-      seating = seating.slice(1).concat(seating[0]);
-    }
-
-    this.self = players[0];
-    this.shimocha = players[1];
-    this.toimen = players[2];
-    this.kamicha = players[3];
-
-    this.seatSelf = seating[0];
-    this.seatShimocha = seating[1];
-    this.seatToimen = seating[2];
-    this.seatKamicha = seating[3];
-  }
-
-  get isUniversalWatcher() {
-    return this.state.isUniversalWatcher();
+    window.open(`https://${this.state.gameConfig.eventStatHost}/last/`);
   }
 }
 
