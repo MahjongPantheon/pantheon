@@ -100,7 +100,6 @@ export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) =>
 
 function loginWithRetry(pin: string, api: RiichiApiService, dispatch: Dispatch, next: Dispatch) {
   next({ type: CONFIRM_REGISTRATION_INIT });
-  // this.metrika.track(MetrikaService.LOAD_STARTED, { type: 'screen-login', request: 'confirmRegistration' });
 
   let retriesCount = 0;
   const runWithRetry = () => {
@@ -108,10 +107,6 @@ function loginWithRetry(pin: string, api: RiichiApiService, dispatch: Dispatch, 
       .then((authToken: string) => {
         retriesCount = 0;
         dispatch({ type: CONFIRM_REGISTRATION_SUCCESS, payload: authToken });
-        // this.metrika.track(MetrikaService.LOAD_SUCCESS, {
-        //   type: 'screen-login',
-        //   request: 'confirmRegistration'
-        // });
       })
       .catch((e) => {
         retriesCount++;
@@ -122,11 +117,6 @@ function loginWithRetry(pin: string, api: RiichiApiService, dispatch: Dispatch, 
 
         retriesCount = 0;
         dispatch({ type: CONFIRM_REGISTRATION_FAIL, payload: e });
-        // this.metrika.track(MetrikaService.LOAD_ERROR, {
-        //   type: 'screen-login',
-        //   request: 'confirmRegistration',
-        //   message: e.toString()
-        // });
       });
   };
 

@@ -27,17 +27,17 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { MetrikaService } from '../../services/metrika';
-import { I18nComponent, I18nService } from '../auxiliary-i18n';
-import { IDB } from '../../services/idb';
-import { IAppState } from '../../services/store/interfaces';
-import { Dispatch } from 'redux';
+import {I18nComponent, I18nService} from '../auxiliary-i18n';
+import {IDB} from '../../services/idb';
+import {IAppState} from '../../services/store/interfaces';
+import {Dispatch} from 'redux';
 import {
   AppActionTypes,
   CONFIRM_REGISTRATION_INIT,
-  RESET_REGISTRATION_ERROR
+  RESET_REGISTRATION_ERROR,
+  TRACK_SCREEN_ENTER
 } from '../../services/store/actions/interfaces';
-import { QrService } from '../../services/qr';
+import {QrService} from '../../services/qr';
 
 @Component({
   selector: 'screen-login',
@@ -63,13 +63,12 @@ export class LoginScreenComponent extends I18nComponent implements OnInit {
   constructor(
     public i18n: I18nService,
     private storage: IDB,
-    private metrika: MetrikaService,
     private qr: QrService,
     private ref: ChangeDetectorRef
   ) { super(i18n); }
 
   ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-login' });
+    this.dispatch({ type: TRACK_SCREEN_ENTER, payload: 'screen-login' });
     this.qr.onReadyStateChange((loading) => {
       this._loadingQrMessageShown = loading;
       this.ref.markForCheck();

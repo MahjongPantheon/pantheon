@@ -53,10 +53,7 @@ export class NewGameScreenComponent implements OnInit {
 
   get playersValid() { return playersValid(this.state); }
 
-  ngOnInit() {
-    this.dispatch({ type: GET_ALL_PLAYERS_INIT });
-  }
-
+  ngOnInit() { this.dispatch({ type: GET_ALL_PLAYERS_INIT });}
   randomize() { this.dispatch( { type: RANDOMIZE_NEWGAME_PLAYERS } ); }
   selectSelf(id: string) { this.dispatch( { type: SELECT_NEWGAME_PLAYER_SELF, payload: parseInt(id, 10) } ); }
   selectShimocha(id: string) { this.dispatch( { type: SELECT_NEWGAME_PLAYER_SHIMOCHA, payload: parseInt(id, 10) } ); }

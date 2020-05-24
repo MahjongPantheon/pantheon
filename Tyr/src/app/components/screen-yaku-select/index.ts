@@ -28,24 +28,23 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
-import {YakuId} from '../../primitives/yaku';
-import {throttle} from 'lodash';
-import {I18nComponent, I18nService} from '../auxiliary-i18n';
-import {MetrikaService} from '../../services/metrika';
-import {IAppState} from '../../services/store/interfaces';
-import {Dispatch} from 'redux';
+import { YakuId } from '../../primitives/yaku';
+import { throttle } from 'lodash';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
 import {
   ADD_YAKU,
   AppActionTypes,
   INIT_REQUIRED_YAKU,
   REMOVE_YAKU,
-  SELECT_MULTIRON_WINNER
+  SELECT_MULTIRON_WINNER, TRACK_SCREEN_ENTER
 } from '../../services/store/actions/interfaces';
-import {getWinningUsers, hasYaku} from '../../services/store/selectors/mimirSelectors';
-import {getDora, getFu, getHan} from '../../services/store/selectors/hanFu';
-import {getSelectedYaku} from '../../services/store/selectors/yaku';
-import {getDisabledYaku, getYakuList, shouldShowTabs} from '../../services/store/selectors/screenYakuSelectors';
-import {getOutcomeName} from '../../services/store/selectors/commonSelectors';
+import { getWinningUsers, hasYaku } from '../../services/store/selectors/mimirSelectors';
+import { getDora, getFu, getHan } from '../../services/store/selectors/hanFu';
+import { getSelectedYaku } from '../../services/store/selectors/yaku';
+import { getDisabledYaku, getYakuList, shouldShowTabs } from '../../services/store/selectors/screenYakuSelectors';
+import { getOutcomeName } from '../../services/store/selectors/commonSelectors';
 
 @Component({
   selector: 'screen-yaku-select',
@@ -89,13 +88,13 @@ export class YakuSelectScreenComponent extends I18nComponent implements OnInit {
   han(id: number) { return getHan(this.state, id) + getDora(this.state, id); }
   isSelected(id: YakuId) { return getSelectedYaku(this.state).indexOf(id) !== -1; }
 
-  constructor(public i18n: I18nService, private metrika: MetrikaService) {
+  constructor(public i18n: I18nService) {
     super(i18n);
     this._initView();
   }
 
   ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-yaku-select' });
+    this.dispatch({ type: TRACK_SCREEN_ENTER, payload: 'screen-yaku-select' });
     // next action sets winner for ron/tsumo too
     this.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: getWinningUsers(this.state)[0].id } });
     this.dispatch({ type: INIT_REQUIRED_YAKU });

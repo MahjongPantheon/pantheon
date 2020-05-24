@@ -18,9 +18,8 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Player } from '../../interfaces/common';
-import { MetrikaService } from '../../services/metrika';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IAppState } from '../../services/store/interfaces';
 import { Dispatch } from 'redux';
@@ -112,7 +111,6 @@ export class OtherTableScreenComponent extends I18nComponent implements OnInit, 
 
   constructor(
     public i18n: I18nService,
-    private metrika: MetrikaService,
     private ref: ChangeDetectorRef
   ) { super(i18n); }
 
@@ -128,7 +126,6 @@ export class OtherTableScreenComponent extends I18nComponent implements OnInit, 
 
   ngOnInit() {
     this.dispatch({ type: GET_OTHER_TABLE_INIT, payload: this.state.currentOtherTableHash });
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-table' });
     this._timer = setInterval(() => this.dispatch({ type: GET_OTHER_TABLE_RELOAD }), 5000 + (300 * Math.random()));
     setTimeout(() => {
       this._initialized = true;

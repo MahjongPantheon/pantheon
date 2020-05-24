@@ -18,11 +18,10 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {MetrikaService} from '../../services/metrika';
-import {I18nComponent, I18nService} from '../auxiliary-i18n';
-import {IAppState} from '../../services/store/interfaces';
-import {Dispatch} from 'redux';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
 import {
   AppActionTypes,
   GET_OTHER_TABLES_LIST_INIT,
@@ -40,15 +39,11 @@ import {
 export class OtherTablesListScreenComponent extends I18nComponent implements OnInit, OnDestroy {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
+  constructor(public i18n: I18nService) { super(i18n); }
   private _timer;
-  constructor(
-    public i18n: I18nService,
-    private metrika: MetrikaService
-  ) { super(i18n); }
 
   ngOnInit() {
     this.dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-other-tables-list' });
     this.dispatch({ type: GET_OTHER_TABLES_LIST_INIT });
     this._timer = setInterval(() => this.dispatch({ type: GET_OTHER_TABLES_LIST_RELOAD }), 5000 + (300 * Math.random()));
   }

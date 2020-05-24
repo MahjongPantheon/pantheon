@@ -18,21 +18,20 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {MetrikaService} from '../../services/metrika';
-import {Player} from '../../interfaces/common';
-import {I18nComponent, I18nService} from '../auxiliary-i18n';
-import {IAppState} from '../../services/store/interfaces';
-import {Dispatch} from 'redux';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Player } from '../../interfaces/common';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
 import {
   AppActionTypes,
   SHOW_LAST_RESULTS,
   SHOW_LAST_ROUND,
   SHOW_OTHER_TABLES_LIST,
-  START_NEW_GAME, TOGGLE_OVERVIEW_DIFFBY,
+  START_NEW_GAME, TOGGLE_OVERVIEW_DIFFBY, TRACK_SCREEN_ENTER,
   UPDATE_CURRENT_GAMES_INIT
 } from '../../services/store/actions/interfaces';
-import {getCurrentTimerZone} from '../../services/store/selectors/mimirSelectors';
+import { getCurrentTimerZone } from '../../services/store/selectors/mimirSelectors';
 import {
   getChomboKamicha,
   getChomboSelf, getChomboShimocha, getChomboToimen,
@@ -53,11 +52,7 @@ import {
 export class OverviewScreenComponent extends I18nComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
-
-  constructor(
-    public i18n: I18nService,
-    private metrika: MetrikaService
-  ) { super(i18n); }
+  constructor(public i18n: I18nService) { super(i18n); }
 
   get _loading(): boolean { return this.state.loading.overview ||  this.state.loading.games || !this.state.gameOverviewReady; }
 
@@ -90,10 +85,7 @@ export class OverviewScreenComponent extends I18nComponent implements OnInit {
 
   get greeting() { return this.i18n._t('Hello, %1!', [this.state.currentPlayerDisplayName]); }
 
-  ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-overview' });
-  }
-
+  ngOnInit() { this.dispatch({ type: TRACK_SCREEN_ENTER, payload: 'screen-overview' }); }
   newGame() { this.dispatch({ type: START_NEW_GAME }); }
   lastResults() { this.dispatch({ type: SHOW_LAST_RESULTS }); }
   reloadOverview() { this.dispatch({ type: UPDATE_CURRENT_GAMES_INIT }); }

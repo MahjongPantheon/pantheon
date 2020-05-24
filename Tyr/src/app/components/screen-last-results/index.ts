@@ -18,15 +18,13 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import { MetrikaService } from '../../services/metrika';
-import { Player } from '../../interfaces/common';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IAppState } from '../../services/store/interfaces';
 import { Dispatch } from 'redux';
 import { AppActionTypes, GET_LAST_RESULTS_INIT, GOTO_NEXT_SCREEN } from '../../services/store/actions/interfaces';
 import { getKamicha, getSelf, getShimocha, getToimen } from '../../services/store/selectors/lastResultsSelectors';
-import {LUserWithScore} from '../../interfaces/local';
+import { LUserWithScore } from '../../interfaces/local';
 
 @Component({
   selector: 'screen-last-results',
@@ -37,10 +35,7 @@ import {LUserWithScore} from '../../interfaces/local';
 export class LastResultsScreenComponent extends I18nComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
-  constructor(
-    public i18n: I18nService,
-    private metrika: MetrikaService
-  ) { super(i18n); }
+  constructor(public i18n: I18nService) { super(i18n); }
 
   get _loading(): boolean { return this.state.loading.overview };
   get _noResults(): boolean { return !this.state.lastResults };
@@ -50,12 +45,6 @@ export class LastResultsScreenComponent extends I18nComponent implements OnInit 
   get toimen(): LUserWithScore { return getToimen(this.state, this.state.lastResults); }
   get kamicha(): LUserWithScore { return getKamicha(this.state, this.state.lastResults); }
 
-  ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-last-results' });
-    this.dispatch({ type: GET_LAST_RESULTS_INIT });
-  }
-
-  nextScreen() {
-    this.dispatch({ type: GOTO_NEXT_SCREEN });
-  }
+  ngOnInit() { this.dispatch({ type: GET_LAST_RESULTS_INIT }); }
+  nextScreen() { this.dispatch({ type: GOTO_NEXT_SCREEN }); }
 }

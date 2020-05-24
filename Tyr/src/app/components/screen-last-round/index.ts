@@ -19,7 +19,6 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { MetrikaService } from '../../services/metrika';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IAppState } from '../../services/store/interfaces';
 import { Dispatch } from 'redux';
@@ -37,6 +36,7 @@ import { RoundPreviewSchemePurpose } from '../../services/store/selectors/roundP
 export class LastRoundScreenComponent extends I18nComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
+  constructor(public i18n: I18nService) { super(i18n); }
 
   get _loading(): boolean { return this.state.loading.overview; };
   get _purpose(): RoundPreviewSchemePurpose {
@@ -69,15 +69,10 @@ export class LastRoundScreenComponent extends I18nComponent implements OnInit {
     }
   };
 
-  constructor(
-    public i18n: I18nService,
-    private metrika: MetrikaService
-  ) {
-    super(i18n);
-  }
-
   ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-last-round' });
-    this.dispatch({ type: GET_LAST_ROUND_INIT, payload: this.state.currentSessionHash || this.state.currentOtherTableHash });
+    this.dispatch({
+      type: GET_LAST_ROUND_INIT,
+      payload: this.state.currentSessionHash || this.state.currentOtherTableHash
+    });
   }
 }

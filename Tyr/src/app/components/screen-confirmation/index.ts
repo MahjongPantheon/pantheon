@@ -18,18 +18,17 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {MetrikaService} from '../../services/metrika';
-import {I18nComponent, I18nService} from '../auxiliary-i18n';
-import {IAppState} from '../../services/store/interfaces';
-import {Dispatch} from 'redux';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
 import {
   ADD_ROUND_INIT,
   AppActionTypes,
   GET_CHANGES_OVERVIEW_INIT,
   GET_GAME_OVERVIEW_INIT
 } from '../../services/store/actions/interfaces';
-import {isLoading} from '../../services/store/selectors/screenConfirmationSelectors';
+import { isLoading } from '../../services/store/selectors/screenConfirmationSelectors';
 
 @Component({
   selector: 'screen-confirmation',
@@ -46,7 +45,6 @@ export class ConfirmationScreenComponent extends I18nComponent implements OnInit
 
   constructor(
     public i18n: I18nService,
-    private metrika: MetrikaService,
     private ref: ChangeDetectorRef
   ) {
     super(i18n);
@@ -64,7 +62,6 @@ export class ConfirmationScreenComponent extends I18nComponent implements OnInit
   }
 
   ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-confirmation' });
     this.dispatch({ type: GET_CHANGES_OVERVIEW_INIT, payload: this.state });
     setTimeout(() => {
       this._initialized = true;
@@ -72,14 +69,6 @@ export class ConfirmationScreenComponent extends I18nComponent implements OnInit
     }, 0);
   }
 
-  confirm() {
-    this.dispatch({ type: ADD_ROUND_INIT, payload: this.state });
-  }
-
-  okay() {
-    this.metrika.track(MetrikaService.LOAD_SUCCESS, { type: 'screen-confirmation', request: 'addRound' });
-    this.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: this.state.currentSessionHash });
-    // when finished, appstate goes to overview screen automatically, no need to go to next
-    // this.state.updateOverview((finished) => finished ? null : this.state.nextScreen()); // TODO
-  }
+  confirm() { this.dispatch({ type: ADD_ROUND_INIT, payload: this.state }); }
+  okay() { this.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: this.state.currentSessionHash }); }
 }

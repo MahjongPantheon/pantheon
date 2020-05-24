@@ -19,7 +19,6 @@
  */
 
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { MetrikaService } from '../../services/metrika';
 import { Player } from '../../interfaces/common';
 import { IAppState } from '../../services/store/interfaces';
 import { Dispatch } from 'redux';
@@ -28,7 +27,7 @@ import {
   TOGGLE_DEADHAND,
   TOGGLE_LOSER, TOGGLE_NAGASHI, TOGGLE_PAO,
   TOGGLE_RIICHI,
-  TOGGLE_WINNER
+  TOGGLE_WINNER, TRACK_SCREEN_ENTER
 } from '../../services/store/actions/interfaces';
 import { getSelf, getShimocha, getToimen, getKamicha } from '../../services/store/selectors/roundPreviewSchemeSelectors';
 
@@ -42,16 +41,12 @@ export class PlayersSelectScreenComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
 
-  constructor(private metrika: MetrikaService) { }
-
   get self(): Player { return getSelf(this.state, 'overview'); }
   get shimocha(): Player { return getShimocha(this.state, 'overview'); }
   get toimen(): Player { return getToimen(this.state, 'overview'); }
   get kamicha(): Player { return getKamicha(this.state, 'overview'); }
 
-  ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-players-select' });
-  }
+  ngOnInit() { this.dispatch({ type: TRACK_SCREEN_ENTER, payload: 'screen-players-select' }); }
 
   handle([player, what]: [Player, 'win' | 'lose' | 'riichi' | 'dead' | 'pao' | 'nagashi']) {
     switch (what) {

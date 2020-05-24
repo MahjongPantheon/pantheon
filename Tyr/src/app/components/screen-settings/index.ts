@@ -18,19 +18,18 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {I18nComponent, I18nService} from '../auxiliary-i18n';
-import {supportedLanguages} from '../../services/i18n';
-import {MetrikaService} from '../../services/metrika';
-import {ThemeService} from '../../services/themes/service';
-import {Theme} from '../../themes/interface';
-import {IAppState} from '../../services/store/interfaces';
-import {Dispatch} from 'redux';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { I18nComponent, I18nService } from '../auxiliary-i18n';
+import { supportedLanguages } from '../../services/i18n';
+import { ThemeService } from '../../services/themes/service';
+import { Theme } from '../../themes/interface';
+import { IAppState } from '../../services/store/interfaces';
+import { Dispatch } from 'redux';
 import {
   AppActionTypes,
   FORCE_LOGOUT,
   SETTINGS_SAVE_LANG,
-  SETTINGS_SAVE_THEME
+  SETTINGS_SAVE_THEME, TRACK_SCREEN_ENTER
 } from '../../services/store/actions/interfaces';
 
 @Component({
@@ -45,7 +44,6 @@ export class SettingsScreenComponent extends I18nComponent implements OnInit {
 
   constructor(
     public i18n: I18nService,
-    private metrika: MetrikaService,
     private themeService: ThemeService
   ) { super(i18n); }
 
@@ -57,16 +55,13 @@ export class SettingsScreenComponent extends I18nComponent implements OnInit {
     return this.themeService.themes;
   }
 
-  ngOnInit() {
-    this.metrika.track(MetrikaService.SCREEN_ENTER, { screen: 'screen-settings' });
-  }
+  ngOnInit() { this.dispatch({ type: TRACK_SCREEN_ENTER, payload: 'screen-settings' }); }
 
   selectLanguage(lang: string) {
     this.dispatch({ type: SETTINGS_SAVE_LANG, payload: lang });
     this.i18n.init((localeName: string) => { // TODO: move to middleware or something
       // make sure value is valid - set it again in callback
       this.dispatch({ type: SETTINGS_SAVE_LANG, payload: localeName });
-      this.metrika.track(MetrikaService.LANG_CHANGED, { localeName });
     }, (error: any) => console.error(error));
   }
 
