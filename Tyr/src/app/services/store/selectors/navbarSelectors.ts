@@ -104,7 +104,7 @@ export function mayGoNextFromPlayersSelect(state: IAppState) {
     case 'nagashi':
       return true;
     case 'multiron':
-      return getWinningUsers(state).length >= 1
+      return getWinningUsers(state).length > 1
         && getLosingUsers(state).length === 1;
     case 'chombo':
       return getLosingUsers(state).length === 1;
