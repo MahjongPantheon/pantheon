@@ -1339,7 +1339,7 @@ msgid "bets lost"
 msgstr "из них потерянных"
 
 msgid "bets won"
-msgstr "из их выигранных"
+msgstr "из них выигранных"
 
 msgid "no"
 msgstr "нет"
