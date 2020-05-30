@@ -69,10 +69,12 @@ class PersonAccessPrimitive extends AccessPrimitive
      *
      * @param IDb $db
      * @param $ids
-     * @return PersonAccessPrimitive[]
+     * @param (int|mixed)[] $ids
+     *
+     *
      * @throws \Exception
      */
-    public static function findByPerson(IDb $db, $ids)
+    public static function findByPerson(IDb $db, array $ids)
     {
         return self::_findBy($db, 'person_id', $ids);
     }

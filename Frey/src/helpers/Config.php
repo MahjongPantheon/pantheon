@@ -39,7 +39,7 @@ class Config
      * @param $path
      * @return mixed
      */
-    public function getValue($path)
+    public function getValue(string $path)
     {
         $parts = explode('.', $path);
         $current = $this->_data;

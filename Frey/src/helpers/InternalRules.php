@@ -38,16 +38,26 @@ class InternalRules
     const ADMIN_EVENT = 'ADMIN_EVENT';
     const EDIT_EVENT = 'EDIT_EVENT';
 
-    public static function isInternal(string $name)
+    public static function isInternal(string $name): bool
     {
         return defined(__CLASS__ . '::' . $name);
     }
 
-    public static function getNames()
+    /**
+     * @return array-key[]
+     *
+     * @psalm-return list<array-key>
+     */
+    public static function getNames(): array
     {
         return array_keys(self::getTranslations()); // ¯\_(ツ)_/¯
     }
 
+    /**
+     * @return array[]|false
+     *
+     * @psalm-return array<array-key, array{default: mixed, type: mixed, title: mixed}>|false
+     */
     public static function getRules()
     {
         $translations = self::getTranslations();

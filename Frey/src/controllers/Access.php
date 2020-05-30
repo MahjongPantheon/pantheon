@@ -143,12 +143,14 @@ class AccessController extends Controller
      * @param string $ruleType   'bool', 'int' or 'enum'
      * @param int $personId
      * @param int $eventId
-     * @return int rule id
+     *
+     * @return int|null rule id
+     *
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId)
+    public function addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId): ?int
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
         $ruleId = $this->_getModel()->addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId);
@@ -166,12 +168,14 @@ class AccessController extends Controller
      * @param string $ruleType   'bool', 'int' or 'enum'
      * @param int $groupId
      * @param int $eventId
-     * @return int rule id
+     *
+     * @return int|null rule id
+     *
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId)
+    public function addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId): ?int
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId, $eventId]);
         $ruleId = $this->_getModel()->addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId);
@@ -188,12 +192,14 @@ class AccessController extends Controller
      * @param string|int|boolean $ruleValue
      * @param string $ruleType   'bool', 'int' or 'enum'
      * @param int $personId
-     * @return int rule id
+     *
+     * @return int|null rule id
+     *
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function addSystemWideRuleForPerson($ruleName, $ruleValue, $ruleType, $personId)
+    public function addSystemWideRuleForPerson($ruleName, $ruleValue, $ruleType, $personId): ?int
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId]);
         $ruleId = $this->_getModel()->addSystemWideRuleForPerson($ruleName, $ruleValue, $ruleType, $personId);
@@ -210,12 +216,14 @@ class AccessController extends Controller
      * @param string|int|boolean $ruleValue
      * @param string $ruleType   'bool', 'int' or 'enum'
      * @param int $groupId
-     * @return int rule id
+     *
+     * @return int|null rule id
+     *
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function addSystemWideRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId)
+    public function addSystemWideRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId): ?int
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId]);
         $ruleId = $this->_getModel()->addSystemWideRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId);

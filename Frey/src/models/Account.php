@@ -36,10 +36,12 @@ class AccountModel extends Model
      * @param $city
      * @param $phone
      * @param null $tenhouId
-     * @return integer id
+     *
+     * @return int|null id
+     *
      * @throws \Exception
      */
-    public function createAccount($email, $password, $title, $city, $phone, $tenhouId = null)
+    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null): ?int
     {
         $this->_checkAccessRights(InternalRules::CREATE_ACCOUNT);
 
@@ -116,7 +118,7 @@ class AccountModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId = null)
+    public function updatePersonalInfo(string $id, string $title, string $city, string $email, string $phone, $tenhouId = null)
     {
         if (empty($this->_authorizedPerson) || $this->_authorizedPerson->getId() != $id) {
             $this->_checkAccessRights(InternalRules::UPDATE_PERSONAL_INFO);
@@ -157,7 +159,7 @@ class AccountModel extends Model
      * @return array
      * @throws InvalidParametersException
      */
-    public function findByTitleFuzzy($query)
+    public function findByTitleFuzzy(string $query)
     {
         $persons = PersonPrimitive::findByTitleFuzzy($this->_db, $query);
         if ($persons === null) { // bad query or too short query

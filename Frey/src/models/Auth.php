@@ -63,11 +63,13 @@ class AuthModel extends Model
      * Returns new person's ID on success, otherwise throws an exception.
      *
      * @param $approvalCode
-     * @return int
+     *
+     * @return int|null
+     *
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function approveRegistration($approvalCode): int
+    public function approveRegistration(string $approvalCode): ?int
     {
         $reg = RegistrantPrimitive::findByApprovalCode($this->_db, [$approvalCode]);
         if (empty($reg)) {
@@ -100,12 +102,16 @@ class AuthModel extends Model
      *
      * @param $email
      * @param $password
-     * @return array[id, hash]
+     *
+     * @return (int|null|string)[]
+     *
      * @throws AuthFailedException
      * @throws EntityNotFoundException
      * @throws \Exception
+     *
+     * @psalm-return array{0: int|null, 1: string}
      */
-    public function authorize($email, $password)
+    public function authorize(string $email, string $password): array
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
@@ -134,7 +140,7 @@ class AuthModel extends Model
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function quickAuthorize($id, $clientSideToken): bool
+    public function quickAuthorize(int $id, string $clientSideToken): bool
     {
         $person = PersonPrimitive::findById($this->_db, [$id]);
         if (empty($person)) {
@@ -156,7 +162,7 @@ class AuthModel extends Model
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function changePassword($email, $password, $newPassword): string
+    public function changePassword(string $email, string $password, string $newPassword): string
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
@@ -186,7 +192,7 @@ class AuthModel extends Model
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function requestResetPassword($email)
+    public function requestResetPassword(string $email)
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
@@ -210,7 +216,7 @@ class AuthModel extends Model
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function approveResetPassword($email, $resetApprovalCode)
+    public function approveResetPassword(string $email, string $resetApprovalCode)
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
@@ -266,7 +272,7 @@ class AuthModel extends Model
      * @param $password
      * @return float|int
      */
-    protected function _calcPasswordStrength($password)
+    protected function _calcPasswordStrength(string $password)
     {
         $hasLatinSymbols = preg_match('#[a-z]#', $password);
         $hasUppercaseLatinSymbols = preg_match('#[A-Z]#', $password);
@@ -290,7 +296,7 @@ class AuthModel extends Model
      * @param $salt
      * @return string
      */
-    protected function _makeClientSideToken($password, $salt): string
+    protected function _makeClientSideToken(string $password, string $salt): string
     {
         return hash('sha3-384', $password . $salt);
     }
@@ -303,7 +309,7 @@ class AuthModel extends Model
      * @param $authSalt
      * @return bool
      */
-    public function checkPasswordFull($password, $authHash, $authSalt): bool
+    public function checkPasswordFull($password, string $authHash, string $authSalt): bool
     {
         $clientSideToken = $this->_makeClientSideToken($password, $authSalt);
         return $this->_checkPasswordQuick($clientSideToken, $authHash);
@@ -316,7 +322,7 @@ class AuthModel extends Model
      * @param $authHash
      * @return bool
      */
-    protected function _checkPasswordQuick($clientSideToken, $authHash): bool
+    protected function _checkPasswordQuick(string $clientSideToken, string $authHash): bool
     {
         return password_verify($clientSideToken, $authHash);
     }

@@ -69,10 +69,12 @@ class GroupAccessPrimitive extends AccessPrimitive
      *
      * @param IDb $db
      * @param $ids
-     * @return GroupAccessPrimitive[]
+     * @param int[] $ids
+     *
+     *
      * @throws \Exception
      */
-    public static function findByGroup(IDb $db, $ids)
+    public static function findByGroup(IDb $db, array $ids)
     {
         return self::_findBy($db, 'group_id', $ids);
     }

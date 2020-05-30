@@ -67,11 +67,16 @@ class Db implements IDb
      * @throws \Exception
      * @return \Idiorm\ORM
      */
-    public function table($tableName)
+    public function table(string $tableName)
     {
         return ORM::forTable($tableName);
     }
 
+    /**
+     * @return (array|mixed)[]
+     *
+     * @psalm-return array{LAST_QUERY: mixed, ERROR_INFO: array}
+     */
     public function debug()
     {
         return [
@@ -80,6 +85,9 @@ class Db implements IDb
         ];
     }
 
+    /**
+     * @return null|scalar
+     */
     public function lastInsertId()
     {
         ORM::rawExecute('SELECT LASTVAL()');
@@ -98,13 +106,19 @@ class Db implements IDb
      * Warning:
      * Don't touch this crap until you totally know what are you doing :)
      *
+     *
+     *
+     * UniqueFields string[] List of columns with unique constraint to check
+     *
      * @param $table
      * @param $data [ [ field => value, field2 => value2 ], [ ... ] ] - nested arrays should be monomorphic
      * @param $tableUniqueFields string[] List of columns with unique constraint to check
+     * @param array[] $data
+     *
      * @throws \Exception
-     * @return boolean
+     *
      */
-    public function upsertQuery($table, $data, $tableUniqueFields)
+    public function upsertQuery($table, array $data, $tableUniqueFields)
     {
         $data = array_map(function ($dataset) {
             foreach ($dataset as $k => $v) {

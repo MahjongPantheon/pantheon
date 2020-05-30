@@ -39,7 +39,7 @@ class ErrorHandler
         $this->_log = $log;
     }
 
-    public function register()
+    public function register(): void
     {
         register_shutdown_function([$this, 'checkForFatal']);
         set_error_handler([$this, 'logError'], (E_ALL | E_STRICT) & ~E_USER_NOTICE);
@@ -51,13 +51,19 @@ class ErrorHandler
 
     /**
      * Error handler, passes flow over the exception logger with new ErrorException.
+     *
      * @param $num
      * @param $str
      * @param $file
      * @param $line
      * @param null $context
+     * @param null|string $str
+     * @param null|string $file
+     * @param int|null $line
+     *
+     * @return void
      */
-    public function logError($num, $str, $file, $line, $context = null)
+    public function logError(int $num, ?string $str, ?string $file, ?int $line, $context = null): void
     {
         $this->logException(new \ErrorException($str, 0, $num, $file, $line));
     }
@@ -65,23 +71,29 @@ class ErrorHandler
     /**
      * Error handler, passes flow over the exception logger with new ErrorException.
      * For debug purposes: does not exit on first error
+     *
      * @param $num
      * @param $str
      * @param $file
      * @param $line
      * @param null $context
+     *
+     * @return void
      */
-    public function logDebugError($num, $str, $file, $line, $context = null)
+    public function logDebugError($num, $str, $file, $line, $context = null): void
     {
         $this->logException(new \ErrorException($str, 0, $num, $file, $line), false);
     }
 
     /**
      * Uncaught exception handler.
+     *
      * @param \Exception $e
      * @param bool $exitOnError
+     *
+     * @return void
      */
-    public function logException($e, $exitOnError = true)
+    public function logException($e, $exitOnError = true): void
     {
         $message = "-----------------\n" .
             "Date:\t\t" . date("Y-m-d H:i:s") . "\n" .
@@ -100,8 +112,10 @@ class ErrorHandler
 
     /**
      * Checks for a fatal error, work around for set_error_handler not working on fatal errors.
+     *
+     * @return void
      */
-    public function checkForFatal()
+    public function checkForFatal(): void
     {
         $error = error_get_last();
         if ($error["type"] == E_ERROR) {

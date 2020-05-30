@@ -114,7 +114,7 @@ class Meta
         return $locale;
     }
 
-    protected function _fillFrom($input, $cookieInput)
+    protected function _fillFrom(?array $input, ?array $cookieInput): void
     {
         // Rheda and Mimir MUST pass authToken from cookie to Frey as X-Auth-Token header.
         // Also they MUST pass currentEventId as X-Current-Event-Id and currentPersonId as X-Current-Person-Id.
@@ -151,27 +151,32 @@ class Meta
         $this->_requestedVersionMajor = $this->_requestedVersionMajor ? intval($this->_requestedVersionMajor) : 1;
     }
 
-    public function getAuthToken()
+    public function getAuthToken(): string
     {
         return $this->_authToken;
     }
 
-    public function getCurrentEventId()
+    public function getCurrentEventId(): ?int
     {
         return $this->_currentEventId;
     }
 
-    public function getCurrentPersonId()
+    public function getCurrentPersonId(): ?int
     {
         return $this->_currentPersonId;
     }
 
-    public function getSelectedLocale()
+    public function getSelectedLocale(): string
     {
         return $this->_selectedLocale;
     }
 
-    public function getRequestedVersion()
+    /**
+     * @return int[]
+     *
+     * @psalm-return array{0: int, 1: int}
+     */
+    public function getRequestedVersion(): array
     {
         return [
             $this->_requestedVersionMajor,
@@ -179,7 +184,7 @@ class Meta
         ];
     }
 
-    public function sendVersionHeader($major, $minor)
+    public function sendVersionHeader($major, $minor): void
     {
         header('X-Api-Version: ' . intval($major) . '.' . intval($minor));
     }

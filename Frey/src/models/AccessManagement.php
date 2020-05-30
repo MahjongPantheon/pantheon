@@ -56,7 +56,7 @@ class AccessManagementModel extends Model
      * @return mixed
      * @throws \Exception
      */
-    public function getRuleValue($personId, $eventId, $ruleName)
+    public function getRuleValue(int $personId, int $eventId, string $ruleName)
     {
         return $this->_getRuleValue($personId, $eventId, $ruleName);
     }
@@ -191,12 +191,14 @@ class AccessManagementModel extends Model
      * @param $ruleType   'bool', 'int' or 'enum'
      * @param $personId
      * @param $eventId
-     * @return int|null Rule id
+     * @param bool|int|string $ruleValue
+     *
+     *
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId)
+    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId)
     {
         $this->_checkAccessRights(InternalRules::ADD_RULE_FOR_PERSON, $eventId);
 
@@ -240,12 +242,14 @@ class AccessManagementModel extends Model
      * @param $ruleType   'bool', 'int' or 'enum'
      * @param $groupId
      * @param $eventId
-     * @return int|null Rule id
+     * @param bool|int|string $ruleValue
+     *
+     *
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId)
+    public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId)
     {
         $this->_checkAccessRights(InternalRules::ADD_RULE_FOR_GROUP, $eventId);
 
@@ -288,12 +292,14 @@ class AccessManagementModel extends Model
      * @param $ruleValue
      * @param $ruleType   'bool', 'int' or 'enum'
      * @param $personId
-     * @return int|null Rule id
+     * @param bool|int|string $ruleValue
+     *
+     *
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function addSystemWideRuleForPerson($ruleName, $ruleValue, $ruleType, $personId)
+    public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId)
     {
         $this->_checkAccessRights(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_PERSON);
 
@@ -335,12 +341,14 @@ class AccessManagementModel extends Model
      * @param $ruleValue
      * @param $ruleType   'bool', 'int' or 'enum'
      * @param $groupId
-     * @return int|null Rule id
+     * @param bool|int|string $ruleValue
+     *
+     *
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function addSystemWideRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId)
+    public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId)
     {
         $this->_checkAccessRights(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_GROUP);
 
@@ -382,11 +390,13 @@ class AccessManagementModel extends Model
      * @param $ruleId
      * @param $ruleValue
      * @param $ruleType
-     * @return bool   success
+     * @param bool|int|string $ruleValue
+     *
+     *
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function updateRuleForPerson($ruleId, $ruleValue, $ruleType)
+    public function updateRuleForPerson(int $ruleId, $ruleValue, string $ruleType)
     {
         /** @var PersonAccessPrimitive[] $rules */
         $rules = PersonAccessPrimitive::findById($this->_db, [$ruleId]);
@@ -422,11 +432,13 @@ class AccessManagementModel extends Model
      * @param $ruleId
      * @param $ruleValue
      * @param $ruleType
-     * @return bool   success
+     * @param bool|int|string $ruleValue
+     *
+     *
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function updateRuleForGroup($ruleId, $ruleValue, $ruleType)
+    public function updateRuleForGroup(int $ruleId, $ruleValue, string $ruleType)
     {
         $rules = GroupAccessPrimitive::findById($this->_db, [$ruleId]);
         if (empty($rules)) {
@@ -454,10 +466,13 @@ class AccessManagementModel extends Model
      * Drop personal rule by id
      *
      * @param $ruleId
+     *
      * @throws EntityNotFoundException
      * @throws \Exception
+     *
+     * @return void
      */
-    public function deleteRuleForPerson($ruleId)
+    public function deleteRuleForPerson(int $ruleId): void
     {
         /** @var PersonAccessPrimitive[] $rules */
         $rules = PersonAccessPrimitive::findById($this->_db, [$ruleId]);
@@ -483,10 +498,13 @@ class AccessManagementModel extends Model
      * Drop group rule by id
      *
      * @param $ruleId
+     *
      * @throws EntityNotFoundException
      * @throws \Exception
+     *
+     * @return void
      */
-    public function deleteRuleForGroup($ruleId)
+    public function deleteRuleForGroup(int $ruleId): void
     {
         $rules = GroupAccessPrimitive::findById($this->_db, [$ruleId]);
         if (empty($rules)) {
@@ -517,7 +535,7 @@ class AccessManagementModel extends Model
      * @return bool
      * @throws \Exception
      */
-    public function clearAccessCache($personId, $eventId)
+    public function clearAccessCache(int $personId, int $eventId)
     {
         $this->_checkAccessRights(InternalRules::CLEAR_ACCESS_CACHE, $eventId);
         return apcu_delete(Model::_getAccessCacheKey($personId, $eventId));

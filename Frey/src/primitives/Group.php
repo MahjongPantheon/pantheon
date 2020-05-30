@@ -115,10 +115,12 @@ class GroupPrimitive extends Primitive
     /**
      * @param IDb $db
      * @param $ids
-     * @return GroupPrimitive[]
+     * @param (int|mixed)[] $ids
+     *
+     *
      * @throws \Exception
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(IDb $db, array $ids)
     {
         return self::_findBy($db, 'id', $ids);
     }

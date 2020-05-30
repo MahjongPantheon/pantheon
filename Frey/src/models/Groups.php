@@ -31,11 +31,13 @@ class GroupsModel extends Model
      * @param $title
      * @param $description
      * @param $color
-     * @return int
+     *
+     * @return int|null
+     *
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function createGroup($title, $description, $color)
+    public function createGroup(string $title, string $description, string $color): ?int
     {
         $this->_checkAccessRights(InternalRules::CREATE_GROUP);
 
@@ -62,7 +64,7 @@ class GroupsModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getGroups($ids)
+    public function getGroups(array $ids)
     {
         if (empty($ids)) {
             throw new InvalidParametersException('ID list is empty', 403);
@@ -90,7 +92,7 @@ class GroupsModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updateGroup($id, $title, $description, $color)
+    public function updateGroup(int $id, string $title, string $description, string $color)
     {
         $this->_checkAccessRights(InternalRules::UPDATE_GROUP);
 
@@ -119,10 +121,13 @@ class GroupsModel extends Model
      * Delete group and all of its linked dependencies
      *
      * @param $id
+     *
      * @throws InvalidParametersException
      * @throws \Exception
+     *
+     * @return void
      */
-    public function deleteGroup($id)
+    public function deleteGroup(int $id): void
     {
         $this->_checkAccessRights(InternalRules::DELETE_GROUP);
 
@@ -149,7 +154,7 @@ class GroupsModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function addPersonToGroup($personId, $groupId)
+    public function addPersonToGroup(int $personId, int $groupId)
     {
         $this->_checkAccessRights(InternalRules::ADD_PERSON_TO_GROUP);
 
@@ -186,7 +191,7 @@ class GroupsModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function removePersonFromGroup($personId, $groupId)
+    public function removePersonFromGroup(int $personId, int $groupId)
     {
         $this->_checkAccessRights(InternalRules::REMOVE_PERSON_FROM_GROUP);
 
@@ -221,7 +226,7 @@ class GroupsModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getGroupsOfPerson($personId)
+    public function getGroupsOfPerson(int $personId)
     {
         $personId = intval($personId);
         if (empty($personId)) {
@@ -250,7 +255,7 @@ class GroupsModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getPersonsOfGroup($groupId)
+    public function getPersonsOfGroup(int $groupId)
     {
         $groupId = intval($groupId);
         if (empty($groupId)) {

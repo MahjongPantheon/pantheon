@@ -141,12 +141,14 @@ class AuthController extends Controller
      *
      * @param string $email
      * @param string $resetApprovalCode
-     * @return int
+     *
+     * @return string
+     *
      * @throws AuthFailedException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function approveResetPassword($email, $resetApprovalCode)
+    public function approveResetPassword($email, $resetApprovalCode): string
     {
         $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), $resetApprovalCode]);
         $newPassword = $this->_getModel()->approveResetPassword($email, $resetApprovalCode);

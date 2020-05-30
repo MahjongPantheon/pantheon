@@ -136,9 +136,10 @@ abstract class Model
      *
      * @param $personId
      * @param $eventId
-     * @return string
+     * @param int|string $eventId
+     *
      */
-    protected static function _getAccessCacheKey($personId, $eventId)
+    protected static function _getAccessCacheKey(int $personId, $eventId)
     {
         return "access_${personId}_${eventId}";
     }
@@ -242,10 +243,12 @@ abstract class Model
     /**
      * @param $personId
      * @param $eventId
-     * @return PersonAccessPrimitive[]
+     * @param int|null $eventId
+     *
+     *
      * @throws \Exception
      */
-    protected function _getPersonAccessRules($personId, $eventId)
+    protected function _getPersonAccessRules(int $personId, ?int $eventId)
     {
         return array_filter(
             PersonAccessPrimitive::findByPerson($this->_db, [$personId]),
@@ -259,10 +262,13 @@ abstract class Model
     /**
      * @param $groupIds
      * @param $eventId
-     * @return GroupAccessPrimitive[]
+     * @param int[] $groupIds
+     * @param int|null $eventId
+     *
+     *
      * @throws \Exception
      */
-    protected function _getGroupAccessRules($groupIds, $eventId)
+    protected function _getGroupAccessRules(array $groupIds, ?int $eventId)
     {
         return array_filter(
             GroupAccessPrimitive::findByGroup($this->_db, $groupIds),
@@ -278,7 +284,7 @@ abstract class Model
      * @return PersonAccessPrimitive[]
      * @throws \Exception
      */
-    protected function _getPersonAccessSystemWideRules($personId)
+    protected function _getPersonAccessSystemWideRules(int $personId)
     {
         return array_filter(
             PersonAccessPrimitive::findByPerson($this->_db, [$personId]),
@@ -290,10 +296,12 @@ abstract class Model
 
     /**
      * @param $groupIds
-     * @return GroupAccessPrimitive[]
+     * @param int[] $groupIds
+     *
+     *
      * @throws \Exception
      */
-    protected function _getGroupAccessSystemWideRules($groupIds)
+    protected function _getGroupAccessSystemWideRules(array $groupIds)
     {
         return array_filter(
             GroupAccessPrimitive::findByGroup($this->_db, $groupIds),
@@ -306,9 +314,12 @@ abstract class Model
     /**
      * @param string $key
      * @param int|null $eventId
+     *
      * @throws AccessDeniedException
+     *
+     * @return void
      */
-    protected function _checkAccessRights(string $key, $eventId = null)
+    protected function _checkAccessRights(string $key, $eventId = null): void
     {
         // FIXME
         return;

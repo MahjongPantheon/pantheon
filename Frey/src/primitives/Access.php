@@ -83,10 +83,12 @@ abstract class AccessPrimitive extends Primitive
     /**
      * @param IDb $db
      * @param $ids
-     * @return self[]
+     * @param array $ids
+     *
+     *
      * @throws \Exception
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(IDb $db, array $ids)
     {
         return self::_findBy($db, 'id', $ids);
     }
