@@ -21,7 +21,7 @@ class PointsCalc
 {
     private static $_lastPaymentsInfo = [];
 
-    public static function resetPaymentsInfo()
+    public static function resetPaymentsInfo(): void
     {
         self::$_lastPaymentsInfo = [
             'direct' => [],
@@ -49,21 +49,25 @@ class PointsCalc
      * @param $paoPlayerId
      * @param null $closestWinner
      * @param int $totalRiichiInRound
-     * @return mixed
+     * @param null|string $paoPlayerId
+     * @param int[] $currentScores
+     * @param int[] $riichiIds
+     *
+     *
      * @throws InvalidParametersException
      */
     public static function ron(
         Ruleset $rules,
-        $isDealer,
-        $currentScores,
-        $winnerId,
-        $loserId,
-        $han,
-        $fu,
-        $riichiIds,
-        $honba,
-        $riichiBetsCount,
-        $paoPlayerId,
+        bool $isDealer,
+        array $currentScores,
+        string $winnerId,
+        string $loserId,
+        int $han,
+        int $fu,
+        array $riichiIds,
+        int $honba,
+        int $riichiBetsCount,
+        ?string $paoPlayerId,
         $closestWinner = null,
         $totalRiichiInRound = 0
     ) {
@@ -137,20 +141,24 @@ class PointsCalc
      * @param $honba
      * @param $riichiBetsCount
      * @param $paoPlayerId
-     * @return mixed
+     * @param int|string $currentDealer
+     * @param int[] $currentScores
+     * @param int[] $riichiIds
+     *
+     *
      * @throws InvalidParametersException
      */
     public static function tsumo(
         Ruleset $rules,
         $currentDealer,
-        $currentScores,
-        $winnerId,
-        $han,
-        $fu,
-        $riichiIds,
-        $honba,
-        $riichiBetsCount,
-        $paoPlayerId
+        array $currentScores,
+        string $winnerId,
+        int $han,
+        int $fu,
+        array $riichiIds,
+        int $honba,
+        int $riichiBetsCount,
+        string $paoPlayerId
     ) {
         self::resetPaymentsInfo();
 
@@ -229,13 +237,17 @@ class PointsCalc
      * @param $currentScores
      * @param $tempaiIds
      * @param $riichiIds
-     * @return mixed
+     * @param int[] $currentScores
+     * @param int[] $tempaiIds
+     * @param int[] $riichiIds
+     *
+     *
      * @throws InvalidParametersException
      */
     public static function draw(
-        $currentScores,
-        $tempaiIds,
-        $riichiIds
+        array $currentScores,
+        array $tempaiIds,
+        array $riichiIds
     ) {
         self::resetPaymentsInfo();
         if (empty($riichiIds)) {
@@ -296,11 +308,13 @@ class PointsCalc
     /**
      * @param $currentScores
      * @param $riichiIds
-     * @return mixed
+     * @param int[] $currentScores
+     * @param int[] $riichiIds
+     *
      */
     public static function abort(
-        $currentScores,
-        $riichiIds
+        array $currentScores,
+        array $riichiIds
     ) {
         self::resetPaymentsInfo();
         if (empty($riichiIds)) {
@@ -320,14 +334,17 @@ class PointsCalc
      * @param $currentDealer
      * @param $loserId
      * @param $currentScores
-     * @return mixed
+     * @param int|string $currentDealer
+     * @param int[] $currentScores
+     *
+     *
      * @throws InvalidParametersException
      */
     public static function chombo(
         Ruleset $rules,
         $currentDealer,
-        $loserId,
-        $currentScores
+        string $loserId,
+        array $currentScores
     ) {
         self::$_lastPaymentsInfo = [];
         if (empty($loserId)) {
@@ -364,14 +381,19 @@ class PointsCalc
      * @param $currentDealer
      * @param $riichiIds
      * @param $nagashiIds
-     * @return mixed
+     * @param int[] $currentScores
+     * @param int|string $currentDealer
+     * @param int[] $riichiIds
+     * @param int[] $nagashiIds
+     *
+     *
      * @throws InvalidParametersException
      */
     public static function nagashi(
-        $currentScores,
+        array $currentScores,
         $currentDealer,
-        $riichiIds,
-        $nagashiIds
+        array $riichiIds,
+        array $nagashiIds
     ) {
         self::resetPaymentsInfo();
         if (empty($riichiIds)) {
@@ -410,7 +432,12 @@ class PointsCalc
         return $currentScores;
     }
 
-    protected static function _calcPoints(Ruleset $rules, $han, $fu, $tsumo, $dealer)
+    /**
+     * @return int[]
+     *
+     * @psalm-return array{winner: int, dealer?: int, player?: int, loser?: int}
+     */
+    protected static function _calcPoints(Ruleset $rules, $han, $fu, bool $tsumo, bool $dealer): array
     {
         if ($han > 0 && $han < 5) {
             $basePoints = $fu * pow(2, 2 + $han);
@@ -473,10 +500,12 @@ class PointsCalc
      * @param $riichiBets int
      * @param $honba int
      * @param $session SessionPrimitive
-     * @return array
+     * @param RoundPrimitive[] $rounds
+     *
+     *
      * @throws InvalidParametersException
      */
-    public static function assignRiichiBets($rounds, $loserId, $riichiBets, $honba, SessionPrimitive $session)
+    public static function assignRiichiBets(array $rounds, string $loserId, int $riichiBets, int $honba, SessionPrimitive $session)
     {
         $bets = [];
         $winners = [];

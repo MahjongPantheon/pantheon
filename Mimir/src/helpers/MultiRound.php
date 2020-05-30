@@ -19,7 +19,10 @@ namespace Mimir;
 
 class MultiRoundHelper
 {
-    public static function findLastRound($rounds)
+    /**
+     * @param RoundPrimitive[] $rounds
+     */
+    public static function findLastRound(array $rounds)
     {
         return array_reduce($rounds, function ($acc, RoundPrimitive $r) {
             /** @var $acc RoundPrimitive */

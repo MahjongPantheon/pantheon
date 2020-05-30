@@ -47,7 +47,12 @@ class EventPrescriptPrimitive extends Primitive
         ];
     }
 
-    protected function _scriptTransform()
+    /**
+     * @return (\Closure|\Closure)[]
+     *
+     * @psalm-return array{serialize: \Closure(mixed):string, deserialize: \Closure(mixed):array<array-key, array<array-key, array<array-key, int>>>}
+     */
+    protected function _scriptTransform(): array
     {
         return [
             'serialize' => function ($obj) {
@@ -238,7 +243,7 @@ class EventPrescriptPrimitive extends Primitive
      * @param $script
      * @return EventPrescriptPrimitive
      */
-    public function setScriptAsString($script)
+    public function setScriptAsString(string $script)
     {
         $this->_script = $this->unpackScript($script);
         return $this;
@@ -286,7 +291,7 @@ class EventPrescriptPrimitive extends Primitive
      * @param $localIdMap
      * @return string[]
      */
-    public function getCheckErrors($localIdMap)
+    public function getCheckErrors(array $localIdMap)
     {
         $errors = [];
         for ($sessionIdx = 0; $sessionIdx < count($this->_script); $sessionIdx++) {

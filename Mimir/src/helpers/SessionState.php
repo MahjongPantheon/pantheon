@@ -142,10 +142,12 @@ class SessionState
      * @param Ruleset $rules
      * @param $playersIds
      * @param $json
+     * @param int[] $playersIds
+     *
      * @throws InvalidParametersException
-     * @return SessionState
+     *
      */
-    public static function fromJson(Ruleset $rules, $playersIds, $json)
+    public static function fromJson(Ruleset $rules, array $playersIds, string $json)
     {
         if (empty($json)) {
             $ret = [];
@@ -222,8 +224,10 @@ class SessionState
 
     /**
      * End game prematurely
+     *
+     * @return self
      */
-    public function forceFinish()
+    public function forceFinish(): self
     {
         $this->_prematurelyFinished = true;
         return $this;
@@ -407,8 +411,10 @@ class SessionState
     /**
      * @param $id
      * @param int $betAmount - total points amount gathered as riichi bets. May be fractional (of 1000)!
+     *
+     * @return void
      */
-    public function giveRiichiBetsToPlayer($id, $betAmount)
+    public function giveRiichiBetsToPlayer(int $id, $betAmount): void
     {
         $this->_scores[$id] += $betAmount;
     }
@@ -627,8 +633,10 @@ class SessionState
      * @param $playerId
      * @param $amount
      * @param $reason
+     *
+     * @return void
      */
-    public function addPenalty($playerId, $amount, $reason)
+    public function addPenalty(int $playerId, int $amount, string $reason): void
     {
         if (empty($this->_penalties[$playerId])) {
             $this->_penalties[$playerId] = 0;

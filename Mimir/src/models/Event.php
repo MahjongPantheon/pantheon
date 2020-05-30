@@ -41,7 +41,7 @@ class EventModel extends Model
      * @throws \Exception
      * @return array TODO: should it be here? Looks a bit too low-level :/
      */
-    public function getCurrentSeating($eventId)
+    public function getCurrentSeating(int $eventId)
     {
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
@@ -228,7 +228,12 @@ class EventModel extends Model
         return $output;
     }
 
-    protected function _formatLastRound(RoundPrimitive $round)
+    /**
+     * @return (((int|string)[]|int)[]|int|string)[]
+     *
+     * @psalm-return array{outcome: string, winner?: string, loser: string, tempai?: array<array-key, int>, riichi: array<array-key, int>, nagashi?: array<array-key, int>, han?: int, fu?: int, wins?: array<array-key, array{winner: string, han: int, fu: int}>}
+     */
+    protected function _formatLastRound(RoundPrimitive $round): array
     {
         if ($round instanceof MultiRoundPrimitive) {
             return [
@@ -289,7 +294,7 @@ class EventModel extends Model
      * @throws \Exception
      * @return array
      */
-    public function getAllEvents($limit, $offset)
+    public function getAllEvents(int $limit, int $offset)
     {
         if ($limit > 100) {
             $limit = 100;
@@ -330,7 +335,7 @@ class EventModel extends Model
      * @throws \Exception
      * @return array
      */
-    public function getEventsById($idList)
+    public function getEventsById(array $idList)
     {
         $data = $this->_ds->table('event')
             ->select('id')

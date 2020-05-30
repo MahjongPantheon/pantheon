@@ -34,11 +34,13 @@ class PlayerStatModel extends Model
      *
      * @param $eventIdList
      * @param $playerId
-     * @return array
+     * @param int[] $eventIdList
+     *
+     *
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function getStats($eventIdList, $playerId)
+    public function getStats(array $eventIdList, int $playerId)
     {
         if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
@@ -90,7 +92,7 @@ class PlayerStatModel extends Model
      * @param $games
      * @return array
      */
-    protected function _getRatingHistorySequence(EventPrimitive $event, $playerId, $games)
+    protected function _getRatingHistorySequence(EventPrimitive $event, $playerId, array $games)
     {
         $rating = $event->getRuleset()->startRating();
         $ratingHistory = array_filter(
@@ -118,7 +120,7 @@ class PlayerStatModel extends Model
      * @throws \Exception
      * @return array
      */
-    protected function _getScoreHistoryAndPlayers($rules, $playerId, $games)
+    protected function _getScoreHistoryAndPlayers($rules, $playerId, array $games)
     {
         $withChips = $rules->chipsValue() > 0;
         $scoreHistory = array_map(function ($game) use ($playerId, $withChips) {
@@ -155,10 +157,12 @@ class PlayerStatModel extends Model
      * 2) get all rows by single query
      *
      * @param $scoreHistory
+     * @param (float|int|string)[][][] $scoreHistory
+     *
      * @throws \Exception
-     * @return array
+     *
      */
-    protected function _fetchPlayersInfo($scoreHistory)
+    protected function _fetchPlayersInfo(array $scoreHistory)
     {
         $playerIds = array_reduce($scoreHistory, function ($acc, $item) {
             return array_merge($acc, array_map(function ($playerInfo) {
@@ -183,7 +187,7 @@ class PlayerStatModel extends Model
      * @param $games
      * @return mixed
      */
-    protected function _getPlacesSummary($playerId, $games)
+    protected function _getPlacesSummary($playerId, array $games)
     {
         return array_reduce($games, function ($acc, $game) use ($playerId) {
             /** @var $results SessionResultsPrimitive[] */
@@ -266,9 +270,10 @@ class PlayerStatModel extends Model
      *
      * @param $playerId
      * @param $rounds
-     * @return array
+     * @param RoundPrimitive[] $rounds
+     *
      */
-    protected function _getYakuSummary($playerId, $rounds)
+    protected function _getYakuSummary($playerId, array $rounds)
     {
         $summary = array_reduce($rounds, function ($acc, RoundPrimitive $r) use ($playerId) {
             if (($r->getOutcome() === 'ron' || $r->getOutcome() === 'tsumo') && $r->getWinnerId() == $playerId) {
@@ -306,9 +311,10 @@ class PlayerStatModel extends Model
      *
      * @param $playerId
      * @param $rounds
-     * @return array
+     * @param RoundPrimitive[] $rounds
+     *
      */
-    protected function _getHanSummary($playerId, $rounds)
+    protected function _getHanSummary($playerId, array $rounds)
     {
         $summary = array_reduce($rounds, function ($acc, RoundPrimitive $r) use ($playerId) {
             if (($r->getOutcome() === 'ron' || $r->getOutcome() === 'tsumo') && $r->getWinnerId() == $playerId) {
@@ -426,10 +432,14 @@ class PlayerStatModel extends Model
      * @param $playerId
      * @param RoundPrimitive[] $rounds
      * @param Ruleset $rules
-     * @return []
+     *
+     * @return (int|mixed|string)[]
+     *
      * @throws \Exception
+     *
+     * @psalm-return array{count: int|mixed, average: int|string}
      */
-    protected function _getDoraStat($playerId, $rounds)
+    protected function _getDoraStat($playerId, $rounds): array
     {
         $doraCount = 0;
         $roundsCount = 0;
@@ -461,7 +471,7 @@ class PlayerStatModel extends Model
      * @throws \Exception
      * @return RoundPrimitive[]
      */
-    protected function _fetchRounds($games)
+    protected function _fetchRounds(array $games)
     {
         $sessionIds = array_map(function ($item) {
             /** @var $session SessionPrimitive */

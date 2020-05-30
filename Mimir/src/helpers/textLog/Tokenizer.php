@@ -67,7 +67,7 @@ class Tokenizer
      * @param $text
      * @return mixed
      */
-    public function tokenize($text)
+    public function tokenize(string $text)
     {
         $tokens = preg_split('#\s+#is', trim(str_replace([
             ':', // scoring
@@ -202,7 +202,12 @@ class Tokenizer
 
     // -----------------------------------------------------------------
 
-    protected function _identifyToken($token)
+    /**
+     * @return (mixed|null|string[])[]
+     *
+     * @psalm-return array{0: mixed|null, 1: array<array-key, string>|null}
+     */
+    protected function _identifyToken($token): array
     {
         $matches = [];
         foreach (self::_getRegexps() as $name => $re) {
@@ -214,7 +219,7 @@ class Tokenizer
         return [self::UNKNOWN_TOKEN, null];
     }
 
-    protected function _isTokenAllowed($tokenType)
+    protected function _isTokenAllowed($tokenType): bool
     {
         if (empty($this->_currentStack)) {
             return !empty($this->_lastAllowedToken[$tokenType]);
@@ -224,7 +229,7 @@ class Tokenizer
         return !empty($allowed[$tokenType]);
     }
 
-    protected function _nextToken($token, $ctx)
+    protected function _nextToken(string $token, string $ctx)
     {
         list($tokenType, $reMatches) = $this->_identifyToken($token);
 
@@ -244,8 +249,12 @@ class Tokenizer
 
     /**
      * Eof decisive token: should parse all remaining items in stack
+     *
+     * @return Token[]
+     *
+     * @psalm-return array<array-key, Token>
      */
-    protected function _callTokenEof()
+    protected function _callTokenEof(): array
     {
         $tmp = $this->_currentStack;
         $this->_currentStack = [];
@@ -596,9 +605,12 @@ class Tokenizer
 
     /**
      * For tests only!!!
+     *
      * @param $tokenList
+     *
+     * @return void
      */
-    public function _reassignLastAllowedToken($tokenList)
+    public function _reassignLastAllowedToken($tokenList): void
     {
         $this->_lastAllowedToken = $tokenList;
     }

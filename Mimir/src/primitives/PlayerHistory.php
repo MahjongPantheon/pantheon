@@ -114,8 +114,12 @@ class PlayerHistoryPrimitive extends Primitive
      * @param DataSource $ds
      * @param int $eventId
      * @param int $playerId  omit this to get all players histories for event
+     *
      * @throws \Exception
-     * @return PlayerHistoryPrimitive[]
+     *
+     * @return self|self[]
+     *
+     * @psalm-return array<array-key, self>|self
      */
     public static function findAllByEvent(DataSource $ds, $eventId, $playerId = null)
     {
@@ -164,8 +168,12 @@ class PlayerHistoryPrimitive extends Primitive
      * @param DataSource $ds
      * @param $playerId
      * @param $sessionId
+     *
      * @throws \Exception
-     * @return PlayerHistoryPrimitive
+     *
+     * @return self|self[]
+     *
+     * @psalm-return array<array-key, self>|self
      */
     public static function findBySessionAndPlayer(DataSource $ds, $playerId, $sessionId)
     {
@@ -217,11 +225,15 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
-     * @deprecated
+     * @deprecated 
+     *
      * @param EventPrimitive $event
+     *
      * @throws InvalidParametersException
+     *
+     * @return void
      */
-    public function _setEvent(EventPrimitive $event)
+    public function _setEvent(EventPrimitive $event): void
     {
         throw new InvalidParametersException('Event should not be set directly to round. Set session instead!');
     }
@@ -424,7 +436,7 @@ class PlayerHistoryPrimitive extends Primitive
      * @param $place
      * @return PlayerHistoryPrimitive
      */
-    protected function _updateAvgPlaceAndGamesCount($place)
+    protected function _updateAvgPlaceAndGamesCount(int $place)
     {
         $placesSum = $this->_gamesPlayed * $this->_avgPlace;
         $placesSum += $place;

@@ -146,6 +146,8 @@ class MultiRoundPrimitive extends RoundPrimitive
 
     /**
      * Drop all rounds in multi-round
+     *
+     * @return void
      */
     public function drop()
     {
@@ -178,6 +180,9 @@ class MultiRoundPrimitive extends RoundPrimitive
         throw new InvalidParametersException('MultiRound should not be treated as round');
     }
 
+    /**
+     * @return void
+     */
     public function _setEvent()
     {
         throw new InvalidParametersException('MultiRound should not be treated as round');
@@ -343,7 +348,12 @@ class MultiRoundPrimitive extends RoundPrimitive
         throw new InvalidParametersException('MultiRound should not be treated as round');
     }
 
-    public function getWinnerIds()
+    /**
+     * @return string[]
+     *
+     * @psalm-return array<array-key, string>
+     */
+    public function getWinnerIds(): array
     {
         return array_map(function (RoundPrimitive $round) {
             return $round->getWinnerId();

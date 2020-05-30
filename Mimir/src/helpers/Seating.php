@@ -109,9 +109,10 @@ class Seating
      * @param $previousSeatings array [ [id, id, id, id] ... ] - players ordered as eswn in table array
      * @param $groupsCount int - shuffling groups count
      * @param $randFactor int - RNG init seed
-     * @return array [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
+     *
+     * @return array|null [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
      */
-    public static function shuffledSeating($playersMap, $previousSeatings, $groupsCount, $randFactor)
+    public static function shuffledSeating($playersMap, $previousSeatings, int $groupsCount, int $randFactor): ?array
     {
         /*
          * Simple random search. Too many variables for real optimising methods :(
@@ -166,7 +167,8 @@ class Seating
      *
      * @param $seating array [id => rating] - Seating candidate
      * @param $previousSeatings array [ [id, id, id, id] ... ] - Previous seatings info
-     * @return int
+     *
+     * @return float|int
      */
     protected static function _calculateIntersectionFactor(array $seating, array $previousSeatings)
     {
@@ -231,7 +233,7 @@ class Seating
      * @param $previousSeatings
      * @return array|null
      */
-    protected static function _updatePlacesAtEachTable($seating, $previousSeatings)
+    protected static function _updatePlacesAtEachTable(array $seating, $previousSeatings)
     {
         $possiblePlacements = [
             '0123', '1023', '2013', '3012',
@@ -284,7 +286,11 @@ class Seating
      * @param $player3
      * @param $player4
      * @param $prevData array - [ [id, id, id, id] ...] - assumed players are sorted as eswn at each table!
-     * @return float|int
+     * @param array-key $player1
+     * @param array-key $player2
+     * @param array-key $player3
+     * @param array-key $player4
+     *
      */
     protected static function _calcSubSums($player1, $player2, $player3, $player4, $prevData)
     {
@@ -319,9 +325,10 @@ class Seating
      *
      * @param $playerTotalGamePoints - rating points sum as array: [ player index -> points ]
      * @param $playedWith - matrix of intersections [ playerIdx1 -> [ playerIdx2 -> N ... ] ... ]
-     * @return array seating [ playerIdx -> tableIdx ]
+     * @param int[][] $playedWith
+     *
      */
-    protected static function _swissSeatingOriginal($playerTotalGamePoints, &$playedWith)
+    protected static function _swissSeatingOriginal(array $playerTotalGamePoints, array &$playedWith)
     {
         $isPlaying = [];
         $playerTable = []; // мап "игрок -> номер стола", тут харнятся все позиции за столами
@@ -363,17 +370,19 @@ class Seating
      * @param $playerTotalGamePoints - rating points sum as array: [ player index -> points ]
      * @param $playedWith - matrix of intersections [ playerIdx1 -> [ playerIdx2 -> N ... ] ... ]
      * @param $iteration - current iteration of calculations
-     * @return bool - success flag
+     * @param false[] $isPlaying
+     * @param int[] $playerTable
+     *
      */
     protected static function _makeSwissSeating(
-        &$isPlaying,
-        $maxCrossings,
-        &$maxCrossingsPrecisionFactor,
-        $numPlayers,
-        &$playerTable,
+        array &$isPlaying,
+        int $maxCrossings,
+        int &$maxCrossingsPrecisionFactor,
+        int $numPlayers,
+        array &$playerTable,
         &$playerTotalGamePoints,
         &$playedWith,
-        &$iteration
+        int &$iteration
     ) {
         $iteration++;
         if ($iteration > 15000) {
@@ -519,8 +528,10 @@ class Seating
 
     /**
      * Run this method before shuffle
+     *
+     * @return void
      */
-    public static function shuffleSeed()
+    public static function shuffleSeed(): void
     {
         srand(crc32(microtime()));
     }
@@ -564,10 +575,12 @@ class Seating
      * @param $currentRatingTable PlayerPrimitive[] :ordered list
      * @param $step
      * @param $randomize
-     * @return array
+     * @param array $currentRatingTable
+     *
+     *
      * @throws \Exception
      */
-    public static function makeIntervalSeating($currentRatingTable, $step, $randomize = false)
+    public static function makeIntervalSeating(array $currentRatingTable, int $step, bool $randomize = false)
     {
         srand(crc32(microtime()));
         $tables = [];

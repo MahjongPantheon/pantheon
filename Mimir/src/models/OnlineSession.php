@@ -36,7 +36,7 @@ class OnlineSessionModel extends Model
      * @throws \Exception
      * @throws ParseException
      */
-    public function addGame($eventId, $logUrl, $gameContent = '')
+    public function addGame(int $eventId, string $logUrl, $gameContent = '')
     {
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
@@ -104,9 +104,12 @@ class OnlineSessionModel extends Model
      *
      * @param $gameLink
      * @param Ruleset $rules
+     *
      * @throws ParseException
+     *
+     * @return void
      */
-    protected function _checkGameExpired($gameLink, Ruleset $rules)
+    protected function _checkGameExpired($gameLink, Ruleset $rules): void
     {
         if (!$rules->gameExpirationTime()) {
             return;

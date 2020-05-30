@@ -168,10 +168,15 @@ class SessionResultsPrimitive extends Primitive
      * @param DataSource $ds
      * @param $sessionId
      * @param $playerIds
-     * @return SessionResultsPrimitive[]
+     * @param int[] $playerIds
+     *
+     * @return self|self[]
+     *
      * @throws \Exception
+     *
+     * @psalm-return array<array-key, self>|self
      */
-    public static function findByPlayersAndSession(DataSource $ds, $sessionId, $playerIds)
+    public static function findByPlayersAndSession(DataSource $ds, int $sessionId, array $playerIds)
     {
         return self::_findBySeveral($ds, [
             'player_id' => (array)$playerIds,
@@ -200,11 +205,15 @@ class SessionResultsPrimitive extends Primitive
     }
 
     /**
-     * @deprecated
+     * @deprecated 
+     *
      * @param EventPrimitive $event
+     *
      * @throws InvalidParametersException
+     *
+     * @return void
      */
-    public function _setEvent(EventPrimitive $event)
+    public function _setEvent(EventPrimitive $event): void
     {
         throw new InvalidParametersException('Event should not be set directly to round. Set session instead!');
     }
@@ -436,9 +445,11 @@ class SessionResultsPrimitive extends Primitive
      *
      * @param $scoreList
      * @param $originalPlayersSequence
-     * @return array
+     * @param int[] $scoreList
+     * @param int[] $originalPlayersSequence
+     *
      */
-    public static function calcPlacesMap($scoreList, $originalPlayersSequence)
+    public static function calcPlacesMap(array $scoreList, array $originalPlayersSequence)
     {
         $playersMap = self::_sort($originalPlayersSequence, $scoreList);
 
@@ -458,9 +469,10 @@ class SessionResultsPrimitive extends Primitive
      *
      * @param Ruleset $rules
      * @param $allScores
-     * @return float
+     * @param int[] $allScores
+     *
      */
-    protected function _calcRatingDelta(Ruleset $rules, $allScores)
+    protected function _calcRatingDelta(Ruleset $rules, array $allScores)
     {
         $score = ($this->_player->getIsReplacement() && $rules->replacementPlayerFixedPoints() !== false)
             ? $rules->replacementPlayerFixedPoints()

@@ -110,10 +110,13 @@ class EventFinishedGamesModel extends Model
      * @param $session SessionPrimitive
      * @param $sessionResults SessionResultsPrimitive[][]
      * @param $rounds RoundPrimitive[][]
+     * @param SessionResultsPrimitive[][] $sessionResults
+     * @param RoundPrimitive[][] $rounds
+     *
      * @throws \Exception
-     * @return array
+     *
      */
-    protected function _formatGameResults($session, $sessionResults, $rounds)
+    protected function _formatGameResults(SessionPrimitive $session, array $sessionResults, array $rounds)
     {
         return [
             'hash' => $session->getRepresentationalHash(),
@@ -134,10 +137,12 @@ class EventFinishedGamesModel extends Model
 
     /**
      * @param $sessionIds
-     * @return RoundPrimitive[][]
+     * @param int[] $sessionIds
+     *
+     *
      * @throws \Exception
      */
-    protected function _getRounds($sessionIds)
+    protected function _getRounds(array $sessionIds)
     {
         $rounds = RoundPrimitive::findBySessionIds($this->_ds, $sessionIds);
 
@@ -154,10 +159,12 @@ class EventFinishedGamesModel extends Model
 
     /**
      * @param $sessionIds
-     * @return SessionResultsPrimitive[][]
+     * @param int[] $sessionIds
+     *
+     *
      * @throws \Exception
      */
-    protected function _getSessionResults($sessionIds)
+    protected function _getSessionResults(array $sessionIds)
     {
         $results = SessionResultsPrimitive::findBySessionId($this->_ds, $sessionIds);
 
@@ -271,6 +278,9 @@ class EventFinishedGamesModel extends Model
         }
     }
 
+    /**
+     * @return array|false
+     */
     protected function _arrayMapPreserveKeys(callable $cb, $array)
     {
         return array_combine(array_keys($array), array_map($cb, array_values($array)));

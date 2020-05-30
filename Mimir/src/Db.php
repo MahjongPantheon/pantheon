@@ -72,6 +72,11 @@ class Db implements IDb
         return ORM::forTable($tableName);
     }
 
+    /**
+     * @return (array|mixed)[]
+     *
+     * @psalm-return array{LAST_QUERY: mixed, ERROR_INFO: array}
+     */
     public function debug()
     {
         return [

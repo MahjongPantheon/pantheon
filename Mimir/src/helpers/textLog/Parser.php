@@ -122,7 +122,7 @@ class TextlogParser
         return [$this->_originalScore, $debug];
     }
 
-    protected function _getStatementAsString($statement)
+    protected function _getStatementAsString(array $statement): string
     {
         return implode(' ', array_map(function (Token $t) {
             return $t->token();
@@ -305,8 +305,12 @@ class TextlogParser
 
     /**
      * @param SessionPrimitive $session
-     * @return PlayerPrimitive[] [alias => PlayerPrimitive]
+     *
+     * @return false|int[] [alias => PlayerPrimitive]
+     *
      * @throws \Exception
+     *
+     * @psalm-return array<array-key, int>|false
      */
     protected function _getParticipantsMap(SessionPrimitive $session)
     {
@@ -327,7 +331,7 @@ class TextlogParser
      * @param $type
      * @return Token
      */
-    protected function _findByType($tokens, $type)
+    protected function _findByType($tokens, string $type)
     {
         foreach ($tokens as $v) {
             if ($v->type() == $type) {
@@ -338,7 +342,7 @@ class TextlogParser
         return new Token(null, Tokenizer::UNKNOWN_TOKEN, [], null);
     }
 
-    protected function _findHan($tokens)
+    protected function _findHan($tokens): int
     {
         $han = $this->_findByType($tokens, Tokenizer::HAN_COUNT)->clean();
         $yakuman = $this->_findByType($tokens, Tokenizer::YAKUMAN)->token();

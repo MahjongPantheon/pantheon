@@ -75,12 +75,17 @@ class Api
         }
     }
 
+    /**
+     * @return string|string[]
+     *
+     * @psalm-return array<array-key, string>|string
+     */
     public function getDefaultServerTimezone()
     {
         return $this->_config->getValue('serverDefaultTimezone');
     }
 
-    public function registerImplAutoloading()
+    public function registerImplAutoloading(): void
     {
         spl_autoload_register(function ($class) {
             $class = ucfirst(str_replace([__NAMESPACE__ . '\\', 'Controller'], '', $class));
@@ -93,7 +98,12 @@ class Api
         });
     }
 
-    public function getMethods()
+    /**
+     * @return (mixed|object|string)[][]
+     *
+     * @psalm-return array<array-key, array{instance: mixed|object, method: string, className: string}>
+     */
+    public function getMethods(): array
     {
         $runtimeCache = [];
         $routes = $this->_config->getValue('routes');
@@ -117,7 +127,7 @@ class Api
         }, $routes);
     }
 
-    public function log($message)
+    public function log($message): void
     {
         $this->_syslog->info($message);
     }

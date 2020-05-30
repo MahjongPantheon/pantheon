@@ -43,7 +43,7 @@ class EventUserManagementModel extends Model
      * @throws InvalidParametersException
      * @return string secret pin code
      */
-    public function enrollPlayer($eventId, $playerId)
+    public function enrollPlayer(int $eventId, int $playerId)
     {
         if (!$this->checkAdminToken()) {
             throw new AuthFailedException('Only administrators are allowed to enroll players to event');
@@ -78,7 +78,7 @@ class EventUserManagementModel extends Model
      * @throws InvalidParametersException
      * @return bool success?
      */
-    public function registerPlayer($playerId, $eventId)
+    public function registerPlayer(int $playerId, int $eventId)
     {
         $player = PlayerPrimitive::findById($this->_ds, [$playerId]);
         if (empty($player)) {
@@ -115,7 +115,7 @@ class EventUserManagementModel extends Model
      * @throws \Exception
      * @return void
      */
-    public function unregisterPlayer($playerId, $eventId)
+    public function unregisterPlayer(int $playerId, int $eventId)
     {
         if (!$this->checkAdminToken()) {
             throw new AuthFailedException('Only administrators are allowed to enroll players to event');
@@ -138,7 +138,7 @@ class EventUserManagementModel extends Model
      * @throws \Exception
      * @return bool
      */
-    public function updateSeatingFlag($playerId, $eventId, $ignoreSeating)
+    public function updateSeatingFlag(int $playerId, int $eventId, int $ignoreSeating)
     {
         if (!$this->checkAdminToken()) {
             throw new AuthFailedException('Only administrators are allowed to update player information');
@@ -158,11 +158,13 @@ class EventUserManagementModel extends Model
      * Self-register player to event by pin
      *
      * @param $pin
+     *
      * @throws BadActionException
      * @throws \Exception
-     * @return string auth token
+     *
+     * @return null|string auth token
      */
-    public function registerPlayerPin($pin)
+    public function registerPlayerPin(int $pin): ?string
     {
         $success = false;
         $token = null;
@@ -215,7 +217,7 @@ class EventUserManagementModel extends Model
      * @throws AuthFailedException
      * @throws \Exception
      */
-    public function updateLocalIds($eventId, $idMap)
+    public function updateLocalIds(int $eventId, array $idMap)
     {
         if (!$this->checkAdminToken()) {
             throw new AuthFailedException('Only administrators are allowed to update local players\' ids');
@@ -233,7 +235,7 @@ class EventUserManagementModel extends Model
      * @throws AuthFailedException
      * @throws \Exception
      */
-    public function updateTeamNames($eventId, $teamMap)
+    public function updateTeamNames(int $eventId, array $teamMap)
     {
         if (!$this->checkAdminToken()) {
             throw new AuthFailedException('Only administrators are allowed to update players\' teams');

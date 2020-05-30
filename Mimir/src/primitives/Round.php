@@ -379,8 +379,11 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @deprecated
+     * @deprecated 
+     *
      * @throws InvalidParametersException
+     *
+     * @return void
      */
     public function _setEvent()
     {

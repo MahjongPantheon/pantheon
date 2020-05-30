@@ -51,6 +51,9 @@ class AchievementsPrimitive extends Primitive
         throw new BadActionException('This primitive is not expected to be instantiated, use static methods instead');
     }
 
+    /**
+     * @return void
+     */
     protected function _create()
     {
         // nothing
@@ -247,8 +250,12 @@ class AchievementsPrimitive extends Primitive
      *
      * @param DataSource $ds
      * @param $eventIdList
+     *
      * @throws \Exception
-     * @return array
+     *
+     * @return array[]|string
+     *
+     * @psalm-return array<array-key, array{name: mixed, yaku: mixed}>|string
      */
     public static function getYakumans(DataSource $ds, $eventIdList)
     {
@@ -766,16 +773,25 @@ class AchievementsPrimitive extends Primitive
         );
     }
 
+    /**
+     * @return void
+     */
     public function save()
     {
         // nothing
     }
 
+    /**
+     * @return void
+     */
     public function drop()
     {
         // nothing
     }
 
+    /**
+     * @return void
+     */
     public function getId()
     {
         // nothing

@@ -26,7 +26,7 @@ abstract class Ruleset
      * @throws InvalidParametersException
      * @return Ruleset
      */
-    public static function instance($title)
+    public static function instance(string $title)
     {
         if (empty(self::$_instances[$title])) {
             if (!file_exists(__DIR__ . '/../config/rulesets/' . $title . '.php')) {
@@ -125,7 +125,7 @@ abstract class Ruleset
      * so if oka is 20000, every player puts 5000 in the "oka-pot" and the
      * gets it all, so he profits 15000 as he payed 5000 himself too.
      */
-    public function oka($place)
+    public function oka(int $place)
     {
         if ($place === 1) {
             return ((static::$_ruleset['oka'])*0.75) ;

@@ -130,9 +130,10 @@ abstract class Primitive
      * @param $currentEntityField
      * @param $foreignEntityField
      * @param $indexFields
-     * @return array
+     * @param string[] $indexFields
+     *
      */
-    protected function _externalManyToManyTransform($connectorTable, $currentEntityField, $foreignEntityField, $indexFields)
+    protected function _externalManyToManyTransform(string $connectorTable, string $currentEntityField, string $foreignEntityField, array $indexFields)
     {
         return [
             'serialize' => function ($obj) use ($connectorTable, $currentEntityField, $foreignEntityField, $indexFields) {

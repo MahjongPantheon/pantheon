@@ -52,7 +52,7 @@ class DataSource
         return $this->_freyClient;
     }
 
-    public function local()
+    public function local(): IDb
     {
         return $this->_db;
     }
@@ -64,7 +64,7 @@ class DataSource
      * @throws \Exception
      * @return \Idiorm\ORM
      */
-    public function table($tableName)
+    public function table(string $tableName)
     {
         return $this->_db->table($tableName);
     }

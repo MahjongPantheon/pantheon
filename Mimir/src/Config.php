@@ -45,7 +45,7 @@ class Config
      * @param $path
      * @return string|string[]
      */
-    public function getValue($path)
+    public function getValue(string $path)
     {
         $parts = explode('.', $path);
         $current = $this->_data;
@@ -57,8 +57,11 @@ class Config
     }
 
     /**
-     * @return string  PDO connection string
+     * @return string|string[] PDO connection string
+     *
      * @throws \RuntimeException
+     *
+     * @psalm-return array<array-key, string>|string
      */
     public function getDbConnectionString()
     {
@@ -71,7 +74,9 @@ class Config
     }
 
     /**
-     * @return array with username and password
+     * @return string|string[] with username and password
+     *
+     * @psalm-return array<array-key, string>|string
      */
     public function getDbConnectionCredentials()
     {

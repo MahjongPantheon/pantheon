@@ -34,7 +34,7 @@ class TextmodeSessionModel extends Model
      * @throws \Exception
      * @throws ParseException
      */
-    public function addGame($eventId, $gameLog, $idMap)
+    public function addGame(int $eventId, string $gameLog, array $idMap)
     {
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {

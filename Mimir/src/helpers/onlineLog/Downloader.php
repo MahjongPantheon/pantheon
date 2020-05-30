@@ -81,7 +81,12 @@ class Downloader
         return $out['log'];
     }
 
-    protected function _download($url)
+    /**
+     * @return (bool|mixed|string)[]
+     *
+     * @psalm-return array{0: bool|string, 1: mixed}
+     */
+    protected function _download(string $url): array
     {
         $handle = curl_init();
         curl_setopt($handle, CURLOPT_URL, $url);
@@ -102,7 +107,7 @@ class Downloader
      * @param $log
      * @return string
      */
-    protected function _decodeHash($log)
+    protected function _decodeHash(string $log)
     {
         $t = json_decode(base64_decode(
             "WzIyMTM2LDUyNzE5LDU1MTQ2LDQyMTA0LDU5NTkxLDQ2OTM0LDkyNDgsMjg4OTEsNDk1OTcsNTI5Nz" .

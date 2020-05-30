@@ -91,7 +91,7 @@ class AchievementsModel extends Model
      * @param $achievementsList
      * @return array
      */
-    public function getAchievements($eventIdList, $achievementsList)
+    public function getAchievements(array $eventIdList, array $achievementsList)
     {
         if (!$this->checkAdminToken()) {
             throw new AuthFailedException('Only administrators are allowed to view achievements');
@@ -107,61 +107,61 @@ class AchievementsModel extends Model
         $this->_rounds = $this->_getRounds($sessionIds);
 
         $callbacks = [
-            'bestHand' => function () use ($eventIdList) {
+            'bestHand' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getBestHandOfEvent($this->_db, $eventIdList);
             },
-            'bestTsumoist' => function () use ($eventIdList) {
+            'bestTsumoist' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getBestTsumoistInSingleSession($this->_db, $eventIdList);
             },
-            'braveSapper' => function () use ($eventIdList) {
+            'braveSapper' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getBraveSappers($this->_db, $eventIdList);
             },
-            'dieHard' => function () use ($eventIdList) {
+            'dieHard' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getDieHardData($this->_db, $eventIdList);
             },
-            'dovakins' => function () use ($eventIdList) {
+            'dovakins' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getDovakins($this->_db, $eventIdList);
             },
-            'yakumans' => function () use ($eventIdList) {
+            'yakumans' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getYakumans($this->_db, $eventIdList);
             },
-            'shithander' => function () use ($eventIdList) {
+            'shithander' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getBestShithander($this->_db, $eventIdList);
             },
-            'bestDealer' => function () use ($eventIdList) {
+            'bestDealer' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getBestDealer($this->_db, $eventIdList);
             },
-            'bestFu' => function () use ($eventIdList) {
+            'bestFu' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getMaxFuHand($this->_db, $eventIdList);
             },
-            'impossibleWait' => function () use ($eventIdList) {
+            'impossibleWait' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getImpossibleWait($this->_db, $eventIdList);
             },
-            'honoredDonor' => function () use ($eventIdList) {
+            'honoredDonor' => function () use ($eventIdList): array {
                 return $this->_getHonoredDonor($this->_games, $this->_players, $this->_rounds);
             },
-            'justAsPlanned' => function () use ($eventIdList) {
+            'justAsPlanned' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getJustAsPlanned($this->_db, $eventIdList);
             },
-            'carefulPlanning' => function () use ($eventIdList) {
+            'carefulPlanning' => function () use ($eventIdList): array {
                 return $this->_getMinFeedsScore($this->_games, $this->_players, $this->_rounds);
             },
-            'doraLord' => function () use ($eventIdList) {
+            'doraLord' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getMaxAverageDoraCount($this->_db, $eventIdList);
             },
-            'catchEmAll' => function () use ($eventIdList) {
+            'catchEmAll' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getMaxDifferentYakuCount($this->_db, $eventIdList);
             },
-            'favoriteAsapinApprentice' => function () use ($eventIdList) {
+            'favoriteAsapinApprentice' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getFavoriteAsapinApprentice($this->_db, $eventIdList);
             },
-            'andYourRiichiBet' => function () use ($eventIdList) {
+            'andYourRiichiBet' => function () use ($eventIdList): array {
                 return $this->_getMaxStolenRiichiBetsCount($this->_games, $this->_players, $this->_rounds);
             },
-            'covetousKnight' => function () use ($eventIdList) {
+            'covetousKnight' => function () use ($eventIdList): array {
                 return $this->_getMinLostRiichiBetsCount($this->_games, $this->_players, $this->_rounds);
             },
-            'ninja' => function () use ($eventIdList) {
+            'ninja' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getNinja($this->_db, $eventIdList);
             }
         ];
@@ -178,10 +178,13 @@ class AchievementsModel extends Model
      * @param $games
      * @param $players
      * @param $rounds
-     * @return array
+     * @param SessionPrimitive[] $games
+     * @param RoundPrimitive[][] $rounds
+     *
+     *
      * @throws \Exception
      */
-    protected function _getHonoredDonor($games, $players, $rounds)
+    protected function _getHonoredDonor(array $games, array $players, array $rounds)
     {
         $riichiStat = $this->_calcRiichiStat($games, $players, $rounds);
 
@@ -209,7 +212,7 @@ class AchievementsModel extends Model
      * @return array
      * @throws \Exception
      */
-    protected function _getMinFeedsScore($games, $players, $rounds)
+    protected function _getMinFeedsScore($games, array $players, $rounds)
     {
         $payments = [];
         foreach ($games as $session) {
@@ -253,10 +256,13 @@ class AchievementsModel extends Model
      * @param $games
      * @param $players
      * @param $rounds
-     * @return array
+     * @param SessionPrimitive[] $games
+     * @param RoundPrimitive[][] $rounds
+     *
+     *
      * @throws \Exception
      */
-    protected function _getMaxStolenRiichiBetsCount($games, $players, $rounds)
+    protected function _getMaxStolenRiichiBetsCount(array $games, array $players, array $rounds)
     {
         $riichiStat = $this->_calcRiichiStat($games, $players, $rounds);
 
@@ -285,10 +291,13 @@ class AchievementsModel extends Model
      * @param $games
      * @param $players
      * @param $rounds
-     * @return array
+     * @param SessionPrimitive[] $games
+     * @param RoundPrimitive[][] $rounds
+     *
+     *
      * @throws \Exception
      */
-    protected function _getMinLostRiichiBetsCount($games, $players, $rounds)
+    protected function _getMinLostRiichiBetsCount(array $games, array $players, array $rounds)
     {
         $riichiStat = $this->_calcRiichiStat($games, $players, $rounds);
 
@@ -431,7 +440,7 @@ class AchievementsModel extends Model
      * @return array
      * @throws \Exception
      */
-    protected function _addLoserPayment($round, $sessionState, $payments)
+    protected function _addLoserPayment($round, $sessionState, array $payments)
     {
         if (!in_array($sessionState->getLastOutcome(), ['ron', 'multiron'])) {
             return $payments;
@@ -497,10 +506,12 @@ class AchievementsModel extends Model
 
     /**
      * @param $sessionIds
-     * @return RoundPrimitive[][]
+     * @param int[] $sessionIds
+     *
+     *
      * @throws \Exception
      */
-    protected function _getRounds($sessionIds)
+    protected function _getRounds(array $sessionIds)
     {
         $rounds = RoundPrimitive::findBySessionIds($this->_db, $sessionIds);
 

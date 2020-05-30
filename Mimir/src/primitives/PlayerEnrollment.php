@@ -118,12 +118,12 @@ class PlayerEnrollmentPrimitive extends Primitive
         return $this->_pin;
     }
 
-    public function getEventId()
+    public function getEventId(): int
     {
         return $this->_eventId;
     }
 
-    public function getPlayerId()
+    public function getPlayerId(): int
     {
         return $this->_playerId;
     }
@@ -132,10 +132,14 @@ class PlayerEnrollmentPrimitive extends Primitive
      * @param DataSource $ds
      * @param $playerId
      * @param $eventId
-     * @return PlayerEnrollmentPrimitive
+     *
+     * @return self|self[]
+     *
      * @throws \Exception
+     *
+     * @psalm-return array<array-key, self>|self
      */
-    public static function findByPlayerAndEvent(DataSource $ds, $playerId, $eventId)
+    public static function findByPlayerAndEvent(DataSource $ds, int $playerId, int $eventId)
     {
         return self::_findBySeveral($ds, [
             'player_id' => [$playerId],
@@ -149,7 +153,7 @@ class PlayerEnrollmentPrimitive extends Primitive
      * @return PlayerEnrollmentPrimitive[]
      * @throws \Exception
      */
-    public static function findByEvent(DataSource $ds, $eventId)
+    public static function findByEvent(DataSource $ds, int $eventId)
     {
         return self::_findBy($ds, 'event_id', [$eventId]);
     }

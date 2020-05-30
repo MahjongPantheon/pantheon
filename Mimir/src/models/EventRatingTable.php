@@ -41,7 +41,7 @@ class EventRatingTableModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getRatingTable($eventList, $orderBy, $order, $withPrefinished = false)
+    public function getRatingTable($eventList, string $orderBy, string $order, $withPrefinished = false)
     {
         if (!in_array($order, ['asc', 'desc'])) {
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
@@ -228,9 +228,12 @@ class EventRatingTableModel extends Model
      * @param $orderBy
      * @param PlayerPrimitive[] $playerItems
      * @param PlayerHistoryPrimitive[] $playersHistoryItems
+     *
      * @throws InvalidParametersException
+     *
+     * @return void
      */
-    protected function _sortItems($startRating, $orderBy, &$playerItems, &$playersHistoryItems)
+    protected function _sortItems($startRating, $orderBy, &$playerItems, &$playersHistoryItems): void
     {
         switch ($orderBy) {
             case 'name':
@@ -294,7 +297,13 @@ class EventRatingTableModel extends Model
         }
     }
 
-    protected function _stableSort(&$array, $comparer = 'strcmp')
+    /**
+     * @param (PlayerHistoryPrimitive|mixed)[] $array
+     * @param \Closure|string $comparer
+     *
+     * @return void
+     */
+    protected function _stableSort(array &$array, $comparer = 'strcmp')
     {
         // Arrays of size < 2 require no action.
         if (count($array) < 2) {

@@ -142,12 +142,12 @@ class PlayerRegistrationPrimitive extends Primitive
         return $this->_token;
     }
 
-    public function getEventId()
+    public function getEventId(): int
     {
         return $this->_eventId;
     }
 
-    public function getPlayerId()
+    public function getPlayerId(): int
     {
         return $this->_playerId;
     }
@@ -180,10 +180,14 @@ class PlayerRegistrationPrimitive extends Primitive
      * @param DataSource $ds
      * @param $playerId
      * @param $eventId
-     * @return PlayerRegistrationPrimitive | []
+     *
+     * @return self|self[]
+     *
      * @throws \Exception
+     *
+     * @psalm-return array<array-key, self>|self
      */
-    public static function findByPlayerAndEvent(DataSource $ds, $playerId, $eventId)
+    public static function findByPlayerAndEvent(DataSource $ds, int $playerId, int $eventId)
     {
         return self::_findBySeveral($ds, [
             'player_id' => [$playerId],
@@ -205,10 +209,12 @@ class PlayerRegistrationPrimitive extends Primitive
     /**
      * @param DataSource $ds
      * @param $playerId
-     * @return PlayerRegistrationPrimitive[]
+     * @param array $playerId
+     *
+     *
      * @throws \Exception
      */
-    public static function findByPlayerId(DataSource $ds, $playerId)
+    public static function findByPlayerId(DataSource $ds, array $playerId)
     {
         return self::_findBy($ds, 'player_id', [$playerId]);
     }
@@ -219,7 +225,7 @@ class PlayerRegistrationPrimitive extends Primitive
      * @return int
      * @throws \Exception
      */
-    public static function findNextFreeLocalId(DataSource $ds, $eventId)
+    public static function findNextFreeLocalId(DataSource $ds, int $eventId)
     {
         $result = $ds->table(static::$_table)
             ->where('event_id', $eventId)
@@ -357,7 +363,7 @@ class PlayerRegistrationPrimitive extends Primitive
      * @return array ['id' => int, 'local_id' => int|null, 'ignore_seating' => int][]
      * @throws \Exception
      */
-    public static function findRegisteredPlayersIdsByEvent(DataSource $ds, $eventId)
+    public static function findRegisteredPlayersIdsByEvent(DataSource $ds, int $eventId)
     {
         return array_map(function (PlayerRegistrationPrimitive $p) {
             return ['id' => $p->_playerId, 'local_id' => $p->_localId, 'ignore_seating' => $p->_ignoreSeating];
@@ -367,7 +373,9 @@ class PlayerRegistrationPrimitive extends Primitive
     /**
      * @param DataSource $ds
      * @param $eventId
-     * @return array
+     * @param array|int $eventId
+     *
+     *
      * @throws \Exception
      */
     public static function findIgnoredPlayersIdsByEvent(DataSource $ds, $eventId)
@@ -420,7 +428,7 @@ class PlayerRegistrationPrimitive extends Primitive
      * @return PlayerPrimitive[]
      * @throws \Exception
      */
-    public static function findRegisteredPlayersByEventList(DataSource $ds, $eventIdList)
+    public static function findRegisteredPlayersByEventList(DataSource $ds, array $eventIdList)
     {
         $ids = array_map(function ($el) {
             return $el['id'];
@@ -461,7 +469,7 @@ class PlayerRegistrationPrimitive extends Primitive
      * @return array [local_id => Player_id, ...]
      * @throws \Exception
      */
-    public static function findLocalIdsMapByEvent(DataSource $ds, $eventId)
+    public static function findLocalIdsMapByEvent(DataSource $ds, int $eventId)
     {
         $map = [];
         /** @var PlayerRegistrationPrimitive[] $items */

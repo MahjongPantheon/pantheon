@@ -213,7 +213,7 @@ class SeatingController extends Controller
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    protected function _getNextPrescriptedSeating($eventId)
+    protected function _getNextPrescriptedSeating(int $eventId)
     {
         $this->_checkIfAllowed($eventId);
         $this->_log->addInfo('Getting next seating for event #' . $eventId);
@@ -285,7 +285,7 @@ class SeatingController extends Controller
      * @throws \Exception
      * @return bool flag if games are started immediately
      */
-    protected function _updateEventStatus($eventId)
+    protected function _updateEventStatus(int $eventId)
     {
         list($event) = EventPrimitive::findById($this->_ds, [$eventId]);
         if ($event->getUseTimer()) {
@@ -299,11 +299,14 @@ class SeatingController extends Controller
      * Check if seating is allowed now
      *
      * @param $eventId
+     *
      * @throws AuthFailedException
      * @throws InvalidParametersException
      * @throws \Exception
+     *
+     * @return void
      */
-    protected function _checkIfAllowed($eventId)
+    protected function _checkIfAllowed(int $eventId): void
     {
         if (!(new EventModel($this->_ds, $this->_config, $this->_meta))->checkAdminToken()) {
             throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
@@ -321,7 +324,7 @@ class SeatingController extends Controller
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    protected function _getData($eventId)
+    protected function _getData(int $eventId)
     {
         $playersMap = [];
 

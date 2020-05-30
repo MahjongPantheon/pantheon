@@ -348,9 +348,10 @@ class EventPrimitive extends Primitive
 
     /**
      * Timer red zone in seconds
-     * @return string
+     *
+     * @return int|null
      */
-    public function getRedZone()
+    public function getRedZone(): ?int
     {
         return $this->_redZone;
     }
@@ -509,7 +510,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return false|int
      */
     public function getAutoSeating()
     {
@@ -568,7 +569,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return false|int
      */
     public function getIsOnline()
     {

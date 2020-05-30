@@ -30,7 +30,7 @@ class DateHelper
      * @return string
      * @throws EntityNotFoundException
      */
-    public static function getLocalDate($utcDate, $timezone)
+    public static function getLocalDate(string $utcDate, string $timezone)
     {
         $date = new \DateTime($utcDate);
         $date->setTimezone(new \DateTimeZone($timezone));

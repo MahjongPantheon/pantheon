@@ -122,7 +122,7 @@ class Meta
         return $locale;
     }
 
-    protected function _fillFrom($input)
+    protected function _fillFrom(array $input): void
     {
         $this->_authToken = (empty($input['HTTP_X_AUTH_TOKEN']) ? '' : $input['HTTP_X_AUTH_TOKEN']);
         list($this->_requestedVersionMajor, $this->_requestedVersionMinor) = explode('.', (
@@ -159,12 +159,12 @@ class Meta
         $this->_requestedVersionMajor = $this->_requestedVersionMajor ? intval($this->_requestedVersionMajor) : 1;
     }
 
-    public function getAuthToken()
+    public function getAuthToken(): ?string
     {
         return $this->_authToken;
     }
 
-    public function getAccessRuleValue($name)
+    public function getAccessRuleValue(string $name)
     {
         if (!isset($this->_accessRules[$name])) {
             return null;
@@ -173,7 +173,12 @@ class Meta
         return $this->_accessRules[$name];
     }
 
-    public function getRequestedVersion()
+    /**
+     * @return int[]
+     *
+     * @psalm-return array{0: int, 1: int}
+     */
+    public function getRequestedVersion(): array
     {
         return [
             $this->_requestedVersionMajor,
@@ -181,22 +186,22 @@ class Meta
         ];
     }
 
-    public function getSelectedLocale()
+    public function getSelectedLocale(): string
     {
         return $this->_selectedLocale;
     }
 
-    public function getCurrentPersonId()
+    public function getCurrentPersonId(): ?int
     {
         return $this->_currentPersonId;
     }
 
-    public function sendVersionHeader($major, $minor)
+    public function sendVersionHeader($major, $minor): void
     {
         header('X-Api-Version: ' . intval($major) . '.' . intval($minor));
     }
 
-    public function isGlobalWatcher()
+    public function isGlobalWatcher(): bool
     {
         return $this->_authToken === '0000000000';
     }
