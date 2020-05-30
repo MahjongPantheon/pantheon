@@ -240,7 +240,7 @@ class RoundPrimitive extends Primitive
      * Find rounds and multi-rounds by session (foreign key search)
      *
      * @param DataSource $ds
-     * @param string[] $idList
+     * @param int[] $idList
      * @throws \Exception
      * @return RoundPrimitive[]
      */
@@ -561,7 +561,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return \int[]
+     * @return int[]
      */
     public function getRiichiIds()
     {
@@ -657,7 +657,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return \int[]
+     * @return int[]
      */
     public function getTempaiIds()
     {
@@ -701,7 +701,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return \int[]
+     * @return int[]
      */
     public function getNagashiIds()
     {

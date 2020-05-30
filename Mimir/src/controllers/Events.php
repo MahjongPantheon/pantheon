@@ -129,7 +129,7 @@ class EventsController extends Controller
         $localMap = [];
         $teamNames = [];
 
-        $ignoredPlayers = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_db, $eventIdList);
+        $ignoredPlayers = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, $eventIdList);
 
         if ($needLocalIds) {
             $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_ds, $eventIdList[0]));
@@ -356,7 +356,7 @@ class EventsController extends Controller
     public function updateTeamNames($eventId, $teamNameMap)
     {
         $this->_log->addInfo('Updating players\' teams for event id# ' . $eventId);
-        $success = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))
+        $success = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))
             ->updateTeamNames($eventId, $teamNameMap);
         $this->_log->addInfo('Successfully updated players\' teams for event id# ' . $eventId);
         return $success;
@@ -542,7 +542,7 @@ class EventsController extends Controller
     {
         $this->_log->addInfo('Getting achievements code list');
 
-        $list = (new AchievementsModel($this->_db, $this->_config, $this->_meta))
+        $list = (new AchievementsModel($this->_ds, $this->_config, $this->_meta))
             ->getAchievementsList();
 
         $this->_log->addInfo('Successfully received achievements code list');

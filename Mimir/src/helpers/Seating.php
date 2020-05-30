@@ -135,6 +135,7 @@ class Seating
         if (empty($previousSeatings)) {
             $previousSeatings = [];
         }
+        /** @var array[] $groups */
         $groups = array_chunk($playersMap, ceil(count($playersMap) / $groupsCount), true); // 1)
         for ($i = 0; $i < $maxIterations; $i++) {
             srand($randFactor + $i * 17); // 2)
@@ -142,8 +143,9 @@ class Seating
                 $groups[$k] = self::shuffle($groups[$k]); // 3)
             }
 
+            /** @var array $flattenedGroups */
             $flattenedGroups = array_reduce($groups, function ($acc, $el) {
-                return $acc + $el;
+                return array_merge($acc, $el);
             }, []);
 
             $newFactor = self::_calculateIntersectionFactor($flattenedGroups, $previousSeatings); // 4)
@@ -166,13 +168,13 @@ class Seating
      * @param $previousSeatings array [ [id, id, id, id] ... ] - Previous seatings info
      * @return int
      */
-    protected static function _calculateIntersectionFactor($seating, $previousSeatings)
+    protected static function _calculateIntersectionFactor(array $seating, array $previousSeatings)
     {
         $factor = 0;
         $crossings = [];
 
         $tablesCount = floor(count($seating) / 4);
-        $games = array_chunk($previousSeatings, $tablesCount);
+        $games = array_chunk($previousSeatings, (int)$tablesCount);
 
         // push new seating to our array, but reformat it first
         $newSeating = [];

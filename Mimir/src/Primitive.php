@@ -114,7 +114,7 @@ abstract class Primitive
             ->where($currentEntityField, $this->getId())
             ->findArray();
 
-        usort($items, function (&$item1, &$item2) {
+        usort($items, function ($item1, $item2) {
             return $item1['order'] - $item2['order'];
         });
 
@@ -280,12 +280,12 @@ abstract class Primitive
      */
     public function drop()
     {
-        $success = $this->_ds->table(static::$_table)
-            ->findOne($this->getId())
-            ->delete();
-
-        if ($success) {
-            $this->_deident();
+        $result = $this->_ds->table(static::$_table)->findOne($this->getId());
+        if ($result) {
+            $success = $result->delete();
+            if ($success) {
+                $this->_deident();
+            }
         }
 
         return $this;
@@ -339,6 +339,7 @@ abstract class Primitive
      * @param DataSource $ds
      * @param $data
      * @return static
+     * @suppress PhanTypeInstantiateAbstractStatic
      */
     protected static function _recreateInstance(DataSource $ds, $data)
     {

@@ -51,29 +51,27 @@ class ErrorHandler
 
     /**
      * Error handler, passes flow over the exception logger with new ErrorException.
-     * @param $num
-     * @param $str
-     * @param $file
-     * @param $line
-     * @param null $context
+     * @param ?int $num
+     * @param ?string $str
+     * @param ?string $file
+     * @param ?int $line
      */
-    public function logError($num, $str, $file, $line, $context = null)
+    public function logError($num, $str, $file, $line)
     {
-        $this->logException(new \ErrorException($str, 0, $num, $file, $line));
+        $this->logException(new \ErrorException($str ?? '', 0, $num ?? 0, $file ?? '', $line ?? 0));
     }
 
     /**
      * Error handler, passes flow over the exception logger with new ErrorException.
      * For debug purposes: does not exit on first error
-     * @param $num
-     * @param $str
-     * @param $file
-     * @param $line
-     * @param null $context
+     * @param ?int $num
+     * @param ?string $str
+     * @param ?string $file
+     * @param ?int $line
      */
-    public function logDebugError($num, $str, $file, $line, $context = null)
+    public function logDebugError($num, $str, $file, $line)
     {
-        $this->logException(new \ErrorException($str, 0, $num, $file, $line), false);
+        $this->logException(new \ErrorException($str ?? '', 0, $num ?? 0, $file ?? '', $line ?? 0), false);
     }
 
     /**

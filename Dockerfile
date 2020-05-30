@@ -49,6 +49,7 @@ RUN apk update && \
     postgresql \
     nodejs \
     npm \
+    php7-pecl-ast \
     php7-mcrypt \
     php7-soap \
     php7-gettext \

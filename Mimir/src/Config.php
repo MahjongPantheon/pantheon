@@ -19,6 +19,9 @@ namespace Mimir;
 
 class Config
 {
+    /**
+     * @var string[]
+     */
     protected $_data;
 
     /**
@@ -27,9 +30,12 @@ class Config
     public function __construct($fileOrSource)
     {
         if (is_array($fileOrSource)) { // not file name, just whole config
+            /** @var string[] $fileOrSource */
             $this->_data = $fileOrSource;
         } else {
-            $this->_data = require $fileOrSource;
+            /** @var string[] $tmp */
+            $tmp = array_map('strval', require $fileOrSource);
+            $this->_data = $tmp;
         }
     }
 
@@ -37,7 +43,7 @@ class Config
      * Get config value by dot-separated path
      *
      * @param $path
-     * @return mixed
+     * @return string|string[]
      */
     public function getValue($path)
     {
@@ -51,7 +57,7 @@ class Config
     }
 
     /**
-     * @return mixed  PDO connection string
+     * @return string  PDO connection string
      * @throws \RuntimeException
      */
     public function getDbConnectionString()

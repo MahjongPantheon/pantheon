@@ -138,7 +138,7 @@ class SeatingController extends Controller
             ->getRatingTable($eventList, 'rating', 'desc');
 
         // In rare cases we want to exclude players from seating
-        $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_db, $eventId);
+        $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, $eventId);
         // array_values required: array_filter maintains numeric keys!
         $currentRatingTable = array_values(array_filter($currentRatingTable, function ($player) use (&$ignoredPlayerIds) {
             return !in_array($player['id'], $ignoredPlayerIds);
@@ -334,7 +334,7 @@ class SeatingController extends Controller
         $ignoredPlayerIds = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, $eventId);
 
         // First step is adding players that already played games
-        $histories = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventId);
+        $histories = (array)PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventId);
         foreach ($histories as $h) {
             if (!in_array($h->getPlayerId(), $ignoredPlayerIds)) {
                 $playersMap[$h->getPlayerId()] = $h->getRating();

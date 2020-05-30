@@ -26,12 +26,15 @@ require_once __DIR__ . '/FreyClient.php';
 
 use Monolog\Logger;
 use Monolog\Handler\ErrorLogHandler;
-use Rheda\Sysconf;
 
 class Api
 {
     /**
-     * @var Db
+     * @var DataSource
+     */
+    protected $_ds;
+    /**
+     * @var IDb
      */
     protected $_db;
     /**

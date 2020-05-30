@@ -55,7 +55,8 @@ class Db implements IDb
 
         ORM::configure($this->_connString);
         if (!empty($credentials)) {
-            ORM::configure($credentials); // should pass username and password
+            ORM::configure('username', $credentials['username']);
+            ORM::configure('password', $credentials['password']);
         }
     }
 
@@ -82,7 +83,7 @@ class Db implements IDb
     public function lastInsertId()
     {
         ORM::rawExecute('SELECT LASTVAL()');
-        return ORM::getLastStatement()->fetchColumn();
+        return intval(ORM::getLastStatement()->fetchColumn());
     }
 
     /**

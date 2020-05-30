@@ -228,7 +228,7 @@ class AccessController extends Controller
     /**
      * Update personal rule value and/or type
      *
-     * @param integer $ruleId
+     * @param int $ruleId
      * @param string|int|boolean $ruleValue
      * @param string $ruleType   'bool', 'int' or 'enum'
      * @return bool   success

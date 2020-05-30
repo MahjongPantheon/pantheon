@@ -13,7 +13,7 @@ interface IFreyClient
 public function __construct(string $apiUrl);
 
 /**
-* @returns \JsonRPC\Client
+* @return \JsonRPC\Client
 */
 public function getClient();
 
@@ -23,7 +23,7 @@ public function getClient();
      *  Approval code is returned. It is intended to be sent to provided email address.
      * @param string $email
      * @param string $password
-     * @returns string
+     * @return string
     */
     public function requestRegistration(string $email, string $password);
 
@@ -31,7 +31,7 @@ public function getClient();
      *  Approve registration with approval code.
      *  Returns new person's ID on success.
      * @param string $approvalCode
-     * @returns int
+     * @return int
     */
     public function approveRegistration(string $approvalCode);
 
@@ -39,7 +39,7 @@ public function getClient();
      *  Authorize person ant return permanent client-side auth token.
      * @param string $email
      * @param string $password
-     * @returns array
+     * @return array
     */
     public function authorize(string $email, string $password);
 
@@ -48,7 +48,7 @@ public function getClient();
      *  Useful for cookie-check.
      * @param int $id
      * @param string $clientSideToken
-     * @returns bool
+     * @return bool
     */
     public function quickAuthorize(int $id, string $clientSideToken);
 
@@ -58,7 +58,7 @@ public function getClient();
      * @param string $email
      * @param string $password
      * @param string $newPassword
-     * @returns string
+     * @return string
     */
     public function changePassword(string $email, string $password, string $newPassword);
 
@@ -66,7 +66,7 @@ public function getClient();
      *  Request password reset.
      *  Returns reset approval token, which should be sent over email to user.
      * @param string $email
-     * @returns string
+     * @return string
     */
     public function requestResetPassword(string $email);
 
@@ -77,7 +77,7 @@ public function getClient();
      *  should be asked to change the password immediately.
      * @param string $email
      * @param string $resetApprovalCode
-     * @returns int
+     * @return int
     */
     public function approveResetPassword(string $email, string $resetApprovalCode);
 
@@ -85,11 +85,11 @@ public function getClient();
      *  Primary client method, aggregating rules from groups and person.
      *  Get array of access rules for person in event.
      *  Cached for 10 minutes.
-     * @param int $personIdcurrentEventId
+     * @param int $personId
      * @param int $eventId
-     * @returns array
+     * @return array
     */
-    public function getAccessRules(int $personIdcurrentEventId, int $eventId);
+    public function getAccessRules(int $personId, int $eventId);
 
     /**
      *  Get single rule for person in event. Hardly relies on cache.
@@ -99,7 +99,7 @@ public function getClient();
      * @param int $personId
      * @param int $eventId
      * @param string $ruleName
-     * @returns mixed
+     * @return mixed
     */
     public function getRuleValue(int $personId, int $eventId, string $ruleName);
 
@@ -110,7 +110,7 @@ public function getClient();
      * @param string $email
      * @param string $phone
      * @param string $tenhouId
-     * @returns bool
+     * @return bool
     */
     public function updatePersonalInfo(string $id, string $title, string $city, string $email, string $phone, string $tenhouId);
 
@@ -118,7 +118,7 @@ public function getClient();
      *  Get personal info by id list.
      *  May or may not include private data (depending on admin rights of requesting user).
      * @param array $ids
-     * @returns array
+     * @return array
     */
     public function getPersonalInfo(array $ids);
 
@@ -126,7 +126,7 @@ public function getClient();
      *  Get personal info by tenhou id list.
      *  May or may not include private data (depending on admin rights of requesting user).
      * @param array $ids
-     * @returns array
+     * @return array
     */
     public function findByTenhouIds(array $ids);
 
@@ -135,16 +135,23 @@ public function getClient();
      *  Query should not contain % or _ characters (they will be cut though)
      *  Query should be more than 2 characters long.
      * @param string $query
-     * @returns array
+     * @return array
     */
     public function findByTitle(string $query);
 
     /**
      *  Get info of groups by id list
      * @param array $ids
-     * @returns array
+     * @return array
     */
     public function getGroups(array $ids);
+
+    /**
+     *  Get rule list with translations to selected locale
+    
+     * @return array
+    */
+    public function getRulesList();
 
     /**
      *  Get access rules for person.
@@ -153,7 +160,7 @@ public function getClient();
      *  - To be used in admin panel, but not in client side!
      * @param int $personId
      * @param int|null $eventId
-     * @returns array
+     * @return array
     */
     public function getPersonAccess(int $personId, $eventId);
 
@@ -164,9 +171,27 @@ public function getClient();
      *  - To be used in admin panel, but not in client side!
      * @param int $groupId
      * @param int|null $eventId
-     * @returns array
+     * @return array
     */
     public function getGroupAccess(int $groupId, $eventId);
+
+    /**
+     *  Get all access rules for person.
+     *  - Method results are not cached!
+     *  - To be used in admin panel, but not in client side!
+     * @param int $personId
+     * @return array
+    */
+    public function getAllPersonAccess(int $personId);
+
+    /**
+     *  Get all access rules for group.
+     *  - Method results are not cached!
+     *  - To be used in admin panel, but not in client side!
+     * @param int $groupId
+     * @return array
+    */
+    public function getAllGroupAccess(int $groupId);
 
     /**
      *  Add new rule for a person.
@@ -175,7 +200,7 @@ public function getClient();
      * @param string $ruleType
      * @param int $personId
      * @param int $eventId
-     * @returns int
+     * @return int
     */
     public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId);
 
@@ -186,39 +211,39 @@ public function getClient();
      * @param string $ruleType
      * @param int $groupId
      * @param int $eventId
-     * @returns int
+     * @return int
     */
     public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId);
 
     /**
      *  Update personal rule value and/or type
-     * @param integer $ruleId
+     * @param int $ruleId
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
-     * @returns bool
+     * @return bool
     */
-    public function updateRuleForPerson(integer $ruleId, $ruleValue, string $ruleType);
+    public function updateRuleForPerson(int $ruleId, $ruleValue, string $ruleType);
 
     /**
      *  Update group rule value and/or type
      * @param int $ruleId
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
-     * @returns bool
+     * @return bool
     */
     public function updateRuleForGroup(int $ruleId, $ruleValue, string $ruleType);
 
     /**
      *  Drop personal rule by id
      * @param int $ruleId
-     * @returns bool
+     * @return bool
     */
     public function deleteRuleForPerson(int $ruleId);
 
     /**
      *  Drop group rule by id
      * @param int $ruleId
-     * @returns bool
+     * @return bool
     */
     public function deleteRuleForGroup(int $ruleId);
 
@@ -228,7 +253,7 @@ public function getClient();
      *  it's better to wait for 10mins than cause shitload on DB.
      * @param int $personId
      * @param int $eventId
-     * @returns bool
+     * @return bool
     */
     public function clearAccessCache(int $personId, int $eventId);
 
@@ -240,7 +265,7 @@ public function getClient();
      * @param string $city
      * @param string $phone
      * @param string $tenhouId
-     * @returns int
+     * @return int
     */
     public function createAccount(string $email, string $password, string $title, string $city, string $phone, string $tenhouId);
 
@@ -250,7 +275,7 @@ public function getClient();
      * @param string $title
      * @param string $description
      * @param string $color
-     * @returns int
+     * @return int
     */
     public function createGroup(string $title, string $description, string $color);
 
@@ -260,14 +285,14 @@ public function getClient();
      * @param string $title
      * @param string $description
      * @param string $color
-     * @returns bool
+     * @return bool
     */
     public function updateGroup(int $id, string $title, string $description, string $color);
 
     /**
      *  Delete group and all of its linked dependencies
      * @param int $id
-     * @returns bool
+     * @return bool
     */
     public function deleteGroup(int $id);
 
@@ -275,7 +300,7 @@ public function getClient();
      *  Add person to group
      * @param int $personId
      * @param int $groupId
-     * @returns bool
+     * @return bool
     */
     public function addPersonToGroup(int $personId, int $groupId);
 
@@ -283,21 +308,21 @@ public function getClient();
      *  Remove person from group
      * @param int $personId
      * @param int $groupId
-     * @returns bool
+     * @return bool
     */
     public function removePersonFromGroup(int $personId, int $groupId);
 
     /**
      *  List persons of group
      * @param int $groupId
-     * @returns array
+     * @return array
     */
     public function getPersonsOfGroup(int $groupId);
 
     /**
      *  List groups of person
      * @param int $personId
-     * @returns array
+     * @return array
     */
     public function getGroupsOfPerson(int $personId);
 
@@ -307,7 +332,7 @@ public function getClient();
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @param int $personId
-     * @returns int
+     * @return int
     */
     public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId);
 
@@ -317,7 +342,7 @@ public function getClient();
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @param int $groupId
-     * @returns int
+     * @return int
     */
     public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId);
 }

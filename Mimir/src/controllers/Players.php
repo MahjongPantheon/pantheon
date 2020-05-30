@@ -17,8 +17,6 @@
  */
 namespace Mimir;
 
-use Symfony\Component\Config\Definition\Exception\Exception;
-
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
 require_once __DIR__ . '/../primitives/Player.php';
@@ -101,7 +99,7 @@ class PlayersController extends Controller
 
     /**
      * @param int $playerId player to get stats for
-     * @param int $eventId event to get stats for
+     * @param int[] $eventIdList event to get stats for
      * @throws EntityNotFoundException
      * @throws \Exception
      * @return array of statistics
@@ -422,8 +420,9 @@ class PlayersController extends Controller
         ];
 
         if (is_array($result['paoPlayer'])) {
+            $players = array_filter($result['paoPlayer']);
             // pao player may be only one
-            $result['paoPlayer'] = reset(array_filter($result['paoPlayer'])) or null;
+            $result['paoPlayer'] = (reset($players) or null);
         }
 
         return $result;

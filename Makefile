@@ -114,6 +114,8 @@ pantheon_run: get_docker_id get_docker_idle_id
   		echo " ${GREEN}Run 'make logs' in separate console to view container logs on-line${NC} "; \
   		echo " ${GREEN}Run 'make php_logs' in separate console to view php logs on-line${NC} "; \
   		echo " ${YELLOW}Run 'make shell' in separate console to get into container shell${NC} "; \
+  		echo " ${YELLOW}Also you can use 'make shell_{tyr|rheda|frey|mimir}' to get ${NC} "; \
+  		echo " ${YELLOW}to specific subproject folder after entering container shell${NC} "; \
   		echo "----------------------------------------------------------------------------------"; \
 		if [ "$(IDLE_DOCKER_ID)" != "" ]; then \
   			docker start $(IDLE_DOCKER_ID) ; \
@@ -222,6 +224,39 @@ shell: get_docker_id
 	else \
 		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Pantheon container$(NC) ~> $$PS1" && /bin/sh' ; \
 	fi
+
+.PHONY: shell_tyr
+shell_tyr: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Pantheon container is not running, can't get to shell.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Pantheon container$(NC) ~> $$PS1" && cd /var/www/html/Tyr && /bin/sh' ; \
+	fi
+
+.PHONY: shell_rheda
+shell_rheda: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Pantheon container is not running, can't get to shell.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Pantheon container$(NC) ~> $$PS1" && cd /var/www/html/Rheda && /bin/sh' ; \
+	fi
+
+.PHONY: shell_mimir
+shell_mimir: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Pantheon container is not running, can't get to shell.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Pantheon container$(NC) ~> $$PS1" && cd /var/www/html/Mimir && /bin/sh' ; \
+	fi
+
+.PHONY: shell_frey
+shell_frey: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Pantheon container is not running, can't get to shell.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Pantheon container$(NC) ~> $$PS1" && cd /var/www/html/Frey && /bin/sh' ; \
+	fi
+
 
 # Some shortcuts for common tasks
 

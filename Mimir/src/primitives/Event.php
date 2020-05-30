@@ -704,7 +704,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return \int[]
+     * @return int[]
      * @throws \Exception
      */
     public function getRegisteredPlayersIds()

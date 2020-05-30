@@ -86,7 +86,7 @@ interface IFreyClient
 public function __construct(string $apiUrl);
 
 /**
-* @returns \JsonRPC\Client
+* @return \JsonRPC\Client
 */
 public function getClient();
 
@@ -108,7 +108,7 @@ public function getClient();
 
     <?php if (!empty($phpDocParams)) echo ' * ' . implode("\n     * ", $phpDocParams); ?>
 
-    <?php if (!empty($method['return'])) echo ' * @returns ' . $method['return']['type']; ?>
+    <?php if (!empty($method['return'])) echo ' * @return ' . $method['return']['type']; ?>
 
     */
     public function <?php echo $methodName; ?>(<?php
@@ -147,7 +147,7 @@ class FreyClient implements IFreyClient
     }
 
     /**
-     * @returns \JsonRPC\Client
+     * @return \JsonRPC\Client
      */
     public function getClient()
     {
@@ -171,7 +171,7 @@ class FreyClient implements IFreyClient
 
     <?php if (!empty($phpDocParams)) echo ' * ' . implode("\n     * ", $phpDocParams); ?>
 
-    <?php if (!empty($method['return'])) echo ' * @returns ' . $method['return']['type']; ?>
+    <?php if (!empty($method['return'])) echo ' * @return ' . $method['return']['type']; ?>
 
      */
     public function <?php echo $methodName; ?>(<?php

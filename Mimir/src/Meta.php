@@ -22,7 +22,7 @@ require_once __DIR__ . '/interfaces/IFreyClient.php';
 class Meta
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $_authToken;
     /**
@@ -57,7 +57,7 @@ class Meta
     /**
      * Meta constructor.
      * @param IFreyClient $frey
-     * @param null $input
+     * @param array|null $input
      * @throws \Exception
      */
     public function __construct(IFreyClient $frey, $input = null)
