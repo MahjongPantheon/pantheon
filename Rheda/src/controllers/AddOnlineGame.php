@@ -26,7 +26,12 @@ class AddOnlineGame extends Controller
         return _t('Add online game') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return (bool|mixed|string)[]
+     *
+     * @psalm-return array{error: mixed|string, successfullyAdded: bool}
+     */
+    protected function _run(): array
     {
         $errorMsg = '';
         $successfullyAdded = false;

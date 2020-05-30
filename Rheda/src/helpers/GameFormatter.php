@@ -25,9 +25,10 @@ class GameFormatter
     /**
      * @param $gamesData array
      * @param $config Config
-     * @return array
+     * @param \Exception|\JsonRPC\Client $gamesData
+     *
      */
-    public function formatGamesData(&$gamesData, $config)
+    public function formatGamesData(&$gamesData, Config $config)
     {
         $labelColorThreshold = $config->subtractStartPoints() ? 0 : $config->startPoints();
         $result = [];
@@ -167,7 +168,10 @@ class GameFormatter
         return $result;
     }
 
-    protected function _enrichWithInitials($array)
+    /**
+     * @param (bool|mixed|null|string)[] $array
+     */
+    protected function _enrichWithInitials(array $array)
     {
         // TODO: make more universal
         if (!empty($array['display_name'])) {
@@ -205,7 +209,12 @@ class GameFormatter
         return $array;
     }
 
-    protected function _makeLog($game, &$playersData)
+    /**
+     * @return array
+     *
+     * @psalm-return list<mixed>
+     */
+    protected function _makeLog($game, &$playersData): array
     {
         $rounds = [];
         foreach ($game as $round) {
@@ -261,7 +270,7 @@ class GameFormatter
         return $rounds;
     }
 
-    protected function _formatYaku(&$round)
+    protected function _formatYaku(&$round): ?string
     {
         $yakuList = null;
         if (!empty($round['yaku'])) {
@@ -279,7 +288,7 @@ class GameFormatter
         return $yakuList;
     }
 
-    protected function _formatCsvPlayersList(&$round, $key, &$playersData)
+    protected function _formatCsvPlayersList(&$round, string $key, &$playersData): ?string
     {
         $list = null;
         if (!empty($round[$key])) {
@@ -295,7 +304,7 @@ class GameFormatter
         return $list;
     }
 
-    protected function _formatMultiron(&$round, &$playersData)
+    protected function _formatMultiron(&$round, &$playersData): ?array
     {
         $wins = null;
         if ($round['outcome'] == 'multiron' && !empty($round['wins'])) {
@@ -318,7 +327,7 @@ class GameFormatter
 
     // ------------------- Tournament control page formatters -----------------------
 
-    public function formatTables($tables, $waitingForTimer, $isSyncStart)
+    public function formatTables($tables, bool $waitingForTimer, bool $isSyncStart): array
     {
         $winds = ['東', '南', '西', '北'];
         return array_map(function ($t) use ($waitingForTimer, $isSyncStart, &$winds) {
@@ -374,7 +383,7 @@ class GameFormatter
             return '';
         }
 
-        $namesOf = function ($list) {
+        $namesOf = function ($list): string {
             return implode(', ', array_map(function ($e) use (&$players) {
                 return $players[$e]['display_name'];
             }, $list));

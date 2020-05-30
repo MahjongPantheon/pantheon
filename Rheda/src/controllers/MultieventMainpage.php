@@ -28,7 +28,12 @@ class MultieventMainpage extends Controller
         return _t('Event list');
     }
 
-    protected function _run()
+    /**
+     * @return (array|bool|int)[]
+     *
+     * @psalm-return array{events: array, prevPage: int, nextPage: int, hasNextButton: bool, hasPreviousButton: bool}
+     */
+    protected function _run(): array
     {
         $page = empty($this->_path['page']) ? 1 : intval($this->_path['page']);
         $limit = 20;

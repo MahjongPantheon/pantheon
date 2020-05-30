@@ -28,7 +28,12 @@ class TeamTable extends Controller
         return _t('Team table');
     }
 
-    protected function _run()
+    /**
+     * @return ((array|bool|mixed)[][]|bool|mixed|string)[]
+     *
+     * @psalm-return array{error: mixed|string, teams: list<array{players: non-empty-list<mixed>, team_name?: mixed, total_rating?: mixed, winner_zone?: bool, _index: mixed}>, isOnlineTournament: bool, hideResults: bool, showAdminWarning: bool}
+     */
+    protected function _run(): array
     {
         $errMsg = '';
         $data = null;
@@ -121,7 +126,7 @@ class TeamTable extends Controller
         ];
     }
 
-    private function _makeShortName($name)
+    private function _makeShortName($name): string
     {
         list($surname, $name) = explode(' ', $name . ' '); // Trailing slash will suppress errors with names without any space
         return $surname . ' ' . mb_substr($name, 0, 1, 'utf8') . '.';

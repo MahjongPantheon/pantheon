@@ -29,6 +29,9 @@ class Sortition extends Controller
         return _t('Seating controls') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if (!empty($_POST['factor'])) {
@@ -44,7 +47,12 @@ class Sortition extends Controller
         return true;
     }
 
-    protected function _run()
+    /**
+     * @return (((bool|int|mixed|string)[][]|int|mixed)[][]|int|mixed)[]
+     *
+     * @psalm-return array{seed?: int, seating?: list<array{tableIndex: int, players: non-empty-list<array{id: mixed, rating: mixed, zone: string, username: mixed}>}>, intersections?: list<array{username: mixed, intersectWith: list<array{self: bool, intcolor: mixed, count: int}>}>, error?: mixed}
+     */
+    protected function _run(): array
     {
         if (!$this->_userHasAdminRights()) {
             return [
@@ -117,7 +125,7 @@ class Sortition extends Controller
         ];
     }
 
-    protected function _getColor($num, $max)
+    protected function _getColor(int $num, $max): string
     {
         $warningThreshold = ceil($max / 2.);
         if ($num == $max) {

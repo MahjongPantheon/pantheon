@@ -29,6 +29,9 @@ class PrivilegesOfUser extends Controller
         return _p('%s : rights and privileges', $this->_selectedPersonData['title']);
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if (!empty($_POST['eventId'])) {
@@ -39,7 +42,12 @@ class PrivilegesOfUser extends Controller
         return true;
     }
 
-    protected function _run()
+    /**
+     * @return ((((bool|mixed)[][]|array-key|bool|mixed|null)[][]|array-key|mixed)[][]|bool|mixed)[]
+     *
+     * @psalm-return array{error: bool, personName?: mixed, rules?: list<array{id: array-key, title: mixed, rules: list<array{id: mixed|null, key: array-key, title: mixed, type: mixed, type_bool: bool, type_int: bool, type_enum: bool, allowed_values: array<empty, array{value: mixed, selected: bool}>, value: mixed, checked: bool}>}>, message?: mixed}
+     */
+    protected function _run(): array
     {
         $rulesList = $this->_frey->getRulesList();
         $data = $this->_frey->getPersonalInfo([$this->_path['id']]);

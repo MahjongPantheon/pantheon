@@ -30,6 +30,9 @@ class TableStatus extends Controller
         return _t('Event tables status') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         // Special password policy for debug mode
@@ -54,7 +57,12 @@ class TableStatus extends Controller
         return true;
     }
 
-    protected function _run()
+    /**
+     * @return (mixed|null|scalar)[]
+     *
+     * @psalm-return array{error: null, tables: false|mixed, redZoneLength: float|int, yellowZoneLength: float|int, redZone: bool, yellowZone: bool, gameDuration: int, initialTime: string}
+     */
+    protected function _run(): array
     {
         $formatter = new GameFormatter();
 

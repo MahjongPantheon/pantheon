@@ -22,7 +22,7 @@ namespace Rheda;
  */
 class Url
 {
-    public static function make($where, $eventId)
+    public static function make(string $where, int $eventId): string
     {
         $pieces = array_filter(explode('/', $where));
         if (!empty($pieces[0]) && strpos($pieces[0], 'eid') === 0) {
@@ -33,12 +33,12 @@ class Url
         return '/' . implode('/', $pieces);
     }
 
-    public static function makeConfirmation($approvalCode)
+    public static function makeConfirmation(string $approvalCode): string
     {
         return '/confirm/' . $approvalCode;
     }
 
-    public static function interpolate($str, \Handlebars\Context $context)
+    public static function interpolate($str, \Handlebars\Context $context): ?string
     {
         return preg_replace_callback('#{([\w\d]+)}#is', function ($matches) use ($context) {
             return $context->get($matches[1]);

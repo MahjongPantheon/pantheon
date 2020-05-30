@@ -9,7 +9,7 @@ class Templater
     protected static $_inlineRenderer;
     protected static $_eventIdListString;
 
-    public static function getInstance($eventIdList)
+    public static function getInstance(array $eventIdList)
     {
         if (!empty(self::$_rootRenderer)) {
             return self::$_rootRenderer;
@@ -74,7 +74,7 @@ class Templater
         }, $args->getPositionalArguments()));
     }
 
-    public static function _formHelper($template, $context, $args, $source)
+    public static function _formHelper($template, $context, $args, $source): string
     {
         $form = $args->getNamedArguments();
         return '<form action="' . Url::make(Url::interpolate($form['action'], $context), self::$_eventIdListString)
@@ -82,7 +82,7 @@ class Templater
             . '>' . self::$_inlineRenderer->render($source, $context) . '</form>';
     }
 
-    public static function _aHelper($template, $context, $args, $source)
+    public static function _aHelper($template, $context, $args, $source): string
     {
         $a = $args->getNamedArguments();
         if (!empty($a['id'])) {
@@ -100,7 +100,7 @@ class Templater
             . '>' . self::$_inlineRenderer->render($source, $context) . '</a>';
     }
 
-    public static function _cssLoader($template, $context, $args, $source)
+    public static function _cssLoader($template, $context, $args, $source): string
     {
         $a = $args->getPositionalArguments();
         $resultName = self::_assetLoader('css', $a[0]);
@@ -111,7 +111,7 @@ class Templater
         return '<link rel="stylesheet" type="text/css" href="' . $resultName . '" />';
     }
 
-    public static function _jsLoader($template, $context, $args, $source)
+    public static function _jsLoader($template, $context, $args, $source): string
     {
         $a = $args->getPositionalArguments();
         $resultName = self::_assetLoader('js', $a[0]);
@@ -129,7 +129,7 @@ class Templater
      * @param $webPath
      * @return mixed|string
      */
-    protected static function _assetLoader($type, $webPath)
+    protected static function _assetLoader(string $type, $webPath)
     {
         $filePath = __DIR__ . '/../www/' . $webPath;
         $cacheKey = $type . '_' . md5($filePath);

@@ -45,7 +45,14 @@ class SelfRegistration extends Controller
         ];
     }
 
-    protected function _tryRegisterUser($data)
+    /**
+     * @param array $data
+     *
+     * @return (bool|mixed|null|string)[]
+     *
+     * @psalm-return array{email?: mixed, error: mixed|null|string, error_email?: mixed|null, error_password?: mixed|null, success?: bool, debug_url?: mixed|null}
+     */
+    protected function _tryRegisterUser(array $data)
     {
         $emailError = null;
         $passwordError = null;

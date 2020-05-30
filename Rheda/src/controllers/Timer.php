@@ -28,7 +28,12 @@ class Timer extends Controller
         return _t('Timer') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return (mixed|scalar)[]
+     *
+     * @psalm-return array{waiting?: bool, redZoneLength?: float|int, yellowZoneLength?: float|int, redZone?: bool, yellowZone?: bool, gameDuration?: int, gameDurationWithoutSeating?: int, initialTime?: string, seating?: mixed, isAggregated?: true, error?: mixed}
+     */
+    protected function _run(): array
     {
         if (count($this->_eventIdList) > 1) {
             return [
@@ -69,7 +74,14 @@ class Timer extends Controller
         ];
     }
 
-    protected function _formatSeating($seating)
+    /**
+     * @param \Exception|\JsonRPC\Client $seating
+     *
+     * @return (array|mixed)[][]
+     *
+     * @psalm-return list<array{index: mixed, players: list<mixed>}>
+     */
+    protected function _formatSeating($seating): array
     {
         $result = [];
 

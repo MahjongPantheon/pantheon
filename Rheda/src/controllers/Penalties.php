@@ -30,6 +30,9 @@ class Penalties extends Controller
         return _t('Penalties') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         $this->_errors = [];
@@ -60,7 +63,12 @@ class Penalties extends Controller
         return true;
     }
 
-    protected function _run()
+    /**
+     * @return (\Exception|\JsonRPC\Client|array[]|mixed|string|true)[]
+     *
+     * @psalm-return array{players?: \Exception|\JsonRPC\Client|array<empty, empty>, penaltyAmounts?: list<array{view: mixed, value: mixed}>, error: mixed|string, isAggregated?: true}
+     */
+    protected function _run(): array
     {
         if (count($this->_eventIdList) > 1) {
             return [

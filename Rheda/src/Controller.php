@@ -232,6 +232,9 @@ abstract class Controller
         $this->_checkCompatibility($client->getLastHeaders());
     }
 
+    /**
+     * @return void
+     */
     public function run()
     {
         if (empty($this->_mainEventRules->rulesetTitle())) {
@@ -289,7 +292,7 @@ abstract class Controller
         $this->_afterRun();
     }
 
-    protected function _transliterate($data)
+    protected function _transliterate(string $data)
     {
         if (empty($data)) {
             return $data;
@@ -314,6 +317,9 @@ abstract class Controller
      */
     abstract protected function _pageTitle();
 
+    /**
+     * @return true
+     */
     protected function _beforeRun()
     {
         // To be overridden in child classes.
@@ -322,7 +328,7 @@ abstract class Controller
         return true;
     }
 
-    protected function _afterRun()
+    protected function _afterRun(): void
     {
     }
 
@@ -422,7 +428,10 @@ DATA;
         return !empty($isEventAdmin);
     }
 
-    protected function _checkCompatibility($headersArray)
+    /**
+     * @return void
+     */
+    protected function _checkCompatibility(array $headersArray)
     {
         $header = '';
         foreach ($headersArray as $h) {

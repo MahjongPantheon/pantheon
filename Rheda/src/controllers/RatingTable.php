@@ -28,7 +28,12 @@ class RatingTable extends Controller
         return _t('Rating table') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return (array|bool|mixed|null|string)[]
+     *
+     * @psalm-return array{error: mixed|string, data: array|null, orderDesc: bool, isOnlineTournament: bool, isTeamTournament: bool, orderByRating: bool, orderByAvgPlace: bool, orderByAvgScore: bool, orderByName: bool, withMinGamesCount: bool, showPlayersOptions: array{0: array{name: mixed, value: string, selected: bool}, 1: array{name: mixed, value: string, selected: bool}, 2: array{name: mixed, value: string, selected: bool}}, hideResults: bool, showAdminWarning: bool}
+     */
+    protected function _run(): array
     {
         $errMsg = '';
         $data = null;
@@ -241,7 +246,7 @@ class RatingTable extends Controller
         ];
     }
 
-    private function _makeShortName($name)
+    private function _makeShortName($name): string
     {
         list($surname, $name) = explode(' ', $name . ' '); // Trailing slash will suppress errors with names without any space
         return $surname . ' ' . mb_substr($name, 0, 1, 'utf8') . '.';

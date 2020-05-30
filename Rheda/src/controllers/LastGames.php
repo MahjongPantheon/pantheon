@@ -28,7 +28,12 @@ class LastGames extends Controller
         return _t('Latest games') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return (array|bool|int|mixed)[]
+     *
+     * @psalm-return array{noGames: bool, games: array, nextPage: int, prevPage: int, gamesCount: mixed, start: int, end: int|mixed, hasNextButton: bool, hasPreviousButton: bool, isOnlineTournament: bool}
+     */
+    protected function _run(): array
     {
         $isTournament = !$this->_mainEventRules->allowPlayerAppend();
         if ($isTournament) {

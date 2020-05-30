@@ -28,7 +28,12 @@ class Mainpage extends Controller
         return _t('Statistics') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return (((array-key|mixed)[]|mixed|null)[]|bool|string)[]
+     *
+     * @psalm-return array{data?: list<mixed>, hasData?: true, title?: string, isAggregated?: true, eventsInfo?: list<array{title: string, description: string}>, description?: string, isLoggedIn?: bool, rules?: list<array{name: array-key, value: mixed, description: mixed}|null>}
+     */
+    protected function _run(): array
     {
         if (count($this->_eventIdList) > 1) {
             return [

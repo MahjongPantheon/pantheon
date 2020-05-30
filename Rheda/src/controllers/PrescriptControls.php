@@ -29,7 +29,12 @@ class PrescriptControls extends Controller
         return _t('Predefined seating and event status') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return ((mixed|string)[]|bool|int|mixed|string)[]
+     *
+     * @psalm-return array{isAggregated: bool, errors: array{0: mixed|string}|mixed, has_errors: bool, prescript: mixed|string, next_session_index: int|mixed}
+     */
+    protected function _run(): array
     {
         $eventConfig = [
             'prescript' => '',
@@ -62,6 +67,9 @@ class PrescriptControls extends Controller
         ];
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if (!empty($_POST['action'])) {

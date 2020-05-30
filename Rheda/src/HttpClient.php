@@ -187,8 +187,10 @@ class HttpClient extends \JsonRPC\HttpClient
     /**
      * Set cookies
      *
-     * @param  array     $cookies
-     * @param  boolean   $replace
+     * @param array     $cookies
+     * @param boolean   $replace
+     *
+     * @return void
      */
     public function withCookies(array $cookies, $replace = false)
     {
@@ -355,7 +357,9 @@ class HttpClient extends \JsonRPC\HttpClient
     /**
      * Parse cookies from response
      *
-     * @param  array $headers
+     * @param array $headers
+     *
+     * @return void
      */
     protected function parseCookies(array $headers)
     {
@@ -381,9 +385,12 @@ class HttpClient extends \JsonRPC\HttpClient
     /**
      * Throw an exception according the HTTP response
      *
-     * @param  array   $headers
+     * @param array   $headers
+     *
      * @throws AccessDeniedException
      * @throws ServerErrorException
+     *
+     * @return void
      */
     public function handleExceptions(array $headers)
     {

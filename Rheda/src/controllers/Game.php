@@ -28,7 +28,12 @@ class Game extends Controller
         return _t('Game details') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return (array|bool|mixed|null)[]
+     *
+     * @psalm-return array{games?: array, singleGamePage?: true, isOnlineTournament?: bool, data?: null, error?: mixed}
+     */
+    protected function _run(): array
     {
         try {
             $formatter = new GameFormatter();

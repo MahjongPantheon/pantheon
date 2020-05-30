@@ -29,7 +29,12 @@ class AddGame extends Controller
         return _t('Add new game') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return (\Exception|\JsonRPC\Client|array|bool|mixed|string)[]
+     *
+     * @psalm-return array{players: \Exception|\JsonRPC\Client|array<empty, empty>, error: mixed|string, text: mixed|string, successfullyAdded: bool}
+     */
+    protected function _run(): array
     {
         $players = [];
         $errorMsg = '';

@@ -66,7 +66,14 @@ class ProfileEdit extends Controller
         ];
     }
 
-    protected function _saveData($data, $originalData)
+    /**
+     * @param array $data
+     *
+     * @return (false|mixed|string)[]
+     *
+     * @psalm-return array{error: mixed|string, success: false|mixed, title: mixed, city: mixed, email: mixed, phone: mixed, tenhouid: mixed}
+     */
+    protected function _saveData(array $data, $originalData)
     {
         try {
             $success = $this->_frey->updatePersonalInfo(

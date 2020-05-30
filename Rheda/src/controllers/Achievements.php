@@ -58,7 +58,12 @@ class Achievements extends Controller
         }
     }
 
-    protected function _achList()
+    /**
+     * @return (mixed|string)[][]
+     *
+     * @psalm-return non-empty-list<array{code: string, name: mixed, description: mixed}>
+     */
+    protected function _achList(): array
     {
         $names = [
             'bestHand' => _t('Best hand'),
@@ -111,7 +116,14 @@ class Achievements extends Controller
 
 
 
-    protected function _achValue($ach)
+    /**
+     * @param \Exception|\JsonRPC\Client $ach
+     *
+     * @return (mixed|null)[]
+     *
+     * @psalm-return array{error: null, bestHand: mixed, bestTsumoist: mixed, braveSapper: mixed, dieHard: mixed, dovakins: mixed, yakumans: mixed, bestFu: mixed, bestDealer: mixed, shithander: mixed, impossibleWait: mixed, honoredDonor: mixed, justAsPlanned: mixed, carefulPlanning: mixed, doraLord: mixed, catchEmAll: mixed, favoriteAsapinApprentice: mixed, andYourRiichiBet: mixed, covetousKnight: mixed, ninja: mixed}
+     */
+    protected function _achValue($ach): array
     {
         $desc = $this->_achList();
         return [
@@ -138,7 +150,7 @@ class Achievements extends Controller
         ];
     }
 
-    protected function _getValue($achievements, $key, $desc)
+    protected function _getValue($achievements, string $key, $desc): ?array
     {
         $d = array_filter($desc, function ($el) use ($key) {
             return $el['code'] == $key;
@@ -148,7 +160,7 @@ class Achievements extends Controller
             : array_merge(['val' => $achievements[$key]], reset($d));
     }
 
-    protected function _formatYakumanString($yakumanIDs)
+    protected function _formatYakumanString($yakumanIDs): string
     {
         $list = array_map(
             function ($yaku) {

@@ -29,7 +29,12 @@ class PlayerEnrollment extends Controller
         return _t('Enroll players') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return (array|bool|mixed|string)[]
+     *
+     * @psalm-return array{isAggregated: bool, error: mixed|string, everybody: list<mixed>}
+     */
+    protected function _run(): array
     {
         $errorMsg = '';
         $registeredPlayers = [];
@@ -59,6 +64,9 @@ class PlayerEnrollment extends Controller
         ];
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if (!empty($_POST['action_type'])) {

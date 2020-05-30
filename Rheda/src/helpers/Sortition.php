@@ -30,7 +30,12 @@ class SortitionHelper
         [2, 3]
     ];
 
-    public static function generate($randFactor, $userList, $ratingsData, $previousPlacements, $groupsCount)
+    /**
+     * @return ((array|mixed|null)[]|mixed)[]
+     *
+     * @psalm-return array{0: array<int, array|null>, 1: list<mixed>, 2: mixed, 3: array<empty, empty>|mixed}
+     */
+    public static function generate($randFactor, $userList, $ratingsData, $previousPlacements, $groupsCount): array
     {
         $maxIterations = 1000;
         $bestGroupsMap = [];
@@ -81,9 +86,10 @@ class SortitionHelper
      *
      * @param $tablePlayers [{username -> #name}, {username -> #name}, {username -> #name}, {username -> #name}]
      * @param $previousPlacements [{#name -> [[player_num -> 1], [player_num -> 2], [player_num -> 0]]}, ...]
-     * @return array|null
+     * @param array $tablePlayers
+     *
      */
-    protected static function _calcPlacement($tablePlayers, $previousPlacements)
+    protected static function _calcPlacement(array $tablePlayers, $previousPlacements)
     {
         $possiblePlacements = [
             '0123', '1023', '2013', '3012',
@@ -166,7 +172,14 @@ class SortitionHelper
         return $totalsum;
     }
 
-    protected static function _calcIntersection($ratingsData, $sortition)
+    /**
+     * @param array $sortition
+     *
+     * @return int[]
+     *
+     * @psalm-return array<string, int>
+     */
+    protected static function _calcIntersection($ratingsData, array $sortition): array
     {
         $intersectionData = [];
 
@@ -194,9 +207,10 @@ class SortitionHelper
      *
      * @param $playersMap array Ordered player list
      * @param $ratingsData array previous seating data
-     * @return int
+     *
+     * @return float|int
      */
-    protected static function _calculateFactor($playersMap, $ratingsData)
+    protected static function _calculateFactor(array $playersMap, $ratingsData)
     {
         $factor = 0;
 

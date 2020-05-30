@@ -34,6 +34,9 @@ class GamesControlPanel extends Controller
         return _t('Games control panel') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if (!empty($this->_path['action'])) {
@@ -71,7 +74,12 @@ class GamesControlPanel extends Controller
         return true;
     }
 
-    protected function _run()
+    /**
+     * @return (mixed|string|true)[]
+     *
+     * @psalm-return array{reason?: mixed|string, tables?: mixed, error?: mixed, isAggregated?: true}
+     */
+    protected function _run(): array
     {
         $formatter = new GameFormatter();
 

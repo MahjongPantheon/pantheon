@@ -32,13 +32,18 @@ class PlayerRegistration extends Controller
         return _t('Players registration') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return (array|bool|int|mixed|string)[]
+     *
+     * @psalm-return array{authorized: bool, isAggregated: bool, prescriptedEvent: bool, teamEvent: bool, canUseSeatingIgnore: bool, lastindex: int, error: mixed|string, registered: list<mixed>, enrolled: list<mixed>, showPrint: bool, registeredCount: int, enrolledCount: int}
+     */
+    protected function _run(): array
     {
         $errorMsg = '';
         $registeredPlayers = [];
         $enrolledPlayers = [];
 
-        $sorter = function ($e1, $e2) {
+        $sorter = function ($e1, $e2): int {
             return strcmp($e1['display_name'], $e2['display_name']);
         };
 
@@ -79,6 +84,9 @@ class PlayerRegistration extends Controller
         ];
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if (count($this->_eventIdList) > 1) {
@@ -145,7 +153,7 @@ class PlayerRegistration extends Controller
         return $errorMsg;
     }
 
-    protected function _unregisterUserFromEvent($userId)
+    protected function _unregisterUserFromEvent($userId): string
     {
         $errorMsg = '';
         try {
@@ -219,7 +227,7 @@ class PlayerRegistration extends Controller
         return $errorMsg;
     }
 
-    protected function _printCards()
+    protected function _printCards(): void
     {
         /** @var array $enrolledPlayers */
         $enrolledPlayers = $this->_api->execute('getAllEnrolled', [$this->_mainEventId]);

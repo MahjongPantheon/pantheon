@@ -41,6 +41,9 @@ class TournamentControlPanel extends Controller
         return _t('Tournament control panel') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if (!empty($this->_path['action'])) {
@@ -96,7 +99,12 @@ class TournamentControlPanel extends Controller
         return true;
     }
 
-    protected function _run()
+    /**
+     * @return (\Exception|\JsonRPC\Client|array|bool|mixed|null|string)[]
+     *
+     * @psalm-return array{error: mixed|null|string, tablesList?: mixed|string, tables?: mixed, stageNotReady?: bool, stageReadyButNotStarted?: bool, stageSeatingReady?: bool, stageSeatingInProgress?: bool, stageStarted?: bool, stagePrefinished?: bool, withAutoSeating?: bool, hideResults?: bool, isPrescripted?: bool, nextPrescriptedSeating?: \Exception|\JsonRPC\Client|array<empty, empty>, noNextPrescript?: bool, prescriptedEventErrorDescription?: mixed}
+     */
+    protected function _run(): array
     {
         $formatter = new GameFormatter();
 
@@ -173,7 +181,7 @@ class TournamentControlPanel extends Controller
         ];
     }
 
-    protected function _determineStage(&$tables, &$players, &$timerState)
+    protected function _determineStage(&$tables, array &$players, &$timerState): int
     {
         $notFinishedTablesCount = array_reduce($tables, function ($acc, $i) {
             return $acc + ($i['status'] == 'finished' ? 0 : 1);

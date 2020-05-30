@@ -28,7 +28,12 @@ class Login extends Controller
         return _t('Log in');
     }
 
-    protected function _run()
+    /**
+     * @return (mixed|null)[]
+     *
+     * @psalm-return array{error_email: mixed|null, error_password: mixed|null, email: mixed|null}
+     */
+    protected function _run(): array
     {
         $emailError = null;
         $passwordError = null;

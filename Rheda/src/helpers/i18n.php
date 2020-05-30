@@ -7,13 +7,13 @@ bindtextdomain(TEXT_DOMAIN, realpath(__DIR__ . '/../../i18n'));
 textdomain(TEXT_DOMAIN);
 bind_textdomain_codeset(TEXT_DOMAIN, 'UTF-8');
 
-function _t($entry)
+function _t($entry): string
 {
     return gettext($entry);
 }
 
 // With plural number substitution
-function _n($entry, $plural, $count)
+function _n($entry, $plural, $count): string
 {
     return sprintf(
         ngettext(
@@ -26,7 +26,7 @@ function _n($entry, $plural, $count)
 }
 
 // With parameters substitution
-function _p($entry, ...$args)
+function _p($entry, ...$args): string
 {
     return vsprintf(
         gettext($entry),
@@ -35,7 +35,7 @@ function _p($entry, ...$args)
 }
 
 // With plural number and parameters substitution
-function _np($entry, $plural, $count, ...$args)
+function _np($entry, $plural, $count, ...$args): string
 {
     return vsprintf(
         ngettext(

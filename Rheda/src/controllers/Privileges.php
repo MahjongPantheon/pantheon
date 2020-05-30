@@ -28,6 +28,9 @@ class Privileges extends Controller
         return _t('Rights and privileges');
     }
 
+    /**
+     * @return void
+     */
     protected function _run()
     {
 

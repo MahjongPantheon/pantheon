@@ -699,8 +699,10 @@ class MobileDetect
      *
      * @param array $httpHeaders The headers to set. If null, then using PHP's _SERVER to extract
      *                           the headers. The default null is left for backwards compatibility.
+     *
+     * @return void
      */
-    public function setHttpHeaders($httpHeaders = null)
+    public function setHttpHeaders($httpHeaders = null): void
     {
         // use global _SERVER if $httpHeaders aren't defined
         if (!is_array($httpHeaders) || !count($httpHeaders)) {
@@ -763,7 +765,7 @@ class MobileDetect
         return null;
     }
 
-    public function getMobileHeaders()
+    public function getMobileHeaders(): array
     {
         return self::$mobileHeaders;
     }
@@ -872,6 +874,8 @@ class MobileDetect
      *
      * @param string $type The type. Must be a self::DETECTION_TYPE_* constant. The default
      *                     parameter is null which will default to self::DETECTION_TYPE_MOBILE.
+     *
+     * @return void
      */
     public function setDetectionType($type = null)
     {
@@ -886,12 +890,12 @@ class MobileDetect
         $this->detectionType = $type;
     }
 
-    public function getMatchingRegex()
+    public function getMatchingRegex(): string
     {
         return $this->matchingRegex;
     }
 
-    public function getMatchesArray()
+    public function getMatchesArray(): string
     {
         return $this->matchesArray;
     }
@@ -1231,7 +1235,7 @@ class MobileDetect
      *
      * @todo: search in the HTTP headers too.
      */
-    public function match($regex, $userAgent = null)
+    public function match(string $regex, $userAgent = null)
     {
         $match = (bool) preg_match(sprintf('#%s#is', $regex), (false === empty($userAgent) ? $userAgent : $this->userAgent), $matches);
         // If positive match is found, store the results for debug.
@@ -1285,7 +1289,7 @@ class MobileDetect
      *                             is optional and defaults to self::VERSION_TYPE_STRING. Passing an
      *                             invalid parameter will default to the this type as well.
      *
-     * @return string|float The version of the property we are trying to extract.
+     * @return false|float|string The version of the property we are trying to extract.
      */
     public function version($propertyName, $type = self::VERSION_TYPE_STRING)
     {

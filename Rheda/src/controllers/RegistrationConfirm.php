@@ -28,7 +28,12 @@ class RegistrationConfirm extends Controller
         return _t('Sign up confirmation');
     }
 
-    protected function _run()
+    /**
+     * @return (bool|int|mixed|null|string)[]
+     *
+     * @psalm-return array{error: mixed|null|string, success?: bool, id?: int}
+     */
+    protected function _run(): array
     {
         if ($this->_currentPersonId !== null) {
             return [

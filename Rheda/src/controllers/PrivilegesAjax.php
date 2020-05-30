@@ -28,8 +28,14 @@ class PrivilegesAjax extends Controller
         return '';
     }
 
+    /**
+     * @return void
+     */
     protected function _run() {}
 
+    /**
+     * @return false
+     */
     protected function _beforeRun()
     {
         print_r($_POST);

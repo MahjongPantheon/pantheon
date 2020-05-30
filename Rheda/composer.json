@@ -8,11 +8,11 @@
     "require": {
         "fguillot/json-rpc": "@stable",
         "justinrainbow/json-schema": "~4.0",
-	"xamin/handlebars.php": "dev-master",
-	"chillerlan/php-qrcode": "dev-master"
+	      "xamin/handlebars.php": "dev-master",
+	      "chillerlan/php-qrcode": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.8.*",
-        "squizlabs/php_codesniffer": "2.*"
+        "squizlabs/php_codesniffer": "2.*",
+        "vimeo/psalm": "^3.11"
     }
 }
