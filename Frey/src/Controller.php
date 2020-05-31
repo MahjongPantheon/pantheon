@@ -24,7 +24,7 @@ use Monolog\Logger;
 abstract class Controller
 {
     /**
-     * @var Db
+     * @var IDb
      */
     protected $_db;
 
@@ -74,7 +74,7 @@ abstract class Controller
         $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: success');
     }
 
-    protected function _logError($method, $args): void
+    protected function _logError(string $method, array $args): void
     {
         $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: failed');
     }

@@ -28,16 +28,16 @@ class GroupsModel extends Model
     /**
      * Create new group in admin interface
      *
-     * @param $title
-     * @param $description
-     * @param $color
+     * @param string $title
+     * @param string $description
+     * @param string $color
      *
-     * @return int|null
+     * @return int
      *
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function createGroup(string $title, string $description, string $color): ?int
+    public function createGroup(string $title, string $description, string $color): int
     {
         $this->_checkAccessRights(InternalRules::CREATE_GROUP);
 
@@ -53,13 +53,13 @@ class GroupsModel extends Model
             throw new \Exception('Failed to save group to DB', 402);
         }
 
-        return $group->getId();
+        return (int)$group->getId();
     }
 
     /**
      * Get info of groups by id list
      *
-     * @param $ids
+     * @param int[] $ids
      * @return array
      * @throws InvalidParametersException
      * @throws \Exception
@@ -84,10 +84,10 @@ class GroupsModel extends Model
     /**
      * Update group info
      *
-     * @param $id
-     * @param $title
-     * @param $description
-     * @param $color
+     * @param int $id
+     * @param string $title
+     * @param string $description
+     * @param string $color
      * @return bool
      * @throws InvalidParametersException
      * @throws \Exception
@@ -120,7 +120,7 @@ class GroupsModel extends Model
     /**
      * Delete group and all of its linked dependencies
      *
-     * @param $id
+     * @param int $id
      *
      * @throws InvalidParametersException
      * @throws \Exception
@@ -147,8 +147,8 @@ class GroupsModel extends Model
     /**
      * Add person to group
      *
-     * @param $personId
-     * @param $groupId
+     * @param int $personId
+     * @param int $groupId
      * @return bool
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
@@ -184,8 +184,8 @@ class GroupsModel extends Model
     /**
      * Remove person from group
      *
-     * @param $personId
-     * @param $groupId
+     * @param int $personId
+     * @param int $groupId
      * @return bool
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
@@ -220,7 +220,7 @@ class GroupsModel extends Model
     }
 
     /**
-     * @param $personId
+     * @param int $personId
      * @return array
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
@@ -249,7 +249,7 @@ class GroupsModel extends Model
     }
 
     /**
-     * @param $groupId
+     * @param int $groupId
      * @return array
      * @throws EntityNotFoundException
      * @throws InvalidParametersException

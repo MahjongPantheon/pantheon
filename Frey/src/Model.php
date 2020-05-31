@@ -22,7 +22,7 @@ require_once 'exceptions/AccessDenied.php';
 abstract class Model
 {
     /**
-     * @var Db
+     * @var IDb
      */
     protected $_db;
 
@@ -37,9 +37,9 @@ abstract class Model
     protected $_meta;
 
     /**
-     * @var PersonPrimitive
+     * @var PersonPrimitive|null
      */
-    protected $_authorizedPerson;
+    protected $_authorizedPerson = null;
 
     /**
      * @var array
@@ -105,9 +105,14 @@ abstract class Model
             return [];
         }
 
+        $pId = $this->_authorizedPerson->getId();
+        if (empty($pId)) {
+            return []; // deidented primitive, no rights
+        }
+
         return $this->_meta->getCurrentEventId() === null
-            ? $this->_getSystemWideRules($this->_authorizedPerson->getId())
-            : $this->_getAccessRules($this->_authorizedPerson->getId(), $this->_meta->getCurrentEventId());
+            ? $this->_getSystemWideRules($pId)
+            : $this->_getAccessRules($pId, $this->_meta->getCurrentEventId());
     }
 
     /**
@@ -134,12 +139,12 @@ abstract class Model
     /**
      * Get apcu cache key for access rules
      *
-     * @param $personId
-     * @param $eventId
-     * @param int|string $eventId
+     * @param int $personId
+     * @param string $eventId   numeric string or '__system-wide'
      *
+     * @return string
      */
-    protected static function _getAccessCacheKey(int $personId, $eventId)
+    protected static function _getAccessCacheKey(int $personId, string $eventId)
     {
         return "access_${personId}_${eventId}";
     }
@@ -156,7 +161,7 @@ abstract class Model
      */
     protected function _getAccessRules(int $personId, int $eventId)
     {
-        $rules = apcu_fetch($this->_getAccessCacheKey($personId, $eventId));
+        $rules = apcu_fetch($this->_getAccessCacheKey($personId, (string)$eventId));
         if ($rules !== false) {
             return $rules;
         }
@@ -181,7 +186,7 @@ abstract class Model
             }
         }
 
-        apcu_store($this->_getAccessCacheKey($personId, $eventId), $resultingRules, self::CACHE_TTL_SEC);
+        apcu_store($this->_getAccessCacheKey($personId, (string)$eventId), $resultingRules, self::CACHE_TTL_SEC);
         return $resultingRules;
     }
 
@@ -225,13 +230,13 @@ abstract class Model
      * Typically should not be used when more than one value should be retrieved.
      * Returns null if no data found for provided person/event ids or rule name.
      *
-     * @param $personId
-     * @param $eventId
-     * @param $ruleName
+     * @param int $personId
+     * @param int $eventId
+     * @param string $ruleName
      * @return mixed
      * @throws \Exception
      */
-    protected function _getRuleValue($personId, $eventId, $ruleName)
+    protected function _getRuleValue(int $personId, int $eventId, string $ruleName)
     {
         $rules = $this->_getAccessRules($personId, $eventId);
         if (empty($rules[$ruleName])) {
@@ -241,11 +246,10 @@ abstract class Model
     }
 
     /**
-     * @param $personId
-     * @param $eventId
+     * @param int $personId
      * @param int|null $eventId
      *
-     *
+     * @return PersonAccessPrimitive[]
      * @throws \Exception
      */
     protected function _getPersonAccessRules(int $personId, ?int $eventId)
@@ -260,12 +264,10 @@ abstract class Model
     }
 
     /**
-     * @param $groupIds
-     * @param $eventId
      * @param int[] $groupIds
      * @param int|null $eventId
      *
-     *
+     * @return GroupAccessPrimitive[]
      * @throws \Exception
      */
     protected function _getGroupAccessRules(array $groupIds, ?int $eventId)
@@ -280,7 +282,7 @@ abstract class Model
     }
 
     /**
-     * @param $personId
+     * @param int $personId
      * @return PersonAccessPrimitive[]
      * @throws \Exception
      */
@@ -295,10 +297,9 @@ abstract class Model
     }
 
     /**
-     * @param $groupIds
      * @param int[] $groupIds
      *
-     *
+     * @return GroupAccessPrimitive[]
      * @throws \Exception
      */
     protected function _getGroupAccessSystemWideRules(array $groupIds)
@@ -322,7 +323,7 @@ abstract class Model
     protected function _checkAccessRights(string $key, $eventId = null): void
     {
         // FIXME
-        return;
+        return; // @phpstan-ignore-next-line
         if (defined('BOOTSTRAP_MODE')) {
             // Everything is allowed during setup
             return;

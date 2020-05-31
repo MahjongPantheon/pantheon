@@ -27,10 +27,28 @@ use Monolog\Handler\ErrorLogHandler;
 
 class Api
 {
+    /**
+     * @var IDb
+     */
     protected $_db;
+    /**
+     * @var Logger
+     */
     protected $_syslog;
+    /**
+     * @var Meta
+     */
     protected $_meta;
+    /**
+     * @var Config
+     */
+    protected $_config;
 
+    /**
+     * Api constructor.
+     * @param string|null $configPath
+     * @throws \Exception
+     */
     public function __construct($configPath = null)
     {
         $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
@@ -46,13 +64,17 @@ class Api
         }
     }
 
+    /**
+     * @return string
+     */
     public function getDefaultServerTimezone()
     {
-        return $this->_config->getValue('serverDefaultTimezone');
+        return (string)$this->_config->getValue('serverDefaultTimezone');
     }
 
     public function registerImplAutoloading(): void
     {
+        // @phpstan-ignore-next-line
         spl_autoload_register(function ($class) {
             $class = ucfirst(str_replace([__NAMESPACE__ . '\\', 'Controller'], '', $class));
             $classFile = __DIR__ . '/controllers/' . $class . '.php';
@@ -93,7 +115,10 @@ class Api
         }, $routes);
     }
 
-    public function log($message): void
+    /**
+     * @param string $message
+     */
+    public function log(string $message): void
     {
         $this->_syslog->info($message);
     }

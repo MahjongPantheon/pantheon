@@ -30,18 +30,18 @@ class AccountModel extends Model
      * Create new account by administrator (no email checks).
      * Admin rights should be checked in controller layer.
      *
-     * @param $email
-     * @param $password
-     * @param $title
-     * @param $city
-     * @param $phone
-     * @param null $tenhouId
+     * @param string $email
+     * @param string $password
+     * @param string $title
+     * @param string $city
+     * @param string $phone
+     * @param string|null $tenhouId
      *
-     * @return int|null id
+     * @return int id
      *
      * @throws \Exception
      */
-    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null): ?int
+    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null): int
     {
         $this->_checkAccessRights(InternalRules::CREATE_ACCOUNT);
 
@@ -66,7 +66,7 @@ class AccountModel extends Model
         if (!$person->save()) {
             throw new \Exception('Couldn\'t save person to DB', 403);
         }
-        return $person->getId();
+        return (int)$person->getId();
     }
 
     /**
@@ -92,12 +92,13 @@ class AccountModel extends Model
         }
 
         $persons = PersonPrimitive::findById($this->_db, $ids);
-        return array_map(function (PersonPrimitive $person) use ($filterPrivateData) {
+        $authPersonId = empty($this->_authorizedPerson) ? 0 : $this->_authorizedPerson->getId();
+        return array_map(function (PersonPrimitive $person) use ($filterPrivateData, $authPersonId) {
             return [
                 'id' => $person->getId(),
                 'city' => $person->getCity(),
-                'email' => $filterPrivateData && $person->getId() !== $this->_authorizedPerson->getId() ? null : $person->getEmail(),
-                'phone' => $filterPrivateData && $person->getId() !== $this->_authorizedPerson->getId() ? null : $person->getPhone(),
+                'email' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getEmail(),
+                'phone' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
@@ -108,12 +109,12 @@ class AccountModel extends Model
     /**
      * Update personal info of selected account
      *
-     * @param $id
-     * @param $title
-     * @param $city
-     * @param $email
-     * @param $phone
-     * @param null $tenhouId
+     * @param string $id
+     * @param string $title
+     * @param string $city
+     * @param string $email
+     * @param string $phone
+     * @param string|null $tenhouId
      * @return bool
      * @throws InvalidParametersException
      * @throws \Exception
@@ -155,7 +156,7 @@ class AccountModel extends Model
      * Query should not contain % or _ characters (they will be cut though)
      * Query should be more than 2 characters long.
      *
-     * @param $query
+     * @param string $query
      * @return array
      * @throws InvalidParametersException
      */
@@ -197,13 +198,13 @@ class AccountModel extends Model
         }
 
         $persons = PersonPrimitive::findByTenhouId($this->_db, $ids);
-
-        return array_map(function (PersonPrimitive $person) use ($filterPrivateData) {
+        $authPersonId = empty($this->_authorizedPerson) ? 0 : $this->_authorizedPerson->getId();
+        return array_map(function (PersonPrimitive $person) use ($filterPrivateData, $authPersonId) {
             return [
                 'id' => $person->getId(),
                 'city' => $person->getCity(),
-                'email' => $filterPrivateData && $person->getId() !== $this->_authorizedPerson->getId() ? null : $person->getEmail(),
-                'phone' => $filterPrivateData && $person->getId() !== $this->_authorizedPerson->getId() ? null : $person->getPhone(),
+                'email' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getEmail(),
+                'phone' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),

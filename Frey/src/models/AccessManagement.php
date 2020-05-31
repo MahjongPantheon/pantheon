@@ -50,9 +50,9 @@ class AccessManagementModel extends Model
      * Typically should not be used when more than one value should be retrieved.
      * Returns null if no data found for provided person/event ids or rule name.
      *
-     * @param $personId
-     * @param $eventId
-     * @param $ruleName
+     * @param int $personId
+     * @param int $eventId
+     * @param string $ruleName
      * @return mixed
      * @throws \Exception
      */
@@ -138,6 +138,7 @@ class AccessManagementModel extends Model
         $this->_checkAccessRights(InternalRules::GET_PERSON_ACCESS, $eventId);
 
         $rules = $this->_getPersonAccessRules($personId, $eventId);
+        /** @var PersonAccessPrimitive[] $eventRelatedRules */
         $eventRelatedRules = array_filter($rules, function (PersonAccessPrimitive $rule) use ($eventId) {
             if (empty($eventId)) { // required to get system-wide rules
                 return true;
@@ -168,6 +169,7 @@ class AccessManagementModel extends Model
         $this->_checkAccessRights(InternalRules::GET_GROUP_ACCESS, $eventId);
 
         $rules = $this->_getGroupAccessRules([$groupId], $eventId);
+        /** @var GroupAccessPrimitive[] $eventRelatedRules */
         $eventRelatedRules = array_filter($rules, function (GroupAccessPrimitive $rule) use ($eventId) {
             if (empty($eventId)) { // required to get system-wide rules
                 return true;
@@ -186,14 +188,13 @@ class AccessManagementModel extends Model
     /**
      * Add new rule for a person.
      *
-     * @param $ruleName
-     * @param $ruleValue
-     * @param $ruleType   'bool', 'int' or 'enum'
-     * @param $personId
-     * @param $eventId
+     * @param string $ruleName
      * @param bool|int|string $ruleValue
+     * @param string $ruleType 'bool', 'int' or 'enum'
+     * @param int $personId
+     * @param int $eventId
      *
-     *
+     * @return int|null
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -219,7 +220,6 @@ class AccessManagementModel extends Model
             throw new EntityNotFoundException('Person with id #' . $personId . ' not found in DB', 403);
         }
 
-        /** @var PersonAccessPrimitive $rule */
         $rule = (new PersonAccessPrimitive($this->_db))
             ->setPerson($persons[0])
             ->setAclName($ruleName)
@@ -237,14 +237,13 @@ class AccessManagementModel extends Model
     /**
      * Add new rule for group.
      *
-     * @param $ruleName
-     * @param $ruleValue
-     * @param $ruleType   'bool', 'int' or 'enum'
-     * @param $groupId
-     * @param $eventId
+     * @param string $ruleName
      * @param bool|int|string $ruleValue
+     * @param string $ruleType 'bool', 'int' or 'enum'
+     * @param int $groupId
+     * @param int $eventId
      *
-     *
+     * @return int|null
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -288,13 +287,12 @@ class AccessManagementModel extends Model
     /**
      * Add new system-wide rule for a person.
      *
-     * @param $ruleName
-     * @param $ruleValue
-     * @param $ruleType   'bool', 'int' or 'enum'
-     * @param $personId
+     * @param string $ruleName
      * @param bool|int|string $ruleValue
+     * @param string $ruleType 'bool', 'int' or 'enum'
+     * @param int $personId
      *
-     *
+     * @return int|null
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -337,13 +335,12 @@ class AccessManagementModel extends Model
     /**
      * Add new system-wide rule for group.
      *
-     * @param $ruleName
-     * @param $ruleValue
-     * @param $ruleType   'bool', 'int' or 'enum'
-     * @param $groupId
+     * @param string $ruleName
      * @param bool|int|string $ruleValue
+     * @param string $ruleType 'bool', 'int' or 'enum'
+     * @param int $groupId
      *
-     *
+     * @return int|null
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -387,12 +384,11 @@ class AccessManagementModel extends Model
     /**
      * Update personal rule value and/or type
      *
-     * @param $ruleId
-     * @param $ruleValue
-     * @param $ruleType
+     * @param int $ruleId
      * @param bool|int|string $ruleValue
+     * @param string $ruleType
      *
-     *
+     * @return bool
      * @throws EntityNotFoundException
      * @throws \Exception
      */
@@ -407,7 +403,7 @@ class AccessManagementModel extends Model
         if (empty($rules[0]->getEventId())) { // systemwide
             $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_PERSON);
         } else {
-            $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_PERSON, $rules[0]->getEventId()[0]);
+            $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_PERSON, $rules[0]->getEventId());
         }
 
         if (InternalRules::isInternal($rules[0]->getAclName()) && $ruleType != $rules[0]->getAclType()) {
@@ -429,12 +425,11 @@ class AccessManagementModel extends Model
     /**
      * Update group rule value and/or type
      *
-     * @param $ruleId
-     * @param $ruleValue
-     * @param $ruleType
+     * @param int $ruleId
      * @param bool|int|string $ruleValue
+     * @param string $ruleType
      *
-     *
+     * @return bool
      * @throws EntityNotFoundException
      * @throws \Exception
      */
@@ -448,7 +443,7 @@ class AccessManagementModel extends Model
         if (empty($rules[0]->getEventId())) { // systemwide
             $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_GROUP);
         } else {
-            $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_GROUP, $rules[0]->getEventId()[0]);
+            $this->_checkAccessRights(InternalRules::UPDATE_RULE_FOR_GROUP, $rules[0]->getEventId());
         }
 
         if (InternalRules::isInternal($rules[0]->getAclName()) && $ruleType != $rules[0]->getAclType()) {
@@ -465,7 +460,7 @@ class AccessManagementModel extends Model
     /**
      * Drop personal rule by id
      *
-     * @param $ruleId
+     * @param int $ruleId
      *
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -483,7 +478,7 @@ class AccessManagementModel extends Model
         if (empty($rules[0]->getEventId())) { // systemwide
             $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_PERSON);
         } else {
-            $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_PERSON, $rules[0]->getEventId()[0]);
+            $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_PERSON, $rules[0]->getEventId());
         }
 
         if (InternalRules::isInternal($rules[0]->getAclName())) {
@@ -497,7 +492,7 @@ class AccessManagementModel extends Model
     /**
      * Drop group rule by id
      *
-     * @param $ruleId
+     * @param int $ruleId
      *
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -514,7 +509,7 @@ class AccessManagementModel extends Model
         if (empty($rules[0]->getEventId())) { // systemwide
             $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_GROUP);
         } else {
-            $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_GROUP, $rules[0]->getEventId()[0]);
+            $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_GROUP, $rules[0]->getEventId());
         }
 
         if (InternalRules::isInternal($rules[0]->getAclName())) {
@@ -530,14 +525,14 @@ class AccessManagementModel extends Model
      * Warning: clearing whole cache is explicitly NOT IMPLEMENTED. When altering groups access rules,
      * it's better to wait for 10mins than cause shitload on DB.
      *
-     * @param $personId
-     * @param $eventId
+     * @param int $personId
+     * @param int $eventId
      * @return bool
      * @throws \Exception
      */
     public function clearAccessCache(int $personId, int $eventId)
     {
         $this->_checkAccessRights(InternalRules::CLEAR_ACCESS_CACHE, $eventId);
-        return apcu_delete(Model::_getAccessCacheKey($personId, $eventId));
+        return (bool)apcu_delete(Model::_getAccessCacheKey($personId, (string)$eventId));
     }
 }

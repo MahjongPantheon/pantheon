@@ -62,14 +62,14 @@ class AuthModel extends Model
      * Approve registration with approval code.
      * Returns new person's ID on success, otherwise throws an exception.
      *
-     * @param $approvalCode
+     * @param string $approvalCode
      *
-     * @return int|null
+     * @return int
      *
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function approveRegistration(string $approvalCode): ?int
+    public function approveRegistration(string $approvalCode): int
     {
         $reg = RegistrantPrimitive::findByApprovalCode($this->_db, [$approvalCode]);
         if (empty($reg)) {
@@ -93,15 +93,15 @@ class AuthModel extends Model
         }
 
         $reg[0]->drop();
-        return $person->getId();
+        return (int)$person->getId();
     }
 
     /**
      * Authorize person ant return permanent client-side auth token iwth person id.
      * Throws exception if authorization was not successful.
      *
-     * @param $email
-     * @param $password
+     * @param string $email
+     * @param string $password
      *
      * @return (int|null|string)[]
      *
@@ -134,8 +134,8 @@ class AuthModel extends Model
      * This method is supposed to be VERY HOT. It should not contain any excessive business logic,
      * especially database queries or ORM usage.
      *
-     * @param $id
-     * @param $clientSideToken
+     * @param int $id
+     * @param string $clientSideToken
      * @return bool
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -154,9 +154,9 @@ class AuthModel extends Model
      * Change password when old password is known.
      * Returns new client-side auth token on success, or throws exception on failure.
      *
-     * @param $email
-     * @param $password
-     * @param $newPassword
+     * @param string $email
+     * @param string $password
+     * @param string $newPassword
      * @return string
      * @throws AuthFailedException
      * @throws EntityNotFoundException
@@ -187,7 +187,7 @@ class AuthModel extends Model
      * Request password reset.
      * Returns reset approval token, which should be sent over email to user.
      *
-     * @param $email
+     * @param string $email
      * @return string
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -209,8 +209,8 @@ class AuthModel extends Model
      * and returns the code. Code should be sent to person via email, and person
      * should be asked to change the password immediately.
      *
-     * @param $email
-     * @param $resetApprovalCode
+     * @param string $email
+     * @param string $resetApprovalCode
      * @return string
      * @throws AuthFailedException
      * @throws EntityNotFoundException
@@ -227,7 +227,7 @@ class AuthModel extends Model
             throw new AuthFailedException('Password reset approval code is incorrect.', 409);
         }
 
-        $newGeneratedPassword = crc32(microtime(true) . $email);
+        $newGeneratedPassword = (string)crc32(microtime(true) . $email);
         $pw = $this->makePasswordTokens($newGeneratedPassword);
         $person[0]
             ->setEmail($email)
@@ -246,7 +246,7 @@ class AuthModel extends Model
      */
     public function makePasswordTokens(string $password)
     {
-        $salt = sha1(microtime(true));
+        $salt = sha1((string)microtime(true));
         $clientHash = $this->_makeClientSideToken($password, $salt);
         $authHash = password_hash($clientHash, PASSWORD_DEFAULT);
         return [
@@ -269,7 +269,7 @@ class AuthModel extends Model
      * Passwords with calculated strength less than 14 should be considered weak.
      *
      * @see also Rheda/src/controllers/SelfRegistration.php:_calcPasswordStrength - functions should match!
-     * @param $password
+     * @param string $password
      * @return float|int
      */
     protected function _calcPasswordStrength(string $password)
@@ -278,7 +278,7 @@ class AuthModel extends Model
         $hasUppercaseLatinSymbols = preg_match('#[A-Z]#', $password);
         $hasDigits = preg_match('#[0-9]#', $password);
         $hasPunctuation = preg_match('#[-@\#\$%\^&*\(\),\./\\"\']#', $password);
-        $hasOtherSymbols = mb_strlen(preg_replace('#[-a-z0-9@\#\$%\^&*\(\),\./\\"\']#ius', '', $password)) > 0;
+        $hasOtherSymbols = mb_strlen((string)preg_replace('#[-a-z0-9@\#\$%\^&*\(\),\./\\"\']#ius', '', $password)) > 0;
 
         return ceil(mb_strlen($password) / 2)
             * ($hasDigits ? 2 : 1)
@@ -292,8 +292,8 @@ class AuthModel extends Model
     /**
      * Make permanent client-side auth token
      *
-     * @param $password
-     * @param $salt
+     * @param string $password
+     * @param string $salt
      * @return string
      */
     protected function _makeClientSideToken(string $password, string $salt): string
@@ -304,9 +304,9 @@ class AuthModel extends Model
     /**
      * Check if password matches hash & salt
      *
-     * @param $password
-     * @param $authHash
-     * @param $authSalt
+     * @param string $password
+     * @param string $authHash
+     * @param string $authSalt
      * @return bool
      */
     public function checkPasswordFull($password, string $authHash, string $authSalt): bool
@@ -318,8 +318,8 @@ class AuthModel extends Model
     /**
      * Check if client-side auth token matches save password hash
      *
-     * @param $clientSideToken
-     * @param $authHash
+     * @param string $clientSideToken
+     * @param string $authHash
      * @return bool
      */
     protected function _checkPasswordQuick(string $clientSideToken, string $authHash): bool

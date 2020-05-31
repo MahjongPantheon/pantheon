@@ -19,6 +19,9 @@ namespace Frey;
 
 class Config
 {
+    /**
+     * @var array|mixed|string
+     */
     protected $_data;
 
     /**
@@ -36,7 +39,7 @@ class Config
     /**
      * Get config value by dot-separated path
      *
-     * @param $path
+     * @param string $path
      * @return mixed
      */
     public function getValue(string $path)
@@ -51,7 +54,7 @@ class Config
     }
 
     /**
-     * @return mixed  PDO connection string
+     * @return string  PDO connection string
      * @throws \RuntimeException
      */
     public function getDbConnectionString()
@@ -65,7 +68,7 @@ class Config
     }
 
     /**
-     * @return array with username and password
+     * @return string[] with username and password
      */
     public function getDbConnectionCredentials()
     {

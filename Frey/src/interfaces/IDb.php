@@ -39,5 +39,8 @@ interface IDb
      */
     public function upsertQuery(string $table, array $data, array $tableUniqueField);
 
+    /**
+     * @return mixed
+     */
     public function debug();
 }

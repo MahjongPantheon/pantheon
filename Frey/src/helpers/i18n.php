@@ -19,46 +19,51 @@
 namespace Frey;
 
 define('TEXT_DOMAIN', 'messages');
-bindtextdomain(TEXT_DOMAIN, realpath(__DIR__ . '/../../i18n'));
+bindtextdomain(TEXT_DOMAIN, realpath(__DIR__ . '/../../i18n') ?: '');
 textdomain(TEXT_DOMAIN);
 bind_textdomain_codeset(TEXT_DOMAIN, 'UTF-8');
 
-function _t($entry): string
+/**
+ * @param string $entry
+ * @return string
+ */
+function _t(string $entry): string
 {
     return gettext($entry);
 }
 
-// With plural number substitution
-function _n($entry, $plural, $count): string
+/**
+ * With plural number substitution
+ * @param string $entry
+ * @param string $plural
+ * @param float $count
+ * @return string
+ */
+function _n(string $entry, string $plural, float $count): string
 {
-    return sprintf(
-        ngettext(
-            (string)$entry,
-            (string)$plural,
-            doubleval($count)
-        ),
-        $count
-    );
+    return sprintf(ngettext($entry, $plural, intval($count)), $count);
 }
 
-// With parameters substitution
-function _p($entry, ...$args): string
+/**
+ * With parameters substitution
+ * @param string $entry
+ * @param array ...$args
+ * @return string
+ */
+function _p(string $entry, ...$args): string
 {
-    return vsprintf(
-        gettext($entry),
-        $args
-    );
+    return vsprintf(gettext($entry), $args);
 }
 
-// With plural number and parameters substitution
-function _np($entry, $plural, $count, ...$args): string
+/**
+ * With plural number and parameters substitution
+ * @param string $entry
+ * @param string $plural
+ * @param float $count
+ * @param mixed ...$args
+ * @return string
+ */
+function _np(string $entry, string $plural, float $count, ...$args): string
 {
-    return vsprintf(
-        ngettext(
-            (string)$entry,
-            (string)$plural,
-            doubleval($count)
-        ),
-        $args
-    );
+    return vsprintf(ngettext($entry, $plural, intval($count)), $args);
 }

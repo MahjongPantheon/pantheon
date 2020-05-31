@@ -46,8 +46,8 @@ class Meta
 
     /**
      * Meta constructor.
-     * @param null $input
-     * @param null $cookieInput
+     * @param array|null $input
+     * @param array|null $cookieInput
      * @throws \Exception
      */
     public function __construct($input = null, $cookieInput = null)
@@ -184,7 +184,11 @@ class Meta
         ];
     }
 
-    public function sendVersionHeader($major, $minor): void
+    /**
+     * @param string $major
+     * @param string $minor
+     */
+    public function sendVersionHeader(string $major, string $minor): void
     {
         header('X-Api-Version: ' . intval($major) . '.' . intval($minor));
     }

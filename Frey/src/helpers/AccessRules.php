@@ -38,7 +38,7 @@ class AccessRules
         $translations = self::getTranslations();
         $defaults = self::_getDefaults();
         $types = self::_getTypes();
-        
+
         return array_combine(array_keys($translations), array_map(function ($key) use ($translations, $defaults, $types) {
             return [
                 'default' => $defaults[$key],
@@ -48,10 +48,22 @@ class AccessRules
         }, array_keys($translations)));
     }
 
+    /**
+     * @var string[]
+     */
     protected static $_translations;
+    /**
+     * @var string[]
+     */
     protected static $_defaults;
+    /**
+     * @var string[]
+     */
     protected static $_types;
-    
+
+    /**
+     * @return string[]
+     */
     public static function getTranslations()
     {
         if (empty(self::$_translations)) {
@@ -63,7 +75,10 @@ class AccessRules
         }
         return self::$_translations;
     }
-    
+
+    /**
+     * @return string[]
+     */
     protected static function _getDefaults()
     {
         if (empty(self::$_defaults)) {
@@ -75,7 +90,10 @@ class AccessRules
         }
         return self::$_defaults;
     }
-    
+
+    /**
+     * @return string[]
+     */
     protected static function _getTypes()
     {
         if (empty(self::$_types)) {

@@ -69,16 +69,17 @@ abstract class Primitive
 
     /**
      * This serialization should occur after primary entity is saved, to ensure it already has an id.
+     * @param array $obj object to serialize (usually array of ids)
+     * @param string $connectorTable
+     * @param string $currentEntityField
+     * @param string $foreignEntityField
+     * @param array $indexFields
+     * @return bool
+     * @throws \Exception
      * @see Primitive::save Save logic is handled by this.
      *
-     * @param $obj object to serialize (usually array of ids)
-     * @param $connectorTable
-     * @param $currentEntityField
-     * @param $foreignEntityField
-     * @param $indexFields
-     * @return bool
      */
-    protected function _serializeManyToMany($obj, $connectorTable, $currentEntityField, $foreignEntityField, $indexFields)
+    protected function _serializeManyToMany(array $obj, string $connectorTable, string $currentEntityField, string $foreignEntityField, array $indexFields)
     {
         $result = [];
         $i = 1;
@@ -109,12 +110,13 @@ abstract class Primitive
     }
 
     /**
-     * @param $connectorTable
-     * @param $currentEntityField
-     * @param $foreignEntityField
+     * @param string $connectorTable
+     * @param string $currentEntityField
+     * @param string $foreignEntityField
      * @return array (usually array of ids)
+     * @throws \Exception
      */
-    protected function _deserializeManyToMany($connectorTable, $currentEntityField, $foreignEntityField)
+    protected function _deserializeManyToMany(string $connectorTable, string $currentEntityField, string $foreignEntityField)
     {
         $items = $this->_db
             ->table($connectorTable)
@@ -133,12 +135,12 @@ abstract class Primitive
     /**
      * Transform for many-to-many relation fields
      *
-     * @param $connectorTable
-     * @param $currentEntityField
-     * @param $foreignEntityField
-     * @param $indexFields
-     * @param string[] $indexFields
+     * @param string $connectorTable
+     * @param string $currentEntityField
+     * @param string $foreignEntityField
+     * @param array $indexFields
      *
+     * @return \Closure[]
      */
     protected function _externalManyToManyTransform(string $connectorTable, string $currentEntityField, string $foreignEntityField, array $indexFields)
     {
@@ -204,7 +206,7 @@ abstract class Primitive
     }
 
     /**
-     * @var Db
+     * @var IDb
      */
     protected $_db;
 
@@ -303,6 +305,9 @@ abstract class Primitive
      */
     abstract protected function _create();
 
+    /**
+     * @return int|null
+     */
     abstract public function getId();
 
     /**
@@ -322,7 +327,7 @@ abstract class Primitive
     }
 
     /**
-     * @param $data
+     * @param array $data
      * @return $this
      */
     protected function _restore(array $data)
@@ -341,10 +346,15 @@ abstract class Primitive
         return $this;
     }
 
-    protected static function _recreateInstance(IDb $db, $data): self
+    /**
+     * @param IDb $db
+     * @param array $data
+     * @return static
+     * @throws \Exception
+     */
+    protected static function _recreateInstance(IDb $db, array $data): self
     {
-        /** @var Primitive $instance */
-        $instance = new static($db);
+        $instance = new static($db); // @phpstan-ignore-line
         return $instance->_restore($data);
     }
 

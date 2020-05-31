@@ -42,9 +42,9 @@ class ErrorHandler
     public function register(): void
     {
         register_shutdown_function([$this, 'checkForFatal']);
-        set_error_handler([$this, 'logError'], (E_ALL | E_STRICT) & ~E_USER_NOTICE);
-        set_error_handler([$this, 'logDebugError'], E_USER_NOTICE);
-        set_exception_handler([$this, 'logException']);
+        set_error_handler([$this, 'logError'], (E_ALL | E_STRICT) & ~E_USER_NOTICE); // @phpstan-ignore-line
+        set_error_handler([$this, 'logDebugError'], E_USER_NOTICE); // @phpstan-ignore-line
+        set_exception_handler([$this, 'logException']); // @phpstan-ignore-line
         ini_set("display_errors", "off");
         error_reporting(E_ALL);
     }
@@ -52,37 +52,32 @@ class ErrorHandler
     /**
      * Error handler, passes flow over the exception logger with new ErrorException.
      *
-     * @param $num
-     * @param $str
-     * @param $file
-     * @param $line
-     * @param null $context
-     * @param null|string $str
-     * @param null|string $file
+     * @param int $num
+     * @param string|null $str
+     * @param string|null $file
      * @param int|null $line
      *
      * @return void
      */
-    public function logError(int $num, ?string $str, ?string $file, ?int $line, $context = null): void
+    public function logError(int $num, ?string $str, ?string $file, ?int $line): void
     {
-        $this->logException(new \ErrorException($str, 0, $num, $file, $line));
+        $this->logException(new \ErrorException($str ?? '', 0, $num ?? 0, $file ?? '', $line ?? 0));
     }
 
     /**
      * Error handler, passes flow over the exception logger with new ErrorException.
      * For debug purposes: does not exit on first error
      *
-     * @param $num
-     * @param $str
-     * @param $file
-     * @param $line
-     * @param null $context
+     * @param int $num
+     * @param string|null $str
+     * @param string|null $file
+     * @param int|null $line
      *
      * @return void
      */
-    public function logDebugError($num, $str, $file, $line, $context = null): void
+    public function logDebugError(int $num, ?string $str, ?string $file, ?int $line): void
     {
-        $this->logException(new \ErrorException($str, 0, $num, $file, $line), false);
+        $this->logException(new \ErrorException($str ?? '', 0, $num ?? 0, $file ?? '', $line ?? 0), false);
     }
 
     /**
@@ -118,7 +113,7 @@ class ErrorHandler
     public function checkForFatal(): void
     {
         $error = error_get_last();
-        if ($error["type"] == E_ERROR) {
+        if (!empty($error) && $error["type"] == E_ERROR) {
             $this->logError($error["type"], $error["message"], $error["file"], $error["line"]);
         }
     }

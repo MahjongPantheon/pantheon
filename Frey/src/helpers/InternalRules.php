@@ -54,29 +54,41 @@ class InternalRules
     }
 
     /**
-     * @return array[]|false
-     *
-     * @psalm-return array<array-key, array{default: mixed, type: mixed, title: mixed}>|false
+     * @return array[]
      */
     public static function getRules()
     {
         $translations = self::getTranslations();
         $defaults = self::_getDefaults();
         $types = self::_getTypes();
-        
-        return array_combine(array_keys($translations), array_map(function ($key) use ($translations, $defaults, $types) {
+
+        /** @var array[] $val */
+        $val = array_combine(array_keys($translations), array_map(function ($key) use ($translations, $defaults, $types) {
             return [
                 'default' => $defaults[$key],
                 'type' => $types[$key],
                 'title' => $translations[$key]
             ];
         }, array_keys($translations)));
+        return $val;
     }
 
+    /**
+     * @var string[]
+     */
     protected static $_translations;
+    /**
+     * @var string[]
+     */
     protected static $_defaults;
+    /**
+     * @var string[]
+     */
     protected static $_types;
-    
+
+    /**
+     * @return string[]
+     */
     public static function getTranslations()
     {
         if (empty(self::$_translations)) {
@@ -112,7 +124,10 @@ class InternalRules
         }
         return self::$_translations;
     }
-    
+
+    /**
+     * @return string[]
+     */
     protected static function _getDefaults()
     {
         if (empty(self::$_defaults)) {
@@ -149,7 +164,10 @@ class InternalRules
         }
         return self::$_defaults;
     }
-    
+
+    /**
+     * @return string[]
+     */
     protected static function _getTypes()
     {
         if (empty(self::$_types)) {
