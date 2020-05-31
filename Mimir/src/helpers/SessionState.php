@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use _HumbugBox01d8f9a04075\Nette\Neon\Exception;
+
 require_once __DIR__ . '/PointsCalc.php';
 
 /**
@@ -40,7 +42,7 @@ class SessionState
      */
     protected $_chips = [];
     /**
-     * @var int[] { player_id => penalty_score }
+     * @var float[] { player_id => penalty_score }
      */
     protected $_penalties = [];
     /**
@@ -90,24 +92,28 @@ class SessionState
     /**
      * SessionState constructor.
      * @param Ruleset $rules
-     * @param $playersIds
+     * @param int[] $playersIds
      * @throws InvalidParametersException
      */
-    public function __construct(Ruleset $rules, $playersIds)
+    public function __construct(Ruleset $rules, array $playersIds)
     {
         $this->_rules = $rules;
         if (count($playersIds) != 4) {
             throw new InvalidParametersException('Players count is not 4: ' . json_encode($playersIds));
         }
-        $this->_scores = array_combine(
+        $sc = array_combine(
             $playersIds,
             array_fill(0, 4, $rules->startPoints())
         );
+        if (empty($sc)) {
+            throw new InvalidParametersException('Attempt to combine inequal arrays');
+        }
+        $this->_scores = $sc;
     }
 
     /**
      * @throws InvalidParametersException
-     * @return string
+     * @return string|false
      */
     public function toJson()
     {
@@ -122,7 +128,7 @@ class SessionState
     {
         $arr = [];
         $withChips = $this->_rules->chipsValue() > 0;
-        foreach ($this as $key => $value) {
+        foreach ($this as $key => $value) { // @phpstan-ignore-line
             if ($key === '_rules') {
                 continue;
             }
@@ -140,10 +146,10 @@ class SessionState
 
     /**
      * @param Ruleset $rules
-     * @param $playersIds
-     * @param $json
      * @param int[] $playersIds
+     * @param string $json
      *
+     * @return SessionState
      * @throws InvalidParametersException
      *
      */
@@ -324,16 +330,17 @@ class SessionState
     }
 
     /**
+     * @param array $scores
      * @return SessionState
      */
-    public function setScores($scores)
+    public function setScores(array $scores)
     {
         $this->_scores = $scores;
         return $this;
     }
 
     /**
-     * @return int[]
+     * @return float[]
      */
     public function getChips()
     {
@@ -359,12 +366,12 @@ class SessionState
 
     /**
      * Return id of current dealer
-     * @return int|string
+     * @return int
      */
     public function getCurrentDealer()
     {
         $players = array_keys($this->_scores);
-        return $players[($this->_round - 1) % 4];
+        return intval($players[($this->_round - 1) % 4]);
     }
 
     /**
@@ -382,7 +389,9 @@ class SessionState
                 $payments = $this->_updateAfterRon($round);
                 break;
             case 'multiron':
-                $payments = $this->_updateAfterMultiRon($round);
+                /** @var MultiRoundPrimitive $mround */
+                $mround = $round;
+                $payments = $this->_updateAfterMultiRon($mround);
                 break;
             case 'tsumo':
                 $payments = $this->_updateAfterTsumo($round);
@@ -630,9 +639,9 @@ class SessionState
      * Add extra penalty points for player in current game
      * Used for penalties that are not related to main game process. Do not use this to apply chombo!
      *
-     * @param $playerId
-     * @param $amount
-     * @param $reason
+     * @param int $playerId
+     * @param int $amount
+     * @param string $reason
      *
      * @return void
      */

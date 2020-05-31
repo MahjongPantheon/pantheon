@@ -42,9 +42,9 @@ class ErrorHandler
     public function register(): void
     {
         register_shutdown_function([$this, 'checkForFatal']);
-        set_error_handler([$this, 'logError'], (E_ALL | E_STRICT) & ~E_USER_NOTICE);
-        set_error_handler([$this, 'logDebugError'], E_USER_NOTICE);
-        set_exception_handler([$this, 'logException']);
+        set_error_handler([$this, 'logError'], (E_ALL | E_STRICT) & ~E_USER_NOTICE); // @phpstan-ignore-line
+        set_error_handler([$this, 'logDebugError'], E_USER_NOTICE); // @phpstan-ignore-line
+        set_exception_handler([$this, 'logException']); // @phpstan-ignore-line
         ini_set("display_errors", "off");
         error_reporting(E_ALL);
     }
@@ -99,7 +99,9 @@ class ErrorHandler
             "Trace:\t\t" . str_replace("\n", "\n\t\t\t", $e->getTraceAsString()) . "\n\n"
         ;
         $this->_log->error($message);
-        file_put_contents($this->_config->getValue('verboseLog'), $message . PHP_EOL, FILE_APPEND);
+        /** @var string $path */
+        $path = $this->_config->getValue('verboseLog');
+        file_put_contents($path, $message . PHP_EOL, FILE_APPEND);
         if ($exitOnError) {
             exit();
         }
@@ -113,7 +115,7 @@ class ErrorHandler
     public function checkForFatal(): void
     {
         $error = error_get_last();
-        if ($error["type"] == E_ERROR) {
+        if (!empty($error) && $error["type"] == E_ERROR) {
             $this->logError($error["type"], $error["message"], $error["file"], $error["line"]);
         }
     }

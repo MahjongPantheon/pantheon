@@ -10,9 +10,10 @@ deps: hooks
 	php bin/composer.phar install
 
 lint:
-	php vendor/bin/phpcs --config-set default_standard PSR2
-	php vendor/bin/phpcs --config-set show_warnings 0
+	php vendor/bin/phpcs --config-set default_standard PSR2 > /dev/null
+	php vendor/bin/phpcs --config-set show_warnings 0 > /dev/null
 	php vendor/bin/phpcs src tests www
+	php vendor/bin/phpstan clear-result-cache && php vendor/bin/phpstan analyse -c phpstan.neon
 
 unit:
 	php bin/unit.php
@@ -30,8 +31,8 @@ freygen:
 	php ../Frey/bin/clientGen.php Mimir interface > src/interfaces/IFreyClient.php
 
 autofix:
-	php vendor/bin/phpcbf --config-set default_standard PSR2
-	php vendor/bin/phpcbf --config-set show_warnings 0
+	php vendor/bin/phpcbf --config-set default_standard PSR2 > /dev/null
+	php vendor/bin/phpcbf --config-set show_warnings 0 > /dev/null
 	php vendor/bin/phpcbf src tests www
 
 dev:

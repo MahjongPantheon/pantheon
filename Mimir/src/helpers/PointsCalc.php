@@ -19,6 +19,9 @@ namespace Mimir;
 
 class PointsCalc
 {
+    /**
+     * @var array $_lastPaymentsInfo
+     */
     private static $_lastPaymentsInfo = [];
 
     public static function resetPaymentsInfo(): void
@@ -30,6 +33,9 @@ class PointsCalc
         ];
     }
 
+    /**
+     * @return array
+     */
     public static function lastPaymentsInfo()
     {
         return self::$_lastPaymentsInfo;
@@ -50,8 +56,8 @@ class PointsCalc
      * @param int|null $closestWinner
      * @param int $totalRiichiInRound
      *
-     *
      * @return int[]
+     *
      * @throws InvalidParametersException
      */
     public static function ron(
@@ -68,7 +74,7 @@ class PointsCalc
         ?int $paoPlayerId,
         ?int $closestWinner = null,
         int $totalRiichiInRound = 0
-    ) {
+    ): array {
         self::resetPaymentsInfo();
         $pointsDiff = self::_calcPoints($rules, $han, $fu, false, $isDealer);
 
@@ -78,13 +84,13 @@ class PointsCalc
 
         if (!empty($paoPlayerId) && $paoPlayerId != $loserId) {
             $currentScores[$winnerId] += $pointsDiff['winner'];
-            $currentScores[$loserId] += $pointsDiff['loser'] / 2;
-            $currentScores[$paoPlayerId] += $pointsDiff['loser'] / 2;
+            $currentScores[$loserId] += ($pointsDiff['loser'] ?? 0) / 2;
+            $currentScores[$paoPlayerId] += ($pointsDiff['loser'] ?? 0) / 2;
             self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $loserId] = $pointsDiff['winner'] / 2;
             self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $paoPlayerId] = $pointsDiff['winner'] / 2;
         } else {
             $currentScores[$winnerId] += $pointsDiff['winner'];
-            $currentScores[$loserId] += $pointsDiff['loser'];
+            $currentScores[$loserId] += $pointsDiff['loser'] ?? 0;
             self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $loserId] = $pointsDiff['winner'];
         }
 
@@ -185,8 +191,8 @@ class PointsCalc
                 if ($playerId == $winnerId) {
                     continue;
                 }
-                $currentScores[$playerId] += $pointsDiff['dealer'];
-                self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $playerId] = -$pointsDiff['dealer'];
+                $currentScores[$playerId] += $pointsDiff['dealer'] ?? 0;
+                self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $playerId] = -($pointsDiff['dealer'] ?? 0);
             }
         } else {
             foreach ($currentScores as $playerId => $value) {
@@ -194,11 +200,11 @@ class PointsCalc
                     continue;
                 }
                 if ($playerId == $currentDealer) {
-                    $currentScores[$playerId] += $pointsDiff['dealer'];
-                    self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $playerId] = -$pointsDiff['dealer'];
+                    $currentScores[$playerId] += $pointsDiff['dealer'] ?? 0;
+                    self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $playerId] = -($pointsDiff['dealer'] ?? 0);
                 } else {
-                    $currentScores[$playerId] += $pointsDiff['player'];
-                    self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $playerId] = -$pointsDiff['player'];
+                    $currentScores[$playerId] += $pointsDiff['player'] ?? 0;
+                    self::$_lastPaymentsInfo['direct'][$winnerId . '<-' . $playerId] = -($pointsDiff['player'] ?? 0);
                 }
             }
         }

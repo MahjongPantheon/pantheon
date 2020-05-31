@@ -145,7 +145,7 @@ class PlayersController extends Controller
                 'hashcode'    => $session->getRepresentationalHash(),
                 'status'      => $session->getStatus(),
                 'table_index' => $session->getTableIndex(),
-                'players'     => array_map(function (PlayerPrimitive $p, $score) use (&$session) {
+                'players'     => array_map(function (PlayerPrimitive $p, $score) {
                     return [
                         'id'            => $p->getId(),
                         'display_name'  => $p->getDisplayName(),
@@ -206,7 +206,7 @@ class PlayersController extends Controller
             $sessionResults[$sr->getPlayerId()] = $sr;
         }
 
-        $result = array_map(function (PlayerPrimitive $p) use (&$session, &$sessionResults) {
+        $result = array_map(function (PlayerPrimitive $p) use (&$sessionResults) {
             return [
                 'id'            => $p->getId(),
                 'display_name'  => $p->getDisplayName(),
@@ -251,11 +251,11 @@ class PlayersController extends Controller
             return null;
         }
 
-        $tmpResults = SessionResultsPrimitive::findByPlayersAndSession(
-            $this->_ds,
-            $session->getId(),
-            $session->getPlayersIds()
-        );
+        $sId = $session->getId();
+        if (empty($sId)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
+        $tmpResults = SessionResultsPrimitive::findByPlayersAndSession($this->_ds, $sId, $session->getPlayersIds());
 
         /** @var SessionResultsPrimitive[] $sessionResults */
         $sessionResults = [];
@@ -263,7 +263,7 @@ class PlayersController extends Controller
             $sessionResults[$sr->getPlayerId()] = $sr;
         }
 
-        $result = array_map(function (PlayerPrimitive $p) use (&$session, &$sessionResults) {
+        $result = array_map(function (PlayerPrimitive $p) use (&$sessionResults) {
             return [
                 'id'            => $p->getId(),
                 'display_name'  => $p->getDisplayName(),
@@ -332,9 +332,13 @@ class PlayersController extends Controller
 
         $events = [];
         if (!empty($regs)) {
-            $evList = EventPrimitive::findById($this->_ds,
-                array_map(function(PlayerRegistrationPrimitive $pr) { return $pr->getEventId(); }, $regs));
-            $events = array_map(function(EventPrimitive $ev) {
+            $evList = EventPrimitive::findById(
+                $this->_ds,
+                array_map(function (PlayerRegistrationPrimitive $pr) {
+                    return $pr->getEventId();
+                }, $regs)
+            );
+            $events = array_map(function (EventPrimitive $ev) {
                 return [
                     'id' => $ev->getId(),
                     'title' => $ev->getTitle(),
@@ -376,7 +380,11 @@ class PlayersController extends Controller
      */
     protected function _getLastRoundCommon(SessionPrimitive $session)
     {
-        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$session->getId()]);
+        $sId = $session->getId();
+        if (empty($sId)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
+        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$sId]);
         /** @var MultiRoundPrimitive $lastRound */
         $lastRound = MultiRoundHelper::findLastRound($rounds);
 

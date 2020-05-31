@@ -202,7 +202,7 @@ class FreyClient implements IFreyClient
 
     /**
      *  Get rule list with translations to selected locale
-    
+
      * @return array
      */
     public function getRulesList(): array

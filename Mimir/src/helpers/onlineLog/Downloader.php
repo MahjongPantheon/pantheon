@@ -26,11 +26,11 @@ class Downloader
     /**
      * Get replay data from a remote server
      *
-     * @param $logUrl
+     * @param string $logUrl
      * @return array [hash => string, content => string]
      * @throws DownloadException
      */
-    public function getReplay($logUrl)
+    public function getReplay(string $logUrl)
     {
         $replayHash = $this->getReplayHash($logUrl);
         $replayHash = $this->_decodeHash($replayHash);
@@ -55,11 +55,11 @@ class Downloader
     /**
      * Validate domain and get attributes
      *
-     * @param $logUrl
+     * @param string $logUrl
      * @return boolean
      * @throws DownloadException
      */
-    public function validateUrl($logUrl)
+    public function validateUrl(string $logUrl)
     {
         $validDomain = base64_decode('Oi8vdGVuaG91Lm5ldC8=');
         if (strpos($logUrl, $validDomain) === false || strpos($logUrl, 'log=') === false) {
@@ -71,18 +71,23 @@ class Downloader
     /**
      * Parse get attributes and find game hash
      *
-     * @param $logUrl
+     * @param string $logUrl
      * @return string
+     * @throws InvalidParametersException
      */
-    public function getReplayHash($logUrl)
+    public function getReplayHash(string $logUrl)
     {
         $queryString = parse_url($logUrl, PHP_URL_QUERY);
+        if (!is_string($queryString)) {
+            throw new InvalidParametersException('Received parameter is not query string');
+        }
         parse_str($queryString, $out);
         return $out['log'];
     }
 
     /**
-     * @return (bool|mixed|string)[]
+     * @param string $url
+     * @return array (bool|mixed|string)[]
      *
      * @psalm-return array{0: bool|string, 1: mixed}
      */
@@ -104,7 +109,7 @@ class Downloader
      * Decode original replay hash
      * Just don't ask how this magic is done.
      *
-     * @param $log
+     * @param string $log
      * @return string
      */
     protected function _decodeHash(string $log)

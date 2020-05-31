@@ -171,7 +171,6 @@ class EventUserManagementModel extends Model
      */
     public function registerPlayerPin(string $pin): ?string
     {
-        $success = false;
         $token = null;
         $nextLocalId = null;
 

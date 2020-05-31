@@ -351,9 +351,9 @@ class MultiRoundPrimitive extends RoundPrimitive
     }
 
     /**
-     * @return string[]
+     * @return int[]
      *
-     * @psalm-return array<array-key, string>
+     * @psalm-return array<array-key, int>
      */
     public function getWinnerIds(): array
     {

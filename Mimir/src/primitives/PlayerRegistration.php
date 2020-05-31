@@ -103,7 +103,6 @@ class PlayerRegistrationPrimitive extends Primitive
                 $this->_id = $this->_ds->local()->lastInsertId();
             }
         } catch (\PDOException $e) { // duplicate unique key, get existing item
-
             var_dump($this->_ds->local()->debug());
             $existingItem = self::findByPlayerAndEvent($this->_ds, $this->_playerId, $this->_eventId);
             if (!empty($existingItem)) {

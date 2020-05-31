@@ -60,7 +60,7 @@ class DataSource
     /**
      * Shortcut for ->local()->table()
      *
-     * @param $tableName
+     * @param string $tableName
      * @throws \Exception
      * @return \Idiorm\ORM
      */

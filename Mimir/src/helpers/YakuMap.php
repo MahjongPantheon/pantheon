@@ -122,23 +122,23 @@ class YakuMap
     /**
      * Get full yaku list except of some yaku
      *
-     * @param $except
+     * @param int[] $except
      * @return array
      */
-    public static function listExcept($except)
+    public static function listExcept(array $except)
     {
         return array_diff(self::allYaku(), $except);
     }
 
     /**
-     * @param string $yakuList csv: 'yaku,han,yaku2,han...'
-     * @param string $yakumanList csv: 'yakuman,yakuman2...'
+     * @param string $yList csv: 'yaku,han,yaku2,han...'
+     * @param string $ymanList csv: 'yakuman,yakuman2...'
      * @return array ['yaku' => [...], 'dora' => int, 'han' => int, 'yakuman' => int]
      */
-    public static function fromTenhou($yakuList, $yakumanList)
+    public static function fromTenhou($yList, $ymanList)
     {
-        $yakuList = self::_toArray($yakuList);
-        $yakumanList = self::_toArray($yakumanList);
+        $yakuList = self::_toArray($yList);
+        $yakumanList = self::_toArray($ymanList);
         $tenhouYakuMap = [
             0 => Y_MENZENTSUMO,
             1 => Y_RIICHI,
@@ -208,8 +208,8 @@ class YakuMap
         $yakuhaiCount = 0;
 
         for ($i = 0; $i < count($yakuList); $i += 2) {
-            $key = $yakuList[$i];
-            $value = $yakuList[$i + 1];
+            $key = intval($yakuList[$i]);
+            $value = intval($yakuList[$i + 1]);
 
             if ($key >= 52 && $key <= 54) {
                 $result['dora'] += $value;
@@ -228,7 +228,7 @@ class YakuMap
         }
 
         for ($i = 0; $i < count($yakumanList); $i ++) {
-            $key = $yakumanList[$i];
+            $key = intval($yakumanList[$i]);
             $result['yaku'] [] = $tenhouYakuMap[$key];
             $result['yakuman'] ++;
         }

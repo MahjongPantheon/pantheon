@@ -25,8 +25,8 @@ class DateHelper
 
     /**
      * Return local date for current event timezone
-     * @param $utcDate
-     * @param $timezone
+     * @param string $utcDate
+     * @param string $timezone
      * @return string
      * @throws EntityNotFoundException
      */

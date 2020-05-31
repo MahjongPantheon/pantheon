@@ -74,7 +74,7 @@ class PlayerPrimitive extends Primitive
     {
         $data = $ds->remote()->getPersonalInfo($ids);
 
-        return array_map(function($item) use ($ds) {
+        return array_map(function ($item) use ($ds) {
             return (new PlayerPrimitive($ds))
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
@@ -87,7 +87,7 @@ class PlayerPrimitive extends Primitive
      * Method should maintain sorting of items according to ids order.
      *
      * @param DataSource $ds
-     * @param int[] $ids
+     * @param string[] $ids
      * @throws \Exception
      * @return PlayerPrimitive[]
      */
@@ -95,7 +95,7 @@ class PlayerPrimitive extends Primitive
     {
         $playersData = $ds->remote()->findByTenhouIds($ids);
         /** @var PlayerPrimitive[] $players */
-        $players = array_map(function($item) use($ds) {
+        $players = array_map(function ($item) use ($ds) {
             return (new PlayerPrimitive($ds))
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])

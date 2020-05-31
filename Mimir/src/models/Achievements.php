@@ -122,7 +122,10 @@ class AchievementsModel extends Model
             'dovakins' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getDovakins($this->_ds, $eventIdList);
             },
-            'yakumans' => function () use ($eventIdList) {
+            'yakumans' => /**
+             * @return array|string
+             */
+            function () use ($eventIdList) {
                 return AchievementsPrimitive::getYakumans($this->_ds, $eventIdList);
             },
             'shithander' => function () use ($eventIdList): array {

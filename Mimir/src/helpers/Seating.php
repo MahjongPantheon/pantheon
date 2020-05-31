@@ -65,11 +65,11 @@ class Seating
     /**
      * Format seating data for better view
      *
-     * @param $seating
-     * @param $previousSeatings
+     * @param array $seating
+     * @param array $previousSeatings
      * @return array
      */
-    public static function makeIntersectionsTable($seating, $previousSeatings)
+    public static function makeIntersectionsTable(array $seating, array $previousSeatings)
     {
         $possibleIntersections = [
             [0, 1],
@@ -137,7 +137,7 @@ class Seating
             $previousSeatings = [];
         }
         /** @var array[] $groups */
-        $groups = array_chunk($playersMap, ceil(count($playersMap) / $groupsCount), true); // 1)
+        $groups = array_chunk($playersMap, (int)ceil(count($playersMap) / $groupsCount), true); // 1)
         for ($i = 0; $i < $maxIterations; $i++) {
             srand($randFactor + $i * 17); // 2)
             foreach ($groups as $k => $v) {
@@ -229,11 +229,11 @@ class Seating
      * Make sure players will initially sit to winds that they did not seat before
      * (or sat less times)
      *
-     * @param $seating
-     * @param $previousSeatings
+     * @param array $seating
+     * @param array $previousSeatings
      * @return array|null
      */
-    protected static function _updatePlacesAtEachTable(array $seating, $previousSeatings)
+    protected static function _updatePlacesAtEachTable(array $seating, array $previousSeatings)
     {
         $possiblePlacements = [
             '0123', '1023', '2013', '3012',
@@ -247,6 +247,7 @@ class Seating
         $tables = array_chunk($seating, 4, true);
         $resultSeating = [];
         foreach ($tables as $tableWithRatings) {
+            /** @var int[] $table */
             $table = array_keys($tableWithRatings);
 
             $bestResult = 10005000;
@@ -281,18 +282,15 @@ class Seating
      * Calculate index of distribution equality for seating at particular
      * winds. Ideally, we want that seating, which produces smallest index.
      *
-     * @param $player1
-     * @param $player2
-     * @param $player3
-     * @param $player4
+     * @param int $player1
+     * @param int $player2
+     * @param int $player3
+     * @param int $player4
      * @param array $prevData - [ [id, id, id, id] ...] - assumed players are sorted as eswn at each table!
-     * @param array-key $player1
-     * @param array-key $player2
-     * @param array-key $player3
-     * @param array-key $player4
      *
+     * @return float|int
      */
-    protected static function _calcSubSums($player1, $player2, $player3, $player4, $prevData)
+    protected static function _calcSubSums(int $player1, int $player2, int $player3, int $player4, array $prevData)
     {
         $totalsum = 0;
         foreach ([$player1, $player2, $player3, $player4] as $idx => $player) {
@@ -327,6 +325,7 @@ class Seating
      * @param array $playedWith - matrix of intersections [ playerIdx1 -> [ playerIdx2 -> N ... ] ... ]
      * @param int[][] $playedWith
      *
+     * @return array
      */
     protected static function _swissSeatingOriginal(array $playerTotalGamePoints, array &$playedWith)
     {
@@ -366,13 +365,12 @@ class Seating
      * @param int $maxCrossings - integer factor of max allowed intersections
      * @param int $maxCrossingsPrecisionFactor - addition to max crossings to relax requirements if too many iterations passed
      * @param int $numPlayers - players count
-     * @param array $playerTable - seating: [ playerIdx -> tableIdx ]
+     * @param int[] $playerTable - seating: [ playerIdx -> tableIdx ]
      * @param array $playerTotalGamePoints - rating points sum as array: [ player index -> points ]
      * @param array $playedWith - matrix of intersections [ playerIdx1 -> [ playerIdx2 -> N ... ] ... ]
      * @param int $iteration - current iteration of calculations
-     * @param false[] $isPlaying
-     * @param int[] $playerTable
      *
+     * @return bool
      */
     protected static function _makeSwissSeating(
         array &$isPlaying,
@@ -540,7 +538,7 @@ class Seating
      * Shuffle array while maintaining its keys
      * Should rely on srand RNG seed: run shuffleSeed before this!
      *
-     * @param $array
+     * @param array $array
      * @return array
      */
     public static function shuffle(array $array)
@@ -572,12 +570,11 @@ class Seating
      * Players from the top are seating with interval of $step, but if table count is
      * not divisible by $step, rest of players are seated with step 1.
      *
-     * @param PlayerPrimitive[] $currentRatingTable :ordered list
-     * @param $step
-     * @param $randomize
-     * @param array $currentRatingTable
+     * @param array $currentRatingTable :ordered list
+     * @param int $step
+     * @param bool $randomize
      *
-     *
+     * @return array
      * @throws \Exception
      */
     public static function makeIntervalSeating(array $currentRatingTable, int $step, bool $randomize = false)

@@ -19,7 +19,8 @@ namespace Mimir;
 
 // TODO: generate this and all other such files dynamically from some unviersal source.
 
-class AccessRules {
+class AccessRules
+{
     const ADD_USER = 'add_user';
     const ADMIN_EVENT = 'admin_event';
 }

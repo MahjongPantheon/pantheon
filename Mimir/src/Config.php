@@ -42,7 +42,7 @@ class Config
     /**
      * Get config value by dot-separated path
      *
-     * @param $path
+     * @param string $path
      * @return string|string[]
      */
     public function getValue(string $path)
@@ -50,21 +50,22 @@ class Config
         $parts = explode('.', $path);
         $current = $this->_data;
         while ($part = array_shift($parts)) {
-            $current = $current[$part];
+            $current = $current[$part]; // @phpstan-ignore-line
         }
 
         return $current;
     }
 
     /**
-     * @return string|string[] PDO connection string
+     * @return string PDO connection string
      *
      * @throws \RuntimeException
      *
-     * @psalm-return array<array-key, string>|string
+     * @psalm-return string
      */
     public function getDbConnectionString()
     {
+        /** @var string $value */
         $value = $this->getValue('db.connection_string');
         if (empty($value)) {
             throw new \RuntimeException('DB connection string not found in configuration!');
@@ -74,12 +75,14 @@ class Config
     }
 
     /**
-     * @return string|string[] with username and password
+     * @return string[] with username and password
      *
-     * @psalm-return array<array-key, string>|string
+     * @psalm-return array<array-key, string>
      */
     public function getDbConnectionCredentials()
     {
-        return $this->getValue('db.credentials');
+        /** @var string[] $val */
+        $val = $this->getValue('db.credentials');
+        return $val;
     }
 }

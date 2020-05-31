@@ -46,7 +46,7 @@ class Meta
      */
     protected $_selectedLocale;
     /**
-     * @var FreyClient
+     * @var IFreyClient
      */
     protected $_frey;
     /**
@@ -138,7 +138,7 @@ class Meta
             : intval($input['HTTP_X_CURRENT_PERSON_ID']));
 
         if (!empty($this->_currentPersonId)) {
-            if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->getAuthToken())) {
+            if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->getAuthToken() ?? '')) {
                 $this->_currentPersonId = null;
                 $this->_authToken = null;
             } else {
@@ -164,6 +164,10 @@ class Meta
         return $this->_authToken;
     }
 
+    /**
+     * @param string $name
+     * @return mixed|null
+     */
     public function getAccessRuleValue(string $name)
     {
         if (!isset($this->_accessRules[$name])) {
@@ -196,6 +200,10 @@ class Meta
         return $this->_currentPersonId;
     }
 
+    /**
+     * @param mixed $major
+     * @param mixed $minor
+     */
     public function sendVersionHeader($major, $minor): void
     {
         header('X-Api-Version: ' . intval($major) . '.' . intval($minor));

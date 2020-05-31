@@ -318,7 +318,7 @@ class EventModel extends Model
 
         return [
             'total' => $count,
-            'events' => array_map(function($event) {
+            'events' => array_map(function ($event) {
                 return [
                     'id' => $event['id'],
                     'title' => $event['title'],
@@ -349,7 +349,7 @@ class EventModel extends Model
             ->whereIdIn($idList)
             ->findMany();
 
-        return array_map(function($event) {
+        return array_map(function ($event) {
             return [
                 'id' => $event['id'],
                 'title' => $event['title'],

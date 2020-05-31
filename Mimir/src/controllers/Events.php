@@ -55,8 +55,12 @@ class EventsController extends Controller
             throw new BadActionException('Somehow we couldn\'t create event - this should not happen');
         }
 
-        $this->_log->addInfo('Successfully create new event (id# ' . $event->getId() . ')');
-        return $event->getId();
+        $id = $event->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to return deidented primitive');
+        }
+        $this->_log->addInfo('Successfully create new event (id# ' . $id . ')');
+        return $id;
     }
 
     /**
@@ -246,6 +250,9 @@ class EventsController extends Controller
         $this->_log->addInfo('Registering pin code #' . $pin);
         $authToken = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))
             ->registerPlayerPin($pin);
+        if (empty($authToken)) {
+            throw new EntityNotFoundException('Pin code was already used or does not exist');
+        }
         $this->_log->addInfo('Successfully registered pin code #' . $pin);
         return $authToken;
     }

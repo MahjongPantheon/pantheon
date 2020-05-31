@@ -43,7 +43,7 @@ class SeatingController extends Controller
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
         list ($playersMap, $tables) = $this->_getData($eventId);
-        $seating = array_chunk(array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed)), 4);
+        $seating = array_chunk(array_keys(Seating::shuffledSeating($playersMap, $tables, $groupsCount, $seed) ?? []), 4);
         $tableIndex = 1;
         foreach ($seating as $table) {
             (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
@@ -207,7 +207,7 @@ class SeatingController extends Controller
     }
 
     /**
-     * @param $eventId
+     * @param int $eventId
      * @return array [id => int, local_id => int][][]
      * @throws AuthFailedException
      * @throws InvalidParametersException
@@ -237,13 +237,13 @@ class SeatingController extends Controller
     /**
      * Get list of tables for next session. Each table is a list of players data.
      *
-     * @param integer $eventId
+     * @param int $eventId
      * @return array
      * @throws AuthFailedException
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getNextSeatingForPrescriptedEvent($eventId)
+    public function getNextSeatingForPrescriptedEvent(int $eventId)
     {
         $seating = $this->_getNextPrescriptedSeating($eventId);
         if (empty($seating)) {
@@ -281,7 +281,7 @@ class SeatingController extends Controller
     /**
      * Update event "seating ready" status.
      * This should be done before games start, or admin panel will show some inadequate data.
-     * @param $eventId
+     * @param int $eventId
      * @throws \Exception
      * @return bool flag if games are started immediately
      */
@@ -298,7 +298,7 @@ class SeatingController extends Controller
     /**
      * Check if seating is allowed now
      *
-     * @param $eventId
+     * @param int $eventId
      *
      * @throws AuthFailedException
      * @throws InvalidParametersException
@@ -319,7 +319,7 @@ class SeatingController extends Controller
     }
 
     /**
-     * @param $eventId
+     * @param int $eventId
      * @return array
      * @throws InvalidParametersException
      * @throws \Exception

@@ -16,6 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Mimir;
+
 require_once __DIR__ . '/DataSource.php';
 
 use Idiorm\ORM;
@@ -73,13 +74,13 @@ abstract class Primitive
      * @see Primitive::save Save logic is handled by this.
      *
      * @param array $obj object to serialize (usually array of ids)
-     * @param $connectorTable
-     * @param $currentEntityField
-     * @param $foreignEntityField
-     * @param $indexFields
+     * @param string $connectorTable
+     * @param string $currentEntityField
+     * @param string $foreignEntityField
+     * @param array $indexFields
      * @return bool
      */
-    protected function _serializeManyToMany($obj, $connectorTable, $currentEntityField, $foreignEntityField, $indexFields)
+    protected function _serializeManyToMany($obj, string $connectorTable, string $currentEntityField, string $foreignEntityField, array $indexFields)
     {
         $result = [];
         $i = 1;
@@ -101,13 +102,13 @@ abstract class Primitive
     }
 
     /**
-     * @param $connectorTable
-     * @param $currentEntityField
-     * @param $foreignEntityField
+     * @param string $connectorTable
+     * @param string $currentEntityField
+     * @param string $foreignEntityField
      * @throws \Exception
      * @return array (usually array of ids)
      */
-    protected function _deserializeManyToMany($connectorTable, $currentEntityField, $foreignEntityField)
+    protected function _deserializeManyToMany(string $connectorTable, string $currentEntityField, string $foreignEntityField)
     {
         $items = $this->_ds
             ->table($connectorTable)
@@ -126,12 +127,12 @@ abstract class Primitive
     /**
      * Transform for many-to-many relation fields
      *
-     * @param $connectorTable
-     * @param $currentEntityField
-     * @param $foreignEntityField
-     * @param $indexFields
+     * @param string $connectorTable
+     * @param string $currentEntityField
+     * @param string $foreignEntityField
      * @param string[] $indexFields
      *
+     * @return callable[]
      */
     protected function _externalManyToManyTransform(string $connectorTable, string $currentEntityField, string $foreignEntityField, array $indexFields)
     {
@@ -298,6 +299,9 @@ abstract class Primitive
      */
     abstract protected function _create();
 
+    /**
+     * @return int|null
+     */
     abstract public function getId();
 
     /**
@@ -317,7 +321,7 @@ abstract class Primitive
     }
 
     /**
-     * @param $data
+     * @param array $data
      * @return $this
      */
     protected function _restore(array $data)
@@ -338,14 +342,13 @@ abstract class Primitive
 
     /**
      * @param DataSource $ds
-     * @param $data
+     * @param array $data
      * @return static
      * @suppress PhanTypeInstantiateAbstractStatic
      */
     protected static function _recreateInstance(DataSource $ds, $data)
     {
-        /** @var Primitive $instance */
-        $instance = new static($ds);
+        $instance = new static($ds); // @phpstan-ignore-line
         return $instance->_restore($data);
     }
 

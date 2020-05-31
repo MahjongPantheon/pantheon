@@ -227,7 +227,7 @@ class HttpClient extends \JsonRPC\HttpClient
     /**
      * Assign a certificate to use TLS
      *
-     * @param $path
+     * @param string $path
      * @return $this
      */
     public function withSslLocalCert($path)
@@ -290,14 +290,14 @@ class HttpClient extends \JsonRPC\HttpClient
 
         $metadata = stream_get_meta_data($stream);
         $headers = $metadata['wrapper_data'];
-        $response = json_decode(stream_get_contents($stream), true);
+        $response = json_decode(stream_get_contents($stream) ?: '', true);
 
         fclose($stream);
 
         if ($this->debug) {
-            error_log('==> Request: '.PHP_EOL.(is_string($payload) ? $payload : json_encode($payload, JSON_PRETTY_PRINT)));
-            error_log('==> Headers: '.PHP_EOL.var_export($headers, true));
-            error_log('==> Response: '.PHP_EOL.json_encode($response, JSON_PRETTY_PRINT));
+            error_log('==> Request: ' . PHP_EOL . $payload);
+            error_log('==> Headers: ' . PHP_EOL . var_export($headers, true));
+            error_log('==> Response: ' . PHP_EOL . json_encode($response, JSON_PRETTY_PRINT));
         }
 
         $this->handleExceptions($headers);
