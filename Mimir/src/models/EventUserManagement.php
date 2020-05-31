@@ -101,8 +101,8 @@ class EventUserManagementModel extends Model
         $success = $regItem->save();
 
         $eItem = PlayerEnrollmentPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
-        if ($success) {
-            $eItem->drop();
+        if ($success && !empty($eItem)) {
+            $eItem[0]->drop();
         }
         return $success;
     }
@@ -126,7 +126,7 @@ class EventUserManagementModel extends Model
             return;
         }
 
-        $regItem->drop();
+        $regItem[0]->drop();
     }
 
     /**
@@ -149,7 +149,7 @@ class EventUserManagementModel extends Model
             throw new EntityNotFoundException('Player is not registered for this event');
         }
 
-        return $regItem
+        return $regItem[0]
             ->setIgnoreSeating($ignoreSeating)
             ->save();
     }

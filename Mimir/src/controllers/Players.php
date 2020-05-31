@@ -328,7 +328,7 @@ class PlayersController extends Controller
         if (empty($this->_meta->getCurrentPersonId())) {
             throw new InvalidParametersException('No player logged in', 404);
         }
-        $regs = PlayerRegistrationPrimitive::findByPlayerId($this->_ds, [$this->_meta->getCurrentPersonId()]);
+        $regs = PlayerRegistrationPrimitive::findByPlayerId($this->_ds, $this->_meta->getCurrentPersonId());
 
         $events = [];
         if (!empty($regs)) {

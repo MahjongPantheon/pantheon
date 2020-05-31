@@ -409,12 +409,12 @@ class SessionState
     }
 
     /**
-     * @param $id
+     * @param int|null $id
      * @param int $betAmount - total points amount gathered as riichi bets. May be fractional (of 1000)!
      *
      * @return void
      */
-    public function giveRiichiBetsToPlayer(int $id, $betAmount): void
+    public function giveRiichiBetsToPlayer($id, int $betAmount): void
     {
         $this->_scores[$id] += $betAmount;
     }

@@ -68,7 +68,7 @@ class EventPrescriptPrimitive extends Primitive
      * @param string $prescript
      * @return int[][][]
      */
-    public function unpackScript($prescript)
+    public function unpackScript(string $prescript)
     {
         $prescript = str_replace("\r", '', $prescript);
         $sessions = [];
@@ -91,7 +91,7 @@ class EventPrescriptPrimitive extends Primitive
      * @param int[][][] $prescriptObj
      * @return string
      */
-    public function packScript($prescriptObj)
+    public function packScript(array $prescriptObj)
     {
         $sessions = [];
         foreach ($prescriptObj as $sessionObj) {
@@ -104,7 +104,7 @@ class EventPrescriptPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
     /**
@@ -114,7 +114,7 @@ class EventPrescriptPrimitive extends Primitive
     protected $_eventId;
     /**
      * Related event
-     * @var EventPrimitive
+     * @var EventPrimitive|null
      */
     protected $_event;
     /**
@@ -170,7 +170,7 @@ class EventPrescriptPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -215,10 +215,15 @@ class EventPrescriptPrimitive extends Primitive
     /**
      * @param EventPrimitive $event
      * @return EventPrescriptPrimitive
+     * @throws InvalidParametersException
      */
     public function setEvent($event)
     {
-        $this->_eventId = $event->getId();
+        $id = $event->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
+        $this->_eventId = $id;
         $this->_event = $event;
         return $this;
     }
@@ -240,7 +245,7 @@ class EventPrescriptPrimitive extends Primitive
     }
 
     /**
-     * @param $script
+     * @param string $script
      * @return EventPrescriptPrimitive
      */
     public function setScriptAsString(string $script)
@@ -258,10 +263,10 @@ class EventPrescriptPrimitive extends Primitive
     }
 
     /**
-     * @param string[] $script
+     * @param int[][][] $script
      * @return EventPrescriptPrimitive
      */
-    public function setScript($script)
+    public function setScript(array $script)
     {
         $this->_script = $script;
         return $this;
@@ -288,7 +293,7 @@ class EventPrescriptPrimitive extends Primitive
     /**
      * Check current prescript for mistakes and output error list
      *
-     * @param $localIdMap
+     * @param array $localIdMap
      * @return string[]
      */
     public function getCheckErrors(array $localIdMap)

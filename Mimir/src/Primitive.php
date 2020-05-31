@@ -407,7 +407,7 @@ abstract class Primitive
      *      $params.order    => asc or desc
      *      $params.orderBy  => field name for results ordering
      * @throws \Exception
-     * @return static|static[]
+     * @return static[]
      */
     protected static function _findBySeveral(DataSource $ds, $conditions, $params = [])
     {
@@ -436,7 +436,7 @@ abstract class Primitive
             } else {
                 return [];
             }
-            return self::_recreateInstance($ds, $item);
+            return [self::_recreateInstance($ds, $item)];
         }
 
         if (!empty($params['order']) && !empty($params['orderBy'])) {

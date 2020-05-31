@@ -30,7 +30,7 @@ class PlayerPrimitive extends Primitive
 {
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
     /**
@@ -70,7 +70,7 @@ class PlayerPrimitive extends Primitive
      * @throws \Exception
      * @return PlayerPrimitive[]
      */
-    public static function findById(DataSource $ds, $ids)
+    public static function findById(DataSource $ds, array $ids)
     {
         $data = $ds->remote()->getPersonalInfo($ids);
 
@@ -108,6 +108,10 @@ class PlayerPrimitive extends Primitive
             }, $players),
             $players
         );
+
+        if (!$playersMap) {
+            throw new InvalidParametersException('Cant combine inequal arrays');
+        }
 
         return array_filter(array_map(function ($id) use ($playersMap) {
             return empty($playersMap[$id]) ? null : $playersMap[$id];
@@ -156,7 +160,7 @@ class PlayerPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {

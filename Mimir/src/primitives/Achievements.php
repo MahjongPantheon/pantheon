@@ -43,10 +43,9 @@ class AchievementsPrimitive extends Primitive
 
     /**
      * AchievementsPrimitive constructor.
-     * @param DataSource $ds
      * @throws BadActionException
      */
-    public function __construct(DataSource $ds) // Missing parent constructor call is intended
+    public function __construct() // Missing parent constructor call is intended
     {
         throw new BadActionException('This primitive is not expected to be instantiated, use static methods instead');
     }
@@ -63,11 +62,11 @@ class AchievementsPrimitive extends Primitive
      * Get players who collected hand with maximum fu
      *
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @throws \Exception
      * @return array
      */
-    public static function getMaxFuHand(DataSource $ds, $eventIdList)
+    public static function getMaxFuHand(DataSource $ds, array $eventIdList)
     {
         $rounds = $ds->table('round')
             ->select('fu')
@@ -104,11 +103,11 @@ class AchievementsPrimitive extends Primitive
      * Get players who played most as dealer
      *
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @throws \Exception
      * @return array
      */
-    public static function getBestDealer(DataSource $ds, $eventIdList)
+    public static function getBestDealer(DataSource $ds, array $eventIdList)
     {
         $rounds = $ds->table('round')
             ->select('winner_id')
@@ -166,11 +165,11 @@ class AchievementsPrimitive extends Primitive
      * Get players who collected largest amount of 1/30 hands
      *
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @throws \Exception
      * @return array
      */
-    public static function getBestShithander(DataSource $ds, $eventIdList)
+    public static function getBestShithander(DataSource $ds, array $eventIdList)
     {
         $rounds = $ds->table('round')
             ->select('winner_id')
@@ -210,11 +209,11 @@ class AchievementsPrimitive extends Primitive
      * Get player who collected most expensive hand
      *
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @throws \Exception
      * @return array
      */
-    public static function getBestHandOfEvent(DataSource $ds, $eventIdList)
+    public static function getBestHandOfEvent(DataSource $ds, array $eventIdList)
     {
         $rounds = $ds->table('round')
             ->select('han')
@@ -249,15 +248,13 @@ class AchievementsPrimitive extends Primitive
      * Get players who collected a yakuman
      *
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      *
      * @throws \Exception
      *
-     * @return array[]|string
-     *
-     * @psalm-return array<array-key, array{name: mixed, yaku: mixed}>|string
+     * @return array|string
      */
-    public static function getYakumans(DataSource $ds, $eventIdList)
+    public static function getYakumans(DataSource $ds, array $eventIdList)
     {
         $rounds = $ds->table('round')
             ->select('winner_id')
@@ -270,8 +267,8 @@ class AchievementsPrimitive extends Primitive
             ->findArray();
         $players = array_map(function ($round) {
             return [
-                'name' => $round['display_name'],
-                'yaku' => $round['yaku']
+                'name' => (string)$round['display_name'],
+                'yaku' => (string)$round['yaku']
             ];
         }, $rounds);
         return empty($players) ? 'No yakumans!' : $players;
@@ -281,11 +278,11 @@ class AchievementsPrimitive extends Primitive
      * Get players who has largest count of feeding into others' hands
      *
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @throws \Exception
      * @return array
      */
-    public static function getBraveSappers(DataSource $ds, $eventIdList)
+    public static function getBraveSappers(DataSource $ds, array $eventIdList)
     {
         $rounds = $ds->table('round')
             ->select('loser_id')
@@ -322,11 +319,11 @@ class AchievementsPrimitive extends Primitive
      * Get players who has smallest count of feeding into others' hands
      *
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @throws \Exception
      * @return array
      */
-    public static function getDieHardData(DataSource $ds, $eventIdList)
+    public static function getDieHardData(DataSource $ds, array $eventIdList)
     {
         // TODO: Fix after rebase. This won't work with Frey.
         $allPlayers = $ds->table('player')
@@ -393,11 +390,11 @@ class AchievementsPrimitive extends Primitive
      * Get players with largest tsumo count during single hanchan
      *
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @throws \Exception
      * @return array
      */
-    public static function getBestTsumoistInSingleSession(DataSource $ds, $eventIdList)
+    public static function getBestTsumoistInSingleSession(DataSource $ds, array $eventIdList)
     {
         $rounds = $ds->table('round')
             ->select('winner_id')
@@ -436,11 +433,11 @@ class AchievementsPrimitive extends Primitive
      * Get players who collected largest amount of yakuhais
      *
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @throws \Exception
      * @return array
      */
-    public static function getDovakins(DataSource $ds, $eventIdList)
+    public static function getDovakins(DataSource $ds, array $eventIdList)
     {
         $rounds = $ds->table('round')
             ->select('display_name')
@@ -490,11 +487,11 @@ class AchievementsPrimitive extends Primitive
      * Get players who fed into most expensive hand (but not while being riichi)
      *
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @throws \Exception
      * @return array
      */
-    public static function getImpossibleWait(DataSource $ds, $eventIdList)
+    public static function getImpossibleWait(DataSource $ds, array $eventIdList)
     {
         $rounds = $ds->table('round')
             ->select('loser_id')
@@ -526,11 +523,11 @@ class AchievementsPrimitive extends Primitive
      * Get players with largest ippatsu count
      *
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @throws \Exception
      * @return array
      */
-    public static function getJustAsPlanned(DataSource $ds, $eventIdList)
+    public static function getJustAsPlanned(DataSource $ds, array $eventIdList)
     {
         $rounds = $ds->table('round')
             ->select('winner_id')
@@ -546,12 +543,14 @@ class AchievementsPrimitive extends Primitive
         });
 
         $counts = [];
-        foreach ($filteredRounds as $round) {
-            if (empty($counts[$round['display_name']])) {
-                $counts[$round['display_name']] = 0;
-            }
+        if ($filteredRounds) {
+            foreach ($filteredRounds as $round) {
+                if (empty($counts[$round['display_name']])) {
+                    $counts[$round['display_name']] = 0;
+                }
 
-            $counts[$round['display_name']] ++;
+                $counts[$round['display_name']]++;
+            }
         }
 
         arsort($counts);
@@ -571,10 +570,10 @@ class AchievementsPrimitive extends Primitive
      * Get players with largest average count of dora in player's hand
      *
      * @param IDb $db
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @return array
      */
-    public static function getMaxAverageDoraCount(IDb $db, $eventIdList)
+    public static function getMaxAverageDoraCount(IDb $db, array $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('winner_id')
@@ -607,10 +606,10 @@ class AchievementsPrimitive extends Primitive
      * Get players with largest amount of unique yaku collected during the tournament
      *
      * @param IDb $db
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @return array
      */
-    public static function getMaxDifferentYakuCount(IDb $db, $eventIdList)
+    public static function getMaxDifferentYakuCount(IDb $db, array $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('winner_id')
@@ -660,10 +659,10 @@ class AchievementsPrimitive extends Primitive
      * Get players with largest amount of points received as ryukoku payments
      *
      * @param IDb $db
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @return array
      */
-    public static function getFavoriteAsapinApprentice(IDb $db, $eventIdList)
+    public static function getFavoriteAsapinApprentice(IDb $db, array $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('tempai')
@@ -732,10 +731,10 @@ class AchievementsPrimitive extends Primitive
      * Get players with largest damaten count
      *
      * @param IDb $db
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @return array
      */
-    public static function getNinja(IDb $db, $eventIdList)
+    public static function getNinja(IDb $db, array $eventIdList)
     {
         $rounds = $db->table('round')
             ->select('winner_id')
@@ -752,12 +751,14 @@ class AchievementsPrimitive extends Primitive
         });
 
         $counts = [];
-        foreach ($filteredRounds as $round) {
-            if (empty($counts[$round['display_name']])) {
-                $counts[$round['display_name']] = 0;
-            }
+        if ($filteredRounds) {
+            foreach ($filteredRounds as $round) {
+                if (empty($counts[$round['display_name']])) {
+                    $counts[$round['display_name']] = 0;
+                }
 
-            $counts[$round['display_name']] ++;
+                $counts[$round['display_name']]++;
+            }
         }
 
         arsort($counts);
@@ -774,18 +775,20 @@ class AchievementsPrimitive extends Primitive
     }
 
     /**
-     * @return void
+     * @return bool
      */
     public function save()
     {
+        return false;
         // nothing
     }
 
     /**
-     * @return void
+     * @return self
      */
     public function drop()
     {
+        return $this;
         // nothing
     }
 

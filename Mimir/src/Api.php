@@ -76,13 +76,13 @@ class Api
     }
 
     /**
-     * @return string|string[]
+     * @return string
      *
-     * @psalm-return array<array-key, string>|string
+     * @psalm-return string
      */
     public function getDefaultServerTimezone()
     {
-        return $this->_config->getValue('serverDefaultTimezone');
+        return (string)$this->_config->getValue('serverDefaultTimezone');
     }
 
     public function registerImplAutoloading(): void

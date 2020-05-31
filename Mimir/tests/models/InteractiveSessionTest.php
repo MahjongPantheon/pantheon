@@ -498,7 +498,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
                 $this->_db,
                 $this->_event->getId(),
                 $player->getId()
-            );
+            )[0];
         }, $this->_players);
 
         $this->assertEquals(0, $items[0]->getRating());

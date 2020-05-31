@@ -86,7 +86,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
 
@@ -96,7 +96,7 @@ class SessionPrimitive extends Primitive
     protected $_eventId;
     /**
      *
-     * @var EventPrimitive
+     * @var EventPrimitive|null
      */
     protected $_event;
 
@@ -138,7 +138,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * Ordered list of player entities
-     * @var PlayerPrimitive[]
+     * @var PlayerPrimitive[]|null
      */
     protected $_players = null;
 
@@ -156,7 +156,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * current game status
-     * @var SessionState
+     * @var SessionState|null
      */
     protected $_current;
 
@@ -199,9 +199,9 @@ class SessionPrimitive extends Primitive
      *
      * @throws \Exception
      *
-     * @return self|self[]
+     * @return self[]
      *
-     * @psalm-return array<array-key, self>|self
+     * @psalm-return array<array-key, self>
      */
     public static function findByReplayHashAndEvent(DataSource $ds, $eventId, $replayHash)
     {
@@ -249,9 +249,9 @@ class SessionPrimitive extends Primitive
      *
      * @throws \Exception
      *
-     * @return self|self[]
+     * @return self[]
      *
-     * @psalm-return array<array-key, self>|self
+     * @psalm-return array<array-key, self>
      */
     public static function findByEventAndStatus(
         DataSource $ds,
@@ -286,9 +286,9 @@ class SessionPrimitive extends Primitive
      *
      * @throws \Exception
      *
-     * @return self|self[]
+     * @return self[]
      *
-     * @psalm-return array<array-key, self>|self
+     * @psalm-return array<array-key, self>
      */
     public static function findByEventListAndStatus(
         DataSource $ds,
@@ -314,11 +314,11 @@ class SessionPrimitive extends Primitive
      * Get data of players' seating during all event
      *
      * @param DataSource $ds
-     * @param $eventId
+     * @param int $eventId
      * @throws \Exception
      * @return array TODO: should it be here? It behaves like non-ORM method :/
      */
-    public static function getPlayersSeatingInEvent(DataSource $ds, $eventId)
+    public static function getPlayersSeatingInEvent(DataSource $ds, int $eventId): array
     {
         return $ds->table(self::$_table)
             ->select('player_id')
@@ -334,9 +334,9 @@ class SessionPrimitive extends Primitive
      * Find session by player/event
      *
      * @param DataSource $ds
-     * @param $playerId
-     * @param $eventId
-     * @param $withStatus
+     * @param int $playerId
+     * @param int $eventId
+     * @param string $withStatus
      * @throws \Exception
      * @return SessionPrimitive[]
      */
@@ -370,8 +370,8 @@ class SessionPrimitive extends Primitive
      * Find last session of player in event
      *
      * @param DataSource $ds
-     * @param $playerId
-     * @param $eventId
+     * @param int $playerId
+     * @param int $eventId
      * @param string $withStatus
      *
      * @throws \Exception
@@ -413,18 +413,18 @@ class SessionPrimitive extends Primitive
      *
      * @param DataSource $ds
      * @param array $eventIdList
-     * @param $withStatus
+     * @param string $withStatus
      * @throws \Exception
      * @return integer
      */
-    public static function getGamesCount(DataSource $ds, $eventIdList, string $withStatus)
+    public static function getGamesCount(DataSource $ds, array $eventIdList, string $withStatus): int
     {
         $result = $ds->table(self::$_table)
             ->whereIn('event_id', $eventIdList)
             ->where('status', $withStatus)
             ->count();
 
-        return $result;
+        return (int)$result;
     }
 
     /**
@@ -468,11 +468,16 @@ class SessionPrimitive extends Primitive
     /**
      * @param \Mimir\EventPrimitive $event
      * @return $this
+     * @throws InvalidParametersException
      */
     public function setEvent(EventPrimitive $event)
     {
+        $id = $event->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_event = $event;
-        $this->_eventId = $event->getId();
+        $this->_eventId = $id;
         return $this;
     }
 
@@ -502,7 +507,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -595,10 +600,12 @@ class SessionPrimitive extends Primitive
             }
 
             $this->_players = array_filter(array_map(function ($id) {
-                // Re-sort players to match request order - important!
-                foreach ($this->_players as $p) {
-                    if ($p->getId() == $id) {
-                        return $p;
+                if (!empty($this->_players)) {
+                    // Re-sort players to match request order - important!
+                    foreach ($this->_players as $p) {
+                        if ($p->getId() == $id) {
+                            return $p;
+                        }
                     }
                 }
                 return null;
@@ -912,7 +919,7 @@ class SessionPrimitive extends Primitive
                 }
             }
 
-            $riichiBetAmount = 100 * floor(($this->getCurrentState()->getRiichiBets() * 10.) / $firstPlacesCount);
+            $riichiBetAmount = (int)(100 * floor(($this->getCurrentState()->getRiichiBets() * 10.) / $firstPlacesCount));
 
             foreach ($this->getPlayers() as $player) {
                 if ($placesMap[$player->getId()]['place'] <= $firstPlacesCount) {

@@ -65,10 +65,10 @@ class MultiRoundPrimitive extends RoundPrimitive
     /**
      * @param DataSource $ds
      * @param SessionPrimitive $session
-     * @param $roundData
+     * @param array $roundData
      * @return RoundPrimitive|MultiRoundPrimitive
      */
-    public static function createFromData(DataSource $ds, SessionPrimitive $session, $roundData)
+    public static function createFromData(DataSource $ds, SessionPrimitive $session, array $roundData)
     {
         if ($roundData['outcome'] !== 'multiron') {
             return RoundPrimitive::createFromData($ds, $session, $roundData);
@@ -135,10 +135,10 @@ class MultiRoundPrimitive extends RoundPrimitive
      * @deprecated
      * For unit testing only
      *
-     * @param $rounds
+     * @param RoundPrimitive[] $rounds
      * @return MultiRoundPrimitive
      */
-    public function _setRounds($rounds)
+    public function _setRounds(array $rounds)
     {
         $this->_rounds = $rounds;
         return $this;
@@ -147,13 +147,15 @@ class MultiRoundPrimitive extends RoundPrimitive
     /**
      * Drop all rounds in multi-round
      *
-     * @return void
+     * @return MultiRoundPrimitive
+     * @throws \Exception
      */
     public function drop()
     {
         foreach ($this->_rounds as $round) {
             $round->drop();
         }
+        return $this;
     }
 
     /**

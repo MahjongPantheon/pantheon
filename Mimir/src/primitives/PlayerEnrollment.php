@@ -49,7 +49,7 @@ class PlayerEnrollmentPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
     /**
@@ -73,7 +73,7 @@ class PlayerEnrollmentPrimitive extends Primitive
     {
         $playerReg = $this->_ds->table(self::$_table)->create();
         if (empty($this->_pin)) {
-            $this->_pin = mt_rand(100000, 999999);
+            $this->_pin = (string)mt_rand(100000, 999999);
         }
 
         try {
@@ -84,10 +84,10 @@ class PlayerEnrollmentPrimitive extends Primitive
         } catch (\PDOException $e) { // duplicate unique key, get existing item
             $existingItem = self::findByPlayerAndEvent($this->_ds, $this->_playerId, $this->_eventId);
             if (!empty($existingItem)) {
-                $this->_id = $existingItem->_id;
-                $this->_eventId = $existingItem->_eventId;
-                $this->_playerId = $existingItem->_playerId;
-                $this->_pin = $existingItem->_pin;
+                $this->_id = $existingItem[0]->_id;
+                $this->_eventId = $existingItem[0]->_eventId;
+                $this->_playerId = $existingItem[0]->_playerId;
+                $this->_pin = $existingItem[0]->_pin;
                 $success = true;
             } else {
                 $success = false;
@@ -103,7 +103,7 @@ class PlayerEnrollmentPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -130,14 +130,14 @@ class PlayerEnrollmentPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param $playerId
-     * @param $eventId
+     * @param int $playerId
+     * @param int $eventId
      *
-     * @return self|self[]
+     * @return self[]
      *
      * @throws \Exception
      *
-     * @psalm-return array<array-key, self>|self
+     * @psalm-return array<array-key, self>
      */
     public static function findByPlayerAndEvent(DataSource $ds, int $playerId, int $eventId)
     {
@@ -149,7 +149,7 @@ class PlayerEnrollmentPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param $eventId
+     * @param int $eventId
      * @return PlayerEnrollmentPrimitive[]
      * @throws \Exception
      */
@@ -162,21 +162,27 @@ class PlayerEnrollmentPrimitive extends Primitive
      * @param PlayerPrimitive $player
      * @param EventPrimitive $event
      * @return PlayerEnrollmentPrimitive
+     * @throws InvalidParametersException
      */
     public function setReg(PlayerPrimitive $player, EventPrimitive $event)
     {
-        $this->_eventId = $event->getId();
-        $this->_playerId = $player->getId();
+        $eId = $event->getId();
+        $pId = $player->getId();
+        if (empty($eId) || empty($pId)) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
+        $this->_eventId = $eId;
+        $this->_playerId = $pId;
         return $this;
     }
 
     /**
      * @param DataSource $ds
-     * @param $pin
+     * @param string $pin
      * @return null|PlayerEnrollmentPrimitive
      * @throws \Exception
      */
-    public static function findByPin(DataSource $ds, $pin)
+    public static function findByPin(DataSource $ds, string $pin)
     {
         $result = self::_findBy($ds, 'reg_pin', [$pin]);
         if (empty($result)) {

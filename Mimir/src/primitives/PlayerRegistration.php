@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use _HumbugBox01d8f9a04075\Nette\Neon\Exception;
+
 require_once __DIR__ . '/../Primitive.php';
 require_once __DIR__ . '/Player.php';
 require_once __DIR__ . '/../FreyClient.php';
@@ -56,7 +58,7 @@ class PlayerRegistrationPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
     /**
@@ -105,11 +107,11 @@ class PlayerRegistrationPrimitive extends Primitive
             var_dump($this->_ds->local()->debug());
             $existingItem = self::findByPlayerAndEvent($this->_ds, $this->_playerId, $this->_eventId);
             if (!empty($existingItem)) {
-                $this->_id = $existingItem->_id;
-                $this->_eventId = $existingItem->_eventId;
-                $this->_playerId = $existingItem->_playerId;
-                $this->_localId = $existingItem->_localId;
-                $this->_teamName = $existingItem->_teamName;
+                $this->_id = $existingItem[0]->_id;
+                $this->_eventId = $existingItem[0]->_eventId;
+                $this->_playerId = $existingItem[0]->_playerId;
+                $this->_localId = $existingItem[0]->_localId;
+                $this->_teamName = $existingItem[0]->_teamName;
                 $this->_token = sha1('PlayerReg' . microtime()); // Token to be updated on every re-issue!
                 $this->save();
                 $success = true;
@@ -127,7 +129,7 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -178,14 +180,14 @@ class PlayerRegistrationPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param $playerId
-     * @param $eventId
+     * @param int $playerId
+     * @param int $eventId
      *
-     * @return self|self[]
+     * @return self[]
      *
      * @throws \Exception
      *
-     * @psalm-return array<array-key, self>|self
+     * @psalm-return array<array-key, self>
      */
     public static function findByPlayerAndEvent(DataSource $ds, int $playerId, int $eventId)
     {
@@ -197,31 +199,30 @@ class PlayerRegistrationPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param $eventId
+     * @param int $eventId
      * @return PlayerRegistrationPrimitive[]
      * @throws \Exception
      */
-    public static function findByEventId(DataSource $ds, $eventId)
+    public static function findByEventId(DataSource $ds, int $eventId)
     {
         return self::_findBy($ds, 'event_id', [$eventId]);
     }
 
     /**
      * @param DataSource $ds
-     * @param $playerId
-     * @param array $playerId
+     * @param int $playerId
      *
-     *
+     * @return PlayerRegistrationPrimitive[]
      * @throws \Exception
      */
-    public static function findByPlayerId(DataSource $ds, array $playerId)
+    public static function findByPlayerId(DataSource $ds, int $playerId)
     {
         return self::_findBy($ds, 'player_id', [$playerId]);
     }
 
     /**
      * @param DataSource $ds
-     * @param $eventId
+     * @param int $eventId
      * @return int
      * @throws \Exception
      */
@@ -244,12 +245,12 @@ class PlayerRegistrationPrimitive extends Primitive
      * Update players' local ids mapping for prescripted event
      *
      * @param DataSource $ds
-     * @param $eventId
-     * @param $idMap
+     * @param int $eventId
+     * @param array $idMap
      * @throws \Exception
      * @return boolean
      */
-    public static function updateLocalIds(DataSource $ds, $eventId, $idMap)
+    public static function updateLocalIds(DataSource $ds, int $eventId, array $idMap)
     {
         $regs = self::findByEventId($ds, $eventId);
         $upsertData = [];
@@ -267,21 +268,21 @@ class PlayerRegistrationPrimitive extends Primitive
                 'team_name'     => empty($regItem->getTeamName()) ? '' : $regItem->getTeamName()
             ];
         }
-        return $db->upsertQuery(self::$_table, $upsertData, ['id']);
+        return $ds->local()->upsertQuery(self::$_table, $upsertData, ['id']);
     }
 
     /**
      * Update players' team mapping for team event
      *
-     * @param IDb $db
-     * @param $eventId
-     * @param $idMap
+     * @param DataSource $ds
+     * @param int $eventId
+     * @param array $idMap
      * @throws \Exception
      * @return boolean
      */
-    public static function updateTeamNames(IDb $db, $eventId, $idMap)
+    public static function updateTeamNames(DataSource $ds, int $eventId, array $idMap)
     {
-        $regs = self::findByEventId($db, $eventId);
+        $regs = self::findByEventId($ds, $eventId);
         $upsertData = [];
         foreach ($regs as $regItem) {
             if (empty($idMap[$regItem->getPlayerId()])) {
@@ -304,11 +305,18 @@ class PlayerRegistrationPrimitive extends Primitive
      * @param PlayerPrimitive $player
      * @param EventPrimitive $event
      * @return PlayerRegistrationPrimitive
+     * @throws InvalidParametersException
      */
     public function setReg(PlayerPrimitive $player, EventPrimitive $event)
     {
-        $this->_eventId = $event->getId();
-        $this->_playerId = $player->getId();
+        $eId = $event->getId();
+        $pId = $player->getId();
+        if (empty($eId) || empty($pId)) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
+
+        $this->_eventId = $eId;
+        $this->_playerId = $pId;
         return $this;
     }
 
@@ -319,10 +327,15 @@ class PlayerRegistrationPrimitive extends Primitive
      * @param int $playerId
      * @param EventPrimitive $event
      * @return PlayerRegistrationPrimitive
+     * @throws InvalidParametersException
      */
     public function _setRegRaw($playerId, EventPrimitive $event)
     {
-        $this->_eventId = $event->getId();
+        $eId = $event->getId();
+        if (empty($eId)) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
+        $this->_eventId = $eId;
         $this->_playerId = $playerId;
         return $this;
     }
@@ -359,7 +372,7 @@ class PlayerRegistrationPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param $eventId
+     * @param int $eventId
      * @return array ['id' => int, 'local_id' => int|null, 'ignore_seating' => int][]
      * @throws \Exception
      */
@@ -372,16 +385,16 @@ class PlayerRegistrationPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param $eventId
-     * @param array|int $eventId
+     * @param int[] $eventIds
      *
      *
+     * @return array
      * @throws \Exception
      */
-    public static function findIgnoredPlayersIdsByEvent(DataSource $ds, $eventId)
+    public static function findIgnoredPlayersIdsByEvent(DataSource $ds, array $eventIds): array
     {
         $result = $ds->table(static::$_table)
-            ->whereIn('event_id', (array)$eventId)
+            ->whereIn('event_id', $eventIds)
             ->where('ignore_seating', 1)
             ->findArray();
 
@@ -392,11 +405,11 @@ class PlayerRegistrationPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @return array ['id' => int, 'local_id' => int|null][]
      * @throws \Exception
      */
-    public static function findRegisteredPlayersIdsByEventList(DataSource $ds, $eventIdList)
+    public static function findRegisteredPlayersIdsByEventList(DataSource $ds, array $eventIdList)
     {
         return array_map(function (PlayerRegistrationPrimitive $p) {
             return ['id' => $p->_playerId, 'local_id' => $p->_localId];
@@ -405,11 +418,11 @@ class PlayerRegistrationPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param $eventId
+     * @param int $eventId
      * @return PlayerPrimitive[]
      * @throws \Exception
      */
-    public static function findRegisteredPlayersByEvent(DataSource $ds, $eventId)
+    public static function findRegisteredPlayersByEvent(DataSource $ds, int $eventId)
     {
         $ids = array_map(function ($el) {
             return $el['id'];
@@ -424,7 +437,7 @@ class PlayerRegistrationPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param $eventIdList
+     * @param int[] $eventIdList
      * @return PlayerPrimitive[]
      * @throws \Exception
      */
@@ -443,11 +456,11 @@ class PlayerRegistrationPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param $token
+     * @param string $token
      * @return null|PlayerRegistrationPrimitive
      * @throws \Exception
      */
-    public static function findEventAndPlayerByToken(DataSource $ds, $token)
+    public static function findEventAndPlayerByToken(DataSource $ds, string $token)
     {
         if (empty($token)) {
             return null;
@@ -465,14 +478,13 @@ class PlayerRegistrationPrimitive extends Primitive
      * Output array has player local id as key and player id as value.
      *
      * @param DataSource $ds
-     * @param $eventId
+     * @param int $eventId
      * @return array [local_id => Player_id, ...]
      * @throws \Exception
      */
     public static function findLocalIdsMapByEvent(DataSource $ds, int $eventId)
     {
         $map = [];
-        /** @var PlayerRegistrationPrimitive[] $items */
         $items = self::_findBy($ds, 'event_id', [$eventId]);
 
         foreach ($items as $regItem) {
@@ -486,14 +498,13 @@ class PlayerRegistrationPrimitive extends Primitive
      * Output array has player id as key and team name as value.
      *
      * @param DataSource $ds
-     * @param $eventId
+     * @param int $eventId
      * @return array [player_id => team name, ...]
      * @throws \Exception
      */
-    public static function findTeamNameMapByEvent(DataSource $ds, $eventId)
+    public static function findTeamNameMapByEvent(DataSource $ds, int $eventId)
     {
         $map = [];
-        /** @var PlayerRegistrationPrimitive[] $items */
         $items = self::_findBy($ds, 'event_id', [$eventId]);
 
         foreach ($items as $regItem) {

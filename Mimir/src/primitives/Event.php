@@ -100,7 +100,7 @@ class EventPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
     /**
@@ -236,7 +236,7 @@ class EventPrimitive extends Primitive
      * - started
      * - NULL
      * In club events without timer should be null
-     * @var string
+     * @var string|null
      */
     protected $_gamesStatus = null;
     const GS_SEATING_READY = 'seating_ready';
@@ -337,7 +337,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param string $redZone
+     * @param int|null $redZone
      * @return EventPrimitive
      */
     public function setRedZone($redZone)
@@ -412,7 +412,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -564,7 +564,6 @@ class EventPrimitive extends Primitive
     public function setAllowPlayerAppend($allowPlayerAppend)
     {
         $this->_allowPlayerAppend = $allowPlayerAppend;
-        $this->_type = $allowPlayerAppend ? 'offline' : 'offline_interactive_tournament'; // DEPRECATED: to be removed in 2.x
         return $this;
     }
 
@@ -595,9 +594,6 @@ class EventPrimitive extends Primitive
     public function setIsOnline($isOnline)
     {
         $this->_isOnline = $isOnline;
-        if ($isOnline) {
-            $this->_type = 'online'; // DEPRECATED: to be removed in 2.x
-        }
         return $this;
     }
 
@@ -710,9 +706,12 @@ class EventPrimitive extends Primitive
      */
     public function getRegisteredPlayersIds()
     {
+        if (!$this->_id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         return array_map(function ($el) {
             return $el['id'];
-        }, PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $this->getId()));
+        }, PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $this->_id));
     }
 
     /**

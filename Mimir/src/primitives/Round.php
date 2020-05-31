@@ -93,11 +93,11 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $_id;
     /**
-     * @var SessionPrimitive
+     * @var SessionPrimitive|null
      */
     protected $_session;
     /**
@@ -105,7 +105,7 @@ class RoundPrimitive extends Primitive
      */
     protected $_sessionId;
     /**
-     * @var EventPrimitive
+     * @var EventPrimitive|null
      */
     protected $_event;
     /**
@@ -119,32 +119,32 @@ class RoundPrimitive extends Primitive
     protected $_outcome;
     /**
      * not null only on ron or tsumo
-     * @var PlayerPrimitive
+     * @var PlayerPrimitive|null
      */
     protected $_winner;
     /**
      * not null only on ron or tsumo
-     * @var string
+     * @var int
      */
     protected $_winnerId;
     /**
      * not null only on ron or chombo
-     * @var PlayerPrimitive
+     * @var PlayerPrimitive|null
      */
     protected $_loser;
     /**
      * not null only on ron or chombo
-     * @var string
+     * @var int
      */
     protected $_loserId;
     /**
      * not null only if pao is applied
-     * @var PlayerPrimitive
+     * @var PlayerPrimitive|null
      */
     protected $_paoPlayer;
     /**
      * not null only if pao is applied
-     * @var string
+     * @var int
      */
     protected $_paoPlayerId;
     /**
@@ -165,7 +165,7 @@ class RoundPrimitive extends Primitive
      */
     protected $_tempaiIds;
     /**
-     * @var PlayerPrimitive[]
+     * @var PlayerPrimitive[]|null
      */
     protected $_tempaiUsers = null;
     /**
@@ -198,7 +198,7 @@ class RoundPrimitive extends Primitive
      */
     protected $_riichiIds;
     /**
-     * @var PlayerPrimitive[]
+     * @var PlayerPrimitive[]|null
      */
     protected $_riichiUsers = null;
     /**
@@ -338,11 +338,11 @@ class RoundPrimitive extends Primitive
     /**
      * @param DataSource $ds
      * @param SessionPrimitive $session
-     * @param $roundData
+     * @param array $roundData
      * @throws \Exception
      * @return RoundPrimitive|MultiRoundPrimitive
      */
-    public static function createFromData(DataSource $ds, SessionPrimitive $session, $roundData)
+    public static function createFromData(DataSource $ds, SessionPrimitive $session, array $roundData)
     {
         require_once __DIR__ . '/MultiRound.php';
         if ($roundData['outcome'] === 'multiron') {
@@ -379,7 +379,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @deprecated 
+     * @deprecated
      *
      * @throws InvalidParametersException
      *
@@ -391,14 +391,19 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @throws EntityNotFoundException
      * @return \Mimir\EventPrimitive
+     * @throws EntityNotFoundException|InvalidParametersException
      */
     public function getEvent()
     {
         if (!$this->_event) {
-            $this->_event = $this->getSession()->getEvent();
-            $this->_eventId = $this->_event->getId();
+            $event = $this->getSession()->getEvent();
+            $id = $event->getId();
+            if (!$id) {
+                throw new InvalidParametersException('Attempted to assign deidented primitive');
+            }
+            $this->_event = $event;
+            $this->_eventId = $id;
         }
         return $this->_event;
     }
@@ -448,7 +453,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -497,8 +502,12 @@ class RoundPrimitive extends Primitive
      */
     public function setLoser(PlayerPrimitive $loser)
     {
+        $id = $loser->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_loser = $loser;
-        $this->_loserId = $loser->getId();
+        $this->_loserId = $id;
         return $this;
     }
 
@@ -520,7 +529,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getLoserId()
     {
@@ -625,11 +634,16 @@ class RoundPrimitive extends Primitive
     /**
      * @param \Mimir\SessionPrimitive $session
      * @return RoundPrimitive
+     * @throws InvalidParametersException
      */
     public function setSession(SessionPrimitive $session)
     {
+        $id = $session->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_session = $session;
-        $this->_sessionId = $session->getId();
+        $this->_sessionId = $id;
         $this->_eventId = $session->getEventId();
         return $this;
     }
@@ -735,11 +749,16 @@ class RoundPrimitive extends Primitive
     /**
      * @param \Mimir\PlayerPrimitive $winner
      * @return RoundPrimitive
+     * @throws InvalidParametersException
      */
     public function setWinner(PlayerPrimitive $winner)
     {
+        $id = $winner->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_winner = $winner;
-        $this->_winnerId = $winner->getId();
+        $this->_winnerId = $id;
         return $this;
     }
 
@@ -761,7 +780,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getWinnerId()
     {
@@ -771,11 +790,16 @@ class RoundPrimitive extends Primitive
     /**
      * @param \Mimir\PlayerPrimitive $paoPlayer
      * @return RoundPrimitive
+     * @throws InvalidParametersException
      */
     public function setPaoPlayer(PlayerPrimitive $paoPlayer)
     {
+        $id = $paoPlayer->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_paoPlayer = $paoPlayer;
-        $this->_paoPlayerId = $paoPlayer->getId();
+        $this->_paoPlayerId = $id;
         return $this;
     }
 
@@ -797,7 +821,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getPaoPlayerId()
     {

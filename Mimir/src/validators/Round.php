@@ -27,13 +27,13 @@ class RoundsHelper
      * Check if round data is valid
      *
      * @param SessionPrimitive $game
-     * @param $roundData
+     * @param array $roundData
      *
      * @throws MalformedPayloadException
      *
      * @return void
      */
-    public static function checkRound(SessionPrimitive $game, $roundData): void
+    public static function checkRound(SessionPrimitive $game, array $roundData): void
     {
         self::_checkOneOf($roundData, 'outcome', ['ron', 'multiron', 'tsumo', 'draw', 'abort', 'chombo', 'nagashi']);
         self::_checkPlayers($game->getPlayersIds(), $game->getEvent()->getRegisteredPlayersIds());
@@ -64,7 +64,7 @@ class RoundsHelper
         }
     }
 
-    protected static function _checkRon(string $players, $yakuList, $roundData): void
+    protected static function _checkRon(string $players, array $yakuList, array $roundData): void
     {
         self::_csvCheckZeroOrMoreOf($roundData, 'riichi', $players);
         self::_checkOneOf($roundData, 'winner_id', explode(',', $players));
@@ -87,7 +87,7 @@ class RoundsHelper
         self::_checkOneOf($roundData, 'kanuradora', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
     }
 
-    protected static function _checkMultiron(string $players, $yakuList, $roundData): void
+    protected static function _checkMultiron(string $players, array $yakuList, array $roundData): void
     {
         self::_checkOneOf($roundData, 'loser_id', explode(',', $players));
         self::_checkOneOf($roundData, 'multi_ron', [count($roundData['wins'])]);
@@ -115,7 +115,7 @@ class RoundsHelper
         }
     }
 
-    protected static function _checkTsumo(string $players, $yakuList, $roundData): void
+    protected static function _checkTsumo(string $players, array $yakuList, array $roundData): void
     {
         self::_csvCheckZeroOrMoreOf($roundData, 'riichi', $players);
         self::_checkOneOf($roundData, 'winner_id', explode(',', $players));
@@ -137,25 +137,25 @@ class RoundsHelper
         self::_checkOneOf($roundData, 'kanuradora', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
     }
 
-    protected static function _checkDraw(string $players, $roundData): void
+    protected static function _checkDraw(string $players, array $roundData): void
     {
         self::_csvCheckZeroOrMoreOf($roundData, 'riichi', $players);
         self::_csvCheckZeroOrMoreOf($roundData, 'tempai', $players);
     }
 
-    protected static function _checkNagashi(string $players, $roundData): void
+    protected static function _checkNagashi(string $players, array $roundData): void
     {
         self::_csvCheckZeroOrMoreOf($roundData, 'riichi', $players);
         self::_csvCheckZeroOrMoreOf($roundData, 'tempai', $players);
         self::_csvCheckZeroOrMoreOf($roundData, 'nagashi', $players);
     }
 
-    protected static function _checkAbortiveDraw(string $players, $roundData): void
+    protected static function _checkAbortiveDraw(string $players, array $roundData): void
     {
         self::_csvCheckZeroOrMoreOf($roundData, 'riichi', $players);
     }
 
-    protected static function _checkChombo(string $players, $roundData): void
+    protected static function _checkChombo(string $players, array $roundData): void
     {
         self::_checkOneOf($roundData, 'loser_id', explode(',', $players));
     }
@@ -171,7 +171,7 @@ class RoundsHelper
         }
     }
 
-    protected static function _checkHan($data, string $key): void
+    protected static function _checkHan(array $data, string $key): void
     {
         if (!is_int($data[$key]) || $data[$key] == 0 || $data[$key] < -5 || $data[$key] > 32) {
             // don't allow more that 32 han or 5x yakuman
@@ -181,16 +181,16 @@ class RoundsHelper
 
     // === Generic checkers ===
 
-    protected static function _checkOneOf($data, string $key, array $values): void
+    protected static function _checkOneOf(array $data, string $key, array $values): void
     {
         if (!in_array($data[$key], $values)) {
             throw new MalformedPayloadException('Field #' . $key . ' should be one of [' . implode(', ', $values) . '], but is "' . $data[$key] . '"');
         }
     }
 
-    protected static function _csvCheckZeroOrMoreOf($data, string $key, $csvValues): void
+    protected static function _csvCheckZeroOrMoreOf(array $data, string $key, string $csvValues): void
     {
-        if (!is_string($csvValues) || !is_string($data[$key])) {
+        if (!is_string($data[$key])) {
             throw new MalformedPayloadException('Field #' . $key . ' should contain comma-separated string');
         }
 
@@ -205,9 +205,9 @@ class RoundsHelper
         }
     }
 
-    protected static function _checkYaku($yakuList, $possibleYakuList): void
+    protected static function _checkYaku(string $yakuList, array $possibleYakuList): void
     {
-        if (!is_string($yakuList) || !preg_match('#[0-9,]*#', $yakuList)) {
+        if (!preg_match('#[0-9,]*#', $yakuList)) {
             throw new MalformedPayloadException('Field #yaku should contain comma-separated ids of yaku as string');
         }
 
