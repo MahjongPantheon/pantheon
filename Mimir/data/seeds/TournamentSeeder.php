@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../src/primitives/Event.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../../src/primitives/PlayerHistory.php';
-require_once __DIR__ . '/../../src/models/TextmodeSession.php';
+require_once __DIR__ . '/../textlogImport/Model.php';
 require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';
 require_once __DIR__ . '/../../src/Ruleset.php';
@@ -104,7 +104,7 @@ class TournamentSeeder extends AbstractSeed
         )));
 
         $meta = new \Mimir\Meta($ds->remote(), $_SERVER);
-        $model = new \Mimir\TextmodeSessionModel($ds, $config, $meta);
+        $model = new \Mimir\TextlogImportModel($ds, $config, $meta);
 
         foreach ($games as $log) {
             $model->addGame($event->getId(), $log, $idMap);

@@ -19,7 +19,6 @@ namespace Mimir;
 
 require_once __DIR__ . '/../models/InteractiveSession.php';
 require_once __DIR__ . '/../models/PenaltySession.php';
-require_once __DIR__ . '/../models/TextmodeSession.php';
 require_once __DIR__ . '/../models/OnlineSession.php';
 require_once __DIR__ . '/../models/EventUserManagement.php';
 require_once __DIR__ . '/../Controller.php';
@@ -240,27 +239,6 @@ class GamesController extends Controller
 
         $this->_log->addInfo('Successfully got session overview for game # ' . $gameHashCode);
         return $result;
-    }
-
-    // TEXT LOG MODE
-
-    /**
-     * Add textual log for whole game
-     *
-     * @deprecated
-     * @param int $eventId
-     * @param string $text
-     * @return bool
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @throws ParseException
-     */
-    public function addTextLog($eventId, $text)
-    {
-        $this->_log->addInfo('Saving new game for event id# ' . $eventId);
-        $success = (new TextmodeSessionModel($this->_ds, $this->_config, $this->_meta))->addGame($eventId, $text, []);
-        $this->_log->addInfo('Successfully saved game for event id# ' . $eventId);
-        return $success;
     }
 
     // ONLINE REPLAY MODE

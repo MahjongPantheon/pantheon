@@ -42,7 +42,6 @@ class EventPrimitive extends Primitive
         'last_timer'        => '_lastTimer',
         'is_online'         => '_isOnline',
         'is_team'           => '_isTeam',
-        'is_textlog'        => '_isTextlog',
         'sync_start'        => '_syncStart',
         'sync_end'          => '_syncEnd',
         'auto_seating'      => '_autoSeating',
@@ -72,7 +71,6 @@ class EventPrimitive extends Primitive
             '_lobbyId'            => $this->_integerTransform(true),
             '_isOnline'           => $this->_integerTransform(),
             '_isTeam'             => $this->_integerTransform(),
-            '_isTextlog'          => $this->_integerTransform(),
             '_isPrescripted'      => $this->_integerTransform(),
             '_syncStart'          => $this->_integerTransform(),
             '_syncEnd'            => $this->_integerTransform(),
@@ -176,7 +174,7 @@ class EventPrimitive extends Primitive
      */
     protected $_allowPlayerAppend;
     /**
-     * if true, event is treated as online (paifu log parser is used). Disabled if is_textlog = true
+     * if true, event is treated as online (paifu log parser is used).
      * @var int
      */
     protected $_isOnline;
@@ -195,11 +193,6 @@ class EventPrimitive extends Primitive
      * @var int
      */
     protected $_usePenalty;
-    /**
-     * if true, non-interactive text log parser is used. For offline games.
-     * @var int
-     */
-    protected $_isTextlog;
     /**
      * if true, event seating is predefined and no manual or automatic seating abilities are provided
      * @var int
@@ -572,10 +565,6 @@ class EventPrimitive extends Primitive
      */
     public function getIsOnline()
     {
-        if ($this->_isTextlog) {
-            return false;
-        }
-
         return $this->_isOnline;
     }
 
@@ -604,24 +593,6 @@ class EventPrimitive extends Primitive
     public function setIsTeam($isTeam)
     {
         $this->_isTeam = $isTeam;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIsTextlog()
-    {
-        return $this->_isTextlog;
-    }
-
-    /**
-     * @param int $isTextlog
-     * @return EventPrimitive
-     */
-    public function setIsTextlog($isTextlog)
-    {
-        $this->_isTextlog = $isTextlog;
         return $this;
     }
 

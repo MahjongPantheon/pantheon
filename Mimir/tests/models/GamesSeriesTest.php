@@ -26,7 +26,7 @@ require_once __DIR__ . '/../../src/models/EventSeries.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
-require_once __DIR__ . '/../../src/models/TextmodeSession.php';
+require_once __DIR__ . '/../../data/textlogImport/Model.php';
 
 class GamesSeriesTest extends \PHPUnit\Framework\TestCase
 {
@@ -82,7 +82,7 @@ class GamesSeriesTest extends \PHPUnit\Framework\TestCase
             return $p;
         }, $playerNames);
 
-        $model = new TextmodeSessionModel($this->_db, $this->_config, $this->_meta);
+        $model = new TextlogImportModel($this->_db, $this->_config, $this->_meta);
 
         foreach ($games as $log) {
             $model->addGame($this->_event->getId(), $log);

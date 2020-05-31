@@ -79,7 +79,6 @@ return [
     'endGame'            => ['GamesController', 'end'],
     'cancelGame'         => ['GamesController', 'cancel'],
     'finalizeSessions'   => ['GamesController', 'finalizeSessions'],
-    'addTextLog'         => ['GamesController', 'addTextLog'],
     'dropLastRound'      => ['GamesController', 'dropLastRound'],
     'definalizeGame'     => ['GamesController', 'definalizeGame'],
     'addPenalty'         => ['GamesController', 'addPenalty'],

@@ -17,9 +17,9 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../YakuMap.php';
+require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 require_once __DIR__ . '/Token.php';
-require_once __DIR__ . '/../../exceptions/Tokenizer.php';
+require_once __DIR__ . '/../../src/exceptions/Tokenizer.php';
 
 class Tokenizer
 {

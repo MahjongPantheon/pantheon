@@ -40,7 +40,6 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setTimezone('UTC')
             ->setAllowPlayerAppend(0)
             ->setAutoSeating(1)
-            ->setIsTextlog(0)
             ->setSortByGames(1)
             ->setSyncStart(1)
             ->setRuleset(Ruleset::instance('jpmlA'));
@@ -52,7 +51,6 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $newEvent->getSortByGames());
         $this->assertEquals(1, $newEvent->getSyncStart());
         $this->assertEquals(0, $newEvent->getAllowPlayerAppend());
-        $this->assertEquals(0, $newEvent->getIsTextlog());
         $this->assertEquals('UTC', $newEvent->getTimezone());
 
         $success = $newEvent->save();

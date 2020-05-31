@@ -17,12 +17,12 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../Model.php';
-require_once __DIR__ . '/../helpers/textLog/Parser.php';
-require_once __DIR__ . '/../primitives/Event.php';
-require_once __DIR__ . '/../primitives/Session.php';
+require_once __DIR__ . '/../../src/Model.php';
+require_once __DIR__ . '/Parser.php';
+require_once __DIR__ . '/../../src/primitives/Event.php';
+require_once __DIR__ . '/../../src/primitives/Session.php';
 
-class TextmodeSessionModel extends Model
+class TextlogImportModel extends Model
 {
     /**
      * @param int $eventId
