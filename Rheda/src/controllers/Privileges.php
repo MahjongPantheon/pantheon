@@ -33,6 +33,5 @@ class Privileges extends Controller
      */
     protected function _run()
     {
-
     }
 }

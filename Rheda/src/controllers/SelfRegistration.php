@@ -57,7 +57,7 @@ class SelfRegistration extends Controller
         $emailError = null;
         $passwordError = null;
 
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))  {
+        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             $emailError = _t('E-mail is invalid or not supported. Note that non-latin e-mail domains are not supported.');
         }
 

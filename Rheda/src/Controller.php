@@ -180,7 +180,8 @@ abstract class Controller
             $authorized = false;
             try {
                 $authorized = $this->_frey->quickAuthorize($this->_currentPersonId, $this->_authToken);
-            } catch (\Exception $e) {} // keep false on exception
+            } catch (\Exception $e) {
+            } // keep false on exception
 
             if (!$authorized) {
                 $this->_currentPersonId = null;

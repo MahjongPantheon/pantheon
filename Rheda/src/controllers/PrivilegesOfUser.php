@@ -60,21 +60,25 @@ class PrivilegesOfUser extends Controller
 
         /** @var array $events */
         $events = $this->_mimir->execute('getEventsById', [
-            array_filter(array_keys($allAccessData), function($v) {
+            array_filter(array_keys($allAccessData), function ($v) {
                 return $v !='__global';
             })
         ]);
 
         $eventTitles = array_combine(
-            array_map(function($ev) { return $ev['id']; }, $events),
-            array_map(function($ev) { return $ev['title']; }, $events)
+            array_map(function ($ev) {
+                return $ev['id'];
+            }, $events),
+            array_map(function ($ev) {
+                return $ev['title'];
+            }, $events)
         );
 
-        $rules = array_map(function($eventId) use(&$rulesList, &$allAccessData, &$eventTitles) {
+        $rules = array_map(function ($eventId) use (&$rulesList, &$allAccessData, &$eventTitles) {
             return [
                 'id' => $eventId,
                 'title' => $eventId == '__global' ? _t('Global privileges') : $eventTitles[$eventId],
-                'rules' => array_map(function($key, $ruleInfo) use(&$allAccessData, $eventId) {
+                'rules' => array_map(function ($key, $ruleInfo) use (&$allAccessData, $eventId) {
                     $currentValue = isset($allAccessData[$eventId][$key]['value'])
                         ? $allAccessData[$eventId][$key]['value']
                         : $ruleInfo['default'];
@@ -93,7 +97,7 @@ class PrivilegesOfUser extends Controller
                         'type_bool' => $ruleInfo['type'] == 'bool',
                         'type_int' => $ruleInfo['type'] == 'int',
                         'type_enum' => $ruleInfo['type'] == 'enum',
-                        'allowed_values' => array_map(function($val) use ($currentValue, $ruleInfo) {
+                        'allowed_values' => array_map(function ($val) use ($currentValue, $ruleInfo) {
                             return [
                                 'value' => $val,
                                 'selected' => $val == $currentValue

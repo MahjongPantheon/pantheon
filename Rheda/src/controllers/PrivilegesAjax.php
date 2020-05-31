@@ -31,7 +31,9 @@ class PrivilegesAjax extends Controller
     /**
      * @return void
      */
-    protected function _run() {}
+    protected function _run()
+    {
+    }
 
     /**
      * @return false

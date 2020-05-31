@@ -39,7 +39,7 @@ class Login extends Controller
         $passwordError = null;
 
         if (!empty($_POST['password']) && empty($this->_currentPersonId)) {
-            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))  {
+            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                 $emailError = _t('E-mail is invalid');
             }
 

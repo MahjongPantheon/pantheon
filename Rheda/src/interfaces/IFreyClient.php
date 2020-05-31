@@ -10,12 +10,12 @@ namespace Rheda;
 interface IFreyClient
 {
 
-public function __construct(string $apiUrl);
+    public function __construct(string $apiUrl);
 
 /**
 * @return \JsonRPC\Client
 */
-public function getClient();
+    public function getClient();
 
 
     /**
@@ -148,7 +148,7 @@ public function getClient();
 
     /**
      *  Get rule list with translations to selected locale
-    
+
      * @return array
     */
     public function getRulesList();

@@ -78,9 +78,12 @@ class ProfileEdit extends Controller
         try {
             $success = $this->_frey->updatePersonalInfo(
                 $this->_currentPersonId,
-                $data['title'], $data['city'],
+                $data['title'],
+                $data['city'],
                 $originalData['email'], // email is not intended to be changed by user
-                $data['phone'], $data['tenhouid']);
+                $data['phone'],
+                $data['tenhouid']
+            );
 
             return [
                 'error' => $success ? null : _t('Failed to update personal information: insufficient privileges or server error'),

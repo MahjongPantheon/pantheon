@@ -44,7 +44,7 @@ class MultieventMainpage extends Controller
         $hasPreviousButton = $page > 1;
 
         return [
-            'events' => array_map(function($event) {
+            'events' => array_map(function ($event) {
                 $ellipsis = mb_strlen($event['description']) > 50 ? '...' : '';
                 $event['description'] = mb_substr($event['description'], 0, 50) . $ellipsis;
                 return $event;

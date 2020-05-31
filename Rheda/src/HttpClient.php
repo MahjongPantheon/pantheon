@@ -19,6 +19,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Rheda;
+
 use JsonRPC\Exception\AccessDeniedException;
 use JsonRPC\Exception\ConnectionFailureException;
 use JsonRPC\Exception\ServerErrorException;
