@@ -83,7 +83,7 @@ class GroupPrimitive extends Primitive
     protected $_personIds = [];
     /**
      * List of person entities
-     * @var PersonPrimitive[]
+     * @var PersonPrimitive[]|null
      */
     protected $_persons = null;
 
@@ -114,10 +114,9 @@ class GroupPrimitive extends Primitive
 
     /**
      * @param IDb $db
-     * @param $ids
-     * @param (int|mixed)[] $ids
+     * @param int[] $ids
      *
-     *
+     * @return GroupPrimitive[]
      * @throws \Exception
      */
     public static function findById(IDb $db, array $ids)

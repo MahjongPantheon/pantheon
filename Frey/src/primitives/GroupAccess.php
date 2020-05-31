@@ -68,10 +68,9 @@ class GroupAccessPrimitive extends AccessPrimitive
      * Find rules by group id
      *
      * @param IDb $db
-     * @param $ids
      * @param int[] $ids
      *
-     *
+     * @return GroupAccessPrimitive[]
      * @throws \Exception
      */
     public static function findByGroup(IDb $db, array $ids)
@@ -106,11 +105,16 @@ class GroupAccessPrimitive extends AccessPrimitive
     /**
      * @param GroupPrimitive $group
      * @return GroupAccessPrimitive
+     * @throws InvalidParametersException
      */
     public function setGroup(GroupPrimitive $group): GroupAccessPrimitive
     {
+        $id = $group->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
         $this->_group = $group;
-        $this->_groupId = $group->getId();
+        $this->_groupId = $id;
         return $this;
     }
 }

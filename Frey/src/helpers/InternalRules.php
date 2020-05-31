@@ -64,7 +64,7 @@ class InternalRules
         $defaults = self::_getDefaults();
         $types = self::_getTypes();
         
-        return array_combine(array_keys($translations), array_map(function($key) use ($translations, $defaults, $types) {
+        return array_combine(array_keys($translations), array_map(function ($key) use ($translations, $defaults, $types) {
             return [
                 'default' => $defaults[$key],
                 'type' => $types[$key],

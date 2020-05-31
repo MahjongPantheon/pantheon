@@ -35,7 +35,7 @@ class Db implements IDb
     /**
      * @var int instances counter
      */
-    static protected $_ctr = 0;
+    protected static $_ctr = 0;
 
     protected $_connString;
 
@@ -86,7 +86,7 @@ class Db implements IDb
     }
 
     /**
-     * @return null|scalar
+     * @return null|int
      */
     public function lastInsertId()
     {
@@ -150,13 +150,13 @@ class Db implements IDb
 
         // Postgresql >= 9.5
         return ORM::rawExecute("
-            INSERT INTO {$table} ({$fields}) VALUES {$values} 
+            INSERT INTO {$table} ({$fields}) VALUES {$values}
             ON CONFLICT ({$tableUniqueFields}) DO UPDATE SET {$assignments}
         ");
     }
 
     // For testing purposes
-    static protected $__testingInstance = null;
+    protected static $__testingInstance = null;
 
     /**
      * @return Db|null

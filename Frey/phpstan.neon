@@ -1,0 +1,11 @@
+parameters:
+  checkMissingIterableValueType: false
+  autoload_directories:
+    - src
+    - vendor/ctizen/idiorm
+    - vendor/fguillot/json-rpc
+    - vendor/monolog/monolog
+  level: 8
+  paths:
+    - src
+    - www

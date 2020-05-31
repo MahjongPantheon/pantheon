@@ -68,10 +68,9 @@ class PersonAccessPrimitive extends AccessPrimitive
      * Find rules by person id list
      *
      * @param IDb $db
-     * @param $ids
-     * @param (int|mixed)[] $ids
+     * @param int[] $ids
      *
-     *
+     * @return PersonAccessPrimitive[]
      * @throws \Exception
      */
     public static function findByPerson(IDb $db, array $ids)
@@ -116,11 +115,16 @@ class PersonAccessPrimitive extends AccessPrimitive
     /**
      * @param PersonPrimitive $person
      * @return PersonAccessPrimitive
+     * @throws InvalidParametersException
      */
     public function setPerson(PersonPrimitive $person): PersonAccessPrimitive
     {
+        $id = $person->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
         $this->_person = $person;
-        $this->_personId = $person->getId();
+        $this->_personId = $id;
         return $this;
     }
 }

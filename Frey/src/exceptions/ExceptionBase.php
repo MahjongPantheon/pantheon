@@ -19,7 +19,7 @@ namespace Frey;
 
 class BaseException extends \Exception
 {
-    static protected $_conf = null;
+    protected static $_conf = null;
 
     public function __construct($message = "", $code = 0, \Exception $previous = null)
     {

@@ -82,10 +82,9 @@ abstract class AccessPrimitive extends Primitive
 
     /**
      * @param IDb $db
-     * @param $ids
-     * @param array $ids
+     * @param int[] $ids
      *
-     *
+     * @return AccessPrimitive[]
      * @throws \Exception
      */
     public static function findById(IDb $db, array $ids)
@@ -169,6 +168,7 @@ abstract class AccessPrimitive extends Primitive
             case self::TYPE_ENUM:
                 return $this->_allowedValues ?: [];
             case self::TYPE_INT:
+            default:
                 return [];
         }
     }
@@ -216,7 +216,7 @@ abstract class AccessPrimitive extends Primitive
                 $this->_aclValue = (string)intval($aclValue);
                 return $this;
             case AccessPrimitive::TYPE_ENUM:
-                $this->_aclValue = $aclValue;
+                $this->_aclValue = (string)$aclValue;
                 return $this;
             default:
                 throw new InvalidParametersException('Unsupported ACL type');

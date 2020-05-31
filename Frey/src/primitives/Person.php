@@ -125,7 +125,7 @@ class PersonPrimitive extends Primitive
     protected $_groupIds = [];
     /**
      * List of group entities
-     * @var GroupPrimitive[]
+     * @var GroupPrimitive[]|null
      */
     protected $_groups = null;
 
@@ -172,10 +172,10 @@ class PersonPrimitive extends Primitive
      * Fuzzy search by title (simple pattern search).
      *
      * @param IDb $db
-     * @param $query
+     * @param string $query
      * @return PersonPrimitive[]|null
      */
-    public static function findByTitleFuzzy(IDb $db, $query)
+    public static function findByTitleFuzzy(IDb $db, string $query)
     {
         $query = str_replace(['%', '_'], '', $query);
         if (mb_strlen($query) <= 2) {
