@@ -77,7 +77,7 @@ public function getClient();
      *  should be asked to change the password immediately.
      * @param string $email
      * @param string $resetApprovalCode
-     * @return int
+     * @return string
     */
     public function approveResetPassword(string $email, string $resetApprovalCode);
 
@@ -148,7 +148,7 @@ public function getClient();
 
     /**
      *  Get rule list with translations to selected locale
-
+    
      * @return array
     */
     public function getRulesList();
@@ -200,7 +200,7 @@ public function getClient();
      * @param string $ruleType
      * @param int $personId
      * @param int $eventId
-     * @return int
+     * @return int|null
     */
     public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId);
 
@@ -211,18 +211,18 @@ public function getClient();
      * @param string $ruleType
      * @param int $groupId
      * @param int $eventId
-     * @return int
+     * @return int|null
     */
     public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId);
 
     /**
      *  Update personal rule value and/or type
-     * @param integer $ruleId
+     * @param int $ruleId
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @return bool
     */
-    public function updateRuleForPerson(integer $ruleId, $ruleValue, string $ruleType);
+    public function updateRuleForPerson(int $ruleId, $ruleValue, string $ruleType);
 
     /**
      *  Update group rule value and/or type
@@ -332,7 +332,7 @@ public function getClient();
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @param int $personId
-     * @return int
+     * @return int|null
     */
     public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId);
 
@@ -342,7 +342,7 @@ public function getClient();
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @param int $groupId
-     * @return int
+     * @return int|null
     */
     public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId);
 }

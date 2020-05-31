@@ -107,11 +107,11 @@ class FreyClient implements IFreyClient
      *  should be asked to change the password immediately.
      * @param string $email
      * @param string $resetApprovalCode
-     * @return int
+     * @return string
      */
-    public function approveResetPassword(string $email, string $resetApprovalCode): int
+    public function approveResetPassword(string $email, string $resetApprovalCode): string
     {
-        return (int)$this->_client->execute('approveResetPassword', [$email, $resetApprovalCode]);
+        return (string)$this->_client->execute('approveResetPassword', [$email, $resetApprovalCode]);
     }
 
     /**
@@ -269,9 +269,9 @@ class FreyClient implements IFreyClient
      * @param string $ruleType
      * @param int $personId
      * @param int $eventId
-     * @return int
+     * @return int|null
      */
-    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId): int
+    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId): ?int
     {
         return (int)$this->_client->execute('addRuleForPerson', [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
     }
@@ -283,21 +283,21 @@ class FreyClient implements IFreyClient
      * @param string $ruleType
      * @param int $groupId
      * @param int $eventId
-     * @return int
+     * @return int|null
      */
-    public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId): int
+    public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId): ?int
     {
         return (int)$this->_client->execute('addRuleForGroup', [$ruleName, $ruleValue, $ruleType, $groupId, $eventId]);
     }
 
     /**
      *  Update personal rule value and/or type
-     * @param integer $ruleId
+     * @param int $ruleId
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @return bool
      */
-    public function updateRuleForPerson(integer $ruleId, $ruleValue, string $ruleType): bool
+    public function updateRuleForPerson(int $ruleId, $ruleValue, string $ruleType): bool
     {
         return (bool)$this->_client->execute('updateRuleForPerson', [$ruleId, $ruleValue, $ruleType]);
     }
@@ -446,9 +446,9 @@ class FreyClient implements IFreyClient
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @param int $personId
-     * @return int
+     * @return int|null
      */
-    public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId): int
+    public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId): ?int
     {
         return (int)$this->_client->execute('addSystemWideRuleForPerson', [$ruleName, $ruleValue, $ruleType, $personId]);
     }
@@ -459,9 +459,9 @@ class FreyClient implements IFreyClient
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @param int $groupId
-     * @return int
+     * @return int|null
      */
-    public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId): int
+    public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId): ?int
     {
         return (int)$this->_client->execute('addSystemWideRuleForGroup', [$ruleName, $ruleValue, $ruleType, $groupId]);
     }
