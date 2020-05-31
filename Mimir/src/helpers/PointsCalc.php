@@ -495,17 +495,16 @@ class PointsCalc
 
 
     /**
-     * @param $rounds RoundPrimitive[]
-     * @param $loserId int
-     * @param $riichiBets int
-     * @param $honba int
-     * @param $session SessionPrimitive
      * @param RoundPrimitive[] $rounds
+     * @param int $loserId
+     * @param int $riichiBets
+     * @param int $honba
+     * @param SessionPrimitive $session
      *
-     *
+     * @return array
      * @throws InvalidParametersException
      */
-    public static function assignRiichiBets(array $rounds, string $loserId, int $riichiBets, int $honba, SessionPrimitive $session)
+    public static function assignRiichiBets(array $rounds, int $loserId, int $riichiBets, int $honba, SessionPrimitive $session)
     {
         $bets = [];
         $winners = [];

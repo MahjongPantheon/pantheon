@@ -23,8 +23,8 @@ class Seating
      * Swiss seating entry point
      * Wrapper for formats conformity
      *
-     * @param $playersMap array [id => rating] - current rating table
-     * @param $previousSeatings array [ [id, id, id, id] ... ] - players ordered as eswn in table array
+     * @param array $playersMap [id => rating] - current rating table
+     * @param array $previousSeatings [ [id, id, id, id] ... ] - players ordered as eswn in table array
      * @return array [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
      */
     public static function swissSeating($playersMap, $previousSeatings)
@@ -105,10 +105,10 @@ class Seating
     }
 
     /**
-     * @param $playersMap array [id => rating] - current rating table
-     * @param $previousSeatings array [ [id, id, id, id] ... ] - players ordered as eswn in table array
-     * @param $groupsCount int - shuffling groups count
-     * @param $randFactor int - RNG init seed
+     * @param array $playersMap [id => rating] - current rating table
+     * @param array $previousSeatings [ [id, id, id, id] ... ] - players ordered as eswn in table array
+     * @param int $groupsCount - shuffling groups count
+     * @param int $randFactor - RNG init seed
      *
      * @return array|null [ id => rating, ... ] flattened players list, each four are a table ordered as eswn.
      */
@@ -165,8 +165,8 @@ class Seating
      * Sequential games of same layers add +10 to factor, while simple crossings add only +1.
      * Less factor value is better!
      *
-     * @param $seating array [id => rating] - Seating candidate
-     * @param $previousSeatings array [ [id, id, id, id] ... ] - Previous seatings info
+     * @param array $seating [id => rating] - Seating candidate
+     * @param array $previousSeatings [ [id, id, id, id] ... ] - Previous seatings info
      *
      * @return float|int
      */
@@ -285,7 +285,7 @@ class Seating
      * @param $player2
      * @param $player3
      * @param $player4
-     * @param $prevData array - [ [id, id, id, id] ...] - assumed players are sorted as eswn at each table!
+     * @param array $prevData - [ [id, id, id, id] ...] - assumed players are sorted as eswn at each table!
      * @param array-key $player1
      * @param array-key $player2
      * @param array-key $player3
@@ -323,8 +323,8 @@ class Seating
      *
      * $playedWith is mutated during algorithm work.
      *
-     * @param $playerTotalGamePoints - rating points sum as array: [ player index -> points ]
-     * @param $playedWith - matrix of intersections [ playerIdx1 -> [ playerIdx2 -> N ... ] ... ]
+     * @param array $playerTotalGamePoints - rating points sum as array: [ player index -> points ]
+     * @param array $playedWith - matrix of intersections [ playerIdx1 -> [ playerIdx2 -> N ... ] ... ]
      * @param int[][] $playedWith
      *
      */
@@ -362,14 +362,14 @@ class Seating
      * Recursive swiss seating algorithm.
      * Taken from mahjongsoft.ru
      *
-     * @param $isPlaying - list of flags: [ playerIdx -> isInGame? ]
-     * @param $maxCrossings - integer factor of max allowed intersections
-     * @param $maxCrossingsPrecisionFactor - addition to max crossings to relax requirements if too many iterations passed
-     * @param $numPlayers - players count
-     * @param $playerTable - seating: [ playerIdx -> tableIdx ]
-     * @param $playerTotalGamePoints - rating points sum as array: [ player index -> points ]
-     * @param $playedWith - matrix of intersections [ playerIdx1 -> [ playerIdx2 -> N ... ] ... ]
-     * @param $iteration - current iteration of calculations
+     * @param array $isPlaying - list of flags: [ playerIdx -> isInGame? ]
+     * @param int $maxCrossings - integer factor of max allowed intersections
+     * @param int $maxCrossingsPrecisionFactor - addition to max crossings to relax requirements if too many iterations passed
+     * @param int $numPlayers - players count
+     * @param array $playerTable - seating: [ playerIdx -> tableIdx ]
+     * @param array $playerTotalGamePoints - rating points sum as array: [ player index -> points ]
+     * @param array $playedWith - matrix of intersections [ playerIdx1 -> [ playerIdx2 -> N ... ] ... ]
+     * @param int $iteration - current iteration of calculations
      * @param false[] $isPlaying
      * @param int[] $playerTable
      *
@@ -572,7 +572,7 @@ class Seating
      * Players from the top are seating with interval of $step, but if table count is
      * not divisible by $step, rest of players are seated with step 1.
      *
-     * @param $currentRatingTable PlayerPrimitive[] :ordered list
+     * @param PlayerPrimitive[] $currentRatingTable :ordered list
      * @param $step
      * @param $randomize
      * @param array $currentRatingTable

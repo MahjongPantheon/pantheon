@@ -28,9 +28,9 @@ require_once __DIR__ . '/../exceptions/Parser.php';
 class OnlineSessionModel extends Model
 {
     /**
-     * @param $eventId int
-     * @param $logUrl string
-     * @param $gameContent string
+     * @param int $eventId
+     * @param string $logUrl
+     * @param string $gameContent
      * @return SessionPrimitive
      * @throws InvalidParametersException
      * @throws \Exception
@@ -92,8 +92,8 @@ class OnlineSessionModel extends Model
 //        if (array_diff($calculatedScore, $originalScore) !== []
 //            || array_diff($originalScore, $calculatedScore) !== []) {
 //            throw new ParseException("Calculated scores do not match with given ones: " . PHP_EOL
-//                . print_r($originalScore, 1) . PHP_EOL
-//                . print_r($calculatedScore, 1), 225);
+//                . print_r($originalScore, true) . PHP_EOL
+//                . print_r($calculatedScore, true), 225);
 //        }
 
         return $session;
@@ -102,14 +102,14 @@ class OnlineSessionModel extends Model
     /**
      * Check if game is not older than some amount of time defined in ruleset
      *
-     * @param $gameLink
+     * @param string $gameLink
      * @param Ruleset $rules
      *
      * @throws ParseException
      *
      * @return void
      */
-    protected function _checkGameExpired($gameLink, Ruleset $rules): void
+    protected function _checkGameExpired(string $gameLink, Ruleset $rules): void
     {
         if (!$rules->gameExpirationTime()) {
             return;

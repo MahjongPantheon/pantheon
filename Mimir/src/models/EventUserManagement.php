@@ -35,8 +35,8 @@ class EventUserManagementModel extends Model
     /**
      * Enroll player to event
      *
-     * @param $eventId
-     * @param $playerId
+     * @param int $eventId
+     * @param int $playerId
      * @throws AuthFailedException
      * @throws BadActionException
      * @throws \Exception
@@ -72,8 +72,8 @@ class EventUserManagementModel extends Model
     /**
      * Register player to event
      *
-     * @param $playerId
-     * @param $eventId
+     * @param int $playerId
+     * @param int $eventId
      * @throws \Exception
      * @throws InvalidParametersException
      * @return bool success?
@@ -90,9 +90,14 @@ class EventUserManagementModel extends Model
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
+        $eId = $event[0]->getId();
+        if (empty($eId)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
+
         $nextLocalId = null;
         if ($event[0]->getIsPrescripted()) {
-            $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_ds, $event[0]->getId());
+            $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_ds, $eId);
         }
 
         $regItem = (new PlayerRegistrationPrimitive($this->_ds))
@@ -110,8 +115,8 @@ class EventUserManagementModel extends Model
     /**
      * Unregister player from event
      *
-     * @param $playerId
-     * @param $eventId
+     * @param int $playerId
+     * @param int $eventId
      * @throws \Exception
      * @return void
      */
@@ -132,9 +137,9 @@ class EventUserManagementModel extends Model
     /**
      * Update ignore_seating flag for registered player
      *
-     * @param $playerId
-     * @param $eventId
-     * @param $ignoreSeating
+     * @param int $playerId
+     * @param int $eventId
+     * @param int $ignoreSeating
      * @throws \Exception
      * @return bool
      */
@@ -157,14 +162,14 @@ class EventUserManagementModel extends Model
     /**
      * Self-register player to event by pin
      *
-     * @param $pin
+     * @param string $pin
      *
      * @throws BadActionException
      * @throws \Exception
      *
      * @return null|string auth token
      */
-    public function registerPlayerPin(int $pin): ?string
+    public function registerPlayerPin(string $pin): ?string
     {
         $success = false;
         $token = null;
@@ -178,9 +183,17 @@ class EventUserManagementModel extends Model
         $eItem = PlayerEnrollmentPrimitive::findByPin($this->_ds, $pin);
         if ($eItem) {
             $event = EventPrimitive::findById($this->_ds, [$eItem->getEventId()]);
+            if (empty($event)) {
+                throw new EntityNotFoundException('Event #' . $eItem->getEventId() . ' not found in DB');
+            }
+
+            $eId = $event[0]->getId();
+            if (empty($eId)) {
+                throw new InvalidParametersException('Attempted to use deidented primitive');
+            }
 
             if (!$event[0]->getAllowPlayerAppend()) {
-                $reggedItems = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $eItem->getPlayerId(), $event[0]->getId());
+                $reggedItems = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $eItem->getPlayerId(), $eId);
                 // check that games are not started yet
                 if ($event[0]->getLastTimer() && empty($reggedItems)) {
                     // do not allow new players to enter already tournament
@@ -190,7 +203,7 @@ class EventUserManagementModel extends Model
             }
 
             if ($event[0]->getIsPrescripted()) {
-                $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_ds, $event[0]->getId());
+                $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_ds, $eId);
             }
 
             $player = PlayerPrimitive::findById($this->_ds, [$eItem->getPlayerId()]);
@@ -199,20 +212,22 @@ class EventUserManagementModel extends Model
                 ->setReg($player[0], $event[0]);
             $success = $regItem->save();
             $token = $regItem->getToken();
-        }
-        if (!$success || empty($regItem)) {
-            throw new BadActionException('Something went wrong: registration failed while saving to db');
+
+            if (!$success || empty($regItem)) {
+                throw new BadActionException('Something went wrong: registration failed while saving to db');
+            }
+
+            $eItem->drop();
         }
 
-        $eItem->drop();
         return $token;
     }
 
     /**
      * Update players' local id mapping for prescripted event
      *
-     * @param $eventId
-     * @param $idMap
+     * @param int $eventId
+     * @param array $idMap
      * @return bool
      * @throws AuthFailedException
      * @throws \Exception
@@ -229,8 +244,8 @@ class EventUserManagementModel extends Model
     /**
      * Update players' team mapping for team event
      *
-     * @param $eventId
-     * @param $teamMap
+     * @param int $eventId
+     * @param array $teamMap
      * @return bool
      * @throws AuthFailedException
      * @throws \Exception
@@ -241,7 +256,7 @@ class EventUserManagementModel extends Model
             throw new AuthFailedException('Only administrators are allowed to update players\' teams');
         }
 
-        return PlayerRegistrationPrimitive::updateTeamNames($this->_db, $eventId, $teamMap);
+        return PlayerRegistrationPrimitive::updateTeamNames($this->_ds, $eventId, $teamMap);
     }
 
     /**
@@ -250,8 +265,8 @@ class EventUserManagementModel extends Model
      *
      * Also should return true to admin-level token to allow everything
      *
-     * @param $playerId
-     * @param $eventId
+     * @param int $playerId
+     * @param int $eventId
      * @return bool
      * @throws \Exception
      */
@@ -274,6 +289,10 @@ class EventUserManagementModel extends Model
      */
     public function dataFromToken()
     {
-        return PlayerRegistrationPrimitive::findEventAndPlayerByToken($this->_ds, $this->_meta->getAuthToken());
+        $token = $this->_meta->getAuthToken();
+        if (empty($token)) {
+            return null;
+        }
+        return PlayerRegistrationPrimitive::findEventAndPlayerByToken($this->_ds, $token);
     }
 }

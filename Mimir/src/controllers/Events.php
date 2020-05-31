@@ -176,15 +176,14 @@ class EventsController extends Controller
      * Get tables state in tournament
      *
      * @param integer $eventId
-     * @param bool $includeAllRounds
      * @throws \Exception
      * @return array
      */
-    public function getTablesState($eventId, $includeAllRounds = false)
+    public function getTablesState($eventId)
     {
         $this->_log->addInfo('Getting tables state for event #' . $eventId);
         $data = (new EventModel($this->_ds, $this->_config, $this->_meta))
-            ->getTablesState($eventId, $includeAllRounds);
+            ->getTablesState($eventId);
         $this->_log->addInfo('Successfully got tables state for event #' . $eventId);
         return $data;
     }
@@ -238,7 +237,7 @@ class EventsController extends Controller
     /**
      * Register for participation in event
      *
-     * @param integer $pin
+     * @param string $pin
      * @throws \Exception
      * @return string Auth token
      */

@@ -45,19 +45,23 @@ class EventSeriesModel extends Model
             throw new InvalidParametersException('This event doesn\'t support series');
         }
 
-        $gamesRaw = SessionPrimitive::findByEventAndStatus(
-            $this->_ds,
-            $event->getId(),
-            SessionPrimitive::STATUS_FINISHED
-        );
+        $eId = $event->getId();
+        if (empty($eId)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
+
+        $gamesRaw = SessionPrimitive::findByEventAndStatus($this->_ds, $eId, SessionPrimitive::STATUS_FINISHED);
 
         $games = [];
         foreach ($gamesRaw as $game) {
-            $games[$game->getId()] = $game;
+            $gId = $game->getId();
+            if (!empty($gId)) {
+                $games[$gId] = $game;
+            }
         }
 
         // load and group by player all session results
-        $results = SessionResultsPrimitive::findByEventId($this->_ds, [$event->getId()]);
+        $results = SessionResultsPrimitive::findByEventId($this->_ds, [$eId]);
         $playersData = [];
         foreach ($results as $item) {
             if (empty($playersData[$item->getPlayerId()])) {
@@ -102,10 +106,12 @@ class EventSeriesModel extends Model
             $bestSeries = null;
             while (($offset + $limit) <= $gamesCount) {
                 $slicedGames = array_slice($playerGames, $offset, $limit);
+                /** @var int $places */
                 $places = array_reduce($slicedGames, function ($i, $item) {
                     $i += $item['place'];
                     return $i;
                 }, 0);
+                /** @var float $scores */
                 $scores = array_reduce($slicedGames, function ($i, $item) {
                     $i += $item['score'];
                     return $i;
@@ -164,7 +170,6 @@ class EventSeriesModel extends Model
             $bestSeries['playerId'] = $playerId;
             $bestSeries['currentSeries'] = $currentSeriesSessionIds;
             $bestSeries['currentSeriesScores'] = $currentSeriesScores;
-
             $seriesResults[] = $bestSeries;
         }
 
@@ -182,8 +187,8 @@ class EventSeriesModel extends Model
             $playerId = $item['playerId'];
             $formattedResults[] = [
                 'player' => $players[$item['playerId']],
-                'best_series_scores' => $item['scoresSum'],
-                'best_series' => $this->_formatSeries($playerId, $item['sessionIds'], $games, $sessionResults),
+                'best_series_scores' => $item['scoresSum'] ?? 0,
+                'best_series' => $this->_formatSeries($playerId, $item['sessionIds'] ?? [], $games, $sessionResults),
                 'current_series' => $this->_formatSeries($playerId, $item['currentSeries'], $games, $sessionResults),
                 'current_series_scores' => $item['currentSeriesScores'],
             ];

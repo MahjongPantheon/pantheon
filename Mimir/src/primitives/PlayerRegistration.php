@@ -74,9 +74,9 @@ class PlayerRegistrationPrimitive extends Primitive
      */
     protected $_token;
     /**
-     * @var int
+     * @var int|null
      */
-    protected $_localId;
+    protected $_localId = null;
     /**
      * @var int
      */
@@ -155,7 +155,7 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getLocalId()
     {
@@ -341,7 +341,7 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
-     * @param int $localId
+     * @param int|null $localId
      * @return $this
      */
     public function setLocalId($localId)

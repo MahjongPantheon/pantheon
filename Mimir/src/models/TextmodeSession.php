@@ -25,9 +25,9 @@ require_once __DIR__ . '/../primitives/Session.php';
 class TextmodeSessionModel extends Model
 {
     /**
-     * @param $eventId int
-     * @param $gameLog string
-     * @param $idMap array
+     * @param int $eventId
+     * @param string $gameLog
+     * @param array $idMap
      * @return bool
      * @throws InvalidParametersException
      * @throws MalformedPayloadException
@@ -47,8 +47,7 @@ class TextmodeSessionModel extends Model
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS);
 
         list($originalScore, $debug) = $parser->parseToSession($session, $gameLog);
-        $success = true;
-        $success = $success && $session->save();
+        $success = $session->save();
         $success = $success && $session->prefinish();
 
         $calculatedScore = $session->getCurrentState()->getScores();

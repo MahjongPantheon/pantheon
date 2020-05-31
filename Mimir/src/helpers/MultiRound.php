@@ -21,6 +21,7 @@ class MultiRoundHelper
 {
     /**
      * @param RoundPrimitive[] $rounds
+     * @return RoundPrimitive|null
      */
     public static function findLastRound(array $rounds)
     {

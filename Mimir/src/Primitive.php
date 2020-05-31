@@ -72,7 +72,7 @@ abstract class Primitive
      * This serialization should occur after primary entity is saved, to ensure it already has an id.
      * @see Primitive::save Save logic is handled by this.
      *
-     * @param $obj object to serialize (usually array of ids)
+     * @param array $obj object to serialize (usually array of ids)
      * @param $connectorTable
      * @param $currentEntityField
      * @param $foreignEntityField

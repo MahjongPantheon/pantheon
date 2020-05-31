@@ -35,14 +35,14 @@ class EventFinishedGamesModel extends Model
 {
     /**
      * @param EventPrimitive[] $eventList
-     * @param integer $limit
-     * @param integer $offset
+     * @param int $limit
+     * @param int $offset
      * @param string $orderBy
      * @param string $order
      * @throws \Exception
      * @return array
      */
-    public function getLastFinishedGames($eventList, $limit, $offset, $orderBy, $order)
+    public function getLastFinishedGames($eventList, int $limit, int $offset, string $orderBy, string $order)
     {
         $eventIdList = array_map(function (EventPrimitive $el) {
             return $el->getId();
@@ -68,10 +68,7 @@ class EventFinishedGamesModel extends Model
             return $el->getId();
         }, $games);
 
-        /** @var SessionResultsPrimitive[][] $sessionResults */
         $sessionResults = $this->_getSessionResults($sessionIds); // 1st level: session id, 2nd level: player id
-
-        /** @var RoundPrimitive[][] $rounds */
         $rounds = $this->_getRounds($sessionIds); // 1st level: session id, 2nd level: numeric index with no meaning
 
         $result = [
@@ -94,11 +91,13 @@ class EventFinishedGamesModel extends Model
      */
     public function getFinishedGame(SessionPrimitive $session)
     {
-        /** @var SessionResultsPrimitive[][] $sessionResults */
-        $sessionResults = $this->_getSessionResults([$session->getId()]);
+        $sId = $session->getId();
+        if (empty($sId)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
 
-        /** @var RoundPrimitive[][] $rounds */
-        $rounds = $this->_getRounds([$session->getId()]);
+        $sessionResults = $this->_getSessionResults([$sId]);
+        $rounds = $this->_getRounds([$sId]);
 
         return [
             'games' => [$this->_formatGameResults($session, $sessionResults, $rounds)],
@@ -107,12 +106,11 @@ class EventFinishedGamesModel extends Model
     }
 
     /**
-     * @param $session SessionPrimitive
-     * @param $sessionResults SessionResultsPrimitive[][]
-     * @param $rounds RoundPrimitive[][]
+     * @param SessionPrimitive $session
      * @param SessionResultsPrimitive[][] $sessionResults
      * @param RoundPrimitive[][] $rounds
      *
+     * @return array
      * @throws \Exception
      *
      */
@@ -136,10 +134,9 @@ class EventFinishedGamesModel extends Model
     }
 
     /**
-     * @param $sessionIds
      * @param int[] $sessionIds
      *
-     *
+     * @return RoundPrimitive[][]
      * @throws \Exception
      */
     protected function _getRounds(array $sessionIds)
@@ -158,10 +155,10 @@ class EventFinishedGamesModel extends Model
     }
 
     /**
-     * @param $sessionIds
      * @param int[] $sessionIds
      *
      *
+     * @return SessionResultsPrimitive[][]
      * @throws \Exception
      */
     protected function _getSessionResults(array $sessionIds)
@@ -279,9 +276,11 @@ class EventFinishedGamesModel extends Model
     }
 
     /**
+     * @param callable $cb
+     * @param array $array
      * @return array|false
      */
-    protected function _arrayMapPreserveKeys(callable $cb, $array)
+    protected function _arrayMapPreserveKeys(callable $cb, array $array)
     {
         return array_combine(array_keys($array), array_map($cb, array_values($array)));
     }

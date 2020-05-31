@@ -96,7 +96,7 @@ class InteractiveSessionModel extends Model
      * This method is strictly for premature end of session (timeout, etc)
      * Normal end or pre-finish should happen when final round is added.
      *
-     * @param $gameHash
+     * @param string $gameHash
      * @throws \Exception
      * @return bool
      */
@@ -112,7 +112,7 @@ class InteractiveSessionModel extends Model
      * or prefinished in the moment of cancellation. No other actions are
      * performed when game is cancelled.
      *
-     * @param $gameHash
+     * @param string $gameHash
      * @throws \Exception
      * @return bool
      */
@@ -128,7 +128,7 @@ class InteractiveSessionModel extends Model
     /**
      * Finalize all sessions in event
      *
-     * @param $eventId
+     * @param int $eventId
      * @throws AuthFailedException
      * @throws \Exception
      * @return int count of finalized sessions
@@ -187,9 +187,9 @@ class InteractiveSessionModel extends Model
     }
 
     /**
-     * @param $gameHashcode string Hashcode of game
-     * @param $roundData array Structure of round data
-     * @param $dry boolean Dry run (no save to DB)
+     * @param string $gameHashcode Hashcode of game
+     * @param array $roundData Structure of round data
+     * @param boolean $dry Dry run (no save to DB)
      * @throws InvalidParametersException
      * @throws BadActionException
      * @throws AuthFailedException
@@ -310,14 +310,14 @@ class InteractiveSessionModel extends Model
     }
 
     /**
-     * @param $gameHash
-     * @param $withStatus
+     * @param string $gameHash
+     * @param string $withStatus
      * @return SessionPrimitive
      * @throws InvalidParametersException
      * @throws \Exception
      * @throws BadActionException
      */
-    protected function _findGame($gameHash, string $withStatus)
+    protected function _findGame(string $gameHash, string $withStatus)
     {
         $game = SessionPrimitive::findByRepresentationalHash($this->_ds, [$gameHash]);
         if (empty($game)) {
@@ -332,8 +332,8 @@ class InteractiveSessionModel extends Model
     }
 
     /**
-     * @param $playersIds
-     * @param $eventId
+     * @param int[] $playersIds
+     * @param int $eventId
      * @param int[] $playersIds
      *
      * @throws AuthFailedException
@@ -357,7 +357,7 @@ class InteractiveSessionModel extends Model
     /**
      * Drop last round from session (except if this last round has led to session finish)
      *
-     * @param $gameHash
+     * @param string $gameHash
      * @throws AuthFailedException
      * @throws \Exception
      * @throws InvalidParametersException
@@ -379,25 +379,33 @@ class InteractiveSessionModel extends Model
                 . 'Can\'t alter finished sessions');
         }
 
-        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$session[0]->getId()]);
+        $id = $session[0]->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
+        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$id]);
         if (empty($rounds)) {
             throw new InvalidParametersException('No recorded rounds found for session id#' . $session[0]->getId());
         }
 
         $lastRound = MultiRoundHelper::findLastRound($rounds);
-        $session[0]->rollback($lastRound); // this also does session save & drop round
+        if (!empty($lastRound)) {
+            $session[0]->rollback($lastRound); // this also does session save & drop round
+        }
         return true;
     }
 
     /**
      * Send event to predefined tracker about new data in game
-     * @param $gameHashcode
+     * @param string $gameHashcode
      * @return bool
      */
     protected function _trackUpdate(string $gameHashcode)
     {
-        if (!empty($this->_config->getValue('trackerUrl'))) {
-            file_get_contents(sprintf($this->_config->getValue('trackerUrl'), $gameHashcode));
+        /** @var string $trackerUrl */
+        $trackerUrl = $this->_config->getValue('trackerUrl');
+        if (!empty($trackerUrl)) {
+            file_get_contents(sprintf($trackerUrl, $gameHashcode));
         }
 
         return true;

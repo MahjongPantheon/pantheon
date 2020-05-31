@@ -34,8 +34,8 @@ class EventRatingTableModel extends Model
 {
     /**
      * @param EventPrimitive[] $eventList
-     * @param $orderBy
-     * @param $order
+     * @param string $orderBy
+     * @param string $order
      * @param bool $withPrefinished
      * @return array
      * @throws InvalidParametersException
@@ -69,9 +69,13 @@ class EventRatingTableModel extends Model
 
         foreach ($eventList as $event) {
             $playersHistoryItems = [];
+            $eId = $event->getId();
+            if (empty($eId)) {
+                throw new InvalidParametersException('Attempted to use deidented primitive');
+            }
 
             /* FIXME (PNTN-237): refactor to get rid of accessing DB in a loop. */
-            $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $event->getId());
+            $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eId);
             foreach ($tmpPlayersHistoryItems as $item) {
                 // php kludge: keys should be string, not numeric (to overwrite values)
                 $playersHistoryItems['id' . $item->getPlayerId()] = $item;
@@ -98,7 +102,6 @@ class EventRatingTableModel extends Model
         }
 
         $playerHistoryItemsSummed = [];
-        /** @var PlayerPrimitive $player */
         foreach ($playerItems as $player) {
             $itemsByPlayer = array_values(
                 array_filter(
@@ -145,8 +148,6 @@ class EventRatingTableModel extends Model
             );
         }
 
-        // TODO: среднеквадратичное отклонение
-
         $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $mainEvent, $startRating) {
             return [
                 'id'            => (int)$el->getPlayerId(),
@@ -185,7 +186,11 @@ class EventRatingTableModel extends Model
      */
     protected function _getFakePrefinishedItems(EventPrimitive $event)
     {
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $event->getId(), SessionPrimitive::STATUS_PREFINISHED);
+        $eId = $event->getId();
+        if (empty($eId)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eId, SessionPrimitive::STATUS_PREFINISHED);
         $historyItems = [];
 
         foreach ($sessions as $session) {
@@ -225,7 +230,8 @@ class EventRatingTableModel extends Model
     }
 
     /**
-     * @param $orderBy
+     * @param float $startRating
+     * @param string $orderBy
      * @param PlayerPrimitive[] $playerItems
      * @param PlayerHistoryPrimitive[] $playersHistoryItems
      *
@@ -233,7 +239,7 @@ class EventRatingTableModel extends Model
      *
      * @return void
      */
-    protected function _sortItems($startRating, $orderBy, &$playerItems, &$playersHistoryItems): void
+    protected function _sortItems(float $startRating, string $orderBy, &$playerItems, &$playersHistoryItems): void
     {
         switch ($orderBy) {
             case 'name':
@@ -298,16 +304,20 @@ class EventRatingTableModel extends Model
     }
 
     /**
-     * @param (PlayerHistoryPrimitive|mixed)[] $array
-     * @param \Closure|string $comparer
+     * @param array $array
+     * @param callable|null $comparer
      *
      * @return void
      */
-    protected function _stableSort(array &$array, $comparer = 'strcmp')
+    protected function _stableSort(array &$array, callable $comparer = null)
     {
         // Arrays of size < 2 require no action.
         if (count($array) < 2) {
             return;
+        }
+
+        if ($comparer === null) {
+            $comparer = 'strcmp';
         }
 
         // Split the array in half

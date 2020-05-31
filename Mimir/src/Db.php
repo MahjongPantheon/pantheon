@@ -104,8 +104,8 @@ class Db implements IDb
      * Don't touch this crap until you totally know what are you doing :)
      *
      * @param $table
-     * @param $data [ [ field => value, field2 => value2 ], [ ... ] ] - nested arrays should be monomorphic
-     * @param $tableUniqueFields string[] List of columns with unique constraint to check
+     * @param array $data [ [ field => value, field2 => value2 ], [ ... ] ] - nested arrays should be monomorphic
+     * @param string[] $tableUniqueFields List of columns with unique constraint to check
      * @throws \Exception
      * @return boolean
      */

@@ -569,13 +569,13 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players with largest average count of dora in player's hand
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $eventIdList
      * @return array
      */
-    public static function getMaxAverageDoraCount(IDb $db, array $eventIdList)
+    public static function getMaxAverageDoraCount(DataSource $ds, array $eventIdList)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->local()->table('round')
             ->select('winner_id')
             ->select('display_name')
             ->selectExpr('sum(dora)*1.0/count(*) as average')
@@ -605,13 +605,13 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players with largest amount of unique yaku collected during the tournament
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $eventIdList
      * @return array
      */
-    public static function getMaxDifferentYakuCount(IDb $db, array $eventIdList)
+    public static function getMaxDifferentYakuCount(DataSource $ds, array $eventIdList)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->local()->table('round')
             ->select('winner_id')
             ->select('display_name')
             ->select('yaku')
@@ -658,13 +658,13 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players with largest amount of points received as ryukoku payments
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $eventIdList
      * @return array
      */
-    public static function getFavoriteAsapinApprentice(IDb $db, array $eventIdList)
+    public static function getFavoriteAsapinApprentice(DataSource $ds, array $eventIdList)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->local()->table('round')
             ->select('tempai')
             ->whereIn('event_id', $eventIdList)
             ->where('outcome', 'draw')
@@ -704,7 +704,7 @@ class AchievementsPrimitive extends Primitive
 
         arsort($filteredPayments);
 
-        $names = $db->table('player')
+        $names = $ds->local()->table('player')
             ->select('id')
             ->select('display_name')
             ->whereIdIn(array_slice(array_keys($filteredPayments), 0, 5))
@@ -730,13 +730,13 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players with largest damaten count
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $eventIdList
      * @return array
      */
-    public static function getNinja(IDb $db, array $eventIdList)
+    public static function getNinja(DataSource $ds, array $eventIdList)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->local()->table('round')
             ->select('winner_id')
             ->select('display_name')
             ->select('riichi')
