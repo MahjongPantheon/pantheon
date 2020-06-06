@@ -38,7 +38,12 @@ class Url
         return '/confirm/' . $approvalCode;
     }
 
-    public static function interpolate($str, \Handlebars\Context $context): ?string
+    /**
+     * @param string $str
+     * @param \Handlebars\Context $context
+     * @return string|null
+     */
+    public static function interpolate(string $str, \Handlebars\Context $context): ?string
     {
         return preg_replace_callback('#{([\w\d]+)}#is', function ($matches) use ($context) {
             return $context->get($matches[1]);

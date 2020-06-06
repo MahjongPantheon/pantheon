@@ -3,57 +3,207 @@ namespace Rheda;
 
 class Config
 {
+    /**
+     * @var array
+     */
     protected $_allowedYaku = [];
+    /**
+     * @var int
+     */
     protected $_startPoints = 0;
+    /**
+     * @var int
+     */
     protected $_goalPoints = 0;
+    /**
+     * @var bool
+     */
     protected $_playAdditionalRounds = false;
+    /**
+     * @var bool
+     */
     protected $_subtractStartPoints = false;
+    /**
+     * @var bool
+     */
     protected $_withKazoe = false;
+    /**
+     * @var bool
+     */
     protected $_withKiriageMangan = false;
+    /**
+     * @var bool
+     */
     protected $_withAbortives = false;
+    /**
+     * @var bool
+     */
     protected $_withNagashiMangan = false;
+    /**
+     * @var bool
+     */
     protected $_withAtamahane = false;
+    /**
+     * @var string
+     */
     protected $_rulesetTitle = '';
+    /**
+     * @var int
+     */
     protected $_tenboDivider = 1;
+    /**
+     * @var int
+     */
     protected $_ratingDivider = 1;
+    /**
+     * @var bool
+     */
     protected $_tonpuusen = false;
+    /**
+     * @var int
+     */
     protected $_startRating = 0;
+    /**
+     * @var bool
+     */
     protected $_riichiGoesToWinner = false;
+    /**
+     * @var bool
+     */
     protected $_extraChomboPayments = false;
+    /**
+     * @var int
+     */
     protected $_chomboPenalty = 0;
+    /**
+     * @var bool
+     */
     protected $_withKuitan = false;
+    /**
+     * @var bool
+     */
     protected $_withButtobi = false;
+    /**
+     * @var bool
+     */
     protected $_withMultiYakumans = false;
+    /**
+     * @var int
+     */
     protected $_gameExpirationTime = 0;
+    /**
+     * @var int
+     */
     protected $_minPenalty = 0;
+    /**
+     * @var int
+     */
     protected $_maxPenalty = 0;
+    /**
+     * @var int
+     */
     protected $_penaltyStep = 0;
+    /**
+     * @var string
+     */
     protected $_eventTitle = '';
+    /**
+     * @var string
+     */
     protected $_eventDescription = '';
+    /**
+     * @var string
+     */
     protected $_eventStatHost = '';
+    /**
+     * @var int
+     */
     protected $_redZone = 0;
+    /**
+     * @var int
+     */
     protected $_yellowZone = 0;
+    /**
+     * @var string
+     */
     protected $_timerPolicy = 'none';
+    /**
+     * @var bool
+     */
     protected $_autoSeating = false;
+    /**
+     * @var bool
+     */
     protected $_isOnline = false;
+    /**
+     * @var bool
+     */
     protected $_isTeam = false;
+    /**
+     * @var int
+     */
     protected $_gameDuration = 0;
+    /**
+     * @var bool
+     */
     protected $_withLeadingDealerGameover = false;
+    /**
+     * @var bool
+     */
     protected $_isTextlog = false;
+    /**
+     * @var bool
+     */
     protected $_syncStart = false;
+    /**
+     * @var bool
+     */
     protected $_syncEnd = false;
+    /**
+     * @var bool
+     */
     protected $_sortByGames = false;
+    /**
+     * @var bool
+     */
     protected $_allowPlayerAppend = false;
+    /**
+     * @var bool
+     */
     protected $_useTimer = false;
+    /**
+     * @var bool
+     */
     protected $_usePenalty = false;
+    /**
+     * @var int
+     */
     protected $_seriesLength = 0;
+    /**
+     * @var int
+     */
     protected $_minGamesCount = 0;
+    /**
+     * @var bool
+     */
     protected $_gamesStatus = false;
+    /**
+     * @var bool
+     */
     protected $_hideResults = false;
+    /**
+     * @var bool
+     */
     protected $_hideAddReplayButton = false;
+    /**
+     * @var bool
+     */
     protected $_isPrescripted = false;
     protected $_chipsValue = 0;
 
+    /**
+     * @var array
+     */
     public static $_blankRules = [
         'allowedYaku' => [],
         'startPoints' => 0,
@@ -163,6 +313,10 @@ class Config
         ];
     }
 
+    /**
+     * @param array $arr
+     * @return self
+     */
     public static function fromRaw($arr): self
     {
         $cfg = new self();
@@ -184,7 +338,7 @@ class Config
     public function toArray()
     {
         $arr = [];
-        foreach ($this as $k => $v) {
+        foreach ($this as $k => $v) { // @phpstan-ignore-line
             $arr[substr($k, 1)] = $v;
         }
 

@@ -23,10 +23,10 @@ include_once __DIR__ . "/../helpers/YakuMap.php";
 class GameFormatter
 {
     /**
-     * @param $gamesData array
-     * @param $config Config
-     * @param \Exception|\JsonRPC\Client $gamesData
+     * @param array $gamesData
+     * @param Config $config
      *
+     * @return array
      */
     public function formatGamesData(&$gamesData, Config $config)
     {
@@ -90,13 +90,13 @@ class GameFormatter
                         break;
                     case 'chombo':
                         $chomboCount++;
-                        continue; // explicit continue to prevent further hands calc
+                        continue 2; // explicit continue to prevent further hands calc
                     case 'draw':
                         $draws++;
-                        continue; // explicit continue to prevent further hands calc
+                        continue 2; // explicit continue to prevent further hands calc
                     case 'abort':
                         $draws++;
-                        continue; // explicit continue to prevent further hands calc
+                        continue 2; // explicit continue to prevent further hands calc
                 }
 
                 if ($round['outcome'] != 'multiron') {
@@ -169,7 +169,8 @@ class GameFormatter
     }
 
     /**
-     * @param (bool|mixed|null|string)[] $array
+     * @param array $array
+     * @return array
      */
     protected function _enrichWithInitials(array $array)
     {
@@ -210,9 +211,9 @@ class GameFormatter
     }
 
     /**
+     * @param array $game
+     * @param array $playersData
      * @return array
-     *
-     * @psalm-return list<mixed>
      */
     protected function _makeLog($game, &$playersData): array
     {
@@ -270,6 +271,10 @@ class GameFormatter
         return $rounds;
     }
 
+    /**
+     * @param array $round
+     * @return string|null
+     */
     protected function _formatYaku(&$round): ?string
     {
         $yakuList = null;
@@ -278,7 +283,7 @@ class GameFormatter
                 ', ',
                 array_map(
                     function ($yaku) {
-                        return Yaku::getMap()[$yaku];
+                        return Yaku::getMap()[(int)$yaku];
                     },
                     explode(',', $round['yaku'])
                 )
@@ -288,6 +293,12 @@ class GameFormatter
         return $yakuList;
     }
 
+    /**
+     * @param array $round
+     * @param string $key
+     * @param array $playersData
+     * @return string|null
+     */
     protected function _formatCsvPlayersList(&$round, string $key, &$playersData): ?string
     {
         $list = null;
@@ -304,6 +315,11 @@ class GameFormatter
         return $list;
     }
 
+    /**
+     * @param array $round
+     * @param array $playersData
+     * @return array|null
+     */
     protected function _formatMultiron(&$round, &$playersData): ?array
     {
         $wins = null;
@@ -327,6 +343,12 @@ class GameFormatter
 
     // ------------------- Tournament control page formatters -----------------------
 
+    /**
+     * @param array $tables
+     * @param bool $waitingForTimer
+     * @param bool $isSyncStart
+     * @return array
+     */
     public function formatTables($tables, bool $waitingForTimer, bool $isSyncStart): array
     {
         $winds = ['東', '南', '西', '北'];
@@ -376,6 +398,11 @@ class GameFormatter
         }, $tables);
     }
 
+    /**
+     * @param array $roundData
+     * @param array $players
+     * @return string
+     */
     protected function _formatLastRound($roundData, $players)
     {
         $players = ArrayHelpers::elm2Key($players, 'id');
@@ -383,7 +410,7 @@ class GameFormatter
             return '';
         }
 
-        $namesOf = function ($list): string {
+        $namesOf = function ($list) use (&$players): string {
             return implode(', ', array_map(function ($e) use (&$players) {
                 return $players[$e]['display_name'];
             }, $list));
