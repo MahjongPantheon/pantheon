@@ -87,15 +87,15 @@ class RatingTable extends Controller
         $showPlayers = !$withMinGamesCount || empty($_GET['players']) ? 'all' : $_GET['players'];
 
         try {
-            $players = $this->_mimir->execute('getAllPlayers', [$this->_eventIdList]);
+            $players = $this->_mimir->getAllPlayers($this->_eventIdList);
             $players = ArrayHelpers::elm2Key($players, 'id');
 
-            $data = $this->_mimir->execute('getRatingTable', [
+            $data = $this->_mimir->getRatingTable(
                 $this->_eventIdList,
                 $orderBy,
                 $order,
                 $this->_userHasAdminRights() // show prefinished results only for admins
-            ]);
+            );
 
             $teamNames = [];
             if ($this->_mainEventRules->isTeam()) {
@@ -144,7 +144,7 @@ class RatingTable extends Controller
                         $data = $filteredData;
                         break;
                     default:
-                        throw new InvalidParametersException("Parameter players should be either 'all', 'min-played' or 'min-not-played'");
+                        throw new \Exception("Parameter players should be either 'all', 'min-played' or 'min-not-played'");
                 }
             } else {
                 // Merge players who didn't finish yet into rating table
@@ -162,7 +162,7 @@ class RatingTable extends Controller
 
             // Assign indexes for table view
             $ctr = 1;
-            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount, &$teamNames, &$playedGames) {
+            $data = array_map(function ($el) use (&$ctr, $minGamesCount, &$teamNames, &$playedGames) {
                 $teamName = null;
                 if ($this->_mainEventRules->isTeam()) {
                     $teamName = $teamNames[$el['id']];
@@ -179,11 +179,11 @@ class RatingTable extends Controller
 
                 return $el;
             }, $data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errMsg = $e->getMessage();
         }
 
-        if ($playedGames == 0 && $this->_mainEventRules->isTeam()) {
+        if (!empty($data) && $playedGames == 0 && $this->_mainEventRules->isTeam()) {
             usort($data, function ($a, $b) {
                 return strcmp($b['team_name'], $a['team_name']);
             });
@@ -246,7 +246,11 @@ class RatingTable extends Controller
         ];
     }
 
-    private function _makeShortName($name): string
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function _makeShortName(string $name): string
     {
         list($surname, $name) = explode(' ', $name . ' '); // Trailing slash will suppress errors with names without any space
         return $surname . ' ' . mb_substr($name, 0, 1, 'utf8') . '.';

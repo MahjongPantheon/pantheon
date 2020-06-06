@@ -29,9 +29,7 @@ class RegistrationConfirm extends Controller
     }
 
     /**
-     * @return (bool|int|mixed|null|string)[]
-     *
-     * @psalm-return array{error: mixed|null|string, success?: bool, id?: int}
+     * @return array
      */
     protected function _run(): array
     {

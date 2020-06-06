@@ -22,10 +22,16 @@ require_once __DIR__ . '/../helpers/Url.php';
 class PrivilegesOfUser extends Controller
 {
     protected $_mainTemplate = 'PrivilegesOfUser';
+    /**
+     * @var array|null
+     */
     protected $_selectedPersonData = null;
 
     protected function _pageTitle()
     {
+        if (empty($this->_selectedPersonData)) {
+            return _t('Rights and privileges');
+        }
         return _p('%s : rights and privileges', $this->_selectedPersonData['title']);
     }
 
@@ -43,9 +49,8 @@ class PrivilegesOfUser extends Controller
     }
 
     /**
-     * @return ((((bool|mixed)[][]|array-key|bool|mixed|null)[][]|array-key|mixed)[][]|bool|mixed)[]
-     *
-     * @psalm-return array{error: bool, personName?: mixed, rules?: list<array{id: array-key, title: mixed, rules: list<array{id: mixed|null, key: array-key, title: mixed, type: mixed, type_bool: bool, type_int: bool, type_enum: bool, allowed_values: array<empty, array{value: mixed, selected: bool}>, value: mixed, checked: bool}>}>, message?: mixed}
+     * @return array
+     * @throws \Exception
      */
     protected function _run(): array
     {
@@ -56,14 +61,11 @@ class PrivilegesOfUser extends Controller
         }
 
         $this->_selectedPersonData = $data[0];
-        $allAccessData = $this->_frey->getAllPersonAccess($this->_path['id']);
+        $allAccessData = $this->_frey->getAllPersonAccess((int)$this->_path['id']);
 
-        /** @var array $events */
-        $events = $this->_mimir->execute('getEventsById', [
-            array_filter(array_keys($allAccessData), function ($v) {
-                return $v !='__global';
-            })
-        ]);
+        $events = $this->_mimir->getEventsById(array_filter(array_keys($allAccessData), function ($v) {
+            return $v !='__global';
+        }));
 
         $eventTitles = array_combine(
             array_map(function ($ev) {
@@ -72,7 +74,7 @@ class PrivilegesOfUser extends Controller
             array_map(function ($ev) {
                 return $ev['title'];
             }, $events)
-        );
+        ) ?: [];
 
         $rules = array_map(function ($eventId) use (&$rulesList, &$allAccessData, &$eventTitles) {
             return [
@@ -97,7 +99,7 @@ class PrivilegesOfUser extends Controller
                         'type_bool' => $ruleInfo['type'] == 'bool',
                         'type_int' => $ruleInfo['type'] == 'int',
                         'type_enum' => $ruleInfo['type'] == 'enum',
-                        'allowed_values' => array_map(function ($val) use ($currentValue, $ruleInfo) {
+                        'allowed_values' => array_map(function ($val) use ($currentValue) {
                             return [
                                 'value' => $val,
                                 'selected' => $val == $currentValue
@@ -112,7 +114,7 @@ class PrivilegesOfUser extends Controller
 
         return [
             'error' => false,
-            'personName' => $this->_selectedPersonData['title'],
+            'personName' => empty($this->_selectedPersonData) ? '' : $this->_selectedPersonData['title'],
             'rules' => $rules
         ];
     }

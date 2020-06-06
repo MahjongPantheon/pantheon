@@ -29,10 +29,11 @@ class PrivilegesAjax extends Controller
     }
 
     /**
-     * @return void
+     * @return array
      */
     protected function _run()
     {
+        return [];
     }
 
     /**

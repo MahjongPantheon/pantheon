@@ -29,9 +29,8 @@ class Timer extends Controller
     }
 
     /**
-     * @return (mixed|scalar)[]
-     *
-     * @psalm-return array{waiting?: bool, redZoneLength?: float|int, yellowZoneLength?: float|int, redZone?: bool, yellowZone?: bool, gameDuration?: int, gameDurationWithoutSeating?: int, initialTime?: string, seating?: mixed, isAggregated?: true, error?: mixed}
+     * @return array
+     * @throws \Exception
      */
     protected function _run(): array
     {
@@ -42,8 +41,14 @@ class Timer extends Controller
             ];
         }
 
-        $timerState = $this->_mimir->execute('getTimerState', [$this->_mainEventId]);
-        $currentSeating = $this->_formatSeating($this->_mimir->execute('getCurrentSeating', [$this->_mainEventId]));
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
+
+        $timerState = $this->_mimir->getTimerState($this->_mainEventId);
+        $currentSeating = $this->_formatSeating($this->_mimir->getCurrentSeating($this->_mainEventId));
         $durationWithoutSeating = $this->_mainEventRules->gameDuration() - 5;
 
         if ($timerState['started'] && $timerState['time_remaining']) {
@@ -75,13 +80,11 @@ class Timer extends Controller
     }
 
     /**
-     * @param \Exception|\JsonRPC\Client $seating
-     *
-     * @return (array|mixed)[][]
-     *
-     * @psalm-return list<array{index: mixed, players: list<mixed>}>
+     * @param array $seating
+     * @return array
+     * @throws \Exception
      */
-    protected function _formatSeating($seating): array
+    protected function _formatSeating(array $seating): array
     {
         $result = [];
 

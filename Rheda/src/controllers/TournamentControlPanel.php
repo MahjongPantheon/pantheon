@@ -47,7 +47,7 @@ class TournamentControlPanel extends Controller
     protected function _beforeRun()
     {
         if (!empty($this->_path['action'])) {
-            if (count($this->_eventIdList) > 1) {
+            if (count($this->_eventIdList) > 1 || empty($this->_mainEventId)) {
                 return true; // to show error in _run
             }
 
@@ -58,31 +58,28 @@ class TournamentControlPanel extends Controller
             try {
                 switch ($this->_path['action']) {
                     case 'shuffledSeating':
-                        $this->_mimir->execute('makeShuffledSeating', [$this->_mainEventId, 1, mt_rand(100000, 999999)]);
+                        $this->_mimir->makeShuffledSeating($this->_mainEventId, 1, mt_rand(100000, 999999));
                         break;
                     case 'intervalSeating':
-                        $this->_mimir->execute(
-                            'makeIntervalSeating',
-                            [$this->_mainEventId, intval($_POST['step'])]
-                        );
+                        $this->_mimir->makeIntervalSeating($this->_mainEventId, intval($_POST['step']));
                         break;
                     case 'predefinedSeating':
-                        $this->_mimir->execute('makePrescriptedSeating', [$this->_mainEventId, isset($_POST['rndseat']) && $_POST['rndseat'] == 1]);
+                        $this->_mimir->makePrescriptedSeating($this->_mainEventId, isset($_POST['rndseat']) && $_POST['rndseat'] == 1);
                         break;
                     case 'swissSeating':
-                        $this->_mimir->execute('makeSwissSeating', [$this->_mainEventId]);
+                        $this->_mimir->makeSwissSeating($this->_mainEventId);
                         break;
                     case 'startTimer':
-                        $this->_mimir->execute('startTimer', [$this->_mainEventId]);
+                        $this->_mimir->startTimer($this->_mainEventId);
                         break;
                     case 'dropLastRound':
-                        $this->_mimir->execute('dropLastRound', [$this->_path['hash']]);
+                        $this->_mimir->dropLastRound($this->_path['hash']);
                         break;
                     case 'finalizeSessions':
-                        $this->_mimir->execute('finalizeSessions', [$this->_mainEventId]);
+                        $this->_mimir->finalizeSessions($this->_mainEventId);
                         break;
                     case 'toggleHideResults':
-                        $this->_mimir->execute('toggleHideResults', [$this->_mainEventId]);
+                        $this->_mimir->toggleHideResults($this->_mainEventId);
                         break;
                     default:
                         ;
@@ -92,7 +89,7 @@ class TournamentControlPanel extends Controller
                 return true;
             }
 
-            header('Location: ' . Url::make('/tourn/', $this->_mainEventId));
+            header('Location: ' . Url::make('/tourn/', (string)$this->_mainEventId));
             return false;
         }
 
@@ -100,9 +97,8 @@ class TournamentControlPanel extends Controller
     }
 
     /**
-     * @return (\Exception|\JsonRPC\Client|array|bool|mixed|null|string)[]
-     *
-     * @psalm-return array{error: mixed|null|string, tablesList?: mixed|string, tables?: mixed, stageNotReady?: bool, stageReadyButNotStarted?: bool, stageSeatingReady?: bool, stageSeatingInProgress?: bool, stageStarted?: bool, stagePrefinished?: bool, withAutoSeating?: bool, hideResults?: bool, isPrescripted?: bool, nextPrescriptedSeating?: \Exception|\JsonRPC\Client|array<empty, empty>, noNextPrescript?: bool, prescriptedEventErrorDescription?: mixed}
+     * @return array
+     * @throws \Exception
      */
     protected function _run(): array
     {
@@ -111,6 +107,12 @@ class TournamentControlPanel extends Controller
         if (count($this->_eventIdList) > 1) {
             return [
                 'error' => _t('Page not available for aggregated events')
+            ];
+        }
+
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
             ];
         }
 
@@ -129,27 +131,25 @@ class TournamentControlPanel extends Controller
         $errCode = null;
 
         // Api calls. TODO: merge into one? Http pipelining maybe?
-        $tables = $this->_mimir->execute('getTablesState', [$this->_mainEventId]);
+        $tables = $this->_mimir->getTablesState($this->_mainEventId);
         $tablesFormatted = $formatter->formatTables(
             $tables,
             $this->_mainEventRules->gamesWaitingForTimer(),
             $this->_mainEventRules->syncStart()
         );
-        $players = $this->_mimir->execute('getAllPlayers', [$this->_eventIdList]);
+        $players = $this->_mimir->getAllPlayers($this->_eventIdList);
 
         // filter $players who are ignored from seating
         $players = array_values(array_filter($players, function ($player) {
             return !$player['ignore_seating'];
         }));
 
-        $timerState = $this->_mimir->execute('getTimerState', [$this->_mainEventId]);
-
-        $currentStage = $this->_determineStage($tablesFormatted, $players, $timerState);
+        $currentStage = $this->_determineStage($tablesFormatted, $players);
 
         $nextPrescriptedSeating = [];
         if ($this->_mainEventRules->isPrescripted() && $currentStage == self::STAGE_READY_BUT_NOT_STARTED) {
             try {
-                $nextPrescriptedSeating = $this->_mimir->execute('getNextPrescriptedSeating', [$this->_mainEventId]);
+                $nextPrescriptedSeating = $this->_mimir->getNextPrescriptedSeating($this->_mainEventId);
                 if (!empty($nextPrescriptedSeating)) {
                     array_unshift($nextPrescriptedSeating, []); // small hack to start from 1
                 }
@@ -181,7 +181,12 @@ class TournamentControlPanel extends Controller
         ];
     }
 
-    protected function _determineStage(&$tables, array &$players, &$timerState): int
+    /**
+     * @param array $tables
+     * @param array $players
+     * @return int
+     */
+    protected function _determineStage(&$tables, array &$players): int
     {
         $notFinishedTablesCount = array_reduce($tables, function ($acc, $i) {
             return $acc + ($i['status'] == 'finished' ? 0 : 1);

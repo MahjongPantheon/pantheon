@@ -31,8 +31,9 @@ function _n(string $entry, string $plural, float $count): string
 /**
  * With parameters substitution
  * @param string $entry
- * @param array ...$args
+ * @param array $args
  * @return string
+ * @phpstan-ignore-next-line
  */
 function _p(string $entry, ...$args): string
 {

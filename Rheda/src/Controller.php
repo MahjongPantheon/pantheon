@@ -22,6 +22,7 @@ require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/HttpClient.php';
 require_once __DIR__ . '/FreyClient.php';
+require_once __DIR__ . '/MimirClient.php';
 require_once __DIR__ . '/helpers/i18n.php';
 require_once __DIR__ . '/AccessRules.php';
 require_once __DIR__ . '/Templater.php';
@@ -40,7 +41,7 @@ abstract class Controller
     protected $_path;
 
     /**
-     * @var \JsonRPC\Client
+     * @var MimirClient
      */
     protected $_mimir;
 
@@ -60,7 +61,7 @@ abstract class Controller
     /**
      * Main event id. For aggregated events, this is the id of the first event in list.
      * For simple events, this is the id of the only used event.
-     * @var int
+     * @var int|null
      */
     protected $_mainEventId;
 
@@ -75,12 +76,12 @@ abstract class Controller
     protected $_mainTemplate = '';
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $_currentPersonId;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $_authToken;
 
@@ -107,14 +108,23 @@ abstract class Controller
      */
     protected $_frey;
 
+    /**
+     * @var bool
+     */
     protected $_useTranslit = false;
 
+    /**
+     * Controller constructor.
+     * @param string $url
+     * @param string[] $path
+     * @throws \Exception
+     */
     public function __construct($url, $path)
     {
         $this->_url = $url;
         $this->_path = $path;
-        $this->_mimir = new \JsonRPC\Client(Sysconf::API_URL(), false, new HttpClient(Sysconf::API_URL()));
-        $this->_frey = new \Rheda\FreyClient(Sysconf::AUTH_API_URL());
+        $this->_mimir = new \Rheda\MimirClient(Sysconf::API_URL()); // @phpstan-ignore-line
+        $this->_frey = new \Rheda\FreyClient(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
 
         // i18n support
         // first step is getting browser language
@@ -128,7 +138,7 @@ abstract class Controller
         // third step is checking GET attribute
         if (isset($_GET['l'])) {
             $locale = $_GET['l'];
-            setcookie('language', $locale, null, '/');
+            setcookie('language', $locale, 0, '/');
         }
 
         // List of locales
@@ -159,13 +169,13 @@ abstract class Controller
         }
         putenv('LC_ALL=' . $locale);
 
-        $this->_currentPersonId = (empty($_COOKIE[Sysconf::COOKIE_ID_KEY])
-            ? null
-            : intval($_COOKIE[Sysconf::COOKIE_ID_KEY]));
+        // @phpstan-ignore-next-line
+        $cookieId = Sysconf::COOKIE_ID_KEY;
+        // @phpstan-ignore-next-line
+        $cookieToken = Sysconf::COOKIE_TOKEN_KEY;
 
-        $this->_authToken = (empty($_COOKIE[Sysconf::COOKIE_TOKEN_KEY])
-            ? null
-            : $_COOKIE[Sysconf::COOKIE_TOKEN_KEY]);
+        $this->_currentPersonId = (empty($_COOKIE[$cookieId]) ? null : intval($_COOKIE[$cookieId]));
+        $this->_authToken = (empty($_COOKIE[$cookieToken]) ? null : $_COOKIE[$cookieToken]);
 
         $eidMatches = [];
         if (empty($path['event']) || !preg_match('#eid(?<ids>\d+(?:\.\d+)*)#is', $path['event'], $eidMatches)) {
@@ -203,7 +213,7 @@ abstract class Controller
         }
 
         /** @var HttpClient $client */
-        $client = $this->_mimir->getHttpClient();
+        $client = $this->_mimir->getClient()->getHttpClient();
 
         $client->withHeaders([
             'X-Debug-Token: aehbntyrey',
@@ -211,8 +221,10 @@ abstract class Controller
             'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
             'X-Current-Person-Id: ' . $this->_currentPersonId ?: '0',
             'X-Locale: ' . $locale,
+            // @phpstan-ignore-next-line
             'X-Api-Version: ' . Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
         ]);
+        // @phpstan-ignore-next-line
         if (Sysconf::DEBUG_MODE) {
             $client->withDebug();
         }
@@ -220,7 +232,7 @@ abstract class Controller
         $this->_rulesList = [];
 
         foreach ($this->_eventIdList as $eventId) {
-            $gameConfig = Config::fromRaw($this->_mimir->execute('getGameConfig', [$eventId]));
+            $gameConfig = Config::fromRaw($this->_mimir->getGameConfig($eventId));
             $this->_rulesList[$eventId] = $gameConfig;
         }
 
@@ -293,7 +305,11 @@ abstract class Controller
         $this->_afterRun();
     }
 
-    protected function _transliterate(string $data)
+    /**
+     * @param string[] $data
+     * @return string[]
+     */
+    protected function _transliterate(array $data)
     {
         if (empty($data)) {
             return $data;
@@ -301,15 +317,17 @@ abstract class Controller
 
         if ($this->_useTranslit) {
             $tr = \Transliterator::create('Cyrillic-Latin; Latin-ASCII');
-            array_walk_recursive($data, function (&$val, $index) use ($tr) {
-                $val = $tr->transliterate($val);
-            });
+            if (!empty($tr)) {
+                array_walk_recursive($data, function (&$val, $index) use ($tr) {
+                    $val = $tr->transliterate($val);
+                });
+            }
         }
         return $data;
     }
 
     /**
-     * @return string Mustache context for render
+     * @return array Mustache context for render
      */
     abstract protected function _run();
 
@@ -319,7 +337,7 @@ abstract class Controller
     abstract protected function _pageTitle();
 
     /**
-     * @return true
+     * @return bool
      */
     protected function _beforeRun()
     {
@@ -334,18 +352,18 @@ abstract class Controller
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @return Controller
      * @throws \Exception
      */
-    public static function makeInstance($url)
+    public static function makeInstance(string $url)
     {
         $routes = require_once __DIR__ . '/../config/routes.php';
         self::_healthSpecialPath($url);
 
         $matches = [];
         $controllerInstance = null;
-        $path = parse_url($url, PHP_URL_PATH);
+        $path = (string)parse_url($url, PHP_URL_PATH);
         foreach ($routes as $regex => $controller) {
             if (!empty($regex) && $regex[0] == '!') {
                 // Eventless paths handling
@@ -448,10 +466,12 @@ DATA;
 
         list ($major, $minor) = explode('.', trim(str_replace('X-Api-Version: ', '', $header)));
 
+        // @phpstan-ignore-next-line
         if (intval($major) !== Sysconf::API_VERSION_MAJOR) {
             throw new \Exception('API major version mismatch. Update your app or API instance!');
         }
 
+        // @phpstan-ignore-next-line
         if (intval($minor) > Sysconf::API_VERSION_MINOR && Sysconf::DEBUG_MODE) {
             trigger_error('API minor version mismatch. Consider updating if possible', E_USER_WARNING);
         }

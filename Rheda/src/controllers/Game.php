@@ -29,22 +29,20 @@ class Game extends Controller
     }
 
     /**
-     * @return (array|bool|mixed|null)[]
-     *
-     * @psalm-return array{games?: array, singleGamePage?: true, isOnlineTournament?: bool, data?: null, error?: mixed}
+     * @return array
      */
     protected function _run(): array
     {
         try {
             $formatter = new GameFormatter();
             $gameHash = $this->_path['hash'];
-            $gamesData = $this->_mimir->execute('getGame', [$gameHash]);
+            $gamesData = $this->_mimir->getGame($gameHash);
             return [
                 'games' => $formatter->formatGamesData($gamesData, $this->_mainEventRules),
                 'singleGamePage' => true,
                 'isOnlineTournament' => $this->_mainEventRules->isOnline()
             ];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return [
                 'data' => null,
                 'error' => $e->getMessage()

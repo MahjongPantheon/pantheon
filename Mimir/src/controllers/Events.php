@@ -66,8 +66,8 @@ class EventsController extends Controller
     /**
      * List all available events in system (paginated)
      *
-     * @param integer $limit
-     * @param integer $offset
+     * @param int $limit
+     * @param int $offset
      * @throws \Exception
      * @return array
      */
@@ -179,7 +179,7 @@ class EventsController extends Controller
     /**
      * Get tables state in tournament
      *
-     * @param integer $eventId
+     * @param int $eventId
      * @throws \Exception
      * @return array
      */
@@ -224,7 +224,7 @@ class EventsController extends Controller
     /**
      * Get current seating in tournament
      *
-     * @param integer $eventId
+     * @param int $eventId
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
@@ -260,8 +260,8 @@ class EventsController extends Controller
     /**
      * Register for participation in event (from admin control panel)
      *
-     * @param integer $playerId
-     * @param integer $eventId
+     * @param int $playerId
+     * @param int $eventId
      * @throws InvalidParametersException
      * @throws \Exception
      * @return bool success?
@@ -278,8 +278,8 @@ class EventsController extends Controller
     /**
      * Unregister from participation in event (from admin control panel)
      *
-     * @param integer $playerId
-     * @param integer $eventId
+     * @param int $playerId
+     * @param int $eventId
      * @throws \Exception
      * @return void
      */
@@ -293,9 +293,9 @@ class EventsController extends Controller
     /**
      * Update ignore_seating flag for registered player
      *
-     * @param integer $playerId
-     * @param integer $eventId
-     * @param integer $ignoreSeating
+     * @param int $playerId
+     * @param int $eventId
+     * @param int $ignoreSeating
      * @throws \Exception
      * @return bool
      */
@@ -315,8 +315,8 @@ class EventsController extends Controller
      * Enroll player to registration lists. Player should make a self-registration after this, or
      * administrator may approve the player manually, and only after that the player will appear in rating table.
      *
-     * @param integer $playerId
-     * @param integer $eventId
+     * @param int $playerId
+     * @param int $eventId
      * @throws AuthFailedException
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -335,7 +335,7 @@ class EventsController extends Controller
     /**
      * Update static local identifiers for events with predefined seating.
      *
-     * @param integer $eventId
+     * @param int $eventId
      * @param array $idMap Mapping of player_id => local_id
      * @return bool
      * @throws AuthFailedException
@@ -353,7 +353,7 @@ class EventsController extends Controller
     /**
      * Update team names for events with teams.
      *
-     * @param integer $eventId
+     * @param int $eventId
      * @param array $teamNameMap Mapping of player_id => team_name
      * @return bool
      * @throws AuthFailedException
@@ -371,7 +371,7 @@ class EventsController extends Controller
     /**
      * Get all players enrolled for event
      *
-     * @param integer $eventId
+     * @param int $eventId
      * @throws \Exception
      * @return array
      */
@@ -409,7 +409,7 @@ class EventsController extends Controller
     /**
      * Get event rules configuration
      *
-     * @param integer $eventId
+     * @param int $eventId
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
@@ -593,8 +593,8 @@ class EventsController extends Controller
      * Get last games for the event
      *
      * @param array $eventIdList
-     * @param integer $limit
-     * @param integer $offset
+     * @param int $limit
+     * @param int $offset
      * @param string $orderBy either 'id' or 'end_date'
      * @param string $order either 'asc' or 'desc'
      * @throws InvalidParametersException
@@ -655,7 +655,7 @@ class EventsController extends Controller
     /**
      * Get games series for each player in event
      *
-     * @param integer $eventId
+     * @param int $eventId
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
@@ -676,7 +676,7 @@ class EventsController extends Controller
     }
 
     /**
-     * @param integer $eventId
+     * @param int $eventId
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
@@ -743,7 +743,7 @@ class EventsController extends Controller
     /**
      * Start or restart timer for event
      *
-     * @param integer $eventId
+     * @param int $eventId
      * @throws InvalidParametersException
      * @throws \Exception
      * @return bool
@@ -769,7 +769,7 @@ class EventsController extends Controller
     /**
      * Toggle hide results table flag
      *
-     * @param integer $eventId
+     * @param int $eventId
      * @throws InvalidParametersException
      * @throws \Exception
      * @return bool
@@ -791,7 +791,7 @@ class EventsController extends Controller
     /**
      * Get prescripted config for event
      *
-     * @param integer $eventId
+     * @param int $eventId
      * @return mixed
      * @throws InvalidParametersException
      * @throws \Exception
@@ -814,8 +814,8 @@ class EventsController extends Controller
     /**
      * Update prescripted config for event
      *
-     * @param integer $eventId
-     * @param integer $nextSessionIndex
+     * @param int $eventId
+     * @param int $nextSessionIndex
      * @param string $prescript
      * @return mixed
      * @throws InvalidParametersException

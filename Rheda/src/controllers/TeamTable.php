@@ -29,9 +29,7 @@ class TeamTable extends Controller
     }
 
     /**
-     * @return ((array|bool|mixed)[][]|bool|mixed|string)[]
-     *
-     * @psalm-return array{error: mixed|string, teams: list<array{players: non-empty-list<mixed>, team_name?: mixed, total_rating?: mixed, winner_zone?: bool, _index: mixed}>, isOnlineTournament: bool, hideResults: bool, showAdminWarning: bool}
+     * @return array
      */
     protected function _run(): array
     {
@@ -42,15 +40,15 @@ class TeamTable extends Controller
         $order = 'desc';
 
         try {
-            $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
+            $players = $this->_mimir->getAllPlayers($this->_eventIdList);
             $players = ArrayHelpers::elm2Key($players, 'id');
 
-            $data = $this->_api->execute('getRatingTable', [
+            $data = $this->_mimir->getRatingTable(
                 $this->_eventIdList,
                 $orderBy,
                 $order,
                 $this->_userHasAdminRights() // show prefinished results only for admins
-            ]);
+            );
 
             $teamNames = [];
             if ($this->_mainEventRules->isTeam()) {
@@ -73,7 +71,7 @@ class TeamTable extends Controller
                 ]);
             }, array_values($players)));
 
-            $data = array_map(function ($el) use (&$ctr, &$players, &$teamNames) {
+            $data = array_map(function ($el) use (&$teamNames) {
                 $teamName = null;
                 if ($this->_mainEventRules->isTeam()) {
                     $teamName = $teamNames[$el['id']];
@@ -82,17 +80,19 @@ class TeamTable extends Controller
                 $el['team_name'] = $teamName;
                 return $el;
             }, $data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errMsg = $e->getMessage();
         }
 
         # group players by team
         $teams = [];
-        foreach ($data as $player) {
-            $teams[$player['team_name']]['players'][] = $player;
-            $teams[$player['team_name']]['team_name'] = $player['team_name'];
-            $teams[$player['team_name']]['total_rating'] += $player['rating'];
-            $teams[$player['team_name']]['winner_zone'] = $teams[$player['team_name']]['total_rating'] >= 0;
+        if (!empty($data)) {
+            foreach ($data as $player) {
+                $teams[$player['team_name']]['players'][] = $player;
+                $teams[$player['team_name']]['team_name'] = $player['team_name'];
+                $teams[$player['team_name']]['total_rating'] += $player['rating'];
+                $teams[$player['team_name']]['winner_zone'] = $teams[$player['team_name']]['total_rating'] >= 0;
+            }
         }
 
         $hideResults = $this->_mainEventRules->hideResults();
@@ -126,7 +126,11 @@ class TeamTable extends Controller
         ];
     }
 
-    private function _makeShortName($name): string
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function _makeShortName(string $name): string
     {
         list($surname, $name) = explode(' ', $name . ' '); // Trailing slash will suppress errors with names without any space
         return $surname . ' ' . mb_substr($name, 0, 1, 'utf8') . '.';

@@ -36,7 +36,7 @@ class TableStatus extends Controller
     protected function _beforeRun()
     {
         // Special password policy for debug mode
-        if (Sysconf::DEBUG_MODE) {
+        if (Sysconf::DEBUG_MODE) { // @phpstan-ignore-line
             if ($this->_path['password'] == 'password') {
                 return true;
             }
@@ -44,26 +44,32 @@ class TableStatus extends Controller
             return false;
         }
 
+        // TODO!
         // This implies admin password is made of some words, and the first word is view page pass.
-        $pw = empty(Sysconf::ADMIN_AUTH()[$this->_mainEventId]['password'])
-            ? null
-            : explode(' ', Sysconf::ADMIN_AUTH()[$this->_mainEventId]['password'])[0];
-
-        if (empty($this->_path['password']) || $this->_path['password'] != $pw) {
-            header('Location: /eid' . $this->_mainEventId);
-            return false;
-        }
+//        $pw = empty(Sysconf::ADMIN_AUTH()[$this->_mainEventId]['password'])
+//            ? null
+//            : explode(' ', Sysconf::ADMIN_AUTH()[$this->_mainEventId]['password'])[0];
+//
+//        if (empty($this->_path['password']) || $this->_path['password'] != $pw) {
+//            header('Location: /eid' . $this->_mainEventId);
+//            return false;
+//        }
 
         return true;
     }
 
     /**
-     * @return (mixed|null|scalar)[]
-     *
-     * @psalm-return array{error: null, tables: false|mixed, redZoneLength: float|int, yellowZoneLength: float|int, redZone: bool, yellowZone: bool, gameDuration: int, initialTime: string}
+     * @return array
+     * @throws \Exception
      */
     protected function _run(): array
     {
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
+
         $formatter = new GameFormatter();
 
         $errCode = null;
@@ -73,7 +79,7 @@ class TableStatus extends Controller
         if (apcu_exists($cacheKey)) {
             $tablesFormatted = apcu_fetch($cacheKey);
         } else {
-            $tables = $this->_mimir->execute('getTablesState', [$this->_mainEventId, true]);
+            $tables = $this->_mimir->getTablesState($this->_mainEventId);
             $tablesFormatted = $formatter->formatTables(
                 $tables,
                 $this->_mainEventRules->gamesWaitingForTimer(),
@@ -82,7 +88,7 @@ class TableStatus extends Controller
             apcu_add($cacheKey, $tablesFormatted, 120); // 2 minutes cache
         }
 
-        $timerState = $this->_mimir->execute('getTimerState', [$this->_mainEventId]);
+        $timerState = $this->_mimir->getTimerState($this->_mainEventId);
         if ($timerState['started'] && $timerState['time_remaining']) {
             $formattedTime = (int)($timerState['time_remaining'] / 60) . ':'
                 . (floor(($timerState['time_remaining'] % 60) / 10) * 10);

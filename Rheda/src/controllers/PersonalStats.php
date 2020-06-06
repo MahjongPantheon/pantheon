@@ -22,9 +22,18 @@ require_once __DIR__ . '/../helpers/YakuMap.php';
 class PersonalStats extends Controller
 {
     protected $_mainTemplate = 'User';
+    /**
+     * @var string
+     */
     protected $_playerName;
 
-    public function __construct($url, $path)
+    /**
+     * PersonalStats constructor.
+     * @param string $url
+     * @param array $path
+     * @throws \Exception
+     */
+    public function __construct(string $url, array $path)
     {
         parent::__construct($url, $path);
         $this->_playerName = _t('Player');
@@ -37,16 +46,15 @@ class PersonalStats extends Controller
     }
 
     /**
-     * @return ((false|float|int|mixed|string)[]|\Exception|\JsonRPC\Client|mixed|null)[]
-     *
-     * @psalm-return array{playerData?: \Exception|\JsonRPC\Client, data: array{labelThreshold: int, currentPlayer: string, totalPlayedGames: mixed, totalPlayedRounds: mixed, playersMap: false|string, points: false|string, games: false|string, handValueStats: false|string, yakuStats: false|string, ronCount: mixed, openHand: mixed, tsumoCount: mixed, winCount: mixed, feedCount: mixed, feedUnderRiichi: mixed, tsumoFeedCount: mixed, chomboCount: mixed, riichiWon: mixed, riichiLost: mixed, riichiTotal: mixed, averageDoraCount: mixed, doraCount: mixed, minScores: string, maxScores: string, averageScores: string, ronCountPercent: float, tsumoCountPercent: float, winCountPercent: float, feedCountPercent: float, feedUnderRiichiPercent: float, tsumoFeedCountPercent: float, chomboCountPercent: float, openHandPercent: float|int, riichiWonPercent: float|int, riichiLostPercent: float|int, riichiTotalPercent: float, place1: float, place2: float, place3: float, place4: float}|null, error: mixed|null}
+     * @return array
+     * @throws \Exception
      */
     protected function _run(): array
     {
         try {
             $currentUser = $this->_path['user'];
-            $playerData = $this->_mimir->execute('getPlayer', [$currentUser]);
-            $data = $this->_mimir->execute('getPlayerStats', [$currentUser, $this->_eventIdList]);
+            $playerData = $this->_mimir->getPlayer((int)$currentUser);
+            $data = $this->_mimir->getPlayerStats((int)$currentUser, $this->_eventIdList);
             $this->_playerName = $playerData['display_name'];
 
             $usersMap = [];
@@ -105,7 +113,7 @@ class PersonalStats extends Controller
                 $yakuStats[] = [$totalYakuhai, _t('Yakuhai: total')];
             }
 
-            $scoresSummary = $this->_getScoresSummary($currentUser, $data['score_history']);
+            $scoresSummary = $this->_getScoresSummary((int)$currentUser, $data['score_history']);
 
             $riichiTotal = $data['riichi_summary']['riichi_won'] + $data['riichi_summary']['riichi_lost'];
             $winCount = $data['win_summary']['ron'] + $data['win_summary']['tsumo'];
@@ -176,7 +184,7 @@ class PersonalStats extends Controller
                 ],
                 'error' => null
             ];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return [
                 'data' => null,
                 'error' => $e->getMessage()
@@ -187,11 +195,11 @@ class PersonalStats extends Controller
     /**
      * Get scores summary stats for player
      *
-     * @param $playerId
-     * @param [] $scoresData
+     * @param int $playerId
+     * @param array $scoresData
      * @return array
      */
-    protected function _getScoresSummary(string $playerId, $scoresData)
+    protected function _getScoresSummary(int $playerId, array $scoresData)
     {
         $totalScores = 0;
         $playedGames = 0;

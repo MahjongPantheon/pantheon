@@ -39,7 +39,7 @@ class GamesControlPanel extends Controller
      */
     protected function _beforeRun()
     {
-        if (!empty($this->_path['action'])) {
+        if (!empty($this->_path['action']) && !empty($this->_mainEventId)) {
             if (count($this->_eventIdList) > 1) {
                 return true; // to show error in _run
             }
@@ -51,13 +51,13 @@ class GamesControlPanel extends Controller
             try {
                 switch ($this->_path['action']) {
                     case 'dropLastRound':
-                        $this->_mimir->execute('dropLastRound', [$this->_path['hash']]);
+                        $this->_mimir->dropLastRound($this->_path['hash']);
                         break;
                     case 'definalize':
                         $this->_api->execute('definalizeGame', [$this->_path['hash']]);
                         break;
                     case 'cancelGame':
-                        $this->_mimir->execute('cancelGame', [$this->_path['hash']]);
+                        $this->_mimir->cancelGame($this->_path['hash']);
                         break;
                     default:
                         ;
@@ -67,7 +67,7 @@ class GamesControlPanel extends Controller
                 return true;
             }
 
-            header('Location: ' . Url::make('/games/', $this->_mainEventId));
+            header('Location: ' . Url::make('/games/', (string)$this->_mainEventId));
             return false;
         }
 
@@ -75,9 +75,8 @@ class GamesControlPanel extends Controller
     }
 
     /**
-     * @return (mixed|string|true)[]
-     *
-     * @psalm-return array{reason?: mixed|string, tables?: mixed, error?: mixed, isAggregated?: true}
+     * @return array
+     * @throws \Exception
      */
     protected function _run(): array
     {
@@ -87,6 +86,12 @@ class GamesControlPanel extends Controller
             return [
                 'error' => _t('Page not available for aggregated events'),
                 'isAggregated' => true,
+            ];
+        }
+
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
             ];
         }
 
@@ -103,7 +108,7 @@ class GamesControlPanel extends Controller
         }
 
         // Tables info
-        $tables = $this->_mimir->execute('getTablesState', [$this->_mainEventId]);
+        $tables = $this->_mimir->getTablesState($this->_mainEventId);
         $tablesFormatted = $formatter->formatTables(
             $tables,
             $this->_mainEventRules->gamesWaitingForTimer(),

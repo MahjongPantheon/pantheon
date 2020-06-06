@@ -27,9 +27,7 @@ class AddOnlineGame extends Controller
     }
 
     /**
-     * @return (bool|mixed|string)[]
-     *
-     * @psalm-return array{error: mixed|string, successfullyAdded: bool}
+     * @return array
      */
     protected function _run(): array
     {
@@ -37,12 +35,18 @@ class AddOnlineGame extends Controller
         $successfullyAdded = false;
         $link = empty($_POST['log']) ? '' : $_POST['log'];
 
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
+
         try {
             if ($link) {
-                $this->_mimir->execute('addOnlineReplay', [$this->_mainEventId, $link]);
+                $this->_mimir->addOnlineReplay($this->_mainEventId, $link);
                 $successfullyAdded = true;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
         }
 

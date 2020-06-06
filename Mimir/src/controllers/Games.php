@@ -149,7 +149,7 @@ class GamesController extends Controller
      *
      * @param string $gameHashcode Hashcode of game
      * @param array $roundData Structure of round data
-     * @param boolean $dry Dry run (without saving to db)
+     * @param bool $dry Dry run (without saving to db)
      * @throws BadActionException
      * @throws \Exception
      * @return bool|array Results|Results of dry run|False in case of error
@@ -165,9 +165,9 @@ class GamesController extends Controller
     /**
      * Add penalty in interactive game
      *
-     * @param integer $eventId Hashcode of game
-     * @param integer $playerId Id of penalized player
-     * @param integer $amount Penalty amount
+     * @param int $eventId Hashcode of game
+     * @param int $playerId Id of penalized player
+     * @param int $amount Penalty amount
      * @param string $reason Penalty reason
      * @throws \Exception
      * @return bool Success?

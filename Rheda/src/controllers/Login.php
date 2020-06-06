@@ -29,9 +29,7 @@ class Login extends Controller
     }
 
     /**
-     * @return (mixed|null)[]
-     *
-     * @psalm-return array{error_email: mixed|null, error_password: mixed|null, email: mixed|null}
+     * @return array
      */
     protected function _run(): array
     {
@@ -49,7 +47,9 @@ class Login extends Controller
                     throw new \Exception();
                 }
 
+                // @phpstan-ignore-next-line
                 setcookie(Sysconf::COOKIE_TOKEN_KEY, $authToken, time() + 365 * 24 * 3600, '/');
+                // @phpstan-ignore-next-line
                 setcookie(Sysconf::COOKIE_ID_KEY, $id, time() + 365 * 24 * 3600, '/');
                 header('Location: ' . '/profile');
             } catch (\Exception $ex) {

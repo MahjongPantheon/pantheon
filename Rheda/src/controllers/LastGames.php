@@ -29,15 +29,14 @@ class LastGames extends Controller
     }
 
     /**
-     * @return (array|bool|int|mixed)[]
-     *
-     * @psalm-return array{noGames: bool, games: array, nextPage: int, prevPage: int, gamesCount: mixed, start: int, end: int|mixed, hasNextButton: bool, hasPreviousButton: bool, isOnlineTournament: bool}
+     * @return array
+     * @throws \Exception
      */
     protected function _run(): array
     {
         $isTournament = !$this->_mainEventRules->allowPlayerAppend();
         if ($isTournament) {
-            $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
+            $players = $this->_mimir->getAllPlayers($this->_eventIdList);
             $numberOfPlayers = count($players);
             $limit = intval($numberOfPlayers / 4);
             if ($limit > 40) {
@@ -55,10 +54,7 @@ class LastGames extends Controller
             $offset = ($currentPage - 1) * $limit;
         }
 
-        $gamesData = $this->_mimir->execute(
-            'getLastGames',
-            [$this->_eventIdList, $limit, $offset, 'end_date', 'desc']
-        );
+        $gamesData = $this->_mimir->getLastGames($this->_eventIdList, $limit, $offset, 'end_date', 'desc');
 
         $formatter = new GameFormatter();
 

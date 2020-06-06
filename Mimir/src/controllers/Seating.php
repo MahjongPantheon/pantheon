@@ -160,8 +160,8 @@ class SeatingController extends Controller
     }
 
     /**
-     * @param integer $eventId
-     * @param boolean $randomizeAtTables
+     * @param int $eventId
+     * @param bool $randomizeAtTables
      * @return bool
      * @throws AuthFailedException
      * @throws DatabaseException

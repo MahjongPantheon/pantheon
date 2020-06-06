@@ -22,7 +22,7 @@ namespace Rheda;
  */
 class Url
 {
-    public static function make(string $where, int $eventId): string
+    public static function make(string $where, string $eventId): string
     {
         $pieces = array_filter(explode('/', $where));
         if (!empty($pieces[0]) && strpos($pieces[0], 'eid') === 0) {

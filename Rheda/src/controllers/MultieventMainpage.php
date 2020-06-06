@@ -29,16 +29,15 @@ class MultieventMainpage extends Controller
     }
 
     /**
-     * @return (array|bool|int)[]
-     *
-     * @psalm-return array{events: array, prevPage: int, nextPage: int, hasNextButton: bool, hasPreviousButton: bool}
+     * @return array
+     * @throws \Exception
      */
     protected function _run(): array
     {
         $page = empty($this->_path['page']) ? 1 : intval($this->_path['page']);
         $limit = 20;
         $offset = $limit * ($page - 1);
-        $data = $this->_mimir->execute('getEvents', [$limit, $offset]);
+        $data = $this->_mimir->getEvents($limit, $offset);
 
         $hasNextButton = $offset + $limit < $data['total'];
         $hasPreviousButton = $page > 1;

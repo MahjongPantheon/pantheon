@@ -22,6 +22,9 @@ require_once __DIR__ . '/../helpers/Array.php';
 
 class Penalties extends Controller
 {
+    /**
+     * @var array
+     */
     protected $_errors = [];
     protected $_mainTemplate = 'Penalties';
 
@@ -37,7 +40,7 @@ class Penalties extends Controller
     {
         $this->_errors = [];
 
-        if ($this->_path['action'] == 'apply') {
+        if ($this->_path['action'] == 'apply' && !empty($this->_mainEventId)) {
             if (count($this->_eventIdList) > 1) {
                 return true; // to show error in _run
             }
@@ -50,13 +53,13 @@ class Penalties extends Controller
             $amount = intval($_POST['amount']);
             $reason = $_POST['reason'];
             try {
-                $this->_mimir->execute('addPenalty', [$this->_mainEventId, $userId, $amount, $reason]);
-            } catch (Exception $e) {
+                $this->_mimir->addPenalty($this->_mainEventId, $userId, $amount, $reason);
+            } catch (\Exception $e) {
                 $this->_errors []= $e->getMessage();
                 return true;
             }
 
-            header('Location: ' . Url::make('/penalties/', $this->_mainEventId));
+            header('Location: ' . Url::make('/penalties/', (string)$this->_mainEventId));
             return false;
         }
 
@@ -64,9 +67,7 @@ class Penalties extends Controller
     }
 
     /**
-     * @return (\Exception|\JsonRPC\Client|array[]|mixed|string|true)[]
-     *
-     * @psalm-return array{players?: \Exception|\JsonRPC\Client|array<empty, empty>, penaltyAmounts?: list<array{view: mixed, value: mixed}>, error: mixed|string, isAggregated?: true}
+     * @return array
      */
     protected function _run(): array
     {
@@ -74,6 +75,12 @@ class Penalties extends Controller
             return [
                 'error' => _t('Page not available for aggregated events'),
                 'isAggregated' => true,
+            ];
+        }
+
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
             ];
         }
 
@@ -85,15 +92,15 @@ class Penalties extends Controller
 
         $amounts = [];
         try {
-            $players = $this->_mimir->execute('getAllPlayers', [$this->_eventIdList]);
-            $settings = $this->_mimir->execute('getGameConfig', [$this->_mainEventId]);
+            $players = $this->_mimir->getAllPlayers($this->_eventIdList);
+            $settings = $this->_mimir->getGameConfig($this->_mainEventId);
             for ($i = $settings['minPenalty']; $i <= $settings['maxPenalty']; $i += $settings['penaltyStep']) {
                 $amounts []= [
                     'view' => $i / (float)$settings['ratingDivider'],
                     'value' => $i
                 ];
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $players = [];
             $this->_errors []= $e->getMessage();
         }

@@ -47,10 +47,7 @@ class SelfRegistration extends Controller
 
     /**
      * @param array $data
-     *
-     * @return (bool|mixed|null|string)[]
-     *
-     * @psalm-return array{email?: mixed, error: mixed|null|string, error_email?: mixed|null, error_password?: mixed|null, success?: bool, debug_url?: mixed|null}
+     * @return array
      */
     protected function _tryRegisterUser(array $data)
     {
@@ -82,6 +79,7 @@ class SelfRegistration extends Controller
             return [
                 'error' => null,
                 'success' => true,
+                // @phpstan-ignore-next-line
                 'debug_url' => Sysconf::DEBUG_MODE ? $url : null
             ];
         } catch (\Exception $ex) {
@@ -105,16 +103,16 @@ class SelfRegistration extends Controller
      * Passwords with calculated strength less than 14 should be considered weak.
      *
      * @see also Frey/src/models/Auth.php:_calcPasswordStrength - functions should match!
-     * @param $password
+     * @param string $password
      * @return float|int
      */
-    protected function _calcPasswordStrength($password)
+    protected function _calcPasswordStrength(string $password)
     {
         $hasLatinSymbols = preg_match('#[a-z]#', $password);
         $hasUppercaseLatinSymbols = preg_match('#[A-Z]#', $password);
         $hasDigits = preg_match('#[0-9]#', $password);
         $hasPunctuation = preg_match('#[-@\#\$%\^&*\(\),\./\\"\']#', $password);
-        $hasOtherSymbols = mb_strlen(preg_replace('#[-a-z0-9@\#\$%\^&*\(\),\./\\"\']#ius', '', $password)) > 0;
+        $hasOtherSymbols = mb_strlen((string)preg_replace('#[-a-z0-9@\#\$%\^&*\(\),\./\\"\']#ius', '', $password)) > 0;
 
         return ceil(mb_strlen($password) / 2)
             * ($hasDigits ? 2 : 1)

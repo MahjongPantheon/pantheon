@@ -68,16 +68,14 @@ class ProfileEdit extends Controller
 
     /**
      * @param array $data
-     *
-     * @return (false|mixed|string)[]
-     *
-     * @psalm-return array{error: mixed|string, success: false|mixed, title: mixed, city: mixed, email: mixed, phone: mixed, tenhouid: mixed}
+     * @param array $originalData
+     * @return array
      */
-    protected function _saveData(array $data, $originalData)
+    protected function _saveData(array $data, array $originalData)
     {
         try {
             $success = $this->_frey->updatePersonalInfo(
-                $this->_currentPersonId,
+                (string)$this->_currentPersonId, // TODO: should be int, check
                 $data['title'],
                 $data['city'],
                 $originalData['email'], // email is not intended to be changed by user
@@ -120,16 +118,16 @@ class ProfileEdit extends Controller
      * Passwords with calculated strength less than 14 should be considered weak.
      *
      * @see also Frey/src/models/Auth.php:_calcPasswordStrength - functions should match!
-     * @param $password
+     * @param string $password
      * @return float|int
      */
-    protected function _calcPasswordStrength($password)
+    protected function _calcPasswordStrength(string $password)
     {
         $hasLatinSymbols = preg_match('#[a-z]#', $password);
         $hasUppercaseLatinSymbols = preg_match('#[A-Z]#', $password);
         $hasDigits = preg_match('#[0-9]#', $password);
         $hasPunctuation = preg_match('#[-@\#\$%\^&*\(\),\./\\"\']#', $password);
-        $hasOtherSymbols = mb_strlen(preg_replace('#[-a-z0-9@\#\$%\^&*\(\),\./\\"\']#ius', '', $password)) > 0;
+        $hasOtherSymbols = mb_strlen((string)preg_replace('#[-a-z0-9@\#\$%\^&*\(\),\./\\"\']#ius', '', $password)) > 0;
 
         return ceil(mb_strlen($password) / 2)
             * ($hasDigits ? 2 : 1)

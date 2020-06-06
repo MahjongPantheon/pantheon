@@ -29,9 +29,8 @@ class Mainpage extends Controller
     }
 
     /**
-     * @return (((array-key|mixed)[]|mixed|null)[]|bool|string)[]
-     *
-     * @psalm-return array{data?: list<mixed>, hasData?: true, title?: string, isAggregated?: true, eventsInfo?: list<array{title: string, description: string}>, description?: string, isLoggedIn?: bool, rules?: list<array{name: array-key, value: mixed, description: mixed}|null>}
+     * @return array
+     * @throws \Exception
      */
     protected function _run(): array
     {
@@ -78,7 +77,12 @@ class Mainpage extends Controller
             ];
         }
 
-        $data = $this->_mimir->execute('getGamesSeries', [$this->_mainEventId]);
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
+        $data = $this->_mimir->getGamesSeries($this->_mainEventId);
 
         $formattedData = [];
         $counter = 1;

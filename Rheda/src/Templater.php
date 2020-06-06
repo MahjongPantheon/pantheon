@@ -1,14 +1,31 @@
 <?php
 namespace Rheda;
 
+require_once __DIR__ . '/helpers/i18n.php';
+
+use Handlebars\Arguments;
+use Handlebars\Context;
 use Handlebars\Handlebars;
 
 class Templater
 {
+    /**
+     * @var Handlebars
+     */
     protected static $_rootRenderer;
+    /**
+     * @var Handlebars
+     */
     protected static $_inlineRenderer;
+    /**
+     * @var string
+     */
     protected static $_eventIdListString;
 
+    /**
+     * @param array $eventIdList
+     * @return Handlebars
+     */
     public static function getInstance(array $eventIdList)
     {
         if (!empty(self::$_rootRenderer)) {
@@ -45,12 +62,26 @@ class Templater
         return self::$_rootRenderer;
     }
 
+    /**
+     * @param Handlebars $template
+     * @param Context $context
+     * @param Arguments $args
+     * @param string $source
+     * @return string
+     */
     public static function _tHelper($template, $context, $args, $source)
     {
         $args = $args->getPositionalArguments();
         return _t($args[0]);
     }
 
+    /**
+     * @param Handlebars $template
+     * @param Context $context
+     * @param Arguments $args
+     * @param string $source
+     * @return string
+     */
     public static function _nHelper($template, $context, $args, $source)
     {
         list($plural1, $plural2, $count) = $args->getPositionalArguments();
@@ -58,6 +89,13 @@ class Templater
         return call_user_func_array('\Rheda\_n', [$plural1, $plural2, $countRealValue]);
     }
 
+    /**
+     * @param Handlebars $template
+     * @param Context $context
+     * @param Arguments $args
+     * @param string $source
+     * @return string
+     */
     public static function _pHelper($template, $context, $args, $source)
     {
         return call_user_func_array('\Rheda\_p', array_map(function ($arg) use ($context) {
@@ -66,6 +104,13 @@ class Templater
         }, $args->getPositionalArguments()));
     }
 
+    /**
+     * @param Handlebars $template
+     * @param Context $context
+     * @param Arguments $args
+     * @param string $source
+     * @return string
+     */
     public static function _npHelper($template, $context, $args, $source)
     {
         return call_user_func_array('\Rheda\_np', array_map(function ($arg) use ($context) {
@@ -74,22 +119,36 @@ class Templater
         }, $args->getPositionalArguments()));
     }
 
+    /**
+     * @param Handlebars $template
+     * @param Context $context
+     * @param Arguments $args
+     * @param string $source
+     * @return string
+     */
     public static function _formHelper($template, $context, $args, $source): string
     {
         $form = $args->getNamedArguments();
-        return '<form action="' . Url::make(Url::interpolate($form['action'], $context), self::$_eventIdListString)
+        return '<form action="' . Url::make(Url::interpolate($form['action'], $context) ?? '', self::$_eventIdListString)
             . (empty($form['method']) ? ' method="get"' : '" method="' . $form['method'] . '"')
             . '>' . self::$_inlineRenderer->render($source, $context) . '</form>';
     }
 
+    /**
+     * @param Handlebars $template
+     * @param Context $context
+     * @param Arguments $args
+     * @param string $source
+     * @return string
+     */
     public static function _aHelper($template, $context, $args, $source): string
     {
         $a = $args->getNamedArguments();
         if (!empty($a['id'])) {
             // id is overridden from template
-            $url = Url::make(Url::interpolate($a['href'], $context), Url::interpolate($a['id'], $context));
+            $url = Url::make(Url::interpolate($a['href'], $context) ?? '', Url::interpolate($a['id'], $context) ?? '');
         } else {
-            $url = Url::make(Url::interpolate($a['href'], $context), self::$_eventIdListString);
+            $url = Url::make(Url::interpolate($a['href'], $context) ?? '', self::$_eventIdListString);
         }
 
         return '<a href="' . $url . '"'
@@ -100,6 +159,13 @@ class Templater
             . '>' . self::$_inlineRenderer->render($source, $context) . '</a>';
     }
 
+    /**
+     * @param Handlebars $template
+     * @param Context $context
+     * @param Arguments $args
+     * @param string $source
+     * @return string
+     */
     public static function _cssLoader($template, $context, $args, $source): string
     {
         $a = $args->getPositionalArguments();
@@ -111,6 +177,13 @@ class Templater
         return '<link rel="stylesheet" type="text/css" href="' . $resultName . '" />';
     }
 
+    /**
+     * @param Handlebars $template
+     * @param Context $context
+     * @param Arguments $args
+     * @param string $source
+     * @return string
+     */
     public static function _jsLoader($template, $context, $args, $source): string
     {
         $a = $args->getPositionalArguments();
@@ -125,11 +198,11 @@ class Templater
     /**
      * Creates content-dependent link for easy cache clearing on client side.
      *
-     * @param $type
-     * @param $webPath
+     * @param string $type
+     * @param string $webPath
      * @return mixed|string
      */
-    protected static function _assetLoader(string $type, $webPath)
+    protected static function _assetLoader(string $type, string $webPath)
     {
         $filePath = __DIR__ . '/../www/' . $webPath;
         $cacheKey = $type . '_' . md5($filePath);

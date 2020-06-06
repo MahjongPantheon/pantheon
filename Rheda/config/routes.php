@@ -20,7 +20,6 @@ return [ // Omit trailing slashes in keys when possible
     ''                => 'Mainpage', // empty path for mainpage
     '/last'           => 'LastGames',
     '/last/.+'        => 'LastGames',
-    '/add'            => 'AddGame',
     '/add-online'     => 'AddOnlineGame',
     '/user'           => 'PersonalStats',
     '/user/(?<user>[0-9]+)' => 'PersonalStats',

@@ -41,13 +41,13 @@ class Achievements extends Controller
         if (!empty($this->_path['achievement'])) {
             $ach = null;
             try {
-                $ach = $this->_mimir->execute('getAchievements', [$this->_eventIdList, [$this->_path['achievement']]]);
+                $ach = $this->_mimir->getAchievements($this->_eventIdList, [$this->_path['achievement']]);
                 $value = $this->_achValue($ach);
                 if ($this->_path['achievement'] == 'yakumans') {
                     $value = $this->_postProcessYakumans($value);
                 }
                 return $value;
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 return [
                     'error' => $e->getMessage()
                 ];
@@ -114,16 +114,11 @@ class Achievements extends Controller
         }, array_keys($names), array_values($names));
     }
 
-
-
     /**
-     * @param \Exception|\JsonRPC\Client $ach
-     *
-     * @return (mixed|null)[]
-     *
-     * @psalm-return array{error: null, bestHand: mixed, bestTsumoist: mixed, braveSapper: mixed, dieHard: mixed, dovakins: mixed, yakumans: mixed, bestFu: mixed, bestDealer: mixed, shithander: mixed, impossibleWait: mixed, honoredDonor: mixed, justAsPlanned: mixed, carefulPlanning: mixed, doraLord: mixed, catchEmAll: mixed, favoriteAsapinApprentice: mixed, andYourRiichiBet: mixed, covetousKnight: mixed, ninja: mixed}
+     * @param array $ach
+     * @return array
      */
-    protected function _achValue($ach): array
+    protected function _achValue(array $ach): array
     {
         $desc = $this->_achList();
         return [
@@ -150,7 +145,13 @@ class Achievements extends Controller
         ];
     }
 
-    protected function _getValue($achievements, string $key, $desc): ?array
+    /**
+     * @param array $achievements
+     * @param string $key
+     * @param array $desc
+     * @return array|null
+     */
+    protected function _getValue(array $achievements, string $key, array $desc): ?array
     {
         $d = array_filter($desc, function ($el) use ($key) {
             return $el['code'] == $key;
@@ -160,18 +161,26 @@ class Achievements extends Controller
             : array_merge(['val' => $achievements[$key]], reset($d));
     }
 
-    protected function _formatYakumanString($yakumanIDs): string
+    /**
+     * @param string $yakumanIDs
+     * @return string
+     */
+    protected function _formatYakumanString(string $yakumanIDs): string
     {
         $list = array_map(
             function ($yaku) {
-                return Yaku::getMap()[$yaku];
+                return Yaku::getMap()[(int)$yaku];
             },
             explode(',', $yakumanIDs)
         );
         return implode(', ', $list);
     }
 
-    protected function _postProcessYakumans($value)
+    /**
+     * @param array $value
+     * @return mixed
+     */
+    protected function _postProcessYakumans(array $value)
     {
         $value['yakumans']['val'] = array_map(function ($value) {
             $value['yaku'] = $this->_formatYakumanString($value['yaku']);

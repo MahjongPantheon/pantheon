@@ -40,7 +40,10 @@ class Sortition extends Controller
         }
 
         if (empty($this->_path['seed'])) {
-            header('Location: ' . Url::make('/sortition/' . substr(md5(microtime(true)), 3, 5) . '/', $this->_mainEventId));
+            header('Location: ' . Url::make(
+                '/sortition/' . substr(md5((string)microtime(true)), 3, 5) . '/',
+                (string)$this->_mainEventId
+            ));
             return false;
         }
 
@@ -48,9 +51,8 @@ class Sortition extends Controller
     }
 
     /**
-     * @return (((bool|int|mixed|string)[][]|int|mixed)[][]|int|mixed)[]
-     *
-     * @psalm-return array{seed?: int, seating?: list<array{tableIndex: int, players: non-empty-list<array{id: mixed, rating: mixed, zone: string, username: mixed}>}>, intersections?: list<array{username: mixed, intersectWith: list<array{self: bool, intcolor: mixed, count: int}>}>, error?: mixed}
+     * @return array
+     * @throws \Exception
      */
     protected function _run(): array
     {
@@ -60,15 +62,17 @@ class Sortition extends Controller
             ];
         }
 
-        $players = $this->_mimir->execute('getAllPlayers', [$this->_eventIdList]);
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
+
+        $players = $this->_mimir->getAllPlayers($this->_eventIdList);
         $players = ArrayHelpers::elm2key($players, 'id');
 
         $seed = hexdec($this->_path['seed']);
-        $sortition = $this->_mimir->execute('generateSeating', [
-            $this->_mainEventId,
-            1, // groups
-            $seed
-        ]);
+        $sortition = $this->_mimir->generateSeating($this->_mainEventId, 1/* groups */, $seed);
 
         // Reformat seating for template...
 
@@ -125,7 +129,12 @@ class Sortition extends Controller
         ];
     }
 
-    protected function _getColor(int $num, $max): string
+    /**
+     * @param int $num
+     * @param int $max
+     * @return string
+     */
+    protected function _getColor(int $num, int $max): string
     {
         $warningThreshold = ceil($max / 2.);
         if ($num == $max) {
