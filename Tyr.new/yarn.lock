@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@types/node@^14.0.14":
+  version "14.0.14"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.14.tgz#24a0b5959f16ac141aeb0c5b3cd7a15b7c64cbce"
+  integrity sha512-syUgf67ZQpaJj01/tRTknkMNoBBLWJOBODF0Zm4NrXmiSuxjymFrxnTu1QVYRubhVkRcZLYZG8STTwJRdVm/WQ==
+
 "@types/prop-types@*":
   version "15.7.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
@@ -21,6 +26,13 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
+
+"@types/reduce-reducers@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/reduce-reducers/-/reduce-reducers-1.0.0.tgz#033120b109159f4b344210ee75310d1ec3fcc8ef"
+  integrity sha512-MWKF9QDH/HaMQZvGyQlrut1ttyrFVIrGZqhCXPBcl5LelhnfC7dIE2jK2qZjxFHUCeXgjKCk5hN+/GzA7GgqjQ==
+  dependencies:
+    reduce-reducers "*"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -759,6 +771,11 @@ decode-uri-component@^0.2.0:
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
 
+deep-clone@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/deep-clone/-/deep-clone-3.0.3.tgz#c13d7797625b66e955c5f6f52bfad028eb1166bb"
+  integrity sha512-6jtXIlCBAwr3GP/7Il52clbIFIKAxg/pnNkL4/sE6+Oqb10MXMtm9LDZV2IAuwdaKV9VBm8hlxAFk9r6pF8XRw==
+
 define-property@^0.2.5:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/define-property/-/define-property-0.2.5.tgz#c35b1ef918ec3c990f9a5bc57be04aacec5c8116"
@@ -1222,6 +1239,16 @@ https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
 
+i18n-dialect@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/i18n-dialect/-/i18n-dialect-1.1.1.tgz#e3d7eb98d44158a1b5a3de6c5050a7b8c34fe7d2"
+  integrity sha512-/TfPINgFFCCDEsHiAyzlZ0XEEtr6Su3+MuqWGzdojnzUOEjfwQIAp5oU/2ykGn8Iv0By10uifG/wSKKXFsLL0A==
+
+i18n-proto@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/i18n-proto/-/i18n-proto-1.0.5.tgz#5688a311022b46ca25612a15d53bee649930da0d"
+  integrity sha1-VoijEQIrRsolYSoV1TvuZJkw2g0=
+
 ieee754@^1.1.4:
   version "1.1.13"
   resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.13.tgz#ec168558e95aa181fd87d37f55c32bbcb6708b84"
@@ -1456,6 +1483,11 @@ json5@^1.0.1:
   integrity sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==
   dependencies:
     minimist "^1.2.0"
+
+jsqr@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/jsqr/-/jsqr-1.3.1.tgz#515a766e58b00c80142f3a2dc4b8751100ceedcf"
+  integrity sha512-zCTP6Qd/WwjrpuHFkJuXc5opRdKprUr7eI7+JCCtcetThJt45qptu82MWQ+eET+FtDrMo7+BYjo3iD0XIq1L9Q==
 
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
@@ -2061,6 +2093,19 @@ readdirp@~3.4.0:
   dependencies:
     picomatch "^2.2.1"
 
+reduce-reducers@*, reduce-reducers@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/reduce-reducers/-/reduce-reducers-1.0.4.tgz#fb77e751a9eb0201760ac5a605ca8c9c2d0537f8"
+  integrity sha512-Mb2WZ2bJF597exiqX7owBzrqJ74DHLK3yOQjCyPAaNifRncE8OD0wFIuoMhXxTnHK07+8zZ2SJEKy/qtiyR7vw==
+
+redux@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.5.tgz#4db5de5816e17891de8a80c424232d06f051d93f"
+  integrity sha512-VSz1uMAH24DM6MF72vcojpYPtrTUu3ByVWfPL1nPfVRb5mZVTve5GnNCUV53QM/BZ66xfWrm0CTWoM+Xlz8V1w==
+  dependencies:
+    loose-envify "^1.4.0"
+    symbol-observable "^1.2.0"
+
 regex-not@^1.0.0, regex-not@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/regex-not/-/regex-not-1.0.2.tgz#1f4ece27e00b0b65e0247a6810e6a85d83a5752c"
@@ -2403,6 +2448,11 @@ supports-color@^6.1.0:
   integrity sha512-qe1jfm1Mg7Nq/NSh6XE24gPXROEVsWHxC1LIx//XNlD9iw7YZQGjZNjYN7xGaEG6iKdA8EtNFW6R0gjnVXp+wQ==
   dependencies:
     has-flag "^3.0.0"
+
+symbol-observable@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
+  integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
 
 tapable@^1.0.0, tapable@^1.1.3:
   version "1.1.3"

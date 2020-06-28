@@ -7,6 +7,8 @@
     "mapRoot": "./",
     "module": "esnext",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "outDir": "dist/out-tsc",
     "sourceMap": true,
     "target": "es2015",
