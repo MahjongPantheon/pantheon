@@ -24,7 +24,7 @@ export class Store {
   private store: ReduxStore<IAppState>;
   private readonly timerSt: TimerStorage;
 
-  constructor(client: HttpClient, i18n: I18nService) {
+  constructor(i18n: I18nService) {
     this.timerSt = {
       timer: null,
       setInterval: window.setInterval,
@@ -37,11 +37,11 @@ export class Store {
       mimirReducer,
       timerReducer
     );
-    const metrikaService = new MetrikaService(client);
+    const metrikaService = new MetrikaService();
     const idb = new IDB(metrikaService);
     const middleware = applyMiddleware(
       logging(`⇨ [middlewares]`),
-      mimirClient(new RiichiApiService(client)),
+      mimirClient(new RiichiApiService()),
       metrika(metrikaService),
       history(),
       timerMw(this.timerSt),

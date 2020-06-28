@@ -48,7 +48,7 @@ function _getWins(info: RRoundPaymentsInfo, players: Player[], i18n: I18nService
 export const getWins = memoize(_getWins);
 
 export function getPenalty(info: RRoundPaymentsInfo, players: Player[]) {
-  if (info.outcome !== 'chombo' || info.penaltyFor === null) {
+  if (info.outcome !== 'chombo' || !info.penaltyFor) {
     return;
   }
   return _getPlayerName(players, info.penaltyFor);
