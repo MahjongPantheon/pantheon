@@ -55,7 +55,6 @@ type GenericResponse = {
 
 export class RiichiApiService {
   private _authToken: string | null = null;
-  constructor(private http: HttpClient) { }
   setCredentials(token: string) {
     this._authToken = token;
   }
@@ -138,11 +137,11 @@ export class RiichiApiService {
   /////////////////////////////////////////////////////////////////////////////////////
 
   private _jsonRpcRequest<RET_TYPE>(methodName: string, ...params: any[]): Promise<RET_TYPE> {
-    const commonHeaders = new HttpHeaders({
-      'Content-type': 'application/json',
-      'X-Api-Version': environment.apiVersion.map((v) => v.toString()).join('.'),
-      'X-Auth-Token': this._authToken || '',
-    });
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-Api-Version', environment.apiVersion.map((v) => v.toString()).join('.'));
+    headers.append('X-Auth-Token', this._authToken || '');
+
     const jsonRpcBody = {
       jsonrpc: '2.0',
       method: methodName,
@@ -150,18 +149,24 @@ export class RiichiApiService {
       id: Math.round(1000000 * Math.random()) // TODO: bind request to response?
     };
 
-    return this.http
-      .post(environment.apiUrl, jsonRpcBody, { headers: commonHeaders })
-      .toPromise()
-      .then<RET_TYPE>((response: GenericResponse) => {
-        if (response.error) {
+    const fetchInit: RequestInit = {
+      method: 'post',
+      headers,
+      mode: 'same-origin',
+      body: JSON.stringify(jsonRpcBody)
+    };
+
+    return fetch(environment.apiUrl, fetchInit)
+      .then((r) => r.json())
+      .then<RET_TYPE>((resp: GenericResponse) => {
+        if (resp.error) {
           if (!environment.production) {
-            console.error(response.error.message);
+            console.error(resp.error.message);
           }
-          throw new RemoteError(response.error.message, response.error.code.toString());
+          throw new RemoteError(resp.error.message, resp.error.code.toString());
         }
 
-        return response.result; // TODO: runtime checks of object structure
+        return resp.result; // TODO: runtime checks of object structure
       });
   }
 }

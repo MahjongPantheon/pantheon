@@ -109,11 +109,7 @@ export function lastResultsFormatter(list: RPlayerData[]): LUserWithScore[] {
   }));
 }
 
-export function gameConfigFormatter(config: RGameConfig): LGameConfig | null {
-  if (!config) {
-    return null;
-  }
-
+export function gameConfigFormatter(config: RGameConfig): LGameConfig {
   return {
     yakuWithPao: (config.yakuWithPao || []).map((y) => parseInt(y.toString(), 10)),
     allowedYaku: (config.allowedYaku || []).map((y) => parseInt(y.toString(), 10)),

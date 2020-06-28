@@ -38,12 +38,12 @@ export class MetrikaService {
   private _eventId: number | null = null;
   private _metrikaId: number | null = null;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this._metrikaId = environment.metrikaId;
   }
 
   setUserId(userId: number) {
-    if (this._metrikaId == 0) {
+    if (!this._metrikaId) {
       return;
     }
     window.ym(this._metrikaId, 'setUserID', userId.toString());
@@ -54,7 +54,7 @@ export class MetrikaService {
   }
 
   track(action: string, params: { [key: string]: any } = {}, eventId?: number) {
-    if (this._metrikaId == 0) {
+    if (!this._metrikaId) {
       return;
     }
 
