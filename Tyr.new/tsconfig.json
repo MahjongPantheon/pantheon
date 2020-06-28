@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react",
+    "baseUrl": "",
+    "lib": ["es6", "dom"],
+    "mapRoot": "./",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "outDir": "dist/out-tsc",
+    "sourceMap": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "paths": {
+      "#/*": ["app/*"]
+    }
+  }
+}
