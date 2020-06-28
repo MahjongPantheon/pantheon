@@ -16,7 +16,8 @@
       "node_modules/@types"
     ],
     "paths": {
-      "#/*": ["app/*"]
+      "#/*": ["app/*"],
+      "#config": ["app/envConfig/environment.prod.ts"]
     }
   }
 }

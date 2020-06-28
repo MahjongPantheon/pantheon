@@ -45,6 +45,7 @@ import {
   gameOverviewFormatter
 } from './formatters';
 import {IAppState} from '#/store/interfaces';
+import {environment} from "#config";
 
 type GenericResponse = {
   error?: { message: string, code: any },
@@ -53,7 +54,7 @@ type GenericResponse = {
 };
 
 export class RiichiApiService {
-  private _authToken: string = null;
+  private _authToken: string | null = null;
   constructor(private http: HttpClient) { }
   setCredentials(token: string) {
     this._authToken = token;
@@ -139,7 +140,7 @@ export class RiichiApiService {
   private _jsonRpcRequest<RET_TYPE>(methodName: string, ...params: any[]): Promise<RET_TYPE> {
     const commonHeaders = new HttpHeaders({
       'Content-type': 'application/json',
-      'X-Api-Version': config.apiVersion.map((v) => v.toString()).join('.'),
+      'X-Api-Version': environment.apiVersion.map((v) => v.toString()).join('.'),
       'X-Auth-Token': this._authToken || '',
     });
     const jsonRpcBody = {
@@ -154,7 +155,7 @@ export class RiichiApiService {
       .toPromise()
       .then<RET_TYPE>((response: GenericResponse) => {
         if (response.error) {
-          if (isDevMode()) {
+          if (!environment.production) {
             console.error(response.error.message);
           }
           throw new RemoteError(response.error.message, response.error.code.toString());

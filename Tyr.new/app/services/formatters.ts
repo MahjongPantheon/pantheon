@@ -28,7 +28,7 @@ import {
   LTimerState, LGameConfig, LSessionOverview
 } from '#/interfaces/local';
 import { Player, Table } from '#/interfaces/common';
-import { YakuId } from '../primitives/yaku';
+import { YakuId } from '#/primitives/yaku';
 import {
   getLosingUsers,
   getNagashiUsers,
@@ -40,6 +40,7 @@ import {
 import {IAppState} from '#/store/interfaces';
 import {getDora, getFu, getHan} from '#/store/selectors/hanFu';
 import {getSelectedYaku} from '#/store/selectors/yaku';
+import {environment} from "#config";
 
 export function gameOverviewFormatter(overview: RSessionOverview): LSessionOverview {
   return {

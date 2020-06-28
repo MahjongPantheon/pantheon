@@ -2,6 +2,7 @@ import { IDBImpl } from './interface';
 import { IDBStorageImpl } from './localstorageImpl';
 import { IDBCookieImpl } from './cookiestorageImpl';
 import { MetrikaService } from '../metrika';
+import {environment} from "#config";
 
 /**
  * Implementation of persistent storage with synchronization

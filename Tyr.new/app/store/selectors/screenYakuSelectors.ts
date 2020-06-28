@@ -6,7 +6,7 @@ import {
   yakuGroups,
   yakumanGroups,
   yakuRareGroups
-} from '../../../components/screen-yaku-select/yaku-lists';
+} from '#/primitives/yaku-lists';
 import { memoize } from '#/primitives/memoize';
 import {getAllowedYaku} from './yaku';
 
@@ -18,7 +18,7 @@ function _getYakuList(state: IAppState): {
     groups: Yaku[][]
   }>
 } {
-  const yakuList = {};
+  const yakuList: { [key: number]: Array<{ anchor: string; groups: Yaku[][] }>} = {};
   for (let user of getWinningUsers(state)) {
     yakuList[user.id] = [
       { anchor: 'simple', groups: filterAllowed(yakuGroups, state.gameConfig.allowedYaku) },

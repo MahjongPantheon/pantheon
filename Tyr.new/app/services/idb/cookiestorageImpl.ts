@@ -3,10 +3,10 @@ import { IDBImpl } from './interface';
 // Cookie driver
 export class IDBCookieImpl implements IDBImpl {
   private keyPrefix: string;
-  private cookieDomain: string;
+  private cookieDomain: string | null;
   private meta: { [key: string]: any } = {};
 
-  constructor(keyPrefix: string, cookieDomain: string) {
+  constructor(keyPrefix: string, cookieDomain: string | null) {
     this.keyPrefix = keyPrefix + '.';
     this.cookieDomain = cookieDomain;
     this.meta = this.get('__meta');

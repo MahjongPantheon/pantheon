@@ -18,6 +18,8 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import {environment} from "#config";
+
 export class MetrikaService {
 
   public static readonly NOT_INITIALIZED = 'not_initialized';
