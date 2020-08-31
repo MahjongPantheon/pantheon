@@ -1,10 +1,10 @@
-import { Dispatch, Store as ReduxStore } from 'redux';
+import { Dispatch, MiddlewareAPI, Store as ReduxStore } from 'redux';
 import { ADD_YAKU, AppActionTypes, REMOVE_YAKU } from '../actions/interfaces';
 import { I18nService } from '#/services/i18n';
 import { YakuId } from '#/primitives/yaku';
 import { IAppState } from '../interfaces';
 
-export const yaku = (i18n: I18nService) => (store: ReduxStore<IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
+export const yaku = (i18n: I18nService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
     case ADD_YAKU:
     case REMOVE_YAKU:
@@ -14,7 +14,7 @@ export const yaku = (i18n: I18nService) => (store: ReduxStore<IAppState>) => (ne
       }
 
       if (action.payload.id === YakuId.DOUBLERIICHI) {
-        const outcome = store.getState().currentOutcome;
+        const outcome = mw.getState().currentOutcome;
         if (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo' || outcome?.selectedOutcome === 'multiron') {
           if (action.payload.winner && outcome.riichiBets.indexOf(action.payload.winner) === -1) {
             alert(i18n._t('If you want to select a riichi, return back and press riichi button for the winner'));

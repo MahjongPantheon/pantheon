@@ -1,10 +1,10 @@
-import {Dispatch, Store as ReduxStore} from 'redux';
+import { Dispatch, MiddlewareAPI } from 'redux';
 import {AppActionTypes, SET_TIMER, UPDATE_TIMER_DATA} from '../actions/interfaces';
 import {IAppState, TimerStorage} from '../interfaces';
 
 const now = () => Math.round((new Date()).getTime() / 1000);
 
-export const timerMw = (timerStorage: TimerStorage) => (store: ReduxStore<IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
+export const timerMw = (timerStorage: TimerStorage) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
     case SET_TIMER:
       if (action.payload.waiting) {
@@ -22,8 +22,8 @@ export const timerMw = (timerStorage: TimerStorage) => (store: ReduxStore<IAppSt
         }
 
         timerStorage.timer = timerStorage.setInterval(() => {
-          const gameEnded = !store.getState().currentSessionHash;
-          const timerNotRequired = !store.getState().gameConfig.useTimer;
+          const gameEnded = !mw.getState().currentSessionHash;
+          const timerNotRequired = !mw.getState().gameConfig.useTimer;
           if (gameEnded || timerNotRequired) {
             if (timerStorage.timer) {
               timerStorage.clearInterval(timerStorage.timer);
@@ -31,8 +31,8 @@ export const timerMw = (timerStorage: TimerStorage) => (store: ReduxStore<IAppSt
             return;
           }
           // Calc delta to support mobile suspending with js timers stopping
-          let delta = (now() - store.getState().timer.lastUpdateTimestamp);
-          let timeRemaining = store.getState().timer.lastUpdateSecondsRemaining - delta;
+          let delta = (now() - mw.getState().timer.lastUpdateTimestamp);
+          let timeRemaining = mw.getState().timer.lastUpdateSecondsRemaining - delta;
           if (timeRemaining <= 0) {
             // timer is finished
             next({ type: UPDATE_TIMER_DATA, payload: {

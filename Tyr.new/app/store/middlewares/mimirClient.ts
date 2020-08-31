@@ -1,4 +1,4 @@
-import {Dispatch, Store as ReduxStore} from 'redux';
+import { Dispatch, MiddlewareAPI } from 'redux';
 import {
   ADD_ROUND_FAIL,
   ADD_ROUND_INIT,
@@ -43,21 +43,21 @@ import {LCurrentGame, LGameConfig, LTimerState, LUser} from '#/interfaces/local'
 import {RemoteError} from '#/services/remoteError';
 import {IAppState} from '../interfaces';
 
-export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) =>
+export const mimirClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
     case CONFIRM_REGISTRATION_INIT:
-      loginWithRetry(action.payload, api, store.dispatch, next);
+      loginWithRetry(action.payload, api, mw.dispatch, next);
       break;
     case SET_CREDENTIALS:
       api.setCredentials(action.payload);
       break;
     case UPDATE_CURRENT_GAMES_INIT:
-      updateCurrentGames(api, next, store.dispatch);
+      updateCurrentGames(api, next, mw.dispatch);
       break;
     case GET_GAME_OVERVIEW_INIT:
       if (!action.payload) {
-        store.dispatch({ type: RESET_STATE });
+        mw.dispatch({ type: RESET_STATE });
         return;
       }
       getGameOverview(action.payload, api, next);
@@ -72,7 +72,7 @@ export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) =>
       getOtherTable(action.payload, api, next);
       break;
     case GET_OTHER_TABLE_RELOAD:
-      getOtherTableReload(store.getState().currentOtherTableHash, api, next);
+      getOtherTableReload(mw.getState().currentOtherTableHash || '', api, next);
       break;
     case GET_OTHER_TABLE_LAST_ROUND_INIT:
     case GET_LAST_ROUND_INIT:
@@ -88,10 +88,10 @@ export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) =>
       getAllPlayers(api, next);
       break;
     case START_GAME_INIT:
-      startGame(action.payload, api, next, store.dispatch);
+      startGame(action.payload, api, next, mw.dispatch);
       break;
     case ADD_ROUND_INIT:
-      addRound(action.payload, api, next, store.dispatch);
+      addRound(action.payload, api, next, mw.dispatch);
       break;
     default:
       return next(action);

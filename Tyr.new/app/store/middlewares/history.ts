@@ -1,4 +1,4 @@
-import {Dispatch, Store as ReduxStore} from 'redux';
+import { Dispatch, MiddlewareAPI } from 'redux';
 import {
   AppActionTypes,
   CONFIRM_REGISTRATION_FAIL,
@@ -8,8 +8,9 @@ import {
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_SUCCESS
 } from '../actions/interfaces';
+import { IAppState } from "#/store/interfaces";
 
-export const history = (/* HistoryService ? */) => (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
+export const history = (/* HistoryService ? */) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
 // TODO !
     default:

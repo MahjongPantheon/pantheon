@@ -1,4 +1,4 @@
-import {Dispatch, Store as ReduxStore} from 'redux';
+import { Dispatch, MiddlewareAPI } from 'redux';
 import {
   AppActionTypes,
   CONFIRM_REGISTRATION_FAIL,
@@ -25,8 +25,9 @@ import {
   UPDATE_CURRENT_GAMES_SUCCESS
 } from '../actions/interfaces';
 import {MetrikaService} from '#/services/metrika';
+import { IAppState } from "#/store/interfaces";
 
-export const metrika = (ms: MetrikaService) => (store: ReduxStore) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
+export const metrika = (ms: MetrikaService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
     case TRACK_ARBITRARY_EVENT:
       ms.track(action.payload[0], action.payload[1]);
@@ -73,7 +74,7 @@ export const metrika = (ms: MetrikaService) => (store: ReduxStore) => (next: Dis
     case GET_GAME_OVERVIEW_SUCCESS:
       ms.track(MetrikaService.LOAD_SUCCESS, {
         type: 'game-overview',
-        finished: store.getState().finished // TODO: check param
+        finished: mw.getState().finished // TODO: check param
       });
       break;
     case GET_GAME_OVERVIEW_FAIL:

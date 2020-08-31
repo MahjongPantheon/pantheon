@@ -19,5 +19,6 @@
       "#/*": ["app/*"],
       "#config": ["app/envConfig/environment.prod.ts"]
     }
-  }
+  },
+  "exclude": ["*/**/*.spec.ts"]
 }
