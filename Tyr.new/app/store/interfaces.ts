@@ -32,27 +32,27 @@ export type ErrorState = {
 
 export interface IAppState {
   currentScreen: AppScreen;
-  currentSessionHash: string;
+  currentSessionHash?: string;
   currentOutcome?: AppOutcome;
   currentRound: number;
-  currentPlayerDisplayName: string;
-  currentPlayerId: number;
-  players: [Player, Player, Player, Player] | null; // e-s-w-n
+  currentPlayerDisplayName?: string;
+  currentPlayerId?: number;
+  players?: [Player, Player, Player, Player]; // e-s-w-n
   mapIdToPlayer: { [key: number]: Player };
   riichiOnTable: number;
   honba: number;
   multironCurrentWinner?: number;
   isLoggedIn: boolean;
-  gameConfig: LGameConfig;
-  tableIndex: number;
+  gameConfig?: LGameConfig;
+  tableIndex?: number;
   yellowZoneAlreadyPlayed: boolean;
   currentOtherTableIndex: number;
-  currentOtherTableHash: string | null;
+  currentOtherTableHash?: string;
   currentOtherTablePlayers: Player[];
   isIos: boolean;
   loading: LoadingSet;
-  timer: TimerData;
-  yakuList: Graph<Yaku>;
+  timer?: TimerData;
+  yakuList?: Graph<Yaku>;
 
   allPlayers?: LUser[];
   allPlayersError?: ErrorState;
@@ -95,7 +95,7 @@ export interface IAppState {
 }
 
 export type TimerStorage = {
-  timer: number | null;
+  timer?: number;
   setInterval: (callback: () => any, milliseconds: number) => number;
   clearInterval: (handle: number) => void;
 }

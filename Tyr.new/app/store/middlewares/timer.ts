@@ -1,6 +1,6 @@
 import { Dispatch, MiddlewareAPI } from 'redux';
-import {AppActionTypes, SET_TIMER, UPDATE_TIMER_DATA} from '../actions/interfaces';
-import {IAppState, TimerStorage} from '../interfaces';
+import { AppActionTypes, SET_TIMER, UPDATE_TIMER_DATA } from '../actions/interfaces';
+import { IAppState, TimerStorage } from '../interfaces';
 
 const now = () => Math.round((new Date()).getTime() / 1000);
 
@@ -11,7 +11,7 @@ export const timerMw = (timerStorage: TimerStorage) => (mw: MiddlewareAPI<Dispat
         if (timerStorage.timer) {
           timerStorage.clearInterval(timerStorage.timer);
         }
-        timerStorage.timer = null;
+        timerStorage.timer = undefined;
         next({ type: UPDATE_TIMER_DATA, payload: {
           ...action.payload,
           lastUpdateTimestamp: undefined
@@ -23,7 +23,7 @@ export const timerMw = (timerStorage: TimerStorage) => (mw: MiddlewareAPI<Dispat
 
         timerStorage.timer = timerStorage.setInterval(() => {
           const gameEnded = !mw.getState().currentSessionHash;
-          const timerNotRequired = !mw.getState().gameConfig.useTimer;
+          const timerNotRequired = !mw.getState().gameConfig?.useTimer;
           if (gameEnded || timerNotRequired) {
             if (timerStorage.timer) {
               timerStorage.clearInterval(timerStorage.timer);
@@ -31,8 +31,8 @@ export const timerMw = (timerStorage: TimerStorage) => (mw: MiddlewareAPI<Dispat
             return;
           }
           // Calc delta to support mobile suspending with js timers stopping
-          let delta = (now() - mw.getState().timer.lastUpdateTimestamp);
-          let timeRemaining = mw.getState().timer.lastUpdateSecondsRemaining - delta;
+          let delta = (now() - (mw.getState().timer?.lastUpdateTimestamp || 0));
+          let timeRemaining = (mw.getState().timer?.lastUpdateSecondsRemaining || 0) - delta;
           if (timeRemaining <= 0) {
             // timer is finished
             next({ type: UPDATE_TIMER_DATA, payload: {
@@ -43,7 +43,7 @@ export const timerMw = (timerStorage: TimerStorage) => (mw: MiddlewareAPI<Dispat
             if (timerStorage.timer) {
               timerStorage.clearInterval(timerStorage.timer);
             }
-            timerStorage.timer = null;
+            timerStorage.timer = undefined;
           } else {
             next({ type: UPDATE_TIMER_DATA, payload: {
               ...action.payload,

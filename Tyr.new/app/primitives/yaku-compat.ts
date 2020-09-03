@@ -574,7 +574,10 @@ export function addYakuToList(yakuGraph: Graph<Yaku>, yaku: Y, selectedYaku: Y[]
   ).map((node) => node.data.id);
 }
 
-export function getAllowedYaku(yakuGraph: Graph<Yaku>, enabledYaku: Y[]): Y[] {
+export function getAllowedYaku(yakuGraph: Graph<Yaku> | undefined, enabledYaku: Y[]): Y[] {
+  if (!yakuGraph) {
+    return [];
+  }
   return yakuGraph.getAllowedNodes(
     enabledYaku.map((id) => nodes[id])
   ).map((node) => node.data.id);

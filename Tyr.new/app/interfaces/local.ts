@@ -50,7 +50,7 @@ export interface LTimerState {
 }
 
 export interface LWinItem {
-  winner: number;
+  winner?: number;
   paoPlayerId?: number;
   han: number;
   fu: number;

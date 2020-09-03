@@ -1,4 +1,4 @@
-import {initBlankOutcome} from '../state';
+import { initBlankOutcome } from '../state';
 import {
   ADD_YAKU,
   AppActionTypes,
@@ -14,7 +14,7 @@ import {
   TOGGLE_RIICHI,
   TOGGLE_WINNER
 } from '../actions/interfaces';
-import {IAppState} from '../interfaces';
+import { IAppState } from '../interfaces';
 import {
   addYakuToProps,
   modifyDrawOutcome,
@@ -24,12 +24,12 @@ import {
   modifyWinOutcomeCommons,
   removeYakuFromProps
 } from './util';
-import {AppOutcome} from '#/interfaces/app';
-import {Player} from '#/interfaces/common';
+import { AppOutcome } from '#/interfaces/app';
+import { Player } from '#/interfaces/common';
 import { intersect } from '#/primitives/intersect';
-import {unpack} from '#/primitives/yaku-compat';
-import {getRequiredYaku} from '../selectors/yaku';
-import {YakuId} from '#/primitives/yaku';
+import { unpack } from '#/primitives/yaku-compat';
+import { getRequiredYaku } from '../selectors/yaku';
+import { YakuId } from '#/primitives/yaku';
 
 /**
  * Get id of player who is dealer in this round
@@ -54,7 +54,7 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
           stateUpdated.currentOutcome,
           stateUpdated.currentOutcome.selectedOutcome,
           yId,
-          stateUpdated.gameConfig.allowedYaku,
+          stateUpdated.gameConfig?.allowedYaku || [],
           stateUpdated.yakuList,
           stateUpdated.currentOutcome.riichiBets
         );
@@ -70,7 +70,7 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
           stateUpdated.currentOutcome.wins[targetPlayer],
           stateUpdated.currentOutcome.selectedOutcome,
           yId,
-          stateUpdated.gameConfig.allowedYaku,
+          stateUpdated.gameConfig?.allowedYaku || [],
           stateUpdated.yakuList,
           stateUpdated.currentOutcome.riichiBets
         );
@@ -199,7 +199,7 @@ export function outcomeReducer(
             winner: state.currentOutcome.winner === action.payload
               ? undefined
               : action.payload,
-            winnerIsDealer: state.currentOutcome.winner === null && state.players !== null &&
+            winnerIsDealer: state.currentOutcome.winner === undefined && state.players !== undefined &&
               getDealerId(state.currentOutcome, state.players) === action.payload
           });
         case 'draw':
@@ -218,7 +218,7 @@ export function outcomeReducer(
           return modifyMultiwin(
             state,
             action.payload,
-            state.players !== null && getDealerId(state.currentOutcome, state.players) === action.payload,
+            state.players !== undefined && getDealerId(state.currentOutcome, state.players) === action.payload,
             !!state.currentOutcome.wins[action.payload]
           );
         default:
@@ -233,7 +233,7 @@ export function outcomeReducer(
             loser: state.currentOutcome.loser === action.payload
               ? undefined
               : action.payload,
-            loserIsDealer: state.currentOutcome.loser === null && state.players !== null
+            loserIsDealer: state.currentOutcome.loser === undefined && state.players !== undefined
               && getDealerId(state.currentOutcome, state.players) === action.payload
           });
         default:
@@ -252,6 +252,9 @@ export function outcomeReducer(
         case 'multiron':
           let newState = state;
           for (let pId in state.currentOutcome.wins) {
+            if (!state.currentOutcome.wins.hasOwnProperty(pId)) {
+              continue;
+            }
             if (intersect(unpack(state.currentOutcome.wins[pId].yaku), action.payload.yakuWithPao).length !== 0) {
               newState = modifyWinOutcome(newState, {
                 paoPlayerId: state.currentOutcome.wins[pId].paoPlayerId === action.payload.id ? undefined : action.payload.id

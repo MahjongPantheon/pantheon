@@ -48,7 +48,7 @@ function _playersValid(state: IAppState) {
   }
 
   // There must be Current Player
-  if (ids.indexOf(state.currentPlayerId) == -1) {
+  if (!state.currentPlayerId || ids.indexOf(state.currentPlayerId) == -1) {
     return false;
   }
 

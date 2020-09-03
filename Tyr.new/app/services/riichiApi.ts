@@ -106,7 +106,7 @@ export class RiichiApiService {
   }
 
   getChangesOverview(state: IAppState) {
-    const gameHashcode: string = state.currentSessionHash;
+    const gameHashcode: string = state.currentSessionHash || '';
     const roundData = formatRoundToRemote(state);
     return this._jsonRpcRequest<RRoundPaymentsInfo>('addRound', gameHashcode, roundData, true);
   }
@@ -124,7 +124,7 @@ export class RiichiApiService {
   }
 
   addRound(state: IAppState) {
-    const gameHashcode: string = state.currentSessionHash;
+    const gameHashcode: string = state.currentSessionHash || '';
     const roundData = formatRoundToRemote(state);
     return this._jsonRpcRequest<boolean | SessionState>('addRound', gameHashcode, roundData, false);
   }

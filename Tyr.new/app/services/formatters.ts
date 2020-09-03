@@ -37,10 +37,10 @@ import {
   getWinningUsers,
   getWins
 } from '#/store/selectors/mimirSelectors';
-import {IAppState} from '#/store/interfaces';
-import {getDora, getFu, getHan} from '#/store/selectors/hanFu';
-import {getSelectedYaku} from '#/store/selectors/yaku';
-import {environment} from "#config";
+import { IAppState } from '#/store/interfaces';
+import { getDora, getFu, getHan } from '#/store/selectors/hanFu';
+import { getSelectedYaku } from '#/store/selectors/yaku';
+import { environment } from "#config";
 
 export function gameOverviewFormatter(overview: RSessionOverview): LSessionOverview {
   return {

@@ -27,9 +27,9 @@ import {
   AppOutcomeChombo,
   AppOutcomeMultiRon,
   AppOutcomeNagashi
-} from '../../interfaces/app';
-import { Outcome as OutcomeType } from '../../interfaces/common';
-import { getFixedFu } from '../../primitives/yaku-values';
+} from '#/interfaces/app';
+import { Outcome as OutcomeType } from '#/interfaces/common';
+import { getFixedFu } from '#/primitives/yaku-values';
 import { IAppState } from './interfaces';
 import { defaultPlayer } from './selectors/screenNewGameSelectors';
 
@@ -41,23 +41,23 @@ export const initialState: IAppState = {
   yakuList: undefined,
 
   currentScreen: 'overview',
-  currentSessionHash: null,
-  currentOutcome: null,
+  currentSessionHash: undefined,
+  currentOutcome: undefined,
   currentRound: 1,
-  currentPlayerDisplayName: null,
-  currentPlayerId: null,
-  players: null, // e-s-w-n,
+  currentPlayerDisplayName: undefined,
+  currentPlayerId: undefined,
+  players: undefined, // e-s-w-n,
   mapIdToPlayer: {},
   riichiOnTable: 0,
   honba: 0,
-  multironCurrentWinner: null,
+  multironCurrentWinner: undefined,
   isLoggedIn: false,
-  gameConfig: null,
-  tableIndex: null,
+  gameConfig: undefined,
+  tableIndex: undefined,
   yellowZoneAlreadyPlayed: false,
   otherTablesList: [],
-  currentOtherTable: null,
-  currentOtherTableHash: null,
+  currentOtherTable: undefined,
+  currentOtherTableHash: undefined,
   currentOtherTablePlayers: [],
   isIos: false,
 
@@ -83,8 +83,8 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       const outcomeRon: AppOutcomeRon = {
         selectedOutcome: 'ron',
         roundIndex: round,
-        loser: null,
-        winner: null,
+        loser: undefined,
+        winner: undefined,
         winnerIsDealer: false,
         loserIsDealer: false,
         han: 0,
@@ -101,7 +101,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       const outcomeMultiRon: AppOutcomeMultiRon = {
         selectedOutcome: 'multiron',
         roundIndex: round,
-        loser: null,
+        loser: undefined,
         loserIsDealer: false,
         multiRon: 0,
         riichiBets: [],
@@ -113,7 +113,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       const outcomeTsumo: AppOutcomeTsumo = {
         selectedOutcome: 'tsumo',
         roundIndex: round,
-        winner: null,
+        winner: undefined,
         winnerIsDealer: false,
         han: 0,
         fu: 30,
@@ -159,7 +159,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       const outcomeChombo: AppOutcomeChombo = {
         selectedOutcome: 'chombo',
         roundIndex: round,
-        loser: null,
+        loser: undefined,
         loserIsDealer: false
       };
       out = outcomeChombo;

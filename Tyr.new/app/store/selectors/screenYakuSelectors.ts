@@ -18,6 +18,10 @@ function _getYakuList(state: IAppState): {
     groups: Yaku[][]
   }>
 } {
+  if (!state.gameConfig) {
+    return {};
+  }
+
   const yakuList: { [key: number]: Array<{ anchor: string; groups: Yaku[][] }>} = {};
   for (let user of getWinningUsers(state)) {
     yakuList[user.id] = [

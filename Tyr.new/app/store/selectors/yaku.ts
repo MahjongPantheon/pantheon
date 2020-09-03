@@ -19,21 +19,25 @@
  */
 
 import { getAllowedYaku as getAllowedYakuCompat, limits, unpack } from '#/primitives/yaku-compat';
-import {IAppState} from '../interfaces';
-import {YakuId} from '#/primitives/yaku';
-import {WinProps} from '#/interfaces/app';
+import { IAppState } from '../interfaces';
+import { YakuId } from '#/primitives/yaku';
+import { WinProps } from '#/interfaces/app';
 
 export function getRequiredYaku(state: IAppState, currentWinner?: number): YakuId[] {
   const outcome = state.currentOutcome;
+  if (!outcome) {
+    return [];
+  }
+
   const existingYaku: YakuId[] = getSelectedYaku(state);
-  switch (outcome?.selectedOutcome) {
+  switch (outcome.selectedOutcome) {
     case 'ron':
-      if (outcome.riichiBets.indexOf(outcome.winner) !== -1) {
+      if (outcome.winner && outcome.riichiBets.indexOf(outcome.winner) !== -1) {
         return [YakuId.RIICHI].filter((y) => !existingYaku.includes(y));
       }
       break;
     case 'tsumo':
-      if (outcome.riichiBets.indexOf(outcome.winner) !== -1) {
+      if (outcome.winner && outcome.riichiBets.indexOf(outcome.winner) !== -1) {
         return [
           YakuId.RIICHI,
           YakuId.MENZENTSUMO
@@ -125,8 +129,12 @@ export function getAllowedYaku(state: IAppState): YakuId[] {
   }
 }
 
-function _excludeYaku(state: IAppState, winner: number, rawYakuList: YakuId[], list: YakuId[], toBeExcluded: YakuId[]) {
+function _excludeYaku(state: IAppState, winner: number | undefined, rawYakuList: YakuId[], list: YakuId[], toBeExcluded: YakuId[]) {
   const outcome = state.currentOutcome;
+  if (!winner || !outcome) {
+    return [];
+  }
+
   return list.filter((yaku: YakuId) => {
     if ( // disable ippatsu if riichi or double riichi is not selected
       yaku === YakuId.IPPATSU

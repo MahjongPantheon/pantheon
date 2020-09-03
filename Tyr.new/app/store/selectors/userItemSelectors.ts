@@ -20,7 +20,7 @@ export function showWinButton(state: IAppState) {
 }
 
 export function showPaoButton(state: IAppState) {
-  if (state.currentScreen !== 'paoSelect') {
+  if (!state.gameConfig || state.currentScreen !== 'paoSelect') {
     return false;
   }
 
@@ -35,6 +35,9 @@ export function showPaoButton(state: IAppState) {
         return false;
       }
       for (let idx in state.currentOutcome.wins) {
+        if (!state.currentOutcome.wins.hasOwnProperty(idx)) {
+          continue;
+        }
         let win = state.currentOutcome.wins[idx];
         if (
           win.winner === state.currentPlayerId &&

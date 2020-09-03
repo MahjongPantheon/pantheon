@@ -10,27 +10,35 @@ import {
 } from '../actions/interfaces';
 import {IDBImpl} from '#/services/idb/interface';
 import {IAppState} from '../interfaces';
+import { RemoteError } from "#/services/remoteError";
 
 export const persistentMw = (storage: IDBImpl) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   const token = storage.get('authToken');
+  let hash: string | undefined;
   switch (action.type) {
     case STARTUP_WITH_AUTH:
       if (!token) { // Not logged in
         // TODO: looks like kludge. These two actions get user to the login screen.
-        mw.dispatch({ type: CONFIRM_REGISTRATION_FAIL, payload: { message: 'Not logged in' } });
+        mw.dispatch({ type: CONFIRM_REGISTRATION_FAIL, payload: new RemoteError('Not logged in', '403') });
         mw.dispatch({ type: RESET_REGISTRATION_ERROR }); // this resets error screen
         return;
       }
 
       mw.dispatch({ type: SET_CREDENTIALS, payload: token });
       mw.dispatch({ type: UPDATE_CURRENT_GAMES_INIT }); // TODO: move somewhere, persistent-storage mw is not best place for such logic
-      mw.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: mw.getState().currentSessionHash }); // TODO: and for this too
+      hash = mw.getState().currentSessionHash;
+      if (hash) {
+        mw.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: hash }); // TODO: and for this too
+      }
       break;
     case CONFIRM_REGISTRATION_SUCCESS:
       storage.set('authToken', action.payload);
       mw.dispatch({ type: SET_CREDENTIALS, payload: action.payload });
       mw.dispatch({ type: UPDATE_CURRENT_GAMES_INIT }); // TODO: move somewhere, persistent-storage mw is not best place for such logic
-      mw.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: mw.getState().currentSessionHash }); // TODO: and for this too
+      hash = mw.getState().currentSessionHash;
+      if (hash) {
+        mw.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: hash }); // TODO: and for this too
+      }
       break;
     case CONFIRM_REGISTRATION_INIT:
       // Remove current token, we're going to get the new one
@@ -41,7 +49,7 @@ export const persistentMw = (storage: IDBImpl) => (mw: MiddlewareAPI<Dispatch<Ap
       storage.delete(['authToken']);
       mw.dispatch({ type: SET_CREDENTIALS, payload: '' });
       // TODO: looks like kludge. These two actions get user to the login screen.
-      mw.dispatch({ type: CONFIRM_REGISTRATION_FAIL, payload: { message: 'Not logged in' } });
+      mw.dispatch({ type: CONFIRM_REGISTRATION_FAIL, payload: new RemoteError('Not logged in', '403') });
       mw.dispatch({ type: RESET_REGISTRATION_ERROR }); // this resets error screen
       break;
     case SETTINGS_SAVE_THEME:

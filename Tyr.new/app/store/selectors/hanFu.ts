@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {IAppState} from '../interfaces';
+import { IAppState } from '../interfaces';
 import { memoize } from '#/primitives/memoize';
 
 function _getHan(state: IAppState, user?: number) {

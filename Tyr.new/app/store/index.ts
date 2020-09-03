@@ -27,7 +27,7 @@ export class Store {
 
   constructor(i18n: I18nService) {
     this.timerSt = {
-      timer: null,
+      timer: undefined,
       setInterval: window.setInterval,
       clearInterval: window.clearInterval
     };

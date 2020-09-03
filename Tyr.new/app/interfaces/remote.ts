@@ -20,7 +20,7 @@
 
 export interface WinItem {
   riichi: string; // comma-separated
-  winner_id: number;
+  winner_id?: number;
   pao_player_id?: number;
   han: number;
   fu: number;

@@ -60,6 +60,10 @@ export function getGameConfig(state: IAppState, key: keyof LGameConfig) {
 }
 
 function _winnerHasYakuWithPao(state: IAppState): boolean {
+  if (!state.gameConfig) {
+    return false;
+  }
+
   const outcome: AppOutcome | undefined = state.currentOutcome;
   const gameConfig: LGameConfig = state.gameConfig;
   if (!outcome) {
@@ -219,16 +223,16 @@ export const getRiichiUsers: typeof _getRiichiUsers = memoize(_getRiichiUsers);
 
 function _getCurrentTimerZone(state: IAppState) {
   let zoneLength;
-  switch (state.gameConfig.timerPolicy) {
+  switch (state.gameConfig?.timerPolicy) {
     case 'redZone':
       zoneLength = state.gameConfig.redZone;
-      if (zoneLength && (state.timer.secondsRemaining < zoneLength) && !state.timer.waiting) {
+      if (zoneLength && ((state.timer?.secondsRemaining || 0) < zoneLength) && !state.timer?.waiting) {
         return 'redZone';
       }
       break;
     case 'yellowZone':
       zoneLength = state.gameConfig.yellowZone;
-      if (zoneLength && (state.timer.secondsRemaining < zoneLength) && !state.timer.waiting) {
+      if (zoneLength && ((state.timer?.secondsRemaining || 0) < zoneLength) && !state.timer?.waiting) {
         return state.yellowZoneAlreadyPlayed ? 'redZone' : 'yellowZone';
       }
       break;

@@ -1,15 +1,15 @@
-import {IAppState} from '../interfaces';
-import {yakumanInYaku} from './yaku';
-import {getFu, getHan, getPossibleFu} from './hanFu';
-import {getLosingUsers, getNagashiUsers, getWinningUsers} from './mimirSelectors';
-import {I18nService} from '#/services/i18n';
+import { IAppState } from '../interfaces';
+import { yakumanInYaku } from './yaku';
+import { getFu, getHan, getPossibleFu } from './hanFu';
+import { getLosingUsers, getNagashiUsers, getWinningUsers } from './mimirSelectors';
+import { I18nService } from '#/services/i18n';
 
 export function doraOptions(state: IAppState) {
   if (yakumanInYaku(state)) {
     return [0];
   }
 
-  if (state.gameConfig.rulesetTitle === 'jpmlA') {
+  if (state.gameConfig?.rulesetTitle === 'jpmlA') {
     // TODO: make withUradora/withKandora config items and use them, not title!
     return [0, 1, 2, 3, 4];
   }
@@ -36,7 +36,7 @@ export function selectedDora(state: IAppState) {
       }
       return state.currentOutcome.wins[state.multironCurrentWinner].dora;
     default:
-      return null;
+      return undefined;
   }
 }
 

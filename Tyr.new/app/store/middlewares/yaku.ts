@@ -1,4 +1,4 @@
-import { Dispatch, MiddlewareAPI, Store as ReduxStore } from 'redux';
+import { Dispatch, MiddlewareAPI } from 'redux';
 import { ADD_YAKU, AppActionTypes, REMOVE_YAKU } from '../actions/interfaces';
 import { I18nService } from '#/services/i18n';
 import { YakuId } from '#/primitives/yaku';

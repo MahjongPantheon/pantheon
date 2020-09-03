@@ -1,10 +1,10 @@
-import {IAppState} from '../interfaces';
-import {AppOutcome, DrawOutcomeProps, LoseOutcomeProps, WinOutcomeProps, WinProps} from '#/interfaces/app';
-import {YakuId} from '#/primitives/yaku';
-import {addYakuToList, limits, pack, unpack} from '#/primitives/yaku-compat';
-import {getFixedFu, getHan} from '#/primitives/yaku-values';
-import {Graph} from '#/primitives/graph';
-import {Yaku} from '#/interfaces/common';
+import { IAppState } from '../interfaces';
+import { AppOutcome, DrawOutcomeProps, LoseOutcomeProps, WinOutcomeProps, WinProps } from '#/interfaces/app';
+import { YakuId } from '#/primitives/yaku';
+import { addYakuToList, limits, pack, unpack } from '#/primitives/yaku-compat';
+import { getFixedFu, getHan } from '#/primitives/yaku-values';
+import { Graph } from '#/primitives/graph';
+import { Yaku } from '#/interfaces/common';
 
 /**
  * Should be used only for common win props, like riichiBets! For all other things modifyWinOutcome should be used.
@@ -195,7 +195,7 @@ const yakuModAfterExceptions: YakuModException[] = [
 
 const yakuModBeforeExceptions: YakuModException[] = [
   function doubleRiichiSelect(outcome, winProps, yList, yakuId, riichiBets) {
-    if (yakuId === YakuId.DOUBLERIICHI && riichiBets.includes(winProps.winner)) {
+    if (yakuId === YakuId.DOUBLERIICHI && winProps.winner && riichiBets.includes(winProps.winner)) {
       if (yList.includes(YakuId.DOUBLERIICHI) && !yList.includes(YakuId.RIICHI)) {
         yList.push(YakuId.RIICHI);
       }
@@ -209,13 +209,17 @@ export function addYakuToProps(
   selectedOutcome: AppOutcome['selectedOutcome'],
   yakuId: YakuId,
   enabledYaku: YakuId[],
-  yakuGraph: Graph<Yaku>,
+  yakuGraph: Graph<Yaku> | undefined,
   riichiPlayers: number[]
-): WinProps | null {
+): WinProps | undefined {
+
+  if (!yakuGraph) {
+    return;
+  }
 
   let yList = unpack(winProps.yaku);
   if (yList.indexOf(yakuId) !== -1) {
-    return null;
+    return undefined;
   }
 
   // reset dora count if limit is added
@@ -260,11 +264,11 @@ export function removeYakuFromProps(
   selectedOutcome: AppOutcome['selectedOutcome'],
   yakuId: YakuId,
   riichiPlayers: number[]
-): WinProps | null {
+): WinProps | undefined {
 
   let yList = unpack(winProps.yaku);
   if (yList.indexOf(yakuId) === -1) {
-    return null;
+    return undefined;
   }
 
   yList = yakuModBeforeExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers), yList);

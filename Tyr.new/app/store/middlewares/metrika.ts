@@ -24,7 +24,7 @@ import {
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_SUCCESS
 } from '../actions/interfaces';
-import {MetrikaService} from '#/services/metrika';
+import { MetrikaService } from '#/services/metrika';
 import { IAppState } from "#/store/interfaces";
 
 export const metrika = (ms: MetrikaService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
@@ -73,8 +73,7 @@ export const metrika = (ms: MetrikaService) => (mw: MiddlewareAPI<Dispatch<AppAc
       break;
     case GET_GAME_OVERVIEW_SUCCESS:
       ms.track(MetrikaService.LOAD_SUCCESS, {
-        type: 'game-overview',
-        finished: mw.getState().finished // TODO: check param
+        type: 'game-overview'
       });
       break;
     case GET_GAME_OVERVIEW_FAIL:

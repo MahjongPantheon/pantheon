@@ -43,15 +43,14 @@ import {
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
-import {IAppState} from '../interfaces';
-import {makeYakuGraph} from '#/primitives/yaku-compat';
-import {RemoteError} from '#/services/remoteError';
-import {modifyArray} from './util';
-import {defaultPlayer} from '../selectors/screenNewGameSelectors';
-import {rand} from '#/primitives/rand';
-import {initialState} from '../state';
-import {Player} from "#/interfaces/common";
-import {LUser} from "#/interfaces/local";
+import { IAppState } from '../interfaces';
+import { makeYakuGraph } from '#/primitives/yaku-compat';
+import { modifyArray } from './util';
+import { defaultPlayer } from '../selectors/screenNewGameSelectors';
+import { rand } from '#/primitives/rand';
+import { initialState } from '../state';
+import { Player } from "#/interfaces/common";
+import { LUser } from "#/interfaces/local";
 
 export function mimirReducer(
   state: IAppState,
@@ -115,7 +114,7 @@ export function mimirReducer(
       }
 
       let mapIdToPlayer: { [key: string]: Player } = {};
-      let players = null;
+      let players = undefined;
       if (action.payload.games[0]) {
         players = action.payload.games[0].players;
         for (let p of players) {
@@ -253,7 +252,7 @@ export function mimirReducer(
       let code = 418;
       if (!action.payload) {
         error = 404;
-      } else if (action.payload instanceof RemoteError) {
+      } else {
         error = action.payload.code;
       }
 
@@ -451,7 +450,7 @@ export function mimirReducer(
           otherTable: false
         },
         currentOtherTable: undefined,
-        currentOtherTableHash: null,
+        currentOtherTableHash: undefined,
         currentOtherTableIndex: 0,
         lastRoundOverview: undefined,
         currentOtherTablePlayers: [],

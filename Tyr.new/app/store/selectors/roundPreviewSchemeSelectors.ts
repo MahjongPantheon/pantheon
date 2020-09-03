@@ -22,7 +22,7 @@ type RoundPaymentInfoShort = {
   paoPlayer?: number;
 };
 
-function _getPayment(state: IAppState, purpose: Csp, player1: Player, player2: Player): PaymentInfo | null {
+function _getPayment(state: IAppState, purpose: Csp, player1: Player, player2: Player): PaymentInfo | undefined {
   let overview;
   switch (purpose) {
     case 'lastround':
@@ -36,7 +36,7 @@ function _getPayment(state: IAppState, purpose: Csp, player1: Player, player2: P
       break;
   }
   if (!overview) {
-    return null;
+    return undefined;
   }
 
   const p = overview.payments;
@@ -49,7 +49,7 @@ function _getPayment(state: IAppState, purpose: Csp, player1: Player, player2: P
 
   // multiple nagashi
   if (directPayment12 === directPayment21 && directPayment12 !== 0) {
-    return null;
+    return undefined;
   }
 
   if (directPayment12 + riichiPayment12 > 0) {
@@ -69,16 +69,20 @@ function _getPayment(state: IAppState, purpose: Csp, player1: Player, player2: P
         .join(' + ')
     };
   } else {
-    return null;
+    return undefined;
   }
 }
 const getPayment = memoize(_getPayment);
 
-const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | null => {
+const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | undefined => {
+  if (!s.currentPlayerId) {
+    return;
+  }
+
   switch (purpose) {
     case 'lastround':
       if (!s.lastRoundOverview || !s.players) {
-        return null;
+        return undefined;
       }
       return {
         round: s.lastRoundOverview.round,
@@ -90,7 +94,7 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | n
       };
     case 'overview':
       if (!s.players) {
-        return null;
+        return undefined;
       }
       return {
         round: s.currentRound,
@@ -102,7 +106,7 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | n
       };
     case 'confirmation':
       if (!s.currentOutcome || !s.players) {
-        return null;
+        return undefined;
       }
       const [pao] = getPaoUsers(s);
       return {
@@ -115,7 +119,7 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | n
       }
     case 'other_overview':
       if (!s.currentOtherTable) {
-        return null;
+        return undefined;
       }
       return {
         round: s.currentOtherTable.currentRound,
@@ -127,7 +131,7 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | n
       }
     case 'otherlastround':
       if (!s.lastRoundOverview) {
-        return null;
+        return undefined;
       }
       return {
         round: s.lastRoundOverview.round,
@@ -176,9 +180,9 @@ export const getTopBottomPayment = (s: IAppState, p: Csp) => getPayment(s, p, ge
 export const getBottomLeftPayment = (s: IAppState, p: Csp) => getPayment(s, p, getSelf(s, p), getKamicha(s, p));
 export const getBottomRightPayment = (s: IAppState, p: Csp) => getPayment(s, p, getSelf(s, p), getShimocha(s, p));
 export const getLeftRightPayment = (s: IAppState, p: Csp) => getPayment(s, p, getKamicha(s, p), getShimocha(s, p));
-export const getIfAnyPaymentsOccured = (s: IAppState, p: Csp) => getTopLeftPayment(s, p) !== null
-  || getTopRightPayment(s, p) !== null
-  || getTopBottomPayment(s, p) !== null
-  || getBottomLeftPayment(s, p) !== null
-  || getBottomRightPayment(s, p) !== null
-  || getLeftRightPayment(s, p) !== null;
+export const getIfAnyPaymentsOccured = (s: IAppState, p: Csp) => getTopLeftPayment(s, p) !== undefined
+  || getTopRightPayment(s, p) !== undefined
+  || getTopBottomPayment(s, p) !== undefined
+  || getBottomLeftPayment(s, p) !== undefined
+  || getBottomRightPayment(s, p) !== undefined
+  || getLeftRightPayment(s, p) !== undefined;

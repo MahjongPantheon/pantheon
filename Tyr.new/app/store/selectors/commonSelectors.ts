@@ -72,6 +72,10 @@ function _getSeating(
 export const getSeating: typeof _getSeating = memoize(_getSeating);
 
 function _getScores(s: IAppState, o: Player[]) {
+  if (!s.currentPlayerId || !s.gameConfig) {
+    return;
+  }
+
   // For other tables preview
   let round = s.currentRound;
   if (!o.map((p) => p.id).includes(s.currentPlayerId) && s.currentOtherTable) {
@@ -82,14 +86,14 @@ function _getScores(s: IAppState, o: Player[]) {
   const scores: string[] = [];
   const chombos: string[] = [];
   const seq = { 'self': 0, 'shimocha': 1, 'toimen': 2, 'kamicha': 3 };
-  seating.forEach((p) => {
+  for (let p of seating) {
     const scoreNum = s.overviewDiffBy ? p.score - seating[seq[s.overviewDiffBy]].score : p.score;
     const score = (s.overviewDiffBy && scoreNum > 0
       ? '+' + scoreNum.toString()
       : scoreNum.toString());
     scores.push(score);
     chombos.push((Math.abs((p.penalties || 0 ) / s.gameConfig.chomboPenalty) || '').toString());
-  });
+  }
 
   return { scores, chombos };
 }

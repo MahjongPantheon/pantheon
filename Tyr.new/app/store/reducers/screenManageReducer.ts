@@ -30,7 +30,7 @@ export function screenManageReducer(
         ),
         currentRound: 1,
         currentOutcome: undefined,
-        players: null,
+        players: undefined,
         mapIdToPlayer: {},
         riichiOnTable: 0,
         honba: 0,
@@ -70,6 +70,10 @@ export function screenManageReducer(
         currentScreen: 'settings'
       };
     case GOTO_NEXT_SCREEN:
+      if (!state.gameConfig) {
+        return state;
+      }
+
       let nextScreen: AppScreen = state.currentScreen;
       switch (state.currentScreen) {
         case 'overview':
@@ -134,6 +138,10 @@ export function screenManageReducer(
         currentScreen: nextScreen
       };
     case GOTO_PREV_SCREEN:
+      if (!state.gameConfig) {
+        return state;
+      }
+
       let prevScreen: AppScreen = state.currentScreen;
       switch (state.currentScreen) {
         case 'outcomeSelect':
