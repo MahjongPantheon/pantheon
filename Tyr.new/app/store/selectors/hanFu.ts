@@ -90,7 +90,7 @@ function _getPossibleFu(state: IAppState) {
 
 export const getPossibleFu = memoize(_getPossibleFu);
 
-function _getDora(state: IAppState, user?: number) {
+function _getDora(state: IAppState, user?: number): number {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
     case 'ron':
@@ -99,7 +99,7 @@ function _getDora(state: IAppState, user?: number) {
     case 'multiron':
       const selected = user || state.multironCurrentWinner;
       if (!selected) {
-        return []; // data not loaded yet
+        return 0; // data not loaded yet
       }
       return outcome.wins[selected].dora;
     default:
