@@ -93,6 +93,7 @@ export function mimirReducer(
     case RESET_REGISTRATION_ERROR:
       return {
         ...state,
+        currentScreen: 'login', //todo remove
         loginError: undefined
       };
     case UPDATE_CURRENT_GAMES_INIT:

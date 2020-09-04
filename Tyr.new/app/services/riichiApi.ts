@@ -152,7 +152,7 @@ export class RiichiApiService {
     const fetchInit: RequestInit = {
       method: 'post',
       headers,
-      mode: 'same-origin',
+      // mode: 'same-origin', //todo please help
       body: JSON.stringify(jsonRpcBody)
     };
 

@@ -27,10 +27,10 @@ import {EnvConfig} from "#/envConfig/interface";
 
 export const environment: EnvConfig = {
   production: false,
-  apiUrl: 'http://api.dev.mjtop.net/',
+  apiUrl: 'http://localhost:4001/',
   guiFix: (src: string) => src,
   keyPrefix: 'tyr',
-  cookieDomain: 'mjtop.net',
+  cookieDomain: null, // when working on localhost this must be omitted!
   metrikaId: 0,
 
   // Do not change this unless you really know what are you doing

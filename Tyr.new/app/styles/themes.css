@@ -1,0 +1,42 @@
+.theme-day {
+  --bg-color: #F4F5F7;
+
+  --primary-text-color: #000000;
+  --secondary-text-color: #FFFFFF;
+
+  --color-primary: #1565C0;
+  --color-primary-active: #1979E5; /*HSB: B from 75 to 90*/
+  --color-primary-light: #bdd4ed; /*fade 0.28 from color-primary*/
+  --color-primary-light-active: #e3edf7; /*fade 0.12 from color-primary*/
+
+  --color-secondary-1: #47526c; /*HSL: L from 60 (color-secondary-2) to 35*/
+  --color-secondary-2: #8491AE;
+  --color-secondary-3: #B8C0D1; /*fade 0.57 from color-secondary-2*/
+  --color-secondary-4: #c8cedb; /*fade 0.45 from color-secondary-2*/
+  --color-secondary-5: #d4d9e3; /*fade 0.35 from color-secondary-2*/
+  --color-secondary-6: #e0e4eb; /*HSL: L from 60 to 90*/
+
+  --color-success: #0DA678;
+  --color-danger: #D32B2B;
+}
+
+.theme-night {
+  --bg-color: #282C34;
+
+  --primary-text-color: #E6E6E6;
+  --secondary-text-color: #FFFFFF;
+
+  --color-primary: #1565C0;
+  --color-primary-active: #1979E5; /*HSB: B from 75 to 90*/
+  --color-primary-light: #606a76; /*HSL: S from 80 to 10*/
+  --color-primary-light-active: #4c535d; /*HSL: S from 80 to 10, L from 42 to 33*/
+
+  --color-secondary-1: #afb4be; /*fade 0.4 from color-secondary-3*/
+  --color-secondary-2: #737c8d; /*fade 0.7 from color-secondary-3*/
+  --color-secondary-3: #37445C;
+  --color-secondary-4: #737c8d; /*fade 0.7 from color-secondary-3*/
+  --color-secondary-5: #37445C;
+  --color-secondary-6: #262f40; /*HSL: L from 29 to 20*/
+  --color-success: #43D8AB;
+  --color-danger: #ff6969;
+}
