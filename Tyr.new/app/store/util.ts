@@ -39,6 +39,6 @@ export const reduceReducers = <S, A extends Action>(initialState: S, reducers: R
       }
 
       return reducer(newState, value);
-    }, initialState);
+    }, prevState || initialState);
   };
 };

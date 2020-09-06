@@ -48,6 +48,9 @@ export const persistentMw = (storage: IDBImpl) => (mw: MiddlewareAPI<Dispatch<Ap
     case FORCE_LOGOUT:
       storage.delete(['authToken']);
       mw.dispatch({ type: SET_CREDENTIALS, payload: '' });
+      // TODO: looks like kludge. These two actions get user to the login screen.
+      mw.dispatch({ type: CONFIRM_REGISTRATION_FAIL, payload: new RemoteError('Not logged in', '403') });
+      mw.dispatch({ type: RESET_REGISTRATION_ERROR }); // this resets error screen
       break;
     case SETTINGS_SAVE_THEME:
       storage.set('currentTheme', action.payload);
