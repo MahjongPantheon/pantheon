@@ -24,21 +24,21 @@ export class Root extends React.Component<IProps> {
   }
 
   render() {
-    const {state, dispatch} = this.props
+    const {state, dispatch} = this.props;
 
-    let children = <>Hello world azaza</>
+    let children = <>Hello world azaza</>;
 
     switch (state.currentScreen) {
       case 'login':
-        children = <EnterPinScreen onSubmit={this.onPinSubmit.bind(this)} />
+        children = <EnterPinScreen onSubmit={this.onPinSubmit.bind(this)} />;
 
         // children = <LoginErrorScreen />
         break;
       case 'overview':
-        children = <HomeScreenView canStartGame={true} hasStartedGame={false} hasPrevGame={true} canSeeOtherTables={true} hasStat={true} onSettingClick={() => dispatch({ type: OPEN_SETTINGS })} />
+        children = <HomeScreenView canStartGame={true} hasStartedGame={false} hasPrevGame={true} canSeeOtherTables={true} hasStat={true} onSettingClick={() => dispatch({ type: OPEN_SETTINGS })} />;
         break;
       case 'settings':
-        children = <SettingsScreen onLogOut={() => dispatch({ type: FORCE_LOGOUT })} />
+        children = <SettingsScreen onLogOut={() => dispatch({ type: FORCE_LOGOUT })} />;
         break;
       case 'outcomeSelect':
       case 'playersSelect':

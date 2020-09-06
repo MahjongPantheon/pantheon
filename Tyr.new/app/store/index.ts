@@ -60,7 +60,7 @@ export class Store {
     this.store.subscribe(() => this.onUpdate && this.onUpdate(this.store.getState()));
   }
 
-  get dispatch() { return this.store.dispatch; }
+  get dispatch() { return this.store.dispatch.bind(this.store); }
 
   public get redux(): ReduxStore<IAppState> {
     return this.store;
