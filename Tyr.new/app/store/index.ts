@@ -28,8 +28,8 @@ export class Store {
   constructor(i18n: I18nService) {
     this.timerSt = {
       timer: undefined,
-      setInterval: window.setInterval,
-      clearInterval: window.clearInterval
+      setInterval: (callback: () => any, milliseconds: number) => window.setInterval(callback, milliseconds),
+      clearInterval: (handle: number) => window.clearInterval(handle)
     };
     const reducer = reduceReducers(initialState, [
       commonReducer,

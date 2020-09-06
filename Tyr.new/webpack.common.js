@@ -20,7 +20,7 @@ module.exports = {
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        use: ['file-loader?name=fonts/[name].[ext]']
+        use: ['file-loader?name=public/fonts/[name].[ext]']
       }
     ],
   },
@@ -39,43 +39,6 @@ module.exports = {
       '#config': getConfig()
     },
     extensions: [ '.tsx', '.ts', '.js', '.jsx' ],
-  },
-  optimization: {
-    minimize: true,
-    minimizer: [new TerserPlugin({
-      terserOptions: {
-        parse: {
-          ecma: 8
-        },
-        compress: {
-          ecma: 5,
-          warnings: false,
-          comparisons: false,
-          inline: 2
-        },
-        mangle: {
-          safari10: true
-        },
-        output: {
-          ecma: 5,
-          comments: false,
-          ascii_only: true
-        }
-      },
-      cache: true,
-      parallel: true,
-      sourceMap: true
-    })],
-    splitChunks: {
-      cacheGroups: {
-        styles: {
-          name: 'styles',
-          test: /\.css$/,
-          chunks: 'all',
-          enforce: true,
-        },
-      },
-    },
   },
   output: {
     filename: 'bundle.js',

@@ -9,7 +9,7 @@ import {
   CONFIRM_REGISTRATION_INIT,
   FORCE_LOGOUT,
   OPEN_SETTINGS,
-} from '../../../Tyr/src/app/services/store/actions/interfaces';
+} from '#/store/actions/interfaces';
 import {HomeScreenView} from '#/components/screens/home/HomeScreenView';
 import {SettingsScreen} from '#/components/screens/settings/SettingsScreen';
 

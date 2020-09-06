@@ -1,5 +1,5 @@
 import {Point} from './base';
-import {PlayerArrow} from '../../screens/table/base/ResultArrowsProps';
+import {PlayerArrow} from './ResultArrowsProps';
 
 export function getCurvePoint(start: Point, center: Point, end: Point, t: number): Point {
   let bx = getBezierCurveCoordinate(start.x, center.x, end.x, t);
