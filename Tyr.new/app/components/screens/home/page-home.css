@@ -81,3 +81,8 @@
   left: 18px;
 }
 
+
+/*todo remove*/
+.svg-button {
+  background-color: var(--color-primary);
+}

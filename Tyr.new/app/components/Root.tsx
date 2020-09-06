@@ -5,8 +5,13 @@ import '../styles/themes.css'
 import '../styles/variables.css'
 import {IAppState} from '#/store/interfaces';
 import {Dispatch} from 'redux';
-import {CONFIRM_REGISTRATION_INIT} from '../../../Tyr/src/app/services/store/actions/interfaces';
+import {
+  CONFIRM_REGISTRATION_INIT,
+  FORCE_LOGOUT,
+  OPEN_SETTINGS,
+} from '../../../Tyr/src/app/services/store/actions/interfaces';
 import {HomeScreenView} from '#/components/screens/home/HomeScreenView';
+import {SettingsScreen} from '#/components/screens/settings/SettingsScreen';
 
 interface IProps {
   state: IAppState;
@@ -30,9 +35,10 @@ export class Root extends React.Component<IProps> {
         // children = <LoginErrorScreen />
         break;
       case 'overview':
-        children = <HomeScreenView canStartGame={true} hasStartedGame={false} hasPrevGame={true} canSeeOtherTables={true} hasStat={true} />
+        children = <HomeScreenView canStartGame={true} hasStartedGame={false} hasPrevGame={true} canSeeOtherTables={true} hasStat={true} onSettingClick={() => dispatch({ type: OPEN_SETTINGS })} />
         break;
       case 'settings':
+        children = <SettingsScreen onLogOut={() => dispatch({ type: FORCE_LOGOUT })} />
         break;
       case 'outcomeSelect':
       case 'playersSelect':

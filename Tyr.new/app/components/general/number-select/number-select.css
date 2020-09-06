@@ -1,0 +1,19 @@
+.number-select {
+  display: flex;
+  align-items: center;
+  margin-right: -12px;
+}
+
+.number-select__minus {
+  padding: 8px 8px 8px 12px;
+}
+
+.number-select__value {
+  padding: 8px 0;
+  width: 54px;
+  text-align: center;
+}
+
+.number-select__plus {
+  padding: 8px 12px 8px 8px;
+}

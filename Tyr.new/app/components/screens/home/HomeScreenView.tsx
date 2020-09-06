@@ -3,15 +3,16 @@ import {classNames} from '../../ReactUtils';
 import './page-home.css'
 
 type IProps = {
-    canStartGame: boolean
-    hasStartedGame: boolean
-    hasPrevGame: boolean
-    canSeeOtherTables: boolean
-    hasStat: boolean
+  canStartGame: boolean
+  hasStartedGame: boolean
+  hasPrevGame: boolean
+  canSeeOtherTables: boolean
+  hasStat: boolean
+  onSettingClick: () => void
 }
 
 export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) {
-  const {canStartGame, hasStartedGame, hasPrevGame, canSeeOtherTables, hasStat} = props;
+  const {canStartGame, hasStartedGame, hasPrevGame, canSeeOtherTables, hasStat, onSettingClick} = props;
 
   return (
     <div className="page-home">
@@ -21,7 +22,7 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
             <use xlinkHref="#refresh"></use>
           </svg>
         </div>
-        <div className="svg-button svg-button--small">
+        <div className="svg-button svg-button--small" onClick={onSettingClick}>
           <svg>
             <use xlinkHref="#settings"></use>
           </svg>

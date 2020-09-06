@@ -1,0 +1,9 @@
+export const START_ARROWS_OFFSET = 20;
+export const TEXT_PATH_OFFSET = 4;
+export const TEXT_HEIGHT = 8;
+export const ARROW_BACKGROUND_WIDTH = 11;
+export const ARROW_HEIGHT = 7;
+export const RIICHI_STROKE = 1;
+export const RIICHI_POINT_RADIUS = 1.8;
+export const RIICHI_WIDTH = 42;
+export const RIICHI_HEIGHT = 7;
