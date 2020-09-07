@@ -80,9 +80,3 @@
 .page-home__button .icon:not(.icon--right) {
   left: 18px;
 }
-
-
-/*todo remove*/
-.svg-button {
-  background-color: var(--color-primary);
-}

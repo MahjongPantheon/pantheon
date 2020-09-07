@@ -1,0 +1,4 @@
+<svg width="106" height="17" viewBox="0 0 106 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="104" height="14" x="1.4" y="1.4" rx="8" ry="8" stroke="currentColor" style="fill: var(--riichi-fill-color);" stroke-width="1.4"></rect>
+    <circle r="3.6" cx="53.4" cy="8.4" style="fill: var(--riichi-circle-color);"></circle>
+</svg>

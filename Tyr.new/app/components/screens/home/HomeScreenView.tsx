@@ -1,6 +1,8 @@
 import * as React from "react";
 import {classNames} from '../../ReactUtils';
 import './page-home.css'
+import {Icon} from '#/components/general/icon/Icon';
+import {IconType} from '#/components/general/icon/IconType';
 
 type IProps = {
   canStartGame: boolean
@@ -18,14 +20,10 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
     <div className="page-home">
       <div className="top-panel top-panel--between">
         <div className="svg-button svg-button--small">
-          <svg>
-            <use xlinkHref="#refresh"></use>
-          </svg>
+          <Icon type={IconType.REFRESH} />
         </div>
         <div className="svg-button svg-button--small" onClick={onSettingClick}>
-          <svg>
-            <use xlinkHref="#settings"></use>
-          </svg>
+          <Icon type={IconType.SETTINGS} />
         </div>
       </div>
       <div className="page-home__title">Pantheon testdrive</div>
@@ -33,9 +31,9 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
         {canStartGame && (
           <div className="page-home__button page-home__button--active">
             <div className="page-home__button-content">
-              <svg className="icon">
-                <use xlinkHref="#plus"></use>
-              </svg>
+              <div className="icon">
+                <Icon type={IconType.PLUS} />
+              </div>
               New game
             </div>
           </div>
@@ -58,9 +56,9 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
         {hasStat && (
           <div className={classNames('page-home__button', {'page-home__button--bordered': (!canStartGame && !hasStartedGame) || hasPrevGame || canSeeOtherTables})}>
             <div className="page-home__button-content">
-              <svg className="icon icon--right">
-                <use xlinkHref="#link"></use>
-              </svg>
+              <div className="icon icon--right">
+                <Icon type={IconType.LINK} />
+              </div>
               Statistics
             </div>
           </div>
