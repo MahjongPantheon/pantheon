@@ -1,7 +1,10 @@
 import * as React from "react";
 import './top-panel.css'
+import {Icon} from '#/components/general/icon/Icon';
+import {IconType} from '#/components/general/icon/IconType';
 
 type IProps = {
+  onBackClick?: () => void
   showSearch?: boolean
 }
 
@@ -27,15 +30,13 @@ export class TopPanel extends React.Component<IProps, IState> {
   }
 
   render() {
-    const {showSearch} = this.props;
+    const {showSearch, onBackClick} = this.props;
     const {searchValue} = this.state;
 
     return (
       <div className="top-panel">
-        <div className="svg-button">
-          <svg>
-            <use xlinkHref="#back"></use>
-          </svg>
+        <div className="svg-button" onClick={onBackClick}>
+          <Icon type={IconType.BACK} />
         </div>
 
         {showSearch && (
@@ -46,9 +47,9 @@ export class TopPanel extends React.Component<IProps, IState> {
 
             </input>
             {!!searchValue && (
-              <svg onClick={this.onClearClick.bind(this)}>
-                <use xlinkHref="#close"></use>
-              </svg>
+              <div onClick={this.onClearClick.bind(this)}>
+                <Icon type={IconType.CLOSE} />
+              </div>
             )}
           </div>
         )}

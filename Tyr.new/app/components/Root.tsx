@@ -3,22 +3,14 @@ import {EnterPinScreen} from '#/components/screens/login/EnterPinScreen';
 import '../styles/base.css'
 import '../styles/themes.css'
 import '../styles/variables.css'
-import {IAppState} from '#/store/interfaces';
-import {Dispatch} from 'redux';
 import {
   CONFIRM_REGISTRATION_INIT,
-  FORCE_LOGOUT,
-  OPEN_SETTINGS,
 } from '#/store/actions/interfaces';
-import {HomeScreenView} from '#/components/screens/home/HomeScreenView';
+import {IComponentProps} from '#/components/IComponentProps';
 import {SettingsScreen} from '#/components/screens/settings/SettingsScreen';
+import {HomeScreen} from '#/components/screens/home/HomeScreen';
 
-interface IProps {
-  state: IAppState;
-  dispatch: Dispatch;
-}
-
-export class Root extends React.Component<IProps> {
+export class Root extends React.Component<IComponentProps> {
   onPinSubmit(pin: string) {
     this.props.dispatch({ type: CONFIRM_REGISTRATION_INIT, payload: pin });
   }
@@ -35,10 +27,12 @@ export class Root extends React.Component<IProps> {
         // children = <LoginErrorScreen />
         break;
       case 'overview':
-        children = <HomeScreenView canStartGame={true} hasStartedGame={false} hasPrevGame={true} canSeeOtherTables={true} hasStat={true} onSettingClick={() => dispatch({ type: OPEN_SETTINGS })} />;
+        children = <HomeScreen state={state} dispatch={dispatch} />;
         break;
       case 'settings':
-        children = <SettingsScreen onLogOut={() => dispatch({ type: FORCE_LOGOUT })} />;
+        children = <SettingsScreen state={state} dispatch={dispatch} />;
+        break;
+      case 'newGame':
         break;
       case 'outcomeSelect':
       case 'playersSelect':
@@ -51,6 +45,6 @@ export class Root extends React.Component<IProps> {
         break;
     }
 
-    return <div className="App theme-day">{children}</div>;
+    return <div className={`App theme-${state.settings.currentTheme}`}>{children}</div>;
   }
 }

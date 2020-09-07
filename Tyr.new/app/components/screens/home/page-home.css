@@ -21,9 +21,13 @@
   color: var(--secondary-text-color);
 }
 
-  .page-home__button--active:active {
-    background-color: var(--color-primary-active);
-  }
+.page-home__button--active:active {
+  background-color: var(--color-primary-active);
+}
+
+.page-home__button:not(.page-home__button--active):active {
+  background-color: var(--color-secondary-6);
+}
 
 
 .page-home__button--bordered {
@@ -32,13 +36,12 @@
 
 .page-home__button--bordered:active {
   padding: 0;
-  background-color: var(--color-secondary-6);
 }
 
-  .page-home__button--bordered:active:before,
-  .page-home__button--bordered:active:after  {
-    width: 100%
-  }
+.page-home__button--bordered:active:before,
+.page-home__button--bordered:active:after  {
+  width: 100%
+}
 
 
 .page-home__button--bordered:before {

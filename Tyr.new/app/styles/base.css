@@ -111,6 +111,10 @@ p {
   color: var(--secondary-text-color);
 }
 
+.radio-btn:not(.radio-btn--active):active {
+  background-color: var(--color-secondary-6);
+}
+
 
 .flat-btn {
   display: flex;

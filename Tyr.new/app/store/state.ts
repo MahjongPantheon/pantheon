@@ -36,7 +36,7 @@ import { defaultPlayer } from './selectors/screenNewGameSelectors';
 export const initialState: IAppState = {
   currentOtherTableIndex: 0,
   isUniversalWatcher: false,
-  settings: { currentLang: 'en', currentTheme: 'default' },
+  settings: { currentLang: 'en', currentTheme: 'day' },
   timer: undefined,
   yakuList: undefined,
 

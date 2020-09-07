@@ -15,11 +15,6 @@ interface IProps {
 }
 
 export class App extends React.PureComponent<IProps, IAppState> {
-  componentDidMount() {
-    this.props.dispatch({type: INIT_STATE});
-    this.props.dispatch({type: STARTUP_WITH_AUTH, payload: this.props.storage.get('authToken') || ''});
-  }
-
   render() {
     return <Root state={this.props.state} dispatch={this.props.dispatch}/>
   }
