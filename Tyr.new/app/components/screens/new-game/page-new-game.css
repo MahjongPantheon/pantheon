@@ -1,0 +1,30 @@
+.page-new-game {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-new-game__inner {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.page-new-game__players {
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  min-height: 352px;
+  justify-content: center;
+}
+
+.page-new-game__buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+.page-new-game__buttons .flat-btn--medium:last-child {
+  margin-left: 24px;
+}

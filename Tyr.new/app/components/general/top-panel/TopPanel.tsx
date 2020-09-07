@@ -44,7 +44,6 @@ export class TopPanel extends React.Component<IProps, IState> {
             <input value={searchValue}
                    placeholder="type to find someone"
                    onChange={this.onSearchChange.bind(this)}>
-
             </input>
             {!!searchValue && (
               <div onClick={this.onClearClick.bind(this)}>

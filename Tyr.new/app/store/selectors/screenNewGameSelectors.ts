@@ -5,7 +5,7 @@ import { memoize } from '#/primitives/memoize';
 
 const DEFAULT_ID = -1;
 export const defaultPlayer: Readonly<LUser> = {
-  displayName: '--- ? ---',
+  displayName: '',
   id: DEFAULT_ID,
   tenhouId: '',
   ident: '',

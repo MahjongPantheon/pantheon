@@ -28,3 +28,7 @@
   padding: 0 4px;
   color: var(--color-secondary-4);
 }
+
+.player-dropdown__placeholder:active {
+  color: var(--color-secondary-5);
+}

@@ -54,7 +54,7 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
         eventName={playerName}
         canStartGame={!state.gameConfig.autoSeating && !state.isUniversalWatcher}
         hasStartedGame={false}
-        hasPrevGame={!state.isUniversalWatcher && state.lastResults !== undefined}
+        hasPrevGame={!state.isUniversalWatcher /*&& state.lastResults !== undefined*/}
         canSeeOtherTables={true}
         hasStat={!!state.gameConfig.eventStatHost && !state.isUniversalWatcher}
         onSettingClick={this.onSettingClick.bind(this)}

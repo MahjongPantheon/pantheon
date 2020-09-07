@@ -9,6 +9,8 @@ import {
 import {IComponentProps} from '#/components/IComponentProps';
 import {SettingsScreen} from '#/components/screens/settings/SettingsScreen';
 import {HomeScreen} from '#/components/screens/home/HomeScreen';
+import {NewGameScreen} from '#/components/screens/new-game/NewGameScreen';
+import {SearchPlayerScreen} from '#/components/screens/search-players/SearchPlayerScreen';
 
 export class Root extends React.Component<IComponentProps> {
   onPinSubmit(pin: string) {
@@ -18,7 +20,7 @@ export class Root extends React.Component<IComponentProps> {
   render() {
     const {state, dispatch} = this.props;
 
-    let children = <>Hello world azaza</>;
+    let children = <>null</>;
 
     switch (state.currentScreen) {
       case 'login':
@@ -33,6 +35,8 @@ export class Root extends React.Component<IComponentProps> {
         children = <SettingsScreen state={state} dispatch={dispatch} />;
         break;
       case 'newGame':
+        children = <NewGameScreen state={state} dispatch={dispatch} />
+        // children = <SearchPlayerScreen state={state} dispatch={dispatch} />
         break;
       case 'outcomeSelect':
       case 'playersSelect':
