@@ -12,6 +12,7 @@ import {SettingsScreen} from '#/components/screens/settings/SettingsScreen';
 import {NewGameScreen} from '#/components/screens/new-game/NewGameScreen';
 import {SearchPlayerScreen} from '#/components/screens/search-players/SearchPlayerScreen';
 import {IDB} from '#/services/idb';
+import {TableIdle} from '#/components/screens/table/TableIdle';
 
 interface IProps {
   state: IAppState;
@@ -45,6 +46,8 @@ const CurrentScreen = React.memo(function (props: IComponentProps) {
       return <NewGameScreen state={state} dispatch={dispatch} />
     case 'searchPlayer':
       return <SearchPlayerScreen state={state} dispatch={dispatch} />
+    case 'currentGame':
+      return <TableIdle state={state} dispatch={dispatch} />
     case 'outcomeSelect':
     case 'playersSelect':
     case 'yakuSelect':

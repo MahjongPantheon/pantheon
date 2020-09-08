@@ -21,6 +21,7 @@ export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
 export const STARTUP_WITH_AUTH = 'STARTUP_WITH_AUTH';
 export const START_NEW_GAME = 'START_NEW_GAME';
+export const GO_TO_CURRENT_GAME = 'GO_TO_CURRENT_GAME';
 export const SEARCH_PLAYER = 'SEARCH_PLAYER';
 export const SHOW_LAST_RESULTS = 'SHOW_LAST_RESULTS';
 export const SHOW_LAST_ROUND = 'SHOW_LAST_ROUND';
@@ -114,6 +115,10 @@ interface StartupWithAuthAction {
 
 interface StartNewGameAction {
   type: typeof START_NEW_GAME;
+}
+
+interface GoToCurrentGameAction {
+  type: typeof GO_TO_CURRENT_GAME;
 }
 
 interface SearchPlayerAction {
@@ -492,6 +497,7 @@ export type AppActionTypes =
   | ResetStateAction
   | StartupWithAuthAction
   | StartNewGameAction
+  | GoToCurrentGameAction
   | SearchPlayerAction
   | ShowLastResultsAction
   | ShowLastRoundAction

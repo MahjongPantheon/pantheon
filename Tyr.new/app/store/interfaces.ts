@@ -5,7 +5,7 @@ import { RRoundPaymentsInfo } from '#/interfaces/remote';
 import {Graph} from '#/primitives/graph';
 import {RemoteError} from '#/services/remoteError';
 
-export type AppScreen = 'overview' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
+export type AppScreen = 'overview' | 'currentGame' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
   | 'yakuSelect' | 'confirmation' | 'newGame' | 'searchPlayer' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
 
 export type LoadingSet = {

@@ -4,10 +4,9 @@ import {
   GET_ALL_PLAYERS_INIT,
   GOTO_PREV_SCREEN,
   RANDOMIZE_NEWGAME_PLAYERS,
-  SEARCH_PLAYER,
+  SEARCH_PLAYER, START_GAME_INIT,
 } from '#/store/actions/interfaces';
 import {NewGameScreenView} from '#/components/screens/new-game/NewGameScreenView';
-import {START_GAME_INIT} from '../../../../../Tyr/src/app/services/store/actions/interfaces';
 
 export class NewGameScreen extends React.PureComponent<IComponentProps>{
   componentDidMount() {

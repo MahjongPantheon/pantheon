@@ -1,7 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 import {BottomPanelProps} from './BottomPanelProps';
-import './bottom-panel.css'
-import {classNames} from '#/components/ReactUtils';
+import './bottom-panel.css';
+import {Icon} from '#/components/general/icon/Icon';
+import {IconType} from '#/components/general/icon/IconType';
+import {classNames} from '#/components/helpers/ReactUtils';
 
 export class BottomPanel extends React.Component<BottomPanelProps> {
   render() {
@@ -25,9 +27,7 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
         <div className="bottom-panel__inner">
           {showBack && (
             <div className="svg-button">
-              <svg>
-                <use xlinkHref="#back"></use>
-              </svg>
+              <Icon type={IconType.BACK} />
             </div>
           )}
           {!!text && (
@@ -38,44 +38,32 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
           {needRenderEmptyButton && <div className="svg-button" />}
           {showNext && (
             <div className={classNames('svg-button', {'svg-button--disabled': isNextDisabled})}>
-              <svg>
-                <use xlinkHref="#next"></use>
-              </svg>
+              <Icon type={IconType.NEXT} />
             </div>
           )}
           {showSave && (
             <div className={classNames('svg-button', {'svg-button--disabled': isSaveDisabled})}>
-              <svg>
-                <use xlinkHref="#save"></use>
-              </svg>
+              <Icon type={IconType.SAVE} />
             </div>
           )}
           {showHome && (
             <div className="svg-button">
-              <svg>
-                <use xlinkHref="#home"></use>
-              </svg>
+              <Icon type={IconType.HOME} />
             </div>
           )}
           {showRefresh && (
             <div className="svg-button">
-              <svg>
-                <use xlinkHref="#refresh"></use>
-              </svg>
+              <Icon type={IconType.REFRESH} />
             </div>
           )}
           {showAdd && (
             <div className="svg-button">
-              <svg>
-                <use xlinkHref="#plus"></use>
-              </svg>
+              <Icon type={IconType.PLUS} />
             </div>
           )}
           {showLog && (
             <div className="svg-button">
-              <svg>
-                <use xlinkHref="#log"></use>
-              </svg>
+              <Icon type={IconType.LOG} />
             </div>
           )}
         </div>

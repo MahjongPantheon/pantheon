@@ -1,6 +1,6 @@
 import { AppScreen, IAppState } from '../interfaces';
 import {
-  AppActionTypes,
+  AppActionTypes, GO_TO_CURRENT_GAME,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   OPEN_SETTINGS,
@@ -42,6 +42,11 @@ export function screenManageReducer(
       return {
         ...state,
         currentScreen: 'newGame'
+      };
+    case GO_TO_CURRENT_GAME:
+      return {
+        ...state,
+        currentScreen: 'currentGame'
       };
     case SEARCH_PLAYER:
       return {

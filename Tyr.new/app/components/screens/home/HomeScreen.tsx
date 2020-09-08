@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {IComponentProps} from '#/components/IComponentProps';
-import {OPEN_SETTINGS, START_NEW_GAME, UPDATE_CURRENT_GAMES_INIT} from '#/store/actions/interfaces';
+import {GO_TO_CURRENT_GAME, OPEN_SETTINGS, START_NEW_GAME, UPDATE_CURRENT_GAMES_INIT} from '#/store/actions/interfaces';
 import {HomeScreenView} from '#/components/screens/home/HomeScreenView';
 
 export class HomeScreen extends React.PureComponent<IComponentProps> {
@@ -25,13 +25,11 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
   }
 
   private onNewGameClick() {
-    const {dispatch} = this.props;
-    dispatch({ type: START_NEW_GAME });
+    this.props.dispatch({ type: START_NEW_GAME });
   }
 
   private onCurrentGameClick() {
-    const {dispatch} = this.props;
-    //todo
+    this.props.dispatch({ type: GO_TO_CURRENT_GAME });
   }
 
   private onStatClick() {
@@ -50,8 +48,8 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
     return (
       <HomeScreenView
         eventName={playerName}
-        canStartGame={!state.gameConfig.autoSeating && !state.isUniversalWatcher}
-        hasStartedGame={false}
+        canStartGame={!state.gameConfig.autoSeating && !state.isUniversalWatcher && !state.currentSessionHash}
+        hasStartedGame={!!state.currentSessionHash}
         hasPrevGame={!state.isUniversalWatcher /*&& state.lastResults !== undefined*/}
         canSeeOtherTables={true}
         hasStat={!!state.gameConfig.eventStatHost && !state.isUniversalWatcher}

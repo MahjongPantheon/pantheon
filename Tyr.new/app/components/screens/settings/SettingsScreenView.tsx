@@ -2,7 +2,7 @@ import * as React from "react";
 import './page-setting.css'
 import {Switch} from '#/components/general/switch/Switch';
 import {TopPanel} from '#/components/general/top-panel/TopPanel';
-import {classNames} from '#/components/ReactUtils';
+import {classNames} from '#/components/helpers/ReactUtils';
 import {Theme} from '#/services/themes';
 
 interface IProps {

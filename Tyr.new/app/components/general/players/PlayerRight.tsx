@@ -1,5 +1,5 @@
 import * as React from 'react';
-import './players.less';
+import './players.css';
 import {PlayerBase} from './PlayerBase';
 import {PlayerMode} from '../../types/PlayerEnums';
 import {PlayerProps} from './PlayerProps';

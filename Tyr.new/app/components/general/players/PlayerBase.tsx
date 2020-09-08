@@ -1,8 +1,8 @@
 import * as React from 'react';
-import './players.less';
+import './players.css';
 import {PlayerButtonMode, PlayerMode, PlayerPointsMode} from '../../types/PlayerEnums';
 import {PlayerProps} from './PlayerProps';
-import {classNames} from '#/components/ReactUtils';
+import {classNames} from '#/components/helpers/ReactUtils';
 
 type IProps = PlayerProps & {
   mode: PlayerMode
@@ -169,7 +169,7 @@ export class PlayerBase extends React.Component<IProps> {
                   </svg>
                 )}
               </p>
-              {penaltyPoints && (
+              {!!penaltyPoints && (
                 <div className="player__penalty">{penaltyPoints / 1000 + 'k'}</div>
               )}
             </div>
