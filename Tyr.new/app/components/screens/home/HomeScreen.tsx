@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {IComponentProps} from '#/components/IComponentProps';
-import {OPEN_SETTINGS} from '#/store/actions/interfaces';
-import {START_NEW_GAME, UPDATE_CURRENT_GAMES_INIT,
-} from '../../../../../Tyr/src/app/services/store/actions/interfaces';
+import {OPEN_SETTINGS, START_NEW_GAME, UPDATE_CURRENT_GAMES_INIT} from '#/store/actions/interfaces';
 import {HomeScreenView} from '#/components/screens/home/HomeScreenView';
 
 export class HomeScreen extends React.PureComponent<IComponentProps> {

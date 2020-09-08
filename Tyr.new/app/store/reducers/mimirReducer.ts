@@ -30,10 +30,10 @@ import {
   GET_OTHER_TABLES_LIST_SUCCESS,
   RANDOMIZE_NEWGAME_PLAYERS,
   RESET_REGISTRATION_ERROR,
-  SELECT_NEWGAME_PLAYER_KAMICHA,
-  SELECT_NEWGAME_PLAYER_SELF,
-  SELECT_NEWGAME_PLAYER_SHIMOCHA,
-  SELECT_NEWGAME_PLAYER_TOIMEN,
+  SELECT_NEWGAME_PLAYER_NORTH,
+  SELECT_NEWGAME_PLAYER_EAST,
+  SELECT_NEWGAME_PLAYER_SOUTH,
+  SELECT_NEWGAME_PLAYER_WEST,
   START_GAME_FAIL,
   START_GAME_INIT,
   START_GAME_SUCCESS,
@@ -335,25 +335,25 @@ export function mimirReducer(
         ...state,
         newGameSelectedUsers: newArr
       };
-    case SELECT_NEWGAME_PLAYER_SELF:
+    case SELECT_NEWGAME_PLAYER_EAST:
       player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
       return {
         ...state,
         newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 0, player)
       };
-    case SELECT_NEWGAME_PLAYER_SHIMOCHA:
+    case SELECT_NEWGAME_PLAYER_SOUTH:
       player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
       return {
         ...state,
         newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 1, player)
       };
-    case SELECT_NEWGAME_PLAYER_TOIMEN:
+    case SELECT_NEWGAME_PLAYER_WEST:
       player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
       return {
         ...state,
         newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 2, player)
       };
-    case SELECT_NEWGAME_PLAYER_KAMICHA:
+    case SELECT_NEWGAME_PLAYER_NORTH:
       player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
       return {
         ...state,

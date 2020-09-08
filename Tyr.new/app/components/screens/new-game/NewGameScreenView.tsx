@@ -15,7 +15,7 @@ type IProps = {
   onBackClick: () => void
   onShuffleClick: () => void
   onSaveClick: () => void
-  onPlayerClick: (index: number) => void
+  onPlayerClick: (side: string) => void
 }
 
 export const NewGameScreenView = React.memo(function (props: IProps) {
@@ -26,16 +26,16 @@ export const NewGameScreenView = React.memo(function (props: IProps) {
       <TopPanel onBackClick={onBackClick} />
       <div className="page-new-game__inner">
         <div className="page-new-game__players">
-          <PlayerDropdown wind="東" playerName={east} onPlayerClick={() => onPlayerClick(0)} />
-          <PlayerDropdown wind="南" playerName={south} onPlayerClick={() => onPlayerClick(1)} />
-          <PlayerDropdown wind="西" playerName={west} onPlayerClick={() => onPlayerClick(2)} />
-          <PlayerDropdown wind="北" playerName={north} onPlayerClick={() => onPlayerClick(3)} />
+          <PlayerDropdown wind="東" playerName={east} onPlayerClick={() => onPlayerClick('東')} />
+          <PlayerDropdown wind="南" playerName={south} onPlayerClick={() => onPlayerClick('南')} />
+          <PlayerDropdown wind="西" playerName={west} onPlayerClick={() => onPlayerClick('西')} />
+          <PlayerDropdown wind="北" playerName={north} onPlayerClick={() => onPlayerClick('北')} />
           <div className="page-new-game__buttons">
             <div className="flat-btn flat-btn--medium" onClick={onShuffleClick}>
               <Icon type={IconType.SHUFFLE} />
             </div>
             <div
-              className={classNames('flat-btn flat-btn--medium', {'flat-btn--disabled': canSave})}
+              className={classNames('flat-btn flat-btn--medium', {'flat-btn--disabled': !canSave})}
               onClick={onSaveClick}
             >
               <Icon type={IconType.SAVE} />

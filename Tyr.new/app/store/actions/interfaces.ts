@@ -21,6 +21,7 @@ export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
 export const STARTUP_WITH_AUTH = 'STARTUP_WITH_AUTH';
 export const START_NEW_GAME = 'START_NEW_GAME';
+export const SEARCH_PLAYER = 'SEARCH_PLAYER';
 export const SHOW_LAST_RESULTS = 'SHOW_LAST_RESULTS';
 export const SHOW_LAST_ROUND = 'SHOW_LAST_ROUND';
 export const SHOW_OTHER_TABLES_LIST = 'SHOW_OTHER_TABLES_LIST';
@@ -85,10 +86,10 @@ export const ADD_ROUND_FAIL = 'ADD_GAME_FAIL';
 export const INIT_BLANK_OUTCOME = 'INIT_BLANK_OUTCOME';
 export const SELECT_MULTIRON_WINNER = 'SELECT_MULTIRON_WINNER';
 export const RANDOMIZE_NEWGAME_PLAYERS = 'RANDOMIZE_NEWGAME_PLAYERS';
-export const SELECT_NEWGAME_PLAYER_SELF = 'SELECT_NEWGAME_PLAYER_SELF';
-export const SELECT_NEWGAME_PLAYER_SHIMOCHA = 'SELECT_NEWGAME_PLAYER_SHIMOCHA';
-export const SELECT_NEWGAME_PLAYER_TOIMEN = 'SELECT_NEWGAME_PLAYER_TOIMEN';
-export const SELECT_NEWGAME_PLAYER_KAMICHA = 'SELECT_NEWGAME_PLAYER_KAMICHA';
+export const SELECT_NEWGAME_PLAYER_EAST = 'SELECT_NEWGAME_PLAYER_EAST';
+export const SELECT_NEWGAME_PLAYER_SOUTH = 'SELECT_NEWGAME_PLAYER_SOUTH';
+export const SELECT_NEWGAME_PLAYER_WEST = 'SELECT_NEWGAME_PLAYER_WEST';
+export const SELECT_NEWGAME_PLAYER_NORTH = 'SELECT_NEWGAME_PLAYER_NORTH';
 export const TOGGLE_OVERVIEW_DIFFBY = 'TOGGLE_OVERVIEW_DIFFBY';
 export const TABLE_ROTATE_COUNTERCLOCKWISE = 'TABLE_ROTATE_COUNTERCLOCKWISE';
 export const TABLE_ROTATE_CLOCKWISE = 'TABLE_ROTATE_CLOCKWISE';
@@ -113,6 +114,11 @@ interface StartupWithAuthAction {
 
 interface StartNewGameAction {
   type: typeof START_NEW_GAME;
+}
+
+interface SearchPlayerAction {
+  type: typeof SEARCH_PLAYER;
+  payload: IAppState['newGameSelectedPlayerSide'],
 }
 
 interface ShowLastResultsAction {
@@ -423,23 +429,23 @@ interface RandomizeNewgamePlayersAction {
   type: typeof RANDOMIZE_NEWGAME_PLAYERS;
 }
 
-interface SelectNewgameSelfAction {
-  type: typeof SELECT_NEWGAME_PLAYER_SELF;
+interface SelectNewgameEastAction {
+  type: typeof SELECT_NEWGAME_PLAYER_EAST;
   payload: number;
 }
 
-interface SelectNewgameShimochaAction {
-  type: typeof SELECT_NEWGAME_PLAYER_SHIMOCHA;
+interface SelectNewgameSouthAction {
+  type: typeof SELECT_NEWGAME_PLAYER_SOUTH;
   payload: number;
 }
 
-interface SelectNewgameToimenAction {
-  type: typeof SELECT_NEWGAME_PLAYER_TOIMEN;
+interface SelectNewgameWestAction {
+  type: typeof SELECT_NEWGAME_PLAYER_WEST;
   payload: number;
 }
 
-interface SelectNewgameKamichaAction {
-  type: typeof SELECT_NEWGAME_PLAYER_KAMICHA;
+interface SelectNewgameNorthAction {
+  type: typeof SELECT_NEWGAME_PLAYER_NORTH;
   payload: number;
 }
 
@@ -486,6 +492,7 @@ export type AppActionTypes =
   | ResetStateAction
   | StartupWithAuthAction
   | StartNewGameAction
+  | SearchPlayerAction
   | ShowLastResultsAction
   | ShowLastRoundAction
   | ShowOtherTablesListAction
@@ -550,10 +557,10 @@ export type AppActionTypes =
   | InitBlankOutcomeAction
   | SelectMultironWinnerAction
   | RandomizeNewgamePlayersAction
-  | SelectNewgameKamichaAction
-  | SelectNewgameSelfAction
-  | SelectNewgameShimochaAction
-  | SelectNewgameToimenAction
+  | SelectNewgameNorthAction
+  | SelectNewgameEastAction
+  | SelectNewgameSouthAction
+  | SelectNewgameWestAction
   | ToggleOverviewDiffbyAction
   | TableRotateClockwiseAction
   | TableRotateCounterclockwiseAction

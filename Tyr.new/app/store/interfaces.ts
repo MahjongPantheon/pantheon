@@ -6,7 +6,7 @@ import {Graph} from '#/primitives/graph';
 import {RemoteError} from '#/services/remoteError';
 
 export type AppScreen = 'overview' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
-  | 'yakuSelect' | 'confirmation' | 'newGame' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
+  | 'yakuSelect' | 'confirmation' | 'newGame' | 'searchPlayer' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
 
 export type LoadingSet = {
   games: boolean;
@@ -70,6 +70,7 @@ export interface IAppState {
   lastResultsError?: ErrorState;
 
   newGameSelectedUsers?: LUser[];
+  newGameSelectedPlayerSide?: '東' | '南' | '西' | '北';
   newGameStartError?: ErrorState;
 
   otherTablesList: Table[];

@@ -4,12 +4,12 @@ import {
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   OPEN_SETTINGS,
-  RESET_STATE,
+  RESET_STATE, SEARCH_PLAYER,
   SHOW_LAST_RESULTS,
   SHOW_LAST_ROUND,
   SHOW_OTHER_TABLE,
   SHOW_OTHER_TABLES_LIST,
-  START_NEW_GAME
+  START_NEW_GAME,
 } from '../actions/interfaces';
 import { winnerHasYakuWithPao } from '../util';
 
@@ -42,6 +42,12 @@ export function screenManageReducer(
       return {
         ...state,
         currentScreen: 'newGame'
+      };
+    case SEARCH_PLAYER:
+      return {
+        ...state,
+        currentScreen: 'searchPlayer',
+        newGameSelectedPlayerSide: action.payload
       };
     case SHOW_LAST_RESULTS:
       return {
@@ -149,6 +155,9 @@ export function screenManageReducer(
         case 'settings':
         case 'newGame':
           prevScreen = 'overview';
+          break;
+        case 'searchPlayer':
+          prevScreen = 'newGame';
           break;
         case 'lastRound':
           if (state.currentSessionHash) {
