@@ -5,13 +5,11 @@ import {HomeScreenView} from '#/components/screens/home/HomeScreenView';
 
 export class HomeScreen extends React.PureComponent<IComponentProps> {
   private onSettingClick() {
-    const {dispatch} = this.props;
-    dispatch({ type: OPEN_SETTINGS });
+    this.props.dispatch({ type: OPEN_SETTINGS });
   }
 
   private onRefreshClick() {
-    const {dispatch} = this.props;
-    dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
+    this.props.dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
   }
 
   private onOtherTablesClick() {
@@ -29,7 +27,9 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
   }
 
   private onCurrentGameClick() {
-    this.props.dispatch({ type: GO_TO_CURRENT_GAME });
+    const {dispatch} = this.props;
+    dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
+    dispatch({ type: GO_TO_CURRENT_GAME });
   }
 
   private onStatClick() {

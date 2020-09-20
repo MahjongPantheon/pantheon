@@ -25,13 +25,26 @@ export class DimensionsWrapper extends React.Component<IProps, IState> {
     frame.removeEventListener('resize', this.onFrameHeightChanged.bind(this));
   }
 
-  onFrameHeightChanged() {
-    const {selector} = this.props;
+  componentDidUpdate() {
+    const newDimension = this.getDimension()
+    if (this.state.dimension !== newDimension) {
+      this.setState({
+        dimension: newDimension
+      })
+    }
+  }
 
+  private onFrameHeightChanged() {
     this.setState({
-      dimension: document.querySelector(selector)!.clientHeight + 'px'
+      dimension: this.getDimension()
     });
   }
+
+  private getDimension() {
+    const {selector} = this.props;
+    return document.querySelector(selector)!.clientHeight + 'px'
+  }
+
 
   render() {
     const {children, propName} = this.props;

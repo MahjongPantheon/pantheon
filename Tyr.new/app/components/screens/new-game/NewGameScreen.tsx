@@ -14,8 +14,7 @@ export class NewGameScreen extends React.PureComponent<IComponentProps>{
   }
 
   private onBackClick() {
-    const {dispatch} = this.props;
-    dispatch({ type: GOTO_PREV_SCREEN });
+    this.props.dispatch({ type: GOTO_PREV_SCREEN });
   }
 
   private onShuffleClick() {

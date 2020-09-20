@@ -247,8 +247,8 @@
   width: 106px;
 }
 
-.player__riichi-button--rotated svg use {
-  transform: rotate(90deg) translate(0px, -100%);
+.player__riichi-button--rotated svg {
+  transform: rotate(90deg);
 }
 
 .player__riichi-button:not(.player__riichi-button--rotated) svg {

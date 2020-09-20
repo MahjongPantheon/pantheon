@@ -87,6 +87,7 @@ export function screenManageReducer(
 
       let nextScreen: AppScreen = state.currentScreen;
       switch (state.currentScreen) {
+        case 'currentGame':
         case 'overview':
           nextScreen = 'outcomeSelect';
           break;
@@ -156,9 +157,12 @@ export function screenManageReducer(
       let prevScreen: AppScreen = state.currentScreen;
       switch (state.currentScreen) {
         case 'outcomeSelect':
+          prevScreen = 'currentGame';
+          break;
         case 'otherTablesList':
         case 'settings':
         case 'newGame':
+        case 'currentGame':
           prevScreen = 'overview';
           break;
         case 'searchPlayer':

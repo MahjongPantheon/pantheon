@@ -10,7 +10,7 @@ import {BottomPanel} from '#/components/general/bottom-panel/BottomPanel';
 import {ResultArrows} from '#/components/general/result-arrows/ResultArrows';
 import {PlayerRight} from '#/components/general/players/PlayerRight';
 import {TableInfo, TableInfoProps} from '#/components/screens/table/base/TableInfo';
-import {SelectOutcomeModal} from '#/components/screens/table/base/SelectOutcomeModal';
+import {SelectModal, SelectModalProps} from '#/components/general/select-modal/SelectModal';
 
 type IProps = {
   showArrows?: boolean
@@ -24,12 +24,12 @@ type IProps = {
   arrowsInfo?: ResultArrowsProps
 
   bottomPanel: BottomPanelProps
-  showOutcomeModal?: boolean
+  outcomeModal?: SelectModalProps
 }
 
 export class TableScreenStateless extends React.Component<IProps> {
   render() {
-    const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, bottomPanel, showOutcomeModal, tableInfo, arrowsInfo} = this.props;
+    const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, bottomPanel, outcomeModal, tableInfo, arrowsInfo} = this.props;
 
     return (
       <div className="flex-container page-table">
@@ -52,8 +52,8 @@ export class TableScreenStateless extends React.Component<IProps> {
         <div className="flex-container__bottom">
           <BottomPanel {...bottomPanel} />
         </div>
-        {showOutcomeModal && (
-          <SelectOutcomeModal />
+        {!!outcomeModal && (
+          <SelectModal {...outcomeModal} />
         )}
       </div>
     );

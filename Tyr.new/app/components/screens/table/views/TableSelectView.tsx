@@ -3,6 +3,7 @@ import {PlayerProps} from '#/components/general/players/PlayerProps';
 import {TableScreen} from '#/components/screens/table/base/TableScreen';
 import {TableMode} from '#/components/types/TableMode';
 import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
+import {BottomPanelPropsBase} from '#/components/general/bottom-panel/BottomPanelProps';
 
 export type PlayerPropsSelect =  Pick<PlayerProps, 'name' | 'wind' | 'rotated' | 'points' | 'pointsMode' | 'penaltyPoints'>
 
@@ -12,6 +13,7 @@ type IProps = {
   rightPlayer: PlayerPropsSelect
   bottomPlayer: PlayerPropsSelect
   tableInfo: TableInfoProps
+  bottomPanelInfo: BottomPanelPropsBase
 }
 
 function getPlayer(player: PlayerPropsSelect): PlayerProps {
@@ -26,7 +28,7 @@ function getPlayer(player: PlayerPropsSelect): PlayerProps {
 }
 
 export const TableSelectView = React.memo(function (props: IProps) {
-  const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, tableInfo} = props;
+  const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, tableInfo, bottomPanelInfo} = props;
 
   return (
     <TableScreen
@@ -35,8 +37,9 @@ export const TableSelectView = React.memo(function (props: IProps) {
       rightPlayer={getPlayer(rightPlayer)}
       bottomPlayer={getPlayer(bottomPlayer)}
       tableMode={TableMode.GAME}
-      selectOutcome={true}
+      // selectOutcome={true}
       tableInfo={tableInfo}
+      bottomPanelInfo={bottomPanelInfo}
     />
   );
 })

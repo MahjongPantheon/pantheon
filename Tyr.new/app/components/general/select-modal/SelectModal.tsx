@@ -3,14 +3,14 @@ import {ItemSelect} from './ItemSelect';
 import * as ReactDOM from "react-dom";
 import './select-modal.css'
 
-type IProps = {
+export type SelectModalProps = {
   items: ItemSelect[]
   onHide: () => void
 }
 
-export class SelectModal extends React.Component<IProps> {
+export class SelectModal extends React.Component<SelectModalProps> {
   element: HTMLDivElement
-  constructor(props: IProps) {
+  constructor(props: SelectModalProps) {
     super(props);
     this.element = document.createElement('div');
   }
@@ -34,17 +34,14 @@ export class SelectModal extends React.Component<IProps> {
     const {items, onHide} = this.props;
 
     return (
-      <div className="modal">
-
-        <div className="modal__bg" onClick={onHide} />
+      <div className="modal" onClick={onHide} >
+        <div className="modal__bg"/>
         <div className="modal__content select-modal">
           <div className="select-modal__pointer" />
 
           <div className="select-modal__items">
-            {items.map((item, i) => (
-              <div key={i} className="select-modal__item" onClick={item.onSelect}>
-                {item.text}
-              </div>
+            {items.filter(item => !item.unavailable).map((item, i) => (
+              <ModalItem key={i} {...item} />
             ))}
           </div>
 
@@ -53,3 +50,18 @@ export class SelectModal extends React.Component<IProps> {
     )
   }
 }
+
+const ModalItem = React.memo(function (props: ItemSelect) {
+  const {text, onSelect} = props;
+
+  const onClick = (e: any) => {
+    e.stopPropagation();
+    onSelect();
+  };
+
+  return (
+    <div className="select-modal__item" onClick={onClick}>
+      {text}
+    </div>
+  )
+})

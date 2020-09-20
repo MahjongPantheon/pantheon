@@ -23,7 +23,7 @@ interface IProps {
 export const App = React.memo(function (props: IProps) {
   const {state, dispatch} = props;
   return (
-    <div className={`App theme-${state.settings.currentTheme}`}>
+    <div id="screen" className={`App theme-${state.settings.currentTheme}`}>
       <CurrentScreen state={state} dispatch={dispatch} />
     </div>
   )
@@ -47,9 +47,9 @@ const CurrentScreen = React.memo(function (props: IComponentProps) {
     case 'searchPlayer':
       return <SearchPlayerScreen state={state} dispatch={dispatch} />
     case 'currentGame':
-      return <TableIdle state={state} dispatch={dispatch} />
     case 'outcomeSelect':
     case 'playersSelect':
+      return <TableIdle state={state} dispatch={dispatch} />
     case 'yakuSelect':
     case 'paoSelect':
     case 'nagashiSelect':

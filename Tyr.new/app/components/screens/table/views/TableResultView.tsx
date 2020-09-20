@@ -5,6 +5,7 @@ import {PlayerProps} from '#/components/general/players/PlayerProps';
 import {TableScreen} from '#/components/screens/table/base/TableScreen';
 import {TableMode} from '#/components/types/TableMode';
 import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
+import {BottomPanelPropsBase} from '#/components/general/bottom-panel/BottomPanelProps';
 
 export type PlayerPropsResult =  Pick<PlayerProps, 'name' | 'wind' | 'rotated' | 'points' | 'pointsMode' | 'showInlineRiichi'>
 
@@ -15,6 +16,7 @@ type IProps = {
   bottomPlayer: PlayerPropsResult
   tableInfo: TableInfoProps
   arrowsInfo?: ResultArrowsProps
+  bottomPanelInfo: BottomPanelPropsBase
 }
 
 function getPlayer(player: PlayerPropsResult): PlayerProps {
@@ -30,7 +32,7 @@ function getPlayer(player: PlayerPropsResult): PlayerProps {
 }
 
 export const TableResultView = React.memo(function (props: IProps) {
-  const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, tableInfo, arrowsInfo} = props;
+  const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, tableInfo, arrowsInfo, bottomPanelInfo} = props;
 
   return (
     <TableScreen
@@ -42,6 +44,7 @@ export const TableResultView = React.memo(function (props: IProps) {
       outcomeMode={OutcomeTableMode.RON}
       tableInfo={tableInfo}
       arrowsInfo={arrowsInfo}
+      bottomPanelInfo={bottomPanelInfo}
     />
   );
 })
