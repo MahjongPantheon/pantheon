@@ -19,17 +19,17 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-class RulesetBakudan extends Ruleset
+class RulesetWrcFish extends Ruleset
 {
-    public static $_title = 'bakudan';
+    public static $_title = 'wrcFish';
     protected static $_ruleset = [
         'tenboDivider'          => 1,
         'ratingDivider'         => 1,
         'startRating'           => 0,
         'oka'                   => 0,
-        'startPoints'           => 30000,
-        'goalPoints'            => 0,
-        'playAdditionalRounds'  => false,
+        'startPoints'           => 25000,
+        'goalPoints'            => 30000,
+        'playAdditionalRounds'  => true,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
         'extraChomboPayments'   => true,
@@ -45,15 +45,21 @@ class RulesetBakudan extends Ruleset
         'tonpuusen'             => false,
         'gameExpirationTime'    => false,
         'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
-        'minPenalty'            => 100,
+        'minPenalty'            => 1000,
         'maxPenalty'            => 20000,
-        'penaltyStep'           => 100,
-        'timerPolicy'           => 'yellowZone',
-        'yellowZone'            => 900, // 15min
-        'redZone'               => 0,
+        'penaltyStep'           => 1000,
+        'timerPolicy'           => 'redZone',
+        'yellowZone'            => 0,
+        'redZone'               => 300, // 5min
         'withLeadingDealerGameOver' => false,
         'replacementPlayerFixedPoints' => -15000,
-        'replacementPlayerOverrideUma' => -15000
+        'replacementPlayerOverrideUma' => -15000,
+        'uma' => [
+            1 => 25000,
+            2 => 10000,
+            3 => -10000,
+            4 => -25000
+        ],
     ];
 
     public function allowedYaku()
@@ -62,14 +68,4 @@ class RulesetBakudan extends Ruleset
             Y_OPENRIICHI
         ]);
     }
-
-    /**
-     * @param array $scores
-     * @return array
-     */
-    public function uma($scores = [])
-    {
-        return $this->_equalizeUma($scores, [1 => 15000, 5000, -5000, -15000]);
-    }
 }
-

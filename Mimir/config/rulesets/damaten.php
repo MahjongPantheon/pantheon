@@ -16,44 +16,57 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Mimir;
-require_once __DIR__ . '/../../src/Ruleset.php';
-require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-class RulesetBakudan extends Ruleset
+require_once __DIR__ . '/../../src/Ruleset.php';
+
+/**
+ * Class RulesetTenhounet
+ * Describes most popular row3-column2 rules
+ * @package Mimir
+ */
+class RulesetDamaten extends Ruleset
 {
-    public static $_title = 'bakudan';
+    protected static $_title = 'damaten';
     protected static $_ruleset = [
-        'tenboDivider'          => 1,
+        'tenboDivider'          => 1000,
         'ratingDivider'         => 1,
-        'startRating'           => 0,
+        'startRating'           => 1500,
         'oka'                   => 0,
-        'startPoints'           => 30000,
-        'goalPoints'            => 0,
-        'playAdditionalRounds'  => false,
+        'startPoints'           => 25000,
+        'goalPoints'            => 30000,
+        'playAdditionalRounds'  => true,
         'subtractStartPoints'   => true,
         'riichiGoesToWinner'    => true,
+        'doubleronRiichiAtamahane' => true,
+        'doubleronHonbaAtamahane'  => true,
         'extraChomboPayments'   => true,
         'chomboPenalty'         => 0,
         'withAtamahane'         => false,
         'withAbortives'         => true,
         'withKuitan'            => true,
         'withKazoe'             => true,
-        'withButtobi'           => false,
+        'withButtobi'           => true,
         'withMultiYakumans'     => true,
         'withNagashiMangan'     => true,
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
-        'gameExpirationTime'    => false,
+        'gameExpirationTime'    => 87600, // hours, to cover JST difference
         'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
-        'minPenalty'            => 100,
-        'maxPenalty'            => 20000,
-        'penaltyStep'           => 100,
-        'timerPolicy'           => 'yellowZone',
-        'yellowZone'            => 900, // 15min
+        'withLeadingDealerGameOver' => true,
+        'timerPolicy'           => 'none',
+        'yellowZone'            => 0,
         'redZone'               => 0,
-        'withLeadingDealerGameOver' => false,
-        'replacementPlayerFixedPoints' => -15000,
-        'replacementPlayerOverrideUma' => -15000
+        'penaltyStep'           => 0,
+        'maxPenalty'            => 0,
+        'minPenalty'            => 0,
+        'uma' => [
+            1 => 0,
+            2 => 0,
+            3 => 0,
+            4 => 0
+        ],
+        'replacementPlayerFixedPoints' => false,
+        'replacementPlayerOverrideUma' => false
     ];
 
     public function allowedYaku()
@@ -62,14 +75,4 @@ class RulesetBakudan extends Ruleset
             Y_OPENRIICHI
         ]);
     }
-
-    /**
-     * @param array $scores
-     * @return array
-     */
-    public function uma($scores = [])
-    {
-        return $this->_equalizeUma($scores, [1 => 15000, 5000, -5000, -15000]);
-    }
 }
-

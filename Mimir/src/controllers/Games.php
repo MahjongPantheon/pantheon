@@ -258,10 +258,10 @@ class GamesController extends Controller
      */
     public function addOnlineReplay($eventId, $link)
     {
-        $this->_log->addInfo('Saving new online game for event id# ' . $eventId);
+        $this->_log->addInfo('Saving new online game for event id# ' . $eventId . ' @ tenhou link ' . $link);
         $session = (new OnlineSessionModel($this->_db, $this->_config, $this->_meta))->addGame($eventId, $link);
         $result = (new EventFinishedGamesModel($this->_db, $this->_config, $this->_meta))->getFinishedGame($session);
-        $this->_log->addInfo('Successfully saved online game for event id# ' . $eventId);
+        $this->_log->addInfo('Successfully saved online game for event id# ' . $eventId . ' @ tenhou link ' . $link);
         return $result;
     }
 }

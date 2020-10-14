@@ -96,7 +96,13 @@ class EventModel extends Model
         $reggedPlayers = array_values(array_filter($reggedPlayers, function ($el) {
             return !$el['ignore_seating'];
         }));
-        $tablesCount = count($reggedPlayers) / 4;
+
+        $event = EventPrimitive::findById($this->_db, [$eventId])[0];
+        if ($event->getAllowPlayerAppend()) { // club game mode
+            $tablesCount = 10;
+        } else {
+            $tablesCount = count($reggedPlayers) / 4;
+        }
 
         $lastGames = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, [
             SessionPrimitive::STATUS_FINISHED,
