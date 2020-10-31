@@ -27,6 +27,7 @@ class OnlineParser
     protected $_checkScores = [];
     protected $_roundData = [];
     /**
+     * (username => PlayerPrimitive)
      * @var PlayerPrimitive[]
      */
     protected $_players = [];
@@ -113,6 +114,31 @@ class OnlineParser
         }
 
         return [];
+    }
+
+    /**
+     * Get nagashi scores
+     *
+     * @param $content
+     * @return string comma-separated player ids
+     */
+    protected function _parseNagashi($content)
+    {
+        list(
+            /* score1 */, $delta1,
+            /* score2 */, $delta2,
+            /* score3 */, $delta3,
+            /* score4 */, $delta4
+        ) = array_map('intval', explode(',', $content));
+
+        $ids = [];
+        foreach ([$delta1, $delta2, $delta3, $delta4] as $idx => $val) {
+            if ($val > 0) {
+                $ids []= array_values($this->_players)[$idx]->getId();
+            }
+        }
+
+        return implode(',', $ids);
     }
 
     protected function _getRiichi()
@@ -274,14 +300,10 @@ class OnlineParser
     protected function _tokenRYUUKYOKU(\XMLReader $reader)
     {
         $rkType = $reader->getAttribute('type');
-        $this->_checkScores []= $this->_makeScores($reader->getAttribute('sc'));
+        $scoreString = $reader->getAttribute('sc');
+        $this->_checkScores []= $this->_makeScores($scoreString);
 
-        if ($rkType && $rkType == 'nm') {
-            // TODO: nagashi mangan (need to implement it in lower layers too)
-            return;
-        }
-
-        if ($rkType) { // abortive draw
+        if ($rkType && $rkType != 'nm') { // abortive draw
             $this->_roundData []= [
                 'outcome'   => 'abort',
                 'riichi'    => $this->_getRiichi(),
@@ -307,6 +329,18 @@ class OnlineParser
                 ]
             )
         );
+
+        // Special case for nagashi
+        if ($rkType && $rkType == 'nm') {
+            $this->_roundData []= [
+                'outcome'   => 'nagashi',
+                'riichi'    => $this->_getRiichi(),
+                'nagashi'   => $this->_parseNagashi($scoreString),
+                'tempai'  => implode(',', array_keys($tempai)),
+            ];
+
+            return;
+        }
 
         $this->_roundData []= [
             'outcome' => 'draw',
