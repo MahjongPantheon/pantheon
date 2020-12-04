@@ -97,6 +97,7 @@ export const SETTINGS_SAVE_LANG = 'SETTINGS_SAVE_LANG';
 export const UPDATE_STATE_SETTINGS = 'UPDATE_STATE_SETTINGS';
 export const TRACK_ARBITRARY_EVENT = 'TRACK_ARBITRARY_EVENT';
 export const TRACK_SCREEN_ENTER = 'TRACK_SCREEN_ENTER';
+export const HISTORY_INIT = 'HISTORY_INIT';
 
 interface InitStateAction {
   type: typeof INIT_STATE;
@@ -481,6 +482,10 @@ interface TrackScreenEnterAction {
   payload: string;
 }
 
+interface HistoryInitAction {
+  type: typeof HISTORY_INIT;
+}
+
 export type AppActionTypes =
   | InitStateAction
   | ResetStateAction
@@ -562,5 +567,6 @@ export type AppActionTypes =
   | UpdateStateSettingsAction
   | TrackArbitraryEventAction
   | TrackScreenEnterAction
+  | HistoryInitAction
   ;
 
