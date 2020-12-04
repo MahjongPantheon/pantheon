@@ -20,6 +20,7 @@ import { initialState } from './state';
 import { logging } from './middlewares/logging';
 import { I18nService } from '../i18n';
 import { yaku } from './middlewares/yaku';
+import { urlCodeLogin } from "./middlewares/urlCodeLogin";
 
 @Injectable()
 export class Store {
@@ -46,6 +47,7 @@ export class Store {
       logging(`⇨ [middlewares]`),
       mimirClient(new RiichiApiService(client)),
       metrika(metrikaService),
+      urlCodeLogin(),
       history(),
       timerMw(this.timerSt),
       persistentMw(idb),
