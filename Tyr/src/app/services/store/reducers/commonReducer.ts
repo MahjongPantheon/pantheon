@@ -1,5 +1,5 @@
 import deepclone from 'deepclone';
-import {initialState} from '../state';
+import { initialState } from '../state';
 import {
   AppActionTypes,
   HISTORY_INIT,
@@ -10,7 +10,7 @@ import {
   TOGGLE_OVERVIEW_DIFFBY,
   UPDATE_STATE_SETTINGS
 } from '../actions/interfaces';
-import {IAppState} from '../interfaces';
+import { IAppState } from '../interfaces';
 
 export function commonReducer(
   state,
