@@ -18,5 +18,36 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-export * from './app.component';
-export * from './app.module';
+:host {
+    position: absolute;
+    top: var(--navbar-height);
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.help-root {
+  margin: 0 10px;
+}
+
+.help-page {
+  background-color: var(--secondary-bg-color-active);
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 22px;
+}
+
+.help-page b {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+}
+
+.ok-button {
+    width: 100%;
+    font-size: 40px;
+    padding: inherit;
+    flex: 1;
+    height: 100%;
+}

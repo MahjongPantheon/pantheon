@@ -18,40 +18,35 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IAppState } from '../../services/store/interfaces';
-import {
-  AppActionTypes,
-  GOTO_NEXT_SCREEN,
-  INIT_BLANK_OUTCOME, TRACK_SCREEN_ENTER,
-  UPDATE_CURRENT_GAMES_INIT
-} from '../../services/store/actions/interfaces';
-import { Outcome } from '../../interfaces/common';
 import { Dispatch } from 'redux';
+import { AppActionTypes, GOTO_NEXT_SCREEN } from '../../services/store/actions/interfaces';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'screen-outcome-select',
+  selector: 'screen-help',
   templateUrl: 'template.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['style.css']
 })
-export class OutcomeSelectScreenComponent extends I18nComponent implements OnInit {
+export class HelpScreenComponent extends I18nComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
-  constructor(public i18n: I18nService) { super(i18n); }
+  public loading = false;
+  public text = '';
 
+  constructor(public i18n: I18nService, private http: HttpClient,
+              private ref: ChangeDetectorRef) { super(i18n); }
+  nextScreen() { this.dispatch({ type: GOTO_NEXT_SCREEN }); }
   ngOnInit() {
-    this.dispatch({ type: TRACK_SCREEN_ENTER, payload: 'screen-outcome-select' });
-    this.dispatch({ type: UPDATE_CURRENT_GAMES_INIT }); // update state before entering new data to prevent "Wrong round" errors.
-    // This still prevents errors when simultaneous submission happens, because two or more players update
-    // their data first, and only then add new data. This will lead to error if more than one player enter
-    // data simultaneously.
-  }
-
-  select(outcome: Outcome) {
-    this.dispatch({ type: INIT_BLANK_OUTCOME, payload: outcome });
-    this.dispatch({ type: GOTO_NEXT_SCREEN });
+    this.loading = true;
+    this.http.get('https://mjtop.net/announces_tyr_' + this.state.settings.currentLang + '.html', {responseType: 'text'})
+      .toPromise().then((response: string) => {
+        this.text = response;
+        this.loading = false;
+        this.ref.markForCheck();
+    });
   }
 }
-

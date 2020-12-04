@@ -1,6 +1,6 @@
 /*
  * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
- * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.dev>
  *
  * This file is part of Tyr.
  *
@@ -26,7 +26,12 @@ import { IDB } from './services/idb';
 import { ThemeService } from './services/themes/service';
 import { Store } from './services/store';
 import { HttpClient } from '@angular/common/http';
-import { HISTORY_INIT, INIT_STATE, STARTUP_WITH_AUTH } from './services/store/actions/interfaces';
+import {
+  HISTORY_INIT,
+  INIT_STATE,
+  STARTUP_WITH_AUTH,
+  UPDATE_STATE_SETTINGS
+} from './services/store/actions/interfaces';
 import { IAppState } from './services/store/interfaces';
 
 @Component({
@@ -81,6 +86,37 @@ export class AppComponent {
       this.store.dispatch({ type: STARTUP_WITH_AUTH, payload: this.storage.get('authToken') || '' });
       this.storage.set('currentLanguage', localeName);
       this.store.dispatch({ type: HISTORY_INIT });
+      this.store.dispatch({ type: UPDATE_STATE_SETTINGS });
+
+      /*
+init() {
+    let loc = window.location.pathname.replace(/^\//, '');
+    if (loc.length > 0) {
+      let [pin, crc] = loc.split('_');
+      if (crc32(pin).toString(16).toLowerCase() === crc.toLowerCase()) {
+        window.history.pushState({}, '', '/'); // to remove pathname
+        this.storage.delete(['authToken']);
+        this._currentScreen = 'login';
+        this.loginWithPin(pin)
+          .then(() => {
+            this.init(); // Should not enter endless loop because path should be empty here.
+          })
+          .catch((e) => {
+            console.error(e);
+            this.metrika.track(MetrikaService.LOAD_ERROR, {
+              type: 'state-init-login',
+              request: 'confirmRegistration',
+              message: e.toString()
+            });
+          });
+        return;
+      }
+    }
+
+  }
+ */
+
+
 
       const key = '__update_notice_202012';
       if (!this.storage.get(key) && (new Date()).getFullYear() === 2020) { // TODO: remove in 2021

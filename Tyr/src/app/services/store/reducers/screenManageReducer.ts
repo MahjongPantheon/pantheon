@@ -2,7 +2,7 @@ import { AppScreen, IAppState } from '../interfaces';
 import {
   AppActionTypes,
   GOTO_NEXT_SCREEN,
-  GOTO_PREV_SCREEN,
+  GOTO_PREV_SCREEN, OPEN_HELP,
   OPEN_SETTINGS,
   RESET_STATE,
   SHOW_LAST_RESULTS,
@@ -68,6 +68,11 @@ export function screenManageReducer(
       return {
         ...state,
         currentScreen: 'settings'
+      };
+    case OPEN_HELP:
+      return {
+        ...state,
+        currentScreen: 'help'
       };
     case GOTO_NEXT_SCREEN:
       let nextScreen: AppScreen = state.currentScreen;
@@ -139,6 +144,7 @@ export function screenManageReducer(
         case 'outcomeSelect':
         case 'otherTablesList':
         case 'settings':
+        case 'help':
         case 'newGame':
           prevScreen = 'overview';
           break;

@@ -1,6 +1,6 @@
 /*
  * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
- * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.dev>
  *
  * This file is part of Tyr.
  *
@@ -24,7 +24,7 @@ import { I18nComponent, I18nService } from '../auxiliary-i18n';
 import { IAppState } from '../../services/store/interfaces';
 import { Dispatch } from 'redux';
 import {
-  AppActionTypes,
+  AppActionTypes, OPEN_HELP,
   SHOW_LAST_RESULTS,
   SHOW_LAST_ROUND,
   SHOW_OTHER_TABLES_LIST,
@@ -92,6 +92,7 @@ export class OverviewScreenComponent extends I18nComponent implements OnInit {
   viewLastRound() { this.dispatch({ type: SHOW_LAST_ROUND }); }
   playerClick(who: IAppState['overviewDiffBy']) { this.dispatch( { type: TOGGLE_OVERVIEW_DIFFBY, payload: who }); }
   otherTables() { this.dispatch({ type: SHOW_OTHER_TABLES_LIST }); }
+  openHelp() { this.dispatch({ type: OPEN_HELP }); }
 
   gotoStat() {
     window.open(`https://${this.state.gameConfig.eventStatHost}/last/`);
