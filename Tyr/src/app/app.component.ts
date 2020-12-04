@@ -87,42 +87,6 @@ export class AppComponent {
       this.storage.set('currentLanguage', localeName);
       this.store.dispatch({ type: HISTORY_INIT });
       this.store.dispatch({ type: UPDATE_STATE_SETTINGS });
-
-      /*
-init() {
-    let loc = window.location.pathname.replace(/^\//, '');
-    if (loc.length > 0) {
-      let [pin, crc] = loc.split('_');
-      if (crc32(pin).toString(16).toLowerCase() === crc.toLowerCase()) {
-        window.history.pushState({}, '', '/'); // to remove pathname
-        this.storage.delete(['authToken']);
-        this._currentScreen = 'login';
-        this.loginWithPin(pin)
-          .then(() => {
-            this.init(); // Should not enter endless loop because path should be empty here.
-          })
-          .catch((e) => {
-            console.error(e);
-            this.metrika.track(MetrikaService.LOAD_ERROR, {
-              type: 'state-init-login',
-              request: 'confirmRegistration',
-              message: e.toString()
-            });
-          });
-        return;
-      }
-    }
-
-  }
- */
-
-
-
-      const key = '__update_notice_202012';
-      if (!this.storage.get(key) && (new Date()).getFullYear() === 2020) { // TODO: remove in 2021
-        alert(this.i18n._t('Mobile client has beed updated. Annoying bug with disabled buttons should go away, but other bugs may appear. In this case, please report to (me@ctizen.dev)'));
-        this.storage.set(key, 'read');
-      }
     }, (error: any) => console.error(error));
   }
 }
