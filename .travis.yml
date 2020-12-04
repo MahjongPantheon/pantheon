@@ -12,7 +12,7 @@ script:
 - make check_covered
 - make prod_build_tyr
 after_success:
-- "./.travis-push.sh"
+- "./.tyr-dist-push.sh"
 env:
   global:
   - secure: dUXoeqV6UBHuvCoxxTv8CrHdxEDmJyxUVEXCg5lQKjhlS/UxgxlKdtHkY/z+SI86u0ju5DFnK3M8M+7Wu7oQm50jcWSNzWwHKpuIfQFwi03qh+4iqWtLVCmo/d7EZnAxhwnggWSXkI3O9vEKx7wk1s0WzgaQD94YEbnzL31JJEyCVSMa9y8vlEeq5mrQjXUit+kzFauv8eIU230fzqVaCtfuzsNtGNDc/24ND7LimOsxvRZARMDjck9dgXUNcZ4lgoaahVYQ9sJISwpfyxA85EOB6KPUlEs7ViER1YQZ402vw/BkdGmMHAoJZK70DJeyCBej0EagnUWH7O8KH/aa82BKbIHZzdumgeQjPifuI/tRp6nfG66lkef1MiUv3voGf7btKvzpHWTCsH+5PqmLZxf6RQb8H+TyCdlgqr3tCd4dgp0z8NCdDDfEvxj+C7kASPR7uiEHxGWBz7o5z4K66Sfu8c3lC9+m1hXih4kqn7EAr3Yae7Z9nrjUBiR0eBowUdwJOm2vbnsfKaq34E3AfOwf8fisBx+egA5ULtDMq2Y+tRr5G250W+zYtPDivVzKq/Q8w4BQbVLNK0fVApdLFxf0d8YXDKmhLUn4SH7uee2IytUZ3sp8U0neKzUWt5fAB0xjrISDL42fupkx6VccXo7j2AMh+iHYmyvwDON4Za4=

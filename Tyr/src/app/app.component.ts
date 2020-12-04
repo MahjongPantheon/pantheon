@@ -80,6 +80,12 @@ export class AppComponent {
       this.api.setCredentials(this.storage.get('authToken') || '');
       this.store.dispatch({ type: STARTUP_WITH_AUTH, payload: this.storage.get('authToken') || '' });
       this.storage.set('currentLanguage', localeName);
+
+      const key = '__update_notice_202012';
+      if (!this.storage.get(key) && (new Date()).getFullYear() === 2020) { // TODO: remove in 2021
+        alert(this.i18n._t('Mobile client has beed updated. Annoying bug with disabled buttons should go away, but other bugs may appear. In this case, please report to (me@ctizen.dev)'));
+        this.storage.set(key, 'read');
+      }
     }, (error: any) => console.error(error));
   }
 }

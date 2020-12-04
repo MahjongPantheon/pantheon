@@ -86,7 +86,7 @@ class ClubEventSeeder extends AbstractSeed
         $cfg = new \Mimir\Config([
             'db' => [
                 'connection_string' => 'pgsql:host=localhost;port=' . $_SERVER['PHINX_DB_PORT']
-                                       . 'dbname=' . $_SERVER['PHINX_DB_NAME'],
+                                       . ';dbname=' . $_SERVER['PHINX_DB_NAME'],
                 'credentials' => [
                     'username' => $_SERVER['PHINX_DB_USER'],
                     'password' => $_SERVER['PHINX_DB_PASS']

@@ -1,0 +1,53 @@
+name: Prebuild Tyr
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checkPr:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build container with project
+        run: make container
+
+      - name: Run container
+        run: make pantheon_run
+
+      - name: Install project deps
+        run: make deps
+
+      - name: Apply db migrations
+        run: make migrate
+
+      - name: Run all tests with coverage
+        run: make check_covered
+  build:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build container with project
+        run: make container
+
+      - name: Run container
+        run: make pantheon_run
+
+      - name: Install project deps
+        run: make deps
+
+      - name: Apply db migrations
+        run: make migrate
+
+      - name: Run all tests with coverage
+        run: make check_covered
+
+      - name: Make prod Tyr build
+        run: make prod_build_tyr
+
+      - name: Push prod build to repo
+        run: ./.tyr-dist-push.sh
