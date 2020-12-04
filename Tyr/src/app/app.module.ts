@@ -1,6 +1,6 @@
 /*
  * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
- * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.dev>
  *
  * This file is part of Tyr.
  *
@@ -61,6 +61,7 @@ import { darkBlueTheme } from './themes/darkBlue';
 import { classicDarkTheme } from './themes/classicDark';
 import { classicLightTheme } from './themes/classicLight';
 import { QrService } from './services/qr';
+import { HelpScreenComponent } from './components/screen-help';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { QrService } from './services/qr';
     YakumanPipe,
     FormatRoundPipe,
     DefaultsToPipe,
-    DescriptionPipe
+    DescriptionPipe,
+    HelpScreenComponent
   ],
   imports: [
     BrowserModule,

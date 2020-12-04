@@ -17,28 +17,20 @@
     You should have received a copy of the GNU General Public License
     along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<div
-  class="inline-preloader"
-  *ngIf="_loading"></div>
-<div class="wrap scroller-wrap" *ngIf="!_loading && _error">
-  <div style="text-align: center; padding: 30% 0;">{{_error}}</div>
-  <button class="allok" style="width: 100%" (click)="okay()">{{_OK}}</button>
-</div>
-<div class="wrap scroller-wrap" *ngIf="!_loading && !_error">
-  <round-preview-scheme
-      [state]="state"
-      [purpose]="'confirmation'"
-  ></round-preview-scheme>
-  <div class="confirmation-controls">
-    <button
-        class="allok"
-        (click)="confirmed=!confirmed"
-        [class.pressed]="confirmed"
-    >{{_ALL_CHECKED}}</button>
-    <button
-        class="confirm gradient-button"
-        [disabled]="!confirmed"
-        (click)="confirm()"
-    >{{_SAVE}}</button>
+<div class="help-root">
+  <div class="help-page">
+    <b>{{_HELP_CREDITS}}</b>
+    <hr />
+    <div class="text">{{_HELP_CONTENTS_SITE}} <a href="https://mjtop.net/" target="_blank">mjtop.net</a></div>
+    <hr />
+    <div class="text">{{_HELP_CONTENTS_EMAIL}} <a href="mailto:me@ctizen.dev" target="_blank">me@ctizen.dev</a></div>
+    <hr *ngIf="state.settings.currentLang === 'ru'" />
+    <div *ngIf="state.settings.currentLang === 'ru'" class="text">{{_HELP_CONTENTS_TG}} <a href="https://t.me/pantheon_support" target="_blank">https://t.me/pantheon_support</a></div>
+  </div>
+  <div *ngIf="loading" class="inline-preloader"></div>
+  <div class="help-page" *ngIf="!loading && text.length > 0">
+    <b>{{_HELP_ANNOUNCES}}</b>
+    <hr />
+    <div [innerHTML]="text"></div>
   </div>
 </div>

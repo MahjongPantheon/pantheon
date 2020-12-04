@@ -26,6 +26,7 @@ export const SHOW_LAST_ROUND = 'SHOW_LAST_ROUND';
 export const SHOW_OTHER_TABLES_LIST = 'SHOW_OTHER_TABLES_LIST';
 export const SHOW_OTHER_TABLE = 'SHOW_OTHER_TABLE';
 export const OPEN_SETTINGS = 'OPEN_SETTINGS';
+export const OPEN_HELP = 'OPEN_HELP';
 export const GOTO_NEXT_SCREEN = 'GOTO_NEXT_SCREEN';
 export const GOTO_PREV_SCREEN = 'GOTO_PREV_SCREEN';
 export const SET_DORA_COUNT = 'SET_DORA_COUNT';
@@ -137,6 +138,10 @@ interface ShowOtherTableAction {
 
 interface OpenSettingsAction {
   type: typeof OPEN_SETTINGS;
+}
+
+interface OpenHelpAction {
+  type: typeof OPEN_HELP;
 }
 
 interface GotoNextScreenAction {
@@ -496,6 +501,7 @@ export type AppActionTypes =
   | ShowOtherTablesListAction
   | ShowOtherTableAction
   | OpenSettingsAction
+  | OpenHelpAction
   | GotoNextScreenAction
   | GotoPrevScreenAction
   | SetDoraCountAction

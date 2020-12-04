@@ -1,6 +1,6 @@
 /*
  * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
- * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.dev>
  *
  * This file is part of Tyr.
  *
@@ -25,7 +25,7 @@ import { Dispatch } from 'redux';
 import {
   AppActionTypes,
   GOTO_NEXT_SCREEN,
-  GOTO_PREV_SCREEN,
+  GOTO_PREV_SCREEN, OPEN_HELP,
   OPEN_SETTINGS, SET_DORA_COUNT, SET_FU_COUNT
 } from '../../services/store/actions/interfaces';
 import {
