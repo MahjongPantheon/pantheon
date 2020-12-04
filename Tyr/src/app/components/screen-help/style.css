@@ -28,6 +28,8 @@
 
 .help-root {
   margin: 0 10px;
+  overflow: scroll;
+  height: 100%;
 }
 
 .help-page {
