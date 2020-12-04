@@ -2,10 +2,13 @@ import deepclone from 'deepclone';
 import { initialState } from '../state';
 import {
   AppActionTypes,
+  HISTORY_INIT,
   INIT_STATE,
   SELECT_MULTIRON_WINNER,
   SETTINGS_SAVE_LANG,
-  SETTINGS_SAVE_THEME, TOGGLE_OVERVIEW_DIFFBY, UPDATE_STATE_SETTINGS
+  SETTINGS_SAVE_THEME,
+  TOGGLE_OVERVIEW_DIFFBY,
+  UPDATE_STATE_SETTINGS
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
 
@@ -16,6 +19,11 @@ export function commonReducer(
   switch (action.type) {
     case INIT_STATE:
       return deepclone(initialState);
+    case HISTORY_INIT:
+      return {
+        ...state,
+        historyInitialized: true
+      };
     case SELECT_MULTIRON_WINNER:
       return {
         ...state,

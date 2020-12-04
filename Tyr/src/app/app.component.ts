@@ -26,7 +26,7 @@ import { IDB } from './services/idb';
 import { ThemeService } from './services/themes/service';
 import { Store } from './services/store';
 import { HttpClient } from '@angular/common/http';
-import { INIT_STATE, STARTUP_WITH_AUTH } from './services/store/actions/interfaces';
+import { HISTORY_INIT, INIT_STATE, STARTUP_WITH_AUTH } from './services/store/actions/interfaces';
 import { IAppState } from './services/store/interfaces';
 
 @Component({
@@ -80,6 +80,7 @@ export class AppComponent {
       this.api.setCredentials(this.storage.get('authToken') || '');
       this.store.dispatch({ type: STARTUP_WITH_AUTH, payload: this.storage.get('authToken') || '' });
       this.storage.set('currentLanguage', localeName);
+      this.store.dispatch({ type: HISTORY_INIT });
 
       const key = '__update_notice_202012';
       if (!this.storage.get(key) && (new Date()).getFullYear() === 2020) { // TODO: remove in 2021

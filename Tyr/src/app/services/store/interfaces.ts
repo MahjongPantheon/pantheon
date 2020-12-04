@@ -92,6 +92,7 @@ export interface IAppState {
   loginError?: ErrorState;
 
   gameOverviewReady: boolean;
+  historyInitialized?: boolean;
 }
 
 export type TimerStorage = {
