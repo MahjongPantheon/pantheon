@@ -20,6 +20,7 @@ import {IAppState} from '../interfaces';
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
 export const STARTUP_WITH_AUTH = 'STARTUP_WITH_AUTH';
+export const INIT_WITH_PINCODE = 'INIT_WITH_PINCODE';
 export const START_NEW_GAME = 'START_NEW_GAME';
 export const SHOW_LAST_RESULTS = 'SHOW_LAST_RESULTS';
 export const SHOW_LAST_ROUND = 'SHOW_LAST_ROUND';
@@ -110,6 +111,11 @@ interface ResetStateAction {
 
 interface StartupWithAuthAction {
   type: typeof STARTUP_WITH_AUTH;
+  payload: string;
+}
+
+interface InitWithPincodeAction {
+  type: typeof INIT_WITH_PINCODE;
   payload: string;
 }
 
@@ -495,6 +501,7 @@ export type AppActionTypes =
   | InitStateAction
   | ResetStateAction
   | StartupWithAuthAction
+  | InitWithPincodeAction
   | StartNewGameAction
   | ShowLastResultsAction
   | ShowLastRoundAction
