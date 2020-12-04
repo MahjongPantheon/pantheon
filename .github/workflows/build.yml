@@ -2,7 +2,6 @@ name: Prebuild Tyr
 
 on:
   push:
-  pull_request:
 
 jobs:
   checkPr:
