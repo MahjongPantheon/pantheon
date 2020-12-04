@@ -1,6 +1,6 @@
 ## Mahjong Pantheon: automated statistics & assistance for japanese riichi mahjong sessions.
 
-[![Build Status](https://travis-ci.org/MahjongPantheon/pantheon.svg?branch=master)](https://travis-ci.org/MahjongPantheon/pantheon) [![Coverage Status](https://coveralls.io/repos/github/MahjongPantheon/pantheon/badge.svg)](https://coveralls.io/github/MahjongPantheon/pantheon)
+[![Coverage Status](https://coveralls.io/repos/github/MahjongPantheon/pantheon/badge.svg)](https://coveralls.io/github/MahjongPantheon/pantheon)
 
 Pantheon project consists of some submodules, each of those might be installed standalone (see instructions in folder 
 of each submodule). To quickly run Pantheon locally using Docker, read further.
