@@ -37,7 +37,7 @@
       <button
           class="start-button"
           (click)="startGame()"
-          [class.disabled]="!playersValid"
+          [class.disabled]="!playersValid || alreadyStarted"
       ><custom-icon [type]="'check'"></custom-icon></button>
     </div>
   </div>
