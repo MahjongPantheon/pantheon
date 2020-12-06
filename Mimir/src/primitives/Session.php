@@ -407,7 +407,11 @@ class SessionPrimitive extends Primitive
     {
         if (empty($this->_representationalHash)) {
             // Set representation hash only if it is empty
-            $this->_representationalHash = sha1(implode(',', $this->_playersIds) . $this->_startDate);
+            // Here we rely on fact that same group of players can't start several games in the same minute.
+            $this->_representationalHash = sha1(
+                implode(',', $this->_playersIds) .
+                DateHelper::getDateWithoutSeconds($this->_startDate)
+            );
         }
         return parent::save();
     }
@@ -610,6 +614,16 @@ class SessionPrimitive extends Primitive
     public function getRepresentationalHash()
     {
         return $this->_representationalHash;
+    }
+
+    /**
+     * @deprecated Do not use this! Left as is only for testing purposes.
+     * @return string
+     */
+    public function _setRepresentationalHash($hash)
+    {
+        $this->_representationalHash = $hash;
+        return $this;
     }
 
     /**

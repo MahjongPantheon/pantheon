@@ -36,4 +36,18 @@ class DateHelper
         $date->setTimezone(new \DateTimeZone($timezone));
         return $date->format('Y-m-d H:i:s');
     }
+
+    /**
+     * Return date without seconds; useful for representational_hash generator
+     *
+     * @param $date
+     * @return string
+     * @throws \Exception
+     */
+    public static function getDateWithoutSeconds($date)
+    {
+        $datetime = new \DateTime($date);
+        return $datetime->modify(sprintf('-%d seconds', (int)$datetime->format('s')))
+            ->format('Y-m-d H:i:s');
+    }
 }
