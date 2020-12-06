@@ -42,6 +42,7 @@ import {getPlayers, playersValid} from '../../services/store/selectors/screenNew
 export class NewGameScreenComponent implements OnInit {
   @Input() state: IAppState;
   @Input() dispatch: Dispatch<AppActionTypes>;
+  public alreadyStarted = false;
 
   get _loading() { return this.state.loading.players; }
   get players() { return getPlayers(this.state); }
@@ -61,10 +62,11 @@ export class NewGameScreenComponent implements OnInit {
   selectKamicha(id: string) { this.dispatch( { type: SELECT_NEWGAME_PLAYER_KAMICHA, payload: parseInt(id, 10) } ); }
 
   startGame() {
-    if (!this.playersValid) {
+    if (!this.playersValid || this.alreadyStarted) {
       return;
     }
 
+    this.alreadyStarted = true; // Prevent duplicate clicks
     this.dispatch({ type: START_GAME_INIT, payload: this.state.newGameSelectedUsers.map((p) => p.id) });
   }
 }
