@@ -182,7 +182,7 @@ class MimirClient implements IMimirClient
      *           riichi => [ ..playerId.. ],
      *           honba => int,
      *           scores => [ ..int.. ],
-     *           finished => boolean,
+     *           finished => bool,
      *           penalties => [ playerId => penaltySize, ... ]
      *       ]
      *  ]
@@ -597,12 +597,12 @@ class MimirClient implements IMimirClient
      *  For interactive mode (tournaments), and only for administrative purposes
      *
      * @param string $gameHashcode
-     * @return boolean
+     * @return bool
     */
-    public function dropLastRound(string $gameHashcode): boolean
+    public function dropLastRound(string $gameHashcode): bool
     {
         /** @phpstan-ignore-next-line */
-        return (boolean)$this->_client->execute('dropLastRound', [$gameHashcode]);
+        return (bool)$this->_client->execute('dropLastRound', [$gameHashcode]);
     }
 
     /**

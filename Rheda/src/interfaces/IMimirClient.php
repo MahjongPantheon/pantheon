@@ -124,7 +124,7 @@ interface IMimirClient
      *           riichi => [ ..playerId.. ],
      *           honba => int,
      *           scores => [ ..int.. ],
-     *           finished => boolean,
+     *           finished => bool,
      *           penalties => [ playerId => penaltySize, ... ]
      *       ]
      *  ]
@@ -403,9 +403,9 @@ interface IMimirClient
      *  For interactive mode (tournaments), and only for administrative purposes
      *
      * @param string $gameHashcode
-     * @return boolean
+     * @return bool
     */
-    public function dropLastRound(string $gameHashcode): boolean;
+    public function dropLastRound(string $gameHashcode): bool;
 
     /**
      *  Add penalty in interactive game

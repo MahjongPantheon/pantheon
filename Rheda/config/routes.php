@@ -33,8 +33,6 @@ return [ // Omit trailing slashes in keys when possible
     '/stat/.+'        => 'RatingTable',
     '/timer'          => 'Timer',
     '/timer/.+'       => 'Timer',
-    '/sortition'      => 'Sortition',
-    '/sortition/(?<seed>[0-9a-f]+)' => 'Sortition',
 
     '/tourn'                                               => 'TournamentControlPanel',
     '/tourn/(?<action>dropLastRound)/(?<hash>[0-9a-f]+)'   => 'TournamentControlPanel',

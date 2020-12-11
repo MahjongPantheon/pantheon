@@ -71,7 +71,7 @@ class GamesController extends Controller
      *
      * @param string $gameHashcode
      * @throws \Exception
-     * @return boolean Success?
+     * @return bool Success?
      */
     public function dropLastRound($gameHashcode)
     {
@@ -196,7 +196,7 @@ class GamesController extends Controller
      *          riichi => [ ..playerId.. ],
      *          honba => int,
      *          scores => [ ..int.. ],
-     *          finished => boolean,
+     *          finished => bool,
      *          penalties => [ playerId => penaltySize, ... ]
      *      ]
      * ]
