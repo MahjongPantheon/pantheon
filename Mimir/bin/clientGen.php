@@ -16,6 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Mimir;
+require_once __DIR__ . '/../../bin/genCommon.php';
 
 // To prevent errors on jsonrpc loading when requiring controllers
 require_once __DIR__ . '/../vendor/fguillot/json-rpc/src/JsonRPC/Client.php';
@@ -27,58 +28,9 @@ if (empty($argv[1])) {
 }
 
 if (!empty($argv[2]) && $argv[2] == 'interface') {
-    genInterface(getData(), $argv[1]);
+    genInterface(getData(__DIR__, 'Mimir'), $argv[1]);
 } else {
-    genClient(getData(), $argv[1]);
-}
-
-function makeInlineParam($param) {
-    if (empty($param)) return '';
-    if (strpos($param['type'], '|') !== false) return '';
-    if ($param['type'] === 'mixed') return '';
-    if (strpos($param['type'], '[]') !== false) return 'array';
-    return $param['type'];
-}
-
-function getData() {
-    // require all controllers
-    $dir = opendir(__DIR__ . '/../src/controllers/');
-    while (($file = readdir($dir))) {
-        if ($file == '.' || $file == '..') {
-            continue;
-        }
-        require_once __DIR__ . '/../src/controllers/' . $file;
-    }
-
-    $routes = require __DIR__ . '/../config/routes.php';
-
-    $doc = [];
-
-    foreach ($routes as $methodName => $callable) {
-        $classRefl = new \ReflectionClass('\\Mimir\\' . $callable[0]);
-        $method = $classRefl->getMethod($callable[1]);
-        $docComment = explode("\n", $method->getDocComment());
-        $doc[$methodName] = [
-            'comment'       => [],
-            'params'        => [],
-            'exceptions'    => [],
-            'return'        => []
-        ];
-
-        foreach ($docComment as $line) {
-            if (preg_match('#@param\s+(?<type>\S+)\s+(?<name>\\$\S+)(\s+(?<comment>.+))?#is', $line, $typedParams)) {
-                $doc[$methodName]['params'] []= $typedParams;
-            } else if (preg_match('#@throws\s+(?<type>\S+)(\s+(?<comment>.+))?#is', $line, $exceptions)) {
-                $doc[$methodName]['exceptions'] []= $exceptions;
-            } else if (preg_match('#@return\s+(?<type>\S+)(\s+(?<comment>.+))?#is', $line, $return)) {
-                $doc[$methodName]['return'] = $return;
-            } else if (trim($line) != '/**' && trim($line) != '*/') {
-                $doc[$methodName]['comment'] []= preg_replace('#^\s+\*#', '', $line);
-            }
-        }
-    }
-
-    return $doc;
+    genClient(getData(__DIR__, 'Mimir'), $argv[1]);
 }
 
 function genInterface($doc, $packageName) {
@@ -94,40 +46,13 @@ namespace <?php echo $packageName; ?>;
 */
 interface IMimirClient
 {
+    public function __construct(string $apiUrl);
 
-public function __construct(string $apiUrl);
-
-/**
-* @return \JsonRPC\Client
-*/
-public function getClient();
-
-<?php foreach ($doc as $methodName => $method):
-
-    $typedParams = [];
-    $phpDocParams = [];
-    $plainParams = [];
-
-    foreach ($method['params'] as $param) {
-        $phpDocParams []= "@param {$param['type']} {$param['name']}";
-        $typedParams []= makeInlineParam($param) . ' ' . $param['name'];
-        $plainParams []= $param['name'];
-    }
-
-    ?>
-
-    /**<?php if (!empty($method['comment'])) echo PHP_EOL . '     * ' . implode("\n     * ", array_filter($method['comment'])); ?>
-
-    <?php if (!empty($phpDocParams)) echo ' * ' . implode("\n     * ", $phpDocParams); ?>
-
-    <?php if (!empty($method['return'])) echo ' * @return ' . $method['return']['type']; ?>
-
+    /**
+    * @return \JsonRPC\Client
     */
-    public function <?php echo $methodName; ?>(<?php
-
-    echo implode(', ', $typedParams);
-    ?>);
-<?php endforeach; ?>
+    public function getClient();
+    <?php echo makeInterfaceDefinition($doc); ?>
 }
 <?php
 }
@@ -165,41 +90,7 @@ class MimirClient implements IMimirClient
     {
         return $this->_client;
     }
-<?php foreach ($doc as $methodName => $method):
-
-    $typedParams = [];
-    $phpDocParams = [];
-    $plainParams = [];
-
-    foreach ($method['params'] as $param) {
-        $phpDocParams []= "@param {$param['type']} {$param['name']}";
-        $typedParams []= makeInlineParam($param) . ' ' . $param['name'];
-        $plainParams []= $param['name'];
-    }
-
-    ?>
-
-    /**<?php if (!empty($method['comment'])) echo PHP_EOL . '     * ' . implode("\n     * ", array_filter($method['comment'])); ?>
-
-    <?php if (!empty($phpDocParams)) echo ' * ' . implode("\n     * ", $phpDocParams); ?>
-
-     * @throws \Exception
-
-    <?php if (!empty($method['return'])) echo ' * @return ' . $method['return']['type']; ?>
-
-     */
-    public function <?php echo $methodName; ?>(<?php
-
-    echo implode(', ', $typedParams);
-    ?>)<?php
-        $retval = makeInlineParam($method['return']);
-        if (!empty($retval)) {
-            echo ": {$retval}";
-        }
-        echo PHP_EOL . '    '; ?>{
-        <?php if ($retval !== 'void') echo 'return '; ?><?php if (!empty($retval) && $retval !== 'void') { echo "({$retval})"; } ?>$this->_client->execute('<?php echo $methodName; ?>', [<?php echo implode(', ', $plainParams); ?>]);
-    }
-<?php endforeach; ?>
+    <?php echo makeClientDefinition($doc); ?>
 }
 <?php
 }

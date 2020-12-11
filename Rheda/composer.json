@@ -1,18 +1,18 @@
 {
-    "repositories": [
-        {
-            "url": "https://github.com/ctizen/JsonRPC.git",
-            "type": "git"
-        }
-    ],
-    "require": {
-        "fguillot/json-rpc": "@stable",
-        "justinrainbow/json-schema": "~4.0",
-	      "xamin/handlebars.php": "dev-master",
-	      "chillerlan/php-qrcode": "dev-master"
-    },
-    "require-dev": {
-        "squizlabs/php_codesniffer": "3.*",
-      "phpstan/phpstan": "^0.12.25"
+  "repositories": [
+    {
+      "url": "https://github.com/ctizen/JsonRPC.git",
+      "type": "git"
     }
+  ],
+  "require": {
+    "fguillot/json-rpc": "@stable",
+    "justinrainbow/json-schema": "~4.0",
+    "xamin/handlebars.php": "dev-master",
+    "chillerlan/php-qrcode": "3.4.0"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "3.*",
+    "phpstan/phpstan": "^0.12.25"
+  }
 }

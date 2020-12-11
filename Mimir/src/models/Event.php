@@ -96,7 +96,7 @@ class EventModel extends Model
             return !$el['ignore_seating'];
         }));
 
-        $event = EventPrimitive::findById($this->_db, [$eventId])[0];
+        $event = EventPrimitive::findById($this->_ds, [$eventId])[0];
         if ($event->getAllowPlayerAppend()) { // club game mode
             $tablesCount = 10;
         } else {

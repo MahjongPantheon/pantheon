@@ -664,9 +664,10 @@ class SessionPrimitive extends Primitive
 
     /**
      * @deprecated Do not use this! Left as is only for testing purposes.
-     * @return string
+     * @param string $hash
+     * @return $this
      */
-    public function _setRepresentationalHash($hash)
+    public function _setRepresentationalHash(string $hash)
     {
         $this->_representationalHash = $hash;
         return $this;

@@ -66,11 +66,11 @@ class DateHelper
     /**
      * Return date without seconds; useful for representational_hash generator
      *
-     * @param $date
+     * @param string $date
      * @return string
      * @throws \Exception
      */
-    public static function getDateWithoutSeconds($date)
+    public static function getDateWithoutSeconds(string $date)
     {
         $datetime = new \DateTime($date);
         return $datetime->modify(sprintf('-%d seconds', (int)$datetime->format('s')))

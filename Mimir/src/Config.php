@@ -20,7 +20,7 @@ namespace Mimir;
 class Config
 {
     /**
-     * @var string[]
+     * @var array
      */
     protected $_data;
 
@@ -30,12 +30,10 @@ class Config
     public function __construct($fileOrSource)
     {
         if (is_array($fileOrSource)) { // not file name, just whole config
-            /** @var string[] $fileOrSource */
+            /** @var array $fileOrSource */
             $this->_data = $fileOrSource;
         } else {
-            /** @var string[] $tmp */
-            $tmp = array_map('strval', require $fileOrSource);
-            $this->_data = $tmp;
+            $this->_data = require $fileOrSource;
         }
     }
 
@@ -50,7 +48,7 @@ class Config
         $parts = explode('.', $path);
         $current = $this->_data;
         while ($part = array_shift($parts)) {
-            $current = $current[$part]; // @phpstan-ignore-line
+            $current = $current[$part];
         }
 
         return $current;
