@@ -106,10 +106,11 @@
     <ul class="navbar-nav justify-content-end" style="position: absolute; right: 0">
       {{#isLoggedIn}}
         <li class="nav-item"><a class='nav-link' href='/profile' title="{{currentPerson.email}} :: {{currentPerson.id}}">{{currentPerson.title}}</a></li>
+        <li class="nav-item"><a class='nav-link' href='/profile/logout'>{{_t 'Logout'}}</a></li>
       {{/isLoggedIn}}
       {{^isLoggedIn}}
-        <li class="nav-item"><a class='nav-link' href='/login/'>{{_t 'Login'}}</a></li>
-        <li class="nav-item"><a class='nav-link' href='/register/'>{{_t 'Register'}}</a></li>
+        <li class="nav-item"><a class='nav-link' href='/profile/login'>{{_t 'Login'}}</a></li>
+        <li class="nav-item"><a class='nav-link' href='/register'>{{_t 'Register'}}</a></li>
       {{/isLoggedIn}}
       <li class="nav-item dropdown language-dropdown">
         <a href="#" class="nav-link dropdown-toggle" id="dropdownMenuButton"

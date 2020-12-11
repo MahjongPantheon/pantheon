@@ -28,7 +28,26 @@ class Login extends Controller
         return _t('Log in');
     }
 
+    protected function _beforeRun()
+    {
+        if (!empty($this->_currentPersonId)) {
+            if ($this->_path['action'] === 'logout') {
+                // @phpstan-ignore-next-line
+                setcookie(Sysconf::COOKIE_TOKEN_KEY, '', time() - 365 * 24 * 3600, '/');
+                // @phpstan-ignore-next-line
+                setcookie(Sysconf::COOKIE_ID_KEY, '', time() - 365 * 24 * 3600, '/');
+                header('Location: ' . '/');
+            } else {
+                header('Location: ' . '/profile/' . $this->_currentPersonId);
+            }
+            return false;
+        }
+
+        return true;
+    }
+
     /**
+     * We should get here only when action === login
      * @return array
      */
     protected function _run(): array
@@ -36,7 +55,7 @@ class Login extends Controller
         $emailError = null;
         $passwordError = null;
 
-        if (!empty($_POST['password']) && empty($this->_currentPersonId)) {
+        if (!empty($_POST['password'])) {
             if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
                 $emailError = _t('E-mail is invalid');
             }
@@ -55,10 +74,6 @@ class Login extends Controller
             } catch (\Exception $ex) {
                 $passwordError = _t('Password is incorrect or account not registered');
             }
-        }
-
-        if (!empty($this->_currentPersonId)) {
-            header('Location: ' . '/profile/' . $this->_currentPersonId);
         }
 
         return [
