@@ -171,6 +171,7 @@ interface IFreyClient
      *  - eventId may be null to get system-wide rules.
      *  - Method results are not cached!
      *  - To be used in admin panel, but not in client side!
+     *  - Does not output superadmin flag
      *
      * @param int $personId
      * @param int|null $eventId
@@ -183,6 +184,7 @@ interface IFreyClient
      *  - eventId may be null to get system-wide rules.
      *  - Method results are not cached!
      *  - To be used in admin panel, but not in client side!
+     *  - Does not output superadmin flag
      *
      * @param int $groupId
      * @param int|null $eventId

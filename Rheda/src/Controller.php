@@ -207,6 +207,7 @@ abstract class Controller
                 if (!empty($this->_mainEventId)) {
                     // TODO: access rules for aggregated events?
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_mainEventId);
+                    if ($this->_accessRules[In])
                 }
                 $this->_personalData = $this->_frey->getPersonalInfo([$this->_currentPersonId])[0];
             }

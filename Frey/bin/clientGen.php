@@ -17,6 +17,7 @@
  */
 namespace Frey;
 require_once __DIR__ . '/../../bin/genCommon.php';
+require_once __DIR__ . '/../src/helpers/InternalRules.php';
 
 if (empty($argv[1])) {
     trigger_error('Wrong subsystem argument' . PHP_EOL . 'Usage: php bin/clientGen.php Mimir [interface]' . PHP_EOL, E_USER_ERROR);
@@ -74,6 +75,9 @@ class FreyClient implements IFreyClient
     */
     protected $_client;
 
+<?php echo makeRightsList(); ?>
+
+
     public function __construct(string $apiUrl)
     {
         $this->_client = new \JsonRPC\Client($apiUrl, false, new HttpClient($apiUrl));
@@ -89,4 +93,10 @@ class FreyClient implements IFreyClient
     <?php echo makeClientDefinition($doc); ?>
 }
 <?php
+}
+
+function makeRightsList() {
+    return implode(PHP_EOL, array_map(function($name) {
+        return '    const PRIV_' . $name . " = '{$name}';";
+    }, InternalRules::getNames()));
 }

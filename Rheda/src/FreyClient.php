@@ -17,6 +17,35 @@ class FreyClient implements IFreyClient
     */
     protected $_client;
 
+    const PRIV_IS_SUPER_ADMIN = 'IS_SUPER_ADMIN';
+    const PRIV_GET_PERSON_ACCESS = 'GET_PERSON_ACCESS';
+    const PRIV_GET_GROUP_ACCESS = 'GET_GROUP_ACCESS';
+    const PRIV_GET_ALL_PERSON_RULES = 'GET_ALL_PERSON_RULES';
+    const PRIV_GET_ALL_GROUP_RULES = 'GET_ALL_GROUP_RULES';
+    const PRIV_ADD_RULE_FOR_PERSON = 'ADD_RULE_FOR_PERSON';
+    const PRIV_ADD_RULE_FOR_GROUP = 'ADD_RULE_FOR_GROUP';
+    const PRIV_ADD_SYSTEM_WIDE_RULE_FOR_PERSON = 'ADD_SYSTEM_WIDE_RULE_FOR_PERSON';
+    const PRIV_ADD_SYSTEM_WIDE_RULE_FOR_GROUP = 'ADD_SYSTEM_WIDE_RULE_FOR_GROUP';
+    const PRIV_UPDATE_RULE_FOR_PERSON = 'UPDATE_RULE_FOR_PERSON';
+    const PRIV_UPDATE_RULE_FOR_GROUP = 'UPDATE_RULE_FOR_GROUP';
+    const PRIV_DELETE_RULE_FOR_PERSON = 'DELETE_RULE_FOR_PERSON';
+    const PRIV_DELETE_RULE_FOR_GROUP = 'DELETE_RULE_FOR_GROUP';
+    const PRIV_CLEAR_ACCESS_CACHE = 'CLEAR_ACCESS_CACHE';
+    const PRIV_CREATE_ACCOUNT = 'CREATE_ACCOUNT';
+    const PRIV_GET_PERSONAL_INFO_WITH_PRIVATE_DATA = 'GET_PERSONAL_INFO_WITH_PRIVATE_DATA';
+    const PRIV_UPDATE_PERSONAL_INFO = 'UPDATE_PERSONAL_INFO';
+    const PRIV_CREATE_GROUP = 'CREATE_GROUP';
+    const PRIV_UPDATE_GROUP = 'UPDATE_GROUP';
+    const PRIV_DELETE_GROUP = 'DELETE_GROUP';
+    const PRIV_ADD_PERSON_TO_GROUP = 'ADD_PERSON_TO_GROUP';
+    const PRIV_REMOVE_PERSON_FROM_GROUP = 'REMOVE_PERSON_FROM_GROUP';
+    const PRIV_CREATE_EVENT = 'CREATE_EVENT';
+    const PRIV_REGISTER_PERSON = 'REGISTER_PERSON';
+    const PRIV_EDIT_PERSON = 'EDIT_PERSON';
+    const PRIV_ADD_USER = 'ADD_USER';
+    const PRIV_ADMIN_EVENT = 'ADMIN_EVENT';
+    const PRIV_EDIT_EVENT = 'EDIT_EVENT';
+
     public function __construct(string $apiUrl)
     {
         $this->_client = new \JsonRPC\Client($apiUrl, false, new HttpClient($apiUrl));
@@ -245,6 +274,7 @@ class FreyClient implements IFreyClient
      *  - eventId may be null to get system-wide rules.
      *  - Method results are not cached!
      *  - To be used in admin panel, but not in client side!
+     *  - Does not output superadmin flag
      *
      * @param int $personId
      * @param int|null $eventId
@@ -261,6 +291,7 @@ class FreyClient implements IFreyClient
      *  - eventId may be null to get system-wide rules.
      *  - Method results are not cached!
      *  - To be used in admin panel, but not in client side!
+     *  - Does not output superadmin flag
      *
      * @param int $groupId
      * @param int|null $eventId

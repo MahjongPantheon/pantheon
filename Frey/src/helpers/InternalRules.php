@@ -93,6 +93,7 @@ class InternalRules
     {
         if (empty(self::$_translations)) {
             self::$_translations = [
+                self::IS_SUPER_ADMIN => _t('Full-privileged administrator'),
                 self::GET_PERSON_ACCESS => _t('Get access rules for a single person'),
                 self::GET_GROUP_ACCESS => _t('Get access rules for a single group'),
                 self::GET_ALL_PERSON_RULES => _t('Get all access rules for a single person'),
