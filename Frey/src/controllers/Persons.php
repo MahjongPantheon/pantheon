@@ -128,7 +128,9 @@ class PersonsController extends Controller
     public function createGroup($title, $description, $color)
     {
         $this->_logStart(__METHOD__, [$title, $description, $color]);
-        $groupId = $this->_getGroupsModel()->createGroup($title, $description, $color);
+        $groupId = $this->_getGroupsModel()
+            ->_checkAccessRights(InternalRules::CREATE_GROUP)
+            ->createGroup($title, $description, $color);
         $this->_logSuccess(__METHOD__, [$title, $description, $color]);
         return $groupId;
     }
@@ -147,7 +149,9 @@ class PersonsController extends Controller
     public function updateGroup($id, $title, $description, $color)
     {
         $this->_logStart(__METHOD__, [$id, $title, $description, $color]);
-        $success = $this->_getGroupsModel()->updateGroup($id, $title, $description, $color);
+        $success = $this->_getGroupsModel()
+            ->_checkAccessRights(InternalRules::UPDATE_GROUP)
+            ->updateGroup($id, $title, $description, $color);
         $this->_logSuccess(__METHOD__, [$id, $title, $description, $color]);
         return $success;
     }
@@ -179,7 +183,9 @@ class PersonsController extends Controller
     public function deleteGroup($id)
     {
         $this->_logStart(__METHOD__, [$id]);
-        $this->_getGroupsModel()->deleteGroup($id);
+        $this->_getGroupsModel()
+            ->_checkAccessRights(InternalRules::DELETE_GROUP)
+            ->deleteGroup($id);
         $this->_logSuccess(__METHOD__, [$id]);
         return true;
     }
@@ -197,7 +203,9 @@ class PersonsController extends Controller
     public function addPersonToGroup($personId, $groupId)
     {
         $this->_logStart(__METHOD__, [$personId, $groupId]);
-        $success = $this->_getGroupsModel()->addPersonToGroup($personId, $groupId);
+        $success = $this->_getGroupsModel()
+            ->_checkAccessRights(InternalRules::ADD_PERSON_TO_GROUP)
+            ->addPersonToGroup($personId, $groupId);
         $this->_logSuccess(__METHOD__, [$personId, $groupId]);
         return $success;
     }
@@ -215,7 +223,9 @@ class PersonsController extends Controller
     public function removePersonFromGroup($personId, $groupId)
     {
         $this->_logStart(__METHOD__, [$personId, $groupId]);
-        $success = $this->_getGroupsModel()->removePersonFromGroup($personId, $groupId);
+        $success = $this->_getGroupsModel()
+            ->_checkAccessRights(InternalRules::REMOVE_PERSON_FROM_GROUP)
+            ->removePersonFromGroup($personId, $groupId);
         $this->_logSuccess(__METHOD__, [$personId, $groupId]);
         return $success;
     }

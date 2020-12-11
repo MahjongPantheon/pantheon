@@ -36,15 +36,14 @@ class AccountModel extends Model
      * @param string $city
      * @param string $phone
      * @param string|null $tenhouId
+     * @param bool $superadmin
      *
      * @return int id
      *
      * @throws \Exception
      */
-    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null): int
+    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null, $superadmin = false): int
     {
-        $this->_checkAccessRights(InternalRules::CREATE_ACCOUNT);
-
         if (empty($email) || empty($password) || empty($title)) {
             throw new InvalidParametersException('Some of required fields are empty (email, password, title)', 401);
         }
@@ -62,6 +61,7 @@ class AccountModel extends Model
             ->setCity($city)
             ->setEmail($email)
             ->setPhone($phone)
+            ->setIsSuperadmin($superadmin)
             ->setTenhouId($tenhouId);
         if (!$person->save()) {
             throw new \Exception('Couldn\'t save person to DB', 403);

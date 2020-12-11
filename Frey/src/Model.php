@@ -47,11 +47,6 @@ abstract class Model
     protected $_currentAccess = [];
 
     /**
-     * @var int[]
-     */
-    protected $_superAdminIds;
-
-    /**
      * Model constructor.
      * @param IDb $db
      * @param Config $config
@@ -71,7 +66,6 @@ abstract class Model
         }
 
         $this->_currentAccess = $this->_fetchPersonAccess();
-        $this->_superAdminIds = $this->_fetchSuperAdminId();
     }
 
     /**
@@ -113,19 +107,6 @@ abstract class Model
         return $this->_meta->getCurrentEventId() === null
             ? $this->_getSystemWideRules($pId)
             : $this->_getAccessRules($pId, $this->_meta->getCurrentEventId());
-    }
-
-    /**
-     * @return array
-     * @throws \Exception
-     */
-    protected function _fetchSuperAdminId()
-    {
-        /** @var PersonAccessPrimitive[] $access */
-        $access = PersonAccessPrimitive::findSuperAdminId($this->_db);
-        return array_map(function (PersonAccessPrimitive $p) {
-            return $p->getPersonId();
-        }, $access);
     }
 
     //////////////////////////////////////////////////////////////////
@@ -186,6 +167,10 @@ abstract class Model
             }
         }
 
+        if ($persons[0]->getIsSuperadmin()) {
+            $resultingRules[InternalRules::IS_SUPER_ADMIN] = '1';
+        }
+
         apcu_store($this->_getAccessCacheKey($personId, (string)$eventId), $resultingRules, self::CACHE_TTL_SEC);
         return $resultingRules;
     }
@@ -218,6 +203,10 @@ abstract class Model
         foreach ($this->_getPersonAccessSystemWideRules($personId) as $rule) {
             // Person rules have higher priority than group rules
             $resultingRules[$rule->getAclName()] = $rule->getAclValue();
+        }
+
+        if ($persons[0]->getIsSuperadmin()) {
+            $resultingRules[InternalRules::IS_SUPER_ADMIN] = '1';
         }
 
         apcu_store($this->_getAccessCacheKey($personId, '__system-wide'), $resultingRules, self::CACHE_TTL_SEC);
@@ -318,21 +307,22 @@ abstract class Model
      *
      * @throws AccessDeniedException
      *
-     * @return void
+     * @return $this
      */
-    protected function _checkAccessRights(string $key, $eventId = null): void
+    public function _checkAccessRights(string $key, $eventId = null): self
     {
-        // FIXME
-        return; // @phpstan-ignore-next-line
-        if (defined('BOOTSTRAP_MODE')) {
-            // Everything is allowed during setup
-            return;
-        }
-
-        if ((!empty($eventId) && $eventId != $this->_meta->getCurrentEventId())
-            || empty($this->_currentAccess[$key])
-            || $this->_currentAccess[$key] != true) {
+        $eventMatches = empty($eventId) || $eventId == $this->_meta->getCurrentEventId();
+        if (!$eventMatches) {
             throw new AccessDeniedException();
         }
+
+        $hasAccess = $this->_authorizedPerson->getIsSuperadmin() || (
+            !empty($this->_currentAccess[$key]) && $this->_currentAccess[$key] == true
+        );
+        if (!$hasAccess) {
+            throw new AccessDeniedException();
+        }
+
+        return $this;
     }
 }

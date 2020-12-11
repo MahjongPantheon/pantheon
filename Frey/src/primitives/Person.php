@@ -42,6 +42,7 @@ class PersonPrimitive extends Primitive
         'city'              => '_city',
         'tenhou_id'         => '_tenhouId',
         'disabled'          => '_disabled',
+        'is_superadmin'     => '_superadmin',
         '::group'           => '_groupIds', // external many-to-many relation
     ];
 
@@ -58,6 +59,7 @@ class PersonPrimitive extends Primitive
             '_city'     => $this->_stringTransform(true),
             '_tenhouId' => $this->_stringTransform(true),
             '_disabled' => $this->_integerTransform(),
+            '_superadmin' => $this->_integerTransform(),
             '_groupIds'   => $this->_externalManyToManyTransform(
                 self::REL_GROUP,
                 'person_id',
@@ -118,6 +120,11 @@ class PersonPrimitive extends Primitive
      * @var int
      */
     protected $_disabled;
+    /**
+     * If this personal account has all possible privileges
+     * @var int
+     */
+    protected $_superadmin;
     /**
      * List of group ids this person belongs to
      * @var int[]
@@ -374,6 +381,24 @@ class PersonPrimitive extends Primitive
     public function setDisabled(bool $disabled): PersonPrimitive
     {
         $this->_disabled = $disabled ? 1 : 0;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsSuperadmin(): bool
+    {
+        return $this->_superadmin == 1;
+    }
+
+    /**
+     * @param bool $superadmin
+     * @return PersonPrimitive
+     */
+    public function setIsSuperadmin(bool $superadmin): PersonPrimitive
+    {
+        $this->_superadmin = $superadmin ? 1 : 0;
         return $this;
     }
 

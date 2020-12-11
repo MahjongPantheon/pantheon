@@ -39,8 +39,6 @@ class GroupsModel extends Model
      */
     public function createGroup(string $title, string $description, string $color): int
     {
-        $this->_checkAccessRights(InternalRules::CREATE_GROUP);
-
         if (empty($title)) {
             throw new InvalidParametersException('Title is required to be non-empty', 401);
         }
@@ -94,8 +92,6 @@ class GroupsModel extends Model
      */
     public function updateGroup(int $id, string $title, string $description, string $color)
     {
-        $this->_checkAccessRights(InternalRules::UPDATE_GROUP);
-
         $id = intval($id);
         if (empty($id)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 404);
@@ -129,8 +125,6 @@ class GroupsModel extends Model
      */
     public function deleteGroup(int $id): void
     {
-        $this->_checkAccessRights(InternalRules::DELETE_GROUP);
-
         $id = intval($id);
         if (empty($id)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 407);
@@ -156,8 +150,6 @@ class GroupsModel extends Model
      */
     public function addPersonToGroup(int $personId, int $groupId)
     {
-        $this->_checkAccessRights(InternalRules::ADD_PERSON_TO_GROUP);
-
         $groupId = intval($groupId);
         $personId = intval($personId);
         if (empty($groupId) || empty($personId)) {
@@ -193,8 +185,6 @@ class GroupsModel extends Model
      */
     public function removePersonFromGroup(int $personId, int $groupId)
     {
-        $this->_checkAccessRights(InternalRules::REMOVE_PERSON_FROM_GROUP);
-
         $groupId = intval($groupId);
         $personId = intval($personId);
         if (empty($groupId) || empty($personId)) {

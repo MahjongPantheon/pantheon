@@ -73,8 +73,6 @@ class AccessManagementModel extends Model
      */
     public function getAllPersonRules($personId)
     {
-        $this->_checkAccessRights(InternalRules::GET_ALL_PERSON_RULES);
-
         $rules = PersonAccessPrimitive::findByPerson($this->_db, [$personId]);
         $resultingRules = [];
         foreach ($rules as $rule) {
@@ -103,8 +101,6 @@ class AccessManagementModel extends Model
      */
     public function getAllGroupRules($groupId)
     {
-        $this->_checkAccessRights(InternalRules::GET_ALL_GROUP_RULES);
-
         $rules = GroupAccessPrimitive::findByGroup($this->_db, [$groupId]);
         $resultingRules = [];
         foreach ($rules as $rule) {
@@ -135,8 +131,6 @@ class AccessManagementModel extends Model
      */
     public function getPersonAccess($personId, $eventId)
     {
-        $this->_checkAccessRights(InternalRules::GET_PERSON_ACCESS, $eventId);
-
         $rules = $this->_getPersonAccessRules($personId, $eventId);
         /** @var PersonAccessPrimitive[] $eventRelatedRules */
         $eventRelatedRules = array_filter($rules, function (PersonAccessPrimitive $rule) use ($eventId) {
@@ -166,8 +160,6 @@ class AccessManagementModel extends Model
      */
     public function getGroupAccess($groupId, $eventId)
     {
-        $this->_checkAccessRights(InternalRules::GET_GROUP_ACCESS, $eventId);
-
         $rules = $this->_getGroupAccessRules([$groupId], $eventId);
         /** @var GroupAccessPrimitive[] $eventRelatedRules */
         $eventRelatedRules = array_filter($rules, function (GroupAccessPrimitive $rule) use ($eventId) {
@@ -201,8 +193,6 @@ class AccessManagementModel extends Model
      */
     public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId)
     {
-        $this->_checkAccessRights(InternalRules::ADD_RULE_FOR_PERSON, $eventId);
-
         if (InternalRules::isInternal($ruleName)) {
             throw new InvalidParametersException('Rule name ' . $ruleName . ' is reserved for internal use');
         }
@@ -250,8 +240,6 @@ class AccessManagementModel extends Model
      */
     public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId)
     {
-        $this->_checkAccessRights(InternalRules::ADD_RULE_FOR_GROUP, $eventId);
-
         if (InternalRules::isInternal($ruleName)) {
             throw new InvalidParametersException('Rule name ' . $ruleName . ' is reserved for internal use');
         }
@@ -299,8 +287,6 @@ class AccessManagementModel extends Model
      */
     public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId)
     {
-        $this->_checkAccessRights(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_PERSON);
-
         if (InternalRules::isInternal($ruleName)) {
             $ruleType = AccessPrimitive::TYPE_BOOL; // Internal rules are always boolean
         }
@@ -347,8 +333,6 @@ class AccessManagementModel extends Model
      */
     public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId)
     {
-        $this->_checkAccessRights(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_GROUP);
-
         if (InternalRules::isInternal($ruleName)) {
             $ruleType = AccessPrimitive::TYPE_BOOL; // Internal rules are always boolean
         }
@@ -532,7 +516,6 @@ class AccessManagementModel extends Model
      */
     public function clearAccessCache(int $personId, int $eventId)
     {
-        $this->_checkAccessRights(InternalRules::CLEAR_ACCESS_CACHE, $eventId);
         return (bool)apcu_delete(Model::_getAccessCacheKey($personId, (string)$eventId));
     }
 }

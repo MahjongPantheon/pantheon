@@ -68,6 +68,7 @@ class AccessController extends Controller
      * - eventId may be null to get system-wide rules.
      * - Method results are not cached!
      * - To be used in admin panel, but not in client side!
+     * - Does not output superadmin flag
      *
      * @param int $personId
      * @param int|null $eventId
@@ -77,7 +78,9 @@ class AccessController extends Controller
     public function getPersonAccess($personId, $eventId)
     {
         $this->_logStart(__METHOD__, [$personId, $eventId]);
-        $rules = $this->_getModel()->getPersonAccess($personId, $eventId);
+        $rules = $this->_getModel()
+            ->_checkAccessRights(InternalRules::GET_PERSON_ACCESS, $eventId)
+            ->getPersonAccess($personId, $eventId);
         $this->_logSuccess(__METHOD__, [$personId, $eventId]);
         return $rules;
     }
@@ -87,6 +90,7 @@ class AccessController extends Controller
      * - eventId may be null to get system-wide rules.
      * - Method results are not cached!
      * - To be used in admin panel, but not in client side!
+     * - Does not output superadmin flag
      *
      * @param int $groupId
      * @param int|null $eventId
@@ -96,7 +100,9 @@ class AccessController extends Controller
     public function getGroupAccess($groupId, $eventId)
     {
         $this->_logStart(__METHOD__, [$groupId, $eventId]);
-        $rules = $this->_getModel()->getGroupAccess($groupId, $eventId);
+        $rules = $this->_getModel()
+            ->_checkAccessRights(InternalRules::GET_GROUP_ACCESS, $eventId)
+            ->getGroupAccess($groupId, $eventId);
         $this->_logSuccess(__METHOD__, [$groupId, $eventId]);
         return $rules;
     }
@@ -113,7 +119,9 @@ class AccessController extends Controller
     public function getAllPersonAccess($personId)
     {
         $this->_logStart(__METHOD__, [$personId]);
-        $rules = $this->_getModel()->getAllPersonRules($personId);
+        $rules = $this->_getModel()
+            ->_checkAccessRights(InternalRules::GET_ALL_PERSON_RULES)
+            ->getAllPersonRules($personId);
         $this->_logSuccess(__METHOD__, [$personId]);
         return $rules;
     }
@@ -130,7 +138,9 @@ class AccessController extends Controller
     public function getAllGroupAccess($groupId)
     {
         $this->_logStart(__METHOD__, [$groupId]);
-        $rules = $this->_getModel()->getAllGroupRules($groupId);
+        $rules = $this->_getModel()
+            ->_checkAccessRights(InternalRules::GET_ALL_GROUP_RULES)
+            ->getAllGroupRules($groupId);
         $this->_logSuccess(__METHOD__, [$groupId]);
         return $rules;
     }
@@ -153,7 +163,9 @@ class AccessController extends Controller
     public function addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId): ?int
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
-        $ruleId = $this->_getModel()->addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId);
+        $ruleId = $this->_getModel()
+            ->_checkAccessRights(InternalRules::ADD_RULE_FOR_PERSON, $eventId)
+            ->addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId);
         if ($ruleId !== null) {
             $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
         }
@@ -178,7 +190,9 @@ class AccessController extends Controller
     public function addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId): ?int
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId, $eventId]);
-        $ruleId = $this->_getModel()->addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId);
+        $ruleId = $this->_getModel()
+            ->_checkAccessRights(InternalRules::ADD_RULE_FOR_GROUP, $eventId)
+            ->addRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId, $eventId);
         if ($ruleId !== null) {
             $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId, $eventId]);
         }
@@ -202,7 +216,9 @@ class AccessController extends Controller
     public function addSystemWideRuleForPerson($ruleName, $ruleValue, $ruleType, $personId): ?int
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId]);
-        $ruleId = $this->_getModel()->addSystemWideRuleForPerson($ruleName, $ruleValue, $ruleType, $personId);
+        $ruleId = $this->_getModel()
+            ->_checkAccessRights(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_PERSON)
+            ->addSystemWideRuleForPerson($ruleName, $ruleValue, $ruleType, $personId);
         if ($ruleId !== null) {
             $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId]);
         }
@@ -226,7 +242,9 @@ class AccessController extends Controller
     public function addSystemWideRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId): ?int
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId]);
-        $ruleId = $this->_getModel()->addSystemWideRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId);
+        $ruleId = $this->_getModel()
+            ->_checkAccessRights(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_GROUP)
+            ->addSystemWideRuleForGroup($ruleName, $ruleValue, $ruleType, $groupId);
         if ($ruleId !== null) {
             $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $groupId]);
         }
@@ -314,7 +332,9 @@ class AccessController extends Controller
     public function clearAccessCache($personId, $eventId)
     {
         $this->_logStart(__METHOD__, [$personId, $eventId]);
-        $success = $this->_getModel()->clearAccessCache($personId, $eventId);
+        $success = $this->_getModel()
+            ->_checkAccessRights(InternalRules::CLEAR_ACCESS_CACHE, $eventId)
+            ->clearAccessCache($personId, $eventId);
         $this->_logSuccess(__METHOD__, [$personId, $eventId]);
         return $success;
     }
