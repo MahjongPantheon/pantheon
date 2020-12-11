@@ -37,11 +37,12 @@ class EventModel extends Model
      * Get data of players' current seating
      *
      * @param int $eventId
+     * @param array $players
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array TODO: should it be here? Looks a bit too low-level :/
      */
-    public function getCurrentSeating(int $eventId)
+    public function getCurrentSeating(int $eventId, array $players)
     {
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
@@ -54,11 +55,9 @@ class EventModel extends Model
         $historyItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventId);
         $seatings = $this->_ds->table('session_player')
             ->join('session', 'session.id = session_player.session_id')
-            ->join('player', 'player.id = session_player.player_id')
             ->select('session_player.order')
             ->select('session_player.player_id')
             ->select('session_player.session_id')
-            ->select('player.display_name')
             ->select('session.table_index')
             ->where('session.event_id', $eventId)
             ->orderByDesc('session.id')
@@ -77,8 +76,9 @@ class EventModel extends Model
             }
         }
 
-        return array_map(function ($seat) use (&$ratings) {
+        return array_map(function ($seat) use (&$ratings, &$players) {
             $seat['rating'] = $ratings[$seat['player_id']];
+            $seat['display_name'] = $players[$seat['player_id']]['display_name'];
             return $seat;
         }, $seatings);
     }

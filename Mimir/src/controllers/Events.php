@@ -232,8 +232,12 @@ class EventsController extends Controller
     public function getCurrentSeating($eventId)
     {
         $this->_log->addInfo('Getting current seating for event #' . $eventId);
+
+        $games = SessionPrimitive::findByEventListAndStatus($this->_ds, [$eventId], SessionPrimitive::STATUS_FINISHED);
+        $players = EventModel::getPlayersOfGames($this->_ds, $games);
+
         $data = (new EventModel($this->_ds, $this->_config, $this->_meta))
-            ->getCurrentSeating($eventId);
+            ->getCurrentSeating($eventId, $players);
         $this->_log->addInfo('Successfully got current seating for event #' . $eventId);
         return $data;
     }
