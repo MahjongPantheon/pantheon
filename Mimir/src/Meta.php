@@ -53,6 +53,15 @@ class Meta
      * @var array
      */
     protected $_accessRules;
+    /**
+     * TODO: this is temporary lightweight hack; should be replaced with full-sized ACL in future.
+     * @var bool
+     */
+    protected $_eventadmin = false;
+    /**
+     * @var bool
+     */
+    protected $_superadmin = false;
 
     /**
      * Meta constructor.
@@ -149,8 +158,14 @@ class Meta
                 ]);
                 if (!empty($this->_currentEventId)) {
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);
-                } else {
-                    // TODO: should we fetch common rules for person in this case?
+                    if ($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN]) {
+                        $this->_superadmin = true;
+                    }
+                    if ($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT]) {
+                        $this->_eventadmin = true;
+                    }
+                } else if (!empty($this->_currentPersonId)) {
+                    $this->_superadmin = $this->_frey->getSuperadminFlag($this->_currentPersonId);
                 }
             }
         }
@@ -175,6 +190,14 @@ class Meta
         }
 
         return $this->_accessRules[$name];
+    }
+
+    public function isSuperadmin() {
+        return $this->_superadmin;
+    }
+
+    public function isEventAdmin() {
+        return $this->_eventadmin;
     }
 
     /**

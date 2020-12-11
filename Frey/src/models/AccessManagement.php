@@ -64,6 +64,30 @@ class AccessManagementModel extends Model
     //////// Admin methods
 
     /**
+     * Client method to receive super-admin flag. Intended to be used only in Mimir/Rheda
+     * to determine if used has super-admin privileges independently of any event.
+     * Cached for 10 minutes.
+     *
+     * @param int $personId
+     * @return bool
+     * @throws \Exception
+     */
+    public function getSuperadminFlag(int $personId)
+    {
+        $key = $this->_getAccessCacheKey($personId, '__superadm');
+        $flag = apcu_fetch($key);
+        if ($flag !== false) {
+            return (bool)$flag;
+        }
+
+        $persons = PersonPrimitive::findById($this->_db, [$personId]);
+        $result = !empty($persons) && $persons[0]->getIsSuperadmin();
+
+        apcu_store($key, $result, self::CACHE_TTL_SEC);
+        return $result;
+    }
+
+    /**
      * Get all access rules for person grouped by events.
      * - Method results are not cached!
      *

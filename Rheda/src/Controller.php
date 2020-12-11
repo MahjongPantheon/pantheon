@@ -24,7 +24,6 @@ require_once __DIR__ . '/HttpClient.php';
 require_once __DIR__ . '/FreyClient.php';
 require_once __DIR__ . '/MimirClient.php';
 require_once __DIR__ . '/helpers/i18n.php';
-require_once __DIR__ . '/AccessRules.php';
 require_once __DIR__ . '/Templater.php';
 
 abstract class Controller
@@ -89,6 +88,17 @@ abstract class Controller
      * @var array
      */
     protected $_accessRules = [];
+
+    /**
+     * TODO: this is temporary lightweight hack; should be replaced with full-sized ACL in future.
+     * @var bool
+     */
+    protected $_eventadmin = false;
+
+    /**
+     * @var bool
+     */
+    protected $_superadmin = false;
 
     /**
      * [ 'id' => int,
@@ -207,8 +217,16 @@ abstract class Controller
                 if (!empty($this->_mainEventId)) {
                     // TODO: access rules for aggregated events?
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_mainEventId);
-                    if ($this->_accessRules[In])
+                    if ($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN]) {
+                        $this->_superadmin = true;
+                    }
+                    if ($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT]) {
+                        $this->_eventadmin = true;
+                    }
+                } else if (!empty($this->_currentPersonId)) {
+                    $this->_superadmin = $this->_frey->getSuperadminFlag($this->_currentPersonId);
                 }
+
                 $this->_personalData = $this->_frey->getPersonalInfo([$this->_currentPersonId])[0];
             }
         }
@@ -438,14 +456,9 @@ DATA;
             return false;
         }
 
-        try {
-            // TODO: split universal admin rule into several atomic rules
-            $isEventAdmin = $this->_frey->getRuleValue($this->_currentPersonId, $this->_mainEventId, AccessRules::ADMIN_EVENT);
-        } catch (\Exception $e) {
-            $isEventAdmin = false;
+        if ($this->_superadmin || $this->_eventadmin) {
+            return true;
         }
-
-        return !empty($isEventAdmin);
     }
 
     /**

@@ -44,6 +44,23 @@ class AccessController extends Controller
     }
 
     /**
+     * Client method to receive super-admin flag. Intended to be used only in Mimir/Rheda
+     * to determine if used has super-admin privileges independently of any event.
+     * Cached for 10 minutes.
+     *
+     * @param int $personId
+     * @return bool
+     * @throws \Exception
+     */
+    public function getSuperadminFlag($personId)
+    {
+        $this->_logStart(__METHOD__, [$personId]);
+        $flag = $this->_getModel()->getSuperadminFlag($personId);
+        $this->_logSuccess(__METHOD__, [$personId]);
+        return $flag;
+    }
+
+    /**
      * Get single rule for person in event. Hardly relies on cache.
      * Also counts group rules if person belongs to one or more groups.
      * Typically should not be used when more than one value should be retrieved.

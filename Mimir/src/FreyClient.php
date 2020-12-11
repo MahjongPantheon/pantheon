@@ -259,6 +259,20 @@ class FreyClient implements IFreyClient
     }
 
     /**
+     *  Client method to receive super-admin flag. Intended to be used only in Mimir/Rheda
+     *  to determine if used has super-admin privileges independently of any event.
+     *  Cached for 10 minutes.
+     *
+     * @param int $personId
+     * @return bool
+    */
+    public function getSuperadminFlag(int $personId): bool
+    {
+        /** @phpstan-ignore-next-line */
+        return (bool)$this->_client->execute('getSuperadminFlag', [$personId]);
+    }
+
+    /**
      *  Get rule list with translations to selected locale
      *
      * @return array

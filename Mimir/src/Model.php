@@ -17,7 +17,6 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/AccessRules.php';
 require_once __DIR__ . '/DataSource.php';
 
 abstract class Model
@@ -50,6 +49,6 @@ abstract class Model
      */
     public function checkAdminToken()
     {
-        return $this->_meta->getAccessRuleValue(AccessRules::ADMIN_EVENT);
+        return $this->_meta->isEventAdmin() || $this->_meta->isSuperadmin();
     }
 }

@@ -46,6 +46,7 @@ return [
     'getGroups'            => ['PersonsController', 'getGroups'],
 
     // admin
+    'getSuperadminFlag'      => ['AccessController', 'getSuperadminFlag'],
     'getRulesList'           => ['AccessController', 'getRulesList'],
     'getPersonAccess'        => ['AccessController', 'getPersonAccess'],
     'getGroupAccess'         => ['AccessController', 'getGroupAccess'],
