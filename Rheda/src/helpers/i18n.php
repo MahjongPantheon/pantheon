@@ -20,10 +20,10 @@ function _t(string $entry): string
  * With plural number substitution
  * @param string $entry
  * @param string $plural
- * @param float $count
+ * @param float|string $count   String here because integer/float zero is treated as falsy value by templater and replaced with param name!
  * @return string
  */
-function _n(string $entry, string $plural, float $count): string
+function _n(string $entry, string $plural, $count): string
 {
     return sprintf(ngettext($entry, $plural, intval($count)), $count);
 }
@@ -44,11 +44,11 @@ function _p(string $entry, ...$args): string
  * With plural number and parameters substitution
  * @param string $entry
  * @param string $plural
- * @param float $count
+ * @param float|string $count   String here because integer/float zero is treated as falsy value by templater and replaced with param name!
  * @param mixed ...$args
  * @return string
  */
-function _np(string $entry, string $plural, float $count, ...$args): string
+function _np(string $entry, string $plural, $count, ...$args): string
 {
     return vsprintf(ngettext($entry, $plural, intval($count)), $args);
 }

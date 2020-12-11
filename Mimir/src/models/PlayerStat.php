@@ -56,13 +56,12 @@ class PlayerStatModel extends Model
         if (empty($player)) {
             throw new EntityNotFoundException('Player id#' . $playerId . ' not found in DB');
         }
-        $player = $player[0];
 
         $games = [];
         foreach ($eventList as $event) {
             /* FIXME (PNTN-237): Need to refactor this to avoid accessing DB in a loop. */
             /* We want to keep keys here, so we use "+" instead of array_merge. */
-            $games = $games + $this->_fetchGamesHistory($event, $player);
+            $games = $games + $this->_fetchGamesHistory($event, $player[0]);
         }
 
         ksort($games);

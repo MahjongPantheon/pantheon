@@ -108,55 +108,55 @@ class AchievementsModel extends Model
 
         $callbacks = [
             'bestHand' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getBestHandOfEvent($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getBestHandOfEvent($this->_ds, $eventIdList, $this->_players);
             },
             'bestTsumoist' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getBestTsumoistInSingleSession($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getBestTsumoistInSingleSession($this->_ds, $eventIdList, $this->_players);
             },
             'braveSapper' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getBraveSappers($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getBraveSappers($this->_ds, $eventIdList, $this->_players);
             },
             'dieHard' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getDieHardData($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getDieHardData($this->_ds, $eventIdList, $this->_players);
             },
             'dovakins' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getDovakins($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getDovakins($this->_ds, $eventIdList, $this->_players);
             },
             'yakumans' => /**
              * @return array|string
              */
             function () use ($eventIdList) {
-                return AchievementsPrimitive::getYakumans($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getYakumans($this->_ds, $eventIdList, $this->_players);
             },
             'shithander' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getBestShithander($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getBestShithander($this->_ds, $eventIdList, $this->_players);
             },
             'bestDealer' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getBestDealer($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getBestDealer($this->_ds, $eventIdList, $this->_players);
             },
             'bestFu' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getMaxFuHand($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getMaxFuHand($this->_ds, $eventIdList, $this->_players);
             },
             'impossibleWait' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getImpossibleWait($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getImpossibleWait($this->_ds, $eventIdList, $this->_players);
             },
             'honoredDonor' => function (): array {
                 return $this->_getHonoredDonor($this->_games, $this->_players, $this->_rounds);
             },
             'justAsPlanned' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getJustAsPlanned($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getJustAsPlanned($this->_ds, $eventIdList, $this->_players);
             },
             'carefulPlanning' => function (): array {
                 return $this->_getMinFeedsScore($this->_games, $this->_players, $this->_rounds);
             },
             'doraLord' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getMaxAverageDoraCount($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getMaxAverageDoraCount($this->_ds, $eventIdList, $this->_players);
             },
             'catchEmAll' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getMaxDifferentYakuCount($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getMaxDifferentYakuCount($this->_ds, $eventIdList, $this->_players);
             },
             'favoriteAsapinApprentice' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getFavoriteAsapinApprentice($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getFavoriteAsapinApprentice($this->_ds, $eventIdList, $this->_players);
             },
             'andYourRiichiBet' => function (): array {
                 return $this->_getMaxStolenRiichiBetsCount($this->_games, $this->_players, $this->_rounds);
@@ -165,7 +165,7 @@ class AchievementsModel extends Model
                 return $this->_getMinLostRiichiBetsCount($this->_games, $this->_players, $this->_rounds);
             },
             'ninja' => function () use ($eventIdList): array {
-                return AchievementsPrimitive::getNinja($this->_ds, $eventIdList);
+                return AchievementsPrimitive::getNinja($this->_ds, $eventIdList, $this->_players);
             }
         ];
 
@@ -307,7 +307,7 @@ class AchievementsModel extends Model
             function ($item) {
                 return [
                     'name'  => $item['name'],
-                    'count'  => $item['lost'],
+                    'count'  => (string)$item['lost'],
                 ];
             },
             array_slice($riichiStat, 0, 5)
