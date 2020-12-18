@@ -38,6 +38,24 @@ class DateHelper
     }
 
     /**
+     * Check if game can be definalized. We allow to definalize only games ended no earlier than 3h before.
+     * NOTE: fetches data from event table for each session!
+     * @param SessionPrimitive $session
+     * @return bool
+     * @throws EntityNotFoundException
+     */
+    public static function mayDefinalizeGame(SessionPrimitive $session)
+    {
+        if ($session->getStatus() !== SessionPrimitive::STATUS_FINISHED) {
+            return false;
+        }
+        $endDate = new \DateTime($session->getEndDate(), new \DateTimeZone($session->getEvent()->getTimezone()));
+        $now = new \DateTime('now', new \DateTimeZone($session->getEvent()->getTimezone()));
+        $diff = $now->diff($endDate);
+        return !($diff->days > 0 || $diff->h >= 3);
+    }
+
+    /**
      * Return date without seconds; useful for representational_hash generator
      *
      * @param $date

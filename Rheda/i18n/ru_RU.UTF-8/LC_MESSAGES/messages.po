@@ -325,6 +325,13 @@ msgstr "Потдвердить явку вручную"
 msgid "Confirm game cancellation: "
 msgstr "Подтвердите отмену игры: "
 
+msgid ""
+"Confirm game definalization. Note that you will need to cancel last round by "
+"hand after that."
+msgstr ""
+"Подтвердите удаление результатов. После этого можно отменить последнюю "
+"раздачу."
+
 msgid "Confirm round cancellation: "
 msgstr "Подтвердите отмену раздачи: "
 
@@ -342,6 +349,9 @@ msgstr "Дайсуши"
 
 msgid "Date & time"
 msgstr "Дата/время"
+
+msgid "Definalize game"
+msgstr "Удалить результаты"
 
 msgid "Description"
 msgstr "Описание"

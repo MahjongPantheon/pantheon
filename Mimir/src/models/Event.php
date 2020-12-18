@@ -194,29 +194,35 @@ class EventModel extends Model
             $playerIdMap[$reg['id']] = $reg['local_id'];
         }
 
-        foreach ($lastGames as $game) {
-            $rounds = RoundPrimitive::findBySessionIds($this->_db, [$game->getId()]);
-            /** @var MultiRoundPrimitive $lastRound */
-            $lastRound = MultiRoundHelper::findLastRound($rounds);
+        if (count($lastGames) > 0) {
+            // Assume that we don't use _formatTablesState for multiple events
+            list($ev) = EventPrimitive::findById($this->_db, [$lastGames[0]->getEventId()]);
+            foreach ($lastGames as $game) {
+                $game->setEvent($ev); // Preload event into session to prevent multiple fetches inside DateHelper::mayDefinalizeGame
+                $rounds = RoundPrimitive::findBySessionIds($this->_db, [$game->getId()]);
+                /** @var MultiRoundPrimitive $lastRound */
+                $lastRound = MultiRoundHelper::findLastRound($rounds);
 
-            $output []= [
-                'status' => $game->getStatus(),
-                'hash' => $game->getRepresentationalHash(),
-                'penalties' => $game->getCurrentState()->getPenaltiesLog(),
-                'table_index' => $game->getTableIndex(),
-                'last_round' => ($lastRound && !$includeAllRounds) ? $this->_formatLastRound($lastRound) : [],
-                'rounds' => $includeAllRounds ? array_map([$this, '_formatLastRound'], $rounds) : [],
-                'current_round' => $game->getCurrentState()->getRound(),
-                'scores' => $game->getCurrentState()->getScores(),
-                'players' => array_map(function (PlayerPrimitive $p) use (&$playerIdMap) {
-                    return [
-                        'id' => $p->getId(),
-                        // may be empty for excluded players in non-prescripted event, so it's fine.
-                        'local_id' => empty($playerIdMap[$p->getId()]) ? 0 : $playerIdMap[$p->getId()],
-                        'display_name' => $p->getDisplayName()
-                    ];
-                }, $game->getPlayers())
-            ];
+                $output [] = [
+                    'status' => $game->getStatus(),
+                    'may_definalize' => DateHelper::mayDefinalizeGame($game),
+                    'hash' => $game->getRepresentationalHash(),
+                    'penalties' => $game->getCurrentState()->getPenaltiesLog(),
+                    'table_index' => $game->getTableIndex(),
+                    'last_round' => ($lastRound && !$includeAllRounds) ? $this->_formatLastRound($lastRound) : [],
+                    'rounds' => $includeAllRounds ? array_map([$this, '_formatLastRound'], $rounds) : [],
+                    'current_round' => $game->getCurrentState()->getRound(),
+                    'scores' => $game->getCurrentState()->getScores(),
+                    'players' => array_map(function (PlayerPrimitive $p) use (&$playerIdMap) {
+                        return [
+                            'id' => $p->getId(),
+                            // may be empty for excluded players in non-prescripted event, so it's fine.
+                            'local_id' => empty($playerIdMap[$p->getId()]) ? 0 : $playerIdMap[$p->getId()],
+                            'display_name' => $p->getDisplayName()
+                        ];
+                    }, $game->getPlayers())
+                ];
+            }
         }
 
         return $output;

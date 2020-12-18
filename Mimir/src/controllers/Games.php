@@ -82,6 +82,22 @@ class GamesController extends Controller
     }
 
     /**
+     * Definalize session: drop results, set status flag to "in progress"
+     * For interactive mode (club games), and only for administrative purposes
+     *
+     * @param string $gameHashcode
+     * @throws \Exception
+     * @return boolean Success?
+     */
+    public function definalizeGame($gameHashcode)
+    {
+        $this->_log->addInfo('Definalizing session #' . $gameHashcode);
+        $success = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->definalizeSession($gameHashcode);
+        $this->_log->addInfo('Successfully definalized session #' . $gameHashcode);
+        return $success;
+    }
+
+    /**
      * Explicitly force end of interactive game
      *
      * @param string $gameHashcode Hashcode of game

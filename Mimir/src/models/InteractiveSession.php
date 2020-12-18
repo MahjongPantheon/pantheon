@@ -150,6 +150,43 @@ class InteractiveSessionModel extends Model
     }
 
     /**
+     * Definalize session in club event
+     *
+     * @param $hash
+     * @throws AuthFailedException
+     * @throws \Exception
+     * @return bool Success?
+     */
+    public function definalizeSession($hash)
+    {
+        if (!$this->checkAdminToken()) {
+            throw new AuthFailedException('Only administrators are allowed to definalize sessions');
+        }
+
+        $games = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
+        if (empty($games)) {
+            return false;
+        }
+
+        $session = $games[0];
+        if (!DateHelper::mayDefinalizeGame($session)) {
+            throw new BadActionException('Session older than 3 hours can not be definalized');
+        }
+
+        $playerResults = PlayerHistoryPrimitive::findBySession($this->_db, $session->getId());
+        $sessionResults = SessionResultsPrimitive::findBySessionId($this->_db, [$session->getId()]);
+        /** @var Primitive[] $primitives */
+        $primitives = array_merge($playerResults, $sessionResults);
+        foreach ($primitives as $p) {
+            $p->drop();
+        }
+        return $session
+            ->setEndDate('')
+            ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
+            ->save();
+    }
+
+    /**
      * @param $gameHashcode string Hashcode of game
      * @param $roundData array Structure of round data
      * @param $dry boolean Dry run (no save to DB)

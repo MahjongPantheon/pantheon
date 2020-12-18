@@ -320,6 +320,11 @@ msgstr "Bestätigen die Anwesenheit manuell"
 msgid "Confirm game cancellation: "
 msgstr ""
 
+msgid ""
+"Confirm game definalization. Note that you will need to cancel last round by "
+"hand after that."
+msgstr ""
+
 msgid "Confirm round cancellation: "
 msgstr "Runde Stornierung bestätigen: "
 
@@ -337,6 +342,10 @@ msgstr "Dai suushii"
 
 msgid "Date & time"
 msgstr "Datum & Uhrzeit"
+
+#, fuzzy
+msgid "Definalize game"
+msgstr "Neues Online-Spiel hinzufügen"
 
 msgid "Description"
 msgstr "Beschreibung"
