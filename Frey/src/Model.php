@@ -316,8 +316,10 @@ abstract class Model
             throw new AccessDeniedException();
         }
 
-        $hasAccess = $this->_authorizedPerson->getIsSuperadmin() || (
-            !empty($this->_currentAccess[$key]) && $this->_currentAccess[$key] == true
+        $hasAccess = !empty($this->_authorizedPerson) && (
+            $this->_authorizedPerson->getIsSuperadmin() || (
+                !empty($this->_currentAccess[$key]) && $this->_currentAccess[$key] == true
+            )
         );
         if (!$hasAccess) {
             throw new AccessDeniedException();
