@@ -72,6 +72,8 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $this->_ruleset->setRule('subtractStartPoints', true);
         $this->_ruleset->setRule('uma', [1 => 15, 5, -5, -15]);
         $this->_ruleset->setRule('oka', 0);
+        $this->_ruleset->setRule('replacementPlayerFixedPoints', -30000);
+        $this->_ruleset->setRule('replacementPlayerOverrideUma', 0);
 
         $this->_event = (new EventPrimitive($this->_db))
             ->setTitle('title')
@@ -101,6 +103,25 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $result->save();
 
         $this->assertEquals(30000, $result->getScore());
+    }
+
+    public function testReplacementPlayerRatingDelta()
+    {
+        $player = $this->_players[0];
+        $player->setIsReplacement(true);
+        $player->save();
+
+        $result = (new SessionResultsPrimitive($this->_db))
+            ->setPlayer($player)
+            ->setSession($this->_session)
+            ->calc(
+                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getCurrentState(),
+                $this->_session->getPlayersIds()
+            );
+        $result->save();
+
+        $this->assertEquals(-30, $result->getRatingDelta());
     }
 
     public function testUmaRule()
