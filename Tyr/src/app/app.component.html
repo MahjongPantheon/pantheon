@@ -21,8 +21,9 @@
   <nav-bar
     [state]="state"
     [dispatch]="store.dispatch"
+    [class.nynav]="ny"
   ></nav-bar>
-  <div class="content">
+  <div class="content" [class.ny]="ny">
     <screen-login
       *ngIf="state.currentScreen === 'login'"
       [state]="state"

@@ -93,4 +93,12 @@ export class AppComponent {
       this.store.dispatch({ type: UPDATE_STATE_SETTINGS });
     }, (error: any) => console.error(error));
   }
+
+  get ny() {
+    const mon = (new Date()).getMonth();
+    const day = (new Date()).getDate();
+    const isYearStart = mon === 0 && day < 10;
+    const isYearEnd = mon === 11 && day > 20;
+    return isYearStart || isYearEnd;
+  }
 }
