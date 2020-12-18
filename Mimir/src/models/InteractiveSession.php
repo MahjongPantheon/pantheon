@@ -170,7 +170,7 @@ class InteractiveSessionModel extends Model
 
         $session = $games[0];
         if (!DateHelper::mayDefinalizeGame($session)) {
-            throw new BadActionException('Session older than 3 hours can not be definalized');
+            throw new BadActionException('Session can not be definalized');
         }
 
         $playerResults = PlayerHistoryPrimitive::findBySession($this->_db, $session->getId());

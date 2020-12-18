@@ -38,7 +38,10 @@ class DateHelper
     }
 
     /**
-     * Check if game can be definalized. We allow to definalize only games ended no earlier than 3h before.
+     * Check if game can be definalized. We allow to definalize only games:
+     * - already finished
+     * - ended no earlier than 3h before
+     * - only if players of the game do not have another played games after this one.
      * NOTE: fetches data from event table for each session!
      * @param SessionPrimitive $session
      * @return bool
@@ -49,6 +52,11 @@ class DateHelper
         if ($session->getStatus() !== SessionPrimitive::STATUS_FINISHED) {
             return false;
         }
+
+        if (!$session->isLastForPlayers()) {
+            return false;
+        }
+
         $endDate = new \DateTime($session->getEndDate(), new \DateTimeZone($session->getEvent()->getTimezone()));
         $now = new \DateTime('now', new \DateTimeZone($session->getEvent()->getTimezone()));
         $diff = $now->diff($endDate);
