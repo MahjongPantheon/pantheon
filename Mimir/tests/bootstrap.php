@@ -1,5 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Novosibirsk');
+ini_set("memory_limit", "2048M");
 
 // Command that starts the built-in web server
 $command = sprintf(
