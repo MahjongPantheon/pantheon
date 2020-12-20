@@ -50,6 +50,9 @@ class GamesControlPanel extends Controller
                     case 'dropLastRound':
                         $this->_api->execute('dropLastRound', [$this->_path['hash']]);
                         break;
+                    case 'definalize':
+                        $this->_api->execute('definalizeGame', [$this->_path['hash']]);
+                        break;
                     case 'cancelGame':
                         $this->_api->execute('cancelGame', [$this->_path['hash']]);
                         break;

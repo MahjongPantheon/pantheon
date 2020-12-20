@@ -114,6 +114,11 @@ msgstr ""
 msgid "Confirm round cancellation: "
 msgstr ""
 
+msgid ""
+"Confirm game definalization. Note that you will need to cancel last round "
+"by hand after that."
+msgstr ""
+
 msgid "Confirm game cancellation: "
 msgstr ""
 
@@ -130,6 +135,9 @@ msgid "Cancel last played round"
 msgstr ""
 
 msgid "Cancel game"
+msgstr ""
+
+msgid "Definalize game"
 msgstr ""
 
 msgid "Penalties:"

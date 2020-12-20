@@ -122,7 +122,7 @@ Parameters:
 * **$roundData** (_array_) Structure of round data
 * **$dry** (_boolean_) Dry run (without saving to db)
 
-Returns: _bool|array_ Success|Results of dry run
+Returns: _bool|array_ Results|Results of dry run|False in case of error
 
 Exceptions:
 * _BadActionException_ 
@@ -133,7 +133,7 @@ Parameters:
 * **$eventId** (_int_) 
 * **$link** (_string_) 
 
-Returns: _bool_ 
+Returns: _array_ 
 
 Exceptions:
 * _InvalidParametersException_ 
@@ -327,7 +327,7 @@ Parameters:
 * **$eventId** (_integer_) 
 * **$ignoreSeating** (_integer_) 
 
-Returns: _void_ 
+Returns: _bool_ 
 
 Exceptions:
 * _\Exception_ 
@@ -357,12 +357,21 @@ Exceptions:
 ### getAchievements
 Parameters:
 * **$eventIdList** (_array_) 
+* **$achievementsList** (_array_) 
 
 Returns: _array_ 
 
 Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
+
+### getAchievementsList
+Parameters:
+
+Returns: _array_ 
+
+Exceptions:
+* _AuthFailedException_ 
 
 ### toggleHideResults
 Parameters:
@@ -378,6 +387,17 @@ Exceptions:
 Parameters:
 * **$eventId** (_integer_) 
 * **$idMap** (_array_) Mapping of player_id => local_id
+
+Returns: _bool_ 
+
+Exceptions:
+* _AuthFailedException_ 
+* _\Exception_ 
+
+### updatePlayersTeams
+Parameters:
+* **$eventId** (_integer_) 
+* **$teamNameMap** (_array_) Mapping of player_id => team_name
 
 Returns: _bool_ 
 

@@ -158,12 +158,24 @@ class PlayerHistoryPrimitive extends Primitive
      * @param $sessionId
      * @return PlayerHistoryPrimitive
      */
-    public static function findBySession(IDb $db, $playerId, $sessionId)
+    public static function findBySessionAndPlayer(IDb $db, $playerId, $sessionId)
     {
         return self::_findBySeveral($db, [
             'player_id'    => [$playerId],
             'session_id'   => [$sessionId]
         ], ['onlyLast' => true]); // should be only one or none, getting last is ok
+    }
+
+    /**
+     * @param IDb $db
+     * @param $sessionId
+     * @return PlayerHistoryPrimitive[]
+     */
+    public static function findBySession(IDb $db, $sessionId)
+    {
+        return self::_findBySeveral($db, [
+            'session_id'   => [$sessionId]
+        ]);
     }
 
     protected function _create()

@@ -255,7 +255,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setGamesPlayed(1)
             ->save();
 
-        $itemCopy = PlayerHistoryPrimitive::findBySession(
+        $itemCopy = PlayerHistoryPrimitive::findBySessionAndPlayer(
             $this->_db,
             $this->_players[0]->getId(),
             $this->_session->getId()

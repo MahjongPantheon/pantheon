@@ -860,4 +860,26 @@ class SessionPrimitive extends Primitive
         $round->drop();
         $this->setStatus(SessionPrimitive::STATUS_INPROGRESS)->save();
     }
+
+    /**
+     * Check if current session is chronologically last for all its players.
+     * @return bool
+     * @throws \Exception
+     */
+    public function isLastForPlayers()
+    {
+        $last = $this->_db->table(self::REL_USER)
+            ->whereIn('player_id', $this->getPlayersIds())
+            ->orderByDesc('id')
+            ->limit(4)
+            ->findArray();
+
+        foreach ($last as $item) {
+            if ($item['session_id'] != $this->_id) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

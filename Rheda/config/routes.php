@@ -55,6 +55,7 @@ return [ // Omit trailing slashes in keys when possible
 
     '/games'                                               => 'GamesControlPanel',
     '/games/(?<action>dropLastRound)/(?<hash>[0-9a-f]+)'   => 'GamesControlPanel',
+    '/games/(?<action>definalize)/(?<hash>[0-9a-f]+)'      => 'GamesControlPanel',
     '/games/(?<action>cancelGame)/(?<hash>[0-9a-f]+)'      => 'GamesControlPanel',
 
     '/penalties'       => 'Penalties',
