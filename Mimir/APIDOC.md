@@ -459,6 +459,15 @@ Returns: _boolean_ Success?
 Exceptions:
 * _\Exception_ 
 
+### definalizeGame
+Parameters:
+* **$gameHashcode** (_string_) 
+
+Returns: _boolean_ Success?
+
+Exceptions:
+* _\Exception_ 
+
 ### addPenalty
 Parameters:
 * **$eventId** (_integer_) Hashcode of game
@@ -492,6 +501,7 @@ Parameters:
 * **$alias** (_string_) textlog alias for quicker enter (optional)
 * **$displayName** (_string_) how to display player in stats (optional)
 * **$tenhouId** (_string_) tenhou username (optional)
+* **$isReplacement** (_bool_) flag (optional)
 
 Returns: _int_ player id
 

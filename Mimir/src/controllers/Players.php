@@ -81,13 +81,14 @@ class PlayersController extends Controller
      * @param string $alias textlog alias for quicker enter (optional)
      * @param string $displayName how to display player in stats (optional)
      * @param string $tenhouId tenhou username (optional)
+     * @param bool $isReplacement flag (optional)
      * @throws EntityNotFoundException
      * @throws MalformedPayloadException
      * @throws AuthFailedException
      * @throws \Exception
      * @return int player id
      */
-    public function update($id, $ident, $alias, $displayName, $tenhouId)
+    public function update($id, $ident, $alias, $displayName, $tenhouId, $isReplacement)
     {
         $this->_log->addInfo('Updating player id #' . $id);
 
@@ -116,6 +117,10 @@ class PlayersController extends Controller
 
         if (!empty($tenhouId)) {
             $player->setTenhouId($tenhouId);
+        }
+
+        if (!empty($isReplacement)) {
+            $player->setIsReplacement($isReplacement);
         }
 
         $player->save();
