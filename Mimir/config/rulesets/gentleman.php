@@ -20,11 +20,10 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 
 /**
- * Class RulesetTenhounet
- * Describes most popular row3-column2 rules
+ * Class RulesetGentleman
  * @package Mimir
  */
-class RulesetDamaten extends Ruleset
+class RulesetGentleman extends Ruleset
 {
     protected static $_title = 'gentleman';
     protected static $_ruleset = [
