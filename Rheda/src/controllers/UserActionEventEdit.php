@@ -129,11 +129,16 @@ class UserActionEventEdit extends Controller
 
     protected function _editEvent($eventId)
     {
-        $prevData = $this->_mimir->getEventForEdit($eventId);
+        if (!empty($this->_prevData)) { // Saving after errors
+            $prevData = $this->_prevData;
+        } else {
+            $prevData = $this->_mimir->getEventForEdit($eventId);
+        }
         return array_merge($this->_defaultSettings, $prevData, [
             'id' => $this->_path['id'],
             'isTournament' => !!($prevData['isTournament'] ?? 0),
             'isOnline' => !!($prevData['isOnline'] ?? 0),
+            'lobbyId' => 'C' . substr($prevData['lobbyId'], 1),
             'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset']),
             'available_timezones' => $this->_getTimezones(empty($prevData['timezone']) ? '' : $prevData['timezone']),
         ]);
