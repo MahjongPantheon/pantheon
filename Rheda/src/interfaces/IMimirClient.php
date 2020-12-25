@@ -262,6 +262,14 @@ interface IMimirClient
     public function startGameT(array $players): string;
 
     /**
+     *  Get settings of existing event
+     *
+     * @param int $id
+     * @return array
+    */
+    public function getEventForEdit(int $id): array;
+
+    /**
      * @param string $type
      * @param string $title
      * @param string $description
@@ -276,6 +284,24 @@ interface IMimirClient
      * @return int
     */
     public function createEvent(string $type, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted): int;
+
+    /**
+     *  Update settings of existing event
+     *
+     * @param int $id
+     * @param string $title
+     * @param string $description
+     * @param string $ruleset
+     * @param int $gameDuration
+     * @param string $timezone
+     * @param int $series
+     * @param int $minGamesCount
+     * @param int $lobbyId
+     * @param bool $isTeam
+     * @param bool $isPrescripted
+     * @return bool
+    */
+    public function updateEvent(int $id, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted): bool;
 
     /**
      *  Get tables state in tournament

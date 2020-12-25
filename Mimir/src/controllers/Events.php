@@ -121,6 +121,121 @@ class EventsController extends Controller
     }
 
     /**
+     * Update settings of existing event
+     *
+     * @param int $id event id
+     * @param string $title
+     * @param string $description
+     * @param string $ruleset one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
+     * @param int $gameDuration duration of game in this event in minutes
+     * @param string $timezone name of timezone, 'Asia/Irkutsk' for example
+     * @param int $series Length of game series, 0 to disable
+     * @param int $minGamesCount Minimum of games to be counted for ratings. 0 to disable.
+     * @param int $lobbyId Tenhou lobby id for online tournaments
+     * @param bool $isTeam If event is team tournament
+     * @param bool $isPrescripted If tournament should have predefined seating
+     * @throws BadActionException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     * @return bool
+     */
+    public function updateEvent(
+        $id, $title, $description, $ruleset, $gameDuration,
+        $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted
+    )
+    {
+        $this->_log->addInfo('Updating event with [' . $ruleset . '] rules');
+
+        $event = EventPrimitive::findById($this->_ds, [$id]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event with id ' . $id . ' not found in DB');
+        }
+        $event = $event[0];
+
+        // Check we have rights to update this event
+        if (!$this->_meta->isEventAdminById($id)) {
+            throw new BadActionException("You don't have enough privileges to modify this event");
+        }
+
+        $event->setTitle($title)
+            ->setDescription($description)
+            ->setGameDuration($gameDuration)
+            ->setTimeZone($timezone)
+            ->setSeriesLength($series)
+            ->setMinGamesCount($minGamesCount)
+            ->setRuleset(Ruleset::instance($ruleset))
+        ;
+
+        if ($event->getSyncStart()) { // Should be a tournament
+            $event
+                ->setAutoSeating($isPrescripted ? 0 : 1)
+                ->setIsTeam($isTeam ? 1 : 0)
+                ->setIsPrescripted($isPrescripted ? 1 : 0)
+            ;
+        } elseif ($event->getIsOnline()) { // Should be online tournament
+            $event
+                ->setIsTeam($isTeam ? 1 : 0)
+                ->setLobbyId($lobbyId)
+            ;
+        } else { // Should be club event
+            // Nothing to update here
+        }
+
+        $success = $event->save();
+        if (!$success) {
+            throw new BadActionException('Somehow we couldn\'t update event - this should not happen');
+        }
+
+        $this->_log->addInfo('Successfully create new event (id# ' . $id . ')');
+        return $success;
+    }
+
+
+    /**
+     * Get settings of existing event
+     *
+     * @param int $id event id
+     * @throws BadActionException
+     * @throws InvalidParametersException
+     * @throws \Exception
+     * @return array
+     */
+    public function getEventForEdit($id)
+    {
+        $this->_log->addInfo('Getting event settings for event #' . $id);
+
+        $event = EventPrimitive::findById($this->_ds, [$id]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event with id ' . $id . ' not found in DB');
+        }
+        $event = $event[0];
+
+        // Check we have rights to update this event
+        if (!$this->_meta->isEventAdminById($id)) {
+            throw new BadActionException("You don't have enough privileges to modify this event");
+        }
+
+        $data = [
+            'id' => $event->getId(),
+            'isTournament' => $event->getSyncStart(),
+            'isOnline' => $event->getIsOnline(),
+            'title' => $event->getTitle(),
+            'description' => $event->getDescription(),
+            'duration' => $event->getGameDuration(),
+            'ruleset' => $event->getRuleset()->title(),
+            'timezone' => $event->getTimezone(),
+            'lobbyId' => $event->getLobbyId(),
+            'seriesLength' => $event->getSeriesLength(),
+            'minGames' => $event->getMinGamesCount(),
+            'isTeam' => $event->getIsTeam(),
+            'isPrescripted' => $event->getIsPrescripted()
+        ];
+
+        $this->_log->addInfo('Successfully got event settings for event #' . $id);
+        return $data;
+    }
+
+    /**
      * List all available events in system (paginated)
      *
      * @param int $limit

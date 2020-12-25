@@ -61,29 +61,11 @@ class UserActionEventEdit extends Controller
             }
 
             try {
-                $id = $this->_mimir->createEvent(
-                    $this->_typeMap[$this->_path['action']],
-                    $checkData['title'],
-                    $checkData['description'],
-                    $checkData['ruleset'],
-                    intval($checkData['duration'] ?? 0),
-                    $checkData['timezone'] ?? '',
-                    intval($checkData['seriesLength'] ?? 0),
-                    intval($checkData['minGames'] ?? 0),
-                    empty($checkData['lobbyId']) ? 0 : intval('1' . str_replace('C', '', $checkData['lobbyId'])),
-                    empty($checkData['isTeam']) ? false : true,
-                    empty($checkData['isPrescripted']) ? false : true
-                );
-                $ruleId = $this->_frey->addRuleForPerson(FreyClient::PRIV_ADMIN_EVENT, true, 'bool', $this->_currentPersonId, $id);
-                if (!$ruleId) {
-                    $this->_error = [
-                        'error' => _p('Failed to assign administrative rights. Consult support and give them id #%s', $id),
-                        'critical' => true
-                    ];
-                    return true;
+                if (empty($checkData['id'])) {
+                    return $this->_saveNewEvent($checkData);
+                } else {
+                    return $this->_saveExistingEvent($checkData);
                 }
-                header('Location: /eid' . $id, null, 302);
-                return false;
             } catch (\Exception $e) {
                 $this->_error = [
                     'error' => $e->getMessage(),
@@ -105,16 +87,12 @@ class UserActionEventEdit extends Controller
         switch ($this->_path['action']) {
             case 'editEvent':
                 return $this->_editEvent($this->_path['id']);
-                break;
             case 'newClubEvent':
                 return $this->_newClubEvent($this->_prevData);
-                break;
             case 'newTournamentEvent':
                 return $this->_newTournamentEvent($this->_prevData);
-                break;
             case 'newOnlineEvent':
                 return $this->_newOnlineEvent($this->_prevData);
-                break;
             default:;
         }
     }
@@ -144,6 +122,18 @@ class UserActionEventEdit extends Controller
         return array_merge($this->_defaultSettings, $prevData, [
             'isTournament' => false,
             'isOnline' => true,
+            'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset']),
+            'available_timezones' => $this->_getTimezones(empty($prevData['timezone']) ? '' : $prevData['timezone']),
+        ]);
+    }
+
+    protected function _editEvent($eventId)
+    {
+        $prevData = $this->_mimir->getEventForEdit($eventId);
+        return array_merge($this->_defaultSettings, $prevData, [
+            'id' => $this->_path['id'],
+            'isTournament' => !!($prevData['isTournament'] ?? 0),
+            'isOnline' => !!($prevData['isOnline'] ?? 0),
             'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset']),
             'available_timezones' => $this->_getTimezones(empty($prevData['timezone']) ? '' : $prevData['timezone']),
         ]);
@@ -190,7 +180,9 @@ class UserActionEventEdit extends Controller
             $checkedData['error_duration'] = _t('There must be non-zero duration for tournaments');
         }
 
-        if (empty($data['lobbyId']) || !preg_match('#^C\d+$#is', $data['lobbyId'])) {
+        if (!empty($data['isOnline']) && (
+            empty($data['lobbyId']) || !preg_match('#^C\d+$#is', $data['lobbyId']))
+        ) {
             $checkedData['error_lobbyId'] = _t('Lobby id must be in format: C####, where # is a digit');
         }
 
@@ -210,5 +202,57 @@ class UserActionEventEdit extends Controller
         }
 
         return $checkedData;
+    }
+
+    protected function _saveNewEvent($checkData) {
+        $id = $this->_mimir->createEvent(
+            $this->_typeMap[$this->_path['action']],
+            $checkData['title'],
+            $checkData['description'],
+            $checkData['ruleset'],
+            intval($checkData['duration'] ?? 0),
+            $checkData['timezone'] ?? '',
+            intval($checkData['seriesLength'] ?? 0),
+            intval($checkData['minGames'] ?? 0),
+            empty($checkData['lobbyId']) ? 0 : intval('1' . str_replace('C', '', $checkData['lobbyId'])),
+            empty($checkData['isTeam']) ? false : true,
+            empty($checkData['isPrescripted']) ? false : true
+        );
+        $ruleId = $this->_frey->addRuleForPerson(FreyClient::PRIV_ADMIN_EVENT, true, 'bool', $this->_currentPersonId, $id);
+        if (!$ruleId) {
+            $this->_error = [
+                'error' => _p('Failed to assign administrative rights. Consult support and give them id #%s', $id),
+                'critical' => true
+            ];
+            return true;
+        }
+        header('Location: /eid' . $id, null, 302);
+        return false;
+    }
+
+    protected function _saveExistingEvent($checkData) {
+        $success = $this->_mimir->updateEvent(
+            intval($this->_path['id']),
+            $checkData['title'],
+            $checkData['description'],
+            $checkData['ruleset'],
+            intval($checkData['duration'] ?? 0),
+            $checkData['timezone'] ?? '',
+            intval($checkData['seriesLength'] ?? 0),
+            intval($checkData['minGames'] ?? 0),
+            empty($checkData['lobbyId']) ? 0 : intval('1' . str_replace('C', '', $checkData['lobbyId'])),
+            empty($checkData['isTeam']) ? false : true,
+            empty($checkData['isPrescripted']) ? false : true
+        );
+        if (!$success) {
+            $this->_error = [
+                'error' => _p('Failed to save event #%s - this should not happen', $this->_path['id']),
+                'critical' => true
+            ];
+            return true;
+        }
+
+        header('Location: /eid' . $this->_path['id'], null, 302);
+        return false;
     }
 }

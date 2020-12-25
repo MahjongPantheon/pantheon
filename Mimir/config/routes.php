@@ -64,7 +64,9 @@ return [
     'startGameT'         => ['GamesController', 'startFromToken'], // for self-starts
 
     // admin
+    'getEventForEdit'    => ['EventsController', 'getEventForEdit'],
     'createEvent'        => ['EventsController', 'createEvent'],
+    'updateEvent'        => ['EventsController', 'updateEvent'],
     'getTablesState'     => ['EventsController', 'getTablesState'],
     'startTimer'         => ['EventsController', 'startTimer'],
     'registerPlayer'     => ['EventsController', 'registerPlayer'],

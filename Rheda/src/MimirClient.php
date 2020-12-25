@@ -392,6 +392,18 @@ class MimirClient implements IMimirClient
     }
 
     /**
+     *  Get settings of existing event
+     *
+     * @param int $id
+     * @return array
+    */
+    public function getEventForEdit(int $id): array
+    {
+        /** @phpstan-ignore-next-line */
+        return (array)$this->_client->execute('getEventForEdit', [$id]);
+    }
+
+    /**
      * @param string $type
      * @param string $title
      * @param string $description
@@ -409,6 +421,28 @@ class MimirClient implements IMimirClient
     {
         /** @phpstan-ignore-next-line */
         return (int)$this->_client->execute('createEvent', [$type, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted]);
+    }
+
+    /**
+     *  Update settings of existing event
+     *
+     * @param int $id
+     * @param string $title
+     * @param string $description
+     * @param string $ruleset
+     * @param int $gameDuration
+     * @param string $timezone
+     * @param int $series
+     * @param int $minGamesCount
+     * @param int $lobbyId
+     * @param bool $isTeam
+     * @param bool $isPrescripted
+     * @return bool
+    */
+    public function updateEvent(int $id, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted): bool
+    {
+        /** @phpstan-ignore-next-line */
+        return (bool)$this->_client->execute('updateEvent', [$id, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted]);
     }
 
     /**

@@ -161,9 +161,6 @@ class Meta
                     if ($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN]) {
                         $this->_superadmin = true;
                     }
-                    if ($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT]) {
-                        $this->_eventadmin = true;
-                    }
                 } else if (!empty($this->_currentPersonId)) {
                     $this->_superadmin = $this->_frey->getSuperadminFlag($this->_currentPersonId);
                 }
@@ -197,7 +194,24 @@ class Meta
     }
 
     public function isEventAdmin() {
-        return $this->_eventadmin;
+        if ($this->_superadmin) {
+            return true;
+        }
+        if ($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT]) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isEventAdminById($eventId) {
+        if ($this->_superadmin) {
+            return true;
+        }
+        $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $eventId);
+        if ($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT]) {
+            return true;
+        }
+        return false;
     }
 
     /**

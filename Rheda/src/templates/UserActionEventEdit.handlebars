@@ -29,6 +29,7 @@
         <input type="hidden" name="save" value="1"/>
         {{#isTournament}}<input type="hidden" name="isTournament" value="1"/>{{/isTournament}}
         {{#isOnline}}<input type="hidden" name="isOnline" value="1"/>{{/isOnline}}
+        {{#id}}<input type="hidden" name="id" value="{{id}}"/>{{/id}}
 
         <div class="form-group">
           <label for="title">{{_t 'Title'}}</label>
@@ -150,7 +151,10 @@
           </div>
         {{/isTournament}}
 
-        <button type="submit" class="btn btn-primary">{{_t 'Create event'}}</button>
+        <button type="submit" class="btn btn-primary">
+          {{#id}}{{_t 'Update event'}}{{/id}}
+          {{^id}}{{_t 'Create event'}}{{/id}}
+        </button>
       </form>
       <hr/>
     </div>
