@@ -273,6 +273,18 @@ class FreyClient implements IFreyClient
     }
 
     /**
+     *  Get list of event IDs where specified person has admin privileges.
+     *
+     * @param int $personId
+     * @return array
+    */
+    public function getOwnedEventIds(int $personId): array
+    {
+        /** @phpstan-ignore-next-line */
+        return (array)$this->_client->execute('getOwnedEventIds', [$personId]);
+    }
+
+    /**
      *  Get rule list with translations to selected locale
      *
      * @return array

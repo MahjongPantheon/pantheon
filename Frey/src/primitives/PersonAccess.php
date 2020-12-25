@@ -79,6 +79,23 @@ class PersonAccessPrimitive extends AccessPrimitive
     }
 
     /**
+     * Find rules of specified type by person id list
+     *
+     * @param IDb $db
+     * @param array $ids
+     * @param $type
+     * @return Primitive|Primitive[]
+     * @throws \Exception
+     */
+    public static function findByPersonAndType(IDb $db, array $ids, $type)
+    {
+        return self::_findBySeveral($db, [
+            'person_id'  => $ids,
+            'acl_name'   => [$type]
+        ]);
+    }
+
+    /**
      * @param IDb $db
      * @return static[]
      * @throws \Exception

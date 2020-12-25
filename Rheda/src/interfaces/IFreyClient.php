@@ -170,6 +170,14 @@ interface IFreyClient
     public function getSuperadminFlag(int $personId): bool;
 
     /**
+     *  Get list of event IDs where specified person has admin privileges.
+     *
+     * @param int $personId
+     * @return array
+    */
+    public function getOwnedEventIds(int $personId): array;
+
+    /**
      *  Get rule list with translations to selected locale
      *
      * @return array

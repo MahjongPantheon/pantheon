@@ -374,6 +374,25 @@ class AccessController extends Controller
     }
 
     /**
+     * Get list of event IDs where specified person has admin privileges.
+     *
+     * @param int $personId
+     * @return array
+     * @throws \Exception
+     */
+    public function getOwnedEventIds($personId)
+    {
+        $this->_logStart(__METHOD__, [$personId]);
+        $rules = $this->_getModel()
+            ->getAllPersonRulesOfType($personId, InternalRules::ADMIN_EVENT) ?? [];
+        $events = array_keys(array_filter($rules, function($rule) {
+            return !!$rule['value'];
+        }));
+        $this->_logSuccess(__METHOD__, [$personId]);
+        return $events;
+    }
+
+    /**
      * @return AccessManagementModel
      */
     protected function _getModel()

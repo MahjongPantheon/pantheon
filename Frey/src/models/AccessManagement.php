@@ -116,6 +116,33 @@ class AccessManagementModel extends Model
     }
 
     /**
+     * Get access rules of specified type for person
+     * - Method results are not cached!
+     *
+     * @param int $personId
+     * @param string $type
+     * @return array
+     * @throws \Exception
+     */
+    public function getAllPersonRulesOfType($personId, $type)
+    {
+        $rules = PersonAccessPrimitive::findByPersonAndType($this->_db, [$personId], $type);
+        $resultingRules = [];
+        foreach ($rules as $rule) {
+            $eventKey = $rule->getEventId() ?? '__global';
+            if (empty($resultingRules[$eventKey])) {
+                $resultingRules[$eventKey] = [];
+            }
+            $resultingRules[$eventKey] = [
+                'id' => $rule->getId(),
+                'value' => $rule->getAclValue()
+            ];
+        }
+
+        return $resultingRules;
+    }
+
+    /**
      * Get access rules for group.
      * - Method results are not cached!
      *

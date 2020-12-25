@@ -22,19 +22,38 @@ require_once __DIR__ . '/../helpers/Url.php';
 class UserActionManageEvents extends Controller
 {
     protected $_mainTemplate = 'UserActionManageEvents';
+    protected $_error = null;
 
     protected function _pageTitle()
     {
         return _t('Control panel: manage events');
     }
 
-    protected function _run()
+    protected function _beforeRun()
     {
         if ($this->_currentPersonId === null) {
-            return [
+            $this->_error = [
                 'error' => _t("Can't proceed to control panel: please log in"),
                 'critical' => true
             ];
+            return true;
         }
+
+        return true;
+    }
+
+    protected function _run()
+    {
+        if (!empty($this->_error)) {
+            return $this->_error;
+        }
+
+        $eventIds = $this->_frey->getOwnedEventIds($this->_currentPersonId);
+        $events = $this->_mimir->getEventsById($eventIds);
+
+        return [
+            'critical' => false,
+            'events' => $events
+        ];
     }
 }

@@ -80,5 +80,5 @@ return [ // Omit trailing slashes in keys when possible
     '!/cp/(?<action>newClubEvent)'                => 'UserActionNewEvent',
     '!/cp/(?<action>newTournamentEvent)'          => 'UserActionNewEvent',
     '!/cp/(?<action>newOnlineEvent)'              => 'UserActionNewEvent',
-    '!/manageEvents'                => 'UserActionManageEvents',
+    '!/cp/(?<action>manageEvents)'                => 'UserActionManageEvents',
 ];
