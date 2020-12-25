@@ -270,11 +270,12 @@ interface IMimirClient
      * @param string $timezone
      * @param int $series
      * @param int $minGamesCount
+     * @param int $lobbyId
      * @param bool $isTeam
      * @param bool $isPrescripted
      * @return int
     */
-    public function createEvent(string $type, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, bool $isTeam, bool $isPrescripted): int;
+    public function createEvent(string $type, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted): int;
 
     /**
      *  Get tables state in tournament

@@ -37,6 +37,7 @@ class EventsController extends Controller
      * @param string $timezone name of timezone, 'Asia/Irkutsk' for example
      * @param int $series Length of game series, 0 to disable
      * @param int $minGamesCount Minimum of games to be counted for ratings. 0 to disable.
+     * @param int $lobbyId Tenhou lobby id for online tournaments
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
      * @throws BadActionException
@@ -44,7 +45,10 @@ class EventsController extends Controller
      * @throws \Exception
      * @return int
      */
-    public function createEvent($type, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $isTeam, $isPrescripted)
+    public function createEvent(
+        $type, $title, $description, $ruleset, $gameDuration,
+        $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted
+    )
     {
         $this->_log->addInfo('Creating new event with [' . $ruleset . '] rules');
         if (!in_array($type, ['club', 'tournament', 'online'])) {
@@ -96,6 +100,7 @@ class EventsController extends Controller
                     ->setUseTimer(0)
                     ->setUsePenalty(1)
                     ->setIsTeam($isTeam ? 1 : 0)
+                    ->setLobbyId($lobbyId)
                     ->setIsPrescripted(0)
                 ;
                 break;

@@ -77,8 +77,10 @@ return [ // Omit trailing slashes in keys when possible
 
     '!/privileges/ajax'             => 'PrivilegesAjax',
 
-    '!/cp/(?<action>newClubEvent)'                => 'UserActionNewEvent',
-    '!/cp/(?<action>newTournamentEvent)'          => 'UserActionNewEvent',
-    '!/cp/(?<action>newOnlineEvent)'              => 'UserActionNewEvent',
     '!/cp/(?<action>manageEvents)'                => 'UserActionManageEvents',
+    '!/cp/(?<action>newClubEvent)'                => 'UserActionEventEdit',
+    '!/cp/(?<action>newTournamentEvent)'          => 'UserActionEventEdit',
+    '!/cp/(?<action>newOnlineEvent)'              => 'UserActionEventEdit',
+    '!/cp/(?<action>editEvent)/(?<id>\d+)'        => 'UserActionEventEdit',
+    '!/cp/(?<action>editEventAdmins)'             => 'UserActionEventEditPrivileges',
 ];

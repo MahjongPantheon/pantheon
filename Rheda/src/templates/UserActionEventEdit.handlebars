@@ -27,6 +27,8 @@
     <div class="col-6">
       <form action="" method="post" class="well">
         <input type="hidden" name="save" value="1"/>
+        {{#isTournament}}<input type="hidden" name="isTournament" value="1"/>{{/isTournament}}
+        {{#isOnline}}<input type="hidden" name="isOnline" value="1"/>{{/isOnline}}
 
         <div class="form-group">
           <label for="title">{{_t 'Title'}}</label>
@@ -43,14 +45,9 @@
 
         <div class="form-group">
           <label for="description">{{_t 'Description'}}</label>
-          <textarea class="form-control{{#error_description}} is-invalid{{/error_description}}" id="description"
+          <textarea class="form-control" id="description"
                     name="description">{{description}}</textarea>
-          {{#error_description}}
-            <div class="invalid-feedback">{{error_description}}</div>
-          {{/error_description}}
-          {{^error_description}}
-            <small id="descriptionHelp" class="form-text text-muted">{{_t "Enter short description. Markdown syntax is supported."}}</small>
-          {{/error_description}}
+          <small id="descriptionHelp" class="form-text text-muted">{{_t "Enter short description. Markdown syntax is supported."}}</small>
         </div>
 
         {{#isTournament}}
@@ -70,33 +67,38 @@
 
         <div class="form-group">
           <label for="ruleset">{{_t 'Ruleset'}}</label>
-          <select class="form-control{{#error_ruleset}} is-invalid{{/error_ruleset}}" id="ruleset" name="ruleset">
+          <select class="form-control" id="ruleset" name="ruleset">
             {{#available_rulesets}}
               <option value="{{ident}}"{{#selected}} selected="selected"{{/selected}}>{{name}}</option>
             {{/available_rulesets}}
           </select>
-          {{#error_ruleset}}
-            <div class="invalid-feedback">{{error_ruleset}}</div>
-          {{/error_ruleset}}
-          {{^error_ruleset}}
-            <small id="rulesetHelp" class="form-text text-muted">{{_t "Select basic ruleset for event."}}</small>
-          {{/error_ruleset}}
+          <small id="rulesetHelp" class="form-text text-muted">{{_t "Select basic ruleset for event."}}</small>
         </div>
 
         <div class="form-group">
           <label for="timezone">{{_t 'Timezone'}}</label>
-          <select class="form-control{{#error_timezone}} is-invalid{{/error_timezone}}" id="timezone" name="timezone">
+          <select class="form-control" id="timezone" name="timezone">
             {{#available_timezones}}
               <option value="{{ident}}"{{#selected}} selected="selected"{{/selected}}>{{ident}}</option>
             {{/available_timezones}}
           </select>
-          {{#error_timezone}}
-            <div class="invalid-feedback">{{error_timezone}}</div>
-          {{/error_timezone}}
-          {{^error_timezone}}
-            <small id="timezoneHelp" class="form-text text-muted">{{_t "All dates and times will be displayed according to selected timezone."}}</small>
-          {{/error_timezone}}
+          <small id="timezoneHelp" class="form-text text-muted">{{_t "All dates and times will be displayed according to selected timezone."}}</small>
         </div>
+
+        {{#isOnline}}
+          <div class="form-group">
+            <label for="lobbyId">{{_t 'Tenhou lobby ID'}}</label>
+            <input type="text" class="form-control{{#error_lobbyId}} is-invalid{{/error_lobbyId}}" id="lobbyId"
+                   value="{{lobbyId}}"
+                   name="lobbyId">
+            {{#error_lobbyId}}
+              <div class="invalid-feedback">{{error_lobbyId}}</div>
+            {{/error_lobbyId}}
+            {{^error_lobbyId}}
+              <small id="lobbyIdHelp" class="form-text text-muted">{{_t "Please enter lobby id for this event like this: C5560"}}</small>
+            {{/error_lobbyId}}
+          </div>
+        {{/isOnline}}
 
         {{^isTournament}}
           <div class="form-group">
@@ -128,25 +130,25 @@
 
         {{#isTournament}}
           <div class="form-group">
-            <label for="isTeam">{{_t 'Team tournament'}}</label>
-            <input type="checkbox" class="form-control{{#error_isTeam}} is-invalid{{/error_isTeam}}" id="isTeam"
-              {{#isTeam}}checked="checked"{{/isTeam}}
-              name="isTeam">
-            {{^error_isTeam}}
-              <small id="isTeamHelp" class="form-text text-muted">{{_t "Choose this for separate team rating"}}</small>
-            {{/error_isTeam}}
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="isTeam"
+                     {{#isTeam}}checked="checked"{{/isTeam}}
+                     name="isTeam">
+              <label class="form-check-label" for="isTeam">{{_t 'Team tournament'}}</label>
+            </div>
+            <small id="isTeamHelp" class="form-text text-muted">{{_t "Choose this for separate team rating"}}</small>
+          </div>
+
+          <div class="form-group">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="isPrescripted"
+                     {{#isPrescripted}}checked="checked"{{/isPrescripted}}
+                     name="isPrescripted">
+              <label class="form-check-label" for="isPrescripted">{{_t 'Predefined seating'}}</label>
+            </div>
+            <small id="isPrescriptedHelp" class="form-text text-muted">{{_t "Choose this if you want to define your own custom seating for tournament by hand"}}</small>
           </div>
         {{/isTournament}}
-
-        <div class="form-group">
-          <label for="isPrescripted">{{_t 'Predefined seating'}}</label>
-          <input type="checkbox" class="form-control{{#error_isPrescripted}} is-invalid{{/error_isPrescripted}}" id="isPrescripted"
-                 {{#isPrescripted}}checked="checked"{{/isPrescripted}}
-                 name="isPrescripted">
-          {{^error_isPrescripted}}
-            <small id="isPrescriptedHelp" class="form-text text-muted">{{_t "Choose this if you want to define your own custom seating for tournament by hand"}}</small>
-          {{/error_isPrescripted}}
-        </div>
 
         <button type="submit" class="btn btn-primary">{{_t 'Create event'}}</button>
       </form>
