@@ -185,7 +185,10 @@ class AccessController extends Controller
             ->addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId);
         if ($ruleId !== null) {
             $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
+        } else {
+            $this->_logError(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
         }
+
         return $ruleId;
     }
 

@@ -20,6 +20,7 @@ namespace Mimir;
 require_once __DIR__ . '/DataSource.php';
 
 use Monolog\Logger;
+use Michelf\Markdown;
 
 abstract class Controller
 {
@@ -54,5 +55,16 @@ abstract class Controller
             $this->_config->getValue('api.version_major'),
             $this->_config->getValue('api.version_minor')
         );
+    }
+
+    /**
+     * @param string $text
+     * @return string
+     */
+    protected function _mdTransform(string $text)
+    {
+        $md = new Markdown();
+        $md->no_markup = true;
+        return $md->transform($text);
     }
 }

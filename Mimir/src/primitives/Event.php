@@ -31,6 +31,7 @@ class EventPrimitive extends Primitive
 {
     protected static $_table = 'event';
     const REL_USER = 'event_registered_players';
+    const ID_PLACEHOLDER = '##ID##';
 
     protected static $_fieldsMapping = [
         'id'                => '_id',

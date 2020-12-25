@@ -311,9 +311,14 @@ abstract class Model
      */
     public function _checkAccessRights(string $key, $eventId = null): self
     {
+        // For direct calls from Mimir/Rheda
+        if (!empty($_SERVER['HTTP_X_INTERNAL_QUERY_SECRET']) && $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] === $this->_config->getValue('admin.internalQuerySecret')) {
+            return $this;
+        }
+
         $eventMatches = empty($eventId) || $eventId == $this->_meta->getCurrentEventId();
         if (!$eventMatches) {
-            throw new AccessDeniedException();
+            throw new AccessDeniedException('This event action is not allowed for you');
         }
 
         $hasAccess = !empty($this->_authorizedPerson) && (
@@ -322,7 +327,7 @@ abstract class Model
             )
         );
         if (!$hasAccess) {
-            throw new AccessDeniedException();
+            throw new AccessDeniedException('This action is not allowed for you');
         }
 
         return $this;

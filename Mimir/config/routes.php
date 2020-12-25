@@ -30,6 +30,9 @@
  */
 return [
     // client
+    'getRulesets'        => ['EventsController', 'getRulesets'],
+    'getTimezones'       => ['EventsController', 'getTimezones'],
+
     'getEvents'          => ['EventsController', 'getEvents'],
     'getEventsById'      => ['EventsController', 'getEventsById'],
     'getMyEvents'        => ['PlayersController', 'getMyEvents'],

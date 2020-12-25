@@ -217,12 +217,14 @@ class AccessManagementModel extends Model
      */
     public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId)
     {
-        if (InternalRules::isInternal($ruleName)) {
-            throw new InvalidParametersException('Rule name ' . $ruleName . ' is reserved for internal use');
-        }
+        // TODO: check again; looks like this should not be here.
+//        if (InternalRules::isInternal($ruleName)) {
+//            throw new InvalidParametersException('Rule name ' . $ruleName . ' is reserved for internal use');
+//        }
 
         $existingRules = $this->getPersonAccess($personId, $eventId);
         if (!empty($existingRules[$ruleName])) {
+            trigger_error('-------------------------1');
             throw new DuplicateEntityException(
                 'Rule ' . $ruleName . ' already exists for person ' . $personId . ' at event ' . $eventId,
                 402
@@ -231,6 +233,7 @@ class AccessManagementModel extends Model
 
         $persons = PersonPrimitive::findById($this->_db, [$personId]);
         if (empty($persons)) {
+            trigger_error('-------------------------2');
             throw new EntityNotFoundException('Person with id #' . $personId . ' not found in DB', 403);
         }
 
@@ -241,6 +244,8 @@ class AccessManagementModel extends Model
             ->setAclValue($ruleValue)
             ->setEventId($eventId);
         $success = $rule->save();
+
+        trigger_error(print_r($this->_db->debug(), 1));
         if (!$success) {
             return null;
         }
@@ -264,9 +269,10 @@ class AccessManagementModel extends Model
      */
     public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId)
     {
-        if (InternalRules::isInternal($ruleName)) {
-            throw new InvalidParametersException('Rule name ' . $ruleName . ' is reserved for internal use');
-        }
+        // TODO: check again; looks like this should not be here.
+//        if (InternalRules::isInternal($ruleName)) {
+//            throw new InvalidParametersException('Rule name ' . $ruleName . ' is reserved for internal use');
+//        }
 
         $existingRules = $this->getGroupAccess($groupId, $eventId);
         if (!empty($existingRules[$ruleName])) {
@@ -489,10 +495,11 @@ class AccessManagementModel extends Model
             $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_PERSON, $rules[0]->getEventId());
         }
 
-        if (InternalRules::isInternal($rules[0]->getAclName())) {
-            throw new InvalidParametersException('Rule name ' . $rules[0]->getAclName()
-                . ' is reserved for internal use, so it can not be deleted');
-        }
+        // TODO: check again; looks like this should not be here.
+//        if (InternalRules::isInternal($rules[0]->getAclName())) {
+//            throw new InvalidParametersException('Rule name ' . $rules[0]->getAclName()
+//                . ' is reserved for internal use, so it can not be deleted');
+//        }
 
         $rules[0]->drop();
     }
@@ -520,10 +527,11 @@ class AccessManagementModel extends Model
             $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_GROUP, $rules[0]->getEventId());
         }
 
-        if (InternalRules::isInternal($rules[0]->getAclName())) {
-            throw new InvalidParametersException('Rule name ' . $rules[0]->getAclName()
-                . ' is reserved for internal use, so it can not be deleted');
-        }
+        // TODO: check again; looks like this should not be here.
+//        if (InternalRules::isInternal($rules[0]->getAclName())) {
+//            throw new InvalidParametersException('Rule name ' . $rules[0]->getAclName()
+//                . ' is reserved for internal use, so it can not be deleted');
+//        }
 
         $rules[0]->drop();
     }

@@ -35,6 +35,8 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         const COOKIE_ID_KEY = 'currentPersonId';
         const COOKIE_EVENT_KEY = 'currentEventId';
 
+        const FREY_INTERNAL_QUERY_SECRET = 'CHANGE_ME'; // TODO: change this in your local config!
+
         public static function API_URL() {
             return getenv('MIMIR_URL');
         }

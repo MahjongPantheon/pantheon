@@ -31,6 +31,30 @@ class MimirClient implements IMimirClient
     }
     
     /**
+     *  Get available rulesets list
+     *
+     * @return string[]
+    */
+    public function getRulesets(): array
+    {
+        /** @phpstan-ignore-next-line */
+        return (array)$this->_client->execute('getRulesets', []);
+    }
+
+    /**
+     *  Get available timezones.
+     *  If addr is provided, calculate preferred timezone based on IP.
+     *
+     * @param string $addr
+     * @return array
+    */
+    public function getTimezones(string $addr): array
+    {
+        /** @phpstan-ignore-next-line */
+        return (array)$this->_client->execute('getTimezones', [$addr]);
+    }
+
+    /**
      *  List all available events in system (paginated)
      *
      * @param int $limit
@@ -368,17 +392,22 @@ class MimirClient implements IMimirClient
     }
 
     /**
+     * @param string $type
      * @param string $title
      * @param string $description
      * @param string $ruleset
      * @param int $gameDuration
      * @param string $timezone
+     * @param int $series
+     * @param int $minGamesCount
+     * @param bool $isTeam
+     * @param bool $isPrescripted
      * @return int
     */
-    public function createEvent(string $title, string $description, string $ruleset, int $gameDuration, string $timezone): int
+    public function createEvent(string $type, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, bool $isTeam, bool $isPrescripted): int
     {
         /** @phpstan-ignore-next-line */
-        return (int)$this->_client->execute('createEvent', [$title, $description, $ruleset, $gameDuration, $timezone]);
+        return (int)$this->_client->execute('createEvent', [$type, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $isTeam, $isPrescripted]);
     }
 
     /**

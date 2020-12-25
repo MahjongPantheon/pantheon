@@ -29,27 +29,79 @@ require_once __DIR__ . '/../Controller.php';
 class EventsController extends Controller
 {
     /**
+     * @param string $type Either 'club', 'tournament' or 'online'
      * @param string $title
      * @param string $description
      * @param string $ruleset one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
      * @param int $gameDuration duration of game in this event in minutes
      * @param string $timezone name of timezone, 'Asia/Irkutsk' for example
+     * @param int $series Length of game series, 0 to disable
+     * @param int $minGamesCount Minimum of games to be counted for ratings. 0 to disable.
+     * @param bool $isTeam If event is team tournament
+     * @param bool $isPrescripted If tournament should have predefined seating
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
      * @return int
      */
-    public function createEvent($title, $description, $ruleset, $gameDuration, $timezone)
+    public function createEvent($type, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $isTeam, $isPrescripted)
     {
         $this->_log->addInfo('Creating new event with [' . $ruleset . '] rules');
+        if (!in_array($type, ['club', 'tournament', 'online'])) {
+            throw new BadActionException(' Unsupported type of event requested');
+        }
 
         $event = (new EventPrimitive($this->_ds))
             ->setTitle($title)
             ->setDescription($description)
             ->setGameDuration($gameDuration)
             ->setTimeZone($timezone)
+            ->setSeriesLength($series)
+            ->setMinGamesCount($minGamesCount)
             ->setRuleset(Ruleset::instance($ruleset))
+            ->setStatHost($this->_config->getValue('rhedaUrl') . '/eid' . EventPrimitive::ID_PLACEHOLDER)
         ;
+
+        switch ($type) {
+            case 'club':
+                $event->setAllowPlayerAppend(1)
+                    ->setAutoSeating(0)
+                    ->setIsOnline(0)
+                    ->setSyncStart(0)
+                    ->setSyncEnd(0)
+                    ->setUseTimer(0)
+                    ->setUsePenalty(0)
+                    ->setIsTeam(0)
+                    ->setIsPrescripted(0)
+                    ;
+                break;
+            case 'tournament':
+                $event->setAllowPlayerAppend(0)
+                    ->setAutoSeating($isPrescripted ? 0 : 1)
+                    ->setIsOnline(0)
+                    ->setSyncStart(1)
+                    ->setSyncEnd(1)
+                    ->setUseTimer(1)
+                    ->setUsePenalty(1)
+                    ->setIsTeam($isTeam ? 1 : 0)
+                    ->setIsPrescripted($isPrescripted ? 1 : 0)
+                ;
+                break;
+            case 'online':
+                $event->setAllowPlayerAppend(0)
+                    ->setAutoSeating(0)
+                    ->setIsOnline(1)
+                    ->setSyncStart(0)
+                    ->setSyncEnd(0)
+                    ->setUseTimer(0)
+                    ->setUsePenalty(1)
+                    ->setIsTeam($isTeam ? 1 : 0)
+                    ->setIsPrescripted(0)
+                ;
+                break;
+            default:;
+        }
+
         $success = $event->save();
         if (!$success) {
             throw new BadActionException('Somehow we couldn\'t create event - this should not happen');
@@ -459,8 +511,8 @@ class EventsController extends Controller
             'penaltyStep'         => $rules->penaltyStep(),
             'yakuWithPao'         => $rules->yakuWithPao(),
             'eventTitle'          => $event[0]->getTitle(),
-            'eventDescription'    => $event[0]->getDescription(),
-            'eventStatHost'       => $event[0]->getStatHost(),
+            'eventDescription'    => $this->_mdTransform($event[0]->getDescription()),
+            'eventStatHost'       => str_replace(EventPrimitive::ID_PLACEHOLDER, $event[0]->getId(), $event[0]->getStatHost()),
             'useTimer'            => (bool)$event[0]->getUseTimer(),
             'usePenalty'          => (bool)$event[0]->getUsePenalty(),
             'timerPolicy'         => $rules->timerPolicy(),
@@ -838,5 +890,56 @@ class EventsController extends Controller
             ->updatePrescriptedConfig($eventId, $nextSessionIndex - 1, $prescript);
         $this->_log->addInfo('Successfully updated prescripted config for event id#' . $eventId);
         return $success;
+    }
+
+    /**
+     * Get available rulesets list
+     *
+     * @return string[]
+     */
+    public function getRulesets()
+    {
+        $this->_log->addInfo('Receiving rulesets list');
+        $list = [
+            'ema' => 'European Mahjong Association rules',
+            'jpmlA' => 'Japanese Professional Mahjong League A rules',
+            'wrc' => 'World Riichi Championship rules',
+            'tenhounet' => 'Tenhou.net compatible rules'
+        ];
+        $this->_log->addInfo('Successfully received rulesets');
+        return $list;
+    }
+
+    /**
+     * Get available timezones.
+     * If addr is provided, calculate preferred timezone based on IP.
+     *
+     * @param string $addr
+     * @return array
+     * @throws \GeoIp2\Exception\AddressNotFoundException
+     * @throws \MaxMind\Db\Reader\InvalidDatabaseException
+     */
+    public function getTimezones($addr = '')
+    {
+        $this->_log->addInfo('Receiving timezones list');
+        $timezoneIdentifiers = \DateTimeZone::listIdentifiers();
+
+        $preferredTimezone = '';
+        if ($addr) {
+            require_once __DIR__ . '/../../bin/geoip2.phar';
+            try {
+                $reader = new \GeoIp2\Database\Reader(__DIR__ . '/../../bin/GeoLite2-City.mmdb');
+                $record = $reader->city($addr);
+                $preferredTimezone = $record->location->timeZone;
+            } catch (\Exception $e) {
+                // Do nothing actually.
+            }
+        }
+
+        $this->_log->addInfo('Successfully received timezones');
+        return [
+            'timezones' => $timezoneIdentifiers,
+            'preferredByIp' => $preferredTimezone
+        ];
     }
 }

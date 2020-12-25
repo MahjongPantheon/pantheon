@@ -211,7 +211,8 @@ abstract class Controller
                     'X-Auth-Token: ' . $this->_authToken,
                     'X-Locale: ' . $locale,
                     'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
-                    'X-Current-Person-Id: ' . $this->_currentPersonId
+                    'X-Current-Person-Id: ' . $this->_currentPersonId,
+                    'X-Internal-Query-Secret: ' . Sysconf::FREY_INTERNAL_QUERY_SECRET
                 ]);
 
                 if (!empty($this->_mainEventId)) {
@@ -246,6 +247,7 @@ abstract class Controller
         // @phpstan-ignore-next-line
         if (Sysconf::DEBUG_MODE) {
             $client->withDebug();
+            $this->_frey->getClient()->getHttpClient()->withDebug();
         }
 
         $this->_rulesList = [];

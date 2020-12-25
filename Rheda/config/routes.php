@@ -76,4 +76,9 @@ return [ // Omit trailing slashes in keys when possible
     '!/groups/gid(?<id>\d+)'        => 'GroupList',
 
     '!/privileges/ajax'             => 'PrivilegesAjax',
+
+    '!/cp/(?<action>newClubEvent)'                => 'UserActionNewEvent',
+    '!/cp/(?<action>newTournamentEvent)'          => 'UserActionNewEvent',
+    '!/cp/(?<action>newOnlineEvent)'              => 'UserActionNewEvent',
+    '!/manageEvents'                => 'UserActionManageEvents',
 ];

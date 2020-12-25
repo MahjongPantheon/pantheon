@@ -46,18 +46,22 @@
     {{/eventSelected}}
   </div>
   <div class="collapse navbar-collapse">
+    {{!*
+        Note: in-event links should use {#a} to put proper event id into
+        the link automatically, but global links should use <a>.
+    *}}
     <ul class="navbar-nav">
       {{#eventSelected}}
         <li class="nav-item"><a class='nav-link' href='/'>{{_t 'To event list'}}</a></li>
-        <li class="nav-item">{{#a class='nav-link' href='/last/'}}{{_t 'Recent games'}}{{/a}}</li>
-        <li class="nav-item">{{#a class='nav-link' href='/stat/'}}{{_t 'Rating table'}}{{/a}}</li>
+        <li class="nav-item">{{#a class='nav-link' href='/last'}}{{_t 'Recent games'}}{{/a}}</li>
+        <li class="nav-item">{{#a class='nav-link' href='/stat'}}{{_t 'Rating table'}}{{/a}}</li>
         {{#isTeam}}
-          <li class="nav-item">{{#a class='nav-link' href='/stat/team/'}}{{_t 'Team table'}}{{/a}}</li>
+          <li class="nav-item">{{#a class='nav-link' href='/stat/team'}}{{_t 'Team table'}}{{/a}}</li>
         {{/isTeam}}
         {{^isAggregated}}
           {{#isOnline}}
             {{^hideAddReplayButton}}
-              <li class="nav-item">{{#a class='nav-link' href='/add-online/'}}{{_t 'Add online game' }}{{/a}}</li>
+              <li class="nav-item">{{#a class='nav-link' href='/add-online'}}{{_t 'Add online game' }}{{/a}}</li>
             {{/hideAddReplayButton}}
           {{/isOnline}}
         {{/isAggregated}}
@@ -74,34 +78,48 @@
               {{^isAggregated}}
                 {{^isOnline}}
                   {{#isTournament}}
-                    {{#a class='dropdown-item' href='/tourn/'}}{{_t 'Tournament control panel'}}{{/a}}
+                    {{#a class='dropdown-item' href='/tourn'}}{{_t 'Tournament control panel'}}{{/a}}
                   {{/isTournament}}
                   {{^isTournament}}
-                    {{#a class='dropdown-item' href='/games/'}}{{_t 'Games control panel'}}{{/a}}
+                    {{#a class='dropdown-item' href='/games'}}{{_t 'Games control panel'}}{{/a}}
                   {{/isTournament}}
                   {{#usePenalty}}
-                    {{#a class='dropdown-item' href='/penalties/'}}{{_t 'Penalties'}}{{/a}}
+                    {{#a class='dropdown-item' href='/penalties'}}{{_t 'Penalties'}}{{/a}}
                   {{/usePenalty}}
                 {{/isOnline}}
-                {{#a class='dropdown-item' href='/enroll/'}}{{_t 'Add player'}}{{/a}}
-                {{#a class='dropdown-item' href='/reg/'}}{{_t 'Manage players'}}{{/a}}
+                {{#a class='dropdown-item' href='/enroll'}}{{_t 'Add player'}}{{/a}}
+                {{#a class='dropdown-item' href='/reg'}}{{_t 'Manage players'}}{{/a}}
                 {{#isPrescripted}}
                   {{#a class='dropdown-item' href='/prescript'}}{{_t 'Predefined seating'}}{{/a}}
                 {{/isPrescripted}}
               {{/isAggregated}}
-              {{#a class='dropdown-item' href='/achievements/'}}{{_t 'Achievements'}}{{/a}}
+              {{#a class='dropdown-item' href='/achievements'}}{{_t 'Achievements'}}{{/a}}
             </div>
           </li>
         {{/userHasAdminRights}}
         {{^isAggregated}}
           {{#useTimer}}
-            <li class="nav-item">{{#a class='nav-link' href='/timer/' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}</li>
+            <li class="nav-item">{{#a class='nav-link' href='/timer' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}</li>
           {{/useTimer}}
         {{/isAggregated}}
       {{/eventSelected}}
       {{#isSuperadmin}}
         <li class="nav-item"><a class='nav-link' href='/privileges'>{{_t 'Rights and privileges'}}</a></li>
       {{/isSuperadmin}}
+      {{#isLoggedIn}}
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="userActionsMenuButton"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{_t 'Actions' }}
+          </a>
+          <div class="dropdown-menu dropdown-menu" aria-labelledby="userActionsMenuButton">
+            <a class='dropdown-item' href='/cp/manageEvents'>{{_t 'Manage ratings and tournaments'}}</a>
+            <a class='dropdown-item' href='/cp/newClubEvent'>{{_t 'Create new club rating'}}</a>
+            <a class='dropdown-item' href='/cp/newTournamentEvent'>{{_t 'Create new tournament'}}</a>
+            <a class='dropdown-item' href='/cp/newOnlineEvent'>{{_t 'Create new online tournament'}}</a>
+          </div>
+        </li>
+      {{/isLoggedIn}}
     </ul>
     <ul class="navbar-nav justify-content-end" style="position: absolute; right: 0">
       {{#isLoggedIn}}

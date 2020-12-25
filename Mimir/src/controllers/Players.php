@@ -342,7 +342,7 @@ class PlayersController extends Controller
                 return [
                     'id' => $ev->getId(),
                     'title' => $ev->getTitle(),
-                    'description' => $ev->getDescription()
+                    'description' => $this->_mdTransform($ev->getDescription())
                 ];
             }, $evList);
         }
