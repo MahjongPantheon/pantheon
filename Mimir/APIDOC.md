@@ -480,6 +480,18 @@ Returns: _bool_ Success?
 Exceptions:
 * _\Exception_ 
 
+### addPenaltyGame
+Parameters:
+* **$eventId** (_int_) Event this session belongs to
+* **$players** (_array_) Player id list
+
+Returns: _string_ Hashcode of started game
+
+Exceptions:
+* _InvalidUserException_ 
+* _DatabaseException_ 
+* _\Exception_ 
+
 ### addPlayer
 Parameters:
 * **$ident** (_string_) oauth ident, if any

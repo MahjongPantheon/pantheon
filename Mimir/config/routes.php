@@ -80,6 +80,7 @@ return [
     'dropLastRound'      => ['GamesController', 'dropLastRound'],
     'definalizeGame'     => ['GamesController', 'definalizeGame'],
     'addPenalty'         => ['GamesController', 'addPenalty'],
+    'addPenaltyGame'     => ['GamesController', 'addPenaltyGame'],
     'addPlayer'          => ['PlayersController', 'add'],
     'updatePlayer'       => ['PlayersController', 'update'],
     'getPlayer'          => ['PlayersController', 'get'],
