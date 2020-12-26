@@ -63,11 +63,12 @@ return [ // Omit trailing slashes in keys when possible
     '!/page/(?<page>[0-9]+)' => 'MultieventMainpage',
     '!/favicon.ico'          => 'MultieventMainpage',
 
-    '!/signup'                     => 'PersonSignup',
-    '!/confirm/(?<code>[0-9a-f]+)' => 'PersonSignupConfirm',
-    '!/profile/(?<action>login)'   => 'PersonLogin',
-    '!/profile/(?<action>logout)'  => 'PersonLogin',
-    '!/profile'                    => 'PersonProfileEdit',
+    '!/signup'                              => 'PersonSignup',
+    '!/confirm/(?<code>[0-9a-f]+)'          => 'PersonSignupConfirm',
+    '!/profile/(?<action>login)'            => 'PersonLogin',
+    '!/profile/(?<action>logout)'           => 'PersonLogin',
+    '!/profile'                             => 'PersonProfileEdit',
+    '!/profile/(?<action>edit)/(?<id>\d+)'   => 'PersonProfileEdit',
 
     '!/privileges'                  => 'Privileges',
     '!/privileges/uid(?<id>\d+)'    => 'PrivilegesOfUser',

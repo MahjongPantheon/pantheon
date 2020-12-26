@@ -37,8 +37,15 @@ class PersonProfileEdit extends Controller
             ];
         }
 
+        $personId = $this->_currentPersonId;
+
+        // Only super admin is allowed to edit other users data
+        if (!empty($this->_path['action']) && $this->_path['action'] === 'edit' && $this->_superadmin) {
+            $personId = intval($this->_path['id']);
+        }
+
         try {
-            $data = $this->_frey->getPersonalInfo([$this->_currentPersonId]);
+            $data = $this->_frey->getPersonalInfo([$personId]);
         } catch (\Exception $ex) {
             $data = null;
         }
@@ -51,13 +58,14 @@ class PersonProfileEdit extends Controller
         }
 
         if (!empty($_POST['save'])) {
-            return $this->_saveData($_POST, $data[0]);
+            return $this->_saveData($_POST, $data[0], $personId);
         }
 
         return [
             'error' => null,
             'success' => null,
-            'id' => $this->_currentPersonId,
+            'emailEditable' => $this->_superadmin,
+            'id' => $personId,
             'title' => $data[0]['title'],
             'city' => $data[0]['city'],
             'email' => $data[0]['email'],
@@ -69,16 +77,19 @@ class PersonProfileEdit extends Controller
     /**
      * @param array $data
      * @param array $originalData
+     * @param int $personId
      * @return array
      */
-    protected function _saveData(array $data, array $originalData)
+    protected function _saveData(array $data, array $originalData, int $personId)
     {
         try {
             $success = $this->_frey->updatePersonalInfo(
-                (string)$this->_currentPersonId, // TODO: should be int, check
+                (string)$personId, // TODO: should be int, check
                 $data['title'],
                 $data['city'],
-                $originalData['email'], // email is not intended to be changed by user
+                $this->_superadmin
+                    ? $data['email']
+                    : $originalData['email'], // email is not intended to be changed by user
                 $data['phone'],
                 $data['tenhouid']
             );
@@ -88,7 +99,9 @@ class PersonProfileEdit extends Controller
                 'success' => $success ? _t('Personal information successfully updated') : null,
                 'title' => $data['title'],
                 'city' => $data['city'],
-                'email' => $originalData['email'],
+                'email' => $this->_superadmin
+                    ? $data['email']
+                    : $originalData['email'],
                 'phone' => $data['phone'],
                 'tenhouid' => $data['tenhouid'],
             ];
@@ -98,43 +111,12 @@ class PersonProfileEdit extends Controller
                 'success' => false,
                 'title' => $data['title'],
                 'city' => $data['city'],
-                'email' => $originalData['email'],
+                'email' => $this->_superadmin
+                    ? $data['email']
+                    : $originalData['email'],
                 'phone' => $data['phone'],
                 'tenhouid' => $data['tenhouid'],
             ];
         }
-    }
-
-    /**
-     * Calc strength of password by simple algorithm:
-     * - 1 base point for every 2 symbols in password
-     * - Multiply by 2 for every symbol class in password
-     *
-     * So:
-     * - "123456" password will have strength of 3 * 2 = 6 (very weak)
-     * - "Simple123" will have strength of 6 * 2 * 2 * 2 = 48 (normal)
-     * - "thisismypasswordandidontcare" will have strength of 14 * 2 = 28 (below normal)
-     *
-     * Passwords with calculated strength less than 14 should be considered weak.
-     *
-     * @see also Frey/src/models/Auth.php:_calcPasswordStrength - functions should match!
-     * @param string $password
-     * @return float|int
-     */
-    protected function _calcPasswordStrength(string $password)
-    {
-        $hasLatinSymbols = preg_match('#[a-z]#', $password);
-        $hasUppercaseLatinSymbols = preg_match('#[A-Z]#', $password);
-        $hasDigits = preg_match('#[0-9]#', $password);
-        $hasPunctuation = preg_match('#[-@\#\$%\^&*\(\),\./\\"\']#', $password);
-        $hasOtherSymbols = mb_strlen((string)preg_replace('#[-a-z0-9@\#\$%\^&*\(\),\./\\"\']#ius', '', $password)) > 0;
-
-        return ceil(mb_strlen($password) / 2)
-            * ($hasDigits ? 2 : 1)
-            * ($hasUppercaseLatinSymbols ? 2 : 1)
-            * ($hasPunctuation ? 2 : 1)
-            * ($hasOtherSymbols ? 2 : 1)
-            * ($hasLatinSymbols ? 2 : 1)
-        ;
     }
 }

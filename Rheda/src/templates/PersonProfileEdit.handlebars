@@ -29,8 +29,19 @@
         <input type="hidden" name="save" value="1"/>
         <div class="form-group">
           <label for="email">{{_t 'E-mail address'}}</label>
+          {{^emailEditable}}
           <input type="text" disabled class="form-control" id="email" name="email" value="{{email}}">
-          <small id="emailHelp" class="form-text text-muted">{{_t "Your e-mail will not be shared with anyone else and will not be visible anywhere. If you want to change your e-mail, contact chief administrator."}}</small>
+          {{/emailEditable}}
+          {{#emailEditable}}
+            <input type="text" class="form-control{{#error_email}} is-invalid{{/error_email}}" id="email" name="email"
+                   value="{{email}}">
+            {{#error_email}}
+              <div class="invalid-feedback">{{error_email}}</div>
+            {{/error_email}}
+          {{/emailEditable}}
+          {{^error_email}}
+            <small id="emailHelp" class="form-text text-muted">{{_t "Your e-mail will not be shared with anyone else and will not be visible anywhere. If you want to change your e-mail, contact chief administrator."}}</small>
+          {{/error_email}}
         </div>
 
         <div class="form-group">

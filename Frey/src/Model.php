@@ -311,11 +311,6 @@ abstract class Model
      */
     public function _checkAccessRights(string $key, $eventId = null): self
     {
-        // For direct calls from Mimir/Rheda
-        if (!empty($_SERVER['HTTP_X_INTERNAL_QUERY_SECRET']) && $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] === $this->_config->getValue('admin.internalQuerySecret')) {
-            return $this;
-        }
-
         $eventMatches = empty($eventId) || $eventId == $this->_meta->getCurrentEventId();
         if (!$eventMatches) {
             throw new AccessDeniedException('This event action is not allowed for you');
@@ -331,5 +326,25 @@ abstract class Model
         }
 
         return $this;
+    }
+
+    /**
+     * Loose check of rights.
+     * Should only be used on non-admin api methods called from mimir/rheda, but not from tyr.
+     * E.g., method of adding admin rights to just created event.
+     *
+     * @param string $key
+     * @param null $eventId
+     * @return $this
+     * @throws AccessDeniedException
+     */
+    public function _checkAccessRightsWithInternal(string $key, $eventId = null)
+    {
+        // For direct calls from Mimir/Rheda
+        if (!empty($_SERVER['HTTP_X_INTERNAL_QUERY_SECRET']) && $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] === $this->_config->getValue('admin.internalQuerySecret')) {
+            return $this;
+        }
+
+        return $this->_checkAccessRights($key, $eventId);
     }
 }
