@@ -268,7 +268,7 @@ class AuthModel extends Model
      *
      * Passwords with calculated strength less than 14 should be considered weak.
      *
-     * @see also Rheda/src/controllers/SelfRegistration.php:_calcPasswordStrength - functions should match!
+     * @see also Rheda/src/controllers/PersonSignup.php:_calcPasswordStrength - functions should match!
      * @param string $password
      * @return float|int
      */

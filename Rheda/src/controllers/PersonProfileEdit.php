@@ -19,73 +19,88 @@ namespace Rheda;
 
 require_once __DIR__ . '/../helpers/Url.php';
 
-class SelfRegistration extends Controller
+class PersonProfileEdit extends Controller
 {
-    protected $_mainTemplate = 'SelfRegistration';
+    protected $_mainTemplate = 'PersonProfileEdit';
 
     protected function _pageTitle()
     {
-        return _t('Sign up');
+        return _t('Profile management');
     }
 
     protected function _run()
     {
-        if ($this->_currentPersonId !== null) {
+        if ($this->_currentPersonId === null) {
             return [
-                'error' => _t("Can't proceed to registration: please log out to create new user")
+                'error' => _t("Can't proceed to profile management: please log in"),
+                'critical' => true
             ];
         }
 
-        if (!empty($_POST['email'])) {
-            return $this->_tryRegisterUser($_POST);
+        try {
+            $data = $this->_frey->getPersonalInfo([$this->_currentPersonId]);
+        } catch (\Exception $ex) {
+            $data = null;
+        }
+
+        if (empty($data)) {
+            return [
+                'error' => _t("Can't proceed to profile management: failed to fetch personal data"),
+                'critical' => true
+            ];
+        }
+
+        if (!empty($_POST['save'])) {
+            return $this->_saveData($_POST, $data[0]);
         }
 
         return [
-            'error' => null
+            'error' => null,
+            'success' => null,
+            'id' => $this->_currentPersonId,
+            'title' => $data[0]['title'],
+            'city' => $data[0]['city'],
+            'email' => $data[0]['email'],
+            'phone' => $data[0]['phone'],
+            'tenhouid' => $data[0]['tenhou_id'],
         ];
     }
 
     /**
      * @param array $data
+     * @param array $originalData
      * @return array
      */
-    protected function _tryRegisterUser(array $data)
+    protected function _saveData(array $data, array $originalData)
     {
-        $emailError = null;
-        $passwordError = null;
-
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-            $emailError = _t('E-mail is invalid or not supported. Note that non-latin e-mail domains are not supported.');
-        }
-
-        if ($this->_calcPasswordStrength($data['password']) < 14) {
-            $passwordError = _t('Password is too weak. Try adding some digits, uppercase letters or punctuation to it, or increase its length.');
-        }
-
-        if (!empty($emailError) || !empty($passwordError)) {
-            return [
-                'email' => $data['email'],
-                'error' => _t('Some errors occured, see below'),
-                'error_email' => $emailError,
-                'error_password' => $passwordError
-            ];
-        }
-
         try {
-            $approvalCode = $this->_frey->requestRegistration($data['email'], $data['password']);
-            $url = Url::makeConfirmation($approvalCode);
+            $success = $this->_frey->updatePersonalInfo(
+                (string)$this->_currentPersonId, // TODO: should be int, check
+                $data['title'],
+                $data['city'],
+                $originalData['email'], // email is not intended to be changed by user
+                $data['phone'],
+                $data['tenhouid']
+            );
 
-            // TODO: send email to user here...
             return [
-                'error' => null,
-                'success' => true,
-                // @phpstan-ignore-next-line
-                'debug_url' => Sysconf::DEBUG_MODE ? $url : null
+                'error' => $success ? null : _t('Failed to update personal information: insufficient privileges or server error'),
+                'success' => $success ? _t('Personal information successfully updated') : null,
+                'title' => $data['title'],
+                'city' => $data['city'],
+                'email' => $originalData['email'],
+                'phone' => $data['phone'],
+                'tenhouid' => $data['tenhouid'],
             ];
         } catch (\Exception $ex) {
             return [
                 'error' => $ex->getMessage(),
-                'success' => false
+                'success' => false,
+                'title' => $data['title'],
+                'city' => $data['city'],
+                'email' => $originalData['email'],
+                'phone' => $data['phone'],
+                'tenhouid' => $data['tenhouid'],
             ];
         }
     }

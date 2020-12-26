@@ -19,9 +19,9 @@ namespace Rheda;
 
 require_once __DIR__ . '/../helpers/Url.php';
 
-class RegistrationConfirm extends Controller
+class PersonSignupConfirm extends Controller
 {
-    protected $_mainTemplate = 'RegistrationConfirm';
+    protected $_mainTemplate = 'PersonSignupConfirm';
 
     protected function _pageTitle()
     {

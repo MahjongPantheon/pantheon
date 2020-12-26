@@ -61,12 +61,13 @@ return [ // Omit trailing slashes in keys when possible
     // Eventless paths (exclamation mark is a special symbol here)
     '!'                      => 'MultieventMainpage',
     '!/page/(?<page>[0-9]+)' => 'MultieventMainpage',
-    '!/register'             => 'SelfRegistration',
-    '!/confirm/(?<code>[0-9a-f]+)' => 'RegistrationConfirm',
-    '!/profile/(?<action>login)'  => 'Login',
-    '!/profile/(?<action>logout)'  => 'Login',
-    '!/profile'              => 'ProfileEdit',
     '!/favicon.ico'          => 'MultieventMainpage',
+
+    '!/signup'                     => 'PersonSignup',
+    '!/confirm/(?<code>[0-9a-f]+)' => 'PersonSignupConfirm',
+    '!/profile/(?<action>login)'   => 'PersonLogin',
+    '!/profile/(?<action>logout)'  => 'PersonLogin',
+    '!/profile'                    => 'PersonProfileEdit',
 
     '!/privileges'                  => 'Privileges',
     '!/privileges/uid(?<id>\d+)'    => 'PrivilegesOfUser',

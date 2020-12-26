@@ -19,9 +19,9 @@ namespace Rheda;
 
 require_once __DIR__ . '/../helpers/Url.php';
 
-class Login extends Controller
+class PersonLogin extends Controller
 {
-    protected $_mainTemplate = 'Login';
+    protected $_mainTemplate = 'PersonLogin';
 
     protected function _pageTitle()
     {
