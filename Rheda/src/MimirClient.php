@@ -446,6 +446,18 @@ class MimirClient implements IMimirClient
     }
 
     /**
+     *  Finish event
+     *
+     * @param int $eventId
+     * @return bool
+    */
+    public function finishEvent(int $eventId): bool
+    {
+        /** @phpstan-ignore-next-line */
+        return (bool)$this->_client->execute('finishEvent', [$eventId]);
+    }
+
+    /**
      *  Get tables state in tournament
      *
      * @param int $eventId

@@ -49,10 +49,13 @@
         <td>{{description}}</td>
         <td>{{type}}</td>
         <td>
-          <a href="/cp/editEvent/{{id}}" class="btn btn-info">{{_t 'Edit'}}</a>
-          <a href="/cp/editEventAdmins" class="btn btn-warning">{{_t 'Privileges'}}</a>
-          <a href="/cp/closeEvent" class="btn btn-danger"
-             onclick="return confirmClose({{id}}, '{{title}}')">{{_t 'Finish'}}</a>
+          {{#finished}}<b class="badge badge-danger">{{_t 'Finished'}}</b>{{/finished}}
+          {{^finished}}
+            <a href="/cp/editEvent/{{id}}" class="btn btn-info">{{_t 'Edit'}}</a>
+            <a href="/cp/editEventAdmins" class="btn btn-warning">{{_t 'Privileges'}}</a>
+            <a href="/cp/finishEvent/{{id}}" class="btn btn-danger"
+               onclick="return confirmClose({{id}}, '{{title}}')">{{_t 'Finish'}}</a>
+          {{/finished}}
         </td>
       </tr>
     {{/events}}

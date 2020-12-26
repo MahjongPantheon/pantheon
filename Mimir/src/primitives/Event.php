@@ -59,6 +59,7 @@ class EventPrimitive extends Primitive
         'hide_results'      => '_hideResults',
         'is_prescripted'    => '_isPrescripted',
         'min_games_count'   => '_minGamesCount',
+        'finished'          => '_finished',
     ];
 
     protected function _getFieldsTransforms()
@@ -86,6 +87,7 @@ class EventPrimitive extends Primitive
             '_gamesStatus'        => $this->_stringTransform(true),
             '_hideResults'        => $this->_integerTransform(),
             '_minGamesCount'      => $this->_integerTransform(),
+            '_finished'           => $this->_integerTransform(),
             '_ruleset'            => [
                 'serialize' => function (Ruleset $rules) {
                     return $rules->title();
@@ -224,6 +226,11 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_hideResults;
+    /**
+     * Is event finished / closed
+     * @var integer
+     */
+    protected $_finished;
     /**
      * Status of games in event: one of
      * - seating_ready
@@ -780,6 +787,24 @@ class EventPrimitive extends Primitive
             throw new InvalidParametersException('Games status should be one of [seating_ready|started|NULL]');
         }
         $this->_gamesStatus = $gamesStatus;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsFinished()
+    {
+        return $this->_finished;
+    }
+
+    /**
+     * @param int $isFinished
+     * @return EventPrimitive
+     */
+    public function setIsFinished($isFinished)
+    {
+        $this->_finished = $isFinished;
         return $this;
     }
 

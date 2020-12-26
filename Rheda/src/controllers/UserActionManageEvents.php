@@ -39,6 +39,28 @@ class UserActionManageEvents extends Controller
             return true;
         }
 
+        if (empty($this->_path['action'])) {
+            return true;
+        }
+
+        switch ($this->_path['action']) {
+            case 'finishEvent':
+                if (!empty($this->_path['id'])) {
+                    $success = $this->_mimir->finishEvent(intval($this->_path['id']));
+                    if (!$success) {
+                        $this->_error = [
+                            'error' => _t("Failed to finish event"),
+                            'critical' => true
+                        ];
+                        return true;
+                    }
+                    header('Location: /cp/manageEvents', null, 302);
+                    return false;
+                }
+                break;
+            default:;
+        }
+
         return true;
     }
 

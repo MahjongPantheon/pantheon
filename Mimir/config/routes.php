@@ -67,6 +67,7 @@ return [
     'getEventForEdit'    => ['EventsController', 'getEventForEdit'],
     'createEvent'        => ['EventsController', 'createEvent'],
     'updateEvent'        => ['EventsController', 'updateEvent'],
+    'finishEvent'        => ['EventsController', 'finishEvent'],
     'getTablesState'     => ['EventsController', 'getTablesState'],
     'startTimer'         => ['EventsController', 'startTimer'],
     'registerPlayer'     => ['EventsController', 'registerPlayer'],

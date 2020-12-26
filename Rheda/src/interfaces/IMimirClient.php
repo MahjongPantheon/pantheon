@@ -304,6 +304,14 @@ interface IMimirClient
     public function updateEvent(int $id, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted): bool;
 
     /**
+     *  Finish event
+     *
+     * @param int $eventId
+     * @return bool
+    */
+    public function finishEvent(int $eventId): bool;
+
+    /**
      *  Get tables state in tournament
      *
      * @param int $eventId

@@ -988,6 +988,35 @@ class EventsController extends Controller
     }
 
     /**
+     * Finish event
+     *
+     * @param int $eventId
+     * @return bool
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function finishEvent($eventId)
+    {
+        $this->_log->addInfo('Finishing event with id#' . $eventId);
+
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+        $event = $event[0];
+
+        // Check we have rights to update this event
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to modify this event");
+        }
+
+        $success = $event->setIsFinished(1)->save();
+
+        $this->_log->addInfo('Successfully finished event with id#' . $eventId);
+        return $success;
+    }
+
+    /**
      * Update prescripted config for event
      *
      * @param int $eventId
