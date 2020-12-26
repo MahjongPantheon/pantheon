@@ -314,12 +314,24 @@ class SessionResultsPrimitive extends Primitive
         return $this->_place;
     }
 
+    public function setPlace($place)
+    {
+        $this->_place = $place;
+        return $this;
+    }
+
     /**
      * @return float
      */
     public function getRatingDelta()
     {
         return $this->_ratingDelta;
+    }
+
+    public function setRatingDelta($ratingDelta)
+    {
+        $this->_ratingDelta = $ratingDelta;
+        return $this;
     }
 
     /**
