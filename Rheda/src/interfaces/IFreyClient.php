@@ -115,13 +115,14 @@ interface IFreyClient
     /**
      * @param string $id
      * @param string $title
+     * @param string $country
      * @param string $city
      * @param string $email
      * @param string $phone
      * @param string $tenhouId
      * @return bool
     */
-    public function updatePersonalInfo(string $id, string $title, string $city, string $email, string $phone, string $tenhouId): bool;
+    public function updatePersonalInfo(string $id, string $title, string $country, string $city, string $email, string $phone, string $tenhouId): bool;
 
     /**
      *  Get personal info by id list.

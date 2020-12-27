@@ -2,13 +2,49 @@
 Api methods
 -----------
 
+### getRulesets
+ Get available rulesets list
+
+
+Parameters:
+
+Returns: _string[]_ 
+
+### getTimezones
+ Get available timezones.
+ If addr is provided, calculate preferred timezone based on IP.
+
+
+Parameters:
+* **$addr** (_string_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _\GeoIp2\Exception\AddressNotFoundException_ 
+* _\MaxMind\Db\Reader\InvalidDatabaseException_ 
+
+### getCountries
+ Get available countries.
+ If addr is provided, calculate preferred country based on IP.
+
+
+Parameters:
+* **$addr** (_string_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _\GeoIp2\Exception\AddressNotFoundException_ 
+* _\MaxMind\Db\Reader\InvalidDatabaseException_ 
+
 ### getEvents
  List all available events in system (paginated)
 
 
 Parameters:
-* **$limit** (_integer_) 
-* **$offset** (_integer_) 
+* **$limit** (_int_) 
+* **$offset** (_int_) 
 
 Returns: _array_ 
 
@@ -44,7 +80,7 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventId** (_int_) 
 
 Returns: _array_ 
 
@@ -74,8 +110,8 @@ Exceptions:
 
 Parameters:
 * **$eventIdList** (_array_) 
-* **$limit** (_integer_) 
-* **$offset** (_integer_) 
+* **$limit** (_int_) 
+* **$offset** (_int_) 
 * **$orderBy** (_string_) either 'id' or 'end_date'
 * **$order** (_string_) either 'asc' or 'desc'
 
@@ -103,7 +139,7 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventId** (_int_) 
 
 Returns: _array_ 
 
@@ -139,7 +175,7 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventId** (_int_) 
 
 Returns: _array_ 
 
@@ -162,7 +198,7 @@ Exceptions:
           riichi => [ ..playerId.. ],
           honba => int,
           scores => [ ..int.. ],
-          finished => boolean,
+          finished => bool,
           penalties => [ playerId => penaltySize, ... ]
       ]
  ]
@@ -183,7 +219,7 @@ Exceptions:
 
 Parameters:
 * **$playerId** (_int_) player to get stats for
-* **$eventId** (_int_) event to get stats for
+* **$eventIdList** (_int[]_) event to get stats for
 
 Returns: _array_ of statistics
 
@@ -198,7 +234,7 @@ Exceptions:
 Parameters:
 * **$gameHashcode** (_string_) Hashcode of game
 * **$roundData** (_array_) Structure of round data
-* **$dry** (_boolean_) Dry run (without saving to db)
+* **$dry** (_bool_) Dry run (without saving to db)
 
 Returns: _bool|array_ Results|Results of dry run|False in case of error
 
@@ -370,15 +406,35 @@ Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
 
+### getEventForEdit
+ Get settings of existing event
+
+
+Parameters:
+* **$id** (_int_) event id
+
+Returns: _array_ 
+
+Exceptions:
+* _BadActionException_ 
+* _InvalidParametersException_ 
+* _\Exception_ 
+
 ### createEvent
 
 
 Parameters:
+* **$type** (_string_) Either 'club', 'tournament' or 'online'
 * **$title** (_string_) 
 * **$description** (_string_) 
 * **$ruleset** (_string_) one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
 * **$gameDuration** (_int_) duration of game in this event in minutes
 * **$timezone** (_string_) name of timezone, 'Asia/Irkutsk' for example
+* **$series** (_int_) Length of game series, 0 to disable
+* **$minGamesCount** (_int_) Minimum of games to be counted for ratings. 0 to disable.
+* **$lobbyId** (_int_) Tenhou lobby id for online tournaments
+* **$isTeam** (_bool_) If event is team tournament
+* **$isPrescripted** (_bool_) If tournament should have predefined seating
 
 Returns: _int_ 
 
@@ -387,13 +443,49 @@ Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
 
+### updateEvent
+ Update settings of existing event
+
+
+Parameters:
+* **$id** (_int_) event id
+* **$title** (_string_) 
+* **$description** (_string_) 
+* **$ruleset** (_string_) one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
+* **$gameDuration** (_int_) duration of game in this event in minutes
+* **$timezone** (_string_) name of timezone, 'Asia/Irkutsk' for example
+* **$series** (_int_) Length of game series, 0 to disable
+* **$minGamesCount** (_int_) Minimum of games to be counted for ratings. 0 to disable.
+* **$lobbyId** (_int_) Tenhou lobby id for online tournaments
+* **$isTeam** (_bool_) If event is team tournament
+* **$isPrescripted** (_bool_) If tournament should have predefined seating
+
+Returns: _bool_ 
+
+Exceptions:
+* _BadActionException_ 
+* _InvalidParametersException_ 
+* _\Exception_ 
+
+### finishEvent
+ Finish event
+
+
+Parameters:
+* **$eventId** (_int_) 
+
+Returns: _bool_ 
+
+Exceptions:
+* _InvalidParametersException_ 
+* _\Exception_ 
+
 ### getTablesState
  Get tables state in tournament
 
 
 Parameters:
-* **$eventId** (_integer_) 
-* **$includeAllRounds** (_bool_) 
+* **$eventId** (_int_) 
 
 Returns: _array_ 
 
@@ -405,7 +497,7 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventId** (_int_) 
 
 Returns: _bool_ 
 
@@ -418,7 +510,7 @@ Exceptions:
 
 
 Parameters:
-* **$pin** (_integer_) 
+* **$pin** (_string_) 
 
 Returns: _string_ Auth token
 
@@ -430,8 +522,8 @@ Exceptions:
 
 
 Parameters:
-* **$playerId** (_integer_) 
-* **$eventId** (_integer_) 
+* **$playerId** (_int_) 
+* **$eventId** (_int_) 
 
 Returns: _bool_ success?
 
@@ -444,8 +536,8 @@ Exceptions:
 
 
 Parameters:
-* **$playerId** (_integer_) 
-* **$eventId** (_integer_) 
+* **$playerId** (_int_) 
+* **$eventId** (_int_) 
 
 Returns: _void_ 
 
@@ -457,9 +549,9 @@ Exceptions:
 
 
 Parameters:
-* **$playerId** (_integer_) 
-* **$eventId** (_integer_) 
-* **$ignoreSeating** (_integer_) 
+* **$playerId** (_int_) 
+* **$eventId** (_int_) 
+* **$ignoreSeating** (_int_) 
 
 Returns: _bool_ 
 
@@ -472,8 +564,8 @@ Exceptions:
 
 
 Parameters:
-* **$playerId** (_integer_) 
-* **$eventId** (_integer_) 
+* **$playerId** (_int_) 
+* **$eventId** (_int_) 
 
 Returns: _string_ Secret pin code for self-registration
 
@@ -488,7 +580,7 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventId** (_int_) 
 
 Returns: _array_ 
 
@@ -524,7 +616,7 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventId** (_int_) 
 
 Returns: _bool_ 
 
@@ -537,7 +629,7 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventId** (_int_) 
 * **$idMap** (_array_) Mapping of player_id => local_id
 
 Returns: _bool_ 
@@ -551,7 +643,7 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventId** (_int_) 
 * **$teamNameMap** (_array_) Mapping of player_id => team_name
 
 Returns: _bool_ 
@@ -611,21 +703,6 @@ Returns: _bool_ Success?
 Exceptions:
 * _\Exception_ 
 
-### addTextLog
- Add textual log for whole game
-
-
-Parameters:
-* **$eventId** (_int_) 
-* **$text** (_string_) 
-
-Returns: _bool_ 
-
-Exceptions:
-* _InvalidParametersException_ 
-* _\Exception_ 
-* _ParseException_ 
-
 ### dropLastRound
  Drop last round from selected game
  For interactive mode (tournaments), and only for administrative purposes
@@ -634,7 +711,7 @@ Exceptions:
 Parameters:
 * **$gameHashcode** (_string_) 
 
-Returns: _boolean_ Success?
+Returns: _bool_ Success?
 
 Exceptions:
 * _\Exception_ 
@@ -657,9 +734,9 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) Hashcode of game
-* **$playerId** (_integer_) Id of penalized player
-* **$amount** (_integer_) Penalty amount
+* **$eventId** (_int_) Hashcode of game
+* **$playerId** (_int_) Id of penalized player
+* **$amount** (_int_) Penalty amount
 * **$reason** (_string_) Penalty reason
 
 Returns: _bool_ Success?
@@ -709,7 +786,7 @@ Returns: _array_
 
 
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventId** (_int_) 
 
 Returns: _array_ 
 
@@ -786,8 +863,8 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
-* **$randomizeAtTables** (_boolean_) 
+* **$eventId** (_int_) 
+* **$randomizeAtTables** (_bool_) 
 
 Returns: _bool_ 
 
@@ -803,7 +880,7 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventId** (_int_) 
 
 Returns: _array_ 
 
@@ -817,7 +894,7 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
+* **$eventId** (_int_) 
 
 Returns: _mixed_ 
 
@@ -830,8 +907,8 @@ Exceptions:
 
 
 Parameters:
-* **$eventId** (_integer_) 
-* **$nextSessionIndex** (_integer_) 
+* **$eventId** (_int_) 
+* **$nextSessionIndex** (_int_) 
 * **$prescript** (_string_) 
 
 Returns: _mixed_ 

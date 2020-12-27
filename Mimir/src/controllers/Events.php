@@ -1091,4 +1091,38 @@ class EventsController extends Controller
             'preferredByIp' => $preferredTimezone
         ];
     }
+
+    /**
+     * Get available countries.
+     * If addr is provided, calculate preferred country based on IP.
+     *
+     * @param string $addr
+     * @return array
+     * @throws \GeoIp2\Exception\AddressNotFoundException
+     * @throws \MaxMind\Db\Reader\InvalidDatabaseException
+     */
+    public function getCountries($addr = '')
+    {
+        $this->_log->addInfo('Receiving countries list');
+        require_once __DIR__ . '/../../bin/countries.php';
+        $countries = getCountriesWithCodes();
+
+        $preferredCountry = '';
+        if ($addr) {
+            require_once __DIR__ . '/../../bin/geoip2.phar';
+            try {
+                $reader = new \GeoIp2\Database\Reader(__DIR__ . '/../../bin/GeoLite2-City.mmdb');
+                $record = $reader->city($addr);
+                $preferredCountry = strtoupper($record->country->isoCode);
+            } catch (\Exception $e) {
+                // Do nothing actually.
+            }
+        }
+
+        $this->_log->addInfo('Successfully received countries');
+        return [
+            'countries' => $countries,
+            'preferredByIp' => $preferredCountry
+        ];
+    }
 }

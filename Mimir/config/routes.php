@@ -32,6 +32,7 @@ return [
     // client
     'getRulesets'        => ['EventsController', 'getRulesets'],
     'getTimezones'       => ['EventsController', 'getTimezones'],
+    'getCountries'       => ['EventsController', 'getCountries'],
 
     'getEvents'          => ['EventsController', 'getEvents'],
     'getEventsById'      => ['EventsController', 'getEventsById'],

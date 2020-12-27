@@ -17,6 +17,8 @@
  */
 namespace Rheda;
 
+use libphonenumber\PhoneNumberUtil;
+
 require_once __DIR__ . '/../helpers/Url.php';
 
 class PersonProfileEdit extends Controller
@@ -46,6 +48,7 @@ class PersonProfileEdit extends Controller
 
         try {
             $data = $this->_frey->getPersonalInfo([$personId]);
+            $data[0]['available_countries'] = $this->_getCountries($data[0]['country'] ?? '');
         } catch (\Exception $ex) {
             $data = null;
         }
@@ -58,65 +61,110 @@ class PersonProfileEdit extends Controller
         }
 
         if (!empty($_POST['save'])) {
-            return $this->_saveData($_POST, $data[0], $personId);
+            $checkedData = $this->_checkData($_POST, $data['email']);
+            $checkedData['available_countries'] = $this->_getCountries($checkedData['country'] ?? '');
+            if ($checkedData['haveErrors']) {
+                return array_merge($checkedData, [
+                    'success' => false,
+                    'emailEditable' => $this->_superadmin,
+                ]);
+            }
+
+            try {
+                $success = $this->_saveData($checkedData, $personId);
+                return array_merge($checkedData, [
+                    'success' => $success
+                        ? _t('Personal information successfully updated')
+                        : false,
+                    'error' => $success
+                        ? false
+                        : _t('Failed to update personal information: insufficient privileges or server error'),
+                    'emailEditable' => $this->_superadmin,
+                ]);
+            } catch (\Exception $ex) {
+                return array_merge($checkedData, [
+                    'error' => $ex->getMessage(),
+                    'success' => false,
+                    'emailEditable' => $this->_superadmin,
+                ]);
+            }
         }
 
-        return [
+        return array_merge($data[0], [
             'error' => null,
             'success' => null,
             'emailEditable' => $this->_superadmin,
             'id' => $personId,
-            'title' => $data[0]['title'],
-            'city' => $data[0]['city'],
-            'email' => $data[0]['email'],
-            'phone' => $data[0]['phone'],
-            'tenhouid' => $data[0]['tenhou_id'],
-        ];
+        ]);
     }
 
     /**
      * @param array $data
-     * @param array $originalData
      * @param int $personId
-     * @return array
+     * @return bool
      */
-    protected function _saveData(array $data, array $originalData, int $personId)
+    protected function _saveData(array $data, int $personId)
     {
-        try {
-            $success = $this->_frey->updatePersonalInfo(
-                (string)$personId, // TODO: should be int, check
-                $data['title'],
-                $data['city'],
-                $this->_superadmin
-                    ? $data['email']
-                    : $originalData['email'], // email is not intended to be changed by user
-                $data['phone'],
-                $data['tenhouid']
-            );
+        return $this->_frey->updatePersonalInfo(
+            (string)$personId, // TODO: should be int, check
+            $data['title'],
+            $data['country'],
+            $data['city'],
+            $data['email'],
+            $data['phone'],
+            $data['tenhouid'] ?? ''
+        );
+    }
 
-            return [
-                'error' => $success ? null : _t('Failed to update personal information: insufficient privileges or server error'),
-                'success' => $success ? _t('Personal information successfully updated') : null,
-                'title' => $data['title'],
-                'city' => $data['city'],
-                'email' => $this->_superadmin
-                    ? $data['email']
-                    : $originalData['email'],
-                'phone' => $data['phone'],
-                'tenhouid' => $data['tenhouid'],
-            ];
-        } catch (\Exception $ex) {
-            return [
-                'error' => $ex->getMessage(),
-                'success' => false,
-                'title' => $data['title'],
-                'city' => $data['city'],
-                'email' => $this->_superadmin
-                    ? $data['email']
-                    : $originalData['email'],
-                'phone' => $data['phone'],
-                'tenhouid' => $data['tenhouid'],
-            ];
+    protected function _checkData($data, $originalEmail)
+    {
+        $checkedData = $data;
+
+        if (mb_strlen($data['title']) < 4) {
+            $checkedData['error_title'] = _t('Player name must be at least 4 characters length. Please enter your real name (and surname).');
         }
+
+        if ($this->_superadmin) {
+            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                $checkedData['error_email'] = _t('Invalid email provided');
+            }
+        } else {
+            $checkedData['email'] = $originalEmail; // Force non-changeable email for non-superadmin user
+        }
+
+        if (!empty($data['phone'])) {
+            $phoneUtil = PhoneNumberUtil::getInstance();
+            $phone = $phoneUtil->parse($data['phone'], $data['country']);
+            if (!$phoneUtil->isValidNumber($phone)) {
+                $checkedData['error_phone'] = _t('Provided number is invalid for selected country. Please provide valid phone number.');
+            }
+        }
+
+        if (!empty($data['tenhou_id']) && preg_match('#^ID[a-z0-9]+-[a-z0-9]+$#is', $data['tenhou_id'])) {
+            $checkedData['error_tenhou_id'] = _t('WARNING: you should NEVER pass your tenhou login string to any service! Please provide your username instead!');
+        }
+
+        foreach ($checkedData as $key => $val) {
+            if (strpos($key, 'error_') === 0) {
+                $checkedData['haveErrors'] = true;
+                break;
+            }
+        }
+
+        return $checkedData;
+    }
+
+    protected function _getCountries($current) {
+        $output = [];
+        $data = $this->_mimir->getCountries($_SERVER['REMOTE_ADDR']);
+        if (empty($current)) {
+            $current = $data['preferredByIp'];
+        }
+        foreach ($data['countries'] as $country) {
+            $output []= array_merge([
+                'selected' => $current === $country['code']
+            ], $country);
+        }
+        return $output;
     }
 }

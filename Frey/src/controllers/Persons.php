@@ -81,6 +81,7 @@ class PersonsController extends Controller
     /**
      * @param string $id
      * @param string $title
+     * @param string $country
      * @param string $city
      * @param string $email
      * @param string $phone
@@ -89,10 +90,10 @@ class PersonsController extends Controller
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId)
+    public function updatePersonalInfo($id, $title, $country, $city, $email, $phone, $tenhouId)
     {
         $this->_logStart(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
-        $success = $this->_getAccountModel()->updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId);
+        $success = $this->_getAccountModel()->updatePersonalInfo($id, $title, $country, $city, $email, $phone, $tenhouId);
         $this->_logSuccess(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
         return $success;
     }

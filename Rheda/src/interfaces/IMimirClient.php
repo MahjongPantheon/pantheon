@@ -33,6 +33,15 @@ interface IMimirClient
     public function getTimezones(string $addr): array;
 
     /**
+     *  Get available countries.
+     *  If addr is provided, calculate preferred country based on IP.
+     *
+     * @param string $addr
+     * @return array
+    */
+    public function getCountries(string $addr): array;
+
+    /**
      *  List all available events in system (paginated)
      *
      * @param int $limit

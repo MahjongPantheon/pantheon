@@ -39,6 +39,7 @@ class PersonPrimitive extends Primitive
         'auth_hash'         => '_authHash',
         'auth_salt'         => '_authSalt',
         'auth_reset_token'  => '_authResetToken',
+        'country'           => '_country',
         'city'              => '_city',
         'tenhou_id'         => '_tenhouId',
         'disabled'          => '_disabled',
@@ -56,6 +57,7 @@ class PersonPrimitive extends Primitive
             '_authHash' => $this->_stringTransform(),
             '_authSalt' => $this->_stringTransform(),
             '_authResetToken' => $this->_stringTransform(true),
+            '_country'  => $this->_stringTransform(),
             '_city'     => $this->_stringTransform(true),
             '_tenhouId' => $this->_stringTransform(true),
             '_disabled' => $this->_integerTransform(),
@@ -105,6 +107,11 @@ class PersonPrimitive extends Primitive
      * @var string
      */
     protected $_authResetToken;
+    /**
+     * Personal data: person country to represent
+     * @var string
+     */
+    protected $_country;
     /**
      * Personal data: person local city
      * @var string
@@ -345,6 +352,24 @@ class PersonPrimitive extends Primitive
     public function setCity($city): PersonPrimitive
     {
         $this->_city = $city ?: '';
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCountry(): string
+    {
+        return $this->_country ?: '';
+    }
+
+    /**
+     * @param string|null $country
+     * @return PersonPrimitive
+     */
+    public function setCountry(?string $country): PersonPrimitive
+    {
+        $this->_country = $country ?: '';
         return $this;
     }
 

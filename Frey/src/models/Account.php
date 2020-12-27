@@ -96,6 +96,7 @@ class AccountModel extends Model
         return array_map(function (PersonPrimitive $person) use ($filterPrivateData, $authPersonId) {
             return [
                 'id' => $person->getId(),
+                'country' => $person->getCountry(),
                 'city' => $person->getCity(),
                 'email' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getEmail(),
                 'phone' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getPhone(),
@@ -111,6 +112,7 @@ class AccountModel extends Model
      *
      * @param string $id
      * @param string $title
+     * @param string $country
      * @param string $city
      * @param string $email
      * @param string $phone
@@ -119,7 +121,7 @@ class AccountModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePersonalInfo(string $id, string $title, string $city, string $email, string $phone, $tenhouId = null)
+    public function updatePersonalInfo(string $id, string $title, string $country, string $city, string $email, string $phone, $tenhouId = null)
     {
         if (empty($this->_authorizedPerson) || $this->_authorizedPerson->getId() != $id) {
             $this->_checkAccessRights(InternalRules::UPDATE_PERSONAL_INFO);
@@ -144,6 +146,7 @@ class AccountModel extends Model
         }
 
         return $persons[0]->setTitle($title)
+            ->setCountry($country)
             ->setCity($city)
             ->setEmail($email)
             ->setPhone($phone)

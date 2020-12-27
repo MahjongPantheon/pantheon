@@ -58,8 +58,18 @@
         </div>
 
         <div class="form-group">
+          <label for="country">{{_t 'Country'}}</label>
+          <select class="form-control" id="country" name="country">
+            {{#available_countries}}
+              <option value="{{code}}"{{#selected}} selected="selected"{{/selected}}>{{name}}</option>
+            {{/available_countries}}
+          </select>
+          <small id="countryHelp" class="form-text text-muted">{{_t "Select the country you are representing"}}</small>
+        </div>
+
+        <div class="form-group">
           <label for="city">{{_t 'City'}}</label>
-          <input type="city" class="form-control{{#error_city}} is-invalid{{/error_city}}" id="city" value="{{city}}"
+          <input type="text" class="form-control{{#error_city}} is-invalid{{/error_city}}" id="city" value="{{city}}"
                  name="city">
           {{#error_city}}
             <div class="invalid-feedback">{{error_city}}</div>
@@ -71,28 +81,28 @@
 
         <div class="form-group">
           <label for="phone">{{_t 'Phone'}}</label>
-          <input type="phone" class="form-control{{#error_phone}} is-invalid{{/error_phone}}" id="phone"
+          <input type="text" class="form-control{{#error_phone}} is-invalid{{/error_phone}}" id="phone"
                  value="{{phone}}"
                  name="phone">
           {{#error_phone}}
             <div class="invalid-feedback">{{error_phone}}</div>
           {{/error_phone}}
           {{^error_phone}}
-            <small id="phoneHelp" class="form-text text-muted">{{_t "Your phone may be shown to administrators of tournaments that are not finished yet."}}</small>
+            <small id="phoneHelp" class="form-text text-muted">{{_t "Your phone may be shown to administrators of tournaments that are not finished yet. Also all chief administrators will be able to see your phone number."}}</small>
           {{/error_phone}}
         </div>
 
         <div class="form-group">
-          <label for="tenhouid">{{_t 'Tenhou ID (nickname)'}}</label>
-          <input type="tenhouid" class="form-control{{#error_tenhouid}} is-invalid{{/error_tenhouid}}" id="tenhouid"
-                 value="{{tenhouid}}"
-                 name="tenhouid">
-          {{#error_tenhouid}}
-            <div class="invalid-feedback">{{error_tenhouid}}</div>
-          {{/error_tenhouid}}
-          {{^error_tenhouid}}
+          <label for="tenhou_id">{{_t 'Tenhou ID (nickname)'}}</label>
+          <input type="text" class="form-control{{#error_tenhou_id}} is-invalid{{/error_tenhou_id}}" id="tenhou_id"
+                 value="{{tenhou_id}}"
+                 name="tenhou_id">
+          {{#error_tenhou_id}}
+            <div class="invalid-feedback">{{error_tenhou_id}}</div>
+          {{/error_tenhou_id}}
+          {{^error_tenhou_id}}
             <small id="tenhouidHelp" class="form-text text-muted">{{_t "Your tenhou ID will be shown publicly. WARNING: this is your tenhou nickname, you should not enter your access code here!"}}</small>
-          {{/error_tenhouid}}
+          {{/error_tenhou_id}}
         </div>
 
         <button type="submit" class="btn btn-primary">{{_t 'Save'}}</button>

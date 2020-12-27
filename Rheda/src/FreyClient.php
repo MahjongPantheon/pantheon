@@ -194,16 +194,17 @@ class FreyClient implements IFreyClient
     /**
      * @param string $id
      * @param string $title
+     * @param string $country
      * @param string $city
      * @param string $email
      * @param string $phone
      * @param string $tenhouId
      * @return bool
     */
-    public function updatePersonalInfo(string $id, string $title, string $city, string $email, string $phone, string $tenhouId): bool
+    public function updatePersonalInfo(string $id, string $title, string $country, string $city, string $email, string $phone, string $tenhouId): bool
     {
         /** @phpstan-ignore-next-line */
-        return (bool)$this->_client->execute('updatePersonalInfo', [$id, $title, $city, $email, $phone, $tenhouId]);
+        return (bool)$this->_client->execute('updatePersonalInfo', [$id, $title, $country, $city, $email, $phone, $tenhouId]);
     }
 
     /**

@@ -55,6 +55,19 @@ class MimirClient implements IMimirClient
     }
 
     /**
+     *  Get available countries.
+     *  If addr is provided, calculate preferred country based on IP.
+     *
+     * @param string $addr
+     * @return array
+    */
+    public function getCountries(string $addr): array
+    {
+        /** @phpstan-ignore-next-line */
+        return (array)$this->_client->execute('getCountries', [$addr]);
+    }
+
+    /**
      *  List all available events in system (paginated)
      *
      * @param int $limit
