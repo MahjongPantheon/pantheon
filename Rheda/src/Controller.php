@@ -279,6 +279,8 @@ abstract class Controller
 
     protected static function _multiEventMode($url, $routes)
     {
+        self::_healthSpecialPath($url);
+
         $matches = [];
         $path = parse_url($url, PHP_URL_PATH);
         foreach ($routes as $regex => $controller) {
@@ -296,6 +298,38 @@ abstract class Controller
         }
 
         return null;
+    }
+
+    protected static function _healthSpecialPath($url)
+    {
+        if ($url === '/health') {
+            $changedLines = [];
+            exec('git diff', $changedLines);
+
+            $status = [];
+            exec('git status', $status);
+
+            $commit = exec('git rev-parse HEAD');
+            $changed = implode("\n", $changedLines);
+            $status = implode("\n", $status);
+
+            $ret = <<<DATA
+<h4>Current commit: {$commit}</h4>
+<hr />
+<div>Customized files:</div>
+<pre>
+  {$status}
+</pre>
+
+<hr />
+<div>Changes:</div>
+<pre>
+  {$changed}
+</pre>
+DATA;
+            echo $ret;
+            exit();
+        }
     }
 
     protected function _adminAuthOk()

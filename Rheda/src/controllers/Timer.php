@@ -25,7 +25,7 @@ class Timer extends Controller
 
     protected function _pageTitle()
     {
-        return _('Timer');
+        return _t('Timer');
     }
 
     protected function _run()
