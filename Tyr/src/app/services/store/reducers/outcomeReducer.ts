@@ -289,7 +289,7 @@ export function outcomeReducer(
     case TOGGLE_NAGASHI:
       switch (state.currentOutcome.selectedOutcome) {
         case 'nagashi':
-          if (state.currentOutcome.nagashi.indexOf(action.payload) !== -1) {
+          if (state.currentOutcome.nagashi.indexOf(action.payload) === -1) {
             return modifyDrawOutcome(state, {
               nagashi: [ ...state.currentOutcome.nagashi, action.payload ]
             });
