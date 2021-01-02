@@ -71,7 +71,7 @@
             </tr>
         {{#registered}}
             <tr>
-                <td>{{display_name}}</td>
+                <td>{{display_name}}{{#onlineEvent}} ({{tenhou_id}}){{/onlineEvent}}</td>
                 <td class="adm-actions">
                     <form action="" method="post">
                         <input type="hidden" name="action_type" value="reenroll" />
