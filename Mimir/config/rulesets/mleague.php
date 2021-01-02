@@ -19,7 +19,7 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-class RulesetZentsupa extends Ruleset
+class RulesetMleague extends Ruleset
 {
     public static $_title = 'mleague';
     protected static $_ruleset = [
