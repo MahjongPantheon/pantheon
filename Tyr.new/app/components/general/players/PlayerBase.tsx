@@ -30,29 +30,50 @@ export class PlayerBase extends React.Component<IProps> {
     )
   }
 
-  renderRiichiButton() {
-    const {verticalButtons, riichiButtonMode} = this.props;
+  private onRiichiClick() {
+    const {riichiButton} = this.props;
+    if (riichiButton && riichiButton.mode !== PlayerButtonMode.DISABLE) {
+      riichiButton.onClick()
+    }
+  }
 
-    if (riichiButtonMode !== undefined) {
+  private renderRiichiButton() {
+    const {verticalButtons, riichiButton} = this.props;
+
+    if (riichiButton !== undefined) {
       return (
-        <div className={classNames(
+        <div onClick={this.onRiichiClick.bind(this)} className={classNames(
           'player__riichi-button',
           {'player__riichi-button--rotated': verticalButtons},
-          {'player__riichi-button--empty': riichiButtonMode === PlayerButtonMode.IDLE}
+          {'player__riichi-button--empty': riichiButton.mode === PlayerButtonMode.IDLE}
         )}
         >
           <Icon type={IconType.RIICHI_BIG} />
         </div>
       )
-    } else {
-      return null
+    }
+
+    return null
+  }
+
+  private onWinClick() {
+    const {winButton} = this.props;
+    if (winButton && winButton.mode !== PlayerButtonMode.DISABLE) {
+      winButton.onClick()
+    }
+  }
+
+  private onLoseClick() {
+    const {loseButton} = this.props;
+    if (loseButton && loseButton.mode !== PlayerButtonMode.DISABLE) {
+      loseButton.onClick()
     }
   }
 
   renderButtons() {
-    const {startWithName, verticalButtons, winButtonMode, loseButtonMode, showDeadButton} = this.props;
-    const hasWinButton = winButtonMode !== undefined;
-    const hasLoseButton = loseButtonMode !== undefined;
+    const {startWithName, verticalButtons, winButton, loseButton, showDeadButton} = this.props;
+    const hasWinButton = winButton !== undefined;
+    const hasLoseButton = loseButton !== undefined;
     const oneButton = (hasWinButton && !hasLoseButton) || (hasLoseButton && !hasWinButton);
 
     return (
@@ -66,28 +87,28 @@ export class PlayerBase extends React.Component<IProps> {
           )}
           >
 
-            {hasWinButton && (
-              <div className={classNames(
+            {hasWinButton && winButton && (
+              <div onClick={this.onWinClick.bind(this)} className={classNames(
                 'player__button flat-btn',
                 {'flat-btn--small': !oneButton},
                 {'flat-btn--v-large': oneButton && verticalButtons},
                 {'flat-btn--large': oneButton && !verticalButtons},
-                {'flat-btn--disabled': winButtonMode === PlayerButtonMode.DISABLE},
-                {'flat-btn--success': winButtonMode === PlayerButtonMode.PRESSED},
+                {'flat-btn--disabled': winButton.mode === PlayerButtonMode.DISABLE},
+                {'flat-btn--success': winButton.mode === PlayerButtonMode.PRESSED},
               )}
               >
                 <Icon type={IconType.WIN} />
               </div>
             )}
 
-            {hasLoseButton && (
-              <div className={classNames(
+            {hasLoseButton && loseButton && (
+              <div onClick={this.onLoseClick.bind(this)} className={classNames(
                 'player__button flat-btn',
                 {'flat-btn--small': !oneButton},
                 {'flat-btn--v-large': oneButton && verticalButtons},
                 {'flat-btn--large': oneButton && !verticalButtons},
-                {'flat-btn--disabled': loseButtonMode === PlayerButtonMode.DISABLE},
-                {'flat-btn--danger': loseButtonMode === PlayerButtonMode.PRESSED},
+                {'flat-btn--disabled': loseButton.mode === PlayerButtonMode.DISABLE},
+                {'flat-btn--danger': loseButton.mode === PlayerButtonMode.PRESSED},
               )}
               >
                 <Icon type={IconType.LOSE} />

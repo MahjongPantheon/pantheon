@@ -1,4 +1,5 @@
-import {PlayerButtonMode, PlayerPointsMode} from '../../types/PlayerEnums';
+import {PlayerPointsMode} from '../../types/PlayerEnums';
+import {PlayerButtonProps} from '#/components/types/PlayerButtonProps';
 
 export type PlayerProps = {
   name: string
@@ -8,9 +9,9 @@ export type PlayerProps = {
   points?: number
   pointsMode?: PlayerPointsMode
   penaltyPoints?: number
-  winButtonMode?: PlayerButtonMode
-  loseButtonMode?: PlayerButtonMode
-  riichiButtonMode?: PlayerButtonMode
+  winButton?: PlayerButtonProps
+  loseButton?: PlayerButtonProps
+  riichiButton?: PlayerButtonProps
   showDeadButton?: boolean
   showInlineRiichi?: boolean
 }

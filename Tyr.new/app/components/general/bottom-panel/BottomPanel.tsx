@@ -6,6 +6,13 @@ import {IconType} from '#/components/general/icon/IconType';
 import {classNames} from '#/components/helpers/ReactUtils';
 
 export class BottomPanel extends React.Component<BottomPanelProps> {
+  private onNextButtonClick() {
+    const {isNextDisabled, onNextClick} = this.props;
+    if (onNextClick && !isNextDisabled) {
+      onNextClick()
+    }
+  }
+
   render() {
     const {
       text,
@@ -46,7 +53,7 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
           {showNext && (
             <div
               className={classNames('svg-button', {'svg-button--disabled': isNextDisabled})}
-              onClick={onNextClick}
+              onClick={this.onNextButtonClick.bind(this)}
             >
               <Icon type={IconType.NEXT} />
             </div>
