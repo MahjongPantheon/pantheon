@@ -6,10 +6,7 @@ import { memoize } from '../../../helpers/memoize';
 const DEFAULT_ID = -1;
 export const defaultPlayer: Readonly<LUser> = {
   displayName: '--- ? ---',
-  id: DEFAULT_ID,
-  tenhouId: null,
-  ident: null,
-  alias: null
+  id: DEFAULT_ID
 };
 
 function _getPlayers(state: IAppState) {

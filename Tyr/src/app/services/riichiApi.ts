@@ -60,8 +60,10 @@ type GenericResponse = {
 @Injectable()
 export class RiichiApiService {
   private _authToken: string = null;
+  private _personId: string = null;
   constructor(private http: HttpClient) { }
-  setCredentials(token: string) {
+  setCredentials(personId: number, token: string) {
+    this._personId = (personId || 0).toString();
     this._authToken = token;
   }
 
@@ -102,11 +104,15 @@ export class RiichiApiService {
       .then<LCurrentGame[]>(currentGamesFormatter);
   }
 
-  getUserInfo() {
-    return this._jsonRpcRequest<RUserInfo>('getPlayerT')
-      .then<LUser>(userInfoFormatter);
+  getUserInfo(personIds: number[]) {
+    return this._jsonRpcRequestFrey<RUserInfo[]>('getPersonalInfo', personIds)
+      .then<LUser[]>(userInfoFormatter);
   }
 
+  /**
+   * @deprecated
+   * @param pin
+   */
   confirmRegistration(pin: string) {
     return this._jsonRpcRequest<string>('registerPlayer', pin);
   }
@@ -140,6 +146,10 @@ export class RiichiApiService {
       .then<Table[]>(tablesStateFormatter);
   }
 
+  quickAuthorize(personId: number, token: string) {
+    return this._jsonRpcRequestFrey<boolean>('quickAuthorize', personId, token);
+  }
+
   /////////////////////////////////////////////////////////////////////////////////////
 
   private _jsonRpcRequest<RET_TYPE>(methodName: string, ...params: any[]): Promise<RET_TYPE> {
@@ -157,6 +167,34 @@ export class RiichiApiService {
 
     return this.http
       .post(environment.apiUrl, jsonRpcBody, { headers: commonHeaders })
+      .toPromise()
+      .then<RET_TYPE>((response: GenericResponse) => {
+        if (response.error) {
+          if (isDevMode()) {
+            console.error(response.error.message);
+          }
+          throw new RemoteError(response.error.message, response.error.code.toString());
+        }
+
+        return response.result; // TODO: runtime checks of object structure
+      });
+  }
+
+  private _jsonRpcRequestFrey<RET_TYPE>(methodName: string, ...params: any[]): Promise<RET_TYPE> {
+    const commonHeaders = new HttpHeaders({
+      'Content-type': 'application/json',
+      'X-Current-Person-Id': this._personId || '0',
+      'X-Auth-Token': this._authToken || '',
+    });
+    const jsonRpcBody = {
+      jsonrpc: '2.0',
+      method: methodName,
+      params: params,
+      id: Math.round(1000000 * Math.random()) // TODO: bind request to response?
+    };
+
+    return this.http
+      .post(environment.uaUrl, jsonRpcBody, { headers: commonHeaders })
       .toPromise()
       .then<RET_TYPE>((response: GenericResponse) => {
         if (response.error) {

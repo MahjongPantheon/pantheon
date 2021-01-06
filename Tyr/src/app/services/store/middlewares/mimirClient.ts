@@ -50,10 +50,11 @@ export const mimirClient = (api: RiichiApiService) => (store: ReduxStore) =>
       loginWithRetry(action.payload, api, store.dispatch, next);
       break;
     case SET_CREDENTIALS:
-      api.setCredentials(action.payload);
+      api.setCredentials(action.payload.id, action.payload.token);
+      next(action);
       break;
     case UPDATE_CURRENT_GAMES_INIT:
-      updateCurrentGames(api, next, store.dispatch);
+      updateCurrentGames(store.getState().currentPlayerId, api, next, store.dispatch);
       break;
     case GET_GAME_OVERVIEW_INIT:
       if (!action.payload) {
@@ -123,19 +124,19 @@ function loginWithRetry(pin: string, api: RiichiApiService, dispatch: Dispatch, 
   runWithRetry();
 }
 
-function updateCurrentGames(api: RiichiApiService, dispatchNext: Dispatch, dispatchToStore: Dispatch) {
+function updateCurrentGames(playerId: number, api: RiichiApiService, dispatchNext: Dispatch, dispatchToStore: Dispatch) {
   dispatchNext({ type: UPDATE_CURRENT_GAMES_INIT });
 
   // TODO: make single method? should become faster!
-  const promises: [Promise<LCurrentGame[]>, Promise<LUser>, Promise<LGameConfig>, Promise<LTimerState>] = [
+  const promises: [Promise<LCurrentGame[]>, Promise<LUser[]>, Promise<LGameConfig>, Promise<LTimerState>] = [
     api.getCurrentGames(),
-    api.getUserInfo(),
+    api.getUserInfo([playerId]),
     api.getGameConfig(),
     api.getTimerState()
   ];
 
   Promise.all(promises).then(([games, playerInfo, gameConfig, timerState]) => {
-    dispatchNext({ type: UPDATE_CURRENT_GAMES_SUCCESS, payload: { games, playerInfo, gameConfig, timerState }});
+    dispatchNext({ type: UPDATE_CURRENT_GAMES_SUCCESS, payload: { games, playerInfo: playerInfo[0], gameConfig, timerState }});
     if (games.length > 0) {
       dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: games[0].hashcode } );
     }

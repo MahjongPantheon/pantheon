@@ -41,8 +41,17 @@ export const TOGGLE_LOSER = 'TOGGLE_LOSER';
 export const TOGGLE_PAO = 'TOGGLE_PAO';
 export const TOGGLE_DEADHAND = 'TOGGLE_DEADHAND';
 export const TOGGLE_NAGASHI = 'TOGGLE_NAGASHI';
+/**
+ * @deprecated
+ */
 export const CONFIRM_REGISTRATION_INIT = 'CONFIRM_REGISTRATION_INIT';
+/**
+ * @deprecated
+ */
 export const CONFIRM_REGISTRATION_SUCCESS = 'CONFIRM_REGISTRATION_SUCCESS';
+/**
+ * @deprecated
+ */
 export const CONFIRM_REGISTRATION_FAIL = 'CONFIRM_REGISTRATION_FAIL';
 export const RESET_REGISTRATION_ERROR = 'RESET_REGISTRATION_ERROR';
 export const SET_CREDENTIALS = 'SET_CREDENTIALS';
@@ -52,6 +61,9 @@ export const UPDATE_CURRENT_GAMES_FAIL = 'UPDATE_CURRENT_GAMES_FAIL';
 export const GET_GAME_OVERVIEW_INIT = 'GET_GAME_OVERVIEW_INIT';
 export const GET_GAME_OVERVIEW_SUCCESS = 'GET_GAME_OVERVIEW_SUCCESS';
 export const GET_GAME_OVERVIEW_FAIL = 'GET_GAME_OVERVIEW_FAIL';
+/**
+ * @deprecated
+ */
 export const FORCE_LOGOUT = 'FORCE_LOGOUT';
 export const GET_OTHER_TABLES_LIST_INIT = 'GET_OTHER_TABLES_LIST_INIT';
 export const GET_OTHER_TABLES_LIST_RELOAD = 'GET_OTHER_TABLES_LIST_RELOAD';
@@ -111,7 +123,6 @@ interface ResetStateAction {
 
 interface StartupWithAuthAction {
   type: typeof STARTUP_WITH_AUTH;
-  payload: string;
 }
 
 interface InitWithPincodeAction {
@@ -244,7 +255,7 @@ interface ResetRegistrationErrorAction {
 }
 interface SetCredentialsAction {
   type: typeof SET_CREDENTIALS;
-  payload: string;
+  payload: { id: number; token: string; };
 }
 interface UpdateCurrentGamesActionInit {
   type: typeof UPDATE_CURRENT_GAMES_INIT;

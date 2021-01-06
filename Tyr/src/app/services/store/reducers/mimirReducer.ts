@@ -27,7 +27,6 @@ import {
   GET_OTHER_TABLE_SUCCESS,
   GET_OTHER_TABLES_LIST_FAIL,
   GET_OTHER_TABLES_LIST_INIT,
-  GET_OTHER_TABLES_LIST_RELOAD,
   GET_OTHER_TABLES_LIST_SUCCESS,
   RANDOMIZE_NEWGAME_PLAYERS,
   RESET_REGISTRATION_ERROR,
@@ -35,6 +34,7 @@ import {
   SELECT_NEWGAME_PLAYER_SELF,
   SELECT_NEWGAME_PLAYER_SHIMOCHA,
   SELECT_NEWGAME_PLAYER_TOIMEN,
+  SET_CREDENTIALS,
   START_GAME_FAIL,
   START_GAME_INIT,
   START_GAME_SUCCESS,
@@ -44,13 +44,13 @@ import {
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
-import {IAppState} from '../interfaces';
-import {makeYakuGraph} from '../../../primitives/yaku-compat';
-import {RemoteError} from '../../remoteError';
-import {modifyArray} from './util';
-import {defaultPlayer} from '../selectors/screenNewGameSelectors';
-import {rand} from '../../../helpers/rand';
-import {initialState} from '../state';
+import { IAppState } from '../interfaces';
+import { makeYakuGraph } from '../../../primitives/yaku-compat';
+import { RemoteError } from '../../remoteError';
+import { modifyArray } from './util';
+import { defaultPlayer } from '../selectors/screenNewGameSelectors';
+import { rand } from '../../../helpers/rand';
+import { initialState } from '../state';
 
 export function mimirReducer(
   state: IAppState,
@@ -59,6 +59,11 @@ export function mimirReducer(
   let error;
   let player;
   switch (action.type) {
+    case SET_CREDENTIALS:
+      return {
+        ...state,
+        currentPlayerId: action.payload.id
+      }
     case CONFIRM_REGISTRATION_INIT:
       return {
         ...state,
