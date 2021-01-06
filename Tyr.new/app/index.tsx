@@ -17,6 +17,7 @@ const doRender = (state: IAppState) => ReactDOM.render(<App
   state={state}
   dispatch={store.dispatch}
   storage={storage}
+  i18nService={i18nService}
 />, document.getElementById('tyr-root'));
 
 store.subscribe(doRender);

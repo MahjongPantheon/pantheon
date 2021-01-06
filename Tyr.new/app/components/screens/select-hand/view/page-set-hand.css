@@ -1,0 +1,85 @@
+.page-select-hand.page-select-hand__player-name {
+  font-size: var(--font-size-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 8px;
+}
+
+.page-select-hand.page-select-hand__top-panel {
+  margin: 24px 26px 16px 26px;
+}
+
+.select-yaku-panel {
+  margin: 8px 0;
+  flex-grow: 1;
+  height: 100%;
+  font-size: var(--font-size-secondary);
+  overflow: scroll;
+}
+
+.select-yaku-panel__group {
+  margin: 0 6px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.select-yaku-panel__button {
+  flex: 1 0 auto;
+  text-align: center;
+  padding: 8px 12px;
+  margin: 0 2px 4px 2px;
+  border: 2px solid var(--color-secondary-4);
+  border-radius: 4px;
+}
+
+.select-yaku-panel__button--pressed {
+  background-color: var(--color-primary-light);
+}
+
+.select-yaku-panel__button--disabled {
+  background-color: var(--color-secondary-6);
+  color: var(--color-secondary-4);
+}
+
+.select-yaku-panel__button:not(.select-yaku-panel__button--disabled):active {
+  background-color: var(--color-primary-light-active);
+}
+
+.select-total-panel {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: var(--font-size-secondary);
+}
+
+.select-total-panel__top-group {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  margin: 24px 0 4px 0;
+}
+
+.select-total-panel__top-group span {
+  margin-left: 10px;
+}
+
+.select-total-panel__max {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.select-total-panel__bottom-group {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  margin: 4px 0 20px 0;
+}
+
+.select-total-panel__select-group {
+  margin: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

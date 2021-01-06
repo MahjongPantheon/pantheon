@@ -13,7 +13,7 @@ import {SelectModalProps} from '#/components/general/select-modal/SelectModal';
 import {
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
-  INIT_BLANK_OUTCOME,
+  INIT_BLANK_OUTCOME, TOGGLE_LOSER, TOGGLE_RIICHI,
   TOGGLE_WINNER,
   UPDATE_CURRENT_GAMES_INIT,
 } from '#/store/actions/interfaces';
@@ -35,10 +35,7 @@ import {
   nagashiDisabled
 } from '#/store/selectors/userItemSelectors';
 import {PlayerButtonProps} from '#/components/types/PlayerButtonProps';
-import {TOGGLE_LOSER, TOGGLE_RIICHI} from '../../../../../Tyr/src/app/services/store/actions/interfaces';
 import {TableMode} from '#/components/types/TableMode';
-import {OutcomeTableMode} from '#/components/types/OutcomeTypes';
-import {BottomPanelProps, BottomPanelPropsBase} from '#/components/general/bottom-panel/BottomPanelProps';
 import {mayGoNextFromPlayersSelect} from '#/store/selectors/navbarSelectors';
 
 export function getPlayerTopInfo(state: IAppState, dispatch: Dispatch) {

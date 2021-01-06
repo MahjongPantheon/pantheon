@@ -12,23 +12,17 @@ import {getAllowedYaku} from './yaku';
 
 export const shouldShowTabs = (state: IAppState) => getWinningUsers(state).length > 1;
 
-function _getYakuList(state: IAppState): {
-  [id: number]: Array<{
-    anchor: string;
-    groups: Yaku[][]
-  }>
-} {
+function _getYakuList(state: IAppState): {[id: number]: Yaku[][]} {
   if (!state.gameConfig) {
     return {};
   }
 
-  const yakuList: { [key: number]: Array<{ anchor: string; groups: Yaku[][] }>} = {};
+  const yakuList: { [key: number]: Yaku[][]} = {};
   for (let user of getWinningUsers(state)) {
-    yakuList[user.id] = [
-      { anchor: 'simple', groups: filterAllowed(yakuGroups, state.gameConfig.allowedYaku) },
-      { anchor: 'rare', groups: filterAllowed(yakuRareGroups, state.gameConfig.allowedYaku) },
-      { anchor: 'yakuman', groups: filterAllowed(yakumanGroups, state.gameConfig.allowedYaku) }
-    ];
+    const simple = filterAllowed(yakuGroups, state.gameConfig.allowedYaku);
+    const rare = filterAllowed(yakuRareGroups, state.gameConfig.allowedYaku);
+    const yakuman = filterAllowed(yakumanGroups, state.gameConfig.allowedYaku);
+    yakuList[user.id] = simple.concat(rare).concat(yakuman);
   }
 
   return yakuList;
@@ -50,11 +44,9 @@ function _getDisabledYaku(state: IAppState): DisabledYakuList {
   return users.reduce((acc: DisabledYakuList, p) => {
     acc[p.id] = {};
     for (let yGroup of yakuList[p.id]) {
-      for (let yRow of yGroup.groups) {
-        for (let yaku of yRow) {
-          if (allowedYaku.indexOf(yaku.id) === -1 && !hasYaku(state, yaku.id)) {
-            acc[p.id][yaku.id] = true;
-          }
+      for (let yaku of yGroup) {
+        if (allowedYaku.indexOf(yaku.id) === -1 && !hasYaku(state, yaku.id)) {
+          acc[p.id][yaku.id] = true;
         }
       }
     }

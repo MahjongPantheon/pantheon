@@ -115,6 +115,9 @@ export function screenManageReducer(
           }
           break;
         case 'yakuSelect':
+          nextScreen = 'totalHandSelect';
+          break;
+        case 'totalHandSelect':
           switch (state.currentOutcome?.selectedOutcome) {
             case 'ron':
             case 'tsumo':

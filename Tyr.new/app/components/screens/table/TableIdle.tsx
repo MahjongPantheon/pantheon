@@ -8,7 +8,7 @@ import {
   getPlayerRightInfo,
   getPlayerTopInfo, getBottomPanel
 } from '#/components/screens/table/TableHelper';
-import {TableScreen} from '#/components/screens/table/base/TableScreen';
+import {TableScreenStateless} from '#/components/screens/table/base/TableScreenStateless';
 
 export class TableIdle extends React.Component<IComponentProps> {
   render() {
@@ -38,7 +38,7 @@ export class TableIdle extends React.Component<IComponentProps> {
     const buttonPanelInfo = getBottomPanel(state, dispatch)
 
     return (
-      <TableScreen
+      <TableScreenStateless
         topPlayer={topPlayerInfo}
         leftPlayer={leftPlayerInfo}
         rightPlayer={rightPlayerInfo}
