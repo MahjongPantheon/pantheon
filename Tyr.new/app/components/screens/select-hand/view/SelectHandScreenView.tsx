@@ -13,22 +13,31 @@ type IProps = {
   playerName: string
   yakuGroups: YakuGroup[]
   outcome: OutcomeTableMode
-  canGoNext: boolean
   leftArrowState: ArrowState
   rightArrowState: ArrowState
+
   activeTab: SelectHandActiveTab
   onTabClick: (tab: SelectHandActiveTab) => void
 
+  onBackClick: () => void
+  canGoNext: boolean
+  onNextClick: () => void
+
+  yakuHan: number
+  doraCount: number
   doraValues: number[]
-  uraDoraValues: number[]
-  redFivesValues: number[]
+  onDoraSelected: (value: number) => void
+  withUraDora?: boolean
+  uraDoraCount?: number
+  uraDoraValues?: number[]
+  onUraDoraSelected: (value: number) => void
+  withRedFives?: boolean
+  redFivesCount?: number
+  redFivesValues?: number[]
+  onRedFivesSelected: (value: number) => void
+  fuCount: number
   fuValues: number[]
-  yakuHan: number,
-  doraCount: number,
-  uraDoraCount: number,
-  withRedFives: boolean,
-  redFivesCount?: number,
-  fuCount: number,
+  onFuSelected: (value: number) => void
 }
 
 const getTabItems = (activeTab: SelectHandActiveTab, onTabClick: (tab: SelectHandActiveTab) => void) => [
@@ -48,23 +57,30 @@ export class SelectHandScreenView extends React.Component<IProps> {
   render() {
     const {
       playerName,
+      yakuGroups,
+      outcome,
       leftArrowState,
       rightArrowState,
       activeTab,
       onTabClick,
-      yakuGroups,
-      outcome,
+      onBackClick,
       canGoNext,
-      doraValues,
-      uraDoraValues,
-      redFivesValues,
-      fuValues,
+      onNextClick,
       yakuHan,
       doraCount,
+      doraValues,
+      onDoraSelected,
+      withUraDora,
       uraDoraCount,
+      uraDoraValues,
+      onUraDoraSelected,
       withRedFives,
       redFivesCount,
+      redFivesValues,
+      onRedFivesSelected,
       fuCount,
+      fuValues,
+      onFuSelected,
     } = this.props;
 
     return (
@@ -94,14 +110,19 @@ export class SelectHandScreenView extends React.Component<IProps> {
           <SelectTotalPanel
             yakuHan={yakuHan}
             doraCount={doraCount}
-            uraDoraCount={uraDoraCount}
-            fuCount={fuCount}
-            redFivesCount={redFivesCount}
-            withRedFives={withRedFives}
             doraValues={doraValues}
+            onDoraSelected={onDoraSelected}
+            withUraDora={withUraDora}
+            uraDoraCount={uraDoraCount}
             uraDoraValues={uraDoraValues}
+            onUraDoraSelected={onUraDoraSelected}
+            withRedFives={withRedFives}
+            redFivesCount={redFivesCount}
             redFivesValues={redFivesValues}
+            onRedFivesSelected={onRedFivesSelected}
+            fuCount={fuCount}
             fuValues={fuValues}
+            onFuSelected={onFuSelected}
           />
         )}
         <div className="flex-container__bottom">
@@ -110,6 +131,8 @@ export class SelectHandScreenView extends React.Component<IProps> {
             showBack={true}
             showNext={true}
             isNextDisabled={!canGoNext}
+            onBackClick={onBackClick}
+            onNextClick={onNextClick}
           />
         </div>
       </div>

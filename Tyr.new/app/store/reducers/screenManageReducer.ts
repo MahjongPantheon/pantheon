@@ -188,6 +188,9 @@ export function screenManageReducer(
         case 'yakuSelect':
           prevScreen = 'playersSelect';
           break;
+        case 'totalHandSelect':
+          prevScreen = 'yakuSelect';
+          break;
         case 'confirmation':
           switch (state.currentOutcome?.selectedOutcome) {
             case 'ron':

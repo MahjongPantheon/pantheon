@@ -10,7 +10,7 @@ import {
 } from '#/components/screens/table/TableHelper';
 import {TableScreenStateless} from '#/components/screens/table/base/TableScreenStateless';
 
-export class TableIdle extends React.Component<IComponentProps> {
+export class TableScreen extends React.Component<IComponentProps> {
   render() {
     const {state, dispatch} = this.props;
     if (!state.players || state.players.length !== 4) {

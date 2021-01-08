@@ -12,7 +12,7 @@ import {SettingsScreen} from '#/components/screens/settings/SettingsScreen';
 import {NewGameScreen} from '#/components/screens/new-game/NewGameScreen';
 import {SearchPlayerScreen} from '#/components/screens/search-players/SearchPlayerScreen';
 import {IDB} from '#/services/idb';
-import {TableIdle} from '#/components/screens/table/TableIdle';
+import {TableScreen} from '#/components/screens/table/TableScreen';
 import {SelectHandScreen} from '#/components/screens/select-hand/SelectHandScreen';
 import {I18nService} from '#/services/i18n';
 
@@ -52,7 +52,8 @@ const CurrentScreen = React.memo(function (props: IComponentProps) {
     case 'currentGame':
     case 'outcomeSelect':
     case 'playersSelect':
-      return <TableIdle {...props} />
+    case 'confirmation':
+      return <TableScreen {...props} />
     case 'yakuSelect':
     case 'totalHandSelect':
       return <SelectHandScreen {...props} />
@@ -60,7 +61,6 @@ const CurrentScreen = React.memo(function (props: IComponentProps) {
     case 'nagashiSelect':
     case 'lastResults':
     case 'lastRound':
-    case 'confirmation':
       break;
   }
 

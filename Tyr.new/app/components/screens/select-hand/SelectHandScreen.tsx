@@ -6,8 +6,15 @@ import {OutcomeTableMode} from '#/components/types/OutcomeTypes';
 import {ArrowState, SelectHandActiveTab, YakuGroup, YakuItem} from '#/components/screens/select-hand/YakuTypes';
 import {getDisabledYaku, getYakuList} from '#/store/selectors/screenYakuSelectors';
 import {getSelectedYaku} from '#/store/selectors/yaku';
-import {ADD_YAKU, GOTO_NEXT_SCREEN, GOTO_PREV_SCREEN, REMOVE_YAKU} from '#/store/actions/interfaces';
-import {doraOptions} from '#/store/selectors/navbarSelectors';
+import {
+  ADD_YAKU,
+  GOTO_NEXT_SCREEN,
+  GOTO_PREV_SCREEN,
+  REMOVE_YAKU,
+  SET_DORA_COUNT,
+  SET_FU_COUNT,
+} from '#/store/actions/interfaces';
+import {doraOptions, mayGoNextFromYakuSelect} from '#/store/selectors/navbarSelectors';
 
 export class SelectHandScreen extends React.Component<IComponentProps> {
 
@@ -29,11 +36,55 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     }
   }
 
+  private onBackClick() {
+    const {state, dispatch} = this.props;
+    //todo maybe for total open table instead of yaku select?
+    dispatch({ type: GOTO_PREV_SCREEN });
+  }
+
+  private onNextClick() {
+    const {state, dispatch} = this.props;
+    //todo for multiron switch player if it's not the last one
+    dispatch({ type: GOTO_NEXT_SCREEN });
+  }
+
+  private onDoraSelected(value: number) {
+    const {state, dispatch} = this.props;
+    dispatch({ type: SET_DORA_COUNT, payload: {
+        count: value,
+        winner: state.multironCurrentWinner
+      }});
+  }
+
+  private onUraDoraSelected(value: number) {
+    //todo
+  }
+
+  private onRedFivesSelected(value: number) {
+    //todo
+  }
+
+  private onFuSelected(value: number) {
+    const {state, dispatch} = this.props;
+    dispatch({ type: SET_FU_COUNT, payload: {
+        count: value,
+        winner: state.multironCurrentWinner
+      }});
+  }
+
+  private canGoNext(): boolean {
+    const {state} = this.props;
+    if (state.currentScreen === 'yakuSelect') {
+      return !!mayGoNextFromYakuSelect(state);
+    }
+
+    return true
+  }
 
 
   render() {
     const {state, i18nService} = this.props;
-    if (!state.currentOutcome || state.currentOutcome.selectedOutcome !== 'ron') {
+    if (!state.currentOutcome || state.currentOutcome.selectedOutcome !== 'ron') { //todo
       return null;
     }
 
@@ -41,7 +92,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     const player = getWinningUsers(state)[0] //state.multironCurrentWinner?
     const playerName = player.displayName;
     const outcomeText = OutcomeTableMode.RON;
-    const canGoNext = true;
+    const canGoNext = this.canGoNext();
     const leftArrowState = ArrowState.UNAVAILABLE;
     const rightArrowState = ArrowState.UNAVAILABLE;
     const activeTab = state.currentScreen === 'yakuSelect' ? SelectHandActiveTab.YAKU : SelectHandActiveTab.TOTAL;
@@ -68,36 +119,50 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     })
 
     const yakuHan = state.currentOutcome.han
-    const doraCount = state.currentOutcome.dora
-    const uraDoraCount = 0
-    const fuCount = state.currentOutcome.fu
-    const withRedFives = false
-    const redFivesCount = undefined
 
+    const doraCount = state.currentOutcome.dora
     const doraValues: number[] = doraOptions(state);
-    const uraDoraValues: number[] = [0, 5]; //add with ura to props
-    const redFivesValues: number[] = [0, 16];
+
+    const withUraDora = false //todo support withUra
+    const uraDoraCount = undefined
+    const uraDoraValues = undefined;
+
+    const withRedFives = false  //todo support withRedFives
+    const redFivesCount = undefined
+    const redFivesValues = undefined;
+
+    const fuCount = state.currentOutcome.fu
     const fuValues = state.currentOutcome.possibleFu;
+    console.log(fuCount, fuValues)
+
+    //todo support yakumans
 
     return <SelectHandScreenView
       playerName={playerName}
       yakuGroups={yakuGroups}
       outcome={outcomeText}
-      canGoNext={canGoNext}
       leftArrowState={leftArrowState}
       rightArrowState={rightArrowState}
       activeTab={activeTab}
       onTabClick={this.onTabClick.bind(this)}
-      doraValues={doraValues}
-      uraDoraValues={uraDoraValues}
-      redFivesValues={redFivesValues}
-      fuValues={fuValues}
+      canGoNext={canGoNext}
+      onNextClick={this.onNextClick.bind(this)}
+      onBackClick={this.onBackClick.bind(this)}
       yakuHan={yakuHan}
       doraCount={doraCount}
+      doraValues={doraValues}
+      onDoraSelected={this.onDoraSelected.bind(this)}
+      withUraDora={withUraDora}
       uraDoraCount={uraDoraCount}
-      fuCount={fuCount}
+      uraDoraValues={uraDoraValues}
+      onUraDoraSelected={this.onUraDoraSelected.bind(this)}
       withRedFives={withRedFives}
       redFivesCount={redFivesCount}
+      redFivesValues={redFivesValues}
+      onRedFivesSelected={this.onRedFivesSelected.bind(this)}
+      fuCount={fuCount}
+      fuValues={fuValues}
+      onFuSelected={this.onFuSelected.bind(this)}
       />
   }
 }

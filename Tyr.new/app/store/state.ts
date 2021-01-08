@@ -88,7 +88,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         winnerIsDealer: false,
         loserIsDealer: false,
         han: 0,
-        fu: 30,
+        fu: 40, //check that nothing goes wrong
         possibleFu: getFixedFu([], 'ron'),
         yaku: '', // empty string is ok for empty yaku list
         riichiBets: [],
