@@ -304,12 +304,12 @@ abstract class Controller
     {
         if ($url === '/health') {
             $changedLines = [];
-            exec('git diff', $changedLines);
+            exec('cd ../../ && git diff --color | bash Rheda/bin/ansi2html.sh', $changedLines);
 
             $status = [];
-            exec('git status', $status);
+            exec('cd ../../ && git status', $status);
 
-            $commit = exec('git rev-parse HEAD');
+            $commit = exec('cd ../../ && git rev-parse HEAD');
             $changed = implode("\n", $changedLines);
             $status = implode("\n", $status);
 
@@ -323,9 +323,7 @@ abstract class Controller
 
 <hr />
 <div>Changes:</div>
-<pre>
-  {$changed}
-</pre>
+{$changed}
 DATA;
             echo $ret;
             exit();
