@@ -13,6 +13,13 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
     }
   }
 
+  private onSaveButtonClick() {
+    const {isSaveDisabled, onSaveClick} = this.props;
+    if (onSaveClick && !isSaveDisabled) {
+      onSaveClick()
+    }
+  }
+
   render() {
     const {
       text,
@@ -29,8 +36,6 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
       onBackClick,
       onHomeClick,
       onLogClick,
-      onNextClick,
-      onSaveClick,
       onRefreshClick,
     } = this.props;
 
@@ -61,7 +66,7 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
           {showSave && (
             <div
               className={classNames('svg-button', {'svg-button--disabled': isSaveDisabled})}
-              onClick={onSaveClick}
+              onClick={this.onSaveButtonClick.bind(this)}
             >
               <Icon type={IconType.SAVE} />
             </div>

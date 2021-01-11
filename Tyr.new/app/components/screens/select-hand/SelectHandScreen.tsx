@@ -133,7 +133,6 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
 
     const fuCount = state.currentOutcome.fu
     const fuValues = state.currentOutcome.possibleFu;
-    console.log(fuCount, fuValues)
 
     //todo support yakumans
 

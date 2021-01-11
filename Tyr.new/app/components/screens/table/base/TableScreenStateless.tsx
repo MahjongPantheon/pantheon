@@ -13,14 +13,12 @@ import {TableInfo, TableInfoProps} from '#/components/screens/table/base/TableIn
 import {SelectModal, SelectModalProps} from '#/components/general/select-modal/SelectModal';
 
 type IProps = {
-  showArrows?: boolean
-
   topPlayer: PlayerProps
   leftPlayer: PlayerProps
   bottomPlayer: PlayerProps
   rightPlayer: PlayerProps
 
-  tableInfo: TableInfoProps
+  tableInfo?: TableInfoProps
   arrowsInfo?: ResultArrowsProps
 
   bottomPanel: BottomPanelProps
@@ -40,7 +38,7 @@ export class TableScreenStateless extends React.Component<IProps> {
           <div className="flex-container__content page-table__center">
             <PlayerLeft {...leftPlayer} />
 
-            <TableInfo {...tableInfo} />
+            {!!tableInfo && <TableInfo {...tableInfo} />}
             {!!arrowsInfo && <ResultArrows {...arrowsInfo} />}
 
             <PlayerRight {...rightPlayer} />

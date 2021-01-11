@@ -1,4 +1,4 @@
-export function roundToString(value: string | number): string | number {
+export function roundToString(value: string | number): string {
   const v = parseInt(value.toString(), 10);
   if (v > 12) {
     return '北' + (v - 12);

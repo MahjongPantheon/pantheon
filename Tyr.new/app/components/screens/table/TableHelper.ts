@@ -37,6 +37,10 @@ import {
 import {PlayerButtonProps} from '#/components/types/PlayerButtonProps';
 import {TableMode} from '#/components/types/TableMode';
 import {mayGoNextFromPlayersSelect} from '#/store/selectors/navbarSelectors';
+import {PlayerArrow, PlayerSide, ResultArrowsProps} from '#/components/general/result-arrows/ResultArrowsProps';
+import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
+import {roundToString} from '#/components/helpers/Utils';
+import {ADD_ROUND_INIT} from '../../../../../Tyr/src/app/services/store/actions/interfaces';
 
 export function getPlayerTopInfo(state: IAppState, dispatch: Dispatch) {
   const purpose = getPurposeForType(state);
@@ -113,10 +117,6 @@ export function getOutcomeModalInfo(state: IAppState, dispatch: Dispatch): Selec
     items: items,
     onHide: () => {dispatch({ type: GOTO_PREV_SCREEN });},
   }
-}
-
-export function getTableInfo(state: IAppState, dispatch: Dispatch) {
-
 }
 
 function getPurposeForType(state: IAppState) {
@@ -212,7 +212,7 @@ export function getBottomPanel(state: IAppState, dispatch: Dispatch) {
   const showNext = tableMode === TableMode.SELECT_PLAYERS;
   const isNextDisabled = !canGoNext(state);
   const showSave = tableMode === TableMode.RESULT;
-  const isSaveDisabled = true; //todo do we really need disabled state for save? seems no
+  const isSaveDisabled = false; //todo do we really need disabled state for save? seems no
 
   const showHome = [TableMode.GAME, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
   const showRefresh = [TableMode.GAME, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
@@ -232,12 +232,11 @@ export function getBottomPanel(state: IAppState, dispatch: Dispatch) {
     isSaveDisabled: isSaveDisabled,
     onNextClick: onNextClick(dispatch),
     onBackClick: onBackClick(dispatch),
-    onSaveClick: onSaveClick(dispatch),
+    onSaveClick: onSaveClick(state, dispatch),
     onLogClick: onLogClick(dispatch),
     onAddClick: onAddClick(state, dispatch),
     onHomeClick: onHomeClick(dispatch),
     onRefreshClick: onRefreshClick(dispatch),
-
   }
 }
 
@@ -248,9 +247,58 @@ function canGoNext(state: IAppState) {
 function getTableMode(state: IAppState): TableMode {
   switch (state.currentScreen) {
     case 'currentGame':
-      return TableMode.GAME
+      return TableMode.GAME;
+    case 'confirmation':
+      return TableMode.RESULT;
     default: //todo
-      return TableMode.SELECT_PLAYERS
+      return TableMode.SELECT_PLAYERS;
+  }
+}
+
+export function getTableInfo(state: IAppState): TableInfoProps | undefined {
+  if (state.currentScreen === 'confirmation') {
+    return undefined;
+  }
+
+  return {
+    showRoundInfo: true,
+    showTableNumber: false,
+    showTimer: false,
+    gamesLeft: undefined,
+    round: roundToString(state.currentRound),
+    honbaCount: state.honba,
+    riichiCount: state.riichiOnTable,
+    currentTime: undefined,
+    tableNumber: undefined,
+  }
+}
+
+export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
+  const changesOverview = state.changesOverview
+  if (state.currentScreen !== 'confirmation' || changesOverview === undefined || state.loading.overview) {
+    return undefined;
+  }
+
+  // const points = changesOverview.payments.direct
+  const points = 3000
+  const honbaPoints = 0
+  const withRiichi = false
+  const withPao = false
+
+  const start = PlayerSide.RIGHT
+  const end = PlayerSide.TOP
+
+  const arrow: PlayerArrow = {
+    points: points,
+    honbaPoints: honbaPoints,
+    withRiichi: withRiichi,
+    withPao: withPao,
+    start: start,
+    end: end,
+  }
+
+  return {
+    arrows: [arrow]
   }
 }
 
@@ -302,15 +350,9 @@ function onNextClick(dispatch: Dispatch) {
 }
 
 function onBackClick(dispatch: Dispatch) {
-  //todo
-  return () => {
-    console.log('onBackClick')
-  };
+  return () => dispatch({ type: GOTO_PREV_SCREEN });
 }
 
-function onSaveClick(dispatch: Dispatch) {
-  //todo
-  return () => {
-    console.log('onSaveClick')
-  };
+function onSaveClick(state: IAppState, dispatch: Dispatch) {
+  return () => dispatch({ type: ADD_ROUND_INIT, payload: state })
 }
