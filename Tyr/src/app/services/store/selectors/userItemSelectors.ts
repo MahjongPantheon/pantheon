@@ -23,18 +23,18 @@ export function showPaoButton(state: IAppState) {
 
   switch (state.currentOutcome.selectedOutcome) {
     case 'ron':
-      return state.currentOutcome.winner !== this.userData.id && state.currentOutcome.loser !== this.userData.id;
+      return state.currentOutcome.winner !== state.currentPlayerId && state.currentOutcome.loser !== state.currentPlayerId;
     case 'tsumo':
-      return state.currentOutcome.winner !== this.userData.id;
+      return state.currentOutcome.winner !== state.currentPlayerId;
     case 'multiron':
       // no pao for loser and winner with yakuman
-      if (state.currentOutcome.loser === this.userData.id) {
+      if (state.currentOutcome.loser === state.currentPlayerId) {
         return false;
       }
       for (let idx in state.currentOutcome.wins) {
         let win = state.currentOutcome.wins[idx];
         if (
-          win.winner === this.userData.id &&
+          win.winner === state.currentPlayerId &&
           intersection(unpack(win.yaku), state.gameConfig.yakuWithPao).length !== 0
         ) {
           return false;
