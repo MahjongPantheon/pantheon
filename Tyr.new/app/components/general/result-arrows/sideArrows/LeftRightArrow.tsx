@@ -43,11 +43,13 @@ export const LeftRightArrow = React.memo(function LeftRightArrow(props: IProps) 
         <ArrowEndByAnge offset={new Point(width, height/2)} angle={180} />
       )}
 
-      <text transform={`translate(${0} ${-TEXT_PATH_OFFSET})`}>
-        <textPath xlinkHref={'#'+id} startOffset={getStartOffset(!fromLeftToRight)} textAnchor={getTextAnchor(!fromLeftToRight)} fill="currentColor">
-          {payment}
-        </textPath>
-      </text>
+      {payment !== '0' && (
+        <text transform={`translate(${0} ${-TEXT_PATH_OFFSET})`}>
+          <textPath xlinkHref={'#'+id} startOffset={getStartOffset(!fromLeftToRight)} textAnchor={getTextAnchor(!fromLeftToRight)} fill="currentColor">
+            {payment}
+          </textPath>
+        </text>
+      )}
       {arrow.withRiichi && (
         <RiichiBet offsetX={riichiOffsetX} offsetY={riichiOffsetY} angle={0} />
       )}

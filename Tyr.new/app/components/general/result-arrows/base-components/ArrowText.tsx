@@ -13,6 +13,10 @@ type IProps = {
 export const ArrowText = React.memo(function ArrowText(props: IProps) {
   const {payment, pathId, withPao, isTextAbove, direction} = props
 
+  if (payment === '0' && !withPao) {
+    return null
+  }
+
   let textOffset = TEXT_PATH_OFFSET + (isTextAbove ? 0 : TEXT_HEIGHT);
 
   let lx = [Direction.TOP_RIGHT, Direction.BOTTOM_RIGHT].includes(direction) ? 1 : -1;
@@ -21,7 +25,9 @@ export const ArrowText = React.memo(function ArrowText(props: IProps) {
   let offsetX = textOffset * lx;
   let offsetY = textOffset * ly;
 
-  let text = payment + (withPao ? ' (pao)' : '');
+  const text = payment !== '0'
+    ? payment + (withPao ? ' (pao)' : '')
+    : 'pao';
 
   return (
     <text transform={`translate(${offsetX} ${offsetY})`}>

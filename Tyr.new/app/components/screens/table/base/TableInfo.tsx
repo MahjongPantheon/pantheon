@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './page-table.css';
 import {IconType} from '#/components/general/icon/IconType';
-import {Icon} from '#/components/general/icon/Icon';
+import {TableTenbou} from '#/components/screens/table/base/TableTenbou';
 
 export type TableInfoProps = {
   showRoundInfo?: boolean
@@ -42,10 +42,10 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
             </div>
           )}
           {riichiCount !== undefined && (
-            <TableTenbou iconType={IconType.RIICHI_SMALL} count={riichiCount} />
+            <TableTenbou iconType={IconType.RIICHI_SMALL} count={riichiCount}/>
           )}
           {honbaCount !== undefined && (
-            <TableTenbou iconType={IconType.HONBA} count={honbaCount} />
+            <TableTenbou iconType={IconType.HONBA} count={honbaCount}/>
           )}
           {showTimer && (
             <div className="table-info__timer">
@@ -76,17 +76,4 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
       )}
     </div>
   );
-})
-
-export const TableTenbou = React.memo(function ({iconType, count}: {iconType: IconType, count: number}) {
-  return (
-    <div className="table-info__tenbou">
-      <div className="svg-button">
-        <Icon type={iconType} />
-      </div>
-      <div className="table-info__tenbou-count">
-        {count}
-      </div>
-    </div>
-  )
 })

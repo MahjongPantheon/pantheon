@@ -44,11 +44,13 @@ export const TopBottomArrow = React.memo(function TopBottomArrow(props: IProps) 
           <ArrowEndByAnge offset={new Point(width / 2, 0)} angle={90} />
         )}
 
-        <text transform={`translate(${TEXT_PATH_OFFSET} ${0})`}>
-          <textPath xlinkHref={'#'+id} startOffset={getStartOffset(!fromTopToBottom)} textAnchor={getTextAnchor(!fromTopToBottom)} fill="currentColor">
-            {payment}
-          </textPath>
-        </text>
+        {payment !== '0' && (
+          <text transform={`translate(${TEXT_PATH_OFFSET} ${0})`}>
+            <textPath xlinkHref={'#'+id} startOffset={getStartOffset(!fromTopToBottom)} textAnchor={getTextAnchor(!fromTopToBottom)} fill="currentColor">
+              {payment}
+            </textPath>
+          </text>
+        )}
         {arrow.withRiichi && (
           <RiichiBet offsetX={riichiOffsetX} offsetY={riichiOffsetY} angle={90} />
         )}

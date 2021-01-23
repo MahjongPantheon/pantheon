@@ -11,6 +11,7 @@ import {PlayerProps} from '#/components/general/players/PlayerProps';
 import {ItemSelect} from '#/components/general/select-modal/ItemSelect';
 import {SelectModalProps} from '#/components/general/select-modal/SelectModal';
 import {
+  ADD_ROUND_INIT,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   INIT_BLANK_OUTCOME, TOGGLE_LOSER, TOGGLE_RIICHI,
@@ -40,7 +41,6 @@ import {mayGoNextFromPlayersSelect} from '#/store/selectors/navbarSelectors';
 import {PlayerArrow, PlayerSide, ResultArrowsProps} from '#/components/general/result-arrows/ResultArrowsProps';
 import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
 import {roundToString} from '#/components/helpers/Utils';
-import {ADD_ROUND_INIT} from '../../../../../Tyr/src/app/services/store/actions/interfaces';
 
 export function getPlayerTopInfo(state: IAppState, dispatch: Dispatch) {
   const purpose = getPurposeForType(state);
@@ -273,33 +273,110 @@ export function getTableInfo(state: IAppState): TableInfoProps | undefined {
   }
 }
 
+
+type paymentObject = {
+  from: number,
+  to: number,
+  amount: number,
+}
+function getObjectFromPayment(payment: {[key: string]: number }): paymentObject[] {
+  const result: paymentObject[] = [];
+  Object.keys(payment).forEach(paymentItem => {
+    const players = paymentItem.split('<-');
+
+    if (players.length === 2) {
+      const item = {
+        from: parseInt(players[1], 10),
+        to: parseInt(players[0], 10),
+        amount: payment[paymentItem]
+      };
+      result.push(item)
+    }
+  })
+
+  return result;
+}
+
 export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
-  const changesOverview = state.changesOverview
+  const changesOverview = state.changesOverview;
   if (state.currentScreen !== 'confirmation' || changesOverview === undefined || state.loading.overview) {
     return undefined;
   }
 
-  // const points = changesOverview.payments.direct
-  const points = 3000
-  const honbaPoints = 0
-  const withRiichi = false
-  const withPao = false
+  const payments = changesOverview.payments;
+  const directPayments = getObjectFromPayment(payments.direct);
+  const riichiPayments = getObjectFromPayment(payments.riichi);
+  const honbaPayments = getObjectFromPayment(payments.honba);
 
-  const start = PlayerSide.RIGHT
-  const end = PlayerSide.TOP
+  // const playersBySide: Record<PlayerSide, Player> = {
+  //   [PlayerSide.TOP]: getToimen(state, 'confirmation'),
+  //   [PlayerSide.LEFT]: getKamicha(state, 'confirmation'),
+  //   [PlayerSide.RIGHT]: getShimocha(state, 'confirmation'),
+  //   [PlayerSide.BOTTOM]: getSelf(state, 'confirmation'),
+  // };
 
-  const arrow: PlayerArrow = {
-    points: points,
-    honbaPoints: honbaPoints,
-    withRiichi: withRiichi,
-    withPao: withPao,
-    start: start,
-    end: end,
-  }
+  const sideByPlayer: Record<number, PlayerSide> = {
+    [getToimen(state, 'confirmation').id]: PlayerSide.TOP,
+    [getKamicha(state, 'confirmation').id]: PlayerSide.LEFT,
+    [getShimocha(state, 'confirmation').id]: PlayerSide.RIGHT,
+    [getSelf(state, 'confirmation').id]: PlayerSide.BOTTOM,
+  };
+
+  const arrows: PlayerArrow[] = []
+  directPayments.forEach(item => {
+    const start = sideByPlayer[item.from]
+    const end = sideByPlayer[item.to]
+
+    const playerArrow: PlayerArrow = {
+      points: item.amount,
+      honbaPoints: 0,
+      withRiichi: false,
+      withPao: false,
+      start: start,
+      end: end,
+    }
+
+    arrows.push(playerArrow)
+  })
+
+  riichiPayments.forEach(item => {
+    if (item.amount !== 0) {
+      const start = sideByPlayer[item.from]
+      const end = sideByPlayer[item.to]
+
+      const currentArrow = arrows.find(arrow => arrow.start === start && arrow.end === end)
+      if (currentArrow) {
+        currentArrow.withRiichi = true
+      } else {
+        const playerArrow: PlayerArrow = {
+          points: 0,
+          honbaPoints: 0,
+          withRiichi: true,
+          withPao: false,
+          start: start,
+          end: end,
+        }
+
+        arrows.push(playerArrow)
+      }
+    }
+  })
+
+  honbaPayments.forEach(item => {
+    const start = sideByPlayer[item.from]
+    const end = sideByPlayer[item.to]
+
+    const currentArrow = arrows.find(arrow => arrow.start === start && arrow.end === end)
+    if (currentArrow) {
+      currentArrow.honbaPoints = item.amount
+    }
+  })
+
+  //todo pao
 
   return {
-    arrows: [arrow]
-  }
+      arrows: arrows
+    };
 }
 
 ///////////////
