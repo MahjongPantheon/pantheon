@@ -119,15 +119,34 @@ export function getOutcomeModalInfo(state: IAppState, dispatch: Dispatch): Selec
   }
 }
 
-function getPurposeForType(state: IAppState) {
-  let purpose: RoundPreviewSchemePurpose = 'overview'
-  // switch (type) {
-  //   case TableType.SELECT_OUTCOME:
-  //     purpose = ''
-  //     break
-  //
-  // }
-  return purpose
+function getPurposeForType(state: IAppState): RoundPreviewSchemePurpose {
+  //todo add other table and check
+  const currentScreen = state.currentScreen;
+
+  switch (currentScreen) {
+    case 'confirmation':
+      return 'confirmation';
+    case 'overview':
+    default:
+      return 'overview';
+  }
+}
+
+function getPlayerPaymentResult(player: Player, state: IAppState): number {
+  const paymentsInfo = getPaymentsInfo(state);
+
+  //todo chombo
+
+  let result = 0;
+  paymentsInfo.forEach(item => {
+    if (item.from === player.id || item.to === player.id) {
+      const payment = item.directAmount + item.riichiAmount + item.honbaAmount + item.paoAmount;
+      const factor =  item.from === player.id ? -1 : 1
+      result += payment * factor;
+    }
+  })
+
+  return  result;
 }
 
 function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dispatch): PlayerProps {
@@ -142,6 +161,20 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
   let showDeadButton = false;
 
   switch (state.currentScreen) {
+    case 'confirmation':
+      const paymentResult = getPlayerPaymentResult(player, state)
+      points = paymentResult !== 0 ? paymentResult : undefined;
+      if (paymentResult > 0) {
+        pointsMode = PlayerPointsMode.POSITIVE
+      } else if (paymentResult < 0) {
+        pointsMode = PlayerPointsMode.NEGATIVE
+      }
+
+      // if (!state.changesOverview) {
+      //   break;
+      // }
+      // points = state.changesOverview
+      break;
     case 'playersSelect':
       points = undefined;
       penaltyPoints = undefined;
@@ -273,26 +306,85 @@ export function getTableInfo(state: IAppState): TableInfoProps | undefined {
   }
 }
 
-
-type paymentObject = {
+type paymentInfo = {
   from: number,
   to: number,
-  amount: number,
+  directAmount: number,
+  riichiAmount: number,
+  honbaAmount: number,
+  paoAmount: number,
 }
-function getObjectFromPayment(payment: {[key: string]: number }): paymentObject[] {
-  const result: paymentObject[] = [];
-  Object.keys(payment).forEach(paymentItem => {
-    const players = paymentItem.split('<-');
+//todo add memorize
+function getPaymentsInfo(state: IAppState): paymentInfo[] {
+  const changesOverview = state.changesOverview;
+  if (state.currentScreen !== 'confirmation' || changesOverview === undefined || state.loading.overview) {
+    return [];
+  }
+
+  const payments = changesOverview.payments;
+
+
+  const result: paymentInfo[] = [];
+  Object.keys(payments.direct).forEach(paymentItem => {
+    const players = paymentItem.split('<-');;
 
     if (players.length === 2) {
+      const from = parseInt(players[1], 10);
+      const to = parseInt(players[0], 10);
+
       const item = {
-        from: parseInt(players[1], 10),
-        to: parseInt(players[0], 10),
-        amount: payment[paymentItem]
+        from: from,
+        to: to,
+        directAmount: payments.direct[paymentItem],
+        riichiAmount: 0,
+        honbaAmount: 0,
+        paoAmount: 0,
       };
-      result.push(item)
+      result.push(item);
     }
   })
+
+  Object.keys(payments.riichi).forEach(paymentItem => {
+    const players = paymentItem.split('<-');
+    const riichiAmount = payments.riichi[paymentItem];
+
+    if (players.length === 2 && riichiAmount !== 0) {
+      const from = parseInt(players[1], 10);
+      const to = parseInt(players[0], 10);
+
+      const currentArrow = result.find(arrow => arrow.to === to && arrow.from === from);
+      if (currentArrow) {
+        currentArrow.riichiAmount = riichiAmount;
+      } else {
+        const item = {
+          from: from,
+          to: to,
+          directAmount: 0,
+          riichiAmount: riichiAmount,
+          honbaAmount: 0,
+          paoAmount: 0,
+        };
+        result.push(item);
+      }
+    }
+  })
+
+  Object.keys(payments.honba).forEach(paymentItem => {
+    const players = paymentItem.split('<-');
+    const honbaAmount = payments.honba[paymentItem];
+
+    if (players.length === 2 && honbaAmount !== 0) {
+      const from = parseInt(players[1], 10);
+      const to = parseInt(players[0], 10);
+
+      const currentArrow = result.find(arrow => arrow.to === to && arrow.from === from);
+      if (currentArrow) {
+        currentArrow.honbaAmount = honbaAmount;
+      }
+    }
+  })
+
+  //todo pao
 
   return result;
 }
@@ -303,17 +395,7 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
     return undefined;
   }
 
-  const payments = changesOverview.payments;
-  const directPayments = getObjectFromPayment(payments.direct);
-  const riichiPayments = getObjectFromPayment(payments.riichi);
-  const honbaPayments = getObjectFromPayment(payments.honba);
-
-  // const playersBySide: Record<PlayerSide, Player> = {
-  //   [PlayerSide.TOP]: getToimen(state, 'confirmation'),
-  //   [PlayerSide.LEFT]: getKamicha(state, 'confirmation'),
-  //   [PlayerSide.RIGHT]: getShimocha(state, 'confirmation'),
-  //   [PlayerSide.BOTTOM]: getSelf(state, 'confirmation'),
-  // };
+  const payments = getPaymentsInfo(state);
 
   const sideByPlayer: Record<number, PlayerSide> = {
     [getToimen(state, 'confirmation').id]: PlayerSide.TOP,
@@ -323,56 +405,21 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
   };
 
   const arrows: PlayerArrow[] = []
-  directPayments.forEach(item => {
-    const start = sideByPlayer[item.from]
-    const end = sideByPlayer[item.to]
+  payments.forEach(item => {
+    const start = sideByPlayer[item.from];
+    const end = sideByPlayer[item.to];
 
     const playerArrow: PlayerArrow = {
-      points: item.amount,
-      honbaPoints: 0,
-      withRiichi: false,
-      withPao: false,
+      points: item.directAmount,
+      honbaPoints: item.honbaAmount,
+      withRiichi: item.riichiAmount !== 0,
+      withPao: item.paoAmount !== 0,
       start: start,
       end: end,
-    }
+    };
 
-    arrows.push(playerArrow)
+    arrows.push(playerArrow);
   })
-
-  riichiPayments.forEach(item => {
-    if (item.amount !== 0) {
-      const start = sideByPlayer[item.from]
-      const end = sideByPlayer[item.to]
-
-      const currentArrow = arrows.find(arrow => arrow.start === start && arrow.end === end)
-      if (currentArrow) {
-        currentArrow.withRiichi = true
-      } else {
-        const playerArrow: PlayerArrow = {
-          points: 0,
-          honbaPoints: 0,
-          withRiichi: true,
-          withPao: false,
-          start: start,
-          end: end,
-        }
-
-        arrows.push(playerArrow)
-      }
-    }
-  })
-
-  honbaPayments.forEach(item => {
-    const start = sideByPlayer[item.from]
-    const end = sideByPlayer[item.to]
-
-    const currentArrow = arrows.find(arrow => arrow.start === start && arrow.end === end)
-    if (currentArrow) {
-      currentArrow.honbaPoints = item.amount
-    }
-  })
-
-  //todo pao
 
   return {
       arrows: arrows
