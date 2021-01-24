@@ -6,7 +6,7 @@ export type PlayerProps = {
   rotated?: boolean
   wind: string
   inlineWind?: boolean
-  points?: number
+  points?: number | string
   pointsMode?: PlayerPointsMode
   penaltyPoints?: number
   winButton?: PlayerButtonProps

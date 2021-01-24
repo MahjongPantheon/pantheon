@@ -491,7 +491,8 @@ export function mimirReducer(
           ...state.loading,
           addRound: false
         },
-        currentScreen: 'overview'
+        currentOutcome: undefined,
+        currentScreen: 'currentGame'
       };
     case ADD_ROUND_FAIL:
       return {

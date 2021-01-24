@@ -181,9 +181,7 @@ export class PlayerBase extends React.Component<IProps> {
               <p>
                 {points}
                 {showInlineRiichi && (
-                  <div className="player__inline-riichi">
-                    <Icon type={IconType.RIICHI_BIG} />
-                  </div>
+                  <Icon type={IconType.RIICHI_BIG} svgProps={{className: "player__inline-riichi"}} />
                 )}
               </p>
               {!!penaltyPoints && (

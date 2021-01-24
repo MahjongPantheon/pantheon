@@ -136,10 +136,11 @@ function getPlayerPaymentResult(player: Player, state: IAppState): number {
   const paymentsInfo = getPaymentsInfo(state);
 
   //todo chombo
+  //todo + riichi on table
 
   let result = 0;
   paymentsInfo.forEach(item => {
-    if (item.from === player.id || item.to === player.id) {
+    if ((item.from === player.id || item.to === player.id) && item.from !== item.to) {
       const payment = item.directAmount + item.riichiAmount + item.honbaAmount + item.paoAmount;
       const factor =  item.from === player.id ? -1 : 1
       result += payment * factor;
@@ -152,28 +153,32 @@ function getPlayerPaymentResult(player: Player, state: IAppState): number {
 function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dispatch): PlayerProps {
   let rotated = false; //todo singleDeviceMode
   let pointsMode = PlayerPointsMode.IDLE; //todo check
-  let points: number | undefined = player.score;
+  let points: number | string | undefined = player.score;
   let penaltyPoints: number | undefined = player.penalties; //todo check
   let inlineWind = true;
   let winButton: PlayerButtonProps | undefined = undefined;
   let loseButton: PlayerButtonProps | undefined = undefined;
   let riichiButton: PlayerButtonProps | undefined = undefined;
   let showDeadButton = false;
+  let showInlineRiichi = false;
 
   switch (state.currentScreen) {
     case 'confirmation':
-      const paymentResult = getPlayerPaymentResult(player, state)
+      const paymentResult = getPlayerPaymentResult(player, state);
       points = paymentResult !== 0 ? paymentResult : undefined;
       if (paymentResult > 0) {
-        pointsMode = PlayerPointsMode.POSITIVE
+        pointsMode = PlayerPointsMode.POSITIVE;
+        points = `+${points}`
       } else if (paymentResult < 0) {
-        pointsMode = PlayerPointsMode.NEGATIVE
+        pointsMode = PlayerPointsMode.NEGATIVE;
       }
 
-      // if (!state.changesOverview) {
-      //   break;
-      // }
-      // points = state.changesOverview
+      const riichiPayments = state.changesOverview?.payments.riichi;
+      const currentPlayerId = player.id;
+      const savedRiichiKey = `${currentPlayerId}<-${currentPlayerId}`;
+      if (riichiPayments && Object.keys(riichiPayments).indexOf(savedRiichiKey) !== -1) {
+        showInlineRiichi = true;
+      }
       break;
     case 'playersSelect':
       points = undefined;
@@ -232,6 +237,7 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
     loseButton: loseButton,
     riichiButton: riichiButton,
     showDeadButton: showDeadButton,
+    showInlineRiichi: showInlineRiichi,
   }
 }
 
