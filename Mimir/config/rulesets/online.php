@@ -59,15 +59,14 @@ class RulesetOnline extends Ruleset
         'penaltyStep'           => 0,
         'maxPenalty'            => 0,
         'minPenalty'            => 0,
-        'uma' => [
-            1 => 30000,
-            2 => 10000,
-            3 => -10000,
-            4 => -30000
-        ],
         'replacementPlayerFixedPoints' => -30000,
         'replacementPlayerOverrideUma' => 0
     ];
+
+    public function uma($scores = [])
+    {
+        return $this->_equalizeUma($scores, [1 => 30000, 10000, -10000, -30000]);
+    }
 
     public function allowedYaku()
     {
