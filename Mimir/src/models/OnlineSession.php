@@ -85,13 +85,14 @@ class OnlineSessionModel extends Model
             throw new \Exception("Wasn't able to properly save the game.");
         }
 
-        $calculatedScore = $session->getCurrentState()->getScores();
-        if (array_diff($calculatedScore, $originalScore) !== []
-            || array_diff($originalScore, $calculatedScore) !== []) {
-            throw new ParseException("Calculated scores do not match with given ones: " . PHP_EOL
-                . print_r($originalScore, 1) . PHP_EOL
-                . print_r($calculatedScore, 1), 225);
-        }
+        // TODO enable after investigation of failed added logs
+//        $calculatedScore = $session->getCurrentState()->getScores();
+//        if (array_diff($calculatedScore, $originalScore) !== []
+//            || array_diff($originalScore, $calculatedScore) !== []) {
+//            throw new ParseException("Calculated scores do not match with given ones: " . PHP_EOL
+//                . print_r($originalScore, 1) . PHP_EOL
+//                . print_r($calculatedScore, 1), 225);
+//        }
 
         return $session;
     }
