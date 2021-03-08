@@ -84,7 +84,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
 
   render() {
     const {state, i18nService} = this.props;
-    if (!state.currentOutcome || state.currentOutcome.selectedOutcome !== 'ron') { //todo
+    if (!state.currentOutcome || state.currentOutcome.selectedOutcome !== 'ron' && state.currentOutcome.selectedOutcome !== 'tsumo') { //todo
       return null;
     }
 

@@ -19,6 +19,7 @@ import { I18nService } from '#/services/i18n';
 import { yaku } from './middlewares/yaku';
 import { reduceReducers } from "#/store/util";
 import { AppActionTypes } from "#/store/actions/interfaces";
+import {screenManageMw} from '#/store/middlewares/screenManage';
 
 export class Store {
   private onUpdate: ((state: IAppState) => void) | undefined;
@@ -49,6 +50,7 @@ export class Store {
       persistentMw(idb),
       yaku(i18n),
       logging(`⇨ [reducers]`),
+      screenManageMw(),
     );
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) || compose;

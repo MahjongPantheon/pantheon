@@ -184,41 +184,55 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
       points = undefined;
       penaltyPoints = undefined;
 
-      let winButtonMode: PlayerButtonMode;
-      if (winPressed(state, player)) {
-        winButtonMode = PlayerButtonMode.PRESSED
-      } else if (winDisabled(state, player)) {
-        winButtonMode = PlayerButtonMode.DISABLE
-      } else {
-        winButtonMode = PlayerButtonMode.IDLE
+      const currentOutcome = state.currentOutcome?.selectedOutcome;
+      if (!currentOutcome) {
+        throw 'empty outcome';
       }
-      winButton = {
-        mode: winButtonMode,
-        onClick: onWinButtonClick(dispatch, player.id),
+      const hasWinButton = ['ron', 'tsumo', 'draw'].includes(currentOutcome);
+      const hasLoseButton = ['ron'].includes(currentOutcome);
+      const hasRiichiButton = ['ron', 'tsumo', 'draw'].includes(currentOutcome);
+
+      if (hasWinButton) {
+        let winButtonMode: PlayerButtonMode;
+        if (winPressed(state, player)) {
+          winButtonMode = PlayerButtonMode.PRESSED;
+        } else if (winDisabled(state, player)) {
+          winButtonMode = PlayerButtonMode.DISABLE;
+        } else {
+          winButtonMode = PlayerButtonMode.IDLE;
+        }
+        winButton = {
+          mode: winButtonMode,
+          onClick: onWinButtonClick(dispatch, player.id),
+        };
       }
 
-      let loseButtonMode: PlayerButtonMode;
-      if (losePressed(state, player)) {
-        loseButtonMode = PlayerButtonMode.PRESSED
-      } else if (loseDisabled(state, player)) {
-        loseButtonMode = PlayerButtonMode.DISABLE
-      } else {
-        loseButtonMode = PlayerButtonMode.IDLE
-      }
-      loseButton = {
-        mode: loseButtonMode,
-        onClick: onLoseButtonClick(dispatch, player.id),
+      if (hasLoseButton) {
+        let loseButtonMode: PlayerButtonMode;
+        if (losePressed(state, player)) {
+          loseButtonMode = PlayerButtonMode.PRESSED;
+        } else if (loseDisabled(state, player)) {
+          loseButtonMode = PlayerButtonMode.DISABLE;
+        } else {
+          loseButtonMode = PlayerButtonMode.IDLE;
+        }
+        loseButton = {
+          mode: loseButtonMode,
+          onClick: onLoseButtonClick(dispatch, player.id),
+        };
       }
 
-      let riichiButtonMode: PlayerButtonMode;
-      if (riichiPressed(state, player)) {
-        riichiButtonMode = PlayerButtonMode.PRESSED
-      } else {
-        riichiButtonMode = PlayerButtonMode.IDLE
-      }
-      riichiButton = {
-        mode: riichiButtonMode,
-        onClick: onRiichiButtonClick(dispatch, player.id),
+      if (hasRiichiButton) {
+        let riichiButtonMode: PlayerButtonMode;
+        if (riichiPressed(state, player)) {
+          riichiButtonMode = PlayerButtonMode.PRESSED;
+        } else {
+          riichiButtonMode = PlayerButtonMode.IDLE;
+        }
+        riichiButton = {
+          mode: riichiButtonMode,
+          onClick: onRiichiButtonClick(dispatch, player.id),
+        };
       }
       break;
   }
@@ -242,8 +256,8 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
 }
 
 export function getBottomPanel(state: IAppState, dispatch: Dispatch) {
-  const tableMode = getTableMode(state)
-  const selectedOutcome = state.currentOutcome && state.currentOutcome.selectedOutcome
+  const tableMode = getTableMode(state);
+  const selectedOutcome = state.currentOutcome && state.currentOutcome.selectedOutcome;
 
   const text = selectedOutcome; //todo
 

@@ -7,15 +7,8 @@ import {
   getPlayerTopInfo, getBottomPanel, getArrowsInfo, getTableInfo,
 } from '#/components/screens/table/TableHelper';
 import {TableScreenStateless} from '#/components/screens/table/base/TableScreenStateless';
-import {GET_CHANGES_OVERVIEW_INIT} from '#/store/actions/interfaces';
 
 export class TableScreen extends React.Component<IComponentProps> {
-  componentDidMount() {
-    const {state, dispatch} = this.props;
-    if (state.currentScreen === 'confirmation') {
-      dispatch({ type: GET_CHANGES_OVERVIEW_INIT, payload: state });
-    }
-  }
 
   render() {
     const {state, dispatch} = this.props;
