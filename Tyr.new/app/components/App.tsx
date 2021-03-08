@@ -53,12 +53,12 @@ const CurrentScreen = React.memo(function (props: IComponentProps) {
     case 'outcomeSelect':
     case 'playersSelect':
     case 'confirmation':
+    case 'nagashiSelect':
       return <TableScreen {...props} />
     case 'yakuSelect':
     case 'totalHandSelect':
       return <SelectHandScreen {...props} />
     case 'paoSelect':
-    case 'nagashiSelect':
     case 'lastResults':
     case 'lastRound':
       break;

@@ -166,20 +166,20 @@ export function outcomeReducer(
         : outcome?.riichiBets.filter((id) => id !== playerId);
 
       // Custom logic which disables tempai and/or riichi
-      if (
-        (
-          outcome?.selectedOutcome === 'draw' &&
-          outcome.tempai.indexOf(playerId) === -1 &&
-          outcome.deadhands.indexOf(playerId) === -1
-        ) || (
-          outcome?.selectedOutcome === 'nagashi' &&
-          outcome.tempai.indexOf(playerId) === -1
-        )
-      ) {
-        return modifyDrawOutcome(state, {
-          tempai: [ ...outcome.tempai, playerId ],
-          riichiBets: riichiList
-        });
+      if (outcome?.selectedOutcome === 'draw' || outcome?.selectedOutcome === 'nagashi') {
+        if (outcome.tempai.indexOf(playerId) === -1 && outcome.deadhands.indexOf(playerId) === -1) {
+          return modifyDrawOutcome(state, {
+            tempai: [ ...outcome.tempai, playerId ],
+            riichiBets: riichiList
+          });
+        }
+
+        if ( outcome.riichiBets.indexOf(playerId) !== -1 && outcome.deadhands.indexOf(playerId) !== -1) {
+          return modifyDrawOutcome(state, {
+            deadhands: outcome.deadhands.filter((id) => id !== playerId),
+            riichiBets: outcome.riichiBets.filter((id) => id !== playerId),
+          });
+        }
       }
 
       if (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo' || outcome?.selectedOutcome === 'multiron') {
@@ -204,16 +204,26 @@ export function outcomeReducer(
           });
         case 'draw':
         case 'nagashi': // select tempai players for nagashi or draw
-          return state.currentOutcome.tempai.indexOf(action.payload) === -1
-            ? modifyDrawOutcome(state, {
-              tempai: [ ...state.currentOutcome.tempai, action.payload ]
-            })
-            : modifyDrawOutcome(state, {
-              tempai: state.currentOutcome.tempai.filter((id) => id !== action.payload),
-              riichiBets: state.currentOutcome.riichiBets.indexOf(action.payload) === -1
-                ? state.currentOutcome.riichiBets
-                : state.currentOutcome.riichiBets.filter((id) => id !== action.payload)
+          if (state.currentOutcome.riichiBets.indexOf(action.payload) === -1) {
+            if (state.currentOutcome.tempai.indexOf(action.payload) === -1) {
+              return modifyDrawOutcome(state, {
+                tempai: [ ...state.currentOutcome.tempai, action.payload ]
+              })
+            }
+
+            return modifyDrawOutcome(state, {
+              tempai: state.currentOutcome.tempai.filter((id) => id !== action.payload)
             });
+          } else {
+            if (state.currentOutcome.tempai.indexOf(action.payload) !== -1 && state.currentOutcome.deadhands.indexOf(action.payload) === -1) {
+              return modifyDrawOutcome(state, {
+                deadhands: [ ...state.currentOutcome.deadhands, action.payload ],
+                tempai: state.currentOutcome.tempai.filter((id) => id !== action.payload)
+              })
+            } else {
+              throw Error('Tempai button cannot exist while deadhand button pressed')
+            }
+          }
         case 'multiron':
           return modifyMultiwin(
             state,
@@ -269,25 +279,17 @@ export function outcomeReducer(
       switch (state.currentOutcome?.selectedOutcome) {
         case 'draw':
         case 'nagashi':
-          if (state.currentOutcome.deadhands.indexOf(action.payload) === -1) {
-            let tempai = state.currentOutcome.tempai;
-            if (tempai.indexOf(action.payload) !== -1) { // remove tempai of dead user
-              tempai = tempai.filter((id) => id !== action.payload);
+          if (state.currentOutcome.riichiBets.indexOf(action.payload) !== -1) {
+            if (state.currentOutcome.tempai.indexOf(action.payload) === -1 && state.currentOutcome.deadhands.indexOf(action.payload) !== -1) {
+              return modifyDrawOutcome(state, {
+                deadhands: state.currentOutcome.deadhands.filter((id) => id !== action.payload),
+                tempai: [ ...state.currentOutcome.tempai, action.payload ]
+              });
+            } else {
+              throw Error('Deadhand button cannot exist while tempai button pressed')
             }
-            return modifyDrawOutcome(state, {
-              tempai,
-              deadhands: [ ...state.currentOutcome.deadhands, action.payload ]
-            });
           } else {
-            let tempai = state.currentOutcome.tempai;
-            if (state.currentOutcome.riichiBets.indexOf(action.payload) !== -1) {
-              // if we remove dead hand from riichi user, he should become tempai
-              tempai = [ ...state.currentOutcome.tempai, action.payload ];
-            }
-            return modifyDrawOutcome(state, {
-              tempai,
-              deadhands: state.currentOutcome.deadhands.filter((id) => id !== action.payload)
-            });
+            throw new Error('Deadhand button cannot exist without pressed riichi');
           }
         default:
           throw new Error('No losers exist on this outcome');
@@ -295,7 +297,7 @@ export function outcomeReducer(
     case TOGGLE_NAGASHI:
       switch (state.currentOutcome?.selectedOutcome) {
         case 'nagashi':
-          if (state.currentOutcome.nagashi.indexOf(action.payload) !== -1) {
+          if (state.currentOutcome.nagashi.indexOf(action.payload) === -1) {
             return modifyDrawOutcome(state, {
               nagashi: [ ...state.currentOutcome.nagashi, action.payload ]
             });

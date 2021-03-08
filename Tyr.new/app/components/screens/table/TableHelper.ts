@@ -14,7 +14,7 @@ import {
   ADD_ROUND_INIT,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
-  INIT_BLANK_OUTCOME, TOGGLE_LOSER, TOGGLE_RIICHI,
+  INIT_BLANK_OUTCOME, TOGGLE_DEADHAND, TOGGLE_LOSER, TOGGLE_NAGASHI, TOGGLE_RIICHI,
   TOGGLE_WINNER,
   UPDATE_CURRENT_GAMES_INIT,
 } from '#/store/actions/interfaces';
@@ -186,13 +186,15 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
 
       const currentOutcome = state.currentOutcome?.selectedOutcome;
       if (!currentOutcome) {
-        throw 'empty outcome';
+        throw new Error('empty outcome');
       }
-      const hasWinButton = ['ron', 'tsumo', 'draw'].includes(currentOutcome);
+      const hasWinButton = ['ron', 'tsumo', 'draw', 'nagashi'].includes(currentOutcome);
       const hasLoseButton = ['ron'].includes(currentOutcome);
-      const hasRiichiButton = ['ron', 'tsumo', 'draw'].includes(currentOutcome);
+      const hasRiichiButton = ['ron', 'tsumo', 'draw', 'abort', 'nagashi'].includes(currentOutcome);
 
-      if (hasWinButton) {
+      showDeadButton = ['draw', 'nagashi'].includes(currentOutcome) && deadPressed(state, player);
+
+      if (hasWinButton && !showDeadButton) {
         let winButtonMode: PlayerButtonMode;
         if (winPressed(state, player)) {
           winButtonMode = PlayerButtonMode.PRESSED;
@@ -234,6 +236,24 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
           onClick: onRiichiButtonClick(dispatch, player.id),
         };
       }
+
+      break;
+    case 'nagashiSelect':
+      points = undefined;
+      penaltyPoints = undefined;
+
+      let winButtonMode: PlayerButtonMode;
+      if (nagashiPressed(state, player)) {
+        winButtonMode = PlayerButtonMode.PRESSED;
+      } else if (nagashiDisabled(state, player)) {
+        winButtonMode = PlayerButtonMode.DISABLE;
+      } else {
+        winButtonMode = PlayerButtonMode.IDLE;
+      }
+      winButton = {
+        mode: winButtonMode,
+        onClick: onNagashiButtonClick(dispatch, player.id),
+      };
       break;
   }
 
@@ -251,6 +271,7 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
     loseButton: loseButton,
     riichiButton: riichiButton,
     showDeadButton: showDeadButton,
+    onDeadButtonClick: onDeadButtonClick(dispatch, player.id),
     showInlineRiichi: showInlineRiichi,
   }
 }
@@ -294,7 +315,7 @@ export function getBottomPanel(state: IAppState, dispatch: Dispatch) {
 }
 
 function canGoNext(state: IAppState) {
-  return mayGoNextFromPlayersSelect(state) //todo
+  return mayGoNextFromPlayersSelect(state) //todo check (at least nagashi)
 }
 
 function getTableMode(state: IAppState): TableMode {
@@ -327,8 +348,8 @@ export function getTableInfo(state: IAppState): TableInfoProps | undefined {
 }
 
 type paymentInfo = {
-  from: number,
-  to: number,
+  from?: number,
+  to?: number,
   directAmount: number,
   riichiAmount: number,
   honbaAmount: number,
@@ -345,22 +366,29 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
 
 
   const result: paymentInfo[] = [];
+  const separator = '<-';
   Object.keys(payments.direct).forEach(paymentItem => {
-    const players = paymentItem.split('<-');;
+    const players = paymentItem.split(separator);
 
     if (players.length === 2) {
       const from = parseInt(players[1], 10);
       const to = parseInt(players[0], 10);
 
-      const item = {
-        from: from,
-        to: to,
-        directAmount: payments.direct[paymentItem],
-        riichiAmount: 0,
-        honbaAmount: 0,
-        paoAmount: 0,
-      };
-      result.push(item);
+      const directAmount = payments.direct[paymentItem];
+
+      const invertedPayment = `${from}${separator}${to}`;
+      const invertedDirectAmount = payments.direct[invertedPayment];
+      if (directAmount !== invertedDirectAmount) {
+        const item = {
+          from: from,
+          to: to,
+          directAmount: directAmount,
+          riichiAmount: 0,
+          honbaAmount: 0,
+          paoAmount: 0,
+        };
+        result.push(item);
+      }
     }
   })
 
@@ -369,8 +397,8 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
     const riichiAmount = payments.riichi[paymentItem];
 
     if (players.length === 2 && riichiAmount !== 0) {
-      const from = parseInt(players[1], 10);
-      const to = parseInt(players[0], 10);
+      const from = players[1] ? parseInt(players[1], 10) : undefined;
+      const to = players[0] ? parseInt(players[0], 10) : undefined;
 
       const currentArrow = result.find(arrow => arrow.to === to && arrow.from === from);
       if (currentArrow) {
@@ -426,19 +454,21 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
 
   const arrows: PlayerArrow[] = []
   payments.forEach(item => {
-    const start = sideByPlayer[item.from];
-    const end = sideByPlayer[item.to];
+    if (item.from && item.to) {
+      const start = sideByPlayer[item.from];
+      const end = sideByPlayer[item.to];
 
-    const playerArrow: PlayerArrow = {
-      points: item.directAmount,
-      honbaPoints: item.honbaAmount,
-      withRiichi: item.riichiAmount !== 0,
-      withPao: item.paoAmount !== 0,
-      start: start,
-      end: end,
-    };
+      const playerArrow: PlayerArrow = {
+        points: item.directAmount,
+        honbaPoints: item.honbaAmount,
+        withRiichi: item.riichiAmount !== 0,
+        withPao: item.paoAmount !== 0,
+        start: start,
+        end: end,
+      };
 
-    arrows.push(playerArrow);
+      arrows.push(playerArrow);
+    }
   })
 
   return {
@@ -452,6 +482,14 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
 
 function onWinButtonClick(dispatch: Dispatch, playerId: number) {
   return () => dispatch({ type: TOGGLE_WINNER, payload: playerId })
+}
+
+function onNagashiButtonClick(dispatch: Dispatch, playerId: number) {
+  return () => dispatch({ type: TOGGLE_NAGASHI, payload: playerId })
+}
+
+function onDeadButtonClick(dispatch: Dispatch, playerId: number) {
+  return () => dispatch({ type: TOGGLE_DEADHAND, payload: playerId })
 }
 
 function onLoseButtonClick(dispatch: Dispatch, playerId: number) {

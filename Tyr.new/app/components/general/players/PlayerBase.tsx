@@ -71,7 +71,7 @@ export class PlayerBase extends React.Component<IProps> {
   }
 
   renderButtons() {
-    const {startWithName, verticalButtons, winButton, loseButton, showDeadButton} = this.props;
+    const {startWithName, verticalButtons, winButton, loseButton, showDeadButton, onDeadButtonClick} = this.props;
     const hasWinButton = winButton !== undefined;
     const hasLoseButton = loseButton !== undefined;
     const oneButton = (hasWinButton && !hasLoseButton) || (hasLoseButton && !hasWinButton);
@@ -116,7 +116,7 @@ export class PlayerBase extends React.Component<IProps> {
             )}
 
             {showDeadButton && (
-              <div className={classNames(
+              <div onClick={onDeadButtonClick} className={classNames(
                 'player__button flat-btn flat-btn--pressed ',
                 {'flat-btn--v-large': verticalButtons},
                 {'flat-btn--large': !verticalButtons},
