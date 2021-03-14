@@ -20,34 +20,34 @@ namespace Mimir;
 require_once __DIR__ . '/../../src/Ruleset.php';
 
 /**
- * Class RulesetOnline
- * Describes most popular row3-column2 tenhou rules + different results scores.
+ * Class RulesetOnlineJpmlA
+ * JPML A like rules
  * @package Mimir
  */
-class RulesetOnline extends Ruleset
+class RulesetOnlineJpmlA extends Ruleset
 {
-    protected static $_title = 'online';
+    protected static $_title = 'onlineJpmlA';
     protected static $_ruleset = [
-        'tenboDivider'          => 1,
-        'ratingDivider'         => 1,
+        'tenboDivider'          => 100,
+        'ratingDivider'         => 10,
         'startRating'           => 0,
         'oka'                   => 0,
         'startPoints'           => 30000,
         'goalPoints'            => 0,
         'playAdditionalRounds'  => false,
         'subtractStartPoints'   => true,
-        'riichiGoesToWinner'    => true,
+        'riichiGoesToWinner'    => false,
         'doubleronRiichiAtamahane' => true,
         'doubleronHonbaAtamahane'  => true,
         'extraChomboPayments'   => false,
         'chomboPenalty'         => 0,
-        'withAtamahane'         => false,
+        'withAtamahane'         => true,
         'withAbortives'         => true,
         'withKuitan'            => true,
-        'withKazoe'             => true,
+        'withKazoe'             => false,
         'withButtobi'           => false,
         'withMultiYakumans'     => true,
-        'withNagashiMangan'     => true,
+        'withNagashiMangan'     => false,
         'withKiriageMangan'     => false,
         'tonpuusen'             => false,
         'gameExpirationTime'    => 24, // hours, to cover JST difference
@@ -63,15 +63,38 @@ class RulesetOnline extends Ruleset
         'replacementPlayerOverrideUma' => 0
     ];
 
-    public function uma($scores = [])
-    {
-        return $this->_equalizeUma($scores, [1 => 30000, 10000, -10000, -30000]);
-    }
-
     public function allowedYaku()
     {
         return YakuMap::listExcept([
+            Y_IPPATSU,
             Y_OPENRIICHI
         ]);
+    }
+
+    /**
+     * JPML A uses complex uma bonus
+     *
+     * @param array $scores
+     * @return array
+     */
+    public function uma($scores = [])
+    {
+        rsort($scores);
+        $minusedPlayers = array_reduce($scores, function($acc, $score) {
+            return $acc + ($score < $this->startPoints() ? 1 : 0);
+        }, 0);
+
+        switch($minusedPlayers) {
+            case 3:
+                $uma = [1 => 120, -10, -30, -80];
+                break;
+            case 1:
+                $uma = [1 => 80, 30, 10, -120];
+                break;
+            default:
+                $uma = [1 => 80, 40, -40, -80];
+        }
+
+        return $this->_equalizeUma($scores, $uma);
     }
 }
