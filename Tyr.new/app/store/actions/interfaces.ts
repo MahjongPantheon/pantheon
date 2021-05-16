@@ -97,6 +97,7 @@ export const TABLE_ROTATE_CLOCKWISE = 'TABLE_ROTATE_CLOCKWISE';
 export const SETTINGS_SAVE_THEME = 'SETTINGS_SAVE_THEME';
 export const SETTINGS_SAVE_LANG = 'SETTINGS_SAVE_LANG';
 export const UPDATE_STATE_SETTINGS = 'UPDATE_STATE_SETTINGS';
+export const SET_STATE_SETTINGS = 'SET_STATE_SETTINGS';
 export const TRACK_ARBITRARY_EVENT = 'TRACK_ARBITRARY_EVENT';
 export const TRACK_SCREEN_ENTER = 'TRACK_SCREEN_ENTER';
 
@@ -479,6 +480,10 @@ interface SettingsSaveLangAction {
 
 interface UpdateStateSettingsAction {
   type: typeof UPDATE_STATE_SETTINGS;
+}
+
+interface SetStateSettingsAction {
+  type: typeof SET_STATE_SETTINGS;
   payload: { [key: string]: any } | undefined;
 }
 
@@ -573,6 +578,7 @@ export type AppActionTypes =
   | SettingsSaveLangAction
   | SettingsSaveThemeAction
   | UpdateStateSettingsAction
+  | SetStateSettingsAction
   | TrackArbitraryEventAction
   | TrackScreenEnterAction
   ;

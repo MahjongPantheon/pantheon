@@ -3,9 +3,9 @@ import { initialState } from '../state';
 import {
   AppActionTypes,
   INIT_STATE,
-  SELECT_MULTIRON_WINNER,
+  SELECT_MULTIRON_WINNER, SET_STATE_SETTINGS,
   SETTINGS_SAVE_LANG,
-  SETTINGS_SAVE_THEME, TOGGLE_OVERVIEW_DIFFBY, UPDATE_STATE_SETTINGS
+  SETTINGS_SAVE_THEME, TOGGLE_OVERVIEW_DIFFBY,
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
 
@@ -37,7 +37,7 @@ export function commonReducer(
           currentLang: action.payload
         }
       };
-    case UPDATE_STATE_SETTINGS:
+    case SET_STATE_SETTINGS:
       return {
         ...state,
         settings: {

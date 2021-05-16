@@ -3,10 +3,10 @@ import {
   AppActionTypes, CONFIRM_REGISTRATION_FAIL,
   CONFIRM_REGISTRATION_INIT,
   CONFIRM_REGISTRATION_SUCCESS,
-  FORCE_LOGOUT, GET_GAME_OVERVIEW_INIT, RESET_REGISTRATION_ERROR, SET_CREDENTIALS,
+  FORCE_LOGOUT, GET_GAME_OVERVIEW_INIT, RESET_REGISTRATION_ERROR, SET_CREDENTIALS, SET_STATE_SETTINGS,
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_THEME, STARTUP_WITH_AUTH, UPDATE_CURRENT_GAMES_INIT,
-  UPDATE_STATE_SETTINGS
+  UPDATE_STATE_SETTINGS,
 } from '../actions/interfaces';
 import {IDBImpl} from '#/services/idb/interface';
 import {IAppState} from '../interfaces';
@@ -63,9 +63,10 @@ export const persistentMw = (storage: IDBImpl) => (mw: MiddlewareAPI<Dispatch<Ap
     case UPDATE_STATE_SETTINGS:
       const data = {
         currentTheme: storage.get('currentTheme'),
-        currentLang: storage.get('currentLang'),
+        currentLang: storage.get('currentLanguage'),
       };
-      next({ type: UPDATE_STATE_SETTINGS, payload: data });
+
+      mw.dispatch({type: SET_STATE_SETTINGS, payload: data });
       break;
   }
 
