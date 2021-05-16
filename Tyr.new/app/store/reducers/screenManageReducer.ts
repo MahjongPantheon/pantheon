@@ -12,6 +12,7 @@ import {
   START_NEW_GAME,
 } from '../actions/interfaces';
 import { winnerHasYakuWithPao } from '../util';
+import {AppOutcome} from '#/interfaces/app';
 
 export function screenManageReducer(
   state: IAppState,
@@ -158,9 +159,11 @@ export function screenManageReducer(
       }
 
       let prevScreen: AppScreen = state.currentScreen;
+      let currentOutcome: AppOutcome | undefined = state.currentOutcome;
       switch (state.currentScreen) {
         case 'outcomeSelect':
           prevScreen = 'currentGame';
+          currentOutcome = undefined;
           break;
         case 'otherTablesList':
         case 'settings':
@@ -183,6 +186,7 @@ export function screenManageReducer(
             prevScreen = 'nagashiSelect';
           } else {
             prevScreen = 'outcomeSelect';
+            currentOutcome = undefined;
           }
           break;
         case 'yakuSelect':
@@ -228,7 +232,8 @@ export function screenManageReducer(
       }
       return {
         ...state,
-        currentScreen: prevScreen
+        currentScreen: prevScreen,
+        currentOutcome: currentOutcome,
       };
     default:
       return state;
