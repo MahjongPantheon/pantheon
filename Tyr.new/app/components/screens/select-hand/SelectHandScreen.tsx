@@ -78,7 +78,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
       return !!mayGoNextFromYakuSelect(state);
     }
 
-    return true
+    return true;
   }
 
 
@@ -89,7 +89,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     }
 
     // const winnerId = state.currentOutcome.winner
-    const player = getWinningUsers(state)[0] //state.multironCurrentWinner?
+    const player = getWinningUsers(state)[0]; //state.multironCurrentWinner?
     const playerName = player.displayName;
     const outcomeText = OutcomeTableMode.RON;
     const canGoNext = this.canGoNext();
@@ -99,7 +99,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
 
 
 
-    const selectedYaku = getSelectedYaku(state)
+    const selectedYaku = getSelectedYaku(state);
     const disabledYaku = getDisabledYaku(state)[player.id]
 
     const yakuList = getYakuList(state)[player.id];
@@ -118,20 +118,22 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
       yakuGroups.push(yakuGroup);
     })
 
-    const yakuHan = state.currentOutcome.han
+    const isYakuman = state.currentOutcome.han < 0;
 
-    const doraCount = state.currentOutcome.dora
+    const yakuHan = state.currentOutcome.han;
+
+    const doraCount = state.currentOutcome.dora;
     const doraValues: number[] = doraOptions(state);
 
-    const withUraDora = false //todo support withUra
-    const uraDoraCount = undefined
+    const withUraDora = false; //todo support withUra
+    const uraDoraCount = undefined;
     const uraDoraValues = undefined;
 
-    const withRedFives = false  //todo support withRedFives
-    const redFivesCount = undefined
+    const withRedFives = false;  //todo support withRedFives
+    const redFivesCount = undefined;
     const redFivesValues = undefined;
 
-    const fuCount = state.currentOutcome.fu
+    const fuCount = state.currentOutcome.fu;
     const fuValues = state.currentOutcome.possibleFu;
 
     //todo support yakumans
@@ -147,6 +149,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
       canGoNext={canGoNext}
       onNextClick={this.onNextClick.bind(this)}
       onBackClick={this.onBackClick.bind(this)}
+      isYakuman={isYakuman}
       yakuHan={yakuHan}
       doraCount={doraCount}
       doraValues={doraValues}

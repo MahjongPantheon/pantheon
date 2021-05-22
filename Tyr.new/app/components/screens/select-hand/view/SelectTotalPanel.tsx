@@ -3,6 +3,8 @@ import './page-set-hand.css'
 import {NumberSelect} from '#/components/general/number-select/NumberSelect';
 
 type IProps = {
+  isYakuman: boolean
+
   yakuHan: number
 
   doraCount: number
@@ -32,6 +34,7 @@ export class SelectTotalPanel extends React.Component<IProps> {
 
   render() {
     const {
+      isYakuman,
       yakuHan,
       doraCount,
       doraValues,
@@ -51,42 +54,51 @@ export class SelectTotalPanel extends React.Component<IProps> {
 
     return (
       <div className="select-total-panel">
-        <div className="select-total-panel__top-group">
-          Han from yaku <span>{yakuHan}</span>
-        </div>
-        <div className="select-total-panel__max">
-          <div className="select-total-panel__select-group">
+        {!isYakuman && (
+          <>
+            <div className="select-total-panel__top-group">
+              Han from yaku <span>{yakuHan}</span>
+            </div>
+            <div className="select-total-panel__max">
+            <div className="select-total-panel__select-group">
             <div className="select-total-panel__select-group-caption">
-              Dora
+            Dora
             </div>
             <NumberSelect value={doraCount} possibleValues={doraValues} onChange={onDoraSelected}/>
-          </div>
-          {withUraDora && uraDoraCount !== undefined && uraDoraValues !== undefined && (
-            <div className="select-total-panel__select-group">
-              <div className="select-total-panel__select-group-caption">
-                Ura dora
-              </div>
-              <NumberSelect value={uraDoraCount} possibleValues={uraDoraValues} onChange={onUraDoraSelected}/>
             </div>
-          )}
-          {withRedFives && redFivesCount !== undefined && redFivesValues !== undefined && (
-            <div className="select-total-panel__select-group">
-              <div className="select-total-panel__select-group-caption">
-                Red fives
+            {withUraDora && uraDoraCount !== undefined && uraDoraValues !== undefined && (
+              <div className="select-total-panel__select-group">
+                <div className="select-total-panel__select-group-caption">
+                  Ura dora
+                </div>
+                <NumberSelect value={uraDoraCount} possibleValues={uraDoraValues} onChange={onUraDoraSelected}/>
               </div>
-              <NumberSelect value={redFivesCount} possibleValues={redFivesValues} onChange={onRedFivesSelected}/>
-            </div>
-          )}
-          <div className="select-total-panel__select-group">
+            )}
+            {withRedFives && redFivesCount !== undefined && redFivesValues !== undefined && (
+              <div className="select-total-panel__select-group">
+                <div className="select-total-panel__select-group-caption">
+                  Red fives
+                </div>
+                <NumberSelect value={redFivesCount} possibleValues={redFivesValues} onChange={onRedFivesSelected}/>
+              </div>
+            )}
+            <div className="select-total-panel__select-group">
             <div className="select-total-panel__select-group-caption">
-              Fu
+            Fu
             </div>
             <NumberSelect value={fuCount} possibleValues={fuValues} onChange={onFuSelected}/>
+            </div>
+            </div>
+            <div className="select-total-panel__bottom-group">
+            {this.hanCount} han {fuCount} fu
+            </div>
+          </>
+        )}
+        {isYakuman && (
+          <div className="select-total-panel__center">
+            Yakuman
           </div>
-        </div>
-        <div className="select-total-panel__bottom-group">
-          {this.hanCount} han {fuCount} fu
-        </div>
+        )}
 
       </div>
     );

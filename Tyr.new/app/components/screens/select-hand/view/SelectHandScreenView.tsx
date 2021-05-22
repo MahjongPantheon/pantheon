@@ -23,6 +23,7 @@ type IProps = {
   canGoNext: boolean
   onNextClick: () => void
 
+  isYakuman: boolean
   yakuHan: number
   doraCount: number
   doraValues: number[]
@@ -66,6 +67,7 @@ export class SelectHandScreenView extends React.Component<IProps> {
       onBackClick,
       canGoNext,
       onNextClick,
+      isYakuman,
       yakuHan,
       doraCount,
       doraValues,
@@ -108,6 +110,7 @@ export class SelectHandScreenView extends React.Component<IProps> {
         )}
         {activeTab === SelectHandActiveTab.TOTAL && (
           <SelectTotalPanel
+            isYakuman={isYakuman}
             yakuHan={yakuHan}
             doraCount={doraCount}
             doraValues={doraValues}

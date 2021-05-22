@@ -14,7 +14,7 @@ import {
   ADD_ROUND_INIT,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
-  INIT_BLANK_OUTCOME, TOGGLE_DEADHAND, TOGGLE_LOSER, TOGGLE_NAGASHI, TOGGLE_RIICHI,
+  INIT_BLANK_OUTCOME, TOGGLE_DEADHAND, TOGGLE_LOSER, TOGGLE_NAGASHI, TOGGLE_PAO, TOGGLE_RIICHI,
   TOGGLE_WINNER,
   UPDATE_CURRENT_GAMES_INIT,
 } from '#/store/actions/interfaces';
@@ -132,11 +132,18 @@ function getPurposeForType(state: IAppState): RoundPreviewSchemePurpose {
   }
 }
 
-function getPlayerPaymentResult(player: Player, state: IAppState): number {
+function getPlayerPaymentResult(player: Player, state: IAppState): number | string {
   const paymentsInfo = getPaymentsInfo(state);
 
-  //todo chombo
-  //todo + riichi on table
+  //todo add reverse mangan tsumo (mimir)
+  if (paymentsInfo.length === 0 ) {
+    if (state.changesOverview && state.changesOverview.outcome === 'chombo' && !!state.changesOverview.penaltyFor) {
+      const penaltyFor = state.changesOverview.penaltyFor
+      if (player.id === penaltyFor) {
+        return 'Penalty'
+      }
+    }
+  }
 
   let result = 0;
   paymentsInfo.forEach(item => {
@@ -166,10 +173,14 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
     case 'confirmation':
       const paymentResult = getPlayerPaymentResult(player, state);
       points = paymentResult !== 0 ? paymentResult : undefined;
-      if (paymentResult > 0) {
-        pointsMode = PlayerPointsMode.POSITIVE;
-        points = `+${points}`
-      } else if (paymentResult < 0) {
+      if (typeof paymentResult === 'number') {
+        if (paymentResult > 0) {
+          pointsMode = PlayerPointsMode.POSITIVE;
+          points = `+${points}`
+        } else if (paymentResult < 0) {
+          pointsMode = PlayerPointsMode.NEGATIVE;
+        }
+      } else {
         pointsMode = PlayerPointsMode.NEGATIVE;
       }
 
@@ -189,7 +200,7 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
         throw new Error('empty outcome');
       }
       const hasWinButton = ['ron', 'tsumo', 'draw', 'nagashi'].includes(currentOutcome);
-      const hasLoseButton = ['ron'].includes(currentOutcome);
+      const hasLoseButton = ['ron', 'chombo'].includes(currentOutcome);
       const hasRiichiButton = ['ron', 'tsumo', 'draw', 'abort', 'nagashi'].includes(currentOutcome);
 
       showDeadButton = ['draw', 'nagashi'].includes(currentOutcome) && deadPressed(state, player);
@@ -242,17 +253,35 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
       points = undefined;
       penaltyPoints = undefined;
 
-      let winButtonMode: PlayerButtonMode;
+      let nagashiButtonMode: PlayerButtonMode;
       if (nagashiPressed(state, player)) {
-        winButtonMode = PlayerButtonMode.PRESSED;
+        nagashiButtonMode = PlayerButtonMode.PRESSED;
       } else if (nagashiDisabled(state, player)) {
-        winButtonMode = PlayerButtonMode.DISABLE;
+        nagashiButtonMode = PlayerButtonMode.DISABLE;
       } else {
-        winButtonMode = PlayerButtonMode.IDLE;
+        nagashiButtonMode = PlayerButtonMode.IDLE;
       }
       winButton = {
-        mode: winButtonMode,
+        mode: nagashiButtonMode,
         onClick: onNagashiButtonClick(dispatch, player.id),
+      };
+      break;
+
+    case 'paoSelect':
+      points = undefined;
+      penaltyPoints = undefined;
+
+      let paoButtonMode: PlayerButtonMode;
+      if (paoPressed(state, player)) {
+        paoButtonMode = PlayerButtonMode.PRESSED;
+      } /*else if (nagashiDisabled(state, player)) {
+        paoButtonMode = PlayerButtonMode.DISABLE;
+      }*/ else {
+        paoButtonMode = PlayerButtonMode.IDLE;
+      }
+      loseButton = {
+        mode: paoButtonMode,
+        onClick: onPaoButtonClick(dispatch, player.id),
       };
       break;
   }
@@ -364,10 +393,9 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
 
   const payments = changesOverview.payments;
 
-
   const result: paymentInfo[] = [];
   const separator = '<-';
-  Object.keys(payments.direct).forEach(paymentItem => {
+  Object.keys(payments.direct || []).forEach(paymentItem => {
     const players = paymentItem.split(separator);
 
     if (players.length === 2) {
@@ -392,7 +420,7 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
     }
   })
 
-  Object.keys(payments.riichi).forEach(paymentItem => {
+  Object.keys(payments.riichi || []).forEach(paymentItem => {
     const players = paymentItem.split('<-');
     const riichiAmount = payments.riichi[paymentItem];
 
@@ -417,7 +445,7 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
     }
   })
 
-  Object.keys(payments.honba).forEach(paymentItem => {
+  Object.keys(payments.honba || []).forEach(paymentItem => {
     const players = paymentItem.split('<-');
     const honbaAmount = payments.honba[paymentItem];
 
@@ -486,6 +514,10 @@ function onWinButtonClick(dispatch: Dispatch, playerId: number) {
 
 function onNagashiButtonClick(dispatch: Dispatch, playerId: number) {
   return () => dispatch({ type: TOGGLE_NAGASHI, payload: playerId })
+}
+
+function onPaoButtonClick(dispatch: Dispatch, playerId: number) {
+  return () => dispatch({ type: TOGGLE_PAO, payload: playerId })
 }
 
 function onDeadButtonClick(dispatch: Dispatch, playerId: number) {
