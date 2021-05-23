@@ -211,10 +211,7 @@ interface ToggleLoserAction {
 
 interface TogglePaoAction {
   type: typeof TOGGLE_PAO;
-  payload: {
-    id: number,
-    yakuWithPao: YakuId[]
-  };
+  payload: number;
 }
 
 interface ToggleDeadhandAction {

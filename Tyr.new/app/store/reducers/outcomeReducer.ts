@@ -250,28 +250,29 @@ export function outcomeReducer(
           throw new Error('No losers exist on this outcome');
       }
     case TOGGLE_PAO:
-      playerId = action.payload.id;
+      playerId = action.payload;
       switch (state.currentOutcome?.selectedOutcome) {
         case 'ron':
         case 'tsumo':
           return modifyWinOutcome(state, {
-            paoPlayerId: state.currentOutcome.paoPlayerId === action.payload.id
+            paoPlayerId: state.currentOutcome.paoPlayerId === playerId
               ? undefined
-              : action.payload.id
+              : playerId
           });
-        case 'multiron':
-          let newState = state;
-          for (let pId in state.currentOutcome.wins) {
-            if (!state.currentOutcome.wins.hasOwnProperty(pId)) {
-              continue;
-            }
-            if (intersect(unpack(state.currentOutcome.wins[pId].yaku), action.payload.yakuWithPao).length !== 0) {
-              newState = modifyWinOutcome(newState, {
-                paoPlayerId: state.currentOutcome.wins[pId].paoPlayerId === action.payload.id ? undefined : action.payload.id
-              }, () => parseInt(playerId.toString(), 10));
-            }
-          }
-          return newState;
+          // todo
+        // case 'multiron':
+        //   let newState = state;
+        //   for (let pId in state.currentOutcome.wins) {
+        //     if (!state.currentOutcome.wins.hasOwnProperty(pId)) {
+        //       continue;
+        //     }
+        //     if (intersect(unpack(state.currentOutcome.wins[pId].yaku), action.payload.yakuWithPao).length !== 0) {
+        //       newState = modifyWinOutcome(newState, {
+        //         paoPlayerId: state.currentOutcome.wins[pId].paoPlayerId === action.payload.id ? undefined : action.payload.id
+        //       }, () => parseInt(playerId.toString(), 10));
+        //     }
+        //   }
+        //   return newState;
         default:
           throw new Error('No pao exist on this outcome');
       }

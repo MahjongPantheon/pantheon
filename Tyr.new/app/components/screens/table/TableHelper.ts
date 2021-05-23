@@ -41,6 +41,7 @@ import {mayGoNextFromPlayersSelect} from '#/store/selectors/navbarSelectors';
 import {PlayerArrow, PlayerSide, ResultArrowsProps} from '#/components/general/result-arrows/ResultArrowsProps';
 import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
 import {roundToString} from '#/components/helpers/Utils';
+import {AppOutcome} from '#/interfaces/app';
 
 export function getPlayerTopInfo(state: IAppState, dispatch: Dispatch) {
   const purpose = getPurposeForType(state);
@@ -148,7 +149,7 @@ function getPlayerPaymentResult(player: Player, state: IAppState): number | stri
   let result = 0;
   paymentsInfo.forEach(item => {
     if ((item.from === player.id || item.to === player.id) && item.from !== item.to) {
-      const payment = item.directAmount + item.riichiAmount + item.honbaAmount + item.paoAmount;
+      const payment = item.directAmount + item.riichiAmount + item.honbaAmount;
       const factor =  item.from === player.id ? -1 : 1
       result += payment * factor;
     }
@@ -168,6 +169,7 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
   let riichiButton: PlayerButtonProps | undefined = undefined;
   let showDeadButton = false;
   let showInlineRiichi = false;
+  const currentOutcome: AppOutcome | undefined = state.currentOutcome;
 
   switch (state.currentScreen) {
     case 'confirmation':
@@ -195,15 +197,15 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
       points = undefined;
       penaltyPoints = undefined;
 
-      const currentOutcome = state.currentOutcome?.selectedOutcome;
-      if (!currentOutcome) {
+      const selectedOutcome = currentOutcome?.selectedOutcome;
+      if (!selectedOutcome) {
         throw new Error('empty outcome');
       }
-      const hasWinButton = ['ron', 'tsumo', 'draw', 'nagashi'].includes(currentOutcome);
-      const hasLoseButton = ['ron', 'chombo'].includes(currentOutcome);
-      const hasRiichiButton = ['ron', 'tsumo', 'draw', 'abort', 'nagashi'].includes(currentOutcome);
+      const hasWinButton = ['ron', 'tsumo', 'draw', 'nagashi'].includes(selectedOutcome);
+      const hasLoseButton = ['ron', 'chombo'].includes(selectedOutcome);
+      const hasRiichiButton = ['ron', 'tsumo', 'draw', 'abort', 'nagashi'].includes(selectedOutcome);
 
-      showDeadButton = ['draw', 'nagashi'].includes(currentOutcome) && deadPressed(state, player);
+      showDeadButton = ['draw', 'nagashi'].includes(selectedOutcome) && deadPressed(state, player);
 
       if (hasWinButton && !showDeadButton) {
         let winButtonMode: PlayerButtonMode;
@@ -271,14 +273,37 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
       points = undefined;
       penaltyPoints = undefined;
 
-      let paoButtonMode: PlayerButtonMode;
-      if (paoPressed(state, player)) {
-        paoButtonMode = PlayerButtonMode.PRESSED;
-      } /*else if (nagashiDisabled(state, player)) {
-        paoButtonMode = PlayerButtonMode.DISABLE;
-      }*/ else {
-        paoButtonMode = PlayerButtonMode.IDLE;
+      if (!currentOutcome) {
+        throw new Error('empty outcome');
       }
+
+      // todo multiron
+
+      let paoButtonMode: PlayerButtonMode | undefined;
+
+      switch (currentOutcome.selectedOutcome) {
+        case 'ron':
+          if (currentOutcome.winner === player.id || currentOutcome.loser === player.id) {
+            paoButtonMode = PlayerButtonMode.DISABLE
+          }
+          break;
+        case 'tsumo':
+          if (currentOutcome.winner === player.id) {
+            paoButtonMode = PlayerButtonMode.DISABLE
+          }
+          break;
+        default:
+          throw new Error('wrong outcome for paoSelect');
+      }
+
+      if (paoButtonMode !== PlayerButtonMode.DISABLE) {
+        if (paoPressed(state, player)) {
+          paoButtonMode = PlayerButtonMode.PRESSED;
+        } else {
+          paoButtonMode = PlayerButtonMode.IDLE;
+        }
+      }
+
       loseButton = {
         mode: paoButtonMode,
         onClick: onPaoButtonClick(dispatch, player.id),
@@ -382,7 +407,6 @@ type paymentInfo = {
   directAmount: number,
   riichiAmount: number,
   honbaAmount: number,
-  paoAmount: number,
 }
 //todo add memorize
 function getPaymentsInfo(state: IAppState): paymentInfo[] {
@@ -413,7 +437,6 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
           directAmount: directAmount,
           riichiAmount: 0,
           honbaAmount: 0,
-          paoAmount: 0,
         };
         result.push(item);
       }
@@ -438,7 +461,6 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
           directAmount: 0,
           riichiAmount: riichiAmount,
           honbaAmount: 0,
-          paoAmount: 0,
         };
         result.push(item);
       }
@@ -460,8 +482,6 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
     }
   })
 
-  //todo pao
-
   return result;
 }
 
@@ -471,6 +491,7 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
     return undefined;
   }
 
+  const paoPlayer = changesOverview.paoPlayer
   const payments = getPaymentsInfo(state);
 
   const sideByPlayer: Record<number, PlayerSide> = {
@@ -490,7 +511,7 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
         points: item.directAmount,
         honbaPoints: item.honbaAmount,
         withRiichi: item.riichiAmount !== 0,
-        withPao: item.paoAmount !== 0,
+        withPao: paoPlayer === item.from,
         start: start,
         end: end,
       };
