@@ -52,6 +52,7 @@ class Config
     protected $_hideResults = false;
     protected $_hideAddReplayButton = false;
     protected $_isPrescripted = false;
+    protected $_chipsValue = 0;
 
     public static function getRuleDescriptions()
     {
@@ -407,6 +408,13 @@ class Config
     public function syncEnd()
     {
         return $this->_syncEnd;
+    }
+    /**
+     * @return int
+     */
+    public function chipsValue()
+    {
+        return $this->_chipsValue;
     }
     /**
      * @return bool

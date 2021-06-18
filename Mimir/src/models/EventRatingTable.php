@@ -152,6 +152,7 @@ class EventRatingTableModel extends Model
                 'display_name'  => $playerItems[$el->getPlayerId()]->getDisplayName(),
                 'tenhou_id'     => $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'        => (float)$el->getRating(),
+                'chips'         => (int)$el->getChips(),
                 'winner_zone'   => (
                     $mainEvent->getRuleset()->subtractStartPoints()
                         ? $el->getRating() >= $mainEvent->getRuleset()->startRating()

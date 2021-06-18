@@ -281,4 +281,26 @@ abstract class Ruleset
     {
         return static::$_ruleset['replacementPlayerOverrideUma'];
     }
+
+    public function withWinningDealerHonbaSkipped()
+    {
+        $valueSet = isset(static::$_ruleset['withWinningDealerHonbaSkipped']);
+        if ($valueSet) {
+            $value = static::$_ruleset['withWinningDealerHonbaSkipped'];
+        } else {
+            // default for all old configs
+            $value = false;
+        }
+        return $value;
+    }
+
+    public function chipsValue()
+    {
+        if (isset(static::$_ruleset['chipsValue'])) {
+            return static::$_ruleset['chipsValue'];
+        } else {
+            // default for all old configs
+            return 0;
+        }
+    }
 }

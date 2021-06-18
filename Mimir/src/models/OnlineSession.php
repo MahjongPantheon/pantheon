@@ -71,7 +71,9 @@ class OnlineSessionModel extends Model
             ->setReplayHash($replayHash)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS);
 
-        list($success, $originalScore, $rounds/*, $debug*/) = $parser->parseToSession($session, $gameContent);
+        $withChips = $event->getRuleset()->chipsValue() > 0;
+
+        list($success, $originalScore, $rounds, $debug) = $parser->parseToSession($session, $gameContent, $withChips);
         $success = $success && $session->save();
 
         /** @var MultiRoundPrimitive|RoundPrimitive $round */

@@ -105,7 +105,12 @@
                 <th>{{_t 'Player'}}</th>
                 <th>{{#a href='/stat/?sort=rating'}}{{_t 'Pts'}}{{/a}}{{#orderByRating}}<span class="icon-arrow-down"></span>{{/orderByRating}}</th>
                 <th>{{#a href='/stat/?sort=avg_place'}}{{_t 'AvPlc'}}{{/a}}{{#orderByAvgPlace}}<span class="icon-arrow-up"></span>{{/orderByAvgPlace}}</th>
-                <th>{{#a href='/stat/?sort=avg_score'}}{{_t 'AvPts'}}{{/a}}{{#orderByAvgScore}}<span class="icon-arrow-up"></span>{{/orderByAvgScore}}</th>
+                {{#if withChips}}
+                  <th>{{_t 'C'}}</th>
+                {{/if}}
+                {{#unless withChips}}
+                  <th>{{#a href='/stat/?sort=avg_score'}}{{_t 'AvPts'}}{{/a}}{{#orderByAvgScore}}<span class="icon-arrow-up"></span>{{/orderByAvgScore}}</th>
+                {{/unless}}
                 <th>&nbsp;</th>
             </tr>
             {{#data}}
@@ -122,7 +127,12 @@
                         {{^winner_zone}}danger{{/winner_zone}}
                          ">{{rating}}</span></td>
                     <td class="cn">{{avg_place_less_precision}}</td>
-                    <td class="cn">{{avg_score_int}}</td>
+                     {{#if withChips}}
+                       <td class="cn">{{chips}}</td>
+                     {{/if}}
+                     {{#unless withChips}}
+                       <td class="cn">{{avg_score_int}}</td>
+                     {{/unless}}
                     <td class="cn">{{games_played}}</td>
                 </tr>
             {{/data}}

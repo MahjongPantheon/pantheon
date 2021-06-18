@@ -1449,3 +1449,9 @@ msgstr "да"
 
 #~ msgid "You can't wait on this"
 #~ msgstr "Он не может на это ждать"
+
+msgid "Chips"
+msgstr "Чипы"
+
+msgid "C"
+msgstr "Ч"
