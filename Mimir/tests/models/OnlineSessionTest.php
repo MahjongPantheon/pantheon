@@ -62,6 +62,10 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @var string
      */
+    protected $_chipsGameContent;
+    /**
+     * @var string
+     */
     protected $_gameLink;
     /**
      * @var string
@@ -86,6 +90,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->_event->save();
 
         $this->_gameContent = file_get_contents(__DIR__ . '/testdata/full_hanchan.xml');
+        $this->_chipsGameContent = file_get_contents(__DIR__ . '/testdata/chips_tonpusen.xml');
         // we had to generate name of the game from current date and time
         // to be able pass game expiration logic
         $this->_gameId = date("YmdH") . 'gm-00a9-0000-40a46a1c';
@@ -160,6 +165,56 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
         $result = $session->addGame($this->_event->getId(), $this->_gameLink, $gameContent);
         $this->assertIsObject($result);
+    }
+
+    public function testAddOnlineGameWithChips()
+    {
+        $this->_event = (new EventPrimitive($this->_db))
+            ->setTitle('title')
+            ->setTimezone('UTC')
+            ->setDescription('desc')
+            ->setType('online')
+            ->setLobbyId('1111')
+            ->setAllowPlayerAppend(1)
+            ->setRuleset(Ruleset::instance('onlineChips'));
+        $this->_event->save();
+
+        $this->playersRegistration();
+
+        $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
+        $result = $session->addGame($this->_event->getId(), $this->_gameLink, $this->_chipsGameContent);
+        $this->assertIsObject($result);
+
+        $statModel = new PlayerStatModel($this->_db, $this->_config, $this->_meta);
+        $stats = $statModel->getStats([$this->_event->getId()], '1');
+        $this->assertEquals(1 + 1, count($stats['rating_history'])); // initial + 1 game
+        $this->assertEquals(1, count($stats['score_history']));
+        $this->assertGreaterThan(1, count($stats['players_info']));
+        $this->assertEquals(1, array_sum($stats['places_summary']));
+
+        $gameResults = $stats['score_history'][1];
+        // scores with included chips 5000 bonus
+        $this->assertEquals(21900, $gameResults[0]['score']);
+        $this->assertEquals(3, $gameResults[0]['place']);
+        $this->assertEquals(-1, $gameResults[0]['chips']);
+        $this->assertEquals(53300, $gameResults[1]['score']);
+        $this->assertEquals(1, $gameResults[1]['place']);
+        $this->assertEquals(3, $gameResults[1]['chips']);
+        $this->assertEquals(11400, $gameResults[2]['score']);
+        $this->assertEquals(4, $gameResults[2]['place']);
+        $this->assertEquals(-2, $gameResults[2]['chips']);
+        $this->assertEquals(33400, $gameResults[3]['score']);
+        $this->assertEquals(2, $gameResults[3]['place']);
+        $this->assertEquals(0, $gameResults[3]['chips']);
+
+        $eventModel = new EventRatingTableModel($this->_db, $this->_config, $this->_meta);
+        $ratings = $eventModel->getRatingTable([$this->_event], 'avg_place', 'asc');
+        $this->assertNotEmpty($ratings);
+        $this->assertEquals(1, $ratings[0]['games_played']);
+        $this->assertEquals(3, $ratings[0]['chips']);
+        $this->assertEquals(0, $ratings[1]['chips']);
+        $this->assertEquals(-1, $ratings[2]['chips']);
+        $this->assertEquals(-2, $ratings[3]['chips']);
     }
 
     // Negative tests

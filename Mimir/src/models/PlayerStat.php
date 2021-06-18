@@ -68,7 +68,7 @@ class PlayerStatModel extends Model
 
         $rounds = $this->_fetchRounds($games);
 
-        $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($playerId, $games);
+        $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($mainEvent->getRuleset(), $playerId, $games);
         return [
             'rating_history'        => $this->_getRatingHistorySequence($mainEvent, $playerId, $games),
             'score_history'         => $scoresAndPlayers['scores'],
@@ -112,21 +112,23 @@ class PlayerStatModel extends Model
     /**
      * Scores and rating deltas of all players
      *
+     * @param $rules
      * @param $playerId
      * @param $games
      * @throws \Exception
      * @return array
      */
-    protected function _getScoreHistoryAndPlayers($playerId, $games)
+    protected function _getScoreHistoryAndPlayers($rules, $playerId, $games)
     {
-        $scoreHistory = array_map(function ($game) use ($playerId) {
+        $withChips = $rules->chipsValue() > 0;
+        $scoreHistory = array_map(function ($game) use ($playerId, $withChips) {
             /** @var $results SessionResultsPrimitive[] */
             $results = $game['results'];
             /** @var SessionPrimitive $session */
             $session = $game['session'];
 
-            return array_map(function ($playerId) use (&$results, &$session) {
-                return [
+            return array_map(function ($playerId) use (&$results, &$session, $withChips) {
+                $result = [
                     'session_hash'  => (string) $session->getRepresentationalHash(),
                     'event_id'      => (int) $session->getEventId(),
                     'player_id'     => (int) $playerId,
@@ -134,6 +136,10 @@ class PlayerStatModel extends Model
                     'rating_delta'  => (float) $results[$playerId]->getRatingDelta(),
                     'place'         => (int) $results[$playerId]->getPlace()
                 ];
+                if ($withChips) {
+                    $result['chips'] = (int) $results[$playerId]->getChips();
+                }
+                return $result;
             }, $session->getPlayersIds());
         }, $games);
 

@@ -46,7 +46,7 @@ class OnlineParser
      * @param $content string game log xml string
      * @return array parsed score
      */
-    public function parseToSession(SessionPrimitive $session, $content)
+    public function parseToSession(SessionPrimitive $session, $content, $withChips = false)
     {
         $reader = new \XMLReader();
         $reader->XML($content);
@@ -84,6 +84,11 @@ class OnlineParser
                 . implode("\t", $scores[$i]);
         }
 
+        if ($withChips) {
+            $session->setChips($this->_parseChipsOutcome($content));
+            $session->updateScoresWithChipsBonus();
+        }
+
         return [$success, $this->_parseOutcome($content), $rounds, $debug];
     }
 
@@ -109,6 +114,33 @@ class OnlineParser
                     intval($parts[2] . '00'),
                     intval($parts[4] . '00'),
                     intval($parts[6] . '00')
+                ]
+            );
+        }
+
+        return [];
+    }
+
+    /**
+     * @param $content
+     * @return array (player id => chips)
+     */
+    protected function _parseChipsOutcome($content)
+    {
+        $regex = "#owari=\"([^\"]*)\"#";
+        $matches = [];
+
+        if (preg_match($regex, $content, $matches)) {
+            $parts = explode(',', $matches[1]);
+            return array_combine(
+                array_map(function (PlayerPrimitive $p) {
+                    return $p->getId();
+                }, $this->_players),
+                [
+                    intval($parts[8]),
+                    intval($parts[10]),
+                    intval($parts[12]),
+                    intval($parts[14])
                 ]
             );
         }

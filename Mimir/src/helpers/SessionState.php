@@ -36,6 +36,10 @@ class SessionState
      */
     protected $_scores = [];
     /**
+     * @var int[] { player_id => chip }
+     */
+    protected $_chips = [];
+    /**
      * @var int[] { player_id => penalty_score }
      */
     protected $_penalties = [];
@@ -111,8 +115,12 @@ class SessionState
     public function toArray()
     {
         $arr = [];
+        $withChips = $this->_rules->chipsValue() > 0;
         foreach ($this as $key => $value) {
             if ($key === '_rules') {
+                continue;
+            }
+            if ($key === '_chips' && !$withChips) {
                 continue;
             }
             if (!is_scalar($value) && !is_array($value) && !is_null($value)) {
@@ -317,6 +325,23 @@ class SessionState
     /**
      * @return \int[]
      */
+    public function getChips()
+    {
+        return $this->_chips;
+    }
+
+    /**
+     * @return SessionState
+     */
+    public function setChips($chips)
+    {
+        $this->_chips = $chips;
+        return $this;
+    }
+
+    /**
+     * @return \int[]
+     */
     public function getPenalties()
     {
         return $this->_penalties;
@@ -403,7 +428,7 @@ class SessionState
             $round->getPaoPlayerId()
         );
 
-        if ($isDealer) {
+        if ($isDealer && !$this->_rules->withWinningDealerHonbaSkipped()) {
             $this->_addHonba();
         } else {
             $this->_resetHonba()
@@ -457,7 +482,7 @@ class SessionState
             $payments = array_merge_recursive($payments, PointsCalc::lastPaymentsInfo());
         }
 
-        if ($dealerWon) {
+        if ($dealerWon && !$this->_rules->withWinningDealerHonbaSkipped()) {
             $this->_addHonba();
         } else {
             $this->_resetHonba()
@@ -487,7 +512,7 @@ class SessionState
             $round->getPaoPlayerId()
         );
 
-        if ($this->getCurrentDealer() == $round->getWinnerId()) {
+        if ($this->getCurrentDealer() == $round->getWinnerId() && !$this->_rules->withWinningDealerHonbaSkipped()) {
             $this->_addHonba();
         } else {
             $this->_resetHonba()
@@ -513,9 +538,10 @@ class SessionState
         $this->_addHonba()
             ->_addRiichiBets(count($round->getRiichiIds()));
 
-        if (!in_array($this->getCurrentDealer(), $round->getTempaiIds())) {
+        if (!in_array($this->getCurrentDealer(), $round->getTempaiIds()) || $this->_rules->withWinningDealerHonbaSkipped()) {
             $this->_nextRound();
         }
+
         return PointsCalc::lastPaymentsInfo();
     }
 

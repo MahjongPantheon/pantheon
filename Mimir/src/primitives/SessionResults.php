@@ -39,7 +39,8 @@ class SessionResultsPrimitive extends Primitive
         'player_id'             => '_playerId',
         'score'                 => '_score',
         'rating_delta'          => '_ratingDelta',
-        'place'                 => '_place'
+        'place'                 => '_place',
+        'chips'                 => '_chips',
     ];
 
     protected function _getFieldsTransforms()
@@ -49,6 +50,7 @@ class SessionResultsPrimitive extends Primitive
             '_sessionId'    => $this->_integerTransform(),
             '_playerId'     => $this->_integerTransform(),
             '_score'        => $this->_integerTransform(),
+            '_chips'        => $this->_integerTransform(true),
             '_ratingDelta'  => $this->_floatTransform(),
             '_id'           => $this->_integerTransform(true)
         ];
@@ -92,6 +94,11 @@ class SessionResultsPrimitive extends Primitive
      * @var int
      */
     protected $_score;
+
+    /**
+     * @var int
+     */
+    protected $_chips;
 
     /**
      * @var float
@@ -321,6 +328,20 @@ class SessionResultsPrimitive extends Primitive
     }
 
     /**
+     * @return int
+     */
+    public function getChips()
+    {
+        return $this->_chips;
+    }
+
+    public function setChips($chips)
+    {
+        $this->_chips = $chips;
+        return $this;
+    }
+
+    /**
      * @return float
      */
     public function getRatingDelta()
@@ -358,6 +379,11 @@ class SessionResultsPrimitive extends Primitive
             $this->_ratingDelta += (
                 $results->getPenalties()[$this->_playerId] / (float)$rules->ratingDivider()
             );
+        }
+
+        $withChips = $rules->chipsValue() > 0;
+        if ($withChips) {
+            $this->_chips = $results->getChips()[$this->_playerId];
         }
 
         return $this;

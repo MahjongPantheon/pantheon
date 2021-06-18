@@ -146,6 +146,7 @@ class RatingTable extends Controller
                 $data = array_merge($data, array_map(function ($el) {
                     return array_merge($el, [
                         'rating'        => '0',
+                        'chips'         => '0',
                         'winner_zone'   => true,
                         'avg_place'     => '0',
                         'avg_score'     => '0',
@@ -236,6 +237,7 @@ class RatingTable extends Controller
 
             'hideResults'       => $hideResults,
             'showAdminWarning'  => $showAdminWarning,
+            'withChips'         => $this->_mainEventRules->chipsValue() > 0,
         ];
     }
 
