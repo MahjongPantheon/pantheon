@@ -842,7 +842,7 @@ class SessionPrimitive extends Primitive
                 $this,
                 $result->getRatingDelta(),
                 $result->getPlace(),
-                $result->getChips(),
+                $result->getChips()
             );
 
             // Should save the result explicitly! It's not saved inside ->getSessionResults()
