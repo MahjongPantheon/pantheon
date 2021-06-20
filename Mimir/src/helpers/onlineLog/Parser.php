@@ -86,7 +86,6 @@ class OnlineParser
 
         if ($withChips) {
             $session->setChips($this->_parseChipsOutcome($content));
-            $session->updateScoresWithChipsBonus();
         }
 
         return [$success, $this->_parseOutcome($content), $rounds, $debug];

@@ -363,6 +363,11 @@ class SessionResultsPrimitive extends Primitive
      */
     public function calc(Ruleset $rules, SessionState $results, $playerIds)
     {
+        $withChips = $rules->chipsValue() > 0;
+        if ($withChips) {
+            $this->_chips = $results->getChips()[$this->_playerId];
+        }
+
         for ($i = 0; $i < count($playerIds); $i++) {
             if ($playerIds[$i] == $this->_playerId) {
                 $this->_score = $results->getScores()[$playerIds[$i]];
@@ -375,15 +380,14 @@ class SessionResultsPrimitive extends Primitive
 
         $this->_ratingDelta = $this->_calcRatingDelta($rules, $results->getScores());
 
+        if ($withChips) {
+            $this->_ratingDelta += $this->_chips * $rules->chipsValue();
+        }
+
         if (!empty($results->getPenalties()[$this->_playerId])) { // final chombing
             $this->_ratingDelta += (
                 $results->getPenalties()[$this->_playerId] / (float)$rules->ratingDivider()
             );
-        }
-
-        $withChips = $rules->chipsValue() > 0;
-        if ($withChips) {
-            $this->_chips = $results->getChips()[$this->_playerId];
         }
 
         return $this;

@@ -194,27 +194,34 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
 
         $gameResults = $stats['score_history'][1];
         // scores with included chips 5000 bonus
-        $this->assertEquals(21900, $gameResults[0]['score']);
         $this->assertEquals(3, $gameResults[0]['place']);
-        $this->assertEquals(-1, $gameResults[0]['chips']);
-        $this->assertEquals(53300, $gameResults[1]['score']);
+        $this->assertEquals(23800, $gameResults[0]['score']);
+        $this->assertEquals(-3, $gameResults[0]['chips']);
+        $this->assertEquals(-16200 - 15000, $gameResults[0]['rating_delta']);
+
         $this->assertEquals(1, $gameResults[1]['place']);
-        $this->assertEquals(3, $gameResults[1]['chips']);
-        $this->assertEquals(11400, $gameResults[2]['score']);
-        $this->assertEquals(4, $gameResults[2]['place']);
-        $this->assertEquals(-2, $gameResults[2]['chips']);
-        $this->assertEquals(33400, $gameResults[3]['score']);
-        $this->assertEquals(2, $gameResults[3]['place']);
-        $this->assertEquals(0, $gameResults[3]['chips']);
+        $this->assertEquals(43200, $gameResults[1]['score']);
+        $this->assertEquals(2, $gameResults[1]['chips']);
+        $this->assertEquals(43200 + 10000, $gameResults[1]['rating_delta']);
+
+        $this->assertEquals(2, $gameResults[2]['place']);
+        $this->assertEquals(39200, $gameResults[2]['score']);
+        $this->assertEquals(5, $gameResults[2]['chips']);
+        $this->assertEquals(19200 + 25000, $gameResults[2]['rating_delta']);
+
+        $this->assertEquals(4, $gameResults[3]['place']);
+        $this->assertEquals(13800, $gameResults[3]['score']);
+        $this->assertEquals(-4, $gameResults[3]['chips']);
+        $this->assertEquals(-46200 - 20000, $gameResults[3]['rating_delta']);
 
         $eventModel = new EventRatingTableModel($this->_db, $this->_config, $this->_meta);
         $ratings = $eventModel->getRatingTable([$this->_event], 'avg_place', 'asc');
         $this->assertNotEmpty($ratings);
         $this->assertEquals(1, $ratings[0]['games_played']);
-        $this->assertEquals(3, $ratings[0]['chips']);
-        $this->assertEquals(0, $ratings[1]['chips']);
-        $this->assertEquals(-1, $ratings[2]['chips']);
-        $this->assertEquals(-2, $ratings[3]['chips']);
+        $this->assertEquals(2, $ratings[0]['chips']);
+        $this->assertEquals(5, $ratings[1]['chips']);
+        $this->assertEquals(-3, $ratings[2]['chips']);
+        $this->assertEquals(-4, $ratings[3]['chips']);
     }
 
     // Negative tests
