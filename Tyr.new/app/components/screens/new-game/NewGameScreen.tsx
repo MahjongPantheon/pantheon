@@ -9,10 +9,6 @@ import {
 import {NewGameScreenView} from '#/components/screens/new-game/NewGameScreenView';
 
 export class NewGameScreen extends React.PureComponent<IComponentProps>{
-  componentDidMount() {
-    this.props.dispatch({ type: GET_ALL_PLAYERS_INIT })
-  }
-
   private onBackClick() {
     this.props.dispatch({ type: GOTO_PREV_SCREEN });
   }

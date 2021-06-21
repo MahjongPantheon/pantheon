@@ -28,7 +28,7 @@ import {
   GET_OTHER_TABLE_SUCCESS,
   GET_OTHER_TABLES_LIST_FAIL,
   GET_OTHER_TABLES_LIST_INIT, GET_OTHER_TABLES_LIST_RELOAD,
-  GET_OTHER_TABLES_LIST_SUCCESS,
+  GET_OTHER_TABLES_LIST_SUCCESS, GO_TO_CURRENT_GAME,
   RESET_STATE,
   SET_CREDENTIALS, SET_TIMER,
   START_GAME_FAIL,
@@ -36,7 +36,7 @@ import {
   START_GAME_SUCCESS,
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
-  UPDATE_CURRENT_GAMES_SUCCESS
+  UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
 import {RiichiApiService} from '#/services/riichiApi';
 import {LCurrentGame, LGameConfig, LTimerState, LUser} from '#/interfaces/local';
@@ -234,6 +234,7 @@ function startGame(playerIds: number[], api: RiichiApiService, dispatch: Dispatc
       dispatchToStore({ type: START_GAME_SUCCESS, payload: results });
       dispatchToStore({ type: RESET_STATE });
       dispatchToStore({ type: UPDATE_CURRENT_GAMES_INIT });
+      dispatchToStore({ type: GO_TO_CURRENT_GAME });
     })
     .catch((e) => dispatch({ type: START_GAME_FAIL, payload: e }));
 }
