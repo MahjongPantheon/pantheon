@@ -10,11 +10,12 @@ import {
   ADD_YAKU,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
-  REMOVE_YAKU,
+  REMOVE_YAKU, SELECT_MULTIRON_WINNER,
   SET_DORA_COUNT,
   SET_FU_COUNT,
 } from '#/store/actions/interfaces';
 import {doraOptions, mayGoNextFromYakuSelect} from '#/store/selectors/navbarSelectors';
+import {getDora, getFu, getPossibleFu, getHan} from '#/store/selectors/hanFu';
 
 export class SelectHandScreen extends React.Component<IComponentProps> {
 
@@ -43,8 +44,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
   }
 
   private onNextClick() {
-    const {state, dispatch} = this.props;
-    //todo for multiron switch player if it's not the last one
+    const {dispatch} = this.props;
     dispatch({ type: GOTO_NEXT_SCREEN });
   }
 
@@ -72,15 +72,27 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
       }});
   }
 
-  private canGoNext(): boolean {
-    const {state} = this.props;
-    if (state.currentScreen === 'yakuSelect') {
-      return !!mayGoNextFromYakuSelect(state);
-    }
-
-    return true;
+  private onLeftArrowClick() {
+    this.goToMultironUser(-1)
   }
 
+  private onRightArrowClick() {
+    this.goToMultironUser(1)
+  }
+
+  private goToMultironUser(delta: number) {
+    const {state, dispatch} = this.props;
+    const currentWinnerId = state.multironCurrentWinner;
+
+    if (currentWinnerId) {
+      const allWinners = getWinningUsers(state)
+      const currentIndex = allWinners.findIndex(x => x.id === currentWinnerId)
+      if (currentIndex !== -1) {
+        const nextId = allWinners[ currentIndex + delta].id
+        dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: nextId} });
+      }
+    }
+  }
 
   render() {
     const {state, i18nService} = this.props;
@@ -88,21 +100,28 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
       return null;
     }
 
-    // const winnerId = state.currentOutcome.winner
-    const player = getWinningUsers(state)[0]; //state.multironCurrentWinner?
-    const playerName = player.displayName;
+    const currentWinnerId = state.multironCurrentWinner;
+    if (!currentWinnerId) {
+      return null;
+    }
+
+    const allWinners = getWinningUsers(state);
+    const playerName = allWinners?.find((val) => val.id === currentWinnerId).displayName;
     const outcomeText = OutcomeTableMode.RON;
-    const canGoNext = this.canGoNext();
-    const leftArrowState = ArrowState.UNAVAILABLE;
-    const rightArrowState = ArrowState.UNAVAILABLE;
+    const canGoNext = !!mayGoNextFromYakuSelect(state);
+
+    let leftArrowState = ArrowState.UNAVAILABLE;
+    let rightArrowState = ArrowState.UNAVAILABLE;
+    if (allWinners.length > 1) {
+      leftArrowState = allWinners[0].id === currentWinnerId ? ArrowState.DISABLED : ArrowState.AVAILABLE
+      rightArrowState = allWinners[allWinners.length - 1].id === currentWinnerId ? ArrowState.DISABLED : ArrowState.AVAILABLE
+    }
     const activeTab = state.currentScreen === 'yakuSelect' ? SelectHandActiveTab.YAKU : SelectHandActiveTab.TOTAL;
 
-
-
     const selectedYaku = getSelectedYaku(state);
-    const disabledYaku = getDisabledYaku(state)[player.id]
+    const disabledYaku = getDisabledYaku(state)[currentWinnerId]
 
-    const yakuList = getYakuList(state)[player.id];
+    const yakuList = getYakuList(state)[currentWinnerId];
     const yakuGroups: YakuGroup[] = [];
     yakuList.forEach(yakuListItem => {
       const yakuGroup: YakuItem[] = []
@@ -118,12 +137,12 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
       yakuGroups.push(yakuGroup);
     })
 
-    const isYakuman = state.currentOutcome.han < 0;
 
-    const yakuHan = state.currentOutcome.han;
+    const yakuHan = getHan(state, currentWinnerId);
+    const isYakuman = yakuHan < 0;
 
-    const doraCount = state.currentOutcome.dora;
-    const doraValues: number[] = doraOptions(state);
+    const doraCount = getDora(state, currentWinnerId);
+    const doraValues = doraOptions(state);
 
     const withUraDora = false; //todo support withUra
     const uraDoraCount = undefined;
@@ -133,17 +152,17 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     const redFivesCount = undefined;
     const redFivesValues = undefined;
 
-    const fuCount = state.currentOutcome.fu;
-    const fuValues = state.currentOutcome.possibleFu;
-
-    //todo support yakumans
+    const fuCount = getFu(state, currentWinnerId);
+    const fuValues = getPossibleFu(state);
 
     return <SelectHandScreenView
       playerName={playerName}
       yakuGroups={yakuGroups}
       outcome={outcomeText}
       leftArrowState={leftArrowState}
+      leftArrowClick={this.onLeftArrowClick.bind(this)}
       rightArrowState={rightArrowState}
+      rightArrowClick={this.onRightArrowClick.bind(this)}
       activeTab={activeTab}
       onTabClick={this.onTabClick.bind(this)}
       canGoNext={canGoNext}

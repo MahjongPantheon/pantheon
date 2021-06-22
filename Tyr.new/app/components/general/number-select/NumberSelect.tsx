@@ -17,26 +17,16 @@ export class NumberSelect extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    this.checkValues();
     this.state = {isModalShown: false};
   }
 
-  shouldComponentUpdate(): boolean {
-    this.checkValues();
-    return true;
-  }
-
-  private checkValues() {
-    const {value, possibleValues} = this.props;
-    if (possibleValues.indexOf(value) === -1) {
-      throw new Error('possibleValues does not include value');
-    }
-  }
-
   private onValueClick() {
-    this.setState({
-      isModalShown: true
-    });
+    const {possibleValues} = this.props;
+    if (possibleValues.length !== 0) {
+      this.setState({
+        isModalShown: true
+      });
+    }
   }
 
   private onValueSelect(value: number) {
@@ -82,6 +72,11 @@ export class NumberSelect extends React.Component<IProps, IState> {
   render() {
     const {value, possibleValues} = this.props;
     const {isModalShown} = this.state;
+    const valueNotInArray = possibleValues.length !== 0 && possibleValues.indexOf(value) === -1
+    const displayValue = possibleValues.length === 0 || valueNotInArray ? '?' : value;
+    if (valueNotInArray) {
+      alert("something goes wrong, please contact you administrator")
+    }
 
     return (
       <div className="number-select">
@@ -97,7 +92,7 @@ export class NumberSelect extends React.Component<IProps, IState> {
           </svg>
         </div>
         <div className="number-select__value" onClick={this.onValueClick.bind(this)}>
-          {value}
+          {displayValue}
         </div>
         <div
           className={classNames(

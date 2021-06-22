@@ -10,7 +10,7 @@ import { I18nService } from '#/services/i18n';
 
 function _getWins(state: IAppState): LWinItem[] {
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'multiron':
+    case 'ron':
       let wins: LWinItem[] = [];
       for (let i in state.currentOutcome.wins) {
         if (!state.currentOutcome.wins.hasOwnProperty(i)) {
@@ -39,8 +39,9 @@ function _getWins(state: IAppState): LWinItem[] {
 export const getWins: typeof _getWins = memoize(_getWins);
 
 export function getMultiRonCount(state: IAppState): number {
+  console.log('getMultiRonCount')
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'multiron':
+    case 'ron':
       return state.currentOutcome.multiRon;
     default:
       return 0;
@@ -71,10 +72,9 @@ function _winnerHasYakuWithPao(state: IAppState): boolean {
   }
 
   switch (outcome.selectedOutcome) {
-    case 'ron':
     case 'tsumo':
       return intersect(unpack(outcome.yaku), gameConfig.yakuWithPao).length > 0;
-    case 'multiron':
+    case 'ron':
       return Object.keys(outcome.wins).reduce<boolean>((acc, playerId) => {
         return acc || (intersect(unpack(outcome.wins[playerId].yaku), gameConfig.yakuWithPao).length > 0);
       }, false);
@@ -92,11 +92,10 @@ export function getOutcome(state: IAppState) {
 function _getWinningUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'ron':
     case 'tsumo':
       const foundWinner = outcome.winner && state.players?.find((val) => val.id === outcome.winner);
       return foundWinner ? [foundWinner] : [];
-    case 'multiron':
+    case 'ron':
       let users: Player[] = [];
       for (let w in outcome.wins) {
         if (!outcome.wins.hasOwnProperty(w)) {
@@ -123,7 +122,6 @@ function _getLosingUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
     case 'ron':
-    case 'multiron':
     case 'chombo':
       const foundLoser = state.players?.find((val) => val.id === outcome.loser);
       return foundLoser ? [foundLoser] : [];
@@ -137,11 +135,10 @@ export const getLosingUsers: typeof _getLosingUsers = memoize(_getLosingUsers);
 function _getPaoUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'ron':
     case 'tsumo':
       const foundPao = outcome.paoPlayerId && state.players?.find((val) => val.id === outcome.paoPlayerId);
       return foundPao ? [foundPao] : [];
-    case 'multiron':
+    case 'ron':
       return Object.keys(outcome.wins).reduce<Player[]>((acc, playerId) => {
         if (outcome.wins[playerId].paoPlayerId) {
           const foundPao = state.players?.find((val) => val.id === outcome.wins[playerId].paoPlayerId);
@@ -188,10 +185,9 @@ export const getNagashiUsers: typeof _getNagashiUsers = memoize(_getNagashiUsers
 function _hasYaku(state: IAppState, id: YakuId) {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'ron':
     case 'tsumo':
       return -1 !== unpack(outcome.yaku).indexOf(id);
-    case 'multiron':
+    case 'ron':
       if (!state.multironCurrentWinner) {
         throw new Error('No winner selected');
       }
@@ -211,7 +207,6 @@ function _getRiichiUsers(state: IAppState): Player[] {
     case 'draw':
     case 'nagashi':
     case 'abort':
-    case 'multiron':
       return outcome.riichiBets.map((r) => state.players?.find((val) => val.id === r))
         .filter((p: Player | undefined): p is Player => !!p);
     default:

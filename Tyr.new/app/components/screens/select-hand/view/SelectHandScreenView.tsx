@@ -8,13 +8,16 @@ import {BottomPanel} from '#/components/general/bottom-panel/BottomPanel';
 import {ArrowState, SelectHandActiveTab, YakuGroup} from '#/components/screens/select-hand/YakuTypes';
 import {Icon} from '#/components/general/icon/Icon';
 import {IconType} from '#/components/general/icon/IconType';
+import {classNames} from '#/components/helpers/ReactUtils';
 
 type IProps = {
   playerName: string
   yakuGroups: YakuGroup[]
   outcome: OutcomeTableMode
   leftArrowState: ArrowState
+  leftArrowClick: () => void
   rightArrowState: ArrowState
+  rightArrowClick: () => void
 
   activeTab: SelectHandActiveTab
   onTabClick: (tab: SelectHandActiveTab) => void
@@ -55,6 +58,20 @@ const getTabItems = (activeTab: SelectHandActiveTab, onTabClick: (tab: SelectHan
 ];
 
 export class SelectHandScreenView extends React.Component<IProps> {
+  private onLeftArrowClick() {
+    const {leftArrowState, leftArrowClick} = this.props;
+    if (leftArrowState !== ArrowState.DISABLED) {
+      leftArrowClick()
+    }
+  }
+
+  private onRightArrowClick() {
+    const {rightArrowState, rightArrowClick} = this.props;
+    if (rightArrowState !== ArrowState.DISABLED) {
+      rightArrowClick()
+    }
+  }
+
   render() {
     const {
       playerName,
@@ -90,7 +107,10 @@ export class SelectHandScreenView extends React.Component<IProps> {
         <div className="page-select-hand__top-panel top-panel top-panel--between">
           <div className="page-select-hand__top-panel-arrow">
             {leftArrowState !== ArrowState.UNAVAILABLE && (
-              <div className="svg-button svg-button--xsmall">
+              <div
+                className={classNames('svg-button svg-button--xsmall', {'svg-button--disabled': leftArrowState === ArrowState.DISABLED})}
+                onClick={this.onLeftArrowClick.bind(this)}
+              >
                 <Icon type={IconType.ARROW_LEFT} />
               </div>
             )}
@@ -98,7 +118,10 @@ export class SelectHandScreenView extends React.Component<IProps> {
           <div className="page-select-hand__player-name">{playerName}</div>
           <div className="page-select-hand__top-panel-arrow">
             {rightArrowState !== ArrowState.UNAVAILABLE && (
-              <div className="svg-button svg-button--xsmall">
+              <div
+                className={classNames('svg-button svg-button--xsmall', {'svg-button--disabled': rightArrowState === ArrowState.DISABLED})}
+                onClick={this.onRightArrowClick.bind(this)}
+              >
                 <Icon type={IconType.ARROW_RIGHT} />
               </div>
             )}

@@ -103,7 +103,6 @@ export function screenManageReducer(
           switch (state.currentOutcome?.selectedOutcome) {
             case 'ron':
             case 'tsumo':
-            case 'multiron':
               nextScreen = 'yakuSelect';
               break;
             case 'draw':
@@ -122,7 +121,6 @@ export function screenManageReducer(
           switch (state.currentOutcome?.selectedOutcome) {
             case 'ron':
             case 'tsumo':
-            case 'multiron':
               if (winnerHasYakuWithPao(state.currentOutcome, state.gameConfig)) {
                 nextScreen = 'paoSelect';
               } else {
@@ -199,7 +197,6 @@ export function screenManageReducer(
           switch (state.currentOutcome?.selectedOutcome) {
             case 'ron':
             case 'tsumo':
-            case 'multiron':
               if (winnerHasYakuWithPao(state.currentOutcome, state.gameConfig)) {
                 prevScreen = 'paoSelect';
               } else {

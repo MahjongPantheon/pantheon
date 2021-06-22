@@ -1,4 +1,4 @@
-import {IAppState} from '#/store/interfaces';
+import {AppScreen, IAppState} from '#/store/interfaces';
 import {Dispatch} from 'redux';
 import {
   getKamicha, getSeatKamicha, getSeatSelf, getSeatShimocha,
@@ -14,11 +14,18 @@ import {
   ADD_ROUND_INIT,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
-  INIT_BLANK_OUTCOME, TOGGLE_DEADHAND, TOGGLE_LOSER, TOGGLE_NAGASHI, TOGGLE_PAO, TOGGLE_RIICHI,
+  INIT_BLANK_OUTCOME,
+  INIT_REQUIRED_YAKU,
+  SELECT_MULTIRON_WINNER,
+  TOGGLE_DEADHAND,
+  TOGGLE_LOSER,
+  TOGGLE_NAGASHI,
+  TOGGLE_PAO,
+  TOGGLE_RIICHI,
   TOGGLE_WINNER,
   UPDATE_CURRENT_GAMES_INIT,
 } from '#/store/actions/interfaces';
-import {Outcome, Player} from '#/interfaces/common';
+import {Outcome as OutcomeType, Outcome, Player} from '#/interfaces/common';
 import {
   paoPressed,
   showDeadButton,
@@ -42,6 +49,9 @@ import {PlayerArrow, PlayerSide, ResultArrowsProps} from '#/components/general/r
 import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
 import {roundToString} from '#/components/helpers/Utils';
 import {AppOutcome} from '#/interfaces/app';
+import {getWinningUsers} from '#/store/selectors/mimirSelectors';
+
+// todo move to selectors most of code from here
 
 export function getPlayerTopInfo(state: IAppState, dispatch: Dispatch) {
   const purpose = getPurposeForType(state);
@@ -277,15 +287,13 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
         throw new Error('empty outcome');
       }
 
-      // todo multiron
-
       let paoButtonMode: PlayerButtonMode | undefined;
 
       switch (currentOutcome.selectedOutcome) {
         case 'ron':
-          if (currentOutcome.winner === player.id || currentOutcome.loser === player.id) {
-            paoButtonMode = PlayerButtonMode.DISABLE
-          }
+          // if (currentOutcome.winner === player.id || currentOutcome.loser === player.id) {
+          //   paoButtonMode = PlayerButtonMode.DISABLE
+          // }
           break;
         case 'tsumo':
           if (currentOutcome.winner === player.id) {
@@ -330,11 +338,52 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
   }
 }
 
+function getTitleForOutcome(selectedOutcome: OutcomeType | undefined, currentScreen: AppScreen): string | undefined {
+  // todo add i18n
+  if (selectedOutcome === undefined) {
+    return undefined
+  }
+
+  switch (selectedOutcome) {
+    case 'ron':
+    case 'tsumo':
+      if (currentScreen === 'paoSelect') {
+        return  'select pao';
+      }
+      break;
+    case 'nagashi':
+      if (currentScreen === 'playersSelect') {
+        return 'select tempai';
+      }
+      break;
+  }
+
+  return getOutcomeName(selectedOutcome)
+}
+
+// todo replace with common selector
+function getOutcomeName(selectedOutcome: OutcomeType): string {
+  switch (selectedOutcome) {
+    case 'ron':
+      return  'Ron';
+    case 'tsumo':
+      return  'Tsumo';
+    case 'draw':
+      return  'Draw';
+    case 'abort':
+      return  'Abort';
+    case 'chombo':
+      return  'Chombo';
+    case 'nagashi':
+      return 'Nagashi';
+  }
+}
+
 export function getBottomPanel(state: IAppState, dispatch: Dispatch) {
   const tableMode = getTableMode(state);
   const selectedOutcome = state.currentOutcome && state.currentOutcome.selectedOutcome;
 
-  const text = selectedOutcome; //todo
+  const text = getTitleForOutcome(selectedOutcome, state.currentScreen)
 
   const showBack = tableMode === TableMode.SELECT_PLAYERS || tableMode ===  TableMode.RESULT;
   const showNext = tableMode === TableMode.SELECT_PLAYERS;

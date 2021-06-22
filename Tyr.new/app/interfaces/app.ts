@@ -37,15 +37,15 @@ export interface WinProps {
   openHand: boolean;
 }
 
-export interface AppOutcomeRon extends Outcome, WinProps {
-  selectedOutcome: 'ron';
-  loser?: number; // id of player
-  loserIsDealer: boolean;
-  riichiBets: number[]; // ids of players
-}
+// export interface AppOutcomeRon extends Outcome, WinProps {
+//   selectedOutcome: 'ron';
+//   loser?: number; // id of player
+//   loserIsDealer: boolean;
+//   riichiBets: number[]; // ids of players
+// }
 
-export interface AppOutcomeMultiRon extends Outcome {
-  selectedOutcome: 'multiron';
+export interface AppOutcomeRon extends Outcome {
+  selectedOutcome: 'ron';
   loser?: number; // id of player
   loserIsDealer: boolean;
   multiRon: number;
@@ -88,13 +88,12 @@ export interface AppOutcomeChombo extends Outcome {
 export type AppOutcome
   = AppOutcomeRon
   | AppOutcomeTsumo
-  | AppOutcomeMultiRon
   | AppOutcomeDraw
   | AppOutcomeAbort
   | AppOutcomeChombo
   | AppOutcomeNagashi
   ;
 
-export type WinOutcomeProps = Partial<AppOutcomeMultiRon | AppOutcomeRon | AppOutcomeTsumo>;
-export type LoseOutcomeProps = Partial<AppOutcomeMultiRon | AppOutcomeRon | AppOutcomeChombo>;
+export type WinOutcomeProps = Partial<AppOutcomeRon | AppOutcomeTsumo>;
+export type LoseOutcomeProps = Partial<AppOutcomeRon | AppOutcomeChombo>;
 export type DrawOutcomeProps = Partial<AppOutcomeAbort | AppOutcomeDraw | AppOutcomeNagashi>;

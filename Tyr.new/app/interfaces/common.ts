@@ -21,7 +21,7 @@
 import { YakuId } from '#/primitives/yaku';
 import { I18nService } from '#/services/i18n';
 
-export type Outcome = 'ron' | 'tsumo' | 'draw' | 'abort' | 'chombo' | 'multiron' | 'nagashi';
+export type Outcome = 'ron' | 'tsumo' | 'draw' | 'abort' | 'chombo' | 'nagashi';
 
 export interface Yaku {
   id: YakuId;

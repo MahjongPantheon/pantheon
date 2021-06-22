@@ -10,10 +10,9 @@ export function winnerHasYakuWithPao(outcome: AppOutcome, gameConfig: LGameConfi
   }
 
   switch (outcome.selectedOutcome) {
-    case 'ron':
     case 'tsumo':
       return intersect(unpack(outcome.yaku), gameConfig.yakuWithPao).length > 0;
-    case 'multiron':
+    case 'ron':
       return Object.keys(outcome.wins).reduce<boolean>((acc, playerId) => {
         return acc || (intersect(unpack(outcome.wins[playerId].yaku), gameConfig.yakuWithPao).length > 0);
       }, false);

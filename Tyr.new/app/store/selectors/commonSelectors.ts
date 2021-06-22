@@ -12,12 +12,6 @@ export function getOutcomeName(i18n: I18nService, outcome: AppOutcome['selectedO
     case 'abort': return i18n._t('Abortive draw');
     case 'chombo': return i18n._t('Chombo');
     case 'nagashi': return i18n._t('Nagashi mangan');
-    case 'multiron': return noMultiRon
-      ? i18n._t('Ron')
-      : (winnersCount === 2
-          ? i18n._t('Double ron')
-          : i18n._t('Triple ron')
-      );
   }
 }
 

@@ -170,25 +170,6 @@ export function currentGamesFormatter(games: RCurrentGames): LCurrentGame[] {
 export function formatRoundToRemote(state: IAppState): RRound | undefined {
   switch (state.currentOutcome?.selectedOutcome) {
     case 'ron':
-      return {
-        round_index: state.currentRound,
-        honba: state.honba,
-        outcome: 'ron',
-        riichi: getRiichiUsers(state).map((player) => player.id).join(','),
-        winner_id: getWinningUsers(state)[0].id,
-        loser_id: getLosingUsers(state)[0].id,
-        pao_player_id: (getPaoUsers(state)[0] || { id: null }).id,
-        han: getHan(state) + getDora(state),
-        fu: getFu(state),
-        multi_ron: null,
-        dora: getDora(state),
-        uradora: 0, // TODO
-        kandora: 0, // TODO
-        kanuradora: 0, // TODO
-        yaku: getSelectedYaku(state).filter(y => y > 0).join(','),
-        open_hand: getSelectedYaku(state).indexOf(YakuId.__OPENHAND) !== -1
-      };
-    case 'multiron':
       let winIdx = 0;
       let wins = getWins(state).map(win => {
         let riichi = winIdx > 0 ? '' : getRiichiUsers(state).map((player) => player.id).join(',');
@@ -208,14 +189,27 @@ export function formatRoundToRemote(state: IAppState): RRound | undefined {
         };
       });
 
+      if (wins.length > 1) { // multiron
+        return {
+          round_index: state.currentRound,
+          honba: state.honba,
+          outcome: 'multiron',
+          loser_id: getLosingUsers(state)[0].id,
+          multi_ron: wins.length,
+          wins: wins
+        };
+      }
+
+      // single winner ron
       return {
         round_index: state.currentRound,
         honba: state.honba,
-        outcome: 'multiron',
+        outcome: 'ron',
         loser_id: getLosingUsers(state)[0].id,
-        multi_ron: wins.length,
-        wins: wins
+        multi_ron: null,
+        ...wins[0]
       };
+
     case 'tsumo':
       return {
         round_index: state.currentRound,

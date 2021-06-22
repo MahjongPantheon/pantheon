@@ -15,7 +15,7 @@ export function showWinButton(state: IAppState) {
   if (!state.currentOutcome) {
     return false;
   }
-  return -1 !== ['ron', 'multiron', 'tsumo', 'draw', 'nagashi']
+  return -1 !== ['ron', 'tsumo', 'draw', 'nagashi']
     .indexOf(state.currentOutcome.selectedOutcome) && state.currentScreen !== 'paoSelect' && state.currentScreen !== 'nagashiSelect';
 }
 
@@ -25,11 +25,9 @@ export function showPaoButton(state: IAppState) {
   }
 
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'ron':
-      return state.currentOutcome.winner !== state.currentPlayerId && state.currentOutcome.loser !== state.currentPlayerId;
     case 'tsumo':
       return state.currentOutcome.winner !== state.currentPlayerId;
-    case 'multiron':
+    case 'ron': // todo check
       // no pao for loser and winner with yakuman
       if (state.currentOutcome.loser === state.currentPlayerId) {
         return false;
@@ -54,7 +52,7 @@ export function showLoseButton(state: IAppState) {
   if (!state.currentOutcome) {
     return false;
   }
-  return -1 !== ['ron', 'multiron', 'chombo']
+  return -1 !== ['ron', 'chombo']
     .indexOf(state.currentOutcome.selectedOutcome) && state.currentScreen !== 'paoSelect' && state.currentScreen !== 'nagashiSelect';
 }
 
@@ -62,7 +60,7 @@ export function showRiichiButton(state: IAppState) {
   if (!state.currentOutcome) {
     return false;
   }
-  return -1 !== ['ron', 'multiron', 'tsumo', 'abort', 'draw', 'nagashi']
+  return -1 !== ['ron', 'tsumo', 'abort', 'draw', 'nagashi']
     .indexOf(state.currentOutcome.selectedOutcome) && state.currentScreen !== 'paoSelect' && state.currentScreen !== 'nagashiSelect';
 }
 
@@ -115,18 +113,18 @@ export function winDisabled(state: IAppState, userData: Player) {
     return -1 !== getDeadhandUsers(state).indexOf(userData)
   }
 
-  if (state.currentOutcome.selectedOutcome === 'multiron') {
+  if (state.currentOutcome.selectedOutcome === 'ron') {
     return -1 !== getLosingUsers(state).indexOf(userData)
   }
 
-  // for ron/tsumo winner is only one
+  // for tsumo winner is only one
   return (
     getWinningUsers(state).length > 0
     && -1 === getWinningUsers(state).indexOf(userData)
   ) || -1 !== getLosingUsers(state).indexOf(userData); // and it should not be current loser
 }
 
-// for ron/multiron/chombo - loser is only one
+// for ron/chombo - loser is only one
 export function loseDisabled(state: IAppState, userData: Player) {
   return (
     getLosingUsers(state).length > 0
@@ -138,6 +136,10 @@ export function loseDisabled(state: IAppState, userData: Player) {
 export function nagashiDisabled(state: IAppState, userData: Player) {
   return getNagashiUsers(state).length >= 3
     && -1 === getNagashiUsers(state).indexOf(userData);
+}
+
+export function paoDisabled(state: IAppState, userData: Player) {
+
 }
 
 // riichi & dead hand can't be disabled

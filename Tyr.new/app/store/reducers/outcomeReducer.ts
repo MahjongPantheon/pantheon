@@ -48,7 +48,6 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
   let winProps;
   yakuToAdd.forEach((yId) => {
     switch (stateUpdated.currentOutcome?.selectedOutcome) {
-      case 'ron':
       case 'tsumo':
         winProps = addYakuToProps(
           stateUpdated.currentOutcome,
@@ -62,7 +61,7 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
           return;
         }
         break;
-      case 'multiron':
+      case 'ron':
         if (!targetPlayer) {
           return;
         }
@@ -107,10 +106,9 @@ export function outcomeReducer(
       return addYakuList(state, [action.payload.id].concat(getRequiredYaku(state)), action.payload.winner);
     case INIT_REQUIRED_YAKU:
       switch (state.currentOutcome?.selectedOutcome) {
-        case 'ron':
         case 'tsumo':
           return addYakuList(state, getRequiredYaku(state), state.multironCurrentWinner);
-        case 'multiron':
+        case 'ron':
           let stateModified = state;
           Object.keys(state.currentOutcome.wins).forEach((pId) => {
             stateModified = addYakuList(stateModified, getRequiredYaku(state, parseInt(pId, 10)), parseInt(pId, 10));
@@ -126,7 +124,6 @@ export function outcomeReducer(
       }
 
       switch (state.currentOutcome?.selectedOutcome) {
-        case 'ron':
         case 'tsumo':
           winProps = removeYakuFromProps(
             state.currentOutcome,
@@ -138,7 +135,7 @@ export function outcomeReducer(
             return state;
           }
           break;
-        case 'multiron':
+        case 'ron':
           winProps = removeYakuFromProps(
             state.currentOutcome.wins[action.payload.winner!],
             state.currentOutcome.selectedOutcome,
@@ -182,7 +179,7 @@ export function outcomeReducer(
         }
       }
 
-      if (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo' || outcome?.selectedOutcome === 'multiron') {
+      if (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo') {
         return modifyWinOutcomeCommons(state, { riichiBets: riichiList });
       } else if (outcome?.selectedOutcome === 'draw' || outcome?.selectedOutcome === 'nagashi' || outcome?.selectedOutcome === 'abort') {
         return modifyDrawOutcome(state, {
@@ -193,7 +190,6 @@ export function outcomeReducer(
       return state;
     case TOGGLE_WINNER:
       switch (state.currentOutcome?.selectedOutcome) {
-        case 'ron':
         case 'tsumo':
           return modifyWinOutcome(state, {
             winner: state.currentOutcome.winner === action.payload
@@ -224,7 +220,7 @@ export function outcomeReducer(
               throw Error('Tempai button cannot exist while deadhand button pressed')
             }
           }
-        case 'multiron':
+        case 'ron':
           return modifyMultiwin(
             state,
             action.payload,
@@ -237,7 +233,6 @@ export function outcomeReducer(
     case TOGGLE_LOSER:
       switch (state.currentOutcome?.selectedOutcome) {
         case 'ron':
-        case 'multiron':
         case 'chombo':
           return modifyLoseOutcome(state, {
             loser: state.currentOutcome.loser === action.payload
@@ -252,27 +247,25 @@ export function outcomeReducer(
     case TOGGLE_PAO:
       playerId = action.payload;
       switch (state.currentOutcome?.selectedOutcome) {
-        case 'ron':
         case 'tsumo':
           return modifyWinOutcome(state, {
             paoPlayerId: state.currentOutcome.paoPlayerId === playerId
               ? undefined
               : playerId
           });
-          // todo
-        // case 'multiron':
-        //   let newState = state;
-        //   for (let pId in state.currentOutcome.wins) {
-        //     if (!state.currentOutcome.wins.hasOwnProperty(pId)) {
-        //       continue;
-        //     }
-        //     if (intersect(unpack(state.currentOutcome.wins[pId].yaku), action.payload.yakuWithPao).length !== 0) {
-        //       newState = modifyWinOutcome(newState, {
-        //         paoPlayerId: state.currentOutcome.wins[pId].paoPlayerId === action.payload.id ? undefined : action.payload.id
-        //       }, () => parseInt(playerId.toString(), 10));
-        //     }
-        //   }
-        //   return newState;
+        case 'ron':
+          let newState = state;
+          /*for (let pId in state.currentOutcome.wins) {
+            if (!state.currentOutcome.wins.hasOwnProperty(pId)) {
+              continue;
+            }
+            if (intersect(unpack(state.currentOutcome.wins[pId].yaku), action.payload.yakuWithPao).length !== 0) {
+              newState = modifyWinOutcome(newState, {
+                paoPlayerId: state.currentOutcome.wins[pId].paoPlayerId === playerId ? undefined : playerId
+              }, () => parseInt(playerId.toString(), 10));
+            }
+          }*/
+          return newState;
         default:
           throw new Error('No pao exist on this outcome');
       }

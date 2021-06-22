@@ -25,7 +25,6 @@ import {
   AppOutcomeDraw,
   AppOutcomeAbort,
   AppOutcomeChombo,
-  AppOutcomeMultiRon,
   AppOutcomeNagashi
 } from '#/interfaces/app';
 import { Outcome as OutcomeType } from '#/interfaces/common';
@@ -80,26 +79,8 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
   let out: AppOutcome;
   switch (outcome) {
     case 'ron':
-      const outcomeRon: AppOutcomeRon = {
+      const outcomeMultiRon: AppOutcomeRon = {
         selectedOutcome: 'ron',
-        roundIndex: round,
-        loser: undefined,
-        winner: undefined,
-        winnerIsDealer: false,
-        loserIsDealer: false,
-        han: 0,
-        fu: 40, //check that nothing goes wrong
-        possibleFu: getFixedFu([], 'ron'),
-        yaku: '', // empty string is ok for empty yaku list
-        riichiBets: [],
-        dora: 0,
-        openHand: false
-      };
-      out = outcomeRon;
-      break;
-    case 'multiron':
-      const outcomeMultiRon: AppOutcomeMultiRon = {
-        selectedOutcome: 'multiron',
         roundIndex: round,
         loser: undefined,
         loserIsDealer: false,
