@@ -75,7 +75,7 @@ export class NumberSelect extends React.Component<IProps, IState> {
     const valueNotInArray = possibleValues.length !== 0 && possibleValues.indexOf(value) === -1
     const displayValue = possibleValues.length === 0 || valueNotInArray ? '?' : value;
     if (valueNotInArray) {
-      alert("something goes wrong, please contact you administrator")
+      alert("something goes wrong, please contact your administrator")
     }
 
     return (

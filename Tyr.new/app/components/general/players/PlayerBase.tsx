@@ -146,17 +146,20 @@ export class PlayerBase extends React.Component<IProps> {
       pointsMode,
       penaltyPoints,
       showInlineRiichi,
+      onPlayerClick,
     } = this.props;
 
     return (
-      <div className = {classNames(
-        'player',
-        {'player--top': mode === PlayerMode.TOP},
-        {'player--right': mode === PlayerMode.RIGHT},
-        {'player--bottom': mode === PlayerMode.BOTTOM},
-        {'player--left': mode === PlayerMode.LEFT},
-        {'player--rotated': rotated},
-      )}
+      <div
+        className={classNames(
+          'player',
+          {'player--top': mode === PlayerMode.TOP},
+          {'player--right': mode === PlayerMode.RIGHT},
+          {'player--bottom': mode === PlayerMode.BOTTOM},
+          {'player--left': mode === PlayerMode.LEFT},
+          {'player--rotated': rotated},
+        )}
+        onClick={onPlayerClick}
       >
         {startWithName && this.renderName()}
 

@@ -19,7 +19,7 @@ import {
   SELECT_MULTIRON_WINNER,
   TOGGLE_DEADHAND,
   TOGGLE_LOSER,
-  TOGGLE_NAGASHI,
+  TOGGLE_NAGASHI, TOGGLE_OVERVIEW_DIFFBY,
   TOGGLE_PAO,
   TOGGLE_RIICHI,
   TOGGLE_WINNER,
@@ -49,7 +49,6 @@ import {PlayerArrow, PlayerSide, ResultArrowsProps} from '#/components/general/r
 import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
 import {roundToString} from '#/components/helpers/Utils';
 import {AppOutcome} from '#/interfaces/app';
-import {getWinningUsers} from '#/store/selectors/mimirSelectors';
 
 // todo move to selectors most of code from here
 
@@ -109,20 +108,33 @@ export function getOutcomeModalInfo(state: IAppState, dispatch: Dispatch): Selec
       onSelect: () => {onItemSelect('draw')},
     },
     {
-      text: 'Abortive draw',
-      onSelect: () => {onItemSelect('abort')},
-      unavailable: false,
-    },
-    {
-      text: 'Nagashi mangan',
-      onSelect: () => {onItemSelect('nagashi')},
-      unavailable: false,
-    },
-    {
       text: 'Chombo',
       onSelect: () => {onItemSelect('chombo')},
     },
   ];
+
+  const gameConfig = state.gameConfig
+  if (gameConfig) {
+    if (gameConfig.withAbortives) {
+      items.push(
+        {
+          text: 'Abortive draw',
+          onSelect: () => {onItemSelect('abort')},
+          unavailable: false,
+        }
+      )
+    }
+
+    if (gameConfig.withNagashiMangan) {
+      items.push(
+        {
+          text: 'Nagashi mangan',
+          onSelect: () => {onItemSelect('nagashi')},
+          unavailable: false,
+        }
+      )
+    }
+  }
 
   return {
     items: items,
@@ -182,6 +194,21 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
   const currentOutcome: AppOutcome | undefined = state.currentOutcome;
 
   switch (state.currentScreen) {
+    case 'currentGame':
+      if (state.overviewDiffBy) {
+        const diffByPlayer = state.players?.find(x => x.id === state.overviewDiffBy);
+        if (diffByPlayer) {
+          points = player.score - diffByPlayer.score;
+          if (points > 0) {
+            pointsMode = PlayerPointsMode.POSITIVE;
+            points = `+${points}`
+          } else if (points < 0) {
+            pointsMode = PlayerPointsMode.NEGATIVE;
+          }
+          penaltyPoints = undefined
+        }
+      }
+      break;
     case 'confirmation':
       const paymentResult = getPlayerPaymentResult(player, state);
       points = paymentResult !== 0 ? paymentResult : undefined;
@@ -335,6 +362,7 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
     showDeadButton: showDeadButton,
     onDeadButtonClick: onDeadButtonClick(dispatch, player.id),
     showInlineRiichi: showInlineRiichi,
+    onPlayerClick: onPlayerClick(state, dispatch, player.id)
   }
 }
 
@@ -639,4 +667,14 @@ function onBackClick(dispatch: Dispatch) {
 
 function onSaveClick(state: IAppState, dispatch: Dispatch) {
   return () => dispatch({ type: ADD_ROUND_INIT, payload: state })
+}
+
+function onPlayerClick(state: IAppState, dispatch: Dispatch, playerId: number) {
+  if (state.currentScreen !== "currentGame") {
+    return undefined
+  }
+
+  return () => {
+    dispatch( { type: TOGGLE_OVERVIEW_DIFFBY, payload: playerId })
+  }
 }

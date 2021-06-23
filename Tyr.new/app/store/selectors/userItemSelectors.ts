@@ -113,11 +113,12 @@ export function winDisabled(state: IAppState, userData: Player) {
     return -1 !== getDeadhandUsers(state).indexOf(userData)
   }
 
-  if (state.currentOutcome.selectedOutcome === 'ron') {
+  // for multiron
+  if (state.currentOutcome.selectedOutcome === 'ron' && !state.gameConfig?.withAtamahane) {
     return -1 !== getLosingUsers(state).indexOf(userData)
   }
 
-  // for tsumo winner is only one
+  // for tsumo and ron without atamahane winner is only one
   return (
     getWinningUsers(state).length > 0
     && -1 === getWinningUsers(state).indexOf(userData)

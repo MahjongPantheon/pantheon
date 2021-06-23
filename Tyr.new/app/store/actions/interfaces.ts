@@ -454,7 +454,7 @@ interface SelectNewgameNorthAction {
 
 interface ToggleOverviewDiffbyAction {
   type: typeof TOGGLE_OVERVIEW_DIFFBY;
-  payload: IAppState['overviewDiffBy'];
+  payload: number;
 }
 
 interface TableRotateClockwiseAction {

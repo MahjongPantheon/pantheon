@@ -79,7 +79,7 @@ export interface IAppState {
   currentOtherTable?: LSessionOverview;
   otherTableError?: ErrorState;
 
-  overviewDiffBy?: 'self' | 'shimocha' | 'toimen' | 'kamicha';
+  overviewDiffBy?: number;
   overviewViewShift?: number;
 
   updateCurrentGamesError?: ErrorState;

@@ -15,4 +15,5 @@ export type PlayerProps = {
   showDeadButton?: boolean
   onDeadButtonClick?: () => void
   showInlineRiichi?: boolean
+  onPlayerClick?: () => void
 }
