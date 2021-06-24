@@ -21,7 +21,7 @@ export class TableScreen extends React.Component<IComponentProps> {
     const rightPlayerInfo = getPlayerRightInfo(state, dispatch)
     const bottomPlayerInfo = getPlayerBottomInfo(state, dispatch)
 
-    const tableInfo = getTableInfo(state);
+    const tableInfo = getTableInfo(state, dispatch);
 
     const outcomeModalInfo = getOutcomeModalInfo(state, dispatch)
     const buttonPanelInfo = getBottomPanel(state, dispatch)

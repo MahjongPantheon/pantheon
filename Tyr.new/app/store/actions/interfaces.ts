@@ -92,6 +92,7 @@ export const SELECT_NEWGAME_PLAYER_SOUTH = 'SELECT_NEWGAME_PLAYER_SOUTH';
 export const SELECT_NEWGAME_PLAYER_WEST = 'SELECT_NEWGAME_PLAYER_WEST';
 export const SELECT_NEWGAME_PLAYER_NORTH = 'SELECT_NEWGAME_PLAYER_NORTH';
 export const TOGGLE_OVERVIEW_DIFFBY = 'TOGGLE_OVERVIEW_DIFFBY';
+export const TOGGLE_ADDITIONAL_TABLE_INFO = 'TOGGLE_ADDITIONAL_TABLE_INFO';
 export const TABLE_ROTATE_COUNTERCLOCKWISE = 'TABLE_ROTATE_COUNTERCLOCKWISE';
 export const TABLE_ROTATE_CLOCKWISE = 'TABLE_ROTATE_CLOCKWISE';
 export const SETTINGS_SAVE_THEME = 'SETTINGS_SAVE_THEME';
@@ -457,6 +458,10 @@ interface ToggleOverviewDiffbyAction {
   payload: number;
 }
 
+interface ToggleAdditionalTableInfoAction {
+  type: typeof TOGGLE_ADDITIONAL_TABLE_INFO;
+}
+
 interface TableRotateClockwiseAction {
   type: typeof TABLE_ROTATE_CLOCKWISE;
 }
@@ -570,6 +575,7 @@ export type AppActionTypes =
   | SelectNewgameSouthAction
   | SelectNewgameWestAction
   | ToggleOverviewDiffbyAction
+  | ToggleAdditionalTableInfoAction
   | TableRotateClockwiseAction
   | TableRotateCounterclockwiseAction
   | SettingsSaveLangAction

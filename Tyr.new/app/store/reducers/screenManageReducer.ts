@@ -149,7 +149,8 @@ export function screenManageReducer(
       }
       return {
         ...state,
-        currentScreen: nextScreen
+        currentScreen: nextScreen,
+        showAdditionalTableInfo: false,
       };
     case GOTO_PREV_SCREEN:
       if (!state.gameConfig) {
@@ -231,6 +232,7 @@ export function screenManageReducer(
         ...state,
         currentScreen: prevScreen,
         currentOutcome: currentOutcome,
+        showAdditionalTableInfo: false,
       };
     default:
       return state;

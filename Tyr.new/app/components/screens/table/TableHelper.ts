@@ -1,8 +1,13 @@
 import {AppScreen, IAppState} from '#/store/interfaces';
 import {Dispatch} from 'redux';
 import {
-  getKamicha, getSeatKamicha, getSeatSelf, getSeatShimocha,
-  getSeatToimen, getShimocha, getSelf,
+  getKamicha,
+  getSeatKamicha,
+  getSeatSelf,
+  getSeatShimocha,
+  getSeatToimen,
+  getSelf,
+  getShimocha,
   getToimen,
   RoundPreviewSchemePurpose,
 } from '#/store/selectors/roundPreviewSchemeSelectors';
@@ -14,12 +19,12 @@ import {
   ADD_ROUND_INIT,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
-  INIT_BLANK_OUTCOME,
-  INIT_REQUIRED_YAKU,
-  SELECT_MULTIRON_WINNER,
+  INIT_BLANK_OUTCOME, SELECT_MULTIRON_WINNER,
+  TOGGLE_ADDITIONAL_TABLE_INFO,
   TOGGLE_DEADHAND,
   TOGGLE_LOSER,
-  TOGGLE_NAGASHI, TOGGLE_OVERVIEW_DIFFBY,
+  TOGGLE_NAGASHI,
+  TOGGLE_OVERVIEW_DIFFBY,
   TOGGLE_PAO,
   TOGGLE_RIICHI,
   TOGGLE_WINNER,
@@ -27,20 +32,15 @@ import {
 } from '#/store/actions/interfaces';
 import {Outcome as OutcomeType, Outcome, Player} from '#/interfaces/common';
 import {
-  paoPressed,
-  showDeadButton,
-  showLoseButton, showNagashiButton,
-  showPaoButton,
-  showRiichiButton,
-  showWinButton,
-  winPressed,
-  losePressed,
-  riichiPressed,
   deadPressed,
-  nagashiPressed,
-  winDisabled,
   loseDisabled,
-  nagashiDisabled
+  losePressed,
+  nagashiDisabled,
+  nagashiPressed,
+  paoPressed,
+  riichiPressed,
+  winDisabled,
+  winPressed,
 } from '#/store/selectors/userItemSelectors';
 import {PlayerButtonProps} from '#/components/types/PlayerButtonProps';
 import {TableMode} from '#/components/types/TableMode';
@@ -49,6 +49,8 @@ import {PlayerArrow, PlayerSide, ResultArrowsProps} from '#/components/general/r
 import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
 import {roundToString} from '#/components/helpers/Utils';
 import {AppOutcome} from '#/interfaces/app';
+import {playerHasYakuWithPao} from '#/store/util';
+import {getWinningUsers} from '#/store/selectors/mimirSelectors';
 
 // todo move to selectors most of code from here
 
@@ -200,11 +202,9 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
         if (diffByPlayer) {
           points = player.score - diffByPlayer.score;
           if (points > 0) {
-            pointsMode = PlayerPointsMode.POSITIVE;
             points = `+${points}`
-          } else if (points < 0) {
-            pointsMode = PlayerPointsMode.NEGATIVE;
           }
+          pointsMode = PlayerPointsMode.ACTIVE;
           penaltyPoints = undefined
         }
       }
@@ -315,34 +315,45 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
       }
 
       let paoButtonMode: PlayerButtonMode | undefined;
+      let hasPaoButton = false
 
       switch (currentOutcome.selectedOutcome) {
         case 'ron':
-          // if (currentOutcome.winner === player.id || currentOutcome.loser === player.id) {
-          //   paoButtonMode = PlayerButtonMode.DISABLE
-          // }
+          if (state.multironCurrentWinner === player.id) {
+            points = 'Winner'
+            pointsMode = PlayerPointsMode.POSITIVE
+          } else if (currentOutcome.loser === player.id) {
+            points = 'Loser'
+            pointsMode = PlayerPointsMode.NEGATIVE
+          } else {
+            hasPaoButton = true
+          }
           break;
         case 'tsumo':
-          if (currentOutcome.winner === player.id) {
-            paoButtonMode = PlayerButtonMode.DISABLE
+          if (currentOutcome.winner !== player.id) {
+            hasPaoButton = true
+          } else {
+            points = 'Winner'
+            pointsMode = PlayerPointsMode.POSITIVE
           }
           break;
         default:
           throw new Error('wrong outcome for paoSelect');
       }
 
-      if (paoButtonMode !== PlayerButtonMode.DISABLE) {
+      if (hasPaoButton) {
         if (paoPressed(state, player)) {
           paoButtonMode = PlayerButtonMode.PRESSED;
         } else {
           paoButtonMode = PlayerButtonMode.IDLE;
         }
+
+        loseButton = {
+          mode: paoButtonMode,
+          onClick: onPaoButtonClick(dispatch, player.id),
+        };
       }
 
-      loseButton = {
-        mode: paoButtonMode,
-        onClick: onPaoButtonClick(dispatch, player.id),
-      };
       break;
   }
 
@@ -376,12 +387,12 @@ function getTitleForOutcome(selectedOutcome: OutcomeType | undefined, currentScr
     case 'ron':
     case 'tsumo':
       if (currentScreen === 'paoSelect') {
-        return  'select pao';
+        return  'Select pao';
       }
       break;
     case 'nagashi':
       if (currentScreen === 'playersSelect') {
-        return 'select tempai';
+        return 'Select tempai';
       }
       break;
   }
@@ -390,7 +401,7 @@ function getTitleForOutcome(selectedOutcome: OutcomeType | undefined, currentScr
 }
 
 // todo replace with common selector
-function getOutcomeName(selectedOutcome: OutcomeType): string {
+export function getOutcomeName(selectedOutcome: OutcomeType): string {
   switch (selectedOutcome) {
     case 'ron':
       return  'Ron';
@@ -424,6 +435,43 @@ export function getBottomPanel(state: IAppState, dispatch: Dispatch) {
   const showAdd = tableMode === TableMode.GAME;
   const showLog = [TableMode.GAME, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
 
+  // todo simplify
+  const nextClickHandler = () => {
+    const gameConfig = state.gameConfig
+    if (state.currentScreen === 'paoSelect' && state.currentOutcome && state.currentOutcome.selectedOutcome === 'ron' && gameConfig) {
+      const allWinners = state.currentOutcome.wins;
+      const winsIds = Object.keys(allWinners);
+
+      if (winsIds.length > 1) {
+        let currentWinnerIndex = -1;
+        let nextPaoWinnerId = -1;
+
+        winsIds.forEach(key => {
+          const id = parseInt(key.toString(), 10);
+
+          if (currentWinnerIndex !== -1) {
+            const winner = allWinners[key];
+            if(playerHasYakuWithPao(winner.yaku, gameConfig)) {
+              nextPaoWinnerId = id;
+              return;
+            }
+          }
+
+          if (id === state.multironCurrentWinner) {
+            currentWinnerIndex = id;
+          }
+        })
+
+        if (nextPaoWinnerId !== -1) {
+          return () => dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: nextPaoWinnerId} });
+        }
+      }
+    }
+
+
+    return onNextClick(dispatch);
+  }
+
   return {
     text: text,
     showBack: showBack,
@@ -435,7 +483,7 @@ export function getBottomPanel(state: IAppState, dispatch: Dispatch) {
     showLog: showLog,
     showSave: showSave,
     isSaveDisabled: isSaveDisabled,
-    onNextClick: onNextClick(dispatch),
+    onNextClick: nextClickHandler(),
     onBackClick: onBackClick(dispatch),
     onSaveClick: onSaveClick(state, dispatch),
     onLogClick: onLogClick(dispatch),
@@ -460,21 +508,32 @@ function getTableMode(state: IAppState): TableMode {
   }
 }
 
-export function getTableInfo(state: IAppState): TableInfoProps | undefined {
+export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoProps | undefined {
   if (state.currentScreen === 'confirmation') {
     return undefined;
   }
 
+  // todo show for showAdditionalTableInfo while confirmation
+
+  let showTableNumber = false; // todo from state
+  let showRoundInfo = true;
+
+  if (state.showAdditionalTableInfo && state.currentScreen === 'currentGame') {
+    showTableNumber = true;
+    showRoundInfo = false;
+  }
+
   return {
-    showRoundInfo: true,
-    showTableNumber: false,
-    showTimer: false,
-    gamesLeft: undefined,
+    showRoundInfo: showRoundInfo,
+    showTableNumber: showTableNumber,
+    showTimer: true, // todo
+    gamesLeft: undefined, // todo
     round: roundToString(state.currentRound),
     honbaCount: state.honba,
     riichiCount: state.riichiOnTable,
-    currentTime: undefined,
-    tableNumber: undefined,
+    currentTime: undefined, // todo
+    tableNumber: undefined, // todo
+    onTableInfoToggle: onTableInfoToggle(state, dispatch),
   }
 }
 
@@ -567,6 +626,8 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
   if (state.currentScreen !== 'confirmation' || changesOverview === undefined || state.loading.overview) {
     return undefined;
   }
+
+  // todo hide for showAdditionalTableInfo
 
   const paoPlayer = changesOverview.paoPlayer
   const payments = getPaymentsInfo(state);
@@ -676,5 +737,23 @@ function onPlayerClick(state: IAppState, dispatch: Dispatch, playerId: number) {
 
   return () => {
     dispatch( { type: TOGGLE_OVERVIEW_DIFFBY, payload: playerId })
+  }
+}
+
+//todo make canShowAdditionalInfo selector
+function onTableInfoToggle(state: IAppState, dispatch: Dispatch) {
+  if (state.currentScreen !== "currentGame" && state.currentScreen !== "confirmation") {
+    return undefined;
+  }
+
+  if (state.currentScreen === "currentGame") {
+    const tableNumber = undefined; // todo
+    if (tableNumber === undefined) {
+      return undefined;
+    }
+  }
+
+  return () => {
+    dispatch( { type: TOGGLE_ADDITIONAL_TABLE_INFO})
   }
 }

@@ -212,6 +212,10 @@
   color: var(--color-danger);
 }
 
+.player__score--active {
+  color: var(--color-primary-active);
+}
+
 .player__button-container {
   z-index: 1;
 }

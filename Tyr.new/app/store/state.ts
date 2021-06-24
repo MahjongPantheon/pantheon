@@ -59,6 +59,7 @@ export const initialState: IAppState = {
   currentOtherTableHash: undefined,
   currentOtherTablePlayers: [],
   isIos: false,
+  showAdditionalTableInfo: false,
 
   // preloaders flags
   loading: {

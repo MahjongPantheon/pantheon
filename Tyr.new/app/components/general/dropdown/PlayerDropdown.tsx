@@ -1,5 +1,4 @@
 import * as React from "react";
-import {Player} from '../../types/Player';
 import './player-dropdown.css'
 
 type IProps = {

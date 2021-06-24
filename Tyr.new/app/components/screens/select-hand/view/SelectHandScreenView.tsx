@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {OutcomeTableMode} from '../../../types/OutcomeTypes';
 import './page-set-hand.css';
 import {SelectYakuPanel} from './SelectYakuPanel';
 import {SelectTotalPanel} from './SelectTotalPanel';
@@ -13,7 +12,7 @@ import {classNames} from '#/components/helpers/ReactUtils';
 type IProps = {
   playerName: string
   yakuGroups: YakuGroup[]
-  outcome: OutcomeTableMode
+  bottomPanelText: string
   leftArrowState: ArrowState
   leftArrowClick: () => void
   rightArrowState: ArrowState
@@ -76,7 +75,7 @@ export class SelectHandScreenView extends React.Component<IProps> {
     const {
       playerName,
       yakuGroups,
-      outcome,
+      bottomPanelText,
       leftArrowState,
       rightArrowState,
       activeTab,
@@ -153,7 +152,7 @@ export class SelectHandScreenView extends React.Component<IProps> {
         )}
         <div className="flex-container__bottom">
           <BottomPanel
-            text={outcome}
+            text={bottomPanelText}
             showBack={true}
             showNext={true}
             isNextDisabled={!canGoNext}

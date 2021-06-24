@@ -65,7 +65,7 @@ function _getSeating(
 
 export const getSeating: typeof _getSeating = memoize(_getSeating);
 
-function _getScores(s: IAppState, o: Player[]) {
+/*function _getScores(s: IAppState, o: Player[]) {
   if (!s.currentPlayerId || !s.gameConfig) {
     return;
   }
@@ -92,4 +92,4 @@ function _getScores(s: IAppState, o: Player[]) {
   return { scores, chombos };
 }
 
-export const getScores: typeof _getScores = memoize(_getScores);
+export const getScores: typeof _getScores = memoize(_getScores);*/

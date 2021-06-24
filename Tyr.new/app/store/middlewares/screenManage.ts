@@ -22,18 +22,27 @@ export const screenManageMw = () => (mw: MiddlewareAPI<Dispatch<AppActionTypes>,
       const state = mw.getState();
       const currentScreen = state.currentScreen;
 
-      if (currentScreen === 'confirmation') {
-        mw.dispatch({ type: GET_CHANGES_OVERVIEW_INIT, payload: state });
-      }
+      switch (currentScreen) {
+        case 'confirmation':
+          mw.dispatch({ type: GET_CHANGES_OVERVIEW_INIT, payload: state });
+          break;
+        case 'yakuSelect':
+          if (previousScreen === 'playersSelect' && state.currentOutcome && ['ron', 'tsumo'].includes(state.currentOutcome.selectedOutcome)) {
+            const currentWinnerId = getWinningUsers(state)[0].id;
+            mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId} });
+            mw.dispatch({ type: INIT_REQUIRED_YAKU });
 
-      if (currentScreen === 'yakuSelect' && previousScreen === 'playersSelect' && ['ron', 'tsumo'].includes(state.currentOutcome?.selectedOutcome)) {
-        const currentWinnerId = getWinningUsers(state)[0].id;
-        mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId} });
-        mw.dispatch({ type: INIT_REQUIRED_YAKU });
-
-        if (state.currentOutcome?.selectedOutcome === 'tsumo') {
-          mw.dispatch({ type: ADD_YAKU, payload: { id: YakuId.MENZENTSUMO, winner: currentWinnerId} });
-        }
+            if (state.currentOutcome?.selectedOutcome === 'tsumo') {
+              mw.dispatch({ type: ADD_YAKU, payload: { id: YakuId.MENZENTSUMO, winner: currentWinnerId} });
+            }
+          }
+          break;
+        case 'paoSelect':
+          if (previousScreen === 'totalHandSelect') {
+            const currentWinnerId = getWinningUsers(state)[0].id;
+            mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId} });
+          }
+          break;
       }
 
       break;

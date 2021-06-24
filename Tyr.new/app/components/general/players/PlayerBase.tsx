@@ -178,7 +178,8 @@ export class PlayerBase extends React.Component<IProps> {
             <div className={classNames(
               'player__score',
               {'player__score--success': pointsMode === PlayerPointsMode.POSITIVE},
-              {'player__score--danger': pointsMode === PlayerPointsMode.NEGATIVE}
+              {'player__score--danger': pointsMode === PlayerPointsMode.NEGATIVE},
+              {'player__score--active': pointsMode === PlayerPointsMode.ACTIVE}
             )}
             >
               <p>

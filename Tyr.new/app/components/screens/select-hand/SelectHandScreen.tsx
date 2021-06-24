@@ -2,7 +2,6 @@ import * as React from 'react';
 import {IComponentProps} from '#/components/IComponentProps';
 import {SelectHandScreenView} from '#/components/screens/select-hand/view/SelectHandScreenView';
 import {getWinningUsers, hasYaku} from '#/store/selectors/mimirSelectors';
-import {OutcomeTableMode} from '#/components/types/OutcomeTypes';
 import {ArrowState, SelectHandActiveTab, YakuGroup, YakuItem} from '#/components/screens/select-hand/YakuTypes';
 import {getDisabledYaku, getYakuList} from '#/store/selectors/screenYakuSelectors';
 import {getSelectedYaku} from '#/store/selectors/yaku';
@@ -16,6 +15,7 @@ import {
 } from '#/store/actions/interfaces';
 import {doraOptions, mayGoNextFromYakuSelect} from '#/store/selectors/navbarSelectors';
 import {getDora, getFu, getPossibleFu, getHan} from '#/store/selectors/hanFu';
+import {getOutcomeName} from '#/components/screens/table/TableHelper';
 
 export class SelectHandScreen extends React.Component<IComponentProps> {
 
@@ -106,8 +106,9 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     }
 
     const allWinners = getWinningUsers(state);
-    const playerName = allWinners?.find((val) => val.id === currentWinnerId).displayName;
-    const outcomeText = OutcomeTableMode.RON;
+    const player = allWinners.find((val) => val.id === currentWinnerId)
+    const playerName = player !== undefined ? player.displayName : '';
+    const bottomPanelText = getOutcomeName(state.currentOutcome.selectedOutcome);
     const canGoNext = !!mayGoNextFromYakuSelect(state);
 
     let leftArrowState = ArrowState.UNAVAILABLE;
@@ -158,7 +159,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     return <SelectHandScreenView
       playerName={playerName}
       yakuGroups={yakuGroups}
-      outcome={outcomeText}
+      bottomPanelText={bottomPanelText}
       leftArrowState={leftArrowState}
       leftArrowClick={this.onLeftArrowClick.bind(this)}
       rightArrowState={rightArrowState}

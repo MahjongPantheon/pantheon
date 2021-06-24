@@ -5,7 +5,7 @@ import {
   INIT_STATE,
   SELECT_MULTIRON_WINNER, SET_STATE_SETTINGS,
   SETTINGS_SAVE_LANG,
-  SETTINGS_SAVE_THEME, TOGGLE_OVERVIEW_DIFFBY,
+  SETTINGS_SAVE_THEME, TOGGLE_ADDITIONAL_TABLE_INFO, TOGGLE_OVERVIEW_DIFFBY,
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
 
@@ -50,6 +50,11 @@ export function commonReducer(
       return {
         ...state,
         overviewDiffBy: state.overviewDiffBy === action.payload ? undefined : action.payload
+      };
+    case TOGGLE_ADDITIONAL_TABLE_INFO:
+      return {
+        ...state,
+        showAdditionalTableInfo: !state.showAdditionalTableInfo
       };
     default:
       return state;

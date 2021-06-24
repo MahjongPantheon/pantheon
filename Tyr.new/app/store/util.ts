@@ -4,6 +4,10 @@ import { intersect } from '#/primitives/intersect';
 import {unpack} from '#/primitives/yaku-compat';
 import { Action, AnyAction } from 'redux';
 
+export function playerHasYakuWithPao(yakuPack: string, gameConfig: LGameConfig): boolean {
+  return intersect(unpack(yakuPack), gameConfig.yakuWithPao).length > 0
+}
+
 export function winnerHasYakuWithPao(outcome: AppOutcome, gameConfig: LGameConfig): boolean {
   if (!outcome) {
     return false;
@@ -11,10 +15,10 @@ export function winnerHasYakuWithPao(outcome: AppOutcome, gameConfig: LGameConfi
 
   switch (outcome.selectedOutcome) {
     case 'tsumo':
-      return intersect(unpack(outcome.yaku), gameConfig.yakuWithPao).length > 0;
+      return playerHasYakuWithPao(outcome.yaku, gameConfig);
     case 'ron':
       return Object.keys(outcome.wins).reduce<boolean>((acc, playerId) => {
-        return acc || (intersect(unpack(outcome.wins[playerId].yaku), gameConfig.yakuWithPao).length > 0);
+        return acc || (playerHasYakuWithPao(outcome.wins[playerId].yaku, gameConfig));
       }, false);
     default:
       throw new Error('No pao exist on this outcome');

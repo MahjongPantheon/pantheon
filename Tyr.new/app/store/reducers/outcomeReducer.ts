@@ -254,18 +254,12 @@ export function outcomeReducer(
               : playerId
           });
         case 'ron':
-          let newState = state;
-          /*for (let pId in state.currentOutcome.wins) {
-            if (!state.currentOutcome.wins.hasOwnProperty(pId)) {
-              continue;
-            }
-            if (intersect(unpack(state.currentOutcome.wins[pId].yaku), action.payload.yakuWithPao).length !== 0) {
-              newState = modifyWinOutcome(newState, {
-                paoPlayerId: state.currentOutcome.wins[pId].paoPlayerId === playerId ? undefined : playerId
-              }, () => parseInt(playerId.toString(), 10));
-            }
-          }*/
-          return newState;
+          if (state.multironCurrentWinner) {
+            return modifyWinOutcome(state, {
+              paoPlayerId: state.currentOutcome.wins[state.multironCurrentWinner].paoPlayerId === playerId ? undefined : playerId
+            }, () => state.multironCurrentWinner);
+          }
+          return state
         default:
           throw new Error('No pao exist on this outcome');
       }

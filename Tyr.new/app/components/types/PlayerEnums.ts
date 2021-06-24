@@ -2,6 +2,7 @@ export enum PlayerPointsMode {
     IDLE,
     POSITIVE,
     NEGATIVE,
+    ACTIVE,
 }
 
 export enum PlayerButtonMode {

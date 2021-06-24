@@ -13,6 +13,7 @@ export type TableInfoProps = {
   riichiCount?: number
   currentTime?: string
   tableNumber?: number
+  onTableInfoToggle?: () => void
 }
 
 export const TableInfo = React.memo(function (props: TableInfoProps) {
@@ -26,14 +27,15 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
     riichiCount,
     currentTime,
     tableNumber,
+    onTableInfoToggle,
   } = props;
 
-  if (!showRoundInfo || showTableNumber) {
+  if (!showRoundInfo && !showTableNumber) {
     return null
   }
 
   return (
-    <div className="table-info">
+    <div className="table-info" onClick={onTableInfoToggle}>
       {showRoundInfo && (
         <>
           {!!round && (

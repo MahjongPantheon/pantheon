@@ -82,6 +82,8 @@ export interface IAppState {
   overviewDiffBy?: number;
   overviewViewShift?: number;
 
+  showAdditionalTableInfo: boolean;
+
   updateCurrentGamesError?: ErrorState;
 
   isUniversalWatcher: boolean;
