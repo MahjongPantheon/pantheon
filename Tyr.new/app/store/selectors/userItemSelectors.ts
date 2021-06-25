@@ -89,7 +89,12 @@ export function losePressed(state: IAppState, userData: Player) {
 }
 
 export function paoPressed(state: IAppState, userData: Player) {
-  return -1 !== getPaoUsers(state).indexOf(userData);
+  const currentWinnerId = state.multironCurrentWinner
+  if (currentWinnerId && state.currentOutcome?.selectedOutcome === 'ron') {
+    return state.currentOutcome.wins[currentWinnerId].paoPlayerId === userData.id;
+  }
+
+  return false;
 }
 
 export function riichiPressed(state: IAppState, userData: Player) {

@@ -51,6 +51,7 @@ import {roundToString} from '#/components/helpers/Utils';
 import {AppOutcome} from '#/interfaces/app';
 import {playerHasYakuWithPao} from '#/store/util';
 import {getWinningUsers} from '#/store/selectors/mimirSelectors';
+import {getNextWinnerWithPao} from '#/store/selectors/paoSelectors';
 
 // todo move to selectors most of code from here
 
@@ -437,37 +438,12 @@ export function getBottomPanel(state: IAppState, dispatch: Dispatch) {
 
   // todo simplify
   const nextClickHandler = () => {
-    const gameConfig = state.gameConfig
-    if (state.currentScreen === 'paoSelect' && state.currentOutcome && state.currentOutcome.selectedOutcome === 'ron' && gameConfig) {
-      const allWinners = state.currentOutcome.wins;
-      const winsIds = Object.keys(allWinners);
-
-      if (winsIds.length > 1) {
-        let currentWinnerIndex = -1;
-        let nextPaoWinnerId = -1;
-
-        winsIds.forEach(key => {
-          const id = parseInt(key.toString(), 10);
-
-          if (currentWinnerIndex !== -1) {
-            const winner = allWinners[key];
-            if(playerHasYakuWithPao(winner.yaku, gameConfig)) {
-              nextPaoWinnerId = id;
-              return;
-            }
-          }
-
-          if (id === state.multironCurrentWinner) {
-            currentWinnerIndex = id;
-          }
-        })
-
-        if (nextPaoWinnerId !== -1) {
-          return () => dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: nextPaoWinnerId} });
-        }
+    if (state.currentScreen === 'paoSelect' && state.currentOutcome?.selectedOutcome === 'ron') {
+      const nextPaoWinnerId = getNextWinnerWithPao(state, state.multironCurrentWinner)
+      if (nextPaoWinnerId !== undefined) {
+        return () => dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: nextPaoWinnerId} });
       }
     }
-
 
     return onNextClick(dispatch);
   }
@@ -629,7 +605,26 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
 
   // todo hide for showAdditionalTableInfo
 
-  const paoPlayer = changesOverview.paoPlayer
+  //todo we get only one pao player from server, need to be fixes for multiron
+  // const paoPlayer = changesOverview.paoPlayer
+
+  let paoPlayersByWinners: number[] = [];
+  if (changesOverview.paoPlayer) {
+    if (state.currentOutcome?.selectedOutcome === 'tsumo') {
+      if (state.currentOutcome.winner) {
+        paoPlayersByWinners[state.currentOutcome.winner] = changesOverview.paoPlayer;
+      }
+    } else if (state.currentOutcome?.selectedOutcome === 'ron') {
+      const wins = state.currentOutcome.wins;
+      Object.keys(wins).forEach(winnerKey => {
+        const winner = wins[winnerKey];
+        if (winner.paoPlayerId && winner.winner) {
+          paoPlayersByWinners[winner.winner] = winner.paoPlayerId
+        }
+      })
+    }
+  }
+
   const payments = getPaymentsInfo(state);
 
   const sideByPlayer: Record<number, PlayerSide> = {
@@ -644,12 +639,13 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
     if (item.from && item.to) {
       const start = sideByPlayer[item.from];
       const end = sideByPlayer[item.to];
+      const withPao = paoPlayersByWinners[item.to] === item.from;
 
       const playerArrow: PlayerArrow = {
         points: item.directAmount,
         honbaPoints: item.honbaAmount,
         withRiichi: item.riichiAmount !== 0,
-        withPao: paoPlayer === item.from,
+        withPao: withPao,
         start: start,
         end: end,
       };

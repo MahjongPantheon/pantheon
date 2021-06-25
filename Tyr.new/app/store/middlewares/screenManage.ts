@@ -12,6 +12,7 @@ import {
 import {IAppState} from '../interfaces';
 import {getWinningUsers} from '#/store/selectors/mimirSelectors';
 import {YakuId} from '#/primitives/yaku';
+import {getNextWinnerWithPao} from '#/store/selectors/paoSelectors';
 
 export const screenManageMw = () => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
@@ -38,9 +39,11 @@ export const screenManageMw = () => (mw: MiddlewareAPI<Dispatch<AppActionTypes>,
           }
           break;
         case 'paoSelect':
-          if (previousScreen === 'totalHandSelect') {
-            const currentWinnerId = getWinningUsers(state)[0].id;
-            mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId} });
+          if (previousScreen === 'totalHandSelect' || previousScreen === 'confirmation') {
+            const currentWinnerId = getNextWinnerWithPao(state);
+            if (currentWinnerId) {
+              mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId} });
+            }
           }
           break;
       }

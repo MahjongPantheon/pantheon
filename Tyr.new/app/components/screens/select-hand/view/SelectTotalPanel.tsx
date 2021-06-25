@@ -52,6 +52,8 @@ export class SelectTotalPanel extends React.Component<IProps> {
       onFuSelected,
     } = this.props;
 
+    const totalHandAmount = fuCount ? `${this.hanCount} han ${fuCount} fu` : `${this.hanCount} han`;
+
     return (
       <div className="select-total-panel">
         {!isYakuman && (
@@ -84,13 +86,13 @@ export class SelectTotalPanel extends React.Component<IProps> {
             )}
             <div className="select-total-panel__select-group">
             <div className="select-total-panel__select-group-caption">
-            Fu
+                Fu
             </div>
             <NumberSelect value={fuCount} possibleValues={fuValues} onChange={onFuSelected}/>
             </div>
             </div>
             <div className="select-total-panel__bottom-group">
-            {this.hanCount} han {fuCount} fu
+                {totalHandAmount}
             </div>
           </>
         )}

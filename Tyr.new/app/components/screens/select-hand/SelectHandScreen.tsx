@@ -154,7 +154,9 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     const redFivesValues = undefined;
 
     const fuCount = getFu(state, currentWinnerId);
-    const fuValues = yakuHan > 0 && doraCount + yakuHan <= 4 ? getPossibleFu(state) : [];
+    // todo move to selectors?
+    const shouldSelectFu = yakuHan > 0 && doraCount + yakuHan <= 4;
+    const fuValues =  shouldSelectFu ? getPossibleFu(state) : [];
 
     return <SelectHandScreenView
       playerName={playerName}
