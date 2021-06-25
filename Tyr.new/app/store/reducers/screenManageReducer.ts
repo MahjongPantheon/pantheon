@@ -103,7 +103,7 @@ export function screenManageReducer(
           switch (state.currentOutcome?.selectedOutcome) {
             case 'ron':
             case 'tsumo':
-              nextScreen = 'yakuSelect';
+              nextScreen = 'handSelect';
               break;
             case 'draw':
             case 'abort':
@@ -114,10 +114,7 @@ export function screenManageReducer(
             default:
           }
           break;
-        case 'yakuSelect':
-          nextScreen = 'totalHandSelect';
-          break;
-        case 'totalHandSelect':
+        case 'handSelect':
           switch (state.currentOutcome?.selectedOutcome) {
             case 'ron':
             case 'tsumo':
@@ -188,11 +185,8 @@ export function screenManageReducer(
             currentOutcome = undefined;
           }
           break;
-        case 'yakuSelect':
+        case 'handSelect':
           prevScreen = 'playersSelect';
-          break;
-        case 'totalHandSelect':
-          prevScreen = 'yakuSelect';
           break;
         case 'confirmation':
           switch (state.currentOutcome?.selectedOutcome) {
@@ -201,7 +195,7 @@ export function screenManageReducer(
               if (winnerHasYakuWithPao(state.currentOutcome, state.gameConfig)) {
                 prevScreen = 'paoSelect';
               } else {
-                prevScreen = 'yakuSelect';
+                prevScreen = 'handSelect';
               }
               break;
             case 'draw':
@@ -214,7 +208,7 @@ export function screenManageReducer(
           }
           break;
         case 'paoSelect':
-          prevScreen = 'yakuSelect';
+          prevScreen = 'handSelect';
           break;
         case 'nagashiSelect':
           prevScreen = 'outcomeSelect';

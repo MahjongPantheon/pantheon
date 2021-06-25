@@ -37,13 +37,6 @@ export interface WinProps {
   openHand: boolean;
 }
 
-// export interface AppOutcomeRon extends Outcome, WinProps {
-//   selectedOutcome: 'ron';
-//   loser?: number; // id of player
-//   loserIsDealer: boolean;
-//   riichiBets: number[]; // ids of players
-// }
-
 export interface AppOutcomeRon extends Outcome {
   selectedOutcome: 'ron';
   loser?: number; // id of player

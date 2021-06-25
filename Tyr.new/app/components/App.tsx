@@ -15,6 +15,10 @@ import {IDB} from '#/services/idb';
 import {TableScreen} from '#/components/screens/table/TableScreen';
 import {SelectHandScreen} from '#/components/screens/select-hand/SelectHandScreen';
 import {I18nService} from '#/services/i18n';
+import {isLoading} from '#/store/selectors/screenConfirmationSelectors';
+import {Preloader} from '#/components/general/preloader/Preloader';
+
+declare var frame: any;
 
 interface IProps {
   state: IAppState;
@@ -25,6 +29,7 @@ interface IProps {
 
 export const App = React.memo(function (props: IProps) {
   const {state, dispatch, i18nService} = props;
+
   return (
     <div id="screen" className={`App theme-${state.settings.currentTheme}`}>
       <CurrentScreen state={state} dispatch={dispatch} i18nService={i18nService} />
@@ -56,8 +61,7 @@ const CurrentScreen = React.memo(function (props: IComponentProps) {
     case 'nagashiSelect':
     case 'paoSelect':
       return <TableScreen {...props} />
-    case 'yakuSelect':
-    case 'totalHandSelect':
+    case 'handSelect':
       return <SelectHandScreen {...props} />
     case 'lastResults':
     case 'lastRound':

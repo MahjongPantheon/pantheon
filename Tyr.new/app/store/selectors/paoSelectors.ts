@@ -1,7 +1,11 @@
 import {IAppState} from '#/store/interfaces';
 import {playerHasYakuWithPao} from '#/store/util';
 
-export function getNextWinnerWithPao(state: IAppState, currentPlayerId?: number): number | undefined {
+export function getFirstWinnerWithPao(state: IAppState): number | undefined {
+  return getNextWinnerWithPao(state, undefined)
+}
+
+export function getNextWinnerWithPao(state: IAppState, currentPlayerId: number | undefined): number | undefined {
   const gameConfig = state.gameConfig
   if (!gameConfig || state.currentScreen !== 'paoSelect' || state.currentOutcome?.selectedOutcome !== 'ron') {
     return undefined;

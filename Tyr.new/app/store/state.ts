@@ -60,6 +60,7 @@ export const initialState: IAppState = {
   currentOtherTablePlayers: [],
   isIos: false,
   showAdditionalTableInfo: false,
+  currentSelectHandTab: undefined,
 
   // preloaders flags
   loading: {

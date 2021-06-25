@@ -2,34 +2,39 @@ import { Dispatch, MiddlewareAPI } from 'redux';
 import {
   AppActionTypes,
   GET_ALL_PLAYERS_INIT,
-  GET_CHANGES_OVERVIEW_INIT, GO_TO_CURRENT_GAME,
-  GOTO_NEXT_SCREEN, INIT_REQUIRED_YAKU,
-  INIT_STATE, SELECT_MULTIRON_WINNER, START_GAME_SUCCESS,
+  GET_CHANGES_OVERVIEW_INIT,
+  GOTO_NEXT_SCREEN,
+  GOTO_PREV_SCREEN,
+  INIT_REQUIRED_YAKU,
+  INIT_STATE, SELECT_MULTIRON_WINNER,
   START_NEW_GAME,
   UPDATE_STATE_SETTINGS,
-  ADD_YAKU,
+  ADD_YAKU, SET_SELECT_HAND_TAB,
 } from '../actions/interfaces';
-import {IAppState} from '../interfaces';
+import {AppScreen, IAppState} from '../interfaces';
 import {getWinningUsers} from '#/store/selectors/mimirSelectors';
 import {YakuId} from '#/primitives/yaku';
-import {getNextWinnerWithPao} from '#/store/selectors/paoSelectors';
+import {getFirstWinnerWithPao} from '#/store/selectors/paoSelectors';
 
 export const screenManageMw = () => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
+  let state: IAppState;
+  let currentScreen: AppScreen;
+
   switch (action.type) {
     case GOTO_NEXT_SCREEN:
-      const previousScreen = mw.getState().currentScreen
       next({ type: GOTO_NEXT_SCREEN });
 
-      const state = mw.getState();
-      const currentScreen = state.currentScreen;
+      state = mw.getState();
+      currentScreen = state.currentScreen;
 
       switch (currentScreen) {
         case 'confirmation':
           mw.dispatch({ type: GET_CHANGES_OVERVIEW_INIT, payload: state });
           break;
-        case 'yakuSelect':
-          if (previousScreen === 'playersSelect' && state.currentOutcome && ['ron', 'tsumo'].includes(state.currentOutcome.selectedOutcome)) {
+        case 'handSelect':
+          if (state.currentOutcome && ['ron', 'tsumo'].includes(state.currentOutcome.selectedOutcome)) {
             const currentWinnerId = getWinningUsers(state)[0].id;
+            mw.dispatch({ type: SET_SELECT_HAND_TAB, payload: 'yaku' });
             mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId} });
             mw.dispatch({ type: INIT_REQUIRED_YAKU });
 
@@ -39,15 +44,30 @@ export const screenManageMw = () => (mw: MiddlewareAPI<Dispatch<AppActionTypes>,
           }
           break;
         case 'paoSelect':
-          if (previousScreen === 'totalHandSelect' || previousScreen === 'confirmation') {
-            const currentWinnerId = getNextWinnerWithPao(state);
-            if (currentWinnerId) {
-              mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId} });
-            }
+          const currentWinnerId = getFirstWinnerWithPao(state);
+          if (currentWinnerId) {
+            mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId} });
           }
           break;
       }
+      break;
+    case GOTO_PREV_SCREEN:
+      next(action);
 
+      state = mw.getState();
+      currentScreen = state.currentScreen;
+
+      switch (currentScreen) {
+        case 'handSelect':
+          mw.dispatch({ type: SET_SELECT_HAND_TAB, payload: 'yaku' });
+          break;
+        case 'paoSelect':
+          const currentWinnerId = getFirstWinnerWithPao(state);
+          if (currentWinnerId) {
+            mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId} });
+          }
+          break;
+      }
       break;
     case START_NEW_GAME:
       next(action)

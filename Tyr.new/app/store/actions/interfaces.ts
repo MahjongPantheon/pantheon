@@ -99,6 +99,7 @@ export const SETTINGS_SAVE_THEME = 'SETTINGS_SAVE_THEME';
 export const SETTINGS_SAVE_LANG = 'SETTINGS_SAVE_LANG';
 export const UPDATE_STATE_SETTINGS = 'UPDATE_STATE_SETTINGS';
 export const SET_STATE_SETTINGS = 'SET_STATE_SETTINGS';
+export const SET_SELECT_HAND_TAB = 'SET_SELECT_HAND_TAB';
 export const TRACK_ARBITRARY_EVENT = 'TRACK_ARBITRARY_EVENT';
 export const TRACK_SCREEN_ENTER = 'TRACK_SCREEN_ENTER';
 
@@ -489,6 +490,11 @@ interface SetStateSettingsAction {
   payload: { [key: string]: any } | undefined;
 }
 
+interface SetSelectHandTabAction {
+  type: typeof SET_SELECT_HAND_TAB;
+  payload: 'yaku' | 'total' | undefined;
+}
+
 interface TrackArbitraryEventAction {
   type: typeof TRACK_ARBITRARY_EVENT;
   payload: [string, { [key: string]: any }];
@@ -582,6 +588,7 @@ export type AppActionTypes =
   | SettingsSaveThemeAction
   | UpdateStateSettingsAction
   | SetStateSettingsAction
+  | SetSelectHandTabAction
   | TrackArbitraryEventAction
   | TrackScreenEnterAction
   ;

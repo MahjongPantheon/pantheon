@@ -11,7 +11,7 @@ import {
   GOTO_PREV_SCREEN,
   REMOVE_YAKU, SELECT_MULTIRON_WINNER,
   SET_DORA_COUNT,
-  SET_FU_COUNT,
+  SET_FU_COUNT, SET_SELECT_HAND_TAB,
 } from '#/store/actions/interfaces';
 import {doraOptions, mayGoNextFromYakuSelect} from '#/store/selectors/navbarSelectors';
 import {getDora, getFu, getPossibleFu, getHan} from '#/store/selectors/hanFu';
@@ -21,10 +21,10 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
 
   private onTabClick(tab: SelectHandActiveTab) {
     const {state, dispatch} = this.props;
-    if (state.currentScreen === 'yakuSelect' && tab === SelectHandActiveTab.TOTAL) {
-      dispatch({ type: GOTO_NEXT_SCREEN });
-    } else if (state.currentScreen === 'totalHandSelect' && tab === SelectHandActiveTab.YAKU) {
-      dispatch({ type: GOTO_PREV_SCREEN });
+    if (state.currentSelectHandTab === 'yaku' && tab === SelectHandActiveTab.TOTAL) {
+      dispatch({ type: SET_SELECT_HAND_TAB, payload: 'total' });
+    } else if (state.currentSelectHandTab === 'total' && tab === SelectHandActiveTab.YAKU) {
+      dispatch({ type: SET_SELECT_HAND_TAB, payload: 'yaku' });
     }
   }
 
@@ -90,6 +90,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
       if (currentIndex !== -1) {
         const nextId = allWinners[ currentIndex + delta].id
         dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: nextId} });
+        dispatch({ type: SET_SELECT_HAND_TAB, payload: 'yaku' });
       }
     }
   }
@@ -117,7 +118,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
       leftArrowState = allWinners[0].id === currentWinnerId ? ArrowState.DISABLED : ArrowState.AVAILABLE
       rightArrowState = allWinners[allWinners.length - 1].id === currentWinnerId ? ArrowState.DISABLED : ArrowState.AVAILABLE
     }
-    const activeTab = state.currentScreen === 'yakuSelect' ? SelectHandActiveTab.YAKU : SelectHandActiveTab.TOTAL;
+    const activeTab = state.currentSelectHandTab === 'total' ? SelectHandActiveTab.TOTAL : SelectHandActiveTab.YAKU;
 
     const selectedYaku = getSelectedYaku(state);
     const disabledYaku = getDisabledYaku(state)[currentWinnerId]
