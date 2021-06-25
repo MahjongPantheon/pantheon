@@ -1,0 +1,47 @@
+.inline-preloader {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 120px;
+  height: 16px;
+  border: 1px solid var(--primary-text-color);
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inline-preloader:after {
+  display: block;
+  content: ' ';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-danger);
+  animation: cssload-motion 1.45s linear infinite;
+}
+
+@keyframes cssload-motion {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translate(calc(-120px / 2 + 8px + 5px));
+  }
+  50% {
+    transform: translateX(0px);
+  }
+  75% {
+    transform: translate(calc(120px / 2 - 8px - 5px));
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
