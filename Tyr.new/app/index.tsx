@@ -7,6 +7,9 @@ import { IDB } from "#/services/idb";
 import { MetrikaService } from "#/services/metrika";
 import { IAppState } from "#/store/interfaces";
 import {INIT_STATE, STARTUP_WITH_AUTH} from '#/store/actions/interfaces';
+import {observe} from '#/scripts/dimensionsObserver'
+
+observe()
 
 const metrikaService = new MetrikaService();
 const storage = new IDB(metrikaService);
@@ -26,3 +29,4 @@ doRender(store.redux.getState());
 
 store.dispatch({type: INIT_STATE});
 store.dispatch({type: STARTUP_WITH_AUTH, payload: storage.get('authToken') || ''});
+

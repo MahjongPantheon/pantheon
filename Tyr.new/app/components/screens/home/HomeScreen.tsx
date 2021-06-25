@@ -1,6 +1,12 @@
 import * as React from 'react';
 import {IComponentProps} from '#/components/IComponentProps';
-import {GO_TO_CURRENT_GAME, OPEN_SETTINGS, START_NEW_GAME, UPDATE_CURRENT_GAMES_INIT} from '#/store/actions/interfaces';
+import {
+  GO_TO_CURRENT_GAME,
+  OPEN_SETTINGS,
+  SHOW_LAST_RESULTS,
+  START_NEW_GAME,
+  UPDATE_CURRENT_GAMES_INIT,
+} from '#/store/actions/interfaces';
 import {HomeScreenView} from '#/components/screens/home/HomeScreenView';
 import {Preloader} from '#/components/general/preloader/Preloader';
 
@@ -19,8 +25,7 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
   }
 
   private onPrevGameClick() {
-    const {dispatch} = this.props;
-    //todo
+    this.props.dispatch({ type: SHOW_LAST_RESULTS });
   }
 
   private onNewGameClick() {

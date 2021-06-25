@@ -4,13 +4,11 @@ import {PlayerBase} from './PlayerBase';
 import {PlayerMode} from '../../types/PlayerEnums';
 import {PlayerProps} from './PlayerProps';
 
-export class PlayerBottom extends React.Component<PlayerProps> {
-  render() {
-    return (
-      <PlayerBase
-        {...this.props}
-        mode={PlayerMode.BOTTOM}
-      />
-    );
-  }
+export const PlayerBottom: React.FC<PlayerProps> = (props) => {
+  return (
+    <PlayerBase
+      {...props}
+      mode={PlayerMode.BOTTOM}
+    />
+  );
 }

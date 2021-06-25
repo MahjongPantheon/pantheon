@@ -15,10 +15,7 @@ import {IDB} from '#/services/idb';
 import {TableScreen} from '#/components/screens/table/TableScreen';
 import {SelectHandScreen} from '#/components/screens/select-hand/SelectHandScreen';
 import {I18nService} from '#/services/i18n';
-import {isLoading} from '#/store/selectors/screenConfirmationSelectors';
-import {Preloader} from '#/components/general/preloader/Preloader';
-
-declare var frame: any;
+import {GameResultScreen} from '#/components/screens/game-result/GameResultScreen';
 
 interface IProps {
   state: IAppState;
@@ -27,18 +24,7 @@ interface IProps {
   i18nService: I18nService;
 }
 
-export const App = React.memo(function (props: IProps) {
-  const {state, dispatch, i18nService} = props;
-
-  return (
-    <div id="screen" className={`App theme-${state.settings.currentTheme}`}>
-      <CurrentScreen state={state} dispatch={dispatch} i18nService={i18nService} />
-    </div>
-  )
-})
-
-
-const CurrentScreen = React.memo(function (props: IComponentProps) {
+const CurrentScreen: React.FC<IComponentProps> = (props) => {
   const {state} = props;
 
   switch (state.currentScreen) {
@@ -64,9 +50,20 @@ const CurrentScreen = React.memo(function (props: IComponentProps) {
     case 'handSelect':
       return <SelectHandScreen {...props} />
     case 'lastResults':
+      return <GameResultScreen {...props} />
     case 'lastRound':
       break;
   }
 
   return null
-})
+}
+
+export const App: React.FC<IProps> = (props: IProps) => {
+  const {state, dispatch, i18nService} = props;
+
+  return (
+    <div id="screen" className={`App theme-${state.settings.currentTheme}`}>
+      <CurrentScreen state={state} dispatch={dispatch} i18nService={i18nService} />
+    </div>
+  )
+}
