@@ -314,6 +314,14 @@ class AchievementsPrimitive extends Primitive
      */
     public static function getDieHardData(IDb $db, $eventIdList)
     {
+        $allPlayers = $db->table('player')
+            ->select('display_name')
+            ->join('session_player', ['player.id', '=', 'session_player.player_id'])
+            ->join('session', ['session_player.session_id', '=', 'session.id'])
+            ->whereIn('event_id', $eventIdList)
+            ->where('session.status', 'finished')
+            ->findArray();
+
         $rounds = $db->table('round')
             ->select('loser_id')
             ->select('display_name')
@@ -325,6 +333,25 @@ class AchievementsPrimitive extends Primitive
             ->groupBy('display_name')
             ->orderByDesc('cnt')
             ->findArray();
+
+        $namesWithZeroCount = [];
+        $namesWithFeedCount = array_map(function ($round) {
+            return $round['display_name'];
+        }, $rounds);
+
+        foreach ($allPlayers as $player) {
+            $displayName = $player['display_name'];
+            if (!in_array($displayName, $namesWithFeedCount)) {
+                array_push($namesWithZeroCount, $displayName);
+            }
+        }
+
+        if (count($namesWithZeroCount) > 0) {
+            return [
+                'feed' => 0,
+                'names' => $namesWithZeroCount
+            ];
+        }
 
         $minThrows = 0;
         $names = [];
