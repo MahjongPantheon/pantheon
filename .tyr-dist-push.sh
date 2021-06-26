@@ -8,6 +8,7 @@ setup_git() {
 commit_built_tyr() {
   git checkout master
   git add Tyr-dist
+  git add Tyr-dist.new
   git commit --message "[TYR] Auto build: $GITHUB_RUN_NUMBER"
 }
 

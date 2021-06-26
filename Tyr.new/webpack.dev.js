@@ -8,7 +8,9 @@
      contentBase: './dist',
      hot: false,
      inline: false,
-     liveReload: false
+     liveReload: false,
+     port: 4005,
+     host: '0.0.0.0',
    },
  });
 
