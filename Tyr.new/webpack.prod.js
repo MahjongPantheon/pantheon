@@ -1,8 +1,25 @@
- const { merge } = require('webpack-merge');
- const common = require('./webpack.common.js');
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common.js');
+const TerserPlugin = require('terser-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = merge(common, {
   mode: 'production',
+  output: {
+    chunkFilename: "[name].[contenthash].js",
+    filename: "[name].[contenthash].js",
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'app/index.html'
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+    }),
+  ],
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin({
@@ -31,6 +48,12 @@ module.exports = merge(common, {
     })],
     splitChunks: {
       cacheGroups: {
+        vendor: {
+          chunks: 'initial',
+          name: 'vendor',
+          test: /node_modules/,
+          enforce: true
+        },
         styles: {
           name: 'styles',
           test: /\.css$/,
@@ -39,6 +62,7 @@ module.exports = merge(common, {
         },
       },
     },
+    runtimeChunk: true
   },
 });
 
