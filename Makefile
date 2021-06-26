@@ -274,6 +274,11 @@ prod_build_tyr: get_docker_id # this is for automated builds, don't run it manua
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make deps && make build';
 	cd Tyr && make cleanup_prebuilts && make prebuild
 
+.PHONY: prod_build_tyr2
+prod_build_tyr2: get_docker_id # this is for automated builds, don't run it manually
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr.new && HOME=/home/user gosu user make deps && make build';
+	cd Tyr.new && make cleanup_prebuilts && make prebuild
+
 # i18n related
 .PHONY: i18n_extract
 i18n_extract: get_docker_id
