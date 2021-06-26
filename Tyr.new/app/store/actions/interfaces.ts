@@ -9,10 +9,11 @@ import {
   LUserWithScore
 } from '#/interfaces/local';
 import {
+  RRoundOverviewInfo,
   RRoundPaymentsInfo,
   RRoundPaymentsInfoMulti,
   RRoundPaymentsInfoSingle,
-  SessionState
+  SessionState,
 } from '#/interfaces/remote';
 import {Table,  Outcome} from '#/interfaces/common';
 import {IAppState} from '../interfaces';
@@ -64,9 +65,9 @@ export const GET_OTHER_TABLE_FAIL = 'GET_OTHER_TABLE_FAIL';
 export const GET_OTHER_TABLE_LAST_ROUND_INIT = 'GET_OTHER_TABLE_LAST_ROUND_INIT';
 export const GET_OTHER_TABLE_LAST_ROUND_SUCCESS = 'GET_OTHER_TABLE_LAST_ROUND_SUCCESS';
 export const GET_OTHER_TABLE_LAST_ROUND_FAIL = 'GET_OTHER_TABLE_LAST_ROUND_FAIL';
-export const GET_LAST_ROUND_INIT = 'GET_LAST_ROUND_INIT';
-export const GET_LAST_ROUND_SUCCESS = 'GET_LAST_ROUND_SUCCESS';
-export const GET_LAST_ROUND_FAIL = 'GET_LAST_ROUND_FAIL';
+export const GET_ALL_ROUNDS_INIT = 'GET_ALL_ROUNDS_INIT';
+export const GET_ALL_ROUNDS_SUCCESS = 'GET_ALL_ROUNDS_SUCCESS';
+export const GET_ALL_ROUNDS_FAIL = 'GET_ALL_ROUNDS_FAIL';
 export const SET_TIMER = 'SET_TIMER';
 export const UPDATE_TIMER_DATA = 'UPDATE_TIMER_DATA';
 export const GET_CHANGES_OVERVIEW_INIT = 'GET_CHANGES_OVERVIEW_INIT';
@@ -319,16 +320,16 @@ interface GetOtherTableLastRoundActionFail {
   type: typeof GET_OTHER_TABLE_LAST_ROUND_FAIL;
   payload: RemoteError;
 }
-interface GetLastRoundActionInit {
-  type: typeof GET_LAST_ROUND_INIT;
+interface GetAllRoundsActionInit {
+  type: typeof GET_ALL_ROUNDS_INIT;
   payload: string;
 }
-interface GetLastRoundActionSuccess {
-  type: typeof GET_LAST_ROUND_SUCCESS;
-  payload: RRoundPaymentsInfoSingle | RRoundPaymentsInfoMulti;
+interface GetAllRoundsActionSuccess {
+  type: typeof GET_ALL_ROUNDS_SUCCESS;
+  payload: RRoundOverviewInfo[];
 }
-interface GetLastRoundActionFail {
-  type: typeof GET_LAST_ROUND_FAIL;
+interface GetAllRoundsActionFail {
+  type: typeof GET_ALL_ROUNDS_FAIL;
   payload: RemoteError;
 }
 interface SetTimerAction {
@@ -549,8 +550,9 @@ export type AppActionTypes =
   | GetOtherTableActionFail
   | GetOtherTablesListActionSuccess
   | GetOtherTablesListActionFail
-  | GetLastRoundActionSuccess
-  | GetLastRoundActionFail
+  | GetAllRoundsActionInit
+  | GetAllRoundsActionSuccess
+  | GetAllRoundsActionFail
   | SetTimerAction
   | UpdateTimerDataAction
   | GetChangesOverviewActionSuccess
@@ -571,7 +573,6 @@ export type AppActionTypes =
   | GetOtherTableLastRoundActionInit
   | GetOtherTableLastRoundActionSuccess
   | GetOtherTableLastRoundActionFail
-  | GetLastRoundActionInit
   | GetChangesOverviewActionInit
   | GetLastResultsActionInit
   | GetAllPlayersActionInit

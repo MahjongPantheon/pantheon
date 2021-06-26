@@ -8,7 +8,7 @@ import {RoundResult} from '#/components/screens/log/view/RoundResult';
 export interface IRoundResult {
   scoresDelta: {[id: number]: number}
   scores: number[]
-  wind: string
+  round: string
 }
 
 export interface IRoundPlayer {
@@ -58,7 +58,7 @@ export const LogScreenView: React.FC<IProps> = (props) => {
               index={i}
               scoresDelta={roundResult.scoresDelta}
               scores={roundResult.scores}
-              wind={roundResult.wind}
+              round={roundResult.round}
               selectRound={selectRound}
             >
               {selectedRoundIndex === i && <RoundInfo />}

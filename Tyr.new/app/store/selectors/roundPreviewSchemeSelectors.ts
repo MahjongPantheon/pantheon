@@ -4,7 +4,7 @@ import { memoize } from '#/primitives/memoize';
 import { getSeating } from './commonSelectors';
 import { getPaoUsers, getRiichiUsers } from './mimirSelectors';
 
-export type RoundPreviewSchemePurpose = 'overview' | 'other_overview' | 'confirmation' | 'lastround' | 'otherlastround';
+export type RoundPreviewSchemePurpose = 'overview' | 'other_overview' | 'confirmation'
 type Csp = RoundPreviewSchemePurpose; // alias for shorter name
 
 export type PaymentInfo = {
@@ -25,11 +25,7 @@ type RoundPaymentInfoShort = {
 function _getPayment(state: IAppState, purpose: Csp, player1: Player, player2: Player): PaymentInfo | undefined {
   let overview;
   switch (purpose) {
-    case 'lastround':
-    case 'otherlastround':
-    case 'other_overview':
-      overview = state.lastRoundOverview;
-      break;
+    case 'other_overview': //todo check
     case 'confirmation':
     case 'overview':
       overview = state.changesOverview;
@@ -80,18 +76,6 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | u
   }
 
   switch (purpose) {
-    case 'lastround':
-      if (!s.lastRoundOverview || !s.players) {
-        return undefined;
-      }
-      return {
-        round: s.lastRoundOverview.round,
-        currentPlayerId: s.currentPlayerId,
-        players: s.players,
-        riichiBets: s.lastRoundOverview.riichiIds,
-        penaltyFor: s.lastRoundOverview.penaltyFor,
-        paoPlayer: s.lastRoundOverview.paoPlayer
-      };
     case 'overview':
       if (!s.players) {
         return undefined;
@@ -128,18 +112,6 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | u
         riichiBets: [],
         penaltyFor: undefined,
         paoPlayer: undefined
-      }
-    case 'otherlastround':
-      if (!s.lastRoundOverview) {
-        return undefined;
-      }
-      return {
-        round: s.lastRoundOverview.round,
-        currentPlayerId: s.currentOtherTablePlayers[(s.overviewViewShift || 0) % 4].id,
-        players: s.currentOtherTablePlayers as [Player, Player, Player, Player],
-        riichiBets: s.lastRoundOverview.riichiIds,
-        penaltyFor: s.lastRoundOverview.penaltyFor,
-        paoPlayer: s.lastRoundOverview.paoPlayer
       }
   }
 };

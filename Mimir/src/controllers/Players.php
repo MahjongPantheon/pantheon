@@ -543,9 +543,11 @@ class PlayersController extends Controller
 
             $scoresBefore = $lastState->getScores();
             $scoresAfter = $currentState->getScores();
-            $scoresDelta = array_map(function ($before, $after) {
-                return $after - $before;
-            }, $scoresBefore, $scoresAfter);
+            
+            $scoresDelta = [];
+            foreach ($scoresBefore as $key => $value) {
+                $scoresDelta[$key] = $scoresAfter[$key] - $value;
+            }
 
             $roundResult = [
                 'outcome'       => $round->getOutcome(),

@@ -7,14 +7,13 @@ import {
   FORCE_LOGOUT,
   GET_ALL_PLAYERS_FAIL,
   GET_ALL_PLAYERS_INIT,
-  GET_ALL_PLAYERS_SUCCESS,
+  GET_ALL_PLAYERS_SUCCESS, GET_ALL_ROUNDS_INIT,
   GET_CHANGES_OVERVIEW_FAIL,
   GET_CHANGES_OVERVIEW_INIT,
   GET_GAME_OVERVIEW_FAIL,
   GET_GAME_OVERVIEW_INIT,
   GET_GAME_OVERVIEW_SUCCESS,
   GET_LAST_RESULTS_INIT,
-  GET_LAST_ROUND_INIT,
   GET_OTHER_TABLE_INIT,
   GET_OTHER_TABLES_LIST_INIT,
   SETTINGS_SAVE_LANG,
@@ -22,7 +21,7 @@ import {
   TRACK_ARBITRARY_EVENT,
   TRACK_SCREEN_ENTER,
   UPDATE_CURRENT_GAMES_FAIL,
-  UPDATE_CURRENT_GAMES_SUCCESS
+  UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
 import { MetrikaService } from '#/services/metrika';
 import { IAppState } from "#/store/interfaces";
@@ -128,9 +127,9 @@ export const metrika = (ms: MetrikaService) => (mw: MiddlewareAPI<Dispatch<AppAc
         screen: 'screen-last-results'
       });
       break;
-    case GET_LAST_ROUND_INIT:
+    case GET_ALL_ROUNDS_INIT:
       ms.track(MetrikaService.SCREEN_ENTER, {
-        screen: 'screen-last-round'
+        screen: 'screen-log'
       });
       break;
     case GET_OTHER_TABLE_INIT:

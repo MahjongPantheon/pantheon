@@ -10,7 +10,7 @@ import {
   FORCE_LOGOUT,
   GET_ALL_PLAYERS_FAIL,
   GET_ALL_PLAYERS_INIT,
-  GET_ALL_PLAYERS_SUCCESS,
+  GET_ALL_PLAYERS_SUCCESS, GET_ALL_ROUNDS_FAIL, GET_ALL_ROUNDS_INIT, GET_ALL_ROUNDS_SUCCESS,
   GET_CHANGES_OVERVIEW_FAIL,
   GET_CHANGES_OVERVIEW_INIT,
   GET_CHANGES_OVERVIEW_SUCCESS,
@@ -20,9 +20,6 @@ import {
   GET_LAST_RESULTS_FAIL,
   GET_LAST_RESULTS_INIT,
   GET_LAST_RESULTS_SUCCESS,
-  GET_LAST_ROUND_FAIL,
-  GET_LAST_ROUND_INIT,
-  GET_LAST_ROUND_SUCCESS,
   GET_OTHER_TABLE_FAIL,
   GET_OTHER_TABLE_INIT, GET_OTHER_TABLE_LAST_ROUND_INIT, GET_OTHER_TABLE_RELOAD,
   GET_OTHER_TABLE_SUCCESS,
@@ -75,9 +72,11 @@ export const mimirClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatc
       getOtherTableReload(mw.getState().currentOtherTableHash || '', api, next);
       break;
     case GET_OTHER_TABLE_LAST_ROUND_INIT:
-    case GET_LAST_ROUND_INIT:
+      next(action);
+      //todo
+      break;
+    case GET_ALL_ROUNDS_INIT:
       getAllRounds(action.payload, api, next)
-      // getLastRound(action.payload, api, next);
       break;
     case GET_CHANGES_OVERVIEW_INIT:
       getChangesOverview(action.payload, api, next);
@@ -188,18 +187,11 @@ function getOtherTablesListReload(api: RiichiApiService, dispatch: Dispatch) {
     .catch((e) => dispatch({ type: GET_OTHER_TABLES_LIST_FAIL, payload: e }));
 }
 
-function getLastRound(sessionHash: string, api: RiichiApiService, dispatch: Dispatch) {
-  dispatch({ type: GET_LAST_ROUND_INIT });
-  api.getLastRound(sessionHash)
-    .then((paymentsInfo) => dispatch({ type: GET_LAST_ROUND_SUCCESS, payload: paymentsInfo }))
-    .catch((e) => dispatch({ type: GET_LAST_ROUND_FAIL, payload: e }));
-}
-
 function getAllRounds(sessionHash: string, api: RiichiApiService, dispatch: Dispatch) {
-  // dispatch({ type: GET_LAST_ROUND_INIT });
+  dispatch({ type: GET_ALL_ROUNDS_INIT });
   api.getAllRounds(sessionHash)
-    .then((paymentsInfo) => dispatch({ type: GET_LAST_ROUND_SUCCESS, payload: paymentsInfo }))
-    // .catch((e) => dispatch({ type: GET_LAST_ROUND_FAIL, payload: e }));
+    .then((paymentsInfo) => dispatch({ type: GET_ALL_ROUNDS_SUCCESS, payload: paymentsInfo }))
+    .catch((e) => dispatch({ type: GET_ALL_ROUNDS_FAIL, payload: e }));
 }
 
 function getChangesOverview(state: IAppState, api: RiichiApiService, dispatch: Dispatch) {

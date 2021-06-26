@@ -10,7 +10,7 @@ type RoundResultProps = IRoundResult & {
 }
 
 export const RoundResult: React.FC<RoundResultProps> = (props) => {
-  const {players, index, selectRound, wind, scoresDelta, scores, children} = props;
+  const {players, index, selectRound, round, scoresDelta, scores, children} = props;
 
   const onRoundClick = useCallback(() => {
     selectRound(index)
@@ -19,7 +19,7 @@ export const RoundResult: React.FC<RoundResultProps> = (props) => {
   return (
     <div  className="page-log__row-container" onClick={onRoundClick}>
       <div className="page-log__row">
-        <div className="page-log__cell page-log__cell--first">{wind}</div>
+        <div className="page-log__cell page-log__cell--first">{round}</div>
         {players.map((player, i) => (
           <RoundResultCell
             key={i}

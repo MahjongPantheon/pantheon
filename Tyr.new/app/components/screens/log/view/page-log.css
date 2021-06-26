@@ -8,7 +8,7 @@
   background-color: var(--color-secondary-5);
 }
 
-.page-log__row-container:not(:first-child) {
+.page-log__row-container:active {
   background-color: var(--color-secondary-6);
 }
 
