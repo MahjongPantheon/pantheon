@@ -1,0 +1,284 @@
+.player__wind {
+  font-size: var(--font-size-header);
+}
+
+.player__score {
+  font-size: var(--font-size-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player__score p {
+  position: relative;
+}
+
+.player__inline-wind {
+  margin-right: 8px;
+}
+
+.player__penalty {
+  margin-left: 8px;
+  padding: 2px 4px;
+  font-size: var(--font-size-small-1);
+  background-color: var(--color-danger);
+  color: var(--secondary-text-color);
+}
+
+.player--top {
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+
+.player--top .player__wind-container,
+.player--top .player__button-container,
+.player--top .player__riichi-button {
+  margin-top: 12px;
+}
+
+.player--top .player__score-container {
+  margin-top: 6px;
+}
+
+.player--top .player__name,
+.player--top .player__wind,
+.player--top .player__score {
+  text-align: center;
+}
+
+
+.player--bottom {
+  margin-top: 4px;
+  margin-bottom: 16px;
+}
+
+.player--bottom .player__wind-container,
+.player--bottom .player__button-container,
+.player--bottom .player__riichi-button {
+  margin-bottom: 12px;
+}
+
+.player--bottom .player__score-container {
+  margin-bottom: 6px;
+}
+
+.player--bottom .player__name,
+.player--bottom .player__wind,
+.player--bottom .player__score {
+  text-align: center;
+}
+
+
+.player--left {
+  margin-left: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.player--left .player__wind-container,
+.player--left .player__button-container,
+.player--left .player__riichi-button {
+  margin-left: 12px;
+}
+
+.player--left .player__score-container {
+  margin-left: 6px;
+}
+
+
+.player--right {
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.player--right .player__wind-container,
+.player--right .player__button-container,
+.player--right .player__riichi-button {
+  margin-right: 12px;
+}
+
+.player--right .player__score-container {
+  margin-right: 6px;
+}
+
+
+.player--rotated.player--left,
+.player--rotated.player--right {
+  height: 100%;
+}
+
+.player--rotated.player--left .player__name,
+.player--rotated.player--left .player__wind,
+.player--rotated.player--left .player__score,
+.player--rotated.player--right .player__name,
+.player--rotated.player--right .player__wind,
+.player--rotated.player--right .player__score {
+  position: absolute;
+  transform-origin: 0 0;
+  text-align: center;
+}
+
+.player--rotated.player--left .player__name-container,
+.player--rotated.player--right .player__name-container {
+  height: 100%;
+  width: 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.player--rotated.player--left .player__name,
+.player--rotated.player--right .player__name {
+  height: 24px;
+}
+
+.player--rotated.player--left .player__name {
+  left: 24px;
+  transform: rotate(90deg);
+}
+
+.player--rotated.player--right .player__name {
+  bottom: -24px;
+  left: 0;
+  transform: rotate(270deg);
+}
+
+.player--rotated.player--left .player__wind-container,
+.player--rotated.player--right .player__wind-container {
+  height: 32px;
+  width: 45px;
+  overflow: hidden;
+  position: relative;
+}
+
+.player--rotated.player--left .player__wind,
+.player--rotated.player--right .player__wind {
+  height: 45px;
+}
+
+.player--rotated.player--left .player__wind {
+  left: 45px;
+  transform: rotate(90deg);
+}
+
+.player--rotated.player--right .player__wind {
+  bottom: -45px;
+  left: 0;
+  transform: rotate(270deg);
+}
+
+.player--rotated.player--left .player__score-container,
+.player--rotated.player--right .player__score-container {
+  height: 300px;
+  width: 23px;
+  overflow: hidden;
+  position: relative;
+}
+
+.player--rotated.player--left .player__score,
+.player--rotated.player--right .player__score {
+  width: 300px;
+}
+
+.player--rotated.player--left .player__score {
+  left: 23px;
+  transform: rotate(90deg);
+}
+
+.player--rotated.player--right .player__score {
+  bottom: -23px;
+  left: 0;
+  transform: rotate(270deg);
+}
+
+.player--rotated.player--top .player__wind,
+.player--rotated.player--top .player__name,
+.player--rotated.player--top .player__score {
+  transform: rotate(180deg);
+}
+
+.player__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player__score--success {
+  color: var(--color-success);
+}
+
+.player__score--danger {
+  color: var(--color-danger);
+}
+
+.player__score--active {
+  color: var(--color-primary-active);
+}
+
+.player__button-container {
+  z-index: 1;
+}
+
+.player__button-container--horizontal {
+  display: flex;
+  justify-content: center;
+}
+
+.player__button-container--horizontal div:nth-child(2) {
+  margin-left: 8px;
+}
+
+.player__button-container:not(.player__button-container--horizontal) div:nth-child(2) {
+  margin-top: 8px;
+}
+
+.player__riichi-button {
+  display: flex;
+  justify-content: center;
+}
+
+.player__riichi-button--rotated {
+  width: 17px;
+  height: 106px;
+  position: relative;
+}
+
+.player__riichi-button--rotated svg {
+  position: absolute;
+  z-index: 0;
+  height: 106px;
+  width: 106px;
+}
+
+.player__riichi-button--rotated svg {
+  transform: rotate(90deg);
+}
+
+.player__riichi-button:not(.player__riichi-button--rotated) svg {
+  width: 106px;
+  height: 17px;
+}
+
+.player__riichi-button--empty {
+  color: var(--color-secondary-4);
+}
+
+.player__riichi-button:not(.player__riichi-button--empty) {
+  --riichi-circle-color: var(--color-danger);
+}
+
+.player__riichi-button:active {
+  --riichi-fill-color: var(--color-secondary-6);
+}
+
+.player__inline-riichi {
+  width: 53px;
+  height: 8.5px;
+  margin-left: 8px;
+  margin-top: 8px;
+  position: absolute;
+
+  color: var(--primary-text-color);
+  --riichi-circle-color: var(--color-danger);
+}

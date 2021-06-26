@@ -1,0 +1,34 @@
+.player-dropdown {
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.player-dropdown__player {
+  width: 276px;
+  margin-bottom: 32px;
+  margin-left: 12px;
+}
+
+.player-dropdown__player:after {
+  display: block;
+  content: '';
+  border-bottom: 2px solid var(--color-secondary-4);
+  width: auto;
+}
+
+.player-dropdown__player-name {
+  padding: 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-dropdown__placeholder {
+  padding: 0 4px;
+  color: var(--color-secondary-4);
+}
+
+.player-dropdown__placeholder:active {
+  color: var(--color-secondary-5);
+}

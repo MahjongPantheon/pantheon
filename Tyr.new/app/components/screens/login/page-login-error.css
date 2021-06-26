@@ -1,0 +1,31 @@
+.page-login-error {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.page-login-error__title {
+  flex: 0 0 auto;
+  margin-top: 48px;
+  font-size: var(--font-size-header);
+  text-align: center;
+}
+
+.page-login-error__message {
+  flex: 1 1 auto;
+  margin: 32px 24px;
+}
+
+.page-login-error__message ul {
+  margin: 12px 0 24px 0;
+  color: var(--primary-text-color);
+}
+
+.page-login-error__message. li {
+  margin-bottom: 12px;
+}
+
+.page-login-error__button-container {
+  flex: 0 0 auto;
+  margin: 16px 24px;
+}

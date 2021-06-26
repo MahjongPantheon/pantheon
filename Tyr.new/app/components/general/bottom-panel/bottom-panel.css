@@ -1,0 +1,22 @@
+.bottom-panel {
+  height: 48px;
+  background-color: var(--color-secondary-3);
+}
+
+.bottom-panel__inner {
+  padding: 6px 34px;
+  height: 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottom-panel__text {
+  font-size: var(--font-size-secondary);
+}
+
+.bottom-panel .svg-button {
+  width: 28px;
+  height: 28px;
+}
+

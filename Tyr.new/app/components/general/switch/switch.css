@@ -1,0 +1,37 @@
+.switch {
+  flex-shrink: 0;
+  position: relative;
+  width: 48px;
+  height: 24px;
+  user-select: none;
+}
+
+.switch__box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  background-color: var(--color-secondary-4);
+}
+
+.switch__box--on {
+  background-color: var(--color-primary);
+}
+
+.switch__button {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  right: 26px;
+  left: 2px;
+  background-color: var(--secondary-text-color);
+  border-radius: 9px;
+  transition: all 100ms ease;
+}
+
+.switch__button--on {
+  right: 2px;
+  left: 26px;
+}

@@ -1,0 +1,54 @@
+.page-table__center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.table-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.table-info__round {
+  font-size: var(--font-size-header);
+}
+
+.table-info__table-number {
+  font-size: var(--font-size-header);
+  margin-top: 2px;
+}
+
+.table-info__tenbou {
+  margin-top: 4px;
+  display: flex;
+}
+
+.table-info__tenbou-count {
+  margin-left: 8px;
+}
+
+.table-info__tenbou .svg-item {
+  width: 31px;
+  height: 24px;
+}
+
+.table-info__timer {
+  margin-top: 8px;
+  font-size: 24px;
+}
+
+.table-info__games-left {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.table-info__games-left-count {
+  font-size: 24px;
+  color: var(--color-danger);
+}
+
+.table-info__games-left-caption {
+  font-size: 14px;
+}
