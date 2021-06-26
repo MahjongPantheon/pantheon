@@ -1,6 +1,6 @@
 import * as React from "react";
 import './page-set-hand.css'
-import {classNames} from '#/components/helpers/ReactUtils';
+import classNames from 'classnames';
 import {YakuGroup, YakuItem} from '#/components/screens/select-hand/YakuTypes';
 
 type IProps = {

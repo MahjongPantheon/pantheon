@@ -1,0 +1,63 @@
+
+.page-log__content {
+  padding: 4px 0;
+  overflow: scroll;
+}
+
+.page-log__row-container:nth-child(2n) {
+  background-color: var(--color-secondary-5);
+}
+
+.page-log__row-container:not(:first-child) {
+  background-color: var(--color-secondary-6);
+}
+
+.page-log__row {
+  display: flex;
+  padding: 8px 0;
+}
+
+.page-log__cell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.page-log__cell:not(.page-log__cell--first) {
+  font-size: var(--font-size-small-1);
+  width: calc((100% - 60px) / 4);
+  padding: 0 2px;
+  box-sizing: border-box;
+}
+
+.page-log__cell.page-log__cell--first {
+  width: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.page-log__delta {
+  margin-bottom: 16px;
+}
+
+.page-log__delta.page-log__delta--success {
+  color: var(--color-success);
+}
+
+.page-log__delta.page-log__delta--danger {
+  color: var(--color-danger);
+}
+
+.page-log__delta,
+.page-log__score {
+  text-align: center;
+}
+
+.page-log__info {
+  font-size: var(--font-size-small-1);
+  padding: 4px 16px;
+
+}

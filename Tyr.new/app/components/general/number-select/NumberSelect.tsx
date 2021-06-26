@@ -1,7 +1,7 @@
 import * as React from "react";
 import {SelectNumberModal} from './SelectNumberModal';
 import './number-select.css'
-import {classNames} from '../../helpers/ReactUtils';
+import classNames from 'classnames';
 
 type IProps = {
   value: number

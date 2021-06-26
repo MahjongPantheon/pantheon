@@ -19,7 +19,7 @@ import {
   ADD_ROUND_INIT,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
-  INIT_BLANK_OUTCOME, SELECT_MULTIRON_WINNER,
+  INIT_BLANK_OUTCOME, SELECT_MULTIRON_WINNER, SHOW_GAME_LOG,
   TOGGLE_ADDITIONAL_TABLE_INFO,
   TOGGLE_DEADHAND,
   TOGGLE_LOSER,
@@ -688,10 +688,7 @@ function onRiichiButtonClick(dispatch: Dispatch, playerId: number) {
 }
 
 function onLogClick(dispatch: Dispatch) {
-  //todo
-  return () => {
-    console.log('onLogClick')
-  }
+  return () => dispatch({ type: SHOW_GAME_LOG })
 }
 
 function onAddClick(state: IAppState, dispatch: Dispatch) {

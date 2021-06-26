@@ -16,7 +16,7 @@ import {
   GET_LAST_RESULTS_INIT,
   GET_ALL_PLAYERS_SUCCESS,
   SET_NEWGAME_PLAYERS,
-  ADD_ROUND_SUCCESS,
+  ADD_ROUND_SUCCESS, SHOW_GAME_LOG, GET_LAST_ROUND_INIT,
 } from '../actions/interfaces';
 import {AppScreen, IAppState} from '../interfaces';
 import {getWinningUsers} from '#/store/selectors/mimirSelectors';
@@ -99,6 +99,14 @@ export const screenManageMw = () => (mw: MiddlewareAPI<Dispatch<AppActionTypes>,
     case GET_ALL_PLAYERS_SUCCESS:
       next(action)
       mw.dispatch({ type: SET_NEWGAME_PLAYERS});
+      break;
+    case SHOW_GAME_LOG:
+      next(action)
+      state = mw.getState();
+      const sessionHash = state.currentSessionHash || state.currentOtherTableHash
+      if (sessionHash) {
+        mw.dispatch({ type: GET_LAST_ROUND_INIT, payload: sessionHash});
+      }
       break;
     default:
       return next(action);

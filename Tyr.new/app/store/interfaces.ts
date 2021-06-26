@@ -6,7 +6,7 @@ import {Graph} from '#/primitives/graph';
 import {RemoteError} from '#/services/remoteError';
 
 export type AppScreen = 'overview' | 'currentGame' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
-  | 'handSelect' | 'confirmation' | 'newGame' | 'searchPlayer' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
+  | 'handSelect' | 'confirmation' | 'newGame' | 'searchPlayer' | 'lastResults' | 'gameLog' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
 
 export type LoadingSet = {
   games: boolean;

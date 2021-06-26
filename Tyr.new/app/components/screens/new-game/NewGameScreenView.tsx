@@ -4,7 +4,7 @@ import {TopPanel} from '#/components/general/top-panel/TopPanel';
 import {PlayerDropdown} from '#/components/general/dropdown/PlayerDropdown';
 import {IconType} from '#/components/general/icon/IconType';
 import {Icon} from '#/components/general/icon/Icon';
-import {classNames} from '#/components/helpers/ReactUtils';
+import classNames from 'classnames';
 
 type IProps = {
   east?: string

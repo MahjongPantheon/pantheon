@@ -1,6 +1,6 @@
 import * as React from "react";
 import './tab.css'
-import {classNames} from '#/components/helpers/ReactUtils';
+import classNames from 'classnames';
 
 type TabItem = {
   caption: string

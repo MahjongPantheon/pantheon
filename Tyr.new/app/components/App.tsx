@@ -6,7 +6,6 @@ import {IAppState} from '#/store/interfaces';
 import { AppActionTypes } from '#/store/actions/interfaces';
 import { Dispatch } from "redux";
 import {IComponentProps} from '#/components/IComponentProps';
-import {EnterPinScreen} from '#/components/screens/login/EnterPinScreen';
 import {HomeScreen} from '#/components/screens/home/HomeScreen';
 import {SettingsScreen} from '#/components/screens/settings/SettingsScreen';
 import {NewGameScreen} from '#/components/screens/new-game/NewGameScreen';
@@ -17,6 +16,7 @@ import {SelectHandScreen} from '#/components/screens/select-hand/SelectHandScree
 import {I18nService} from '#/services/i18n';
 import {GameResultScreen} from '#/components/screens/game-result/GameResultScreen';
 import {LoginScreen} from '#/components/screens/login/LoginScreen';
+import {LogScreen} from '#/components/screens/log/LogScreen';
 
 interface IProps {
   state: IAppState;
@@ -50,8 +50,8 @@ const CurrentScreen: React.FC<IComponentProps> = (props) => {
       return <SelectHandScreen {...props} />
     case 'lastResults':
       return <GameResultScreen {...props} />
-    case 'lastRound':
-      break;
+    case 'gameLog':
+      return <LogScreen {...props} />
   }
 
   return null

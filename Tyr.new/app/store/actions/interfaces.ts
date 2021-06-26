@@ -24,7 +24,7 @@ export const START_NEW_GAME = 'START_NEW_GAME';
 export const GO_TO_CURRENT_GAME = 'GO_TO_CURRENT_GAME';
 export const SEARCH_PLAYER = 'SEARCH_PLAYER';
 export const SHOW_LAST_RESULTS = 'SHOW_LAST_RESULTS';
-export const SHOW_LAST_ROUND = 'SHOW_LAST_ROUND';
+export const SHOW_GAME_LOG = 'SHOW_GAME_LOG';
 export const SHOW_OTHER_TABLES_LIST = 'SHOW_OTHER_TABLES_LIST';
 export const SHOW_OTHER_TABLE = 'SHOW_OTHER_TABLE';
 export const OPEN_SETTINGS = 'OPEN_SETTINGS';
@@ -135,8 +135,8 @@ interface ShowLastResultsAction {
   type: typeof SHOW_LAST_RESULTS;
 }
 
-interface ShowLastRoundAction {
-  type: typeof SHOW_LAST_ROUND;
+interface ShowGameLogAction {
+  type: typeof SHOW_GAME_LOG;
 }
 
 interface ShowOtherTablesListAction {
@@ -519,7 +519,7 @@ export type AppActionTypes =
   | GoToCurrentGameAction
   | SearchPlayerAction
   | ShowLastResultsAction
-  | ShowLastRoundAction
+  | ShowGameLogAction
   | ShowOtherTablesListAction
   | ShowOtherTableAction
   | OpenSettingsAction

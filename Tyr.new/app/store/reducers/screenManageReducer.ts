@@ -6,15 +6,13 @@ import {
   OPEN_SETTINGS,
   RESET_STATE, SEARCH_PLAYER,
   SHOW_LAST_RESULTS,
-  SHOW_LAST_ROUND,
+  SHOW_GAME_LOG,
   SHOW_OTHER_TABLE,
   SHOW_OTHER_TABLES_LIST,
   START_NEW_GAME,
 } from '../actions/interfaces';
 import { winnerHasYakuWithPao } from '../util';
 import {AppOutcome} from '#/interfaces/app';
-import {defaultPlayer} from '#/store/selectors/screenNewGameSelectors';
-import {LUser} from '#/interfaces/local';
 
 export function screenManageReducer(
   state: IAppState,
@@ -63,10 +61,10 @@ export function screenManageReducer(
         ...state,
         currentScreen: 'lastResults'
       };
-    case SHOW_LAST_ROUND:
+    case SHOW_GAME_LOG:
       return {
         ...state,
-        currentScreen: 'lastRound'
+        currentScreen: 'gameLog'
       };
     case SHOW_OTHER_TABLE:
       return {
@@ -138,7 +136,7 @@ export function screenManageReducer(
           nextScreen = 'playersSelect';
           break;
         case 'lastResults':
-        case 'lastRound':
+        case 'gameLog':
         case 'confirmation':
           nextScreen = 'overview';
           break;
@@ -173,7 +171,7 @@ export function screenManageReducer(
         case 'searchPlayer':
           prevScreen = 'newGame';
           break;
-        case 'lastRound':
+        case 'gameLog':
           if (state.currentSessionHash) {
             prevScreen = 'overview';
           } else {
