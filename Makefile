@@ -122,7 +122,12 @@ pantheon_run: get_docker_id get_docker_idle_id
 				-d -e LOCAL_USER_ID=$(UID) \
 				-e COVERALLS_REPO_TOKEN=$(COVERALLS_REPO_TOKEN) \
 				-e COVERALLS_RUN_LOCALLY=1 \
-				-p 127.0.0.1:4001:4001 -p 127.0.0.1:4002:4002 -p 127.0.0.1:4003:4003 -p 127.0.0.1:4004:4004 -p 127.0.0.1:4005:4005 -p 127.0.0.1:5532:5532 \
+				-p 127.0.0.1:4001:4001 \
+				-p 127.0.0.1:4002:4002 \
+				-p 127.0.0.1:4003:4003 \
+				-p 127.0.0.1:4004:4004 \
+				-p 127.0.0.1:4005:4005 \
+				-p 127.0.0.1:5532:5532 \
 				-v `pwd`/Tyr:/var/www/html/Tyr:z \
 				-v `pwd`/Tyr.new:/var/www/html/Tyr.new:z \
 				-v `pwd`/Mimir:/var/www/html/Mimir:z \
@@ -149,20 +154,15 @@ run: pantheon_run pgadmin_start
 .PHONY: stop
 stop: pantheon_stop pgadmin_stop
 
-.PHONY: ngdev
-ngdev: get_docker_id
-	@docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make docker'
-
-.PHONY: wpdev
-wpdev: get_docker_id
-	@docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr.new && HOME=/home/user gosu user make docker'
+.PHONY: frontdev
+frontdev: get_docker_id
+	@docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon && HOME=/home/user gosu user sh ./frontdev.sh'
 
 .PHONY: dev
 dev: run
 	${MAKE} deps
 	${MAKE} migrate
-	${MAKE} ngdev
-	${MAKE} wpdev
+	${MAKE} frontdev
 
 .PHONY: migrate
 migrate: get_docker_id

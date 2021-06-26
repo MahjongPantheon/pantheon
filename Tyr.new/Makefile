@@ -17,7 +17,7 @@ prebuild:
 	cp -R * ../../Tyr-dist.new/
 
 dev:
-	webpack-dev-server --config webpack.dev.js
+	./node_modules/.bin/webpack-dev-server --config webpack.dev.js
 
 docker: dev
 

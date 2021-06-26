@@ -9,7 +9,8 @@
      hot: false,
      inline: false,
      liveReload: false,
-     port: 4005
+     port: 4005,
+     host: '0.0.0.0',
    },
  });
 
