@@ -1,103 +1,66 @@
-import * as React from "react";
-import './page-enter-pin.css'
+import * as React from 'react';
+import {useCallback, useState} from 'react';
+import './page-enter-pin.css';
+import {Icon} from '#/components/general/icon/Icon';
+import {IconType} from '#/components/general/icon/IconType';
 
 type IProps = {
     onSubmit: (pin: string) => void
 }
 
-type IState = {
-    pin: string
-}
+const clearCaption = '←';
+const submitCaption = 'Ok';
+const buttonCaptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, clearCaption, 0, submitCaption];
 
-type buttonItem = {
-    caption: string | number
-    onClick: () => void
-}
+export const EnterPinScreenView: React.FC<IProps> = (props) => {
+  const {onSubmit} = props;
+  const [pin, setPin] = useState('');
 
-export class EnterPinScreenView extends React.PureComponent<IProps, IState> {
-    private readonly buttons: buttonItem[];
-
-    constructor(props: IProps) {
-        super(props);
-
-        this.state = {pin: ''};
-        this.buttons = [];
-        for (let i = 1; i <= 9; i++) {
-            this.buttons.push({
-                caption: i,
-                onClick: () => this.onNumberClick(i)
-            })
-        }
-
-        this.buttons.push({
-            caption: '←',
-            onClick: () => this.onClearClick(),
-        });
-        this.buttons.push({
-            caption: 0,
-            onClick: () => this.onNumberClick(0)
-        });
-        this.buttons.push({
-            caption: 'Ok',
-            onClick: () => this.props.onSubmit(this.state.pin),
-        });
+  const onButtonClick = useCallback((caption: string | number) => {
+    if (typeof caption === 'number') {
+      setPin(pin + caption.toString())
+    } else if (caption === clearCaption) {
+        setPin(pin.slice(0, pin.length - 1))
+    } else if (caption === submitCaption) {
+      onSubmit(pin)
     }
+  }, [onSubmit, pin, setPin])
 
-    private onNumberClick(value: number) {
-        this.setState({
-            pin: this.state.pin + value.toString()
-        })
-    }
+  return (
+    <div className="page-enter-pin">
+      <div className="page-enter-pin__title">
+        Pantheon
+      </div>
 
-    private onClearClick() {
-        if (this.state.pin.length) {
-            this.setState({
-                pin: this.state.pin.slice(0, this.state.pin.length - 1)
-            })
-        }
-    }
-
-    render() {
-        const {pin} = this.state;
-
-        return (
-            <div className="page-enter-pin">
-                <div className="page-enter-pin__title">
-                    Pantheon
-                </div>
-
-                <div className="page-enter-pin__input">
-                    <div className="page-enter-pin__input-group">
-                        {!!pin && (
-                            <div className="page-enter-pin__number">
-                                {pin}
-                            </div>
-                        )}
-                        {!pin && (
-                            <div className="page-enter-pin__placeholder">
-                                enter pin code
-                            </div>
-                        )}
-
-                        <div className="page-enter-pin__qr svg-button">
-                            <svg>
-                                <use xlinkHref="#qr" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="page-enter-pin__button-container">
-                    {this.buttons.map(button => (
-                        <div key={button.caption}
-                             className="page-enter-pin__button flat-btn"
-                             onClick={button.onClick}
-                        >
-                            {button.caption}
-                        </div>
-                    ))}
-                </div>
+      <div className="page-enter-pin__input">
+        <div className="page-enter-pin__input-group">
+          {!!pin && (
+            <div className="page-enter-pin__number">
+              {pin}
             </div>
-        );
-    }
+          )}
+          {!pin && (
+            <div className="page-enter-pin__placeholder">
+              enter pin code
+            </div>
+          )}
+
+          <div className="page-enter-pin__qr svg-button">
+            <Icon type={IconType.QR} />
+          </div>
+        </div>
+      </div>
+
+      <div className="page-enter-pin__button-container">
+        {buttonCaptions.map(caption => (
+          <div key={caption}
+               className="page-enter-pin__button flat-btn"
+               onClick={() => onButtonClick(caption)}
+          >
+            {caption}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }

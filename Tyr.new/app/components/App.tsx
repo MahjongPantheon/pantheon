@@ -16,6 +16,7 @@ import {TableScreen} from '#/components/screens/table/TableScreen';
 import {SelectHandScreen} from '#/components/screens/select-hand/SelectHandScreen';
 import {I18nService} from '#/services/i18n';
 import {GameResultScreen} from '#/components/screens/game-result/GameResultScreen';
+import {LoginScreen} from '#/components/screens/login/LoginScreen';
 
 interface IProps {
   state: IAppState;
@@ -29,9 +30,7 @@ const CurrentScreen: React.FC<IComponentProps> = (props) => {
 
   switch (state.currentScreen) {
     case 'login':
-      return <EnterPinScreen {...props} />;
-
-      // return <LoginErrorScreen />
+      return <LoginScreen {...props} />;
     case 'overview':
       return <HomeScreen {...props} />;
     case 'settings':

@@ -3,14 +3,14 @@ import './page-enter-pin.css'
 import {IComponentProps} from '#/components/IComponentProps';
 import {EnterPinScreenView} from '#/components/screens/login/EnterPinScreenView';
 import {CONFIRM_REGISTRATION_INIT} from '#/store/actions/interfaces';
+import {useCallback} from 'react';
 
-export class EnterPinScreen extends React.PureComponent<IComponentProps> {
-    private onSubmit(pin: string) {
-      const {dispatch} = this.props;
-      dispatch({ type: CONFIRM_REGISTRATION_INIT, payload: pin });
-    }
+export const EnterPinScreen: React.FC<IComponentProps> = (props) => {
+  const {dispatch} = props;
 
-    render() {
-        return <EnterPinScreenView onSubmit={this.onSubmit.bind(this)} />
-    }
+  const onSubmit = useCallback((pin: string) => {
+    dispatch({ type: CONFIRM_REGISTRATION_INIT, payload: pin });
+  }, [dispatch]);
+
+  return <EnterPinScreenView onSubmit={onSubmit} />
 }
