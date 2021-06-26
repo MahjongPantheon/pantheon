@@ -22,7 +22,7 @@ import { RemoteError } from './remoteError';
 import {
   RTimerState, RGameConfig, RSessionOverview, RCurrentGames,
   RUserInfo, RAllPlayersInEvent, RLastResults,
-  RRoundPaymentsInfo, RTablesState, SessionState
+  RRoundPaymentsInfo, RTablesState, SessionState, RRoundOverviewInfo,
 } from '#/interfaces/remote';
 import {
   LCurrentGame,
@@ -121,6 +121,10 @@ export class RiichiApiService {
           return result;
         });
     }
+  }
+
+  getAllRounds(sessionHashcode: string) {
+    return this._jsonRpcRequest<RRoundOverviewInfo>('getAllRounds', sessionHashcode);
   }
 
   addRound(state: IAppState) {

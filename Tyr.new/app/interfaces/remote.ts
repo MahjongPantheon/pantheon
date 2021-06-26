@@ -263,6 +263,27 @@ export interface RRoundPaymentsInfoMulti {
 
 export type RRoundPaymentsInfo = RRoundPaymentsInfoSingle | RRoundPaymentsInfoMulti;
 
+export type RRoundOverviewInfo = {
+  dealer: number; // player id
+  round: number;
+  riichi: number; // riichis on table
+  riichiIds: string[]; // player ids
+  outcome: 'ron' | 'tsumo' | 'draw' | 'abort' | 'chombo' | 'nagashi';
+  penaltyFor?: number;
+  honba: number;
+  scores: number[]; // after payments
+  scoresDelta: number[];
+  winner: number[];
+  paoPlayers: number[];
+  yaku: string[];
+  han: number[];
+  fu: number[];
+  dora: number[];
+  kandora: number[];
+  uradora: number[];
+  kanuradora: number[];
+}
+
 export interface SessionState {
   /**
    * @param int[] { player_id => score }

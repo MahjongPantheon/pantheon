@@ -1,13 +1,13 @@
 import * as React from "react";
-import classNames from 'classnames';
 import {BottomPanel} from '#/components/general/bottom-panel/BottomPanel';
 import './page-log.css'
 import {RoundInfo} from '#/components/screens/log/view/RoundInfo';
 import {useCallback, useState} from 'react';
+import {RoundResult} from '#/components/screens/log/view/RoundResult';
 
 export interface IRoundResult {
-  delta: number[]
-  result: number[]
+  scoresDelta: {[id: number]: number}
+  scores: number[]
   wind: string
 }
 
@@ -35,49 +35,37 @@ export const LogScreenView: React.FC<IProps> = (props) => {
     }
   }, [selectedRoundIndex, setRoundIndex])
 
-  if (results.length) {
-    return (
-      <div className="flex-container page-log">
-        No results found
-      </div>
-    )
-  }
-
   return (
     <div className="flex-container page-log">
-      <div className="flex-container__content page-log__content">
-        <div className="page-log__row-container">
-          <div className="page-log__row">
-            <div className="page-log__cell page-log__cell--first" />
-            {players.map(player => (
-              <div key={player.id} className="page-log__cell">{player.name}</div>
-            ))}
-          </div>
-        </div>
-
-        {results.map((roundResult, i) => (
-          <div key={i} className="page-log__row-container" onClick={() => selectRound(i)}>
+      {!results.length && (
+        <div className="flex-container__content page-log__no-results">No results found</div>
+      )}
+      {!!results.length && (
+        <div className="flex-container__content page-log__content">
+          <div className="page-log__row-container">
             <div className="page-log__row">
-              <div className="page-log__cell page-log__cell--first">{roundResult.wind}</div>
-              {roundResult.delta.map((playerDelta, j) => (
-                <div key={j} className="page-log__cell">
-                  <div className={classNames(
-                    'page-log__delta',
-                    {'page-log__delta--success': playerDelta > 0},
-                    {'page-log__delta--danger': playerDelta < 0}
-                  )}
-                  >{playerDelta > 0 ? '+' + playerDelta : playerDelta}</div>
-                  <div className="page-log__score">{roundResult.result[j]}</div>
-                </div>
+              <div className="page-log__cell page-log__cell--first" />
+              {players.map(player => (
+                <div key={player.id} className="page-log__cell">{player.name}</div>
               ))}
             </div>
-            {selectedRoundIndex === i &&
-              <RoundInfo />
-            }
           </div>
-        ))}
 
-      </div>
+          {results.map((roundResult, i) => (
+            <RoundResult
+              key={i}
+              players={players}
+              index={i}
+              scoresDelta={roundResult.scoresDelta}
+              scores={roundResult.scores}
+              wind={roundResult.wind}
+              selectRound={selectRound}
+            >
+              {selectedRoundIndex === i && <RoundInfo />}
+            </RoundResult>
+          ))}
+        </div>
+      )}
       <div className="flex-container__bottom">
         <BottomPanel
           text="Log"

@@ -173,7 +173,7 @@ export function screenManageReducer(
           break;
         case 'gameLog':
           if (state.currentSessionHash) {
-            prevScreen = 'overview';
+            prevScreen = 'currentGame';
           } else {
             prevScreen = 'otherTable';
           }

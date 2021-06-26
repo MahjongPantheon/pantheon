@@ -76,7 +76,8 @@ export const mimirClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatc
       break;
     case GET_OTHER_TABLE_LAST_ROUND_INIT:
     case GET_LAST_ROUND_INIT:
-      getLastRound(action.payload, api, next);
+      getAllRounds(action.payload, api, next)
+      // getLastRound(action.payload, api, next);
       break;
     case GET_CHANGES_OVERVIEW_INIT:
       getChangesOverview(action.payload, api, next);
@@ -192,6 +193,13 @@ function getLastRound(sessionHash: string, api: RiichiApiService, dispatch: Disp
   api.getLastRound(sessionHash)
     .then((paymentsInfo) => dispatch({ type: GET_LAST_ROUND_SUCCESS, payload: paymentsInfo }))
     .catch((e) => dispatch({ type: GET_LAST_ROUND_FAIL, payload: e }));
+}
+
+function getAllRounds(sessionHash: string, api: RiichiApiService, dispatch: Dispatch) {
+  // dispatch({ type: GET_LAST_ROUND_INIT });
+  api.getAllRounds(sessionHash)
+    .then((paymentsInfo) => dispatch({ type: GET_LAST_ROUND_SUCCESS, payload: paymentsInfo }))
+    // .catch((e) => dispatch({ type: GET_LAST_ROUND_FAIL, payload: e }));
 }
 
 function getChangesOverview(state: IAppState, api: RiichiApiService, dispatch: Dispatch) {
