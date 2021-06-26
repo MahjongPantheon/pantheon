@@ -41,9 +41,9 @@ export class SettingsScreen extends React.PureComponent<IComponentProps>{
       <SettingsScreenView
         playerName={playerName}
         supportedLanguages={supportedLanguages}
-        currentLanguage={state.settings.currentLang}
+        currentLanguage={state.settings.currentLang || 'en'}
         supportedThemes={themes}
-        currentTheme={state.settings.currentTheme}
+        currentTheme={state.settings.currentTheme || 'day'}
         singleDeviceMode={false} //todo
         onBackClick={this.onBackClick.bind(this)}
         onLogout={this.onLogout.bind(this)}

@@ -69,6 +69,7 @@ export interface IAppState {
   lastResults?: LUserWithScore[];
   lastResultsError?: ErrorState;
 
+  newGameIdsToSet?: number[];
   newGameSelectedUsers?: LUser[];
   newGameSelectedPlayerSide?: '東' | '南' | '西' | '北';
   newGameStartError?: ErrorState;

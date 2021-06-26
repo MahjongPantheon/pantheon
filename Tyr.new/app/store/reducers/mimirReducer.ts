@@ -41,7 +41,8 @@ import {
   TABLE_ROTATE_COUNTERCLOCKWISE,
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
-  UPDATE_CURRENT_GAMES_SUCCESS,
+  UPDATE_CURRENT_GAMES_SUCCESS
+  , SET_NEWGAME_PLAYERS,
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
 import { makeYakuGraph } from '#/primitives/yaku-compat';
@@ -167,7 +168,7 @@ export function mimirReducer(
         allPlayersError: undefined
       };
     case GET_ALL_PLAYERS_SUCCESS:
-      return {
+      let nextState = {
         ...state,
         loading: {
           ...state.loading,
@@ -175,7 +176,9 @@ export function mimirReducer(
         },
         allPlayers: action.payload,
         allPlayersError: undefined
-      };
+      }
+
+      return nextState;
     case GET_ALL_PLAYERS_FAIL:
       return {
         ...state,
@@ -334,6 +337,20 @@ export function mimirReducer(
       return {
         ...state,
         newGameSelectedUsers: newArr
+      };
+    case SET_NEWGAME_PLAYERS:
+      if (!state.newGameIdsToSet) {
+        return state;
+      }
+
+      const selectedUsers = state.newGameIdsToSet.map(id => {
+        return  state.allPlayers?.find((p) => p.id === id) || defaultPlayer;
+      })
+
+      return {
+        ...state,
+        newGameSelectedUsers: selectedUsers,
+        newGameIdsToSet: undefined,
       };
     case SELECT_NEWGAME_PLAYER_EAST:
       player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;

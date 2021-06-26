@@ -9,6 +9,7 @@ import {
 } from '#/store/actions/interfaces';
 import {HomeScreenView} from '#/components/screens/home/HomeScreenView';
 import {Preloader} from '#/components/general/preloader/Preloader';
+import {isLoading} from '#/store/selectors/screenConfirmationSelectors';
 
 export class HomeScreen extends React.PureComponent<IComponentProps> {
   private onSettingClick() {
@@ -45,7 +46,7 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
 
   render() {
     const {state} = this.props;
-    if (!state.gameConfig || !state.gameOverviewReady) {
+    if (!state.gameConfig || isLoading(state)) {
       return <Preloader />;
     }
 
@@ -55,7 +56,7 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
       <HomeScreenView
         eventName={playerName}
         canStartGame={!state.gameConfig.autoSeating && !state.isUniversalWatcher && !state.currentSessionHash}
-        hasStartedGame={!!state.currentSessionHash}
+        hasStartedGame={!!state.currentSessionHash && state.gameOverviewReady}
         hasPrevGame={!state.isUniversalWatcher /*&& state.lastResults !== undefined*/}
         canSeeOtherTables={true}
         hasStat={!!state.gameConfig.eventStatHost && !state.isUniversalWatcher}

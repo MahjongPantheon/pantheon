@@ -3,7 +3,7 @@ import {IComponentProps} from '#/components/IComponentProps';
 import {GameResultScreenView, PlayerScore} from '#/components/screens/game-result/GameResultScreenView';
 import {isLoading} from '#/store/selectors/screenConfirmationSelectors';
 import {Preloader} from '#/components/general/preloader/Preloader';
-import {GOTO_NEXT_SCREEN} from '#/store/actions/interfaces';
+import {GOTO_NEXT_SCREEN, START_NEW_GAME} from '#/store/actions/interfaces';
 
 export const GameResultScreen: React.FC<IComponentProps> = props => {
   const {state, dispatch} = props;
@@ -31,8 +31,13 @@ export const GameResultScreen: React.FC<IComponentProps> = props => {
   }, [dispatch])
 
   const onRepeatClick = useCallback(() => {
+    let playerIds: number[] | undefined
+    if (state.lastResults) {
+      playerIds = state.lastResults.map(x => x.id)
+    }
 
-  }, [dispatch])
+    dispatch({ type: START_NEW_GAME, payload: playerIds });
+  }, [state.lastResults, dispatch])
 
 
   return (

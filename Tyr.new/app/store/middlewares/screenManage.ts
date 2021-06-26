@@ -6,10 +6,17 @@ import {
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   INIT_REQUIRED_YAKU,
-  INIT_STATE, SELECT_MULTIRON_WINNER,
+  INIT_STATE,
+  SELECT_MULTIRON_WINNER,
   START_NEW_GAME,
   UPDATE_STATE_SETTINGS,
-  ADD_YAKU, SET_SELECT_HAND_TAB, SHOW_LAST_RESULTS, GET_LAST_RESULTS_INIT,
+  ADD_YAKU,
+  SET_SELECT_HAND_TAB,
+  SHOW_LAST_RESULTS,
+  GET_LAST_RESULTS_INIT,
+  GET_ALL_PLAYERS_SUCCESS,
+  SET_NEWGAME_PLAYERS,
+  ADD_ROUND_SUCCESS,
 } from '../actions/interfaces';
 import {AppScreen, IAppState} from '../interfaces';
 import {getWinningUsers} from '#/store/selectors/mimirSelectors';
@@ -77,9 +84,22 @@ export const screenManageMw = () => (mw: MiddlewareAPI<Dispatch<AppActionTypes>,
       next(action)
       mw.dispatch({ type: UPDATE_STATE_SETTINGS});
       break;
+    case ADD_ROUND_SUCCESS:
+      next(action)
+
+      state = mw.getState();
+      if (state.currentScreen === 'lastResults') {
+        mw.dispatch({ type: GET_LAST_RESULTS_INIT});
+      }
+      break;
     case SHOW_LAST_RESULTS:
       next(action)
       mw.dispatch({ type: GET_LAST_RESULTS_INIT});
+      break;
+    case GET_ALL_PLAYERS_SUCCESS:
+      next(action)
+      mw.dispatch({ type: SET_NEWGAME_PLAYERS});
+      break;
     default:
       return next(action);
   }

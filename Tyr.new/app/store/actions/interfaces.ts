@@ -87,6 +87,7 @@ export const ADD_ROUND_FAIL = 'ADD_GAME_FAIL';
 export const INIT_BLANK_OUTCOME = 'INIT_BLANK_OUTCOME';
 export const SELECT_MULTIRON_WINNER = 'SELECT_MULTIRON_WINNER';
 export const RANDOMIZE_NEWGAME_PLAYERS = 'RANDOMIZE_NEWGAME_PLAYERS';
+export const SET_NEWGAME_PLAYERS = 'SET_NEWGAME_PLAYERS';
 export const SELECT_NEWGAME_PLAYER_EAST = 'SELECT_NEWGAME_PLAYER_EAST';
 export const SELECT_NEWGAME_PLAYER_SOUTH = 'SELECT_NEWGAME_PLAYER_SOUTH';
 export const SELECT_NEWGAME_PLAYER_WEST = 'SELECT_NEWGAME_PLAYER_WEST';
@@ -118,6 +119,7 @@ interface StartupWithAuthAction {
 
 interface StartNewGameAction {
   type: typeof START_NEW_GAME;
+  payload?: number[]
 }
 
 interface GoToCurrentGameAction {
@@ -434,6 +436,10 @@ interface RandomizeNewgamePlayersAction {
   type: typeof RANDOMIZE_NEWGAME_PLAYERS;
 }
 
+interface SetNewgamePlayersAction {
+  type: typeof SET_NEWGAME_PLAYERS;
+}
+
 interface SelectNewgameEastAction {
   type: typeof SELECT_NEWGAME_PLAYER_EAST;
   payload: number;
@@ -577,6 +583,7 @@ export type AppActionTypes =
   | SelectMultironWinnerAction
   | RandomizeNewgamePlayersAction
   | SelectNewgameNorthAction
+  | SetNewgamePlayersAction
   | SelectNewgameEastAction
   | SelectNewgameSouthAction
   | SelectNewgameWestAction

@@ -7,14 +7,14 @@ import {
   getPlayerTopInfo, getBottomPanel, getArrowsInfo, getTableInfo,
 } from '#/components/screens/table/TableHelper';
 import {TableScreenStateless} from '#/components/screens/table/base/TableScreenStateless';
-import {isLoading} from '#/store/selectors/screenConfirmationSelectors';
 import {Preloader} from '#/components/general/preloader/Preloader';
 
 export class TableScreen extends React.Component<IComponentProps> {
 
   render() {
     const {state, dispatch} = this.props;
-    if (!state.players || state.players.length !== 4 || isLoading(state)) {
+    const isLoading = !state.gameOverviewReady || state.loading.addRound || state.loading.overview;
+    if (!state.players || state.players.length !== 4 || isLoading) {
       return <Preloader />
     }
 

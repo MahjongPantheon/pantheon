@@ -13,6 +13,8 @@ import {
 } from '../actions/interfaces';
 import { winnerHasYakuWithPao } from '../util';
 import {AppOutcome} from '#/interfaces/app';
+import {defaultPlayer} from '#/store/selectors/screenNewGameSelectors';
+import {LUser} from '#/interfaces/local';
 
 export function screenManageReducer(
   state: IAppState,
@@ -42,7 +44,8 @@ export function screenManageReducer(
     case START_NEW_GAME:
       return {
         ...state,
-        currentScreen: 'newGame'
+        currentScreen: 'newGame',
+        newGameIdsToSet: action.payload
       };
     case GO_TO_CURRENT_GAME:
       return {

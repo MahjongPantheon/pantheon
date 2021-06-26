@@ -60,9 +60,10 @@ const CurrentScreen: React.FC<IComponentProps> = (props) => {
 
 export const App: React.FC<IProps> = (props: IProps) => {
   const {state, dispatch, i18nService} = props;
+  const currentThemeName = state.settings.currentTheme ?? 'day'
 
   return (
-    <div id="screen" className={`App theme-${state.settings.currentTheme}`}>
+    <div id="screen" className={`App theme-${currentThemeName}`}>
       <CurrentScreen state={state} dispatch={dispatch} i18nService={i18nService} />
     </div>
   )
