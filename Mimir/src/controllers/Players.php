@@ -537,7 +537,7 @@ class PlayersController extends Controller
         $result = [];
         $currentState = $session -> getCurrentState();
         $index = count($rounds) - 1;
-        while($index > -1) {
+        while ($index > -1) {
             $round = $rounds[$index];
             $lastState = $round->getLastSessionState();
 
@@ -563,6 +563,7 @@ class PlayersController extends Controller
                 'loser'         => $round->getLoserId(),
                 'tempai'        => $multiGet($round, 'getTempaiIds'),
                 'winner'        => $multiGet($round, 'getWinnerId'),
+                'nagashi'        => $multiGet($round, 'getNagashiIds'),
                 'paoPlayer'     => $multiGet($round, 'getPaoPlayerId'),
                 'yaku'          => $multiGet($round, 'getYaku'),
                 'han'           => $multiGet($round, 'getHan'),

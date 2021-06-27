@@ -19,12 +19,12 @@ export interface IRoundOverviewRon extends IRoundOverviewBase {
 export interface IRoundOverviewMultiRon extends IRoundOverviewBase {
   outcome: 'multiron'
   loser: string;
-  winner: string[];
-  paoPlayer: (string | undefined)[];
+  winnerList: string[];
+  paoPlayerList: (string | undefined)[];
   yakuList: string[][];
-  han: number[];
-  fu: (number | undefined)[];
-  dora: (number | undefined)[];
+  hanList: number[];
+  fuList: (number | undefined)[];
+  doraList: (number | undefined)[];
 }
 
 export interface IRoundOverviewTsumo extends IRoundOverviewBase {
@@ -48,14 +48,16 @@ export interface IRoundOverviewAbort extends IRoundOverviewBase {
 
 export interface IRoundOverviewChombo extends IRoundOverviewBase {
   outcome: 'chombo'
+  penaltyFor: string;
 }
 
 export interface IRoundOverviewNagashi extends IRoundOverviewBase {
   outcome: 'nagashi'
   tempai: string[]
+  nagashi: string[]
 }
 
-export type IRoundInfo =
+export type IRoundOverviewInfo =
   | IRoundOverviewRon
   | IRoundOverviewMultiRon
   | IRoundOverviewTsumo

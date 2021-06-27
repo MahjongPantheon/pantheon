@@ -1,10 +1,5 @@
 
-.page-log__content {
-  padding: 4px 0;
-  overflow: scroll;
-}
-
-.page-log__row-container:nth-child(2n) {
+.page-log__row-container:nth-child(2n + 1) {
   background-color: var(--color-secondary-5);
 }
 
@@ -67,4 +62,14 @@
   align-items: center;
   justify-content: center;
   padding-bottom: 10%;
+}
+
+.page-log__names {
+  padding-top: 4px;
+  border-bottom: 2px solid var(--color-secondary-5);
+}
+
+.page-log__rounds {
+  overflow: scroll;
+  padding-bottom: 4px
 }

@@ -5,10 +5,11 @@ import {useCallback} from 'react';
 import {GOTO_PREV_SCREEN} from '#/store/actions/interfaces';
 import {roundToString} from '#/components/helpers/Utils';
 import {Preloader} from '#/components/general/preloader/Preloader';
-import {IRoundInfo} from '#/components/screens/log/view/RoundTypes';
+import {IRoundOverviewInfo} from '#/components/screens/log/view/RoundTypes';
+import {getRoundOverviewInfo} from '#/components/screens/log/LogScreenSelectors';
 
 export const LogScreen: React.FC<IComponentProps> = props => {
-  const {state, dispatch} = props;
+  const {state, dispatch, i18nService} = props;
 
   const onBackClick = useCallback(() => {
     dispatch({ type: GOTO_PREV_SCREEN });
@@ -20,7 +21,7 @@ export const LogScreen: React.FC<IComponentProps> = props => {
 
   let players: {[index: string]: string} = {};
   let results: IRoundResult[] = [];
-  let rounds: IRoundInfo[] = [];
+  let rounds: IRoundOverviewInfo[] = [];
 
   if (!state.allRoundsOverviewErrorCode && state.allRoundsOverview && state.players) {
     state.players.forEach(player => {
@@ -34,24 +35,9 @@ export const LogScreen: React.FC<IComponentProps> = props => {
         scoresDelta: roundOverview.scoresDelta,
       })
 
-
-      rounds.push({
-        outcome: roundOverview.outcome,
-        riichiOnTable: roundOverview.riichi,
-        honbaOnTable: roundOverview.honba,
-        // riichiPlayers: riichiPlayers,
-        // penaltyFor: '',
-        // loser: '',
-        // winner: roundOverview.winner.map(id => players[id]),
-        // paoPlayers: [],
-        // han: [],
-        // fu: [],
-        // dora: [],
-      } as any)
+      rounds.push(getRoundOverviewInfo(roundOverview, players, i18nService));
     })
   }
-
-  console.log(results)
 
   return (
     <LogScreenView

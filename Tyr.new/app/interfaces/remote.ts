@@ -263,8 +263,7 @@ export interface RRoundPaymentsInfoMulti {
 
 export type RRoundPaymentsInfo = RRoundPaymentsInfoSingle | RRoundPaymentsInfoMulti;
 
-export type RRoundOverviewInfo = {
-  outcome: 'ron' | 'tsumo' | 'draw' | 'abort' | 'chombo' | 'nagashi';
+export interface RRoundOverviewBase {
   dealer: number; // player id
   round: number;
   riichi: number; // riichis on table
@@ -272,19 +271,77 @@ export type RRoundOverviewInfo = {
   riichiIds: string[]; // player ids
   scores: {[index: number]: number}; // after payments
   scoresDelta: {[index: number]: number};
-  tempai: number[]
-
-  loser: number | null;
-  winner: number | null | number[];
-  paoPlayer: number | null | number[];
-  yaku: string | string[];
-  han: number | null | number[];
-  fu: number | null | (number | null)[];
-  dora: number | null | (number | null)[];
-  kandora: number | null | (number | null)[];
-  uradora: number | null | (number | null)[];
-  kanuradora: number | null | (number | null)[];
 }
+
+export interface RRoundOverviewRon extends RRoundOverviewBase {
+  outcome: 'ron'
+  loser: number;
+  winner: number;
+  paoPlayer: number | null;
+  yaku: string;
+  han: number;
+  fu: number | null;
+  dora: number | null;
+  kandora: number | null;
+  uradora: number | null;
+  kanuradora: number | null;
+}
+
+export interface RRoundOverviewMultiRon extends RRoundOverviewBase {
+  outcome: 'multiron'
+  loser: number;
+  winner: number[];
+  paoPlayer: (number | null)[];
+  yaku: string[];
+  han: number[];
+  fu: (number | null)[];
+  dora: (number | null)[];
+  kandora: (number | null)[];
+  uradora: (number | null)[];
+  kanuradora: (number | null)[];
+}
+
+export interface RRoundOverviewTsumo extends RRoundOverviewBase {
+  outcome: 'tsumo'
+  winner: number;
+  paoPlayer: number | null;
+  yaku: string;
+  han: number;
+  fu: number | null;
+  dora: number | null;
+  kandora: number | null;
+  uradora: number | null;
+  kanuradora: number | null;
+}
+
+export interface RRoundOverviewDraw extends RRoundOverviewBase {
+  outcome: 'draw';
+  tempai: string[];
+}
+
+export interface RRoundOverviewAbort extends RRoundOverviewBase {
+  outcome: 'abort';
+}
+
+export interface RRoundOverviewChombo extends RRoundOverviewBase {
+  outcome: 'chombo';
+  penaltyFor: number; // todo check penalty for tournaments
+}
+
+export interface RRoundOverviewNagashi extends RRoundOverviewBase {
+  outcome: 'nagashi';
+  nagashi: string[];
+  tempai: string[];
+}
+
+export type RRoundOverviewInfo =
+  | RRoundOverviewRon
+  | RRoundOverviewMultiRon
+  | RRoundOverviewTsumo
+  | RRoundOverviewDraw
+  | RRoundOverviewAbort
+  | RRoundOverviewChombo
+  | RRoundOverviewNagashi
 
 export interface SessionState {
   /**

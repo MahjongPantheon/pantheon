@@ -49,8 +49,6 @@ import {PlayerArrow, PlayerSide, ResultArrowsProps} from '#/components/general/r
 import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
 import {roundToString} from '#/components/helpers/Utils';
 import {AppOutcome} from '#/interfaces/app';
-import {playerHasYakuWithPao} from '#/store/util';
-import {getWinningUsers} from '#/store/selectors/mimirSelectors';
 import {getNextWinnerWithPao} from '#/store/selectors/paoSelectors';
 
 // todo move to selectors most of code from here
