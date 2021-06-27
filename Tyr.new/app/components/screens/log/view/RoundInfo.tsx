@@ -1,32 +1,20 @@
 import React from 'react';
+import {getRoundDescription} from '#/components/screens/log/view/RoundSelectors';
+import {IRoundInfo} from '#/components/screens/log/view/RoundTypes';
 
+export const RoundInfo: React.FC<IRoundInfo> = (props: IRoundInfo) => {
 
-interface IRoundInfo {
-
-}
-
-/*interface IRoundInfo {
-  winners: number[]
-  losers: number[]
-  tempaiPlayers: number[]
-  paoPlayer?: number
-  delta: number[]
-  result: number[]
-  outcome: string
-  prevHonba: number
-  prevRiichi: number
-  riichiPlayers: number[]
-  winnerHans: IHand[]
-  wind: string
-}*/
-
-
-export const RoundInfo: React.FC = (props: IRoundInfo) => {
-
+  const description = getRoundDescription(props)
+  const length = description.length
 
   return (
     <div className="page-log__info">
-      hhjjhjh
+      {description.map((line, i)=> (
+        <React.Fragment key={i}>
+          {line}
+          {i !== length - 1 && (<br />)}
+        </React.Fragment>
+      ))}
     </div>
   )
 

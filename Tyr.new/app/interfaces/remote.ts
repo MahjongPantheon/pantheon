@@ -264,24 +264,26 @@ export interface RRoundPaymentsInfoMulti {
 export type RRoundPaymentsInfo = RRoundPaymentsInfoSingle | RRoundPaymentsInfoMulti;
 
 export type RRoundOverviewInfo = {
+  outcome: 'ron' | 'tsumo' | 'draw' | 'abort' | 'chombo' | 'nagashi';
   dealer: number; // player id
   round: number;
   riichi: number; // riichis on table
-  riichiIds: string[]; // player ids
-  outcome: 'ron' | 'tsumo' | 'draw' | 'abort' | 'chombo' | 'nagashi';
-  penaltyFor?: number;
   honba: number;
-  scores: number[]; // after payments
-  scoresDelta: number[];
-  winner: number[];
-  paoPlayers: number[];
-  yaku: string[];
-  han: number[];
-  fu: number[];
-  dora: number[];
-  kandora: number[];
-  uradora: number[];
-  kanuradora: number[];
+  riichiIds: string[]; // player ids
+  scores: {[index: number]: number}; // after payments
+  scoresDelta: {[index: number]: number};
+  tempai: number[]
+
+  loser: number | null;
+  winner: number | null | number[];
+  paoPlayer: number | null | number[];
+  yaku: string | string[];
+  han: number | null | number[];
+  fu: number | null | (number | null)[];
+  dora: number | null | (number | null)[];
+  kandora: number | null | (number | null)[];
+  uradora: number | null | (number | null)[];
+  kanuradora: number | null | (number | null)[];
 }
 
 export interface SessionState {

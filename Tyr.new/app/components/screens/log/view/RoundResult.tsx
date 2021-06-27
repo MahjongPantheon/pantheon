@@ -1,11 +1,11 @@
 import * as React from 'react';
 import {useCallback} from 'react';
 import classNames from 'classnames';
-import {IRoundPlayer, IRoundResult} from '#/components/screens/log/view/LogScreenView';
+import {IRoundResult} from '#/components/screens/log/view/LogScreenView';
 
 type RoundResultProps = IRoundResult & {
   index: number
-  players: IRoundPlayer[]
+  players: {[index: string]: string}
   selectRound: (index: number) => void
 }
 
@@ -20,11 +20,11 @@ export const RoundResult: React.FC<RoundResultProps> = (props) => {
     <div  className="page-log__row-container" onClick={onRoundClick}>
       <div className="page-log__row">
         <div className="page-log__cell page-log__cell--first">{round}</div>
-        {players.map((player, i) => (
+        {Object.keys(players).map(key => (
           <RoundResultCell
-            key={i}
-            delta={scoresDelta[player.id]}
-            score={scores[player.id]}
+            key={key}
+            delta={scoresDelta[key]}
+            score={scores[key]}
           />
         ))}
       </div>

@@ -1,25 +1,20 @@
 import * as React from "react";
 import {BottomPanel} from '#/components/general/bottom-panel/BottomPanel';
 import './page-log.css'
-import {RoundInfo} from '#/components/screens/log/view/RoundInfo';
 import {useCallback, useState} from 'react';
 import {RoundResult} from '#/components/screens/log/view/RoundResult';
+import {IRoundInfo} from '#/components/screens/log/view/RoundTypes';
 
 export interface IRoundResult {
-  scoresDelta: {[id: number]: number}
-  scores: number[]
+  scoresDelta: {[id: string]: number}
+  scores: {[index: string]: number}
   round: string
 }
 
-export interface IRoundPlayer {
-  id: number
-  name: string
-}
-
 type IProps = {
-  players: IRoundPlayer[]
+  players: {[index: string]: string}
   results: IRoundResult[]
-  // rounds: IRound[]
+  rounds: IRoundInfo[]
   onBackClick: () => void
 }
 
@@ -45,8 +40,8 @@ export const LogScreenView: React.FC<IProps> = (props) => {
           <div className="page-log__row-container">
             <div className="page-log__row">
               <div className="page-log__cell page-log__cell--first" />
-              {players.map(player => (
-                <div key={player.id} className="page-log__cell">{player.name}</div>
+              {Object.keys(players).map(key => (
+                <div key={key} className="page-log__cell">{players[key]}</div>
               ))}
             </div>
           </div>
@@ -61,7 +56,7 @@ export const LogScreenView: React.FC<IProps> = (props) => {
               round={roundResult.round}
               selectRound={selectRound}
             >
-              {selectedRoundIndex === i && <RoundInfo />}
+              {/*{selectedRoundIndex === i && <RoundInfo />}*/}
             </RoundResult>
           ))}
         </div>

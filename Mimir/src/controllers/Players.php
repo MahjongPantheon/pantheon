@@ -531,7 +531,7 @@ class PlayersController extends Controller
                 }, $p->rounds());
             }
 
-            return [$p->{$method}()];
+            return $p->{$method}();
         };
 
         $result = [];
@@ -543,12 +543,13 @@ class PlayersController extends Controller
 
             $scoresBefore = $lastState->getScores();
             $scoresAfter = $currentState->getScores();
-            
+
             $scoresDelta = [];
             foreach ($scoresBefore as $key => $value) {
                 $scoresDelta[$key] = $scoresAfter[$key] - $value;
             }
 
+            // should match RRoundOverviewInfo format
             $roundResult = [
                 'outcome'       => $round->getOutcome(),
                 'penaltyFor'    => $round->getOutcome() === 'chombo' ? $round->getLoserId() : null,
@@ -559,8 +560,10 @@ class PlayersController extends Controller
                 'honba'         => $lastState->getHonba(),
                 'scores'        => $scoresAfter,
                 'scoresDelta'   => $scoresDelta,
+                'loser'         => $round->getLoserId(),
+                'tempai'        => $multiGet($round, 'getTempaiIds'),
                 'winner'        => $multiGet($round, 'getWinnerId'),
-                'paoPlayers'     => $multiGet($round, 'getPaoPlayerId'),
+                'paoPlayer'     => $multiGet($round, 'getPaoPlayerId'),
                 'yaku'          => $multiGet($round, 'getYaku'),
                 'han'           => $multiGet($round, 'getHan'),
                 'fu'            => $multiGet($round, 'getFu'),
