@@ -96,4 +96,6 @@ return [
     'getNextPrescriptedSeating'    => ['SeatingController', 'getNextSeatingForPrescriptedEvent'],
     'getPrescriptedEventConfig'    => ['EventsController', 'getPrescriptedEventConfig'],
     'updatePrescriptedEventConfig' => ['EventsController', 'updatePrescriptedEventConfig'],
+
+    'addErrorLog' => ['MiscController', 'addErrorLog'],
 ];

@@ -33,6 +33,7 @@ import {
   UPDATE_STATE_SETTINGS
 } from './services/store/actions/interfaces';
 import { IAppState } from './services/store/interfaces';
+import { registerFrontErrorHandler } from './helpers/logFrontError';
 
 @Component({
   selector: 'riichi-app',
@@ -52,7 +53,7 @@ export class AppComponent {
     private storage: IDB,
     private themeService: ThemeService
   ) {
-
+    registerFrontErrorHandler();
     this.store = new Store(this.http, this.i18n);
     this.state = this.store.redux.getState();
     this.metrika.track(MetrikaService.APP_INIT);
@@ -77,6 +78,7 @@ export class AppComponent {
     this.store.subscribe((newState: IAppState) => {
       this.state = newState;
       this.ref.markForCheck(); // trigger full change detection
+      (window as any).__debugInfo = { sh: newState.currentSessionHash, p: newState.currentPlayerId };
     });
 
     this.i18n.init((localeName: string) => {
