@@ -41,7 +41,8 @@ class MiscController extends Controller
      */
     private $_logPath =  '/tmp/mimir_log_front_errors.log';
 
-    public function createLogger() {
+    public function createLogger()
+    {
         if (!file_exists($this->_logPath)) {
             touch($this->_logPath);
         }
@@ -59,7 +60,8 @@ class MiscController extends Controller
      * @param string $error
      * @param string $stack
      */
-    public function addErrorLog($facility, $sessionHash, $playerId, $error, $stack) {
+    public function addErrorLog($facility, $sessionHash, $playerId, $error, $stack)
+    {
         if ($this->_frontErrorLogger === null) {
             $this->createLogger();
         }
