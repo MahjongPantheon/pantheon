@@ -19,13 +19,13 @@ const i18nService = new I18nService(storage);
 const store = new Store(i18nService);
 
 const doRender = (state: IAppState) => {
+  (window as any).__debugInfo = { sh: state.currentSessionHash, p: state.currentPlayerId };
   ReactDOM.render(<App
     state={state}
     dispatch={store.dispatch}
     storage={storage}
     i18nService={i18nService}
   />, document.getElementById('tyr-root'));
-  (window as any).__debugInfo = { sh: state.currentSessionHash, p: state.currentPlayerId };
 };
 
 store.subscribe(doRender);
