@@ -7,7 +7,7 @@ import {BottomPanel} from '#/components/general/bottom-panel/BottomPanel';
 import {ArrowState, SelectHandActiveTab, YakuGroup} from '#/components/screens/select-hand/YakuTypes';
 import {Icon} from '#/components/general/icon/Icon';
 import {IconType} from '#/components/general/icon/IconType';
-import {classNames} from '#/components/helpers/ReactUtils';
+import classNames from 'classnames';
 
 type IProps = {
   playerName: string

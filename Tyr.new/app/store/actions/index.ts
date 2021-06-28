@@ -5,7 +5,7 @@ import {
   OPEN_SETTINGS,
   RESET_STATE,
   SHOW_LAST_RESULTS,
-  SHOW_LAST_ROUND,
+  SHOW_GAME_LOG,
   SHOW_OTHER_TABLE,
   SHOW_OTHER_TABLES_LIST,
   START_NEW_GAME
@@ -29,9 +29,9 @@ export function showLastResults(): AppActionTypes {
   };
 }
 
-export function showLastRound(): AppActionTypes {
+export function showGameLog(): AppActionTypes {
   return {
-    type: SHOW_LAST_ROUND
+    type: SHOW_GAME_LOG
   };
 }
 

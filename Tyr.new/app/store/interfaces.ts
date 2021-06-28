@@ -1,12 +1,12 @@
 import { AppOutcome } from '#/interfaces/app';
 import {Player, Table, Yaku} from '#/interfaces/common';
 import {LGameConfig, LSessionOverview, LUser, LUserWithScore} from '#/interfaces/local';
-import { RRoundPaymentsInfo } from '#/interfaces/remote';
+import {RRoundOverviewInfo, RRoundPaymentsInfo} from '#/interfaces/remote';
 import {Graph} from '#/primitives/graph';
 import {RemoteError} from '#/services/remoteError';
 
 export type AppScreen = 'overview' | 'currentGame' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
-  | 'handSelect' | 'confirmation' | 'newGame' | 'searchPlayer' | 'lastResults' | 'lastRound' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
+  | 'handSelect' | 'confirmation' | 'newGame' | 'searchPlayer' | 'lastResults' | 'gameLog' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
 
 export type LoadingSet = {
   games: boolean;
@@ -61,9 +61,9 @@ export interface IAppState {
   changesOverview?: RRoundPaymentsInfo;
   changesOverviewError?: ErrorState;
 
-  // View last round of current table
-  lastRoundOverview?: RRoundPaymentsInfo;
-  lastRoundOverviewErrorCode?: number;
+  // View log of current table
+  allRoundsOverview?: RRoundOverviewInfo[];
+  allRoundsOverviewErrorCode?: number;
 
   // Previous game results
   lastResults?: LUserWithScore[];

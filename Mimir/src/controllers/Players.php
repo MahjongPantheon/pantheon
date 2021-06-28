@@ -513,6 +513,96 @@ class PlayersController extends Controller
         return $result;
     }
 
+
+    /**
+     * Common formatting for last round getter
+     * @param SessionPrimitive $session
+     * @throws \Exception
+     * @return array|null
+     */
+    protected function _getAllRoundsCommon(SessionPrimitive $session)
+    {
+        $rounds = RoundPrimitive::findBySessionIds($this->_db, [$session->getId()]);
+
+        $multiGet = function (RoundPrimitive $p, $method) {
+            if ($p instanceof MultiRoundPrimitive) {
+                return array_map(function (RoundPrimitive $inner) use ($method) {
+                    return $inner->{$method}();
+                }, $p->rounds());
+            }
+
+            return $p->{$method}();
+        };
+
+        $result = [];
+        $currentState = $session -> getCurrentState();
+        $index = count($rounds) - 1;
+        while ($index > -1) {
+            $round = $rounds[$index];
+            $lastState = $round->getLastSessionState();
+
+            $scoresBefore = $lastState->getScores();
+            $scoresAfter = $currentState->getScores();
+
+            $scoresDelta = [];
+            foreach ($scoresBefore as $key => $value) {
+                $scoresDelta[$key] = $scoresAfter[$key] - $value;
+            }
+
+            // should match RRoundOverviewInfo format
+            $roundResult = [
+                'outcome'       => $round->getOutcome(),
+                'penaltyFor'    => $round->getOutcome() === 'chombo' ? $round->getLoserId() : null,
+                'riichiIds'     => $round->getRiichiIds(),
+                'dealer'        => $round->getLastSessionState()->getCurrentDealer(),
+                'round'         => $round->getRoundIndex(),
+                'riichi'        => $lastState->getRiichiBets(),
+                'honba'         => $lastState->getHonba(),
+                'scores'        => $scoresAfter,
+                'scoresDelta'   => $scoresDelta,
+                'loser'         => $round->getLoserId(),
+                'tempai'        => $multiGet($round, 'getTempaiIds'),
+                'winner'        => $multiGet($round, 'getWinnerId'),
+                'nagashi'        => $multiGet($round, 'getNagashiIds'),
+                'paoPlayer'     => $multiGet($round, 'getPaoPlayerId'),
+                'yaku'          => $multiGet($round, 'getYaku'),
+                'han'           => $multiGet($round, 'getHan'),
+                'fu'            => $multiGet($round, 'getFu'),
+                'dora'          => $multiGet($round, 'getDora'),
+                'kandora'       => $multiGet($round, 'getKandora'),
+                'uradora'       => $multiGet($round, 'getUradora'),
+                'kanuradora'    => $multiGet($round, 'getKanuradora'),
+                'openHand'      => $multiGet($round, 'getOpenHand'),
+            ];
+            array_push($result, $roundResult);
+
+            $currentState = $lastState;
+            $index--;
+        }
+
+        return array_reverse($result);
+    }
+
+    /**
+     * Get all recorded round for session by hashcode
+     *
+     * @param string $hashcode
+     * @throws \Exception
+     * @return array|null
+     */
+    public function getAllRoundsByHash($hashcode)
+    {
+        $this->_log->addInfo('Getting last all rounds for hashcode ' . $hashcode);
+        $session = SessionPrimitive::findByRepresentationalHash($this->_db, [$hashcode]);
+        if (empty($session)) {
+            return null;
+        }
+
+        $data = $this->_getAllRoundsCommon($session[0]);
+        $this->_log->addInfo('Successfully got last all rounds for hashcode ' . $hashcode);
+        return $data;
+    }
+
     /**
      * Get last recorded round with player in event
      *

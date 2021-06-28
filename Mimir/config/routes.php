@@ -45,6 +45,7 @@ return [
     'addOnlineReplay'    => ['GamesController', 'addOnlineReplay'],
     'getLastResults'     => ['PlayersController', 'getLastResults'],
     'getLastRound'       => ['PlayersController', 'getLastRound'],
+    'getAllRounds'       => ['PlayersController', 'getAllRoundsByHash'],
     'getLastRoundByHash' => ['PlayersController', 'getLastRoundByHashcode'],
 
     'getGameConfigT'     => ['EventsController', 'getGameConfigFromToken'],

@@ -2,7 +2,7 @@ import * as React from "react";
 import './page-home.css'
 import {Icon} from '#/components/general/icon/Icon';
 import {IconType} from '#/components/general/icon/IconType';
-import {classNames} from '#/components/helpers/ReactUtils';
+import classNames from 'classnames';
 
 type IProps = {
   eventName: string

@@ -263,6 +263,86 @@ export interface RRoundPaymentsInfoMulti {
 
 export type RRoundPaymentsInfo = RRoundPaymentsInfoSingle | RRoundPaymentsInfoMulti;
 
+export interface RRoundOverviewBase {
+  dealer: number; // player id
+  round: number;
+  riichi: number; // riichis on table
+  honba: number;
+  riichiIds: string[]; // player ids
+  scores: {[index: number]: number}; // after payments
+  scoresDelta: {[index: number]: number};
+}
+
+export interface RRoundOverviewRon extends RRoundOverviewBase {
+  outcome: 'ron'
+  loser: number;
+  winner: number;
+  paoPlayer: number | null;
+  yaku: string;
+  han: number;
+  fu: number | null;
+  dora: number | null;
+  kandora: number | null;
+  uradora: number | null;
+  kanuradora: number | null;
+}
+
+export interface RRoundOverviewMultiRon extends RRoundOverviewBase {
+  outcome: 'multiron'
+  loser: number;
+  winner: number[];
+  paoPlayer: (number | null)[];
+  yaku: string[];
+  han: number[];
+  fu: (number | null)[];
+  dora: (number | null)[];
+  kandora: (number | null)[];
+  uradora: (number | null)[];
+  kanuradora: (number | null)[];
+}
+
+export interface RRoundOverviewTsumo extends RRoundOverviewBase {
+  outcome: 'tsumo'
+  winner: number;
+  paoPlayer: number | null;
+  yaku: string;
+  han: number;
+  fu: number | null;
+  dora: number | null;
+  kandora: number | null;
+  uradora: number | null;
+  kanuradora: number | null;
+}
+
+export interface RRoundOverviewDraw extends RRoundOverviewBase {
+  outcome: 'draw';
+  tempai: string[];
+}
+
+export interface RRoundOverviewAbort extends RRoundOverviewBase {
+  outcome: 'abort';
+}
+
+export interface RRoundOverviewChombo extends RRoundOverviewBase {
+  outcome: 'chombo';
+  penaltyFor: number; // todo check penalty for tournaments
+}
+
+export interface RRoundOverviewNagashi extends RRoundOverviewBase {
+  outcome: 'nagashi';
+  nagashi: string[];
+  tempai: string[];
+}
+
+export type RRoundOverviewInfo =
+  | RRoundOverviewRon
+  | RRoundOverviewMultiRon
+  | RRoundOverviewTsumo
+  | RRoundOverviewDraw
+  | RRoundOverviewAbort
+  | RRoundOverviewChombo
+  | RRoundOverviewNagashi
+
 export interface SessionState {
   /**
    * @param int[] { player_id => score }

@@ -19,7 +19,7 @@ import {
   ADD_ROUND_INIT,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
-  INIT_BLANK_OUTCOME, SELECT_MULTIRON_WINNER,
+  INIT_BLANK_OUTCOME, SELECT_MULTIRON_WINNER, SHOW_GAME_LOG,
   TOGGLE_ADDITIONAL_TABLE_INFO,
   TOGGLE_DEADHAND,
   TOGGLE_LOSER,
@@ -49,8 +49,6 @@ import {PlayerArrow, PlayerSide, ResultArrowsProps} from '#/components/general/r
 import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
 import {roundToString} from '#/components/helpers/Utils';
 import {AppOutcome} from '#/interfaces/app';
-import {playerHasYakuWithPao} from '#/store/util';
-import {getWinningUsers} from '#/store/selectors/mimirSelectors';
 import {getNextWinnerWithPao} from '#/store/selectors/paoSelectors';
 
 // todo move to selectors most of code from here
@@ -688,10 +686,7 @@ function onRiichiButtonClick(dispatch: Dispatch, playerId: number) {
 }
 
 function onLogClick(dispatch: Dispatch) {
-  //todo
-  return () => {
-    console.log('onLogClick')
-  }
+  return () => dispatch({ type: SHOW_GAME_LOG })
 }
 
 function onAddClick(state: IAppState, dispatch: Dispatch) {

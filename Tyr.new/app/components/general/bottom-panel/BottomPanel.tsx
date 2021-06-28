@@ -3,7 +3,7 @@ import {BottomPanelProps} from './BottomPanelProps';
 import './bottom-panel.css';
 import {Icon} from '#/components/general/icon/Icon';
 import {IconType} from '#/components/general/icon/IconType';
-import {classNames} from '#/components/helpers/ReactUtils';
+import classNames from 'classnames';
 
 export class BottomPanel extends React.Component<BottomPanelProps> {
   private onNextButtonClick() {

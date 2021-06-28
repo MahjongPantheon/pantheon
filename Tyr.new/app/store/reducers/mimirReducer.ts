@@ -19,9 +19,6 @@ import {
   GET_LAST_RESULTS_FAIL,
   GET_LAST_RESULTS_INIT,
   GET_LAST_RESULTS_SUCCESS,
-  GET_LAST_ROUND_FAIL,
-  GET_LAST_ROUND_INIT,
-  GET_LAST_ROUND_SUCCESS,
   GET_OTHER_TABLE_FAIL,
   GET_OTHER_TABLE_INIT,
   GET_OTHER_TABLE_SUCCESS,
@@ -42,7 +39,7 @@ import {
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS
-  , SET_NEWGAME_PLAYERS,
+  , SET_NEWGAME_PLAYERS, GET_ALL_ROUNDS_FAIL, GET_ALL_ROUNDS_INIT, GET_ALL_ROUNDS_SUCCESS,
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
 import { makeYakuGraph } from '#/primitives/yaku-compat';
@@ -220,17 +217,17 @@ export function mimirReducer(
           details: action.payload
         }
       };
-    case GET_LAST_ROUND_INIT:
+    case GET_ALL_ROUNDS_INIT:
       return {
         ...state,
         loading: {
           ...state.loading,
           overview: true
         },
-        lastRoundOverview: undefined,
-        lastRoundOverviewErrorCode: undefined
+        allRoundsOverview: undefined,
+        allRoundsOverviewErrorCode: undefined
       };
-    case GET_LAST_ROUND_SUCCESS:
+    case GET_ALL_ROUNDS_SUCCESS:
       if (action.payload) { // check for success: in some cases we can get 404 for this request
         return {
           ...state,
@@ -238,8 +235,8 @@ export function mimirReducer(
             ...state.loading,
             overview: false
           },
-          lastRoundOverview: action.payload,
-          lastRoundOverviewErrorCode: undefined
+          allRoundsOverview: action.payload,
+          allRoundsOverviewErrorCode: undefined
         };
       } else {
         return {
@@ -248,11 +245,11 @@ export function mimirReducer(
             ...state.loading,
             overview: false
           },
-          lastRoundOverview: undefined,
-          lastRoundOverviewErrorCode: 404
+          allRoundsOverview: undefined,
+          allRoundsOverviewErrorCode: 404
         };
       }
-    case GET_LAST_ROUND_FAIL:
+    case GET_ALL_ROUNDS_FAIL:
       let code = 418;
       if (!action.payload) {
         error = 404;
@@ -266,8 +263,8 @@ export function mimirReducer(
           ...state.loading,
           overview: false
         },
-        lastRoundOverview: undefined,
-        lastRoundOverviewErrorCode: code
+        allRoundsOverview: undefined,
+        allRoundsOverviewErrorCode: code
       };
     case GET_LAST_RESULTS_INIT:
       return {
@@ -443,7 +440,7 @@ export function mimirReducer(
         currentOtherTable: undefined,
         currentOtherTableHash: action.payload,
         currentOtherTableIndex: 0,
-        lastRoundOverview: undefined,
+        allRoundsOverview: undefined,
         currentOtherTablePlayers: [],
         otherTableError: undefined
       };
@@ -470,7 +467,7 @@ export function mimirReducer(
         currentOtherTable: undefined,
         currentOtherTableHash: undefined,
         currentOtherTableIndex: 0,
-        lastRoundOverview: undefined,
+        allRoundsOverview: undefined,
         currentOtherTablePlayers: [],
         otherTableError: {
           message: action.payload.message,
