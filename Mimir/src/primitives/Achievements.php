@@ -312,15 +312,6 @@ class AchievementsPrimitive extends Primitive
      */
     public static function getDieHardData(DataSource $ds, array $eventIdList, array $players)
     {
-        // TODO: Fix after rebase. This won't work with Frey.
-        $allPlayers = $ds->table('player')
-            ->select('display_name')
-            ->join('session_player', ['player.id', '=', 'session_player.player_id'])
-            ->join('session', ['session_player.session_id', '=', 'session.id'])
-            ->whereIn('event_id', $eventIdList)
-            ->where('session.status', 'finished')
-            ->findArray();
-
         $rounds = $ds->table('round')
             ->select('loser_id')
             ->selectExpr('count(*)', 'cnt')
@@ -335,7 +326,7 @@ class AchievementsPrimitive extends Primitive
             return $round['display_name'];
         }, $rounds);
 
-        foreach ($allPlayers as $player) {
+        foreach ($players as $player) {
             $displayName = $player['display_name'];
             if (!in_array($displayName, $namesWithFeedCount)) {
                 array_push($namesWithZeroCount, $displayName);
