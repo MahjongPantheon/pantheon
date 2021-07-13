@@ -46,6 +46,7 @@ import {
 } from './formatters';
 import {IAppState} from '#/store/interfaces';
 import {environment} from "#config";
+import config from "../../../Tyr/src/app/config";
 
 type GenericResponse = {
   error?: { message: string, code: any },
@@ -55,8 +56,11 @@ type GenericResponse = {
 
 export class RiichiApiService {
   private _authToken: string | null = null;
-  setCredentials(token: string) {
+  private _personId: string | null = null;
+
+  setCredentials(personId: number, token: string) {
     this._authToken = token;
+    this._personId = (personId || 0).toString();
   }
 
   // TODO: formatters
@@ -96,11 +100,15 @@ export class RiichiApiService {
       .then<LCurrentGame[]>(currentGamesFormatter);
   }
 
-  getUserInfo() {
-    return this._jsonRpcRequest<RUserInfo>('getPlayerT')
-      .then<LUser>(userInfoFormatter);
+  getUserInfo(personIds: number[]) {
+    return this._jsonRpcRequestFrey<RUserInfo[]>('getPersonalInfo', personIds)
+      .then<LUser[]>(userListFormatter);
   }
 
+  /**
+   * @deprecated
+   * @param pin
+   */
   confirmRegistration(pin: string) {
     return this._jsonRpcRequest<string>('registerPlayer', pin);
   }
@@ -109,6 +117,18 @@ export class RiichiApiService {
     const gameHashcode: string = state.currentSessionHash || '';
     const roundData = formatRoundToRemote(state);
     return this._jsonRpcRequest<RRoundPaymentsInfo>('addRound', gameHashcode, roundData, true);
+  }
+
+  getLastRound(sessionHashcode?: string) {
+    if (!sessionHashcode) {
+      return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundT');
+    } else {
+      return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundByHash', sessionHashcode)
+        .then((result) => {
+          result.sessionHash = sessionHashcode;
+          return result;
+        });
+    }
   }
 
   getAllRounds(sessionHashcode: string) {
@@ -124,6 +144,10 @@ export class RiichiApiService {
   getTablesState() {
     return this._jsonRpcRequest<RTablesState>('getTablesStateT')
       .then<Table[]>(tablesStateFormatter);
+  }
+
+  quickAuthorize(personId: number, token: string) {
+    return this._jsonRpcRequestFrey<boolean>('quickAuthorize', personId, token);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////
@@ -149,6 +173,41 @@ export class RiichiApiService {
     };
 
     return fetch(environment.apiUrl, fetchInit)
+      .then((r) => r.json())
+      .then<RET_TYPE>((resp: GenericResponse) => {
+        if (resp.error) {
+          if (!environment.production) {
+            console.error(resp.error.message);
+          }
+          throw new RemoteError(resp.error.message, resp.error.code.toString());
+        }
+
+        return resp.result; // TODO: runtime checks of object structure
+      });
+  }
+
+  private _jsonRpcRequestFrey<RET_TYPE>(methodName: string, ...params: any[]): Promise<RET_TYPE> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-Api-Version', environment.apiVersion.map((v) => v.toString()).join('.'));
+    headers.append('X-Auth-Token', this._authToken || '');
+    headers.append('X-Current-Person-Id', this._personId || '');
+
+    const jsonRpcBody = {
+      jsonrpc: '2.0',
+      method: methodName,
+      params: params,
+      id: Math.round(1000000 * Math.random()) // TODO: bind request to response?
+    };
+
+    const fetchInit: RequestInit = {
+      method: 'post',
+      headers,
+      // mode: 'same-origin', //todo please help
+      body: JSON.stringify(jsonRpcBody)
+    };
+
+    return fetch(environment.uaUrl, fetchInit)
       .then((r) => r.json())
       .then<RET_TYPE>((resp: GenericResponse) => {
         if (resp.error) {

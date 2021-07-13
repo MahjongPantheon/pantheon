@@ -246,7 +246,10 @@ interface ResetRegistrationErrorAction {
 }
 interface SetCredentialsAction {
   type: typeof SET_CREDENTIALS;
-  payload: string;
+  payload: {
+    authToken: string;
+    personId: number;
+  };
 }
 interface UpdateCurrentGamesActionInit {
   type: typeof UPDATE_CURRENT_GAMES_INIT;
