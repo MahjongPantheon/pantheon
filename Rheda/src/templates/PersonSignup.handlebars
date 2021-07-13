@@ -1,0 +1,90 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<h3>{{_t 'Sign up'}}</h3>
+<br>
+{{#error}}
+  <div class="alert alert-danger" role="alert">{{error}}</div>
+{{/error}}
+{{^success}}
+  <div class="row">
+    <div class="col-6">
+      {{_t "Please enter your e-mail address and password. We will send authentication link to your email, so you will be able to sign in and fill your personal data"}}
+      <form action="" method="post" class="well">
+        <hr/>
+        <div class="form-group">
+          <label for="email">{{_t 'Your e-mail address'}}</label>
+          <input type="text" class="form-control{{#error_email}} is-invalid{{/error_email}}" id="email" name="email"
+                 value="{{email}}">
+          {{#error_email}}
+            <div class="invalid-feedback">{{error_email}}</div>
+          {{/error_email}}
+          {{^error_email}}
+            <small id="emailHelp" class="form-text text-muted">{{_t "Your e-mail will not be shared with anyone else and will not be visible anywhere."}}</small>
+          {{/error_email}}
+        </div>
+        <div class="form-group">
+          <label for="password">{{_t 'Your password'}}</label>
+          <input type="password" class="form-control{{#error_password}} is-invalid{{/error_password}}" id="password"
+                 name="password">
+          {{#error_password}}
+            <div class="invalid-feedback">{{error_password}}</div>
+          {{/error_password}}
+          {{^error_password}}
+            <small id="passwordHelp" class="form-text text-muted">{{_t "We never store passwords as plain text. But keep in mind that weak passwords will not be accepted by checker."}}</small>
+          {{/error_password}}
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input"
+                   id="accept" name="accept"
+                   onchange="document.getElementById('reg_button').disabled = !this.checked">
+            <label for="accept" class="form-check-label">{{_t "I've read the privacy policy listed below and accept its terms"}}</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="reg_button" disabled>{{_t 'Create account'}}</button>
+      </form>
+      <hr/>
+    </div>
+  </div>
+
+  <div id="Policy">
+    <div class="card">
+      <div id="PolicyHeading">
+        <span class="mb-0">
+          <button class="btn btn-link collapsed"
+                  data-toggle="collapse" data-target="#PolicyOverview"
+                  aria-expanded="false" aria-controls="PolicyOverview">
+            {{_t 'Privacy policy overview'}}
+          </button>
+        </span>
+      </div>
+
+      <div id="PolicyOverview" class="collapse" aria-labelledby="PolicyHeading" data-parent="#Policy">
+        <div class="card-body">
+          {{> partials/PrivacyPolicyOverview }}
+        </div>
+      </div>
+    </div>
+  </div>
+{{/success}}
+{{#success}}
+  {{_t 'Confirmation email has been sent. Please check your inbox for further instructions.'}}
+  {{#debug_url}}
+    <hr />
+    Confirmation link: <a href="{{debug_url}}">{{debug_url}}</a>
+  {{/debug_url}}
+{{/success}}

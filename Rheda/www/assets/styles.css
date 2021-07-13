@@ -29,6 +29,10 @@
     font-style: normal;
 }
 
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
 * {
     font-family: "PT Sans Narrow", Arial, sans-serif !important;
     font-size: 20px;
@@ -108,10 +112,6 @@ body {
     padding: 0.25rem;
 }
 
-.language-dropdown {
-    margin-right: 20px;
-}
-
 .language-dropdown a.dropdown-toggle {
     padding-left: 10px;
     padding-right: 10px;
@@ -140,4 +140,41 @@ body {
 }
 .team-name-selector {
     max-width: 200px;
+}
+
+.centered-content {
+  text-align: center;
+}
+
+.access-rule-value-selector {
+  position:relative;
+}
+
+.access-rule-value-selector .icon {
+  display: none; /* default */
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.access-rule-value-selector .icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.icon-access-save-fail svg {
+  fill: red;
+}
+
+.icon-access-save-success svg {
+  fill: green;
+}
+
+.icon-access-save-progress svg {
+  fill: gray;
+  -webkit-animation:spin 1s linear infinite;
+  -moz-animation:spin 1s linear infinite;
+  animation:spin 1s linear infinite;
 }

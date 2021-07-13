@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rules>
+  <global>
+    <rule
+      name="IS_SUPER_ADMIN"
+      title="Super admin privileges"
+      type="bool"
+      defaultValue="0"
+      isHidden="1"
+      isPersistent="1"
+    />
+    <rule
+      name="GET_PERSON_ACCESS"
+      title="Get access rules for a single person"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="GET_GROUP_ACCESS"
+      title="Get access rules for a single group"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="GET_ALL_PERSON_RULES"
+      title="Get all access rules for a single person"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="GET_ALL_GROUP_RULES"
+      title="Get all access rules for a single group"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="ADD_RULE_FOR_PERSON"
+      title="Add new access rule for a person"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="ADD_RULE_FOR_GROUP"
+      title="Add new access rule for a group"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="ADD_SYSTEM_WIDE_RULE_FOR_PERSON"
+      title="Add new system-wide access rule for a person"
+      type="bool"
+      defaultValue="0"
+    />,
+    <rule
+      name="ADD_SYSTEM_WIDE_RULE_FOR_GROUP"
+      title="Add new system-wide access rule for a group"
+      type="bool"
+      defaultValue="0"
+    />,
+    <rule
+      name="UPDATE_RULE_FOR_PERSON"
+      title="Modify access rule value for a person"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="UPDATE_RULE_FOR_GROUP"
+      title="Modify access rule value for a group"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="DELETE_RULE_FOR_PERSON"
+      title="Delete access rule for a person"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="DELETE_RULE_FOR_GROUP"
+      title="Delete access rule for a group"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="CLEAR_ACCESS_CACHE"
+      title="Clear access rules cache for a single event"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="CREATE_ACCOUNT"
+      title="Create new person account"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="GET_PERSONAL_INFO_WITH_PRIVATE_DATA"
+      title="Get personal info including private data for ALL persons"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="UPDATE_PERSONAL_INFO"
+      title="Update personal info of a single person"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="CREATE_GROUP"
+      title="Create new group"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="UPDATE_GROUP"
+      title="Update a group"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="DELETE_GROUP"
+      title="Delete a group"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="ADD_PERSON_TO_GROUP"
+      title="Add person to a group"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="REMOVE_PERSON_FROM_GROUP"
+      title="Remove person from a group"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="CREATE_EVENT"
+      title="Create new event"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="REGISTER_PERSON"
+      title="Register new person in the system"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="EDIT_PERSON"
+      title="Edit personal data (non-private)"
+      type="bool"
+      defaultValue="0"
+    />
+  </global>
+  <perEvent>
+
+  </perEvent>
+  <globalAndPerEvent>
+    <rule
+      name="ADD_USER"
+      title="Invite person to event"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="ADMIN_EVENT"
+      title="Use games administration features in event"
+      type="bool"
+      defaultValue="0"
+    />
+    <rule
+      name="EDIT_EVENT"
+      title="Edit event settings"
+      type="bool"
+      defaultValue="0"
+    />
+  </globalAndPerEvent>
+</rules>

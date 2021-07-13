@@ -25,12 +25,33 @@ class MultieventMainpage extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Statistics');
+        return _t('Event list');
     }
 
-    protected function _run()
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    protected function _run(): array
     {
-        // TODO: event list
-        return [];
+        $page = empty($this->_path['page']) ? 1 : intval($this->_path['page']);
+        $limit = 20;
+        $offset = $limit * ($page - 1);
+        $data = $this->_mimir->getEvents($limit, $offset);
+
+        $hasNextButton = $offset + $limit < $data['total'];
+        $hasPreviousButton = $page > 1;
+
+        return [
+            'events' => array_map(function ($event) {
+                $ellipsis = mb_strlen($event['description']) > 50 ? '...' : '';
+                $event['description'] = mb_substr($event['description'], 0, 50) . $ellipsis;
+                return $event;
+            }, $data['events']),
+            'prevPage' => $page > 1 ? $page - 1 : 1,
+            'nextPage' => $page + 1,
+            'hasNextButton' => $hasNextButton,
+            'hasPreviousButton' => $hasPreviousButton
+        ];
     }
 }

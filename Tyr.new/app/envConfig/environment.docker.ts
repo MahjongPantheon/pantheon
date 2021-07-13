@@ -23,6 +23,7 @@ import {EnvConfig} from "#/envConfig/interface";
 export const environment: EnvConfig = {
   production: false,
   apiUrl: 'http://localhost:4001',
+  uaUrl: 'http://localhost:4004',
   guiFix: (src: string) => src,
   keyPrefix: 'tyr',
   cookieDomain: null, // when working on localhost this must be omitted!

@@ -47,11 +47,8 @@ export function gameOverviewFormatter(overview: RSessionOverview): LSessionOverv
     tableIndex: overview.table_index,
     players: [...overview.players.map((pl) => {
       return {
-        ident: '', // TODO: workaround
-        tenhouId: '', // TODO: workaround
         ratingDelta: 0, // TODO: workaround
         id: pl.id,
-        alias: '',
         displayName: pl.display_name,
         score: overview.state.scores[pl.id] || 0,
         penalties: overview.state.penalties[pl.id] || 0
@@ -73,23 +70,17 @@ export function timerFormatter(timer: RTimerState): LTimerState {
   };
 }
 
-export function userInfoFormatter(user: RUserInfo): LUser {
-  return {
+export function userInfoFormatter(list: RUserInfo[]): LUser[] {
+  return list.map((user) => ({
     id: parseInt(user.id.toString(), 10),
-    displayName: user.display_name,
-    alias: user.alias,
-    tenhouId: user.tenhou_id,
-    ident: user.ident
-  };
+    displayName: user.title
+  }));
 }
 
 export function userListFormatter(list: RAllPlayersInEvent): LUser[] {
   return list.map((user) => ({
     id: parseInt(user.id.toString(), 10),
-    displayName: user.display_name,
-    alias: user.alias,
-    tenhouId: user.tenhou_id,
-    ident: null  // TODO?
+    displayName: user.display_name
   }));
 }
 
@@ -100,9 +91,6 @@ export function lastResultsFormatter(list: RPlayerData[]): LUserWithScore[] {
   return list.map((user) => ({
     id: parseInt(user.id.toString(), 10),
     displayName: user.display_name,
-    alias: user.alias,
-    ident: user.ident,
-    tenhouId: null, // TODO?
     score: user.score,
     ratingDelta: user.rating_delta,
     penalties: 0, // TODO?
@@ -152,7 +140,6 @@ export function gameConfigFormatter(config: RGameConfig): LGameConfig {
 export function currentGamesFormatter(games: RCurrentGames): LCurrentGame[] {
   const formatPlayer = (player): Player => ({
     id: parseInt(player.id, 10),
-    alias: player.alias,
     displayName: player.display_name,
     score: player.score,
     penalties: 0, // TODO?

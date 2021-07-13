@@ -96,7 +96,7 @@ body {
     color: green;
 }
 
-.mobile-add-online-game .alert-error {
+.mobile-add-online-game .alert-danger {
     color: red;
 }
 

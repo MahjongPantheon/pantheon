@@ -10,9 +10,10 @@ deps: hooks
 	php bin/composer.phar install
 
 lint:
-	php vendor/bin/phpcs --config-set default_standard PSR2
-	php vendor/bin/phpcs --config-set show_warnings 0
+	php vendor/bin/phpcs --config-set default_standard PSR2 > /dev/null
+	php vendor/bin/phpcs --config-set show_warnings 0 > /dev/null
 	php vendor/bin/phpcs src www --ignore=www/assets/*
+	php vendor/bin/phpstan clear-result-cache && php vendor/bin/phpstan analyse -c phpstan.neon
 
 dev:
 	echo "Running dev server on port 8001..."
@@ -24,9 +25,17 @@ unit: # TODO
 unit_covered: # TODO
 	# phpdbg -qrr bin/unit.php --testdox --coverage-clover=/tmp/coverage-rheda.xml
 
+freygen:
+	php ../Frey/bin/clientGen.php Rheda > src/FreyClient.php
+	php ../Frey/bin/clientGen.php Rheda interface > src/interfaces/IFreyClient.php
+
+mimirgen:
+	php ../Mimir/bin/clientGen.php Rheda > src/MimirClient.php
+	php ../Mimir/bin/clientGen.php Rheda interface > src/interfaces/IMimirClient.php
+
 autofix:
-	php vendor/bin/phpcbf --config-set default_standard PSR2
-	php vendor/bin/phpcbf --config-set show_warnings 0
+	php vendor/bin/phpcbf --config-set default_standard PSR2 > /dev/null
+	php vendor/bin/phpcbf --config-set show_warnings 0 > /dev/null
 	php vendor/bin/phpcbf src www --ignore=www/assets/*
 
 i18n_extract:

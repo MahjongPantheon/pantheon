@@ -17,18 +17,20 @@ class InitFreyVersion1m0 extends AbstractMigration
 //        $this->_genFormation();
 //        $this->_genFormationUser();
 
-        $this->getAdapter()->commitTransaction();
 
-        list($db, $config) = $this->_getConnection();
-        $meta = new \Frey\Meta($_SERVER);
-        try {
-            \Frey\BootstrapAccess::create(
-                $db, $config, $meta,
-                'admin@pantheon.mahjong', 'changethis'
-            );
-        } catch (\Exception $e) {
-            echo 'Failed to bootstrap superadmin & supergroup: ' . $e->getMessage();
-        }
+        // Should not do this here. Separate script should be used.
+//        $this->getAdapter()->commitTransaction();
+//
+//        list($db, $config) = $this->_getConnection();
+//        $meta = new \Frey\Meta($_SERVER);
+//        try {
+//            \Frey\BootstrapAccess::create(
+//                $db, $config, $meta,
+//                'admin@pantheon.mahjong', 'changethis'
+//            );
+//        } catch (\Exception $e) {
+//            echo 'Failed to bootstrap superadmin & supergroup: ' . $e->getMessage();
+//        }
     }
 
     /**

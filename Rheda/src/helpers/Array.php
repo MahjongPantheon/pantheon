@@ -37,7 +37,7 @@ class ArrayHelpers
      *   5 => ['a' => 5, 'b' => 6]
      * ]
      *
-     * @throws Exception
+     * @throws \Exception
      * @param array $array
      * @param string $elmKey
      * @param bool $append
@@ -53,7 +53,7 @@ class ArrayHelpers
 
         foreach ($array as $k => $v) {
             if (!isset($v[$elmKey])) {
-                throw new Exception('Wrong key');
+                throw new \Exception('Wrong key');
             }
             if ($append) {
                 $result[$v[$elmKey]] []= $v;

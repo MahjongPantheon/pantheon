@@ -39,7 +39,7 @@ Parameters:
 * **$email** (_string_) 
 * **$password** (_string_) 
 
-Returns: _string_ 
+Returns: _array_ 
 
 Exceptions:
 * _AuthFailedException_ 
@@ -52,7 +52,7 @@ Exceptions:
 
 
 Parameters:
-* **$id** (_integer_) 
+* **$id** (_int_) 
 * **$clientSideToken** (_string_) 
 
 Returns: _bool_ 
@@ -117,8 +117,8 @@ Exceptions:
 
 
 Parameters:
-* **$personId** (_integer_) 
-* **$eventId** (_integer_) 
+* **$personId** (_int_) 
+* **$eventId** (_int_) 
 
 Returns: _array_ 
 
@@ -133,8 +133,8 @@ Exceptions:
 
 
 Parameters:
-* **$personId** (_integer_) 
-* **$eventId** (_integer_) 
+* **$personId** (_int_) 
+* **$eventId** (_int_) 
 * **$ruleName** (_string_) 
 
 Returns: _mixed_ 
@@ -161,6 +161,19 @@ Exceptions:
 
 ### getPersonalInfo
  Get personal info by id list.
+ May or may not include private data (depending on admin rights of requesting user).
+
+
+Parameters:
+* **$ids** (_array_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _\Exception_ 
+
+### findByTenhouIds
+ Get personal info by tenhou id list.
  May or may not include private data (depending on admin rights of requesting user).
 
 
@@ -199,6 +212,17 @@ Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
 
+### getRulesList
+ Get rule list with translations to selected locale
+
+
+Parameters:
+
+Returns: _array_ 
+
+Exceptions:
+* _\Exception_ 
+
 ### getPersonAccess
  Get access rules for person.
  - eventId may be null to get system-wide rules.
@@ -207,8 +231,8 @@ Exceptions:
 
 
 Parameters:
-* **$personId** (_integer_) 
-* **$eventId** (_integer|null_) 
+* **$personId** (_int_) 
+* **$eventId** (_int|null_) 
 
 Returns: _array_ 
 
@@ -223,8 +247,36 @@ Exceptions:
 
 
 Parameters:
-* **$groupId** (_integer_) 
-* **$eventId** (_integer|null_) 
+* **$groupId** (_int_) 
+* **$eventId** (_int|null_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _\Exception_ 
+
+### getAllPersonAccess
+ Get all access rules for person.
+ - Method results are not cached!
+ - To be used in admin panel, but not in client side!
+
+
+Parameters:
+* **$personId** (_int_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _\Exception_ 
+
+### getAllGroupAccess
+ Get all access rules for group.
+ - Method results are not cached!
+ - To be used in admin panel, but not in client side!
+
+
+Parameters:
+* **$groupId** (_int_) 
 
 Returns: _array_ 
 
@@ -237,12 +289,12 @@ Exceptions:
 
 Parameters:
 * **$ruleName** (_string_) 
-* **$ruleValue** (_string|integer|boolean_) 
+* **$ruleValue** (_string|int|boolean_) 
 * **$ruleType** (_string_) 'bool', 'int' or 'enum'
-* **$personId** (_integer_) 
-* **$eventId** (_integer_) 
+* **$personId** (_int_) 
+* **$eventId** (_int_) 
 
-Returns: _integer_ rule id
+Returns: _int_ rule id
 
 Exceptions:
 * _DuplicateEntityException_ 
@@ -255,12 +307,12 @@ Exceptions:
 
 Parameters:
 * **$ruleName** (_string_) 
-* **$ruleValue** (_string|integer|boolean_) 
+* **$ruleValue** (_string|int|boolean_) 
 * **$ruleType** (_string_) 'bool', 'int' or 'enum'
-* **$groupId** (_integer_) 
-* **$eventId** (_integer_) 
+* **$groupId** (_int_) 
+* **$eventId** (_int_) 
 
-Returns: _integer_ rule id
+Returns: _int_ rule id
 
 Exceptions:
 * _DuplicateEntityException_ 
@@ -273,7 +325,7 @@ Exceptions:
 
 Parameters:
 * **$ruleId** (_integer_) 
-* **$ruleValue** (_string|integer|boolean_) 
+* **$ruleValue** (_string|int|boolean_) 
 * **$ruleType** (_string_) 'bool', 'int' or 'enum'
 
 Returns: _bool_ success
@@ -287,8 +339,8 @@ Exceptions:
 
 
 Parameters:
-* **$ruleId** (_integer_) 
-* **$ruleValue** (_string|integer|boolean_) 
+* **$ruleId** (_int_) 
+* **$ruleValue** (_string|int|boolean_) 
 * **$ruleType** (_string_) 'bool', 'int' or 'enum'
 
 Returns: _bool_ success
@@ -302,7 +354,7 @@ Exceptions:
 
 
 Parameters:
-* **$ruleId** (_integer_) 
+* **$ruleId** (_int_) 
 
 Returns: _bool_ 
 
@@ -315,7 +367,7 @@ Exceptions:
 
 
 Parameters:
-* **$ruleId** (_integer_) 
+* **$ruleId** (_int_) 
 
 Returns: _bool_ 
 
@@ -330,8 +382,8 @@ Exceptions:
 
 
 Parameters:
-* **$personId** (_integer_) 
-* **$eventId** (_integer_) 
+* **$personId** (_int_) 
+* **$eventId** (_int_) 
 
 Returns: _bool_ 
 
@@ -376,7 +428,7 @@ Exceptions:
 
 
 Parameters:
-* **$id** (_integer_) 
+* **$id** (_int_) 
 * **$title** (_string_) 
 * **$description** (_string_) 
 * **$color** (_string_) 
@@ -392,7 +444,7 @@ Exceptions:
 
 
 Parameters:
-* **$id** (_integer_) 
+* **$id** (_int_) 
 
 Returns: _bool_ 
 
@@ -405,8 +457,8 @@ Exceptions:
 
 
 Parameters:
-* **$personId** (_integer_) 
-* **$groupId** (_integer_) 
+* **$personId** (_int_) 
+* **$groupId** (_int_) 
 
 Returns: _bool_ success
 
@@ -456,5 +508,39 @@ Returns: _array_
 Exceptions:
 * _EntityNotFoundException_ 
 * _InvalidParametersException_ 
+* _\Exception_ 
+
+### addSystemWideRuleForPerson
+ Add new system-wide rule for a person.
+
+
+Parameters:
+* **$ruleName** (_string_) 
+* **$ruleValue** (_string|int|boolean_) 
+* **$ruleType** (_string_) 'bool', 'int' or 'enum'
+* **$personId** (_int_) 
+
+Returns: _int_ rule id
+
+Exceptions:
+* _DuplicateEntityException_ 
+* _EntityNotFoundException_ 
+* _\Exception_ 
+
+### addSystemWideRuleForGroup
+ Add new system-wide rule for a group.
+
+
+Parameters:
+* **$ruleName** (_string_) 
+* **$ruleValue** (_string|int|boolean_) 
+* **$ruleType** (_string_) 'bool', 'int' or 'enum'
+* **$groupId** (_int_) 
+
+Returns: _int_ rule id
+
+Exceptions:
+* _DuplicateEntityException_ 
+* _EntityNotFoundException_ 
 * _\Exception_ 
 

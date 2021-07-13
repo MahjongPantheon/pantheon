@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+require_once __DIR__ . '/DataSource.php';
+
 use Idiorm\ORM;
 
 define('EXTERNAL_RELATION_MARKER', '::');
@@ -71,14 +73,14 @@ abstract class Primitive
      * This serialization should occur after primary entity is saved, to ensure it already has an id.
      * @see Primitive::save Save logic is handled by this.
      *
-     * @param $obj object to serialize (usually array of ids)
-     * @param $connectorTable
-     * @param $currentEntityField
-     * @param $foreignEntityField
-     * @param $indexFields
+     * @param array $obj object to serialize (usually array of ids)
+     * @param string $connectorTable
+     * @param string $currentEntityField
+     * @param string $foreignEntityField
+     * @param array $indexFields
      * @return bool
      */
-    protected function _serializeManyToMany($obj, $connectorTable, $currentEntityField, $foreignEntityField, $indexFields)
+    protected function _serializeManyToMany($obj, string $connectorTable, string $currentEntityField, string $foreignEntityField, array $indexFields)
     {
         $result = [];
         $i = 1;
@@ -96,23 +98,24 @@ abstract class Primitive
 
         // TODO: what if we need to delete some relations?
 
-        return $this->_db->upsertQuery($connectorTable, $result, $indexFields);
+        return $this->_ds->local()->upsertQuery($connectorTable, $result, $indexFields);
     }
 
     /**
-     * @param $connectorTable
-     * @param $currentEntityField
-     * @param $foreignEntityField
+     * @param string $connectorTable
+     * @param string $currentEntityField
+     * @param string $foreignEntityField
+     * @throws \Exception
      * @return array (usually array of ids)
      */
-    protected function _deserializeManyToMany($connectorTable, $currentEntityField, $foreignEntityField)
+    protected function _deserializeManyToMany(string $connectorTable, string $currentEntityField, string $foreignEntityField)
     {
-        $items = $this->_db
+        $items = $this->_ds
             ->table($connectorTable)
             ->where($currentEntityField, $this->getId())
             ->findArray();
 
-        usort($items, function (&$item1, &$item2) {
+        usort($items, function ($item1, $item2) {
             return $item1['order'] - $item2['order'];
         });
 
@@ -124,13 +127,14 @@ abstract class Primitive
     /**
      * Transform for many-to-many relation fields
      *
-     * @param $connectorTable
-     * @param $currentEntityField
-     * @param $foreignEntityField
-     * @param $indexFields
-     * @return array
+     * @param string $connectorTable
+     * @param string $currentEntityField
+     * @param string $foreignEntityField
+     * @param string[] $indexFields
+     *
+     * @return callable[]
      */
-    protected function _externalManyToManyTransform($connectorTable, $currentEntityField, $foreignEntityField, $indexFields)
+    protected function _externalManyToManyTransform(string $connectorTable, string $currentEntityField, string $foreignEntityField, array $indexFields)
     {
         return [
             'serialize' => function ($obj) use ($connectorTable, $currentEntityField, $foreignEntityField, $indexFields) {
@@ -194,13 +198,18 @@ abstract class Primitive
     }
 
     /**
-     * @var Db
+     * @var DataSource
      */
-    protected $_db;
+    protected $_ds;
 
-    public function __construct(IDb $db)
+    /**
+     * Primitive constructor.
+     * @param DataSource $ds
+     * @throws \Exception
+     */
+    public function __construct(DataSource $ds)
     {
-        $this->_db = $db;
+        $this->_ds = $ds;
         if (empty(static::$_table)) {
             throw new \Exception('Table name must be set!');
         }
@@ -212,6 +221,7 @@ abstract class Primitive
 
     /**
      * Save instance to db
+     * @throws \Exception
      * @return bool success
      */
     public function save()
@@ -220,7 +230,7 @@ abstract class Primitive
         if (empty($id)) {
             $result = $this->_create();
         } else {
-            $instance = $this->_db->table(static::$_table)->findOne($id);
+            $instance = $this->_ds->table(static::$_table)->findOne($id);
             $result = ($instance ? $this->_save($instance) : $this->_create());
         }
 
@@ -267,16 +277,17 @@ abstract class Primitive
 
     /**
      * Delete item from DB
+     * @throws \Exception
      * @return Primitive
      */
     public function drop()
     {
-        $success = $this->_db->table(static::$_table)
-            ->findOne($this->getId())
-            ->delete();
-
-        if ($success) {
-            $this->_deident();
+        $result = $this->_ds->table(static::$_table)->findOne($this->getId());
+        if ($result) {
+            $success = $result->delete();
+            if ($success) {
+                $this->_deident();
+            }
         }
 
         return $this;
@@ -288,6 +299,9 @@ abstract class Primitive
      */
     abstract protected function _create();
 
+    /**
+     * @return int|null
+     */
     abstract public function getId();
 
     /**
@@ -307,7 +321,7 @@ abstract class Primitive
     }
 
     /**
-     * @param $data
+     * @param array $data
      * @return $this
      */
     protected function _restore(array $data)
@@ -326,23 +340,28 @@ abstract class Primitive
         return $this;
     }
 
-    protected static function _recreateInstance(IDb $db, $data)
+    /**
+     * @param DataSource $ds
+     * @param array $data
+     * @return static
+     * @suppress PhanTypeInstantiateAbstractStatic
+     */
+    protected static function _recreateInstance(DataSource $ds, $data)
     {
-        /** @var Model $instance */
-        $instance = new static($db);
+        $instance = new static($ds); // @phpstan-ignore-line
         return $instance->_restore($data);
     }
 
     /**
      * Find items by indexed search
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param string $key
      * @param array $identifiers
      * @throws \Exception
-     * @return Primitive[]
+     * @return static[]
      */
-    protected static function _findBy(IDb $db, $key, $identifiers)
+    protected static function _findBy(DataSource $ds, $key, $identifiers)
     {
         if (!is_array($identifiers)) {
             throw new \Exception("Identifiers should be an array in search by $key");
@@ -352,36 +371,37 @@ abstract class Primitive
             return [];
         }
 
-        $result = $db->table(static::$_table)->whereIn($key, $identifiers)->findArray();
+        $result = $ds->table(static::$_table)->whereIn($key, $identifiers)->findArray();
         if (empty($result)) {
             return [];
         }
 
-        return array_map(function ($data) use ($db) {
-            return self::_recreateInstance($db, $data);
+        return array_map(function ($data) use ($ds) {
+            return self::_recreateInstance($ds, $data);
         }, $result);
     }
 
     /**
-     * @param IDb $db
-     * @return Primitive[]
+     * @param DataSource $ds
+     * @throws \Exception
+     * @return static[]
      */
-    public static function findAll(IDb $db)
+    public static function findAll(DataSource $ds)
     {
-        $result = $db->table(static::$_table)->findArray();
+        $result = $ds->table(static::$_table)->findArray();
         if (empty($result)) {
             return [];
         }
 
-        return array_map(function ($data) use ($db) {
-            return self::_recreateInstance($db, $data);
+        return array_map(function ($data) use ($ds) {
+            return self::_recreateInstance($ds, $data);
         }, $result);
     }
 
     /**
      * Find items by indexed search by several fields
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param array $conditions
      * @param array $params
      *      $params.onlyLast => return only last item (when sorted by primary key)
@@ -390,15 +410,15 @@ abstract class Primitive
      *      $params.order    => asc or desc
      *      $params.orderBy  => field name for results ordering
      * @throws \Exception
-     * @return Primitive|Primitive[]
+     * @return static[]
      */
-    protected static function _findBySeveral(IDb $db, $conditions, $params = [])
+    protected static function _findBySeveral(DataSource $ds, $conditions, $params = [])
     {
         if (!is_array($conditions)) {
             throw new \Exception("Conditions should be assoc array: key => [values...]");
         }
 
-        $orm = $db->table(static::$_table);
+        $orm = $ds->table(static::$_table);
         foreach ($conditions as $key => $identifiers) {
             $orm = $orm->whereIn($key, $identifiers);
         }
@@ -419,7 +439,7 @@ abstract class Primitive
             } else {
                 return [];
             }
-            return self::_recreateInstance($db, $item);
+            return [self::_recreateInstance($ds, $item)];
         }
 
         if (!empty($params['order']) && !empty($params['orderBy'])) {
@@ -436,8 +456,8 @@ abstract class Primitive
             return [];
         }
 
-        return array_map(function ($data) use ($db) {
-            return self::_recreateInstance($db, $data);
+        return array_map(function ($data) use ($ds) {
+            return self::_recreateInstance($ds, $data);
         }, $result);
     }
 }

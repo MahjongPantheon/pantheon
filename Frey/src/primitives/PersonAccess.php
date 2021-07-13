@@ -33,10 +33,11 @@ class PersonAccessPrimitive extends AccessPrimitive
     protected static $_fieldsMapping = [
         'id'                => '_id',
         'person_id'         => '_personId',
-        'event_ids'         => '_eventIds',
+        'event_id'          => '_eventId',
         'acl_type'          => '_aclType',
         'acl_name'          => '_aclName',
         'acl_value'         => '_aclValue',
+        'allowed_values'    => '_allowedValues',
     ];
 
     protected function _getFieldsTransforms()
@@ -44,10 +45,11 @@ class PersonAccessPrimitive extends AccessPrimitive
         return [
             '_id'        => $this->_integerTransform(true),
             '_personId'  => $this->_integerTransform(),
-            '_eventIds'  => $this->_csvTransform(),
+            '_eventId'   => $this->_integerTransform(true),
             '_aclType'   => $this->_stringTransform(),
             '_aclName'   => $this->_stringTransform(),
             '_aclValue'  => $this->_stringTransform(),
+            '_allowedValues' => $this->_csvTransform(),
         ];
     }
 
@@ -66,13 +68,31 @@ class PersonAccessPrimitive extends AccessPrimitive
      * Find rules by person id list
      *
      * @param IDb $db
-     * @param $ids
+     * @param int[] $ids
+     *
      * @return PersonAccessPrimitive[]
      * @throws \Exception
      */
-    public static function findByPerson(IDb $db, $ids)
+    public static function findByPerson(IDb $db, array $ids)
     {
         return self::_findBy($db, 'person_id', $ids);
+    }
+
+    /**
+     * Find rules of specified type by person id list
+     *
+     * @param IDb $db
+     * @param array $ids
+     * @param $type
+     * @return Primitive|Primitive[]
+     * @throws \Exception
+     */
+    public static function findByPersonAndType(IDb $db, array $ids, $type)
+    {
+        return self::_findBySeveral($db, [
+            'person_id'  => $ids,
+            'acl_name'   => [$type]
+        ]);
     }
 
     /**
@@ -112,11 +132,16 @@ class PersonAccessPrimitive extends AccessPrimitive
     /**
      * @param PersonPrimitive $person
      * @return PersonAccessPrimitive
+     * @throws InvalidParametersException
      */
     public function setPerson(PersonPrimitive $person): PersonAccessPrimitive
     {
+        $id = $person->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
         $this->_person = $person;
-        $this->_personId = $person->getId();
+        $this->_personId = $id;
         return $this;
     }
 }

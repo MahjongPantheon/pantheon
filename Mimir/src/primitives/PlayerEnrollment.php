@@ -49,7 +49,7 @@ class PlayerEnrollmentPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
     /**
@@ -65,25 +65,29 @@ class PlayerEnrollmentPrimitive extends Primitive
      */
     protected $_pin;
 
+    /**
+     * @return bool|mixed
+     * @throws \Exception
+     */
     protected function _create()
     {
-        $playerReg = $this->_db->table(self::$_table)->create();
+        $playerReg = $this->_ds->table(self::$_table)->create();
         if (empty($this->_pin)) {
-            $this->_pin = mt_rand(100000, 999999);
+            $this->_pin = (string)mt_rand(100000, 999999);
         }
 
         try {
             $success = $this->_save($playerReg);
             if ($success) {
-                $this->_id = $this->_db->lastInsertId();
+                $this->_id = $this->_ds->local()->lastInsertId();
             }
         } catch (\PDOException $e) { // duplicate unique key, get existing item
-            $existingItem = self::findByPlayerAndEvent($this->_db, $this->_playerId, $this->_eventId);
+            $existingItem = self::findByPlayerAndEvent($this->_ds, $this->_playerId, $this->_eventId);
             if (!empty($existingItem)) {
-                $this->_id = $existingItem->_id;
-                $this->_eventId = $existingItem->_eventId;
-                $this->_playerId = $existingItem->_playerId;
-                $this->_pin = $existingItem->_pin;
+                $this->_id = $existingItem[0]->_id;
+                $this->_eventId = $existingItem[0]->_eventId;
+                $this->_playerId = $existingItem[0]->_playerId;
+                $this->_pin = $existingItem[0]->_pin;
                 $success = true;
             } else {
                 $success = false;
@@ -99,7 +103,7 @@ class PlayerEnrollmentPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -114,63 +118,73 @@ class PlayerEnrollmentPrimitive extends Primitive
         return $this->_pin;
     }
 
-    public function getEventId()
+    public function getEventId(): int
     {
         return $this->_eventId;
     }
 
-    public function getPlayerId()
+    public function getPlayerId(): int
     {
         return $this->_playerId;
     }
 
     /**
-     * @param IDb $db
-     * @param $playerId
-     * @param $eventId
-     * @return PlayerEnrollmentPrimitive
+     * @param DataSource $ds
+     * @param int $playerId
+     * @param int $eventId
+     *
+     * @return self[]
+     *
      * @throws \Exception
+     *
+     * @psalm-return array<array-key, self>
      */
-    public static function findByPlayerAndEvent(IDb $db, $playerId, $eventId)
+    public static function findByPlayerAndEvent(DataSource $ds, int $playerId, int $eventId)
     {
-        return self::_findBySeveral($db, [
+        return self::_findBySeveral($ds, [
             'player_id' => [$playerId],
             'event_id' => [$eventId]
         ], ['onlyLast' => true]);
     }
 
     /**
-     * @param IDb $db
-     * @param $eventId
+     * @param DataSource $ds
+     * @param int $eventId
      * @return PlayerEnrollmentPrimitive[]
      * @throws \Exception
      */
-    public static function findByEvent(IDb $db, $eventId)
+    public static function findByEvent(DataSource $ds, int $eventId)
     {
-        return self::_findBy($db, 'event_id', [$eventId]);
+        return self::_findBy($ds, 'event_id', [$eventId]);
     }
 
     /**
      * @param PlayerPrimitive $player
      * @param EventPrimitive $event
      * @return PlayerEnrollmentPrimitive
+     * @throws InvalidParametersException
      */
     public function setReg(PlayerPrimitive $player, EventPrimitive $event)
     {
-        $this->_eventId = $event->getId();
-        $this->_playerId = $player->getId();
+        $eId = $event->getId();
+        $pId = $player->getId();
+        if (empty($eId) || empty($pId)) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
+        $this->_eventId = $eId;
+        $this->_playerId = $pId;
         return $this;
     }
 
     /**
-     * @param IDb $db
-     * @param $pin
+     * @param DataSource $ds
+     * @param string $pin
      * @return null|PlayerEnrollmentPrimitive
      * @throws \Exception
      */
-    public static function findByPin(IDb $db, $pin)
+    public static function findByPin(DataSource $ds, string $pin)
     {
-        $result = self::_findBy($db, 'reg_pin', [$pin]);
+        $result = self::_findBy($ds, 'reg_pin', [$pin]);
         if (empty($result)) {
             return null;
         }

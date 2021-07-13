@@ -41,12 +41,18 @@ return [
     'getRuleValue'         => ['AccessController', 'getRuleValue'],
     'updatePersonalInfo'   => ['PersonsController', 'updatePersonalInfo'],
     'getPersonalInfo'      => ['PersonsController', 'getPersonalInfo'],
+    'findByTenhouIds'      => ['PersonsController', 'findByTenhouIds'],
     'findByTitle'          => ['PersonsController', 'findByTitle'],
     'getGroups'            => ['PersonsController', 'getGroups'],
 
     // admin
+    'getSuperadminFlag'      => ['AccessController', 'getSuperadminFlag'],
+    'getOwnedEventIds'       => ['AccessController', 'getOwnedEventIds'],
+    'getRulesList'           => ['AccessController', 'getRulesList'],
     'getPersonAccess'        => ['AccessController', 'getPersonAccess'],
     'getGroupAccess'         => ['AccessController', 'getGroupAccess'],
+    'getAllPersonAccess'     => ['AccessController', 'getAllPersonAccess'],
+    'getAllGroupAccess'      => ['AccessController', 'getAllGroupAccess'],
     'addRuleForPerson'       => ['AccessController', 'addRuleForPerson'],
     'addRuleForGroup'        => ['AccessController', 'addRuleForGroup'],
     'updateRuleForPerson'    => ['AccessController', 'updateRuleForPerson'],
@@ -62,4 +68,8 @@ return [
     'removePersonFromGroup'  => ['PersonsController', 'removePersonFromGroup'],
     'getPersonsOfGroup'      => ['PersonsController', 'getPersonsOfGroup'],
     'getGroupsOfPerson'      => ['PersonsController', 'getGroupsOfPerson'],
+
+    // superadmin: this should be covered with some bootstrap authenthication, TODO
+    'addSystemWideRuleForPerson'       => ['AccessController', 'addSystemWideRuleForPerson'],
+    'addSystemWideRuleForGroup'        => ['AccessController', 'addSystemWideRuleForGroup'],
 ];

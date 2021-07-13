@@ -22,9 +22,18 @@ require_once __DIR__ . '/../helpers/YakuMap.php';
 class PersonalStats extends Controller
 {
     protected $_mainTemplate = 'User';
+    /**
+     * @var string
+     */
     protected $_playerName;
 
-    public function __construct($url, $path)
+    /**
+     * PersonalStats constructor.
+     * @param string $url
+     * @param array $path
+     * @throws \Exception
+     */
+    public function __construct(string $url, array $path)
     {
         parent::__construct($url, $path);
         $this->_playerName = _t('Player');
@@ -33,15 +42,19 @@ class PersonalStats extends Controller
     protected function _pageTitle()
     {
         // This is called after _run, so proper player name is substituted.
-        return _p('Stats & diagrams: %s', $this->_playerName);
+        return _p('Stats & diagrams: %s', $this->_playerName) . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    protected function _run(): array
     {
         try {
             $currentUser = $this->_path['user'];
-            $playerData = $this->_api->execute('getPlayer', [$currentUser]);
-            $data = $this->_api->execute('getPlayerStats', [$currentUser, $this->_eventIdList]);
+            $playerData = $this->_mimir->getPlayer((int)$currentUser);
+            $data = $this->_mimir->getPlayerStats((int)$currentUser, $this->_eventIdList);
             $this->_playerName = $playerData['display_name'];
 
             $usersMap = [];
@@ -100,7 +113,7 @@ class PersonalStats extends Controller
                 $yakuStats[] = [$totalYakuhai, _t('Yakuhai: total')];
             }
 
-            $scoresSummary = $this->_getScoresSummary($currentUser, $data['score_history']);
+            $scoresSummary = $this->_getScoresSummary((int)$currentUser, $data['score_history']);
 
             $riichiTotal = $data['riichi_summary']['riichi_won'] + $data['riichi_summary']['riichi_lost'];
             $winCount = $data['win_summary']['ron'] + $data['win_summary']['tsumo'];
@@ -171,7 +184,7 @@ class PersonalStats extends Controller
                 ],
                 'error' => null
             ];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return [
                 'data' => null,
                 'error' => $e->getMessage()
@@ -182,11 +195,11 @@ class PersonalStats extends Controller
     /**
      * Get scores summary stats for player
      *
-     * @param $playerId
-     * @param [] $scoresData
+     * @param int $playerId
+     * @param array $scoresData
      * @return array
      */
-    protected function _getScoresSummary($playerId, $scoresData)
+    protected function _getScoresSummary(int $playerId, array $scoresData)
     {
         $totalScores = 0;
         $playedGames = 0;

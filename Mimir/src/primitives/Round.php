@@ -93,11 +93,11 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $_id;
     /**
-     * @var SessionPrimitive
+     * @var SessionPrimitive|null
      */
     protected $_session;
     /**
@@ -105,7 +105,7 @@ class RoundPrimitive extends Primitive
      */
     protected $_sessionId;
     /**
-     * @var EventPrimitive
+     * @var EventPrimitive|null
      */
     protected $_event;
     /**
@@ -119,32 +119,32 @@ class RoundPrimitive extends Primitive
     protected $_outcome;
     /**
      * not null only on ron or tsumo
-     * @var PlayerPrimitive
+     * @var PlayerPrimitive|null
      */
     protected $_winner;
     /**
      * not null only on ron or tsumo
-     * @var string
+     * @var int
      */
     protected $_winnerId;
     /**
      * not null only on ron or chombo
-     * @var PlayerPrimitive
+     * @var PlayerPrimitive|null
      */
     protected $_loser;
     /**
      * not null only on ron or chombo
-     * @var string
+     * @var int
      */
     protected $_loserId;
     /**
      * not null only if pao is applied
-     * @var PlayerPrimitive
+     * @var PlayerPrimitive|null
      */
     protected $_paoPlayer;
     /**
      * not null only if pao is applied
-     * @var string
+     * @var int
      */
     protected $_paoPlayerId;
     /**
@@ -165,7 +165,7 @@ class RoundPrimitive extends Primitive
      */
     protected $_tempaiIds;
     /**
-     * @var PlayerPrimitive[]
+     * @var PlayerPrimitive[]|null
      */
     protected $_tempaiUsers = null;
     /**
@@ -198,7 +198,7 @@ class RoundPrimitive extends Primitive
      */
     protected $_riichiIds;
     /**
-     * @var PlayerPrimitive[]
+     * @var PlayerPrimitive[]|null
      */
     protected $_riichiUsers = null;
     /**
@@ -226,40 +226,40 @@ class RoundPrimitive extends Primitive
      * because it makes no sense with multi-rounds.
      *
      * @deprecated
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return RoundPrimitive[]
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(DataSource $ds, $ids)
     {
-        return self::_findBy($db, 'id', $ids);
+        return self::_findBy($ds, 'id', $ids);
     }
 
     /**
      * Find rounds and multi-rounds by session (foreign key search)
      *
-     * @param IDb $db
-     * @param string[] $idList
+     * @param DataSource $ds
+     * @param int[] $idList
      * @throws \Exception
      * @return RoundPrimitive[]
      */
-    public static function findBySessionIds(IDb $db, $idList)
+    public static function findBySessionIds(DataSource $ds, $idList)
     {
         /** @var RoundPrimitive[] $rounds */
-        $rounds = self::_findBy($db, 'session_id', $idList);
-        return self::_mergeMultiRoundsBySession($db, $rounds);
+        $rounds = self::_findBy($ds, 'session_id', $idList);
+        return self::_mergeMultiRoundsBySession($ds, $rounds);
     }
 
     // Warning: other foreign key search methods should implement multi-rounds logic,
     // or it will ruin all object model.
 
     /**
-     * @param IDb $db
+     * @param DataSource $ds
      * @param RoundPrimitive[] $rounds
      * @return array
      */
-    protected static function _mergeMultiRoundsBySession(IDb $db, &$rounds)
+    protected static function _mergeMultiRoundsBySession(DataSource $ds, &$rounds)
     {
         require_once __DIR__ . '/MultiRound.php';
         $splitBySession = [];
@@ -270,7 +270,7 @@ class RoundPrimitive extends Primitive
             $splitBySession[$round->getSessionId()] []= $round;
         }
 
-        $splitBySession = array_map(function ($roundsInSession) use ($db) {
+        $splitBySession = array_map(function ($roundsInSession) use ($ds) {
             $result = [];
             usort($roundsInSession, function (RoundPrimitive $el1, RoundPrimitive $el2) {
                 // sort by id, so consecutive multi-ron ids will
@@ -289,7 +289,7 @@ class RoundPrimitive extends Primitive
 
                 // double ron
                 if ($round->getMultiRon() == 2) {
-                    $result []= MultiRoundPrimitive::createFromRounds($db, [
+                    $result []= MultiRoundPrimitive::createFromRounds($ds, [
                         $round,
                         $roundsInSession[$i + 1]
                     ]);
@@ -299,7 +299,7 @@ class RoundPrimitive extends Primitive
 
                 // triple ron
                 if ($round->getMultiRon() == 3) {
-                    $result []= MultiRoundPrimitive::createFromRounds($db, [
+                    $result []= MultiRoundPrimitive::createFromRounds($ds, [
                         $round,
                         $roundsInSession[$i + 1],
                         $roundsInSession[$i + 2]
@@ -315,12 +315,16 @@ class RoundPrimitive extends Primitive
         return array_reduce($splitBySession, 'array_merge', []); // flatten and return
     }
 
+    /**
+     * @return bool|mixed
+     * @throws \Exception
+     */
     protected function _create()
     {
-        $round = $this->_db->table(self::$_table)->create();
+        $round = $this->_ds->table(self::$_table)->create();
         $success = $this->_save($round);
         if ($success) {
-            $this->_id = $this->_db->lastInsertId();
+            $this->_id = $this->_ds->local()->lastInsertId();
         }
 
         return $success;
@@ -332,16 +336,17 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @param IDb $db
+     * @param DataSource $ds
      * @param SessionPrimitive $session
-     * @param $roundData
+     * @param array $roundData
+     * @throws \Exception
      * @return RoundPrimitive|MultiRoundPrimitive
      */
-    public static function createFromData(IDb $db, SessionPrimitive $session, $roundData)
+    public static function createFromData(DataSource $ds, SessionPrimitive $session, array $roundData)
     {
         require_once __DIR__ . '/MultiRound.php';
         if ($roundData['outcome'] === 'multiron') {
-            return MultiRoundPrimitive::createFromData($db, $session, $roundData);
+            return MultiRoundPrimitive::createFromData($ds, $session, $roundData);
         }
 
         RoundsHelper::checkRound($session, $roundData);
@@ -352,7 +357,7 @@ class RoundPrimitive extends Primitive
         $roundData['end_date'] = date('Y-m-d H:i:s');
 
         // Just set it, as we already checked its perfect validity.
-        return (new RoundPrimitive($db))->_restore($roundData);
+        return (new RoundPrimitive($ds))->_restore($roundData);
     }
 
     /**
@@ -375,7 +380,10 @@ class RoundPrimitive extends Primitive
 
     /**
      * @deprecated
+     *
      * @throws InvalidParametersException
+     *
+     * @return void
      */
     public function _setEvent()
     {
@@ -383,14 +391,19 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @throws EntityNotFoundException
      * @return \Mimir\EventPrimitive
+     * @throws EntityNotFoundException|InvalidParametersException
      */
     public function getEvent()
     {
         if (!$this->_event) {
-            $this->_event = $this->getSession()->getEvent();
-            $this->_eventId = $this->_event->getId();
+            $event = $this->getSession()->getEvent();
+            $id = $event->getId();
+            if (!$id) {
+                throw new InvalidParametersException('Attempted to assign deidented primitive');
+            }
+            $this->_event = $event;
+            $this->_eventId = $id;
         }
         return $this->_event;
     }
@@ -440,7 +453,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -489,19 +502,24 @@ class RoundPrimitive extends Primitive
      */
     public function setLoser(PlayerPrimitive $loser)
     {
+        $id = $loser->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_loser = $loser;
-        $this->_loserId = $loser->getId();
+        $this->_loserId = $id;
         return $this;
     }
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\PlayerPrimitive
      */
     public function getLoser()
     {
         if (!$this->_loser) {
-            $foundUsers = PlayerPrimitive::findById($this->_db, [$this->_loserId]);
+            $foundUsers = PlayerPrimitive::findById($this->_ds, [$this->_loserId]);
             if (empty($foundUsers)) {
                 throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_loserId . ' not found in DB');
             }
@@ -511,7 +529,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getLoserId()
     {
@@ -555,7 +573,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return \int[]
+     * @return int[]
      */
     public function getRiichiIds()
     {
@@ -577,13 +595,14 @@ class RoundPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\PlayerPrimitive[]
      */
     public function getRiichiUsers()
     {
         if ($this->_riichiUsers === null) {
             $this->_riichiUsers = PlayerPrimitive::findById(
-                $this->_db,
+                $this->_ds,
                 $this->_riichiIds
             );
             if (empty($this->_riichiUsers) || count($this->_riichiUsers) !== count($this->_riichiIds)) {
@@ -615,23 +634,29 @@ class RoundPrimitive extends Primitive
     /**
      * @param \Mimir\SessionPrimitive $session
      * @return RoundPrimitive
+     * @throws InvalidParametersException
      */
     public function setSession(SessionPrimitive $session)
     {
+        $id = $session->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_session = $session;
-        $this->_sessionId = $session->getId();
+        $this->_sessionId = $id;
         $this->_eventId = $session->getEventId();
         return $this;
     }
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\SessionPrimitive
      */
     public function getSession()
     {
         if (!$this->_session) {
-            $foundSessions = SessionPrimitive::findById($this->_db, [$this->_sessionId]);
+            $foundSessions = SessionPrimitive::findById($this->_ds, [$this->_sessionId]);
             if (empty($foundSessions)) {
                 throw new EntityNotFoundException("Entity SessionPrimitive with id#" . $this->_sessionId . ' not found in DB');
             }
@@ -649,7 +674,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return \int[]
+     * @return int[]
      */
     public function getTempaiIds()
     {
@@ -674,13 +699,14 @@ class RoundPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\PlayerPrimitive[]
      */
     public function getTempaiUsers()
     {
         if ($this->_tempaiUsers === null) {
             $this->_tempaiUsers = PlayerPrimitive::findById(
-                $this->_db,
+                $this->_ds,
                 $this->_tempaiIds
             );
             if (empty($this->_tempaiUsers) || count($this->_tempaiUsers) !== count($this->_tempaiIds)) {
@@ -692,7 +718,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return \int[]
+     * @return int[]
      */
     public function getNagashiIds()
     {
@@ -723,22 +749,28 @@ class RoundPrimitive extends Primitive
     /**
      * @param \Mimir\PlayerPrimitive $winner
      * @return RoundPrimitive
+     * @throws InvalidParametersException
      */
     public function setWinner(PlayerPrimitive $winner)
     {
+        $id = $winner->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_winner = $winner;
-        $this->_winnerId = $winner->getId();
+        $this->_winnerId = $id;
         return $this;
     }
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\PlayerPrimitive
      */
     public function getWinner()
     {
         if (!$this->_winner) {
-            $foundUsers = PlayerPrimitive::findById($this->_db, [$this->_winnerId]);
+            $foundUsers = PlayerPrimitive::findById($this->_ds, [$this->_winnerId]);
             if (empty($foundUsers)) {
                 throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_winnerId . ' not found in DB');
             }
@@ -748,7 +780,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getWinnerId()
     {
@@ -758,22 +790,28 @@ class RoundPrimitive extends Primitive
     /**
      * @param \Mimir\PlayerPrimitive $paoPlayer
      * @return RoundPrimitive
+     * @throws InvalidParametersException
      */
     public function setPaoPlayer(PlayerPrimitive $paoPlayer)
     {
+        $id = $paoPlayer->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_paoPlayer = $paoPlayer;
-        $this->_paoPlayerId = $paoPlayer->getId();
+        $this->_paoPlayerId = $id;
         return $this;
     }
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\PlayerPrimitive
      */
     public function getPaoPlayer()
     {
         if (!$this->_paoPlayer) {
-            $foundUsers = PlayerPrimitive::findById($this->_db, [$this->_paoPlayerId]);
+            $foundUsers = PlayerPrimitive::findById($this->_ds, [$this->_paoPlayerId]);
             if (empty($foundUsers)) {
                 throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_paoPlayerId . ' not found in DB');
             }
@@ -783,7 +821,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return int
      */
     public function getPaoPlayerId()
     {
@@ -820,6 +858,7 @@ class RoundPrimitive extends Primitive
      * @return SessionState
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
+     * @throws \Exception
      */
     public function getLastSessionState()
     {
@@ -841,6 +880,7 @@ class RoundPrimitive extends Primitive
     }
 
     /**
+     * @throws EntityNotFoundException
      * @return string
      */
     public function getEndDate()

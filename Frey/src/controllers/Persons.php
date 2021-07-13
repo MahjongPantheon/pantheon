@@ -63,8 +63,25 @@ class PersonsController extends Controller
     }
 
     /**
+     * Get personal info by tenhou id list.
+     * May or may not include private data (depending on admin rights of requesting user).
+     *
+     * @param array $ids
+     * @return array
+     * @throws \Exception
+     */
+    public function findByTenhouIds($ids)
+    {
+        $this->_logStart(__METHOD__, [implode(',', $ids)]);
+        $personalInfo = $this->_getAccountModel()->findByTenhouId($ids);
+        $this->_logSuccess(__METHOD__, [implode(',', $ids)]);
+        return $personalInfo;
+    }
+
+    /**
      * @param string $id
      * @param string $title
+     * @param string $country
      * @param string $city
      * @param string $email
      * @param string $phone
@@ -73,10 +90,10 @@ class PersonsController extends Controller
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId)
+    public function updatePersonalInfo($id, $title, $country, $city, $email, $phone, $tenhouId)
     {
         $this->_logStart(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
-        $success = $this->_getAccountModel()->updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId);
+        $success = $this->_getAccountModel()->updatePersonalInfo($id, $title, $country, $city, $email, $phone, $tenhouId);
         $this->_logSuccess(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
         return $success;
     }
@@ -112,7 +129,9 @@ class PersonsController extends Controller
     public function createGroup($title, $description, $color)
     {
         $this->_logStart(__METHOD__, [$title, $description, $color]);
-        $groupId = $this->_getGroupsModel()->createGroup($title, $description, $color);
+        $groupId = $this->_getGroupsModel()
+            ->_checkAccessRights(InternalRules::CREATE_GROUP)
+            ->createGroup($title, $description, $color);
         $this->_logSuccess(__METHOD__, [$title, $description, $color]);
         return $groupId;
     }
@@ -120,7 +139,7 @@ class PersonsController extends Controller
     /**
      * Update group info in admin interface
      *
-     * @param integer $id
+     * @param int $id
      * @param string $title
      * @param string $description
      * @param string $color
@@ -131,7 +150,9 @@ class PersonsController extends Controller
     public function updateGroup($id, $title, $description, $color)
     {
         $this->_logStart(__METHOD__, [$id, $title, $description, $color]);
-        $success = $this->_getGroupsModel()->updateGroup($id, $title, $description, $color);
+        $success = $this->_getGroupsModel()
+            ->_checkAccessRights(InternalRules::UPDATE_GROUP)
+            ->updateGroup($id, $title, $description, $color);
         $this->_logSuccess(__METHOD__, [$id, $title, $description, $color]);
         return $success;
     }
@@ -155,7 +176,7 @@ class PersonsController extends Controller
     /**
      * Delete group and all of its linked dependencies
      *
-     * @param integer $id
+     * @param int $id
      * @return bool
      * @throws InvalidParametersException
      * @throws \Exception
@@ -163,7 +184,9 @@ class PersonsController extends Controller
     public function deleteGroup($id)
     {
         $this->_logStart(__METHOD__, [$id]);
-        $this->_getGroupsModel()->deleteGroup($id);
+        $this->_getGroupsModel()
+            ->_checkAccessRights(InternalRules::DELETE_GROUP)
+            ->deleteGroup($id);
         $this->_logSuccess(__METHOD__, [$id]);
         return true;
     }
@@ -171,8 +194,8 @@ class PersonsController extends Controller
     /**
      * Add person to group
      *
-     * @param integer $personId
-     * @param integer $groupId
+     * @param int $personId
+     * @param int $groupId
      * @return bool  success
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
@@ -181,7 +204,9 @@ class PersonsController extends Controller
     public function addPersonToGroup($personId, $groupId)
     {
         $this->_logStart(__METHOD__, [$personId, $groupId]);
-        $success = $this->_getGroupsModel()->addPersonToGroup($personId, $groupId);
+        $success = $this->_getGroupsModel()
+            ->_checkAccessRights(InternalRules::ADD_PERSON_TO_GROUP)
+            ->addPersonToGroup($personId, $groupId);
         $this->_logSuccess(__METHOD__, [$personId, $groupId]);
         return $success;
     }
@@ -199,7 +224,9 @@ class PersonsController extends Controller
     public function removePersonFromGroup($personId, $groupId)
     {
         $this->_logStart(__METHOD__, [$personId, $groupId]);
-        $success = $this->_getGroupsModel()->removePersonFromGroup($personId, $groupId);
+        $success = $this->_getGroupsModel()
+            ->_checkAccessRights(InternalRules::REMOVE_PERSON_FROM_GROUP)
+            ->removePersonFromGroup($personId, $groupId);
         $this->_logSuccess(__METHOD__, [$personId, $groupId]);
         return $success;
     }

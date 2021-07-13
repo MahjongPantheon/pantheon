@@ -31,6 +31,7 @@ class EventPrimitive extends Primitive
 {
     protected static $_table = 'event';
     const REL_USER = 'event_registered_players';
+    const ID_PLACEHOLDER = '##ID##';
 
     protected static $_fieldsMapping = [
         'id'                => '_id',
@@ -40,12 +41,8 @@ class EventPrimitive extends Primitive
         'end_time'          => '_endTime',
         'game_duration'     => '_gameDuration',
         'last_timer'        => '_lastTimer',
-        'owner_formation'   => '_ownerFormationId',
-        'owner_player'      => '_ownerPlayerId',
-        'type'              => '_type', // DEPRECATED: to be removed in 2.x
         'is_online'         => '_isOnline',
         'is_team'           => '_isTeam',
-        'is_textlog'        => '_isTextlog',
         'sync_start'        => '_syncStart',
         'sync_end'          => '_syncEnd',
         'auto_seating'      => '_autoSeating',
@@ -62,23 +59,20 @@ class EventPrimitive extends Primitive
         'hide_results'      => '_hideResults',
         'is_prescripted'    => '_isPrescripted',
         'min_games_count'   => '_minGamesCount',
+        'finished'          => '_finished',
     ];
 
     protected function _getFieldsTransforms()
     {
         return [
-            '_ownerFormationId'   => $this->_integerTransform(true),
-            '_ownerPlayerId'      => $this->_integerTransform(true),
             '_startTime'          => $this->_stringTransform(true),
             '_endTime'            => $this->_stringTransform(true),
             '_gameDuration'       => $this->_integerTransform(true),
             '_lastTimer'          => $this->_integerTransform(true),
             '_id'                 => $this->_integerTransform(true),
             '_lobbyId'            => $this->_integerTransform(true),
-            '_type'               => $this->_stringTransform(), // DEPRECATED: to be removed in 2.x
             '_isOnline'           => $this->_integerTransform(),
             '_isTeam'             => $this->_integerTransform(),
-            '_isTextlog'          => $this->_integerTransform(),
             '_isPrescripted'      => $this->_integerTransform(),
             '_syncStart'          => $this->_integerTransform(),
             '_syncEnd'            => $this->_integerTransform(),
@@ -93,6 +87,7 @@ class EventPrimitive extends Primitive
             '_gamesStatus'        => $this->_stringTransform(true),
             '_hideResults'        => $this->_integerTransform(),
             '_minGamesCount'      => $this->_integerTransform(),
+            '_finished'           => $this->_integerTransform(),
             '_ruleset'            => [
                 'serialize' => function (Ruleset $rules) {
                     return $rules->title();
@@ -106,7 +101,7 @@ class EventPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
     /**
@@ -155,32 +150,6 @@ class EventPrimitive extends Primitive
      */
     protected $_timezone;
     /**
-     * Owner organisation
-     * @var FormationPrimitive|null
-     */
-    protected $_ownerFormation = null;
-    /**
-     * Owner organisation id
-     * @var int
-     */
-    protected $_ownerFormationId;
-    /**
-     * Owner player
-     * @var PlayerPrimitive|null
-     */
-    protected $_ownerPlayer = null;
-    /**
-     * Owner player id
-     * @var int
-     */
-    protected $_ownerPlayerId;
-    /**
-     * Event type: online/offline, tournament/simple, etc
-     * @deprecated to be removed in 2.x
-     * @var int
-     */
-    protected $_type;
-    /**
      * should tables start synchronously or not (if not, players may start games when they want)
      * @var int
      */
@@ -208,7 +177,7 @@ class EventPrimitive extends Primitive
      */
     protected $_allowPlayerAppend;
     /**
-     * if true, event is treated as online (paifu log parser is used). Disabled if is_textlog = true
+     * if true, event is treated as online (paifu log parser is used).
      * @var int
      */
     protected $_isOnline;
@@ -227,11 +196,6 @@ class EventPrimitive extends Primitive
      * @var int
      */
     protected $_usePenalty;
-    /**
-     * if true, non-interactive text log parser is used. For offline games.
-     * @var int
-     */
-    protected $_isTextlog;
     /**
      * if true, event seating is predefined and no manual or automatic seating abilities are provided
      * @var int
@@ -263,56 +227,70 @@ class EventPrimitive extends Primitive
      */
     protected $_hideResults;
     /**
+     * Is event finished / closed
+     * @var integer
+     */
+    protected $_finished;
+    /**
      * Status of games in event: one of
      * - seating_ready
      * - started
      * - NULL
      * In club events without timer should be null
-     * @var string
+     * @var string|null
      */
     protected $_gamesStatus = null;
     const GS_SEATING_READY = 'seating_ready';
     const GS_STARTED = 'started';
 
-    public function __construct(IDb $db)
+    /**
+     * EventPrimitive constructor.
+     * @param DataSource $ds
+     * @throws \Exception
+     */
+    public function __construct(DataSource $ds)
     {
-        parent::__construct($db);
+        parent::__construct($ds);
         $this->_startTime = date('Y-m-d H:i:s'); // may be actualized on restore
     }
 
     /**
      * Find events by local ids (primary key)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return EventPrimitive[]
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(DataSource $ds, $ids)
     {
-        return self::_findBy($db, 'id', $ids);
+        return self::_findBy($ds, 'id', $ids);
     }
 
     /**
      * Find events by lobby (indexed search)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param string[] $lobbyList
      * @throws \Exception
      * @return EventPrimitive[]
      */
-    public static function findByLobby(IDb $db, $lobbyList)
+    public static function findByLobby(DataSource $ds, $lobbyList)
     {
         // TODO: All games in lobby are likely to be too much. Make pagination here.
-        return self::_findBy($db, 'lobby_id', $lobbyList);
+        return self::_findBy($ds, 'lobby_id', $lobbyList);
     }
 
+    /**
+     * @return bool|mixed
+     * @throws \Exception
+     */
     protected function _create()
     {
-        $session = $this->_db->table(self::$_table)->create();
+        $session = $this->_ds->table(self::$_table)->create();
         $success = $this->_save($session);
         if ($success) {
-            $this->_id = $this->_db->lastInsertId();
+            $this->_id = $this->_ds->local()->lastInsertId();
         }
 
         return $success;
@@ -360,7 +338,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param string $redZone
+     * @param int|null $redZone
      * @return EventPrimitive
      */
     public function setRedZone($redZone)
@@ -371,9 +349,10 @@ class EventPrimitive extends Primitive
 
     /**
      * Timer red zone in seconds
-     * @return string
+     *
+     * @return int|null
      */
-    public function getRedZone()
+    public function getRedZone(): ?int
     {
         return $this->_redZone;
     }
@@ -434,7 +413,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -478,76 +457,6 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param null|\Mimir\FormationPrimitive $ownerFormation
-     * @return EventPrimitive
-     */
-    public function setOwnerFormation(FormationPrimitive $ownerFormation)
-    {
-        $this->_ownerFormation = $ownerFormation;
-        $this->_ownerFormationId = $ownerFormation->getId();
-        return $this;
-    }
-
-    /**
-     * @throws EntityNotFoundException
-     * @return null|\Mimir\FormationPrimitive
-     */
-    public function getOwnerFormation()
-    {
-        if (!$this->_ownerFormation) {
-            $foundFormations = FormationPrimitive::findById($this->_db, [$this->_ownerFormationId]);
-            if (empty($foundFormations)) {
-                throw new EntityNotFoundException("Entity FormationPrimitive with id#" . $this->_ownerFormationId . ' not found in DB');
-            }
-            $this->_ownerFormation = $foundFormations[0];
-        }
-        return $this->_ownerFormation;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOwnerFormationId()
-    {
-        return $this->_ownerFormationId;
-    }
-
-    /**
-     * @param null|\Mimir\PlayerPrimitive $ownerPlayer
-     * @return EventPrimitive
-     */
-    public function setOwnerPlayer(PlayerPrimitive $ownerPlayer)
-    {
-        $this->_ownerPlayer = $ownerPlayer;
-        $this->_ownerPlayerId = $ownerPlayer->getId();
-        return $this;
-    }
-
-    /**
-     * @throws EntityNotFoundException
-     * @return null|\Mimir\PlayerPrimitive
-     */
-    public function getOwnerPlayer()
-    {
-        if (!$this->_ownerPlayer) {
-            $foundPlayers = PlayerPrimitive::findById($this->_db, [$this->_ownerPlayerId]);
-            if (empty($foundPlayers)) {
-                throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_ownerPlayerId . ' not found in DB');
-            }
-            $this->_ownerPlayer = $foundPlayers[0];
-        }
-        return $this->_ownerPlayer;
-    }
-
-    /**
-     * @return int
-     */
-    public function getOwnerPlayerId()
-    {
-        return $this->_ownerPlayerId;
-    }
-
-    /**
      * @param string $startTime
      * @return EventPrimitive
      */
@@ -584,29 +493,6 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param string $type
-     * @deprecated to be removed in 2.x
-     * @return EventPrimitive
-     */
-    public function setType($type)
-    {
-        if ($type == 'online') {
-            $this->setIsOnline(1);
-        }
-        $this->_type = $type;
-        return $this;
-    }
-
-    /**
-     * @deprecated to be removed in 2.x
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->_type;
-    }
-
-    /**
      * @return int
      */
     public function getSyncStart()
@@ -625,7 +511,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return false|int
      */
     public function getAutoSeating()
     {
@@ -679,19 +565,14 @@ class EventPrimitive extends Primitive
     public function setAllowPlayerAppend($allowPlayerAppend)
     {
         $this->_allowPlayerAppend = $allowPlayerAppend;
-        $this->_type = $allowPlayerAppend ? 'offline' : 'offline_interactive_tournament'; // DEPRECATED: to be removed in 2.x
         return $this;
     }
 
     /**
-     * @return int
+     * @return false|int
      */
     public function getIsOnline()
     {
-        if ($this->_isTextlog) {
-            return false;
-        }
-
         return $this->_isOnline;
     }
 
@@ -710,9 +591,6 @@ class EventPrimitive extends Primitive
     public function setIsOnline($isOnline)
     {
         $this->_isOnline = $isOnline;
-        if ($isOnline) {
-            $this->_type = 'online'; // DEPRECATED: to be removed in 2.x
-        }
         return $this;
     }
 
@@ -723,24 +601,6 @@ class EventPrimitive extends Primitive
     public function setIsTeam($isTeam)
     {
         $this->_isTeam = $isTeam;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIsTextlog()
-    {
-        return $this->_isTextlog;
-    }
-
-    /**
-     * @param int $isTextlog
-     * @return EventPrimitive
-     */
-    public function setIsTextlog($isTextlog)
-    {
-        $this->_isTextlog = $isTextlog;
         return $this;
     }
 
@@ -820,14 +680,17 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return \int[]
+     * @return int[]
      * @throws \Exception
      */
     public function getRegisteredPlayersIds()
     {
+        if (!$this->_id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         return array_map(function ($el) {
             return $el['id'];
-        }, PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $this->getId()));
+        }, PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $this->_id));
     }
 
     /**
@@ -924,6 +787,24 @@ class EventPrimitive extends Primitive
             throw new InvalidParametersException('Games status should be one of [seating_ready|started|NULL]');
         }
         $this->_gamesStatus = $gamesStatus;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsFinished()
+    {
+        return $this->_finished;
+    }
+
+    /**
+     * @param int $isFinished
+     * @return EventPrimitive
+     */
+    public function setIsFinished($isFinished)
+    {
+        $this->_finished = $isFinished;
         return $this;
     }
 

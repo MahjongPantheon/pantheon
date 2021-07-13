@@ -28,7 +28,7 @@ import { Store } from './services/store';
 import { HttpClient } from '@angular/common/http';
 import {
   HISTORY_INIT,
-  INIT_STATE, INIT_WITH_PINCODE,
+  INIT_STATE, INIT_WITH_PINCODE, SET_CREDENTIALS,
   STARTUP_WITH_AUTH,
   UPDATE_STATE_SETTINGS
 } from './services/store/actions/interfaces';
@@ -84,8 +84,7 @@ export class AppComponent {
     this.i18n.init((localeName: string) => {
       this.metrika.track(MetrikaService.I18N_INIT, { localeName });
       this.store.dispatch({ type: INIT_STATE });
-      this.api.setCredentials(this.storage.get('authToken') || '');
-      this.store.dispatch({ type: STARTUP_WITH_AUTH, payload: this.storage.get('authToken') || '' });
+      this.store.dispatch({ type: STARTUP_WITH_AUTH });
       this.storage.set('currentLanguage', localeName);
       let loc = window.location.pathname.replace(/^\//, '');
       if (loc.length > 0) {

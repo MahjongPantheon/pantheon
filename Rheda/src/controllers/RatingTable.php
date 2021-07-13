@@ -25,10 +25,15 @@ class RatingTable extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Rating table');
+        return _t('Rating table') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return (array|bool|mixed|null|string)[]
+     *
+     * @psalm-return array{error: mixed|string, data: array|null, orderDesc: bool, isOnlineTournament: bool, isTeamTournament: bool, orderByRating: bool, orderByAvgPlace: bool, orderByAvgScore: bool, orderByName: bool, withMinGamesCount: bool, showPlayersOptions: array{0: array{name: mixed, value: string, selected: bool}, 1: array{name: mixed, value: string, selected: bool}, 2: array{name: mixed, value: string, selected: bool}}, hideResults: bool, showAdminWarning: bool}
+     */
+    protected function _run(): array
     {
         $errMsg = '';
         $data = null;
@@ -82,15 +87,15 @@ class RatingTable extends Controller
         $showPlayers = !$withMinGamesCount || empty($_GET['players']) ? 'all' : $_GET['players'];
 
         try {
-            $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
+            $players = $this->_mimir->getAllPlayers($this->_eventIdList);
             $players = ArrayHelpers::elm2Key($players, 'id');
 
-            $data = $this->_api->execute('getRatingTable', [
+            $data = $this->_mimir->getRatingTable(
                 $this->_eventIdList,
                 $orderBy,
                 $order,
-                $this->_adminAuthOk() // show prefinished results only for admins
-            ]);
+                $this->_userHasAdminRights() // show prefinished results only for admins
+            );
 
             $teamNames = [];
             if ($this->_mainEventRules->isTeam()) {
@@ -139,7 +144,7 @@ class RatingTable extends Controller
                         $data = $filteredData;
                         break;
                     default:
-                        throw new InvalidParametersException("Parameter players should be either 'all', 'min-played' or 'min-not-played'");
+                        throw new \Exception("Parameter players should be either 'all', 'min-played' or 'min-not-played'");
                 }
             } else {
                 // Merge players who didn't finish yet into rating table
@@ -157,7 +162,7 @@ class RatingTable extends Controller
 
             // Assign indexes for table view
             $ctr = 1;
-            $data = array_map(function ($el) use (&$ctr, &$players, $minGamesCount, &$teamNames, &$playedGames) {
+            $data = array_map(function ($el) use (&$ctr, $minGamesCount, &$teamNames, &$playedGames) {
                 $teamName = null;
                 if ($this->_mainEventRules->isTeam()) {
                     $teamName = $teamNames[$el['id']];
@@ -174,11 +179,11 @@ class RatingTable extends Controller
 
                 return $el;
             }, $data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errMsg = $e->getMessage();
         }
 
-        if ($playedGames == 0 && $this->_mainEventRules->isTeam()) {
+        if (!empty($data) && $playedGames == 0 && $this->_mainEventRules->isTeam()) {
             usort($data, function ($a, $b) {
                 return strcmp($b['team_name'], $a['team_name']);
             });
@@ -195,7 +200,7 @@ class RatingTable extends Controller
         $showAdminWarning = false;
 
         // admin should be able to see results
-        if ($this->_adminAuthOk() && $hideResults) {
+        if ($this->_userHasAdminRights() && $hideResults) {
             $hideResults = false;
             $showAdminWarning = true;
         }
@@ -241,7 +246,11 @@ class RatingTable extends Controller
         ];
     }
 
-    private function _makeShortName($name)
+    /**
+     * @param string $name
+     * @return string
+     */
+    private function _makeShortName(string $name): string
     {
         list($surname, $name) = explode(' ', $name . ' '); // Trailing slash will suppress errors with names without any space
         return $surname . ' ' . mb_substr($name, 0, 1, 'utf8') . '.';

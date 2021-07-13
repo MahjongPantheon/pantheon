@@ -22,14 +22,20 @@ require_once __DIR__ . '/../helpers/Url.php';
 class PlayerEnrollment extends Controller
 {
     protected $_mainTemplate = 'PlayerEnrollment';
+    /**
+     * @var string
+     */
     protected $_lastError = '';
 
     protected function _pageTitle()
     {
-        return _t('Enroll players');
+        return _t('Enroll players') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return array
+     */
+    protected function _run(): array
     {
         $errorMsg = '';
         $registeredPlayers = [];
@@ -42,11 +48,11 @@ class PlayerEnrollment extends Controller
             $errorMsg = $this->_lastError;
         } else {
             try {
-                $registeredPlayers = $this->_api->execute('getEverybody', []);
+                $registeredPlayers = $this->_mimir->getEverybody();
                 usort($registeredPlayers, function ($u1, $u2) {
                     return strcmp($u1['display_name'], $u2['display_name']);
                 });
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $registeredPlayers = [];
                 $errorMsg = $e->getMessage();
             }
@@ -59,6 +65,9 @@ class PlayerEnrollment extends Controller
         ];
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if (!empty($_POST['action_type'])) {
@@ -67,8 +76,13 @@ class PlayerEnrollment extends Controller
                 return true;
             }
 
-            if (!$this->_adminAuthOk()) {
+            if (!$this->_userHasAdminRights()) {
                 $this->_lastError = _t("Wrong admin password");
+                return true;
+            }
+
+            if (empty($this->_mainEventId)) {
+                $this->_lastError = _t('Main event is empty: this is unexpected behavior');
                 return true;
             }
 
@@ -84,7 +98,7 @@ class PlayerEnrollment extends Controller
             }
 
             if (empty($err)) {
-                header('Location: ' . Url::make('/enroll/', $this->_mainEventId));
+                header('Location: ' . Url::make('/enroll/', (string)$this->_mainEventId));
                 return false;
             }
 
@@ -93,15 +107,20 @@ class PlayerEnrollment extends Controller
         return true;
     }
 
-    protected function _registerUserInSystem($ident, $displayName)
+    /**
+     * @param string $ident
+     * @param string $displayName
+     * @return string
+     */
+    protected function _registerUserInSystem(string $ident, string $displayName)
     {
         $errorMsg = '';
         if (preg_match('#[^a-z0-9]+#is', $ident)) {
             $errorMsg = _t("System name should contain only lowercase latin characters.");
         } else {
             try {
-                $this->_api->execute('addPlayer', [$ident, $ident, $displayName, null]);
-            } catch (Exception $e) {
+                $this->_mimir->addPlayer($ident, $ident, $displayName, null);
+            } catch (\Exception $e) {
                 $errorMsg = $e->getMessage();
             };
         }
@@ -109,15 +128,19 @@ class PlayerEnrollment extends Controller
         return $errorMsg;
     }
 
-    protected function _enrollUserForEvent($userId)
+    /**
+     * @param int $userId
+     * @return string
+     */
+    protected function _enrollUserForEvent(int $userId)
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_mainEventId]);
+            $success = $this->_mainEventId && $this->_mimir->enrollPlayerCP($userId, $this->_mainEventId);
             if (!$success) {
                 $errorMsg = _t('Failed to add the player. Check your network connection.');
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
         };
 

@@ -22,24 +22,30 @@ require_once __DIR__ . '/../helpers/Array.php';
 
 class Penalties extends Controller
 {
+    /**
+     * @var array
+     */
     protected $_errors = [];
     protected $_mainTemplate = 'Penalties';
 
     protected function _pageTitle()
     {
-        return _t('Penalties');
+        return _t('Penalties') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         $this->_errors = [];
 
-        if ($this->_path['action'] == 'apply') {
+        if ($this->_path['action'] == 'apply' && !empty($this->_mainEventId)) {
             if (count($this->_eventIdList) > 1) {
                 return true; // to show error in _run
             }
 
-            if (!$this->_adminAuthOk()) {
+            if (!$this->_userHasAdminRights()) {
                 return true; // to show error in _run
             }
 
@@ -47,20 +53,23 @@ class Penalties extends Controller
             $amount = intval($_POST['amount']);
             $reason = $_POST['reason'];
             try {
-                $this->_api->execute('addPenalty', [$this->_mainEventId, $userId, $amount, $reason]);
-            } catch (Exception $e) {
+                $this->_mimir->addPenalty($this->_mainEventId, $userId, $amount, $reason);
+            } catch (\Exception $e) {
                 $this->_errors []= $e->getMessage();
                 return true;
             }
 
-            header('Location: ' . Url::make('/penalties/', $this->_mainEventId));
+            header('Location: ' . Url::make('/penalties/', (string)$this->_mainEventId));
             return false;
         }
 
         return true;
     }
 
-    protected function _run()
+    /**
+     * @return array
+     */
+    protected function _run(): array
     {
         if (count($this->_eventIdList) > 1) {
             return [
@@ -69,7 +78,13 @@ class Penalties extends Controller
             ];
         }
 
-        if (!$this->_adminAuthOk()) {
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
+
+        if (!$this->_userHasAdminRights()) {
             return [
                 'error' => _t('Wrong admin password')
             ];
@@ -77,15 +92,15 @@ class Penalties extends Controller
 
         $amounts = [];
         try {
-            $players = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
-            $settings = $this->_api->execute('getGameConfig', [$this->_mainEventId]);
+            $players = $this->_mimir->getAllPlayers($this->_eventIdList);
+            $settings = $this->_mimir->getGameConfig($this->_mainEventId);
             for ($i = $settings['minPenalty']; $i <= $settings['maxPenalty']; $i += $settings['penaltyStep']) {
                 $amounts []= [
                     'view' => $i / (float)$settings['ratingDivider'],
                     'value' => $i
                 ];
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $players = [];
             $this->_errors []= $e->getMessage();
         }

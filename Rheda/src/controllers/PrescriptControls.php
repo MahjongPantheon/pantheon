@@ -22,15 +22,27 @@ require_once __DIR__ . '/../helpers/Url.php';
 class PrescriptControls extends Controller
 {
     protected $_mainTemplate = 'PrescriptControls';
+    /**
+     * @var string
+     */
     protected $_lastError = '';
 
     protected function _pageTitle()
     {
-        return _t('Predefined seating and event status');
+        return _t('Predefined seating and event status') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return array
+     */
+    protected function _run(): array
     {
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
+
         $eventConfig = [
             'prescript' => '',
             'next_session_index' => 1,
@@ -46,7 +58,7 @@ class PrescriptControls extends Controller
             $eventConfig['has_errors'] = true;
         } else {
             try {
-                $eventConfig = $this->_api->execute('getPrescriptedEventConfig', [$this->_mainEventId]);
+                $eventConfig = $this->_mimir->getPrescriptedEventConfig($this->_mainEventId);
             } catch (\Exception $e) {
                 $eventConfig['check_errors'] = [$e->getMessage()];
                 $eventConfig['has_errors'] = true;
@@ -62,6 +74,9 @@ class PrescriptControls extends Controller
         ];
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if (!empty($_POST['action'])) {
@@ -70,7 +85,7 @@ class PrescriptControls extends Controller
                 return true;
             }
 
-            if (!$this->_adminAuthOk()) {
+            if (!$this->_userHasAdminRights()) {
                 $this->_lastError = _t("Wrong admin password");
                 return true;
             }
@@ -84,7 +99,7 @@ class PrescriptControls extends Controller
             }
 
             if (empty($err)) {
-                header('Location: ' . Url::make('/prescript', $this->_mainEventId));
+                header('Location: ' . Url::make('/prescript', (string)$this->_mainEventId));
                 return false;
             }
 
@@ -93,11 +108,16 @@ class PrescriptControls extends Controller
         return true;
     }
 
+    /**
+     * @param string $prescript
+     * @param int $nextGameIndex
+     * @return string
+     */
     protected function _updatePrescript($prescript, $nextGameIndex)
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('updatePrescriptedEventConfig', [$this->_mainEventId, $nextGameIndex, $prescript]);
+            $success = $this->_mainEventId && $this->_mimir->updatePrescriptedEventConfig($this->_mainEventId, $nextGameIndex, $prescript);
             if (!$success) {
                 $errorMsg = _t('Failed to update predefined seating. Check your network connection.');
             }

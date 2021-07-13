@@ -30,6 +30,13 @@
  */
 return [
     // client
+    'getRulesets'        => ['EventsController', 'getRulesets'],
+    'getTimezones'       => ['EventsController', 'getTimezones'],
+    'getCountries'       => ['EventsController', 'getCountries'],
+
+    'getEvents'          => ['EventsController', 'getEvents'],
+    'getEventsById'      => ['EventsController', 'getEventsById'],
+    'getMyEvents'        => ['PlayersController', 'getMyEvents'],
     'getGameConfig'      => ['EventsController', 'getGameConfig'],
     'getRatingTable'     => ['EventsController', 'getRatingTable'],
     'getLastGames'       => ['EventsController', 'getLastGames'],
@@ -37,7 +44,6 @@ return [
     'getGamesSeries'     => ['EventsController', 'getGamesSeries'],
     'getCurrentGames'    => ['PlayersController', 'getCurrentSessions'],
     'getAllPlayers'      => ['EventsController', 'getAllRegisteredPlayers'],
-    'getPlayerIdByIdent' => ['PlayersController', 'getIdByIdent'],
     'getTimerState'      => ['EventsController', 'getTimerState'],
     'getGameOverview'    => ['GamesController', 'getSessionOverview'],
     'getPlayerStats'     => ['PlayersController', 'getStats'],
@@ -59,7 +65,10 @@ return [
     'startGameT'         => ['GamesController', 'startFromToken'], // for self-starts
 
     // admin
+    'getEventForEdit'    => ['EventsController', 'getEventForEdit'],
     'createEvent'        => ['EventsController', 'createEvent'],
+    'updateEvent'        => ['EventsController', 'updateEvent'],
+    'finishEvent'        => ['EventsController', 'finishEvent'],
     'getTablesState'     => ['EventsController', 'getTablesState'],
     'startTimer'         => ['EventsController', 'startTimer'],
     'registerPlayer'     => ['EventsController', 'registerPlayer'],
@@ -77,13 +86,10 @@ return [
     'endGame'            => ['GamesController', 'end'],
     'cancelGame'         => ['GamesController', 'cancel'],
     'finalizeSessions'   => ['GamesController', 'finalizeSessions'],
-    'addTextLog'         => ['GamesController', 'addTextLog'],
     'dropLastRound'      => ['GamesController', 'dropLastRound'],
     'definalizeGame'     => ['GamesController', 'definalizeGame'],
     'addPenalty'         => ['GamesController', 'addPenalty'],
     'addPenaltyGame'     => ['GamesController', 'addPenaltyGame'],
-    'addPlayer'          => ['PlayersController', 'add'],
-    'updatePlayer'       => ['PlayersController', 'update'],
     'getPlayer'          => ['PlayersController', 'get'],
     'getEverybody'       => ['PlayersController', 'getAll'], // TODO: get rid
 

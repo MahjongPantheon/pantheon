@@ -55,7 +55,6 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
     public function setUp()
     {
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
-        $_SERVER['HTTP_X_AUTH_TOKEN'] = $this->_config->getValue('admin.god_token');
 
         $this->_meta = new Meta($_SERVER);
         $this->_db = Db::__getCleanTestingInstance();
@@ -499,7 +498,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
                 $this->_db,
                 $this->_event->getId(),
                 $player->getId()
-            );
+            )[0];
         }, $this->_players);
 
         $this->assertEquals(0, $items[0]->getRating());

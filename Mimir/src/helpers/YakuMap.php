@@ -64,7 +64,12 @@ define('Y_OPENRIICHI', 44);
 
 class YakuMap
 {
-    public static function allYaku()
+    /**
+     * @return int[]
+     *
+     * @psalm-return array{0: int, 1: int, 2: int, 3: int, 4: int, 5: int, 6: int, 7: int, 8: int, 9: int, 10: int, 11: int, 12: int, 13: int, 14: int, 15: int, 16: int, 17: int, 18: int, 19: int, 20: int, 21: int, 22: int, 23: int, 24: int, 25: int, 26: int, 27: int, 28: int, 29: int, 30: int, 31: int, 32: int, 33: int, 34: int, 35: int, 36: int, 37: int, 38: int, 39: int, 40: int, 41: int, 42: int, 43: int}
+     */
+    public static function allYaku(): array
     {
         return [
             Y_DOUBLERIICHI,
@@ -117,23 +122,23 @@ class YakuMap
     /**
      * Get full yaku list except of some yaku
      *
-     * @param $except
+     * @param int[] $except
      * @return array
      */
-    public static function listExcept($except)
+    public static function listExcept(array $except)
     {
         return array_diff(self::allYaku(), $except);
     }
 
     /**
-     * @param string $yakuList csv: 'yaku,han,yaku2,han...'
-     * @param string $yakumanList csv: 'yakuman,yakuman2...'
+     * @param string $yList csv: 'yaku,han,yaku2,han...'
+     * @param string $ymanList csv: 'yakuman,yakuman2...'
      * @return array ['yaku' => [...], 'dora' => int, 'han' => int, 'yakuman' => int]
      */
-    public static function fromTenhou($yakuList, $yakumanList)
+    public static function fromTenhou($yList, $ymanList)
     {
-        $yakuList = self::_toArray($yakuList);
-        $yakumanList = self::_toArray($yakumanList);
+        $yakuList = self::_toArray($yList);
+        $yakumanList = self::_toArray($ymanList);
         $tenhouYakuMap = [
             0 => Y_MENZENTSUMO,
             1 => Y_RIICHI,
@@ -203,8 +208,8 @@ class YakuMap
         $yakuhaiCount = 0;
 
         for ($i = 0; $i < count($yakuList); $i += 2) {
-            $key = $yakuList[$i];
-            $value = $yakuList[$i + 1];
+            $key = intval($yakuList[$i]);
+            $value = intval($yakuList[$i + 1]);
 
             if ($key >= 52 && $key <= 54) {
                 $result['dora'] += $value;
@@ -223,7 +228,7 @@ class YakuMap
         }
 
         for ($i = 0; $i < count($yakumanList); $i ++) {
-            $key = $yakumanList[$i];
+            $key = intval($yakumanList[$i]);
             $result['yaku'] [] = $tenhouYakuMap[$key];
             $result['yakuman'] ++;
         }
@@ -235,7 +240,12 @@ class YakuMap
         return $result;
     }
 
-    private static function _toArray($list)
+    /**
+     * @return string[]
+     *
+     * @psalm-return array<int, string>
+     */
+    private static function _toArray(string $list): array
     {
         return array_filter(explode(',', $list), function ($el) {
             return $el !== null && $el !== '' && $el !== false;

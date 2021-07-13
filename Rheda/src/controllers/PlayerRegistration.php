@@ -25,29 +25,41 @@ require_once __DIR__ . '/../helpers/Url.php';
 class PlayerRegistration extends Controller
 {
     protected $_mainTemplate = 'PlayerRegistration';
+    /**
+     * @var string
+     */
     protected $_lastError = '';
 
     protected function _pageTitle()
     {
-        return _t('Players registration');
+        return _t('Players registration') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return array
+     */
+    protected function _run(): array
     {
         $errorMsg = '';
         $registeredPlayers = [];
         $enrolledPlayers = [];
 
-        $sorter = function ($e1, $e2) {
+        $sorter = function ($e1, $e2): int {
             return strcmp($e1['display_name'], $e2['display_name']);
         };
+
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
 
         if (!empty($this->_lastError)) {
             $errorMsg = $this->_lastError;
         } else {
             try {
-                $registeredPlayers = $this->_api->execute('getAllPlayers', [$this->_eventIdList]);
-                $enrolledPlayers = $this->_api->execute('getAllEnrolled', [$this->_mainEventId]);
+                $registeredPlayers = $this->_mimir->getAllPlayers($this->_eventIdList);
+                $enrolledPlayers = $this->_mimir->getAllEnrolled($this->_mainEventId);
                 usort($enrolledPlayers, $sorter);
                 usort($registeredPlayers, $sorter);
                 $registeredPlayers = array_map(function ($el, $index) {
@@ -62,7 +74,7 @@ class PlayerRegistration extends Controller
         }
 
         return [
-            'authorized' => $this->_adminAuthOk(),
+            'authorized' => $this->_userHasAdminRights(),
             'isAggregated' => (count($this->_eventIdList) > 1),
             'prescriptedEvent' => $this->_mainEventRules->isPrescripted(),
             'onlineEvent' => $this->_mainEventRules->isOnline(),
@@ -79,6 +91,9 @@ class PlayerRegistration extends Controller
         ];
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if (count($this->_eventIdList) > 1) {
@@ -86,7 +101,12 @@ class PlayerRegistration extends Controller
             return true;
         }
 
-        if (!$this->_adminAuthOk()) {
+        if (empty($this->_mainEventId)) {
+            $this->_lastError = _t('Main event is empty: this is unexpected behavior');
+            return true;
+        }
+
+        if (!$this->_userHasAdminRights()) {
             $this->_lastError = _t("Wrong admin password");
             return true;
         }
@@ -121,7 +141,7 @@ class PlayerRegistration extends Controller
             }
 
             if (empty($err)) {
-                header('Location: ' . Url::make('/reg/', $this->_mainEventId));
+                header('Location: ' . Url::make('/reg/', (string)$this->_mainEventId));
                 return false;
             }
 
@@ -130,11 +150,15 @@ class PlayerRegistration extends Controller
         return true;
     }
 
-    protected function _registerUserForEvent($userId)
+    /**
+     * @param int $userId
+     * @return string
+     */
+    protected function _registerUserForEvent(int $userId)
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('registerPlayerCP', [$userId, $this->_mainEventId]);
+            $success = $this->_mainEventId && $this->_mimir->registerPlayerCP($userId, $this->_mainEventId);
             if (!$success) {
                 $errorMsg = _t('Failed to register the player. Check your network connection.');
             }
@@ -145,11 +169,17 @@ class PlayerRegistration extends Controller
         return $errorMsg;
     }
 
-    protected function _unregisterUserFromEvent($userId)
+    /**
+     * @param int $userId
+     * @return string
+     */
+    protected function _unregisterUserFromEvent(int $userId): string
     {
         $errorMsg = '';
         try {
-            $this->_api->execute('unregisterPlayerCP', [$userId, $this->_mainEventId]);
+            if ($this->_mainEventId) {
+                $this->_mimir->unregisterPlayerCP($userId, $this->_mainEventId);
+            }
         } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
         };
@@ -157,11 +187,15 @@ class PlayerRegistration extends Controller
         return $errorMsg;
     }
 
-    protected function _reenrollUserForEvent($userId)
+    /**
+     * @param int $userId
+     * @return string
+     */
+    protected function _reenrollUserForEvent(int $userId)
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('enrollPlayerCP', [$userId, $this->_mainEventId]);
+            $success = $this->_mainEventId && $this->_mimir->enrollPlayerCP($userId, $this->_mainEventId);
             if (!$success) {
                 $errorMsg = _t('Failed to enroll the player. Check your network connection.');
             }
@@ -172,12 +206,16 @@ class PlayerRegistration extends Controller
         return $errorMsg;
     }
 
-    protected function _saveLocalIds($json)
+    /**
+     * @param string $json
+     * @return string
+     */
+    protected function _saveLocalIds(string $json)
     {
         $errorMsg = '';
         $mapping = json_decode($json, true);
         try {
-            $success = $this->_api->execute('updatePlayersLocalIds', [$this->_mainEventId, $mapping]);
+            $success = $this->_mainEventId && $this->_mimir->updatePlayersLocalIds($this->_mainEventId, $mapping);
             if (!$success) {
                 $errorMsg = _t('Failed to save local ids mapping. Check your network connection.');
             }
@@ -188,12 +226,16 @@ class PlayerRegistration extends Controller
         return $errorMsg;
     }
 
-    protected function _saveTeams($json)
+    /**
+     * @param string $json
+     * @return string
+     */
+    protected function _saveTeams(string $json)
     {
         $errorMsg = '';
         $mapping = json_decode($json, true);
         try {
-            $success = $this->_api->execute('updatePlayersTeams', [$this->_mainEventId, $mapping]);
+            $success = $this->_mainEventId && $this->_mimir->updatePlayersTeams($this->_mainEventId, $mapping);
             if (!$success) {
                 $errorMsg = _t('Failed to save teams mapping. Check your network connection.');
             }
@@ -204,11 +246,16 @@ class PlayerRegistration extends Controller
         return $errorMsg;
     }
 
-    protected function _updateIgnoreSeating($playerId, $ignore)
+    /**
+     * @param int $playerId
+     * @param bool $ignore
+     * @return string
+     */
+    protected function _updateIgnoreSeating(int $playerId, bool $ignore)
     {
         $errorMsg = '';
         try {
-            $success = $this->_api->execute('updatePlayerSeatingFlagCP', [$playerId, $this->_mainEventId, $ignore ? 1 : 0]);
+            $success = $this->_mainEventId && $this->_mimir->updatePlayerSeatingFlagCP($playerId, $this->_mainEventId, $ignore ? 1 : 0);
             if (!$success) {
                 $errorMsg = _t('Failed to save ignore seating flag. Check your network connection.');
             }
@@ -219,11 +266,17 @@ class PlayerRegistration extends Controller
         return $errorMsg;
     }
 
-    protected function _printCards()
+    /**
+     * @throws \Exception
+     */
+    protected function _printCards(): void
     {
-        /** @var array $enrolledPlayers */
-        $enrolledPlayers = $this->_api->execute('getAllEnrolled', [$this->_mainEventId]);
-        $host = Sysconf::MOBILE_CLIENT_URL();
+        if (empty($this->_mainEventId)) {
+            echo "Main event is empty: this is unexpected behavior";
+            return;
+        }
+        $enrolledPlayers = $this->_mimir->getAllEnrolled($this->_mainEventId);
+        $host = Sysconf::MOBILE_CLIENT_URL(); // @phpstan-ignore-line
 
         $options = new QROptions([
             'version'    => 5,
@@ -235,6 +288,11 @@ class PlayerRegistration extends Controller
         $qrcode = new QRCode($options);
 
         $origFile = file_get_contents(__DIR__ . '/../../www/assets/printcard.svg');
+
+        if (empty($origFile)) {
+            echo "Error: no template found";
+            return;
+        }
 
         $i = 0;
         $data = implode(PHP_EOL, array_map(function ($playerEntry) use ($host, $qrcode, $origFile, &$i) {
