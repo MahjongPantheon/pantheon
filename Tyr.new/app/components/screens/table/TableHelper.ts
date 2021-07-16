@@ -50,6 +50,7 @@ import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
 import {roundToString} from '#/components/helpers/Utils';
 import {AppOutcome} from '#/interfaces/app';
 import {getNextWinnerWithPao} from '#/store/selectors/paoSelectors';
+import {formatTime, getTimeRemaining} from '#/store/selectors/overviewSelectors';
 
 // todo move to selectors most of code from here
 
@@ -196,6 +197,14 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
 
   switch (state.currentScreen) {
     case 'currentGame':
+      if (state.timer?.waiting) {
+        inlineWind = false;
+        points = undefined;
+        penaltyPoints = undefined;
+      }
+
+      // if ()
+
       if (state.overviewDiffBy) {
         const diffByPlayer = state.players?.find(x => x.id === state.overviewDiffBy);
         if (diffByPlayer) {
@@ -472,6 +481,10 @@ function canGoNext(state: IAppState) {
 }
 
 function getTableMode(state: IAppState): TableMode {
+  if (state.timer?.waiting) {
+    return TableMode.BEFORE_START;
+  }
+
   switch (state.currentScreen) {
     case 'currentGame':
       return TableMode.GAME;
@@ -489,24 +502,47 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
 
   // todo show for showAdditionalTableInfo while confirmation
 
-  let showTableNumber = false; // todo from state
+  let showTableNumber = false;
+  let tableNumber = state.tableIndex;
   let showRoundInfo = true;
+  let showTimer = false;
+  let currentTime: string | undefined = undefined;
+  let gamesLeft: number | undefined = undefined;
 
-  if (state.showAdditionalTableInfo && state.currentScreen === 'currentGame') {
-    showTableNumber = true;
-    showRoundInfo = false;
+  if (state.showAdditionalTableInfo) {
+    if (state.currentScreen === 'currentGame') {
+      showTableNumber = true;
+      showRoundInfo = false;
+    }
+  } else if (state.timer !== undefined) {
+    if (state.timer?.waiting) {
+      if (state.tableIndex) {
+        showTableNumber = true;
+        showRoundInfo = false;
+      }
+    } else if (state.currentScreen === 'currentGame' || state.currentScreen === 'outcomeSelect') {
+      const timeRemaining = getTimeRemaining(state);
+      if (timeRemaining !== undefined) {
+        showTimer = true;
+        if (timeRemaining.minutes === 0 && timeRemaining.seconds === 0) {
+          gamesLeft = state.yellowZoneAlreadyPlayed ? 1 : 2
+        } else {
+          currentTime = formatTime(timeRemaining.minutes, timeRemaining.seconds)
+        }
+      }
+    }
   }
 
   return {
     showRoundInfo: showRoundInfo,
     showTableNumber: showTableNumber,
-    showTimer: true, // todo
-    gamesLeft: undefined, // todo
+    showTimer: showTimer,
+    gamesLeft: gamesLeft,
     round: roundToString(state.currentRound),
     honbaCount: state.honba,
     riichiCount: state.riichiOnTable,
-    currentTime: undefined, // todo
-    tableNumber: undefined, // todo
+    currentTime: currentTime,
+    tableNumber: tableNumber,
     onTableInfoToggle: onTableInfoToggle(state, dispatch),
   }
 }
@@ -722,7 +758,7 @@ function onSaveClick(state: IAppState, dispatch: Dispatch) {
 }
 
 function onPlayerClick(state: IAppState, dispatch: Dispatch, playerId: number) {
-  if (state.currentScreen !== "currentGame") {
+  if (state.currentScreen !== "currentGame" || state.timer?.waiting) {
     return undefined
   }
 
@@ -738,8 +774,8 @@ function onTableInfoToggle(state: IAppState, dispatch: Dispatch) {
   }
 
   if (state.currentScreen === "currentGame") {
-    const tableNumber = undefined; // todo
-    if (tableNumber === undefined) {
+    const tableNumber = state.tableIndex;
+    if (!tableNumber) {
       return undefined;
     }
   }

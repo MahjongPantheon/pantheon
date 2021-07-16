@@ -1,27 +1,37 @@
 import { IAppState } from '../interfaces';
 import { memoize } from '#/primitives/memoize';
-import { Player } from '#/interfaces/common';
+// import { Player } from '#/interfaces/common';
 // import { getScores } from './commonSelectors';
 
 // TODO ##2: из-за постоянных обновлений таймера в стейте селекторы могут работать не столь эффективно.
 //  Нужно делать остальные селекторы более специальными.
-function _getTimeRemaining(state: IAppState) {
-  if (!state.gameConfig?.useTimer) {
-    return '';
+function _getTimeRemaining(state: IAppState): {minutes: number, seconds: number} | undefined {
+  if (!state.gameConfig?.useTimer || state.timer?.waiting) {
+    return undefined;
   }
 
-  if (state.timer?.waiting) {
-    return '⏳';
-  }
+  const lastGamesLeftZone = 15; //todo will work only for ema
+  let min = Math.floor((state.timer?.secondsRemaining || 0) / 60) - lastGamesLeftZone;
 
-  let min = Math.floor((state.timer?.secondsRemaining || 0) / 60);
-  let sec = (state.timer?.secondsRemaining || 0) % 60;
-  return min.toString() + ':' + (
-    (sec < 10) ? ('0' + sec.toString()) : sec.toString()
-  );
+  if (min < 0) {
+    return {
+      minutes: 0,
+      seconds: 0,
+    }
+  }
+  return {
+    minutes: min,
+    seconds: (state.timer?.secondsRemaining || 0) % 60
+  }
 }
 
 export const getTimeRemaining = memoize(_getTimeRemaining);
+
+export function formatTime(minutes: number, seconds: number) {
+  return minutes.toString() + ':' + (
+    (seconds < 10) ? ('0' + seconds.toString()) : seconds.toString()
+  );
+}
 
 /*export const getScoreSelf = (s: IAppState, o: Player[]) => getScores(s, o)?.scores[0];
 export const getScoreShimocha = (s: IAppState, o: Player[]) => getScores(s, o)?.scores[1];

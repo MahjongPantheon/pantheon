@@ -44,3 +44,9 @@
 .player-result__delta--danger {
   color: var(--color-danger);
 }
+
+.page-game-result__no-games {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
