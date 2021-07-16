@@ -40,8 +40,10 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
   }
 
   private onStatClick() {
-    const {dispatch} = this.props;
-    //todo
+    const {gameConfig} = this.props.state;
+    if (gameConfig) {
+      window.open(`https://${gameConfig.eventStatHost}/last/`);
+    }
   }
 
   render() {

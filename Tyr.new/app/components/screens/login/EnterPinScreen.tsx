@@ -9,7 +9,9 @@ export const EnterPinScreen: React.FC<IComponentProps> = (props) => {
   const {dispatch} = props;
 
   const onSubmit = useCallback((pin: string) => {
-    dispatch({ type: CONFIRM_REGISTRATION_INIT, payload: pin });
+    if (pin.length > 0) {
+      dispatch({ type: CONFIRM_REGISTRATION_INIT, payload: pin });
+    }
   }, [dispatch]);
 
   return <EnterPinScreenView onSubmit={onSubmit} />

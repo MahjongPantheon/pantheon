@@ -8,6 +8,7 @@ type IProps = {
     onSubmit: (pin: string) => void
 }
 
+const maxPinLength = 15;
 const clearCaption = '←';
 const submitCaption = 'Ok';
 const buttonCaptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, clearCaption, 0, submitCaption];
@@ -18,7 +19,9 @@ export const EnterPinScreenView: React.FC<IProps> = (props) => {
 
   const onButtonClick = useCallback((caption: string | number) => {
     if (typeof caption === 'number') {
-      setPin(pin + caption.toString())
+      if (pin.length <= maxPinLength) { // todo add disabled or notification
+        setPin(pin + caption.toString())
+      }
     } else if (caption === clearCaption) {
         setPin(pin.slice(0, pin.length - 1))
     } else if (caption === submitCaption) {
