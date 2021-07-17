@@ -6,7 +6,6 @@ import { I18nService } from "#/services/i18n";
 import { IDB } from "#/services/idb";
 import { MetrikaService } from "#/services/metrika";
 import { IAppState } from "#/store/interfaces";
-import { INIT_STATE, STARTUP_WITH_AUTH } from '#/store/actions/interfaces';
 import { observe } from '#/scripts/dimensionsObserver'
 import { registerFrontErrorHandler } from '#/scripts/logFrontError'
 
@@ -30,8 +29,3 @@ const doRender = (state: IAppState) => {
 
 store.subscribe(doRender);
 doRender(store.redux.getState());
-
-
-store.dispatch({type: INIT_STATE});
-store.dispatch({type: STARTUP_WITH_AUTH, payload: storage.get('authToken') || ''});
-

@@ -1,9 +1,10 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import '../styles/base.css'
 import '../styles/themes.css'
 import '../styles/variables.css'
 import {IAppState} from '#/store/interfaces';
-import { AppActionTypes } from '#/store/actions/interfaces';
+import {AppActionTypes, INIT_STATE, STARTUP_WITH_AUTH} from '#/store/actions/interfaces';
 import { Dispatch } from "redux";
 import {IComponentProps} from '#/components/IComponentProps';
 import {HomeScreen} from '#/components/screens/home/HomeScreen';
@@ -58,8 +59,13 @@ const CurrentScreen: React.FC<IComponentProps> = (props) => {
 }
 
 export const App: React.FC<IProps> = (props: IProps) => {
-  const {state, dispatch, i18nService} = props;
+  const {state, dispatch, storage, i18nService} = props;
   const currentThemeName = state.settings.currentTheme ?? 'day'
+
+  useEffect(() => {
+    dispatch({type: INIT_STATE});
+    dispatch({type: STARTUP_WITH_AUTH, payload: storage.get('authToken') || ''});
+  }, [])
 
   return (
     <div id="screen" className={`App theme-${currentThemeName}`}>

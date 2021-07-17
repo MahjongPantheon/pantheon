@@ -60,7 +60,7 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
                 {gamesLeft}
               </div>
               <div className="table-info__games-left-caption">
-                max games left
+                max deals left
               </div>
             </div>
           )}

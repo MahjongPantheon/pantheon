@@ -75,7 +75,7 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
           onClick={onOtherTablesClick}
         />
         <HomeScreenButton
-          caption="New"
+          caption="Statistics"
           isVisible={hasStat}
           isBordered={(!canStartGame && !hasStartedGame) || hasPrevGame || canSeeOtherTables}
           iconType={IconType.LINK}
