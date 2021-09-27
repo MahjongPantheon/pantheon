@@ -136,6 +136,19 @@ class PlayerRegistration extends Controller
                 case 'save_teams':
                     $err = $this->_saveTeams($_POST['map_json']);
                     break;
+                case 'enroll':
+                    $err = $this->_enrollUserForEvent($_POST['id']);
+                    break;
+                case 'find_persons':
+                    [$err, $result] = $this->_findPersons($_POST['query']);
+                    if (empty($err)) {
+                        echo json_encode($result);
+                        return false;
+                    } else {
+                        echo json_encode(['error' => $err]);
+                        return false;
+                    }
+                    break;
                 default:
                     ;
             }
@@ -148,6 +161,19 @@ class PlayerRegistration extends Controller
             $this->_lastError = $err;
         }
         return true;
+    }
+
+    protected function _findPersons($query)
+    {
+        $errorMsg = '';
+        $result = [];
+        try {
+            $result = $this->_frey->findByTitle($query);
+        } catch (\Exception $e) {
+            $errorMsg = $e->getMessage();
+        };
+
+        return [$errorMsg, $result];
     }
 
     /**
@@ -262,6 +288,25 @@ class PlayerRegistration extends Controller
         } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
         }
+
+        return $errorMsg;
+    }
+
+    /**
+     * @param int $userId
+     * @return string
+     */
+    protected function _enrollUserForEvent(int $userId)
+    {
+        $errorMsg = '';
+        try {
+            $success = $this->_mainEventId && $this->_mimir->enrollPlayerCP($userId, $this->_mainEventId);
+            if (!$success) {
+                $errorMsg = _t('Failed to add the player. Check your network connection.');
+            }
+        } catch (\Exception $e) {
+            $errorMsg = $e->getMessage();
+        };
 
         return $errorMsg;
     }

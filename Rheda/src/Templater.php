@@ -44,6 +44,7 @@ class Templater
         self::$_eventIdListString = implode('.', $eventIdList);
 
         self::$_rootRenderer->addHelper("a", ['Rheda\Templater', '_aHelper']);
+        self::$_rootRenderer->addHelper("link", ['Rheda\Templater', '_linkHelper']);
         self::$_rootRenderer->addHelper("form", ['Rheda\Templater', '_formHelper']);
         // i18n
         self::$_rootRenderer->addHelper("_t", ['Rheda\Templater', '_tHelper']);
@@ -143,6 +144,25 @@ class Templater
      */
     public static function _aHelper($template, $context, $args, $source): string
     {
+        $url = self::_linkHelper($template, $context, $args, $source);
+
+        return '<a href="' . $url . '"'
+            . (empty($a['target']) ? '' : ' target="' . $a['target'] . '"')
+            . (empty($a['title']) ? '' : ' title="' . Url::interpolate($a['title'], $context) . '"')
+            . (empty($a['class']) ? '' : ' class="' . $a['class'] . '"')
+            . (empty($a['onclick']) ? '' : ' onclick="' . Url::interpolate($a['onclick'], $context) . '"')
+            . '>' . self::$_inlineRenderer->render($source, $context) . '</a>';
+    }
+
+    /**
+     * @param Handlebars $template
+     * @param Context $context
+     * @param Arguments $args
+     * @param string $source
+     * @return string
+     */
+    public static function _linkHelper($template, $context, $args, $source): string
+    {
         $a = $args->getNamedArguments();
         if (!empty($a['id'])) {
             // id is overridden from template
@@ -151,12 +171,7 @@ class Templater
             $url = Url::make(Url::interpolate($a['href'], $context) ?? '', self::$_eventIdListString);
         }
 
-        return '<a href="' . $url . '"'
-            . (empty($a['target']) ? '' : ' target="' . $a['target'] . '"')
-            . (empty($a['title']) ? '' : ' title="' . Url::interpolate($a['title'], $context) . '"')
-            . (empty($a['class']) ? '' : ' class="' . $a['class'] . '"')
-            . (empty($a['onclick']) ? '' : ' onclick="' . Url::interpolate($a['onclick'], $context) . '"')
-            . '>' . self::$_inlineRenderer->render($source, $context) . '</a>';
+        return $url;
     }
 
     /**

@@ -29,7 +29,7 @@ class MimirClient implements IMimirClient
     {
         return $this->_client;
     }
-    
+
     /**
      *  Get available rulesets list
      *
@@ -718,18 +718,6 @@ class MimirClient implements IMimirClient
     {
         /** @phpstan-ignore-next-line */
         return (array)$this->_client->execute('getPlayer', [$id]);
-    }
-
-    /**
-     *  Get all system players
-     *  TODO: replace it with some search/autocomplete! Amounts of data might be very large!
-     *
-     * @return array
-    */
-    public function getEverybody(): array
-    {
-        /** @phpstan-ignore-next-line */
-        return (array)$this->_client->execute('getEverybody', []);
     }
 
     /**

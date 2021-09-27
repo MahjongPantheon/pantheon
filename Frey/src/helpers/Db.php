@@ -77,6 +77,18 @@ class Db implements IDb
     }
 
     /**
+     * Execute raw query. Don't use this if there is ORM-way to go!
+     *
+     * @param string $query
+     * @param $params
+     * @return bool
+     */
+    public function rawExec(string $query, $params = [])
+    {
+        return ORM::rawExecute($query, $params);
+    }
+
+    /**
      * @return (array|mixed)[]
      *
      * @psalm-return array{LAST_QUERY: mixed, ERROR_INFO: array}

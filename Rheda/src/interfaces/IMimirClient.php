@@ -15,7 +15,7 @@ interface IMimirClient
     * @return \JsonRPC\Client
     */
     public function getClient();
-    
+
     /**
      *  Get available rulesets list
      *
@@ -489,14 +489,6 @@ interface IMimirClient
      * @return array
     */
     public function getPlayer(int $id): array;
-
-    /**
-     *  Get all system players
-     *  TODO: replace it with some search/autocomplete! Amounts of data might be very large!
-     *
-     * @return array
-    */
-    public function getEverybody(): array;
 
     /**
      *  Get current seating in tournament

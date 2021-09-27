@@ -43,4 +43,11 @@ interface IDb
      * @return mixed
      */
     public function debug();
+
+    /**
+     * @param string $query
+     * @param array $params
+     * @return mixed
+     */
+    public function rawExec(string $query, $params = []);
 }

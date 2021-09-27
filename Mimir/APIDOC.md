@@ -770,16 +770,7 @@ Returns: _array_
 
 Exceptions:
 * _EntityNotFoundException_ 
-* _\Exception_ 
-
-### getEverybody
- Get all system players
- TODO: replace it with some search/autocomplete! Amounts of data might be very large!
-
-
-Parameters:
-
-Returns: _array_ 
+* _\Exception_
 
 ### getCurrentSeating
  Get current seating in tournament

@@ -91,7 +91,6 @@ return [
     'addPenalty'         => ['GamesController', 'addPenalty'],
     'addPenaltyGame'     => ['GamesController', 'addPenaltyGame'],
     'getPlayer'          => ['PlayersController', 'get'],
-    'getEverybody'       => ['PlayersController', 'getAll'], // TODO: get rid
 
     'getCurrentSeating'    => ['EventsController', 'getCurrentSeating'],
     'makeShuffledSeating'  => ['SeatingController', 'makeShuffledSeating'],

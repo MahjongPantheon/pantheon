@@ -19,6 +19,65 @@
         display: inline;
     }
 </style>
+<script type="text/javascript">
+  window.addEventListener('DOMContentLoaded', () => {
+    function _updateResults() {
+      let formData = new FormData();
+      formData.append('action_type', 'find_persons');
+      formData.append('query', document.getElementById('search_field').value);
+      fetch('{{link href='/reg'}}', {
+        method: 'POST',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        referrerPolicy: 'no-referrer',
+        body: formData
+      }).then((result) => result.json()).then((result) => {
+        if (result.error) {
+          document.getElementById('search_results').innerHTML = `
+          <div class="alert alert-danger" role="alert">
+            ${result.error}
+          </div>
+          `;
+          return;
+        }
+        if (result.length === 0) {
+          document.getElementById('search_results').innerHTML = `
+          <div class="alert alert-primary" role="alert">
+            {{_t 'No results found'}}
+          </div>
+          `;
+          return;
+        }
+        document.getElementById('search_results').innerHTML = `
+        <table class="table table-condensed table-stripped">
+        <tr>
+            <th>ID</th>
+            <th>{{_t 'Player'}}</th>
+            <th>{{_t 'Admin actions'}}</th>
+        </tr>
+        ${result.map((item) => {
+          return `<tr>
+            <td>${item.id}</td>
+            <td>${item.title}</td>
+            <td>
+              <form action="" method="post">
+                <input type="hidden" name="action_type" value="enroll" />
+                <input type="hidden" name="id" value="${item.id}" />
+                <input class="btn btn-large btn-success" type="submit" value="{{_t 'Add to current rating'}}" />
+              </form>
+            </td>
+          </tr>`;
+        }).join('')}
+        </table>
+      `;
+      });
+    }
+
+    const upd = jQuery.debounce(250, _updateResults);
+    document.getElementById('search_field')
+      .addEventListener('keyup', () => setTimeout(upd, 0));
+  });
+</script>
 <h3>{{_t 'Players management'}}</h3>
 <br>
 {{#error}}
@@ -26,6 +85,14 @@
 {{/error}}
 {{^isAggregated}}
     {{#authorized}}
+        <h4>{{_t 'Enroll players'}}</h4>
+        <div>
+          <input type="text" width="200" id="search_field"
+                 class="form-control"
+                 placeholder="{{_t 'Enter part of name'}}" />
+        </div>
+        <hr />
+        <div id="search_results"></div>
         <hr />
         <h4>{{_p 'Pre-registration list (%d)' enrolledCount}}
           {{#showPrint}}

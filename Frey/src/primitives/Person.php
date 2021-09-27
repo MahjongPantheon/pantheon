@@ -157,6 +157,40 @@ class PersonPrimitive extends Primitive
     }
 
     /**
+     * @param IDb $db
+     * @param string $query
+     * @return PersonPrimitive[]|null
+     */
+    public static function findByTitleFuzzy(IDb $db, string $query)
+    {
+        $query = trim($query);
+        if (mb_strlen($query) < 2) {
+            return null;
+        }
+
+        $q = <<<QRY
+            SELECT * FROM "person"
+            WHERE (to_tsvector('simple', coalesce(title, '')) @@ to_tsquery('simple', :query))
+            ORDER BY title LIMIT 10;
+QRY;
+
+        $result = $db->table('person')
+            ->rawQuery($q, [':query' => implode(' & ', array_map(
+                function ($word) { return $word . ':*'; },
+                explode(' ', $query)
+            ))])
+            ->findArray();
+
+        if (empty($result)) {
+            return [];
+        }
+
+        return array_map(function ($data) use ($db) {
+            return self::_recreateInstance($db, $data);
+        }, $result);
+    }
+
+    /**
      * Find persons by tenhou ids (indexed search)
      *
      * @param IDb $db
@@ -180,29 +214,6 @@ class PersonPrimitive extends Primitive
     public static function findByEmail(IDb $db, $emails)
     {
         return self::_findBy($db, 'email', $emails);
-    }
-
-    /**
-     * Fuzzy search by title (simple pattern search).
-     *
-     * @param IDb $db
-     * @param string $query
-     * @return PersonPrimitive[]|null
-     */
-    public static function findByTitleFuzzy(IDb $db, string $query)
-    {
-        $query = str_replace(['%', '_'], '', $query);
-        if (mb_strlen($query) <= 2) {
-            return null;
-        }
-
-        $objects = $db->table(self::$_table)
-            ->whereLike('title', '%' . $query . '%')
-            ->findArray();
-
-        return array_map(function ($item) use ($db) {
-            return self::_recreateInstance($db, $item);
-        }, $objects);
     }
 
     protected function _create()
