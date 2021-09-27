@@ -309,7 +309,8 @@ class Config
             'hideResults' => null, // not intended to be shown in rule overview
             'hideAddReplayButton' => null, // not intended to be shown in rule overview
             'isPrescripted' => _t('If seating for all games is entered in advance'),
-            'minGamesCount' => _t('Minimal amount of games to be played for passing to finals')
+            'minGamesCount' => _t('Minimal amount of games to be played for passing to finals'),
+            'chipsValue' => _t('Chips value')
         ];
     }
 

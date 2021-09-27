@@ -51,12 +51,12 @@ class Mainpage extends Controller
                 'title' => $this->_mainEventRules->eventTitle(),
                 'description' => $this->_mainEventRules->eventDescription(),
                 'isLoggedIn' => $this->_userHasAdminRights(),
-                'rules' => array_map(function ($key, $value) use (&$ruleDescriptions) {
+                'rules' => array_values(array_filter(array_map(function ($key, $value) use (&$ruleDescriptions) {
                     if ($key == 'allowedYaku' ||
                         $key == 'tenboDivider' ||
                         $key == 'ratingDivider' ||
                         $key == 'gameExpirationTime' ||
-                        $key == 'eventTitle ' ||
+                        $key == 'eventTitle' ||
                         $key == 'eventDescription' ||
                         $key == 'eventStatHost' ||
                         $key == 'isTextlog' ||
@@ -66,14 +66,14 @@ class Mainpage extends Controller
                     ) { // don't display this for now
                         return null;
                     }
-                    return [
+                    return $value === null ? null : [
                         'name' => $key,
                         'value' => $value === true || $value === false
                             ? ($value === true ? _t('yes') : _t('no'))
                             : $value,
                         'description' => $ruleDescriptions[$key]
                     ];
-                }, array_keys($rules), array_values($rules))
+                }, array_keys($rules), array_values($rules))))
             ];
         }
 
