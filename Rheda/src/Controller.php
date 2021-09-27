@@ -492,4 +492,8 @@ DATA;
             trigger_error('API minor version mismatch. Consider updating if possible', E_USER_WARNING);
         }
     }
+
+    protected function _offset($perpage) {
+        return (($this->_path['page'] ?? 1) - 1) * $perpage;
+    }
 }

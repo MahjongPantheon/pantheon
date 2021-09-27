@@ -323,6 +323,7 @@ class EventModel extends Model
                     'id' => $event['id'],
                     'title' => $event['title'],
                     'description' => $event['description'],
+                    'finished' => !!$event['finished'],
                     'type' => $event['is_online']
                         ? 'online'
                         : ($event['sync_start'] ? 'tournament' : 'local')

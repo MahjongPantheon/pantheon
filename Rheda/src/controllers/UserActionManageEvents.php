@@ -23,6 +23,7 @@ class UserActionManageEvents extends Controller
 {
     protected $_mainTemplate = 'UserActionManageEvents';
     protected $_error = null;
+    const PERPAGE = 30;
 
     protected function _pageTitle()
     {
@@ -71,11 +72,19 @@ class UserActionManageEvents extends Controller
         }
 
         $eventIds = $this->_frey->getOwnedEventIds($this->_currentPersonId);
-        $events = $this->_mimir->getEventsById($eventIds);
+        if (in_array('__global', $eventIds)) {
+            $data = $this->_mimir->getEvents(self::PERPAGE, $this->_offset(self::PERPAGE));
+            $events = $data['events'];
+            $hasNextPage = ($this->_offset(self::PERPAGE) + self::PERPAGE) < $data['total'];
+        } else {
+            $events = $this->_mimir->getEventsById($eventIds);
+            $hasNextPage = false;
+        }
 
         return [
             'critical' => false,
-            'events' => $events
+            'events' => $events,
+            'hasNextPage' => $hasNextPage
         ];
     }
 }
