@@ -145,7 +145,7 @@ class Templater
     public static function _aHelper($template, $context, $args, $source): string
     {
         $url = self::_linkHelper($template, $context, $args, $source);
-
+        $a = $args->getNamedArguments();
         return '<a href="' . $url . '"'
             . (empty($a['target']) ? '' : ' target="' . $a['target'] . '"')
             . (empty($a['title']) ? '' : ' title="' . Url::interpolate($a['title'], $context) . '"')

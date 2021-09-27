@@ -960,7 +960,7 @@ class SessionPrimitive extends Primitive
      */
     public function isLastForPlayers()
     {
-        $last = $this->_db->table(self::REL_USER)
+        $last = $this->_ds->table(self::REL_USER)
             ->whereIn('player_id', $this->getPlayersIds())
             ->orderByDesc('id')
             ->limit(4)
