@@ -49,6 +49,7 @@ return [
     'getSuperadminFlag'      => ['AccessController', 'getSuperadminFlag'],
     'getOwnedEventIds'       => ['AccessController', 'getOwnedEventIds'],
     'getRulesList'           => ['AccessController', 'getRulesList'],
+    'getAllEventRules'       => ['AccessController', 'getAllEventRules'],
     'getPersonAccess'        => ['AccessController', 'getPersonAccess'],
     'getGroupAccess'         => ['AccessController', 'getGroupAccess'],
     'getAllPersonAccess'     => ['AccessController', 'getAllPersonAccess'],

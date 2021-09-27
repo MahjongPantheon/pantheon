@@ -40,7 +40,7 @@ class PersonAccessPrimitive extends AccessPrimitive
         'allowed_values'    => '_allowedValues',
     ];
 
-    protected function _getFieldsTransforms()
+    protected function _getFieldsTransforms(): array
     {
         return [
             '_id'        => $this->_integerTransform(true),
@@ -57,25 +57,39 @@ class PersonAccessPrimitive extends AccessPrimitive
      * Id of person this rule is applied to
      * @var int
      */
-    protected $_personId;
+    protected int $_personId;
     /**
      * Person this rule is applied to
      * @var PersonPrimitive
      */
-    protected $_person;
+    protected PersonPrimitive $_person;
 
     /**
      * Find rules by person id list
      *
      * @param IDb $db
      * @param int[] $ids
+     * @return PersonAccessPrimitive[]
      *
      * @return PersonAccessPrimitive[]
      * @throws \Exception
      */
-    public static function findByPerson(IDb $db, array $ids)
+    public static function findByPerson(IDb $db, array $ids): array
     {
         return self::_findBy($db, 'person_id', $ids);
+    }
+
+    /**
+     * Find rules by event id list
+     *
+     * @param IDb $db
+     * @param int[] $ids
+     * @return PersonAccessPrimitive[]
+     * @throws \Exception
+     */
+    public static function findByEvent(IDb $db, array $ids): array
+    {
+        return self::_findBy($db, 'event_id', $ids, true);
     }
 
     /**
@@ -100,7 +114,7 @@ class PersonAccessPrimitive extends AccessPrimitive
      * @return static[]
      * @throws \Exception
      */
-    public static function findSuperAdminId(IDb $db)
+    public static function findSuperAdminId(IDb $db): array
     {
         return self::_findBy($db, 'acl_name', [InternalRules::IS_SUPER_ADMIN]);
     }

@@ -186,6 +186,16 @@ interface IFreyClient
     public function getRulesList(): array;
 
     /**
+     *  Get all access rules for event.
+     *  - Method results are not cached!
+     *  - To be used in admin panel, but not in client side!
+     *
+     * @param int $eventId
+     * @return array
+    */
+    public function getAllEventRules(int $eventId): array;
+
+    /**
      *  Get access rules for person.
      *  - eventId may be null to get system-wide rules.
      *  - Method results are not cached!

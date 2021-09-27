@@ -297,6 +297,20 @@ class FreyClient implements IFreyClient
     }
 
     /**
+     *  Get all access rules for event.
+     *  - Method results are not cached!
+     *  - To be used in admin panel, but not in client side!
+     *
+     * @param int $eventId
+     * @return array
+    */
+    public function getAllEventRules(int $eventId): array
+    {
+        /** @phpstan-ignore-next-line */
+        return (array)$this->_client->execute('getAllEventRules', [$eventId]);
+    }
+
+    /**
      *  Get access rules for person.
      *  - eventId may be null to get system-wide rules.
      *  - Method results are not cached!

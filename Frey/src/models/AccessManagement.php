@@ -171,6 +171,40 @@ class AccessManagementModel extends Model
     }
 
     /**
+     * Get all access rules for event grouped by persons and groups.
+     * - Method results are not cached!
+     *
+     * @param int $eventId
+     * @return array
+     * @throws \Exception
+     */
+    public function getAllEventRules($eventId)
+    {
+        $personRules = PersonAccessPrimitive::findByEvent($this->_db, [$eventId]);
+        $groupRules = GroupAccessPrimitive::findByEvent($this->_db, [$eventId]);
+
+        /** @var PersonAccessPrimitive|GroupAccessPrimitive $rule */
+        $predicate = function($rule) {
+            return [
+                'isGlobal' => !$rule->getEventId(),
+                'id' => $rule->getId(),
+                'type' => $rule->getAclType(),
+                'value' => $rule->getAclValue(),
+                'name' => $rule->getAclName(),
+                'ownerTitle' => $rule instanceof PersonAccessPrimitive // TODO: db query inside loop, can be improved
+                    ? $rule->getPerson()->getTitle()
+                    : $rule->getGroup()->getTitle(),
+                'allowed_values' => $rule->getAllowedValues()
+            ];
+        };
+
+        return [
+            'person' => array_map($predicate, $personRules),
+            'group' => array_map($predicate, $groupRules)
+        ];
+    }
+
+    /**
      * Get access rules for person.
      * - eventId may be null to get system-wide rules.
      * - Method results are not cached!

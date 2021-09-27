@@ -367,7 +367,7 @@ abstract class Primitive
      * @throws \Exception
      * @return static[]
      */
-    protected static function _findBy(IDb $db, $key, $identifiers)
+    protected static function _findBy(IDb $db, $key, $identifiers, $includeNull = false)
     {
         if (!is_array($identifiers)) {
             throw new \Exception("Identifiers should be an array in search by $key");
@@ -378,6 +378,9 @@ abstract class Primitive
         }
 
         $result = $db->table(static::$_table)->whereIn($key, $identifiers)->findArray();
+        if ($includeNull) {
+            $result = array_merge($result, $db->table(static::$_table)->whereNull($key)->findArray());
+        }
         if (empty($result)) {
             return [];
         }

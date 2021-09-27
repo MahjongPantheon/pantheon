@@ -144,6 +144,25 @@ class AccessController extends Controller
     }
 
     /**
+     * Get all access rules for event.
+     * - Method results are not cached!
+     * - To be used in admin panel, but not in client side!
+     *
+     * @param int $eventId
+     * @return array
+     * @throws \Exception
+     */
+    public function getAllEventRules($eventId)
+    {
+        $this->_logStart(__METHOD__, [$eventId]);
+        $rules = $this->_getModel()
+            ->_checkAccessRights(InternalRules::GET_ALL_EVENT_RULES)
+            ->getAllEventRules($eventId);
+        $this->_logSuccess(__METHOD__, [$eventId]);
+        return $rules;
+    }
+
+    /**
      * Get all access rules for group.
      * - Method results are not cached!
      * - To be used in admin panel, but not in client side!

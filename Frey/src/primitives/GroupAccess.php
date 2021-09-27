@@ -79,6 +79,20 @@ class GroupAccessPrimitive extends AccessPrimitive
     }
 
     /**
+     * Find rules by event id
+     *
+     * @param IDb $db
+     * @param int[] $ids
+     *
+     * @return GroupAccessPrimitive[]
+     * @throws \Exception
+     */
+    public static function findByEvent(IDb $db, array $ids)
+    {
+        return self::_findBy($db, 'event_id', $ids, true);
+    }
+
+    /**
      * @return int
      */
     public function getGroupId(): int
