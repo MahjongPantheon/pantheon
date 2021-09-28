@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, Store as ReduxStore, compose, Reducer } from 'redux';
 import { screenManageReducer } from './reducers/screenManageReducer';
-import { mimirClient } from './middlewares/mimirClient';
+import { apiClient } from './middlewares/apiClient';
 import { RiichiApiService } from '#/services/riichiApi';
 import { mimirReducer } from './reducers/mimirReducer';
 import { outcomeReducer } from './reducers/outcomeReducer';
@@ -43,7 +43,7 @@ export class Store {
     const idb = new IDB(metrikaService);
     const middleware = applyMiddleware(
       logging(`⇨ [middlewares]`),
-      mimirClient(new RiichiApiService()),
+      apiClient(new RiichiApiService()),
       metrika(metrikaService),
       history(),
       timerMw(this.timerSt),

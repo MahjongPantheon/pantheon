@@ -36,6 +36,11 @@ export type LUser = {
   alias: string;
 }
 
+export type LFreyAuthData = {
+  personId: number;
+  token: string;
+};
+
 export type LUserWithScore = LUser & {
   score: number;
   ratingDelta: number;

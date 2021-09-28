@@ -4,9 +4,9 @@ import {
   ADD_ROUND_INIT,
   ADD_ROUND_SUCCESS,
   AppActionTypes,
-  CONFIRM_REGISTRATION_FAIL,
-  CONFIRM_REGISTRATION_INIT,
-  CONFIRM_REGISTRATION_SUCCESS,
+  LOGIN_FAIL,
+  LOGIN_INIT,
+  LOGIN_SUCCESS,
   GET_ALL_PLAYERS_FAIL,
   GET_ALL_PLAYERS_INIT,
   GET_ALL_PLAYERS_SUCCESS,
@@ -26,7 +26,7 @@ import {
   GET_OTHER_TABLES_LIST_INIT,
   GET_OTHER_TABLES_LIST_SUCCESS,
   RANDOMIZE_NEWGAME_PLAYERS,
-  RESET_REGISTRATION_ERROR,
+  RESET_LOGIN_ERROR,
   SELECT_NEWGAME_PLAYER_NORTH,
   SELECT_NEWGAME_PLAYER_EAST,
   SELECT_NEWGAME_PLAYER_SOUTH,
@@ -57,7 +57,7 @@ export function mimirReducer(
   let error;
   let player;
   switch (action.type) {
-    case CONFIRM_REGISTRATION_INIT:
+    case LOGIN_INIT:
       return {
         ...state,
         loading: {
@@ -66,18 +66,19 @@ export function mimirReducer(
         },
         loginError: undefined
       };
-    case CONFIRM_REGISTRATION_SUCCESS:
+    case LOGIN_SUCCESS:
       return {
         ...state,
         loading: {
           ...state.loading,
           login: false
         },
+        currentPlayerId: action.payload.personId || undefined,
         isLoggedIn: true,
         currentScreen: 'overview',
         loginError: undefined
       };
-    case CONFIRM_REGISTRATION_FAIL:
+    case LOGIN_FAIL:
       return {
         ...state,
         loading: {
@@ -88,7 +89,7 @@ export function mimirReducer(
         currentScreen: 'login',
         loginError: { details: action.payload, message: action.payload.message }
       };
-    case RESET_REGISTRATION_ERROR:
+    case RESET_LOGIN_ERROR:
       return {
         ...state,
         currentScreen: 'login', //todo remove

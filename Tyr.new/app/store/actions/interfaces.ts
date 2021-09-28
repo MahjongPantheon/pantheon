@@ -42,10 +42,10 @@ export const TOGGLE_LOSER = 'TOGGLE_LOSER';
 export const TOGGLE_PAO = 'TOGGLE_PAO';
 export const TOGGLE_DEADHAND = 'TOGGLE_DEADHAND';
 export const TOGGLE_NAGASHI = 'TOGGLE_NAGASHI';
-export const CONFIRM_REGISTRATION_INIT = 'CONFIRM_REGISTRATION_INIT';
-export const CONFIRM_REGISTRATION_SUCCESS = 'CONFIRM_REGISTRATION_SUCCESS';
-export const CONFIRM_REGISTRATION_FAIL = 'CONFIRM_REGISTRATION_FAIL';
-export const RESET_REGISTRATION_ERROR = 'RESET_REGISTRATION_ERROR';
+export const LOGIN_INIT = 'LOGIN_INIT';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const RESET_LOGIN_ERROR = 'RESET_LOGIN_ERROR';
 export const SET_CREDENTIALS = 'SET_CREDENTIALS';
 export const UPDATE_CURRENT_GAMES_INIT = 'UPDATE_CURRENT_GAMES_INIT';
 export const UPDATE_CURRENT_GAMES_SUCCESS = 'UPDATE_CURRENT_GAMES_SUCCESS';
@@ -229,20 +229,26 @@ interface ToggleNagashiAction {
   payload: number;
 }
 
-interface ConfirmRegistrationActionInit {
-  type: typeof CONFIRM_REGISTRATION_INIT;
-  payload: string;
+interface LoginActionInit {
+  type: typeof LOGIN_INIT;
+  payload: {
+    email: string;
+    password: string;
+  };
 }
-interface ConfirmRegistrationActionSuccess {
-  type: typeof CONFIRM_REGISTRATION_SUCCESS;
-  payload: string;
+interface LoginActionSuccess {
+  type: typeof LOGIN_SUCCESS;
+  payload: {
+    personId: number;
+    token: string;
+  };
 }
-interface ConfirmRegistrationActionFail {
-  type: typeof CONFIRM_REGISTRATION_FAIL;
+interface LoginActionFail {
+  type: typeof LOGIN_FAIL;
   payload: RemoteError;
 }
-interface ResetRegistrationErrorAction {
-  type: typeof RESET_REGISTRATION_ERROR;
+interface ResetLoginErrorAction {
+  type: typeof RESET_LOGIN_ERROR;
 }
 interface SetCredentialsAction {
   type: typeof SET_CREDENTIALS;
@@ -540,11 +546,11 @@ export type AppActionTypes =
   | TogglePaoAction
   | ToggleDeadhandAction
   | ToggleNagashiAction
-  | ConfirmRegistrationActionSuccess
-  | ResetRegistrationErrorAction
+  | LoginActionSuccess
+  | ResetLoginErrorAction
   | UpdateCurrentGamesActionSuccess
   | GetGameOverviewActionSuccess
-  | ConfirmRegistrationActionFail
+  | LoginActionFail
   | UpdateCurrentGamesActionFail
   | GetGameOverviewActionFail
   | SetCredentialsAction
@@ -566,7 +572,7 @@ export type AppActionTypes =
   | GetAllPlayersActionFail
   | StartGameActionSuccess
   | StartGameActionFail
-  | ConfirmRegistrationActionInit
+  | LoginActionInit
   | UpdateCurrentGamesActionInit
   | GetGameOverviewActionInit
   | GetOtherTableActionInit

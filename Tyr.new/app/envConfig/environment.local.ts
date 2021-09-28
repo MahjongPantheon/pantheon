@@ -29,6 +29,7 @@ export const environment: EnvConfig = {
   production: false,
   apiUrl: 'http://localhost:4001/',
   uaUrl: 'http://localhost:4004/',
+  guiUrl: 'http://localhost:4002/',
   guiFix: (src: string) => src,
   keyPrefix: 'tyr',
   cookieDomain: null, // when working on localhost this must be omitted!

@@ -334,6 +334,8 @@ export interface RRoundOverviewNagashi extends RRoundOverviewBase {
   tempai: string[];
 }
 
+export type RFreyAuthData = [number | null | undefined, string];
+
 export type RRoundOverviewInfo =
   | RRoundOverviewRon
   | RRoundOverviewMultiRon

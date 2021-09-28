@@ -4,9 +4,9 @@ import {
   ADD_ROUND_INIT,
   ADD_ROUND_SUCCESS,
   AppActionTypes,
-  CONFIRM_REGISTRATION_FAIL,
-  CONFIRM_REGISTRATION_INIT,
-  CONFIRM_REGISTRATION_SUCCESS,
+  LOGIN_FAIL,
+  LOGIN_INIT,
+  LOGIN_SUCCESS,
   FORCE_LOGOUT,
   GET_ALL_PLAYERS_FAIL,
   GET_ALL_PLAYERS_INIT,
@@ -39,11 +39,12 @@ import {RiichiApiService} from '#/services/riichiApi';
 import {LCurrentGame, LGameConfig, LTimerState, LUser} from '#/interfaces/local';
 import {RemoteError} from '#/services/remoteError';
 import {IAppState} from '../interfaces';
+import { emit } from 'cluster';
 
-export const mimirClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
+export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
-    case CONFIRM_REGISTRATION_INIT:
+    case LOGIN_INIT:
       loginWithRetry(action.payload, api, mw.dispatch, next);
       break;
     case SET_CREDENTIALS:
@@ -102,15 +103,15 @@ export const mimirClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatc
   }
 };
 
-function loginWithRetry(pin: string, api: RiichiApiService, dispatch: Dispatch, next: Dispatch) {
-  next({ type: CONFIRM_REGISTRATION_INIT });
+function loginWithRetry(data: { email: string, password: string }, api: RiichiApiService, dispatch: Dispatch, next: Dispatch) {
+  next({ type: LOGIN_INIT });
 
   let retriesCount = 0;
   const runWithRetry = () => {
-    api.confirmRegistration(pin)
-      .then((authToken: string) => {
+    api.authorize(data.email, data.password)
+      .then((auth) => {
         retriesCount = 0;
-        dispatch({ type: CONFIRM_REGISTRATION_SUCCESS, payload: authToken });
+        dispatch({ type: LOGIN_SUCCESS, payload: auth });
       })
       .catch((e) => {
         retriesCount++;
@@ -120,7 +121,7 @@ function loginWithRetry(pin: string, api: RiichiApiService, dispatch: Dispatch, 
         }
 
         retriesCount = 0;
-        dispatch({ type: CONFIRM_REGISTRATION_FAIL, payload: e });
+        dispatch({ type: LOGIN_FAIL, payload: e });
       });
   };
 

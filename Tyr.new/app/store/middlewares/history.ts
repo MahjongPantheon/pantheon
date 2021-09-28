@@ -1,7 +1,7 @@
 import { Dispatch, MiddlewareAPI } from 'redux';
 import {
   AppActionTypes,
-  CONFIRM_REGISTRATION_FAIL,
+  LOGIN_FAIL,
   GET_GAME_OVERVIEW_FAIL,
   GET_GAME_OVERVIEW_INIT,
   GET_GAME_OVERVIEW_SUCCESS,

@@ -22,7 +22,7 @@ import { RemoteError } from './remoteError';
 import {
   RTimerState, RGameConfig, RSessionOverview, RCurrentGames,
   RUserInfo, RAllPlayersInEvent, RLastResults,
-  RRoundPaymentsInfo, RTablesState, SessionState, RRoundOverviewInfo,
+  RRoundPaymentsInfo, RTablesState, SessionState, RRoundOverviewInfo, RFreyAuthData,
 } from '#/interfaces/remote';
 import {
   LCurrentGame,
@@ -30,23 +30,21 @@ import {
   LUserWithScore,
   LTimerState,
   LSessionOverview,
-  LGameConfig
+  LGameConfig, LFreyAuthData
 } from '#/interfaces/local';
 import { Table } from '#/interfaces/common';
 import {
   currentGamesFormatter,
   formatRoundToRemote,
-  userInfoFormatter,
   userListFormatter,
   lastResultsFormatter,
   timerFormatter,
   gameConfigFormatter,
   tablesStateFormatter,
-  gameOverviewFormatter
+  gameOverviewFormatter, freyAuthFormatter
 } from './formatters';
 import {IAppState} from '#/store/interfaces';
 import {environment} from "#config";
-import config from "../../../Tyr/src/app/config";
 
 type GenericResponse = {
   error?: { message: string, code: any },
@@ -146,8 +144,13 @@ export class RiichiApiService {
       .then<Table[]>(tablesStateFormatter);
   }
 
-  quickAuthorize(personId: number, token: string) {
-    return this._jsonRpcRequestFrey<boolean>('quickAuthorize', personId, token);
+  quickAuthorize() {
+    return this._jsonRpcRequestFrey<boolean>('quickAuthorize', this._personId, this._authToken);
+  }
+
+  authorize(email: string, password: string) {
+    return this._jsonRpcRequestFrey<RFreyAuthData>('authorize', email, password)
+      .then<LFreyAuthData>(freyAuthFormatter);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////

@@ -1,9 +1,9 @@
 import { Dispatch, MiddlewareAPI } from 'redux';
 import {
   AppActionTypes,
-  CONFIRM_REGISTRATION_FAIL,
-  CONFIRM_REGISTRATION_INIT,
-  CONFIRM_REGISTRATION_SUCCESS,
+  LOGIN_FAIL,
+  LOGIN_INIT,
+  LOGIN_SUCCESS,
   FORCE_LOGOUT,
   GET_ALL_PLAYERS_FAIL,
   GET_ALL_PLAYERS_INIT,
@@ -36,19 +36,19 @@ export const metrika = (ms: MetrikaService) => (mw: MiddlewareAPI<Dispatch<AppAc
         screen: action.payload
       });
       break;
-    case CONFIRM_REGISTRATION_INIT:
+    case LOGIN_INIT:
       ms.track(MetrikaService.LOAD_STARTED, {
         type: 'screen-login',
         request: 'confirmRegistration'
       });
       break;
-    case CONFIRM_REGISTRATION_SUCCESS:
+    case LOGIN_SUCCESS:
       ms.track(MetrikaService.LOAD_SUCCESS, {
         type: 'screen-login',
         request: 'confirmRegistration'
       });
       break;
-    case CONFIRM_REGISTRATION_FAIL:
+    case LOGIN_FAIL:
       ms.track(MetrikaService.LOAD_ERROR, {
         type: 'state-init-login',
         request: 'confirmRegistration',

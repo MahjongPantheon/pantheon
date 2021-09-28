@@ -1,5 +1,6 @@
 import * as React from "react";
-import './page-login-error.css'
+import './page-login-error.css';
+import { environment } from '#config';
 
 type IProps = {
   onOkClick: () => void
@@ -16,11 +17,11 @@ export const LoginErrorView: React.FC<IProps> = ({onOkClick}) => {
           Login attempt has failed. Possible reasons are:
         </div>
         <ul>
-          <li>Tournament games already started and you wasn't registered</li>
-          <li>Pin code was already used on another device</li>
+          <li>E-mail is not registered in Pantheon database (<a href={environment.guiUrl + 'signup'} target={'_blank'}>register</a>)</li>
+          <li>Password check has failed</li>
           <li>Unexpected server error</li>
         </ul>
-        <div>Contact to the tournament administrator for further instructions.</div>
+        <div>If in doubt, contact the tournament administrator for further instructions.</div>
       </div>
       <div className="page-login-error__button-container">
         <div className="flat-btn flat-btn--large" onClick={onOkClick}>

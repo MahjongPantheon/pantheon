@@ -21,11 +21,11 @@
 import {
   RCurrentGames, RRound, RUserInfo,
   RAllPlayersInEvent, RPlayerData,
-  RTimerState, RGameConfig, RTablesState, RSessionOverview
+  RTimerState, RGameConfig, RTablesState, RSessionOverview, RFreyAuthData
 } from '#/interfaces/remote';
 import {
   LCurrentGame, LUser, LUserWithScore,
-  LTimerState, LGameConfig, LSessionOverview
+  LTimerState, LGameConfig, LSessionOverview, LFreyAuthData
 } from '#/interfaces/local';
 import { Player, Table } from '#/interfaces/common';
 import { YakuId } from '#/primitives/yaku';
@@ -277,4 +277,11 @@ export function tablesStateFormatter(tables: RTablesState): Table[] {
         penalties: 0, // mock
       }))
     }));
+}
+
+export function freyAuthFormatter(data: RFreyAuthData): LFreyAuthData {
+  return {
+    personId: parseInt((data[0] || 0).toString(), 10),
+    token: data[1]
+  };
 }
