@@ -3,9 +3,13 @@ export type EnvConfig = {
   apiUrl: string;
   uaUrl: string;
   guiUrl: string;
-  keyPrefix: string;
   cookieDomain: string | null;
   guiFix: (src: string) => string;
   metrikaId: number;
+  idbTokenKey: string;
+  idbIdKey: string;
+  idbEventKey: string;
+  idbLangKey: string;
+  idbThemeKey: string;
   apiVersion: [number, number];
 };

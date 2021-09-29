@@ -3,7 +3,7 @@ import { initialState } from '../state';
 import {
   AppActionTypes,
   INIT_STATE,
-  SELECT_MULTIRON_WINNER, SET_SELECT_HAND_TAB, SET_STATE_SETTINGS,
+  SELECT_MULTIRON_WINNER, SET_CREDENTIALS, SET_SELECT_HAND_TAB, SET_STATE_SETTINGS,
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_THEME, TOGGLE_ADDITIONAL_TABLE_INFO, TOGGLE_OVERVIEW_DIFFBY,
 } from '../actions/interfaces';
@@ -16,6 +16,11 @@ export function commonReducer(
   switch (action.type) {
     case INIT_STATE:
       return deepclone(initialState);
+    case SET_CREDENTIALS:
+      return {
+        ...state,
+        currentPlayerId: action.payload.personId
+      };
     case SELECT_MULTIRON_WINNER:
       return {
         ...state,

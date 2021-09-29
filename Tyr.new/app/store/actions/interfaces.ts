@@ -115,7 +115,10 @@ interface ResetStateAction {
 
 interface StartupWithAuthAction {
   type: typeof STARTUP_WITH_AUTH;
-  payload: string;
+  payload: {
+    token: string;
+    personId: number;
+  };
 }
 
 interface StartNewGameAction {

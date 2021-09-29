@@ -160,6 +160,7 @@ export class RiichiApiService {
     headers.append('Content-Type', 'application/json');
     headers.append('X-Api-Version', environment.apiVersion.map((v) => v.toString()).join('.'));
     headers.append('X-Auth-Token', this._authToken || '');
+    headers.append('X-Current-Person-Id', this._personId || '');
 
     const jsonRpcBody = {
       jsonrpc: '2.0',

@@ -2,40 +2,44 @@ import { IDBImpl } from './interface';
 
 // Cookie driver
 export class IDBCookieImpl implements IDBImpl {
-  private keyPrefix: string;
   private cookieDomain: string | null;
   private meta: { [key: string]: any } = {};
 
-  constructor(keyPrefix: string, cookieDomain: string | null) {
-    this.keyPrefix = keyPrefix + '.';
+  constructor(cookieDomain: string | null) {
     this.cookieDomain = cookieDomain;
-    this.meta = this.get('__meta');
+    this.meta = this.get('__meta', 'object');
     if (this.meta === null) {
       this.meta = {};
-      this.set('__meta', {});
+      this.set('__meta', 'object', {});
     }
   }
 
-  public get(key: string): any|null {
+  public get(key: string, type: 'int' | 'string' | 'object'): any|null {
     let result = new RegExp(
       '(?:^|; )' +
-      encodeURIComponent(this.keyPrefix + key) +
+      encodeURIComponent(key) +
       '=([^;]*)'
     ).exec(document.cookie);
 
     try {
-      return result ? JSON.parse(result[1]) : null;
+      return result
+        ? type === 'object'
+          ? JSON.parse(result[1])
+          : type === 'int'
+            ? parseInt(result[1], 10)
+            : result[1]
+        : null;
     } catch (e) {
       return null;
     }
   }
 
-  public set(key: string, value: any): boolean {
+  public set(key: string, type: 'int' | 'string' | 'object', value: any): boolean {
     let date = new Date();
     date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
     let expires = ';expires=' + date.toUTCString();
     let domain = this.cookieDomain ? ';domain=.' + this.cookieDomain : '';
-    document.cookie = this.keyPrefix + key + '=' + JSON.stringify(value) + expires + domain + '; path=/';
+    document.cookie = key + '=' + (type === 'object' ? JSON.stringify(value) : value) + expires + domain + '; path=/';
     if (key !== '__meta') {
       this.meta[key] = true;
       this.updateMeta();
@@ -50,7 +54,7 @@ export class IDBCookieImpl implements IDBImpl {
     let domain = this.cookieDomain ? ';domain=.' + this.cookieDomain : '';
 
     keys.forEach((key: string) => {
-      document.cookie = this.keyPrefix + key + '=' + expires + domain + '; path=/';
+      document.cookie = key + '=' + expires + domain + '; path=/';
       delete this.meta[key];
     });
     this.updateMeta();
@@ -61,6 +65,6 @@ export class IDBCookieImpl implements IDBImpl {
   }
 
   private updateMeta() {
-    return this.set('__meta', this.meta);
+    return this.set('__meta', 'object', this.meta);
   }
 }

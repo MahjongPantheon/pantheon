@@ -21,7 +21,7 @@ export class IDB implements IDBImpl {
 
   constructor(private metrika: MetrikaService) {
     // Assume we always have at least cookies.
-    this.cookieEngine = new IDBCookieImpl(environment.keyPrefix, environment.cookieDomain);
+    this.cookieEngine = new IDBCookieImpl(environment.cookieDomain);
     this.activeStorages.push(this.cookieEngine);
 
     try { // check is local storage is sane
@@ -31,29 +31,10 @@ export class IDB implements IDBImpl {
         throw new Error();
       }
       localStorage.removeItem('testStorageItem');
-      this.storageEngine = new IDBStorageImpl(environment.keyPrefix);
+      this.storageEngine = new IDBStorageImpl();
       this.activeStorages.push(this.storageEngine);
-
-      this.migrate();
     } catch (e) {
       this.storageEngine = this.cookieEngine; // so .get() will work with its current logic
-    }
-  }
-
-  /**
-   * Migration code from old scheme.
-   * TODO Remove this in some time...
-   */
-  private migrate(): void {
-    let authTokenOld = localStorage.getItem('authToken');
-    let currentLanguageOld = localStorage.getItem('currentLanguage');
-    if (authTokenOld !== null) {
-      this.set('authToken', authTokenOld);
-      localStorage.removeItem('authToken');
-    }
-    if (currentLanguageOld !== null) {
-      this.set('currentLanguage', currentLanguageOld);
-      localStorage.removeItem('currentLanguage');
     }
   }
 
@@ -61,12 +42,13 @@ export class IDB implements IDBImpl {
    * Set value by key
    *
    * @param {string} key Arbitrary key
+   * @param type
    * @param {any} value  Any serializable value
    * @return bool Success
    */
-  public set(key: string, value: any): boolean {
+  public set(key: string, type: 'int' | 'string' | 'object', value: any): boolean {
     return this.activeStorages.reduce<boolean>(
-      (acc: boolean, s: IDBImpl) => acc && s.set(key, value),
+      (acc: boolean, s: IDBImpl) => acc && s.set(key, type, value),
       true
     );
   }
@@ -76,23 +58,24 @@ export class IDB implements IDBImpl {
    * Synchronizes storages while getting values.
    *
    * @param {string} key Arbitrary key
+   * @param type
    * @return any|null Received value or null if not found
    */
-  public get(key: string): any | null {
-    let valuePrimary = this.storageEngine.get(key);
-    let valueSecondary = this.cookieEngine.get(key);
+  public get(key: string, type: 'int' | 'string' | 'object'): any | null {
+    let valuePrimary = this.storageEngine.get(key, type);
+    let valueSecondary = this.cookieEngine.get(key, type);
 
     if (valuePrimary === valueSecondary) {
       return valuePrimary;
     }
 
     if (valuePrimary === null) {
-      this.storageEngine.set(key, valueSecondary);
+      this.storageEngine.set(key, type, valueSecondary);
       return valueSecondary;
     }
 
     // We come here in case of values conflict only or absence of secondary value -> use primary value.
-    this.cookieEngine.set(key, valuePrimary);
+    this.cookieEngine.set(key, type, valuePrimary);
     return valuePrimary;
   }
 

@@ -18,6 +18,7 @@ import {I18nService} from '#/services/i18n';
 import {GameResultScreen} from '#/components/screens/game-result/GameResultScreen';
 import {LoginScreen} from '#/components/screens/login/LoginScreen';
 import {LogScreen} from '#/components/screens/log/LogScreen';
+import { environment } from '#config';
 
 interface IProps {
   state: IAppState;
@@ -64,7 +65,10 @@ export const App: React.FC<IProps> = (props: IProps) => {
 
   useEffect(() => {
     dispatch({type: INIT_STATE});
-    dispatch({type: STARTUP_WITH_AUTH, payload: storage.get('authToken') || ''});
+    dispatch({type: STARTUP_WITH_AUTH, payload: {
+      token: storage.get(environment.idbTokenKey, 'string') || '',
+      personId: storage.get(environment.idbIdKey, 'int')
+    }});
   }, [])
 
   return (

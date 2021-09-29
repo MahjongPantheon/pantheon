@@ -39,7 +39,6 @@ import {RiichiApiService} from '#/services/riichiApi';
 import {LCurrentGame, LGameConfig, LTimerState, LUser} from '#/interfaces/local';
 import {RemoteError} from '#/services/remoteError';
 import {IAppState} from '../interfaces';
-import { emit } from 'cluster';
 
 export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
@@ -49,7 +48,7 @@ export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<
       break;
     case SET_CREDENTIALS:
       api.setCredentials(action.payload.personId, action.payload.authToken);
-      break;
+      return next(action);
     case UPDATE_CURRENT_GAMES_INIT:
       const personId = mw.getState().currentPlayerId;
       if (!personId) {

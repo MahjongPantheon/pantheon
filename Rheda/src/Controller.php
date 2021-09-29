@@ -141,14 +141,14 @@ abstract class Controller
         $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
         // second step is checking cookie
-        if (isset($_COOKIE['language'])) {
-            $locale = $_COOKIE['language'];
+        if (isset($_COOKIE[Sysconf::COOKIE_LANG_KEY])) {
+            $locale = $_COOKIE[Sysconf::COOKIE_LANG_KEY];
         }
 
         // third step is checking GET attribute
         if (isset($_GET['l'])) {
             $locale = $_GET['l'];
-            setcookie('language', $locale, 0, '/');
+            setcookie(Sysconf::COOKIE_LANG_KEY, $locale, 0, '/');
         }
 
         // List of locales
@@ -179,13 +179,8 @@ abstract class Controller
         }
         putenv('LC_ALL=' . $locale);
 
-        // @phpstan-ignore-next-line
-        $cookieId = Sysconf::COOKIE_ID_KEY;
-        // @phpstan-ignore-next-line
-        $cookieToken = Sysconf::COOKIE_TOKEN_KEY;
-
-        $this->_currentPersonId = (empty($_COOKIE[$cookieId]) ? null : intval($_COOKIE[$cookieId]));
-        $this->_authToken = (empty($_COOKIE[$cookieToken]) ? null : $_COOKIE[$cookieToken]);
+        $this->_currentPersonId = (empty($_COOKIE[Sysconf::COOKIE_ID_KEY]) ? null : intval($_COOKIE[Sysconf::COOKIE_ID_KEY]));
+        $this->_authToken = (empty($_COOKIE[Sysconf::COOKIE_TOKEN_KEY]) ? null : $_COOKIE[Sysconf::COOKIE_TOKEN_KEY]);
 
         $eidMatches = [];
         if (empty($path['event']) || !preg_match('#eid(?<ids>\d+(?:\.\d+)*)#is', $path['event'], $eidMatches)) {

@@ -31,9 +31,10 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         const API_VERSION_MINOR = 0;
         const DEBUG_MODE = true; // TODO -> to false in prod!
 
-        const COOKIE_TOKEN_KEY = 'authToken';
-        const COOKIE_ID_KEY = 'currentPersonId';
-        const COOKIE_EVENT_KEY = 'currentEventId';
+        const COOKIE_TOKEN_KEY = 'pantheon_authToken';
+        const COOKIE_ID_KEY = 'pantheon_currentPersonId';
+        const COOKIE_EVENT_KEY = 'pantheon_currentEventId';
+        const COOKIE_LANG_KEY = 'pantheon_currentLanguage';
 
         const FREY_INTERNAL_QUERY_SECRET = 'CHANGE_ME'; // TODO: change this in your local config!
 
