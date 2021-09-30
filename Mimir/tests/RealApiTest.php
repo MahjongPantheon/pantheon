@@ -89,7 +89,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
 
     public function testDryRunMultiron()
     {
-        // registration and enrollment boilerplate...
+        // registration boilerplate...
         $this->_client->execute('addPlayer', ['p1', 'p1', 'player1', null]);
         $this->_client->execute('addPlayer', ['p2', 'p2', 'player2', null]);
         $this->_client->execute('addPlayer', ['p3', 'p3', 'player3', null]);
@@ -182,7 +182,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
 
     public function testGetLastRoundInfo()
     {
-        // registration and enrollment boilerplate...
+        // registration boilerplate...
         $this->_client->execute('addPlayer', ['p1', 'p1', 'player1', null]);
         $this->_client->execute('addPlayer', ['p2', 'p2', 'player2', null]);
         $this->_client->execute('addPlayer', ['p3', 'p3', 'player3', null]);
