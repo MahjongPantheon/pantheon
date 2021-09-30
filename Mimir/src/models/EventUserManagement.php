@@ -24,7 +24,6 @@ require_once __DIR__ . '/../primitives/Session.php';
 require_once __DIR__ . '/../primitives/SessionResults.php';
 require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
-require_once __DIR__ . '/../primitives/PlayerEnrollment.php';
 require_once __DIR__ . '/../primitives/PlayerHistory.php';
 require_once __DIR__ . '/../primitives/Achievements.php';
 require_once __DIR__ . '/../primitives/Round.php';
@@ -32,43 +31,6 @@ require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 
 class EventUserManagementModel extends Model
 {
-    /**
-     * Enroll player to event
-     *
-     * @param int $eventId
-     * @param int $playerId
-     * @throws AuthFailedException
-     * @throws BadActionException
-     * @throws \Exception
-     * @throws InvalidParametersException
-     * @return string secret pin code
-     */
-    public function enrollPlayer(int $eventId, int $playerId)
-    {
-        if (!$this->checkAdminToken()) {
-            throw new AuthFailedException('Only administrators are allowed to enroll players to event');
-        }
-
-        $event = EventPrimitive::findById($this->_ds, [$eventId]);
-        if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
-        }
-        $player = PlayerPrimitive::findById($this->_ds, [$playerId]);
-        if (empty($player)) {
-            throw new InvalidParametersException('Player id#' . $playerId . ' not found in DB');
-        }
-
-        $regItem = (new PlayerEnrollmentPrimitive($this->_ds))
-            ->setReg($player[0], $event[0]);
-        $success = $regItem->save();
-
-        if (!$success) {
-            throw new BadActionException('Something went wrong: enrollment failed while saving to db');
-        }
-
-        return $regItem->getPin();
-    }
-
     /**
      * Register player to event
      *
@@ -105,10 +67,6 @@ class EventUserManagementModel extends Model
             ->setReg($player[0], $event[0]);
         $success = $regItem->save();
 
-        $eItem = PlayerEnrollmentPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
-        if ($success && !empty($eItem)) {
-            $eItem[0]->drop();
-        }
         return $success;
     }
 
@@ -123,7 +81,7 @@ class EventUserManagementModel extends Model
     public function unregisterPlayer(int $playerId, int $eventId)
     {
         if (!$this->checkAdminToken()) {
-            throw new AuthFailedException('Only administrators are allowed to enroll players to event');
+            throw new AuthFailedException('Only administrators are allowed to unregister players to event');
         }
 
         $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
@@ -157,69 +115,6 @@ class EventUserManagementModel extends Model
         return $regItem[0]
             ->setIgnoreSeating($ignoreSeating)
             ->save();
-    }
-
-    /**
-     * Self-register player to event by pin
-     *
-     * @param string $pin
-     *
-     * @throws BadActionException
-     * @throws \Exception
-     *
-     * @return null|string auth token
-     */
-    public function registerPlayerPin(string $pin): ?string
-    {
-        $token = null;
-        $nextLocalId = null;
-
-        if ($pin === '0000000000') {
-            // Special pin & token for universal watcher
-            return '0000000000';
-        }
-
-        $eItem = PlayerEnrollmentPrimitive::findByPin($this->_ds, $pin);
-        if ($eItem) {
-            $event = EventPrimitive::findById($this->_ds, [$eItem->getEventId()]);
-            if (empty($event)) {
-                throw new EntityNotFoundException('Event #' . $eItem->getEventId() . ' not found in DB');
-            }
-
-            $eId = $event[0]->getId();
-            if (empty($eId)) {
-                throw new InvalidParametersException('Attempted to use deidented primitive');
-            }
-
-            if (!$event[0]->getAllowPlayerAppend()) {
-                $reggedItems = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $eItem->getPlayerId(), $eId);
-                // check that games are not started yet
-                if ($event[0]->getLastTimer() && empty($reggedItems)) {
-                    // do not allow new players to enter already tournament
-                    // but allow to reenroll/reenter pin for already participating people
-                    throw new BadActionException('Pin is expired: game sessions are already started.');
-                }
-            }
-
-            if ($event[0]->getIsPrescripted()) {
-                $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_ds, $eId);
-            }
-
-            $player = PlayerPrimitive::findById($this->_ds, [$eItem->getPlayerId()]);
-            $regItem = (new PlayerRegistrationPrimitive($this->_ds))
-                ->setLocalId($nextLocalId)
-                ->setReg($player[0], $event[0]);
-            $success = $regItem->save();
-            $token = $regItem->getToken();
-
-            if (!$success || empty($regItem)) {
-                throw new BadActionException('Something went wrong: registration failed while saving to db');
-            }
-
-            $eItem->drop();
-        }
-
-        return $token;
     }
 
     /**

@@ -190,7 +190,6 @@ class EventsController extends Controller
         return $success;
     }
 
-
     /**
      * Get settings of existing event
      *
@@ -369,25 +368,6 @@ class EventsController extends Controller
     }
 
     /**
-     * Register for participation in event
-     *
-     * @param string $pin
-     * @throws \Exception
-     * @return string Auth token
-     */
-    public function registerPlayer($pin)
-    {
-        $this->_log->addInfo('Registering pin code #' . $pin);
-        $authToken = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))
-            ->registerPlayerPin($pin);
-        if (empty($authToken)) {
-            throw new EntityNotFoundException('Pin code was already used or does not exist');
-        }
-        $this->_log->addInfo('Successfully registered pin code #' . $pin);
-        return $authToken;
-    }
-
-    /**
      * Register for participation in event (from admin control panel)
      *
      * @param int $playerId
@@ -442,27 +422,6 @@ class EventsController extends Controller
     }
 
     /**
-     * Enroll player to registration lists. Player should make a self-registration after this, or
-     * administrator may approve the player manually, and only after that the player will appear in rating table.
-     *
-     * @param int $playerId
-     * @param int $eventId
-     * @throws AuthFailedException
-     * @throws BadActionException
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @return string Secret pin code for self-registration
-     */
-    public function enrollPlayer($playerId, $eventId)
-    {
-        $this->_log->addInfo('Enrolling player id# ' . $playerId . ' for event id# ' . $eventId);
-        $pin = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))
-            ->enrollPlayer($eventId, $playerId);
-        $this->_log->addInfo('Successfully enrolled player id# ' . $playerId . ' for event id# ' . $eventId);
-        return $pin;
-    }
-
-    /**
      * Update static local identifiers for events with predefined seating.
      *
      * @param int $eventId
@@ -496,44 +455,6 @@ class EventsController extends Controller
             ->updateTeamNames($eventId, $teamNameMap);
         $this->_log->addInfo('Successfully updated players\' teams for event id# ' . $eventId);
         return $success;
-    }
-
-    /**
-     * Get all players enrolled for event
-     *
-     * @param int $eventId
-     * @throws \Exception
-     * @return array
-     */
-    public function getAllEnrolledPlayers($eventId)
-    {
-        $this->_log->addInfo('Getting all enrolled players for event id# ' . $eventId);
-
-        $enrolled = PlayerEnrollmentPrimitive::findByEvent($this->_ds, $eventId);
-        $players = PlayerPrimitive::findById(
-            $this->_ds,
-            array_map(function (PlayerEnrollmentPrimitive $e) {
-                return $e->getPlayerId();
-            }, $enrolled)
-        );
-
-        /** @var PlayerEnrollmentPrimitive[] $enrolledByKey */
-        $enrolledByKey = [];
-        foreach ($enrolled as $e) {
-            $enrolledByKey[$e->getPlayerId()] = $e;
-        }
-
-        $data = array_map(function (PlayerPrimitive $p) use (&$enrolledByKey) {
-            return [
-                'id'            => $p->getId(),
-                'display_name'  => $p->getDisplayName(),
-                'tenhou_id'     => $p->getTenhouId(),
-                'pin'           => $enrolledByKey[$p->getId()]->getPin()
-            ];
-        }, $players);
-
-        $this->_log->addInfo('Successfully received all enrolled players for event id# ' . $eventId);
-        return $data;
     }
 
     /**

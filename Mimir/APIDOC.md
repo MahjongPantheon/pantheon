@@ -284,8 +284,8 @@ Returns: _array|null_
 Exceptions:
 * _\Exception_ 
 
-### getLastRoundByHash
- Get last recorded round for session by hashcode
+### getAllRounds
+ Get all recorded round for session by hashcode
 
 
 Parameters:
@@ -296,114 +296,16 @@ Returns: _array|null_
 Exceptions:
 * _\Exception_ 
 
-### getGameConfigT
- Get event rules configuration
+### getLastRoundByHash
+ Get last recorded round for session by hashcode
 
 
 Parameters:
-
-Returns: _array_ 
-
-Exceptions:
-* _InvalidParametersException_ 
-* _\Exception_ 
-
-### getTimerStateT
-
-
-Parameters:
-
-Returns: _array_ 
-
-Exceptions:
-* _InvalidParametersException_ 
-* _\Exception_ 
-
-### getAllPlayersT
- Get all players registered for event
-
-
-Parameters:
-
-Returns: _array_ 
-
-Exceptions:
-* _InvalidParametersException_ 
-* _\Exception_ 
-
-### getTablesStateT
- Get tables state in tournament from token
-
-
-Parameters:
-
-Returns: _array_ 
-
-Exceptions:
-* _InvalidParametersException_ 
-* _\Exception_ 
-
-### getCurrentGamesT
-
-
-Parameters:
-
-Returns: _array_ of session data
-
-Exceptions:
-* _InvalidParametersException_ 
-* _\Exception_ 
-
-### getLastResultsT
- Get last game results of player in event
-
-
-Parameters:
+* **$hashcode** (_string_) 
 
 Returns: _array|null_ 
 
 Exceptions:
-* _InvalidParametersException_ 
-* _EntityNotFoundException_ 
-* _\Exception_ 
-
-### getLastRoundT
- Get last recorded round with player in event
-
-
-Parameters:
-
-Returns: _array|null_ 
-
-Exceptions:
-* _InvalidParametersException_ 
-* _\Exception_ 
-
-### getPlayerT
- Get player info by id
-
-Parameters:
-
-Returns: _array_ 
-
-Exceptions:
-* _InvalidParametersException_ 
-* _EntityNotFoundException_ 
-* _\Exception_ 
-
-### startGameT
- Start new interactive game and return its hash
-
-
-Parameters:
-* **$players** (_array_) Player id list
-
-Returns: _string_ Hashcode of started game
-
-Exceptions:
-* _InvalidUserException_ 
-* _DatabaseException_ 
-* _InvalidParametersException_ 
 * _\Exception_ 
 
 ### getEventForEdit
@@ -505,18 +407,6 @@ Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
 
-### registerPlayer
- Register for participation in event
-
-
-Parameters:
-* **$pin** (_string_) 
-
-Returns: _string_ Auth token
-
-Exceptions:
-* _\Exception_ 
-
 ### registerPlayerCP
  Register for participation in event (from admin control panel)
 
@@ -554,35 +444,6 @@ Parameters:
 * **$ignoreSeating** (_int_) 
 
 Returns: _bool_ 
-
-Exceptions:
-* _\Exception_ 
-
-### enrollPlayerCP
- Enroll player to registration lists. Player should make a self-registration after this, or
- administrator may approve the player manually, and only after that the player will appear in rating table.
-
-
-Parameters:
-* **$playerId** (_int_) 
-* **$eventId** (_int_) 
-
-Returns: _string_ Secret pin code for self-registration
-
-Exceptions:
-* _AuthFailedException_ 
-* _BadActionException_ 
-* _InvalidParametersException_ 
-* _\Exception_ 
-
-### getAllEnrolled
- Get all players enrolled for event
-
-
-Parameters:
-* **$eventId** (_int_) 
-
-Returns: _array_ 
 
 Exceptions:
 * _\Exception_ 
@@ -770,7 +631,7 @@ Returns: _array_
 
 Exceptions:
 * _EntityNotFoundException_ 
-* _\Exception_
+* _\Exception_ 
 
 ### getCurrentSeating
  Get current seating in tournament
@@ -907,4 +768,14 @@ Returns: _mixed_
 Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
+
+### addErrorLog
+
+
+Parameters:
+* **$facility** (_string_) 
+* **$sessionHash** (_string_) 
+* **$playerId** (_float_) 
+* **$error** (_string_) 
+* **$stack** (_string_) 
 

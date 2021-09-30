@@ -547,20 +547,6 @@ class MimirClient implements IMimirClient
     }
 
     /**
-     *  Enroll player to registration lists. Player should make a self-registration after this, or
-     *  administrator may approve the player manually, and only after that the player will appear in rating table.
-     *
-     * @param int $playerId
-     * @param int $eventId
-     * @return string
-    */
-    public function enrollPlayerCP(int $playerId, int $eventId): string
-    {
-        /** @phpstan-ignore-next-line */
-        return (string)$this->_client->execute('enrollPlayerCP', [$playerId, $eventId]);
-    }
-
-    /**
      *  Get all players enrolled for event
      *
      * @param int $eventId

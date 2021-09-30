@@ -1275,26 +1275,6 @@
 					"response": []
 				},
 				{
-					"name": "enrollPlayerCP",
-					"request": {
-						"url": "{{basefuriten}}",
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n   \"jsonrpc\": \"2.0\",\r\n   \"method\": \"enrollPlayerCP\",\r\n   \"params\": {\r\n     \"playerId\": {{player}},\r\n     \"eventId\": {{event}}\r\n   },\r\n   \"id\": \"{{$guid}}\"\r\n}"
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
 					"name": "getAllEnrolled",
 					"request": {
 						"url": "{{basefuriten}}",
