@@ -42,7 +42,6 @@ class PlayerRegistration extends Controller
     {
         $errorMsg = '';
         $registeredPlayers = [];
-        $enrolledPlayers = [];
 
         $sorter = function ($e1, $e2): int {
             return strcmp($e1['display_name'], $e2['display_name']);
@@ -59,8 +58,6 @@ class PlayerRegistration extends Controller
         } else {
             try {
                 $registeredPlayers = $this->_mimir->getAllPlayers($this->_eventIdList);
-                $enrolledPlayers = $this->_mimir->getAllEnrolled($this->_mainEventId);
-                usort($enrolledPlayers, $sorter);
                 usort($registeredPlayers, $sorter);
                 $registeredPlayers = array_map(function ($el, $index) {
                     $el['index'] = $index + 1;
@@ -68,7 +65,6 @@ class PlayerRegistration extends Controller
                 }, $registeredPlayers, array_keys($registeredPlayers));
             } catch (\Exception $e) {
                 $registeredPlayers = [];
-                $enrolledPlayers = [];
                 $errorMsg = $e->getMessage();
             }
         }
@@ -84,10 +80,7 @@ class PlayerRegistration extends Controller
             'lastindex' => count($registeredPlayers) + 2,
             'error' => $errorMsg,
             'registered' => $registeredPlayers,
-            'enrolled' => $enrolledPlayers,
-            'showPrint' => count($enrolledPlayers) > 0,
             'registeredCount' => count($registeredPlayers),
-            'enrolledCount' => count($enrolledPlayers)
         ];
     }
 
@@ -111,11 +104,6 @@ class PlayerRegistration extends Controller
             return true;
         }
 
-        if (!empty($this->_path['print'])) {
-            $this->_printCards();
-            return false; // just print our cards and exit
-        }
-
         if (!empty($_POST['action_type'])) {
             switch ($_POST['action_type']) {
                 case 'event_reg':
@@ -123,9 +111,6 @@ class PlayerRegistration extends Controller
                     break;
                 case 'event_unreg':
                     $err = $this->_unregisterUserFromEvent($_POST['id']);
-                    break;
-                case 'reenroll':
-                    $err = $this->_reenrollUserForEvent($_POST['id']);
                     break;
                 case 'update_ignore_seating':
                     $err = $this->_updateIgnoreSeating($_POST['id'], $_POST['ignore']);
@@ -135,9 +120,6 @@ class PlayerRegistration extends Controller
                     break;
                 case 'save_teams':
                     $err = $this->_saveTeams($_POST['map_json']);
-                    break;
-                case 'enroll':
-                    $err = $this->_enrollUserForEvent($_POST['id']);
                     break;
                 case 'find_persons':
                     [$err, $result] = $this->_findPersons($_POST['query']);
@@ -214,25 +196,6 @@ class PlayerRegistration extends Controller
     }
 
     /**
-     * @param int $userId
-     * @return string
-     */
-    protected function _reenrollUserForEvent(int $userId)
-    {
-        $errorMsg = '';
-        try {
-            $success = $this->_mainEventId && $this->_mimir->enrollPlayerCP($userId, $this->_mainEventId);
-            if (!$success) {
-                $errorMsg = _t('Failed to enroll the player. Check your network connection.');
-            }
-        } catch (\Exception $e) {
-            $errorMsg = $e->getMessage();
-        };
-
-        return $errorMsg;
-    }
-
-    /**
      * @param string $json
      * @return string
      */
@@ -290,84 +253,5 @@ class PlayerRegistration extends Controller
         }
 
         return $errorMsg;
-    }
-
-    /**
-     * @param int $userId
-     * @return string
-     */
-    protected function _enrollUserForEvent(int $userId)
-    {
-        $errorMsg = '';
-        try {
-            $success = $this->_mainEventId && $this->_mimir->enrollPlayerCP($userId, $this->_mainEventId);
-            if (!$success) {
-                $errorMsg = _t('Failed to add the player. Check your network connection.');
-            }
-        } catch (\Exception $e) {
-            $errorMsg = $e->getMessage();
-        };
-
-        return $errorMsg;
-    }
-
-    /**
-     * @throws \Exception
-     */
-    protected function _printCards(): void
-    {
-        if (empty($this->_mainEventId)) {
-            echo "Main event is empty: this is unexpected behavior";
-            return;
-        }
-        $enrolledPlayers = $this->_mimir->getAllEnrolled($this->_mainEventId);
-        $host = Sysconf::MOBILE_CLIENT_URL(); // @phpstan-ignore-line
-
-        $options = new QROptions([
-            'version'    => 5,
-            'outputType' => QRCode::OUTPUT_MARKUP_SVG,
-            'eccLevel'   => QRCode::ECC_L,
-        ]);
-
-        // invoke a fresh QRCode instance
-        $qrcode = new QRCode($options);
-
-        $origFile = file_get_contents(__DIR__ . '/../../www/assets/printcard.svg');
-
-        if (empty($origFile)) {
-            echo "Error: no template found";
-            return;
-        }
-
-        $i = 0;
-        $data = implode(PHP_EOL, array_map(function ($playerEntry) use ($host, $qrcode, $origFile, &$i) {
-            $xIdx = $i % 2;
-            $yIdx = ceil($i / 2);
-            $xOffset = 20 + $xIdx * 88;
-            $yOffset = 20 + $yIdx * 55;
-            $i++;
-
-            $qrlink = $host . '/' . $playerEntry['pin'] . '_' . dechex(crc32($playerEntry['pin']));
-            return str_replace(
-                ['%name', '%pin', '%host', '%qr', '%xoffset', '%yoffset'],
-                [
-                    $playerEntry['display_name'],
-                    $playerEntry['pin'],
-                    $host,
-                    str_replace('<svg', '<svg width="32" height="32" x="54" y="18"', $qrcode->render($qrlink)),
-                    $xOffset . 'mm',
-                    $yOffset . 'mm'
-                ],
-                $origFile
-            );
-        }, $enrolledPlayers));
-
-        header('Content-type: image/svg+xml');
-        echo <<<SVG
-<?xml version="1.0" encoding="UTF-8"?>
-<svg version="1.1" width="210.03mm" height="297.02mm" x="10mm">
-  $data
-</svg>
-SVG;
     }
 }

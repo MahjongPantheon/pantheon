@@ -547,18 +547,6 @@ class MimirClient implements IMimirClient
     }
 
     /**
-     *  Get all players enrolled for event
-     *
-     * @param int $eventId
-     * @return array
-    */
-    public function getAllEnrolled(int $eventId): array
-    {
-        /** @phpstan-ignore-next-line */
-        return (array)$this->_client->execute('getAllEnrolled', [$eventId]);
-    }
-
-    /**
      *  Get achievements list for event
      *
      * @param array $eventIdList

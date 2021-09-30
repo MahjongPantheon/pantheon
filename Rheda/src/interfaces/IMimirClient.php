@@ -373,24 +373,6 @@ interface IMimirClient
     public function updatePlayerSeatingFlagCP(int $playerId, int $eventId, int $ignoreSeating): bool;
 
     /**
-     *  Enroll player to registration lists. Player should make a self-registration after this, or
-     *  administrator may approve the player manually, and only after that the player will appear in rating table.
-     *
-     * @param int $playerId
-     * @param int $eventId
-     * @return string
-    */
-    public function enrollPlayerCP(int $playerId, int $eventId): string;
-
-    /**
-     *  Get all players enrolled for event
-     *
-     * @param int $eventId
-     * @return array
-    */
-    public function getAllEnrolled(int $eventId): array;
-
-    /**
      *  Get achievements list for event
      *
      * @param array $eventIdList

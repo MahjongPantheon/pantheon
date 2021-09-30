@@ -61,7 +61,7 @@
             <td>${item.title}</td>
             <td>
               <form action="" method="post">
-                <input type="hidden" name="action_type" value="enroll" />
+                <input type="hidden" name="action_type" value="event_reg" />
                 <input type="hidden" name="id" value="${item.id}" />
                 <input class="btn btn-large btn-success" type="submit" value="{{_t 'Add to current rating'}}" />
               </form>
@@ -85,7 +85,7 @@
 {{/error}}
 {{^isAggregated}}
     {{#authorized}}
-        <h4>{{_t 'Enroll players'}}</h4>
+        <h4>{{_t 'Register players'}}</h4>
         <div>
           <input type="text" width="200" id="search_field"
                  class="form-control"
@@ -93,33 +93,7 @@
         </div>
         <hr />
         <div id="search_results"></div>
-        <hr />
-        <h4>{{_p 'Pre-registration list (%d)' enrolledCount}}
-          {{#showPrint}}
-            {{#a href='/reg/print' class='btn btn-primary'}}{{_t 'Print PINs and QR codes'}}{{/a}}
-          {{/showPrint}}
-        </h4>
 
-        <table class="table table-condensed table-striped">
-            <tr>
-                <th>{{_t 'Player'}}</th>
-                <th>{{_t 'PIN'}}</th>
-                <th>{{_t 'Admin actions'}}</th>
-            </tr>
-        {{#enrolled}}
-            <tr>
-                <td>{{display_name}}</td>
-                <td>{{pin}}</td>
-                <td>
-                    <form action="" method="post">
-                        <input type="hidden" name="action_type" value="event_reg" />
-                        <input type="hidden" name="id" value="{{id}}" />
-                        <input class="btn btn-large btn-success" type="submit" value="{{_t 'Confirm attendance manually'}}" />
-                    </form>
-                </td>
-            </tr>
-        {{/enrolled}}
-        </table>
         <hr />
         <h4>{{_p 'Registered players (%d)' registeredCount}}</h4>
         <table class="table table-condensed table-striped table-hover">
@@ -140,11 +114,6 @@
             <tr>
                 <td>{{display_name}}{{#onlineEvent}} ({{tenhou_id}}){{/onlineEvent}}</td>
                 <td class="adm-actions">
-                    <form action="" method="post">
-                        <input type="hidden" name="action_type" value="reenroll" />
-                        <input type="hidden" name="id" value="{{id}}" />
-                        <input class="btn btn-large btn-info" type="submit" value="{{_t 'Reissue PIN'}}" />
-                    </form>
                     <form action="" method="post">
                         <input type="hidden" name="action_type" value="event_unreg" />
                         <input type="hidden" name="id" value="{{id}}" />
