@@ -1,11 +1,12 @@
 import {Dispatch, MiddlewareAPI} from 'redux';
 import {
   AppActionTypes,
+  FORCE_LOGOUT,
   LOGIN_FAIL,
   LOGIN_INIT,
   LOGIN_SUCCESS,
-  FORCE_LOGOUT,
   RESET_LOGIN_ERROR,
+  SELECT_EVENT,
   SET_CREDENTIALS,
   SET_STATE_SETTINGS,
   SETTINGS_SAVE_LANG,
@@ -38,6 +39,10 @@ export const persistentMw = (storage: IDBImpl) => (mw: MiddlewareAPI<Dispatch<Ap
       break;
     case SETTINGS_SAVE_THEME:
       storage.set(environment.idbThemeKey, 'string', action.payload);
+      next(action);
+      break;
+    case SELECT_EVENT:
+      storage.set(environment.idbIdKey, 'int', action.payload);
       next(action);
       break;
     case SETTINGS_SAVE_LANG:

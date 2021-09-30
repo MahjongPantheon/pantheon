@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {IComponentProps} from '#/components/IComponentProps';
 import {
+  GET_GAME_OVERVIEW_INIT,
   GO_TO_CURRENT_GAME,
   OPEN_SETTINGS,
   SHOW_LAST_RESULTS,
@@ -44,6 +45,11 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
     if (gameConfig) {
       window.open(`https://${gameConfig.eventStatHost}/last/`);
     }
+  }
+
+  componentDidMount() {
+    const {dispatch} = this.props;
+    dispatch({ type: GET_GAME_OVERVIEW_INIT });
   }
 
   render() {

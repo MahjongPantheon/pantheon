@@ -559,7 +559,8 @@ export function mimirReducer(
     case SELECT_EVENT:
       return {
         ...state,
-        currentEventId: action.payload
+        currentEventId: action.payload,
+        currentScreen: 'overview'
       };
     default:
       return state;

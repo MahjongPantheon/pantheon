@@ -3,8 +3,10 @@ import {
   ADD_ROUND_FAIL,
   ADD_ROUND_INIT,
   ADD_ROUND_SUCCESS,
-  AppActionTypes, EVENTS_GET_LIST_FAIL,
-  EVENTS_GET_LIST_INIT, EVENTS_GET_LIST_SUCCESS,
+  AppActionTypes,
+  EVENTS_GET_LIST_FAIL,
+  EVENTS_GET_LIST_INIT,
+  EVENTS_GET_LIST_SUCCESS,
   FORCE_LOGOUT,
   GET_ALL_PLAYERS_FAIL,
   GET_ALL_PLAYERS_INIT,
@@ -60,7 +62,7 @@ export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<
   switch (action.type) {
     case STARTUP_WITH_AUTH:
       if (!action.payload.token) { // Not logged in
-        forcedLogout(mw.dispatch);
+        mw.dispatch({ type: FORCE_LOGOUT });
         return;
       }
 
@@ -289,12 +291,6 @@ function startGame(playerIds: number[], api: RiichiApiService, dispatch: Dispatc
     .catch((e) => dispatch({ type: START_GAME_FAIL, payload: e }));
 }
 
-function forcedLogout(dispatchToStore: Dispatch<AppActionTypes>) {
-  // TODO: looks like kludge. These two actions get user to the login screen.
-  dispatchToStore({ type: LOGIN_FAIL, payload: new RemoteError('Not logged in', '403') });
-  dispatchToStore({ type: RESET_LOGIN_ERROR }); // this resets error screen
-}
-
 function startupWithAuth(
   api: RiichiApiService,
   dispatchToStore: Dispatch<AppActionTypes>,
@@ -319,6 +315,6 @@ function startupWithAuth(
       }
     }
   }).catch(() => {
-    forcedLogout(dispatchToStore);
+    dispatchToStore({ type: FORCE_LOGOUT });
   });
 }
