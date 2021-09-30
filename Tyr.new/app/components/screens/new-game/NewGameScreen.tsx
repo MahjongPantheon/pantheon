@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {IComponentProps} from '#/components/IComponentProps';
 import {
-  GET_ALL_PLAYERS_INIT,
   GOTO_PREV_SCREEN,
   RANDOMIZE_NEWGAME_PLAYERS,
   SEARCH_PLAYER, START_GAME_INIT,

@@ -5,7 +5,7 @@ import {RRoundOverviewInfo, RRoundPaymentsInfo} from '#/interfaces/remote';
 import {Graph} from '#/primitives/graph';
 import {RemoteError} from '#/services/remoteError';
 
-export type AppScreen = 'overview' | 'currentGame' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
+export type AppScreen = 'eventSelector' | 'overview' | 'currentGame' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
   | 'handSelect' | 'confirmation' | 'newGame' | 'searchPlayer' | 'lastResults' | 'gameLog' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
 
 export type LoadingSet = {
@@ -37,6 +37,7 @@ export interface IAppState {
   currentRound: number;
   currentPlayerDisplayName?: string;
   currentPlayerId?: number;
+  currentEventId?: number;
   players?: [Player, Player, Player, Player]; // e-s-w-n
   mapIdToPlayer: { [key: number]: Player };
   riichiOnTable: number;

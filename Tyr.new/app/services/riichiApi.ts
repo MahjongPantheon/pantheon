@@ -64,27 +64,27 @@ export class RiichiApiService {
   // TODO: formatters
 
   // returns game hashcode
-  startGame(playerIds: number[]) {
-    return this._jsonRpcRequest<string>('startGameT', playerIds);
+  startGame(eventId: number, playerIds: number[]) {
+    return this._jsonRpcRequest<string>('startGame', eventId, playerIds);
   }
 
-  getGameConfig() {
-    return this._jsonRpcRequest<RGameConfig>('getGameConfigT')
+  getGameConfig(eventId: number) {
+    return this._jsonRpcRequest<RGameConfig>('getGameConfig', eventId)
       .then<LGameConfig>(gameConfigFormatter);
   }
 
-  getTimerState() {
-    return this._jsonRpcRequest<RTimerState>('getTimerStateT')
+  getTimerState(eventId: number) {
+    return this._jsonRpcRequest<RTimerState>('getTimerState', eventId)
       .then<LTimerState>(timerFormatter);
   }
 
-  getLastResults() {
-    return this._jsonRpcRequest<RLastResults>('getLastResultsT')
+  getLastResults(playerId: number, eventId: number) {
+    return this._jsonRpcRequest<RLastResults>('getLastResults', playerId, eventId)
       .then<LUserWithScore[]>(lastResultsFormatter);
   }
 
-  getAllPlayers() {
-    return this._jsonRpcRequest<RAllPlayersInEvent>('getAllPlayersT')
+  getAllPlayers(eventId: number) {
+    return this._jsonRpcRequest<RAllPlayersInEvent>('getAllEnrolled', eventId)
       .then<LUser[]>(userListFormatter);
   }
 
@@ -93,8 +93,8 @@ export class RiichiApiService {
       .then<LSessionOverview>(gameOverviewFormatter);
   }
 
-  getCurrentGames(): Promise<LCurrentGame[]> {
-    return this._jsonRpcRequest<RCurrentGames>('getCurrentGamesT')
+  getCurrentGames(playerId: number, eventId: number): Promise<LCurrentGame[]> {
+    return this._jsonRpcRequest<RCurrentGames>('getCurrentGames', playerId, eventId)
       .then<LCurrentGame[]>(currentGamesFormatter);
   }
 
@@ -117,16 +117,16 @@ export class RiichiApiService {
     return this._jsonRpcRequest<RRoundPaymentsInfo>('addRound', gameHashcode, roundData, true);
   }
 
-  getLastRound(sessionHashcode?: string) {
-    if (!sessionHashcode) {
-      return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundT');
-    } else {
-      return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundByHash', sessionHashcode)
-        .then((result) => {
-          result.sessionHash = sessionHashcode;
-          return result;
-        });
-    }
+  getLastRoundByHash(sessionHashcode: string) {
+    return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundByHash', sessionHashcode)
+      .then((result) => {
+        result.sessionHash = sessionHashcode;
+        return result;
+      });
+  }
+
+  getLastRound(playerId: number, eventId: number) {
+    return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRound', playerId, eventId);
   }
 
   getAllRounds(sessionHashcode: string) {
@@ -139,8 +139,8 @@ export class RiichiApiService {
     return this._jsonRpcRequest<boolean | SessionState>('addRound', gameHashcode, roundData, false);
   }
 
-  getTablesState() {
-    return this._jsonRpcRequest<RTablesState>('getTablesStateT')
+  getTablesState(eventId: number) {
+    return this._jsonRpcRequest<RTablesState>('getTablesState', eventId)
       .then<Table[]>(tablesStateFormatter);
   }
 

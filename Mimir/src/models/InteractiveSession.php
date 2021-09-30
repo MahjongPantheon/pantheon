@@ -51,7 +51,7 @@ class InteractiveSessionModel extends Model
      */
     public function startGame($eventId, $playerIds, $tableIndex = null, $replayHash = null)
     {
-        $this->_checkAuth($playerIds, $eventId);
+        $this->_checkAuth($playerIds);
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
@@ -103,7 +103,7 @@ class InteractiveSessionModel extends Model
     public function endGame(string $gameHash)
     {
         $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
-        $this->_checkAuth($session->getPlayersIds(), $session->getEventId());
+        $this->_checkAuth($session->getPlayersIds());
         return $session->prefinish();
     }
 
@@ -199,7 +199,7 @@ class InteractiveSessionModel extends Model
     public function addRound(string $gameHashcode, array $roundData, bool $dry = false)
     {
         $session = $this->_findGame($gameHashcode, SessionPrimitive::STATUS_INPROGRESS);
-        $this->_checkAuth($session->getPlayersIds(), $session->getEventId());
+        $this->_checkAuth($session->getPlayersIds());
 
         if ($session->getEvent()->getGamesStatus() == EventPrimitive::GS_SEATING_READY) {
             // We should not allow adding new rounds if session is not started yet
@@ -333,23 +333,16 @@ class InteractiveSessionModel extends Model
 
     /**
      * @param int[] $playersIds
-     * @param int $eventId
-     * @param int[] $playersIds
      *
      * @throws AuthFailedException
      * @throws \Exception
      *
      * @return void
      */
-    protected function _checkAuth(array $playersIds, int $eventId): void
+    protected function _checkAuth(array $playersIds): void
     {
         // Check that real session player is trying to enter data
-        $evMdl = new EventUserManagementModel($this->_ds, $this->_config, $this->_meta);
-        if (!$evMdl->checkToken($playersIds[0], $eventId) &&
-            !$evMdl->checkToken($playersIds[1], $eventId) &&
-            !$evMdl->checkToken($playersIds[2], $eventId) &&
-            !$evMdl->checkToken($playersIds[3], $eventId)
-        ) {
+        if (!in_array($this->_meta->getCurrentPersonId(), $playersIds)) {
             throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
         }
     }

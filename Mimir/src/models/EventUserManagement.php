@@ -257,41 +257,4 @@ class EventUserManagementModel extends Model
 
         return PlayerRegistrationPrimitive::updateTeamNames($this->_ds, $eventId, $teamMap);
     }
-
-    /**
-     * Checks if token is ok.
-     * Reads token value from X-Auth-Token request header
-     *
-     * Also should return true to admin-level token to allow everything
-     *
-     * @param int $playerId
-     * @param int $eventId
-     * @return bool
-     * @throws \Exception
-     */
-    public function checkToken($playerId, $eventId)
-    {
-        if ($this->checkAdminToken()) {
-            return true;
-        }
-
-        $regItem = $this->dataFromToken();
-        return $regItem
-            && $regItem->getEventId() == $eventId
-            && $regItem->getPlayerId() == $playerId;
-    }
-
-    /**
-     * Get player and event ids by auth token
-     * @return null|PlayerRegistrationPrimitive
-     * @throws \Exception
-     */
-    public function dataFromToken()
-    {
-        $token = $this->_meta->getAuthToken();
-        if (empty($token)) {
-            return null;
-        }
-        return PlayerRegistrationPrimitive::findEventAndPlayerByToken($this->_ds, $token);
-    }
 }

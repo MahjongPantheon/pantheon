@@ -454,25 +454,6 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
-     * @param DataSource $ds
-     * @param string $token
-     * @return null|PlayerRegistrationPrimitive
-     * @throws \Exception
-     */
-    public static function findEventAndPlayerByToken(DataSource $ds, string $token)
-    {
-        if (empty($token)) {
-            return null;
-        }
-
-        $result = self::_findBy($ds, 'auth_token', [$token]);
-        if (empty($result)) {
-            return null;
-        }
-        return $result[0];
-    }
-
-    /**
      * Finds all players registered to event.
      * Output array has player local id as key and player id as value.
      *

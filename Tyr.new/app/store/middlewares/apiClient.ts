@@ -33,7 +33,7 @@ import {
   START_GAME_SUCCESS,
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
-  UPDATE_CURRENT_GAMES_SUCCESS,
+  UPDATE_CURRENT_GAMES_SUCCESS, STARTUP_WITH_AUTH, RESET_LOGIN_ERROR,
 } from '../actions/interfaces';
 import {RiichiApiService} from '#/services/riichiApi';
 import {LCurrentGame, LGameConfig, LTimerState, LUser} from '#/interfaces/local';
@@ -42,7 +42,28 @@ import {IAppState} from '../interfaces';
 
 export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
+  let personId: number | undefined = mw.getState().currentPlayerId;
+  let eventId: number | undefined = mw.getState().currentEventId;
+
   switch (action.type) {
+
+    // TODO #3: repair this action handler
+    case STARTUP_WITH_AUTH:
+      if (!action.payload.token) { // Not logged in
+        // TODO: looks like kludge. These two actions get user to the login screen.
+        mw.dispatch({ type: LOGIN_FAIL, payload: new RemoteError('Not logged in', '403') });
+        mw.dispatch({ type: RESET_LOGIN_ERROR }); // this resets error screen
+        return;
+      }
+
+      mw.dispatch({ type: SET_CREDENTIALS, payload: { authToken: action.payload.token, personId: action.payload.personId } });
+      mw.dispatch({ type: UPDATE_CURRENT_GAMES_INIT }); // TODO: move somewhere, persistent-storage mw is not best place for such logic
+      hash = mw.getState().currentSessionHash;
+      if (hash) {
+        mw.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: hash }); // TODO: and for this too
+      }
+      break;
+
     case LOGIN_INIT:
       loginWithRetry(action.payload, api, mw.dispatch, next);
       break;
@@ -50,11 +71,10 @@ export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<
       api.setCredentials(action.payload.personId, action.payload.authToken);
       return next(action);
     case UPDATE_CURRENT_GAMES_INIT:
-      const personId = mw.getState().currentPlayerId;
-      if (!personId) {
+      if (!personId || !eventId) {
         return;
       }
-      updateCurrentGames(api, next, mw.dispatch, personId);
+      updateCurrentGames(api, next, mw.dispatch, personId, eventId);
       break;
     case GET_GAME_OVERVIEW_INIT:
       if (!action.payload) {
@@ -64,10 +84,16 @@ export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<
       getGameOverview(action.payload, api, next);
       break;
     case GET_OTHER_TABLES_LIST_INIT:
-      getOtherTablesList(api, next);
+      if (!eventId) {
+        return;
+      }
+      getOtherTablesList(api, next, eventId);
       break;
     case GET_OTHER_TABLES_LIST_RELOAD:
-      getOtherTablesListReload(api, next);
+      if (!eventId) {
+        return;
+      }
+      getOtherTablesListReload(api, next, eventId);
       break;
     case GET_OTHER_TABLE_INIT:
       getOtherTable(action.payload, api, next);
@@ -86,13 +112,22 @@ export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<
       getChangesOverview(action.payload, api, next);
       break;
     case GET_LAST_RESULTS_INIT:
-      getLastResults(api, next);
+      if (!personId || !eventId) {
+        return;
+      }
+      getLastResults(api, next, personId, eventId);
       break;
     case GET_ALL_PLAYERS_INIT:
-      getAllPlayers(api, next);
+      if (!eventId) {
+        return;
+      }
+      getAllPlayers(api, next, eventId);
       break;
     case START_GAME_INIT:
-      startGame(action.payload, api, next, mw.dispatch);
+      if (!eventId) {
+        return;
+      }
+      startGame(action.payload, api, next, mw.dispatch, eventId);
       break;
     case ADD_ROUND_INIT:
       addRound(action.payload, api, next, mw.dispatch);
@@ -127,15 +162,15 @@ function loginWithRetry(data: { email: string, password: string }, api: RiichiAp
   runWithRetry();
 }
 
-function updateCurrentGames(api: RiichiApiService, dispatchNext: Dispatch, dispatchToStore: Dispatch, currentPersonId: number) {
+function updateCurrentGames(api: RiichiApiService, dispatchNext: Dispatch, dispatchToStore: Dispatch, currentPersonId: number, eventId: number) {
   dispatchNext({ type: UPDATE_CURRENT_GAMES_INIT });
 
   // TODO: make single method? should become faster!
   const promises: [Promise<LCurrentGame[]>, Promise<LUser[]>, Promise<LGameConfig>, Promise<LTimerState>] = [
-    api.getCurrentGames(),
+    api.getCurrentGames(currentPersonId, eventId),
     api.getUserInfo([currentPersonId]),
-    api.getGameConfig(),
-    api.getTimerState()
+    api.getGameConfig(eventId),
+    api.getTimerState(eventId)
   ];
 
   Promise.all(promises).then(([games, [playerInfo], gameConfig, timerState]) => {
@@ -177,16 +212,16 @@ function getOtherTableReload(sessionHash: string, api: RiichiApiService, dispatc
     .catch((e) => dispatch({ type: GET_OTHER_TABLE_FAIL, payload: e }));
 }
 
-function getOtherTablesList(api: RiichiApiService, dispatch: Dispatch) {
+function getOtherTablesList(api: RiichiApiService, dispatch: Dispatch, eventId: number) {
   dispatch({ type: GET_OTHER_TABLES_LIST_INIT });
-  api.getTablesState()
+  api.getTablesState(eventId)
     .then((tables) => dispatch({ type: GET_OTHER_TABLES_LIST_SUCCESS, payload: tables }))
     .catch((e) => dispatch({ type: GET_OTHER_TABLES_LIST_FAIL, payload: e }));
 }
 
-function getOtherTablesListReload(api: RiichiApiService, dispatch: Dispatch) {
+function getOtherTablesListReload(api: RiichiApiService, dispatch: Dispatch, eventId: number) {
   dispatch({ type: GET_OTHER_TABLES_LIST_RELOAD });
-  api.getTablesState()
+  api.getTablesState(eventId)
     .then((tables) => dispatch({ type: GET_OTHER_TABLES_LIST_SUCCESS, payload: tables }))
     .catch((e) => dispatch({ type: GET_OTHER_TABLES_LIST_FAIL, payload: e }));
 }
@@ -217,23 +252,23 @@ function addRound(state: IAppState, api: RiichiApiService, dispatch: Dispatch, d
     }).catch((e) => dispatch({ type: ADD_ROUND_FAIL, payload: e }));
 }
 
-function getLastResults(api: RiichiApiService, dispatch: Dispatch) {
+function getLastResults(api: RiichiApiService, dispatch: Dispatch, currentPersonId: number, eventId: number) {
   dispatch({ type: GET_LAST_RESULTS_INIT });
-  api.getLastResults()
+  api.getLastResults(currentPersonId, eventId)
     .then((results) => dispatch({ type: GET_LAST_RESULTS_SUCCESS, payload: results }))
     .catch((e) => dispatch({ type: GET_LAST_RESULTS_FAIL, payload: e }));
 }
 
-function getAllPlayers(api: RiichiApiService, dispatch: Dispatch) {
+function getAllPlayers(api: RiichiApiService, dispatch: Dispatch, eventId: number) {
   dispatch({ type: GET_ALL_PLAYERS_INIT });
-  api.getAllPlayers()
+  api.getAllPlayers(eventId)
     .then((results) => dispatch({ type: GET_ALL_PLAYERS_SUCCESS, payload: results }))
     .catch((e) => dispatch({ type: GET_ALL_PLAYERS_FAIL, payload: e }));
 }
 
-function startGame(playerIds: number[], api: RiichiApiService, dispatch: Dispatch, dispatchToStore: Dispatch) {
+function startGame(playerIds: number[], api: RiichiApiService, dispatch: Dispatch, dispatchToStore: Dispatch, eventId: number) {
   dispatch({ type: START_GAME_INIT });
-  api.startGame(playerIds)
+  api.startGame(eventId, playerIds)
     .then((results) => {
       dispatchToStore({ type: START_GAME_SUCCESS, payload: results });
       dispatchToStore({ type: RESET_STATE });

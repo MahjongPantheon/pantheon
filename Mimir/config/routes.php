@@ -54,16 +54,6 @@ return [
     'getAllRounds'       => ['PlayersController', 'getAllRoundsByHash'],
     'getLastRoundByHash' => ['PlayersController', 'getLastRoundByHashcode'],
 
-    'getGameConfigT'     => ['EventsController', 'getGameConfigFromToken'],
-    'getTimerStateT'     => ['EventsController', 'getTimerStateFromToken'],
-    'getAllPlayersT'     => ['EventsController', 'getAllRegisteredPlayersFromToken'],
-    'getTablesStateT'    => ['EventsController', 'getTablesStateFromToken'],
-    'getCurrentGamesT'   => ['PlayersController', 'getCurrentSessionsFromToken'],
-    'getLastResultsT'    => ['PlayersController', 'getLastResultsFromToken'],
-    'getLastRoundT'      => ['PlayersController', 'getLastRoundFromToken'],
-    'getPlayerT'         => ['PlayersController', 'getFromToken'],
-    'startGameT'         => ['GamesController', 'startFromToken'], // for self-starts
-
     // admin
     'getEventForEdit'    => ['EventsController', 'getEventForEdit'],
     'createEvent'        => ['EventsController', 'createEvent'],

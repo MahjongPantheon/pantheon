@@ -75,7 +75,8 @@ export function mimirReducer(
         },
         currentPlayerId: action.payload.personId || undefined,
         isLoggedIn: true,
-        currentScreen: 'overview',
+        // TODO #3 support this new screen
+        currentScreen: 'eventSelector',
         loginError: undefined
       };
     case LOGIN_FAIL:

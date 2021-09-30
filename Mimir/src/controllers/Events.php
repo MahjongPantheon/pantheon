@@ -332,23 +332,6 @@ class EventsController extends Controller
     }
 
     /**
-     * Get all players registered for event
-     *
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @return array
-     */
-    public function getAllRegisteredPlayersFromToken()
-    {
-        $this->_log->addInfo('Getting all players for event (by token)');
-        $data = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->getAllRegisteredPlayers([$data->getEventId()]);
-    }
-
-    /**
      * Get tables state in tournament
      *
      * @param int $eventId
@@ -363,35 +346,6 @@ class EventsController extends Controller
         $this->_log->addInfo('Successfully got tables state for event #' . $eventId);
         return $data;
     }
-
-    /**
-     * Get tables state in tournament from token
-     *
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @return array
-     */
-    public function getTablesStateFromToken()
-    {
-        $this->_log->addInfo('Getting tables state for event (by token)');
-        $eventModel = new EventModel($this->_ds, $this->_config, $this->_meta);
-
-        if ($this->_meta->isGlobalWatcher()) {
-            $data = $eventModel->getGlobalTablesState();
-        } else {
-            $eventUserModel = new EventUserManagementModel($this->_ds, $this->_config, $this->_meta);
-            $reg = $eventUserModel->dataFromToken();
-            if (empty($reg)) {
-                throw new InvalidParametersException('Invalid player token', 401);
-            }
-
-            $data = $eventModel->getTablesState($reg->getEventId());
-        }
-
-        $this->_log->addInfo('Successfully got tables state for event (by token)');
-        return $data;
-    }
-
 
     /**
      * Get current seating in tournament
@@ -663,23 +617,6 @@ class EventsController extends Controller
     }
 
     /**
-     * Get event rules configuration
-     *
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @return array
-     */
-    public function getGameConfigFromToken()
-    {
-        $this->_log->addInfo('Getting config for event (by token)');
-        $data = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->getGameConfig($data->getEventId());
-    }
-
-    /**
      * Get rating table for event
      *
      * @param array $eventIdList
@@ -899,21 +836,6 @@ class EventsController extends Controller
         $this->_log->addInfo('Successfully got timer data for event id#' . $eventId);
 
         return $response;
-    }
-
-    /**
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @return array
-     */
-    public function getTimerStateFromToken()
-    {
-        $this->_log->addInfo('Getting timer for event (by token)');
-        $data = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->getTimerState($data->getEventId());
     }
 
     /**

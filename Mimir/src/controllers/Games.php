@@ -46,26 +46,6 @@ class GamesController extends Controller
     }
 
     /**
-     * Start new interactive game and return its hash
-     *
-     * @param array $players Player id list
-     * @throws InvalidUserException
-     * @throws DatabaseException
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @return string Hashcode of started game
-     */
-    public function startFromToken($players)
-    {
-        $this->_log->addInfo('Starting new game (by token)');
-        $data = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->start($data->getEventId(), $players);
-    }
-
-    /**
      * Drop last round from selected game
      * For interactive mode (tournaments), and only for administrative purposes
      *

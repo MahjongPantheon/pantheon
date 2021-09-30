@@ -3,7 +3,6 @@ import './page-search-player.css'
 import {SearchPlayerView} from '#/components/screens/search-players/SearchPlayerView';
 import {IComponentProps} from '#/components/IComponentProps';
 import {
-  GET_ALL_PLAYERS_INIT,
   SELECT_NEWGAME_PLAYER_WEST,
   SELECT_NEWGAME_PLAYER_NORTH,
   SELECT_NEWGAME_PLAYER_SOUTH,

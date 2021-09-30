@@ -80,24 +80,6 @@ class PlayersController extends Controller
     }
 
     /**
-     * Get player info by id
-     * @throws InvalidParametersException
-     * @throws EntityNotFoundException
-     * @throws \Exception
-     * @return array
-     */
-    public function getFromToken()
-    {
-        $this->_log->addInfo('Getting info of player (by token)');
-        $data = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->get($data->getPlayerId());
-    }
-
-
-    /**
      * @param int $playerId player to get stats for
      * @param int[] $eventIdList event to get stats for
      * @throws EntityNotFoundException
@@ -158,26 +140,6 @@ class PlayersController extends Controller
         $this->_log->addInfo('Successfully got current sessions for player id #' . $playerId . ' at event id #' . $eventId);
         return $result;
     }
-
-    /**
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @return array of session data
-     */
-    public function getCurrentSessionsFromToken()
-    {
-        $this->_log->addInfo('Getting current sessions (by token)');
-        if ($this->_meta->isGlobalWatcher()) {
-            return [];
-        }
-
-        $data = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->getCurrentSessions($data->getPlayerId(), $data->getEventId());
-    }
-
 
     /**
      * Get last prefinished game results of player in event with syncEnd = true
@@ -274,24 +236,6 @@ class PlayersController extends Controller
 
         $this->_log->addInfo('Successfully got last session results for player id #' . $playerId . ' at event id #' . $eventId);
         return $result;
-    }
-
-    /**
-     * Get last game results of player in event
-     *
-     * @throws InvalidParametersException
-     * @throws EntityNotFoundException
-     * @throws \Exception
-     * @return array|null
-     */
-    public function getLastResultsFromToken()
-    {
-        $this->_log->addInfo('Getting last session results (by token)');
-        $data = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->getLastResults($data->getPlayerId(), $data->getEventId());
     }
 
     /**
@@ -524,23 +468,6 @@ class PlayersController extends Controller
         $data = $this->_getAllRoundsCommon($session[0]);
         $this->_log->addInfo('Successfully got last all rounds for hashcode ' . $hashcode);
         return $data;
-    }
-
-    /**
-     * Get last recorded round with player in event
-     *
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @return array|null
-     */
-    public function getLastRoundFromToken()
-    {
-        $this->_log->addInfo('Getting last round (by token)');
-        $data = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->getLastRound($data->getPlayerId(), $data->getEventId());
     }
 
     /**
