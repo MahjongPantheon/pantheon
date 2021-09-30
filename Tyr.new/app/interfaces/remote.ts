@@ -334,6 +334,14 @@ export interface RRoundOverviewNagashi extends RRoundOverviewBase {
   tempai: string[];
 }
 
+export type REvent = {
+  id: number;
+  title: string;
+  description: string;
+}
+
+export type REventsList = REvent[];
+
 export type RFreyAuthData = [number | null | undefined, string];
 
 export type RRoundOverviewInfo =

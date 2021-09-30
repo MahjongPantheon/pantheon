@@ -4,12 +4,15 @@ import {
   ADD_ROUND_INIT,
   ADD_ROUND_SUCCESS,
   AppActionTypes,
-  LOGIN_FAIL,
-  LOGIN_INIT,
-  LOGIN_SUCCESS,
+  EVENTS_GET_LIST_FAIL,
+  EVENTS_GET_LIST_INIT,
+  EVENTS_GET_LIST_SUCCESS,
   GET_ALL_PLAYERS_FAIL,
   GET_ALL_PLAYERS_INIT,
   GET_ALL_PLAYERS_SUCCESS,
+  GET_ALL_ROUNDS_FAIL,
+  GET_ALL_ROUNDS_INIT,
+  GET_ALL_ROUNDS_SUCCESS,
   GET_CHANGES_OVERVIEW_FAIL,
   GET_CHANGES_OVERVIEW_INIT,
   GET_CHANGES_OVERVIEW_SUCCESS,
@@ -25,12 +28,17 @@ import {
   GET_OTHER_TABLES_LIST_FAIL,
   GET_OTHER_TABLES_LIST_INIT,
   GET_OTHER_TABLES_LIST_SUCCESS,
+  LOGIN_FAIL,
+  LOGIN_INIT,
+  LOGIN_SUCCESS,
   RANDOMIZE_NEWGAME_PLAYERS,
   RESET_LOGIN_ERROR,
-  SELECT_NEWGAME_PLAYER_NORTH,
+  SELECT_EVENT,
   SELECT_NEWGAME_PLAYER_EAST,
+  SELECT_NEWGAME_PLAYER_NORTH,
   SELECT_NEWGAME_PLAYER_SOUTH,
   SELECT_NEWGAME_PLAYER_WEST,
+  SET_NEWGAME_PLAYERS,
   START_GAME_FAIL,
   START_GAME_INIT,
   START_GAME_SUCCESS,
@@ -38,17 +46,16 @@ import {
   TABLE_ROTATE_COUNTERCLOCKWISE,
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
-  UPDATE_CURRENT_GAMES_SUCCESS
-  , SET_NEWGAME_PLAYERS, GET_ALL_ROUNDS_FAIL, GET_ALL_ROUNDS_INIT, GET_ALL_ROUNDS_SUCCESS,
+  UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
-import { IAppState } from '../interfaces';
-import { makeYakuGraph } from '#/primitives/yaku-compat';
-import { modifyArray } from './util';
-import { defaultPlayer } from '../selectors/screenNewGameSelectors';
-import { rand } from '#/primitives/rand';
-import { initialState } from '../state';
-import { Player } from "#/interfaces/common";
-import { LUser } from "#/interfaces/local";
+import {IAppState} from '../interfaces';
+import {makeYakuGraph} from '#/primitives/yaku-compat';
+import {modifyArray} from './util';
+import {defaultPlayer} from '../selectors/screenNewGameSelectors';
+import {rand} from '#/primitives/rand';
+import {initialState} from '../state';
+import {Player} from "#/interfaces/common";
+import {LUser} from "#/interfaces/local";
 
 export function mimirReducer(
   state: IAppState,
@@ -75,7 +82,6 @@ export function mimirReducer(
         },
         currentPlayerId: action.payload.personId || undefined,
         isLoggedIn: true,
-        // TODO #3 support this new screen
         currentScreen: 'eventSelector',
         loginError: undefined
       };
@@ -521,6 +527,39 @@ export function mimirReducer(
           details: action.payload,
           message: action.payload.message
         }
+      };
+    case EVENTS_GET_LIST_INIT:
+      return {
+        ...state,
+        eventsListError: undefined,
+        loading: {
+          ...state.loading,
+          events: true
+        }
+      };
+    case EVENTS_GET_LIST_SUCCESS:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          events: false
+        },
+        currentOutcome: undefined,
+        eventsList: action.payload
+      };
+    case EVENTS_GET_LIST_FAIL:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          events: false
+        },
+        eventsListError: action.payload
+      };
+    case SELECT_EVENT:
+      return {
+        ...state,
+        currentEventId: action.payload
       };
     default:
       return state;

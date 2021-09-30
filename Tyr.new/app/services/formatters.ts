@@ -21,11 +21,11 @@
 import {
   RCurrentGames, RRound, RUserInfo,
   RAllPlayersInEvent, RPlayerData,
-  RTimerState, RGameConfig, RTablesState, RSessionOverview, RFreyAuthData
+  RTimerState, RGameConfig, RTablesState, RSessionOverview, RFreyAuthData, REvent, REventsList
 } from '#/interfaces/remote';
 import {
   LCurrentGame, LUser, LUserWithScore,
-  LTimerState, LGameConfig, LSessionOverview, LFreyAuthData
+  LTimerState, LGameConfig, LSessionOverview, LFreyAuthData, LEventsList
 } from '#/interfaces/local';
 import { Player, Table } from '#/interfaces/common';
 import { YakuId } from '#/primitives/yaku';
@@ -106,6 +106,14 @@ export function lastResultsFormatter(list: RPlayerData[]): LUserWithScore[] {
     score: user.score,
     ratingDelta: user.rating_delta,
     penalties: 0, // TODO?
+  }));
+}
+
+export function eventsListFormatter(list: REventsList): LEventsList {
+  return list.map((event) => ({
+    id: parseInt(event.id.toString(), 10),
+    description: event.description,
+    title: event.title
   }));
 }
 

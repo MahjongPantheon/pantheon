@@ -22,7 +22,7 @@ import { RemoteError } from './remoteError';
 import {
   RTimerState, RGameConfig, RSessionOverview, RCurrentGames,
   RUserInfo, RAllPlayersInEvent, RLastResults,
-  RRoundPaymentsInfo, RTablesState, SessionState, RRoundOverviewInfo, RFreyAuthData,
+  RRoundPaymentsInfo, RTablesState, SessionState, RRoundOverviewInfo, RFreyAuthData, REventsList,
 } from '#/interfaces/remote';
 import {
   LCurrentGame,
@@ -30,7 +30,7 @@ import {
   LUserWithScore,
   LTimerState,
   LSessionOverview,
-  LGameConfig, LFreyAuthData
+  LGameConfig, LFreyAuthData, LEventsList
 } from '#/interfaces/local';
 import { Table } from '#/interfaces/common';
 import {
@@ -41,7 +41,7 @@ import {
   timerFormatter,
   gameConfigFormatter,
   tablesStateFormatter,
-  gameOverviewFormatter, freyAuthFormatter
+  gameOverviewFormatter, freyAuthFormatter, eventsListFormatter
 } from './formatters';
 import {IAppState} from '#/store/interfaces';
 import {environment} from "#config";
@@ -61,11 +61,14 @@ export class RiichiApiService {
     this._personId = (personId || 0).toString();
   }
 
-  // TODO: formatters
-
   // returns game hashcode
   startGame(eventId: number, playerIds: number[]) {
     return this._jsonRpcRequest<string>('startGame', eventId, playerIds);
+  }
+
+  getMyEvents() {
+    return this._jsonRpcRequest<REventsList>('getMyEvents')
+      .then<LEventsList>(eventsListFormatter);
   }
 
   getGameConfig(eventId: number) {

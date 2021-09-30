@@ -1,7 +1,7 @@
 import { YakuId } from '#/primitives/yaku';
 import { RemoteError } from '#/services/remoteError';
 import {
-  LCurrentGame,
+  LCurrentGame, LEventsList,
   LGameConfig,
   LSessionOverview,
   LTimerState,
@@ -23,6 +23,7 @@ export const RESET_STATE = 'RESET_STATE';
 export const STARTUP_WITH_AUTH = 'STARTUP_WITH_AUTH';
 export const START_NEW_GAME = 'START_NEW_GAME';
 export const GO_TO_CURRENT_GAME = 'GO_TO_CURRENT_GAME';
+export const GOTO_EVENT_SELECT = 'GOTO_EVENT_SELECT';
 export const SEARCH_PLAYER = 'SEARCH_PLAYER';
 export const SHOW_LAST_RESULTS = 'SHOW_LAST_RESULTS';
 export const SHOW_GAME_LOG = 'SHOW_GAME_LOG';
@@ -85,6 +86,10 @@ export const START_GAME_FAIL = 'START_GAME_FAIL';
 export const ADD_ROUND_INIT = 'ADD_GAME_INIT';
 export const ADD_ROUND_SUCCESS = 'ADD_GAME_SUCCESS';
 export const ADD_ROUND_FAIL = 'ADD_GAME_FAIL';
+export const EVENTS_GET_LIST_INIT = 'EVENTS_GET_LIST_INIT';
+export const EVENTS_GET_LIST_SUCCESS = 'EVENTS_GET_LIST_SUCCESS';
+export const EVENTS_GET_LIST_FAIL = 'EVENTS_GET_LIST_FAIL';
+export const SELECT_EVENT = 'SELECT_EVENT';
 export const INIT_BLANK_OUTCOME = 'INIT_BLANK_OUTCOME';
 export const SELECT_MULTIRON_WINNER = 'SELECT_MULTIRON_WINNER';
 export const RANDOMIZE_NEWGAME_PLAYERS = 'RANDOMIZE_NEWGAME_PLAYERS';
@@ -128,6 +133,10 @@ interface StartNewGameAction {
 
 interface GoToCurrentGameAction {
   type: typeof GO_TO_CURRENT_GAME;
+}
+
+interface GoToEventSelectAction {
+  type: typeof GOTO_EVENT_SELECT;
 }
 
 interface SearchPlayerAction {
@@ -433,6 +442,25 @@ interface AddRoundActionFail {
   payload: RemoteError;
 }
 
+interface EventsGetListActionInit {
+  type: typeof EVENTS_GET_LIST_INIT;
+}
+
+interface EventsGetListActionSuccess {
+  type: typeof EVENTS_GET_LIST_SUCCESS;
+  payload: LEventsList;
+}
+
+interface EventsGetListActionFail {
+  type: typeof EVENTS_GET_LIST_FAIL;
+  payload: RemoteError;
+}
+
+interface SelectEventAction {
+  type: typeof SELECT_EVENT;
+  payload: number;
+}
+
 interface InitBlankOutcomeAction {
   type: typeof INIT_BLANK_OUTCOME;
   payload: Outcome;
@@ -530,6 +558,7 @@ export type AppActionTypes =
   | StartupWithAuthAction
   | StartNewGameAction
   | GoToCurrentGameAction
+  | GoToEventSelectAction
   | SearchPlayerAction
   | ShowLastResultsAction
   | ShowGameLogAction
@@ -611,5 +640,9 @@ export type AppActionTypes =
   | SetSelectHandTabAction
   | TrackArbitraryEventAction
   | TrackScreenEnterAction
+  | EventsGetListActionInit
+  | EventsGetListActionSuccess
+  | EventsGetListActionFail
+  | SelectEventAction
   ;
 

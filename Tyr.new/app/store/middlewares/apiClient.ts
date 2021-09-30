@@ -1,16 +1,17 @@
-import { Dispatch, MiddlewareAPI } from 'redux';
+import {Dispatch, MiddlewareAPI} from 'redux';
 import {
   ADD_ROUND_FAIL,
   ADD_ROUND_INIT,
   ADD_ROUND_SUCCESS,
-  AppActionTypes,
-  LOGIN_FAIL,
-  LOGIN_INIT,
-  LOGIN_SUCCESS,
+  AppActionTypes, EVENTS_GET_LIST_FAIL,
+  EVENTS_GET_LIST_INIT, EVENTS_GET_LIST_SUCCESS,
   FORCE_LOGOUT,
   GET_ALL_PLAYERS_FAIL,
   GET_ALL_PLAYERS_INIT,
-  GET_ALL_PLAYERS_SUCCESS, GET_ALL_ROUNDS_FAIL, GET_ALL_ROUNDS_INIT, GET_ALL_ROUNDS_SUCCESS,
+  GET_ALL_PLAYERS_SUCCESS,
+  GET_ALL_ROUNDS_FAIL,
+  GET_ALL_ROUNDS_INIT,
+  GET_ALL_ROUNDS_SUCCESS,
   GET_CHANGES_OVERVIEW_FAIL,
   GET_CHANGES_OVERVIEW_INIT,
   GET_CHANGES_OVERVIEW_SUCCESS,
@@ -21,19 +22,30 @@ import {
   GET_LAST_RESULTS_INIT,
   GET_LAST_RESULTS_SUCCESS,
   GET_OTHER_TABLE_FAIL,
-  GET_OTHER_TABLE_INIT, GET_OTHER_TABLE_LAST_ROUND_INIT, GET_OTHER_TABLE_RELOAD,
+  GET_OTHER_TABLE_INIT,
+  GET_OTHER_TABLE_LAST_ROUND_INIT,
+  GET_OTHER_TABLE_RELOAD,
   GET_OTHER_TABLE_SUCCESS,
   GET_OTHER_TABLES_LIST_FAIL,
-  GET_OTHER_TABLES_LIST_INIT, GET_OTHER_TABLES_LIST_RELOAD,
-  GET_OTHER_TABLES_LIST_SUCCESS, GO_TO_CURRENT_GAME,
+  GET_OTHER_TABLES_LIST_INIT,
+  GET_OTHER_TABLES_LIST_RELOAD,
+  GET_OTHER_TABLES_LIST_SUCCESS,
+  GO_TO_CURRENT_GAME,
+  GOTO_EVENT_SELECT,
+  LOGIN_FAIL,
+  LOGIN_INIT,
+  LOGIN_SUCCESS,
+  RESET_LOGIN_ERROR,
   RESET_STATE,
-  SET_CREDENTIALS, SET_TIMER,
+  SET_CREDENTIALS,
+  SET_TIMER,
   START_GAME_FAIL,
   START_GAME_INIT,
   START_GAME_SUCCESS,
+  STARTUP_WITH_AUTH,
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_INIT,
-  UPDATE_CURRENT_GAMES_SUCCESS, STARTUP_WITH_AUTH, RESET_LOGIN_ERROR,
+  UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
 import {RiichiApiService} from '#/services/riichiApi';
 import {LCurrentGame, LGameConfig, LTimerState, LUser} from '#/interfaces/local';
@@ -46,24 +58,23 @@ export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<
   let eventId: number | undefined = mw.getState().currentEventId;
 
   switch (action.type) {
-
-    // TODO #3: repair this action handler
     case STARTUP_WITH_AUTH:
       if (!action.payload.token) { // Not logged in
-        // TODO: looks like kludge. These two actions get user to the login screen.
-        mw.dispatch({ type: LOGIN_FAIL, payload: new RemoteError('Not logged in', '403') });
-        mw.dispatch({ type: RESET_LOGIN_ERROR }); // this resets error screen
+        forcedLogout(mw.dispatch);
         return;
       }
 
-      mw.dispatch({ type: SET_CREDENTIALS, payload: { authToken: action.payload.token, personId: action.payload.personId } });
-      mw.dispatch({ type: UPDATE_CURRENT_GAMES_INIT }); // TODO: move somewhere, persistent-storage mw is not best place for such logic
-      hash = mw.getState().currentSessionHash;
-      if (hash) {
-        mw.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: hash }); // TODO: and for this too
-      }
+      startupWithAuth(
+        api, mw.dispatch, next,
+        action.payload.personId, action.payload.token,
+        eventId, mw.getState().currentSessionHash
+      );
       break;
-
+    case EVENTS_GET_LIST_INIT:
+      api.getMyEvents()
+        .then((events) => mw.dispatch({ type: EVENTS_GET_LIST_SUCCESS, payload: events }))
+        .catch((err) => mw.dispatch({ type: EVENTS_GET_LIST_FAIL, payload: err }));
+      break;
     case LOGIN_INIT:
       loginWithRetry(action.payload, api, mw.dispatch, next);
       break;
@@ -276,4 +287,38 @@ function startGame(playerIds: number[], api: RiichiApiService, dispatch: Dispatc
       dispatchToStore({ type: GO_TO_CURRENT_GAME });
     })
     .catch((e) => dispatch({ type: START_GAME_FAIL, payload: e }));
+}
+
+function forcedLogout(dispatchToStore: Dispatch<AppActionTypes>) {
+  // TODO: looks like kludge. These two actions get user to the login screen.
+  dispatchToStore({ type: LOGIN_FAIL, payload: new RemoteError('Not logged in', '403') });
+  dispatchToStore({ type: RESET_LOGIN_ERROR }); // this resets error screen
+}
+
+function startupWithAuth(
+  api: RiichiApiService,
+  dispatchToStore: Dispatch<AppActionTypes>,
+  dispatchNext: Dispatch<AppActionTypes>,
+  personId: number,
+  token: string,
+  eventId?: number,
+  sessionHash?: string
+) {
+  api.setCredentials(personId, token);
+  api.quickAuthorize().then((isAuthorized) => {
+    dispatchToStore({
+      type: SET_CREDENTIALS,
+      payload: {authToken: token, personId: personId}
+    });
+    if (!eventId) {
+      dispatchToStore({type: GOTO_EVENT_SELECT});
+    } else {
+      updateCurrentGames(api, dispatchNext, dispatchToStore, personId, eventId);
+      if (sessionHash) {
+        dispatchToStore({type: GET_GAME_OVERVIEW_INIT, payload: sessionHash});
+      }
+    }
+  }).catch(() => {
+    forcedLogout(dispatchToStore);
+  });
 }

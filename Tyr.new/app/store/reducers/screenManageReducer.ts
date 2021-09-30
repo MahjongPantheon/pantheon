@@ -10,6 +10,7 @@ import {
   SHOW_OTHER_TABLE,
   SHOW_OTHER_TABLES_LIST,
   START_NEW_GAME,
+  GOTO_EVENT_SELECT,
 } from '../actions/interfaces';
 import { winnerHasYakuWithPao } from '../util';
 import {AppOutcome} from '#/interfaces/app';
@@ -44,6 +45,11 @@ export function screenManageReducer(
         ...state,
         currentScreen: 'newGame',
         newGameIdsToSet: action.payload
+      };
+    case GOTO_EVENT_SELECT:
+      return {
+        ...state,
+        currentScreen: 'eventSelector'
       };
     case GO_TO_CURRENT_GAME:
       return {
@@ -166,7 +172,10 @@ export function screenManageReducer(
         case 'settings':
         case 'newGame':
         case 'currentGame':
-          prevScreen = 'overview';
+        case 'eventSelector':
+          if (state.currentEventId) {
+            prevScreen = 'overview';
+          }
           break;
         case 'searchPlayer':
           prevScreen = 'newGame';

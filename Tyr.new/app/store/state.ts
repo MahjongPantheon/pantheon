@@ -70,8 +70,11 @@ export const initialState: IAppState = {
     otherTable: false,
     login: false,
     players: false,
-    addRound: false
+    addRound: false,
+    events: false,
   },
+
+  eventsList: [],
 
   newGameSelectedUsers: [defaultPlayer, defaultPlayer, defaultPlayer, defaultPlayer],
   gameOverviewReady: false,

@@ -19,6 +19,7 @@ import {GameResultScreen} from '#/components/screens/game-result/GameResultScree
 import {LoginScreen} from '#/components/screens/login/LoginScreen';
 import {LogScreen} from '#/components/screens/log/LogScreen';
 import { environment } from '#config';
+import {EventSelectScreen} from "#/components/screens/event-select/EventSelectScreen";
 
 interface IProps {
   state: IAppState;
@@ -33,6 +34,8 @@ const CurrentScreen: React.FC<IComponentProps> = (props) => {
   switch (state.currentScreen) {
     case 'login':
       return <LoginScreen {...props} />;
+    case 'eventSelector':
+      return <EventSelectScreen {...props} />;
     case 'overview':
       return <HomeScreen {...props} />;
     case 'settings':

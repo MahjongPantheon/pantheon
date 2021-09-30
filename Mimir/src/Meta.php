@@ -147,10 +147,11 @@ class Meta
             : intval($input['HTTP_X_CURRENT_PERSON_ID']));
 
         if (!empty($this->_currentPersonId)) {
-            if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->getAuthToken() ?? '')) {
-                $this->_currentPersonId = null;
-                $this->_authToken = null;
-            } else {
+            try {
+                if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->getAuthToken() ?? '')) {
+                    $this->_currentPersonId = null;
+                    $this->_authToken = null;
+                }
                 $this->_frey->getClient()->getHttpClient()->withHeaders([
                     'X-Auth-Token: ' . $this->_authToken,
                     'X-Current-Event-Id: ' . $this->_currentEventId ?: '0',
@@ -164,6 +165,9 @@ class Meta
                 } else if (!empty($this->_currentPersonId)) {
                     $this->_superadmin = $this->_frey->getSuperadminFlag($this->_currentPersonId);
                 }
+            } catch (\Exception $e) {
+                $this->_currentPersonId = null;
+                $this->_authToken = null;
             }
         }
 

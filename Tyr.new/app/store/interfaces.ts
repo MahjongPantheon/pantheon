@@ -1,6 +1,6 @@
 import { AppOutcome } from '#/interfaces/app';
 import {Player, Table, Yaku} from '#/interfaces/common';
-import {LGameConfig, LSessionOverview, LUser, LUserWithScore} from '#/interfaces/local';
+import {LEventsList, LGameConfig, LSessionOverview, LUser, LUserWithScore} from '#/interfaces/local';
 import {RRoundOverviewInfo, RRoundPaymentsInfo} from '#/interfaces/remote';
 import {Graph} from '#/primitives/graph';
 import {RemoteError} from '#/services/remoteError';
@@ -16,6 +16,7 @@ export type LoadingSet = {
   login: boolean;
   players: boolean;
   addRound: boolean;
+  events: boolean;
 };
 
 export type TimerData = {
@@ -99,6 +100,9 @@ export interface IAppState {
   loginError?: ErrorState;
 
   gameOverviewReady: boolean;
+
+  eventsList: LEventsList;
+  eventsListError?: RemoteError;
 }
 
 export type TimerStorage = {

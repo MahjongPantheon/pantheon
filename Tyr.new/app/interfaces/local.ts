@@ -67,6 +67,14 @@ export interface LWinItem {
   yaku: YakuId[];
 }
 
+export type LEvent = {
+  id: number;
+  title: string;
+  description: string;
+}
+
+export type LEventsList = LEvent[];
+
 export interface LSessionOverview {
   currentRound: number;
   riichiOnTable: number;
