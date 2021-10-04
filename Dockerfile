@@ -34,6 +34,8 @@ ENV PHINX_DB_FREY_USER frey
 ENV PHINX_DB_FREY_PASS pgpass
 ENV PHINX_DB_FREY_PORT $DB_PORT
 
+ENV PHP_IDE_CONFIG serverName=pantheon
+
 RUN apk update && \
     apk upgrade && \
     apk add --update tzdata && \
@@ -69,6 +71,7 @@ RUN apk update && \
     php7-xmlreader \
     php7-xmlwriter \
     php7-xmlrpc \
+    php7-xdebug \
     php7-phpdbg \
     php7-iconv \
     php7-curl \
@@ -102,6 +105,11 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.d/www.co
     sed -i "s|;*opcache.interned_strings_buffer=.*|opcache.interned_strings_buffer=8|i" /etc/php7/php.ini && \
     sed -i "s|;*opcache.max_accelerated_files=.*|opcache.max_accelerated_files=4000|i" /etc/php7/php.ini && \
     sed -i "s|;*opcache.fast_shutdown=.*|opcache.fast_shutdown=1|i" /etc/php7/php.ini
+RUN echo -ne "zend_extension=xdebug.so\n \
+          xdebug.mode=debug\n \
+          xdebug.start_with_request=yes\n \
+          xdebug.client_host=172.17.0.1\n \
+          xdebug.client_port=9001\n" > /etc/php7/conf.d/50_xdebug.ini
 
 # Cleaning up
 RUN mkdir /www && \
@@ -113,7 +121,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/php7/error.log
 
 # Expose ports
-EXPOSE 4001 4002 4003 4004 4005 $DB_PORT
+EXPOSE 4001 4002 4003 4004 4005 $DB_PORT 9001
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh

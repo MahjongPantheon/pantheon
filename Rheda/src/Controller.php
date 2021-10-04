@@ -239,10 +239,13 @@ abstract class Controller
             // @phpstan-ignore-next-line
             'X-Api-Version: ' . Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
         ]);
+
         // @phpstan-ignore-next-line
         if (Sysconf::DEBUG_MODE) {
             $client->withDebug();
+            $client->withCookies(['XDEBUG_SESSION=PHPSTORM']);
             $this->_frey->getClient()->getHttpClient()->withDebug();
+            $this->_frey->getClient()->getHttpClient()->withCookies(['XDEBUG_SESSION=PHPSTORM']);
         }
 
         $this->_rulesList = [];
