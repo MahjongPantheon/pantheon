@@ -97,6 +97,7 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.d/www.co
     sed -i "s|;*error_log =.*|error_log = ${PHP_LOGFILE}|i" /etc/php7/php.ini && \
     sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${MAX_UPLOAD}|i" /etc/php7/php.ini && \
     sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /etc/php7/php.ini && \
+    sed -i "s|;*max_execution_time =.*|max_execution_time = 1000|i" /etc/php7/php.ini && \
     sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /etc/php7/php.ini && \
     sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo = 0|i" /etc/php7/php.ini && \
     sed -i "s|;*opcache.enable=.*|opcache.enable = 1|i" /etc/php7/php.ini && \

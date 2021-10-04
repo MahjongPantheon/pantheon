@@ -48,8 +48,10 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
   }
 
   componentDidMount() {
-    const {dispatch} = this.props;
-    dispatch({ type: GET_GAME_OVERVIEW_INIT });
+    if (this.props.state.currentEventId) {
+      const {dispatch} = this.props;
+      dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
+    }
   }
 
   render() {

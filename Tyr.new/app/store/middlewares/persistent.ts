@@ -42,7 +42,7 @@ export const persistentMw = (storage: IDBImpl) => (mw: MiddlewareAPI<Dispatch<Ap
       next(action);
       break;
     case SELECT_EVENT:
-      storage.set(environment.idbIdKey, 'int', action.payload);
+      storage.set(environment.idbEventKey, 'int', action.payload);
       next(action);
       break;
     case SETTINGS_SAVE_LANG:

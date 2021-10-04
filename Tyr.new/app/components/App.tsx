@@ -4,7 +4,7 @@ import '../styles/base.css'
 import '../styles/themes.css'
 import '../styles/variables.css'
 import {IAppState} from '#/store/interfaces';
-import {AppActionTypes, INIT_STATE, STARTUP_WITH_AUTH} from '#/store/actions/interfaces';
+import {AppActionTypes, INIT_STATE, SELECT_EVENT, STARTUP_WITH_AUTH} from '#/store/actions/interfaces';
 import { Dispatch } from "redux";
 import {IComponentProps} from '#/components/IComponentProps';
 import {HomeScreen} from '#/components/screens/home/HomeScreen';
@@ -68,6 +68,10 @@ export const App: React.FC<IProps> = (props: IProps) => {
 
   useEffect(() => {
     dispatch({type: INIT_STATE});
+    const event = storage.get(environment.idbEventKey, 'int');
+    if (event) {
+      dispatch({type: SELECT_EVENT, payload: event });
+    }
     dispatch({type: STARTUP_WITH_AUTH, payload: {
       token: storage.get(environment.idbTokenKey, 'string') || '',
       personId: storage.get(environment.idbIdKey, 'int')
