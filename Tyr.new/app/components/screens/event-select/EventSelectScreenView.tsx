@@ -27,12 +27,12 @@ export const EventSelectScreenView = React.memo(function (props: IProps) {
         <TopPanel onBackClick={onBackClick}/>
         <div className="page-event-select__name">{playerName}</div>
         <div className="page-event-select__section">
-          <div className="page-setting__section-title">Select event</div>
-          <div className="page-setting__section-content">
+          <div className="page-event-select__section-title">Select event</div>
+          <div className="page-event-select__section-content">
             {events.map(event => (
               <div
                 key={event.id}
-                className={classNames('radio-btn radio-btn--small', {'radio-btn--active': event.id === currentEvent})}
+                className={classNames('radio-menuitem', {'radio-menuitem--active': event.id === currentEvent})}
                 onClick={() => onSelectEvent(event.id)}
               >{event.title}</div>
             ))}

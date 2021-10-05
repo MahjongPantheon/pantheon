@@ -1,3 +1,3 @@
 import {IAppState} from '../interfaces';
 
-export const isLoading = (state: IAppState) => state.loading.overview || state.loading.addRound;
+export const isLoading = (state: IAppState) => state.loading.overview || state.loading.addRound || state.loading.games;

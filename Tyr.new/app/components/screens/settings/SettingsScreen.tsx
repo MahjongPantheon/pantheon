@@ -1,7 +1,13 @@
 import * as React from 'react';
 import {SettingsScreenView} from '#/components/screens/settings/SettingsScreenView';
 import {IComponentProps} from '#/components/IComponentProps';
-import {FORCE_LOGOUT, GOTO_PREV_SCREEN, SETTINGS_SAVE_LANG, SETTINGS_SAVE_THEME} from '#/store/actions/interfaces';
+import {
+  FORCE_LOGOUT,
+  GOTO_EVENT_SELECT,
+  GOTO_PREV_SCREEN,
+  SETTINGS_SAVE_LANG,
+  SETTINGS_SAVE_THEME
+} from '#/store/actions/interfaces';
 import {supportedLanguages} from '#/services/i18n';
 import {themes} from '#/services/themes';
 
@@ -31,6 +37,10 @@ export class SettingsScreen extends React.PureComponent<IComponentProps>{
     dispatch({ type: SETTINGS_SAVE_THEME, payload: theme })
   }
 
+  private onEventSelect() {
+    const {dispatch} = this.props;
+    dispatch({ type: GOTO_EVENT_SELECT });
+  }
 
   render() {
     const {state} = this.props;
@@ -50,6 +60,7 @@ export class SettingsScreen extends React.PureComponent<IComponentProps>{
         onSingleDeviceModeChange={this.onSingleDeviceModeChange.bind(this)}
         onLangChange={this.onLangChange.bind(this)}
         onThemeSelect={this.onThemeSelect.bind(this)}
+        onEventSelect={this.onEventSelect.bind(this)}
       />
     )
   }

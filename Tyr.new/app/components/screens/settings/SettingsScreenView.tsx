@@ -1,22 +1,23 @@
 import * as React from "react";
 import './page-setting.css'
-import {Switch} from '#/components/general/switch/Switch';
+// import {Switch} from '#/components/general/switch/Switch';
 import {TopPanel} from '#/components/general/top-panel/TopPanel';
 import classNames from 'classnames';
 import {Theme} from '#/services/themes';
 
 interface IProps {
-  playerName: string
-  supportedLanguages: string[]
-  currentLanguage: string
-  supportedThemes: Theme[]
-  currentTheme: string
-  singleDeviceMode: boolean
-  onLogout: () => void
-  onBackClick: () => void
-  onSingleDeviceModeChange: () => void
-  onLangChange: (lang: string) => void
-  onThemeSelect: (theme: string) => void
+  playerName: string;
+  supportedLanguages: string[];
+  currentLanguage: string;
+  supportedThemes: Theme[];
+  currentTheme: string;
+  singleDeviceMode: boolean;
+  onLogout: () => void;
+  onBackClick: () => void;
+  onSingleDeviceModeChange: () => void;
+  onLangChange: (lang: string) => void;
+  onThemeSelect: (theme: string) => void;
+  onEventSelect: () => void;
 }
 
 export const SettingsScreenView = React.memo(function (props: IProps) {
@@ -26,12 +27,13 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
     currentLanguage,
     supportedThemes,
     currentTheme,
-    singleDeviceMode,
+    // singleDeviceMode,
     onLogout,
     onBackClick,
-    onSingleDeviceModeChange,
+    // onSingleDeviceModeChange,
     onLangChange,
     onThemeSelect,
+    onEventSelect,
   } = props;
 
   return (
@@ -70,14 +72,19 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
           </div>
         </div>
         <div className="page-setting__section">
-          <div className="switch-setting">
-            <Switch switched={singleDeviceMode} onToggle={onSingleDeviceModeChange}/>
-            <div className="switch-setting__description">
-              <div className="switch-setting__caption">Single device mode</div>
-              <div className="switch-setting__info">Turn on if you use one device on table during the game</div>
-            </div>
+          <div className="page-setting__section-content">
+            <button onClick={() => onEventSelect()}>Select another event</button>
           </div>
         </div>
+        {/*<div className="page-setting__section">*/}
+        {/*  <div className="switch-setting">*/}
+        {/*    <Switch switched={singleDeviceMode} onToggle={onSingleDeviceModeChange}/>*/}
+        {/*    <div className="switch-setting__description">*/}
+        {/*      <div className="switch-setting__caption">Single device mode</div>*/}
+        {/*      <div className="switch-setting__info">Turn on if you use one device on table during the game</div>*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
       </div>
       <div className="flex-container__bottom page-setting__bottom" onClick={onLogout}>
         <div className="link">Log out</div>

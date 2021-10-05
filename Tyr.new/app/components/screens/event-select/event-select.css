@@ -15,28 +15,28 @@
 
 .page-event-select__section-content {
   margin-top: 16px;
-  display: flex;
 }
 
 .page-event-select__section-content > div {
-  margin-right: 24px;
-}
-
-.switch-setting {
-  display: flex;
-}
-
-.switch-setting__description {
-  margin-left: 16px;
-}
-
-.switch-setting__info {
-  margin-top: 12px;
-  color: var(--color-secondary-2);
-  font-size: var(--font-size-small-1);
+  margin: 14px 0;
 }
 
 .page-event-select__bottom {
   margin: 16px 24px;
 }
 
+.radio-menuitem {
+  border: 1px solid var(--primary-text-color);
+  display: block;
+  padding: 10px;
+}
+
+.radio-menuitem--active {
+  border: none;
+  background-color: var(--color-primary);
+  color: var(--secondary-text-color);
+}
+
+.radio-menuitem:not(.radio-menuitem--active):active {
+  background-color: var(--color-secondary-6);
+}
