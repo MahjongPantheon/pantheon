@@ -13,10 +13,6 @@ import {LUser} from '#/interfaces/local';
 import {getPlayers} from '#/store/selectors/screenNewGameSelectors';
 
 export class SearchPlayerScreen extends React.Component<IComponentProps> {
-  constructor(props: IComponentProps) {
-    super(props);
-  }
-
   private onUserClick(user: LUser) {
     const {dispatch, state} = this.props;
     if (state.newGameSelectedPlayerSide) {
@@ -47,12 +43,7 @@ export class SearchPlayerScreen extends React.Component<IComponentProps> {
 
   render() {
     const {state} = this.props;
-
-    let possiblePlayers = getPlayers(state)
-
-    if (!possiblePlayers) {
-      return null;
-    }
+    const possiblePlayers = getPlayers(state) || [];
 
     return (
       <SearchPlayerView

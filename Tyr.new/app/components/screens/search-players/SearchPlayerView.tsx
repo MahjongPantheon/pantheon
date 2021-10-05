@@ -16,12 +16,13 @@ type IState = {
 export class SearchPlayerView extends React.PureComponent<IProps, IState>{
   constructor(props: IProps) {
     super(props);
-
-    this.state = {foundUsers: props.users}
+    this.state = {foundUsers: props.users};
   }
 
   private onSearchChange(value: string) {
-    const newUsers = this.props.users.filter(user => user.displayName.includes(value))
+    const newUsers = this.props.users.filter((user) => {
+      return user.displayName.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+    });
     this.setState({foundUsers: newUsers})
   }
 
