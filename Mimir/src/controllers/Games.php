@@ -72,7 +72,7 @@ class GamesController extends Controller
     public function definalizeGame($gameHashcode)
     {
         $this->_log->addInfo('Definalizing session #' . $gameHashcode);
-        $success = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->definalizeSession($gameHashcode);
+        $success = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))->definalizeSession($gameHashcode);
         $this->_log->addInfo('Successfully definalized session #' . $gameHashcode);
         return $success;
     }
@@ -256,7 +256,7 @@ class GamesController extends Controller
     public function addPenaltyGame($eventId, $players)
     {
         $this->_log->addInfo('Adding penalty game with players id# ' . implode(',', $players));
-        $gameHash = (new PenaltySessionModel($this->_db, $this->_config, $this->_meta))->addPenaltyGame($eventId, $players);
+        $gameHash = (new PenaltySessionModel($this->_ds, $this->_config, $this->_meta))->addPenaltyGame($eventId, $players);
         $this->_log->addInfo('Successfully added penalty game with players id# ' . implode(',', $players));
         return $gameHash;
     }

@@ -365,7 +365,7 @@ class PlayersController extends Controller
      */
     protected function _getAllRoundsCommon(SessionPrimitive $session)
     {
-        $rounds = RoundPrimitive::findBySessionIds($this->_db, [$session->getId()]);
+        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$session->getId()]);
 
         $multiGet = function (RoundPrimitive $p, $method) {
             if ($p instanceof MultiRoundPrimitive) {
@@ -436,7 +436,7 @@ class PlayersController extends Controller
     public function getAllRoundsByHash($hashcode)
     {
         $this->_log->addInfo('Getting last all rounds for hashcode ' . $hashcode);
-        $session = SessionPrimitive::findByRepresentationalHash($this->_db, [$hashcode]);
+        $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hashcode]);
         if (empty($session)) {
             return null;
         }

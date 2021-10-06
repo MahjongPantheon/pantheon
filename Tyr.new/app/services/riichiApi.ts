@@ -87,7 +87,7 @@ export class RiichiApiService {
   }
 
   getAllPlayers(eventId: number) {
-    return this._jsonRpcRequest<RAllPlayersInEvent>('getAllEnrolled', eventId)
+    return this._jsonRpcRequest<RAllPlayersInEvent>('getAllPlayers', [eventId])
       .then<LUser[]>(userListFormatter);
   }
 
