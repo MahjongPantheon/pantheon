@@ -28,6 +28,7 @@ import {
   GET_OTHER_TABLES_LIST_FAIL,
   GET_OTHER_TABLES_LIST_INIT,
   GET_OTHER_TABLES_LIST_SUCCESS,
+  HISTORY_INIT,
   LOGIN_FAIL,
   LOGIN_INIT,
   LOGIN_SUCCESS,
@@ -561,6 +562,11 @@ export function mimirReducer(
         ...state,
         currentEventId: action.payload,
         currentScreen: 'overview'
+      };
+    case HISTORY_INIT:
+      return {
+        ...state,
+        historyInitialized: true
       };
     default:
       return state;

@@ -1,18 +1,27 @@
 import { Dispatch, MiddlewareAPI } from 'redux';
 import {
   AppActionTypes,
-  LOGIN_FAIL,
-  GET_GAME_OVERVIEW_FAIL,
-  GET_GAME_OVERVIEW_INIT,
-  GET_GAME_OVERVIEW_SUCCESS,
-  UPDATE_CURRENT_GAMES_FAIL,
-  UPDATE_CURRENT_GAMES_SUCCESS
 } from '../actions/interfaces';
 import { IAppState } from "#/store/interfaces";
+import {GOTO_PREV_SCREEN, HISTORY_INIT} from "../../../../Tyr/src/app/services/store/actions/interfaces";
 
 export const history = (/* HistoryService ? */) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
-// TODO !
+    case HISTORY_INIT:
+      if (!mw.getState().historyInitialized) {
+        // initial push to make some history to return to
+        window.history.pushState({}, '', '/');
+
+        // Register handler
+        window.onpopstate = (): any => {
+          // Any history pop we do as BACK event!
+          mw.dispatch({type: GOTO_PREV_SCREEN});
+          // Then make another dummy history item
+          window.history.pushState({}, '');
+        };
+        next(action);
+      }
+      break;
     default:
   }
 

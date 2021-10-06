@@ -78,6 +78,8 @@ export const initialState: IAppState = {
 
   newGameSelectedUsers: [defaultPlayer, defaultPlayer, defaultPlayer, defaultPlayer],
   gameOverviewReady: false,
+
+  historyInitialized: false,
 };
 
 export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcome {

@@ -37,8 +37,8 @@ import {
   LOGIN_FAIL,
   LOGIN_INIT,
   LOGIN_SUCCESS,
-  RESET_LOGIN_ERROR,
   RESET_STATE,
+  SELECT_EVENT,
   SET_CREDENTIALS,
   SET_TIMER,
   START_GAME_FAIL,
@@ -309,6 +309,7 @@ function startupWithAuth(
     if (!eventId) {
       dispatchToStore({type: GOTO_EVENT_SELECT});
     } else {
+      dispatchToStore({ type: SELECT_EVENT, payload: eventId });
       updateCurrentGames(api, dispatchNext, dispatchToStore, personId, eventId);
       if (sessionHash) {
         dispatchToStore({type: GET_GAME_OVERVIEW_INIT, payload: sessionHash});

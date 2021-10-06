@@ -103,6 +103,8 @@ export interface IAppState {
 
   eventsList: LEventsList;
   eventsListError?: RemoteError;
+
+  historyInitialized: boolean;
 }
 
 export type TimerStorage = {

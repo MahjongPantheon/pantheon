@@ -4,8 +4,8 @@ import '../styles/base.css'
 import '../styles/themes.css'
 import '../styles/variables.css'
 import {IAppState} from '#/store/interfaces';
-import {AppActionTypes, INIT_STATE, SELECT_EVENT, STARTUP_WITH_AUTH} from '#/store/actions/interfaces';
-import { Dispatch } from "redux";
+import {AppActionTypes, HISTORY_INIT, INIT_STATE, SELECT_EVENT, STARTUP_WITH_AUTH} from '#/store/actions/interfaces';
+import {Dispatch} from "redux";
 import {IComponentProps} from '#/components/IComponentProps';
 import {HomeScreen} from '#/components/screens/home/HomeScreen';
 import {SettingsScreen} from '#/components/screens/settings/SettingsScreen';
@@ -18,7 +18,7 @@ import {I18nService} from '#/services/i18n';
 import {GameResultScreen} from '#/components/screens/game-result/GameResultScreen';
 import {LoginScreen} from '#/components/screens/login/LoginScreen';
 import {LogScreen} from '#/components/screens/log/LogScreen';
-import { environment } from '#config';
+import {environment} from '#config';
 import {EventSelectScreen} from "#/components/screens/event-select/EventSelectScreen";
 
 interface IProps {
@@ -68,6 +68,7 @@ export const App: React.FC<IProps> = (props: IProps) => {
 
   useEffect(() => {
     dispatch({type: INIT_STATE});
+    dispatch({type: HISTORY_INIT});
     const event = storage.get(environment.idbEventKey, 'int');
     if (event) {
       dispatch({type: SELECT_EVENT, payload: event });
