@@ -53,6 +53,7 @@ import {RiichiApiService} from '#/services/riichiApi';
 import {LCurrentGame, LGameConfig, LTimerState, LUser} from '#/interfaces/local';
 import {RemoteError} from '#/services/remoteError';
 import {IAppState} from '../interfaces';
+import {SessionState} from "#/interfaces/remote";
 
 export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
@@ -261,7 +262,9 @@ function addRound(state: IAppState, api: RiichiApiService, dispatch: Dispatch, d
         dispatch({ type: ADD_ROUND_FAIL, payload: { code: 500, message: 'Server error occurred while saving the game' } });
       }
       dispatch({ type: ADD_ROUND_SUCCESS, payload: data });
-      dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: state.currentSessionHash });
+      if (!(data as SessionState)._isFinished) {
+        dispatchToStore({type: GET_GAME_OVERVIEW_INIT, payload: state.currentSessionHash});
+      }
     }).catch((e) => dispatch({ type: ADD_ROUND_FAIL, payload: e }));
 }
 
@@ -285,6 +288,7 @@ function startGame(playerIds: number[], api: RiichiApiService, dispatch: Dispatc
     .then((results) => {
       dispatchToStore({ type: START_GAME_SUCCESS, payload: results });
       dispatchToStore({ type: RESET_STATE });
+      dispatchToStore({ type: SELECT_EVENT, payload: eventId });
       dispatchToStore({ type: UPDATE_CURRENT_GAMES_INIT });
       dispatchToStore({ type: GO_TO_CURRENT_GAME });
     })

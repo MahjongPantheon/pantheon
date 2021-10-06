@@ -7,7 +7,7 @@ import {
   SELECT_NEWGAME_PLAYER_NORTH,
   SELECT_NEWGAME_PLAYER_SOUTH,
   SELECT_NEWGAME_PLAYER_EAST,
-  GOTO_PREV_SCREEN,
+  GOTO_PREV_SCREEN, GET_ALL_PLAYERS_INIT,
 } from '#/store/actions/interfaces';
 import {LUser} from '#/interfaces/local';
 import {getPlayers} from '#/store/selectors/screenNewGameSelectors';
@@ -39,6 +39,10 @@ export class SearchPlayerScreen extends React.Component<IComponentProps> {
 
   private onBackClick() {
     this.props.dispatch({ type: GOTO_PREV_SCREEN });
+  }
+
+  componentDidMount() {
+    this.props.dispatch({ type: GET_ALL_PLAYERS_INIT });
   }
 
   render() {

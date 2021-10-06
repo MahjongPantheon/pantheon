@@ -494,9 +494,10 @@ export function mimirReducer(
     case ADD_ROUND_SUCCESS:
       if (action.payload._isFinished) {
         const cleanState = deepclone(initialState);
-        cleanState.gameConfig = state.gameConfig;
         return {
           ...cleanState,
+          eventsList: state.eventsList,
+          currentEventId: state.currentEventId,
           currentScreen: 'lastResults',
           gameConfig: state.gameConfig,
           currentPlayerDisplayName: state.currentPlayerDisplayName,
