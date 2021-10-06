@@ -1,0 +1,18 @@
+.page-other-tables-list {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-other-tables-list__content {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.page-other-tables-list__table {
+  margin: 0px 16px 20px 16px;
+}
+
+.page-other-tables-list__table:active {
+  background-color: var(--color-secondary-6);
+}

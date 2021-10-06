@@ -5,8 +5,13 @@ import {RRoundOverviewInfo, RRoundPaymentsInfo} from '#/interfaces/remote';
 import {Graph} from '#/primitives/graph';
 import {RemoteError} from '#/services/remoteError';
 
-export type AppScreen = 'eventSelector' | 'overview' | 'currentGame' | 'outcomeSelect' | 'playersSelect' | 'otherTable' | 'otherTablesList'
-  | 'handSelect' | 'confirmation' | 'newGame' | 'searchPlayer' | 'lastResults' | 'gameLog' | 'login' | 'paoSelect' | 'settings' | 'nagashiSelect';
+export type AppScreen =
+  'eventSelector' | 'overview' | 'currentGame' |
+  'outcomeSelect' | 'playersSelect' | 'otherTable' |
+  'otherTablesList' | 'handSelect' | 'confirmation' |
+  'newGame' | 'searchPlayer' | 'lastResults' |
+  'gameLog' | 'login' | 'paoSelect' | 'settings' |
+  'nagashiSelect';
 
 export type LoadingSet = {
   games: boolean;

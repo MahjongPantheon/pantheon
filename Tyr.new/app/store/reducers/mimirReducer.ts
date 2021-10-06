@@ -425,6 +425,7 @@ export function mimirReducer(
           otherTables: false
         },
         otherTablesList: action.payload,
+        currentScreen: 'otherTablesList',
         otherTablesListError: undefined
       };
     case GET_OTHER_TABLES_LIST_FAIL:
@@ -434,6 +435,7 @@ export function mimirReducer(
           ...state.loading,
           otherTables: false
         },
+        currentScreen: 'otherTablesList',
         otherTablesListError: {
           message: action.payload.message,
           details: action.payload
@@ -460,6 +462,7 @@ export function mimirReducer(
           ...state.loading,
           otherTable: false
         },
+        currentScreen: 'otherTable',
         currentOtherTable: action.payload,
         currentOtherTableIndex: action.payload.tableIndex,
         // currentOtherTableLastRound: action.payload, // TODO wat
@@ -473,6 +476,7 @@ export function mimirReducer(
           ...state.loading,
           otherTable: false
         },
+        currentScreen: 'otherTable',
         currentOtherTable: undefined,
         currentOtherTableHash: undefined,
         currentOtherTableIndex: 0,

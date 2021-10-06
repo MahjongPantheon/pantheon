@@ -6,7 +6,6 @@ import {
   SEARCH_PLAYER, START_GAME_INIT,
 } from '#/store/actions/interfaces';
 import {NewGameScreenView} from '#/components/screens/new-game/NewGameScreenView';
-import {isLoading} from '#/store/selectors/screenConfirmationSelectors';
 import {Preloader} from '#/components/general/preloader/Preloader';
 
 export class NewGameScreen extends React.PureComponent<IComponentProps>{

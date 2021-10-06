@@ -51,7 +51,6 @@ class InteractiveSessionModel extends Model
      */
     public function startGame($eventId, $playerIds, $tableIndex = null, $replayHash = null)
     {
-        $this->_checkAuth($playerIds);
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');

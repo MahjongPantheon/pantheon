@@ -20,6 +20,7 @@ import {LoginScreen} from '#/components/screens/login/LoginScreen';
 import {LogScreen} from '#/components/screens/log/LogScreen';
 import {environment} from '#config';
 import {EventSelectScreen} from "#/components/screens/event-select/EventSelectScreen";
+import {OtherTablesList} from "#/components/screens/other-tables-list/OtherTablesListScreen";
 
 interface IProps {
   state: IAppState;
@@ -57,6 +58,10 @@ const CurrentScreen: React.FC<IComponentProps> = (props) => {
       return <GameResultScreen {...props} />
     case 'gameLog':
       return <LogScreen {...props} />
+    case 'otherTablesList':
+      return <OtherTablesList {...props} />
+    case 'otherTable':
+      // TODO!
   }
 
   return null
