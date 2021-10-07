@@ -32,13 +32,13 @@ class PlayerRegistrationPrimitive extends Primitive
     protected static $_table = 'event_registered_players';
 
     protected static $_fieldsMapping = [
-        'id'            => '_id',
-        'event_id'      => '_eventId',
-        'player_id'     => '_playerId',
-        'auth_token'    => '_token',
-        'local_id'      => '_localId',
+        'id'             => '_id',
+        'event_id'       => '_eventId',
+        'player_id'      => '_playerId',
+        'replacement_id' => '_replacementPlayerId',
+        'local_id'       => '_localId',
         'ignore_seating' => '_ignoreSeating',
-        'team_name'     => '_teamName',
+        'team_name'      => '_teamName',
     ];
 
     protected function _getFieldsTransforms()
@@ -46,7 +46,7 @@ class PlayerRegistrationPrimitive extends Primitive
         return [
             '_id' => $this->_integerTransform(true),
             '_eventId' => $this->_integerTransform(),
-            '_token' => $this->_stringTransform(),
+            '_replacementPlayerId' => $this->_integerTransform(true),
             '_playerId' => $this->_integerTransform(),
             '_localId' => $this->_integerTransform(true),
             '_ignoreSeating' => $this->_integerTransform(),
@@ -54,35 +54,13 @@ class PlayerRegistrationPrimitive extends Primitive
         ];
     }
 
-    /**
-     * Local id
-     * @var int|null
-     */
-    protected $_id;
-    /**
-     * @var int
-     */
-    protected $_eventId;
-    /**
-     * @var int
-     */
-    protected $_playerId;
-    /**
-     * @var string
-     */
-    protected $_token;
-    /**
-     * @var int|null
-     */
-    protected $_localId = null;
-    /**
-     * @var int
-     */
-    protected $_ignoreSeating;
-    /**
-     * @var string
-     */
-    protected $_teamName;
+    protected ?int $_id;
+    protected int $_eventId;
+    protected int $_playerId;
+    protected ?int $_replacementPlayerId;
+    protected ?int $_localId = null;
+    protected int $_ignoreSeating;
+    protected string $_teamName;
 
     /**
      * @return bool|mixed
@@ -91,30 +69,9 @@ class PlayerRegistrationPrimitive extends Primitive
     protected function _create()
     {
         $playerReg = $this->_ds->table(self::$_table)->create();
-        if (empty($this->_token)) {
-            $this->_token = sha1('PlayerReg' . microtime());
-        }
-
-        try {
-            $success = $this->_save($playerReg);
-            if ($success) {
-                $this->_id = $this->_ds->local()->lastInsertId();
-            }
-        } catch (\PDOException $e) { // duplicate unique key, get existing item
-            var_dump($this->_ds->local()->debug());
-            $existingItem = self::findByPlayerAndEvent($this->_ds, $this->_playerId, $this->_eventId);
-            if (!empty($existingItem)) {
-                $this->_id = $existingItem[0]->_id;
-                $this->_eventId = $existingItem[0]->_eventId;
-                $this->_playerId = $existingItem[0]->_playerId;
-                $this->_localId = $existingItem[0]->_localId;
-                $this->_teamName = $existingItem[0]->_teamName;
-                $this->_token = sha1('PlayerReg' . microtime()); // Token to be updated on every re-issue!
-                $this->save();
-                $success = true;
-            } else {
-                $success = false;
-            }
+        $success = $this->_save($playerReg);
+        if ($success) {
+            $this->_id = $this->_ds->local()->lastInsertId();
         }
 
         return $success;
@@ -134,11 +91,11 @@ class PlayerRegistrationPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return int|null
      */
-    public function getToken()
+    public function getReplacementPlayerId()
     {
-        return $this->_token;
+        return $this->_replacementPlayerId;
     }
 
     public function getEventId(): int
@@ -257,12 +214,12 @@ class PlayerRegistrationPrimitive extends Primitive
             }
 
             $upsertData []= [
-                'id'            => $regItem->getId(),
-                'event_id'      => $eventId,
-                'player_id'     => $regItem->getPlayerId(),
-                'auth_token'    => $regItem->getToken(),
-                'local_id'      => $idMap[$regItem->getPlayerId()],
-                'team_name'     => empty($regItem->getTeamName()) ? '' : $regItem->getTeamName()
+                'id'             => $regItem->getId(),
+                'event_id'       => $eventId,
+                'player_id'      => $regItem->getPlayerId(),
+                'replacement_id' => $regItem->getReplacementPlayerId(),
+                'local_id'       => $idMap[$regItem->getPlayerId()],
+                'team_name'      => empty($regItem->getTeamName()) ? '' : $regItem->getTeamName()
             ];
         }
         return $ds->local()->upsertQuery(self::$_table, $upsertData, ['id']);
@@ -287,12 +244,12 @@ class PlayerRegistrationPrimitive extends Primitive
             }
 
             $upsertData []= [
-                'id'            => $regItem->getId(),
-                'event_id'      => $eventId,
-                'player_id'     => $regItem->getPlayerId(),
-                'auth_token'    => $regItem->getToken(),
-                'local_id'      => empty($regItem->getLocalId()) ? null : $regItem->getLocalId(),
-                'team_name'     => $idMap[$regItem->getPlayerId()]
+                'id'             => $regItem->getId(),
+                'event_id'       => $eventId,
+                'player_id'      => $regItem->getPlayerId(),
+                'replacement_id' => $regItem->getReplacementPlayerId(),
+                'local_id'       => empty($regItem->getLocalId()) ? null : $regItem->getLocalId(),
+                'team_name'      => $idMap[$regItem->getPlayerId()]
             ];
         }
         return $ds->local()->upsertQuery(self::$_table, $upsertData, ['id']);
@@ -337,31 +294,25 @@ class PlayerRegistrationPrimitive extends Primitive
         return $this;
     }
 
-    /**
-     * @param int|null $localId
-     * @return $this
-     */
-    public function setLocalId($localId)
+    public function setLocalId(?int $localId): PlayerRegistrationPrimitive
     {
         $this->_localId = $localId;
         return $this;
     }
 
-    /**
-     * @param int $ignoreSeating
-     * @return $this
-     */
-    public function setIgnoreSeating($ignoreSeating)
+    public function setReplacementPlayerId(?int $replacementPlayerId): PlayerRegistrationPrimitive
+    {
+        $this->_replacementPlayerId = $replacementPlayerId;
+        return $this;
+    }
+
+    public function setIgnoreSeating(int $ignoreSeating): PlayerRegistrationPrimitive
     {
         $this->_ignoreSeating = $ignoreSeating;
         return $this;
     }
 
-    /**
-     * @param string $teamName
-     * @return $this
-     */
-    public function setTeamName($teamName)
+    public function setTeamName(string $teamName): PlayerRegistrationPrimitive
     {
         $this->_teamName = $teamName;
         return $this;

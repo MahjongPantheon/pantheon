@@ -38,6 +38,10 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
      */
     protected $_players;
     /**
+     * @var PlayerRegistrationPrimitive[]
+     */
+    protected $_regs;
+    /**
      * @var SessionPrimitive
      */
     protected $_session;
@@ -49,15 +53,6 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
     public function setUp()
     {
         $this->_db = Db::__getCleanTestingInstance();
-
-        $this->_players = array_map(function ($i) {
-            $p = (new PlayerPrimitive($this->_db))
-                ->setDisplayName('player' . $i)
-                ->setIdent('oauth' . $i)
-                ->setTenhouId('tenhou' . $i);
-            $p->save();
-            return $p;
-        }, [1, 2, 3, 4]);
 
         $this->_ruleset = new MockRuleset();
         $this->_ruleset->setRule('withButtobi', false);
@@ -79,9 +74,20 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setTitle('title')
             ->setDescription('desc')
             ->setTimezone('UTC')
-            ->setType('online')
             ->setRuleset($this->_ruleset);
         $this->_event->save();
+
+        $this->_regs = [];
+        $this->_players = array_map(function ($i) {
+            $p = (new PlayerPrimitive($this->_db))
+                ->setDisplayName('player' . $i)
+                ->setTenhouId('tenhou' . $i);
+            $p->save();
+            $regs[$p->getId()] = (new PlayerRegistrationPrimitive($this->_db))
+                ->setReg($p, $this->_event);
+            $regs[$p->getId()]->save();
+            return $p;
+        }, [1, 2, 3, 4]);
 
         $this->_session = (new SessionPrimitive($this->_db))
             ->setEvent($this->_event)
@@ -108,8 +114,8 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
     public function testReplacementPlayerRatingDelta()
     {
         $player = $this->_players[0];
-        $player->setIsReplacement(true);
-        $player->save();
+        $this->_regs[$player->getId()]->setReplacementPlayerId(true);
+        $this->_regs[$player->getId()]->save();
 
         $result = (new SessionResultsPrimitive($this->_db))
             ->setPlayer($player)

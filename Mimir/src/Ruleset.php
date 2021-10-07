@@ -385,7 +385,7 @@ abstract class Ruleset
     }
 
     /**
-     * @return int
+     * @return int|false
      */
     public function replacementPlayerFixedPoints()
     {
@@ -393,7 +393,7 @@ abstract class Ruleset
     }
 
     /**
-     * @return float
+     * @return float|false
      */
     public function replacementOverrideUma()
     {

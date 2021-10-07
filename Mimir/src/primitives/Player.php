@@ -43,14 +43,6 @@ class PlayerPrimitive extends Primitive
      * @var string
      */
     protected $_tenhouId;
-    /**
-     * Is player a substitution player
-     *
-     * TODO: в аккаунтной схеме с заменами будут сложности. Надо что-то придумывать.
-     *
-     * @var int
-     */
-    protected $_isReplacement = 0;
 
     /**
      * PlayerPrimitive constructor.
@@ -193,23 +185,5 @@ class PlayerPrimitive extends Primitive
     public function getTenhouId()
     {
         return $this->_tenhouId;
-    }
-
-    /**
-     * @param int $isRep
-     * @return $this
-     */
-    public function setIsReplacement($isRep)
-    {
-        $this->_isReplacement = $isRep;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIsReplacement()
-    {
-        return $this->_isReplacement;
     }
 }

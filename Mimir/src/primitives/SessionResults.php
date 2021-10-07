@@ -488,18 +488,20 @@ class SessionResultsPrimitive extends Primitive
      * @param int[] $allScores
      *
      * @return float|int
+     * @throws InvalidParametersException
      */
     protected function _calcRatingDelta(Ruleset $rules, array $allScores)
     {
-        if (!$this->_player) {
-            throw new InvalidParametersException('Current player not fetched, this is runtime error');
+        $reg = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $this->_playerId, $this->_eventId);
+        if (empty($reg)) {
+            throw new InvalidParametersException('No player/event id pair found, can\'t calculate delta');
         }
 
-        $score = ($this->_player->getIsReplacement() && $rules->replacementPlayerFixedPoints() !== false)
+        $score = ($reg[0]->getReplacementPlayerId() && $rules->replacementPlayerFixedPoints() !== false)
             ? $rules->replacementPlayerFixedPoints()
             : $this->_score - ($rules->subtractStartPoints() ? $rules->startPoints() : 0);
 
-        $uma = ($this->_player->getIsReplacement() && $rules->replacementOverrideUma() !== false)
+        $uma = ($reg[0]->getReplacementPlayerId() && $rules->replacementOverrideUma() !== false)
             ? $rules->replacementOverrideUma()
             : $rules->uma($allScores)[$this->_place];
 

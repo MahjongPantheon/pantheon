@@ -266,13 +266,22 @@ class SeatingController extends Controller
             $playersMap[$player->getId()] = $player;
         }
 
-        return array_map(function ($table) use (&$playersMap) {
-            return array_map(function ($player) use (&$playersMap) {
+        $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
+        /** @var PlayerRegistrationPrimitive[] $replacementMap */
+        $replacementMap = [];
+        foreach ($regs as $reg) {
+            if (!empty($playersMap[$reg->getPlayerId()])) {
+                $replacementMap[$reg->getPlayerId()] = $reg->getReplacementPlayerId();
+            }
+        }
+
+        return array_map(function ($table) use (&$playersMap, &$replacementMap) {
+            return array_map(function ($player) use (&$playersMap,&$replacementMap) {
                 return [
                     'id' => $playersMap[$player['id']]->getId(),
                     'local_id' => $player['local_id'],
                     'display_name' => $playersMap[$player['id']]->getDisplayName(),
-                    'is_replacement' => $playersMap[$player['id']]->getIsReplacement()
+                    'replacement_id' => $replacementMap[$player['id']]
                 ];
             }, $table);
         }, $seating);
