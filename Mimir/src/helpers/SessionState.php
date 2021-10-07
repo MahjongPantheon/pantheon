@@ -17,8 +17,6 @@
  */
 namespace Mimir;
 
-use _HumbugBox01d8f9a04075\Nette\Neon\Exception;
-
 require_once __DIR__ . '/PointsCalc.php';
 
 /**

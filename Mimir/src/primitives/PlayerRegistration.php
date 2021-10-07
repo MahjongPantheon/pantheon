@@ -17,8 +17,6 @@
  */
 namespace Mimir;
 
-use _HumbugBox01d8f9a04075\Nette\Neon\Exception;
-
 require_once __DIR__ . '/../Primitive.php';
 require_once __DIR__ . '/Player.php';
 require_once __DIR__ . '/../FreyClient.php';
