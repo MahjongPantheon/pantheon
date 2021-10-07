@@ -145,12 +145,13 @@ export function getOutcomeModalInfo(state: IAppState, dispatch: Dispatch): Selec
 }
 
 function getPurposeForType(state: IAppState): RoundPreviewSchemePurpose {
-  //todo add other table and check
   const currentScreen = state.currentScreen;
 
   switch (currentScreen) {
     case 'confirmation':
       return 'confirmation';
+    case 'otherTable':
+      return 'other_overview';
     case 'overview':
     default:
       return 'overview';

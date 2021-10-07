@@ -51,6 +51,7 @@ const CurrentScreen: React.FC<IComponentProps> = (props) => {
     case 'confirmation':
     case 'nagashiSelect':
     case 'paoSelect':
+    case 'otherTable':
       return <TableScreen {...props} />
     case 'handSelect':
       return <SelectHandScreen {...props} />
@@ -60,8 +61,6 @@ const CurrentScreen: React.FC<IComponentProps> = (props) => {
       return <LogScreen {...props} />
     case 'otherTablesList':
       return <OtherTablesList {...props} />
-    case 'otherTable':
-      // TODO!
   }
 
   return null

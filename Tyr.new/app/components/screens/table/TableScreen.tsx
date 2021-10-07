@@ -14,10 +14,12 @@ export class TableScreen extends React.Component<IComponentProps> {
   render() {
     const {state, dispatch} = this.props;
     const isLoading = state.loading.events
-      || (state.currentScreen === 'overview' && !state.gameOverviewReady)
+      || (state.currentScreen === 'overview' && (
+        !state.gameOverviewReady || !state.players || state.players.length !== 4
+      ))
       || state.loading.addRound
       || state.loading.overview;
-    if (!state.players || state.players.length !== 4 || isLoading) {
+    if (isLoading) {
       return <Preloader />
     }
 

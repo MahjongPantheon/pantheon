@@ -465,7 +465,6 @@ export function mimirReducer(
         currentScreen: 'otherTable',
         currentOtherTable: action.payload,
         currentOtherTableIndex: action.payload.tableIndex,
-        // currentOtherTableLastRound: action.payload, // TODO wat
         currentOtherTablePlayers: action.payload.players,
         otherTableError: undefined
       };
