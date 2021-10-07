@@ -1,4 +1,5 @@
 import React from "react";
+import {TableMode} from "#/components/types/TableMode";
 
 //temporary solution until sprite doesn't work
 //generate sprite from img/*.svg
@@ -7,6 +8,10 @@ export const icons: { [key: string]: JSX.Element } = {
   'arrow-left': <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" > <polyline points="15 3 6 12 15 21"/> </g></svg>,
 
   'arrow-right': <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"> <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" > <polyline points="9 3 18 12 9 21"/> </g> </svg> ,
+
+  'rotate-cw': <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"/><path d="M31.1 11.1l-9.1-9.1v6.14c-7.89.98-14 7.7-14 15.86s6.11 14.88 14 15.86v-4.04c-5.67-.95-10-5.88-10-11.82s4.33-10.87 10-11.82v7.82l9.1-8.9zm8.76 10.9c-.34-2.78-1.45-5.46-3.25-7.78l-2.83 2.83c1.07 1.51 1.75 3.2 2.04 4.95h4.04zm-13.86 13.81v4.05c2.78-.34 5.48-1.42 7.8-3.22l-2.87-2.87c-1.5 1.06-3.18 1.74-4.93 2.04zm7.78-4.86l2.83 2.83c1.8-2.32 2.91-5 3.25-7.78h-4.04c-.29 1.75-.97 3.44-2.04 4.95z"/></svg>,
+
+  'rotate-ccw': <svg height="48" viewBox="0 0 48 48" width="48" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h48v48h-48z" fill="none"/><path d="M14.22 17.05l-2.83-2.83c-1.8 2.32-2.91 5-3.25 7.78h4.04c.29-1.75.97-3.44 2.04-4.95zm-2.04 8.95h-4.04c.34 2.78 1.45 5.46 3.25 7.78l2.83-2.83c-1.07-1.51-1.75-3.2-2.04-4.95zm2.02 10.63c2.32 1.81 5.02 2.88 7.8 3.22v-4.04c-1.75-.29-3.43-.98-4.93-2.05l-2.87 2.87zm11.8-28.49v-6.14l-9.1 9.1 9.1 8.9v-7.82c5.67.95 10 5.88 10 11.82s-4.33 10.87-10 11.82v4.04c7.89-.99 14-7.7 14-15.86s-6.11-14.87-14-15.86z"/></svg>,
 
   'back': <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M15.8561 4.8904L5.41614 15.1346L15.7777 25.6138" stroke="currentColor" strokeWidth="3.36"/> <path d="M24.0388 15H7" stroke="currentColor" strokeWidth="3.36"/> </svg> ,
 

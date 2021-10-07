@@ -19,7 +19,11 @@ import {
   ADD_ROUND_INIT,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
-  INIT_BLANK_OUTCOME, SELECT_MULTIRON_WINNER, SHOW_GAME_LOG,
+  INIT_BLANK_OUTCOME,
+  SELECT_MULTIRON_WINNER,
+  SHOW_GAME_LOG,
+  TABLE_ROTATE_CLOCKWISE,
+  TABLE_ROTATE_COUNTERCLOCKWISE,
   TOGGLE_ADDITIONAL_TABLE_INFO,
   TOGGLE_DEADHAND,
   TOGGLE_LOSER,
@@ -369,8 +373,6 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
       break;
   }
 
-
-
   return {
     name: player.displayName,
     wind: wind,
@@ -436,13 +438,13 @@ export function getBottomPanel(state: IAppState, dispatch: Dispatch) {
 
   const text = getTitleForOutcome(selectedOutcome, state.currentScreen)
 
-  const showBack = tableMode === TableMode.SELECT_PLAYERS || tableMode ===  TableMode.RESULT;
+  const showBack = [TableMode.OTHER_PLAYER_TABLE, TableMode.SELECT_PLAYERS, TableMode.RESULT].includes(tableMode);
   const showNext = tableMode === TableMode.SELECT_PLAYERS;
   const isNextDisabled = !canGoNext(state);
   const showSave = tableMode === TableMode.RESULT;
   const isSaveDisabled = false; //todo do we really need disabled state for save? seems no
 
-  const showHome = [TableMode.GAME, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
+  const showHome = [TableMode.GAME, TableMode.BEFORE_START].includes(tableMode);
   const showRefresh = [TableMode.GAME, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
   const showAdd = tableMode === TableMode.GAME;
   const showLog = [TableMode.GAME, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
@@ -494,6 +496,8 @@ function getTableMode(state: IAppState): TableMode {
       return TableMode.GAME;
     case 'confirmation':
       return TableMode.RESULT;
+    case 'otherTable':
+      return TableMode.OTHER_PLAYER_TABLE;
     default: //todo
       return TableMode.SELECT_PLAYERS;
   }
@@ -538,16 +542,19 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
   }
 
   return {
-    showRoundInfo: showRoundInfo,
-    showTableNumber: showTableNumber,
-    showTimer: showTimer,
-    gamesLeft: gamesLeft,
+    showRotators: state.currentScreen === 'otherTable',
+    showRoundInfo,
+    showTableNumber,
+    showTimer,
+    gamesLeft,
     round: roundToString(state.currentRound),
     honbaCount: state.honba,
     riichiCount: state.riichiOnTable,
-    currentTime: currentTime,
-    tableNumber: tableNumber,
+    currentTime,
+    tableNumber,
     onTableInfoToggle: onTableInfoToggle(state, dispatch),
+    onRotateCwClick: () => dispatch({ type: TABLE_ROTATE_CLOCKWISE }),
+    onRotateCcwClick: () => dispatch({ type: TABLE_ROTATE_COUNTERCLOCKWISE }),
   }
 }
 

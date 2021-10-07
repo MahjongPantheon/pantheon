@@ -1,6 +1,8 @@
 export enum IconType {
   ARROW_LEFT = 'arrow-left',
   ARROW_RIGHT = 'arrow-right',
+  ROTATE_CW = 'rotate-cw',
+  ROTATE_CCW = 'rotate-ccw',
   BACK = 'back',
   CLOSE = 'close',
   HOME = 'home',
