@@ -198,16 +198,19 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
 
   switch (state.currentScreen) {
     case 'currentGame':
+    case 'otherTable':
       if (state.timer?.waiting) {
         inlineWind = false;
         points = undefined;
         penaltyPoints = undefined;
       }
 
-      // if ()
-
       if (state.overviewDiffBy) {
-        const diffByPlayer = state.players?.find(x => x.id === state.overviewDiffBy);
+        const diffByPlayer = (
+          state.currentScreen === 'currentGame'
+            ? state.players
+            : state.currentOtherTablePlayers
+        )?.find(x => x.id === state.overviewDiffBy);
         if (diffByPlayer) {
           points = player.score - diffByPlayer.score;
           if (points > 0) {
@@ -759,7 +762,7 @@ function onSaveClick(state: IAppState, dispatch: Dispatch) {
 }
 
 function onPlayerClick(state: IAppState, dispatch: Dispatch, playerId: number) {
-  if (state.currentScreen !== "currentGame" || state.timer?.waiting) {
+  if (!["currentGame", "otherTable"].includes(state.currentScreen) || state.timer?.waiting) {
     return undefined
   }
 
