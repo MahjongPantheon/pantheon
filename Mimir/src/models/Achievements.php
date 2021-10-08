@@ -56,10 +56,6 @@ class AchievementsModel extends Model
      */
     public function getAchievementsList()
     {
-        if (!$this->checkAdminToken()) {
-            throw new AuthFailedException('Only administrators are allowed to view achievements');
-        }
-
         return [
             'bestHand',
             'bestTsumoist',
@@ -93,10 +89,6 @@ class AchievementsModel extends Model
      */
     public function getAchievements(array $eventIdList, array $achievementsList)
     {
-        if (!$this->checkAdminToken()) {
-            throw new AuthFailedException('Only administrators are allowed to view achievements');
-        }
-
         $this->_games = $this->_getGames($eventIdList);
         $this->_players = $this->_getPlayers($this->_games);
 

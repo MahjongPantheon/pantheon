@@ -51,7 +51,7 @@ class PenaltySessionModel extends Model
      */
     public function addPenaltyGame($eventId, $playerIds)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to create penalty games');
         }
 

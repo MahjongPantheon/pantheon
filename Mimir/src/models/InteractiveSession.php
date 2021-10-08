@@ -117,10 +117,10 @@ class InteractiveSessionModel extends Model
      */
     public function cancelGame(string $gameHash)
     {
-        if (!$this->checkAdminToken()) {
+        $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
+        if (!$this->_meta->isEventAdminById($session->getEventId())) {
             throw new AuthFailedException('Only administrators are allowed to cancel games');
         }
-        $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
         return $session->setStatus(SessionPrimitive::STATUS_CANCELLED)->save();
     }
 
@@ -134,7 +134,7 @@ class InteractiveSessionModel extends Model
      */
     public function finalizeSessions(int $eventId)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to finalize sessions');
         }
 
@@ -158,22 +158,22 @@ class InteractiveSessionModel extends Model
      */
     public function definalizeSession($hash)
     {
-        if (!$this->checkAdminToken()) {
-            throw new AuthFailedException('Only administrators are allowed to definalize sessions');
-        }
-
-        $games = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
+        $games = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
         if (empty($games)) {
             return false;
         }
 
         $session = $games[0];
+        if (!$this->_meta->isEventAdminById($session->getEventId())) {
+            throw new AuthFailedException('Only administrators are allowed to definalize sessions');
+        }
+
         if (!DateHelper::mayDefinalizeGame($session)) {
             throw new BadActionException('Session can not be definalized');
         }
 
-        $playerResults = PlayerHistoryPrimitive::findBySession($this->_db, $session->getId());
-        $sessionResults = SessionResultsPrimitive::findBySessionId($this->_db, [$session->getId()]);
+        $playerResults = PlayerHistoryPrimitive::findBySession($this->_ds, $session->getId());
+        $sessionResults = SessionResultsPrimitive::findBySessionId($this->_ds, [$session->getId()]);
         /** @var Primitive[] $primitives */
         $primitives = array_merge($playerResults, $sessionResults);
         foreach ($primitives as $p) {
@@ -286,7 +286,7 @@ class InteractiveSessionModel extends Model
      */
     public function addPenalty($eventId, $playerId, $amount, $reason)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to add penalties');
         }
 
@@ -357,13 +357,13 @@ class InteractiveSessionModel extends Model
      */
     public function dropLastRound(string $gameHash)
     {
-        if (!$this->checkAdminToken()) {
-            throw new AuthFailedException('Only administrators are allowed to drop last round');
-        }
-
         $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$gameHash]);
         if (empty($session)) {
             throw new InvalidParametersException("Couldn't find session in DB");
+        }
+
+        if (!$this->_meta->isEventAdminById($session[0]->getEventId())) {
+            throw new AuthFailedException('Only administrators are allowed to drop last round');
         }
 
         if ($session[0]->getStatus() === SessionPrimitive::STATUS_FINISHED) {

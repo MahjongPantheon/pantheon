@@ -38,8 +38,14 @@ class SeatingController extends Controller
      */
     public function makeShuffledSeating($eventId, $groupsCount, $seed)
     {
-        $this->_checkIfAllowed($eventId);
         $this->_log->addInfo('Creating new shuffled seating by seed #' . $seed . ' for event #' . $eventId);
+        $this->_checkIfAllowed($eventId);
+
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        if (!empty($sessions)) {
+            throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
+        }
+
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
         list ($playersMap, $tables) = $this->_getData($eventId);
@@ -69,8 +75,14 @@ class SeatingController extends Controller
      */
     public function makeSwissSeating($eventId)
     {
-        $this->_checkIfAllowed($eventId);
         $this->_log->addInfo('Creating new swiss seating for event #' . $eventId);
+        $this->_checkIfAllowed($eventId);
+
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        if (!empty($sessions)) {
+            throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
+        }
+
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
         list ($playersMap, $tables) = $this->_getData($eventId);
@@ -125,8 +137,14 @@ class SeatingController extends Controller
      */
     public function makeIntervalSeating($eventId, $step)
     {
-        $this->_checkIfAllowed($eventId);
         $this->_log->addInfo('Creating new interval seating for event #' . $eventId);
+        $this->_checkIfAllowed($eventId);
+
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        if (!empty($sessions)) {
+            throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
+        }
+
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
         $eventList = EventPrimitive::findById($this->_ds, [$eventId]);
@@ -172,6 +190,13 @@ class SeatingController extends Controller
     public function makePrescriptedSeating($eventId, $randomizeAtTables = false)
     {
         $this->_log->addInfo('Creating new prescripted seating for event #' . $eventId);
+        $this->_checkIfAllowed($eventId);
+
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        if (!empty($sessions)) {
+            throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
+        }
+
         $seating = $this->_getNextPrescriptedSeating($eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
         $tableIndex = 1;
@@ -245,6 +270,7 @@ class SeatingController extends Controller
      */
     public function getNextSeatingForPrescriptedEvent(int $eventId)
     {
+        $this->_checkIfAllowed($eventId);
         $seating = $this->_getNextPrescriptedSeating($eventId);
         if (empty($seating)) {
             // No next seating: probably, all games are finished already.
@@ -296,6 +322,7 @@ class SeatingController extends Controller
      */
     protected function _updateEventStatus(int $eventId)
     {
+        $this->_checkIfAllowed($eventId);
         list($event) = EventPrimitive::findById($this->_ds, [$eventId]);
         if ($event->getUseTimer()) {
             $event->setGamesStatus(EventPrimitive::GS_SEATING_READY)->save();
@@ -317,13 +344,8 @@ class SeatingController extends Controller
      */
     protected function _checkIfAllowed(int $eventId): void
     {
-        if (!(new EventModel($this->_ds, $this->_config, $this->_meta))->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
-        }
-
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
-        if (!empty($sessions)) {
-            throw new InvalidParametersException('Failed to start new game: not all games finished in event id#' . $eventId);
         }
     }
 

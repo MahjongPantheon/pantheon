@@ -42,6 +42,10 @@ class EventUserManagementModel extends Model
      */
     public function registerPlayer(int $playerId, int $eventId)
     {
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new AuthFailedException('Only administrators are allowed to register players to event');
+        }
+
         $player = PlayerPrimitive::findById($this->_ds, [$playerId]);
         if (empty($player)) {
             throw new InvalidParametersException('Player id#' . $playerId . ' not found in DB');
@@ -80,7 +84,7 @@ class EventUserManagementModel extends Model
      */
     public function unregisterPlayer(int $playerId, int $eventId)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to unregister players to event');
         }
 
@@ -103,7 +107,7 @@ class EventUserManagementModel extends Model
      */
     public function updateSeatingFlag(int $playerId, int $eventId, int $ignoreSeating)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to update player information');
         }
 
@@ -128,7 +132,7 @@ class EventUserManagementModel extends Model
      */
     public function updateLocalIds(int $eventId, array $idMap)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to update local players\' ids');
         }
 
@@ -146,7 +150,7 @@ class EventUserManagementModel extends Model
      */
     public function updateTeamNames(int $eventId, array $teamMap)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to update players\' teams');
         }
 

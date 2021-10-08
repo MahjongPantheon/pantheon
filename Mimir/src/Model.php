@@ -42,13 +42,4 @@ abstract class Model
         $this->_config = $config;
         $this->_meta = $meta;
     }
-
-    /**
-     * Check if token allows administrative operations
-     * @return bool
-     */
-    public function checkAdminToken()
-    {
-        return $this->_meta->isEventAdmin() || $this->_meta->isSuperadmin();
-    }
 }

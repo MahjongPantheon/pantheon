@@ -51,6 +51,12 @@ class EventsController extends Controller
     )
     {
         $this->_log->addInfo('Creating new event with [' . $ruleset . '] rules');
+
+        // Check we have rights to create new event
+        if (!$this->_meta->isSuperadmin()) {
+            throw new BadActionException("You don't have enough privileges to create new event");
+        }
+
         if (!in_array($type, ['club', 'tournament', 'online'])) {
             throw new BadActionException(' Unsupported type of event requested');
         }
@@ -396,7 +402,8 @@ class EventsController extends Controller
     public function unregisterPlayerAdmin($playerId, $eventId)
     {
         $this->_log->addInfo('Unregistering player id# ' . $playerId . ' for event id# ' . $eventId);
-        (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))->unregisterPlayer($playerId, $eventId);
+        (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))
+            ->unregisterPlayer($playerId, $eventId);
         $this->_log->addInfo('Successfully unregistered player id# ' . $playerId . ' for event id# ' . $eventId);
     }
 
@@ -412,11 +419,8 @@ class EventsController extends Controller
     public function updatePlayerSeatingFlag($playerId, $eventId, $ignoreSeating)
     {
         $this->_log->addInfo('Update player seating flag id# ' . $playerId . ' for event id# ' . $eventId);
-        $result = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))->updateSeatingFlag(
-            $playerId,
-            $eventId,
-            $ignoreSeating
-        );
+        $result = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))
+            ->updateSeatingFlag($playerId, $eventId, $ignoreSeating);
         $this->_log->addInfo('Successfully updated player seating flag id# ' . $playerId . ' for event id# ' . $eventId);
         return $result;
     }
@@ -776,6 +780,11 @@ class EventsController extends Controller
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
+        // Check we have rights to register player modify timer for this event
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to modify timer for this event");
+        }
+
         if ($event[0]->getGamesStatus() == EventPrimitive::GS_SEATING_READY) {
             $event[0]->setGamesStatus(EventPrimitive::GS_STARTED);
         }
@@ -800,6 +809,11 @@ class EventsController extends Controller
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        // Check we have rights to hide results for this event
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to hide results for this event");
         }
 
         $success = $event[0]->setHideResults($event[0]->getHideResults() == 1 ? 0 : 1)->save();
@@ -876,6 +890,11 @@ class EventsController extends Controller
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        // Check we have rights to modify this event
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to modify this event");
         }
 
         $success = (new EventModel($this->_ds, $this->_config, $this->_meta))
