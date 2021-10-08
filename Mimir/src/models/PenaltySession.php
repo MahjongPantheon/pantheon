@@ -55,7 +55,7 @@ class PenaltySessionModel extends Model
             throw new AuthFailedException('Only administrators are allowed to create penalty games');
         }
 
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
@@ -64,7 +64,7 @@ class PenaltySessionModel extends Model
             throw new InvalidParametersException('Players list is not array');
         }
 
-        $players = PlayerPrimitive::findById($this->_db, $playerIds);
+        $players = PlayerPrimitive::findById($this->_ds, $playerIds);
         $players = array_filter(array_map(function ($id) use (&$players) {
             // Re-sort players to match request order - important!
             foreach ($players as $p) {
@@ -79,7 +79,7 @@ class PenaltySessionModel extends Model
             throw new InvalidUserException('Some players do not exist in DB, check ids');
         }
 
-        $session = (new SessionPrimitive($this->_db))
+        $session = (new SessionPrimitive($this->_ds))
             ->setEvent($event[0])
             ->setPlayers($players)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
@@ -90,7 +90,7 @@ class PenaltySessionModel extends Model
         $ruleset = $event[0]->getRuleset();
         $penalty = $ruleset->replacementPlayerFixedPoints() / (float) $ruleset->tenboDivider();
         foreach ($players as $i => $player) {
-            $result = (new SessionResultsPrimitive($this->_db))
+            $result = (new SessionResultsPrimitive($this->_ds))
                 ->setPlayer($player)
                 ->setSession($session)
                 ->setRatingDelta($penalty)
@@ -98,7 +98,7 @@ class PenaltySessionModel extends Model
             $result->save();
 
             PlayerHistoryPrimitive::makeNewHistoryItem(
-                $this->_db,
+                $this->_ds,
                 $player,
                 $session,
                 $penalty,
