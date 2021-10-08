@@ -143,9 +143,8 @@ interface IFreyClient
     public function findByTenhouIds(array $ids): array;
 
     /**
-     *  Fuzzy (pattern) search by title.
-     *  Query should not contain % or _ characters (they will be cut though)
-     *  Query should be more than 2 characters long.
+     *  Fuzzy search by title.
+     *  Query should 3 or more characters long.
      *
      * @param string $query
      * @return array

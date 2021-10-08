@@ -29,7 +29,7 @@ class MimirClient implements IMimirClient
     {
         return $this->_client;
     }
-
+    
     /**
      *  Get available rulesets list
      *
@@ -298,6 +298,18 @@ class MimirClient implements IMimirClient
     }
 
     /**
+     *  Get all recorded round for session by hashcode
+     *
+     * @param string $hashcode
+     * @return array|null
+    */
+    public function getAllRounds(string $hashcode)
+    {
+        /** @phpstan-ignore-next-line */
+        return $this->_client->execute('getAllRounds', [$hashcode]);
+    }
+
+    /**
      *  Get last recorded round for session by hashcode
      *
      * @param string $hashcode
@@ -307,101 +319,6 @@ class MimirClient implements IMimirClient
     {
         /** @phpstan-ignore-next-line */
         return $this->_client->execute('getLastRoundByHash', [$hashcode]);
-    }
-
-    /**
-     *  Get event rules configuration
-     *
-     * @return array
-    */
-    public function getGameConfigT(): array
-    {
-        /** @phpstan-ignore-next-line */
-        return (array)$this->_client->execute('getGameConfigT', []);
-    }
-
-    /**
-     * @return array
-    */
-    public function getTimerStateT(): array
-    {
-        /** @phpstan-ignore-next-line */
-        return (array)$this->_client->execute('getTimerStateT', []);
-    }
-
-    /**
-     *  Get all players registered for event
-     *
-     * @return array
-    */
-    public function getAllPlayersT(): array
-    {
-        /** @phpstan-ignore-next-line */
-        return (array)$this->_client->execute('getAllPlayersT', []);
-    }
-
-    /**
-     *  Get tables state in tournament from token
-     *
-     * @return array
-    */
-    public function getTablesStateT(): array
-    {
-        /** @phpstan-ignore-next-line */
-        return (array)$this->_client->execute('getTablesStateT', []);
-    }
-
-    /**
-     * @return array
-    */
-    public function getCurrentGamesT(): array
-    {
-        /** @phpstan-ignore-next-line */
-        return (array)$this->_client->execute('getCurrentGamesT', []);
-    }
-
-    /**
-     *  Get last game results of player in event
-     *
-     * @return array|null
-    */
-    public function getLastResultsT()
-    {
-        /** @phpstan-ignore-next-line */
-        return $this->_client->execute('getLastResultsT', []);
-    }
-
-    /**
-     *  Get last recorded round with player in event
-     *
-     * @return array|null
-    */
-    public function getLastRoundT()
-    {
-        /** @phpstan-ignore-next-line */
-        return $this->_client->execute('getLastRoundT', []);
-    }
-
-    /**
-     *  Get player info by id
-     * @return array
-    */
-    public function getPlayerT(): array
-    {
-        /** @phpstan-ignore-next-line */
-        return (array)$this->_client->execute('getPlayerT', []);
-    }
-
-    /**
-     *  Start new interactive game and return its hash
-     *
-     * @param array $players
-     * @return string
-    */
-    public function startGameT(array $players): string
-    {
-        /** @phpstan-ignore-next-line */
-        return (string)$this->_client->execute('startGameT', [$players]);
     }
 
     /**
@@ -495,18 +412,6 @@ class MimirClient implements IMimirClient
     }
 
     /**
-     *  Register for participation in event
-     *
-     * @param string $pin
-     * @return string
-    */
-    public function registerPlayer(string $pin): string
-    {
-        /** @phpstan-ignore-next-line */
-        return (string)$this->_client->execute('registerPlayer', [$pin]);
-    }
-
-    /**
      *  Register for participation in event (from admin control panel)
      *
      * @param int $playerId
@@ -594,6 +499,21 @@ class MimirClient implements IMimirClient
     }
 
     /**
+     *  Update replacement_id for registered player.
+     *  Assign -1 to remove replacement.
+     *
+     * @param int $playerId
+     * @param int $eventId
+     * @param int $replacementId
+     * @return bool
+    */
+    public function updatePlayerReplacement(int $playerId, int $eventId, int $replacementId): bool
+    {
+        /** @phpstan-ignore-next-line */
+        return (bool)$this->_client->execute('updatePlayerReplacement', [$playerId, $eventId, $replacementId]);
+    }
+
+    /**
      *  Update team names for events with teams.
      *
      * @param int $eventId
@@ -669,6 +589,19 @@ class MimirClient implements IMimirClient
     }
 
     /**
+     *  Definalize session: drop results, set status flag to "in progress"
+     *  For interactive mode (club games), and only for administrative purposes
+     *
+     * @param string $gameHashcode
+     * @return boolean
+    */
+    public function definalizeGame(string $gameHashcode): boolean
+    {
+        /** @phpstan-ignore-next-line */
+        return (boolean)$this->_client->execute('definalizeGame', [$gameHashcode]);
+    }
+
+    /**
      *  Add penalty in interactive game
      *
      * @param int $eventId
@@ -681,6 +614,20 @@ class MimirClient implements IMimirClient
     {
         /** @phpstan-ignore-next-line */
         return (bool)$this->_client->execute('addPenalty', [$eventId, $playerId, $amount, $reason]);
+    }
+
+    /**
+     *  Add game with penalty for all players.
+     *  It was added for online tournament needs. Use it on your own risk.
+     *
+     * @param int $eventId
+     * @param array $players
+     * @return string
+    */
+    public function addPenaltyGame(int $eventId, array $players): string
+    {
+        /** @phpstan-ignore-next-line */
+        return (string)$this->_client->execute('addPenaltyGame', [$eventId, $players]);
     }
 
     /**
@@ -808,5 +755,18 @@ class MimirClient implements IMimirClient
     {
         /** @phpstan-ignore-next-line */
         return $this->_client->execute('updatePrescriptedEventConfig', [$eventId, $nextSessionIndex, $prescript]);
+    }
+
+    /**
+     * @param string $facility
+     * @param string $sessionHash
+     * @param float $playerId
+     * @param string $error
+     * @param string $stack
+    */
+    public function addErrorLog(string $facility, string $sessionHash, float $playerId, string $error, string $stack)
+    {
+        /** @phpstan-ignore-next-line */
+        return $this->_client->execute('addErrorLog', [$facility, $sessionHash, $playerId, $error, $stack]);
     }
 }

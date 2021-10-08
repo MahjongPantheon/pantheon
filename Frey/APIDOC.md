@@ -99,11 +99,13 @@ Exceptions:
  should be asked to change the password immediately.
 
 
+
+
 Parameters:
 * **$email** (_string_) 
 * **$resetApprovalCode** (_string_) 
 
-Returns: _int_ 
+Returns: _string_ 
 
 Exceptions:
 * _AuthFailedException_ 
@@ -148,6 +150,7 @@ Exceptions:
 Parameters:
 * **$id** (_string_) 
 * **$title** (_string_) 
+* **$country** (_string_) 
 * **$city** (_string_) 
 * **$email** (_string_) 
 * **$phone** (_string_) 
@@ -186,9 +189,8 @@ Exceptions:
 * _\Exception_ 
 
 ### findByTitle
- Fuzzy (pattern) search by title.
- Query should not contain % or _ characters (they will be cut though)
- Query should be more than 2 characters long.
+ Fuzzy search by title.
+ Query should 3 or more characters long.
 
 
 Parameters:
@@ -212,6 +214,32 @@ Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
 
+### getSuperadminFlag
+ Client method to receive super-admin flag. Intended to be used only in Mimir/Rheda
+ to determine if used has super-admin privileges independently of any event.
+ Cached for 10 minutes.
+
+
+Parameters:
+* **$personId** (_int_) 
+
+Returns: _bool_ 
+
+Exceptions:
+* _\Exception_ 
+
+### getOwnedEventIds
+ Get list of event IDs where specified person has admin privileges.
+
+
+Parameters:
+* **$personId** (_int_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _\Exception_ 
+
 ### getRulesList
  Get rule list with translations to selected locale
 
@@ -223,11 +251,26 @@ Returns: _array_
 Exceptions:
 * _\Exception_ 
 
+### getAllEventRules
+ Get all access rules for event.
+ - Method results are not cached!
+ - To be used in admin panel, but not in client side!
+
+
+Parameters:
+* **$eventId** (_int_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _\Exception_ 
+
 ### getPersonAccess
  Get access rules for person.
  - eventId may be null to get system-wide rules.
  - Method results are not cached!
  - To be used in admin panel, but not in client side!
+ - Does not output superadmin flag
 
 
 Parameters:
@@ -244,6 +287,7 @@ Exceptions:
  - eventId may be null to get system-wide rules.
  - Method results are not cached!
  - To be used in admin panel, but not in client side!
+ - Does not output superadmin flag
 
 
 Parameters:
@@ -287,6 +331,8 @@ Exceptions:
  Add new rule for a person.
 
 
+
+
 Parameters:
 * **$ruleName** (_string_) 
 * **$ruleValue** (_string|int|boolean_) 
@@ -294,7 +340,7 @@ Parameters:
 * **$personId** (_int_) 
 * **$eventId** (_int_) 
 
-Returns: _int_ rule id
+Returns: _int|null_ rule id
 
 Exceptions:
 * _DuplicateEntityException_ 
@@ -305,6 +351,8 @@ Exceptions:
  Add new rule for a group.
 
 
+
+
 Parameters:
 * **$ruleName** (_string_) 
 * **$ruleValue** (_string|int|boolean_) 
@@ -312,7 +360,7 @@ Parameters:
 * **$groupId** (_int_) 
 * **$eventId** (_int_) 
 
-Returns: _int_ rule id
+Returns: _int|null_ rule id
 
 Exceptions:
 * _DuplicateEntityException_ 
@@ -324,7 +372,7 @@ Exceptions:
 
 
 Parameters:
-* **$ruleId** (_integer_) 
+* **$ruleId** (_int_) 
 * **$ruleValue** (_string|int|boolean_) 
 * **$ruleType** (_string_) 'bool', 'int' or 'enum'
 
@@ -514,13 +562,15 @@ Exceptions:
  Add new system-wide rule for a person.
 
 
+
+
 Parameters:
 * **$ruleName** (_string_) 
 * **$ruleValue** (_string|int|boolean_) 
 * **$ruleType** (_string_) 'bool', 'int' or 'enum'
 * **$personId** (_int_) 
 
-Returns: _int_ rule id
+Returns: _int|null_ rule id
 
 Exceptions:
 * _DuplicateEntityException_ 
@@ -531,13 +581,15 @@ Exceptions:
  Add new system-wide rule for a group.
 
 
+
+
 Parameters:
 * **$ruleName** (_string_) 
 * **$ruleValue** (_string|int|boolean_) 
 * **$ruleType** (_string_) 'bool', 'int' or 'enum'
 * **$groupId** (_int_) 
 
-Returns: _int_ rule id
+Returns: _int|null_ rule id
 
 Exceptions:
 * _DuplicateEntityException_ 

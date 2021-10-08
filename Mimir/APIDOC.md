@@ -499,6 +499,21 @@ Exceptions:
 * _AuthFailedException_ 
 * _\Exception_ 
 
+### updatePlayerReplacement
+ Update replacement_id for registered player.
+ Assign -1 to remove replacement.
+
+
+Parameters:
+* **$playerId** (_int_) 
+* **$eventId** (_int_) 
+* **$replacementId** (_int_) 
+
+Returns: _bool_ 
+
+Exceptions:
+* _\Exception_ 
+
 ### updatePlayersTeams
  Update team names for events with teams.
 

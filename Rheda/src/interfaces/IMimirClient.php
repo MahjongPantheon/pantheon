@@ -15,7 +15,7 @@ interface IMimirClient
     * @return \JsonRPC\Client
     */
     public function getClient();
-
+    
     /**
      *  Get available rulesets list
      *
@@ -204,71 +204,20 @@ interface IMimirClient
     public function getLastRound(int $playerId, int $eventId);
 
     /**
+     *  Get all recorded round for session by hashcode
+     *
+     * @param string $hashcode
+     * @return array|null
+    */
+    public function getAllRounds(string $hashcode);
+
+    /**
      *  Get last recorded round for session by hashcode
      *
      * @param string $hashcode
      * @return array|null
     */
     public function getLastRoundByHash(string $hashcode);
-
-    /**
-     *  Get event rules configuration
-     *
-     * @return array
-    */
-    public function getGameConfigT(): array;
-
-    /**
-     * @return array
-    */
-    public function getTimerStateT(): array;
-
-    /**
-     *  Get all players registered for event
-     *
-     * @return array
-    */
-    public function getAllPlayersT(): array;
-
-    /**
-     *  Get tables state in tournament from token
-     *
-     * @return array
-    */
-    public function getTablesStateT(): array;
-
-    /**
-     * @return array
-    */
-    public function getCurrentGamesT(): array;
-
-    /**
-     *  Get last game results of player in event
-     *
-     * @return array|null
-    */
-    public function getLastResultsT();
-
-    /**
-     *  Get last recorded round with player in event
-     *
-     * @return array|null
-    */
-    public function getLastRoundT();
-
-    /**
-     *  Get player info by id
-     * @return array
-    */
-    public function getPlayerT(): array;
-
-    /**
-     *  Start new interactive game and return its hash
-     *
-     * @param array $players
-     * @return string
-    */
-    public function startGameT(array $players): string;
 
     /**
      *  Get settings of existing event
@@ -337,14 +286,6 @@ interface IMimirClient
     public function startTimer(int $eventId): bool;
 
     /**
-     *  Register for participation in event
-     *
-     * @param string $pin
-     * @return string
-    */
-    public function registerPlayer(string $pin): string;
-
-    /**
      *  Register for participation in event (from admin control panel)
      *
      * @param int $playerId
@@ -404,6 +345,17 @@ interface IMimirClient
     public function updatePlayersLocalIds(int $eventId, array $idMap): bool;
 
     /**
+     *  Update replacement_id for registered player.
+     *  Assign -1 to remove replacement.
+     *
+     * @param int $playerId
+     * @param int $eventId
+     * @param int $replacementId
+     * @return bool
+    */
+    public function updatePlayerReplacement(int $playerId, int $eventId, int $replacementId): bool;
+
+    /**
      *  Update team names for events with teams.
      *
      * @param int $eventId
@@ -455,6 +407,15 @@ interface IMimirClient
     public function dropLastRound(string $gameHashcode): bool;
 
     /**
+     *  Definalize session: drop results, set status flag to "in progress"
+     *  For interactive mode (club games), and only for administrative purposes
+     *
+     * @param string $gameHashcode
+     * @return boolean
+    */
+    public function definalizeGame(string $gameHashcode): boolean;
+
+    /**
      *  Add penalty in interactive game
      *
      * @param int $eventId
@@ -464,6 +425,16 @@ interface IMimirClient
      * @return bool
     */
     public function addPenalty(int $eventId, int $playerId, int $amount, string $reason): bool;
+
+    /**
+     *  Add game with penalty for all players.
+     *  It was added for online tournament needs. Use it on your own risk.
+     *
+     * @param int $eventId
+     * @param array $players
+     * @return string
+    */
+    public function addPenaltyGame(int $eventId, array $players): string;
 
     /**
      *  Get player info by id
@@ -551,4 +522,13 @@ interface IMimirClient
      * @return mixed
     */
     public function updatePrescriptedEventConfig(int $eventId, int $nextSessionIndex, string $prescript);
+
+    /**
+     * @param string $facility
+     * @param string $sessionHash
+     * @param float $playerId
+     * @param string $error
+     * @param string $stack
+    */
+    public function addErrorLog(string $facility, string $sessionHash, float $playerId, string $error, string $stack);
 }
