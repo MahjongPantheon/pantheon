@@ -354,14 +354,36 @@ class PlayerRegistrationPrimitive extends Primitive
     /**
      * @param DataSource $ds
      * @param int[] $eventIdList
-     * @return array ['id' => int, 'local_id' => int|null][]
+     * @return array ['id' => int, 'local_id' => int|null, 'replacement_id' => int|null][]
      * @throws \Exception
      */
-    public static function findRegisteredPlayersIdsByEventList(DataSource $ds, array $eventIdList)
+    public static function fetchPlayerRegData(DataSource $ds, array $eventIdList)
     {
         return array_map(function (PlayerRegistrationPrimitive $p) {
-            return ['id' => $p->_playerId, 'local_id' => $p->_localId];
+            return [
+                'id' => $p->_playerId,
+                'local_id' => $p->_localId,
+                'replacement_id' => $p->_replacementPlayerId
+            ];
         }, self::_findBy($ds, 'event_id', $eventIdList));
+    }
+
+    /**
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param int[] $playerIdList
+     * @return array ['id' => int, 'local_id' => int|null, 'replacement_id' => int|null][]
+     * @throws \Exception
+     */
+    public static function fetchPlayerRegDataByIds(DataSource $ds, array $eventIdList, array $playerIdList)
+    {
+        return array_map(function (PlayerRegistrationPrimitive $p) {
+            return [
+                'id' => $p->_playerId,
+                'local_id' => $p->_localId,
+                'replacement_id' => $p->_replacementPlayerId
+            ];
+        }, self::_findBySeveral($ds, ['event_id' => $eventIdList, 'player_id' => $playerIdList]));
     }
 
     /**
@@ -375,25 +397,6 @@ class PlayerRegistrationPrimitive extends Primitive
         $ids = array_map(function ($el) {
             return $el['id'];
         }, self::findRegisteredPlayersIdsByEvent($ds, $eventId));
-
-        if (empty($ids)) {
-            return [];
-        }
-
-        return PlayerPrimitive::findById($ds, $ids);
-    }
-
-    /**
-     * @param DataSource $ds
-     * @param int[] $eventIdList
-     * @return PlayerPrimitive[]
-     * @throws \Exception
-     */
-    public static function findRegisteredPlayersByEventList(DataSource $ds, array $eventIdList)
-    {
-        $ids = array_map(function ($el) {
-            return $el['id'];
-        }, self::findRegisteredPlayersIdsByEventList($ds, $eventIdList));
 
         if (empty($ids)) {
             return [];

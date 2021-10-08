@@ -122,6 +122,31 @@ class EventUserManagementModel extends Model
     }
 
     /**
+     * Update replacement_id for registered player
+     *
+     * @param int $playerId
+     * @param int $eventId
+     * @param int $replacementId
+     * @throws \Exception
+     * @return bool
+     */
+    public function updateReplacement(int $playerId, int $eventId, int $replacementId)
+    {
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new AuthFailedException('Only administrators are allowed to update player information');
+        }
+
+        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
+        if (empty($regItem)) {
+            throw new EntityNotFoundException('Player is not registered for this event');
+        }
+
+        return $regItem[0]
+            ->setReplacementPlayerId($replacementId)
+            ->save();
+    }
+
+    /**
      * Update players' local id mapping for prescripted event
      *
      * @param int $eventId

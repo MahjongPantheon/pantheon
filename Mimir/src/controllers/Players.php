@@ -97,19 +97,26 @@ class PlayersController extends Controller
     {
         $this->_log->addInfo('Getting current sessions for player id #' . $playerId . ' at event id #' . $eventId);
         $sessions = SessionPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $regData = PlayerPrimitive::findPlayersForEvents($this->_ds, [$eventId]);
 
-        $result = array_map(function (SessionPrimitive $session) {
+        $result = array_map(function (SessionPrimitive $session) use(&$regData) {
             return [
                 'hashcode'    => $session->getRepresentationalHash(),
                 'status'      => $session->getStatus(),
                 'table_index' => $session->getTableIndex(),
-                'players'     => array_map(function (PlayerPrimitive $p, $score) {
+                'players'     => array_map(function (PlayerPrimitive $p, $score) use ($regData) {
                     return [
                         'id'            => $p->getId(),
                         'display_name'  => $p->getDisplayName(),
-                        'score'         => $score
+                        'score'         => $score,
+                        'replaced_by' => empty($playersReg['replacements'][$p->getId()])
+                            ? null
+                            : [
+                                'id' => $playersReg['replacements'][$p->getId()]->getId(),
+                                'display_name' => $playersReg['replacements'][$p->getId()]->getDisplayName(),
+                            ],
                     ];
-                }, $session->getPlayers(), $session->getCurrentState()->getScores())
+                }, $regData['players'], $session->getCurrentState()->getScores())
             ];
         }, $sessions);
 

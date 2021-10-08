@@ -342,9 +342,6 @@ class SessionPrimitive extends Primitive
      */
     public static function findByPlayerAndEvent(DataSource $ds, int $playerId, int $eventId, string $withStatus = '*')
     {
-        $playerId = intval($playerId);
-        $eventId = intval($eventId);
-
         // TODO: here we can precache players, ids are known as GROUP_CONCAT(player_id)
         $orm = $ds->table(self::$_table)
             ->select(self::$_table . '.*')

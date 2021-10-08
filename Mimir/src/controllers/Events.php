@@ -306,28 +306,39 @@ class EventsController extends Controller
             $needLocalIds = true;
         }
 
-        $players = PlayerRegistrationPrimitive::findRegisteredPlayersByEventList($this->_ds, $eventIdList);
+        $playersData = PlayerPrimitive::findPlayersForEvents($this->_ds, $eventIdList);
+        /** @var PlayerPrimitive[] $players */
+        $players = $playersData['players'];
+        /** @var PlayerPrimitive[] $replacements */
+        $replacements = $playersData['replacements'];
         $localMap = [];
         $teamNames = [];
 
+        // Players who should ignore seating
         $ignoredPlayers = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, $eventIdList);
 
+        // Local player ids for prescripted events
         if ($needLocalIds) {
             $localMap = array_flip(PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_ds, $eventIdList[0]));
         }
 
+        // Team names for team tournaments
         if ($eventList[0]->getIsTeam()) {
             $teamNames = PlayerRegistrationPrimitive::findTeamNameMapByEvent($this->_ds, $eventIdList[0]);
         }
 
-        $data = array_map(function (PlayerPrimitive $p) use (&$localMap, &$teamNames, &$ignoredPlayers) {
+        $data = array_map(function (PlayerPrimitive $p) use (&$localMap, &$teamNames, &$ignoredPlayers, &$replacements) {
             return [
                 'id'            => $p->getId(),
                 'display_name'  => $p->getDisplayName(),
                 'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
                 'team_name'  => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
                 'tenhou_id'     => $p->getTenhouId(),
-                'ignore_seating' => in_array($p->getId(), $ignoredPlayers)
+                'ignore_seating' => in_array($p->getId(), $ignoredPlayers),
+                'replaced_by'   => empty($replacements[$p->getId()]) ? null : [
+                    'id' => $replacements[$p->getId()]->getId(),
+                    'display_name' => $replacements[$p->getId()]->getDisplayName(),
+                ],
             ];
         }, $players);
 
@@ -422,6 +433,25 @@ class EventsController extends Controller
         $result = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))
             ->updateSeatingFlag($playerId, $eventId, $ignoreSeating);
         $this->_log->addInfo('Successfully updated player seating flag id# ' . $playerId . ' for event id# ' . $eventId);
+        return $result;
+    }
+
+    /**
+     * Update replacement_id for registered player.
+     * Assign -1 to remove replacement.
+     *
+     * @param int $playerId
+     * @param int $eventId
+     * @param int $replacementId
+     * @throws \Exception
+     * @return bool
+     */
+    public function updatePlayerReplacement($playerId, $eventId, $replacementId)
+    {
+        $this->_log->addInfo('Update player replacement id# ' . $playerId . ' for event id# ' . $eventId);
+        $result = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))
+            ->updateReplacement($playerId, $eventId, $replacementId);
+        $this->_log->addInfo('Successfully updated player replacement id# ' . $playerId . ' for event id# ' . $eventId);
         return $result;
     }
 

@@ -111,6 +111,51 @@ class PlayerPrimitive extends Primitive
     }
 
     /**
+     * @param DataSource $ds
+     * @param array $eventIdList
+     * @return array ['players' => PlayerPrimitive[], 'replacements' => [id => PlayerPrimitive, ...]]
+     * @throws \Exception
+     */
+    public static function findPlayersForEvents(DataSource $ds, array $eventIdList)
+    {
+        $playerRegData = PlayerRegistrationPrimitive::fetchPlayerRegData($ds, $eventIdList);
+        return self::_findPlayers($ds, $playerRegData);
+    }
+
+    /**
+     * @param DataSource $ds
+     * @param string $sessionHash
+     * @return array ['players' => PlayerPrimitive[], 'replacements' => [id => PlayerPrimitive, ...]]
+     * @throws \Exception
+     */
+    public static function findPlayersForSession(DataSource $ds, string $sessionHash)
+    {
+        $sessions = SessionPrimitive::findByRepresentationalHash($ds, [$sessionHash]);
+        if (empty($sessions)) {
+            return [];
+        }
+        $playerRegData = PlayerRegistrationPrimitive::fetchPlayerRegDataByIds($ds, [$sessions[0]->getEventId()], $sessions[0]->getPlayersIds());
+        return self::_findPlayers($ds, $playerRegData);
+    }
+
+    protected static function _findPlayers(DataSource $ds, array $playerRegData)
+    {
+        $players = self::findById($ds, array_map(function ($el) use (&$replacements) {
+            if (!empty($el['replacement_id'])) {
+                $replacements[$el['replacement_id']] = true;
+            }
+            return $el['id'];
+        }, $playerRegData));
+
+        $replacementPlayers = self::findById($ds, array_keys($replacements));
+        foreach ($replacementPlayers as $p) {
+            $replacements[$p->getId()] = $p;
+        }
+
+        return ['players' => $players, 'replacements' => $replacements];
+    }
+
+    /**
      * @return mixed|void
      * @throws BadActionException
      */

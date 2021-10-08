@@ -195,15 +195,23 @@ class GamesController extends Controller
             throw new InvalidParametersException("Couldn't find session in DB", 404);
         }
 
+        $playersReg = PlayerPrimitive::findPlayersForSession($this->_ds, $gameHashCode);
+
         $result = [
             'id'    => $session[0]->getId(),
             'table_index' => $session[0]->getTableIndex(),
-            'players' => array_map(function (PlayerPrimitive $player) {
+            'players' => array_map(function (PlayerPrimitive $player) use (&$playersReg) {
                 return [
                     'id' => $player->getId(),
-                    'display_name' => $player->getDisplayName()
+                    'display_name' => $player->getDisplayName(),
+                    'replaced_by' => empty($playersReg['replacements'][$player->getId()])
+                        ? null
+                        : [
+                            'id' => $playersReg['replacements'][$player->getId()]->getId(),
+                            'display_name' => $playersReg['replacements'][$player->getId()]->getDisplayName(),
+                        ]
                 ];
-            }, $session[0]->getPlayers()),
+            }, $playersReg['players']),
 
             'state' => [
                 'dealer'    => $session[0]->getCurrentState()->getCurrentDealer(),

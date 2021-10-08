@@ -293,7 +293,6 @@ class SeatingController extends Controller
         }
 
         $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
-        /** @var PlayerRegistrationPrimitive[] $replacementMap */
         $replacementMap = [];
         foreach ($regs as $reg) {
             if (!empty($playersMap[$reg->getPlayerId()])) {
@@ -301,13 +300,23 @@ class SeatingController extends Controller
             }
         }
 
+        $replacements = PlayerPrimitive::findById($this->_ds, array_values($replacementMap));
+        foreach ($replacements as $rep) {
+            $replacementMap[$rep->getId()] = $rep;
+        }
+
         return array_map(function ($table) use (&$playersMap, &$replacementMap) {
-            return array_map(function ($player) use (&$playersMap,&$replacementMap) {
+            return array_map(function ($player) use (&$playersMap, &$replacementMap) {
                 return [
                     'id' => $playersMap[$player['id']]->getId(),
                     'local_id' => $player['local_id'],
                     'display_name' => $playersMap[$player['id']]->getDisplayName(),
-                    'replacement_id' => $replacementMap[$player['id']]
+                    'replaced_by' => empty($replacementMap[$player['id']])
+                        ? null
+                        : [
+                            'id' => $replacementMap[$player['id']]->getId(),
+                            'display_name' => $replacementMap[$player['id']]->getDisplayName(),
+                        ],
                 ];
             }, $table);
         }, $seating);
