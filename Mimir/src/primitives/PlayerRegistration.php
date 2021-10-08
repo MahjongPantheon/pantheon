@@ -54,13 +54,34 @@ class PlayerRegistrationPrimitive extends Primitive
         ];
     }
 
-    protected ?int $_id;
-    protected int $_eventId;
-    protected int $_playerId;
-    protected ?int $_replacementPlayerId;
-    protected ?int $_localId = null;
-    protected int $_ignoreSeating;
-    protected string $_teamName;
+    /**
+     * @var int|null
+     */
+    protected $_id = null;
+    /**
+     * @var int
+     */
+    protected $_eventId;
+    /**
+     * @var int
+     */
+    protected $_playerId;
+    /**
+     * @var int|null
+     */
+    protected $_replacementPlayerId = null;
+    /**
+     * @var int|null
+     */
+    protected $_localId = null;
+    /**
+     * @var int
+     */
+    protected $_ignoreSeating;
+    /**
+     * @var string
+     */
+    protected $_teamName;
 
     /**
      * @return bool|mixed

@@ -142,7 +142,7 @@ class EventUserManagementModel extends Model
         }
 
         return $regItem[0]
-            ->setReplacementPlayerId($replacementId)
+            ->setReplacementPlayerId($replacementId === -1 ? null : $replacementId)
             ->save();
     }
 
