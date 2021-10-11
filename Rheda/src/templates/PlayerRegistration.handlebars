@@ -114,8 +114,15 @@
             <tr>
                 <td>{{display_name}}{{#onlineEvent}} ({{tenhou_id}}){{/onlineEvent}}</td>
                 <td class="adm-actions">
+                    {{#showRemove}}
                     <form action="" method="post">
                         <input type="hidden" name="action_type" value="event_unreg" />
+                        <input type="hidden" name="id" value="{{id}}" />
+                        <input class="btn btn-large btn-danger" type="submit" value="{{_t 'Remove'}}" onclick="return confirm('{{_p 'Remove player %s?' display_name}}');" />
+                    </form>
+                    {{/showRemove}}
+                    <form action="" method="post">
+                        <input type="hidden" name="action_type" value="update_replacement" />
                         <input type="hidden" name="id" value="{{id}}" />
                         <input class="btn btn-large btn-danger" type="submit" value="{{_t 'Remove'}}" onclick="return confirm('{{_p 'Remove player %s?' display_name}}');" />
                     </form>

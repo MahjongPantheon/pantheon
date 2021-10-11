@@ -347,18 +347,22 @@ class EventModel extends Model
             ->select('is_online')
             ->select('sync_start')
             ->select('finished')
+            ->selectExpr('count(session.id)', 'sessioncnt')
+            ->leftOuterJoin('session', 'session.event_id = event.id')
             ->whereIdIn($idList)
             ->findMany();
 
         return array_map(function ($event) {
+            $type = $event['is_online']
+                ? 'online'
+                : ($event['sync_start'] ? 'tournament' : 'local');
             return [
                 'id' => $event['id'],
                 'title' => $event['title'],
                 'description' => $event['description'],
                 'finished' => !!$event['finished'],
-                'type' => $event['is_online']
-                    ? 'online'
-                    : ($event['sync_start'] ? 'tournament' : 'local')
+                'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
+                'type' => $type
             ];
         }, $data);
     }

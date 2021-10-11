@@ -42,6 +42,7 @@ class PlayerRegistration extends Controller
     {
         $errorMsg = '';
         $registeredPlayers = [];
+        $showRemovePlayer = false;
 
         $sorter = function ($e1, $e2): int {
             return strcmp($e1['display_name'], $e2['display_name']);
@@ -63,6 +64,9 @@ class PlayerRegistration extends Controller
                     $el['index'] = $index + 1;
                     return $el;
                 }, $registeredPlayers, array_keys($registeredPlayers));
+
+                $ev = $this->_mimir->getEventsById($this->_eventIdList);
+                $showRemovePlayer = count($ev) === 1 && !$ev[0]['tournamentStarted'];
             } catch (\Exception $e) {
                 $registeredPlayers = [];
                 $errorMsg = $e->getMessage();
@@ -75,6 +79,7 @@ class PlayerRegistration extends Controller
             'prescriptedEvent' => $this->_mainEventRules->isPrescripted(),
             'onlineEvent' => $this->_mainEventRules->isOnline(),
             'teamEvent' => $this->_mainEventRules->isTeam(),
+            'showRemove' => $showRemovePlayer,
             // === non-prescripted tournaments
             'canUseSeatingIgnore' => $this->_mainEventRules->syncStart() && !$this->_mainEventRules->isPrescripted(),
             'lastindex' => count($registeredPlayers) + 2,
@@ -111,6 +116,9 @@ class PlayerRegistration extends Controller
                     break;
                 case 'event_unreg':
                     $err = $this->_unregisterUserFromEvent($_POST['id']);
+                    break;
+                case 'update_replacement':
+                    $err = $this->_updateReplacement($_POST['id'], $_POST['replacement']);
                     break;
                 case 'update_ignore_seating':
                     $err = $this->_updateIgnoreSeating($_POST['id'], $_POST['ignore']);
@@ -247,6 +255,28 @@ class PlayerRegistration extends Controller
             $success = $this->_mainEventId && $this->_mimir->updatePlayerSeatingFlagCP($playerId, $this->_mainEventId, $ignore ? 1 : 0);
             if (!$success) {
                 $errorMsg = _t('Failed to save ignore seating flag. Check your network connection.');
+            }
+        } catch (\Exception $e) {
+            $errorMsg = $e->getMessage();
+        }
+
+        return $errorMsg;
+    }
+
+    /**
+     * @param int $playerId
+     * @param int $replacement
+     * @return string
+     */
+    protected function _updateReplacement(int $playerId, int $replacement)
+    {
+        $errorMsg = '';
+        try {
+            $success = $this->_mainEventId && $this->_mimir->updatePlayerReplacement(
+                $playerId, $this->_mainEventId, $replacement
+            );
+            if (!$success) {
+                $errorMsg = _t('Failed to save replacement player. Check your network connection.');
             }
         } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
