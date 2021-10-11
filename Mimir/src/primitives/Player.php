@@ -140,9 +140,10 @@ class PlayerPrimitive extends Primitive
 
     protected static function _findPlayers(DataSource $ds, array $playerRegData)
     {
+        $replacements = [];
         $players = self::findById($ds, array_map(function ($el) use (&$replacements) {
             if (!empty($el['replacement_id'])) {
-                $replacements[$el['replacement_id']] = true;
+                $replacements[$el['id']] = true;
             }
             return $el['id'];
         }, $playerRegData));

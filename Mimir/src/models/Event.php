@@ -341,15 +341,16 @@ class EventModel extends Model
     public function getEventsById(array $idList)
     {
         $data = $this->_ds->table('event')
-            ->select('id')
-            ->select('title')
-            ->select('description')
-            ->select('is_online')
-            ->select('sync_start')
-            ->select('finished')
+            ->select('event.id', 'id')
+            ->select('event.title', 'title')
+            ->select('event.description', 'description')
+            ->select('event.is_online', 'is_online')
+            ->select('event.sync_start', 'sync_start')
+            ->select('event.finished', 'finished')
             ->selectExpr('count(session.id)', 'sessioncnt')
             ->leftOuterJoin('session', 'session.event_id = event.id')
-            ->whereIdIn($idList)
+            ->whereIn('event.id', $idList)
+            ->groupBy('event.id')
             ->findMany();
 
         return array_map(function ($event) {

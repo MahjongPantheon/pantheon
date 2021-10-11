@@ -76,6 +76,50 @@
     const upd = jQuery.debounce(250, _updateResults);
     document.getElementById('search_field')
       .addEventListener('keyup', () => setTimeout(upd, 0));
+
+    function _updateReplacementsList(targetListId, inputEl, id) {
+        let formData = new FormData();
+        formData.append('action_type', 'find_persons');
+        formData.append('query', inputEl.value);
+        fetch('{{link href='/reg'}}', {
+            method: 'POST',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            referrerPolicy: 'no-referrer',
+            body: formData
+        }).then((result) => result.json()).then((result) => {
+            document.getElementById(targetListId).innerHTML = `
+                <a class="dropdown-item" href="#" onclick="selectReplacement(id, -1, '{{_t 'Nobody'}}', this); return false;">{{_t 'Nobody'}}</a>
+                ${result.map((item) => {
+                    return `<a class="dropdown-item" href="#" onclick="selectReplacement(${id}, ${item.id}, '${item.title}', this); return false;">${item.title}</a>`
+                }).join('')}
+            `;
+        }).catch(() => {
+            document.getElementById(targetListId).innerHTML = `
+                <a class="dropdown-item" href="#" onclick="selectReplacement(id, -1, '{{_t 'Nobody'}}', this); return false;">{{_t 'Nobody'}}</a>
+            `;
+        })
+    }
+    window.updateReplacementsList = jQuery.debounce(250, _updateReplacementsList);
+    window.selectReplacement = function(id, replacementId, replacementName, menuItemEl) {
+        let formData = new FormData();
+        formData.append('action_type', 'update_replacement');
+        formData.append('id', id);
+        formData.append('replacement', replacementId);
+        fetch('{{link href='/reg'}}', {
+            method: 'POST',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            referrerPolicy: 'no-referrer',
+            body: formData
+        }).then((result) => result.json()).then((result) => {
+            if (result.success) {
+                debugger;
+                const inputEl = menuItemEl.parentNode.previousSibling;
+                inputEl.value = replacementName;
+            }
+        });
+    };
   });
 </script>
 <h3>{{_t 'Players management'}}</h3>
@@ -124,7 +168,22 @@
                     <form action="" method="post">
                         <input type="hidden" name="action_type" value="update_replacement" />
                         <input type="hidden" name="id" value="{{id}}" />
-                        <input class="btn btn-large btn-danger" type="submit" value="{{_t 'Remove'}}" onclick="return confirm('{{_p 'Remove player %s?' display_name}}');" />
+                        {{#replaced_by}}
+                            <input type="hidden" name="replacement" value="-1" />
+                            Replaced with {{replaced_by.display_name}}
+                            <input class="btn btn-large btn-danger" type="submit" value="{{_t 'Remove replacement'}}"
+                                   onclick="return confirm('{{_p 'Remove replacement %s?' replaced_by.display_name}}');" />
+                        {{/replaced_by}}
+                        {{^replaced_by}}
+                            <div class="dropdown">
+                                <input placeholder="{{_t 'Replace with...'}}"
+                                       type="text" data-toggle="dropdown"
+                                       onkeyup="updateReplacementsList('repl_list{{id}}', this, {{id}})"/><div
+                                        class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="repl_list{{id}}">
+                                    <a class="dropdown-item" href="#" onclick="selectReplacement({{id}}, -1, '{{_t 'Nobody'}}', this); return false;">{{_t 'Nobody'}}</a>
+                                </div>
+                            </div>
+                        {{/replaced_by}}
                     </form>
                 </td>
                 {{#prescriptedEvent}}

@@ -119,7 +119,12 @@ class PlayerRegistration extends Controller
                     break;
                 case 'update_replacement':
                     $err = $this->_updateReplacement($_POST['id'], $_POST['replacement']);
-                    break;
+                    if (!$err) {
+                        echo json_encode(['success' => true]);
+                    } else {
+                        echo json_encode(['success' => false, 'error' => $err]);
+                    }
+                    return false;
                 case 'update_ignore_seating':
                     $err = $this->_updateIgnoreSeating($_POST['id'], $_POST['ignore']);
                     break;
@@ -133,12 +138,10 @@ class PlayerRegistration extends Controller
                     [$err, $result] = $this->_findPersons($_POST['query']);
                     if (empty($err)) {
                         echo json_encode($result);
-                        return false;
                     } else {
                         echo json_encode(['error' => $err]);
-                        return false;
                     }
-                    break;
+                    return false;
                 default:
                     ;
             }
