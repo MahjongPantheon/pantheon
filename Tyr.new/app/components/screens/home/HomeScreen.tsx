@@ -11,6 +11,8 @@ import {
 import {HomeScreenView} from '#/components/screens/home/HomeScreenView';
 import {Preloader} from '#/components/general/preloader/Preloader';
 import {isLoading} from '#/store/selectors/screenConfirmationSelectors';
+import {useContext} from "react";
+import {i18n} from "#/components/i18n";
 
 export class HomeScreen extends React.PureComponent<IComponentProps> {
   private onSettingClick() {
@@ -55,11 +57,12 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
 
   render() {
     const {state} = this.props;
+    const loc = useContext(i18n);
     if (!state.gameConfig || isLoading(state)) {
       return <Preloader />;
     }
 
-    const playerName = state.gameConfig.eventTitle || 'title';
+    const playerName = state.gameConfig.eventTitle || loc._t('Event title');
 
     return (
       <HomeScreenView

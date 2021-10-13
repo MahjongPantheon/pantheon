@@ -1,10 +1,11 @@
 import * as React from "react";
 import {BottomPanel} from '#/components/general/bottom-panel/BottomPanel';
 import './page-log.css'
-import {useCallback, useState} from 'react';
+import {useCallback, useContext, useState} from 'react';
 import {RoundResult} from '#/components/screens/log/view/RoundResult';
 import {IRoundOverviewInfo} from '#/components/screens/log/view/RoundTypes';
 import {RoundInfo} from '#/components/screens/log/view/RoundInfo';
+import {i18n} from "#/components/i18n";
 
 export interface IRoundResult {
   scoresDelta: {[id: string]: number}
@@ -20,6 +21,7 @@ type IProps = {
 }
 
 export const LogScreenView: React.FC<IProps> = (props) => {
+  const loc = useContext(i18n);
   const {players, results, rounds, onBackClick} = props;
   const [selectedRoundIndex, setRoundIndex] = useState<number | undefined>(undefined);
 
@@ -34,7 +36,7 @@ export const LogScreenView: React.FC<IProps> = (props) => {
   return (
     <div className="flex-container page-log">
       {!results.length && (
-        <div className="flex-container__content page-log__no-results">No results found</div>
+        <div className="flex-container__content page-log__no-results">{loc._t('No results found')}</div>
       )}
       {!!results.length && (
         <>
@@ -66,7 +68,7 @@ export const LogScreenView: React.FC<IProps> = (props) => {
       )}
       <div className="flex-container__bottom">
         <BottomPanel
-          text="Log"
+          text={loc._t('Game log')}
           showBack={true}
           onBackClick={onBackClick}
         />

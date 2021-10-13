@@ -1,5 +1,7 @@
 import * as React from "react";
 import './player-dropdown.css'
+import {useContext} from "react";
+import {i18n} from "#/components/i18n";
 
 type IProps = {
   playerName?: string
@@ -10,6 +12,7 @@ type IProps = {
 export class PlayerDropdown extends React.Component<IProps> {
   render() {
     const {playerName, wind, onPlayerClick} = this.props;
+    const loc = useContext(i18n);
 
     return (
       <div className="player-dropdown">
@@ -24,7 +27,7 @@ export class PlayerDropdown extends React.Component<IProps> {
           )}
           {!playerName &&  (
             <div className="player-dropdown__placeholder">
-              select player
+              {loc._t('select player')}
             </div>
           )}
         </div>

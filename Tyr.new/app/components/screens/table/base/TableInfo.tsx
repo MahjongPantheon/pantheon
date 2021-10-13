@@ -3,6 +3,8 @@ import './page-table.css';
 import {IconType} from '#/components/general/icon/IconType';
 import {TableTenbou} from '#/components/screens/table/base/TableTenbou';
 import {Icon} from "#/components/general/icon/Icon";
+import {useContext} from "react";
+import {i18n} from "#/components/i18n";
 
 export type TableInfoProps = {
   showRoundInfo?: boolean;
@@ -21,6 +23,7 @@ export type TableInfoProps = {
 }
 
 export const TableInfo = React.memo(function (props: TableInfoProps) {
+  const loc = useContext(i18n);
   const {
     showRoundInfo,
     showTableNumber,
@@ -68,10 +71,7 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
           {gamesLeft && (
             <div className="table-info__games-left">
               <div className="table-info__games-left-count">
-                {gamesLeft}
-              </div>
-              <div className="table-info__games-left-caption">
-                max deals left
+                {loc._nt(['%s deal left', '%s deals left'], gamesLeft, [gamesLeft])}
               </div>
             </div>
           )}
@@ -80,10 +80,7 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
       {showTableNumber && (
         <>
           <div className="table-info__table-caption">
-            Table
-          </div>
-          <div className="table-info__table-number">
-            #{tableNumber}
+            {loc._t('Table #%s', [tableNumber])}
           </div>
         </>
       )}

@@ -3,6 +3,8 @@ import './event-select.css'
 import {TopPanel} from '#/components/general/top-panel/TopPanel';
 import classNames from 'classnames';
 import {LEventsList} from "#/interfaces/local";
+import {useContext} from "react";
+import {i18n} from "#/components/i18n";
 
 interface IProps {
   playerName: string;
@@ -13,6 +15,7 @@ interface IProps {
 }
 
 export const EventSelectScreenView = React.memo(function (props: IProps) {
+  const loc = useContext(i18n);
   const {
     playerName,
     events,
@@ -27,7 +30,7 @@ export const EventSelectScreenView = React.memo(function (props: IProps) {
         <TopPanel onBackClick={onBackClick}/>
         <div className="page-event-select__name">{playerName}</div>
         <div className="page-event-select__section">
-          <div className="page-event-select__section-title">Select event</div>
+          <div className="page-event-select__section-title">{loc._t('Select event')}</div>
           <div className="page-event-select__section-content">
             {events.map(event => (
               <div

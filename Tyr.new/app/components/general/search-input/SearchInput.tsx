@@ -1,8 +1,9 @@
 import * as React from "react";
 import {Icon} from '#/components/general/icon/Icon';
 import {IconType} from '#/components/general/icon/IconType';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import useDebounce from '#/components/general/search-input/UseDebounce';
+import {i18n} from "#/components/i18n";
 
 type IProps = {
   onChange: (value: string) => void
@@ -57,11 +58,11 @@ class SearchInputInner extends React.Component<IInnerProps, IState> {
 
   render() {
     const {searchValue} = this.state;
-
+    const loc = useContext(i18n);
     return (
       <>
         <input value={searchValue}
-               placeholder="type to find someone"
+               placeholder={loc._t('type to find someone')}
                onChange={this.onInputChange.bind(this)}>
         </input>
         {!!searchValue && (

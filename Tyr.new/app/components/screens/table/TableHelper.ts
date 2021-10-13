@@ -55,42 +55,43 @@ import {roundToString} from '#/components/helpers/Utils';
 import {AppOutcome} from '#/interfaces/app';
 import {getNextWinnerWithPao} from '#/store/selectors/paoSelectors';
 import {formatTime, getTimeRemaining} from '#/store/selectors/overviewSelectors';
+import {I18nService} from "#/services/i18n";
 
 // todo move to selectors most of code from here
 
-export function getPlayerTopInfo(state: IAppState, dispatch: Dispatch) {
+export function getPlayerTopInfo(loc: I18nService, state: IAppState, dispatch: Dispatch) {
   const purpose = getPurposeForType(state);
   const playerBase = getToimen(state, purpose);
   const wind = getSeatToimen(state, purpose);
 
-  return getPlayer(playerBase, wind, state, dispatch)
+  return getPlayer(loc, playerBase, wind, state, dispatch)
 }
 
-export function getPlayerLeftInfo(state: IAppState, dispatch: Dispatch) {
+export function getPlayerLeftInfo(loc: I18nService, state: IAppState, dispatch: Dispatch) {
   const purpose = getPurposeForType(state)
   const playerBase = getKamicha(state, purpose)
   const wind = getSeatKamicha(state, purpose);
 
-  return getPlayer(playerBase, wind, state, dispatch)
+  return getPlayer(loc, playerBase, wind, state, dispatch)
 }
 
-export function getPlayerRightInfo(state: IAppState, dispatch: Dispatch) {
+export function getPlayerRightInfo(loc: I18nService, state: IAppState, dispatch: Dispatch) {
   const purpose = getPurposeForType(state)
   const playerBase = getShimocha(state, purpose)
   const wind = getSeatShimocha(state, purpose);
 
-  return getPlayer(playerBase, wind, state, dispatch)
+  return getPlayer(loc, playerBase, wind, state, dispatch)
 }
 
-export function getPlayerBottomInfo(state: IAppState, dispatch: Dispatch) {
+export function getPlayerBottomInfo(loc: I18nService, state: IAppState, dispatch: Dispatch) {
   const purpose = getPurposeForType(state)
   const playerBase = getSelf(state, purpose)
   const wind = getSeatSelf(state, purpose);
 
-  return getPlayer(playerBase, wind, state, dispatch)
+  return getPlayer(loc, playerBase, wind, state, dispatch)
 }
 
-export function getOutcomeModalInfo(state: IAppState, dispatch: Dispatch): SelectModalProps | undefined {
+export function getOutcomeModalInfo(loc: I18nService, state: IAppState, dispatch: Dispatch): SelectModalProps | undefined {
   if (state.currentScreen !== 'outcomeSelect') {
     return undefined
   }
@@ -102,19 +103,19 @@ export function getOutcomeModalInfo(state: IAppState, dispatch: Dispatch): Selec
 
   const items: ItemSelect[] = [
     {
-      text: 'Ron',
+      text: loc._t('Ron'),
       onSelect: () => {onItemSelect('ron')},
     },
     {
-      text: 'Tsumo',
+      text: loc._t('Tsumo'),
       onSelect: () => {onItemSelect('tsumo')},
     },
     {
-      text: 'Exhaustive draw',
+      text: loc._t('Exhaustive draw'),
       onSelect: () => {onItemSelect('draw')},
     },
     {
-      text: 'Chombo',
+      text: loc._t('Chombo'),
       onSelect: () => {onItemSelect('chombo')},
     },
   ];
@@ -124,7 +125,7 @@ export function getOutcomeModalInfo(state: IAppState, dispatch: Dispatch): Selec
     if (gameConfig.withAbortives) {
       items.push(
         {
-          text: 'Abortive draw',
+          text: loc._t('Abortive draw'),
           onSelect: () => {onItemSelect('abort')},
           unavailable: false,
         }
@@ -134,7 +135,7 @@ export function getOutcomeModalInfo(state: IAppState, dispatch: Dispatch): Selec
     if (gameConfig.withNagashiMangan) {
       items.push(
         {
-          text: 'Nagashi mangan',
+          text: loc._t('Nagashi mangan'),
           onSelect: () => {onItemSelect('nagashi')},
           unavailable: false,
         }
@@ -162,7 +163,7 @@ function getPurposeForType(state: IAppState): RoundPreviewSchemePurpose {
   }
 }
 
-function getPlayerPaymentResult(player: Player, state: IAppState): number | string {
+function getPlayerPaymentResult(loc: I18nService, player: Player, state: IAppState): number | string {
   const paymentsInfo = getPaymentsInfo(state);
 
   //todo add reverse mangan tsumo (mimir)
@@ -170,7 +171,7 @@ function getPlayerPaymentResult(player: Player, state: IAppState): number | stri
     if (state.changesOverview && state.changesOverview.outcome === 'chombo' && !!state.changesOverview.penaltyFor) {
       const penaltyFor = state.changesOverview.penaltyFor
       if (player.id === penaltyFor) {
-        return 'Penalty'
+        return loc._t('Penalty');
       }
     }
   }
@@ -187,7 +188,7 @@ function getPlayerPaymentResult(player: Player, state: IAppState): number | stri
   return  result;
 }
 
-function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dispatch): PlayerProps {
+function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppState, dispatch: Dispatch): PlayerProps {
   let rotated = false; //todo singleDeviceMode
   let pointsMode = PlayerPointsMode.IDLE; //todo check
   let points: number | string | undefined = player.score;
@@ -226,7 +227,7 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
       }
       break;
     case 'confirmation':
-      const paymentResult = getPlayerPaymentResult(player, state);
+      const paymentResult = getPlayerPaymentResult(loc, player, state);
       points = paymentResult !== 0 ? paymentResult : undefined;
       if (typeof paymentResult === 'number') {
         if (paymentResult > 0) {
@@ -327,7 +328,7 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
       penaltyPoints = undefined;
 
       if (!currentOutcome) {
-        throw new Error('empty outcome');
+        throw new Error(loc._t('empty outcome'));
       }
 
       let paoButtonMode: PlayerButtonMode | undefined;
@@ -336,11 +337,11 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
       switch (currentOutcome.selectedOutcome) {
         case 'ron':
           if (state.multironCurrentWinner === player.id) {
-            points = 'Winner'
-            pointsMode = PlayerPointsMode.POSITIVE
+            points = loc._t('Winner');
+            pointsMode = PlayerPointsMode.POSITIVE;
           } else if (currentOutcome.loser === player.id) {
-            points = 'Loser'
-            pointsMode = PlayerPointsMode.NEGATIVE
+            points = loc._t('Loser');
+            pointsMode = PlayerPointsMode.NEGATIVE;
           } else {
             hasPaoButton = true
           }
@@ -349,12 +350,12 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
           if (currentOutcome.winner !== player.id) {
             hasPaoButton = true
           } else {
-            points = 'Winner'
-            pointsMode = PlayerPointsMode.POSITIVE
+            points = loc._t('Winner');
+            pointsMode = PlayerPointsMode.POSITIVE;
           }
           break;
         default:
-          throw new Error('wrong outcome for paoSelect');
+          throw new Error(loc._t('wrong outcome for paoSelect'));
       }
 
       if (hasPaoButton) {
@@ -391,7 +392,7 @@ function getPlayer(player: Player, wind: string, state: IAppState, dispatch: Dis
   }
 }
 
-function getTitleForOutcome(selectedOutcome: OutcomeType | undefined, currentScreen: AppScreen): string | undefined {
+function getTitleForOutcome(loc: I18nService, selectedOutcome: OutcomeType | undefined, currentScreen: AppScreen): string | undefined {
   // todo add i18n
   if (selectedOutcome === undefined) {
     return undefined
@@ -401,42 +402,42 @@ function getTitleForOutcome(selectedOutcome: OutcomeType | undefined, currentScr
     case 'ron':
     case 'tsumo':
       if (currentScreen === 'paoSelect') {
-        return  'Select pao';
+        return  loc._t('Select pao');
       }
       break;
     case 'nagashi':
       if (currentScreen === 'playersSelect') {
-        return 'Select tempai';
+        return loc._t('Select tempai');
       }
       break;
   }
 
-  return getOutcomeName(selectedOutcome)
+  return getOutcomeName(loc, selectedOutcome)
 }
 
 // todo replace with common selector
-export function getOutcomeName(selectedOutcome: OutcomeType): string {
+export function getOutcomeName(loc: I18nService, selectedOutcome: OutcomeType): string {
   switch (selectedOutcome) {
     case 'ron':
-      return  'Ron';
+      return  loc._t('Ron');
     case 'tsumo':
-      return  'Tsumo';
+      return  loc._t('Tsumo');
     case 'draw':
-      return  'Draw';
+      return  loc._t('Draw');
     case 'abort':
-      return  'Abort';
+      return  loc._t('Abort');
     case 'chombo':
-      return  'Chombo';
+      return  loc._t('Chombo');
     case 'nagashi':
-      return 'Nagashi';
+      return loc._t('Nagashi');
   }
 }
 
-export function getBottomPanel(state: IAppState, dispatch: Dispatch) {
+export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dispatch) {
   const tableMode = getTableMode(state);
   const selectedOutcome = state.currentOutcome && state.currentOutcome.selectedOutcome;
 
-  const text = getTitleForOutcome(selectedOutcome, state.currentScreen)
+  const text = getTitleForOutcome(loc, selectedOutcome, state.currentScreen)
 
   const showBack = [TableMode.OTHER_PLAYER_TABLE, TableMode.SELECT_PLAYERS, TableMode.RESULT].includes(tableMode);
   const showNext = tableMode === TableMode.SELECT_PLAYERS;

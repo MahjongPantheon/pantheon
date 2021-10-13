@@ -1,5 +1,4 @@
 import React from "react";
-import {TableMode} from "#/components/types/TableMode";
 
 //temporary solution until sprite doesn't work
 //generate sprite from img/*.svg

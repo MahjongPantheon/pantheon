@@ -16,6 +16,8 @@ import {
 import {doraOptions, mayGoNextFromYakuSelect} from '#/store/selectors/navbarSelectors';
 import {getDora, getFu, getPossibleFu, getHan} from '#/store/selectors/hanFu';
 import {getOutcomeName} from '#/components/screens/table/TableHelper';
+import {useContext} from "react";
+import {i18n} from "#/components/i18n";
 
 export class SelectHandScreen extends React.Component<IComponentProps> {
 
@@ -96,7 +98,8 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
   }
 
   render() {
-    const {state, i18nService} = this.props;
+    const loc = useContext(i18n);
+    const {state} = this.props;
     if (!state.currentOutcome || state.currentOutcome.selectedOutcome !== 'ron' && state.currentOutcome.selectedOutcome !== 'tsumo') { //todo
       return null;
     }
@@ -109,7 +112,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     const allWinners = getWinningUsers(state);
     const player = allWinners.find((val) => val.id === currentWinnerId)
     const playerName = player !== undefined ? player.displayName : '';
-    const bottomPanelText = getOutcomeName(state.currentOutcome.selectedOutcome);
+    const bottomPanelText = getOutcomeName(loc, state.currentOutcome.selectedOutcome);
     const canGoNext = !!mayGoNextFromYakuSelect(state);
 
     let leftArrowState = ArrowState.UNAVAILABLE;
@@ -129,7 +132,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
       const yakuGroup: YakuItem[] = []
       yakuListItem.forEach(yaku => {
         const item: YakuItem = {
-          name: yaku.name(i18nService),
+          name: yaku.name(loc),
           onClick: () => this.onYakuClick(yaku.id),
           disabled: disabledYaku[yaku.id],
           pressed: selectedYaku.indexOf(yaku.id) !== -1,

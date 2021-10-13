@@ -3,6 +3,8 @@ import './page-home.css'
 import {Icon} from '#/components/general/icon/Icon';
 import {IconType} from '#/components/general/icon/IconType';
 import classNames from 'classnames';
+import {useContext} from "react";
+import {i18n} from "#/components/i18n";
 
 type IProps = {
   eventName: string
@@ -21,6 +23,7 @@ type IProps = {
 }
 
 export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) {
+  const loc = useContext(i18n);
   const {
     eventName,
     canStartGame,
@@ -50,32 +53,32 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
       <div className="page-home__title">{eventName}</div>
       <div className="page-home__bottom">
         <HomeScreenButton
-          caption="New game"
+          caption={loc._t('New game')}
           isVisible={canStartGame}
           isActive={true}
           iconType={IconType.PLUS}
           onClick={onNewGameClick}
         />
         <HomeScreenButton
-          caption="Current game"
+          caption={loc._t('Current game')}
           isVisible={hasStartedGame}
           isActive={true}
           onClick={onCurrentGameClick}
         />
         <HomeScreenButton
-          caption="Previous game"
+          caption={loc._t('Previous game')}
           isVisible={hasPrevGame}
           isBordered={!canStartGame && !hasStartedGame}
           onClick={onPrevGameClick}
         />
         <HomeScreenButton
-          caption="Other playing tables"
+          caption={loc._t('Other playing tables')}
           isVisible={canSeeOtherTables}
           isBordered={(!canStartGame && !hasStartedGame) || hasPrevGame}
           onClick={onOtherTablesClick}
         />
         <HomeScreenButton
-          caption="Statistics"
+          caption={loc._t('Statistics')}
           isVisible={hasStat}
           isBordered={(!canStartGame && !hasStartedGame) || hasPrevGame || canSeeOtherTables}
           iconType={IconType.LINK}

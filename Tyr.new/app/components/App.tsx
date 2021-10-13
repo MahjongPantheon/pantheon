@@ -21,6 +21,7 @@ import {LogScreen} from '#/components/screens/log/LogScreen';
 import {environment} from '#config';
 import {EventSelectScreen} from "#/components/screens/event-select/EventSelectScreen";
 import {OtherTablesList} from "#/components/screens/other-tables-list/OtherTablesListScreen";
+import { i18n } from './i18n';
 
 interface IProps {
   state: IAppState;
@@ -85,7 +86,9 @@ export const App: React.FC<IProps> = (props: IProps) => {
 
   return (
     <div id="screen" className={`App theme-${currentThemeName}`}>
-      <CurrentScreen state={state} dispatch={dispatch} i18nService={i18nService} />
+      <i18n.Provider value={i18nService}>
+        <CurrentScreen state={state} dispatch={dispatch} />
+      </i18n.Provider>
     </div>
   )
 }

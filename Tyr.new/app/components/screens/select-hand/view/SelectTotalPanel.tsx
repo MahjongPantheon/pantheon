@@ -1,6 +1,8 @@
 import * as React from "react";
 import './page-set-hand.css'
 import {NumberSelect} from '#/components/general/number-select/NumberSelect';
+import {useContext} from "react";
+import {i18n} from "#/components/i18n";
 
 type IProps = {
   isYakuman: boolean
@@ -33,6 +35,7 @@ export class SelectTotalPanel extends React.Component<IProps> {
   }
 
   render() {
+    const loc = useContext(i18n);
     const {
       isYakuman,
       yakuHan,
@@ -52,26 +55,28 @@ export class SelectTotalPanel extends React.Component<IProps> {
       onFuSelected,
     } = this.props;
 
-    const totalHandAmount = fuCount ? `${this.hanCount} han ${fuCount} fu` : `${this.hanCount} han`;
+    const totalHandAmount = fuCount
+      ? loc._t('%s han %s fu', [this.hanCount, fuCount])
+      : loc._t('%s han', [this.hanCount]);
 
     return (
       <div className="select-total-panel">
         {!isYakuman && (
           <>
             <div className="select-total-panel__top-group">
-              Han from yaku <span>{yakuHan}</span>
+              {loc._t('Han from yaku')} <span>{yakuHan}</span>
             </div>
             <div className="select-total-panel__max">
             <div className="select-total-panel__select-group">
             <div className="select-total-panel__select-group-caption">
-            Dora
+              {loc._t('Dora')}
             </div>
             <NumberSelect value={doraCount} possibleValues={doraValues} onChange={onDoraSelected}/>
             </div>
             {withUraDora && uraDoraCount !== undefined && uraDoraValues !== undefined && (
               <div className="select-total-panel__select-group">
                 <div className="select-total-panel__select-group-caption">
-                  Ura dora
+                  {loc._t('Ura dora')}
                 </div>
                 <NumberSelect value={uraDoraCount} possibleValues={uraDoraValues} onChange={onUraDoraSelected}/>
               </div>
@@ -79,14 +84,14 @@ export class SelectTotalPanel extends React.Component<IProps> {
             {withRedFives && redFivesCount !== undefined && redFivesValues !== undefined && (
               <div className="select-total-panel__select-group">
                 <div className="select-total-panel__select-group-caption">
-                  Red fives
+                  {loc._t('Red fives')}
                 </div>
                 <NumberSelect value={redFivesCount} possibleValues={redFivesValues} onChange={onRedFivesSelected}/>
               </div>
             )}
             <div className="select-total-panel__select-group">
             <div className="select-total-panel__select-group-caption">
-                Fu
+              {loc._t('Fu')}
             </div>
             <NumberSelect value={fuCount} possibleValues={fuValues} onChange={onFuSelected}/>
             </div>
@@ -98,7 +103,7 @@ export class SelectTotalPanel extends React.Component<IProps> {
         )}
         {isYakuman && (
           <div className="select-total-panel__center">
-            Yakuman
+            {loc._t('Yakuman')}
           </div>
         )}
 

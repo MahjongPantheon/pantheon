@@ -4,6 +4,8 @@ import './page-setting.css'
 import {TopPanel} from '#/components/general/top-panel/TopPanel';
 import classNames from 'classnames';
 import {Theme} from '#/services/themes';
+import {useContext} from "react";
+import {i18n} from "#/components/i18n";
 
 interface IProps {
   playerName: string;
@@ -21,6 +23,7 @@ interface IProps {
 }
 
 export const SettingsScreenView = React.memo(function (props: IProps) {
+  const loc = useContext(i18n);
   const {
     playerName,
     supportedLanguages,
@@ -42,7 +45,7 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
         <TopPanel onBackClick={onBackClick}/>
         <div className="page-setting__name">{playerName}</div>
         <div className="page-setting__section">
-          <div className="page-setting__section-title">Language</div>
+          <div className="page-setting__section-title">{loc._t('Language')}</div>
           <div className="page-setting__section-content">
             {supportedLanguages.map(lang => (
               <div
@@ -54,7 +57,7 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
           </div>
         </div>
         <div className="page-setting__section">
-          <div className="page-setting__section-title">Theme</div>
+          <div className="page-setting__section-title">{loc._t('Theme')}</div>
           <div className="page-setting__section-content">
 
             {supportedThemes.map(theme => (
@@ -73,7 +76,7 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
         </div>
         <div className="page-setting__section">
           <div className="page-setting__section-content">
-            <button onClick={() => onEventSelect()}>Select another event</button>
+            <button onClick={() => onEventSelect()}>{loc._t('Select another event')}</button>
           </div>
         </div>
         {/*<div className="page-setting__section">*/}
@@ -87,7 +90,7 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
         {/*</div>*/}
       </div>
       <div className="flex-container__bottom page-setting__bottom" onClick={onLogout}>
-        <div className="link">Log out</div>
+        <div className="link">{loc._t('Log out')}</div>
       </div>
     </div>
   );

@@ -7,6 +7,8 @@ import {
   SELECT_EVENT,
 } from '#/store/actions/interfaces';
 import {Preloader} from "#/components/general/preloader/Preloader";
+import {useContext} from "react";
+import {i18n} from "#/components/i18n";
 
 export class EventSelectScreen extends React.PureComponent<IComponentProps>{
   private onBackClick() {
@@ -26,7 +28,8 @@ export class EventSelectScreen extends React.PureComponent<IComponentProps>{
 
   render() {
     const {state} = this.props;
-    const playerName = state.currentPlayerDisplayName || 'name';
+    const loc = useContext(i18n);
+    const playerName = state.currentPlayerDisplayName || loc._t('name');
 
     return (
       state.loading.events ? <Preloader /> : <EventSelectScreenView

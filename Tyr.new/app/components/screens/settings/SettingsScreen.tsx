@@ -10,6 +10,8 @@ import {
 } from '#/store/actions/interfaces';
 import {supportedLanguages} from '#/services/i18n';
 import {themes} from '#/services/themes';
+import {useContext} from "react";
+import {i18n} from "#/components/i18n";
 
 export class SettingsScreen extends React.PureComponent<IComponentProps>{
   private onBackClick() {
@@ -44,8 +46,9 @@ export class SettingsScreen extends React.PureComponent<IComponentProps>{
 
   render() {
     const {state} = this.props;
+    const loc = useContext(i18n);
 
-    const playerName = state.currentPlayerDisplayName || 'name';
+    const playerName = state.currentPlayerDisplayName || loc._t('Player name');
 
     return (
       <SettingsScreenView

@@ -8,10 +8,13 @@ import {
 } from '#/components/screens/table/TableHelper';
 import {TableScreenStateless} from '#/components/screens/table/base/TableScreenStateless';
 import {Preloader} from '#/components/general/preloader/Preloader';
+import {useContext} from "react";
+import {i18n} from "#/components/i18n";
 
 export class TableScreen extends React.Component<IComponentProps> {
 
   render() {
+    const loc = useContext(i18n);
     const {state, dispatch} = this.props;
     const isLoading = state.loading.events
       || (state.currentScreen === 'overview' && (
@@ -23,15 +26,15 @@ export class TableScreen extends React.Component<IComponentProps> {
       return <Preloader />
     }
 
-    const topPlayerInfo = getPlayerTopInfo(state, dispatch);
-    const leftPlayerInfo = getPlayerLeftInfo(state, dispatch);
-    const rightPlayerInfo = getPlayerRightInfo(state, dispatch);
-    const bottomPlayerInfo = getPlayerBottomInfo(state, dispatch);
+    const topPlayerInfo = getPlayerTopInfo(loc, state, dispatch);
+    const leftPlayerInfo = getPlayerLeftInfo(loc, state, dispatch);
+    const rightPlayerInfo = getPlayerRightInfo(loc, state, dispatch);
+    const bottomPlayerInfo = getPlayerBottomInfo(loc, state, dispatch);
 
     const tableInfo = getTableInfo(state, dispatch);
 
-    const outcomeModalInfo = getOutcomeModalInfo(state, dispatch);
-    const buttonPanelInfo = getBottomPanel(state, dispatch);
+    const outcomeModalInfo = getOutcomeModalInfo(loc, state, dispatch);
+    const buttonPanelInfo = getBottomPanel(loc, state, dispatch);
 
     const arrowsInfo = getArrowsInfo(state);
 

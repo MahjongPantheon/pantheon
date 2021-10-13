@@ -1,9 +1,10 @@
 import { Dispatch, MiddlewareAPI } from 'redux';
 import {
   AppActionTypes,
+  HISTORY_INIT,
+  GOTO_PREV_SCREEN
 } from '../actions/interfaces';
 import { IAppState } from "#/store/interfaces";
-import {GOTO_PREV_SCREEN, HISTORY_INIT} from "../../../../Tyr/src/app/services/store/actions/interfaces";
 
 export const history = (/* HistoryService ? */) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
