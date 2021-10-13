@@ -66,6 +66,11 @@ class EventUserManagementModel extends Model
             $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_ds, $eId);
         }
 
+        $regItemOld = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
+        if (count($regItemOld) > 0) {
+            throw new InvalidParametersException('Player already registered to this event');
+        }
+
         $regItem = (new PlayerRegistrationPrimitive($this->_ds))
             ->setLocalId($nextLocalId)
             ->setReg($player[0], $event[0]);

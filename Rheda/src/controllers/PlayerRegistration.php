@@ -42,7 +42,8 @@ class PlayerRegistration extends Controller
     {
         $errorMsg = '';
         $registeredPlayers = [];
-        $showRemovePlayer = false;
+        $showAddRemovePlayer = false;
+        $eventType = 'local'; // other types: tournament, online
 
         $sorter = function ($e1, $e2): int {
             return strcmp($e1['display_name'], $e2['display_name']);
@@ -66,7 +67,8 @@ class PlayerRegistration extends Controller
                 }, $registeredPlayers, array_keys($registeredPlayers));
 
                 $ev = $this->_mimir->getEventsById($this->_eventIdList);
-                $showRemovePlayer = count($ev) === 1 && !$ev[0]['tournamentStarted'];
+                $showAddRemovePlayer = count($ev) === 1 && !$ev[0]['tournamentStarted'];
+                $eventType = count($ev) === 1 ? $ev[0]['type'] : 'local';
             } catch (\Exception $e) {
                 $registeredPlayers = [];
                 $errorMsg = $e->getMessage();
@@ -79,7 +81,8 @@ class PlayerRegistration extends Controller
             'prescriptedEvent' => $this->_mainEventRules->isPrescripted(),
             'onlineEvent' => $this->_mainEventRules->isOnline(),
             'teamEvent' => $this->_mainEventRules->isTeam(),
-            'showRemove' => $showRemovePlayer,
+            'showAddRemove' => $showAddRemovePlayer,
+            'showReplace' => $eventType !== 'local',
             // === non-prescripted tournaments
             'canUseSeatingIgnore' => $this->_mainEventRules->syncStart() && !$this->_mainEventRules->isPrescripted(),
             'lastindex' => count($registeredPlayers) + 2,
@@ -113,6 +116,12 @@ class PlayerRegistration extends Controller
             switch ($_POST['action_type']) {
                 case 'event_reg':
                     $err = $this->_registerUserForEvent($_POST['id']);
+                    if (!$err) {
+                        echo json_encode(['success' => true]);
+                    } else {
+                        echo json_encode(['success' => false, 'error' => $err]);
+                    }
+                    return false;
                     break;
                 case 'event_unreg':
                     $err = $this->_unregisterUserFromEvent($_POST['id']);

@@ -143,14 +143,18 @@ class PlayerPrimitive extends Primitive
         $replacements = [];
         $players = self::findById($ds, array_map(function ($el) use (&$replacements) {
             if (!empty($el['replacement_id'])) {
-                $replacements[$el['id']] = true;
+                $replacements[$el['id']] = $el['replacement_id'];
             }
             return $el['id'];
         }, $playerRegData));
 
-        $replacementPlayers = self::findById($ds, array_keys($replacements));
+        $replacementPlayers = self::findById($ds, array_values($replacements));
+        $repl = [];
         foreach ($replacementPlayers as $p) {
-            $replacements[$p->getId()] = $p;
+            $repl[$p->getId()] = $p;
+        }
+        foreach ($replacements as $id => $replacementId) {
+            $replacements[$id] = $repl[$replacementId];
         }
 
         return ['players' => $players, 'replacements' => $replacements];
