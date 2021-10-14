@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-14 22:12+0300\n"
+"POT-Creation-Date: 2021-10-14 22:27+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,35 +157,36 @@ msgid "Password"
 msgstr ""
 
 #: app/components/screens/login/EnterCredentialsView.tsx:31:12
-#: app/components/screens/login/LoginErrorView.tsx:32:12
+#: app/components/screens/login/LoginErrorView.tsx:35:12
 msgid "OK"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:13:79
+#: app/components/screens/login/LoginErrorView.tsx:14:7
+msgctxt "Name of registration link"
 msgid "register"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:17:10
+#: app/components/screens/login/LoginErrorView.tsx:20:10
 msgid "Pantheon"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:21:12
+#: app/components/screens/login/LoginErrorView.tsx:24:12
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:24:16
+#: app/components/screens/login/LoginErrorView.tsx:27:16
 msgid "E-mail is not registered in Pantheon database (%1)"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:25:16
+#: app/components/screens/login/LoginErrorView.tsx:28:16
 msgid "Password check has failed"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:26:16
+#: app/components/screens/login/LoginErrorView.tsx:29:16
 msgid "Unexpected server error"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:28:15
+#: app/components/screens/login/LoginErrorView.tsx:31:15
 msgid "If in doubt, contact the tournament administrator for further instructions."
 msgstr ""
 

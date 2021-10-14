@@ -10,7 +10,10 @@ type IProps = {
 
 export const LoginErrorView: React.FC<IProps> = ({onOkClick}) => {
   const loc = useContext(i18n);
-  const regLink = `<a href=${environment.guiUrl + 'signup'} target='_blank'>${loc._t('register')}</a>`;
+  const regLink = `<a href=${environment.guiUrl + 'signup'} target='_blank'>
+    ${loc._pt('Name of registration link', 'register')}
+  </a>`;
+
   return (
     <div className="page-login-error">
       <div className="page-login-error__title">
