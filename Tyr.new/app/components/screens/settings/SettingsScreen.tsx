@@ -31,7 +31,12 @@ export class SettingsScreen extends React.PureComponent<IComponentProps>{
 
   private onLangChange(lang: string) {
     const {dispatch} = this.props;
+    const loc = this.context as I18nService;
     dispatch({ type: SETTINGS_SAVE_LANG, payload: lang });
+    loc.init((localeName: string) => {
+      // make sure value is valid - set it again in callback
+      dispatch({ type: SETTINGS_SAVE_LANG, payload: localeName });
+    }, (error: any) => console.error(error));
   }
 
   private onThemeSelect(theme: string) {

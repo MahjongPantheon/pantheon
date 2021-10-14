@@ -4,7 +4,14 @@ import '../styles/base.css'
 import '../styles/themes.css'
 import '../styles/variables.css'
 import {IAppState} from '#/store/interfaces';
-import {AppActionTypes, HISTORY_INIT, INIT_STATE, SELECT_EVENT, STARTUP_WITH_AUTH} from '#/store/actions/interfaces';
+import {
+  AppActionTypes,
+  HISTORY_INIT,
+  INIT_STATE,
+  SELECT_EVENT,
+  SETTINGS_SAVE_LANG,
+  STARTUP_WITH_AUTH
+} from '#/store/actions/interfaces';
 import {Dispatch} from "redux";
 import {IComponentProps} from '#/components/IComponentProps';
 import {HomeScreen} from '#/components/screens/home/HomeScreen';
@@ -73,6 +80,9 @@ export const App: React.FC<IProps> = (props: IProps) => {
 
   useEffect(() => {
     dispatch({type: INIT_STATE});
+    i18nService.init((localeName) => {
+      dispatch({type: SETTINGS_SAVE_LANG, payload: localeName});
+    }, (err) => console.error(err));
     dispatch({type: HISTORY_INIT});
     const event = storage.get(environment.idbEventKey, 'int');
     if (event) {
