@@ -182,7 +182,7 @@ class Db implements IDb
      */
     public static function __getCleanTestingInstance()
     {
-        shell_exec('cd ' . __DIR__ . '/../../ && make init_test_db && make clean_test_db');
+        shell_exec('cd ' . __DIR__ . '/../../ && make clean_test_db && make init_test_db');
         $cfg = new Config(__DIR__ . '/../../tests/util/config.php');
 
         if (self::$__testingInstance === null) {

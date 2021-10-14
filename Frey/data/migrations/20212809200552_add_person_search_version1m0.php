@@ -15,13 +15,14 @@ class AddPersonSearchVersion1m0 extends AbstractMigration
 
     protected function _getConnection()
     {
+        $opts = $this->getAdapter()->getOptions();
         $cfg = new \Frey\Config([
             'db' => [
-                'connection_string' => 'pgsql:host=localhost;port=' . $_SERVER['PHINX_DB_FREY_PORT']
-                    . ';dbname=' . $_SERVER['PHINX_DB_FREY_NAME'],
+                'connection_string' => 'pgsql:host=localhost;port=' . $opts['port']
+                    . ';dbname=' . $opts['name'],
                 'credentials' => [
-                    'username' => $_SERVER['PHINX_DB_FREY_USER'],
-                    'password' => $_SERVER['PHINX_DB_FREY_PASS']
+                    'username' => $opts['user'],
+                    'password' => $opts['pass']
                 ]
             ],
             'admin'     => [

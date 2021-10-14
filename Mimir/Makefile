@@ -43,11 +43,10 @@ req:
 	php bin/rpc.php "$(filter-out $@,$(MAKECMDGOALS))"
 
 init_test_db:
-	@bin/phinx migrate -e testing
+	@php bin/phinx migrate -e testing
 
 clean_test_db:
 	while read p; do \
-		PGPASSWORD=pgpass psql -p5532 -U mimir mimir_unit -c "DELETE FROM $$p"; \
-		PGPASSWORD=pgpass psql -p5532 -U mimir mimir_unit -c "ALTER SEQUENCE IF EXISTS $${p}_id_seq RESTART"; \
-	done < ./data/tablelist.txt
+		PGPASSWORD=pgpass psql -p5532 -U mimir mimir_unit -c "DROP TABLE $$p"; \
+	done < ./data/tablelist.txt || true
 

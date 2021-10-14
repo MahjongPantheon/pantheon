@@ -37,9 +37,8 @@ init_test_db:
 
 clean_test_db:
 	while read p; do \
-		PGPASSWORD=pgpass psql -p5532 -U frey frey_unit -c "DELETE FROM \"$$p\""; \
-		PGPASSWORD=pgpass psql -p5532 -U frey frey_unit -c "ALTER SEQUENCE IF EXISTS $${p}_id_seq RESTART"; \
-	done < ./data/tablelist.txt
+		PGPASSWORD=pgpass psql -p5532 -U frey frey_unit -c "DROP TABLE \"$$p\""; \
+	done < ./data/tablelist.txt || true
 
 i18n_extract:
 	touch i18n/messages.pot

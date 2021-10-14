@@ -68,4 +68,10 @@ class DataSource
     {
         return $this->_db->table($tableName);
     }
+/*
+    public static function __getCleanTestingInstance()
+    {
+        $db = Db::__getCleanTestingInstance();
+        $client = new FreyClient();
+    }*/
 }

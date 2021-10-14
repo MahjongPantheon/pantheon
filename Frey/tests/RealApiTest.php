@@ -156,11 +156,12 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
 
         $title = 'testuser';
         $city = 'testcity';
+        $country = 'testcountry';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $success = $this->_client->execute('updatePersonalInfo', [
-            $userId, $title, $city, $email, $phone, $tenhouId
+            $userId, $title, $country, $city, $email, $phone, $tenhouId
         ]);
         $this->assertInternalType('bool', $success);
 
@@ -183,11 +184,12 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
 
         $title = 'testuser';
         $city = 'testcity';
+        $country = 'testcountry';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $this->_client->execute('updatePersonalInfo', [
-            $userId, $title, $city, $email, $phone, $tenhouId
+            $userId, $title, $country, $city, $email, $phone, $tenhouId
         ]);
 
         $response = $this->_client->execute('getPersonalInfo', [[$userId]]);
@@ -216,16 +218,17 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
 
-        $title = 'testuser';
+        $title = 'newtestuser';
         $city = 'testcity';
+        $country = 'testcountry';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $this->_client->execute('updatePersonalInfo', [
-            $userId, $title, $city, $email, $phone, $tenhouId
+            $userId, $title, $country, $city, $email, $phone, $tenhouId
         ]);
 
-        $response = $this->_client->execute('findByTitle', ['use']);
+        $response = $this->_client->execute('findByTitle', ['new']);
         $this->assertNotEmpty($response);
         $this->assertNotEmpty($response[0]);
         $this->assertEquals($userId, $response[0]['id']);

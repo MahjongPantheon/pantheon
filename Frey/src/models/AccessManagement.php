@@ -283,7 +283,6 @@ class AccessManagementModel extends Model
 
         $existingRules = $this->getPersonAccess($personId, $eventId);
         if (!empty($existingRules[$ruleName])) {
-            trigger_error('-------------------------1');
             throw new DuplicateEntityException(
                 'Rule ' . $ruleName . ' already exists for person ' . $personId . ' at event ' . $eventId,
                 402
@@ -292,7 +291,6 @@ class AccessManagementModel extends Model
 
         $persons = PersonPrimitive::findById($this->_db, [$personId]);
         if (empty($persons)) {
-            trigger_error('-------------------------2');
             throw new EntityNotFoundException('Person with id #' . $personId . ' not found in DB', 403);
         }
 

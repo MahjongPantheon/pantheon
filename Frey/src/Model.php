@@ -59,7 +59,26 @@ abstract class Model
         $this->_config = $config;
         $this->_meta = $meta;
         $this->_authorizedPerson = $this->_fetchAuthorizedPerson();
+
+        // for unit/integration testing purposes
+        $testingToken = $this->_config->getValue('testing_token');
+        if (!empty($testingToken) && $this->_meta->getAuthToken() == $testingToken) {
+            $this->_authorizedPerson = PersonPrimitive::findById($db, $this->_fetchSuperAdminId())[0];
+        }
+
         $this->_currentAccess = $this->_fetchPersonAccess();
+    }
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    private function _fetchSuperAdminId()
+    {
+        $access = PersonAccessPrimitive::findSuperAdminId($this->_db);
+        return array_map(function (PersonAccessPrimitive $p) {
+            return $p->getPersonId();
+        }, $access);
     }
 
     /**

@@ -1,3 +1,4 @@
+phinxlog
 round
 player_history
 session_player
@@ -5,4 +6,3 @@ session_results
 session
 event_registered_players
 event
-player
