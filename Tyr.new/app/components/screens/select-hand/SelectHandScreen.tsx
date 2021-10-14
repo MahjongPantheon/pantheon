@@ -16,10 +16,11 @@ import {
 import {doraOptions, mayGoNextFromYakuSelect} from '#/store/selectors/navbarSelectors';
 import {getDora, getFu, getPossibleFu, getHan} from '#/store/selectors/hanFu';
 import {getOutcomeName} from '#/components/screens/table/TableHelper';
-import {useContext} from "react";
 import {i18n} from "#/components/i18n";
+import {I18nService} from "#/services/i18n";
 
 export class SelectHandScreen extends React.Component<IComponentProps> {
+  static contextType = i18n;
 
   private onTabClick(tab: SelectHandActiveTab) {
     const {state, dispatch} = this.props;
@@ -98,7 +99,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
   }
 
   render() {
-    const loc = useContext(i18n);
+    const loc = this.context as I18nService;
     const {state} = this.props;
     if (!state.currentOutcome || state.currentOutcome.selectedOutcome !== 'ron' && state.currentOutcome.selectedOutcome !== 'tsumo') { //todo
       return null;

@@ -1,8 +1,8 @@
 import * as React from "react";
 import './page-set-hand.css'
 import {NumberSelect} from '#/components/general/number-select/NumberSelect';
-import {useContext} from "react";
 import {i18n} from "#/components/i18n";
+import {I18nService} from "#/services/i18n";
 
 type IProps = {
   isYakuman: boolean
@@ -29,13 +29,14 @@ type IProps = {
 }
 
 export class SelectTotalPanel extends React.Component<IProps> {
+  static contextType = i18n;
   private get hanCount(): number {
     const {yakuHan, doraCount, uraDoraCount = 0, redFivesCount = 0} = this.props;
     return yakuHan + doraCount + uraDoraCount + redFivesCount
   }
 
   render() {
-    const loc = useContext(i18n);
+    const loc = this.context as I18nService;
     const {
       isYakuman,
       yakuHan,

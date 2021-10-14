@@ -1,7 +1,7 @@
 import * as React from "react";
 import './player-dropdown.css'
-import {useContext} from "react";
 import {i18n} from "#/components/i18n";
+import {I18nService} from "#/services/i18n";
 
 type IProps = {
   playerName?: string
@@ -10,9 +10,10 @@ type IProps = {
 }
 
 export class PlayerDropdown extends React.Component<IProps> {
+  static contextType = i18n;
   render() {
     const {playerName, wind, onPlayerClick} = this.props;
-    const loc = useContext(i18n);
+    const loc = this.context as I18nService;
 
     return (
       <div className="player-dropdown">

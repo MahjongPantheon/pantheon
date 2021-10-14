@@ -8,12 +8,12 @@ import {
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_THEME
 } from '#/store/actions/interfaces';
-import {supportedLanguages} from '#/services/i18n';
+import {I18nService, supportedLanguages} from '#/services/i18n';
 import {themes} from '#/services/themes';
-import {useContext} from "react";
 import {i18n} from "#/components/i18n";
 
 export class SettingsScreen extends React.PureComponent<IComponentProps>{
+  static contextType = i18n;
   private onBackClick() {
     const {dispatch} = this.props;
     dispatch({ type: GOTO_PREV_SCREEN });
@@ -46,7 +46,7 @@ export class SettingsScreen extends React.PureComponent<IComponentProps>{
 
   render() {
     const {state} = this.props;
-    const loc = useContext(i18n);
+    const loc = this.context as I18nService;
 
     const playerName = state.currentPlayerDisplayName || loc._t('Player name');
 

@@ -11,10 +11,11 @@ import {
 import {HomeScreenView} from '#/components/screens/home/HomeScreenView';
 import {Preloader} from '#/components/general/preloader/Preloader';
 import {isLoading} from '#/store/selectors/screenConfirmationSelectors';
-import {useContext} from "react";
 import {i18n} from "#/components/i18n";
+import {I18nService} from "#/services/i18n";
 
 export class HomeScreen extends React.PureComponent<IComponentProps> {
+  static contextType = i18n;
   private onSettingClick() {
     this.props.dispatch({ type: OPEN_SETTINGS });
   }
@@ -57,7 +58,7 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
 
   render() {
     const {state} = this.props;
-    const loc = useContext(i18n);
+    const loc = this.context as I18nService;
     if (!state.gameConfig || isLoading(state)) {
       return <Preloader />;
     }

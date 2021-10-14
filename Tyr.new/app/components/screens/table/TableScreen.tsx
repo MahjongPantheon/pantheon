@@ -8,13 +8,14 @@ import {
 } from '#/components/screens/table/TableHelper';
 import {TableScreenStateless} from '#/components/screens/table/base/TableScreenStateless';
 import {Preloader} from '#/components/general/preloader/Preloader';
-import {useContext} from "react";
 import {i18n} from "#/components/i18n";
+import {I18nService} from "#/services/i18n";
 
 export class TableScreen extends React.Component<IComponentProps> {
+  static contextType = i18n;
 
   render() {
-    const loc = useContext(i18n);
+    const loc = this.context as I18nService;
     const {state, dispatch} = this.props;
     const isLoading = state.loading.events
       || (state.currentScreen === 'overview' && (

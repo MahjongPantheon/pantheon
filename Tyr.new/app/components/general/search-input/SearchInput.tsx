@@ -1,9 +1,10 @@
 import * as React from "react";
 import {Icon} from '#/components/general/icon/Icon';
 import {IconType} from '#/components/general/icon/IconType';
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import useDebounce from '#/components/general/search-input/UseDebounce';
 import {i18n} from "#/components/i18n";
+import {I18nService} from "#/services/i18n";
 
 type IProps = {
   onChange: (value: string) => void
@@ -56,9 +57,10 @@ class SearchInputInner extends React.Component<IInnerProps, IState> {
     this.props.onClear()
   }
 
+  static contextType = i18n;
   render() {
     const {searchValue} = this.state;
-    const loc = useContext(i18n);
+    const loc = this.context as I18nService;
     return (
       <>
         <input value={searchValue}

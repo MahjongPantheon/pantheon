@@ -2,8 +2,8 @@ import * as React from "react";
 import {SelectNumberModal} from './SelectNumberModal';
 import './number-select.css'
 import classNames from 'classnames';
-import {useContext} from "react";
 import {i18n} from "#/components/i18n";
+import {I18nService} from "#/services/i18n";
 
 type IProps = {
   value: number
@@ -16,6 +16,8 @@ type IState = {
 }
 
 export class NumberSelect extends React.Component<IProps, IState> {
+  static contextType = i18n;
+
   constructor(props: IProps) {
     super(props);
 
@@ -72,7 +74,7 @@ export class NumberSelect extends React.Component<IProps, IState> {
   }
 
   render() {
-    const loc = useContext(i18n);
+    const loc = this.context as I18nService;
     const {value, possibleValues} = this.props;
     const {isModalShown} = this.state;
     const valueNotInArray = possibleValues.length !== 0 && possibleValues.indexOf(value) === -1
