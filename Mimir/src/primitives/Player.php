@@ -138,6 +138,12 @@ class PlayerPrimitive extends Primitive
         return self::_findPlayers($ds, $playerRegData);
     }
 
+    /**
+     * @param DataSource $ds
+     * @param array $playerRegData
+     * @return array
+     * @throws \Exception
+     */
     protected static function _findPlayers(DataSource $ds, array $playerRegData)
     {
         $replacements = [];

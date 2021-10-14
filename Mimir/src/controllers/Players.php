@@ -104,16 +104,16 @@ class PlayersController extends Controller
                 'hashcode'    => $session->getRepresentationalHash(),
                 'status'      => $session->getStatus(),
                 'table_index' => $session->getTableIndex(),
-                'players'     => array_map(function (PlayerPrimitive $p, $score) use ($regData) {
+                'players'     => array_map(function (PlayerPrimitive $p, $score) use (&$regData) {
                     return [
                         'id'            => $p->getId(),
                         'display_name'  => $p->getDisplayName(),
                         'score'         => $score,
-                        'replaced_by' => empty($playersReg['replacements'][$p->getId()])
+                        'replaced_by' => empty($regData['replacements'][$p->getId()])
                             ? null
                             : [
-                                'id' => $playersReg['replacements'][$p->getId()]->getId(),
-                                'display_name' => $playersReg['replacements'][$p->getId()]->getDisplayName(),
+                                'id' => $regData['replacements'][$p->getId()]->getId(),
+                                'display_name' => $regData['replacements'][$p->getId()]->getDisplayName(),
                             ],
                     ];
                 }, $regData['players'], $session->getCurrentState()->getScores())
@@ -372,7 +372,11 @@ class PlayersController extends Controller
      */
     protected function _getAllRoundsCommon(SessionPrimitive $session)
     {
-        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$session->getId()]);
+        $id = $session->getId();
+        if (empty($id)) {
+            return [];
+        }
+        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$id]);
 
         $multiGet = function (RoundPrimitive $p, $method) {
             if ($p instanceof MultiRoundPrimitive) {

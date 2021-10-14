@@ -21,7 +21,13 @@ require_once __DIR__ . '/../helpers/Url.php';
 
 class UserActionManageEvents extends Controller
 {
+    /**
+     * @var string
+     */
     protected $_mainTemplate = 'UserActionManageEvents';
+    /**
+     * @var null|array|string
+     */
     protected $_error = null;
     const PERPAGE = 30;
 
@@ -55,20 +61,28 @@ class UserActionManageEvents extends Controller
                         ];
                         return true;
                     }
-                    header('Location: /cp/manageEvents', null, 302);
+                    header('Location: /cp/manageEvents', false, 302);
                     return false;
                 }
                 break;
-            default:;
+            default:
         }
 
         return true;
     }
 
+    /**
+     * @return array|string|null
+     */
     protected function _run()
     {
         if (!empty($this->_error)) {
             return $this->_error;
+        }
+
+        if (!$this->_currentPersonId) {
+            header('Location: /', false, 302);
+            return null;
         }
 
         $eventIds = $this->_frey->getOwnedEventIds($this->_currentPersonId);

@@ -67,7 +67,7 @@ class GamesController extends Controller
      *
      * @param string $gameHashcode
      * @throws \Exception
-     * @return boolean Success?
+     * @return bool Success?
      */
     public function definalizeGame($gameHashcode)
     {

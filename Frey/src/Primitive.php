@@ -364,6 +364,7 @@ abstract class Primitive
      * @param IDb $db
      * @param string $key
      * @param array $identifiers
+     * @param bool $includeNull
      * @throws \Exception
      * @return static[]
      */
@@ -418,7 +419,7 @@ abstract class Primitive
      *      $params.order    => asc or desc
      *      $params.orderBy  => field name for results ordering
      * @throws \Exception
-     * @return Primitive|Primitive[]
+     * @return static|static[]
      */
     protected static function _findBySeveral(IDb $db, $conditions, $params = [])
     {

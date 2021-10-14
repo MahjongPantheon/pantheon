@@ -21,14 +21,26 @@ require_once __DIR__ . '/../helpers/Url.php';
 
 class UserActionEventEditPrivileges extends Controller
 {
+    /**
+     * @var string
+     */
     protected $_mainTemplate = 'UserActionEventEditPrivileges';
+    /**
+     * @var null|array|string
+     */
     protected $_error = null;
 
+    /**
+     * @return string
+     */
     protected function _pageTitle()
     {
         return _t('Control panel: manage event privileges');
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if ($this->_currentPersonId === null) {
@@ -48,6 +60,9 @@ class UserActionEventEditPrivileges extends Controller
         return true;
     }
 
+    /**
+     * @return array|string|null
+     */
     protected function _run()
     {
         if (!empty($this->_error)) {
@@ -61,7 +76,7 @@ class UserActionEventEditPrivileges extends Controller
                 'error' => _t('Event not found in database')
             ];
         }
-        $rules = $this->_frey->getAllEventRules($this->_path['id']);
+        $rules = $this->_frey->getAllEventRules(intval($this->_path['id']));
 
         return [
             'critical' => false,

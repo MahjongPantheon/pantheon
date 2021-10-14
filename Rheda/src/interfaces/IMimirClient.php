@@ -411,9 +411,9 @@ interface IMimirClient
      *  For interactive mode (club games), and only for administrative purposes
      *
      * @param string $gameHashcode
-     * @return boolean
+     * @return bool
     */
-    public function definalizeGame(string $gameHashcode): boolean;
+    public function definalizeGame(string $gameHashcode): bool;
 
     /**
      *  Add penalty in interactive game
@@ -529,6 +529,7 @@ interface IMimirClient
      * @param float $playerId
      * @param string $error
      * @param string $stack
+     * @return void
     */
-    public function addErrorLog(string $facility, string $sessionHash, float $playerId, string $error, string $stack);
+    public function addErrorLog(string $facility, string $sessionHash, float $playerId, string $error, string $stack): void;
 }

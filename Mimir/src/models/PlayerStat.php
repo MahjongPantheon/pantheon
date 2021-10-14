@@ -112,7 +112,7 @@ class PlayerStatModel extends Model
     /**
      * Scores and rating deltas of all players
      *
-     * @param $rules
+     * @param Ruleset $rules
      * @param array $games
      * @throws \Exception
      * @return array

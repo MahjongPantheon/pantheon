@@ -400,6 +400,9 @@ abstract class Ruleset
         return static::$_ruleset['replacementPlayerOverrideUma'];
     }
 
+    /**
+     * @return false|mixed
+     */
     public function withWinningDealerHonbaSkipped()
     {
         $valueSet = isset(static::$_ruleset['withWinningDealerHonbaSkipped']);
@@ -412,6 +415,9 @@ abstract class Ruleset
         return $value;
     }
 
+    /**
+     * @return int|mixed
+     */
     public function chipsValue()
     {
         if (isset(static::$_ruleset['chipsValue'])) {

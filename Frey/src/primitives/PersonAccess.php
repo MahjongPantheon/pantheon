@@ -97,12 +97,13 @@ class PersonAccessPrimitive extends AccessPrimitive
      *
      * @param IDb $db
      * @param array $ids
-     * @param $type
-     * @return Primitive|Primitive[]
+     * @param string $type
+     * @return static[]
      * @throws \Exception
      */
     public static function findByPersonAndType(IDb $db, array $ids, $type)
     {
+        /* @phpstan-ignore-next-line */
         return self::_findBySeveral($db, [
             'person_id'  => $ids,
             'acl_name'   => [$type]

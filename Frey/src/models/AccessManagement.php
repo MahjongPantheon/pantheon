@@ -182,9 +182,7 @@ class AccessManagementModel extends Model
     {
         $personRules = PersonAccessPrimitive::findByEvent($this->_db, [$eventId]);
         $groupRules = GroupAccessPrimitive::findByEvent($this->_db, [$eventId]);
-
-        /** @var PersonAccessPrimitive|GroupAccessPrimitive $rule */
-        $predicate = function ($rule) {
+        $predicate = function (/** @var PersonAccessPrimitive|GroupAccessPrimitive $rule */ $rule) {
             return [
                 'isGlobal' => !$rule->getEventId(),
                 'id' => $rule->getId(),
@@ -306,7 +304,6 @@ class AccessManagementModel extends Model
             ->setEventId($eventId);
         $success = $rule->save();
 
-        trigger_error(print_r($this->_db->debug(), 1));
         if (!$success) {
             return null;
         }
@@ -484,11 +481,6 @@ class AccessManagementModel extends Model
         if (InternalRules::isInternal($rules[0]->getAclName()) && $ruleType != $rules[0]->getAclType()) {
             throw new InvalidParametersException('Rule name ' . $rules[0]->getAclName()
                 . ' is reserved for internal use, so it\'s type can not be changed');
-        }
-
-        if (InternalRules::isInternal($rules[0]->getAclName()) && in_array($rules[0]->getPersonId(), $this->_superAdminIds)) {
-            throw new InvalidParametersException('Rule name ' . $rules[0]->getAclName()
-                . ' is reserved for internal use and it\'s value can not be changed for super admin user');
         }
 
         return $rules[0]

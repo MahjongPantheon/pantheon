@@ -38,15 +38,27 @@ if (file_exists(__DIR__ . '/local/index.php')) {
 
         const FREY_INTERNAL_QUERY_SECRET = 'CHANGE_ME'; // TODO: change this in your local config!
 
-        public static function API_URL() {
+        /**
+         * @return array|false|string
+         */
+        public static function API_URL()
+        {
             return getenv('MIMIR_URL');
         }
 
-        public static function MOBILE_CLIENT_URL() {
+        /**
+         * @return array|false|string
+         */
+        public static function MOBILE_CLIENT_URL()
+        {
             return getenv('TYR_URL');
         }
 
-        public static function AUTH_API_URL() {
+        /**
+         * @return array|false|string
+         */
+        public static function AUTH_API_URL()
+        {
             return getenv('FREY_URL');
         }
     }

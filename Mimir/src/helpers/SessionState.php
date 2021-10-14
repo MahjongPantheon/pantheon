@@ -338,7 +338,7 @@ class SessionState
     }
 
     /**
-     * @return float[]
+     * @return int[]
      */
     public function getChips()
     {
@@ -346,6 +346,7 @@ class SessionState
     }
 
     /**
+     * @param int[] $chips
      * @return SessionState
      */
     public function setChips($chips)
@@ -355,7 +356,7 @@ class SessionState
     }
 
     /**
-     * @return \int[]
+     * @return float[]
      */
     public function getPenalties()
     {

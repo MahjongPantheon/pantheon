@@ -350,6 +350,10 @@ class SessionResultsPrimitive extends Primitive
         return $this->_place;
     }
 
+    /**
+     * @param int $place
+     * @return $this
+     */
     public function setPlace($place)
     {
         $this->_place = $place;
@@ -364,6 +368,10 @@ class SessionResultsPrimitive extends Primitive
         return $this->_chips;
     }
 
+    /**
+     * @param int $chips
+     * @return $this
+     */
     public function setChips($chips)
     {
         $this->_chips = $chips;
@@ -378,6 +386,10 @@ class SessionResultsPrimitive extends Primitive
         return $this->_ratingDelta;
     }
 
+    /**
+     * @param float|int $ratingDelta
+     * @return $this
+     */
     public function setRatingDelta($ratingDelta)
     {
         $this->_ratingDelta = $ratingDelta;

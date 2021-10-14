@@ -185,7 +185,7 @@ class PlayerHistoryPrimitive extends Primitive
 
     /**
      * @param DataSource $ds
-     * @param $sessionId
+     * @param int $sessionId
      * @throws \Exception
      * @return PlayerHistoryPrimitive[]
      */
@@ -428,6 +428,7 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
+     * @param int $chips
      * @return PlayerHistoryPrimitive
      */
     public function setChips($chips)

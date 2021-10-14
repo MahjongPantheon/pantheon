@@ -116,6 +116,12 @@ class PersonProfileEdit extends Controller
         );
     }
 
+    /**
+     * @param array $data
+     * @param string $originalEmail
+     * @return mixed
+     * @throws \libphonenumber\NumberParseException
+     */
     protected function _checkData($data, $originalEmail)
     {
         $checkedData = $data;
@@ -154,7 +160,12 @@ class PersonProfileEdit extends Controller
         return $checkedData;
     }
 
-    protected function _getCountries($current) {
+    /**
+     * @param string $current
+     * @return array
+     */
+    protected function _getCountries($current)
+    {
         $output = [];
         $data = $this->_mimir->getCountries($_SERVER['REMOTE_ADDR']);
         if (empty($current)) {

@@ -151,7 +151,7 @@ class InteractiveSessionModel extends Model
     /**
      * Definalize session in club event
      *
-     * @param $hash
+     * @param string $hash
      * @throws AuthFailedException
      * @throws \Exception
      * @return bool Success?
@@ -167,13 +167,14 @@ class InteractiveSessionModel extends Model
         if (!$this->_meta->isEventAdminById($session->getEventId())) {
             throw new AuthFailedException('Only administrators are allowed to definalize sessions');
         }
+        $sessionId = $session->getId();
 
-        if (!DateHelper::mayDefinalizeGame($session)) {
+        if (!DateHelper::mayDefinalizeGame($session) || empty($sessionId)) {
             throw new BadActionException('Session can not be definalized');
         }
 
-        $playerResults = PlayerHistoryPrimitive::findBySession($this->_ds, $session->getId());
-        $sessionResults = SessionResultsPrimitive::findBySessionId($this->_ds, [$session->getId()]);
+        $playerResults = PlayerHistoryPrimitive::findBySession($this->_ds, $sessionId);
+        $sessionResults = SessionResultsPrimitive::findBySessionId($this->_ds, [$sessionId]);
         /** @var Primitive[] $primitives */
         $primitives = array_merge($playerResults, $sessionResults);
         foreach ($primitives as $p) {

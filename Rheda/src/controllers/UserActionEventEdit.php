@@ -21,15 +21,29 @@ require_once __DIR__ . '/../helpers/Url.php';
 
 class UserActionEventEdit extends Controller
 {
+    /**
+     * @var string
+     */
     protected $_mainTemplate = 'UserActionEventEdit';
+    /**
+     * @var null|string|array
+     */
     protected $_error = null;
+    /**
+     * @var array
+     */
     protected $_prevData = [];
-
+    /**
+     * @var string[]
+     */
     protected $_typeMap = [
         'newClubEvent' => 'club',
         'newTournamentEvent' => 'tournament',
         'newOnlineEvent' => 'online',
     ];
+    /**
+     * @var array
+     */
     protected $_defaultSettings = [
         'duration' => 90,
         'seriesLength' => 0,
@@ -38,11 +52,17 @@ class UserActionEventEdit extends Controller
         'isPrescripted' => false,
     ];
 
+    /**
+     * @return string
+     */
     protected function _pageTitle()
     {
         return _t('Control panel: create event');
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
         if ($this->_currentPersonId === null) {
@@ -78,6 +98,9 @@ class UserActionEventEdit extends Controller
         return true;
     }
 
+    /**
+     * @return array|string|null
+     */
     protected function _run()
     {
         if (!empty($this->_error)) {
@@ -86,17 +109,22 @@ class UserActionEventEdit extends Controller
 
         switch ($this->_path['action']) {
             case 'editEvent':
-                return $this->_editEvent($this->_path['id']);
+                return $this->_editEvent(intval($this->_path['id']));
             case 'newClubEvent':
                 return $this->_newClubEvent($this->_prevData);
             case 'newTournamentEvent':
                 return $this->_newTournamentEvent($this->_prevData);
             case 'newOnlineEvent':
                 return $this->_newOnlineEvent($this->_prevData);
-            default:;
+            default:
         }
+        return null;
     }
 
+    /**
+     * @param array $prevData
+     * @return array
+     */
     protected function _newClubEvent($prevData)
     {
         return array_merge($this->_defaultSettings, $prevData, [
@@ -107,6 +135,10 @@ class UserActionEventEdit extends Controller
         ]);
     }
 
+    /**
+     * @param array $prevData
+     * @return array
+     */
     protected function _newTournamentEvent($prevData)
     {
         return array_merge($this->_defaultSettings, $prevData, [
@@ -117,6 +149,10 @@ class UserActionEventEdit extends Controller
         ]);
     }
 
+    /**
+     * @param array $prevData
+     * @return array
+     */
     protected function _newOnlineEvent($prevData)
     {
         return array_merge($this->_defaultSettings, $prevData, [
@@ -127,6 +163,10 @@ class UserActionEventEdit extends Controller
         ]);
     }
 
+    /**
+     * @param int $eventId
+     * @return array
+     */
     protected function _editEvent($eventId)
     {
         if (!empty($this->_prevData)) { // Saving after errors
@@ -144,7 +184,12 @@ class UserActionEventEdit extends Controller
         ]);
     }
 
-    protected function _getRulesets($current) {
+    /**
+     * @param string $current
+     * @return array
+     */
+    protected function _getRulesets($current)
+    {
         $rulesets = $this->_mimir->getRulesets();
         $output = [];
         foreach ($rulesets as $ident => $name) {
@@ -157,7 +202,12 @@ class UserActionEventEdit extends Controller
         return $output;
     }
 
-    protected function _getTimezones($current) {
+    /**
+     * @param string $current
+     * @return array
+     */
+    protected function _getTimezones($current)
+    {
         $data = $this->_mimir->getTimezones($_SERVER['REMOTE_ADDR']);
         if (empty($current)) {
             $current = $data['preferredByIp'];
@@ -169,6 +219,10 @@ class UserActionEventEdit extends Controller
         return $output;
     }
 
+    /**
+     * @param array $data
+     * @return mixed
+     */
     protected function _checkData($data)
     {
         $checkedData = $data;
@@ -209,7 +263,16 @@ class UserActionEventEdit extends Controller
         return $checkedData;
     }
 
-    protected function _saveNewEvent($checkData) {
+    /**
+     * @param array $checkData
+     * @return bool
+     */
+    protected function _saveNewEvent($checkData)
+    {
+        if (!$this->_currentPersonId) {
+            header('Location: /', false, 302);
+            return false;
+        }
         $id = $this->_mimir->createEvent(
             $this->_typeMap[$this->_path['action']],
             $checkData['title'],
@@ -223,7 +286,13 @@ class UserActionEventEdit extends Controller
             empty($checkData['isTeam']) ? false : true,
             empty($checkData['isPrescripted']) ? false : true
         );
-        $ruleId = $this->_frey->addRuleForPerson(FreyClient::PRIV_ADMIN_EVENT, true, 'bool', $this->_currentPersonId, $id);
+        $ruleId = $this->_frey->addRuleForPerson(
+            FreyClient::PRIV_ADMIN_EVENT,
+            true,
+            'bool',
+            $this->_currentPersonId,
+            $id
+        );
         if (!$ruleId) {
             $this->_error = [
                 'error' => _p('Failed to assign administrative rights. Consult support and give them id #%s', $id),
@@ -231,11 +300,16 @@ class UserActionEventEdit extends Controller
             ];
             return true;
         }
-        header('Location: /eid' . $id, null, 302);
+        header('Location: /eid' . $id, false, 302);
         return false;
     }
 
-    protected function _saveExistingEvent($checkData) {
+    /**
+     * @param array $checkData
+     * @return bool
+     */
+    protected function _saveExistingEvent($checkData)
+    {
         $success = $this->_mimir->updateEvent(
             intval($this->_path['id']),
             $checkData['title'],
@@ -257,7 +331,7 @@ class UserActionEventEdit extends Controller
             return true;
         }
 
-        header('Location: /eid' . $this->_path['id'], null, 302);
+        header('Location: /eid' . $this->_path['id'], false, 302);
         return false;
     }
 }

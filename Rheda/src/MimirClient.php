@@ -593,12 +593,12 @@ class MimirClient implements IMimirClient
      *  For interactive mode (club games), and only for administrative purposes
      *
      * @param string $gameHashcode
-     * @return boolean
+     * @return bool
     */
-    public function definalizeGame(string $gameHashcode): boolean
+    public function definalizeGame(string $gameHashcode): bool
     {
         /** @phpstan-ignore-next-line */
-        return (boolean)$this->_client->execute('definalizeGame', [$gameHashcode]);
+        return (bool)$this->_client->execute('definalizeGame', [$gameHashcode]);
     }
 
     /**
@@ -763,10 +763,11 @@ class MimirClient implements IMimirClient
      * @param float $playerId
      * @param string $error
      * @param string $stack
+     * @return void
     */
-    public function addErrorLog(string $facility, string $sessionHash, float $playerId, string $error, string $stack)
+    public function addErrorLog(string $facility, string $sessionHash, float $playerId, string $error, string $stack): void
     {
         /** @phpstan-ignore-next-line */
-        return $this->_client->execute('addErrorLog', [$facility, $sessionHash, $playerId, $error, $stack]);
+        $this->_client->execute('addErrorLog', [$facility, $sessionHash, $playerId, $error, $stack]);
     }
 }

@@ -300,22 +300,23 @@ class SeatingController extends Controller
             }
         }
 
-        $replacements = PlayerPrimitive::findById($this->_ds, array_values($replacementMap));
+        $replacementMapToPlayer = [];
+        $replacements = PlayerPrimitive::findById($this->_ds, array_filter(array_values($replacementMap)));
         foreach ($replacements as $rep) {
-            $replacementMap[$rep->getId()] = $rep;
+            $replacementMapToPlayer[$rep->getId()] = $rep;
         }
 
-        return array_map(function ($table) use (&$playersMap, &$replacementMap) {
-            return array_map(function ($player) use (&$playersMap, &$replacementMap) {
+        return array_map(function ($table) use (&$playersMap, &$replacementMapToPlayer) {
+            return array_map(function ($player) use (&$playersMap, &$replacementMapToPlayer) {
                 return [
                     'id' => $playersMap[$player['id']]->getId(),
                     'local_id' => $player['local_id'],
                     'display_name' => $playersMap[$player['id']]->getDisplayName(),
-                    'replaced_by' => empty($replacementMap[$player['id']])
+                    'replaced_by' => empty($replacementMapToPlayer[$player['id']])
                         ? null
                         : [
-                            'id' => $replacementMap[$player['id']]->getId(),
-                            'display_name' => $replacementMap[$player['id']]->getDisplayName(),
+                            'id' => $replacementMapToPlayer[$player['id']]->getId(),
+                            'display_name' => $replacementMapToPlayer[$player['id']]->getDisplayName(),
                         ],
                 ];
             }, $table);

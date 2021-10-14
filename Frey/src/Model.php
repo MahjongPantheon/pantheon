@@ -59,12 +59,6 @@ abstract class Model
         $this->_config = $config;
         $this->_meta = $meta;
         $this->_authorizedPerson = $this->_fetchAuthorizedPerson();
-
-        $testingToken = $this->_config->getValue('testing_token');
-        if (!empty($testingToken) && $this->_meta->getAuthToken() == $testingToken) {
-            $this->_authorizedPerson = PersonPrimitive::findById($db, $this->_fetchSuperAdminId())[0];
-        }
-
         $this->_currentAccess = $this->_fetchPersonAccess();
     }
 
@@ -334,7 +328,7 @@ abstract class Model
      * E.g., method of adding admin rights to just created event.
      *
      * @param string $key
-     * @param null $eventId
+     * @param int|null $eventId
      * @return $this
      * @throws AccessDeniedException
      */

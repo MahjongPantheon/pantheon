@@ -199,6 +199,9 @@ class Config
      * @var bool
      */
     protected $_isPrescripted = false;
+    /**
+     * @var int
+     */
     protected $_chipsValue = 0;
 
     /**

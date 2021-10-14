@@ -59,6 +59,7 @@ class OnlineParser
     /**
      * @param SessionPrimitive $session
      * @param string $content game log xml string
+     * @param bool $withChips
      * @throws \Exception
      * @return array parsed score
      */
@@ -141,7 +142,7 @@ class OnlineParser
     }
 
     /**
-     * @param $content
+     * @param string $content
      * @return array (player id => chips)
      */
     protected function _parseChipsOutcome($content)
@@ -161,7 +162,7 @@ class OnlineParser
                     intval($parts[12]),
                     intval($parts[14])
                 ]
-            );
+            ) ?: [];
         }
 
         return [];

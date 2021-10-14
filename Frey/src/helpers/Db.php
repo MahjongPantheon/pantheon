@@ -80,7 +80,7 @@ class Db implements IDb
      * Execute raw query. Don't use this if there is ORM-way to go!
      *
      * @param string $query
-     * @param $params
+     * @param array $params
      * @return bool
      */
     public function rawExec(string $query, $params = [])

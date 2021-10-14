@@ -413,6 +413,10 @@ abstract class Controller
         return $controllerInstance;
     }
 
+    /**
+     * @param string $url
+     * @return void
+     */
     protected static function _healthSpecialPath($url)
     {
         if ($url === '/health') {
@@ -459,6 +463,8 @@ DATA;
         if ($this->_superadmin || $this->_eventadmin) {
             return true;
         }
+
+        return false;
     }
 
     /**
@@ -491,7 +497,12 @@ DATA;
         }
     }
 
-    protected function _offset($perpage) {
-        return (($this->_path['page'] ?? 1) - 1) * $perpage;
+    /**
+     * @param int $perpage
+     * @return int
+     */
+    protected function _offset($perpage)
+    {
+        return (intval($this->_path['page'] ?? 1) - 1) * $perpage;
     }
 }

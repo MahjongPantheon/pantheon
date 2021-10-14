@@ -157,7 +157,7 @@ class Meta
                     'X-Current-Event-Id: ' . $this->_currentEventId ?: '0',
                     'X-Current-Person-Id: ' . $this->_currentPersonId
                 ]);
-                if (!empty($this->_currentEventId)) {
+                if (!empty($this->_currentEventId) && !empty($this->_currentPersonId)) {
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);
                     if ($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN]) {
                         $this->_superadmin = true;
@@ -193,11 +193,17 @@ class Meta
         return $this->_accessRules[$name];
     }
 
+    /**
+     * @return bool
+     */
     public function isSuperadmin()
     {
         return $this->_superadmin;
     }
 
+    /**
+     * @return bool
+     */
     public function isEventAdmin()
     {
         if ($this->_superadmin) {
@@ -209,10 +215,17 @@ class Meta
         return false;
     }
 
+    /**
+     * @param int $eventId
+     * @return bool
+     */
     public function isEventAdminById($eventId)
     {
         if ($this->_superadmin) {
             return true;
+        }
+        if (empty($this->_currentPersonId)) {
+            return false;
         }
         $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $eventId);
         if ($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT]) {

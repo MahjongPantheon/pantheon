@@ -122,7 +122,6 @@ class PlayerRegistration extends Controller
                         echo json_encode(['success' => false, 'error' => $err]);
                     }
                     return false;
-                    break;
                 case 'event_unreg':
                     $err = $this->_unregisterUserFromEvent($_POST['id']);
                     break;
@@ -165,6 +164,10 @@ class PlayerRegistration extends Controller
         return true;
     }
 
+    /**
+     * @param string $query
+     * @return array
+     */
     protected function _findPersons($query)
     {
         $errorMsg = '';
@@ -285,7 +288,9 @@ class PlayerRegistration extends Controller
         $errorMsg = '';
         try {
             $success = $this->_mainEventId && $this->_mimir->updatePlayerReplacement(
-                $playerId, $this->_mainEventId, $replacement
+                $playerId,
+                $this->_mainEventId,
+                $replacement
             );
             if (!$success) {
                 $errorMsg = _t('Failed to save replacement player. Check your network connection.');

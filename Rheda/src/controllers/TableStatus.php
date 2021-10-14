@@ -55,6 +55,7 @@ class TableStatus extends Controller
 //            return false;
 //        }
 
+        /* @phpstan-ignore-next-line */
         return true;
     }
 

@@ -54,7 +54,7 @@ class GamesControlPanel extends Controller
                         $this->_mimir->dropLastRound($this->_path['hash']);
                         break;
                     case 'definalize':
-                        $this->_api->execute('definalizeGame', [$this->_path['hash']]);
+                        $this->_mimir->definalizeGame($this->_path['hash']);
                         break;
                     case 'cancelGame':
                         $this->_mimir->cancelGame($this->_path['hash']);

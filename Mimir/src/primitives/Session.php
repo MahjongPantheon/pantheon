@@ -689,6 +689,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * @param int[] $chips
      * @return $this
      */
     public function setChips($chips)
@@ -855,6 +856,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * Add chips bonus to final scores
+     * @return void
      */
     public function updateScoresWithChipsBonus()
     {

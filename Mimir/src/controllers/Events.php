@@ -69,6 +69,8 @@ class EventsController extends Controller
             throw new BadActionException(' Unsupported type of event requested');
         }
 
+        /** @phpstan-ignore-next-line */
+        $statHost = $this->_config->getValue('rhedaUrl') . '/eid' . EventPrimitive::ID_PLACEHOLDER;
         $event = (new EventPrimitive($this->_ds))
             ->setTitle($title)
             ->setDescription($description)
@@ -77,7 +79,7 @@ class EventsController extends Controller
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
             ->setRuleset(Ruleset::instance($ruleset))
-            ->setStatHost($this->_config->getValue('rhedaUrl') . '/eid' . EventPrimitive::ID_PLACEHOLDER)
+            ->setStatHost($statHost)
         ;
 
         switch ($type) {
@@ -558,7 +560,7 @@ class EventsController extends Controller
             'yakuWithPao'         => $rules->yakuWithPao(),
             'eventTitle'          => $event[0]->getTitle(),
             'eventDescription'    => $this->_mdTransform($event[0]->getDescription()),
-            'eventStatHost'       => str_replace(EventPrimitive::ID_PLACEHOLDER, $event[0]->getId(), $event[0]->getStatHost()),
+            'eventStatHost'       => str_replace(EventPrimitive::ID_PLACEHOLDER, (string)$event[0]->getId(), $event[0]->getStatHost()),
             'useTimer'            => (bool)$event[0]->getUseTimer(),
             'usePenalty'          => (bool)$event[0]->getUsePenalty(),
             'timerPolicy'         => $rules->timerPolicy(),
@@ -974,8 +976,7 @@ class EventsController extends Controller
      *
      * @param string $addr
      * @return array
-     * @throws \GeoIp2\Exception\AddressNotFoundException
-     * @throws \MaxMind\Db\Reader\InvalidDatabaseException
+     * @throws \Exception
      */
     public function getTimezones($addr = '')
     {
@@ -986,7 +987,9 @@ class EventsController extends Controller
         if ($addr) {
             require_once __DIR__ . '/../../bin/geoip2.phar';
             try {
+                /** @phpstan-ignore-next-line */
                 $reader = new \GeoIp2\Database\Reader(__DIR__ . '/../../bin/GeoLite2-City.mmdb');
+                /** @phpstan-ignore-next-line */
                 $record = $reader->city($addr);
                 $preferredTimezone = $record->location->timeZone;
             } catch (\Exception $e) {
@@ -1007,20 +1010,22 @@ class EventsController extends Controller
      *
      * @param string $addr
      * @return array
-     * @throws \GeoIp2\Exception\AddressNotFoundException
-     * @throws \MaxMind\Db\Reader\InvalidDatabaseException
+     * @throws \Exception
      */
     public function getCountries($addr = '')
     {
         $this->_log->addInfo('Receiving countries list');
         require_once __DIR__ . '/../../bin/countries.php';
+        /** @phpstan-ignore-next-line */
         $countries = getCountriesWithCodes();
 
         $preferredCountry = '';
         if ($addr) {
             require_once __DIR__ . '/../../bin/geoip2.phar';
             try {
+                /** @phpstan-ignore-next-line */
                 $reader = new \GeoIp2\Database\Reader(__DIR__ . '/../../bin/GeoLite2-City.mmdb');
+                /** @phpstan-ignore-next-line */
                 $record = $reader->city($addr);
                 $preferredCountry = strtoupper($record->country->isoCode);
             } catch (\Exception $e) {
