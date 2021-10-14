@@ -145,9 +145,12 @@ class Seating
             }
 
             /** @var array $flattenedGroups */
-            $flattenedGroups = array_reduce($groups, function ($acc, $el) {
-                return array_merge($acc, $el);
-            }, []);
+            $flattenedGroups = [];
+            foreach ($groups as $group) {
+                foreach ($group as $k => $v) {
+                    $flattenedGroups[$k] = $v;
+                }
+            }
 
             $newFactor = self::_calculateIntersectionFactor($flattenedGroups, $previousSeatings); // 4)
             if ($newFactor < $factor) {
@@ -251,7 +254,7 @@ class Seating
             $table = array_keys($tableWithRatings);
 
             $bestResult = 10005000;
-            $bestPlacement = null;
+            $bestPlacement = [];
             foreach ($possiblePlacements as $placement) {
                 $newResult = self::_calcSubSums(
                     $table[$placement[0]],
