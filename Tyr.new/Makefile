@@ -24,7 +24,7 @@ docker: dev
 
 PHONY: i18n_extract
 i18n_extract:
-	./node_modules/.bin/stex -s '**/*.ts' -o app/i18n/messages.pot.json
+	./node_modules/.bin/stex -s 'app/**/*.?(ts|tsx)' -o app/i18n/messages.pot.json
 	./node_modules/.bin/jsonpo -s app/i18n/messages.pot.json -o app/i18n/messages.pot --printOccurences
 	rm app/i18n/messages.pot.json
 	msgmerge -s -U ./app/i18n/ru.po ./app/i18n/messages.pot --backup=none

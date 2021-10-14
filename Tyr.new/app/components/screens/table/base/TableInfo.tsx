@@ -71,7 +71,7 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
           {gamesLeft && (
             <div className="table-info__games-left">
               <div className="table-info__games-left-count">
-                {loc._nt(['%s deal left', '%s deals left'], gamesLeft, [gamesLeft])}
+                {loc._nt(['%1 deal left', '%1 deals left'], gamesLeft, [gamesLeft])}
               </div>
             </div>
           )}
@@ -80,7 +80,7 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
       {showTableNumber && (
         <>
           <div className="table-info__table-caption">
-            {loc._t('Table #%s', [tableNumber])}
+            {loc._t('Table #%1', [tableNumber])}
           </div>
         </>
       )}

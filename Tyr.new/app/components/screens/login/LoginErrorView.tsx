@@ -21,7 +21,7 @@ export const LoginErrorView: React.FC<IProps> = ({onOkClick}) => {
           {loc._t('Login attempt has failed. Possible reasons are:')}
         </div>
         <ul>
-          <li>{loc._t('E-mail is not registered in Pantheon database (%s)', [regLink])}</li>
+          <li>{loc._t('E-mail is not registered in Pantheon database (%1)', [regLink])}</li>
           <li>{loc._t('Password check has failed')}</li>
           <li>{loc._t('Unexpected server error')}</li>
         </ul>

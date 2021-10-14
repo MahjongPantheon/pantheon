@@ -56,8 +56,8 @@ export class SelectTotalPanel extends React.Component<IProps> {
     } = this.props;
 
     const totalHandAmount = fuCount
-      ? loc._t('%s han %s fu', [this.hanCount, fuCount])
-      : loc._t('%s han', [this.hanCount]);
+      ? loc._t('%1 han %2 fu', [this.hanCount, fuCount])
+      : loc._t('%1 han', [this.hanCount]);
 
     return (
       <div className="select-total-panel">

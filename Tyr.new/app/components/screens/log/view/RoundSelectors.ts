@@ -13,24 +13,24 @@ function getHandAmount(loc: I18nService, han: number, fu?: number): string {
     return loc._t('yakuman');
   }
 
-  let str = loc._t('%s han', [han]);
+  let str = loc._t('%1 han', [han]);
 
   if (han < 5 && fu) {
-    return loc._t('%s han %s fu', [han, fu]);
+    return loc._t('%1 han %2 fu', [han, fu]);
   }
   return str;
 }
 
 function getPaoLine(loc: I18nService, paoPlayer: string) {
-  return loc._t('Pao from: %s', [paoPlayer]);
+  return loc._t('Pao from: %1', [paoPlayer]);
 }
 
 function getHonbaLine(loc: I18nService, honbaOnTable: number) {
-  return loc._t('Honba: ', [honbaOnTable]);
+  return loc._t('Honba: %1', [honbaOnTable]);
 }
 
 function getTempaiLine(loc: I18nService, tempai: string[]) {
-  return loc._t('Tempai: ', [tempai.join(', ')]);
+  return loc._t('Tempai: %1', [tempai.join(', ')]);
 }
 
 function getRiichiLine(loc: I18nService, riichiPlayers: string[], riichiOnTable: number) {
@@ -44,11 +44,11 @@ function getRiichiLine(loc: I18nService, riichiPlayers: string[], riichiOnTable:
     riichiStr = riichiOnTable.toString();
   }
 
-  return loc._t('Riichi bets: ', [riichiStr]);
+  return loc._t('Riichi bets: %1', [riichiStr]);
 }
 
 function getYakuLine(loc: I18nService, yakuList: string[], dora?: number) {
-  const doraStr = loc._t('dora %s', [dora]);
+  const doraStr = loc._t('dora %1', [dora]);
   const yakuStr = [...yakuList, dora ? doraStr : null]
     .filter(el => !!el).join(', ');
   return `${yakuStr}`;
@@ -58,8 +58,8 @@ function getRoundDescriptionRon(info: IRoundOverviewRon, loc: I18nService) {
   const {winner, loser, paoPlayer, han, fu, dora, yakuList, riichiPlayers, riichiOnTable, honbaOnTable} = info;
 
   const lines: string[] = []
-  lines.push(loc._t('Ron, %s', [getHandAmount(loc, han, fu)]));
-  lines.push(loc._t('%s ← %s', [winner, loser]));
+  lines.push(loc._t('Ron, %1', [getHandAmount(loc, han, fu)]));
+  lines.push(loc._t('%1 ← %2', [winner, loser]));
   lines.push(getYakuLine(loc, yakuList, dora));
   if (paoPlayer) {
     lines.push(getPaoLine(loc, paoPlayer));
@@ -75,7 +75,7 @@ function getRoundDescriptionMultiron(info: IRoundOverviewMultiRon, loc: I18nServ
   const {loser, winnerList, hanList, fuList, doraList, yakuList, paoPlayerList, riichiPlayers, riichiOnTable, honbaOnTable} = info;
 
   const lines: string[] = []
-  lines.push(loc._t('Multiron, from %s', [loser]));
+  lines.push(loc._t('Multiron, from %1', [loser]));
   lines.push('');
 
   winnerList.forEach((winner, i) => {
@@ -105,7 +105,7 @@ function getRoundDescriptionTsumo(info: IRoundOverviewTsumo, loc: I18nService) {
   const {winner, paoPlayer, han, fu, dora, yakuList, riichiPlayers, riichiOnTable, honbaOnTable} = info;
 
   const lines: string[] = []
-  lines.push(loc._t('Tsumo, %s', [getHandAmount(loc, han, fu)]));
+  lines.push(loc._t('Tsumo, %1', [getHandAmount(loc, han, fu)]));
   lines.push(winner);
   lines.push(getYakuLine(loc, yakuList, dora));
   if (paoPlayer) {
