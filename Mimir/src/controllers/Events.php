@@ -46,10 +46,18 @@ class EventsController extends Controller
      * @return int
      */
     public function createEvent(
-        $type, $title, $description, $ruleset, $gameDuration,
-        $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted
-    )
-    {
+        $type,
+        $title,
+        $description,
+        $ruleset,
+        $gameDuration,
+        $timezone,
+        $series,
+        $minGamesCount,
+        $lobbyId,
+        $isTeam,
+        $isPrescripted
+    ) {
         $this->_log->addInfo('Creating new event with [' . $ruleset . '] rules');
 
         // Check we have rights to create new event
@@ -110,7 +118,8 @@ class EventsController extends Controller
                     ->setIsPrescripted(0)
                 ;
                 break;
-            default:;
+            default:
+                ;
         }
 
         $success = $event->save();
@@ -146,10 +155,18 @@ class EventsController extends Controller
      * @return bool
      */
     public function updateEvent(
-        $id, $title, $description, $ruleset, $gameDuration,
-        $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted
-    )
-    {
+        $id,
+        $title,
+        $description,
+        $ruleset,
+        $gameDuration,
+        $timezone,
+        $series,
+        $minGamesCount,
+        $lobbyId,
+        $isTeam,
+        $isPrescripted
+    ) {
         $this->_log->addInfo('Updating event with [' . $ruleset . '] rules');
 
         $event = EventPrimitive::findById($this->_ds, [$id]);

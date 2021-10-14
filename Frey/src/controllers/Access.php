@@ -404,7 +404,7 @@ class AccessController extends Controller
         $this->_logStart(__METHOD__, [$personId]);
         $rules = $this->_getModel()
             ->getAllPersonRulesOfType($personId, InternalRules::ADMIN_EVENT) ?? [];
-        $events = array_keys(array_filter($rules, function($rule) {
+        $events = array_keys(array_filter($rules, function ($rule) {
             return !!$rule['value'];
         }));
         $this->_logSuccess(__METHOD__, [$personId]);

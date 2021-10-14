@@ -193,11 +193,13 @@ class Meta
         return $this->_accessRules[$name];
     }
 
-    public function isSuperadmin() {
+    public function isSuperadmin()
+    {
         return $this->_superadmin;
     }
 
-    public function isEventAdmin() {
+    public function isEventAdmin()
+    {
         if ($this->_superadmin) {
             return true;
         }
@@ -207,7 +209,8 @@ class Meta
         return false;
     }
 
-    public function isEventAdminById($eventId) {
+    public function isEventAdminById($eventId)
+    {
         if ($this->_superadmin) {
             return true;
         }

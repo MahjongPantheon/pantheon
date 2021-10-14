@@ -176,7 +176,9 @@ QRY;
 
         $result = $db->table('person')
             ->rawQuery($q, [':query' => implode(' & ', array_map(
-                function ($word) { return $word . ':*'; },
+                function ($word) {
+                    return $word . ':*';
+                },
                 explode(' ', $query)
             ))])
             ->findArray();

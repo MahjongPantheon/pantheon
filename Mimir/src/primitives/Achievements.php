@@ -484,7 +484,7 @@ class AchievementsPrimitive extends Primitive
             return !in_array($round['loser_id'], explode(',', $round['riichi']));
         });
 
-        return array_map(function ($round) use(&$players) {
+        return array_map(function ($round) use (&$players) {
             return [
                 'name' => $players[$round['loser_id']]['display_name'],
                 'hand' => ['han' => $round['han'], 'fu' => $round['han'] > 4 ? null : $round['fu']]
@@ -563,7 +563,7 @@ class AchievementsPrimitive extends Primitive
         });
 
         return array_map(
-            function ($round) use(&$players) {
+            function ($round) use (&$players) {
                 return [
                     'name' => $players[$round['winner_id']]['display_name'],
                     'count' => sprintf('%.2f', $round['average'])

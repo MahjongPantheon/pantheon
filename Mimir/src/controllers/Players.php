@@ -99,7 +99,7 @@ class PlayersController extends Controller
         $sessions = SessionPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         $regData = PlayerPrimitive::findPlayersForEvents($this->_ds, [$eventId]);
 
-        $result = array_map(function (SessionPrimitive $session) use(&$regData) {
+        $result = array_map(function (SessionPrimitive $session) use (&$regData) {
             return [
                 'hashcode'    => $session->getRepresentationalHash(),
                 'status'      => $session->getStatus(),

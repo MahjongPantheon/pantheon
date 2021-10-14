@@ -184,7 +184,7 @@ class AccessManagementModel extends Model
         $groupRules = GroupAccessPrimitive::findByEvent($this->_db, [$eventId]);
 
         /** @var PersonAccessPrimitive|GroupAccessPrimitive $rule */
-        $predicate = function($rule) {
+        $predicate = function ($rule) {
             return [
                 'isGlobal' => !$rule->getEventId(),
                 'id' => $rule->getId(),
