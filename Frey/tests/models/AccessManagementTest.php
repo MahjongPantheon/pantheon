@@ -53,6 +53,41 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      * @var string
      */
     protected $_authToken;
+    /**
+     * @var int|null
+     */
+    private ?int $_oldMetaEid;
+    /**
+     * @var string
+     */
+    private string $_oldToken;
+    /**
+     * @var int|null
+     */
+    private ?int $_oldPersonId;
+
+    /**
+     * @return void
+     */
+    protected function _loginMeta()
+    {
+        $this->_oldMetaEid = $this->_meta->getCurrentEventId();
+        $this->_oldToken = $this->_meta->getAuthToken();
+        $this->_oldPersonId = $this->_meta->getCurrentPersonId();
+        $this->_meta->__setEventId($this->_eventId);
+        $this->_meta->__setAuthToken($this->_authToken);
+        $this->_meta->__setPersonId($this->_person->getId());
+    }
+
+    /**
+     * @return void
+     */
+    protected function _resetMeta()
+    {
+        $this->_meta->__setEventId($this->_oldMetaEid);
+        $this->_meta->__setAuthToken($this->_oldToken);
+        $this->_meta->__setPersonId($this->_oldPersonId);
+    }
 
     /**
      * @throws \Exception
@@ -70,6 +105,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             ->setTitle('Test person')
             ->setEmail('test@test.com')
             ->setAuthHash($tokens['auth_hash'])
+            ->setIsSuperadmin(true)
             ->setAuthSalt($tokens['salt']);
         $this->_person->save();
 
@@ -83,6 +119,8 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
         $this->_eventId = mt_rand(1, 500);
         (new AccessManagementModel($this->_db, $this->_config, $this->_meta))
             ->clearAccessCache($this->_person->getId(), $this->_eventId);
+
+        $this->_loginMeta();
     }
 
     /**
@@ -127,14 +165,6 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
         $this->_testAddDuplicateRuleForPerson(null);
     }
 
-    protected function _loginMeta()
-    {
-        $oldMetaEid = $this->_meta->getCurrentEventId();
-        $oldToken = $this->_meta->getAuthToken();
-        $this->_meta->__setEventId($this->_eventId);
-        $this->_meta->__setAuthToken($this->_authToken);
-    }
-
     /**
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
@@ -142,13 +172,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testUpdateRuleForPerson()
     {
-        $oldMetaEid = $this->_meta->getCurrentEventId();
-        $oldToken = $this->_meta->getAuthToken();
-        $this->_meta->__setEventId($this->_eventId);
-        $this->_meta->__setAuthToken($this->_authToken);
         $this->_testUpdateRuleForPerson($this->_eventId);
-        $this->_meta->__setEventId($oldMetaEid);
-        $this->_meta->__setAuthToken($oldToken);
     }
 
     /**

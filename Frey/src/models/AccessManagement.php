@@ -267,14 +267,14 @@ class AccessManagementModel extends Model
      * @param bool|int|string $ruleValue
      * @param string $ruleType 'bool', 'int' or 'enum'
      * @param int $personId
-     * @param int $eventId
+     * @param int|null $eventId
      *
      * @return int|null
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId)
+    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, ?int $eventId)
     {
         // TODO: check again; looks like this should not be here.
 //        if (InternalRules::isInternal($ruleName)) {
@@ -316,14 +316,14 @@ class AccessManagementModel extends Model
      * @param bool|int|string $ruleValue
      * @param string $ruleType 'bool', 'int' or 'enum'
      * @param int $groupId
-     * @param int $eventId
+     * @param int|null $eventId
      *
      * @return int|null
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId)
+    public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, ?int $eventId)
     {
         // TODO: check again; looks like this should not be here.
 //        if (InternalRules::isInternal($ruleName)) {

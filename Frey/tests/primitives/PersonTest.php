@@ -163,40 +163,6 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($newPerson !== $personCopy[0]); // different objects!
     }
 
-    public function testFindPersonByTitleFuzzySuccessFromEnd()
-    {
-        $newPerson = new PersonPrimitive($this->_db);
-        $newPerson
-            ->setTitle('person1')
-            ->setEmail('test@mail.com')
-            ->setCity('testcity')
-            ->setPhone('testphone')
-            ->setTenhouId('testtenhou')
-            ->save();
-
-        $personCopy = PersonPrimitive::findByTitleFuzzy($this->_db, 'son1');
-        $this->assertEquals(1, count($personCopy));
-        $this->assertEquals('person1', $personCopy[0]->getTitle());
-        $this->assertTrue($newPerson !== $personCopy[0]); // different objects!
-    }
-
-    public function testFindPersonByTitleFuzzySuccessInMiddle()
-    {
-        $newPerson = new PersonPrimitive($this->_db);
-        $newPerson
-            ->setTitle('person1')
-            ->setEmail('test@mail.com')
-            ->setCity('testcity')
-            ->setPhone('testphone')
-            ->setTenhouId('testtenhou')
-            ->save();
-
-        $personCopy = PersonPrimitive::findByTitleFuzzy($this->_db, 'rson');
-        $this->assertEquals(1, count($personCopy));
-        $this->assertEquals('person1', $personCopy[0]->getTitle());
-        $this->assertTrue($newPerson !== $personCopy[0]); // different objects!
-    }
-
     /**
      * @throws \Exception
      */

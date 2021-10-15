@@ -19,6 +19,7 @@ namespace Frey;
 
 require_once __DIR__ . '/../../src/exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../../src/models/Account.php';
+require_once __DIR__ . '/../../src/models/Auth.php';
 require_once __DIR__ . '/../../src/primitives/Person.php';
 require_once __DIR__ . '/../../src/primitives/Group.php';
 require_once __DIR__ . '/../../src/helpers/Db.php';
@@ -48,6 +49,41 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      * @var int
      */
     protected $_eventId;
+    /**
+     * @var int|null
+     */
+    private ?int $_oldMetaEid;
+    /**
+     * @var string
+     */
+    private string $_oldToken;
+    /**
+     * @var int|null
+     */
+    private ?int $_oldPersonId;
+
+    /**
+     * @return void
+     */
+    protected function _loginMeta()
+    {
+        $this->_oldMetaEid = $this->_meta->getCurrentEventId();
+        $this->_oldToken = $this->_meta->getAuthToken();
+        $this->_oldPersonId = $this->_meta->getCurrentPersonId();
+        $this->_meta->__setEventId($this->_eventId);
+        $this->_meta->__setAuthToken($this->_authToken);
+        $this->_meta->__setPersonId($this->_person->getId());
+    }
+
+    /**
+     * @return void
+     */
+    protected function _resetMeta()
+    {
+        $this->_meta->__setEventId($this->_oldMetaEid);
+        $this->_meta->__setAuthToken($this->_oldToken);
+        $this->_meta->__setPersonId($this->_oldPersonId);
+    }
 
     public function setUp()
     {
@@ -55,9 +91,15 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
         $this->_meta = new Meta($_SERVER);
 
+        $auth = new AuthModel($this->_db, $this->_config, $this->_meta);
+        $tokens = $auth->makePasswordTokens('qwerasdfqwer');
+        $this->_authToken = $tokens['client_hash'];
         $this->_person = (new PersonPrimitive($this->_db))
             ->setTitle('Test person')
-            ->setEmail('test@test.com');
+            ->setEmail('test@test.com')
+            ->setAuthHash($tokens['auth_hash'])
+            ->setIsSuperadmin(true)
+            ->setAuthSalt($tokens['salt']);
         $this->_person->save();
 
         $this->_group = (new GroupPrimitive($this->_db))
@@ -66,6 +108,8 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             ->setPersons([$this->_person])
             ->setLabelColor('#ffffff');
         $this->_group->save();
+
+        $this->_loginMeta();
     }
 
     /**
@@ -174,9 +218,10 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'tid'
         );
         $data = $model->getPersonalInfo([$personId]);
-        $this->assertEquals('test@email.com', $data[0]['email']);
+        // TODO uncomment for unfiltered data
+//        $this->assertEquals('test@email.com', $data[0]['email']);
+//        $this->assertEquals('111-111-111', $data[0]['phone']);
         $this->assertEquals('test', $data[0]['title']);
-        $this->assertEquals('111-111-111', $data[0]['phone']);
         $this->assertEquals('tid', $data[0]['tenhou_id']);
         $this->assertEquals($personId, $data[0]['id']);
     }
@@ -242,9 +287,10 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'tid'
         );
         $data = $model->findByTenhouId(['tid']);
-        $this->assertEquals('test@email.com', $data[0]['email']);
+        // TODO uncomment for unfiltered data
+//        $this->assertEquals('test@email.com', $data[0]['email']);
+//        $this->assertEquals('111-111-111', $data[0]['phone']);
         $this->assertEquals('test', $data[0]['title']);
-        $this->assertEquals('111-111-111', $data[0]['phone']);
         $this->assertEquals('tid', $data[0]['tenhou_id']);
         $this->assertEquals($personId, $data[0]['id']);
     }
@@ -287,6 +333,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $success = $model->updatePersonalInfo(
             $personId,
             'test2',
+            'testcountry2',
             'testcity2',
             'test2@email.com',
             '222-222-222',
@@ -294,9 +341,10 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         );
         $this->assertTrue($success);
         $data = $model->getPersonalInfo([$personId]);
-        $this->assertEquals('test2@email.com', $data[0]['email']);
+        // TODO uncomment for unfiltered data
+//        $this->assertEquals('test2@email.com', $data[0]['email']);
+//        $this->assertEquals('222-222-222', $data[0]['phone']);
         $this->assertEquals('test2', $data[0]['title']);
-        $this->assertEquals('222-222-222', $data[0]['phone']);
         $this->assertEquals('tid2', $data[0]['tenhou_id']);
         $this->assertEquals($personId, $data[0]['id']);
     }
@@ -304,15 +352,16 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 405
      */
     public function testUpdatePersonalInfoBadId()
     {
+        $this->expectExceptionCode(405);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->updatePersonalInfo(
             'kek',
             'test2',
+            'testcountry2',
             'testcity2',
             'test2@email.com',
             '222-222-222',
@@ -323,15 +372,16 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 406
      */
     public function testUpdatePersonalInfoIdNotFound()
     {
+        $this->expectExceptionCode(406);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->updatePersonalInfo(
             123,
             'test2',
+            'testcountry2',
             'testcity2',
             'test2@email.com',
             '222-222-222',
@@ -342,11 +392,11 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 407
      */
     public function testUpdatePersonalInfoEmptyTitle()
     {
+        $this->expectException(\Frey\InvalidParametersException::class);
+        $this->expectExceptionCode(407);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(
             'test@email.com',
@@ -359,6 +409,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $model->updatePersonalInfo(
             $personId,
             '',
+            'testcountry2',
             'testcity2',
             'test2@email.com',
             '222-222-222',
@@ -369,11 +420,11 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 407
      */
     public function testUpdatePersonalInfoEmptyEmail()
     {
+        $this->expectExceptionCode(407);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(
             'test@email.com',
@@ -386,6 +437,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $model->updatePersonalInfo(
             $personId,
             'test2',
+            'testcountry2',
             'testcity2',
             '',
             '222-222-222',
@@ -396,11 +448,11 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 408
      */
     public function testUpdatePersonalInfoInvalidEmail()
     {
+        $this->expectExceptionCode(408);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(
             'test@email.com',
@@ -413,6 +465,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $model->updatePersonalInfo(
             $personId,
             'test2',
+            'testcountry2',
             'testcity2',
             'test2bademail.com',
             '222-222-222',
@@ -439,7 +492,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $emptyresults = $model->findByTitleFuzzy('watisthis');
         $this->assertEmpty($emptyresults);
 
-        $results = $model->findByTitleFuzzy('findable');
+        $results = $model->findByTitleFuzzy('easyfind');
         $this->assertNotEmpty($results);
         $this->assertEquals('testcity', $results[0]['city']);
         $this->assertEquals('easyfindableperson', $results[0]['title']);

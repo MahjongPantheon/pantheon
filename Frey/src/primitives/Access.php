@@ -39,7 +39,7 @@ abstract class AccessPrimitive extends Primitive
     protected $_id;
     /**
      * Event this rule is applied to. If empty, this means rule is applied system-wide.
-     * @var int
+     * @var int|null
      */
     protected $_eventId;
     /**
@@ -101,7 +101,7 @@ abstract class AccessPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getEventId()
     {
@@ -109,7 +109,7 @@ abstract class AccessPrimitive extends Primitive
     }
 
     /**
-     * @param int $eventId
+     * @param int|null $eventId
      * @return self
      */
     public function setEventId($eventId)

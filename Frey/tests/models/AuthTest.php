@@ -58,11 +58,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 401
      */
     public function testRequestRegistrationInvalidEmail()
     {
+        $this->expectExceptionCode(401);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $model->requestRegistration('bademail.com', 'greatpassword');
     }
@@ -70,11 +70,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 411
      */
     public function testRequestRegistrationWeakPassword()
     {
+        $this->expectExceptionCode(411);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $model->requestRegistration('test@email.com', 'badpw');
     }
@@ -95,11 +95,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws EntityNotFoundException
      * @throws \Exception
-     * @expectedException \Frey\EntityNotFoundException
-     * @expectedExceptionCode 402
      */
     public function testApproveRegistrationWithInvalidCode()
     {
+        $this->expectExceptionCode(402);
+        $this->expectException(\Frey\EntityNotFoundException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $model->approveRegistration('232314241');
     }
@@ -108,11 +108,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 410
      */
     public function testApproveRegistrationWithRegisteredEmail()
     {
+        $this->expectExceptionCode(410);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
         $model->approveRegistration($approvalCode);
@@ -140,11 +140,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\EntityNotFoundException
-     * @expectedExceptionCode 403
      */
     public function testAuthorizeUnknownEmail()
     {
+        $this->expectExceptionCode(403);
+        $this->expectException(\Frey\EntityNotFoundException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
         $model->approveRegistration($approvalCode);
@@ -156,11 +156,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\AuthFailedException
-     * @expectedExceptionCode 404
      */
     public function testAuthorizeWrongPassword()
     {
+        $this->expectExceptionCode(404);
+        $this->expectException(\Frey\AuthFailedException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
         $model->approveRegistration($approvalCode);
@@ -186,11 +186,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws EntityNotFoundException
      * @throws \Exception
-     * @expectedException \Frey\EntityNotFoundException
-     * @expectedExceptionCode 405
      */
     public function testQuickAuthorizeWrongPerson()
     {
+        $this->expectExceptionCode(405);
+        $this->expectException(\Frey\EntityNotFoundException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $model->quickAuthorize(123, 'oshdfhfsdisdfjl');
     }
@@ -234,11 +234,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
      * @throws AuthFailedException
      * @throws EntityNotFoundException
      * @throws \Exception
-     * @expectedException \Frey\EntityNotFoundException
-     * @expectedExceptionCode 406
      */
     public function testChangePasswordUnknownEmail()
     {
+        $this->expectExceptionCode(406);
+        $this->expectException(\Frey\EntityNotFoundException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $model->changePassword('test@test.com', 'greatpassword', 'newpassword');
     }
@@ -248,11 +248,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\AuthFailedException
-     * @expectedExceptionCode 404
      */
     public function testChangePasswordWrongPassword()
     {
+        $this->expectExceptionCode(404);
+        $this->expectException(\Frey\AuthFailedException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
         $model->approveRegistration($approvalCode);
@@ -276,11 +276,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws EntityNotFoundException
      * @throws \Exception
-     * @expectedException \Frey\EntityNotFoundException
-     * @expectedExceptionCode 407
      */
     public function testRequestResetPasswordWrongEmail()
     {
+        $this->expectExceptionCode(407);
+        $this->expectException(\Frey\EntityNotFoundException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $model->requestResetPassword('test@test.com');
     }
@@ -309,11 +309,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\EntityNotFoundException
-     * @expectedExceptionCode 408
      */
     public function testApproveResetPasswordWrongEmail()
     {
+        $this->expectExceptionCode(408);
+        $this->expectException(\Frey\EntityNotFoundException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
         $model->approveRegistration($approvalCode);
@@ -326,11 +326,11 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\AuthFailedException
-     * @expectedExceptionCode 409
      */
     public function testApproveResetPasswordWrongApprovalCode()
     {
+        $this->expectExceptionCode(409);
+        $this->expectException(\Frey\AuthFailedException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
         $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
         $model->approveRegistration($approvalCode);
