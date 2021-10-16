@@ -283,8 +283,8 @@ global_admin: migrate
 
 .PHONY: check
 check: get_docker_id lint
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user gosu user make unit';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user make unit';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user gosu user make unit';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user gosu user make unit';
 	# TODO: checks for Tyr
 

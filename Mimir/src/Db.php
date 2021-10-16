@@ -156,7 +156,7 @@ class Db implements IDb
     protected static $__testingInstance = null;
 
     /**
-     * @return Db|null
+     * @return Db
      */
     public static function __getCleanTestingInstance()
     {

@@ -19,6 +19,7 @@ namespace Mimir;
 
 require_once __DIR__ . '/../src/interfaces/IDb.php';
 require_once __DIR__ . '/../src/interfaces/IFreyClient.php';
+require_once __DIR__ . '/../tests/util/FreyClientMock.php';
 require_once __DIR__ . '/../src/Config.php';
 
 /**
@@ -68,10 +69,14 @@ class DataSource
     {
         return $this->_db->table($tableName);
     }
-/*
+
+    /**
+     * @return DataSource
+     */
     public static function __getCleanTestingInstance()
     {
         $db = Db::__getCleanTestingInstance();
-        $client = new FreyClient();
-    }*/
+        $client = new FreyClientMock('');
+        return new self($db, $client);
+    }
 }
