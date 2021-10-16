@@ -106,11 +106,12 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.d/www.co
     sed -i "s|;*opcache.interned_strings_buffer=.*|opcache.interned_strings_buffer=8|i" /etc/php7/php.ini && \
     sed -i "s|;*opcache.max_accelerated_files=.*|opcache.max_accelerated_files=4000|i" /etc/php7/php.ini && \
     sed -i "s|;*opcache.fast_shutdown=.*|opcache.fast_shutdown=1|i" /etc/php7/php.ini
-RUN echo -ne "zend_extension=xdebug.so\n \
+RUN if [[ -z "$NO_XDEBUG" ]] ; then echo -ne "zend_extension=xdebug.so\n \
           xdebug.mode=debug\n \
           xdebug.start_with_request=yes\n \
           xdebug.client_host=172.17.0.1\n \
-          xdebug.client_port=9001\n" > /etc/php7/conf.d/50_xdebug.ini
+          xdebug.client_port=9001\n" > /etc/php7/conf.d/50_xdebug.ini ; \
+    fi
 
 # Cleaning up
 RUN mkdir /www && \
