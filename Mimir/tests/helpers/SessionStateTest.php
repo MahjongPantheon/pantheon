@@ -492,11 +492,9 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
         ], $this->_state->getScores());
     }
 
-    /**
-     * @expectedException \Mimir\InvalidParametersException
-     */
     public function testAbortWhenNotAllowed()
     {
+        $this->expectException(\Mimir\InvalidParametersException::class);
         $this->_ruleset->setRule('withAbortives', false);
         $round = new RoundPrimitive($this->_ds);
         $round

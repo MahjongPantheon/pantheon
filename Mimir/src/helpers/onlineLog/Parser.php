@@ -256,11 +256,16 @@ class OnlineParser
             }
 
             if ($session->getEvent()->getAllowPlayerAppend()) {
+                $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $session->getEventId());
+                $registeredPlayers = array_map(function (PlayerRegistrationPrimitive $p) {
+                    return $p->getPlayerId();
+                }, $regs);
                 foreach ($players as $player) {
-                    // it is ok to re-register every time, it just will do nothing in db if record exists
-                    (new PlayerRegistrationPrimitive($this->_ds))
-                        ->setReg($player, $session->getEvent())
-                        ->save();
+                    if (!in_array($player->getId(), $registeredPlayers)) {
+                        (new PlayerRegistrationPrimitive($this->_ds))
+                            ->setReg($player, $session->getEvent())
+                            ->save();
+                    }
                 }
             }
 

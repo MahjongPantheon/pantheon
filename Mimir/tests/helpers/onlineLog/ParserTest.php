@@ -30,9 +30,9 @@ require_once __DIR__ . '/../../../src/primitives/PlayerRegistration.php';
 class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Db
+     * @var DataSource
      */
-    protected $_db;
+    protected $_ds;
     /**
      * @var PlayerPrimitive[]
      */
@@ -48,31 +48,24 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->_db = Db::__getCleanTestingInstance();
+        $this->_ds = DataSource::__getCleanTestingInstance();
 
-        $this->_event = (new EventPrimitive($this->_db))
+        $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setTimezone('UTC')
             ->setDescription('desc')
-            ->setType('online')
             ->setLobbyId('0')
             ->setRuleset(Ruleset::instance('tenhounet'));
         $this->_event->save();
 
-        $this->_players = array_map(function ($i) {
-            $p = (new PlayerPrimitive($this->_db))
-                ->setDisplayName('player' . $i)
-                ->setAlias('player' . $i)
-                ->setIdent('oauth' . $i)
-                ->setTenhouId('player' . $i);
-            $p->save();
-            (new PlayerRegistrationPrimitive($this->_db))
+        $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
+        foreach ($this->_players as $p) {
+            (new PlayerRegistrationPrimitive($this->_ds))
                 ->setReg($p, $this->_event)
                 ->save();
-            return $p;
-        }, [1, 2, 3, 4]);
+        }
 
-        $this->_session = (new SessionPrimitive($this->_db))
+        $this->_session = (new SessionPrimitive($this->_ds))
             ->setEvent($this->_event)
             ->setPlayers($this->_players)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
@@ -83,7 +76,7 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
     public function testParseUsualGame()
     {
         $content = file_get_contents(__DIR__ . '/testdata/usual.xml');
-        list($success, $results, $rounds) = (new OnlineParser($this->_db))
+        list($success, $results, $rounds) = (new OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -106,7 +99,7 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
     public function testParseYakumanDoubleRon()
     {
         $content = file_get_contents(__DIR__ . '/testdata/doubleron.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_db))
+        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -119,7 +112,7 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
     public function testParseTripleYakuman()
     {
         $content = file_get_contents(__DIR__ . '/testdata/tripleyakuman.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_db))
+        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -132,7 +125,7 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
     public function testParseDoubleRonAndRiichiBets()
     {
         $content = file_get_contents(__DIR__ . '/testdata/doubleron_and_riichi.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_db))
+        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -145,7 +138,7 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
     public function testParseDoubleRonAndHonbaBets()
     {
         $content = file_get_contents(__DIR__ . '/testdata/doubleron_and_honba.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_db))
+        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -158,7 +151,7 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
     public function testParseNagashiMangan()
     {
         $content = file_get_contents(__DIR__ . '/testdata/nagashi.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_db))
+        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);
@@ -171,7 +164,7 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
     public function testHanchanWithWestRound()
     {
         $content = file_get_contents(__DIR__ . '/testdata/west.xml');
-        list($success, $results/*, $debug*/) = (new OnlineParser($this->_db))
+        list($success, $results/*, $debug*/) = (new OnlineParser($this->_ds))
             ->parseToSession($this->_session, $content);
 
         $this->assertTrue($success);

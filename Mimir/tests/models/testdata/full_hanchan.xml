@@ -9,7 +9,7 @@
 <mjloggm ver="2.3">
     <SHUFFLE seed="" ref=""/>
     <GO type="169" lobby="1111"/>
-    <UN n0="tenhou1" n1="tenhou2" n2="tenhou3" n3="tenhou4" dan="16,16,19,16"
+    <UN n0="player1" n1="player2" n2="player3" n3="player4" dan="16,16,19,16"
         rate="2179.17,2152.91,2234.74,2117.26" sx="M,M,M,M"/>
     <TAIKYOKU oya="0"/>
     <INIT seed="0,0,0,3,0,133" ten="250,250,250,250" oya="0" hai0="69,127,94,36,86,15,93,66,12,101,114,29,102"

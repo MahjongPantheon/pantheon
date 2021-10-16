@@ -60,7 +60,11 @@ class FreyClientMock implements IFreyClient
 
     public function getAccessRules(int $personId, int $eventId): array
     {
-        // TODO: Implement getAccessRules() method.
+        if ($personId === 1) {
+            return [
+                FreyClient::PRIV_ADMIN_EVENT => true
+            ];
+        }
         return [];
     }
 
@@ -77,15 +81,26 @@ class FreyClientMock implements IFreyClient
 
     public function getPersonalInfo(array $ids): array
     {
+        $ids = array_filter($ids, function ($id) {
+            return $id < 1000;
+        });
         return array_map(function ($id) {
-            return ['id' => $id, 'title' => 'player' . $id, 'tenhou_id' => 'thid' . $id];
+            return ['id' => $id, 'title' => 'player' . $id, 'tenhou_id' => 'player' . $id];
         }, $ids);
     }
 
+    // Expect 'playerN' ids here
     public function findByTenhouIds(array $ids): array
     {
-        // TODO: Implement findByTenhouIds() method.
-        return [];
+        return array_filter(array_map(function ($id) {
+            if ($id === 'NoName') {
+                return ['id' => 100, 'title' => 'NoName', 'tenhou_id' => 'NoName'];
+            }
+            if (strpos($id, 'player') !== 0) {
+                return null;
+            }
+            return ['id' => intval(str_replace('player', '', $id)), 'title' => $id, 'tenhou_id' => $id];
+        }, $ids));
     }
 
     public function findByTitle(string $query): array

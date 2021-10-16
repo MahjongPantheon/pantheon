@@ -27,7 +27,10 @@ require_once __DIR__ . '/../../src/Db.php';
 
 class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
-    protected $_db;
+    /**
+     * @var DataSource
+     */
+    protected $_ds;
     /**
      * @var SessionPrimitive
      */
@@ -47,26 +50,18 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->_db = Db::__getCleanTestingInstance();
+        $this->_ds = DataSource::__getCleanTestingInstance();
 
-        $this->_event = (new EventPrimitive($this->_db))
+        $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setDescription('desc')
             ->setTimezone('UTC')
-            ->setType('online')
             ->setRuleset(Ruleset::instance('jpmlA'));
         $this->_event->save();
 
-        $this->_players = array_map(function ($i) {
-            $p = (new PlayerPrimitive($this->_db))
-                ->setDisplayName('player' . $i)
-                ->setIdent('oauth' . $i)
-                ->setTenhouId('tenhou' . $i);
-            $p->save();
-            return $p;
-        }, [1, 2, 3, 4]);
+        $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
 
-        $this->_session = (new SessionPrimitive($this->_db))
+        $this->_session = (new SessionPrimitive($this->_ds))
             ->setEvent($this->_event)
             ->setPlayers($this->_players)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
@@ -74,7 +69,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setReplayHash('');
         $this->_session->save();
 
-        $this->_anotherSession = (new SessionPrimitive($this->_db))
+        $this->_anotherSession = (new SessionPrimitive($this->_ds))
             ->setEvent($this->_event)
             ->setPlayers($this->_players)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
@@ -85,7 +80,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testNewHistoryItem()
     {
-        $item = new PlayerHistoryPrimitive($this->_db);
+        $item = new PlayerHistoryPrimitive($this->_ds);
         $item
             ->setSession($this->_session)
             ->setPlayer($this->_players[0])
@@ -106,7 +101,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindLastItemByPlayerAndEvent()
     {
-        $item = new PlayerHistoryPrimitive($this->_db);
+        $item = new PlayerHistoryPrimitive($this->_ds);
         $item
             ->setSession($this->_session)
             ->setPlayer($this->_players[0])
@@ -114,7 +109,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setAvgPlace(3)
             ->_setGamesPlayed(1)
             ->save();
-        $item2 = new PlayerHistoryPrimitive($this->_db);
+        $item2 = new PlayerHistoryPrimitive($this->_ds);
         $item2
             ->setSession($this->_session)
             ->setPlayer($this->_players[1])
@@ -122,7 +117,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setAvgPlace(2)
             ->_setGamesPlayed(1)
             ->save();
-        $item3 = new PlayerHistoryPrimitive($this->_db);
+        $item3 = new PlayerHistoryPrimitive($this->_ds);
         $item3
             ->setSession($this->_anotherSession)
             ->setPlayer($this->_players[0])
@@ -132,7 +127,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->save();
 
         $itemCopy = PlayerHistoryPrimitive::findLastByEvent(
-            $this->_db,
+            $this->_ds,
             $this->_event->getId(),
             $this->_players[0]->getId()
         )[0];
@@ -145,7 +140,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindAllPlayersLastItemByEvent()
     {
-        $item = new PlayerHistoryPrimitive($this->_db);
+        $item = new PlayerHistoryPrimitive($this->_ds);
         $item
             ->setSession($this->_session)
             ->setPlayer($this->_players[0])
@@ -153,7 +148,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setAvgPlace(3)
             ->_setGamesPlayed(1)
             ->save();
-        $item2 = new PlayerHistoryPrimitive($this->_db);
+        $item2 = new PlayerHistoryPrimitive($this->_ds);
         $item2
             ->setSession($this->_session)
             ->setPlayer($this->_players[1])
@@ -161,7 +156,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setAvgPlace(2)
             ->_setGamesPlayed(1)
             ->save();
-        $item3 = new PlayerHistoryPrimitive($this->_db);
+        $item3 = new PlayerHistoryPrimitive($this->_ds);
         $item3
             ->setSession($this->_anotherSession)
             ->setPlayer($this->_players[0])
@@ -171,7 +166,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->save();
 
         $items = PlayerHistoryPrimitive::findLastByEvent(
-            $this->_db,
+            $this->_ds,
             $this->_event->getId()
         );
 
@@ -186,7 +181,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindAllItemsByPlayerAndEvent()
     {
-        $item1 = new PlayerHistoryPrimitive($this->_db);
+        $item1 = new PlayerHistoryPrimitive($this->_ds);
         $item1
             ->setSession($this->_session)
             ->setPlayer($this->_players[0])
@@ -194,7 +189,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setAvgPlace(3)
             ->_setGamesPlayed(1)
             ->save();
-        $item2 = new PlayerHistoryPrimitive($this->_db);
+        $item2 = new PlayerHistoryPrimitive($this->_ds);
         $item2
             ->setSession($this->_session)
             ->setPlayer($this->_players[1])
@@ -202,7 +197,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setAvgPlace(2)
             ->_setGamesPlayed(1)
             ->save();
-        $item3 = new PlayerHistoryPrimitive($this->_db);
+        $item3 = new PlayerHistoryPrimitive($this->_ds);
         $item3
             ->setSession($this->_anotherSession)
             ->setPlayer($this->_players[0])
@@ -212,7 +207,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->save();
 
         $items = PlayerHistoryPrimitive::findAllByEvent(
-            $this->_db,
+            $this->_ds,
             $this->_event->getId(),
             $this->_players[0]->getId()
         );
@@ -230,7 +225,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindItemByPlayerAndSession()
     {
-        $item = new PlayerHistoryPrimitive($this->_db);
+        $item = new PlayerHistoryPrimitive($this->_ds);
         $item
             ->setSession($this->_session)
             ->setPlayer($this->_players[0])
@@ -238,7 +233,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setAvgPlace(3)
             ->_setGamesPlayed(1)
             ->save();
-        $item2 = new PlayerHistoryPrimitive($this->_db);
+        $item2 = new PlayerHistoryPrimitive($this->_ds);
         $item2
             ->setSession($this->_session)
             ->setPlayer($this->_players[1])
@@ -246,7 +241,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setAvgPlace(2)
             ->_setGamesPlayed(1)
             ->save();
-        $item3 = new PlayerHistoryPrimitive($this->_db);
+        $item3 = new PlayerHistoryPrimitive($this->_ds);
         $item3
             ->setSession($this->_anotherSession)
             ->setPlayer($this->_players[0])
@@ -256,7 +251,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->save();
 
         [$itemCopy] = PlayerHistoryPrimitive::findBySessionAndPlayer(
-            $this->_db,
+            $this->_ds,
             $this->_players[0]->getId(),
             $this->_session->getId()
         );
@@ -269,7 +264,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testUpdateHistoryItem()
     {
-        $item = new PlayerHistoryPrimitive($this->_db);
+        $item = new PlayerHistoryPrimitive($this->_ds);
         $item
             ->setSession($this->_session)
             ->setPlayer($this->_players[0])
@@ -278,10 +273,10 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setGamesPlayed(1)
             ->save();
 
-        $itemCopy = PlayerHistoryPrimitive::findById($this->_db, [$item->getId()]);
+        $itemCopy = PlayerHistoryPrimitive::findById($this->_ds, [$item->getId()]);
         $itemCopy[0]->_setRating(1000)->_setAvgPlace(4)->_setGamesPlayed(2)->save();
 
-        $anotherItemCopy = PlayerHistoryPrimitive::findById($this->_db, [$item->getId()]);
+        $anotherItemCopy = PlayerHistoryPrimitive::findById($this->_ds, [$item->getId()]);
         $this->assertEquals(1000, $anotherItemCopy[0]->getRating());
         $this->assertEquals(4, $anotherItemCopy[0]->getAvgPlace());
         $this->assertEquals(2, $anotherItemCopy[0]->getGamesPlayed());
@@ -289,7 +284,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testRelationSession()
     {
-        $item = new PlayerHistoryPrimitive($this->_db);
+        $item = new PlayerHistoryPrimitive($this->_ds);
         $item
             ->setSession($this->_session)
             ->setPlayer($this->_players[0])
@@ -298,7 +293,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setGamesPlayed(1)
             ->save();
 
-        $itemCopy = PlayerHistoryPrimitive::findById($this->_db, [$item->getId()])[0];
+        $itemCopy = PlayerHistoryPrimitive::findById($this->_ds, [$item->getId()])[0];
         $this->assertEquals($this->_session->getId(), $itemCopy->getSessionId()); // before fetch
         $this->assertNotEmpty($itemCopy->getSession());
         $this->assertEquals($this->_session->getId(), $itemCopy->getSession()->getId());
@@ -307,7 +302,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testRelationEvent()
     {
-        $item = new PlayerHistoryPrimitive($this->_db);
+        $item = new PlayerHistoryPrimitive($this->_ds);
         $item
             ->setSession($this->_session)
             ->setPlayer($this->_players[0])
@@ -316,7 +311,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setGamesPlayed(1)
             ->save();
 
-        $itemCopy = PlayerHistoryPrimitive::findById($this->_db, [$item->getId()])[0];
+        $itemCopy = PlayerHistoryPrimitive::findById($this->_ds, [$item->getId()])[0];
         $this->assertEquals($this->_event->getId(), $itemCopy->getEventId()); // before fetch
         $this->assertNotEmpty($itemCopy->getEvent());
         $this->assertEquals($this->_event->getId(), $itemCopy->getEvent()->getId());
@@ -325,7 +320,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testRelationPlayer()
     {
-        $item = new PlayerHistoryPrimitive($this->_db);
+        $item = new PlayerHistoryPrimitive($this->_ds);
         $item
             ->setSession($this->_session)
             ->setPlayer($this->_players[0])
@@ -334,7 +329,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->_setGamesPlayed(1)
             ->save();
 
-        $itemCopy = PlayerHistoryPrimitive::findById($this->_db, [$item->getId()])[0];
+        $itemCopy = PlayerHistoryPrimitive::findById($this->_ds, [$item->getId()])[0];
         $this->assertEquals($this->_players[0]->getId(), $itemCopy->getPlayerId()); // before fetch
         $this->assertNotEmpty($itemCopy->getPlayer());
         $this->assertEquals($this->_players[0]->getId(), $itemCopy->getPlayer()->getId());

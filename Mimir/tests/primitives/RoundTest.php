@@ -26,7 +26,10 @@ require_once __DIR__ . '/../../src/Db.php';
 
 class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
-    protected $_db;
+    /**
+     * @var DataSource
+     */
+    protected $_ds;
     /**
      * @var SessionPrimitive
      */
@@ -42,26 +45,23 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->_db = Db::__getCleanTestingInstance();
+        $this->_ds = DataSource::__getCleanTestingInstance();
 
-        $this->_event = (new EventPrimitive($this->_db))
+        $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setDescription('desc')
             ->setTimezone('UTC')
-            ->setType('online')
             ->setRuleset(Ruleset::instance('jpmlA'));
         $this->_event->save();
 
-        $this->_players = array_map(function ($i) {
-            $p = (new PlayerPrimitive($this->_db))
-                ->setDisplayName('player' . $i)
-                ->setIdent('oauth' . $i)
-                ->setTenhouId('tenhou' . $i);
-            $p->save();
-            return $p;
-        }, [1, 2, 3, 4]);
+        $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
+        foreach ($this->_players as $p) {
+            (new PlayerRegistrationPrimitive($this->_ds))
+                ->setReg($p, $this->_event)
+                ->save();
+        }
 
-        $this->_session = (new SessionPrimitive($this->_db))
+        $this->_session = (new SessionPrimitive($this->_ds))
             ->setEvent($this->_event)
             ->setPlayers($this->_players)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
@@ -71,7 +71,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testNewRound()
     {
-        $newRound = new RoundPrimitive($this->_db);
+        $newRound = new RoundPrimitive($this->_ds);
         $newRound
             ->setSession($this->_session)
             ->setOutcome('ron')
@@ -116,7 +116,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindRoundById()
     {
-        $newRound = new RoundPrimitive($this->_db);
+        $newRound = new RoundPrimitive($this->_ds);
         $newRound
             ->setSession($this->_session)
             ->setOutcome('ron')
@@ -125,7 +125,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setRoundIndex(1);
         $newRound->save();
 
-        $roundsCopy = RoundPrimitive::findById($this->_db, [$newRound->getId()]);
+        $roundsCopy = RoundPrimitive::findById($this->_ds, [$newRound->getId()]);
         $this->assertEquals(1, count($roundsCopy));
         $this->assertEquals('ron', $roundsCopy[0]->getOutcome());
         $this->assertTrue($newRound !== $roundsCopy[0]); // different objects!
@@ -133,7 +133,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindRoundBySession()
     {
-        $newRound = new RoundPrimitive($this->_db);
+        $newRound = new RoundPrimitive($this->_ds);
         $newRound
             ->setSession($this->_session)
             ->setOutcome('ron')
@@ -142,7 +142,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setRoundIndex(1);
         $newRound->save();
 
-        $roundsCopy = RoundPrimitive::findBySessionIds($this->_db, [$this->_session->getId()]);
+        $roundsCopy = RoundPrimitive::findBySessionIds($this->_ds, [$this->_session->getId()]);
         $this->assertEquals(1, count($roundsCopy));
         $this->assertEquals('ron', $roundsCopy[0]->getOutcome());
         $this->assertTrue($newRound !== $roundsCopy[0]); // different objects!
@@ -150,7 +150,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testUpdateRound()
     {
-        $newRound = new RoundPrimitive($this->_db);
+        $newRound = new RoundPrimitive($this->_ds);
         $newRound
             ->setSession($this->_session)
             ->setOutcome('ron')
@@ -159,16 +159,16 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setRoundIndex(1);
         $newRound->save();
 
-        $roundCopy = RoundPrimitive::findById($this->_db, [$newRound->getId()]);
+        $roundCopy = RoundPrimitive::findById($this->_ds, [$newRound->getId()]);
         $roundCopy[0]->setOutcome('tsumo')->save();
 
-        $anotherRoundCopy = RoundPrimitive::findById($this->_db, [$newRound->getId()]);
+        $anotherRoundCopy = RoundPrimitive::findById($this->_ds, [$newRound->getId()]);
         $this->assertEquals('tsumo', $anotherRoundCopy[0]->getOutcome());
     }
 
     public function testRelationSession()
     {
-        $newRound = new RoundPrimitive($this->_db);
+        $newRound = new RoundPrimitive($this->_ds);
         $newRound
             ->setSession($this->_session)
             ->setOutcome('ron')
@@ -177,7 +177,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setRoundIndex(1);
         $newRound->save();
 
-        $roundCopy = RoundPrimitive::findById($this->_db, [$newRound->getId()])[0];
+        $roundCopy = RoundPrimitive::findById($this->_ds, [$newRound->getId()])[0];
         $this->assertEquals($this->_session->getId(), $roundCopy->getSessionId()); // before fetch
         $this->assertNotEmpty($roundCopy->getSession());
         $this->assertEquals($this->_session->getId(), $roundCopy->getSession()->getId());
@@ -186,7 +186,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testRelationEvent()
     {
-        $newRound = new RoundPrimitive($this->_db);
+        $newRound = new RoundPrimitive($this->_ds);
         $newRound
             ->setSession($this->_session)
             ->setOutcome('ron')
@@ -195,7 +195,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setRoundIndex(1);
         $newRound->save();
 
-        $roundCopy = RoundPrimitive::findById($this->_db, [$newRound->getId()])[0];
+        $roundCopy = RoundPrimitive::findById($this->_ds, [$newRound->getId()])[0];
         $this->assertEquals($this->_event->getId(), $roundCopy->getEventId()); // before fetch
         $this->assertNotEmpty($roundCopy->getEvent());
         $this->assertEquals($this->_event->getId(), $roundCopy->getEvent()->getId());
@@ -204,17 +204,13 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testRelationWinner()
     {
-        $newUser = new PlayerPrimitive($this->_db);
-        $newUser
-            ->setDisplayName('user1')
-            ->setIdent('someident')
-            ->setTenhouId('someid');
-        $newUser->save();
+        $players = PlayerPrimitive::findById($this->_ds, [5]);
+        $newUser = $players[0];
 
         $this->_players[1] = $newUser;
         $this->_session->setPlayers($this->_players)->save();
 
-        $newRound = new RoundPrimitive($this->_db);
+        $newRound = new RoundPrimitive($this->_ds);
         $newRound
             ->setSession($this->_session)
             ->setOutcome('ron')
@@ -223,7 +219,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setRoundIndex(1);
         $newRound->save();
 
-        $roundCopy = RoundPrimitive::findById($this->_db, [$newRound->getId()])[0];
+        $roundCopy = RoundPrimitive::findById($this->_ds, [$newRound->getId()])[0];
         $this->assertEquals($newUser->getId(), $roundCopy->getWinnerId()); // before fetch
 
         $this->assertNotEmpty($roundCopy->getWinner());
@@ -233,17 +229,13 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testRelationLoser()
     {
-        $newUser = new PlayerPrimitive($this->_db);
-        $newUser
-            ->setDisplayName('user1')
-            ->setIdent('someident')
-            ->setTenhouId('someid');
-        $newUser->save();
+        $players = PlayerPrimitive::findById($this->_ds, [5]);
+        $newUser = $players[0];
 
         $this->_players[1] = $newUser;
         $this->_session->setPlayers($this->_players)->save();
 
-        $newRound = new RoundPrimitive($this->_db);
+        $newRound = new RoundPrimitive($this->_ds);
         $newRound
             ->setSession($this->_session)
             ->setOutcome('ron')
@@ -252,7 +244,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setRoundIndex(1);
         $newRound->save();
 
-        $roundCopy = RoundPrimitive::findById($this->_db, [$newRound->getId()])[0];
+        $roundCopy = RoundPrimitive::findById($this->_ds, [$newRound->getId()])[0];
         $this->assertEquals($newUser->getId(), $roundCopy->getLoserId()); // before fetch
         $this->assertNotEmpty($roundCopy->getLoser());
         $this->assertEquals($newUser->getId(), $roundCopy->getLoser()->getId());
@@ -261,7 +253,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testRelationTempaiUsers()
     {
-        $newRound = new RoundPrimitive($this->_db);
+        $newRound = new RoundPrimitive($this->_ds);
         $newRound
             ->setSession($this->_session)
             ->setOutcome('draw')
@@ -269,7 +261,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setRoundIndex(1);
         $newRound->save();
 
-        $roundCopy = RoundPrimitive::findById($this->_db, [$newRound->getId()])[0];
+        $roundCopy = RoundPrimitive::findById($this->_ds, [$newRound->getId()])[0];
         $this->assertEquals( // before fetch
             $this->_players[0]->getId(),
             explode(',', $roundCopy->getTempaiIds()[0])[0]
@@ -281,7 +273,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testRelationRiichiUsers()
     {
-        $newRound = new RoundPrimitive($this->_db);
+        $newRound = new RoundPrimitive($this->_ds);
         $newRound
             ->setSession($this->_session)
             ->setOutcome('draw')
@@ -289,7 +281,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setRoundIndex(1);
         $newRound->save();
 
-        $roundCopy = RoundPrimitive::findById($this->_db, [$newRound->getId()])[0];
+        $roundCopy = RoundPrimitive::findById($this->_ds, [$newRound->getId()])[0];
         $this->assertEquals( // before fetch
             $this->_players[0]->getId(),
             explode(',', $roundCopy->getRiichiIds()[0])[0]

@@ -270,4 +270,34 @@ class Meta
     {
         return $this->_authToken === '0000000000';
     }
+
+    /**
+     * @deprecated only for testing purposes!
+     * @param int|null $eventId
+     * @return void
+     */
+    public function __setEventId($eventId)
+    {
+        $this->_currentEventId = $eventId;
+    }
+
+    /**
+     * @deprecated only for testing purposes!
+     * @param int|null $personId
+     * @return void
+     */
+    public function __setPersonId($personId)
+    {
+        $this->_currentPersonId = $personId;
+    }
+
+    /**
+     * @deprecated only for testing purposes!
+     * @param string $token
+     * @return void
+     */
+    public function __setAuthToken($token)
+    {
+        $this->_authToken = $token;
+    }
 }

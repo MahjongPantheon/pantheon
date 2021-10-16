@@ -24,15 +24,18 @@ require_once __DIR__ . '/../../src/Db.php';
 
 class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
-    protected $_db;
+    /**
+     * @var DataSource
+     */
+    protected $_ds;
     public function setUp()
     {
-        $this->_db = Db::__getCleanTestingInstance();
+        $this->_ds = DataSource::__getCleanTestingInstance();
     }
 
     public function testNewEvent()
     {
-        $newEvent = new EventPrimitive($this->_db);
+        $newEvent = new EventPrimitive($this->_ds);
         $newEvent
             ->setTitle('event1')
             ->setDescription('eventdesc1')
@@ -60,16 +63,15 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindEventById()
     {
-        $newEvent = new EventPrimitive($this->_db);
+        $newEvent = new EventPrimitive($this->_ds);
         $newEvent
             ->setTitle('event1')
             ->setDescription('eventdesc1')
             ->setTimezone('UTC')
-            ->setType('online')
             ->setRuleset(Ruleset::instance('jpmlA'))
             ->save();
 
-        $eventCopy = EventPrimitive::findById($this->_db, [$newEvent->getId()]);
+        $eventCopy = EventPrimitive::findById($this->_ds, [$newEvent->getId()]);
         $this->assertEquals(1, count($eventCopy));
         $this->assertEquals('event1', $eventCopy[0]->getTitle());
         $this->assertTrue($newEvent !== $eventCopy[0]); // different objects!
@@ -77,17 +79,16 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindEventByLobby()
     {
-        $newEvent = new EventPrimitive($this->_db);
+        $newEvent = new EventPrimitive($this->_ds);
         $newEvent
             ->setTitle('event1')
             ->setDescription('eventdesc1')
             ->setTimezone('UTC')
-            ->setType('online')
             ->setRuleset(Ruleset::instance('jpmlA'))
             ->setLobbyId(123)
             ->save();
 
-        $eventCopy = EventPrimitive::findByLobby($this->_db, [$newEvent->getLobbyId()]);
+        $eventCopy = EventPrimitive::findByLobby($this->_ds, [$newEvent->getLobbyId()]);
         $this->assertEquals(1, count($eventCopy));
         $this->assertEquals('event1', $eventCopy[0]->getTitle());
         $this->assertTrue($newEvent !== $eventCopy[0]); // different objects!
@@ -95,45 +96,18 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testUpdateEvent()
     {
-        $newEvent = new EventPrimitive($this->_db);
+        $newEvent = new EventPrimitive($this->_ds);
         $newEvent
             ->setTitle('event1')
             ->setDescription('eventdesc1')
             ->setTimezone('UTC')
-            ->setType('online')
             ->setRuleset(Ruleset::instance('jpmlA'))
             ->save();
 
-        $eventCopy = EventPrimitive::findById($this->_db, [$newEvent->getId()]);
+        $eventCopy = EventPrimitive::findById($this->_ds, [$newEvent->getId()]);
         $eventCopy[0]->setDescription('someanotherdesc')->save();
 
-        $anotherEventCopy = EventPrimitive::findById($this->_db, [$newEvent->getId()]);
+        $anotherEventCopy = EventPrimitive::findById($this->_ds, [$newEvent->getId()]);
         $this->assertEquals('someanotherdesc', $anotherEventCopy[0]->getDescription());
-    }
-
-    public function testRelationOwnerUser()
-    {
-        $newUser = new PlayerPrimitive($this->_db);
-        $newUser
-            ->setDisplayName('user1')
-            ->setIdent('someident')
-            ->setTenhouId('someid');
-        $newUser->save();
-
-        $newEvent = new EventPrimitive($this->_db);
-        $newEvent
-            ->setTitle('event1')
-            ->setOwnerPlayer($newUser)
-            ->setTimezone('UTC')
-            ->setDescription('eventdesc1')
-            ->setType('online')
-            ->setRuleset(Ruleset::instance('jpmlA'))
-            ->save();
-
-        $eventCopy = EventPrimitive::findById($this->_db, [$newEvent->getId()])[0];
-        $this->assertEquals($newUser->getId(), $eventCopy->getOwnerPlayerId()); // before fetch
-        $this->assertNotEmpty($eventCopy->getOwnerPlayer());
-        $this->assertEquals($newUser->getId(), $eventCopy->getOwnerPlayer()->getId());
-        $this->assertTrue($newUser !== $eventCopy->getOwnerPlayer()); // different objects!
     }
 }

@@ -22,10 +22,13 @@ require_once __DIR__ . '/../../src/Db.php';
 
 class RoundsHelperTest extends \PHPUnit\Framework\TestCase
 {
-    protected $_db;
+    /**
+     * @var DataSource
+     */
+    protected $_ds;
     public function setUp()
     {
-        $this->_db = Db::__getCleanTestingInstance();
+        $this->_ds = DataSource::__getCleanTestingInstance();
     }
 
     // Positive tests
@@ -238,11 +241,9 @@ class RoundsHelperTest extends \PHPUnit\Framework\TestCase
 
     // Negative tests
 
-    /**
-     * @expectedException \Mimir\MalformedPayloadException
-     */
     public function testCheckOneOfFail()
     {
+        $this->expectException(\Mimir\MalformedPayloadException::class);
         $checkOneOf = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkOneOf');
         $checkOneOf->setAccessible(true);
 
@@ -251,11 +252,9 @@ class RoundsHelperTest extends \PHPUnit\Framework\TestCase
         $checkOneOf->invokeArgs(null, [$data, 'test', $possibleVals]);
     }
 
-    /**
-     * @expectedException \Mimir\MalformedPayloadException
-     */
     public function testCheckYakuWrongDataFail()
     {
+        $this->expectException(\Mimir\MalformedPayloadException::class);
         $checkYaku = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkYaku');
         $checkYaku->setAccessible(true);
 
@@ -264,11 +263,9 @@ class RoundsHelperTest extends \PHPUnit\Framework\TestCase
         $checkYaku->invokeArgs(null, [$data, $possibleVals]);
     }
 
-    /**
-     * @expectedException \Mimir\MalformedPayloadException
-     */
     public function testCheckYakuNotAllowedFail()
     {
+        $this->expectException(\Mimir\MalformedPayloadException::class);
         $checkYaku = new \ReflectionMethod('\Mimir\RoundsHelper', '_checkYaku');
         $checkYaku->setAccessible(true);
 

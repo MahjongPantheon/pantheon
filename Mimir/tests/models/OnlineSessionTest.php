@@ -36,9 +36,9 @@ require_once __DIR__ . '/../../src/helpers/onlineLog/Downloader.php';
 class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Db
+     * @var DataSource
      */
-    protected $_db;
+    protected $_ds;
     /**
      * @var PlayerPrimitive[]
      */
@@ -76,13 +76,13 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
 
-        $this->_meta = new Meta($_SERVER);
-        $this->_db = Db::__getCleanTestingInstance();
-        $this->_event = (new EventPrimitive($this->_db))
+        $this->_ds = DataSource::__getCleanTestingInstance();
+        $this->_meta = new Meta($this->_ds->remote(), $_SERVER);
+        $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setTimezone('UTC')
+            ->setIsOnline(1)
             ->setDescription('desc')
-            ->setType('online')
             ->setLobbyId('1111')
             ->setAllowPlayerAppend(1)
             ->setRuleset(Ruleset::instance('tenhounet'));
@@ -96,46 +96,44 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->_gameLink = base64_decode('aHR0cDovL3RlbmhvdS5uZXQv') . '0/?log=' . $this->_gameId;
     }
 
-    private function playersRegistration($tenhouNicknames = [])
+    /**
+     * @param array $tenhouNicknames
+     * @throws InvalidParametersException
+     */
+    private function playersRegistration($tenhouNicknames)
     {
-        if (!$tenhouNicknames) {
-            $tenhouNicknames = ['tenhou1', 'tenhou2', 'tenhou3', 'tenhou4'];
+        $this->_players = PlayerPrimitive::findByTenhouId($this->_ds, $tenhouNicknames);
+        foreach ($this->_players as $p) {
+            (new PlayerRegistrationPrimitive($this->_ds))
+                ->setReg($p, $this->_event)
+                ->save();
         }
-
-        $this->_players = array_map(function ($i, $tenhouNickname) {
-            $p = (new PlayerPrimitive($this->_db))
-                ->setDisplayName('player' . $i)
-                ->setIdent('oauth' . $i)
-                ->setTenhouId($tenhouNickname);
-            $p->save();
-            return $p;
-        }, [1, 2, 3, 4], $tenhouNicknames);
     }
 
     // Positive tests
 
     public function testAddOnlineGame()
     {
-        $this->playersRegistration();
+        $this->playersRegistration(['player1', 'player2', 'player3', 'player4']);
 
-        $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $result = $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
         $this->assertIsObject($result);
 
-        $statModel = new PlayerStatModel($this->_db, $this->_config, $this->_meta);
+        $statModel = new PlayerStatModel($this->_ds, $this->_config, $this->_meta);
         $stats = $statModel->getStats([$this->_event->getId()], '1');
         $this->assertEquals(1 + 1, count($stats['rating_history'])); // initial + 1 game
         $this->assertEquals(1, count($stats['score_history']));
         $this->assertGreaterThan(1, count($stats['players_info']));
         $this->assertEquals(1, array_sum($stats['places_summary']));
 
-        $eventModel = new EventRatingTableModel($this->_db, $this->_config, $this->_meta);
+        $eventModel = new EventRatingTableModel($this->_ds, $this->_config, $this->_meta);
         $ratings = $eventModel->getRatingTable([$this->_event], 'avg_place', 'asc');
         $this->assertNotEmpty($ratings);
         $this->assertEquals(1, $ratings[0]['games_played']);
         $this->assertEquals(4, $ratings[0]['id']);
 
-        $sessionPrimitive = SessionPrimitive::findByEventAndStatus($this->_db, $this->_event->getId(), SessionPrimitive::STATUS_FINISHED);
+        $sessionPrimitive = SessionPrimitive::findByEventAndStatus($this->_ds, $this->_event->getId(), SessionPrimitive::STATUS_FINISHED);
         $this->assertEquals(1, count($sessionPrimitive));
         $session = $sessionPrimitive[0];
         $this->assertEquals($this->_event->getId(), $session->getEventId());
@@ -143,10 +141,10 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($this->_gameId, $session->getReplayHash());
         $this->assertEquals($this->_gameLink, $session->getReplayLink());
 
-        $rounds = RoundPrimitive::findBySessionIds($this->_db, [$session->getId()]);
+        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$session->getId()]);
         $this->assertEquals(9, count($rounds));
 
-        $registered = PlayerRegistrationPrimitive::findRegisteredPlayersByEvent($this->_db, $this->_event->getId());
+        $registered = PlayerRegistrationPrimitive::findRegisteredPlayersByEvent($this->_ds, $this->_event->getId());
         $this->assertEquals(4, count($registered));
     }
 
@@ -159,32 +157,32 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
          */
         $gameContent = file_get_contents(__DIR__ . '/testdata/negative_scores.xml');
 
-        $this->playersRegistration();
+        $this->playersRegistration(['player1', 'player2', 'player3', 'player4']);
 
-        $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $result = $session->addGame($this->_event->getId(), $this->_gameLink, $gameContent);
         $this->assertIsObject($result);
     }
 
     public function testAddOnlineGameWithChips()
     {
-        $this->_event = (new EventPrimitive($this->_db))
+        $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setTimezone('UTC')
             ->setDescription('desc')
-            ->setType('online')
+            ->setIsOnline(1)
             ->setLobbyId('1111')
             ->setAllowPlayerAppend(1)
             ->setRuleset(Ruleset::instance('onlineChips'));
         $this->_event->save();
 
-        $this->playersRegistration();
+        $this->playersRegistration(['player1', 'player2', 'player3', 'player4']);
 
-        $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $result = $session->addGame($this->_event->getId(), $this->_gameLink, $this->_chipsGameContent);
         $this->assertIsObject($result);
 
-        $statModel = new PlayerStatModel($this->_db, $this->_config, $this->_meta);
+        $statModel = new PlayerStatModel($this->_ds, $this->_config, $this->_meta);
         $stats = $statModel->getStats([$this->_event->getId()], '1');
         $this->assertEquals(1 + 1, count($stats['rating_history'])); // initial + 1 game
         $this->assertEquals(1, count($stats['score_history']));
@@ -213,7 +211,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(-4, $gameResults[3]['chips']);
         $this->assertEquals(-31200 - 8000, $gameResults[3]['rating_delta']);
 
-        $eventModel = new EventRatingTableModel($this->_db, $this->_config, $this->_meta);
+        $eventModel = new EventRatingTableModel($this->_ds, $this->_config, $this->_meta);
         $ratings = $eventModel->getRatingTable([$this->_event], 'avg_place', 'asc');
         $this->assertNotEmpty($ratings);
         $this->assertEquals(1, $ratings[0]['games_played']);
@@ -225,82 +223,75 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
 
     // Negative tests
 
-    /**
-     * @expectedException \Mimir\ParseException
-     * @expectedExceptionMessage "NoName" players are not allowed in replays
-     */
     public function testAddGameWithNoNamePlayer()
     {
+        $this->expectExceptionMessage("\"NoName\" players are not allowed in replays");
+        $this->expectException(\Mimir\ParseException::class);
         $this->_gameContent = file_get_contents(__DIR__ . '/testdata/hanchan_with_noname.xml');
-        $this->playersRegistration(['NoName', 'tenhou2', 'tenhou3', 'tenhou4']);
+        $this->playersRegistration(['player2', 'player3', 'player4']);
 
-        $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
     }
 
-    /**
-     * @expectedException \Mimir\ParseException
-     * @expectedExceptionMessage Not all tenhou nicknames were registered in the system: tenhou1, tenhou2
-     */
     public function testAddGameWithNotRegisteredInSystemPlayers()
     {
-        $this->playersRegistration(['another1', 'another2', 'tenhou3', 'tenhou4']);
+        $this->expectException(\Mimir\ParseException::class);
+        $this->expectExceptionMessage("Not all tenhou nicknames were registered in the system: tenhou1, tenhou2");
+        $this->playersRegistration(['player3', 'player4']);
 
-        $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
-        $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
+        $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
+        $content = str_replace(
+            'player1',
+            'tenhou1',
+            str_replace('player2', 'tenhou2', $this->_gameContent)
+        );
+        $session->addGame($this->_event->getId(), $this->_gameLink, $content);
     }
 
-    /**
-     * @expectedException \Mimir\ParseException
-     * @expectedExceptionMessage Provided replay doesn't belong to the event lobby 2222
-     */
     public function testAddGameFromDifferentLobby()
     {
-        $this->playersRegistration();
+        $this->expectException(\Mimir\ParseException::class);
+        $this->expectExceptionMessage("Provided replay doesn't belong to the event lobby 2222");
+        $this->playersRegistration(['player1', 'player2', 'player3', 'player4']);
 
         $this->_event->setLobbyId('2222');
         $this->_event->save();
 
-        $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
     }
 
-    /**
-     * @expectedException \Mimir\ParseException
-     * @expectedExceptionMessage Replay is older than
-     */
     public function testAddExpiredGame()
     {
+        $this->expectExceptionMessage("Replay is older than");
+        $this->expectException(\Mimir\ParseException::class);
         $this->_gameId = date("YmdH", strtotime("-11 years")) . 'gm-00a9-0000-40a46a1c';
         $this->_gameLink = base64_decode('aHR0cDovL3RlbmhvdS5uZXQv') . '0/?log=' . $this->_gameId;
 
-        $this->playersRegistration();
+        $this->playersRegistration(['player1', 'player2', 'player3', 'player4']);
 
-        $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
     }
 
-    /**
-     * @expectedException \Mimir\InvalidParametersException
-     * @expectedExceptionMessage This game is already added to the system
-     */
     public function testAddAlreadyAddedGame()
     {
-        $this->playersRegistration();
+        $this->expectExceptionMessage("This game is already added to the system");
+        $this->expectException(\Mimir\InvalidParametersException::class);
+        $this->playersRegistration(['player1', 'player2', 'player3', 'player4']);
 
-        $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
         $result = $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
         $this->assertIsObject($result);
 
         $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
     }
 
-    /**
-     * @expectedException \Mimir\DownloadException
-     * @expectedExceptionMessage Invalid replay link
-     */
     public function testGameLinkValidation()
     {
+        $this->expectExceptionMessage("Invalid replay link");
+        $this->expectException(\Mimir\DownloadException::class);
         $downloader = new Downloader();
 
         $validDomain = base64_decode('aHR0cDovL3RlbmhvdS5uZXQv') . '0/?log=1';
@@ -310,18 +301,17 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($downloader->validateUrl($invalidDomain));
     }
 
-    /**
-     * @expectedException \Mimir\MalformedPayloadException
-     * @expectedExceptionMessage Player id #1 is not registered for this event
-     */
     public function testAddGameWithNotRegisteredToEventPlayers()
     {
-        $this->playersRegistration();
+        $this->expectExceptionMessage("Player id #33 is not registered for this event");
+        $this->expectException(\Mimir\MalformedPayloadException::class);
+        $this->playersRegistration(['player2', 'player3', 'player4']);
 
         $this->_event->setAllowPlayerAppend(0);
         $this->_event->save();
 
-        $session = new OnlineSessionModel($this->_db, $this->_config, $this->_meta);
-        $session->addGame($this->_event->getId(), $this->_gameLink, $this->_gameContent);
+        $session = new OnlineSessionModel($this->_ds, $this->_config, $this->_meta);
+        $content = str_replace('player1', 'player33', $this->_gameContent);
+        $session->addGame($this->_event->getId(), $this->_gameLink, $content);
     }
 }
