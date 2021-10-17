@@ -123,7 +123,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/php7/error.log
 
 # Expose ports
-EXPOSE 4001 4002 4003 4004 4005 $DB_PORT 9001
+EXPOSE 4001 4002 4003 4004 4005 $DB_PORT
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
