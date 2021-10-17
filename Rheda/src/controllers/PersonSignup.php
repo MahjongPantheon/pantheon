@@ -75,7 +75,30 @@ class PersonSignup extends Controller
             $approvalCode = $this->_frey->requestRegistration($data['email'], $data['password']);
             $url = Url::makeConfirmation($approvalCode);
 
-            // TODO: send email to user here...
+            if (!Sysconf::DEBUG_MODE) {
+                mail(
+                    $data['email'],
+                    _t('Pantheon: confirm your registration'),
+                    _p("Hello!
+
+You have just registered your account in the Pantheon system,
+please follow next link to confirm your registration:
+
+%s
+
+If you didn't attempt to register, you can safely ignore this message.
+
+Sincerely yours,
+Pantheon support team
+", Sysconf::GUI_URL() . $url),
+                    [
+                        'From' => Sysconf::MAILER_ADDR(),
+                        'Reply-To' => Sysconf::MAILER_ADDR(),
+                        'X-Mailer' => 'PHP/' . phpversion()
+                    ]
+                );
+            }
+
             return [
                 'error' => null,
                 'success' => true,

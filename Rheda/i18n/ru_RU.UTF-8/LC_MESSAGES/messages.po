@@ -6,7 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-17 23:08+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -52,6 +53,10 @@ msgstr "%s - %d очков (%s)"
 
 msgid "%s - %s points of penalty. Reason: %s"
 msgstr "%s - штраф %s очков. Причина: %s"
+
+#, php-format
+msgid "%s : rights and privileges"
+msgstr ""
 
 msgid "%s bet"
 msgid_plural "%s bets"
@@ -166,23 +171,18 @@ msgstr "Номинация"
 msgid "Achievements"
 msgstr "Номинации"
 
+#, fuzzy
+msgid "Actions"
+msgstr "Действия администратора"
+
 msgid "Add game"
 msgstr "Добавить игру"
 
 msgid "Add new game"
 msgstr "Добавить новую игру"
 
-msgid "Add new player to the system"
-msgstr "Добавить нового игрока в систему"
-
 msgid "Add online game"
 msgstr "Добавить онлайн-игру"
-
-msgid "Add player"
-msgstr "Добавить игрока"
-
-msgid "Add to current rating"
-msgstr "Добавить в текущий рейтинг"
 
 msgid "Additional penalties"
 msgstr "Дополнительные штрафы"
@@ -192,12 +192,6 @@ msgstr "Дополнительные штрафы:"
 
 msgid "Admin actions"
 msgstr "Действия администратора"
-
-msgid "Admin login"
-msgstr "Вход администратора"
-
-msgid "Admin panel"
-msgstr "Администрирование"
 
 msgid ""
 "After this button is pressed, you won't be able to cancel any rounds, and "
@@ -210,11 +204,11 @@ msgstr ""
 msgid "Aggregated event"
 msgstr "Агрегированное событие"
 
+msgid "All dates and times will be displayed according to selected timezone."
+msgstr ""
+
 msgid "All players"
 msgstr "Все игроки"
-
-msgid "All players list"
-msgstr "Список всех игроков в системе"
 
 msgid "Allowed yaku"
 msgstr "Разрешенные яку"
@@ -224,12 +218,6 @@ msgstr "И Ваша риичи палочка"
 
 msgid "Apply penalty"
 msgstr "Применить штраф"
-
-msgid "Authorize"
-msgstr "Авторизоваться"
-
-msgid "Authorized successfully!"
-msgstr "Авторизация прошла успешно!"
 
 msgid "AvPlc"
 msgstr "СМ"
@@ -264,6 +252,21 @@ msgstr "Лучшая серия:"
 msgid "Brave minesweeper"
 msgstr "Бравый сапёр"
 
+msgid "C"
+msgstr "Ч"
+
+msgid "Can't proceed to control panel: please log in"
+msgstr ""
+
+msgid "Can't proceed to profile management: failed to fetch personal data"
+msgstr ""
+
+msgid "Can't proceed to profile management: please log in"
+msgstr ""
+
+msgid "Can't proceed to registration: please log out to create new user"
+msgstr ""
+
 msgid "Cancel game"
 msgstr "Отменить игру"
 
@@ -294,6 +297,13 @@ msgstr "Чиницу"
 msgid "Chinroutou"
 msgstr "Чинрото"
 
+msgid "Chips"
+msgstr "Чипы"
+
+#, fuzzy
+msgid "Chips value"
+msgstr "Стоимость рук"
+
 #, php-format
 msgid "Chombo (%s)"
 msgstr "Чомбо (%s)"
@@ -310,17 +320,30 @@ msgstr "Штраф чомбо в рейтинговых очках"
 msgid "Chombo: %s."
 msgstr "Чомбо: %s."
 
+msgid ""
+"Choose single session duration in minutes (timer initial value). Default is "
+"90."
+msgstr ""
+
+msgid "Choose this for separate team rating"
+msgstr ""
+
+msgid ""
+"Choose this if you want to define your own custom seating for tournament by "
+"hand"
+msgstr ""
+
 msgid "Chuuren pooto"
 msgstr "Чууренпото"
+
+msgid "City"
+msgstr ""
 
 msgid "Click here to start"
 msgstr "Нажмите здесь для начала работы"
 
 msgid "Common stats"
 msgstr "Общая статистика"
-
-msgid "Confirm attendance manually"
-msgstr "Потдвердить явку вручную"
 
 msgid "Confirm game cancellation: "
 msgstr "Подтвердите отмену игры: "
@@ -337,6 +360,45 @@ msgstr "Подтвердите отмену раздачи: "
 
 msgid "Confirm the results and finish all games"
 msgstr "Утвердить результаты и завершить игры"
+
+msgid "Confirmation code not found"
+msgstr ""
+
+msgid ""
+"Confirmation email has been sent. Please check your inbox for further "
+"instructions."
+msgstr ""
+
+#, fuzzy
+msgid "Control panel: create event"
+msgstr "Агрегированное событие"
+
+msgid "Control panel: manage event privileges"
+msgstr ""
+
+msgid "Control panel: manage events"
+msgstr ""
+
+msgid "Controls"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+#, fuzzy
+msgid "Create account"
+msgstr "Размер штрафа"
+
+#, fuzzy
+msgid "Create event"
+msgstr "Агрегированное событие"
+
+#, fuzzy
+msgid "Create new event"
+msgstr "Агрегированное событие"
+
+msgid "Customize"
+msgstr ""
 
 msgid "Daburu riichi"
 msgstr "Дабл риичи"
@@ -382,17 +444,60 @@ msgstr ""
 msgid "Drawn rounds: %d"
 msgstr "Ничьих: %d"
 
+msgid "E-mail address"
+msgstr ""
+
+msgid "E-mail is invalid"
+msgstr ""
+
+msgid ""
+"E-mail is invalid or not supported. Note that non-latin e-mail domains are "
+"not supported."
+msgstr ""
+
 msgid "EAST"
 msgstr "ВОСТОК"
 
 msgid "Earlier"
 msgstr "Раньше"
 
-msgid "Enroll players"
-msgstr "Добавление игроков в рейтинг"
+msgid "Edit"
+msgstr ""
 
-msgid "Event tables status"
+msgid "Enter part of name"
+msgstr ""
+
+msgid "Enter short description. Markdown syntax is supported."
+msgstr ""
+
+msgid "Error occured while adding player: "
+msgstr ""
+
+#, fuzzy
+msgid "Event description"
+msgstr "Описание"
+
+#, fuzzy
+msgid "Event is not selected"
 msgstr "Статус столов"
+
+#, fuzzy
+msgid "Event list"
+msgstr "Командный турнир"
+
+msgid "Event not found in database"
+msgstr ""
+
+#, fuzzy
+msgid "Event tables status"
+msgstr "Состояние столов:"
+
+#, fuzzy
+msgid "Event title"
+msgstr "Статус столов"
+
+msgid "Event type"
+msgstr ""
 
 msgid "Example:"
 msgstr "Пример:"
@@ -417,14 +522,20 @@ msgstr "Ничья (темпай: %s)."
 msgid "Exhaustive draw (tenpai: %s); riichi bets - %s"
 msgstr "Ничья (темпай: %s); риичиs - %s"
 
-msgid "Failed to add the player. Check your network connection."
-msgstr "Не удалось добавить игрока. Проверьте сетевое соединение."
+#, php-format
+msgid ""
+"Failed to assign administrative rights. Consult support and give them id #%s"
+msgstr ""
 
-msgid "Failed to enroll the player. Check your network connection."
-msgstr "Не удалось добавить игрока. Проверьте сетевое соединение."
+msgid "Failed to finish event"
+msgstr ""
 
 msgid "Failed to register the player. Check your network connection."
 msgstr "Не удалось зарегистрировать игрока. Проверьте сетевое соединение."
+
+#, php-format
+msgid "Failed to save event #%s - this should not happen"
+msgstr ""
 
 msgid "Failed to save ignore seating flag. Check your network connection."
 msgstr ""
@@ -435,8 +546,17 @@ msgid "Failed to save local ids mapping. Check your network connection."
 msgstr ""
 "Не удалось сохранить соответствие локальных ID. Проверьте сетевое соединение."
 
+#, fuzzy
+msgid "Failed to save replacement player. Check your network connection."
+msgstr "Не удалось добавить игрока. Проверьте сетевое соединение."
+
 msgid "Failed to save teams mapping. Check your network connection."
 msgstr "Не удалось сохранить имена команд. Проверьте сетевое соединение."
+
+msgid ""
+"Failed to update personal information: insufficient privileges or server "
+"error"
+msgstr ""
 
 msgid "Failed to update predefined seating. Check your network connection."
 msgstr ""
@@ -445,11 +565,17 @@ msgstr ""
 msgid "Final game points:"
 msgstr "Очки по итогу игры:"
 
+msgid "Finish"
+msgstr ""
+
 msgid "Finish all the games"
 msgstr "Завершить все игры"
 
 msgid "Finish the games? You will not be able to cancel rounds anymore!"
 msgstr "Завершить игры? Отменить раздачу станет невозможно!"
+
+msgid "Finished"
+msgstr ""
 
 msgid "Format:"
 msgstr "Формат:"
@@ -538,6 +664,9 @@ msgstr "Дается за минимальную среднюю величину
 msgid "Given for winning the largest number of hands with damaten."
 msgstr "Дается за максимальное число побед из даматена."
 
+msgid "Global privileges"
+msgstr ""
+
 msgid "Going back in 3 seconds..."
 msgstr "Идем назад через 3 секунды..."
 
@@ -555,6 +684,21 @@ msgstr "Хан"
 
 msgid "Hands value"
 msgstr "Стоимость рук"
+
+#, php-format
+msgid ""
+"Hello!\n"
+"\n"
+"You have just registered your account in the Pantheon system,\n"
+"please follow next link to confirm your registration:\n"
+"\n"
+"%s\n"
+"\n"
+"If you didn't attempt to register, you can safely ignore this message.\n"
+"\n"
+"Sincerely yours,\n"
+"Pantheon support team\n"
+msgstr ""
 
 msgid "Hide/show rating table"
 msgstr "Показать/скрыть рейтинговую таблицу"
@@ -580,6 +724,9 @@ msgstr "Хотей"
 
 msgid "I saw them dancing"
 msgstr "Задолбал!"
+
+msgid "I've read the privacy policy listed below and accept its terms"
+msgstr ""
 
 msgid "If 4/30 and 3/60 should be rounded to mangan"
 msgstr "Должны ли руки 4/30 и 3/60 округляться до мангана"
@@ -647,6 +794,11 @@ msgstr "Должны ли стартовые очки вычитаться из 
 msgid "If tanyao in open hand is allowed"
 msgstr "Разрешено ли таняо на открытой руке"
 
+msgid ""
+"If this is non-zero N, only those who played more than N games will be shown "
+"in rating table."
+msgstr ""
+
 msgid "If timer should be used"
 msgstr "Должен ли быть использован таймер"
 
@@ -674,6 +826,9 @@ msgstr "Включить в рассадку"
 
 msgid "Interval seating"
 msgstr "Интервальная рассадка"
+
+msgid "Invalid email provided"
+msgstr ""
 
 msgid "Ippatsu"
 msgstr "Иппацу"
@@ -705,14 +860,36 @@ msgstr "Позже"
 msgid "Latest games"
 msgstr "Последние игры"
 
+msgid "Lobby id must be in format: C####, where # is a digit"
+msgstr ""
+
 msgid "Local id"
 msgstr "Локальный ID"
 
-msgid "Login"
-msgstr "Вход"
+msgid "Log in"
+msgstr ""
+
+msgid "Log out"
+msgstr ""
+
+msgid "Main event is empty: this is unexpected behavior"
+msgstr ""
+
+msgid "Manage events privileges: %s"
+msgstr ""
+
+msgid "Manage owned events"
+msgstr ""
 
 msgid "Manage players"
 msgstr "Управление игроками"
+
+#, fuzzy
+msgid "Manage profile: %s"
+msgstr "Управление игроками"
+
+msgid "Manage ratings and tournaments"
+msgstr ""
 
 msgid "Maximal"
 msgstr "Максимальные"
@@ -726,8 +903,19 @@ msgstr "Мендзен цумо"
 msgid "Minimal"
 msgstr "Минимальные"
 
+msgid "Minimal amount of games to be played for passing to finals"
+msgstr ""
+
 msgid "Minimal arbitrary penalty amount"
 msgstr "Минимальный произвольный штраф"
+
+#, fuzzy
+msgid "Minimal games count"
+msgstr "Очки по итогу игры:"
+
+#, fuzzy
+msgid "Minimal games count must be numeric value"
+msgstr "Очки по итогу игры:"
 
 msgid "NORTH"
 msgstr "СЕВЕР"
@@ -742,6 +930,16 @@ msgstr "Нагаши манган - %s; риичи - %s; темпай - %s"
 
 msgid "Nagashi mangan: %s."
 msgstr "Нагаши манган: %s."
+
+msgid "New club rating"
+msgstr ""
+
+#, fuzzy
+msgid "New online tournament"
+msgstr "Добавить онлайн-игру"
+
+msgid "New tournament"
+msgstr ""
 
 msgid "Next session index (starting from 1):"
 msgstr "Номер следующей игры (начиная с 1):"
@@ -771,6 +969,9 @@ msgstr "На данный момент статистика отсутствуе
 msgid "No time left!"
 msgstr "СТОП!"
 
+msgid "Nobody"
+msgstr ""
+
 msgid "Nominees"
 msgstr "Номинанты"
 
@@ -781,13 +982,6 @@ msgstr ""
 "Обратите внимание, что рассадка происходит от начала рейтинговой таблицы, "
 "таким образом игроки в нижней части, не вошедшие в интервалы, будут "
 "рассажены с интервалом 1."
-
-msgid ""
-"Note: if a player is already added to the rating, adding him again will "
-"result in reissuing his PIN code."
-msgstr ""
-"Примечание: если игрок уже добавлен в текущий рейтинг, нажатие на кнопку "
-"добавления будет эквивалентно перевыдаче ПИН-кода."
 
 msgid "Ongoing series:"
 msgstr "Текущая серия:"
@@ -801,11 +995,20 @@ msgstr "Опен риичи"
 msgid "Over 9000 fu"
 msgstr "Over 9000 fu"
 
-msgid "PIN"
-msgstr "PIN-код"
-
 msgid "Page not available for aggregated events"
 msgstr "Для агрегированных событий страница недоступна"
+
+#, fuzzy
+msgid "Pantheon: confirm your registration"
+msgstr "Регистрация игроков"
+
+msgid "Password is incorrect or account not registered"
+msgstr ""
+
+msgid ""
+"Password is too weak. Try adding some digits, uppercase letters or "
+"punctuation to it, or increase its length."
+msgstr ""
 
 msgid "Penalties"
 msgstr "Штрафы"
@@ -819,8 +1022,17 @@ msgstr "Размер штрафа"
 msgid "Penalty reason"
 msgstr "Причина штрафа"
 
+msgid "Person not found in database"
+msgstr ""
+
+msgid "Personal information successfully updated"
+msgstr ""
+
 msgid "Personal stats"
 msgstr "Личная статистика"
+
+msgid "Phone"
+msgstr ""
 
 msgid "Pinfu"
 msgstr "Пин-фу"
@@ -851,8 +1063,20 @@ msgstr "Игрок"
 msgid "Player #%d"
 msgstr "Игрок №%d"
 
+msgid "Player added successfully. Reload page to see results"
+msgstr ""
+
 msgid "Player aliases"
 msgstr "Алиасы"
+
+#, fuzzy
+msgid "Player name"
+msgstr "Управление игроками"
+
+msgid ""
+"Player name must be at least 4 characters length. Please enter your real "
+"name (and surname)."
+msgstr ""
 
 msgid "Player: %s"
 msgstr "Игрок: %s"
@@ -873,8 +1097,23 @@ msgstr ""
 "Игроки будут назначены на столы согласно позиции в рейтинговой таблице через "
 "указанный интервал."
 
-msgid "Please select some event!"
-msgstr "Выберите рейтинг!"
+msgid "Please enter lobby id for this event like this: C5560"
+msgstr ""
+
+msgid "Please enter title for this event with at least 4 characters."
+msgstr ""
+
+msgid "Please enter your e-mail address and password."
+msgstr ""
+
+msgid ""
+"Please enter your e-mail address and password. We will send authentication "
+"link to your email, so you will be able to sign in and fill your personal "
+"data"
+msgstr ""
+
+msgid "Please enter your real name and surname (if you have it)."
+msgstr ""
 
 msgid "Please wait a while and reload the page."
 msgstr "Подождите немного и перезагрузите страницу."
@@ -893,9 +1132,6 @@ msgstr "Стартовые очки"
 
 msgid "Points:"
 msgstr "Очки:"
-
-msgid "Pre-registration list (%d)"
-msgstr "Список на утверждение (%d)"
 
 msgid "Predefined seating"
 msgstr "Предопределенная рассадка"
@@ -923,8 +1159,23 @@ msgstr ""
 "Нажатие на эту кнопку сбросить таймер в исходное значение. Будьте осторожны, "
 "как правило это не требуется."
 
-msgid "Print PINs and QR codes"
-msgstr "Печать PIN и QR кодов"
+msgid "Privacy policy overview"
+msgstr ""
+
+msgid "Privilege"
+msgstr ""
+
+msgid "Privileges"
+msgstr ""
+
+#, fuzzy
+msgid "Profile management"
+msgstr "Управление игроками"
+
+msgid ""
+"Provided number is invalid for selected country. Please provide valid phone "
+"number."
+msgstr ""
 
 msgid "Pts"
 msgstr "Очки"
@@ -962,8 +1213,10 @@ msgstr "Рейтинговая таблица доступна. Скрыть"
 msgid "Ready to generate seating"
 msgstr "Всё готово для генерации рассадки"
 
-msgid "Real name"
-msgstr "Реальное имя"
+msgid ""
+"Really finish event #id (#title)? You won't be able to add games after event "
+"is finished."
+msgstr ""
 
 msgid "Really reset the timer?"
 msgstr "Действительно сбросить таймер?"
@@ -971,17 +1224,16 @@ msgstr "Действительно сбросить таймер?"
 msgid "Recent games"
 msgstr "Последние игры"
 
+#, fuzzy
 msgid "Red zone duration"
-msgstr "Длительность красной зоны"
+msgstr "Длительность желтой зоны"
 
-msgid "Register"
-msgstr "Зарегистрировать"
+#, fuzzy
+msgid "Register players"
+msgstr "Окончательно зарегистрированные игроки (%d)"
 
 msgid "Registered players (%d)"
 msgstr "Окончательно зарегистрированные игроки (%d)"
-
-msgid "Reissue PIN"
-msgstr "Перевыдать PIN"
 
 msgid "Remove"
 msgstr "Удалить"
@@ -999,8 +1251,28 @@ msgstr ""
 msgid "Renhou"
 msgstr "Ренхо"
 
+#, fuzzy
+msgid "Replacement player"
+msgstr "Выберите игрока"
+
 msgid "Reset the timer"
 msgstr "Сбросить таймер"
+
+msgid "Revoke"
+msgstr ""
+
+msgid "Revoke privilege #title?"
+msgstr ""
+
+#, fuzzy
+msgid "Rheda: mahjong statistic system"
+msgstr "Добро пожаловать в систему игровой статистики."
+
+msgid "Rights and privileges"
+msgstr ""
+
+msgid "Rights and privileges: %s"
+msgstr ""
 
 msgid "Riichi"
 msgstr "Риичи"
@@ -1039,6 +1311,9 @@ msgstr "Выиграно раздач"
 msgid "Rules overview"
 msgstr "Обзор правил"
 
+msgid "Ruleset"
+msgstr ""
+
 msgid "Ryan peikou"
 msgstr "Рянпейко"
 
@@ -1063,14 +1338,17 @@ msgstr "Саншоку"
 msgid "Sanshoku dokou"
 msgstr "Саншоку доко"
 
+msgid "Save"
+msgstr ""
+
 msgid "Save local IDs"
 msgstr "Сохранить локальные ID"
 
 msgid "Save teams list"
 msgstr "Сохранить список команд"
 
-msgid "Seating controls"
-msgstr "Управление рассадкой"
+msgid "Select basic ruleset for event."
+msgstr ""
 
 msgid "Select player"
 msgstr "Выберите игрока"
@@ -1078,11 +1356,41 @@ msgstr "Выберите игрока"
 msgid "Select seating mode and press the appropriate button."
 msgstr "Выберите тип рассадки и нажмите соответствующую кнопку."
 
+msgid "Select the country you are representing"
+msgstr ""
+
+msgid "Series"
+msgstr ""
+
+msgid "Series length must be numeric value"
+msgstr ""
+
+#, fuzzy
+msgid "Session duration"
+msgstr "Длительность красной зоны"
+
+msgid ""
+"Set length of game series. Separate rating table for series will be "
+"available."
+msgstr ""
+
 msgid "Shou sangen"
 msgstr "Шосанген"
 
 msgid "Shou suushii"
 msgstr "Шосуши"
+
+msgid "Sign in"
+msgstr ""
+
+msgid "Sign up"
+msgstr ""
+
+msgid "Sign up confirmation"
+msgstr ""
+
+msgid "Some errors occured, see below"
+msgstr ""
 
 msgid "Something went wrong:"
 msgstr "Что-то пошло не так, и вот что именно:"
@@ -1101,6 +1409,11 @@ msgstr "Начать игры!"
 
 msgid "Start timer and games"
 msgstr "Старт таймера и игр"
+
+msgid ""
+"Start typing and select your city from list, or just type it's whole name to "
+"add new city"
+msgstr ""
 
 msgid "Statistics"
 msgstr "Статистика"
@@ -1121,13 +1434,6 @@ msgstr "Сууканцу"
 msgid "Swiss seating"
 msgstr "Швейцарская рассадка"
 
-msgid "System name"
-msgstr "Системное имя"
-
-msgid "System name should contain only lowercase latin characters."
-msgstr ""
-"Системное имя должно содержать только латинские символы в нижнем регистре."
-
 msgid "Table #"
 msgstr "Стол №"
 
@@ -1143,8 +1449,9 @@ msgstr "Таняо"
 msgid "Team"
 msgstr "Команда"
 
+#, fuzzy
 msgid "Team event"
-msgstr "Командный турнир"
+msgstr "Агрегированное событие"
 
 msgid "Team name"
 msgstr "Команда"
@@ -1152,11 +1459,24 @@ msgstr "Команда"
 msgid "Team table"
 msgstr "Командный рейтинг"
 
+#, fuzzy
+msgid "Team tournament"
+msgstr "Команда"
+
 msgid "Tenhou"
 msgstr "Тенхо"
 
+msgid "Tenhou ID (nickname)"
+msgstr ""
+
+msgid "Tenhou lobby ID"
+msgstr ""
+
 msgid "Tenpai: %s."
 msgstr "Темпай: %s."
+
+msgid "Thank you, your registration was successfully approved."
+msgstr ""
 
 msgid "The 1k Flash"
 msgstr "Мистер Хэнки"
@@ -1172,6 +1492,9 @@ msgstr "Игра успешно добавлена!"
 
 msgid "The great dealer"
 msgstr "Восточный мастер"
+
+msgid "There must be non-zero duration for tournaments"
+msgstr ""
 
 msgid "These results are visible only for tournament administrator"
 msgstr "Результаты видны только администратору турнира"
@@ -1224,6 +1547,20 @@ msgstr "Таймер и рассадка"
 msgid "Timer policy"
 msgstr "Политика таймера"
 
+#, fuzzy
+msgid "Timezone"
+msgstr "Таймер"
+
+msgid "Title"
+msgstr ""
+
+msgid "Title must be at least 4 characters length"
+msgstr ""
+
+#, fuzzy
+msgid "To event list"
+msgstr "Командный турнир"
+
 msgid "Toi-toi"
 msgstr "Тойтой"
 
@@ -1267,8 +1604,15 @@ msgstr "Выигрышей по цумо"
 msgid "Tsuu iisou"
 msgstr "Цуисо"
 
+msgid "Type"
+msgstr ""
+
 msgid "Unable to generate seating"
 msgstr "Невозможно сгенерировать рассадку"
+
+#, fuzzy
+msgid "Update event"
+msgstr "Агрегированное событие"
 
 msgid "Update predefined seating config"
 msgstr "Обновить конфигурацию предопределенной рассадки"
@@ -1303,8 +1647,18 @@ msgstr "Значение"
 msgid "View replay online"
 msgstr "Посмотреть реплей"
 
+msgid ""
+"WARNING: you should NEVER pass your tenhou login string to any service! "
+"Please provide your username instead!"
+msgstr ""
+
 msgid "WEST"
 msgstr "ЗАПАД"
+
+msgid ""
+"We never store passwords as plain text. But keep in mind that weak passwords "
+"will not be accepted by checker."
+msgstr ""
 
 msgid "Welcome to game statistics system."
 msgstr "Добро пожаловать в систему игровой статистики."
@@ -1312,6 +1666,7 @@ msgstr "Добро пожаловать в систему игровой ста�
 msgid "Wind: %s"
 msgstr "Ветер: %s"
 
+#, fuzzy
 msgid "Wrong admin password"
 msgstr "Неправильный пароль администратора"
 
@@ -1339,8 +1694,40 @@ msgstr "Якухай: всего"
 msgid "Yellow zone duration"
 msgstr "Длительность желтой зоны"
 
+msgid ""
+"You are required to log in with your email and password before proceeding"
+msgstr ""
+
 msgid "You are viewing the abbreviated statistics for mobile devices."
 msgstr "Вы просматриваете сокращенную статистику для мобильных устройств."
+
+msgid "Your e-mail address"
+msgstr ""
+
+msgid ""
+"Your e-mail will not be shared with anyone else and will not be visible "
+"anywhere."
+msgstr ""
+
+msgid ""
+"Your e-mail will not be shared with anyone else and will not be visible "
+"anywhere. If you want to change your e-mail, contact chief administrator."
+msgstr ""
+
+#, fuzzy
+msgid "Your password"
+msgstr "Неправильный пароль администратора"
+
+msgid ""
+"Your phone may be shown to administrators of tournaments that are not "
+"finished yet. Also all chief administrators will be able to see your phone "
+"number."
+msgstr ""
+
+msgid ""
+"Your tenhou ID will be shown publicly. WARNING: this is your tenhou "
+"nickname, you should not enter your access code here!"
+msgstr ""
 
 msgid "because of riichi"
 msgstr "в том числе из-за риичи"
@@ -1350,6 +1737,9 @@ msgstr "из них потерянных"
 
 msgid "bets won"
 msgstr "из них выигранных"
+
+msgid "global"
+msgstr ""
 
 msgid "no"
 msgstr "нет"
@@ -1372,6 +1762,30 @@ msgstr "да"
 #~ msgid "(%d on %s)"
 #~ msgstr "(%d из %s)"
 
+#~ msgid "Add new player to the system"
+#~ msgstr "Добавить нового игрока в систему"
+
+#~ msgid "Add player"
+#~ msgstr "Добавить игрока"
+
+#~ msgid "Add to current rating"
+#~ msgstr "Добавить в текущий рейтинг"
+
+#~ msgid "Admin login"
+#~ msgstr "Вход администратора"
+
+#~ msgid "Admin panel"
+#~ msgstr "Администрирование"
+
+#~ msgid "All players list"
+#~ msgstr "Список всех игроков в системе"
+
+#~ msgid "Authorize"
+#~ msgstr "Авторизоваться"
+
+#~ msgid "Authorized successfully!"
+#~ msgstr "Авторизация прошла успешно!"
+
 #~ msgid "Avg. dora count in hand"
 #~ msgstr "Ср. количество дор в руке"
 
@@ -1386,6 +1800,9 @@ msgstr "да"
 #~ msgid "Chombo master"
 #~ msgstr "Чомбо-мастер"
 
+#~ msgid "Confirm attendance manually"
+#~ msgstr "Потдвердить явку вручную"
+
 #~ msgid "Drawn rounds: %s"
 #~ msgstr "Ничьих: %s"
 
@@ -1396,8 +1813,14 @@ msgstr "да"
 #~ "Каждое число - это номер игрока в текущем рейтинге. Пример рассадки с "
 #~ "шагом 4:"
 
+#~ msgid "Enroll players"
+#~ msgstr "Добавление игроков в рейтинг"
+
 #~ msgid "Enter tables, one per line."
 #~ msgstr "Введите состав столов, один стол - одна строка."
+
+#~ msgid "Failed to enroll the player. Check your network connection."
+#~ msgstr "Не удалось добавить игрока. Проверьте сетевое соединение."
 
 #~ msgid "Finish the games? You won't be able to cancel rounds anymore!"
 #~ msgstr "Завершить игры? Отменить раздачу станет невозможно!"
@@ -1423,6 +1846,19 @@ msgstr "да"
 #~ msgid "If tanyao counts on open hand"
 #~ msgstr "Засчитывается ли таняо на открытой руке"
 
+#~ msgid "Login"
+#~ msgstr "Вход"
+
+#~ msgid ""
+#~ "Note: if a player is already added to the rating, adding him again will "
+#~ "result in reissuing his PIN code."
+#~ msgstr ""
+#~ "Примечание: если игрок уже добавлен в текущий рейтинг, нажатие на кнопку "
+#~ "добавления будет эквивалентно перевыдаче ПИН-кода."
+
+#~ msgid "PIN"
+#~ msgstr "PIN-код"
+
 #~ msgid "Played at least %d games"
 #~ msgid_plural "Played at least %d game"
 #~ msgstr[0] "Сыгравшие хотя бы %d игру"
@@ -1435,8 +1871,36 @@ msgstr "да"
 #~ msgstr[1] "Сыгравшие менее %d игр"
 #~ msgstr[2] "Сыгравшие менее %d игр"
 
+#~ msgid "Please select some event!"
+#~ msgstr "Выберите рейтинг!"
+
+#~ msgid "Pre-registration list (%d)"
+#~ msgstr "Список на утверждение (%d)"
+
+#~ msgid "Print PINs and QR codes"
+#~ msgstr "Печать PIN и QR кодов"
+
 #~ msgid "Randomize seating at each table"
 #~ msgstr "Перемешать игроков за каждым столом"
+
+#~ msgid "Real name"
+#~ msgstr "Реальное имя"
+
+#~ msgid "Register"
+#~ msgstr "Зарегистрировать"
+
+#~ msgid "Reissue PIN"
+#~ msgstr "Перевыдать PIN"
+
+#~ msgid "Seating controls"
+#~ msgstr "Управление рассадкой"
+
+#~ msgid "System name"
+#~ msgstr "Системное имя"
+
+#~ msgid "System name should contain only lowercase latin characters."
+#~ msgstr ""
+#~ "Системное имя должно содержать только латинские символы в нижнем регистре."
 
 #~ msgid "The Prudent"
 #~ msgstr "Бережливый"
@@ -1449,9 +1913,3 @@ msgstr "да"
 
 #~ msgid "You can't wait on this"
 #~ msgstr "Он не может на это ждать"
-
-msgid "Chips"
-msgstr "Чипы"
-
-msgid "C"
-msgstr "Ч"

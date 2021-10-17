@@ -61,6 +61,22 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         {
             return getenv('FREY_URL');
         }
+
+        /**
+         * @return array|false|string
+         */
+        public static function GUI_URL()
+        {
+            return getenv('RHEDA_URL');
+        }
+
+        /**
+         * @return string
+         */
+        public static function MAILER_ADDR()
+        {
+            return 'noreply@localhost';
+        }
     }
 }
 

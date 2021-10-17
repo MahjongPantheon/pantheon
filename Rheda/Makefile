@@ -41,8 +41,8 @@ autofix:
 i18n_extract:
 	rm ./i18n/messages.pot
 	touch ./i18n/messages.pot
-	find ./src -iname "*.php" -print0 | sort -z | xargs -r0 xgettext -j --no-location --keyword=_t --keyword=_n:1,2 --keyword=_p --keyword=_np:1,2 --from-code=UTF-8 -o i18n/messages.pot
 	find ./src -iname "*.handlebars" -print0 | sort -z | xargs -r0 xgettext-template -L Handlebars --no-location=1 --from-code=UTF-8 --keyword=_t --keyword=_n:1,2 --keyword=_p --keyword=_np:1,2 -j -o i18n/messages.pot
+	find ./src -iname "*.php" -print0 | sort -z | xargs -r0 xgettext -j --no-location --keyword=_t --keyword=_n:1,2 --keyword=_p --keyword=_np:1,2 --from-code=UTF-8 -o i18n/messages.pot
 	chmod a+w i18n/messages.pot
 	msgmerge -s -U ./i18n/de_DE.UTF-8/LC_MESSAGES/messages.po ./i18n/messages.pot --backup=none
 	msgmerge -s -U ./i18n/ru_RU.UTF-8/LC_MESSAGES/messages.po ./i18n/messages.pot --backup=none
