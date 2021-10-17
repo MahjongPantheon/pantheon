@@ -12,8 +12,23 @@ class FreyClientMock implements IFreyClient
 
     public function getClient()
     {
-        // TODO: Implement getClient() method.
-        /* @phpstan-ignore-line */
+        /* @phpstan-ignore-next-line */
+        return new class {
+            /**
+             * @return mixed
+             */
+            public function getHttpClient()
+            {
+                return new class {
+                    /**
+                     * @return void
+                     */
+                    public function withHeaders()
+                    {
+                    }
+                };
+            }
+        };
     }
 
     public function requestRegistration(string $email, string $password): string

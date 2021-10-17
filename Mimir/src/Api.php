@@ -50,7 +50,7 @@ class Api
      */
     protected $_config;
     /**
-     * @var FreyClient
+     * @var IFreyClient
      */
     protected $_frey;
 
@@ -66,9 +66,13 @@ class Api
         $this->_db = new Db($this->_config);
         /** @var string $freyUrl */
         $freyUrl = $this->_config->getValue('freyUrl');
-        $this->_frey = new FreyClient($freyUrl);
+        if ($freyUrl === '__mock__') { // testing purposes
+            $this->_frey = new FreyClientMock('');
+        } else {
+            $this->_frey = new FreyClient($freyUrl);
+        }
         $this->_ds = new DataSource($this->_db, $this->_frey);
-        $this->_meta = new Meta($this->_frey, $_SERVER);
+        $this->_meta = new Meta($this->_frey, $this->_config, $_SERVER);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 

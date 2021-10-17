@@ -32,8 +32,10 @@ return [
     'verbose'   => true,
     'verboseLog' => __DIR__ . '/../data/verbose.log',
     'trackerUrl' => null,
+    'freyUrl' => '__mock__',
     'api' => [
         'version_major' => 1,
         'version_minor' => 0
-    ]
+    ],
+    'testing_token' => '198vdsh904hfbnkjv98whb2iusvd98b29bsdv98svbr9wghj',
 ];

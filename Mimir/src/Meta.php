@@ -66,10 +66,11 @@ class Meta
     /**
      * Meta constructor.
      * @param IFreyClient $frey
+     * @param Config $config
      * @param array|null $input
      * @throws \Exception
      */
-    public function __construct(IFreyClient $frey, $input = null)
+    public function __construct(IFreyClient $frey, Config $config, $input = null)
     {
         if (empty($input)) {
             $input = $_SERVER;
@@ -78,6 +79,12 @@ class Meta
         $this->_frey = $frey;
         $this->_fillFrom($input);
         $this->_selectedLocale = $this->_initI18n();
+
+        // for unit/integration testing purposes
+        $testingToken = $config->getValue('testing_token');
+        if (!empty($testingToken) && $this->_authToken == $testingToken) {
+            $this->_superadmin = true;
+        }
     }
 
     /**

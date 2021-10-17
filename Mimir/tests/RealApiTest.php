@@ -35,13 +35,9 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->markTestIncomplete('This test should be rewritten');
-
-        // Init db! Or bunch of PDOExceptions will appeal
-        $db = Db::__getCleanTestingInstance();
-        $evt = (new EventPrimitive($db))
+        $ds = DataSource::__getCleanTestingInstance();
+        $evt = (new EventPrimitive($ds))
             ->setRuleset(Ruleset::instance('ema')) // TODO: why 'tenhounet' rules fail? o_0
-            ->setType('offline')
             ->setTimezone('UTC')
             ->setTitle('test')
             ->setDescription('test')
@@ -53,6 +49,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $this->_client = new Client('http://localhost:1349');
         // $this->_client->getHttpClient()->withDebug();
         $this->_client->getHttpClient()->withHeaders(['X-Auth-Token: 198vdsh904hfbnkjv98whb2iusvd98b29bsdv98svbr9wghj']);
+        $this->_client->getHttpClient()->withHeaders(['X-Current-Person-Id: 1']);
     }
 
     public function testGameConfig()
@@ -92,15 +89,10 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testDryRunMultiron()
     {
         // registration boilerplate...
-        $this->_client->execute('addPlayer', ['p1', 'p1', 'player1', null]);
-        $this->_client->execute('addPlayer', ['p2', 'p2', 'player2', null]);
-        $this->_client->execute('addPlayer', ['p3', 'p3', 'player3', null]);
-        $this->_client->execute('addPlayer', ['p4', 'p4', 'player4', null]);
-
-        $this->_client->execute('registerPlayer', [1, 1]);
-        $this->_client->execute('registerPlayer', [1, 2]);
-        $this->_client->execute('registerPlayer', [1, 3]);
-        $this->_client->execute('registerPlayer', [1, 4]);
+        $this->_client->execute('registerPlayerCP', [1, 1]);
+        $this->_client->execute('registerPlayerCP', [2, 1]);
+        $this->_client->execute('registerPlayerCP', [3, 1]);
+        $this->_client->execute('registerPlayerCP', [4, 1]);
 
         $hashcode = $this->_client->execute('startGame', [1, [1, 2, 3, 4]]);
 
@@ -185,15 +177,10 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testGetLastRoundInfo()
     {
         // registration boilerplate...
-        $this->_client->execute('addPlayer', ['p1', 'p1', 'player1', null]);
-        $this->_client->execute('addPlayer', ['p2', 'p2', 'player2', null]);
-        $this->_client->execute('addPlayer', ['p3', 'p3', 'player3', null]);
-        $this->_client->execute('addPlayer', ['p4', 'p4', 'player4', null]);
-
-        $this->_client->execute('registerPlayer', [1, 1]);
-        $this->_client->execute('registerPlayer', [1, 2]);
-        $this->_client->execute('registerPlayer', [1, 3]);
-        $this->_client->execute('registerPlayer', [1, 4]);
+        $this->_client->execute('registerPlayerCP', [1, 1]);
+        $this->_client->execute('registerPlayerCP', [2, 1]);
+        $this->_client->execute('registerPlayerCP', [3, 1]);
+        $this->_client->execute('registerPlayerCP', [4, 1]);
 
         $hashcode = $this->_client->execute('startGame', [1, [1, 2, 3, 4]]);
 
