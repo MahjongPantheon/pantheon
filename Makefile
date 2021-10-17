@@ -32,7 +32,6 @@ deps: get_docker_id
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user gosu user make deps'; \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user gosu user make deps'; \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make deps'; \
-		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr.new && HOME=/home/user gosu user make deps'; \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user gosu user make deps'; \
 	fi
 
@@ -96,9 +95,8 @@ pantheon_run: get_docker_id get_docker_idle_id
 		echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."; \
 		echo "- ${YELLOW}Mimir API${NC} is exposed on port 4001"; \
 		echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
-		echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as angular dev server."; \
+		echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
 		echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
-		echo "- ${YELLOW}Tyr2${NC} is accessible on port 4005 (http://localhost:4005) as webpack dev server."; \
   		echo "----------------------------------------------------------------------------------"; \
   		echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
   		echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
@@ -128,10 +126,8 @@ pantheon_run: get_docker_id get_docker_idle_id
 				-p 127.0.0.1:4002:4002 \
 				-p 127.0.0.1:4003:4003 \
 				-p 127.0.0.1:4004:4004 \
-				-p 127.0.0.1:4005:4005 \
 				-p 127.0.0.1:5532:5532 \
 				-v `pwd`/Tyr:/var/www/html/Tyr:z \
-				-v `pwd`/Tyr.new:/var/www/html/Tyr.new:z \
 				-v `pwd`/Mimir:/var/www/html/Mimir:z \
 				-v `pwd`/Rheda:/var/www/html/Rheda:z \
 				-v `pwd`/Frey:/var/www/html/Frey:z \
@@ -158,7 +154,7 @@ stop: pantheon_stop pgadmin_stop
 
 .PHONY: frontdev
 frontdev: get_docker_id
-	@docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon && HOME=/home/user gosu user sh ./frontdev.sh'
+	@docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Tyr && HOME=/home/user gosu user make docker'
 
 .PHONY: dev
 dev: run
@@ -330,11 +326,6 @@ prod_deps:
 prod_build_tyr: get_docker_id # this is for automated builds, don't run it manually
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make deps && make build';
 	cd Tyr && make cleanup_prebuilts && make prebuild
-
-.PHONY: prod_build_tyr2
-prod_build_tyr2: get_docker_id # this is for automated builds, don't run it manually
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr.new && HOME=/home/user gosu user make deps && make build';
-	cd Tyr.new && make cleanup_prebuilts && make prebuild
 
 # i18n related
 .PHONY: i18n_extract
