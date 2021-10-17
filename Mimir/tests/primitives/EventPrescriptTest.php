@@ -19,21 +19,24 @@ namespace Mimir;
 
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
-require_once __DIR__ . '/../../src/primitives/Formation.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/Db.php';
 
 class EventPrescriptPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
-    protected $_db;
+    /**
+     * @var DataSource
+     */
+    protected $_ds;
+
     public function setUp()
     {
-        $this->_db = Db::__getCleanTestingInstance();
+        $this->_ds = DataSource::__getCleanTestingInstance();
     }
 
     public function testPackScript()
     {
-        $newEventPrescript = new EventPrescriptPrimitive($this->_db);
+        $newEventPrescript = new EventPrescriptPrimitive($this->_ds);
         $script = [
             [
                 [1, 2, 3, 4],
@@ -57,7 +60,7 @@ class EventPrescriptPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testUnpackScript()
     {
-        $newEventPrescript = new EventPrescriptPrimitive($this->_db);
+        $newEventPrescript = new EventPrescriptPrimitive($this->_ds);
         $string = implode("\n", [
             '1-2-3-4',
             '5-6-7-8',

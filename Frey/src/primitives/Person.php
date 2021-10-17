@@ -39,9 +39,11 @@ class PersonPrimitive extends Primitive
         'auth_hash'         => '_authHash',
         'auth_salt'         => '_authSalt',
         'auth_reset_token'  => '_authResetToken',
+        'country'           => '_country',
         'city'              => '_city',
         'tenhou_id'         => '_tenhouId',
         'disabled'          => '_disabled',
+        'is_superadmin'     => '_superadmin',
         '::group'           => '_groupIds', // external many-to-many relation
     ];
 
@@ -55,9 +57,11 @@ class PersonPrimitive extends Primitive
             '_authHash' => $this->_stringTransform(),
             '_authSalt' => $this->_stringTransform(),
             '_authResetToken' => $this->_stringTransform(true),
+            '_country'  => $this->_stringTransform(),
             '_city'     => $this->_stringTransform(true),
             '_tenhouId' => $this->_stringTransform(true),
             '_disabled' => $this->_integerTransform(),
+            '_superadmin' => $this->_integerTransform(),
             '_groupIds'   => $this->_externalManyToManyTransform(
                 self::REL_GROUP,
                 'person_id',
@@ -104,6 +108,11 @@ class PersonPrimitive extends Primitive
      */
     protected $_authResetToken;
     /**
+     * Personal data: person country to represent
+     * @var string
+     */
+    protected $_country;
+    /**
      * Personal data: person local city
      * @var string
      */
@@ -119,13 +128,18 @@ class PersonPrimitive extends Primitive
      */
     protected $_disabled;
     /**
+     * If this personal account has all possible privileges
+     * @var int
+     */
+    protected $_superadmin;
+    /**
      * List of group ids this person belongs to
      * @var int[]
      */
     protected $_groupIds = [];
     /**
      * List of group entities
-     * @var GroupPrimitive[]
+     * @var GroupPrimitive[]|null
      */
     protected $_groups = null;
 
@@ -140,6 +154,42 @@ class PersonPrimitive extends Primitive
     public static function findById(IDb $db, $ids)
     {
         return self::_findBy($db, 'id', $ids);
+    }
+
+    /**
+     * @param IDb $db
+     * @param string $query
+     * @return PersonPrimitive[]|null
+     */
+    public static function findByTitleFuzzy(IDb $db, string $query)
+    {
+        $query = trim($query);
+        if (mb_strlen($query) < 2) {
+            return null;
+        }
+
+        $q = <<<QRY
+            SELECT * FROM "person"
+            WHERE (to_tsvector('simple', coalesce(title, '')) @@ to_tsquery('simple', :query))
+            ORDER BY title LIMIT 10;
+QRY;
+
+        $result = $db->table('person')
+            ->rawQuery($q, [':query' => implode(' & ', array_map(
+                function ($word) {
+                    return $word . ':*';
+                },
+                explode(' ', $query)
+            ))])
+            ->findArray();
+
+        if (empty($result)) {
+            return [];
+        }
+
+        return array_map(function ($data) use ($db) {
+            return self::_recreateInstance($db, $data);
+        }, $result);
     }
 
     /**
@@ -166,29 +216,6 @@ class PersonPrimitive extends Primitive
     public static function findByEmail(IDb $db, $emails)
     {
         return self::_findBy($db, 'email', $emails);
-    }
-
-    /**
-     * Fuzzy search by title (simple pattern search).
-     *
-     * @param IDb $db
-     * @param $query
-     * @return PersonPrimitive[]|null
-     */
-    public static function findByTitleFuzzy(IDb $db, $query)
-    {
-        $query = str_replace(['%', '_'], '', $query);
-        if (mb_strlen($query) <= 2) {
-            return null;
-        }
-
-        $objects = $db->table(self::$_table)
-            ->whereLike('title', '%' . $query . '%')
-            ->findArray();
-
-        return array_map(function ($item) use ($db) {
-            return self::_recreateInstance($db, $item);
-        }, $objects);
     }
 
     protected function _create()
@@ -344,6 +371,24 @@ class PersonPrimitive extends Primitive
     /**
      * @return string
      */
+    public function getCountry(): string
+    {
+        return $this->_country ?: '';
+    }
+
+    /**
+     * @param string|null $country
+     * @return PersonPrimitive
+     */
+    public function setCountry(?string $country): PersonPrimitive
+    {
+        $this->_country = $country ?: '';
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getTenhouId(): string
     {
         return $this->_tenhouId ?: '';
@@ -374,6 +419,24 @@ class PersonPrimitive extends Primitive
     public function setDisabled(bool $disabled): PersonPrimitive
     {
         $this->_disabled = $disabled ? 1 : 0;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsSuperadmin(): bool
+    {
+        return $this->_superadmin == 1;
+    }
+
+    /**
+     * @param bool $superadmin
+     * @return PersonPrimitive
+     */
+    public function setIsSuperadmin(bool $superadmin): PersonPrimitive
+    {
+        $this->_superadmin = $superadmin ? 1 : 0;
         return $this;
     }
 

@@ -18,49 +18,21 @@
 namespace Mimir;
 
 require_once __DIR__ . '/../Primitive.php';
+require_once __DIR__ . '/../exceptions/BadAction.php';
 
 /**
  * Class PlayerPrimitive
  *
- * Low-level model with basic CRUD operations and relations
+ * Networked primitive: uses remote service as a data source
  * @package Mimir
  */
 class PlayerPrimitive extends Primitive
 {
-    protected static $_table = 'player';
-
-    protected static $_fieldsMapping = [
-        'id'             => '_id',
-        'display_name'   => '_displayName',
-        'ident'          => '_ident',
-        'alias'          => '_alias',
-        'tenhou_id'      => '_tenhouId',
-        'is_replacement' => '_isReplacement'
-    ];
-
-    protected function _getFieldsTransforms()
-    {
-        return [
-            '_id' => $this->_integerTransform(true),
-            '_isReplacement' => $this->_integerTransform()
-        ];
-    }
-
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
-    /**
-     * oauth ident info, for example
-     * @var string
-     */
-    protected $_ident;
-    /**
-     * alias for text-mode game logs
-     * @var string
-     */
-    protected $_alias;
     /**
      * How to display in state
      * @var string
@@ -71,64 +43,57 @@ class PlayerPrimitive extends Primitive
      * @var string
      */
     protected $_tenhouId;
-    /**
-     * Is player a substitution player
-     * @var int
-     */
-    protected $_isReplacement = 0;
 
     /**
-     * Find players by local ids (primary key)
+     * PlayerPrimitive constructor.
+     * @param DataSource $ds
+     */
+    public function __construct(DataSource $ds)
+    {
+        // Parent constructor not called intentionally.
+        $this->_ds = $ds;
+    }
+
+    /**
+     * Find players by local ids
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return PlayerPrimitive[]
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(DataSource $ds, array $ids)
     {
-        return self::_findBy($db, 'id', $ids);
+        $data = $ds->remote()->getPersonalInfo($ids);
+
+        return array_map(function ($item) use ($ds) {
+            return (new PlayerPrimitive($ds))
+                ->setTenhouId($item['tenhou_id'])
+                ->setDisplayName($item['title'])
+                ->_setId($item['id']);
+        }, $data);
     }
 
     /**
-     * Find players by [oauth] idents (indexed search)
-     *
-     * @param IDb $db
-     * @param int[] $idents
-     * @throws \Exception
-     * @return PlayerPrimitive[]
-     */
-    public static function findByIdent(IDb $db, $idents)
-    {
-        return self::_findBy($db, 'ident', $idents);
-    }
-
-    /**
-     * Find players by alias (indexed search)
-     *
-     * @param IDb $db
-     * @param int[] $idents
-     * @throws \Exception
-     * @return PlayerPrimitive[]
-     */
-    public static function findByAlias(IDb $db, $idents)
-    {
-        return self::_findBy($db, 'alias', $idents);
-    }
-
-    /**
-     * Find players by tenhou ids (indexed search)
+     * Find players by tenhou ids
      * Method should maintain sorting of items according to ids order.
      *
-     * @param IDb $db
-     * @param int[] $ids
+     * @param DataSource $ds
+     * @param string[] $ids
      * @throws \Exception
      * @return PlayerPrimitive[]
      */
-    public static function findByTenhouId(IDb $db, $ids)
+    public static function findByTenhouId(DataSource $ds, $ids)
     {
+        $playersData = $ds->remote()->findByTenhouIds($ids);
         /** @var PlayerPrimitive[] $players */
-        $players = self::_findBy($db, 'tenhou_id', $ids);
+        $players = array_map(function ($item) use ($ds) {
+            return (new PlayerPrimitive($ds))
+                ->setTenhouId($item['tenhou_id'])
+                ->setDisplayName($item['title'])
+                ->_setId($item['id']);
+        }, $playersData);
+
         $playersMap = array_combine(
             array_map(function (PlayerPrimitive $player) {
                 return $player->getTenhouId();
@@ -136,20 +101,87 @@ class PlayerPrimitive extends Primitive
             $players
         );
 
+        if (!$playersMap) {
+            throw new InvalidParametersException('Cant combine inequal arrays');
+        }
+
         return array_filter(array_map(function ($id) use ($playersMap) {
             return empty($playersMap[$id]) ? null : $playersMap[$id];
         }, $ids));
     }
 
-    protected function _create()
+    /**
+     * @param DataSource $ds
+     * @param array $eventIdList
+     * @return array ['players' => PlayerPrimitive[], 'replacements' => [id => PlayerPrimitive, ...]]
+     * @throws \Exception
+     */
+    public static function findPlayersForEvents(DataSource $ds, array $eventIdList)
     {
-        $player = $this->_db->table(self::$_table)->create();
-        $success = $this->_save($player);
-        if ($success) {
-            $this->_id = $this->_db->lastInsertId();
+        $playerRegData = PlayerRegistrationPrimitive::fetchPlayerRegData($ds, $eventIdList);
+        return self::_findPlayers($ds, $playerRegData);
+    }
+
+    /**
+     * @param DataSource $ds
+     * @param string $sessionHash
+     * @return array ['players' => PlayerPrimitive[], 'replacements' => [id => PlayerPrimitive, ...]]
+     * @throws \Exception
+     */
+    public static function findPlayersForSession(DataSource $ds, string $sessionHash)
+    {
+        $sessions = SessionPrimitive::findByRepresentationalHash($ds, [$sessionHash]);
+        if (empty($sessions)) {
+            return [];
+        }
+        $playerRegData = PlayerRegistrationPrimitive::fetchPlayerRegDataByIds($ds, [$sessions[0]->getEventId()], $sessions[0]->getPlayersIds());
+        return self::_findPlayers($ds, $playerRegData);
+    }
+
+    /**
+     * @param DataSource $ds
+     * @param array $playerRegData
+     * @return array
+     * @throws \Exception
+     */
+    protected static function _findPlayers(DataSource $ds, array $playerRegData)
+    {
+        $replacements = [];
+        $players = self::findById($ds, array_map(function ($el) use (&$replacements) {
+            if (!empty($el['replacement_id'])) {
+                $replacements[$el['id']] = $el['replacement_id'];
+            }
+            return $el['id'];
+        }, $playerRegData));
+
+        $replacementPlayers = self::findById($ds, array_values($replacements));
+        $repl = [];
+        foreach ($replacementPlayers as $p) {
+            $repl[$p->getId()] = $p;
+        }
+        foreach ($replacements as $id => $replacementId) {
+            $replacements[$id] = $repl[$replacementId];
         }
 
-        return $success;
+        return ['players' => $players, 'replacements' => $replacements];
+    }
+
+    /**
+     * @return mixed|void
+     * @throws BadActionException
+     */
+    protected function _create()
+    {
+        throw new BadActionException('Networked Player primitives are considered to be readonly!');
+    }
+
+    /**
+     * @return bool|void
+     * @throws BadActionException
+     */
+    public function save()
+    {
+        throw new BadActionException('Networked Player primitives are considered to be readonly!');
     }
 
     protected function _deident()
@@ -176,7 +208,7 @@ class PlayerPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -184,39 +216,13 @@ class PlayerPrimitive extends Primitive
     }
 
     /**
-     * @param string $ident
+     * @param int $id
      * @return $this
      */
-    public function setIdent($ident)
+    protected function _setId($id)
     {
-        $this->_ident = $ident;
+        $this->_id = $id;
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIdent()
-    {
-        return $this->_ident;
-    }
-
-    /**
-     * @param string $alias
-     * @return PlayerPrimitive
-     */
-    public function setAlias($alias)
-    {
-        $this->_alias = $alias;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAlias()
-    {
-        return $this->_alias;
     }
 
     /**
@@ -235,23 +241,5 @@ class PlayerPrimitive extends Primitive
     public function getTenhouId()
     {
         return $this->_tenhouId;
-    }
-
-    /**
-     * @param int $isRep
-     * @return $this
-     */
-    public function setIsReplacement($isRep)
-    {
-        $this->_isReplacement = $isRep;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getIsReplacement()
-    {
-        return $this->_isReplacement;
     }
 }

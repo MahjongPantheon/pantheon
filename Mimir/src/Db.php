@@ -34,8 +34,11 @@ class Db implements IDb
     /**
      * @var int instances counter
      */
-    static protected $_ctr = 0;
+    protected static $_ctr = 0;
 
+    /**
+     * @var string|string[]
+     */
     protected $_connString;
 
     public function __construct(Config $cfg)
@@ -55,22 +58,28 @@ class Db implements IDb
 
         ORM::configure($this->_connString);
         if (!empty($credentials)) {
-            ORM::configure($credentials); // should pass username and password
+            ORM::configure('username', $credentials['username']);
+            ORM::configure('password', $credentials['password']);
         }
     }
 
     /**
      * General entry point for all queries
      *
-     * @param $tableName
+     * @param string $tableName
      * @throws \Exception
      * @return \Idiorm\ORM
      */
-    public function table($tableName)
+    public function table(string $tableName)
     {
         return ORM::forTable($tableName);
     }
 
+    /**
+     * @return (array|mixed)[]
+     *
+     * @psalm-return array{LAST_QUERY: mixed, ERROR_INFO: array}
+     */
     public function debug()
     {
         return [
@@ -82,7 +91,7 @@ class Db implements IDb
     public function lastInsertId()
     {
         ORM::rawExecute('SELECT LASTVAL()');
-        return ORM::getLastStatement()->fetchColumn();
+        return intval(ORM::getLastStatement()->fetchColumn());
     }
 
     /**
@@ -97,13 +106,13 @@ class Db implements IDb
      * Warning:
      * Don't touch this crap until you totally know what are you doing :)
      *
-     * @param $table
-     * @param $data [ [ field => value, field2 => value2 ], [ ... ] ] - nested arrays should be monomorphic
-     * @param $tableUniqueFields string[] List of columns with unique constraint to check
+     * @param string $table
+     * @param array $data [ [ field => value, field2 => value2 ], [ ... ] ] - nested arrays should be monomorphic
+     * @param string[] $tableUniqueFields List of columns with unique constraint to check
      * @throws \Exception
      * @return boolean
      */
-    public function upsertQuery($table, $data, $tableUniqueFields)
+    public function upsertQuery(string $table, $data, $tableUniqueFields)
     {
         $data = array_map(function ($dataset) {
             foreach ($dataset as $k => $v) {
@@ -143,10 +152,15 @@ class Db implements IDb
     }
 
     // For testing purposes
-    static protected $__testingInstance = null;
+    /** @var Db|null $__testingInstance */
+    protected static $__testingInstance = null;
+
+    /**
+     * @return Db
+     */
     public static function __getCleanTestingInstance()
     {
-        shell_exec('cd ' . __DIR__ . '/../ && make init_test_db && make clean_test_db');
+        shell_exec('cd ' . __DIR__ . '/../ && make clean_test_db && make init_test_db');
 
         if (self::$__testingInstance === null) {
             $cfg = new Config(__DIR__ . '/../tests/util/config.php');

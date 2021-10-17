@@ -24,7 +24,6 @@ require_once __DIR__ . '/../primitives/Session.php';
 require_once __DIR__ . '/../primitives/SessionResults.php';
 require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
-require_once __DIR__ . '/../primitives/PlayerEnrollment.php';
 require_once __DIR__ . '/../primitives/PlayerHistory.php';
 require_once __DIR__ . '/../primitives/Achievements.php';
 require_once __DIR__ . '/../primitives/Round.php';
@@ -34,14 +33,14 @@ class EventRatingTableModel extends Model
 {
     /**
      * @param EventPrimitive[] $eventList
-     * @param $orderBy
-     * @param $order
+     * @param string $orderBy
+     * @param string $order
      * @param bool $withPrefinished
      * @return array
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getRatingTable($eventList, $orderBy, $order, $withPrefinished = false)
+    public function getRatingTable($eventList, string $orderBy, string $order, $withPrefinished = false)
     {
         if (!in_array($order, ['asc', 'desc'])) {
             throw new InvalidParametersException("Parameter order should be either 'asc' or 'desc'");
@@ -69,9 +68,13 @@ class EventRatingTableModel extends Model
 
         foreach ($eventList as $event) {
             $playersHistoryItems = [];
+            $eId = $event->getId();
+            if (empty($eId)) {
+                throw new InvalidParametersException('Attempted to use deidented primitive');
+            }
 
             /* FIXME (PNTN-237): refactor to get rid of accessing DB in a loop. */
-            $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_db, $event->getId());
+            $tmpPlayersHistoryItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eId);
             foreach ($tmpPlayersHistoryItems as $item) {
                 // php kludge: keys should be string, not numeric (to overwrite values)
                 $playersHistoryItems['id' . $item->getPlayerId()] = $item;
@@ -103,6 +106,7 @@ class EventRatingTableModel extends Model
                 array_filter(
                     $playersHistoryItemsCombined,
                     function ($v, $k) use ($player) {
+                        /** @var $v PlayerHistoryPrimitive */
                         return $v->getPlayerId() == $player->getId();
                     },
                     ARRAY_FILTER_USE_BOTH
@@ -143,8 +147,6 @@ class EventRatingTableModel extends Model
             );
         }
 
-        // TODO: среднеквадратичное отклонение
-
         $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $mainEvent, $startRating) {
             return [
                 'id'            => (int)$el->getPlayerId(),
@@ -183,14 +185,18 @@ class EventRatingTableModel extends Model
      */
     protected function _getFakePrefinishedItems(EventPrimitive $event)
     {
-        $sessions = SessionPrimitive::findByEventAndStatus($this->_db, $event->getId(), SessionPrimitive::STATUS_PREFINISHED);
+        $eId = $event->getId();
+        if (empty($eId)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eId, SessionPrimitive::STATUS_PREFINISHED);
         $historyItems = [];
 
         foreach ($sessions as $session) {
             $sessionResults = $session->getSessionResults();
             foreach ($sessionResults as $sessionResult) {
                 $historyItems []= PlayerHistoryPrimitive::makeNewHistoryItem(
-                    $this->_db,
+                    $this->_ds,
                     $sessionResult->getPlayer(),
                     $session,
                     $sessionResult->getRatingDelta(),
@@ -212,7 +218,7 @@ class EventRatingTableModel extends Model
         $ids = array_map(function (PlayerHistoryPrimitive $el) {
             return $el->getPlayerId();
         }, $playersHistoryItems);
-        $players = PlayerPrimitive::findById($this->_db, $ids);
+        $players = PlayerPrimitive::findById($this->_ds, $ids);
 
         $result = [];
         foreach ($players as $p) {
@@ -223,12 +229,16 @@ class EventRatingTableModel extends Model
     }
 
     /**
-     * @param $orderBy
+     * @param float $startRating
+     * @param string $orderBy
      * @param PlayerPrimitive[] $playerItems
      * @param PlayerHistoryPrimitive[] $playersHistoryItems
+     *
      * @throws InvalidParametersException
+     *
+     * @return void
      */
-    protected function _sortItems($startRating, $orderBy, &$playerItems, &$playersHistoryItems)
+    protected function _sortItems(float $startRating, string $orderBy, &$playerItems, &$playersHistoryItems): void
     {
         switch ($orderBy) {
             case 'name':
@@ -292,11 +302,21 @@ class EventRatingTableModel extends Model
         }
     }
 
-    protected function _stableSort(&$array, $comparer = 'strcmp')
+    /**
+     * @param array $array
+     * @param callable|null $comparer
+     *
+     * @return void
+     */
+    protected function _stableSort(array &$array, callable $comparer = null)
     {
         // Arrays of size < 2 require no action.
         if (count($array) < 2) {
             return;
+        }
+
+        if ($comparer === null) {
+            $comparer = 'strcmp';
         }
 
         // Split the array in half

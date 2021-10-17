@@ -43,14 +43,16 @@ class AchievementsPrimitive extends Primitive
 
     /**
      * AchievementsPrimitive constructor.
-     * @param IDb $db
      * @throws BadActionException
      */
-    public function __construct(IDb $db)
+    public function __construct() // Missing parent constructor call is intended
     {
         throw new BadActionException('This primitive is not expected to be instantiated, use static methods instead');
     }
 
+    /**
+     * @return void
+     */
     protected function _create()
     {
         // nothing
@@ -59,17 +61,17 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players who collected hand with maximum fu
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @throws \Exception
      * @return array
      */
-    public static function getMaxFuHand(IDb $db, $eventIdList)
+    public static function getMaxFuHand(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->table('round')
             ->select('fu')
             ->select('winner_id')
-            ->select('display_name')
-            ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
             ->whereGt('fu', 0)
             ->orderByDesc('fu')
@@ -87,7 +89,7 @@ class AchievementsPrimitive extends Primitive
                 continue;
             }
 
-            $names []= $round['display_name'];
+            $names []= $players[$round['winner_id']]['display_name'];
         }
 
         return [
@@ -99,13 +101,15 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players who played most as dealer
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @throws \Exception
      * @return array
      */
-    public static function getBestDealer(IDb $db, $eventIdList)
+    public static function getBestDealer(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->table('round')
             ->select('winner_id')
             ->select('round')
             ->select('session_id')
@@ -140,19 +144,11 @@ class AchievementsPrimitive extends Primitive
             if ($count < $bestCount) {
                 continue;
             }
-            $bestDealers []= $id;
+            $bestDealers []= $players[$id]['display_name'];
         }
 
-        $players = $db->table('player')
-            ->select('id')
-            ->select('display_name')
-            ->whereIdIn($bestDealers)
-            ->findArray();
-
         return [
-            'names' => array_map(function ($p) {
-                return $p['display_name'];
-            }, $players),
+            'names' => $bestDealers,
             'bestWinCount' => $bestCount
         ];
     }
@@ -160,23 +156,22 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players who collected largest amount of 1/30 hands
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @throws \Exception
      * @return array
      */
-    public static function getBestShithander(IDb $db, $eventIdList)
+    public static function getBestShithander(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->table('round')
             ->select('winner_id')
-            ->select('display_name')
             ->selectExpr('count(*)', 'cnt')
-            ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
             ->where('han', 1)
             ->where('fu', 30)
             ->whereRaw('dora is null')
             ->groupBy('winner_id')
-            ->groupBy('display_name')
             ->orderByDesc('cnt')
             ->limit(10)
             ->findArray();
@@ -191,7 +186,7 @@ class AchievementsPrimitive extends Primitive
                 continue;
             }
 
-            $names []= $round['display_name'];
+            $names []= $players[$round['winner_id']]['display_name'];
         }
 
         return [
@@ -203,18 +198,19 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get player who collected most expensive hand
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @throws \Exception
      * @return array
      */
-    public static function getBestHandOfEvent(IDb $db, $eventIdList)
+    public static function getBestHandOfEvent(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->table('round')
             ->select('han')
             ->select('winner_id')
-            ->select('display_name')
-            ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
+            ->whereNotNull('winner_id')
             ->orderByDesc('han')
             ->limit(10)
             ->findArray();
@@ -229,7 +225,7 @@ class AchievementsPrimitive extends Primitive
                 continue;
             }
 
-            $names []= $round['display_name'];
+            $names []= $players[$round['winner_id']]['display_name'];
         }
 
         return [
@@ -241,25 +237,26 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players who collected a yakuman
      *
-     * @param IDb $db
-     * @param $eventIdList
-     * @return array
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @throws \Exception
+     *
+     * @return array|string
      */
-    public static function getYakumans(IDb $db, $eventIdList)
+    public static function getYakumans(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->table('round')
             ->select('winner_id')
-            ->select('display_name')
             ->select('yaku')
-            ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['ron', 'tsumo', 'multiron'])
             ->whereLt('han', 0) // yakuman
             ->findArray();
-        $players = array_map(function ($round) {
+        $players = array_map(function ($round) use (&$players) {
             return [
-                'name' => $round['display_name'],
-                'yaku' => $round['yaku']
+                'name' => (string)$players[$round['winner_id']]['display_name'],
+                'yaku' => (string)$round['yaku']
             ];
         }, $rounds);
         return empty($players) ? 'No yakumans!' : $players;
@@ -268,21 +265,20 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players who has largest count of feeding into others' hands
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @throws \Exception
      * @return array
      */
-    public static function getBraveSappers(IDb $db, $eventIdList)
+    public static function getBraveSappers(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->table('round')
             ->select('loser_id')
-            ->select('display_name')
             ->selectExpr('count(*)', 'cnt')
-            ->join('player', ['player.id', '=', 'round.loser_id'])
             ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['ron', 'multiron'])
             ->groupBy('loser_id')
-            ->groupBy('display_name')
             ->orderByDesc('cnt')
             ->findArray();
         $maxThrows = 0;
@@ -296,7 +292,7 @@ class AchievementsPrimitive extends Primitive
                 continue;
             }
 
-            $names []= $round['display_name'];
+            $names []= $players[$round['loser_id']]['display_name'];
         }
 
         return [
@@ -308,29 +304,20 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players who has smallest count of feeding into others' hands
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @throws \Exception
      * @return array
      */
-    public static function getDieHardData(IDb $db, $eventIdList)
+    public static function getDieHardData(DataSource $ds, array $eventIdList, array $players)
     {
-        $allPlayers = $db->table('player')
-            ->select('display_name')
-            ->join('session_player', ['player.id', '=', 'session_player.player_id'])
-            ->join('session', ['session_player.session_id', '=', 'session.id'])
-            ->whereIn('event_id', $eventIdList)
-            ->where('session.status', 'finished')
-            ->findArray();
-
-        $rounds = $db->table('round')
+        $rounds = $ds->table('round')
             ->select('loser_id')
-            ->select('display_name')
             ->selectExpr('count(*)', 'cnt')
-            ->join('player', ['player.id', '=', 'round.loser_id'])
             ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['ron', 'multiron'])
             ->groupBy('loser_id')
-            ->groupBy('display_name')
             ->orderByDesc('cnt')
             ->findArray();
 
@@ -339,7 +326,7 @@ class AchievementsPrimitive extends Primitive
             return $round['display_name'];
         }, $rounds);
 
-        foreach ($allPlayers as $player) {
+        foreach ($players as $player) {
             $displayName = $player['display_name'];
             if (!in_array($displayName, $namesWithFeedCount)) {
                 array_push($namesWithZeroCount, $displayName);
@@ -365,7 +352,7 @@ class AchievementsPrimitive extends Primitive
                 $names = [];
             }
 
-            $names []= $round['display_name'];
+            $names []= $players[$round['loser_id']]['display_name'];
         }
 
         return [
@@ -377,23 +364,22 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players with largest tsumo count during single hanchan
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @throws \Exception
      * @return array
      */
-    public static function getBestTsumoistInSingleSession(IDb $db, $eventIdList)
+    public static function getBestTsumoistInSingleSession(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->table('round')
             ->select('winner_id')
             ->select('session_id')
-            ->select('display_name')
             ->selectExpr('count(*)', 'cnt')
-            ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
             ->where('outcome', 'tsumo')
             ->groupBy('winner_id')
             ->groupBy('session_id')
-            ->groupBy('display_name')
             ->orderByDesc('cnt')
             ->findArray();
         $maxTsumo = 0;
@@ -407,7 +393,7 @@ class AchievementsPrimitive extends Primitive
                 continue;
             }
 
-            $names []= $round['display_name'];
+            $names []= $players[$round['winner_id']]['display_name'];
         }
 
         return [
@@ -419,40 +405,42 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players who collected largest amount of yakuhais
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @throws \Exception
      * @return array
      */
-    public static function getDovakins(IDb $db, $eventIdList)
+    public static function getDovakins(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
-            ->select('display_name')
+        $rounds = $ds->table('round')
             ->select('yaku')
-            ->join('player', ['player.id', '=', 'round.winner_id'])
+            ->select('winner_id')
             ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['tsumo', 'ron', 'multiron'])
             ->findArray();
 
         $yakuhaiStats = [];
         foreach ($rounds as $round) {
-            if (empty($yakuhaiStats[$round['display_name']])) {
-                $yakuhaiStats[$round['display_name']] = 0;
+            $name = $players[$round['winner_id']]['display_name'];
+            if (empty($yakuhaiStats[$name])) {
+                $yakuhaiStats[$name] = 0;
             }
 
             $yaku = explode(',', $round['yaku']);
             foreach ($yaku as $id) {
                 switch ($id) {
                     case Y_YAKUHAI1:
-                        $yakuhaiStats[$round['display_name']] ++;
+                        $yakuhaiStats[$name] ++;
                         break;
                     case Y_YAKUHAI2:
-                        $yakuhaiStats[$round['display_name']] += 2;
+                        $yakuhaiStats[$name] += 2;
                         break;
                     case Y_YAKUHAI3:
-                        $yakuhaiStats[$round['display_name']] += 3;
+                        $yakuhaiStats[$name] += 3;
                         break;
                     case Y_YAKUHAI4:
-                        $yakuhaiStats[$round['display_name']] += 4;
+                        $yakuhaiStats[$name] += 4;
                         break;
                     default:
                         ;
@@ -472,19 +460,19 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players who fed into most expensive hand (but not while being riichi)
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @throws \Exception
      * @return array
      */
-    public static function getImpossibleWait(IDb $db, $eventIdList)
+    public static function getImpossibleWait(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->table('round')
             ->select('loser_id')
-            ->select('display_name')
             ->select('riichi')
             ->select('han')
             ->select('fu')
-            ->join('player', ['player.id', '=', 'round.loser_id'])
             ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['multiron', 'ron'])
             ->orderByDesc('han')
@@ -496,9 +484,9 @@ class AchievementsPrimitive extends Primitive
             return !in_array($round['loser_id'], explode(',', $round['riichi']));
         });
 
-        return array_map(function ($round) {
+        return array_map(function ($round) use (&$players) {
             return [
-                'name' => $round['display_name'],
+                'name' => $players[$round['loser_id']]['display_name'],
                 'hand' => ['han' => $round['han'], 'fu' => $round['han'] > 4 ? null : $round['fu']]
             ];
         }, array_slice($filteredRounds, 0, 10));
@@ -507,17 +495,17 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players with largest ippatsu count
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @throws \Exception
      * @return array
      */
-    public static function getJustAsPlanned(IDb $db, $eventIdList)
+    public static function getJustAsPlanned(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->table('round')
             ->select('winner_id')
-            ->select('display_name')
             ->select('yaku')
-            ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['multiron', 'ron', 'tsumo'])
             ->findArray();
@@ -527,12 +515,15 @@ class AchievementsPrimitive extends Primitive
         });
 
         $counts = [];
-        foreach ($filteredRounds as $round) {
-            if (empty($counts[$round['display_name']])) {
-                $counts[$round['display_name']] = 0;
-            }
+        if ($filteredRounds) {
+            foreach ($filteredRounds as $round) {
+                $name = $players[$round['winner_id']]['display_name'];
+                if (empty($counts[$name])) {
+                    $counts[$name] = 0;
+                }
 
-            $counts[$round['display_name']] ++;
+                $counts[$name]++;
+            }
         }
 
         arsort($counts);
@@ -551,21 +542,19 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players with largest average count of dora in player's hand
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
      * @return array
      */
-    public static function getMaxAverageDoraCount(IDb $db, $eventIdList)
+    public static function getMaxAverageDoraCount(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->local()->table('round')
             ->select('winner_id')
-            ->select('display_name')
             ->selectExpr('sum(dora)*1.0/count(*) as average')
-            ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['multiron', 'ron', 'tsumo'])
             ->groupBy('winner_id')
-            ->groupBy('display_name')
             ->orderByDesc('average')
             ->findArray();
 
@@ -574,9 +563,9 @@ class AchievementsPrimitive extends Primitive
         });
 
         return array_map(
-            function ($round) {
+            function ($round) use (&$players) {
                 return [
-                    'name' => $round['display_name'],
+                    'name' => $players[$round['winner_id']]['display_name'],
                     'count' => sprintf('%.2f', $round['average'])
                 ];
             },
@@ -587,25 +576,25 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players with largest amount of unique yaku collected during the tournament
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
      * @return array
      */
-    public static function getMaxDifferentYakuCount(IDb $db, $eventIdList)
+    public static function getMaxDifferentYakuCount(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->local()->table('round')
             ->select('winner_id')
-            ->select('display_name')
             ->select('yaku')
-            ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['multiron', 'ron', 'tsumo'])
             ->findArray();
 
         $playersYaku = [];
         foreach ($rounds as $round) {
-            if (empty($playersYaku[$round['display_name']])) {
-                $playersYaku[$round['display_name']] = [];
+            $name = $players[$round['winner_id']]['display_name'];
+            if (empty($playersYaku[$name])) {
+                $playersYaku[$name] = [];
             }
 
             foreach (explode(',', $round['yaku']) as $yaku) {
@@ -613,8 +602,8 @@ class AchievementsPrimitive extends Primitive
                     $yaku = Y_YAKUHAI1;
                 }
 
-                if (!in_array($yaku, $playersYaku[$round['display_name']])) {
-                    array_push($playersYaku[$round['display_name']], $yaku);
+                if (!in_array($yaku, $playersYaku[$name])) {
+                    array_push($playersYaku[$name], $yaku);
                 }
             }
         }
@@ -640,13 +629,14 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players with largest amount of points received as ryukoku payments
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
      * @return array
      */
-    public static function getFavoriteAsapinApprentice(IDb $db, $eventIdList)
+    public static function getFavoriteAsapinApprentice(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->local()->table('round')
             ->select('tempai')
             ->whereIn('event_id', $eventIdList)
             ->where('outcome', 'draw')
@@ -686,21 +676,10 @@ class AchievementsPrimitive extends Primitive
 
         arsort($filteredPayments);
 
-        $names = $db->table('player')
-            ->select('id')
-            ->select('display_name')
-            ->whereIdIn(array_slice(array_keys($filteredPayments), 0, 5))
-            ->findArray();
-
-        $namesAssoc = [];
-        foreach ($names as $item) {
-            $namesAssoc[$item['id']] = $item['display_name'];
-        }
-
         return array_map(
-            function ($playerId, $payment) use ($namesAssoc) {
+            function ($playerId, $payment) use ($players) {
                 return [
-                    'name' => $namesAssoc[$playerId],
+                    'name' => $players[$playerId]['display_name'],
                     'score' => $payment
                 ];
             },
@@ -712,17 +691,16 @@ class AchievementsPrimitive extends Primitive
     /**
      * Get players with largest damaten count
      *
-     * @param IDb $db
-     * @param $eventIdList
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
      * @return array
      */
-    public static function getNinja(IDb $db, $eventIdList)
+    public static function getNinja(DataSource $ds, array $eventIdList, array $players)
     {
-        $rounds = $db->table('round')
+        $rounds = $ds->local()->table('round')
             ->select('winner_id')
-            ->select('display_name')
             ->select('riichi')
-            ->join('player', ['player.id', '=', 'round.winner_id'])
             ->whereIn('event_id', $eventIdList)
             ->whereIn('outcome', ['multiron', 'ron', 'tsumo'])
             ->where('open_hand', 0)
@@ -733,12 +711,15 @@ class AchievementsPrimitive extends Primitive
         });
 
         $counts = [];
-        foreach ($filteredRounds as $round) {
-            if (empty($counts[$round['display_name']])) {
-                $counts[$round['display_name']] = 0;
-            }
+        if ($filteredRounds) {
+            foreach ($filteredRounds as $round) {
+                $name = $players[$round['winner_id']]['display_name'];
+                if (empty($counts[$name])) {
+                    $counts[$name] = 0;
+                }
 
-            $counts[$round['display_name']] ++;
+                $counts[$name]++;
+            }
         }
 
         arsort($counts);
@@ -754,18 +735,30 @@ class AchievementsPrimitive extends Primitive
         );
     }
 
+    /**
+     * @return bool
+     */
     public function save()
     {
+        return false;
         // nothing
     }
 
+    /**
+     * @return self
+     */
     public function drop()
     {
+        return $this;
         // nothing
     }
 
+    /**
+     * @return int|null
+     */
     public function getId()
     {
         // nothing
+        return null;
     }
 }

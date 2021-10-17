@@ -23,11 +23,12 @@ include_once __DIR__ . "/../helpers/YakuMap.php";
 class GameFormatter
 {
     /**
-     * @param $gamesData array
-     * @param $config Config
+     * @param array $gamesData
+     * @param Config $config
+     *
      * @return array
      */
-    public function formatGamesData(&$gamesData, $config)
+    public function formatGamesData(&$gamesData, Config $config)
     {
         $labelColorThreshold = $config->subtractStartPoints() ? 0 : $config->startPoints();
         $result = [];
@@ -89,13 +90,13 @@ class GameFormatter
                         break;
                     case 'chombo':
                         $chomboCount++;
-                        continue; // explicit continue to prevent further hands calc
+                        continue 2; // explicit continue to prevent further hands calc
                     case 'draw':
                         $draws++;
-                        continue; // explicit continue to prevent further hands calc
+                        continue 2; // explicit continue to prevent further hands calc
                     case 'abort':
                         $draws++;
-                        continue; // explicit continue to prevent further hands calc
+                        continue 2; // explicit continue to prevent further hands calc
                 }
 
                 if ($round['outcome'] != 'multiron') {
@@ -167,7 +168,11 @@ class GameFormatter
         return $result;
     }
 
-    protected function _enrichWithInitials($array)
+    /**
+     * @param array $array
+     * @return array
+     */
+    protected function _enrichWithInitials(array $array)
     {
         // TODO: make more universal
         if (!empty($array['display_name'])) {
@@ -205,7 +210,12 @@ class GameFormatter
         return $array;
     }
 
-    protected function _makeLog($game, &$playersData)
+    /**
+     * @param array $game
+     * @param array $playersData
+     * @return array
+     */
+    protected function _makeLog($game, &$playersData): array
     {
         $rounds = [];
         foreach ($game as $round) {
@@ -261,7 +271,11 @@ class GameFormatter
         return $rounds;
     }
 
-    protected function _formatYaku(&$round)
+    /**
+     * @param array $round
+     * @return string|null
+     */
+    protected function _formatYaku(&$round): ?string
     {
         $yakuList = null;
         if (!empty($round['yaku'])) {
@@ -269,7 +283,7 @@ class GameFormatter
                 ', ',
                 array_map(
                     function ($yaku) {
-                        return Yaku::getMap()[$yaku];
+                        return Yaku::getMap()[(int)$yaku];
                     },
                     explode(',', $round['yaku'])
                 )
@@ -279,7 +293,13 @@ class GameFormatter
         return $yakuList;
     }
 
-    protected function _formatCsvPlayersList(&$round, $key, &$playersData)
+    /**
+     * @param array $round
+     * @param string $key
+     * @param array $playersData
+     * @return string|null
+     */
+    protected function _formatCsvPlayersList(&$round, string $key, &$playersData): ?string
     {
         $list = null;
         if (!empty($round[$key])) {
@@ -295,7 +315,12 @@ class GameFormatter
         return $list;
     }
 
-    protected function _formatMultiron(&$round, &$playersData)
+    /**
+     * @param array $round
+     * @param array $playersData
+     * @return array|null
+     */
+    protected function _formatMultiron(&$round, &$playersData): ?array
     {
         $wins = null;
         if ($round['outcome'] == 'multiron' && !empty($round['wins'])) {
@@ -318,7 +343,13 @@ class GameFormatter
 
     // ------------------- Tournament control page formatters -----------------------
 
-    public function formatTables($tables, $waitingForTimer, $isSyncStart)
+    /**
+     * @param array $tables
+     * @param bool $waitingForTimer
+     * @param bool $isSyncStart
+     * @return array
+     */
+    public function formatTables($tables, bool $waitingForTimer, bool $isSyncStart): array
     {
         $winds = ['東', '南', '西', '北'];
         return array_map(function ($t) use ($waitingForTimer, $isSyncStart, &$winds) {
@@ -367,6 +398,11 @@ class GameFormatter
         }, $tables);
     }
 
+    /**
+     * @param array $roundData
+     * @param array $players
+     * @return string
+     */
     protected function _formatLastRound($roundData, $players)
     {
         $players = ArrayHelpers::elm2Key($players, 'id');
@@ -374,7 +410,7 @@ class GameFormatter
             return '';
         }
 
-        $namesOf = function ($list) {
+        $namesOf = function ($list) use (&$players): string {
             return implode(', ', array_map(function ($e) use (&$players) {
                 return $players[$e]['display_name'];
             }, $list));

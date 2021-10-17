@@ -33,10 +33,11 @@ class GroupAccessPrimitive extends AccessPrimitive
     protected static $_fieldsMapping = [
         'id'                => '_id',
         'group_id'          => '_groupId',
-        'event_ids'         => '_eventIds',
+        'event_id'          => '_eventId',
         'acl_type'          => '_aclType',
         'acl_name'          => '_aclName',
         'acl_value'         => '_aclValue',
+        'allowed_values'    => '_allowedValues',
     ];
 
     protected function _getFieldsTransforms()
@@ -44,10 +45,11 @@ class GroupAccessPrimitive extends AccessPrimitive
         return [
             '_id'        => $this->_integerTransform(true),
             '_groupId'   => $this->_integerTransform(),
-            '_eventIds'  => $this->_csvTransform(),
+            '_eventId'   => $this->_integerTransform(true),
             '_aclType'   => $this->_stringTransform(),
             '_aclName'   => $this->_stringTransform(),
             '_aclValue'  => $this->_stringTransform(),
+            '_allowedValues' => $this->_csvTransform(),
         ];
     }
 
@@ -66,13 +68,28 @@ class GroupAccessPrimitive extends AccessPrimitive
      * Find rules by group id
      *
      * @param IDb $db
-     * @param $ids
+     * @param int[] $ids
+     *
      * @return GroupAccessPrimitive[]
      * @throws \Exception
      */
-    public static function findByGroup(IDb $db, $ids)
+    public static function findByGroup(IDb $db, array $ids)
     {
         return self::_findBy($db, 'group_id', $ids);
+    }
+
+    /**
+     * Find rules by event id
+     *
+     * @param IDb $db
+     * @param int[] $ids
+     *
+     * @return GroupAccessPrimitive[]
+     * @throws \Exception
+     */
+    public static function findByEvent(IDb $db, array $ids)
+    {
+        return self::_findBy($db, 'event_id', $ids, true);
     }
 
     /**
@@ -102,11 +119,16 @@ class GroupAccessPrimitive extends AccessPrimitive
     /**
      * @param GroupPrimitive $group
      * @return GroupAccessPrimitive
+     * @throws InvalidParametersException
      */
     public function setGroup(GroupPrimitive $group): GroupAccessPrimitive
     {
+        $id = $group->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
         $this->_group = $group;
-        $this->_groupId = $group->getId();
+        $this->_groupId = $id;
         return $this;
     }
 }

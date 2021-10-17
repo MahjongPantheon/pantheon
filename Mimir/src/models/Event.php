@@ -25,7 +25,6 @@ require_once __DIR__ . '/../primitives/SessionResults.php';
 require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../primitives/EventPrescript.php';
-require_once __DIR__ . '/../primitives/PlayerEnrollment.php';
 require_once __DIR__ . '/../primitives/PlayerHistory.php';
 require_once __DIR__ . '/../primitives/Achievements.php';
 require_once __DIR__ . '/../primitives/Round.php';
@@ -36,29 +35,28 @@ class EventModel extends Model
     /**
      * Get data of players' current seating
      *
-     * @param $eventId
+     * @param int $eventId
+     * @param array $players
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array TODO: should it be here? Looks a bit too low-level :/
      */
-    public function getCurrentSeating($eventId)
+    public function getCurrentSeating(int $eventId, array $players)
     {
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
         $startRating = $event[0]->getRuleset()->startRating();
 
         // get data from primitives, and some raw data
-        $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $eventId);
-        $historyItems = PlayerHistoryPrimitive::findLastByEvent($this->_db, $eventId);
-        $seatings = $this->_db->table('session_player')
+        $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);
+        $historyItems = PlayerHistoryPrimitive::findLastByEvent($this->_ds, $eventId);
+        $seatings = $this->_ds->table('session_player')
             ->join('session', 'session.id = session_player.session_id')
-            ->join('player', 'player.id = session_player.player_id')
             ->select('session_player.order')
             ->select('session_player.player_id')
             ->select('session_player.session_id')
-            ->select('player.display_name')
             ->select('session.table_index')
             ->where('session.event_id', $eventId)
             ->orderByDesc('session.id')
@@ -77,8 +75,9 @@ class EventModel extends Model
             }
         }
 
-        return array_map(function ($seat) use (&$ratings) {
+        return array_map(function ($seat) use (&$ratings, &$players) {
             $seat['rating'] = $ratings[$seat['player_id']];
+            $seat['display_name'] = $players[$seat['player_id']]['display_name'];
             return $seat;
         }, $seatings);
     }
@@ -86,30 +85,29 @@ class EventModel extends Model
     /**
      * Find out currently playing tables state (for tournaments only)
      * @param integer $eventId
-     * @param bool $includeAllRounds
      * @return array
      * @throws \Exception
      */
-    public function getTablesState($eventId, $includeAllRounds = false)
+    public function getTablesState($eventId)
     {
-        $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_db, $eventId);
+        $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);
         $reggedPlayers = array_values(array_filter($reggedPlayers, function ($el) {
             return !$el['ignore_seating'];
         }));
 
-        $event = EventPrimitive::findById($this->_db, [$eventId])[0];
+        $event = EventPrimitive::findById($this->_ds, [$eventId])[0];
         if ($event->getAllowPlayerAppend()) { // club game mode
             $tablesCount = 10;
         } else {
             $tablesCount = count($reggedPlayers) / 4;
         }
 
-        $lastGames = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, [
+        $lastGames = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, [
             SessionPrimitive::STATUS_FINISHED,
             SessionPrimitive::STATUS_INPROGRESS,
             SessionPrimitive::STATUS_PREFINISHED
         ], 0, $tablesCount);
-        return $this->_formatTablesState($lastGames, $reggedPlayers, $includeAllRounds);
+        return $this->_formatTablesState($lastGames, $reggedPlayers);
     }
 
     /**
@@ -119,7 +117,7 @@ class EventModel extends Model
      */
     public function getGlobalTablesState()
     {
-        $games = SessionPrimitive::findAllInProgress($this->_db);
+        $games = SessionPrimitive::findAllInProgress($this->_ds);
         return $this->_formatTablesState($games, []);
     }
 
@@ -132,7 +130,7 @@ class EventModel extends Model
      */
     public function getPrescriptedConfig($eventId)
     {
-        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
+        $prescript = EventPrescriptPrimitive::findByEventId($this->_ds, [$eventId]);
         if (empty($prescript)) {
             return [
                 'event_id' => $eventId,
@@ -144,7 +142,7 @@ class EventModel extends Model
             ];
         }
 
-        $regData = PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_db, $eventId);
+        $regData = PlayerRegistrationPrimitive::findLocalIdsMapByEvent($this->_ds, $eventId);
 
         return [
             'event_id' => $eventId,
@@ -165,10 +163,10 @@ class EventModel extends Model
      */
     public function updatePrescriptedConfig($eventId, $nextSessionIndex, $prescriptText)
     {
-        $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
+        $prescript = EventPrescriptPrimitive::findByEventId($this->_ds, [$eventId]);
         if (empty($prescript)) {
             $prescript = [
-                (new EventPrescriptPrimitive($this->_db))
+                (new EventPrescriptPrimitive($this->_ds))
                     ->setEventId($eventId)
             ];
         }
@@ -182,11 +180,10 @@ class EventModel extends Model
     /**
      * @param SessionPrimitive[] $lastGames
      * @param array $reggedPlayers
-     * @param bool $includeAllRounds
      * @throws \Exception
      * @return array
      */
-    protected function _formatTablesState($lastGames, $reggedPlayers, $includeAllRounds = false)
+    protected function _formatTablesState($lastGames, $reggedPlayers)
     {
         $output = [];
         $playerIdMap = [];
@@ -196,11 +193,14 @@ class EventModel extends Model
 
         if (count($lastGames) > 0) {
             // Assume that we don't use _formatTablesState for multiple events
-            list($ev) = EventPrimitive::findById($this->_db, [$lastGames[0]->getEventId()]);
+            list($ev) = EventPrimitive::findById($this->_ds, [$lastGames[0]->getEventId()]);
             foreach ($lastGames as $game) {
                 $game->setEvent($ev); // Preload event into session to prevent multiple fetches inside DateHelper::mayDefinalizeGame
-                $rounds = RoundPrimitive::findBySessionIds($this->_db, [$game->getId()]);
-                /** @var MultiRoundPrimitive $lastRound */
+                $gId = $game->getId();
+                if (empty($gId)) {
+                    throw new InvalidParametersException('Attempted to use deidented primitive');
+                }
+                $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$gId]);
                 $lastRound = MultiRoundHelper::findLastRound($rounds);
 
                 $output [] = [
@@ -209,15 +209,18 @@ class EventModel extends Model
                     'hash' => $game->getRepresentationalHash(),
                     'penalties' => $game->getCurrentState()->getPenaltiesLog(),
                     'table_index' => $game->getTableIndex(),
-                    'last_round' => ($lastRound && !$includeAllRounds) ? $this->_formatLastRound($lastRound) : [],
-                    'rounds' => $includeAllRounds ? array_map([$this, '_formatLastRound'], $rounds) : [],
+                    'last_round' => $lastRound ? $this->_formatLastRound($lastRound) : [],
                     'current_round' => $game->getCurrentState()->getRound(),
                     'scores' => $game->getCurrentState()->getScores(),
                     'players' => array_map(function (PlayerPrimitive $p) use (&$playerIdMap) {
+                        $pId = $p->getId();
+                        if (empty($pId)) {
+                            throw new InvalidParametersException('Attempted to use deidented primitive');
+                        }
                         return [
-                            'id' => $p->getId(),
+                            'id' => $pId,
                             // may be empty for excluded players in non-prescripted event, so it's fine.
-                            'local_id' => empty($playerIdMap[$p->getId()]) ? 0 : $playerIdMap[$p->getId()],
+                            'local_id' => empty($playerIdMap[$pId]) ? 0 : $playerIdMap[$pId],
                             'display_name' => $p->getDisplayName()
                         ];
                     }, $game->getPlayers())
@@ -228,7 +231,11 @@ class EventModel extends Model
         return $output;
     }
 
-    protected function _formatLastRound(RoundPrimitive $round)
+    /**
+     * @param RoundPrimitive $round
+     * @return array
+     */
+    protected function _formatLastRound(RoundPrimitive $round): array
     {
         if ($round instanceof MultiRoundPrimitive) {
             return [
@@ -258,14 +265,14 @@ class EventModel extends Model
     }
 
     /**
-     * @param IDb $db
+     * @param DataSource $ds
      * @param SessionPrimitive[] $games
      * @throws \Exception
      * @return array
      */
-    public static function getPlayersOfGames(IDB $db, $games)
+    public static function getPlayersOfGames(DataSource $ds, $games)
     {
-        $players = PlayerPrimitive::findById($db, array_reduce($games, function ($acc, SessionPrimitive $el) {
+        $players = PlayerPrimitive::findById($ds, array_reduce($games, function ($acc, SessionPrimitive $el) {
             return array_merge($acc, $el->getPlayersIds());
         }, []));
 
@@ -279,5 +286,85 @@ class EventModel extends Model
         }
 
         return $result;
+    }
+
+    /**
+     * Get all events (paginated)
+     *
+     * @param int $limit
+     * @param int $offset
+     * @throws \Exception
+     * @return array
+     */
+    public function getAllEvents(int $limit, int $offset)
+    {
+        if ($limit > 100) {
+            $limit = 100;
+        }
+
+        $count = $this->_ds->table('event')->count();
+
+        $data = $this->_ds->table('event')
+            ->select('id')
+            ->select('title')
+            ->select('description')
+            ->select('is_online')
+            ->select('sync_start')
+            ->orderByDesc('id')
+            ->limit($limit)
+            ->offset($offset)
+            ->findMany();
+
+        return [
+            'total' => $count,
+            'events' => array_map(function ($event) {
+                return [
+                    'id' => $event['id'],
+                    'title' => $event['title'],
+                    'description' => $event['description'],
+                    'finished' => !!$event['finished'],
+                    'type' => $event['is_online']
+                        ? 'online'
+                        : ($event['sync_start'] ? 'tournament' : 'local')
+                ];
+            }, $data)
+        ];
+    }
+
+    /**
+     * Get events by id list
+     *
+     * @param array $idList
+     * @throws \Exception
+     * @return array
+     */
+    public function getEventsById(array $idList)
+    {
+        $data = $this->_ds->table('event')
+            ->select('event.id', 'id')
+            ->select('event.title', 'title')
+            ->select('event.description', 'description')
+            ->select('event.is_online', 'is_online')
+            ->select('event.sync_start', 'sync_start')
+            ->select('event.finished', 'finished')
+            ->selectExpr('count(session.id)', 'sessioncnt')
+            ->leftOuterJoin('session', 'session.event_id = event.id')
+            ->whereIn('event.id', $idList)
+            ->groupBy('event.id')
+            ->findMany();
+
+        return array_map(function ($event) {
+            $type = $event['is_online']
+                ? 'online'
+                : ($event['sync_start'] ? 'tournament' : 'local');
+            return [
+                'id' => $event['id'],
+                'title' => $event['title'],
+                'description' => $event['description'],
+                'finished' => !!$event['finished'],
+                'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
+                'type' => $type
+            ];
+        }, $data);
     }
 }

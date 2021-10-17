@@ -32,43 +32,43 @@ class PlayerStatModel extends Model
      * Now it costs 6 indexed queries to DB (should be fast),
      * but be careful about adding some other stats.
      *
-     * @param $eventIdList
-     * @param $playerId
+     * @param int[] $eventIdList
+     * @param int $playerId
+     *
      * @return array
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function getStats($eventIdList, $playerId)
+    public function getStats(array $eventIdList, int $playerId)
     {
         if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
-        $eventList = EventPrimitive::findById($this->_db, $eventIdList);
+        $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
         $mainEvent = $eventList[0];
 
-        $player = PlayerPrimitive::findById($this->_db, [$playerId]);
+        $player = PlayerPrimitive::findById($this->_ds, [$playerId]);
         if (empty($player)) {
             throw new EntityNotFoundException('Player id#' . $playerId . ' not found in DB');
         }
-        $player = $player[0];
 
         $games = [];
         foreach ($eventList as $event) {
             /* FIXME (PNTN-237): Need to refactor this to avoid accessing DB in a loop. */
             /* We want to keep keys here, so we use "+" instead of array_merge. */
-            $games = $games + $this->_fetchGamesHistory($event, $player);
+            $games = $games + $this->_fetchGamesHistory($event, $player[0]);
         }
 
         ksort($games);
 
         $rounds = $this->_fetchRounds($games);
 
-        $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($mainEvent->getRuleset(), $playerId, $games);
+        $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($mainEvent->getRuleset(), $games);
         return [
             'rating_history'        => $this->_getRatingHistorySequence($mainEvent, $playerId, $games),
             'score_history'         => $scoresAndPlayers['scores'],
@@ -86,17 +86,17 @@ class PlayerStatModel extends Model
 
     /**
      * @param EventPrimitive $event
-     * @param $playerId
-     * @param $games
+     * @param int $playerId
+     * @param array $games
      * @return array
      */
-    protected function _getRatingHistorySequence(EventPrimitive $event, $playerId, $games)
+    protected function _getRatingHistorySequence(EventPrimitive $event, int $playerId, array $games)
     {
         $rating = $event->getRuleset()->startRating();
         $ratingHistory = array_filter(
             array_map(
                 function ($game) use (&$rating, $playerId) {
-                    /** @var $results SessionResultsPrimitive[] */
+                    /** @param SessionResultsPrimitive[] $results */
                     $results = $game['results'];
                     $rating += $results[$playerId]->getRatingDelta();
                     return $rating;
@@ -112,17 +112,16 @@ class PlayerStatModel extends Model
     /**
      * Scores and rating deltas of all players
      *
-     * @param $rules
-     * @param $playerId
-     * @param $games
+     * @param Ruleset $rules
+     * @param array $games
      * @throws \Exception
      * @return array
      */
-    protected function _getScoreHistoryAndPlayers($rules, $playerId, $games)
+    protected function _getScoreHistoryAndPlayers($rules, array $games)
     {
         $withChips = $rules->chipsValue() > 0;
-        $scoreHistory = array_map(function ($game) use ($playerId, $withChips) {
-            /** @var $results SessionResultsPrimitive[] */
+        $scoreHistory = array_map(function ($game) use ($withChips) {
+            /** @var SessionResultsPrimitive[] $results */
             $results = $game['results'];
             /** @var SessionPrimitive $session */
             $session = $game['session'];
@@ -154,11 +153,13 @@ class PlayerStatModel extends Model
      * 1) get all ids,
      * 2) get all rows by single query
      *
-     * @param $scoreHistory
+     * @param array $scoreHistory
+     *
+     * @return array[]
      * @throws \Exception
-     * @return array
+     *
      */
-    protected function _fetchPlayersInfo($scoreHistory)
+    protected function _fetchPlayersInfo(array $scoreHistory)
     {
         $playerIds = array_reduce($scoreHistory, function ($acc, $item) {
             return array_merge($acc, array_map(function ($playerInfo) {
@@ -171,7 +172,7 @@ class PlayerStatModel extends Model
                 'display_name'  => $p->getDisplayName(),
                 'tenhou_id'     => $p->getTenhouId(),
             ];
-        }, PlayerPrimitive::findById($this->_db, $playerIds));
+        }, PlayerPrimitive::findById($this->_ds, $playerIds));
 
         return $players;
     }
@@ -179,14 +180,14 @@ class PlayerStatModel extends Model
     /**
      * Get places stats for player
      *
-     * @param $playerId
-     * @param $games
-     * @return mixed
+     * @param int $playerId
+     * @param array $games
+     * @return array
      */
-    protected function _getPlacesSummary($playerId, $games)
+    protected function _getPlacesSummary(int $playerId, array $games)
     {
         return array_reduce($games, function ($acc, $game) use ($playerId) {
-            /** @var $results SessionResultsPrimitive[] */
+            /** @var SessionResultsPrimitive[] $results */
             $results = $game['results'];
 
             $acc[$results[$playerId]->getPlace()] ++;
@@ -200,11 +201,11 @@ class PlayerStatModel extends Model
     }
 
     /**
-     * @param $playerId
+     * @param int $playerId
      * @param RoundPrimitive[] $rounds
      * @return array
      */
-    protected function _getOutcomeSummary($playerId, $rounds)
+    protected function _getOutcomeSummary(int $playerId, array $rounds)
     {
         return array_reduce($rounds, function ($acc, RoundPrimitive $r) use ($playerId) {
             switch ($r->getOutcome()) {
@@ -234,15 +235,16 @@ class PlayerStatModel extends Model
                     }
                     break;
                 case 'multiron':
-                    /** @var $r MultiRoundPrimitive */
-                    foreach ($r->rounds() as $round) {
+                    /** @var MultiRoundPrimitive $mr */
+                    $mr = $r;
+                    foreach ($mr->rounds() as $round) {
                         if ($round->getWinnerId() == $playerId) {
                             $acc['ron'] ++;
-                            if ($r->getOpenHand()) {
+                            if ($mr->getOpenHand()) {
                                 $acc['openhand'] ++;
                             }
                             break;
-                        } else if ($r->getLoserId() == $playerId) {
+                        } else if ($mr->getLoserId() == $playerId) {
                             $acc['feed'] ++;
                         }
                     }
@@ -264,11 +266,12 @@ class PlayerStatModel extends Model
     /**
      * Get yaku summary stats for player
      *
-     * @param $playerId
-     * @param $rounds
+     * @param int $playerId
+     * @param RoundPrimitive[] $rounds
+     *
      * @return array
      */
-    protected function _getYakuSummary($playerId, $rounds)
+    protected function _getYakuSummary(int $playerId, array $rounds)
     {
         $summary = array_reduce($rounds, function ($acc, RoundPrimitive $r) use ($playerId) {
             if (($r->getOutcome() === 'ron' || $r->getOutcome() === 'tsumo') && $r->getWinnerId() == $playerId) {
@@ -280,8 +283,9 @@ class PlayerStatModel extends Model
                     return $acc;
                 }, $acc);
             } else if ($r->getOutcome() === 'multiron') {
-                /** @var $r MultiRoundPrimitive */
-                foreach ($r->rounds() as $round) {
+                /** @var MultiRoundPrimitive $mr */
+                $mr = $r;
+                foreach ($mr->rounds() as $round) {
                     if ($round->getWinnerId() == $playerId) {
                         $acc = array_reduce(explode(',', $round->getYaku()), function ($acc, $yaku) {
                             if (empty($acc[$yaku])) {
@@ -304,32 +308,30 @@ class PlayerStatModel extends Model
     /**
      * Get hand value summary stats for player
      *
-     * @param $playerId
-     * @param $rounds
+     * @param int $playerId
+     * @param RoundPrimitive[] $rounds
+     *
      * @return array
      */
-    protected function _getHanSummary($playerId, $rounds)
+    protected function _getHanSummary(int $playerId, array $rounds)
     {
         $summary = array_reduce($rounds, function ($acc, RoundPrimitive $r) use ($playerId) {
             if (($r->getOutcome() === 'ron' || $r->getOutcome() === 'tsumo') && $r->getWinnerId() == $playerId) {
-                $acc = array_reduce(explode(',', $r->getHan()), function ($acc, $han) {
-                    if (empty($acc[$han])) {
-                        $acc[$han] = 0;
-                    }
-                    $acc[$han] ++;
-                    return $acc;
-                }, $acc);
+                $han = $r->getHan();
+                if (empty($acc[$han])) {
+                    $acc[$han] = 0;
+                }
+                $acc[$han] ++;
             } else if ($r->getOutcome() === 'multiron') {
-                /** @var $r MultiRoundPrimitive */
-                foreach ($r->rounds() as $round) {
+                /** @var MultiRoundPrimitive $mr */
+                $mr = $r;
+                foreach ($mr->rounds() as $round) {
                     if ($round->getWinnerId() == $playerId) {
-                        $acc = array_reduce(explode(',', $round->getHan()), function ($acc, $han) {
-                            if (empty($acc[$han])) {
-                                $acc[$han] = 0;
-                            }
-                            $acc[$han] ++;
-                            return $acc;
-                        }, $acc);
+                        $han = $round->getHan();
+                        if (empty($acc[$han])) {
+                            $acc[$han] = 0;
+                        }
+                        $acc[$han] ++;
                         break;
                     }
                 }
@@ -344,13 +346,13 @@ class PlayerStatModel extends Model
     /**
      * Get riichi win/lose summary stats for player
      *
-     * @param $playerId
-     * @param RoundPrimitive[] $rounds
      * @param Ruleset $rules
+     * @param int $playerId
+     * @param RoundPrimitive[] $rounds
      * @return array
      * @throws \Exception
      */
-    protected function _getRiichiSummary($rules, $playerId, $rounds)
+    protected function _getRiichiSummary(Ruleset $rules, int $playerId, array $rounds)
     {
         $acc = [
             'riichi_won'        => 0,
@@ -381,18 +383,19 @@ class PlayerStatModel extends Model
             }
 
             if ($r->getOutcome() === 'multiron') {
-                /** @var $r MultiRoundPrimitive */
-                $roundRiichi = $r->getRiichiIds();
-                $roundWinners = $r->getWinnerIds();
+                /** @var MultiRoundPrimitive $mr */
+                $mr = $r;
+                $roundRiichi = $mr->getRiichiIds();
+                $roundWinners = $mr->getWinnerIds();
 
                 if (in_array($playerId, $roundWinners) && in_array($playerId, $roundRiichi)) {
-                    $lastSessionState = $r->getLastSessionState();
+                    $lastSessionState = $mr->getLastSessionState();
                     $riichiWinners = PointsCalc::assignRiichiBets(
-                        $r->rounds(),
-                        $r->getLoserId(),
+                        $mr->rounds(),
+                        $mr->getLoserId(),
                         $lastSessionState->getRiichiBets(),
                         $lastSessionState->getHonba(),
-                        $r->getSession()
+                        $mr->getSession()
                     );
 
                     $closestWinner = $riichiWinners[$playerId]['closest_winner'];
@@ -411,7 +414,7 @@ class PlayerStatModel extends Model
                     $acc['riichi_lost']++;
                 }
 
-                if ($r->getLoserId() == $playerId && in_array($playerId, $roundRiichi)) {
+                if ($mr->getLoserId() == $playerId && in_array($playerId, $roundRiichi)) {
                     $acc['feed_under_riichi']++;
                 }
             }
@@ -423,13 +426,15 @@ class PlayerStatModel extends Model
     /**
      * Get average dora count for player
      *
-     * @param $playerId
+     * @param int $playerId
      * @param RoundPrimitive[] $rounds
-     * @param Ruleset $rules
-     * @return []
+     *
+     * @return array
      * @throws \Exception
+     *
+     * @psalm-return array{count: int|mixed, average: int|string}
      */
-    protected function _getDoraStat($playerId, $rounds)
+    protected function _getDoraStat(int $playerId, array $rounds): array
     {
         $doraCount = 0;
         $roundsCount = 0;
@@ -440,7 +445,9 @@ class PlayerStatModel extends Model
             }
 
             if ($r->getOutcome() === 'multiron') {
-                foreach ($r->rounds() as $round) {
+                /** @var MultiRoundPrimitive $mr */
+                $mr = $r;
+                foreach ($mr->rounds() as $round) {
                     if ($round->getWinnerId() == $playerId) {
                         $doraCount += $round->getDora();
                         $roundsCount += 1;
@@ -457,19 +464,19 @@ class PlayerStatModel extends Model
     }
 
     /**
-     * @param $games
+     * @param array $games
      * @throws \Exception
      * @return RoundPrimitive[]
      */
-    protected function _fetchRounds($games)
+    protected function _fetchRounds(array $games)
     {
         $sessionIds = array_map(function ($item) {
-            /** @var $session SessionPrimitive */
+            /** @var SessionPrimitive $session */
             $session = $item['session'];
             return $session->getId();
         }, $games);
 
-        return RoundPrimitive::findBySessionIds($this->_db, $sessionIds);
+        return RoundPrimitive::findBySessionIds($this->_ds, $sessionIds);
     }
 
     /**
@@ -480,14 +487,23 @@ class PlayerStatModel extends Model
      */
     protected function _fetchGamesHistory(EventPrimitive $event, PlayerPrimitive $player)
     {
-        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_db, $player->getId(), $event->getId());
+        $pId = $player->getId();
+        $eId = $event->getId();
+        if (empty($pId) || empty($eId)) {
+            throw new InvalidParametersException('Attempt to use deidented primitive');
+        }
+        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_ds, $pId, $eId);
 
         $sessionIds = array_map(function (SessionPrimitive $s) {
             return $s->getId();
         }, $sessions);
 
-        $sessionResults = SessionResultsPrimitive::findBySessionId($this->_db, $sessionIds);
+        $sessionResults = SessionResultsPrimitive::findBySessionId($this->_ds, $sessionIds);
         $sessions = array_combine($sessionIds, $sessions);
+
+        if (!$sessions) {
+            throw new InvalidParametersException('Attempt to combine inequal arrays');
+        }
 
         $fullResults = [];
         foreach ($sessionResults as $result) {

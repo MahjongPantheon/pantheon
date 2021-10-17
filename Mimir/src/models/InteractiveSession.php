@@ -51,8 +51,7 @@ class InteractiveSessionModel extends Model
      */
     public function startGame($eventId, $playerIds, $tableIndex = null, $replayHash = null)
     {
-        $this->_checkAuth($playerIds, $eventId);
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
@@ -61,7 +60,7 @@ class InteractiveSessionModel extends Model
             throw new InvalidParametersException('Players list is not array');
         }
 
-        $players = PlayerPrimitive::findById($this->_db, $playerIds);
+        $players = PlayerPrimitive::findById($this->_ds, $playerIds);
         $players = array_filter(array_map(function ($id) use (&$players) {
             // Re-sort players to match request order - important!
             foreach ($players as $p) {
@@ -76,7 +75,7 @@ class InteractiveSessionModel extends Model
             throw new InvalidUserException('Some players do not exist in DB, check ids');
         }
 
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $success = $newSession
             ->setEvent($event[0])
             ->setPlayers($players)
@@ -96,14 +95,14 @@ class InteractiveSessionModel extends Model
      * This method is strictly for premature end of session (timeout, etc)
      * Normal end or pre-finish should happen when final round is added.
      *
-     * @param $gameHash
+     * @param string $gameHash
      * @throws \Exception
      * @return bool
      */
-    public function endGame($gameHash)
+    public function endGame(string $gameHash)
     {
         $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
-        $this->_checkAuth($session->getPlayersIds(), $session->getEventId());
+        $this->_checkAuth($session->getPlayersIds());
         return $session->prefinish();
     }
 
@@ -112,34 +111,34 @@ class InteractiveSessionModel extends Model
      * or prefinished in the moment of cancellation. No other actions are
      * performed when game is cancelled.
      *
-     * @param $gameHash
+     * @param string $gameHash
      * @throws \Exception
      * @return bool
      */
-    public function cancelGame($gameHash)
+    public function cancelGame(string $gameHash)
     {
-        if (!$this->checkAdminToken()) {
+        $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
+        if (!$this->_meta->isEventAdminById($session->getEventId())) {
             throw new AuthFailedException('Only administrators are allowed to cancel games');
         }
-        $session = $this->_findGame($gameHash, SessionPrimitive::STATUS_INPROGRESS);
         return $session->setStatus(SessionPrimitive::STATUS_CANCELLED)->save();
     }
 
     /**
      * Finalize all sessions in event
      *
-     * @param $eventId
+     * @param int $eventId
      * @throws AuthFailedException
      * @throws \Exception
      * @return int count of finalized sessions
      */
-    public function finalizeSessions($eventId)
+    public function finalizeSessions(int $eventId)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to finalize sessions');
         }
 
-        $games = SessionPrimitive::findByEventAndStatus($this->_db, $eventId, 'prefinished');
+        $games = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, 'prefinished');
         if (empty($games)) {
             return 0;
         }
@@ -152,29 +151,30 @@ class InteractiveSessionModel extends Model
     /**
      * Definalize session in club event
      *
-     * @param $hash
+     * @param string $hash
      * @throws AuthFailedException
      * @throws \Exception
      * @return bool Success?
      */
     public function definalizeSession($hash)
     {
-        if (!$this->checkAdminToken()) {
-            throw new AuthFailedException('Only administrators are allowed to definalize sessions');
-        }
-
-        $games = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
+        $games = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
         if (empty($games)) {
             return false;
         }
 
         $session = $games[0];
-        if (!DateHelper::mayDefinalizeGame($session)) {
+        if (!$this->_meta->isEventAdminById($session->getEventId())) {
+            throw new AuthFailedException('Only administrators are allowed to definalize sessions');
+        }
+        $sessionId = $session->getId();
+
+        if (!DateHelper::mayDefinalizeGame($session) || empty($sessionId)) {
             throw new BadActionException('Session can not be definalized');
         }
 
-        $playerResults = PlayerHistoryPrimitive::findBySession($this->_db, $session->getId());
-        $sessionResults = SessionResultsPrimitive::findBySessionId($this->_db, [$session->getId()]);
+        $playerResults = PlayerHistoryPrimitive::findBySession($this->_ds, $sessionId);
+        $sessionResults = SessionResultsPrimitive::findBySessionId($this->_ds, [$sessionId]);
         /** @var Primitive[] $primitives */
         $primitives = array_merge($playerResults, $sessionResults);
         foreach ($primitives as $p) {
@@ -187,19 +187,19 @@ class InteractiveSessionModel extends Model
     }
 
     /**
-     * @param $gameHashcode string Hashcode of game
-     * @param $roundData array Structure of round data
-     * @param $dry boolean Dry run (no save to DB)
+     * @param string $gameHashcode Hashcode of game
+     * @param array $roundData Structure of round data
+     * @param boolean $dry Dry run (no save to DB)
      * @throws InvalidParametersException
      * @throws BadActionException
      * @throws AuthFailedException
      * @throws \Exception
      * @return bool|array Success?|Results of dry run
      */
-    public function addRound($gameHashcode, $roundData, $dry = false)
+    public function addRound(string $gameHashcode, array $roundData, bool $dry = false)
     {
         $session = $this->_findGame($gameHashcode, SessionPrimitive::STATUS_INPROGRESS);
-        $this->_checkAuth($session->getPlayersIds(), $session->getEventId());
+        $this->_checkAuth($session->getPlayersIds());
 
         if ($session->getEvent()->getGamesStatus() == EventPrimitive::GS_SEATING_READY) {
             // We should not allow adding new rounds if session is not started yet
@@ -217,7 +217,7 @@ class InteractiveSessionModel extends Model
             throw new InvalidParametersException('This round is already recorded (or other round index/honba mismatch)');
         }
 
-        $round = RoundPrimitive::createFromData($this->_db, $session, $roundData);
+        $round = RoundPrimitive::createFromData($this->_ds, $session, $roundData);
 
         if ($dry) {
             list(, $paymentsInfo) = $session->dryRunUpdateCurrentState($round);
@@ -287,11 +287,11 @@ class InteractiveSessionModel extends Model
      */
     public function addPenalty($eventId, $playerId, $amount, $reason)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to add penalties');
         }
 
-        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         if (empty($session)) {
             throw new InvalidParametersException("Couldn't find session in DB");
         }
@@ -310,16 +310,16 @@ class InteractiveSessionModel extends Model
     }
 
     /**
-     * @param $gameHash
-     * @param $withStatus
+     * @param string $gameHash
+     * @param string $withStatus
      * @return SessionPrimitive
      * @throws InvalidParametersException
      * @throws \Exception
      * @throws BadActionException
      */
-    protected function _findGame($gameHash, $withStatus)
+    protected function _findGame(string $gameHash, string $withStatus)
     {
-        $game = SessionPrimitive::findByRepresentationalHash($this->_db, [$gameHash]);
+        $game = SessionPrimitive::findByRepresentationalHash($this->_ds, [$gameHash]);
         if (empty($game)) {
             throw new InvalidParametersException("Couldn't find session in DB");
         }
@@ -332,20 +332,17 @@ class InteractiveSessionModel extends Model
     }
 
     /**
-     * @param $playersIds
-     * @param $eventId
+     * @param int[] $playersIds
+     *
      * @throws AuthFailedException
      * @throws \Exception
+     *
+     * @return void
      */
-    protected function _checkAuth($playersIds, $eventId)
+    protected function _checkAuth(array $playersIds): void
     {
         // Check that real session player is trying to enter data
-        $evMdl = new EventUserManagementModel($this->_db, $this->_config, $this->_meta);
-        if (!$evMdl->checkToken($playersIds[0], $eventId) &&
-            !$evMdl->checkToken($playersIds[1], $eventId) &&
-            !$evMdl->checkToken($playersIds[2], $eventId) &&
-            !$evMdl->checkToken($playersIds[3], $eventId)
-        ) {
+        if (!in_array($this->_meta->getCurrentPersonId(), $playersIds)) {
             throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
         }
     }
@@ -353,21 +350,21 @@ class InteractiveSessionModel extends Model
     /**
      * Drop last round from session (except if this last round has led to session finish)
      *
-     * @param $gameHash
+     * @param string $gameHash
      * @throws AuthFailedException
      * @throws \Exception
      * @throws InvalidParametersException
      * @return boolean
      */
-    public function dropLastRound($gameHash)
+    public function dropLastRound(string $gameHash)
     {
-        if (!$this->checkAdminToken()) {
-            throw new AuthFailedException('Only administrators are allowed to drop last round');
-        }
-
-        $session = SessionPrimitive::findByRepresentationalHash($this->_db, [$gameHash]);
+        $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$gameHash]);
         if (empty($session)) {
             throw new InvalidParametersException("Couldn't find session in DB");
+        }
+
+        if (!$this->_meta->isEventAdminById($session[0]->getEventId())) {
+            throw new AuthFailedException('Only administrators are allowed to drop last round');
         }
 
         if ($session[0]->getStatus() === SessionPrimitive::STATUS_FINISHED) {
@@ -375,25 +372,33 @@ class InteractiveSessionModel extends Model
                 . 'Can\'t alter finished sessions');
         }
 
-        $rounds = RoundPrimitive::findBySessionIds($this->_db, [$session[0]->getId()]);
+        $id = $session[0]->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
+        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$id]);
         if (empty($rounds)) {
             throw new InvalidParametersException('No recorded rounds found for session id#' . $session[0]->getId());
         }
 
         $lastRound = MultiRoundHelper::findLastRound($rounds);
-        $session[0]->rollback($lastRound); // this also does session save & drop round
+        if (!empty($lastRound)) {
+            $session[0]->rollback($lastRound); // this also does session save & drop round
+        }
         return true;
     }
 
     /**
      * Send event to predefined tracker about new data in game
-     * @param $gameHashcode
+     * @param string $gameHashcode
      * @return bool
      */
-    protected function _trackUpdate($gameHashcode)
+    protected function _trackUpdate(string $gameHashcode)
     {
-        if (!empty($this->_config->getValue('trackerUrl'))) {
-            file_get_contents(sprintf($this->_config->getValue('trackerUrl'), $gameHashcode));
+        /** @var string $trackerUrl */
+        $trackerUrl = $this->_config->getValue('trackerUrl');
+        if (!empty($trackerUrl)) {
+            file_get_contents(sprintf($trackerUrl, $gameHashcode));
         }
 
         return true;

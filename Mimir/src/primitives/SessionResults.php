@@ -58,7 +58,7 @@ class SessionResultsPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
 
@@ -68,7 +68,7 @@ class SessionResultsPrimitive extends Primitive
     protected $_eventId;
     /**
      *
-     * @var EventPrimitive
+     * @var EventPrimitive|null
      */
     protected $_event;
 
@@ -77,7 +77,7 @@ class SessionResultsPrimitive extends Primitive
      */
     protected $_sessionId;
     /**
-     * @var SessionPrimitive
+     * @var SessionPrimitive|null
      */
     protected $_session;
 
@@ -86,7 +86,7 @@ class SessionResultsPrimitive extends Primitive
      */
     protected $_playerId;
     /**
-     * @var PlayerPrimitive
+     * @var PlayerPrimitive|null
      */
     protected $_player;
 
@@ -113,78 +113,86 @@ class SessionResultsPrimitive extends Primitive
     /**
      * Find sessions by local ids (primary key)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return SessionResultsPrimitive[]
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(DataSource $ds, $ids)
     {
-        return self::_findBy($db, 'id', $ids);
+        return self::_findBy($ds, 'id', $ids);
     }
 
     /**
      * Find session results by event id (foreign key search)
      *
-     * @param IDb $db
-     * @param string[] $eventIds
+     * @param DataSource $ds
+     * @param int[] $eventIds
      * @throws \Exception
      * @return SessionResultsPrimitive[]
      */
-    public static function findByEventId(IDb $db, $eventIds)
+    public static function findByEventId(DataSource $ds, $eventIds)
     {
-        return self::_findBy($db, 'event_id', $eventIds);
+        return self::_findBy($ds, 'event_id', $eventIds);
     }
 
     /**
      * Find session results by session id (foreign key search)
      *
-     * @param IDb $db
-     * @param string[] $sessionIds
+     * @param DataSource $ds
+     * @param int[] $sessionIds
      * @throws \Exception
      * @return SessionResultsPrimitive[]
      */
-    public static function findBySessionId(IDb $db, $sessionIds)
+    public static function findBySessionId(DataSource $ds, $sessionIds)
     {
-        return self::_findBy($db, 'session_id', $sessionIds);
+        return self::_findBy($ds, 'session_id', $sessionIds);
     }
 
     /**
      * Find session results by player id (foreign key search)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param string[] $playerIds
      * @throws \Exception
      * @return SessionResultsPrimitive[]
      */
-    public static function findByPlayerId(IDb $db, $playerIds)
+    public static function findByPlayerId(DataSource $ds, $playerIds)
     {
-        return self::_findBy($db, 'player_id', $playerIds);
+        return self::_findBy($ds, 'player_id', $playerIds);
     }
 
     /**
      * Find session results by players and session id
      *
-     * @param IDb $db
-     * @param $sessionId
-     * @param $playerIds
-     * @return SessionResultsPrimitive[]
+     * @param DataSource $ds
+     * @param int $sessionId
+     * @param int[] $playerIds
+     *
+     * @return self[]
+     *
      * @throws \Exception
+     *
+     * @psalm-return array<array-key, self>
      */
-    public static function findByPlayersAndSession(IDb $db, $sessionId, $playerIds)
+    public static function findByPlayersAndSession(DataSource $ds, int $sessionId, array $playerIds)
     {
-        return self::_findBySeveral($db, [
+        return self::_findBySeveral($ds, [
             'player_id' => (array)$playerIds,
             'session_id' => (array)$sessionId
         ]);
     }
 
+    /**
+     * @return bool|mixed
+     * @throws \Exception
+     */
     protected function _create()
     {
-        $sessionReuslts = $this->_db->table(self::$_table)->create();
-        $success = $this->_save($sessionReuslts);
+        $sessionResults = $this->_ds->table(self::$_table)->create();
+        $success = $this->_save($sessionResults);
         if ($success) {
-            $this->_id = $this->_db->lastInsertId();
+            $this->_id = $this->_ds->local()->lastInsertId();
         }
 
         return $success;
@@ -197,23 +205,33 @@ class SessionResultsPrimitive extends Primitive
 
     /**
      * @deprecated
+     *
      * @param EventPrimitive $event
+     *
      * @throws InvalidParametersException
+     *
+     * @return void
      */
-    public function _setEvent(EventPrimitive $event)
+    public function _setEvent(EventPrimitive $event): void
     {
         throw new InvalidParametersException('Event should not be set directly to round. Set session instead!');
     }
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\EventPrimitive
      */
     public function getEvent()
     {
         if (!$this->_event) {
-            $this->_event = $this->getSession()->getEvent();
-            $this->_eventId = $this->_event->getId();
+            $event = $this->getSession()->getEvent();
+            $id = $event->getId();
+            if (!$id) {
+                throw new InvalidParametersException('Attempted to assign deidented primitive');
+            }
+            $this->_event = $event;
+            $this->_eventId = $id;
         }
         return $this->_event;
     }
@@ -232,20 +250,25 @@ class SessionResultsPrimitive extends Primitive
      */
     public function setSession(SessionPrimitive $session)
     {
+        $id = $session->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_session = $session;
-        $this->_sessionId = $session->getId();
+        $this->_sessionId = $id;
         $this->_eventId = $session->getEventId();
         return $this;
     }
 
     /**
      * @return SessionPrimitive
+     * @throws \Exception
      * @throws EntityNotFoundException
      */
     public function getSession()
     {
         if (!$this->_session) {
-            $foundSessions = SessionPrimitive::findById($this->_db, [$this->_sessionId]);
+            $foundSessions = SessionPrimitive::findById($this->_ds, [$this->_sessionId]);
             if (empty($foundSessions)) {
                 throw new EntityNotFoundException("Entity SessionPrimitive with id#" . $this->_sessionId . ' not found in DB');
             }
@@ -263,7 +286,7 @@ class SessionResultsPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -273,22 +296,28 @@ class SessionResultsPrimitive extends Primitive
     /**
      * @param \Mimir\PlayerPrimitive $player
      * @return SessionResultsPrimitive
+     * @throws InvalidParametersException
      */
     public function setPlayer(PlayerPrimitive $player)
     {
+        $id = $player->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_player = $player;
-        $this->_playerId = $player->getId();
+        $this->_playerId = $id;
         return $this;
     }
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\PlayerPrimitive
      */
     public function getPlayer()
     {
         if (!$this->_player) {
-            $foundUsers = PlayerPrimitive::findById($this->_db, [$this->_playerId]);
+            $foundUsers = PlayerPrimitive::findById($this->_ds, [$this->_playerId]);
             if (empty($foundUsers)) {
                 throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_playerId . ' not found in DB');
             }
@@ -321,6 +350,10 @@ class SessionResultsPrimitive extends Primitive
         return $this->_place;
     }
 
+    /**
+     * @param int $place
+     * @return $this
+     */
     public function setPlace($place)
     {
         $this->_place = $place;
@@ -335,6 +368,10 @@ class SessionResultsPrimitive extends Primitive
         return $this->_chips;
     }
 
+    /**
+     * @param int $chips
+     * @return $this
+     */
     public function setChips($chips)
     {
         $this->_chips = $chips;
@@ -349,6 +386,10 @@ class SessionResultsPrimitive extends Primitive
         return $this->_ratingDelta;
     }
 
+    /**
+     * @param float|int $ratingDelta
+     * @return $this
+     */
     public function setRatingDelta($ratingDelta)
     {
         $this->_ratingDelta = $ratingDelta;
@@ -361,7 +402,7 @@ class SessionResultsPrimitive extends Primitive
      * @param int[] $playerIds
      * @return SessionResultsPrimitive
      */
-    public function calc(Ruleset $rules, SessionState $results, $playerIds)
+    public function calc(Ruleset $rules, SessionState $results, array $playerIds)
     {
         $withChips = $rules->chipsValue() > 0;
         if ($withChips) {
@@ -396,16 +437,20 @@ class SessionResultsPrimitive extends Primitive
     /**
      * Sort scores while maintaining sequence of equally scored players
      *
-     * @param $playersSeq
-     * @param $scores
+     * @param array $playersSeq
+     * @param array $scores
      * @return array
      */
-    protected static function _sort($playersSeq, $scores)
+    protected static function _sort(array $playersSeq, array $scores)
     {
         $map = array_combine(
             array_values($playersSeq),
             array_values($scores)
         );
+
+        if (!$map) {
+            throw new InvalidParametersException('Cant combine inequal arrays');
+        }
 
         $result = [];
         while (count($result) < 4) {
@@ -427,11 +472,13 @@ class SessionResultsPrimitive extends Primitive
     /**
      * Calculates player place
      *
-     * @param $scoreList
-     * @param $originalPlayersSequence
+     * @param int[] $scoreList
+     * @param int[] $originalPlayersSequence
      * @return array
+     *
+     * @throws InvalidParametersException
      */
-    public static function calcPlacesMap($scoreList, $originalPlayersSequence)
+    public static function calcPlacesMap(array $scoreList, array $originalPlayersSequence): array
     {
         $playersMap = self::_sort($originalPlayersSequence, $scoreList);
 
@@ -450,16 +497,23 @@ class SessionResultsPrimitive extends Primitive
      * Calculates rating change
      *
      * @param Ruleset $rules
-     * @param $allScores
-     * @return float
+     * @param int[] $allScores
+     *
+     * @return float|int
+     * @throws InvalidParametersException
      */
-    protected function _calcRatingDelta(Ruleset $rules, $allScores)
+    protected function _calcRatingDelta(Ruleset $rules, array $allScores)
     {
-        $score = ($this->_player->getIsReplacement() && $rules->replacementPlayerFixedPoints() !== false)
+        $reg = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $this->_playerId, $this->_eventId);
+        if (empty($reg)) {
+            throw new InvalidParametersException('No player/event id pair found, can\'t calculate delta');
+        }
+
+        $score = ($reg[0]->getReplacementPlayerId() && $rules->replacementPlayerFixedPoints() !== false)
             ? $rules->replacementPlayerFixedPoints()
             : $this->_score - ($rules->subtractStartPoints() ? $rules->startPoints() : 0);
 
-        $uma = ($this->_player->getIsReplacement() && $rules->replacementOverrideUma() !== false)
+        $uma = ($reg[0]->getReplacementPlayerId() && $rules->replacementOverrideUma() !== false)
             ? $rules->replacementOverrideUma()
             : $rules->uma($allScores)[$this->_place];
 

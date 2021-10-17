@@ -30,19 +30,20 @@ class AccountModel extends Model
      * Create new account by administrator (no email checks).
      * Admin rights should be checked in controller layer.
      *
-     * @param $email
-     * @param $password
-     * @param $title
-     * @param $city
-     * @param $phone
-     * @param null $tenhouId
-     * @return integer id
+     * @param string $email
+     * @param string $password
+     * @param string $title
+     * @param string $city
+     * @param string $phone
+     * @param string|null $tenhouId
+     * @param bool $superadmin
+     *
+     * @return int id
+     *
      * @throws \Exception
      */
-    public function createAccount($email, $password, $title, $city, $phone, $tenhouId = null)
+    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null, $superadmin = false): int
     {
-        $this->_checkAccessRights(InternalRules::CREATE_ACCOUNT);
-
         if (empty($email) || empty($password) || empty($title)) {
             throw new InvalidParametersException('Some of required fields are empty (email, password, title)', 401);
         }
@@ -60,11 +61,12 @@ class AccountModel extends Model
             ->setCity($city)
             ->setEmail($email)
             ->setPhone($phone)
+            ->setIsSuperadmin($superadmin)
             ->setTenhouId($tenhouId);
         if (!$person->save()) {
             throw new \Exception('Couldn\'t save person to DB', 403);
         }
-        return $person->getId();
+        return (int)$person->getId();
     }
 
     /**
@@ -90,12 +92,14 @@ class AccountModel extends Model
         }
 
         $persons = PersonPrimitive::findById($this->_db, $ids);
-        return array_map(function (PersonPrimitive $person) use ($filterPrivateData) {
+        $authPersonId = empty($this->_authorizedPerson) ? 0 : $this->_authorizedPerson->getId();
+        return array_map(function (PersonPrimitive $person) use ($filterPrivateData, $authPersonId) {
             return [
                 'id' => $person->getId(),
+                'country' => $person->getCountry(),
                 'city' => $person->getCity(),
-                'email' => $filterPrivateData ? null : $person->getEmail(),
-                'phone' => $filterPrivateData ? null : $person->getPhone(),
+                'email' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getEmail(),
+                'phone' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
@@ -106,17 +110,18 @@ class AccountModel extends Model
     /**
      * Update personal info of selected account
      *
-     * @param $id
-     * @param $title
-     * @param $city
-     * @param $email
-     * @param $phone
-     * @param null $tenhouId
+     * @param string $id
+     * @param string $title
+     * @param string $country
+     * @param string $city
+     * @param string $email
+     * @param string $phone
+     * @param string|null $tenhouId
      * @return bool
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePersonalInfo($id, $title, $city, $email, $phone, $tenhouId = null)
+    public function updatePersonalInfo(string $id, string $title, string $country, string $city, string $email, string $phone, $tenhouId = null)
     {
         if (empty($this->_authorizedPerson) || $this->_authorizedPerson->getId() != $id) {
             $this->_checkAccessRights(InternalRules::UPDATE_PERSONAL_INFO);
@@ -141,6 +146,7 @@ class AccountModel extends Model
         }
 
         return $persons[0]->setTitle($title)
+            ->setCountry($country)
             ->setCity($city)
             ->setEmail($email)
             ->setPhone($phone)
@@ -149,15 +155,14 @@ class AccountModel extends Model
     }
 
     /**
-     * Fuzzy (pattern) search by title.
-     * Query should not contain % or _ characters (they will be cut though)
-     * Query should be more than 2 characters long.
+     * Fuzzy search by title.
+     * Query should be 3 or more characters long.
      *
-     * @param $query
+     * @param string $query
      * @return array
      * @throws InvalidParametersException
      */
-    public function findByTitleFuzzy($query)
+    public function findByTitleFuzzy(string $query)
     {
         $persons = PersonPrimitive::findByTitleFuzzy($this->_db, $query);
         if ($persons === null) { // bad query or too short query
@@ -169,6 +174,41 @@ class AccountModel extends Model
                 'id' => $person->getId(),
                 'city' => $person->getCity(),
                 'tenhou_id' => $person->getTenhouId(),
+                'title' => $person->getTitle(),
+            ];
+        }, $persons);
+    }
+
+    /**
+     * Find accounts by tenhou ids list.
+     * If tenhou id is not found, resulting empty result
+     * is not included into result set at all. Maintaining
+     * positional mapping id -> data is expected at client side.
+     *
+     * @param array $ids
+     * @return array
+     * @throws \Exception
+     */
+    public function findByTenhouId($ids)
+    {
+        $filterPrivateData = false;
+        try {
+            $this->_checkAccessRights(InternalRules::GET_PERSONAL_INFO_WITH_PRIVATE_DATA);
+        } catch (AccessDeniedException $e) {
+            // No access, filter out private data
+            $filterPrivateData = true;
+        }
+
+        $persons = PersonPrimitive::findByTenhouId($this->_db, $ids);
+        $authPersonId = empty($this->_authorizedPerson) ? 0 : $this->_authorizedPerson->getId();
+        return array_map(function (PersonPrimitive $person) use ($filterPrivateData, $authPersonId) {
+            return [
+                'id' => $person->getId(),
+                'city' => $person->getCity(),
+                'email' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getEmail(),
+                'phone' => $filterPrivateData && $person->getId() !== $authPersonId ? null : $person->getPhone(),
+                'tenhou_id' => $person->getTenhouId(),
+                'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
             ];
         }, $persons);

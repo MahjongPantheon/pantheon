@@ -27,9 +27,9 @@ require_once __DIR__ . '/../../src/Db.php';
 class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Db
+     * @var DataSource
      */
-    protected $_db;
+    protected $_ds;
     /**
      * @var EventPrimitive
      */
@@ -41,29 +41,21 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->_db = Db::__getCleanTestingInstance();
+        $this->_ds = DataSource::__getCleanTestingInstance();
 
-        $this->_event = (new EventPrimitive($this->_db))
+        $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setDescription('desc')
             ->setTimezone('UTC')
-            ->setType('online')
             ->setRuleset(Ruleset::instance('jpmlA'));
         $this->_event->save();
 
-        $this->_players = array_map(function ($i) {
-            $p = (new PlayerPrimitive($this->_db))
-                ->setDisplayName('player' . $i)
-                ->setIdent('oauth' . $i)
-                ->setTenhouId('tenhou' . $i);
-            $p->save();
-            return $p;
-        }, [1, 2, 3, 4]);
+        $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
     }
 
     public function testNewSession()
     {
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $newSession
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setReplayHash('hash')
@@ -82,7 +74,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindSessionById()
     {
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $newSession
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
@@ -90,7 +82,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setEvent($this->_event)
             ->save();
 
-        $sessionCopy = SessionPrimitive::findById($this->_db, [$newSession->getId()]);
+        $sessionCopy = SessionPrimitive::findById($this->_ds, [$newSession->getId()]);
         $this->assertEquals(1, count($sessionCopy));
         $this->assertEquals('hash', $sessionCopy[0]->getReplayHash());
         $this->assertTrue($newSession !== $sessionCopy[0]); // different objects!
@@ -98,7 +90,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindSessionByStatus()
     {
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $newSession
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
@@ -106,7 +98,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setEvent($this->_event)
             ->save();
 
-        $sessionCopy = SessionPrimitive::findByEventAndStatus($this->_db, $this->_event->getId(), $newSession->getStatus());
+        $sessionCopy = SessionPrimitive::findByEventAndStatus($this->_ds, $this->_event->getId(), $newSession->getStatus());
         $this->assertEquals(1, count($sessionCopy));
         $this->assertEquals('hash', $sessionCopy[0]->getReplayHash());
         $this->assertTrue($newSession !== $sessionCopy[0]); // different objects!
@@ -114,7 +106,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindSessionByReplay()
     {
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $newSession
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
@@ -122,7 +114,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setEvent($this->_event)
             ->save();
 
-        $sessionCopy = SessionPrimitive::findByReplayHashAndEvent($this->_db, $this->_event->getId(), $newSession->getReplayHash());
+        $sessionCopy = SessionPrimitive::findByReplayHashAndEvent($this->_ds, $this->_event->getId(), $newSession->getReplayHash());
         $this->assertEquals(1, count($sessionCopy));
         $this->assertEquals(SessionPrimitive::STATUS_INPROGRESS, $sessionCopy[0]->getStatus());
         $this->assertTrue($newSession !== $sessionCopy[0]); // different objects!
@@ -130,7 +122,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindSessionByRepHash()
     {
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $newSession
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
@@ -139,7 +131,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->save();
 
         $this->assertNotEmpty($newSession->getRepresentationalHash());
-        $sessionCopy = SessionPrimitive::findByRepresentationalHash($this->_db, [$newSession->getRepresentationalHash()]);
+        $sessionCopy = SessionPrimitive::findByRepresentationalHash($this->_ds, [$newSession->getRepresentationalHash()]);
         $this->assertEquals(1, count($sessionCopy));
         $this->assertEquals('hash', $sessionCopy[0]->getReplayHash());
         $this->assertTrue($newSession !== $sessionCopy[0]); // different objects!
@@ -147,7 +139,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindSessionByPlayerAndEvent()
     {
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $newSession
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
@@ -155,7 +147,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setEvent($this->_event)
             ->save();
 
-        $sessionCopy = SessionPrimitive::findByPlayerAndEvent($this->_db, $this->_players[0]->getId(), $this->_event->getId());
+        $sessionCopy = SessionPrimitive::findByPlayerAndEvent($this->_ds, $this->_players[0]->getId(), $this->_event->getId());
         $this->assertEquals(1, count($sessionCopy));
         $this->assertEquals('hash', $sessionCopy[0]->getReplayHash());
         $this->assertTrue($newSession !== $sessionCopy[0]); // different objects!
@@ -163,7 +155,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testUpdateSession()
     {
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $newSession
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
@@ -171,18 +163,18 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setEvent($this->_event)
             ->save();
 
-        $sessionCopy = SessionPrimitive::findById($this->_db, [$newSession->getId()]);
+        $sessionCopy = SessionPrimitive::findById($this->_ds, [$newSession->getId()]);
         $sessionCopy[0]->setReplayHash('someanotherhash')->save();
         $this->assertEquals($newSession->getRepresentationalHash(), $sessionCopy[0]->getRepresentationalHash());
 
-        $anotherSessionCopy = SessionPrimitive::findById($this->_db, [$newSession->getId()]);
+        $anotherSessionCopy = SessionPrimitive::findById($this->_ds, [$newSession->getId()]);
         $this->assertEquals('someanotherhash', $anotherSessionCopy[0]->getReplayHash());
         $this->assertEquals($newSession->getRepresentationalHash(), $anotherSessionCopy[0]->getRepresentationalHash());
     }
 
     public function testUpdateSessionStateAfterSave()
     {
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $newSession
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
@@ -190,7 +182,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setEvent($this->_event)
             ->save();
 
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('draw')
             ->setTempaiUsers([])
@@ -199,13 +191,13 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newSession->updateCurrentState($round);
         $newSession->save();
 
-        $sessionCopy = SessionPrimitive::findById($this->_db, [$newSession->getId()]);
+        $sessionCopy = SessionPrimitive::findById($this->_ds, [$newSession->getId()]);
         $this->assertEquals(2, $sessionCopy[0]->getCurrentState()->getRound());
     }
 
     public function testRelationEvent()
     {
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $newSession
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
@@ -213,7 +205,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setEvent($this->_event)
             ->save();
 
-        $sessionCopy = SessionPrimitive::findById($this->_db, [$newSession->getId()])[0];
+        $sessionCopy = SessionPrimitive::findById($this->_ds, [$newSession->getId()])[0];
         $this->assertEquals($this->_event->getId(), $sessionCopy->getEventId()); // before fetch
         $this->assertNotEmpty($sessionCopy->getEvent());
         $this->assertEquals($this->_event->getId(), $sessionCopy->getEvent()->getId());
@@ -222,7 +214,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testRelationPlayers()
     {
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $newSession
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
@@ -231,7 +223,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayers($this->_players)
             ->save();
 
-        $sessionCopy = SessionPrimitive::findById($this->_db, [$newSession->getId()])[0];
+        $sessionCopy = SessionPrimitive::findById($this->_ds, [$newSession->getId()])[0];
         $this->assertEquals( // before fetch
             $this->_players[0]->getId(),
             explode(',', $sessionCopy->getPlayersIds()[0])[0]
@@ -243,7 +235,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFindSeatings()
     {
-        $newSession = new SessionPrimitive($this->_db);
+        $newSession = new SessionPrimitive($this->_ds);
         $newSession
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
             ->setPlayers($this->_players)
@@ -251,7 +243,7 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setEvent($this->_event)
             ->save();
 
-        $seating = SessionPrimitive::getPlayersSeatingInEvent($this->_db, $this->_event->getId());
+        $seating = SessionPrimitive::getPlayersSeatingInEvent($this->_ds, $this->_event->getId());
         $this->assertEquals([
             ['player_id' => 1, 'order' => 1],
             ['player_id' => 2, 'order' => 2],

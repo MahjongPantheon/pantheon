@@ -41,22 +41,12 @@ class BootstrapAccess
      */
     public static function create(Db $db, Config $config, Meta $meta, string $adminEmail, string $adminPassword)
     {
-        if (!defined('BOOTSTRAP_MODE')) {
-            define('BOOTSTRAP_MODE', true);
-        }
         $accountModel = new AccountModel($db, $config, $meta);
         $groupModel = new GroupsModel($db, $config, $meta);
         $accessModel = new AccessManagementModel($db, $config, $meta);
 
-        $adminId = $accountModel->createAccount($adminEmail, $adminPassword, 'Administrator', '', '');
+        $adminId = $accountModel->createAccount($adminEmail, $adminPassword, 'Administrator', '', '', null, true);
         $adminGroupId = $groupModel->createGroup('Administrators', 'System administrators', '#990000');
-
-        $accessModel->addSystemWideRuleForPerson(
-            InternalRules::IS_SUPER_ADMIN,
-            true,
-            AccessPrimitive::TYPE_BOOL,
-            $adminId
-        );
         foreach (InternalRules::getNames() as $name) {
             $accessModel->addSystemWideRuleForPerson($name, true, AccessPrimitive::TYPE_BOOL, $adminId);
             $accessModel->addSystemWideRuleForGroup($name, true, AccessPrimitive::TYPE_BOOL, $adminGroupId);

@@ -26,14 +26,14 @@ require_once __DIR__ . '/../../src/models/EventSeries.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
-require_once __DIR__ . '/../../src/models/TextmodeSession.php';
+require_once __DIR__ . '/../../data/textlogImport/Model.php';
 
 class GamesSeriesTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Db
+     * @var DataSource
      */
-    protected $_db;
+    protected $_ds;
     /**
      * @var PlayerPrimitive[]
      */
@@ -57,42 +57,70 @@ class GamesSeriesTest extends \PHPUnit\Framework\TestCase
         $games = explode("\n\n\n", file_get_contents(__DIR__ . '/../models/testdata/games.txt'));
 
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
-        $_SERVER['HTTP_X_AUTH_TOKEN'] = $this->_config->getValue('admin.god_token');
 
-        $this->_meta = new Meta($_SERVER);
-        $this->_db = Db::__getCleanTestingInstance();
-        $this->_event = (new EventPrimitive($this->_db))
+        $this->_ds = DataSource::__getCleanTestingInstance();
+        $this->_meta = new Meta($this->_ds->remote(), $this->_config, $_SERVER);
+        $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setTimezone('UTC')
             ->setDescription('desc')
-            ->setType('offline')
             ->setSeriesLength(5)
             ->setRuleset(Ruleset::instance('ema'));
         $this->_event->save();
 
-        $players = array_map(function ($id) {
-            $p = (new PlayerPrimitive($this->_db))
-                ->setDisplayName($id)
-                ->setAlias($id)
-                ->setIdent($id)
-                ->setTenhouId($id);
-            $p->save();
-            (new PlayerRegistrationPrimitive($this->_db))
+        $this->_players = PlayerPrimitive::findById($this->_ds, [
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
+            17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32
+        ]);
+        foreach ($this->_players as $p) {
+            (new PlayerRegistrationPrimitive($this->_ds))
                 ->setReg($p, $this->_event)
                 ->save();
-            return $p;
-        }, $playerNames);
+        }
 
-        $model = new TextmodeSessionModel($this->_db, $this->_config, $this->_meta);
+        $model = new TextlogImportModel($this->_ds, $this->_config, $this->_meta);
 
         foreach ($games as $log) {
-            $model->addGame($this->_event->getId(), $log);
+            $model->addGame($this->_event->getId(), $log, [
+                'player1' => 1,
+                'player2' => 2,
+                'player3' => 3,
+                'player4' => 4,
+                'player5' => 5,
+                'player6' => 6,
+                'player7' => 7,
+                'player8' => 8,
+                'player9' => 9,
+                'player10' => 10,
+                'player11' => 11,
+                'player12' => 12,
+                'player13' => 13,
+                'player14' => 14,
+                'player15' => 15,
+                'player16' => 16,
+                'player17' => 17,
+                'player18' => 18,
+                'player19' => 19,
+                'player20' => 20,
+                'player21' => 21,
+                'player22' => 22,
+                'player23' => 23,
+                'player24' => 24,
+                'player25' => 25,
+                'player26' => 26,
+                'player27' => 27,
+                'player28' => 28,
+                'player29' => 29,
+                'player30' => 30,
+                'player31' => 31,
+                'player32' => 32,
+            ]);
         }
     }
 
     public function testGetGamesSeries()
     {
-        $data = (new EventSeriesModel($this->_db, $this->_config, $this->_meta))->getGamesSeries($this->_event);
+        $data = (new EventSeriesModel($this->_ds, $this->_config, $this->_meta))->getGamesSeries($this->_event);
         //$this->assertNotEmpty($data);
 
         $referenceData = [

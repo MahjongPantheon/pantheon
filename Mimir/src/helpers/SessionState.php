@@ -40,7 +40,7 @@ class SessionState
      */
     protected $_chips = [];
     /**
-     * @var int[] { player_id => penalty_score }
+     * @var float[] { player_id => penalty_score }
      */
     protected $_penalties = [];
     /**
@@ -87,21 +87,31 @@ class SessionState
      */
     protected $_lastOutcome = null;
 
-    public function __construct(Ruleset $rules, $playersIds)
+    /**
+     * SessionState constructor.
+     * @param Ruleset $rules
+     * @param int[] $playersIds
+     * @throws InvalidParametersException
+     */
+    public function __construct(Ruleset $rules, array $playersIds)
     {
         $this->_rules = $rules;
         if (count($playersIds) != 4) {
             throw new InvalidParametersException('Players count is not 4: ' . json_encode($playersIds));
         }
-        $this->_scores = array_combine(
+        $sc = array_combine(
             $playersIds,
             array_fill(0, 4, $rules->startPoints())
         );
+        if (empty($sc)) {
+            throw new InvalidParametersException('Attempt to combine inequal arrays');
+        }
+        $this->_scores = $sc;
     }
 
     /**
      * @throws InvalidParametersException
-     * @return string
+     * @return string|false
      */
     public function toJson()
     {
@@ -116,7 +126,7 @@ class SessionState
     {
         $arr = [];
         $withChips = $this->_rules->chipsValue() > 0;
-        foreach ($this as $key => $value) {
+        foreach ($this as $key => $value) { // @phpstan-ignore-line
             if ($key === '_rules') {
                 continue;
             }
@@ -134,12 +144,14 @@ class SessionState
 
     /**
      * @param Ruleset $rules
-     * @param $playersIds
-     * @param $json
-     * @throws InvalidParametersException
+     * @param int[] $playersIds
+     * @param string $json
+     *
      * @return SessionState
+     * @throws InvalidParametersException
+     *
      */
-    public static function fromJson(Ruleset $rules, $playersIds, $json)
+    public static function fromJson(Ruleset $rules, array $playersIds, string $json)
     {
         if (empty($json)) {
             $ret = [];
@@ -216,8 +228,10 @@ class SessionState
 
     /**
      * End game prematurely
+     *
+     * @return self
      */
-    public function forceFinish()
+    public function forceFinish(): self
     {
         $this->_prematurelyFinished = true;
         return $this;
@@ -306,7 +320,7 @@ class SessionState
     }
 
     /**
-     * @return \int[]
+     * @return int[]
      */
     public function getScores()
     {
@@ -314,16 +328,17 @@ class SessionState
     }
 
     /**
+     * @param array $scores
      * @return SessionState
      */
-    public function setScores($scores)
+    public function setScores(array $scores)
     {
         $this->_scores = $scores;
         return $this;
     }
 
     /**
-     * @return \int[]
+     * @return int[]
      */
     public function getChips()
     {
@@ -331,6 +346,7 @@ class SessionState
     }
 
     /**
+     * @param int[] $chips
      * @return SessionState
      */
     public function setChips($chips)
@@ -340,7 +356,7 @@ class SessionState
     }
 
     /**
-     * @return \int[]
+     * @return float[]
      */
     public function getPenalties()
     {
@@ -349,18 +365,19 @@ class SessionState
 
     /**
      * Return id of current dealer
-     * @return int|string
+     * @return int
      */
     public function getCurrentDealer()
     {
         $players = array_keys($this->_scores);
-        return $players[($this->_round - 1) % 4];
+        return intval($players[($this->_round - 1) % 4]);
     }
 
     /**
      * Register new round in current session
      * @param RoundPrimitive|MultiRoundPrimitive $round
      * @throws InvalidParametersException
+     * @throws \Exception
      * @return array
      */
     public function update(RoundPrimitive $round)
@@ -371,7 +388,9 @@ class SessionState
                 $payments = $this->_updateAfterRon($round);
                 break;
             case 'multiron':
-                $payments = $this->_updateAfterMultiRon($round);
+                /** @var MultiRoundPrimitive $mround */
+                $mround = $round;
+                $payments = $this->_updateAfterMultiRon($mround);
                 break;
             case 'tsumo':
                 $payments = $this->_updateAfterTsumo($round);
@@ -398,16 +417,19 @@ class SessionState
     }
 
     /**
-     * @param $id
+     * @param int|null $id
      * @param int $betAmount - total points amount gathered as riichi bets. May be fractional (of 1000)!
+     *
+     * @return void
      */
-    public function giveRiichiBetsToPlayer($id, $betAmount)
+    public function giveRiichiBetsToPlayer($id, int $betAmount): void
     {
         $this->_scores[$id] += $betAmount;
     }
 
     /**
      * @param RoundPrimitive $round
+     * @throws \Exception
      * @return array
      */
     protected function _updateAfterRon(RoundPrimitive $round)
@@ -495,6 +517,7 @@ class SessionState
 
     /**
      * @param RoundPrimitive $round
+     * @throws \Exception
      * @return array
      */
     protected function _updateAfterTsumo(RoundPrimitive $round)
@@ -525,6 +548,7 @@ class SessionState
 
     /**
      * @param RoundPrimitive $round
+     * @throws \Exception
      * @return array
      */
     protected function _updateAfterDraw(RoundPrimitive $round)
@@ -568,6 +592,7 @@ class SessionState
 
     /**
      * @param RoundPrimitive $round
+     * @throws \Exception
      * @return array
      */
     protected function _updateAfterChombo(RoundPrimitive $round)
@@ -588,6 +613,7 @@ class SessionState
 
     /**
      * @param RoundPrimitive $round
+     * @throws \Exception
      * @return array
      */
     protected function _updateAfterNagashi(RoundPrimitive $round)
@@ -612,11 +638,13 @@ class SessionState
      * Add extra penalty points for player in current game
      * Used for penalties that are not related to main game process. Do not use this to apply chombo!
      *
-     * @param $playerId
-     * @param $amount
-     * @param $reason
+     * @param int $playerId
+     * @param int $amount
+     * @param string $reason
+     *
+     * @return void
      */
-    public function addPenalty($playerId, $amount, $reason)
+    public function addPenalty(int $playerId, int $amount, string $reason): void
     {
         if (empty($this->_penalties[$playerId])) {
             $this->_penalties[$playerId] = 0;

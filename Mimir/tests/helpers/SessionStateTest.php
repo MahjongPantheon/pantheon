@@ -27,7 +27,10 @@ require_once __DIR__ . '/../../src/Db.php';
 
 class SessionStateTest extends \PHPUnit\Framework\TestCase
 {
-    protected $_db;
+    /**
+     * @var DataSource
+     */
+    protected $_ds;
     /**
      * @var MockRuleset
      */
@@ -51,25 +54,17 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->_db = Db::__getCleanTestingInstance();
-        $this->_event = (new EventPrimitive($this->_db))
+        $this->_ds = DataSource::__getCleanTestingInstance();
+        $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setTimezone('UTC')
             ->setDescription('desc')
-            ->setType('online')
             ->setRuleset(Ruleset::instance('jpmlA'));
         $this->_event->save();
 
-        $this->_players = array_map(function ($i) {
-            $p = (new PlayerPrimitive($this->_db))
-                ->setDisplayName('player' . $i)
-                ->setIdent('oauth' . $i)
-                ->setTenhouId('tenhou' . $i);
-            $p->save();
-            return $p;
-        }, [1, 2, 3, 4]);
+        $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
 
-        $this->_session = (new SessionPrimitive($this->_db))
+        $this->_session = (new SessionPrimitive($this->_ds))
             ->setEvent($this->_event)
             ->setPlayers($this->_players)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS)
@@ -93,7 +88,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testRon()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('ron')
             ->setWinner($this->_players[1])
@@ -118,7 +113,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testRonDealer()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('ron')
             ->setWinner($this->_players[0])
@@ -143,7 +138,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testPaoRon()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('ron')
             ->setWinner($this->_players[1])
@@ -169,7 +164,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testPaoRonDealer()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('ron')
             ->setWinner($this->_players[0])
@@ -196,7 +191,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
     public function testMultiRon()
     {
         $rounds = [
-            (new RoundPrimitive($this->_db))
+            (new RoundPrimitive($this->_ds))
                 ->setSession($this->_session)
                 ->setOutcome('ron')
                 ->setWinner($this->_players[1])
@@ -205,7 +200,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
                 ->setFu(30)
                 ->setDora(1)
                 ->setRiichiUsers([$this->_players[1]]),
-            (new RoundPrimitive($this->_db))
+            (new RoundPrimitive($this->_ds))
                 ->setSession($this->_session)
                 ->setOutcome('ron')
                 ->setWinner($this->_players[3])
@@ -216,7 +211,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
                 ->setRiichiUsers([$this->_players[2]]),
         ];
 
-        $this->_state->update((new MultiRoundPrimitive($this->_db))->_setRounds($rounds));
+        $this->_state->update((new MultiRoundPrimitive($this->_ds))->_setRounds($rounds));
 
         $this->assertEquals($this->_players[1]->getId(), $this->_state->getCurrentDealer());
         $this->assertEquals(2, $this->_state->getRound());
@@ -233,7 +228,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
     public function testMultiRonWithPao()
     {
         $rounds = [
-            (new RoundPrimitive($this->_db))
+            (new RoundPrimitive($this->_ds))
                 ->setSession($this->_session)
                 ->setOutcome('ron')
                 ->setWinner($this->_players[1])
@@ -243,7 +238,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
                 ->setFu(30)
                 ->setDora(0)
                 ->setRiichiUsers([$this->_players[1]]),
-            (new RoundPrimitive($this->_db))
+            (new RoundPrimitive($this->_ds))
                 ->setSession($this->_session)
                 ->setOutcome('ron')
                 ->setWinner($this->_players[3])
@@ -254,7 +249,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
                 ->setRiichiUsers([$this->_players[2]]),
         ];
 
-        $this->_state->update((new MultiRoundPrimitive($this->_db))->_setRounds($rounds));
+        $this->_state->update((new MultiRoundPrimitive($this->_ds))->_setRounds($rounds));
 
         $this->assertEquals($this->_players[1]->getId(), $this->_state->getCurrentDealer());
         $this->assertEquals(2, $this->_state->getRound());
@@ -270,7 +265,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testMultiRonWithRiichi()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('draw')
             ->setTempaiUsers([])
@@ -281,7 +276,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $this->_state->getRiichiBets());
 
         $rounds = [
-            (new RoundPrimitive($this->_db))
+            (new RoundPrimitive($this->_ds))
                 ->setSession($this->_session)
                 ->setOutcome('ron')
                 ->setWinner($this->_players[0])
@@ -290,7 +285,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
                 ->setFu(30)
                 ->setDora(1)
                 ->setRiichiUsers([$this->_players[0]]),
-            (new RoundPrimitive($this->_db))
+            (new RoundPrimitive($this->_ds))
                 ->setSession($this->_session)
                 ->setOutcome('ron')
                 ->setWinner($this->_players[3])
@@ -301,7 +296,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
                 ->setRiichiUsers([$this->_players[2]]),
         ];
 
-        $this->_state->update((new MultiRoundPrimitive($this->_db))->_setRounds($rounds));
+        $this->_state->update((new MultiRoundPrimitive($this->_ds))->_setRounds($rounds));
 
         $this->assertEquals($this->_players[2]->getId(), $this->_state->getCurrentDealer());
         $this->assertEquals(3, $this->_state->getRound());
@@ -317,7 +312,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testTsumo()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('tsumo')
             ->setWinner($this->_players[1])
@@ -341,7 +336,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testTsumoDealer()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('tsumo')
             ->setWinner($this->_players[0])
@@ -365,7 +360,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testPaoTsumo()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('tsumo')
             ->setWinner($this->_players[1])
@@ -390,7 +385,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testPaoTsumoDealer()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('tsumo')
             ->setWinner($this->_players[0])
@@ -415,7 +410,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testDrawDealerNoten()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('draw')
             ->setTempaiUsers([$this->_players[1]])
@@ -436,7 +431,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testDrawDealerTempai()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('draw')
             ->setTempaiUsers([$this->_players[0], $this->_players[1]])
@@ -457,7 +452,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testDrawEverybodyNoten()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('draw')
             ->setTempaiUsers([])
@@ -479,7 +474,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
     public function testAbort()
     {
         $this->_ruleset->setRule('withAbortives', true);
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('abort')
             ->setRiichiUsers([$this->_players[2]]);
@@ -497,13 +492,11 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
         ], $this->_state->getScores());
     }
 
-    /**
-     * @expectedException \Mimir\InvalidParametersException
-     */
     public function testAbortWhenNotAllowed()
     {
+        $this->expectException(\Mimir\InvalidParametersException::class);
         $this->_ruleset->setRule('withAbortives', false);
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('abort')
             ->setRiichiUsers([$this->_players[2]]);
@@ -514,7 +507,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
     {
         $this->_ruleset->setRule('chomboPenalty', 20);
         $this->_ruleset->setRule('extraChomboPayments', false);
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('chombo')
             ->setLoser($this->_players[1])
@@ -553,7 +546,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testGainRiichiBetsAfterDraw()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('draw')
             ->setTempaiUsers([$this->_players[3]])
@@ -571,7 +564,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
         // next round
 
-        $nextround = new RoundPrimitive($this->_db);
+        $nextround = new RoundPrimitive($this->_ds);
         $nextround
             ->setOutcome('ron')
             ->setWinner($this->_players[0])
@@ -595,7 +588,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testSerialDraw()
     {
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('draw')
             ->setTempaiUsers([])
@@ -627,7 +620,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
             $this->_state->toJson()
         );
 
-        $round = new RoundPrimitive($this->_db);
+        $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('draw')
             ->setTempaiUsers([])

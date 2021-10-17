@@ -34,6 +34,8 @@ ENV PHINX_DB_FREY_USER frey
 ENV PHINX_DB_FREY_PASS pgpass
 ENV PHINX_DB_FREY_PORT $DB_PORT
 
+ENV PHP_IDE_CONFIG serverName=pantheon
+
 RUN apk update && \
     apk upgrade && \
     apk add --update tzdata && \
@@ -49,6 +51,7 @@ RUN apk update && \
     postgresql \
     nodejs \
     npm \
+    php7-pecl-ast \
     php7-mcrypt \
     php7-soap \
     php7-gettext \
@@ -68,6 +71,7 @@ RUN apk update && \
     php7-xmlreader \
     php7-xmlwriter \
     php7-xmlrpc \
+    php7-xdebug \
     php7-phpdbg \
     php7-iconv \
     php7-curl \
@@ -93,6 +97,7 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.d/www.co
     sed -i "s|;*error_log =.*|error_log = ${PHP_LOGFILE}|i" /etc/php7/php.ini && \
     sed -i "s|;*upload_max_filesize =.*|upload_max_filesize = ${MAX_UPLOAD}|i" /etc/php7/php.ini && \
     sed -i "s|;*max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|i" /etc/php7/php.ini && \
+    sed -i "s|;*max_execution_time =.*|max_execution_time = 1000|i" /etc/php7/php.ini && \
     sed -i "s|;*post_max_size =.*|post_max_size = ${PHP_MAX_POST}|i" /etc/php7/php.ini && \
     sed -i "s|;*cgi.fix_pathinfo=.*|cgi.fix_pathinfo = 0|i" /etc/php7/php.ini && \
     sed -i "s|;*opcache.enable=.*|opcache.enable = 1|i" /etc/php7/php.ini && \
@@ -101,6 +106,12 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.d/www.co
     sed -i "s|;*opcache.interned_strings_buffer=.*|opcache.interned_strings_buffer=8|i" /etc/php7/php.ini && \
     sed -i "s|;*opcache.max_accelerated_files=.*|opcache.max_accelerated_files=4000|i" /etc/php7/php.ini && \
     sed -i "s|;*opcache.fast_shutdown=.*|opcache.fast_shutdown=1|i" /etc/php7/php.ini
+RUN if [[ -z "$NO_XDEBUG" ]] ; then echo -ne "zend_extension=xdebug.so\n \
+          xdebug.mode=debug\n \
+          xdebug.start_with_request=yes\n \
+          xdebug.client_host=172.17.0.1\n \
+          xdebug.client_port=9001\n" > /etc/php7/conf.d/50_xdebug.ini ; \
+    fi
 
 # Cleaning up
 RUN mkdir /www && \
@@ -112,7 +123,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/php7/error.log
 
 # Expose ports
-EXPOSE 4001 4002 4003 4004 4005 $DB_PORT
+EXPOSE 4001 4002 4003 4004 $DB_PORT
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
@@ -132,7 +143,6 @@ COPY dbinit_frey.sql /docker-entrypoint-initdb.d/dbinit_frey.sql
 RUN mkdir -p /run/postgresql && chown postgres /run/postgresql
 RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Tyr
-RUN mkdir -p /var/www/html/Tyr.new
 RUN mkdir -p /var/www/html/Mimir
 RUN mkdir -p /var/www/html/Rheda
 RUN mkdir -p /var/www/html/Frey

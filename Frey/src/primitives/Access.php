@@ -38,12 +38,12 @@ abstract class AccessPrimitive extends Primitive
      */
     protected $_id;
     /**
-     * Events this rule is applied to. If empty, this means rule is applied system-wide.
-     * @var int[]
+     * Event this rule is applied to. If empty, this means rule is applied system-wide.
+     * @var int|null
      */
-    protected $_eventIds;
+    protected $_eventId;
     /**
-     * Data type stored in this cell. Can be boolean, enum or integer
+     * Data type stored in this cell. Can be bool, enum or int
      * @var string
      */
     protected $_aclType;
@@ -58,6 +58,11 @@ abstract class AccessPrimitive extends Primitive
      * @var string
      */
     protected $_aclValue;
+    /**
+     * ACL enum allowed values list
+     * @var string[]
+     */
+    protected $_allowedValues = [];
 
     protected function _create()
     {
@@ -77,11 +82,12 @@ abstract class AccessPrimitive extends Primitive
 
     /**
      * @param IDb $db
-     * @param $ids
-     * @return self[]
+     * @param int[] $ids
+     *
+     * @return AccessPrimitive[]
      * @throws \Exception
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(IDb $db, array $ids)
     {
         return self::_findBy($db, 'id', $ids);
     }
@@ -95,20 +101,20 @@ abstract class AccessPrimitive extends Primitive
     }
 
     /**
-     * @return int[]
+     * @return int|null
      */
-    public function getEventsId()
+    public function getEventId()
     {
-        return $this->_eventIds;
+        return $this->_eventId;
     }
 
     /**
-     * @param int[] $eventIds
+     * @param int|null $eventId
      * @return self
      */
-    public function setEventIds($eventIds)
+    public function setEventId($eventId)
     {
-        $this->_eventIds = $eventIds;
+        $this->_eventId = $eventId;
         return $this;
     }
 
@@ -152,6 +158,32 @@ abstract class AccessPrimitive extends Primitive
     }
 
     /**
+     * @return array
+     */
+    public function getAllowedValues(): array
+    {
+        switch ($this->_aclType) {
+            case self::TYPE_BOOL:
+                return ['true', 'false'];
+            case self::TYPE_ENUM:
+                return $this->_allowedValues ?: [];
+            case self::TYPE_INT:
+            default:
+                return [];
+        }
+    }
+
+    /**
+     * @param array $allowedValues
+     * @return self
+     */
+    public function setAllowedValues(array $allowedValues)
+    {
+        $this->_allowedValues = $allowedValues;
+        return $this;
+    }
+
+    /**
      * @return string|int|bool
      * @throws InvalidParametersException
      */
@@ -184,7 +216,7 @@ abstract class AccessPrimitive extends Primitive
                 $this->_aclValue = (string)intval($aclValue);
                 return $this;
             case AccessPrimitive::TYPE_ENUM:
-                $this->_aclValue = $aclValue;
+                $this->_aclValue = (string)$aclValue;
                 return $this;
             default:
                 throw new InvalidParametersException('Unsupported ACL type');

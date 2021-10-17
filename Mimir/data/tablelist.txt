@@ -1,11 +1,10 @@
+phinxlog
 round
 player_history
 session_player
 session_results
 session
-event_enrolled_players
 event_registered_players
+event_prescript
+yaku
 event
-formation_player
-formation
-player

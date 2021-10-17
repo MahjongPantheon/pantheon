@@ -28,17 +28,17 @@ class GroupsModel extends Model
     /**
      * Create new group in admin interface
      *
-     * @param $title
-     * @param $description
-     * @param $color
+     * @param string $title
+     * @param string $description
+     * @param string $color
+     *
      * @return int
+     *
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function createGroup($title, $description, $color)
+    public function createGroup(string $title, string $description, string $color): int
     {
-        $this->_checkAccessRights(InternalRules::CREATE_GROUP);
-
         if (empty($title)) {
             throw new InvalidParametersException('Title is required to be non-empty', 401);
         }
@@ -51,18 +51,18 @@ class GroupsModel extends Model
             throw new \Exception('Failed to save group to DB', 402);
         }
 
-        return $group->getId();
+        return (int)$group->getId();
     }
 
     /**
      * Get info of groups by id list
      *
-     * @param $ids
+     * @param int[] $ids
      * @return array
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getGroups($ids)
+    public function getGroups(array $ids)
     {
         if (empty($ids)) {
             throw new InvalidParametersException('ID list is empty', 403);
@@ -82,18 +82,16 @@ class GroupsModel extends Model
     /**
      * Update group info
      *
-     * @param $id
-     * @param $title
-     * @param $description
-     * @param $color
+     * @param int $id
+     * @param string $title
+     * @param string $description
+     * @param string $color
      * @return bool
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updateGroup($id, $title, $description, $color)
+    public function updateGroup(int $id, string $title, string $description, string $color)
     {
-        $this->_checkAccessRights(InternalRules::UPDATE_GROUP);
-
         $id = intval($id);
         if (empty($id)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 404);
@@ -118,14 +116,15 @@ class GroupsModel extends Model
     /**
      * Delete group and all of its linked dependencies
      *
-     * @param $id
+     * @param int $id
+     *
      * @throws InvalidParametersException
      * @throws \Exception
+     *
+     * @return void
      */
-    public function deleteGroup($id)
+    public function deleteGroup(int $id): void
     {
-        $this->_checkAccessRights(InternalRules::DELETE_GROUP);
-
         $id = intval($id);
         if (empty($id)) {
             throw new InvalidParametersException('Id is empty or non-numeric', 407);
@@ -142,17 +141,15 @@ class GroupsModel extends Model
     /**
      * Add person to group
      *
-     * @param $personId
-     * @param $groupId
+     * @param int $personId
+     * @param int $groupId
      * @return bool
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function addPersonToGroup($personId, $groupId)
+    public function addPersonToGroup(int $personId, int $groupId)
     {
-        $this->_checkAccessRights(InternalRules::ADD_PERSON_TO_GROUP);
-
         $groupId = intval($groupId);
         $personId = intval($personId);
         if (empty($groupId) || empty($personId)) {
@@ -179,17 +176,15 @@ class GroupsModel extends Model
     /**
      * Remove person from group
      *
-     * @param $personId
-     * @param $groupId
+     * @param int $personId
+     * @param int $groupId
      * @return bool
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function removePersonFromGroup($personId, $groupId)
+    public function removePersonFromGroup(int $personId, int $groupId)
     {
-        $this->_checkAccessRights(InternalRules::REMOVE_PERSON_FROM_GROUP);
-
         $groupId = intval($groupId);
         $personId = intval($personId);
         if (empty($groupId) || empty($personId)) {
@@ -215,13 +210,13 @@ class GroupsModel extends Model
     }
 
     /**
-     * @param $personId
+     * @param int $personId
      * @return array
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getGroupsOfPerson($personId)
+    public function getGroupsOfPerson(int $personId)
     {
         $personId = intval($personId);
         if (empty($personId)) {
@@ -244,13 +239,13 @@ class GroupsModel extends Model
     }
 
     /**
-     * @param $groupId
+     * @param int $groupId
      * @return array
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function getPersonsOfGroup($groupId)
+    public function getPersonsOfGroup(int $groupId)
     {
         $groupId = intval($groupId);
         if (empty($groupId)) {

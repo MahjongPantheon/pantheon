@@ -19,14 +19,17 @@ namespace Mimir;
 
 abstract class Ruleset
 {
+    /**
+     * @var array $_instances
+     */
     private static $_instances = [];
 
     /**
-     * @param $title
+     * @param string $title
      * @throws InvalidParametersException
      * @return Ruleset
      */
-    public static function instance($title)
+    public static function instance(string $title)
     {
         if (empty(self::$_instances[$title])) {
             if (!file_exists(__DIR__ . '/../config/rulesets/' . $title . '.php')) {
@@ -35,7 +38,7 @@ abstract class Ruleset
             require_once __DIR__ . '/../config/rulesets/' . $title . '.php';
             /** @var Ruleset $className */
             $className = 'Mimir\Ruleset' . ucfirst($title);
-            self::$_instances[$title] = new $className();
+            self::$_instances[$title] = new $className(); // @phpstan-ignore-line
         }
 
         return static::$_instances[$title];
@@ -44,11 +47,11 @@ abstract class Ruleset
     /**
      * Make uma equal if scores are equal
      *
-     * @param $score
-     * @param $uma
-     * @return array
+     * @param float[] $score
+     * @param float[] $uma
+     * @return float[]
      */
-    protected function _equalizeUma($score, $uma)
+    protected function _equalizeUma(array $score, array $uma)
     {
         rsort($score);
         if ($score[0] === $score[1] && $score[1] === $score[2] && $score[2] === $score[3]) {
@@ -82,39 +85,67 @@ abstract class Ruleset
         return $uma;
     }
 
+    /**
+     * @var string $_title
+     */
     protected static $_title;
+    /**
+     * @var array $_ruleset
+     */
     protected static $_ruleset;
 
+    /**
+     * @return string
+     */
     public function title()
     {
         return static::$_title;
     }
 
+    /**
+     * @return array
+     */
     public function allowedYaku()
     {
         return static::$_ruleset['allowedYaku'];
     }
 
+    /**
+     * @return float
+     */
     public function tenboDivider()
     {
         return static::$_ruleset['tenboDivider'];
     }
 
+    /**
+     * @return float
+     */
     public function ratingDivider()
     {
         return static::$_ruleset['ratingDivider'];
     }
 
+    /**
+     * @return bool
+     */
     public function tonpuusen()
     {
         return static::$_ruleset['tonpuusen'];
     }
 
+    /**
+     * @return int
+     */
     public function startRating()
     {
         return static::$_ruleset['startRating'];
     }
 
+    /**
+     * @param array $scores
+     * @return array
+     */
     public function uma($scores = [])
     {
         return static::$_ruleset['uma'];
@@ -124,41 +155,62 @@ abstract class Ruleset
      * oka is an ante every player pays upfront, and the winner takes its all.
      * so if oka is 20000, every player puts 5000 in the "oka-pot" and the
      * gets it all, so he profits 15000 as he payed 5000 himself too.
+     *
+     * @param int $place
+     * @return float
      */
-    public function oka($place)
+    public function oka(int $place)
     {
         if ($place === 1) {
-            return ((static::$_ruleset['oka'])*0.75) ;
+            return ((static::$_ruleset['oka']) * 0.75) ;
         } else {
             return -(static::$_ruleset['oka'] / 4);
         }
     }
 
+    /**
+     * @return int
+     */
     public function startPoints()
     {
         return static::$_ruleset['startPoints'];
     }
 
+    /**
+     * @return int
+     */
     public function goalPoints()
     {
         return static::$_ruleset['goalPoints'];
     }
 
+    /**
+     * @return bool
+     */
     public function playAdditionalRounds()
     {
         return static::$_ruleset['playAdditionalRounds'];
     }
 
+    /**
+     * @return bool
+     */
     public function subtractStartPoints()
     {
         return static::$_ruleset['subtractStartPoints'];
     }
 
+    /**
+     * @return bool
+     */
     public function riichiGoesToWinner()
     {
         return static::$_ruleset['riichiGoesToWinner'];
     }
 
+    /**
+     * @return bool
+     */
     public function doubleronRiichiAtamahane()
     {
         if (isset(static::$_ruleset['doubleronRiichiAtamahane'])) {
@@ -168,6 +220,9 @@ abstract class Ruleset
         }
     }
 
+    /**
+     * @return bool
+     */
     public function doubleronHonbaAtamahane()
     {
         if (isset(static::$_ruleset['doubleronHonbaAtamahane'])) {
@@ -177,111 +232,177 @@ abstract class Ruleset
         }
     }
 
+    /**
+     * @return bool
+     */
     public function extraChomboPayments()
     {
         return static::$_ruleset['extraChomboPayments'];
     }
 
+    /**
+     * @return float
+     */
     public function chomboPenalty()
     {
         return static::$_ruleset['chomboPenalty'];
     }
 
+    /**
+     * @return bool
+     */
     public function withAtamahane()
     {
         return static::$_ruleset['withAtamahane'];
     }
 
+    /**
+     * @return bool
+     */
     public function withAbortives()
     {
         return static::$_ruleset['withAbortives'];
     }
 
+    /**
+     * @return bool
+     */
     public function withKuitan()
     {
         return static::$_ruleset['withKuitan'];
     }
 
+    /**
+     * @return bool
+     */
     public function withKazoe()
     {
         return static::$_ruleset['withKazoe'];
     }
 
+    /**
+     * @return bool
+     */
     public function withButtobi()
     {
         return static::$_ruleset['withButtobi'];
     }
 
+    /**
+     * @return bool
+     */
     public function withLeadingDealerGameOver()
     {
         return static::$_ruleset['withLeadingDealerGameOver'];
     }
 
+    /**
+     * @return bool
+     */
     public function withMultiYakumans()
     {
         return static::$_ruleset['withMultiYakumans'];
     }
 
+    /**
+     * @return bool
+     */
     public function withNagashiMangan()
     {
         return static::$_ruleset['withNagashiMangan'];
     }
 
+    /**
+     * @return bool
+     */
     public function withKiriageMangan()
     {
         return static::$_ruleset['withKiriageMangan'];
     }
 
+    /**
+     * @return float
+     */
     public function gameExpirationTime()
     {
         return static::$_ruleset['gameExpirationTime'];
     }
 
+    /**
+     * @return float
+     */
     public function minPenalty()
     {
         return static::$_ruleset['minPenalty'];
     }
 
+    /**
+     * @return float
+     */
     public function maxPenalty()
     {
         return static::$_ruleset['maxPenalty'];
     }
 
+    /**
+     * @return float
+     */
     public function penaltyStep()
     {
         return static::$_ruleset['penaltyStep'];
     }
 
+    /**
+     * @return array
+     */
     public function yakuWithPao()
     {
         return static::$_ruleset['yakuWithPao'];
     }
 
+    /**
+     * @return int
+     */
     public function redZone()
     {
         return static::$_ruleset['redZone'];
     }
 
+    /**
+     * @return int
+     */
     public function yellowZone()
     {
         return static::$_ruleset['yellowZone'];
     }
 
+    /**
+     * @return string
+     */
     public function timerPolicy()
     {
         return static::$_ruleset['timerPolicy'];
     }
 
+    /**
+     * @return int|false
+     */
     public function replacementPlayerFixedPoints()
     {
         return static::$_ruleset['replacementPlayerFixedPoints'];
     }
 
+    /**
+     * @return float|false
+     */
     public function replacementOverrideUma()
     {
         return static::$_ruleset['replacementPlayerOverrideUma'];
     }
 
+    /**
+     * @return false|mixed
+     */
     public function withWinningDealerHonbaSkipped()
     {
         $valueSet = isset(static::$_ruleset['withWinningDealerHonbaSkipped']);
@@ -294,6 +415,9 @@ abstract class Ruleset
         return $value;
     }
 
+    /**
+     * @return int|mixed
+     */
     public function chipsValue()
     {
         if (isset(static::$_ruleset['chipsValue'])) {

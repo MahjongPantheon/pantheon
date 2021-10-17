@@ -1,3 +1,4 @@
+phinxlog
 person_group
 registrant
 person_access

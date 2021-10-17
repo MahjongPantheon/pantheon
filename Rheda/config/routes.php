@@ -17,12 +17,9 @@
  */
 
 return [ // Omit trailing slashes in keys when possible
-    '!'               => 'MultieventMainpage', // special path for multievent mainpage
     ''                => 'Mainpage', // empty path for mainpage
-    '/login'          => 'AdminLogin',
     '/last'           => 'LastGames',
     '/last/.+'        => 'LastGames',
-    '/add'            => 'AddGame',
     '/add-online'     => 'AddOnlineGame',
     '/user'           => 'PersonalStats',
     '/user/(?<user>[0-9]+)' => 'PersonalStats',
@@ -30,14 +27,11 @@ return [ // Omit trailing slashes in keys when possible
     '/game/(?<hash>[0-9a-f]+)' => 'Game',
     '/reg'            => 'PlayerRegistration',
     '/reg/(?<print>print)' => 'PlayerRegistration',
-    '/enroll'         => 'PlayerEnrollment',
     '/stat/team'      => 'TeamTable',
     '/stat'           => 'RatingTable',
     '/stat/.+'        => 'RatingTable',
     '/timer'          => 'Timer',
     '/timer/.+'       => 'Timer',
-    '/sortition'      => 'Sortition',
-    '/sortition/(?<seed>[0-9a-f]+)' => 'Sortition',
 
     '/tourn'                                               => 'TournamentControlPanel',
     '/tourn/(?<action>dropLastRound)/(?<hash>[0-9a-f]+)'   => 'TournamentControlPanel',
@@ -63,5 +57,33 @@ return [ // Omit trailing slashes in keys when possible
     '/achievements'    => 'Achievements',
     '/achievements/(?<achievement>[0-9a-zA-Z]+)' => 'Achievements',
 
-    '!/favicon.ico'    => 'Mainpage' // костылёк ^_^
+    // Eventless paths (exclamation mark is a special symbol here)
+    '!'                      => 'MultieventMainpage',
+    '!/page/(?<page>[0-9]+)' => 'MultieventMainpage',
+    '!/favicon.ico'          => 'MultieventMainpage',
+
+    '!/signup'                              => 'PersonSignup',
+    '!/confirm/(?<code>[0-9a-f]+)'          => 'PersonSignupConfirm',
+    '!/profile/(?<action>login)'            => 'PersonLogin',
+    '!/profile/(?<action>logout)'           => 'PersonLogin',
+    '!/profile'                             => 'PersonProfileEdit',
+    '!/profile/(?<action>edit)/(?<id>\d+)'   => 'PersonProfileEdit',
+
+    '!/privileges'                  => 'Privileges',
+    '!/privileges/uid(?<id>\d+)'    => 'PrivilegesOfUser',
+    '!/privileges/eid(?<id>\d+)'    => 'PrivilegesOfEvent',
+    '!/privileges/gid(?<id>\d+)'    => 'PrivilegesOfGroup',
+    '!/groups/uid(?<id>\d+)'        => 'GroupsOfUser',
+    '!/groups/gid(?<id>\d+)'        => 'GroupList',
+
+    '!/privileges/ajax'             => 'PrivilegesAjax',
+
+    '!/cp/(?<action>manageEvents)'                => 'UserActionManageEvents',
+    '!/cp/(?<action>manageEvents)/(?<page>\d+)'   => 'UserActionManageEvents',
+    '!/cp/(?<action>newClubEvent)'                => 'UserActionEventEdit',
+    '!/cp/(?<action>newTournamentEvent)'          => 'UserActionEventEdit',
+    '!/cp/(?<action>newOnlineEvent)'              => 'UserActionEventEdit',
+    '!/cp/(?<action>editEvent)/(?<id>\d+)'        => 'UserActionEventEdit',
+    '!/cp/(?<action>finishEvent)/(?<id>\d+)'      => 'UserActionManageEvents',
+    '!/cp/(?<action>editEventAdmins)/(?<id>\d+)'  => 'UserActionEventEditPrivileges',
 ];

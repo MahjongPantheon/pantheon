@@ -22,7 +22,7 @@ require_once 'exceptions/AccessDenied.php';
 abstract class Model
 {
     /**
-     * @var Db
+     * @var IDb
      */
     protected $_db;
 
@@ -37,19 +37,14 @@ abstract class Model
     protected $_meta;
 
     /**
-     * @var PersonPrimitive
+     * @var PersonPrimitive|null
      */
-    protected $_authorizedPerson;
+    protected $_authorizedPerson = null;
 
     /**
      * @var array
      */
     protected $_currentAccess = [];
-
-    /**
-     * @var int[]
-     */
-    protected $_superAdminIds;
 
     /**
      * Model constructor.
@@ -65,13 +60,25 @@ abstract class Model
         $this->_meta = $meta;
         $this->_authorizedPerson = $this->_fetchAuthorizedPerson();
 
+        // for unit/integration testing purposes
         $testingToken = $this->_config->getValue('testing_token');
         if (!empty($testingToken) && $this->_meta->getAuthToken() == $testingToken) {
             $this->_authorizedPerson = PersonPrimitive::findById($db, $this->_fetchSuperAdminId())[0];
         }
 
         $this->_currentAccess = $this->_fetchPersonAccess();
-        $this->_superAdminIds = $this->_fetchSuperAdminId();
+    }
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    private function _fetchSuperAdminId()
+    {
+        $access = PersonAccessPrimitive::findSuperAdminId($this->_db);
+        return array_map(function (PersonAccessPrimitive $p) {
+            return $p->getPersonId();
+        }, $access);
     }
 
     /**
@@ -105,22 +112,14 @@ abstract class Model
             return [];
         }
 
-        return $this->_meta->getCurrentEventId() === null
-            ? $this->_getSystemWideRules($this->_authorizedPerson->getId())
-            : $this->_getAccessRules($this->_authorizedPerson->getId(), $this->_meta->getCurrentEventId());
-    }
+        $pId = $this->_authorizedPerson->getId();
+        if (empty($pId)) {
+            return []; // deidented primitive, no rights
+        }
 
-    /**
-     * @return array
-     * @throws \Exception
-     */
-    protected function _fetchSuperAdminId()
-    {
-        /** @var PersonAccessPrimitive[] $access */
-        $access = PersonAccessPrimitive::findSuperAdminId($this->_db);
-        return array_map(function (PersonAccessPrimitive $p) {
-            return $p->getPersonId();
-        }, $access);
+        return $this->_meta->getCurrentEventId() === null
+            ? $this->_getSystemWideRules($pId)
+            : $this->_getAccessRules($pId, $this->_meta->getCurrentEventId());
     }
 
     //////////////////////////////////////////////////////////////////
@@ -134,11 +133,12 @@ abstract class Model
     /**
      * Get apcu cache key for access rules
      *
-     * @param $personId
-     * @param $eventId
+     * @param int $personId
+     * @param string $eventId   numeric string or '__system-wide'
+     *
      * @return string
      */
-    protected static function _getAccessCacheKey($personId, $eventId)
+    protected static function _getAccessCacheKey(int $personId, string $eventId)
     {
         return "access_${personId}_${eventId}";
     }
@@ -155,7 +155,7 @@ abstract class Model
      */
     protected function _getAccessRules(int $personId, int $eventId)
     {
-        $rules = apcu_fetch($this->_getAccessCacheKey($personId, $eventId));
+        $rules = apcu_fetch($this->_getAccessCacheKey($personId, (string)$eventId));
         if ($rules !== false) {
             return $rules;
         }
@@ -167,20 +167,24 @@ abstract class Model
 
         $resultingRules = [];
         foreach ($this->_getGroupAccessRules($persons[0]->getGroupIds(), $eventId) as $rule) {
-            $systemWideRuleToBeApplied = empty($rule->getEventsId()) && !isset($resultingRules[$rule->getAclName()]);
-            if ($systemWideRuleToBeApplied || !empty($rule->getEventsId()) /* not systemwide rule */) {
+            $systemWideRuleToBeApplied = empty($rule->getEventId()) && !isset($resultingRules[$rule->getAclName()]);
+            if ($systemWideRuleToBeApplied || !empty($rule->getEventId()) /* not systemwide rule */) {
                 $resultingRules[$rule->getAclName()] = $rule->getAclValue();
             }
         }
         foreach ($this->_getPersonAccessRules($personId, $eventId) as $rule) {
             // Person rules have higher priority than group rules
-            $systemWideRuleToBeApplied = empty($rule->getEventsId()) && !isset($resultingRules[$rule->getAclName()]);
-            if ($systemWideRuleToBeApplied || !empty($rule->getEventsId()) /* not systemwide rule */) {
+            $systemWideRuleToBeApplied = empty($rule->getEventId()) && !isset($resultingRules[$rule->getAclName()]);
+            if ($systemWideRuleToBeApplied || !empty($rule->getEventId()) /* not systemwide rule */) {
                 $resultingRules[$rule->getAclName()] = $rule->getAclValue();
             }
         }
 
-        apcu_store($this->_getAccessCacheKey($personId, $eventId), $resultingRules, self::CACHE_TTL_SEC);
+        if ($persons[0]->getIsSuperadmin()) {
+            $resultingRules[InternalRules::IS_SUPER_ADMIN] = '1';
+        }
+
+        apcu_store($this->_getAccessCacheKey($personId, (string)$eventId), $resultingRules, self::CACHE_TTL_SEC);
         return $resultingRules;
     }
 
@@ -214,6 +218,10 @@ abstract class Model
             $resultingRules[$rule->getAclName()] = $rule->getAclValue();
         }
 
+        if ($persons[0]->getIsSuperadmin()) {
+            $resultingRules[InternalRules::IS_SUPER_ADMIN] = '1';
+        }
+
         apcu_store($this->_getAccessCacheKey($personId, '__system-wide'), $resultingRules, self::CACHE_TTL_SEC);
         return $resultingRules;
     }
@@ -224,13 +232,13 @@ abstract class Model
      * Typically should not be used when more than one value should be retrieved.
      * Returns null if no data found for provided person/event ids or rule name.
      *
-     * @param $personId
-     * @param $eventId
-     * @param $ruleName
+     * @param int $personId
+     * @param int $eventId
+     * @param string $ruleName
      * @return mixed
      * @throws \Exception
      */
-    protected function _getRuleValue($personId, $eventId, $ruleName)
+    protected function _getRuleValue(int $personId, int $eventId, string $ruleName)
     {
         $rules = $this->_getAccessRules($personId, $eventId);
         if (empty($rules[$ruleName])) {
@@ -240,65 +248,68 @@ abstract class Model
     }
 
     /**
-     * @param $personId
-     * @param $eventId
+     * @param int $personId
+     * @param int|null $eventId
+     *
      * @return PersonAccessPrimitive[]
      * @throws \Exception
      */
-    protected function _getPersonAccessRules($personId, $eventId)
+    protected function _getPersonAccessRules(int $personId, ?int $eventId)
     {
         return array_filter(
             PersonAccessPrimitive::findByPerson($this->_db, [$personId]),
             function (PersonAccessPrimitive $rule) use ($eventId) {
-                return empty($rule->getEventsId()) // system-wide person rules
-                    || in_array($eventId, $rule->getEventsId());
+                return empty($rule->getEventId()) // system-wide person rules
+                    || $eventId == $rule->getEventId();
             }
         );
     }
 
     /**
-     * @param $groupIds
-     * @param $eventId
+     * @param int[] $groupIds
+     * @param int|null $eventId
+     *
      * @return GroupAccessPrimitive[]
      * @throws \Exception
      */
-    protected function _getGroupAccessRules($groupIds, $eventId)
+    protected function _getGroupAccessRules(array $groupIds, ?int $eventId)
     {
         return array_filter(
             GroupAccessPrimitive::findByGroup($this->_db, $groupIds),
             function (GroupAccessPrimitive $rule) use ($eventId) {
-                return empty($rule->getEventsId()) // system-wide group rules
-                    || in_array($eventId, $rule->getEventsId());
+                return empty($rule->getEventId()) // system-wide group rules
+                    || $eventId == $rule->getEventId();
             }
         );
     }
 
     /**
-     * @param $personId
+     * @param int $personId
      * @return PersonAccessPrimitive[]
      * @throws \Exception
      */
-    protected function _getPersonAccessSystemWideRules($personId)
+    protected function _getPersonAccessSystemWideRules(int $personId)
     {
         return array_filter(
             PersonAccessPrimitive::findByPerson($this->_db, [$personId]),
             function (PersonAccessPrimitive $rule) {
-                return empty($rule->getEventsId());
+                return empty($rule->getEventId());
             }
         );
     }
 
     /**
-     * @param $groupIds
+     * @param int[] $groupIds
+     *
      * @return GroupAccessPrimitive[]
      * @throws \Exception
      */
-    protected function _getGroupAccessSystemWideRules($groupIds)
+    protected function _getGroupAccessSystemWideRules(array $groupIds)
     {
         return array_filter(
             GroupAccessPrimitive::findByGroup($this->_db, $groupIds),
             function (GroupAccessPrimitive $rule) {
-                return empty($rule->getEventsId());
+                return empty($rule->getEventId());
             }
         );
     }
@@ -306,19 +317,47 @@ abstract class Model
     /**
      * @param string $key
      * @param int|null $eventId
+     *
      * @throws AccessDeniedException
+     *
+     * @return $this
      */
-    protected function _checkAccessRights(string $key, $eventId = null)
+    public function _checkAccessRights(string $key, $eventId = null): self
     {
-        if (defined('BOOTSTRAP_MODE')) {
-            // Everything is allowed during setup
-            return;
+        $eventMatches = empty($eventId) || $eventId == $this->_meta->getCurrentEventId();
+        if (!$eventMatches) {
+            throw new AccessDeniedException('This event action is not allowed for you');
         }
 
-        if ((!empty($eventId) && $eventId != $this->_meta->getCurrentEventId())
-            || empty($this->_currentAccess[$key])
-            || $this->_currentAccess[$key] != true) {
-            throw new AccessDeniedException();
+        $hasAccess = !empty($this->_authorizedPerson) && (
+            $this->_authorizedPerson->getIsSuperadmin() || (
+                !empty($this->_currentAccess[$key]) && $this->_currentAccess[$key] == true
+            )
+        );
+        if (!$hasAccess) {
+            throw new AccessDeniedException('This action is not allowed for you');
         }
+
+        return $this;
+    }
+
+    /**
+     * Loose check of rights.
+     * Should only be used on non-admin api methods called from mimir/rheda, but not from tyr.
+     * E.g., method of adding admin rights to just created event.
+     *
+     * @param string $key
+     * @param int|null $eventId
+     * @return $this
+     * @throws AccessDeniedException
+     */
+    public function _checkAccessRightsWithInternal(string $key, $eventId = null)
+    {
+        // For direct calls from Mimir/Rheda
+        if (!empty($_SERVER['HTTP_X_INTERNAL_QUERY_SECRET']) && $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] === $this->_config->getValue('admin.internalQuerySecret')) {
+            return $this;
+        }
+
+        return $this->_checkAccessRights($key, $eventId);
     }
 }

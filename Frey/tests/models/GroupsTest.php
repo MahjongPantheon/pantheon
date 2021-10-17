@@ -78,11 +78,11 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 401
      */
     public function testCreateGroupEmptyTitle()
     {
+        $this->expectExceptionCode(401);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
         $model->createGroup('', '', '');
     }
@@ -113,11 +113,11 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 403
      */
     public function testGetGroupsEmptyList()
     {
+        $this->expectExceptionCode(403);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
         $model->getGroups([]);
     }
@@ -155,23 +155,11 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 404
-     */
-    public function testUpdateGroupBadId()
-    {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $model->updateGroup('lol', 'Updated group', 'Updated description', '#654321');
-    }
-
-    /**
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 405
      */
     public function testUpdateGroupIdNotFound()
     {
+        $this->expectExceptionCode(405);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
         $model->updateGroup(1234, 'Updated group', 'Updated description', '#654321');
     }
@@ -179,11 +167,11 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 406
      */
     public function testUpdateGroupBadTitle()
     {
+        $this->expectExceptionCode(406);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
         $groupId = $model->createGroup('Test group', 'Test group description', '#123456');
         $model->updateGroup($groupId, '', '', '');
@@ -206,23 +194,11 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 407
-     */
-    public function testDeleteGroupBadId()
-    {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $model->deleteGroup('lol');
-    }
-
-    /**
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 408
      */
     public function testDeleteGroupIdNotFound()
     {
+        $this->expectExceptionCode(408);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
         $model->deleteGroup(123);
     }
@@ -246,38 +222,11 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 407
-     */
-    public function testAddPersonToGroupBadGroupId()
-    {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $model->addPersonToGroup($this->_person->getId(), 'kek');
-    }
-
-    /**
-     * @throws EntityNotFoundException
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 407
-     */
-    public function testAddPersonToGroupBadPersonId()
-    {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '#123456');
-        $model->addPersonToGroup('lol', $groupId);
-    }
-
-    /**
-     * @throws EntityNotFoundException
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 408
      */
     public function testAddPersonToGroupGroupIdNotFound()
     {
+        $this->expectExceptionCode(408);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
         $model->addPersonToGroup($this->_person->getId(), 123);
     }
@@ -286,11 +235,11 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 409
      */
     public function testAddPersonToGroupPersonIdNotFound()
     {
+        $this->expectExceptionCode(409);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
         $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup(321, $groupId);
@@ -316,41 +265,11 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 410
-     */
-    public function testRemovePersonToGroupBadGroupId()
-    {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '#123456');
-        $model->addPersonToGroup($this->_person->getId(), $groupId);
-        $model->removePersonFromGroup($this->_person->getId(), 'kek');
-    }
-
-    /**
-     * @throws EntityNotFoundException
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 410
-     */
-    public function testRemovePersonToGroupBadPersonId()
-    {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $groupId = $model->createGroup('test', 'test', '#123456');
-        $model->addPersonToGroup($this->_person->getId(), $groupId);
-        $model->removePersonFromGroup('lol', $groupId);
-    }
-
-    /**
-     * @throws EntityNotFoundException
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 411
      */
     public function testRemovePersonToGroupGroupIdNotFound()
     {
+        $this->expectExceptionCode(411);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
         $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
@@ -361,11 +280,11 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 412
      */
     public function testRemovePersonToGroupPersonIdNotFound()
     {
+        $this->expectExceptionCode(412);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
         $groupId = $model->createGroup('test', 'test', '#123456');
         $model->addPersonToGroup($this->_person->getId(), $groupId);
@@ -394,24 +313,11 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 413
-     */
-    public function testGetGroupsOfPersonBadId()
-    {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $model->getGroupsOfPerson('lol');
-    }
-
-    /**
-     * @throws EntityNotFoundException
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 414
      */
     public function testGetGroupsOfPersonNotFound()
     {
+        $this->expectExceptionCode(414);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
         $model->getGroupsOfPerson(1234);
     }
@@ -438,24 +344,11 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 415
-     */
-    public function testGetPersonsOfGroupBadId()
-    {
-        $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
-        $model->getPersonsOfGroup('kek');
-    }
-
-    /**
-     * @throws EntityNotFoundException
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 416
      */
     public function testGetPersonsOfGroupGroupNotFound()
     {
+        $this->expectExceptionCode(416);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new GroupsModel($this->_db, $this->_config, $this->_meta);
         $model->getPersonsOfGroup(123);
     }

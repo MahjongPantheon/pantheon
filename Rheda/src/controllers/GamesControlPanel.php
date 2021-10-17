@@ -31,30 +31,33 @@ class GamesControlPanel extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Games control panel');
+        return _t('Games control panel') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
+    /**
+     * @return bool
+     */
     protected function _beforeRun()
     {
-        if (!empty($this->_path['action'])) {
+        if (!empty($this->_path['action']) && !empty($this->_mainEventId)) {
             if (count($this->_eventIdList) > 1) {
                 return true; // to show error in _run
             }
 
-            if (!$this->_adminAuthOk()) {
+            if (!$this->_userHasAdminRights()) {
                 return true; // to show error in _run
             }
 
             try {
                 switch ($this->_path['action']) {
                     case 'dropLastRound':
-                        $this->_api->execute('dropLastRound', [$this->_path['hash']]);
+                        $this->_mimir->dropLastRound($this->_path['hash']);
                         break;
                     case 'definalize':
-                        $this->_api->execute('definalizeGame', [$this->_path['hash']]);
+                        $this->_mimir->definalizeGame($this->_path['hash']);
                         break;
                     case 'cancelGame':
-                        $this->_api->execute('cancelGame', [$this->_path['hash']]);
+                        $this->_mimir->cancelGame($this->_path['hash']);
                         break;
                     default:
                         ;
@@ -64,14 +67,18 @@ class GamesControlPanel extends Controller
                 return true;
             }
 
-            header('Location: ' . Url::make('/games/', $this->_mainEventId));
+            header('Location: ' . Url::make('/games/', (string)$this->_mainEventId));
             return false;
         }
 
         return true;
     }
 
-    protected function _run()
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    protected function _run(): array
     {
         $formatter = new GameFormatter();
 
@@ -82,7 +89,13 @@ class GamesControlPanel extends Controller
             ];
         }
 
-        if (!$this->_adminAuthOk()) {
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
+
+        if (!$this->_userHasAdminRights()) {
             return [
                 'reason' => _t('Wrong admin password')
             ];
@@ -95,7 +108,7 @@ class GamesControlPanel extends Controller
         }
 
         // Tables info
-        $tables = $this->_api->execute('getTablesState', [$this->_mainEventId]);
+        $tables = $this->_mimir->getTablesState($this->_mainEventId);
         $tablesFormatted = $formatter->formatTables(
             $tables,
             $this->_mainEventRules->gamesWaitingForTimer(),

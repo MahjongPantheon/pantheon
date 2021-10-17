@@ -28,7 +28,10 @@ require_once __DIR__ . '/../../src/Db.php';
 
 class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
-    protected $_db;
+    /**
+     * @var DataSource
+     */
+    protected $_ds;
     /**
      * @var EventPrimitive
      */
@@ -37,6 +40,10 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
      * @var PlayerPrimitive[]
      */
     protected $_players;
+    /**
+     * @var PlayerRegistrationPrimitive[]
+     */
+    protected $_regs;
     /**
      * @var SessionPrimitive
      */
@@ -48,16 +55,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->_db = Db::__getCleanTestingInstance();
-
-        $this->_players = array_map(function ($i) {
-            $p = (new PlayerPrimitive($this->_db))
-                ->setDisplayName('player' . $i)
-                ->setIdent('oauth' . $i)
-                ->setTenhouId('tenhou' . $i);
-            $p->save();
-            return $p;
-        }, [1, 2, 3, 4]);
+        $this->_ds = DataSource::__getCleanTestingInstance();
 
         $this->_ruleset = new MockRuleset();
         $this->_ruleset->setRule('withButtobi', false);
@@ -75,15 +73,21 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $this->_ruleset->setRule('replacementPlayerFixedPoints', -30000);
         $this->_ruleset->setRule('replacementPlayerOverrideUma', 0);
 
-        $this->_event = (new EventPrimitive($this->_db))
+        $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setDescription('desc')
             ->setTimezone('UTC')
-            ->setType('online')
             ->setRuleset($this->_ruleset);
         $this->_event->save();
 
-        $this->_session = (new SessionPrimitive($this->_db))
+        $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
+        foreach ($this->_players as $p) {
+            $this->_regs[$p->getId()] = (new PlayerRegistrationPrimitive($this->_ds))
+                ->setReg($p, $this->_event);
+            $this->_regs[$p->getId()]->save();
+        }
+
+        $this->_session = (new SessionPrimitive($this->_ds))
             ->setEvent($this->_event)
             ->setPlayers($this->_players)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS);
@@ -92,7 +96,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testSinglePlayerResults()
     {
-        $result = (new SessionResultsPrimitive($this->_db))
+        $result = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
@@ -108,10 +112,10 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
     public function testReplacementPlayerRatingDelta()
     {
         $player = $this->_players[0];
-        $player->setIsReplacement(true);
-        $player->save();
+        $this->_regs[$player->getId()]->setReplacementPlayerId(true);
+        $this->_regs[$player->getId()]->save();
 
-        $result = (new SessionResultsPrimitive($this->_db))
+        $result = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($player)
             ->setSession($this->_session)
             ->calc(
@@ -126,7 +130,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testUmaRule()
     {
-        $result = (new SessionResultsPrimitive($this->_db))
+        $result = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
@@ -144,7 +148,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $this->_ruleset->setRule('startPoints', 25000);
         $this->_ruleset->setRule('oka', 20);
 
-        $result = (new SessionResultsPrimitive($this->_db))
+        $result = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[0])
             ->setSession($this->_session)
             ->calc(
@@ -156,7 +160,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals(30, $result->getRatingDelta());
 
-        $result = (new SessionResultsPrimitive($this->_db))
+        $result = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
@@ -173,7 +177,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testFourEqualScore()
     {
-        $round = (new RoundPrimitive($this->_db))
+        $round = (new RoundPrimitive($this->_ds))
             ->setOutcome('draw')
             ->setSession($this->_session)
             ->setRoundIndex(1)
@@ -182,7 +186,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $round->save();
         $this->_session->updateCurrentState($round);
 
-        $result1 = (new SessionResultsPrimitive($this->_db))
+        $result1 = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[0])
             ->setSession($this->_session)
             ->calc(
@@ -192,7 +196,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             );
         $result1->save();
 
-        $result2 = (new SessionResultsPrimitive($this->_db))
+        $result2 = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
@@ -202,7 +206,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             );
         $result2->save();
 
-        $result3 = (new SessionResultsPrimitive($this->_db))
+        $result3 = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[2])
             ->setSession($this->_session)
             ->calc(
@@ -212,7 +216,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             );
         $result3->save();
 
-        $result4 = (new SessionResultsPrimitive($this->_db))
+        $result4 = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[3])
             ->setSession($this->_session)
             ->calc(
@@ -240,7 +244,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $this->_ruleset = Ruleset::instance('ema');
         $this->_event->setRuleset($this->_ruleset)->save();
 
-        $round = (new RoundPrimitive($this->_db))
+        $round = (new RoundPrimitive($this->_ds))
             ->setOutcome('draw')
             ->setSession($this->_session)
             ->setRoundIndex(1)
@@ -249,7 +253,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $round->save();
         $this->_session->updateCurrentState($round);
 
-        $result1 = (new SessionResultsPrimitive($this->_db))
+        $result1 = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
@@ -259,7 +263,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             );
         $result1->save();
 
-        $result2 = (new SessionResultsPrimitive($this->_db))
+        $result2 = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[2])
             ->setSession($this->_session)
             ->calc(
@@ -278,7 +282,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
     public function testChombo()
     {
         $this->_ruleset->setRule('extraChomboPayments', false);
-        $round = (new RoundPrimitive($this->_db))
+        $round = (new RoundPrimitive($this->_ds))
             ->setOutcome('chombo')
             ->setSession($this->_session)
             ->setLoser($this->_players[1])
@@ -286,7 +290,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $round->save();
         $this->_session->updateCurrentState($round);
 
-        $result1 = (new SessionResultsPrimitive($this->_db))
+        $result1 = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(

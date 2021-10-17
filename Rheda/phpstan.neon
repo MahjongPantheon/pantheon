@@ -1,0 +1,10 @@
+parameters:
+  checkMissingIterableValueType: false
+  reportUnmatchedIgnoredErrors: false
+  scanDirectories:
+    - vendor/fguillot/json-rpc
+  level: 8
+  paths:
+    - src
+    - www
+    - config

@@ -1,0 +1,13 @@
+parameters:
+  checkMissingIterableValueType: false
+  reportUnmatchedIgnoredErrors: false
+  scanDirectories:
+    - vendor/ctizen/idiorm
+    - vendor/fguillot/json-rpc
+    - vendor/monolog/monolog
+  bootstrapFiles:
+    - src/helpers/i18n.php
+  level: 8
+  paths:
+    - src
+    - www

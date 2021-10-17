@@ -86,7 +86,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
 
@@ -96,7 +96,7 @@ class SessionPrimitive extends Primitive
     protected $_eventId;
     /**
      *
-     * @var EventPrimitive
+     * @var EventPrimitive|null
      */
     protected $_event;
 
@@ -108,13 +108,13 @@ class SessionPrimitive extends Primitive
 
     /**
      * tenhou game hash, for deduplication
-     * @var string
+     * @var string|null
      */
     protected $_replayHash;
 
     /**
      * Number of table in tournament
-     * @var int
+     * @var int|null
      */
     protected $_tableIndex = null;
 
@@ -138,7 +138,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * Ordered list of player entities
-     * @var PlayerPrimitive[]
+     * @var PlayerPrimitive[]|null
      */
     protected $_players = null;
 
@@ -156,7 +156,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * current game status
-     * @var SessionState
+     * @var SessionState|null
      */
     protected $_current;
 
@@ -166,38 +166,47 @@ class SessionPrimitive extends Primitive
      */
     protected $_chips;
 
-    public function __construct(IDb $db)
+    /**
+     * SessionPrimitive constructor.
+     * @param DataSource $ds
+     * @throws \Exception
+     */
+    public function __construct(DataSource $ds)
     {
-        parent::__construct($db);
+        parent::__construct($ds);
         $this->_startDate = date('Y-m-d H:i:s'); // may be actualized on restore
     }
 
     /**
      * Find sessions by local ids (primary key)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return SessionPrimitive[]
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(DataSource $ds, $ids)
     {
-        return self::_findBy($db, 'id', $ids);
+        return self::_findBy($ds, 'id', $ids);
     }
 
     /**
      * Find sessions by state (indexed search, paginated)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param integer $eventId
      * @param string $replayHash
+     *
      * @throws \Exception
-     * @return SessionPrimitive[]
+     *
+     * @return self[]
+     *
+     * @psalm-return array<array-key, self>
      */
-    public static function findByReplayHashAndEvent(IDb $db, $eventId, $replayHash)
+    public static function findByReplayHashAndEvent(DataSource $ds, $eventId, $replayHash)
     {
         return self::_findBySeveral(
-            $db,
+            $ds,
             ['event_id' => [$eventId], 'replay_hash' => [$replayHash]]
         );
     }
@@ -205,43 +214,47 @@ class SessionPrimitive extends Primitive
     /**
      * Find all sessions in progress
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @throws \Exception
      * @return SessionPrimitive[]
      */
-    public static function findAllInProgress(IDb $db)
+    public static function findAllInProgress(DataSource $ds)
     {
-        return self::_findBy($db, 'status', [SessionPrimitive::STATUS_INPROGRESS]);
+        return self::_findBy($ds, 'status', [SessionPrimitive::STATUS_INPROGRESS]);
     }
 
     /**
      * Find sessions by client-aware hash list (indexed search)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param string[] $hashList
      * @throws \Exception
      * @return SessionPrimitive[]
      */
-    public static function findByRepresentationalHash(IDb $db, $hashList)
+    public static function findByRepresentationalHash(DataSource $ds, $hashList)
     {
-        return self::_findBy($db, 'representational_hash', $hashList);
+        return self::_findBy($ds, 'representational_hash', $hashList);
     }
 
     /**
      * Find sessions by state (indexed search, paginated)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param integer $eventId
      * @param string|string[] $status
      * @param integer $offset
      * @param integer $limit
      * @param string $orderBy
      * @param string $order
+     *
      * @throws \Exception
-     * @return SessionPrimitive[]
+     *
+     * @return self[]
+     *
+     * @psalm-return array<array-key, self>
      */
     public static function findByEventAndStatus(
-        IDb $db,
+        DataSource $ds,
         $eventId,
         $status,
         $offset = 0,
@@ -251,7 +264,7 @@ class SessionPrimitive extends Primitive
     ) {
 
         return self::_findBySeveral(
-            $db,
+            $ds,
             ['status' => (array)$status, 'event_id' => [$eventId]],
             [
                 'limit' => $limit, 'offset'  => $offset,
@@ -263,19 +276,22 @@ class SessionPrimitive extends Primitive
     /**
      * Find sessions by state (indexed search, paginated)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param array $eventIdList
      * @param string|string[] $status
      * @param integer $offset
      * @param integer $limit
      * @param string $orderBy
      * @param string $order
+     *
      * @throws \Exception
-     * @return SessionPrimitive[]
+     *
+     * @return self[]
+     *
+     * @psalm-return array<array-key, self>
      */
-    /* FIXME (PNTN-237): merge with single event implementation. */
     public static function findByEventListAndStatus(
-        IDb $db,
+        DataSource $ds,
         $eventIdList,
         $status,
         $offset = 0,
@@ -285,7 +301,7 @@ class SessionPrimitive extends Primitive
     ) {
 
         return self::_findBySeveral(
-            $db,
+            $ds,
             ['status' => (array)$status, 'event_id' => $eventIdList],
             [
                 'limit' => $limit, 'offset'  => $offset,
@@ -297,13 +313,14 @@ class SessionPrimitive extends Primitive
     /**
      * Get data of players' seating during all event
      *
-     * @param IDb $db
-     * @param $eventId
+     * @param DataSource $ds
+     * @param int $eventId
+     * @throws \Exception
      * @return array TODO: should it be here? It behaves like non-ORM method :/
      */
-    public static function getPlayersSeatingInEvent(IDb $db, $eventId)
+    public static function getPlayersSeatingInEvent(DataSource $ds, int $eventId): array
     {
-        return $db->table(self::$_table)
+        return $ds->table(self::$_table)
             ->select('player_id')
             ->select('order')
             ->join(self::REL_USER, [self::REL_USER . '.session_id', '=', self::$_table . '.id'])
@@ -316,19 +333,17 @@ class SessionPrimitive extends Primitive
     /**
      * Find session by player/event
      *
-     * @param IDb $db
-     * @param $playerId
-     * @param $eventId
-     * @param $withStatus
+     * @param DataSource $ds
+     * @param int $playerId
+     * @param int $eventId
+     * @param string $withStatus
+     * @throws \Exception
      * @return SessionPrimitive[]
      */
-    public static function findByPlayerAndEvent(IDb $db, $playerId, $eventId, $withStatus = '*')
+    public static function findByPlayerAndEvent(DataSource $ds, int $playerId, int $eventId, string $withStatus = '*')
     {
-        $playerId = intval($playerId);
-        $eventId = intval($eventId);
-
         // TODO: here we can precache players, ids are known as GROUP_CONCAT(player_id)
-        $orm = $db->table(self::$_table)
+        $orm = $ds->table(self::$_table)
             ->select(self::$_table . '.*')
             ->leftOuterJoin(self::REL_USER, [self::REL_USER . '.session_id', '=', self::$_table . '.id'])
             ->where(self::REL_USER . '.player_id', $playerId)
@@ -343,21 +358,24 @@ class SessionPrimitive extends Primitive
             return [];
         }
 
-        return array_map(function ($data) use ($db) {
-            return self::_recreateInstance($db, $data);
+        return array_map(function ($data) use ($ds) {
+            return self::_recreateInstance($ds, $data);
         }, $result);
     }
 
     /**
      * Find last session of player in event
      *
-     * @param IDb $db
-     * @param $playerId
-     * @param $eventId
+     * @param DataSource $ds
+     * @param int $playerId
+     * @param int $eventId
      * @param string $withStatus
-     * @return SessionPrimitive
+     *
+     * @throws \Exception
+     *
+     * @return null|self
      */
-    public static function findLastByPlayerAndEvent(IDb $db, $playerId, $eventId, $withStatus = '*')
+    public static function findLastByPlayerAndEvent(DataSource $ds, int $playerId, int $eventId, $withStatus = '*'): ?self
     {
         $conditions = [
             'sp.player_id'  => [$playerId],
@@ -367,7 +385,7 @@ class SessionPrimitive extends Primitive
             $conditions['s.status'] = [$withStatus];
         }
 
-        $orm = $db->table(static::$_table)->tableAlias('s')
+        $orm = $ds->table(static::$_table)->tableAlias('s')
             ->select('*')
             ->select('s.id', 'id') // session_player also has 'id' field, we need to select it explicitly
             ->join(self::REL_USER, ['sp.session_id', '=', 's.id'], 'sp');
@@ -384,29 +402,31 @@ class SessionPrimitive extends Primitive
         } else {
             return null;
         }
-        return self::_recreateInstance($db, $item);
+        return self::_recreateInstance($ds, $item);
     }
 
     /**
      * Total count of played games
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param array $eventIdList
-     * @param $withStatus
+     * @param string $withStatus
+     * @throws \Exception
      * @return integer
      */
-    public static function getGamesCount(IDb $db, $eventIdList, $withStatus)
+    public static function getGamesCount(DataSource $ds, array $eventIdList, string $withStatus): int
     {
-        $result = $db->table(self::$_table)
+        $result = $ds->table(self::$_table)
             ->whereIn('event_id', $eventIdList)
             ->where('status', $withStatus)
             ->count();
 
-        return $result;
+        return (int)$result;
     }
 
     /**
      * Save session instance to db
+     * @throws \Exception
      * @return bool success
      */
     public function save()
@@ -422,12 +442,16 @@ class SessionPrimitive extends Primitive
         return parent::save();
     }
 
+    /**
+     * @return bool|mixed
+     * @throws \Exception
+     */
     protected function _create()
     {
-        $session = $this->_db->table(self::$_table)->create();
+        $session = $this->_ds->table(self::$_table)->create();
         $success = $this->_save($session);
         if ($success) {
-            $this->_id = $this->_db->lastInsertId();
+            $this->_id = $this->_ds->local()->lastInsertId();
         }
 
         return $success;
@@ -441,22 +465,28 @@ class SessionPrimitive extends Primitive
     /**
      * @param \Mimir\EventPrimitive $event
      * @return $this
+     * @throws InvalidParametersException
      */
     public function setEvent(EventPrimitive $event)
     {
+        $id = $event->getId();
+        if (!$id) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_event = $event;
-        $this->_eventId = $event->getId();
+        $this->_eventId = $id;
         return $this;
     }
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\EventPrimitive
      */
     public function getEvent()
     {
         if (!$this->_event) {
-            $foundEvents = EventPrimitive::findById($this->_db, [$this->_eventId]);
+            $foundEvents = EventPrimitive::findById($this->_ds, [$this->_eventId]);
             if (empty($foundEvents)) {
                 throw new EntityNotFoundException("Entity EventPrimitive with id#" . $this->_eventId . ' not found in DB');
             }
@@ -474,7 +504,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -482,7 +512,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
-     * @param int $tableIndex
+     * @param int|null $tableIndex
      * @return $this
      */
     public function setTableIndex($tableIndex)
@@ -492,7 +522,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return int|null
      */
     public function getTableIndex()
     {
@@ -500,9 +530,12 @@ class SessionPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @throws EntityNotFoundException
+     * @throws \Exception
+     *
+     * @return null|string
      */
-    public function getStartDate()
+    public function getStartDate(): ?string
     {
         if (!$this->_startDate) {
             return null;
@@ -521,6 +554,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * @throws \Exception
      * @return string|null
      */
     public function getEndDate()
@@ -547,13 +581,14 @@ class SessionPrimitive extends Primitive
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\PlayerPrimitive[]
      */
     public function getPlayers()
     {
         if ($this->_players === null) {
             $this->_players = PlayerPrimitive::findById(
-                $this->_db,
+                $this->_ds,
                 $this->_playersIds
             );
             if (empty($this->_players) || count($this->_players) !== count($this->_playersIds)) {
@@ -562,10 +597,12 @@ class SessionPrimitive extends Primitive
             }
 
             $this->_players = array_filter(array_map(function ($id) {
-                // Re-sort players to match request order - important!
-                foreach ($this->_players as $p) {
-                    if ($p->getId() == $id) {
-                        return $p;
+                if (!empty($this->_players)) {
+                    // Re-sort players to match request order - important!
+                    foreach ($this->_players as $p) {
+                        if ($p->getId() == $id) {
+                            return $p;
+                        }
                     }
                 }
                 return null;
@@ -583,7 +620,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
-     * @param string $replayHash
+     * @param string|null $replayHash
      * @return $this
      */
     public function setReplayHash($replayHash)
@@ -593,7 +630,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getReplayHash()
     {
@@ -624,9 +661,10 @@ class SessionPrimitive extends Primitive
 
     /**
      * @deprecated Do not use this! Left as is only for testing purposes.
-     * @return string
+     * @param string $hash
+     * @return $this
      */
-    public function _setRepresentationalHash($hash)
+    public function _setRepresentationalHash(string $hash)
     {
         $this->_representationalHash = $hash;
         return $this;
@@ -651,6 +689,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * @param int[] $chips
      * @return $this
      */
     public function setChips($chips)
@@ -668,9 +707,10 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * @throws \Exception
      * @return SessionState
      */
-    public function getCurrentState()
+    public function getCurrentState(): SessionState
     {
         if (empty($this->_current)) {
             $this->_current = new SessionState(
@@ -761,6 +801,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * @param RoundPrimitive $round
+     * @throws \Exception
      * @return array [SessionState, array]
      */
     public function dryRunUpdateCurrentState(RoundPrimitive $round)
@@ -771,6 +812,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * @throws \Exception
      * @return bool
      */
     public function prefinish()
@@ -791,6 +833,7 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * @throws \Exception
      * @return bool
      */
     public function finish()
@@ -813,6 +856,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * Add chips bonus to final scores
+     * @return void
      */
     public function updateScoresWithChipsBonus()
     {
@@ -828,6 +872,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * Generate session results
+     * @throws \Exception
      * @return bool
      */
     protected function _finalizeGame()
@@ -835,10 +880,9 @@ class SessionPrimitive extends Primitive
         $sessionResults = $this->getSessionResults();
 
         return array_reduce($sessionResults, function ($acc, SessionResultsPrimitive $result) {
-            $player = $result->getPlayer();
             $playerHistoryItem = PlayerHistoryPrimitive::makeNewHistoryItem(
-                $this->_db,
-                $player,
+                $this->_ds,
+                $result->getPlayer(),
                 $this,
                 $result->getRatingDelta(),
                 $result->getPlace(),
@@ -852,6 +896,7 @@ class SessionPrimitive extends Primitive
 
     /**
      * Get a list on unsaved session results primitives
+     * @throws \Exception
      * @return SessionResultsPrimitive[]
      */
     public function getSessionResults()
@@ -874,7 +919,7 @@ class SessionPrimitive extends Primitive
                 }
             }
 
-            $riichiBetAmount = 100 * floor(($this->getCurrentState()->getRiichiBets() * 10.) / $firstPlacesCount);
+            $riichiBetAmount = (int)(100 * floor(($this->getCurrentState()->getRiichiBets() * 10.) / $firstPlacesCount));
 
             foreach ($this->getPlayers() as $player) {
                 if ($placesMap[$player->getId()]['place'] <= $firstPlacesCount) {
@@ -884,7 +929,7 @@ class SessionPrimitive extends Primitive
         }
 
         return array_map(function (PlayerPrimitive $player) {
-            return (new SessionResultsPrimitive($this->_db))
+            return (new SessionResultsPrimitive($this->_ds))
                 ->setPlayer($player)
                 ->setSession($this)
                 ->calc($this->getEvent()->getRuleset(), $this->getCurrentState(), $this->getPlayersIds());
@@ -893,10 +938,14 @@ class SessionPrimitive extends Primitive
 
     /**
      * Rollback round in current session
+     *
      * @param RoundPrimitive|MultiRoundPrimitive $round
-     * @throws InvalidParametersException
+     *
+     * @throws \Exception
+     *
+     * @return void
      */
-    public function rollback(RoundPrimitive $round)
+    public function rollback(RoundPrimitive $round): void
     {
         $this->_current = $round->getLastSessionState();
         $round->drop();
@@ -910,7 +959,7 @@ class SessionPrimitive extends Primitive
      */
     public function isLastForPlayers()
     {
-        $last = $this->_db->table(self::REL_USER)
+        $last = $this->_ds->table(self::REL_USER)
             ->whereIn('player_id', $this->getPlayersIds())
             ->orderByDesc('id')
             ->limit(4)

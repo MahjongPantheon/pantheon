@@ -25,10 +25,14 @@ class Timer extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Timer');
+        return _t('Timer') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    protected function _run(): array
     {
         if (count($this->_eventIdList) > 1) {
             return [
@@ -37,8 +41,14 @@ class Timer extends Controller
             ];
         }
 
-        $timerState = $this->_api->execute('getTimerState', [$this->_mainEventId]);
-        $currentSeating = $this->_formatSeating($this->_api->execute('getCurrentSeating', [$this->_mainEventId]));
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
+
+        $timerState = $this->_mimir->getTimerState($this->_mainEventId);
+        $currentSeating = $this->_formatSeating($this->_mimir->getCurrentSeating($this->_mainEventId));
         $durationWithoutSeating = $this->_mainEventRules->gameDuration() - 5;
 
         if ($timerState['started'] && $timerState['time_remaining']) {
@@ -69,7 +79,12 @@ class Timer extends Controller
         ];
     }
 
-    protected function _formatSeating($seating)
+    /**
+     * @param array $seating
+     * @return array
+     * @throws \Exception
+     */
+    protected function _formatSeating(array $seating): array
     {
         $result = [];
 

@@ -53,7 +53,7 @@ class PlayerHistoryPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
     /**
@@ -61,7 +61,7 @@ class PlayerHistoryPrimitive extends Primitive
      */
     protected $_playerId;
     /**
-     * @var PlayerPrimitive
+     * @var PlayerPrimitive|null
      */
     protected $_player;
     /**
@@ -69,7 +69,7 @@ class PlayerHistoryPrimitive extends Primitive
      */
     protected $_sessionId;
     /**
-     * @var SessionPrimitive
+     * @var SessionPrimitive|null
      */
     protected $_session;
     /**
@@ -77,7 +77,7 @@ class PlayerHistoryPrimitive extends Primitive
      */
     protected $_eventId;
     /**
-     * @var EventPrimitive
+     * @var EventPrimitive|null
      */
     protected $_event;
     /**
@@ -100,47 +100,53 @@ class PlayerHistoryPrimitive extends Primitive
     /**
      * Find history items by local ids (primary key)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return PlayerHistoryPrimitive[]
      */
-    public static function findById(IDb $db, $ids)
+    public static function findById(DataSource $ds, $ids)
     {
-        return self::_findBy($db, 'id', $ids);
+        return self::_findBy($ds, 'id', $ids);
     }
 
     /**
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int $eventId
      * @param int $playerId  omit this to get all players histories for event
-     * @return PlayerHistoryPrimitive[]
+     *
+     * @throws \Exception
+     *
+     * @return self[]
+     *
+     * @psalm-return array<array-key, self>
      */
-    public static function findAllByEvent(IDb $db, $eventId, $playerId = null)
+    public static function findAllByEvent(DataSource $ds, $eventId, $playerId = null)
     {
         // todo: optional pagination and sorting
 
         if (!$playerId) {
-            return self::_findBy($db, 'event_id', [$eventId]);
+            return self::_findBy($ds, 'event_id', [$eventId]);
         }
 
-        return self::_findBySeveral($db, [
+        return self::_findBySeveral($ds, [
             'player_id'  => [$playerId],
             'event_id'   => [$eventId]
         ]);
     }
 
     /**
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int $eventId
      * @param int $playerId  omit this to get list of last results for all players
-     * @return PlayerHistoryPrimitive|PlayerHistoryPrimitive[]
+     * @throws \Exception
+     * @return PlayerHistoryPrimitive[]
      */
-    public static function findLastByEvent(IDb $db, $eventId, $playerId = null)
+    public static function findLastByEvent(DataSource $ds, $eventId, $playerId = null)
     {
         if (!$playerId) {
             // 1) select ids of latest player history items
-            $orm = $db->table(static::$_table);
+            $orm = $ds->table(static::$_table);
             $orm->selectExpr('max(id)', 'mx')
                 ->where('event_id', $eventId)
                 ->groupBy('player_id');
@@ -149,47 +155,57 @@ class PlayerHistoryPrimitive extends Primitive
             }, $orm->findArray());
 
             // 2) return id-indexed search results
-            return self::findById($db, $ids);
+            return self::findById($ds, $ids);
         }
 
-        return self::_findBySeveral($db, [
+        return self::_findBySeveral($ds, [
             'player_id'  => [$playerId],
             'event_id'   => [$eventId]
         ], ['onlyLast' => true]);
     }
 
     /**
-     * @param IDb $db
-     * @param $playerId
-     * @param $sessionId
-     * @return PlayerHistoryPrimitive
+     * @param DataSource $ds
+     * @param int $playerId
+     * @param int $sessionId
+     *
+     * @throws \Exception
+     *
+     * @return self[]
+     *
+     * @psalm-return array<array-key, self>
      */
-    public static function findBySessionAndPlayer(IDb $db, $playerId, $sessionId)
+    public static function findBySessionAndPlayer(DataSource $ds, int $playerId, int $sessionId)
     {
-        return self::_findBySeveral($db, [
+        return self::_findBySeveral($ds, [
             'player_id'    => [$playerId],
             'session_id'   => [$sessionId]
         ], ['onlyLast' => true]); // should be only one or none, getting last is ok
     }
 
     /**
-     * @param IDb $db
-     * @param $sessionId
+     * @param DataSource $ds
+     * @param int $sessionId
+     * @throws \Exception
      * @return PlayerHistoryPrimitive[]
      */
-    public static function findBySession(IDb $db, $sessionId)
+    public static function findBySession(DataSource $ds, $sessionId)
     {
-        return self::_findBySeveral($db, [
+        return self::_findBySeveral($ds, [
             'session_id'   => [$sessionId]
         ]);
     }
 
+    /**
+     * @return bool|mixed
+     * @throws \Exception
+     */
     protected function _create()
     {
-        $histItem = $this->_db->table(self::$_table)->create();
+        $histItem = $this->_ds->table(self::$_table)->create();
         $success = $this->_save($histItem);
         if ($success) {
-            $this->_id = $this->_db->lastInsertId();
+            $this->_id = $this->_ds->local()->lastInsertId();
         }
 
         return $success;
@@ -201,7 +217,7 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -210,23 +226,32 @@ class PlayerHistoryPrimitive extends Primitive
 
     /**
      * @deprecated
+     *
      * @param EventPrimitive $event
+     *
      * @throws InvalidParametersException
+     *
+     * @return void
      */
-    public function _setEvent(EventPrimitive $event)
+    public function _setEvent(EventPrimitive $event): void
     {
         throw new InvalidParametersException('Event should not be set directly to round. Set session instead!');
     }
 
     /**
-     * @throws EntityNotFoundException
      * @return \Mimir\EventPrimitive
+     * @throws EntityNotFoundException|InvalidParametersException
      */
     public function getEvent()
     {
         if (empty($this->_event)) {
-            $this->_event = $this->getSession()->getEvent();
-            $this->_eventId = $this->_event->getId();
+            $e = $this->getSession()->getEvent();
+            $eId = $e->getId();
+            if (empty($eId)) {
+                throw new InvalidParametersException('Attempted to assign deidented primitive');
+            }
+            $this->_event = $e;
+            $this->_eventId = $eId;
         }
 
         return $this->_event;
@@ -243,22 +268,28 @@ class PlayerHistoryPrimitive extends Primitive
     /**
      * @param \Mimir\PlayerPrimitive $player
      * @return PlayerHistoryPrimitive
+     * @throws InvalidParametersException
      */
     public function setPlayer(PlayerPrimitive $player)
     {
+        $id = $player->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_player = $player;
-        $this->_playerId = $player->getId();
+        $this->_playerId = $id;
         return $this;
     }
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\PlayerPrimitive
      */
     public function getPlayer()
     {
         if (empty($this->_player)) {
-            $foundUsers = PlayerPrimitive::findById($this->_db, [$this->_playerId]);
+            $foundUsers = PlayerPrimitive::findById($this->_ds, [$this->_playerId]);
             if (empty($foundUsers)) {
                 throw new EntityNotFoundException("Entity PlayerPrimitive with id#" . $this->_playerId . ' not found in DB');
             }
@@ -296,7 +327,7 @@ class PlayerHistoryPrimitive extends Primitive
      * @param float $avg
      * @return PlayerHistoryPrimitive
      */
-    public function _setAvgPlace($avg)
+    public function _setAvgPlace(float $avg)
     {
         $this->_avgPlace = $avg;
         return $this;
@@ -309,7 +340,7 @@ class PlayerHistoryPrimitive extends Primitive
      * @param int $cnt
      * @return PlayerHistoryPrimitive
      */
-    public function _setGamesPlayed($cnt)
+    public function _setGamesPlayed(int $cnt)
     {
         $this->_gamesPlayed = $cnt;
         return $this;
@@ -318,22 +349,22 @@ class PlayerHistoryPrimitive extends Primitive
     /**
      * Create new history item
      *
-     * @param Db $db
+     * @param DataSource $ds
      * @param PlayerPrimitive $player
      * @param SessionPrimitive $session
      * @param float $ratingDelta
      * @param int $place
      * @param int $chips
-     * @throws InvalidParametersException
+     * @throws \Exception
      * @return PlayerHistoryPrimitive
      */
-    public static function makeNewHistoryItem(Db $db, PlayerPrimitive $player, SessionPrimitive $session, $ratingDelta, $place, $chips = null)
+    public static function makeNewHistoryItem(DataSource $ds, PlayerPrimitive $player, SessionPrimitive $session, $ratingDelta, $place, $chips = null)
     {
-        $previousItem = self::findLastByEvent($db, $session->getEventId(), $player->getId());
+        $previousItem = self::findLastByEvent($ds, $session->getEventId(), $player->getId());
 
         if (empty($previousItem)) {
             // This may happen if player has just started to participate in event and has no previous results
-            $previousItem = (new self($db))
+            $previousItem = (new self($ds))
                 ->setPlayer($player)
                 ->setSession($session)
                 ->_setGamesPlayed(0)
@@ -345,9 +376,11 @@ class PlayerHistoryPrimitive extends Primitive
             }
 
             $previousItem->save();
+        } else {
+            $previousItem = $previousItem[0];
         }
 
-        $item = (new self($db))
+        $item = (new self($ds))
             ->setPlayer($player)
             ->setSession($session)
             ->_setAvgPlace($previousItem->getAvgPlace())
@@ -368,15 +401,16 @@ class PlayerHistoryPrimitive extends Primitive
      *
      * @param PlayerHistoryPrimitive $his1
      * @param PlayerHistoryPrimitive $his2
+     * @throws \Exception
      * @return PlayerHistoryPrimitive
      */
     public static function makeHistoryItemsSum(PlayerHistoryPrimitive $his1, PlayerHistoryPrimitive $his2)
     {
-        if ($his1->_db !== $his2->_db) {
+        if ($his1->_ds !== $his2->_ds) {
             throw new InvalidParametersException('PlayerHistoryPrimitives should belong to same DB');
         }
 
-        return (new self($his1->_db))
+        return (new self($his1->_ds))
             ->setPlayer($his1->getPlayer())
             ->setSession($his1->getSession())
             ->_setAvgPlace(($his1->getAvgPlace() * $his1->getGamesPlayed() + $his2->getAvgPlace() * $his2->getGamesPlayed())
@@ -394,6 +428,7 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
+     * @param int $chips
      * @return PlayerHistoryPrimitive
      */
     public function setChips($chips)
@@ -411,10 +446,10 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
-     * @param $place
+     * @param int $place
      * @return PlayerHistoryPrimitive
      */
-    protected function _updateAvgPlaceAndGamesCount($place)
+    protected function _updateAvgPlaceAndGamesCount(int $place)
     {
         $placesSum = $this->_gamesPlayed * $this->_avgPlace;
         $placesSum += $place;
@@ -432,16 +467,16 @@ class PlayerHistoryPrimitive extends Primitive
     }
 
     /**
-     * @param $startRating
+     * @param float $startRating
      * @return float
      */
-    public function getAvgScore($startRating)
+    public function getAvgScore(float $startRating)
     {
         return ($this->getRating() - $startRating) / $this->getGamesPlayed();
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function getGamesPlayed()
     {
@@ -451,23 +486,29 @@ class PlayerHistoryPrimitive extends Primitive
     /**
      * @param \Mimir\SessionPrimitive $session
      * @return PlayerHistoryPrimitive
+     * @throws InvalidParametersException
      */
     public function setSession(SessionPrimitive $session)
     {
+        $id = $session->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
         $this->_session = $session;
-        $this->_sessionId = $session->getId();
+        $this->_sessionId = $id;
         $this->_eventId = $session->getEventId();
         return $this;
     }
 
     /**
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return \Mimir\SessionPrimitive
      */
     public function getSession()
     {
         if (empty($this->_session)) {
-            $foundSessions = SessionPrimitive::findById($this->_db, [$this->_sessionId]);
+            $foundSessions = SessionPrimitive::findById($this->_ds, [$this->_sessionId]);
             if (empty($foundSessions)) {
                 throw new EntityNotFoundException("Entity SessionPrimitive with id#" . $this->_sessionId . ' not found in DB');
             }

@@ -19,14 +19,18 @@ namespace Mimir;
 
 class Config
 {
+    /**
+     * @var array
+     */
     protected $_data;
 
     /**
-     * @param string $fileOrSource config file location
+     * @param string|array $fileOrSource config file location
      */
     public function __construct($fileOrSource)
     {
         if (is_array($fileOrSource)) { // not file name, just whole config
+            /** @var array $fileOrSource */
             $this->_data = $fileOrSource;
         } else {
             $this->_data = require $fileOrSource;
@@ -36,10 +40,10 @@ class Config
     /**
      * Get config value by dot-separated path
      *
-     * @param $path
-     * @return mixed
+     * @param string $path
+     * @return string|string[]
      */
-    public function getValue($path)
+    public function getValue(string $path)
     {
         $parts = explode('.', $path);
         $current = $this->_data;
@@ -51,11 +55,15 @@ class Config
     }
 
     /**
-     * @return mixed  PDO connection string
+     * @return string PDO connection string
+     *
      * @throws \RuntimeException
+     *
+     * @psalm-return string
      */
     public function getDbConnectionString()
     {
+        /** @var string $value */
         $value = $this->getValue('db.connection_string');
         if (empty($value)) {
             throw new \RuntimeException('DB connection string not found in configuration!');
@@ -65,10 +73,14 @@ class Config
     }
 
     /**
-     * @return array with username and password
+     * @return string[] with username and password
+     *
+     * @psalm-return array<array-key, string>
      */
     public function getDbConnectionCredentials()
     {
-        return $this->getValue('db.credentials');
+        /** @var string[] $val */
+        $val = $this->getValue('db.credentials');
+        return $val;
     }
 }

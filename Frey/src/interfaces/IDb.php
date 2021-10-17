@@ -21,10 +21,10 @@ namespace Frey;
 interface IDb
 {
     /**
-     * @param $tableName
+     * @param string $tableName
      * @return \Idiorm\ORM
      */
-    public function table($tableName);
+    public function table(string $tableName);
 
     /**
      * @return int
@@ -32,12 +32,22 @@ interface IDb
     public function lastInsertId();
 
     /**
-     * @param $table
-     * @param $data [ [ field => value, field2 => value2 ], [ ... ] ] - nested arrays should be monomorphic
-     * @param $tableUniqueField string[] Names of unique constraint to check
+     * @param string $table
+     * @param array $data [ [ field => value, field2 => value2 ], [ ... ] ] - nested arrays should be monomorphic
+     * @param string[] $tableUniqueField Names of unique constraint to check
      * @return boolean
      */
-    public function upsertQuery($table, $data, $tableUniqueField);
+    public function upsertQuery(string $table, array $data, array $tableUniqueField);
 
+    /**
+     * @return mixed
+     */
     public function debug();
+
+    /**
+     * @param string $query
+     * @param array $params
+     * @return mixed
+     */
+    public function rawExec(string $query, $params = []);
 }

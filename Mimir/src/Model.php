@@ -17,12 +17,14 @@
  */
 namespace Mimir;
 
+require_once __DIR__ . '/DataSource.php';
+
 abstract class Model
 {
     /**
-     * @var Db
+     * @var DataSource
      */
-    protected $_db;
+    protected $_ds;
 
     /**
      * @var Config
@@ -34,19 +36,10 @@ abstract class Model
      */
     protected $_meta;
 
-    public function __construct(IDb $db, Config $config, Meta $meta)
+    public function __construct(DataSource $ds, Config $config, Meta $meta)
     {
-        $this->_db = $db;
+        $this->_ds = $ds;
         $this->_config = $config;
         $this->_meta = $meta;
-    }
-
-    /**
-     * Check if token allows administrative operations
-     * @return bool
-     */
-    public function checkAdminToken()
-    {
-        return $this->_meta->getAuthToken() === $this->_config->getValue('admin.god_token');
     }
 }

@@ -24,7 +24,7 @@ use Monolog\Logger;
 abstract class Controller
 {
     /**
-     * @var Db
+     * @var IDb
      */
     protected $_db;
 
@@ -62,63 +62,24 @@ abstract class Controller
             $this->_config->getValue('api.version_major'),
             $this->_config->getValue('api.version_minor')
         );
-
-        $locale = 'en_US.UTF-8';
-
-        // i18n support
-        // first step is getting browser language
-        if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-            $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
-        }
-
-        // second step is checking cookie
-        if (isset($_COOKIE['language'])) {
-            $locale = $_COOKIE['language'];
-        }
-
-        // List of locales
-        // https://gcc.gnu.org/onlinedocs/libstdc++/manual/localization.html
-        switch ($locale) {
-            // map common lang ids to more specific
-            case 'ru':
-            case 'ru_RU':
-            case 'ru_UA':
-                $locale = 'ru_RU.UTF-8';
-                break;
-            case 'de':
-            case 'de_DE':
-            case 'de_AT':
-            case 'de_BE':
-            case 'de_CH':
-            case 'de_LU':
-                $locale = 'de_DE.UTF-8';
-                break;
-            default:
-                $locale = 'en_US.UTF-8';
-        }
-
-        if (setlocale(LC_ALL, $locale) === false) {
-            throw new \Exception("Server error: The $locale locale is not installed");
-        }
-        putenv('LC_ALL=' . $locale);
     }
 
-    protected function _logStart($method, $args)
+    protected function _logStart(string $method, array $args): void
     {
         $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: started');
     }
 
-    protected function _logSuccess($method, $args)
+    protected function _logSuccess(string $method, array $args): void
     {
         $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: success');
     }
 
-    protected function _logError($method, $args)
+    protected function _logError(string $method, array $args): void
     {
         $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: failed');
     }
 
-    protected function _depersonalizeEmail($email)
+    protected function _depersonalizeEmail(string $email): string
     {
         $parts = explode('@', $email);
         return implode('@', [

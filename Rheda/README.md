@@ -17,8 +17,7 @@ Features:
 Administration features:
 
 - Allows starting a tournament session with random or manual seating
-- Allows players' enrollment and registration, enrolled players also get their PIN code, which will identify them in 
-[Tyr](https://github.com/MahjongPantheon/pantheon/tree/master/Tyr).
+- Allows players' registration.
 - Allows additional penalties for players.
 - Shows current state of tournament tables and recently added rounds.
 - Allows cancellation of round results, recently added through [Tyr](https://github.com/MahjongPantheon/pantheon/tree/master/Tyr).

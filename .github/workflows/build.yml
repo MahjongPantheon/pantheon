@@ -6,6 +6,8 @@ on:
 jobs:
   checkPr:
     runs-on: ubuntu-latest
+    env:
+      NO_XDEBUG: true
     if: github.ref != 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
@@ -47,9 +49,6 @@ jobs:
 
       - name: Make prod Tyr build
         run: make prod_build_tyr
-
-      - name: Make prod Tyr2 build
-        run: make prod_build_tyr2
 
       - name: Push prod build to repo
         run: ./.tyr-dist-push.sh

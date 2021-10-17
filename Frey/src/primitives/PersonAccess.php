@@ -33,21 +33,23 @@ class PersonAccessPrimitive extends AccessPrimitive
     protected static $_fieldsMapping = [
         'id'                => '_id',
         'person_id'         => '_personId',
-        'event_ids'         => '_eventIds',
+        'event_id'          => '_eventId',
         'acl_type'          => '_aclType',
         'acl_name'          => '_aclName',
         'acl_value'         => '_aclValue',
+        'allowed_values'    => '_allowedValues',
     ];
 
-    protected function _getFieldsTransforms()
+    protected function _getFieldsTransforms(): array
     {
         return [
             '_id'        => $this->_integerTransform(true),
             '_personId'  => $this->_integerTransform(),
-            '_eventIds'  => $this->_csvTransform(),
+            '_eventId'   => $this->_integerTransform(true),
             '_aclType'   => $this->_stringTransform(),
             '_aclName'   => $this->_stringTransform(),
             '_aclValue'  => $this->_stringTransform(),
+            '_allowedValues' => $this->_csvTransform(),
         ];
     }
 
@@ -55,24 +57,57 @@ class PersonAccessPrimitive extends AccessPrimitive
      * Id of person this rule is applied to
      * @var int
      */
-    protected $_personId;
+    protected int $_personId;
     /**
      * Person this rule is applied to
      * @var PersonPrimitive
      */
-    protected $_person;
+    protected PersonPrimitive $_person;
 
     /**
      * Find rules by person id list
      *
      * @param IDb $db
-     * @param $ids
+     * @param int[] $ids
+     * @return PersonAccessPrimitive[]
+     *
      * @return PersonAccessPrimitive[]
      * @throws \Exception
      */
-    public static function findByPerson(IDb $db, $ids)
+    public static function findByPerson(IDb $db, array $ids): array
     {
         return self::_findBy($db, 'person_id', $ids);
+    }
+
+    /**
+     * Find rules by event id list
+     *
+     * @param IDb $db
+     * @param int[] $ids
+     * @return PersonAccessPrimitive[]
+     * @throws \Exception
+     */
+    public static function findByEvent(IDb $db, array $ids): array
+    {
+        return self::_findBy($db, 'event_id', $ids, true);
+    }
+
+    /**
+     * Find rules of specified type by person id list
+     *
+     * @param IDb $db
+     * @param array $ids
+     * @param string $type
+     * @return static[]
+     * @throws \Exception
+     */
+    public static function findByPersonAndType(IDb $db, array $ids, $type)
+    {
+        /* @phpstan-ignore-next-line */
+        return self::_findBySeveral($db, [
+            'person_id'  => $ids,
+            'acl_name'   => [$type]
+        ]);
     }
 
     /**
@@ -80,7 +115,7 @@ class PersonAccessPrimitive extends AccessPrimitive
      * @return static[]
      * @throws \Exception
      */
-    public static function findSuperAdminId(IDb $db)
+    public static function findSuperAdminId(IDb $db): array
     {
         return self::_findBy($db, 'acl_name', [InternalRules::IS_SUPER_ADMIN]);
     }
@@ -112,11 +147,16 @@ class PersonAccessPrimitive extends AccessPrimitive
     /**
      * @param PersonPrimitive $person
      * @return PersonAccessPrimitive
+     * @throws InvalidParametersException
      */
     public function setPerson(PersonPrimitive $person): PersonAccessPrimitive
     {
+        $id = $person->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
         $this->_person = $person;
-        $this->_personId = $person->getId();
+        $this->_personId = $id;
         return $this;
     }
 }

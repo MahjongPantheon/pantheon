@@ -23,21 +23,30 @@ class AddOnlineGame extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Add online game');
+        return _t('Add online game') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return array
+     */
+    protected function _run(): array
     {
         $errorMsg = '';
         $successfullyAdded = false;
         $link = empty($_POST['log']) ? '' : $_POST['log'];
 
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
+
         try {
             if ($link) {
-                $this->_api->execute('addOnlineReplay', [$this->_mainEventId, $link]);
+                $this->_mimir->addOnlineReplay($this->_mainEventId, $link);
                 $successfullyAdded = true;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errorMsg = $e->getMessage();
         }
 

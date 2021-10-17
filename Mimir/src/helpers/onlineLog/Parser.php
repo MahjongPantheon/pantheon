@@ -19,34 +19,51 @@ namespace Mimir;
 
 require_once __DIR__ . '/../../exceptions/Parser.php';
 require_once __DIR__ . '/../../helpers/YakuMap.php';
+require_once __DIR__ . '/../../FreyClient.php';
 require_once __DIR__ . '/../../primitives/Round.php';
 require_once __DIR__ . '/../../primitives/PlayerHistory.php';
 
 class OnlineParser
 {
+    /**
+     * @var string[][] $_checkScores
+     */
     protected $_checkScores = [];
+    /**
+     * @var array[] $_roundData
+     */
     protected $_roundData = [];
     /**
      * (username => PlayerPrimitive)
-     * @var PlayerPrimitive[]
+     * @var PlayerPrimitive[] $_players
      */
     protected $_players = [];
-    protected $_db;
+    /**
+     * @var DataSource $_ds
+     */
+    protected $_ds;
+    /**
+     * @var int[] $_riichi
+     */
     protected $_riichi = [];
-
+    /**
+     * @var bool $_lastTokenIsAgari
+     */
     protected $_lastTokenIsAgari = false;
 
-    public function __construct(Db $db)
+    public function __construct(DataSource $ds)
     {
-        $this->_db = $db;
+        $this->_ds = $ds;
     }
 
     /**
      * @param SessionPrimitive $session
-     * @param $content string game log xml string
+     * @param string $content game log xml string
+     * @param bool $withChips
+     * @throws \Exception
      * @return array parsed score
      */
-    public function parseToSession(SessionPrimitive $session, $content, $withChips = false)
+    public function parseToSession(SessionPrimitive $session, string $content, $withChips = false)
     {
         $reader = new \XMLReader();
         $reader->XML($content);
@@ -70,7 +87,7 @@ class OnlineParser
         $scores = [];
         $rounds = [];
         foreach ($this->_roundData as $round) {
-            $savedRound = RoundPrimitive::createFromData($this->_db, $session, $round);
+            $savedRound = RoundPrimitive::createFromData($this->_ds, $session, $round);
             $rounds []= $savedRound;
             $success = $success && $session->updateCurrentState($savedRound);
             $scores []= $session->getCurrentState()->getScores();
@@ -94,17 +111,17 @@ class OnlineParser
     /**
      * Much simpler to get final scores by regex :)
      *
-     * @param $content
+     * @param string $content
      * @return array (player id => score)
      */
-    protected function _parseOutcome($content)
+    protected function _parseOutcome(string $content)
     {
         $regex = "#owari=\"([^\"]*)\"#";
         $matches = [];
 
         if (preg_match($regex, $content, $matches)) {
             $parts = explode(',', $matches[1]);
-            return array_combine(
+            $result = array_combine(
                 array_map(function (PlayerPrimitive $p) {
                     return $p->getId();
                 }, $this->_players),
@@ -115,13 +132,17 @@ class OnlineParser
                     intval($parts[6] . '00')
                 ]
             );
+            if (empty($result)) {
+                throw new InvalidParametersException('Attempt to combine inequal arrays');
+            }
+            return $result;
         }
 
         return [];
     }
 
     /**
-     * @param $content
+     * @param string $content
      * @return array (player id => chips)
      */
     protected function _parseChipsOutcome($content)
@@ -141,7 +162,7 @@ class OnlineParser
                     intval($parts[12]),
                     intval($parts[14])
                 ]
-            );
+            ) ?: [];
         }
 
         return [];
@@ -150,10 +171,10 @@ class OnlineParser
     /**
      * Get nagashi scores
      *
-     * @param $content
+     * @param string $content
      * @return string comma-separated player ids
      */
-    protected function _parseNagashi($content)
+    protected function _parseNagashi(string $content): string
     {
         list(
             /* score1 */, $delta1,
@@ -172,21 +193,28 @@ class OnlineParser
         return implode(',', $ids);
     }
 
-    protected function _getRiichi()
+    protected function _getRiichi(): string
     {
         $riichis = $this->_riichi;
         $this->_riichi = [];
         return implode(',', $riichis);
     }
 
-    protected function _makeScores($str)
+    /**
+     * @param string $str
+     *
+     * @return string[]
+     *
+     * @psalm-return array{0: string, 1: string, 2: string, 3: string}
+     */
+    protected function _makeScores(string $str): array
     {
         $parts = explode(',', $str);
         return [
-            ($parts[0] + $parts[1]) . '00',
-            ($parts[2] + $parts[3]) . '00',
-            ($parts[4] + $parts[5]) . '00',
-            ($parts[6] + $parts[7]) . '00'
+            (intval($parts[0]) + intval($parts[1])) . '00',
+            (intval($parts[2]) + intval($parts[3])) . '00',
+            (intval($parts[4]) + intval($parts[5])) . '00',
+            (intval($parts[6]) + intval($parts[7])) . '00'
         ];
     }
 
@@ -196,60 +224,72 @@ class OnlineParser
      *
      * @param \XMLReader $reader
      * @param SessionPrimitive $session
+     *
      * @throws ParseException
+     * @throws \Exception
+     *
+     * @return void
      */
-    protected function _tokenUN(\XMLReader $reader, SessionPrimitive $session)
+    protected function _tokenUN(\XMLReader $reader, SessionPrimitive $session): void
     {
         if (count($this->_players) == 0) {
-            $this->_players = [
-                rawurldecode($reader->getAttribute('n0')) => 1,
-                rawurldecode($reader->getAttribute('n1')) => 1,
-                rawurldecode($reader->getAttribute('n2')) => 1,
-                rawurldecode($reader->getAttribute('n3')) => 1
+            $parsedPlayers = [
+                rawurldecode((string)$reader->getAttribute('n0')) => 1,
+                rawurldecode((string)$reader->getAttribute('n1')) => 1,
+                rawurldecode((string)$reader->getAttribute('n2')) => 1,
+                rawurldecode((string)$reader->getAttribute('n3')) => 1
             ];
 
-            if (!empty($this->_players['NoName'])) {
+            if (!empty($parsedPlayers['NoName'])) {
                 throw new ParseException('"NoName" players are not allowed in replays');
             }
 
-            $players = PlayerPrimitive::findByTenhouId($this->_db, array_keys($this->_players));
+            $players = PlayerPrimitive::findByTenhouId($this->_ds, array_keys($parsedPlayers));
 
-            if (count($players) !== count($this->_players)) {
+            if (count($players) !== count($parsedPlayers)) {
                 $registeredPlayers = array_map(function (PlayerPrimitive $p) {
                     return $p->getTenhouId();
                 }, $players);
-                $missedPlayers = array_diff(array_keys($this->_players), $registeredPlayers);
+                $missedPlayers = array_diff(array_keys($parsedPlayers), $registeredPlayers);
                 $missedPlayers = join(', ', $missedPlayers);
                 throw new ParseException('Not all tenhou nicknames were registered in the system: ' . $missedPlayers);
             }
 
             if ($session->getEvent()->getAllowPlayerAppend()) {
+                $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $session->getEventId());
+                $registeredPlayers = array_map(function (PlayerRegistrationPrimitive $p) {
+                    return $p->getPlayerId();
+                }, $regs);
                 foreach ($players as $player) {
-                    // it is ok to re-register every time, it just will do nothing in db if record exists
-                    (new PlayerRegistrationPrimitive($this->_db))
-                        ->setReg($player, $session->getEvent())
-                        ->save();
+                    if (!in_array($player->getId(), $registeredPlayers)) {
+                        (new PlayerRegistrationPrimitive($this->_ds))
+                            ->setReg($player, $session->getEvent())
+                            ->save();
+                    }
                 }
             }
 
             $session->setPlayers($players);
-            $this->_players = array_combine(array_keys($this->_players), $players); // players order should persist
+            $p = array_combine(array_keys($parsedPlayers), $players); // players order should persist
+            if (!empty($p)) {
+                $this->_players = $p;
+            }
         }
     }
 
-    protected function _tokenAGARI(\XMLReader $reader)
+    protected function _tokenAGARI(\XMLReader $reader): void
     {
-        $winner = array_keys($this->_players)[$reader->getAttribute('who')];
-        $loser = array_keys($this->_players)[$reader->getAttribute('fromWho')];
+        $winner = array_keys($this->_players)[(int)$reader->getAttribute('who')];
+        $loser = array_keys($this->_players)[(int)$reader->getAttribute('fromWho')];
         $paoPlayer = $reader->getAttribute('paoWho')
-            ? array_keys($this->_players)[$reader->getAttribute('paoWho')]
+            ? array_keys($this->_players)[(int)$reader->getAttribute('paoWho')]
             : null;
         $openHand = $reader->getAttribute('m') ? 1 : 0;
         $outcomeType = ($winner == $loser ? 'tsumo' : 'ron');
 
-        list($fu) = explode(',', $reader->getAttribute('ten'));
-        $yakuList = $reader->getAttribute('yaku');
-        $yakumanList = $reader->getAttribute('yakuman');
+        list($fu) = explode(',', (string)$reader->getAttribute('ten'));
+        $yakuList = (string)$reader->getAttribute('yaku');
+        $yakumanList = (string)$reader->getAttribute('yakuman');
 
         $yakuData = YakuMap::fromTenhou($yakuList, $yakumanList);
 
@@ -272,9 +312,10 @@ class OnlineParser
                 'open_hand' => $openHand
             ];
 
-            $this->_checkScores []= $this->_makeScores($reader->getAttribute('sc'));
+            $this->_checkScores []= $this->_makeScores((string)$reader->getAttribute('sc'));
         } else {
             // double or triple ron, previous round record should be modified
+            /** @var array $roundRecord */
             $roundRecord = array_pop($this->_roundData);
 
             if ($roundRecord['outcome'] === 'ron') {
@@ -316,23 +357,26 @@ class OnlineParser
             $this->_roundData []= $roundRecord;
 
             array_pop($this->_checkScores);
-            $this->_checkScores []= $this->_makeScores($reader->getAttribute('sc'));
+            $this->_checkScores []= $this->_makeScores((string)$reader->getAttribute('sc'));
         }
 
         $this->_lastTokenIsAgari = true;
     }
 
     // round start, reset all needed things
-    protected function _tokenINIT()
+    protected function _tokenINIT(): void
     {
         $this->_lastTokenIsAgari = false; // resets double/triple ron sequence
     }
 
+    /**
+     * @return void
+     */
     protected function _tokenRYUUKYOKU(\XMLReader $reader)
     {
         $rkType = $reader->getAttribute('type');
         $scoreString = $reader->getAttribute('sc');
-        $this->_checkScores []= $this->_makeScores($scoreString);
+        $this->_checkScores []= $this->_makeScores((string)$scoreString);
 
         if ($rkType && $rkType != 'nm') { // abortive draw
             $this->_roundData []= [
@@ -344,29 +388,31 @@ class OnlineParser
         }
 
         // form array in form of [int 'player id' => bool 'tempai?']
-        $tempai = array_filter(
-            array_combine(
-                array_map(
-                    function (PlayerPrimitive $el) {
-                        return $el->getId();
-                    },
-                    $this->_players
-                ),
-                [
-                    !!$reader->getAttribute('hai0'),
-                    !!$reader->getAttribute('hai1'),
-                    !!$reader->getAttribute('hai2'),
-                    !!$reader->getAttribute('hai3'),
-                ]
-            )
+        $combined = array_combine(
+            array_map(
+                function (PlayerPrimitive $el) {
+                    return $el->getId();
+                },
+                $this->_players
+            ),
+            [
+                !!$reader->getAttribute('hai0'),
+                !!$reader->getAttribute('hai1'),
+                !!$reader->getAttribute('hai2'),
+                !!$reader->getAttribute('hai3'),
+            ]
         );
+        if (empty($combined)) {
+            throw new InvalidParametersException('Attempt to combine inequal arrays');
+        }
+        $tempai = array_filter($combined);
 
         // Special case for nagashi
         if ($rkType && $rkType == 'nm') {
             $this->_roundData []= [
                 'outcome'   => 'nagashi',
                 'riichi'    => $this->_getRiichi(),
-                'nagashi'   => $this->_parseNagashi($scoreString),
+                'nagashi'   => $this->_parseNagashi($scoreString ?: ''),
                 'tempai'  => implode(',', array_keys($tempai)),
             ];
 
@@ -380,19 +426,35 @@ class OnlineParser
         ];
     }
 
+    /**
+     * @return void
+     */
     protected function _tokenREACH(\XMLReader $reader)
     {
-        $player = $reader->getAttribute('who');
+        $player = (int)$reader->getAttribute('who');
         if ($reader->getAttribute('step') == '1') {
             // this is unconfirmed riichi. Confirmed one has step=2.
             // We don't count unconfirmed riichi (e.g. ron on riichi should return bet), so return here.
             return;
         }
 
-        $this->_riichi []= $this->_players[array_keys($this->_players)[$player]]->getId();
+        $id = $this->_players[array_keys($this->_players)[$player]]->getId();
+        if (!empty($id)) {
+            $this->_riichi [] = $id;
+        }
     }
 
-    protected function _tokenGO(\XMLReader $reader, SessionPrimitive $session)
+    /**
+     * @param \XMLReader $reader
+     * @param SessionPrimitive $session
+     *
+     * @throws EntityNotFoundException
+     * @throws ParseException
+     * @throws \Exception
+     *
+     * @return void
+     */
+    protected function _tokenGO(\XMLReader $reader, SessionPrimitive $session): void
     {
         $eventLobby = $session->getEvent()->getLobbyId();
 

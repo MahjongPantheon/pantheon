@@ -28,17 +28,17 @@ require_once __DIR__ . '/../exceptions/Parser.php';
 class OnlineSessionModel extends Model
 {
     /**
-     * @param $eventId int
-     * @param $logUrl string
-     * @param $gameContent string
+     * @param int $eventId
+     * @param string $logUrl
+     * @param string $gameContent
      * @return SessionPrimitive
      * @throws InvalidParametersException
      * @throws \Exception
      * @throws ParseException
      */
-    public function addGame($eventId, $logUrl, $gameContent = '')
+    public function addGame(int $eventId, string $logUrl, $gameContent = '')
     {
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
@@ -54,7 +54,7 @@ class OnlineSessionModel extends Model
 
         $this->_checkGameExpired($logUrl, $event->getRuleset());
 
-        $addedSession = SessionPrimitive::findByReplayHashAndEvent($this->_db, $eventId, $replayHash);
+        $addedSession = SessionPrimitive::findByReplayHashAndEvent($this->_ds, $eventId, $replayHash);
         if (!empty($addedSession)) {
             throw new InvalidParametersException('This game is already added to the system');
         }
@@ -65,8 +65,8 @@ class OnlineSessionModel extends Model
             $gameContent = $replay['content'];
         }
 
-        $parser = new OnlineParser($this->_db);
-        $session = (new SessionPrimitive($this->_db))
+        $parser = new OnlineParser($this->_ds);
+        $session = (new SessionPrimitive($this->_ds))
             ->setEvent($event)
             ->setReplayHash($replayHash)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS);
@@ -92,8 +92,8 @@ class OnlineSessionModel extends Model
 //        if (array_diff($calculatedScore, $originalScore) !== []
 //            || array_diff($originalScore, $calculatedScore) !== []) {
 //            throw new ParseException("Calculated scores do not match with given ones: " . PHP_EOL
-//                . print_r($originalScore, 1) . PHP_EOL
-//                . print_r($calculatedScore, 1), 225);
+//                . print_r($originalScore, true) . PHP_EOL
+//                . print_r($calculatedScore, true), 225);
 //        }
 
         return $session;
@@ -102,11 +102,14 @@ class OnlineSessionModel extends Model
     /**
      * Check if game is not older than some amount of time defined in ruleset
      *
-     * @param $gameLink
+     * @param string $gameLink
      * @param Ruleset $rules
+     *
      * @throws ParseException
+     *
+     * @return void
      */
-    protected function _checkGameExpired($gameLink, Ruleset $rules)
+    protected function _checkGameExpired(string $gameLink, Ruleset $rules): void
     {
         if (!$rules->gameExpirationTime()) {
             return;

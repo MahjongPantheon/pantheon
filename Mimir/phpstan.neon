@@ -1,0 +1,14 @@
+parameters:
+  checkMissingIterableValueType: false
+  reportUnmatchedIgnoredErrors: false
+  scanDirectories:
+    - vendor/ctizen/idiorm
+    - vendor/fguillot/json-rpc
+    - vendor/monolog/monolog
+  bootstrapFiles:
+    - src/helpers/YakuMap.php
+  level: 8
+  paths:
+    - src
+    - www
+    - tests/util

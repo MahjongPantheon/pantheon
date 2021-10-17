@@ -1,0 +1,57 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<h3>{{_p 'Rights and privileges: %s' personName}}</h3>
+<br>
+
+<script type="text/javascript">
+  $(window).on('bundleLoaded', function() {
+    registerAccessTypeSelectors();
+  })
+</script>
+
+{{#rules}}
+  <h4>{{title}}</h4>
+  <hr />
+  <table class="table table-bordered table-hover table-striped access-list">
+    <tr class="centered-content">
+      <th>{{_t "Customize"}}</th>
+      <th>{{_t "Title"}}</th>
+      <th>{{_t "Type"}}</th>
+      <th>{{_t "Value"}}</th>
+    </tr>
+    {{#rules}}
+      <tr class="customize {{#overridden}}overridden{{/overridden}}">
+        <td>
+          <div class="custom-control custom-switch centered-content">
+          <input name="{{overrideKey}}"
+                 class="custom-control-input"
+                 id="aro_{{id}}"
+                 type="checkbox"
+                 {{#overridden}}checked="checked"{{/overridden}} />
+          <label class="custom-control-label"
+                 for="aro_{{this.id}}"></label>
+          </div>
+        </td>
+        <td>{{title}}</td>
+        <td>{{type}}</td>
+        <td>{{> partials/AccessTypeSelector this}}</td>
+      </tr>
+    {{/rules}}
+  </table>
+  <hr />
+{{/rules}}
+

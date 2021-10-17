@@ -3,58 +3,265 @@ namespace Rheda;
 
 class Config
 {
+    /**
+     * @var array
+     */
     protected $_allowedYaku = [];
+    /**
+     * @var int
+     */
     protected $_startPoints = 0;
+    /**
+     * @var int
+     */
     protected $_goalPoints = 0;
+    /**
+     * @var bool
+     */
     protected $_playAdditionalRounds = false;
+    /**
+     * @var bool
+     */
     protected $_subtractStartPoints = false;
+    /**
+     * @var bool
+     */
     protected $_withKazoe = false;
+    /**
+     * @var bool
+     */
     protected $_withKiriageMangan = false;
+    /**
+     * @var bool
+     */
     protected $_withAbortives = false;
+    /**
+     * @var bool
+     */
     protected $_withNagashiMangan = false;
+    /**
+     * @var bool
+     */
     protected $_withAtamahane = false;
+    /**
+     * @var string
+     */
     protected $_rulesetTitle = '';
+    /**
+     * @var int
+     */
     protected $_tenboDivider = 1;
+    /**
+     * @var int
+     */
     protected $_ratingDivider = 1;
+    /**
+     * @var bool
+     */
     protected $_tonpuusen = false;
+    /**
+     * @var int
+     */
     protected $_startRating = 0;
+    /**
+     * @var bool
+     */
     protected $_riichiGoesToWinner = false;
+    /**
+     * @var bool
+     */
     protected $_extraChomboPayments = false;
+    /**
+     * @var int
+     */
     protected $_chomboPenalty = 0;
+    /**
+     * @var bool
+     */
     protected $_withKuitan = false;
+    /**
+     * @var bool
+     */
     protected $_withButtobi = false;
+    /**
+     * @var bool
+     */
     protected $_withMultiYakumans = false;
+    /**
+     * @var int
+     */
     protected $_gameExpirationTime = 0;
+    /**
+     * @var int
+     */
     protected $_minPenalty = 0;
+    /**
+     * @var int
+     */
     protected $_maxPenalty = 0;
+    /**
+     * @var int
+     */
     protected $_penaltyStep = 0;
+    /**
+     * @var string
+     */
     protected $_eventTitle = '';
+    /**
+     * @var string
+     */
     protected $_eventDescription = '';
+    /**
+     * @var string
+     */
     protected $_eventStatHost = '';
+    /**
+     * @var int
+     */
     protected $_redZone = 0;
+    /**
+     * @var int
+     */
     protected $_yellowZone = 0;
+    /**
+     * @var string
+     */
     protected $_timerPolicy = 'none';
+    /**
+     * @var bool
+     */
     protected $_autoSeating = false;
+    /**
+     * @var bool
+     */
     protected $_isOnline = false;
+    /**
+     * @var bool
+     */
     protected $_isTeam = false;
+    /**
+     * @var int
+     */
     protected $_gameDuration = 0;
+    /**
+     * @var bool
+     */
     protected $_withLeadingDealerGameover = false;
+    /**
+     * @var bool
+     */
     protected $_isTextlog = false;
+    /**
+     * @var bool
+     */
     protected $_syncStart = false;
+    /**
+     * @var bool
+     */
     protected $_syncEnd = false;
+    /**
+     * @var bool
+     */
     protected $_sortByGames = false;
+    /**
+     * @var bool
+     */
     protected $_allowPlayerAppend = false;
+    /**
+     * @var bool
+     */
     protected $_useTimer = false;
+    /**
+     * @var bool
+     */
     protected $_usePenalty = false;
+    /**
+     * @var int
+     */
     protected $_seriesLength = 0;
+    /**
+     * @var int
+     */
     protected $_minGamesCount = 0;
+    /**
+     * @var bool
+     */
     protected $_gamesStatus = false;
+    /**
+     * @var bool
+     */
     protected $_hideResults = false;
+    /**
+     * @var bool
+     */
     protected $_hideAddReplayButton = false;
+    /**
+     * @var bool
+     */
     protected $_isPrescripted = false;
+    /**
+     * @var int
+     */
     protected $_chipsValue = 0;
 
-    public static function getRuleDescriptions()
+    /**
+     * @var array
+     */
+    public static $_blankRules = [
+        'allowedYaku' => [],
+        'startPoints' => 0,
+        'subtractStartPoints' => false,
+        'withKazoe' => false,
+        'withKiriageMangan' => false,
+        'withAbortives' => false,
+        'withNagashiMangan' => false,
+        'withAtamahane' => false,
+        'rulesetTitle' => 'blank',
+        'tenboDivider' => 1,
+        'ratingDivider' => 1,
+        'tonpuusen' => false,
+        'startRating' => 0,
+        'riichiGoesToWinner' => false,
+        'extraChomboPayments' => false,
+        'chomboPenalty' => 0,
+        'withKuitan' => false,
+        'withButtobi' => false,
+        'withMultiYakumans' => false,
+        'gameExpirationTime' => 0,
+        'minPenalty' => 0,
+        'maxPenalty' => 0,
+        'penaltyStep' => 1,
+        'eventTitle' => 'Rheda',
+        'eventDescription' => '',
+        'eventStatHost' => '',
+        'redZone' => 0,
+        'yellowZone' => 0,
+        'timerPolicy' => 'none',
+        'autoSeating' => false,
+        'isOnline' => false,
+        'gameDuration' => 0,
+        'withLeadingDealerGameover' => false,
+        'isTextlog' => false,
+        'syncStart' => false,
+        'syncEnd' => false,
+        'sortByGames' => false,
+        'allowPlayerAppend' => false,
+        'useTimer' => false,
+        'usePenalty' => false,
+        'seriesLength' => 0,
+        'gamesStatus' => false,
+        'hideResults' => false,
+        'hideAddReplayButton' => false,
+        'isPrescripted' => false,
+        'minGamesCount' => 0,
+    ];
+
+    /**
+     * @return (mixed|null)[]
+     *
+     * @psalm-return array{allowedYaku: mixed, startPoints: mixed, goalPoints: mixed, playAdditionalRounds: mixed, subtractStartPoints: mixed, withKazoe: mixed, withKiriageMangan: mixed, withAbortives: mixed, withNagashiMangan: mixed, withAtamahane: mixed, rulesetTitle: mixed, tenboDivider: null, ratingDivider: null, tonpuusen: mixed, startRating: mixed, riichiGoesToWinner: mixed, extraChomboPayments: mixed, chomboPenalty: mixed, withKuitan: mixed, withButtobi: mixed, withMultiYakumans: mixed, gameExpirationTime: null, minPenalty: mixed, maxPenalty: mixed, penaltyStep: mixed, eventTitle: null, eventDescription: null, eventStatHost: null, redZone: mixed, yellowZone: mixed, timerPolicy: mixed, autoSeating: mixed, isOnline: mixed, isTeam: mixed, gameDuration: mixed, withLeadingDealerGameover: mixed, isTextlog: null, syncStart: mixed, syncEnd: mixed, sortByGames: mixed, allowPlayerAppend: mixed, useTimer: mixed, usePenalty: mixed, seriesLength: mixed, gamesStatus: null, hideResults: null, hideAddReplayButton: null, isPrescripted: mixed, minGamesCount: mixed}
+     */
+    public static function getRuleDescriptions(): array
     {
         return [
             'allowedYaku' => _t('Allowed yaku'),
@@ -104,11 +311,17 @@ class Config
             'gamesStatus' => null, // not intended to be shown in rule overview
             'hideResults' => null, // not intended to be shown in rule overview
             'hideAddReplayButton' => null, // not intended to be shown in rule overview
-            'isPrescripted' => _t('If seating for all games is entered in advance')
+            'isPrescripted' => _t('If seating for all games is entered in advance'),
+            'minGamesCount' => _t('Minimal amount of games to be played for passing to finals'),
+            'chipsValue' => _t('Chips value')
         ];
     }
 
-    public static function fromRaw($arr)
+    /**
+     * @param array $arr
+     * @return self
+     */
+    public static function fromRaw($arr): self
     {
         $cfg = new self();
         foreach ($arr as $k => $v) {
@@ -129,7 +342,7 @@ class Config
     public function toArray()
     {
         $arr = [];
-        foreach ($this as $k => $v) {
+        foreach ($this as $k => $v) { // @phpstan-ignore-line
             $arr[substr($k, 1)] = $v;
         }
 

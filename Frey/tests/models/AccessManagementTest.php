@@ -49,6 +49,45 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      * @var int
      */
     protected $_eventId;
+    /**
+     * @var string
+     */
+    protected $_authToken;
+    /**
+     * @var int|null
+     */
+    private ?int $_oldMetaEid;
+    /**
+     * @var string
+     */
+    private string $_oldToken;
+    /**
+     * @var int|null
+     */
+    private ?int $_oldPersonId;
+
+    /**
+     * @return void
+     */
+    protected function _loginMeta()
+    {
+        $this->_oldMetaEid = $this->_meta->getCurrentEventId();
+        $this->_oldToken = $this->_meta->getAuthToken();
+        $this->_oldPersonId = $this->_meta->getCurrentPersonId();
+        $this->_meta->__setEventId($this->_eventId);
+        $this->_meta->__setAuthToken($this->_authToken);
+        $this->_meta->__setPersonId($this->_person->getId());
+    }
+
+    /**
+     * @return void
+     */
+    protected function _resetMeta()
+    {
+        $this->_meta->__setEventId($this->_oldMetaEid);
+        $this->_meta->__setAuthToken($this->_oldToken);
+        $this->_meta->__setPersonId($this->_oldPersonId);
+    }
 
     /**
      * @throws \Exception
@@ -59,9 +98,15 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
         $this->_meta = new Meta($_SERVER);
 
+        $auth = new AuthModel($this->_db, $this->_config, $this->_meta);
+        $tokens = $auth->makePasswordTokens('qwerasdfqwer');
+        $this->_authToken = $tokens['client_hash'];
         $this->_person = (new PersonPrimitive($this->_db))
             ->setTitle('Test person')
-            ->setEmail('test@test.com');
+            ->setEmail('test@test.com')
+            ->setAuthHash($tokens['auth_hash'])
+            ->setIsSuperadmin(true)
+            ->setAuthSalt($tokens['salt']);
         $this->_person->save();
 
         $this->_group = (new GroupPrimitive($this->_db))
@@ -74,6 +119,8 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
         $this->_eventId = mt_rand(1, 500);
         (new AccessManagementModel($this->_db, $this->_config, $this->_meta))
             ->clearAccessCache($this->_person->getId(), $this->_eventId);
+
+        $this->_loginMeta();
     }
 
     /**
@@ -100,10 +147,10 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
-     * @expectedException \Frey\DuplicateEntityException
      */
     public function testAddDuplicateRuleForPerson()
     {
+        $this->expectException(\Frey\DuplicateEntityException::class);
         $this->_testAddDuplicateRuleForPerson($this->_eventId);
     }
 
@@ -111,10 +158,10 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
-     * @expectedException \Frey\DuplicateEntityException
      */
     public function testAddDuplicateRuleForPersonSystemwide()
     {
+        $this->expectException(\Frey\DuplicateEntityException::class);
         $this->_testAddDuplicateRuleForPerson(null);
     }
 
@@ -162,10 +209,10 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
-     * @expectedException \Frey\DuplicateEntityException
      */
     public function testAddDuplicateRuleForGroup()
     {
+        $this->expectException(\Frey\DuplicateEntityException::class);
         $this->_testAddDuplicateRuleForGroup($this->_eventId);
     }
 
@@ -173,10 +220,10 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
-     * @expectedException \Frey\DuplicateEntityException
      */
     public function testAddDuplicateRuleForGroupSystemwide()
     {
+        $this->expectException(\Frey\DuplicateEntityException::class);
         $this->_testAddDuplicateRuleForGroup(null);
     }
 
@@ -277,10 +324,10 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
-     * @expectedException \Frey\DuplicateEntityException
      */
     protected function _testAddDuplicateRuleForPerson($eventId)
     {
+        $this->expectException(\Frey\DuplicateEntityException::class);
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         if (empty($eventId)) {
             $model->addSystemWideRuleForPerson(
@@ -389,10 +436,10 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
-     * @expectedException \Frey\DuplicateEntityException
      */
     protected function _testAddDuplicateRuleForGroup($eventId)
     {
+        $this->expectException(\Frey\DuplicateEntityException::class);
         $model = new AccessManagementModel($this->_db, $this->_config, $this->_meta);
         if (empty($eventId)) {
             $model->addSystemWideRuleForGroup(
@@ -568,6 +615,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_group->getId(),
             $this->_eventId
         );
+        apcu_clear_cache();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -614,6 +662,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_person->getId(),
             null
         );
+        apcu_clear_cache();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -660,6 +709,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_group->getId(),
             null
         );
+        apcu_clear_cache();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -706,6 +756,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_group->getId(),
             $this->_eventId
         );
+        apcu_clear_cache();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -751,6 +802,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_person->getId(),
             null
         );
+        apcu_clear_cache();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -796,6 +848,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_group->getId(),
             null
         );
+        apcu_clear_cache();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -869,6 +922,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_group->getId(),
             null
         );
+        apcu_clear_cache();
         $rules = $model->getAccessRules(
             $this->_person->getId(),
             $this->_eventId
@@ -916,6 +970,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
             $this->_group->getId(),
             $this->_eventId
         );
+        apcu_clear_cache();
         $this->assertEquals('ololo1', $model->getRuleValue(
             $this->_person->getId(),
             $this->_eventId,

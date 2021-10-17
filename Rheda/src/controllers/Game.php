@@ -25,21 +25,24 @@ class Game extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Game details');
+        return _t('Game details') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return array
+     */
+    protected function _run(): array
     {
         try {
             $formatter = new GameFormatter();
             $gameHash = $this->_path['hash'];
-            $gamesData = $this->_api->execute('getGame', [$gameHash]);
+            $gamesData = $this->_mimir->getGame($gameHash);
             return [
                 'games' => $formatter->formatGamesData($gamesData, $this->_mainEventRules),
                 'singleGamePage' => true,
                 'isOnlineTournament' => $this->_mainEventRules->isOnline()
             ];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return [
                 'data' => null,
                 'error' => $e->getMessage()

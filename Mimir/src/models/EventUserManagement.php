@@ -24,7 +24,6 @@ require_once __DIR__ . '/../primitives/Session.php';
 require_once __DIR__ . '/../primitives/SessionResults.php';
 require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
-require_once __DIR__ . '/../primitives/PlayerEnrollment.php';
 require_once __DIR__ . '/../primitives/PlayerHistory.php';
 require_once __DIR__ . '/../primitives/Achievements.php';
 require_once __DIR__ . '/../primitives/Round.php';
@@ -33,245 +32,158 @@ require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 class EventUserManagementModel extends Model
 {
     /**
-     * Enroll player to event
-     *
-     * @param $eventId
-     * @param $playerId
-     * @throws AuthFailedException
-     * @throws BadActionException
-     * @throws \Exception
-     * @throws InvalidParametersException
-     * @return string secret pin code
-     */
-    public function enrollPlayer($eventId, $playerId)
-    {
-        if (!$this->checkAdminToken()) {
-            throw new AuthFailedException('Only administrators are allowed to enroll players to event');
-        }
-
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
-        if (empty($event)) {
-            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
-        }
-        $player = PlayerPrimitive::findById($this->_db, [$playerId]);
-        if (empty($player)) {
-            throw new InvalidParametersException('Player id#' . $playerId . ' not found in DB');
-        }
-
-        $regItem = (new PlayerEnrollmentPrimitive($this->_db))
-            ->setReg($player[0], $event[0]);
-        $success = $regItem->save();
-
-        if (!$success) {
-            throw new BadActionException('Something went wrong: enrollment failed while saving to db');
-        }
-
-        return $regItem->getPin();
-    }
-
-    /**
      * Register player to event
      *
-     * @param $playerId
-     * @param $eventId
+     * @param int $playerId
+     * @param int $eventId
      * @throws \Exception
      * @throws InvalidParametersException
      * @return bool success?
      */
-    public function registerPlayer($playerId, $eventId)
+    public function registerPlayer(int $playerId, int $eventId)
     {
-        $player = PlayerPrimitive::findById($this->_db, [$playerId]);
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new AuthFailedException('Only administrators are allowed to register players to event');
+        }
+
+        $player = PlayerPrimitive::findById($this->_ds, [$playerId]);
         if (empty($player)) {
             throw new InvalidParametersException('Player id#' . $playerId . ' not found in DB');
         }
 
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
-        $nextLocalId = null;
-        if ($event[0]->getIsPrescripted()) {
-            $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_db, $event[0]->getId());
+        $eId = $event[0]->getId();
+        if (empty($eId)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
         }
 
-        $regItem = (new PlayerRegistrationPrimitive($this->_db))
+        $nextLocalId = null;
+        if ($event[0]->getIsPrescripted()) {
+            $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_ds, $eId);
+        }
+
+        $regItemOld = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
+        if (count($regItemOld) > 0) {
+            throw new InvalidParametersException('Player already registered to this event');
+        }
+
+        $regItem = (new PlayerRegistrationPrimitive($this->_ds))
             ->setLocalId($nextLocalId)
             ->setReg($player[0], $event[0]);
         $success = $regItem->save();
 
-        $eItem = PlayerEnrollmentPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId);
-        if ($success) {
-            $eItem->drop();
-        }
         return $success;
     }
 
     /**
      * Unregister player from event
      *
-     * @param $playerId
-     * @param $eventId
+     * @param int $playerId
+     * @param int $eventId
      * @throws \Exception
      * @return void
      */
-    public function unregisterPlayer($playerId, $eventId)
+    public function unregisterPlayer(int $playerId, int $eventId)
     {
-        if (!$this->checkAdminToken()) {
-            throw new AuthFailedException('Only administrators are allowed to enroll players to event');
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new AuthFailedException('Only administrators are allowed to unregister players to event');
         }
 
-        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId);
+        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
         if (empty($regItem)) {
             return;
         }
 
-        $regItem->drop();
+        $regItem[0]->drop();
     }
 
     /**
      * Update ignore_seating flag for registered player
      *
-     * @param $playerId
-     * @param $eventId
-     * @param $ignoreSeating
+     * @param int $playerId
+     * @param int $eventId
+     * @param int $ignoreSeating
      * @throws \Exception
      * @return bool
      */
-    public function updateSeatingFlag($playerId, $eventId, $ignoreSeating)
+    public function updateSeatingFlag(int $playerId, int $eventId, int $ignoreSeating)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to update player information');
         }
 
-        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId);
+        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
         if (empty($regItem)) {
             throw new EntityNotFoundException('Player is not registered for this event');
         }
 
-        return $regItem
+        return $regItem[0]
             ->setIgnoreSeating($ignoreSeating)
             ->save();
     }
 
     /**
-     * Self-register player to event by pin
+     * Update replacement_id for registered player
      *
-     * @param $pin
-     * @throws BadActionException
+     * @param int $playerId
+     * @param int $eventId
+     * @param int $replacementId
      * @throws \Exception
-     * @return string auth token
+     * @return bool
      */
-    public function registerPlayerPin($pin)
+    public function updateReplacement(int $playerId, int $eventId, int $replacementId)
     {
-        $success = false;
-        $token = null;
-        $nextLocalId = null;
-
-        if ($pin === '0000000000') {
-            // Special pin & token for universal watcher
-            return '0000000000';
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new AuthFailedException('Only administrators are allowed to update player information');
         }
 
-        $eItem = PlayerEnrollmentPrimitive::findByPin($this->_db, $pin);
-        if ($eItem) {
-            $event = EventPrimitive::findById($this->_db, [$eItem->getEventId()]);
-
-            if (!$event[0]->getAllowPlayerAppend()) {
-                $reggedItems = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_db, $eItem->getPlayerId(), $event[0]->getId());
-                // check that games are not started yet
-                if ($event[0]->getLastTimer() && empty($reggedItems)) {
-                    // do not allow new players to enter already tournament
-                    // but allow to reenroll/reenter pin for already participating people
-                    throw new BadActionException('Pin is expired: game sessions are already started.');
-                }
-            }
-
-            if ($event[0]->getIsPrescripted()) {
-                $nextLocalId = PlayerRegistrationPrimitive::findNextFreeLocalId($this->_db, $event[0]->getId());
-            }
-
-            $player = PlayerPrimitive::findById($this->_db, [$eItem->getPlayerId()]);
-            $regItem = (new PlayerRegistrationPrimitive($this->_db))
-                ->setLocalId($nextLocalId)
-                ->setReg($player[0], $event[0]);
-            $success = $regItem->save();
-            $token = $regItem->getToken();
-        }
-        if (!$success || empty($regItem)) {
-            throw new BadActionException('Something went wrong: registration failed while saving to db');
+        $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
+        if (empty($regItem)) {
+            throw new EntityNotFoundException('Player is not registered for this event');
         }
 
-        $eItem->drop();
-        return $token;
+        return $regItem[0]
+            ->setReplacementPlayerId($replacementId === -1 ? null : $replacementId)
+            ->save();
     }
 
     /**
      * Update players' local id mapping for prescripted event
      *
-     * @param $eventId
-     * @param $idMap
+     * @param int $eventId
+     * @param array $idMap
      * @return bool
      * @throws AuthFailedException
      * @throws \Exception
      */
-    public function updateLocalIds($eventId, $idMap)
+    public function updateLocalIds(int $eventId, array $idMap)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to update local players\' ids');
         }
 
-        return PlayerRegistrationPrimitive::updateLocalIds($this->_db, $eventId, $idMap);
+        return PlayerRegistrationPrimitive::updateLocalIds($this->_ds, $eventId, $idMap);
     }
 
     /**
      * Update players' team mapping for team event
      *
-     * @param $eventId
-     * @param $teamMap
+     * @param int $eventId
+     * @param array $teamMap
      * @return bool
      * @throws AuthFailedException
      * @throws \Exception
      */
-    public function updateTeamNames($eventId, $teamMap)
+    public function updateTeamNames(int $eventId, array $teamMap)
     {
-        if (!$this->checkAdminToken()) {
+        if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Only administrators are allowed to update players\' teams');
         }
 
-        return PlayerRegistrationPrimitive::updateTeamNames($this->_db, $eventId, $teamMap);
-    }
-
-    /**
-     * Checks if token is ok.
-     * Reads token value from X-Auth-Token request header
-     *
-     * Also should return true to admin-level token to allow everything
-     *
-     * @param $playerId
-     * @param $eventId
-     * @return bool
-     * @throws \Exception
-     */
-    public function checkToken($playerId, $eventId)
-    {
-        if ($this->checkAdminToken()) {
-            return true;
-        }
-
-        $regItem = $this->dataFromToken();
-        return $regItem
-            && $regItem->getEventId() == $eventId
-            && $regItem->getPlayerId() == $playerId;
-    }
-
-    /**
-     * Get player and event ids by auth token
-     * @return null|PlayerRegistrationPrimitive
-     * @throws \Exception
-     */
-    public function dataFromToken()
-    {
-        return PlayerRegistrationPrimitive::findEventAndPlayerByToken($this->_db, $this->_meta->getAuthToken());
+        return PlayerRegistrationPrimitive::updateTeamNames($this->_ds, $eventId, $teamMap);
     }
 }

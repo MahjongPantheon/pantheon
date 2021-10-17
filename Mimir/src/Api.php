@@ -18,27 +18,67 @@
 namespace Mimir;
 
 require_once __DIR__ . '/Config.php';
+require_once __DIR__ . '/DataSource.php';
 require_once __DIR__ . '/Db.php';
 require_once __DIR__ . '/Meta.php';
 require_once __DIR__ . '/ErrorHandler.php';
+require_once __DIR__ . '/FreyClient.php';
 
 use Monolog\Logger;
 use Monolog\Handler\ErrorLogHandler;
 
 class Api
 {
+    /**
+     * @var DataSource
+     */
+    protected $_ds;
+    /**
+     * @var IDb
+     */
     protected $_db;
+    /**
+     * @var Logger
+     */
     protected $_syslog;
+    /**
+     * @var Meta
+     */
     protected $_meta;
+    /**
+     * @var Config
+     */
+    protected $_config;
+    /**
+     * @var IFreyClient
+     */
+    protected $_frey;
 
+    /**
+     * Api constructor.
+     * @param string|null $configPath
+     * @throws \Exception
+     */
     public function __construct($configPath = null)
     {
         $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
         $this->_config = new Config($cfgPath);
         $this->_db = new Db($this->_config);
-        $this->_meta = new Meta($_SERVER);
+        /** @var string $freyUrl */
+        $freyUrl = $this->_config->getValue('freyUrl');
+        if ($freyUrl === '__mock__') { // testing purposes
+            $this->_frey = new FreyClientMock('');
+        } else {
+            $this->_frey = new FreyClient($freyUrl);
+        }
+        $this->_ds = new DataSource($this->_db, $this->_frey);
+        $this->_meta = new Meta($this->_frey, $this->_config, $_SERVER);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
+
+        $this->_frey->getClient()->getHttpClient()->withHeaders([
+            'X-Locale: ' . $this->_meta->getSelectedLocale(),
+        ]);
 
         // + some custom handler for testing errors
         if ($this->_config->getValue('verbose')) {
@@ -46,13 +86,21 @@ class Api
         }
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-return string
+     */
     public function getDefaultServerTimezone()
     {
-        return $this->_config->getValue('serverDefaultTimezone');
+        /** @var string $tz */
+        $tz = $this->_config->getValue('serverDefaultTimezone');
+        return $tz;
     }
 
-    public function registerImplAutoloading()
+    public function registerImplAutoloading(): void
     {
+        // @phpstan-ignore-next-line
         spl_autoload_register(function ($class) {
             $class = ucfirst(str_replace([__NAMESPACE__ . '\\', 'Controller'], '', $class));
             $classFile = __DIR__ . '/controllers/' . $class . '.php';
@@ -64,9 +112,15 @@ class Api
         });
     }
 
-    public function getMethods()
+    /**
+     * @return (mixed|object|string)[][]
+     *
+     * @psalm-return array<array-key, array{instance: mixed|object, method: string, className: string}>
+     */
+    public function getMethods(): array
     {
         $runtimeCache = [];
+        /** @var string[] $routes */
         $routes = $this->_config->getValue('routes');
         return array_map(function ($route) use (&$runtimeCache) {
             // We should instantiate every controller here to enable proper reflection inspection in rpc-server
@@ -81,14 +135,17 @@ class Api
             } else {
                 class_exists($route[0]); // this will ensure class existence
                 $className = __NAMESPACE__ . '\\' . $route[0];
-                $ret['instance'] = $runtimeCache[$route[0]] = new $className($this->_db, $this->_syslog, $this->_config, $this->_meta);
+                $ret['instance'] = $runtimeCache[$route[0]] = new $className($this->_ds, $this->_syslog, $this->_config, $this->_meta);
             }
 
             return $ret;
         }, $routes);
     }
 
-    public function log($message)
+    /**
+     * @param string $message
+     */
+    public function log(string $message): void
     {
         $this->_syslog->info($message);
     }

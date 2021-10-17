@@ -33,103 +33,6 @@ require_once __DIR__ . '/../models/EventUserManagement.php';
 class PlayersController extends Controller
 {
     /**
-     * @param string $ident oauth ident, if any
-     * @param string $alias textlog alias for quicker enter
-     * @param string $displayName how to display player in stats
-     * @param string $tenhouId tenhou username
-     * @throws MalformedPayloadException
-     * @throws InvalidUserException
-     * @throws AuthFailedException
-     * @return int player id
-     */
-    public function add($ident, $alias, $displayName, $tenhouId)
-    {
-        $this->_log->addInfo('Adding new player');
-
-        if (!(new PlayerStatModel($this->_db, $this->_config, $this->_meta))->checkAdminToken()) {
-            throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
-        }
-
-        if (empty($ident) || empty($displayName)) {
-            throw new MalformedPayloadException('Fields #ident and #displayName should not be empty');
-        }
-
-        $player = (new PlayerPrimitive($this->_db))
-            ->setAlias($alias)
-            ->setDisplayName($displayName)
-            ->setIdent($ident)
-            ->setTenhouId($tenhouId);
-
-        try {
-            $player->save();
-        } catch (\PDOException $e) {
-            if ($e->getCode() == '23000') {
-                // duplicate entry
-                throw new InvalidUserException(
-                    'User ident #' . $ident . ' already exists in DB'
-                );
-            }
-            throw $e;
-        }
-        $this->_log->addInfo('Successfully added new player id=' . $player->getId());
-        return $player->getId();
-    }
-
-    /**
-     * @param int $id player to update (required)
-     * @param string $ident oauth ident (optional)
-     * @param string $alias textlog alias for quicker enter (optional)
-     * @param string $displayName how to display player in stats (optional)
-     * @param string $tenhouId tenhou username (optional)
-     * @param bool $isReplacement flag (optional)
-     * @throws EntityNotFoundException
-     * @throws MalformedPayloadException
-     * @throws AuthFailedException
-     * @throws \Exception
-     * @return int player id
-     */
-    public function update($id, $ident, $alias, $displayName, $tenhouId, $isReplacement)
-    {
-        $this->_log->addInfo('Updating player id #' . $id);
-
-        if (!(new PlayerStatModel($this->_db, $this->_config, $this->_meta))->checkAdminToken()) {
-            throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
-        }
-
-        $player = PlayerPrimitive::findById($this->_db, [$id]);
-        if (empty($player)) {
-            throw new EntityNotFoundException('No player with id #' . $id . ' found');
-        }
-
-        $player = $player[0];
-
-        if (!empty($ident)) {
-            $player->setIdent($ident);
-        }
-
-        if (!empty($displayName)) {
-            $player->setDisplayName($displayName);
-        }
-
-        if (!empty($alias)) {
-            $player->setAlias($alias);
-        }
-
-        if (!empty($tenhouId)) {
-            $player->setTenhouId($tenhouId);
-        }
-
-        if (!empty($isReplacement)) {
-            $player->setIsReplacement($isReplacement);
-        }
-
-        $player->save();
-
-        $this->_log->addInfo('Successfully updated player id #' . $player->getId());
-        return $player->getId();
-    }
-
-    /**
      * Get player info by id
      * @param int $id
      * @throws EntityNotFoundException
@@ -139,7 +42,7 @@ class PlayersController extends Controller
     public function get($id)
     {
         $this->_log->addInfo('Fetching info of player id #' . $id);
-        $player = PlayerPrimitive::findById($this->_db, [$id]);
+        $player = PlayerPrimitive::findById($this->_ds, [$id]);
         if (empty($player)) {
             throw new EntityNotFoundException('No player with id #' . $id . ' found');
         }
@@ -147,58 +50,16 @@ class PlayersController extends Controller
         $this->_log->addInfo('Successfully fetched info of player id #' . $id);
         return [
             'id'            => $player[0]->getId(),
-            'alias'         => $player[0]->getAlias(),
             'display_name'  => $player[0]->getDisplayName(),
-            'ident'         => $player[0]->getIdent(),
             'tenhou_id'     => $player[0]->getTenhouId()
         ];
     }
 
     /**
-     * Get all system players
-     * TODO: replace it with some search/autocomplete! Amounts of data might be very large!
-     *
-     * @return array
-     */
-    public function getAll()
-    {
-        $this->_log->addInfo('Fetching info of ALL players');
-        /** @var PlayerPrimitive[] $players */
-        $players = PlayerPrimitive::findAll($this->_db);
-        $this->_log->addInfo('Successfully fetched info of all players');
-        return array_map(function (PlayerPrimitive $p) {
-            return [
-                'id'            => $p->getId(),
-                'alias'         => $p->getAlias(),
-                'display_name'  => $p->getDisplayName(),
-                'ident'         => $p->getIdent(),
-                'tenhou_id'     => $p->getTenhouId()
-            ];
-        }, $players);
-    }
-
-    /**
-     * Get player info by id
-     * @throws InvalidParametersException
+     * @param int $playerId player to get stats for
+     * @param int[] $eventIdList event to get stats for
      * @throws EntityNotFoundException
      * @throws \Exception
-     * @return array
-     */
-    public function getFromToken()
-    {
-        $this->_log->addInfo('Getting info of player (by token)');
-        $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->get($data->getPlayerId());
-    }
-
-
-    /**
-     * @param int $playerId player to get stats for
-     * @param int $eventId event to get stats for
-     * @throws EntityNotFoundException
      * @return array of statistics
      */
     public function getStats($playerId, $eventIdList)
@@ -209,7 +70,7 @@ class PlayersController extends Controller
 
         $this->_log->addInfo('Getting stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
 
-        $eventList = EventPrimitive::findById($this->_db, $eventIdList);
+        $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
@@ -218,7 +79,7 @@ class PlayersController extends Controller
             throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
-        $stats = (new PlayerStatModel($this->_db, $this->_config, $this->_meta))
+        $stats = (new PlayerStatModel($this->_ds, $this->_config, $this->_meta))
             ->getStats($eventIdList, $playerId);
 
         $this->_log->addInfo('Successfully got stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
@@ -229,27 +90,33 @@ class PlayersController extends Controller
     /**
      * @param int $playerId
      * @param int $eventId
+     * @throws \Exception
      * @return array of session data
      */
     public function getCurrentSessions($playerId, $eventId)
     {
         $this->_log->addInfo('Getting current sessions for player id #' . $playerId . ' at event id #' . $eventId);
-        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $sessions = SessionPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $regData = PlayerPrimitive::findPlayersForEvents($this->_ds, [$eventId]);
 
-        $result = array_map(function (SessionPrimitive $session) {
+        $result = array_map(function (SessionPrimitive $session) use (&$regData) {
             return [
                 'hashcode'    => $session->getRepresentationalHash(),
                 'status'      => $session->getStatus(),
                 'table_index' => $session->getTableIndex(),
-                'players'     => array_map(function (PlayerPrimitive $p, $score) use (&$session) {
+                'players'     => array_map(function (PlayerPrimitive $p, $score) use (&$regData) {
                     return [
                         'id'            => $p->getId(),
-                        'alias'         => $p->getAlias(),
-                        'ident'         => $p->getIdent(),
                         'display_name'  => $p->getDisplayName(),
-                        'score'         => $score
+                        'score'         => $score,
+                        'replaced_by' => empty($regData['replacements'][$p->getId()])
+                            ? null
+                            : [
+                                'id' => $regData['replacements'][$p->getId()]->getId(),
+                                'display_name' => $regData['replacements'][$p->getId()]->getDisplayName(),
+                            ],
                     ];
-                }, $session->getPlayers(), $session->getCurrentState()->getScores())
+                }, $regData['players'], $session->getCurrentState()->getScores())
             ];
         }, $sessions);
 
@@ -258,38 +125,19 @@ class PlayersController extends Controller
     }
 
     /**
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @return array of session data
-     */
-    public function getCurrentSessionsFromToken()
-    {
-        $this->_log->addInfo('Getting current sessions (by token)');
-        if ($this->_meta->isGlobalWatcher()) {
-            return [];
-        }
-
-        $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->getCurrentSessions($data->getPlayerId(), $data->getEventId());
-    }
-
-
-    /**
      * Get last prefinished game results of player in event with syncEnd = true
      *
      * @param int $playerId
      * @param int $eventId
      * @throws EntityNotFoundException
+     * @throws \Exception
      * @return array|null
      */
     public function getPrefinishedSessionResults($playerId, $eventId)
     {
         $this->_log->addInfo('Getting prefinished session results for player id #' . $playerId . ' at event id #' . $eventId);
 
-        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_PREFINISHED);
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_PREFINISHED);
         if (empty($session)) {
             return null;
         }
@@ -303,11 +151,9 @@ class PlayersController extends Controller
             $sessionResults[$sr->getPlayerId()] = $sr;
         }
 
-        $result = array_map(function (PlayerPrimitive $p) use (&$session, &$sessionResults) {
+        $result = array_map(function (PlayerPrimitive $p) use (&$sessionResults) {
             return [
                 'id'            => $p->getId(),
-                'alias'         => $p->getAlias(),
-                'ident'         => $p->getIdent(),
                 'display_name'  => $p->getDisplayName(),
                 'score'         => $sessionResults[$p->getId()]->getScore(),
                 'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),
@@ -330,7 +176,7 @@ class PlayersController extends Controller
     public function getLastResults($playerId, $eventId)
     {
         $this->_log->addInfo('Getting last session results for player id #' . $playerId . ' at event id #' . $eventId);
-        $event = EventPrimitive::findById($this->_db, [$eventId]);
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             return null;
         }
@@ -345,16 +191,16 @@ class PlayersController extends Controller
             // (i.e. games may be already confirmed by admin)
         }
 
-        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_FINISHED);
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_FINISHED);
         if (empty($session)) {
             return null;
         }
 
-        $tmpResults = SessionResultsPrimitive::findByPlayersAndSession(
-            $this->_db,
-            $session->getId(),
-            $session->getPlayersIds()
-        );
+        $sId = $session->getId();
+        if (empty($sId)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
+        $tmpResults = SessionResultsPrimitive::findByPlayersAndSession($this->_ds, $sId, $session->getPlayersIds());
 
         /** @var SessionResultsPrimitive[] $sessionResults */
         $sessionResults = [];
@@ -362,11 +208,9 @@ class PlayersController extends Controller
             $sessionResults[$sr->getPlayerId()] = $sr;
         }
 
-        $result = array_map(function (PlayerPrimitive $p) use (&$session, &$sessionResults) {
+        $result = array_map(function (PlayerPrimitive $p) use (&$sessionResults) {
             return [
                 'id'            => $p->getId(),
-                'alias'         => $p->getAlias(),
-                'ident'         => $p->getIdent(),
                 'display_name'  => $p->getDisplayName(),
                 'score'         => $sessionResults[$p->getId()]->getScore(),
                 'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),
@@ -375,42 +219,6 @@ class PlayersController extends Controller
 
         $this->_log->addInfo('Successfully got last session results for player id #' . $playerId . ' at event id #' . $eventId);
         return $result;
-    }
-
-    /**
-     * Get last game results of player in event
-     *
-     * @throws InvalidParametersException
-     * @throws EntityNotFoundException
-     * @throws \Exception
-     * @return array|null
-     */
-    public function getLastResultsFromToken()
-    {
-        $this->_log->addInfo('Getting last session results (by token)');
-        $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->getLastResults($data->getPlayerId(), $data->getEventId());
-    }
-
-    /**
-     * @param string $playerIdent unique identifying string
-     * @throws EntityNotFoundException
-     * @throws \Exception
-     * @return int player id
-     */
-    public function getIdByIdent($playerIdent)
-    {
-        $this->_log->addInfo('Getting id for player #' . $playerIdent);
-        $player = PlayerPrimitive::findByIdent($this->_db, [$playerIdent]);
-        if (empty($player)) {
-            throw new EntityNotFoundException('No player with ident #' . $playerIdent . ' found');
-        }
-
-        $this->_log->addInfo('Successfully got id for player #' . $playerIdent);
-        return $player[0]->getId();
     }
 
     /**
@@ -423,7 +231,7 @@ class PlayersController extends Controller
     public function getLastRoundByHashcode($hashcode)
     {
         $this->_log->addInfo('Getting last round for hashcode ' . $hashcode);
-        $session = SessionPrimitive::findByRepresentationalHash($this->_db, [$hashcode]);
+        $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hashcode]);
         if (empty($session)) {
             return null;
         }
@@ -431,6 +239,43 @@ class PlayersController extends Controller
         $data = $this->_getLastRoundCommon($session[0]);
         $this->_log->addInfo('Successfully got last round for hashcode ' . $hashcode);
         return $data;
+    }
+
+    /**
+     * Get all active events of current user
+     * Output: [[id => ... , title => '...', description => '...'], ...]
+     *
+     * @throws \Exception
+     * @return array
+     */
+    public function getMyEvents()
+    {
+        $this->_log->addInfo('Getting all active events for current user');
+
+        if (empty($this->_meta->getCurrentPersonId())) {
+            throw new InvalidParametersException('No player logged in', 404);
+        }
+        $regs = PlayerRegistrationPrimitive::findByPlayerId($this->_ds, $this->_meta->getCurrentPersonId());
+
+        $events = [];
+        if (!empty($regs)) {
+            $evList = EventPrimitive::findById(
+                $this->_ds,
+                array_map(function (PlayerRegistrationPrimitive $pr) {
+                    return $pr->getEventId();
+                }, $regs)
+            );
+            $events = array_map(function (EventPrimitive $ev) {
+                return [
+                    'id' => $ev->getId(),
+                    'title' => $ev->getTitle(),
+                    'description' => $this->_mdTransform($ev->getDescription())
+                ];
+            }, $evList);
+        }
+
+        $this->_log->addInfo('Successfully got all active events for current user');
+        return $events;
     }
 
     /**
@@ -444,7 +289,7 @@ class PlayersController extends Controller
     public function getLastRound($playerId, $eventId)
     {
         $this->_log->addInfo('Getting last round for player id #' . $playerId . ' at event id #' . $eventId);
-        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_db, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        $session = SessionPrimitive::findLastByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         if (empty($session)) {
             return null;
         }
@@ -462,7 +307,11 @@ class PlayersController extends Controller
      */
     protected function _getLastRoundCommon(SessionPrimitive $session)
     {
-        $rounds = RoundPrimitive::findBySessionIds($this->_db, [$session->getId()]);
+        $sId = $session->getId();
+        if (empty($sId)) {
+            throw new InvalidParametersException('Attempted to use deidented primitive');
+        }
+        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$sId]);
         /** @var MultiRoundPrimitive $lastRound */
         $lastRound = MultiRoundHelper::findLastRound($rounds);
 
@@ -506,8 +355,9 @@ class PlayersController extends Controller
         ];
 
         if (is_array($result['paoPlayer'])) {
+            $players = array_filter($result['paoPlayer']);
             // pao player may be only one
-            $result['paoPlayer'] = reset(array_filter($result['paoPlayer'])) or null;
+            $result['paoPlayer'] = (reset($players) or null);
         }
 
         return $result;
@@ -522,7 +372,11 @@ class PlayersController extends Controller
      */
     protected function _getAllRoundsCommon(SessionPrimitive $session)
     {
-        $rounds = RoundPrimitive::findBySessionIds($this->_db, [$session->getId()]);
+        $id = $session->getId();
+        if (empty($id)) {
+            return [];
+        }
+        $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$id]);
 
         $multiGet = function (RoundPrimitive $p, $method) {
             if ($p instanceof MultiRoundPrimitive) {
@@ -593,7 +447,7 @@ class PlayersController extends Controller
     public function getAllRoundsByHash($hashcode)
     {
         $this->_log->addInfo('Getting last all rounds for hashcode ' . $hashcode);
-        $session = SessionPrimitive::findByRepresentationalHash($this->_db, [$hashcode]);
+        $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hashcode]);
         if (empty($session)) {
             return null;
         }
@@ -604,29 +458,13 @@ class PlayersController extends Controller
     }
 
     /**
-     * Get last recorded round with player in event
-     *
-     * @throws InvalidParametersException
-     * @throws \Exception
-     * @return array|null
-     */
-    public function getLastRoundFromToken()
-    {
-        $this->_log->addInfo('Getting last round (by token)');
-        $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
-        if (empty($data)) {
-            throw new InvalidParametersException('Invalid player token', 401);
-        }
-        return $this->getLastRound($data->getPlayerId(), $data->getEventId());
-    }
-
-    /**
      * Calculate payments for given round
      *
      * @param SessionPrimitive $session
      * @param RoundPrimitive $round
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
+     * @throws \Exception
      * @return array
      */
     protected function _formatLastRound(SessionPrimitive $session, RoundPrimitive $round)

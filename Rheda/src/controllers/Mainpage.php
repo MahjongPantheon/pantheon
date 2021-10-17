@@ -25,10 +25,14 @@ class Mainpage extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Statistics');
+        return _t('Statistics') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
-    protected function _run()
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    protected function _run(): array
     {
         if (count($this->_eventIdList) > 1) {
             return [
@@ -46,13 +50,13 @@ class Mainpage extends Controller
             return [
                 'title' => $this->_mainEventRules->eventTitle(),
                 'description' => $this->_mainEventRules->eventDescription(),
-                'isLoggedIn' => $this->_adminAuthOk(),
-                'rules' => array_map(function ($key, $value) use (&$ruleDescriptions) {
+                'isLoggedIn' => $this->_userHasAdminRights(),
+                'rules' => array_values(array_filter(array_map(function ($key, $value) use (&$ruleDescriptions) {
                     if ($key == 'allowedYaku' ||
                         $key == 'tenboDivider' ||
                         $key == 'ratingDivider' ||
                         $key == 'gameExpirationTime' ||
-                        $key == 'eventTitle ' ||
+                        $key == 'eventTitle' ||
                         $key == 'eventDescription' ||
                         $key == 'eventStatHost' ||
                         $key == 'isTextlog' ||
@@ -62,18 +66,23 @@ class Mainpage extends Controller
                     ) { // don't display this for now
                         return null;
                     }
-                    return [
+                    return $value === null ? null : [
                         'name' => $key,
                         'value' => $value === true || $value === false
                             ? ($value === true ? _t('yes') : _t('no'))
                             : $value,
                         'description' => $ruleDescriptions[$key]
                     ];
-                }, array_keys($rules), array_values($rules))
+                }, array_keys($rules), array_values($rules))))
             ];
         }
 
-        $data = $this->_api->execute('getGamesSeries', [$this->_mainEventId]);
+        if (empty($this->_mainEventId)) {
+            return [
+                'error' => _t('Main event is empty: this is unexpected behavior')
+            ];
+        }
+        $data = $this->_mimir->getGamesSeries($this->_mainEventId);
 
         $formattedData = [];
         $counter = 1;

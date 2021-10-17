@@ -87,7 +87,7 @@ class MobileDetect
 
     /**
      * The User-Agent HTTP header is stored in here.
-     * @var string
+     * @var string|null
      */
     protected $userAgent = null;
 
@@ -699,8 +699,10 @@ class MobileDetect
      *
      * @param array $httpHeaders The headers to set. If null, then using PHP's _SERVER to extract
      *                           the headers. The default null is left for backwards compatibility.
+     *
+     * @return void
      */
-    public function setHttpHeaders($httpHeaders = null)
+    public function setHttpHeaders($httpHeaders = null): void
     {
         // use global _SERVER if $httpHeaders aren't defined
         if (!is_array($httpHeaders) || !count($httpHeaders)) {
@@ -763,7 +765,7 @@ class MobileDetect
         return null;
     }
 
-    public function getMobileHeaders()
+    public function getMobileHeaders(): array
     {
         return self::$mobileHeaders;
     }
@@ -872,6 +874,8 @@ class MobileDetect
      *
      * @param string $type The type. Must be a self::DETECTION_TYPE_* constant. The default
      *                     parameter is null which will default to self::DETECTION_TYPE_MOBILE.
+     *
+     * @return void
      */
     public function setDetectionType($type = null)
     {
@@ -886,12 +890,12 @@ class MobileDetect
         $this->detectionType = $type;
     }
 
-    public function getMatchingRegex()
+    public function getMatchingRegex(): string
     {
         return $this->matchingRegex;
     }
 
-    public function getMatchesArray()
+    public function getMatchesArray(): string
     {
         return $this->matchesArray;
     }
@@ -1055,17 +1059,16 @@ class MobileDetect
     /**
      * Magic overloading method.
      *
-     * @method boolean is[...]()
      * @param  string                 $name
      * @param  array                  $arguments
      * @return mixed
-     * @throws BadMethodCallException when the method doesn't exist and doesn't start with 'is'
+     * @throws \BadMethodCallException when the method doesn't exist and doesn't start with 'is'
      */
     public function __call($name, $arguments)
     {
         // make sure the name starts with 'is', otherwise
         if (substr($name, 0, 2) !== 'is') {
-            throw new BadMethodCallException("No such method exists: $name");
+            throw new \BadMethodCallException("No such method exists: $name");
         }
 
         $this->setDetectionType(self::DETECTION_TYPE_MOBILE);
@@ -1129,8 +1132,8 @@ class MobileDetect
     /**
      * Check if the device is mobile.
      * Returns true if any type of mobile device detected, including special ones
-     * @param  null $userAgent   deprecated
-     * @param  null $httpHeaders deprecated
+     * @param  string|null $userAgent   deprecated
+     * @param  array|null $httpHeaders deprecated
      * @return bool
      */
     public function isMobile($userAgent = null, $httpHeaders = null)
@@ -1197,7 +1200,7 @@ class MobileDetect
      *
      * @param  string        $key
      * @param  string        $userAgent   deprecated
-     * @param  string        $httpHeaders deprecated
+     * @param  array        $httpHeaders deprecated
      * @return bool|int|null
      */
     public function is($key, $userAgent = null, $httpHeaders = null)
@@ -1225,15 +1228,19 @@ class MobileDetect
      * This method will be used to check custom regexes against
      * the User-Agent string.
      *
-     * @param $regex
-     * @param  string $userAgent
+     * @param string $regex
+     * @param  string|null $userAgent
      * @return bool
      *
      * @todo: search in the HTTP headers too.
      */
-    public function match($regex, $userAgent = null)
+    public function match(string $regex, $userAgent = null)
     {
-        $match = (bool) preg_match(sprintf('#%s#is', $regex), (false === empty($userAgent) ? $userAgent : $this->userAgent), $matches);
+        $match = (bool) preg_match(
+            sprintf('#%s#is', $regex),
+            empty($userAgent) ? $this->userAgent ?? '' : $userAgent,
+            $matches
+        );
         // If positive match is found, store the results for debug.
         if ($match) {
             $this->matchingRegex = $regex;
@@ -1285,7 +1292,7 @@ class MobileDetect
      *                             is optional and defaults to self::VERSION_TYPE_STRING. Passing an
      *                             invalid parameter will default to the this type as well.
      *
-     * @return string|float The version of the property we are trying to extract.
+     * @return false|float|string The version of the property we are trying to extract.
      */
     public function version($propertyName, $type = self::VERSION_TYPE_STRING)
     {
@@ -1310,7 +1317,7 @@ class MobileDetect
                 $propertyPattern = str_replace('[VER]', self::VER, $propertyMatchString);
 
                 // Identify and extract the version.
-                preg_match(sprintf('#%s#is', $propertyPattern), $this->userAgent, $match);
+                preg_match(sprintf('#%s#is', $propertyPattern), $this->userAgent ?? '', $match);
 
                 if (false === empty($match[1])) {
                     $version = ($type == self::VERSION_TYPE_FLOAT ? $this->prepareVersionNo($match[1]) : $match[1]);

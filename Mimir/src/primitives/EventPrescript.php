@@ -47,7 +47,12 @@ class EventPrescriptPrimitive extends Primitive
         ];
     }
 
-    protected function _scriptTransform()
+    /**
+     * @return (\Closure|\Closure)[]
+     *
+     * @psalm-return array{serialize: \Closure(mixed):string, deserialize: \Closure(mixed):array<array-key, array<array-key, array<array-key, int>>>}
+     */
+    protected function _scriptTransform(): array
     {
         return [
             'serialize' => function ($obj) {
@@ -63,7 +68,7 @@ class EventPrescriptPrimitive extends Primitive
      * @param string $prescript
      * @return int[][][]
      */
-    public function unpackScript($prescript)
+    public function unpackScript(string $prescript)
     {
         $prescript = str_replace("\r", '', $prescript);
         $sessions = [];
@@ -86,7 +91,7 @@ class EventPrescriptPrimitive extends Primitive
      * @param int[][][] $prescriptObj
      * @return string
      */
-    public function packScript($prescriptObj)
+    public function packScript(array $prescriptObj)
     {
         $sessions = [];
         foreach ($prescriptObj as $sessionObj) {
@@ -99,7 +104,7 @@ class EventPrescriptPrimitive extends Primitive
 
     /**
      * Local id
-     * @var int
+     * @var int|null
      */
     protected $_id;
     /**
@@ -109,7 +114,7 @@ class EventPrescriptPrimitive extends Primitive
     protected $_eventId;
     /**
      * Related event
-     * @var EventPrimitive
+     * @var EventPrimitive|null
      */
     protected $_event;
     /**
@@ -134,22 +139,26 @@ class EventPrescriptPrimitive extends Primitive
     /**
      * Find prescripts by local ids (primary key)
      *
-     * @param IDb $db
+     * @param DataSource $ds
      * @param int[] $ids
      * @throws \Exception
      * @return EventPrescriptPrimitive[]
      */
-    public static function findByEventId(IDb $db, $ids)
+    public static function findByEventId(DataSource $ds, $ids)
     {
-        return self::_findBy($db, 'event_id', $ids);
+        return self::_findBy($ds, 'event_id', $ids);
     }
 
+    /**
+     * @return bool|mixed
+     * @throws \Exception
+     */
     protected function _create()
     {
-        $session = $this->_db->table(self::$_table)->create();
+        $session = $this->_ds->table(self::$_table)->create();
         $success = $this->_save($session);
         if ($success) {
-            $this->_id = $this->_db->lastInsertId();
+            $this->_id = $this->_ds->local()->lastInsertId();
         }
 
         return $success;
@@ -161,7 +170,7 @@ class EventPrescriptPrimitive extends Primitive
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -194,7 +203,7 @@ class EventPrescriptPrimitive extends Primitive
     public function getEvent()
     {
         if (!$this->_event) {
-            $foundEvents = EventPrimitive::findById($this->_db, [$this->_eventId]);
+            $foundEvents = EventPrimitive::findById($this->_ds, [$this->_eventId]);
             if (empty($foundEvents)) {
                 throw new EntityNotFoundException("Entity EventPrimitive with id#" . $this->_eventId . ' not found in DB');
             }
@@ -206,10 +215,15 @@ class EventPrescriptPrimitive extends Primitive
     /**
      * @param EventPrimitive $event
      * @return EventPrescriptPrimitive
+     * @throws InvalidParametersException
      */
     public function setEvent($event)
     {
-        $this->_eventId = $event->getId();
+        $id = $event->getId();
+        if (empty($id)) {
+            throw new InvalidParametersException('Attempted to assign deidented primitive');
+        }
+        $this->_eventId = $id;
         $this->_event = $event;
         return $this;
     }
@@ -231,10 +245,10 @@ class EventPrescriptPrimitive extends Primitive
     }
 
     /**
-     * @param $script
+     * @param string $script
      * @return EventPrescriptPrimitive
      */
-    public function setScriptAsString($script)
+    public function setScriptAsString(string $script)
     {
         $this->_script = $this->unpackScript($script);
         return $this;
@@ -249,10 +263,10 @@ class EventPrescriptPrimitive extends Primitive
     }
 
     /**
-     * @param string[] $script
+     * @param int[][][] $script
      * @return EventPrescriptPrimitive
      */
-    public function setScript($script)
+    public function setScript(array $script)
     {
         $this->_script = $script;
         return $this;
@@ -279,10 +293,10 @@ class EventPrescriptPrimitive extends Primitive
     /**
      * Check current prescript for mistakes and output error list
      *
-     * @param $localIdMap
+     * @param array $localIdMap
      * @return string[]
      */
-    public function getCheckErrors($localIdMap)
+    public function getCheckErrors(array $localIdMap)
     {
         $errors = [];
         for ($sessionIdx = 0; $sessionIdx < count($this->_script); $sessionIdx++) {

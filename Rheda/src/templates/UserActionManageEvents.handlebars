@@ -1,0 +1,63 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<h3>{{_t 'Manage owned events'}}</h3>
+
+<script type="text/javascript">
+  function confirmClose(id, title) {
+    return confirm(
+      "{{_p "Really finish event #id (#title)? You won't be able to add games after event is finished."}}"
+        .replace('#id', id)
+        .replace('#title', title)
+    );
+  }
+</script>
+
+<div class="container">
+  <div>
+    <a class='btn btn-secondary float-right m-sm-1' href='/cp/newClubEvent'>{{_t 'New club rating'}}</a>
+    <a class='btn btn-secondary float-right m-sm-1' href='/cp/newTournamentEvent'>{{_t 'New tournament'}}</a>
+    <a class='btn btn-secondary float-right m-sm-1' href='/cp/newOnlineEvent'>{{_t 'New online tournament'}}</a>
+    <div class="clearfix"></div>
+  </div>
+
+  <hr />
+
+  <table class="table table-striped table-condensed">
+    <tr>
+      <th>{{_t 'Event title'}}</th>
+      <th>{{_t 'Event description'}}</th>
+      <th>{{_t 'Event type'}}</th>
+      <th>{{_t 'Controls'}}</th>
+    </tr>
+    {{#events}}
+      <tr>
+        <td>{{#a class='nav-link' href='/' id='{id}'}}{{title}}{{/a}}</td>
+        <td>{{description}}</td>
+        <td>{{type}}</td>
+        <td>
+          {{#finished}}<b class="badge badge-danger">{{_t 'Finished'}}</b>{{/finished}}
+          {{^finished}}
+            <a href="/cp/editEvent/{{id}}" class="btn btn-info">{{_t 'Edit'}}</a>
+            <a href="/cp/editEventAdmins/{{id}}" class="btn btn-warning">{{_t 'Privileges'}}</a>
+            <a href="/cp/finishEvent/{{id}}" class="btn btn-danger"
+               onclick="return confirmClose({{id}}, '{{title}}')">{{_t 'Finish'}}</a>
+          {{/finished}}
+        </td>
+      </tr>
+    {{/events}}
+  </table>
+</div>

@@ -27,12 +27,12 @@ class Achievements extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Achievements');
+        return _t('Achievements') . ' - ' . $this->_mainEventRules->eventTitle();
     }
 
     protected function _run()
     {
-        if (!$this->_adminAuthOk()) {
+        if (!$this->_userHasAdminRights()) {
             return [
                 'error' => _t("Wrong admin password"),
             ];
@@ -41,13 +41,13 @@ class Achievements extends Controller
         if (!empty($this->_path['achievement'])) {
             $ach = null;
             try {
-                $ach = $this->_api->execute('getAchievements', [$this->_eventIdList, [$this->_path['achievement']]]);
+                $ach = $this->_mimir->getAchievements($this->_eventIdList, [$this->_path['achievement']]);
                 $value = $this->_achValue($ach);
                 if ($this->_path['achievement'] == 'yakumans') {
                     $value = $this->_postProcessYakumans($value);
                 }
                 return $value;
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 return [
                     'error' => $e->getMessage()
                 ];
@@ -58,7 +58,12 @@ class Achievements extends Controller
         }
     }
 
-    protected function _achList()
+    /**
+     * @return (mixed|string)[][]
+     *
+     * @psalm-return non-empty-list<array{code: string, name: mixed, description: mixed}>
+     */
+    protected function _achList(): array
     {
         $names = [
             'bestHand' => _t('Best hand'),
@@ -109,9 +114,11 @@ class Achievements extends Controller
         }, array_keys($names), array_values($names));
     }
 
-
-
-    protected function _achValue($ach)
+    /**
+     * @param array $ach
+     * @return array
+     */
+    protected function _achValue(array $ach): array
     {
         $desc = $this->_achList();
         return [
@@ -138,7 +145,13 @@ class Achievements extends Controller
         ];
     }
 
-    protected function _getValue($achievements, $key, $desc)
+    /**
+     * @param array $achievements
+     * @param string $key
+     * @param array $desc
+     * @return array|null
+     */
+    protected function _getValue(array $achievements, string $key, array $desc): ?array
     {
         $d = array_filter($desc, function ($el) use ($key) {
             return $el['code'] == $key;
@@ -148,18 +161,26 @@ class Achievements extends Controller
             : array_merge(['val' => $achievements[$key]], reset($d));
     }
 
-    protected function _formatYakumanString($yakumanIDs)
+    /**
+     * @param string $yakumanIDs
+     * @return string
+     */
+    protected function _formatYakumanString(string $yakumanIDs): string
     {
         $list = array_map(
             function ($yaku) {
-                return Yaku::getMap()[$yaku];
+                return Yaku::getMap()[(int)$yaku];
             },
             explode(',', $yakumanIDs)
         );
         return implode(', ', $list);
     }
 
-    protected function _postProcessYakumans($value)
+    /**
+     * @param array $value
+     * @return mixed
+     */
+    protected function _postProcessYakumans(array $value)
     {
         $value['yakumans']['val'] = array_map(function ($value) {
             $value['yaku'] = $this->_formatYakumanString($value['yaku']);

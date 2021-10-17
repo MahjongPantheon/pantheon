@@ -29,12 +29,12 @@ require_once __DIR__ . '/../../src/Meta.php';
  * Class SessionTest: integration test suite
  * @package Mimir
  */
-class SessionModelTest extends \PHPUnit\Framework\TestCase
+class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Db
+     * @var DataSource
      */
-    protected $_db;
+    protected $_ds;
     /**
      * @var PlayerPrimitive[]
      */
@@ -55,37 +55,34 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
     public function setUp()
     {
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
-        $_SERVER['HTTP_X_AUTH_TOKEN'] = $this->_config->getValue('admin.god_token');
 
-        $this->_meta = new Meta($_SERVER);
-        $this->_db = Db::__getCleanTestingInstance();
-        $this->_event = (new EventPrimitive($this->_db))
+        $this->_ds = DataSource::__getCleanTestingInstance();
+        $this->_meta = new Meta($this->_ds->remote(), $this->_config, $_SERVER);
+        $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setTimezone('UTC')
             ->setDescription('desc')
             ->setUsePenalty(1)
-            ->setType('online')
             ->setRuleset(Ruleset::instance('jpmlA'));
         $this->_event->save();
 
-        $this->_players = array_map(function ($i) {
-            $p = (new PlayerPrimitive($this->_db))
-                ->setDisplayName('player' . $i)
-                ->setIdent('oauth' . $i)
-                ->setTenhouId('tenhou' . $i);
-            $p->save();
-            (new PlayerRegistrationPrimitive($this->_db))
+        $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
+        foreach ($this->_players as $p) {
+            (new PlayerRegistrationPrimitive($this->_ds))
                 ->setReg($p, $this->_event)
                 ->save();
-            return $p;
-        }, [1, 2, 3, 4]);
+        }
+
+        $this->_meta->__setPersonId(1);
+        $this->_meta->__setEventId($this->_event->getId());
+        $this->_meta->__setAuthToken('player1auth');
     }
 
     // Positive tests
 
     public function testNewGame()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -93,7 +90,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             }, $this->_players)
         );
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
         $this->assertEquals(1, count($sessionPrimitive));
         $this->assertEquals($this->_event->getId(), $sessionPrimitive[0]->getEventId());
         $this->assertEquals(SessionPrimitive::STATUS_INPROGRESS, $sessionPrimitive[0]->getStatus());
@@ -101,7 +98,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testEndGame()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -119,7 +116,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
         $session->endGame($hash);
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
         $this->assertEquals(1, count($sessionPrimitive));
         $this->assertEquals($this->_event->getId(), $sessionPrimitive[0]->getEventId());
         $this->assertEquals(SessionPrimitive::STATUS_FINISHED, $sessionPrimitive[0]->getStatus());
@@ -128,7 +125,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testCancelGame()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -146,7 +143,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
         $session->cancelGame($hash);
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
         $this->assertEquals(1, count($sessionPrimitive));
         $this->assertEquals($this->_event->getId(), $sessionPrimitive[0]->getEventId());
         $this->assertEquals(SessionPrimitive::STATUS_CANCELLED, $sessionPrimitive[0]->getStatus());
@@ -155,7 +152,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAddRoundRon()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -185,7 +182,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAddRoundTsumo()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -214,7 +211,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAddRoundDraw()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -235,7 +232,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAddRoundAbortiveDraw()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -255,7 +252,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAddRoundChombo()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -275,7 +272,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAddRoundNagashi()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -294,7 +291,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
         $this->assertNotEmpty($session->addRound($hash, $roundData));
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
 
         $this->assertEquals(1, $sessionPrimitive->getCurrentState()->getHonba());
         $this->assertEquals(2, $sessionPrimitive->getCurrentState()->getRound());
@@ -303,7 +300,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAddRoundNagashiWhenDealerTempai()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -322,7 +319,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
         $this->assertNotEmpty($session->addRound($hash, $roundData));
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
 
         $this->assertEquals(1, $sessionPrimitive->getCurrentState()->getHonba());
         $this->assertEquals(1, $sessionPrimitive->getCurrentState()->getRiichiBets());
@@ -332,7 +329,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAddPenalty()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -345,28 +342,26 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $success = $session->addPenalty($this->_event->getId(), $playerId, 100, 'Just like that');
         $this->assertTrue($success);
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
         $this->assertEquals([$playerId => -100], $sessionPrimitive->getCurrentState()->getPenalties());
 
         $success = $session->addPenalty($this->_event->getId(), $playerId, 200, 'Just like that');
         $this->assertTrue($success);
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
         $this->assertEquals([$playerId => -300], $sessionPrimitive->getCurrentState()->getPenalties());
     }
 
     // Negative tests
 
-    /**
-     * @expectedException \Mimir\InvalidParametersException
-     * @expectedExceptionMessage This event doesn't support adding penalties
-     */
     public function testAddPenaltyToEventWithEmptyPenaltyFlag()
     {
+        $this->expectExceptionMessage("This event doesn't support adding penalties");
+        $this->expectException(\Mimir\InvalidParametersException::class);
         $this->_event->setUsePenalty(0);
         $this->_event->save();
 
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -377,46 +372,40 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $session->addPenalty($this->_event->getId(), $this->_players[0]->getId(), 100, 'Just like that');
     }
 
-    /**
-     * @expectedException \Mimir\InvalidUserException
-     */
     public function testNewGameBadUser()
     {
+        $this->expectException(\Mimir\InvalidUserException::class);
         $playerIds = array_map(function (PlayerPrimitive $p) {
             return $p->getId();
         }, $this->_players);
         $playerIds[1] = 100400; // non-existing id
 
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->startGame($this->_event->getId(), $playerIds);
     }
 
-    /**
-     * @expectedException \Mimir\InvalidUserException
-     */
     public function testNewGameWrongUserCount()
     {
+        $this->expectException(\Mimir\InvalidUserException::class);
         $playerIds = array_map(function (PlayerPrimitive $p) {
             return $p->getId();
         }, $this->_players);
         array_pop($playerIds); // 3 players instead of 4
 
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->startGame($this->_event->getId(), $playerIds);
     }
 
-    /**
-         * @expectedException \Mimir\InvalidParametersException
-     */
     public function testEndGameWrongHash()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $this->expectException(\Mimir\InvalidParametersException::class);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $session->endGame('inexisting_hash');
     }
 
     public function testEndGameButGameAlreadyFinished()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -440,7 +429,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAutoEndGameWhenHanchanFinishes()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $session->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -484,7 +473,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($caught, "Game should be already finished");
 
         // Check that results exist in db
-        $results = SessionResultsPrimitive::findByEventId($this->_db, [$this->_event->getId()]);
+        $results = SessionResultsPrimitive::findByEventId($this->_ds, [$this->_event->getId()]);
         $this->assertEquals(4, count($results));
         // See jpmlA ruleset to find out why these numbers are ok
         $this->assertEquals(0, $results[0]->getRatingDelta());
@@ -496,10 +485,10 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         /** @var PlayerHistoryPrimitive[] $items */
         $items = array_map(function (PlayerPrimitive $player) {
             return PlayerHistoryPrimitive::findLastByEvent(
-                $this->_db,
+                $this->_ds,
                 $this->_event->getId(),
                 $player->getId()
-            );
+            )[0];
         }, $this->_players);
 
         $this->assertEquals(0, $items[0]->getRating());
@@ -510,7 +499,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testRoundRollback()
     {
-        $sessionMdl = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $sessionMdl = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $hash = $sessionMdl->startGame(
             $this->_event->getId(),
             array_map(function (PlayerPrimitive $p) {
@@ -529,7 +518,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
         // save current state for check
         /** @var SessionPrimitive $session */
-        list($session) = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
+        list($session) = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
         $stateBeforeTsumo = $session->getCurrentState()->toJson();
 
         $round2Data = [ // anything...
@@ -550,7 +539,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($sessionMdl->addRound($hash, $round2Data));
 
         /** @var SessionPrimitive $session */
-        list($session) = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
+        list($session) = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
         $this->assertEquals(
             '{"_scores":{"1":29400,"2":32800,"3":29900,"4":27900},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":"tsumo","_isFinished":false}',
             $session->getCurrentState()->toJson()
@@ -559,17 +548,16 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($sessionMdl->dropLastRound($hash));
 
         /** @var SessionPrimitive $session */
-        list($session) = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash]);
+        list($session) = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
         $this->assertEquals($stateBeforeTsumo, $session->getCurrentState()->toJson()); // restored!
     }
 
     public function testContinueGameAfterChomboOrAbortiveDrawOnOorasu()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(Ruleset::instance('tenhounet'))
-            ->setType('offline');
+            ->setRuleset(Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -607,11 +595,10 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testContinueGameToWestRound()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(Ruleset::instance('tenhounet'))
-            ->setType('offline');
+            ->setRuleset(Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -645,7 +632,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $roundIndex += $drawCount;
 
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
         $this->assertEquals(9, $sessionPrimitive->getCurrentState()->getRound());
         $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
 
@@ -654,11 +641,10 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testDoNotPlayNorthRound()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(Ruleset::instance('tenhounet'))
-            ->setType('offline');
+            ->setRuleset(Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -673,25 +659,24 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $this->_addDrawRounds($session, $hash, $roundIndex, $drawCount);
         $roundIndex += $drawCount;
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
         $this->assertEquals(12, $sessionPrimitive->getCurrentState()->getRound());
         $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
 
 
         $this->_addDrawRounds($session, $hash, $roundIndex, 1, $drawCount);  // 4e -> 1n
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
         $this->assertEquals(13, $sessionPrimitive->getCurrentState()->getRound());
         $this->assertTrue($sessionPrimitive->getCurrentState()->isFinished());
     }
 
     public function testEndWestRound()
     {
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(Ruleset::instance('tenhounet'))
-            ->setType('offline');
+            ->setRuleset(Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -722,13 +707,13 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
             'yaku'      => '32'
         ];
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
         $this->assertEquals(10, $sessionPrimitive->getCurrentState()->getRound());
         $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
 
         $this->assertNotEmpty($session->addRound($hash, $roundYakumanData)); //2e -> 3e
 
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
         $this->assertEquals(11, $sessionPrimitive->getCurrentState()->getRound());
         $this->assertTrue($sessionPrimitive->getCurrentState()->isFinished());
     }
@@ -766,13 +751,13 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         ];
 
         $this->assertNotEmpty($session->addRound($hash, $roundAbortData));
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
 
         $this->assertEquals($roundIndex, $sessionPrimitive->getCurrentState()->getRound());
         $this->assertFalse($sessionPrimitive->getCurrentState()->isFinished());
 
         $this->assertNotEmpty($session->addRound($hash, $roundChomboData));
-        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_db, [$hash])[0];
+        $sessionPrimitive = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash])[0];
 
         $this->assertEquals($roundIndex, $sessionPrimitive->getCurrentState()->getRound());
         $this->assertTrue($sessionPrimitive->getCurrentState()->getScores()[4] > 30000);
@@ -782,11 +767,10 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
     public function testRiichiSplitForThreePlayers()
     {
         $this->_event
-            ->setRuleset(Ruleset::instance('ema'))
-            ->setType('offline');
+            ->setRuleset(Ruleset::instance('ema'));
         $this->_event->save();
 
-        $session = new InteractiveSessionModel($this->_db, $this->_config, $this->_meta);
+        $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
         $playerIds = array_map(function (PlayerPrimitive $p) {
             return $p->getId();
         }, $this->_players);
@@ -821,7 +805,7 @@ class SessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($caught, "Game should be already finished");
 
         // Check that results exist in db
-        $results = SessionResultsPrimitive::findByEventId($this->_db, [$this->_event->getId()]);
+        $results = SessionResultsPrimitive::findByEventId($this->_ds, [$this->_event->getId()]);
         $this->assertEquals(4, count($results));
 
         $this->assertEquals(5300, $results[0]->getRatingDelta());

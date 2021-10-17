@@ -8,12 +8,13 @@ deps: hooks
 	php bin/composer.phar install
 
 lint:
-	php vendor/bin/phpcs --config-set default_standard PSR2
-	php vendor/bin/phpcs --config-set show_warnings 0
+	php vendor/bin/phpcs --config-set default_standard PSR2 > /dev/null
+	php vendor/bin/phpcs --config-set show_warnings 0 > /dev/null
 	php vendor/bin/phpcs src tests www
+	php vendor/bin/phpstan clear-result-cache && php vendor/bin/phpstan analyse -c phpstan.neon
 
 unit:
-	php bin/unit.php --testdox
+	php bin/unit.php
 
 unit_covered:
 	phpdbg -qrr bin/unit.php --testdox --coverage-clover=/tmp/coverage-frey.xml
@@ -24,8 +25,8 @@ apidoc:
 	php bin/routeDoc.php > APIDOC.md
 
 autofix:
-	php vendor/bin/phpcbf --config-set default_standard PSR2
-	php vendor/bin/phpcbf --config-set show_warnings 0
+	php vendor/bin/phpcbf --config-set default_standard PSR2 > /dev/null
+	php vendor/bin/phpcbf --config-set show_warnings 0 > /dev/null
 	php vendor/bin/phpcbf src tests www
 
 req:
@@ -36,9 +37,8 @@ init_test_db:
 
 clean_test_db:
 	while read p; do \
-		PGPASSWORD=pgpass psql -p5532 -U frey frey_unit -c "DELETE FROM \"$$p\""; \
-		PGPASSWORD=pgpass psql -p5532 -U frey frey_unit -c "ALTER SEQUENCE IF EXISTS $${p}_id_seq RESTART"; \
-	done < ./data/tablelist.txt
+		PGPASSWORD=pgpass psql -p5532 -U frey frey_unit -c "DROP TABLE \"$$p\""; \
+	done < ./data/tablelist.txt || true
 
 i18n_extract:
 	touch i18n/messages.pot

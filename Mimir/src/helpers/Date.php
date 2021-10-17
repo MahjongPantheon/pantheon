@@ -25,12 +25,12 @@ class DateHelper
 
     /**
      * Return local date for current event timezone
-     * @param $utcDate
-     * @param $timezone
+     * @param string $utcDate
+     * @param string $timezone
      * @return string
      * @throws EntityNotFoundException
      */
-    public static function getLocalDate($utcDate, $timezone)
+    public static function getLocalDate(string $utcDate, string $timezone)
     {
         $date = new \DateTime($utcDate);
         $date->setTimezone(new \DateTimeZone($timezone));
@@ -53,11 +53,12 @@ class DateHelper
             return false;
         }
 
-        if (!$session->isLastForPlayers()) {
+        $sEndDate = $session->getEndDate();
+        if (!$session->isLastForPlayers() || !$sEndDate) {
             return false;
         }
 
-        $endDate = new \DateTime($session->getEndDate(), new \DateTimeZone($session->getEvent()->getTimezone()));
+        $endDate = new \DateTime($sEndDate, new \DateTimeZone($session->getEvent()->getTimezone()));
         $now = new \DateTime('now', new \DateTimeZone($session->getEvent()->getTimezone()));
         $diff = $now->diff($endDate);
         return !($diff->days > 0 || $diff->h >= 3);
@@ -66,11 +67,11 @@ class DateHelper
     /**
      * Return date without seconds; useful for representational_hash generator
      *
-     * @param $date
+     * @param string $date
      * @return string
      * @throws \Exception
      */
-    public static function getDateWithoutSeconds($date)
+    public static function getDateWithoutSeconds(string $date)
     {
         $datetime = new \DateTime($date);
         return $datetime->modify(sprintf('-%d seconds', (int)$datetime->format('s')))

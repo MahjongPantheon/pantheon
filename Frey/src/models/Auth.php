@@ -42,8 +42,8 @@ class AuthModel extends Model
             throw new InvalidParametersException('Invalid email provided', 401);
         }
 
-        if (strlen($password) < 8) {
-            throw new InvalidParametersException('Password should be 8 or more characters long', 411);
+        if ($this->_calcPasswordStrength($password) < 14) {
+            throw new InvalidParametersException('Password is too weak', 411);
         }
 
         $pw = $this->makePasswordTokens($password);
@@ -62,12 +62,14 @@ class AuthModel extends Model
      * Approve registration with approval code.
      * Returns new person's ID on success, otherwise throws an exception.
      *
-     * @param $approvalCode
+     * @param string $approvalCode
+     *
      * @return int
+     *
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function approveRegistration($approvalCode): int
+    public function approveRegistration(string $approvalCode): int
     {
         $reg = RegistrantPrimitive::findByApprovalCode($this->_db, [$approvalCode]);
         if (empty($reg)) {
@@ -91,21 +93,25 @@ class AuthModel extends Model
         }
 
         $reg[0]->drop();
-        return $person->getId();
+        return (int)$person->getId();
     }
 
     /**
-     * Authorize person ant return permanent client-side auth token.
+     * Authorize person ant return permanent client-side auth token iwth person id.
      * Throws exception if authorization was not successful.
      *
-     * @param $email
-     * @param $password
-     * @return string
+     * @param string $email
+     * @param string $password
+     *
+     * @return (int|null|string)[]
+     *
      * @throws AuthFailedException
      * @throws EntityNotFoundException
      * @throws \Exception
+     *
+     * @psalm-return array{0: int|null, 1: string}
      */
-    public function authorize($email, $password): string
+    public function authorize(string $email, string $password): array
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
@@ -116,7 +122,10 @@ class AuthModel extends Model
             throw new AuthFailedException('Password is incorrect', 404);
         }
 
-        return $this->_makeClientSideToken($password, $person[0]->getAuthSalt());
+        return [
+            $person[0]->getId(),
+            $this->_makeClientSideToken($password, $person[0]->getAuthSalt())
+        ];
     }
 
     /**
@@ -125,13 +134,13 @@ class AuthModel extends Model
      * This method is supposed to be VERY HOT. It should not contain any excessive business logic,
      * especially database queries or ORM usage.
      *
-     * @param $id
-     * @param $clientSideToken
+     * @param int $id
+     * @param string $clientSideToken
      * @return bool
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function quickAuthorize($id, $clientSideToken): bool
+    public function quickAuthorize(int $id, string $clientSideToken): bool
     {
         $person = PersonPrimitive::findById($this->_db, [$id]);
         if (empty($person)) {
@@ -145,15 +154,15 @@ class AuthModel extends Model
      * Change password when old password is known.
      * Returns new client-side auth token on success, or throws exception on failure.
      *
-     * @param $email
-     * @param $password
-     * @param $newPassword
+     * @param string $email
+     * @param string $password
+     * @param string $newPassword
      * @return string
      * @throws AuthFailedException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function changePassword($email, $password, $newPassword): string
+    public function changePassword(string $email, string $password, string $newPassword): string
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
@@ -178,12 +187,12 @@ class AuthModel extends Model
      * Request password reset.
      * Returns reset approval token, which should be sent over email to user.
      *
-     * @param $email
+     * @param string $email
      * @return string
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function requestResetPassword($email)
+    public function requestResetPassword(string $email)
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
@@ -200,14 +209,14 @@ class AuthModel extends Model
      * and returns the code. Code should be sent to person via email, and person
      * should be asked to change the password immediately.
      *
-     * @param $email
-     * @param $resetApprovalCode
+     * @param string $email
+     * @param string $resetApprovalCode
      * @return string
      * @throws AuthFailedException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function approveResetPassword($email, $resetApprovalCode)
+    public function approveResetPassword(string $email, string $resetApprovalCode)
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
@@ -218,7 +227,7 @@ class AuthModel extends Model
             throw new AuthFailedException('Password reset approval code is incorrect.', 409);
         }
 
-        $newGeneratedPassword = crc32(microtime(true) . $email);
+        $newGeneratedPassword = (string)crc32(microtime(true) . $email);
         $pw = $this->makePasswordTokens($newGeneratedPassword);
         $person[0]
             ->setEmail($email)
@@ -237,7 +246,7 @@ class AuthModel extends Model
      */
     public function makePasswordTokens(string $password)
     {
-        $salt = sha1(microtime(true));
+        $salt = sha1((string)microtime(true));
         $clientHash = $this->_makeClientSideToken($password, $salt);
         $authHash = password_hash($clientHash, PASSWORD_DEFAULT);
         return [
@@ -248,13 +257,46 @@ class AuthModel extends Model
     }
 
     /**
+     * Calc strength of password by simple algorithm:
+     * - 1 base point for every 2 symbols in password
+     * - Multiply by 2 for every symbol class in password
+     *
+     * So:
+     * - "123456" password will have strength of 3 * 2 = 6 (very weak)
+     * - "Simple123" will have strength of 6 * 2 * 2 * 2 = 48 (normal)
+     * - "thisismypasswordandidontcare" will have strength of 14 * 2 = 28 (below normal)
+     *
+     * Passwords with calculated strength less than 14 should be considered weak.
+     *
+     * @see also Rheda/src/controllers/PersonSignup.php:_calcPasswordStrength - functions should match!
+     * @param string $password
+     * @return float|int
+     */
+    protected function _calcPasswordStrength(string $password)
+    {
+        $hasLatinSymbols = preg_match('#[a-z]#', $password);
+        $hasUppercaseLatinSymbols = preg_match('#[A-Z]#', $password);
+        $hasDigits = preg_match('#[0-9]#', $password);
+        $hasPunctuation = preg_match('#[-@\#\$%\^&*\(\),\./\\"\']#', $password);
+        $hasOtherSymbols = mb_strlen((string)preg_replace('#[-a-z0-9@\#\$%\^&*\(\),\./\\"\']#ius', '', $password)) > 0;
+
+        return ceil(mb_strlen($password) / 2)
+            * ($hasDigits ? 2 : 1)
+            * ($hasUppercaseLatinSymbols ? 2 : 1)
+            * ($hasPunctuation ? 2 : 1)
+            * ($hasOtherSymbols ? 2 : 1)
+            * ($hasLatinSymbols ? 2 : 1)
+            ;
+    }
+
+    /**
      * Make permanent client-side auth token
      *
-     * @param $password
-     * @param $salt
+     * @param string $password
+     * @param string $salt
      * @return string
      */
-    protected function _makeClientSideToken($password, $salt): string
+    protected function _makeClientSideToken(string $password, string $salt): string
     {
         return hash('sha3-384', $password . $salt);
     }
@@ -262,12 +304,12 @@ class AuthModel extends Model
     /**
      * Check if password matches hash & salt
      *
-     * @param $password
-     * @param $authHash
-     * @param $authSalt
+     * @param string $password
+     * @param string $authHash
+     * @param string $authSalt
      * @return bool
      */
-    public function checkPasswordFull($password, $authHash, $authSalt): bool
+    public function checkPasswordFull($password, string $authHash, string $authSalt): bool
     {
         $clientSideToken = $this->_makeClientSideToken($password, $authSalt);
         return $this->_checkPasswordQuick($clientSideToken, $authHash);
@@ -276,11 +318,11 @@ class AuthModel extends Model
     /**
      * Check if client-side auth token matches save password hash
      *
-     * @param $clientSideToken
-     * @param $authHash
+     * @param string $clientSideToken
+     * @param string $authHash
      * @return bool
      */
-    protected function _checkPasswordQuick($clientSideToken, $authHash): bool
+    protected function _checkPasswordQuick(string $clientSideToken, string $authHash): bool
     {
         return password_verify($clientSideToken, $authHash);
     }

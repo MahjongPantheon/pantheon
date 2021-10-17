@@ -25,6 +25,9 @@ class MockRuleset extends Ruleset
     public static $_title = 'mock';
     protected static $_ruleset = [];
 
+    /**
+     * @var array
+     */
     public static $defaultRuleset = [
         'tenboDivider'          => 1,
         'ratingDivider'         => 1,
@@ -61,11 +64,23 @@ class MockRuleset extends Ruleset
         return YakuMap::allYaku();
     }
 
+    /**
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
     public function setRule($name, $value)
     {
         self::$_ruleset[$name] = $value;
     }
 
+    /**
+     * @param int|float $currentRating
+     * @param int $place
+     * @param int $points
+     * @param array $allScores
+     * @return float|int
+     */
     public function calcRating($currentRating, $place, $points, $allScores)
     {
         return $currentRating + (
