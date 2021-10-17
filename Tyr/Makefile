@@ -10,11 +10,11 @@ build:
 PHONY: cleanup_prebuilts
 cleanup_prebuilts:
 	# clean all generated bundle files except last 30
-	cd ../Tyr-dist.new && find -name *.js -or -name *.css -or -name *.js.gz -or -name *.css.gz | tail -n +30 | xargs -I {} rm {}
+	cd ../Tyr-dist && find -name *.js -or -name *.css -or -name *.js.gz -or -name *.css.gz | tail -n +30 | xargs -I {} rm {}
 
 prebuild:
 	cd dist && \
-	cp -R * ../../Tyr-dist.new/
+	cp -R * ../../Tyr-dist/
 
 dev:
 	rm -rf dist
