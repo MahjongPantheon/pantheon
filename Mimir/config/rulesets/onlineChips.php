@@ -62,12 +62,12 @@ class RulesetOnlineChips extends Ruleset
         'minPenalty'            => 0,
         'replacementPlayerFixedPoints' => -30000,
         'replacementPlayerOverrideUma' => 0,
-        'chipsValue' => 5000
+        'chipsValue' => 2000
     ];
 
     public function uma($scores = [])
     {
-        return $this->_equalizeUma($scores, [1 => 30000, 10000, -10000, -30000]);
+        return $this->_equalizeUma($scores, [1 => 15000, 5000, -5000, -15000]);
     }
 
     public function allowedYaku()

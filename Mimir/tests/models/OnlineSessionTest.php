@@ -193,26 +193,26 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, array_sum($stats['places_summary']));
 
         $gameResults = $stats['score_history'][1];
-        // scores with included chips 5000 bonus
+        // scores with included chips 2000 bonus
         $this->assertEquals(3, $gameResults[0]['place']);
         $this->assertEquals(23800, $gameResults[0]['score']);
         $this->assertEquals(-3, $gameResults[0]['chips']);
-        $this->assertEquals(-16200 - 15000, $gameResults[0]['rating_delta']);
+        $this->assertEquals(-11200 - 6000, $gameResults[0]['rating_delta']);
 
         $this->assertEquals(1, $gameResults[1]['place']);
         $this->assertEquals(43200, $gameResults[1]['score']);
         $this->assertEquals(2, $gameResults[1]['chips']);
-        $this->assertEquals(43200 + 10000, $gameResults[1]['rating_delta']);
+        $this->assertEquals(28200 + 4000, $gameResults[1]['rating_delta']);
 
         $this->assertEquals(2, $gameResults[2]['place']);
         $this->assertEquals(39200, $gameResults[2]['score']);
         $this->assertEquals(5, $gameResults[2]['chips']);
-        $this->assertEquals(19200 + 25000, $gameResults[2]['rating_delta']);
+        $this->assertEquals(14200 + 10000, $gameResults[2]['rating_delta']);
 
         $this->assertEquals(4, $gameResults[3]['place']);
         $this->assertEquals(13800, $gameResults[3]['score']);
         $this->assertEquals(-4, $gameResults[3]['chips']);
-        $this->assertEquals(-46200 - 20000, $gameResults[3]['rating_delta']);
+        $this->assertEquals(-31200 - 8000, $gameResults[3]['rating_delta']);
 
         $eventModel = new EventRatingTableModel($this->_db, $this->_config, $this->_meta);
         $ratings = $eventModel->getRatingTable([$this->_event], 'avg_place', 'asc');
