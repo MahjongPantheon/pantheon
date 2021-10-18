@@ -17,6 +17,8 @@
  */
 namespace Rheda;
 
+use LordDashMe\SimpleCaptcha\Captcha;
+
 require_once __DIR__ . '/../helpers/Url.php';
 
 class PersonSignup extends Controller
@@ -36,11 +38,27 @@ class PersonSignup extends Controller
             ];
         }
 
-        if (!empty($_POST['email'])) {
-            return $this->_tryRegisterUser($_POST);
+        if (!empty($_POST['signup_email'])) {
+            $code = file_get_contents('/tmp/mail_' . md5($_POST['uniqid']));
+            @unlink('/tmp/mail_' . md5($_POST['uniqid']));
+            if (!empty($code) && $_POST['signup_captcha'] === $code) {
+                return $this->_tryRegisterUser($_POST);
+            } else {
+                return [
+                    'error' => _t('Captcha is invalid')
+                ];
+            }
         }
 
+        $captcha = new Captcha();
+        $captcha->code();
+        $captcha->image();
+        $uniqid = md5((string)mt_rand());
+        file_put_contents('/tmp/mail_' . md5($uniqid), $captcha->getCode());
+
         return [
+            'captcha' => $captcha->getImage(),
+            'uniqid' => $uniqid,
             'error' => null
         ];
     }
@@ -54,17 +72,17 @@ class PersonSignup extends Controller
         $emailError = null;
         $passwordError = null;
 
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($data['signup_email'], FILTER_VALIDATE_EMAIL)) {
             $emailError = _t('E-mail is invalid or not supported. Note that non-latin e-mail domains are not supported.');
         }
 
-        if ($this->_calcPasswordStrength($data['password']) < 14) {
+        if ($this->_calcPasswordStrength($data['signup_password']) < 14) {
             $passwordError = _t('Password is too weak. Try adding some digits, uppercase letters or punctuation to it, or increase its length.');
         }
 
         if (!empty($emailError) || !empty($passwordError)) {
             return [
-                'email' => $data['email'],
+                'email' => $data['signup_email'],
                 'error' => _t('Some errors occured, see below'),
                 'error_email' => $emailError,
                 'error_password' => $passwordError
@@ -72,12 +90,13 @@ class PersonSignup extends Controller
         }
 
         try {
-            $approvalCode = $this->_frey->requestRegistration($data['email'], $data['password']);
+            $approvalCode = $this->_frey->requestRegistration($data['signup_email'], $data['signup_password']);
             $url = Url::makeConfirmation($approvalCode);
 
+            /* @phpstan-ignore-next-line */
             if (!Sysconf::DEBUG_MODE) {
                 mail(
-                    $data['email'],
+                    $data['signup_email'],
                     _t('Pantheon: confirm your registration'),
                     _p("Hello!
 
@@ -92,10 +111,12 @@ Sincerely yours,
 Pantheon support team
 ", Sysconf::GUI_URL() . $url),
                     [
-                        'From' => Sysconf::MAILER_ADDR(),
-                        'Reply-To' => Sysconf::MAILER_ADDR(),
-                        'X-Mailer' => 'PHP/' . phpversion()
-                    ]
+                        'MIME-Version' => '1.0',
+                        'Content-Type' => 'text/plain; charset=utf-8',
+                        'List-Unsubscribe' => Sysconf::MAILER_ADDR(),
+                        'X-Mailer' => 'PantheonNotifier/2.0'
+                    ],
+                    '-f ' . Sysconf::MAILER_ADDR()
                 );
             }
 

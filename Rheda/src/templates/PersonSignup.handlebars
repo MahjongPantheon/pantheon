@@ -23,11 +23,15 @@
   <div class="row">
     <div class="col-6">
       {{_t "Please enter your e-mail address and password. We will send authentication link to your email, so you will be able to sign in and fill your personal data"}}
-      <form action="" method="post" class="well">
+      <form action="" method="post" class="well"
+            autocomplete="off">
+        <input type="hidden" name="uniqid" value="{{uniqid}}">
         <hr/>
         <div class="form-group">
-          <label for="email">{{_t 'Your e-mail address'}}</label>
-          <input type="text" class="form-control{{#error_email}} is-invalid{{/error_email}}" id="email" name="email"
+          <label for="signup_email">{{_t 'Your e-mail address'}}</label>
+          <input type="text" class="form-control{{#error_email}} is-invalid{{/error_email}}"
+                 id="signup_email" name="signup_email"
+                 autocomplete="off"
                  value="{{email}}">
           {{#error_email}}
             <div class="invalid-feedback">{{error_email}}</div>
@@ -37,15 +41,31 @@
           {{/error_email}}
         </div>
         <div class="form-group">
-          <label for="password">{{_t 'Your password'}}</label>
-          <input type="password" class="form-control{{#error_password}} is-invalid{{/error_password}}" id="password"
-                 name="password">
+          <label for="signup_password">{{_t 'Your password'}}</label>
+          <input type="password" class="form-control{{#error_password}} is-invalid{{/error_password}}"
+                 id="signup_password"
+                 autocomplete="new-password"
+                 name="signup_password">
           {{#error_password}}
             <div class="invalid-feedback">{{error_password}}</div>
           {{/error_password}}
           {{^error_password}}
             <small id="passwordHelp" class="form-text text-muted">{{_t "We never store passwords as plain text. But keep in mind that weak passwords will not be accepted by checker."}}</small>
           {{/error_password}}
+        </div>
+        <div class="row">
+            <div class="col-5">
+                <img src="{{captcha}}" alt="captcha" />
+            </div>
+            <div class="col-7">
+                <div class="form-group">
+                    <label for="signup_captcha">{{_t 'Please enter symbols to make sure you\'re not a robot:'}}</label>
+                    <input id="signup_captcha"
+                           autocomplete="off"
+                           class="form-control"
+                           type="text" name="signup_captcha" value="">
+                </div>
+            </div>
         </div>
         <div class="form-group">
           <div class="form-check">
