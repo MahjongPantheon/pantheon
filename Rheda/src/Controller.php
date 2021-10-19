@@ -17,7 +17,6 @@
  */
 namespace Rheda;
 
-require_once __DIR__ . '/helpers/MobileDetect.php';
 require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/HttpClient.php';
@@ -280,27 +279,25 @@ abstract class Controller
             $context = $this->_transliterate($context);
 
             $pageTitle = $this->_pageTitle(); // должно быть после run! чтобы могло использовать полученные данные
-            $detector = new MobileDetect();
 
             $templateEngine = Templater::getInstance($this->_eventIdList);
-            $add = ($detector->isMobile() && !$detector->isTablet()) ? 'Mobile' : ''; // use full version for tablets
 
             header("Content-type: text/html; charset=utf-8");
 
             if (count($this->_eventIdList) > 1) {
                 /* Aggregated events. */
-                echo $templateEngine->render($add . 'Layout', [
+                echo $templateEngine->render('Layout', [
                     'eventTitle' => _t("Aggregated event"),
                     'pageTitle' => $pageTitle,
                     'currentPerson' => $this->_personalData,
-                    'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
+                    'content' => $templateEngine->render($this->_mainTemplate, $context),
                     'userHasAdminRights' => $this->_userHasAdminRights(),
                     'isAggregated' => true,
                     'isLoggedIn' => !empty($this->_personalData)
                 ]);
             } else {
                 /* Simple events. */
-                echo $templateEngine->render($add . 'Layout', [
+                echo $templateEngine->render('Layout', [
                     'isOnline' => $this->_mainEventRules->isOnline(),
                     'isTeam' => $this->_mainEventRules->isTeam(),
                     'useTimer' => $this->_mainEventRules->useTimer(),
@@ -311,7 +308,7 @@ abstract class Controller
                     'isPrescripted' => $this->_mainEventRules->isPrescripted(),
                     'userHasAdminRights' => $this->_userHasAdminRights(),
                     'pageTitle' => $pageTitle,
-                    'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
+                    'content' => $templateEngine->render($this->_mainTemplate, $context),
                     'eventSelected' => $this->_mainEventId,
                     'currentPerson' => $this->_personalData,
                     'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),

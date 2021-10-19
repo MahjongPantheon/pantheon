@@ -21,51 +21,29 @@
 {{/error}}
 {{^isAggregated}}
     {{#form action='/penalties/apply/' method='post'}}
-        <table class="table table-striped table-condensed">
-            <tr>
-                <td colspan="2">
-                    {{_t 'A penalty may be applied only to player currently in game. Otherwise error will occur.'}}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {{_t 'Select player'}}
-                </td>
-                <td>
-                    <select name="player">
-                        {{#players}}
-                            <option value="{{id}}">{{display_name}}</option>
-                        {{/players}}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {{_t 'Penalty amount'}}
-                </td>
-                <td>
-                    <select name="amount">
-                        {{#penaltyAmounts}}
-                        <option value="{{value}}">{{view}}</option>
-                        {{/penaltyAmounts}}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {{_t 'Penalty reason'}}
-                </td>
-                <td>
-                    <input type="text" name="reason" />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    {{_t 'Check twice penalty data. You won\'t be able to cancel the penalty'}}
-                    <hr />
-                    <input type="submit" value="{{_t 'Apply penalty'}}">
-                </td>
-            </tr>
-        </table>
+        <div class="form-group">
+            <label for="playerSelector">{{_t 'A penalty may be applied only to player currently in game. Otherwise error will occur.'}}</label>
+            <select name="player" class="form-control" id="playerSelector">
+                {{#players}}
+                    <option value="{{id}}">{{display_name}}</option>
+                {{/players}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="penaltySelector">{{_t 'Penalty amount'}}</label>
+            <select name="amount" class="form-control" id="penaltySelector">
+                {{#penaltyAmounts}}
+                    <option value="{{value}}">{{view}}</option>
+                {{/penaltyAmounts}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="penaltyReason">{{_t 'Penalty reason'}}</label>
+            <input type="text" name="reason" class="form-control" id="penaltyReason" />
+        </div>
+        <div class="form-group">
+            <label for="penaltySubmit">{{_t 'Check twice penalty data. You won\'t be able to cancel the penalty'}}</label>
+            <input type="submit" value="{{_t 'Apply penalty'}}" class="form-control btn btn-primary" />
+        </div>
     {{/form}}
 {{/isAggregated}}

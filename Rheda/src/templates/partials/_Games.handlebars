@@ -1,30 +1,25 @@
-<table class='table table-striped table-condensed'>
-    <tr>
-        <th>{{_t 'Date & time'}}</th>
-        <th>{{_t 'Players'}}</th>
-        <th>{{_t 'Details'}}</th>
-    </tr>
-    {{#games}}
-    <tr>
-        <td>{{#a href='/game/{hash}/'}}{{endDate}}{{/a}}</td>
-        <td>
-            <table class='table table-condensed player-list'>
-                {{#players}}
-                    <tr class="user-item-row">
-                        <td class="wind-cell">{{wind}}</td>
-                        <td>
-                          <b>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</b>
-                          {{#if isOnlineTournament}}<div>{{tenhou_id}}</div>{{/if}}
-                        </td>
-                        <td>
-                            <div class='badge badge-{{label}}'>{{rating_delta}}</div>
-                            <div class="score">{{score}}</div>
-                        </td>
-                    </tr>
-                {{/players}}
-            </table>
-        </td>
-        <td>
+{{#games}}
+    <hr />
+    <div class="row mobile-flex-tr">
+        <div class="col-5 mobile-flex-td">
+            {{#a href='/game/{hash}/'}}{{endDate}}{{/a}}
+            <hr />
+            {{#players}}
+                <div class="row" style="padding: 6px">
+                    <div class="col-1">{{wind}}</div>
+                    <div class="col-3">
+                      <b>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</b>
+                      {{#if isOnlineTournament}}<div>{{tenhou_id}}</div>{{/if}}
+                    </div>
+                    <div class="col-4">
+                        <div class='badge badge-{{label}}'>{{rating_delta}}</div>
+                    </div>
+                    <div class="col-4">{{score}}</div>
+                </div>
+            {{/players}}
+            <hr />
+        </div>
+        <div class="col-7 mobile-flex-td">
             <ul>
                 {{#replayLink}}
                     <li><a href='{{replayLink}}' class="replay-link" target='_blank'>{{_t 'View replay online'}}</a></li>
@@ -55,7 +50,6 @@
                     {{/logItems}}
                 </div>
             </ul>
-        </td>
-    </tr>
-    {{/games}}
-</table>
+        </div>
+    </div>
+{{/games}}

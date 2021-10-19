@@ -100,12 +100,8 @@ li, .table th, .table td {
     width: 30px;
 }
 
-.navbar {
-    height: 48px;
-}
-
 body {
-    padding-top: 58px;
+    padding-top: 72px;
 }
 
 .table th, .table td {
