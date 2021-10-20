@@ -1,21 +1,8 @@
-<style>
-  .rules-flex-container {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .rules-flex-item {
-    flex: 1 1 48%;
-    width: 48%;
-    padding: 5px;
-  }
-</style>
-<div class="rules-flex-container">
-  {{#rules}}{{#name}}
-    <div class="rules-flex-item">
-      <label>{{description}}
-        <input type="text" class="form-control" readonly value="{{value}}">
-      </label>
+{{#rules}}{{#name}}
+    <div class="row rule-row">
+        <div class="col-6">{{description}}</div>
+        <div class="col-6">
+            <input type="text" class="form-control" readonly value="{{value}}">
+        </div>
     </div>
-  {{/name}}{{/rules}}
-</div>
+{{/name}}{{/rules}}

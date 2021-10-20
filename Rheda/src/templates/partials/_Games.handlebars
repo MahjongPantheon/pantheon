@@ -1,20 +1,20 @@
 {{#games}}
     <hr />
     <div class="row mobile-flex-tr">
-        <div class="col-5 mobile-flex-td">
+        <div class="col-5 mobile-flex-td container">
             {{#a href='/game/{hash}/'}}{{endDate}}{{/a}}
             <hr />
             {{#players}}
-                <div class="row" style="padding: 6px">
+                <div class="row" style="padding: 6px 0">
                     <div class="col-1">{{wind}}</div>
-                    <div class="col-3">
-                      <b>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</b>
+                    <div class="col-5"><b>{{#a href='/user/{id}/'}}{{display_name}}{{/a}}</b>
+                        <div>(azazatenhou)</div>
                       {{#if isOnlineTournament}}<div>{{tenhou_id}}</div>{{/if}}
                     </div>
-                    <div class="col-4">
+                    <div class="col-5 mobile-flex-player-points">
                         <div class='badge badge-{{label}}'>{{rating_delta}}</div>
+                        <div>{{score}}</div>
                     </div>
-                    <div class="col-4">{{score}}</div>
                 </div>
             {{/players}}
             <hr />

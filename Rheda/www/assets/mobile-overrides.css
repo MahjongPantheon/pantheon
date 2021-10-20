@@ -13,4 +13,8 @@
     width: 16px;
     height: 16px;
   }
+
+  .mobile-flex-player-points {
+    padding: 0 52px;
+  }
 }

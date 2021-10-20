@@ -15,29 +15,21 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
 <h3>{{_t 'Rheda: mahjong statistic system'}}</h3>
-<br>
+<hr/>
 
-<table class="table table-striped table-condensed">
-  <tr>
-    <th>{{_t 'Event title'}}</th>
-    <th>{{_t 'Event description'}}</th>
-    <th>{{_t 'Event type'}}</th>
-  </tr>
-  {{#events}}
-    <tr>
-      <td>{{#a class='nav-link' href='/' id='{id}'}}{{title}}{{/a}}</td>
-      <td>{{description}}</td>
-      <td>{{type}}</td>
-    </tr>
-  {{/events}}
-</table>
+{{#events}}
+    <div class="row">
+        <div class="col-4">{{#a href='/' id='{id}'}}{{title}}{{/a}} ({{type}})</div>
+        <div class="col-8">{{description}}</div>
+    </div>
+{{/events}}
 
 <ul class="pagination">
-  {{#hasPreviousButton}}
-    <li class="page-item"><a class='page-link' href='/page/{{prevPage}}'>{{_t 'Later'}}</a></li>
-  {{/hasPreviousButton}}
+    {{#hasPreviousButton}}
+        <li class="page-item"><a class='page-link' href='/page/{{prevPage}}'>{{_t 'Later'}}</a></li>
+    {{/hasPreviousButton}}
 
-  {{#hasNextButton}}
-    <li class="page-item"><a class='page-link' href='/page/{{nextPage}}'>{{_t 'Earlier'}}</a></li>
-  {{/hasNextButton}}
+    {{#hasNextButton}}
+        <li class="page-item"><a class='page-link' href='/page/{{nextPage}}'>{{_t 'Earlier'}}</a></li>
+    {{/hasNextButton}}
 </ul>

@@ -15,6 +15,14 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
 
+<style>
+    .rule-row {
+        padding: 6px 0;
+    }
+    .rule-row:nth-of-type(even) {
+        background-color: rgb(243, 243, 243);
+    }
+</style>
 
 {{#isAggregated}}
   <h3>{{_t 'Aggregated event'}}</h3>
@@ -46,10 +54,8 @@
         </span>
       </div>
 
-      <div id="RulesOverview" class="collapse" aria-labelledby="RulesHeading" data-parent="#Rules">
-        <div class="card-body">
-          {{> partials/RulesOverview }}
-        </div>
+      <div id="RulesOverview" class="container" aria-labelledby="RulesHeading" data-parent="#Rules">
+      {{> partials/RulesOverview }}
       </div>
     </div>
   </div>
