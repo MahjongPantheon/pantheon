@@ -16,7 +16,7 @@
  */
 
 !function (wnd) {
-  function plotRating (points, games, currentUser, playersMap, labelColorThreshold, i18n) {
+  function plotRating(points, games, currentUser, playersMap, labelColorThreshold, i18n) {
     var ticks = [];
     for (var idx = 0; idx < points.length; idx++) {
       ticks.push(idx);
@@ -30,10 +30,15 @@
       gamesIdx.push(id);
     }
 
+    $.jqplot.eventListenerHooks.push(['jqplotClick', function () {
+      $('#chart_rating_info').html('');
+    }]);
+
     $.jqplot(
       'chart_rating',
       [points],
       {
+        title: i18n['_RATING_GRAPH'],
         axes: {
           xaxis: {
             ticks: ticks,
@@ -41,46 +46,15 @@
             tickOptions: {
               formatString: '%d'
             }
-          },
-          yaxis: {
-            label: i18n['_LABEL_RATING'],
-            tickOptions: {
-              formatString: "%'i"
-            }
-          }
-        },
-        highlighter: {
-          show: true,
-          sizeAdjust: 7,
-          tooltipContentEditor: function (str, seriesIndex, pointIndex) {
-            var g = games[gamesIdx[pointIndex - 1]];
-            if (!g) {
-                      return '';
-                    }var players = [];
-            var outcome = '';
-            var own = '';
-            var winds = ['東', '南', '西', '北'];
-
-            players.push('<table class="table table-condensed table-bordered table-plot-rating">');
-            for (var i = 0; i < 4; i++) {
-              outcome = g[i].rating_delta < labelColorThreshold ? 'danger' : 'success';
-              own = g[i].player_id == currentUser ? 'own' : '';
-              var rating_delta = $.jqplot.sprintf("%'i", g[i].rating_delta);
-              var scores = $.jqplot.sprintf("%'i", g[i].score);
-              players.push(
-                '<tr class="' + own + '">' +
-                '<td>' + winds[i] + ' <b>' + playersMap[g[i].player_id].display_name + '</b>: ' +
-                '</td><td>' +
-                scores + ' <span class="badge badge-' + outcome + '">' + rating_delta + '</span>' +
-                '</td></tr>'
-              );
-            }
-            players.push('</table>');
-            return players.join('');
           }
         },
         cursor: {
           show: false
+        },
+        highlighter: {
+          show: true,
+          showTooltip: false,
+          sizeAdjust: 10
         },
         seriesDefaults: {
           rendererOptions: {
@@ -90,23 +64,52 @@
       }
     );
 
-  $('#chart_rating').bind('jqplotDataClick',
-        function (ev, seriesIndex, pointIndex) {
-            var g = games[gamesIdx[pointIndex - 1]];
-            if (!g) {
-              return '';
-            }
-            var gameHash = g[0]['session_hash'];
-            var eventId = g[0]['event_id'];
-            window.location = '/eid' + eventId + '/game/' + gameHash;
+    $('#chart_rating').bind('jqplotDataClick',
+      function (ev, seriesIndex, pointIndex) {
+        var g = games[gamesIdx[pointIndex - 1]];
+        if (!g) {
+          return '';
         }
-    );
-}
+        var players = [];
+        var outcome = '';
+        var own = '';
+        var score;
+        var winds = ['東', '南', '西', '北'];
+        players.push('<div class="container">');
 
-  function plotHands (handValueStats, yakuStats, i18n) {
+        var gameHash = g[0]['session_hash'];
+        var eventId = g[0]['event_id'];
+        var url = '/eid' + eventId + '/game/' + gameHash;
+        players.push('<div class="row m-3"><a href="' + url + '">' + i18n._GAME_DETAILS + '</a></div>');
+
+        for (var i = 0; i < 4; i++) {
+          outcome = g[i].rating_delta < labelColorThreshold ? 'badge-danger' : 'badge-success';
+          own = g[i].player_id == currentUser ? 'own' : '';
+          score = $.jqplot.sprintf("%'i", g[i].score);
+          players.push(
+            '<div class="row ' + own + '">' +
+            '<div class="col-6">' +
+            winds[i] + ' ' +
+            playersMap[g[i].player_id].display_name +
+            '</div>' +
+            '<div class="col-3">' +
+            '<span class="score">' + score + '</span>' +
+            '</div><div class="col-3">' +
+            '<span class="badge ' + outcome + '">' + (
+              g[i].rating_delta > labelColorThreshold ? '+' : ''
+            ) + parseFloat(g[i].rating_delta).toFixed(1) + '</span>' +
+            '</div></div>'
+          );
+        }
+        $('#chart_rating_info').html(players.join(''));
+      }
+    );
+  }
+
+  function plotHands(handValueStats, yakuStats, i18n) {
     $.jqplot('chart_hands', [handValueStats], {
       title: i18n['_HANDS_VALUE'],
-      series:[{renderer:$.jqplot.BarRenderer}],
+      series: [{renderer: $.jqplot.BarRenderer}],
       axesDefaults: {
         tickOptions: {
           fontSize: '12pt'
@@ -123,7 +126,7 @@
     $.jqplot('chart_yaku', [yakuStats], {
       height: 400,
       title: i18n['_YAKU_OVERALLTIME'],
-      series:[{
+      series: [{
         renderer: $.jqplot.BarRenderer,
         rendererOptions: {
           barWidth: 7,
@@ -224,7 +227,7 @@
 
     setIcon.call(context, ICON_PROGRESS);
     context.disabled = true;
-    $.post(target, data, function(reply) {
+    $.post(target, data, function (reply) {
       if (reply.success) {
         backupCurrentAccessRuleValue.call(context);
         setIcon.call(context, ICON_OK, 1000);
@@ -272,7 +275,7 @@
       dataHolder.iconTimer = null;
     }
 
-    dataHolder.children('.icon').each(function(idx, icon) {
+    dataHolder.children('.icon').each(function (idx, icon) {
       $(icon).css('display', 'none');
 
       if (type && $(icon).hasClass(type)) {
@@ -286,13 +289,14 @@
   }
 
 
-  //// Exports to global object ////
+//// Exports to global object ////
   wnd.plotRating = plotRating;
   wnd.plotHands = plotHands;
   wnd.saveLocalIds = saveLocalIds;
   wnd.registerAccessTypeSelectors = registerAccessTypeSelectors;
   wnd.dispatchEvent(new CustomEvent('bundleLoaded'));
-}(window);
+}
+(window);
 
 /*!
  * jQuery throttle / debounce - v1.1 - 3/7/2010
@@ -356,13 +360,13 @@
 // the `Cowboy` namespace. Usage will be exactly the same, but instead of
 // $.method() or jQuery.method(), you'll need to use Cowboy.method().
 
-(function(window,undefined){
+(function (window, undefined) {
   '$:nomunge'; // Used by YUI compressor.
 
   // Since jQuery really isn't required for this plugin, use `jQuery` as the
   // namespace only if it already exists, otherwise use the `Cowboy` namespace,
   // creating it if necessary.
-  var $ = window.jQuery || window.Cowboy || ( window.Cowboy = {} ),
+  var $ = window.jQuery || window.Cowboy || (window.Cowboy = {}),
 
     // Internal method reference.
     jq_throttle;
@@ -415,7 +419,7 @@
   //
   //  (Function) A new, throttled, function.
 
-  $.throttle = jq_throttle = function( delay, no_trailing, callback, debounce_mode ) {
+  $.throttle = jq_throttle = function (delay, no_trailing, callback, debounce_mode) {
     // After wrapper has stopped being called, this timeout ensures that
     // `callback` is executed at the proper times in `throttle` and `end`
     // debounce modes.
@@ -425,7 +429,7 @@
       last_exec = 0;
 
     // `no_trailing` defaults to falsy.
-    if ( typeof no_trailing !== 'boolean' ) {
+    if (typeof no_trailing !== 'boolean') {
       debounce_mode = callback;
       callback = no_trailing;
       no_trailing = undefined;
@@ -442,7 +446,7 @@
       // Execute `callback` and update the `last_exec` timestamp.
       function exec() {
         last_exec = +new Date();
-        callback.apply( that, args );
+        callback.apply(that, args);
       };
 
       // If `debounce_mode` is true (at_begin) this is used to clear the flag
@@ -451,21 +455,21 @@
         timeout_id = undefined;
       };
 
-      if ( debounce_mode && !timeout_id ) {
+      if (debounce_mode && !timeout_id) {
         // Since `wrapper` is being called for the first time and
         // `debounce_mode` is true (at_begin), execute `callback`.
         exec();
       }
 
       // Clear any existing timeout.
-      timeout_id && clearTimeout( timeout_id );
+      timeout_id && clearTimeout(timeout_id);
 
-      if ( debounce_mode === undefined && elapsed > delay ) {
+      if (debounce_mode === undefined && elapsed > delay) {
         // In throttle mode, if `delay` time has been exceeded, execute
         // `callback`.
         exec();
 
-      } else if ( no_trailing !== true ) {
+      } else if (no_trailing !== true) {
         // In trailing throttle mode, since `delay` time has not been
         // exceeded, schedule `callback` to execute `delay` ms after most
         // recent execution.
@@ -475,14 +479,14 @@
         //
         // If `debounce_mode` is false (at end), schedule `callback` to
         // execute after `delay` ms.
-        timeout_id = setTimeout( debounce_mode ? clear : exec, debounce_mode === undefined ? delay - elapsed : delay );
+        timeout_id = setTimeout(debounce_mode ? clear : exec, debounce_mode === undefined ? delay - elapsed : delay);
       }
     };
 
     // Set the guid of `wrapper` function to the same of original callback, so
     // it can be removed in jQuery 1.4+ .unbind or .die by using the original
     // callback as a reference.
-    if ( $.guid ) {
+    if ($.guid) {
       wrapper.guid = callback.guid = callback.guid || $.guid++;
     }
 
@@ -539,10 +543,10 @@
   //
   //  (Function) A new, debounced, function.
 
-  $.debounce = function( delay, at_begin, callback ) {
+  $.debounce = function (delay, at_begin, callback) {
     return callback === undefined
-      ? jq_throttle( delay, at_begin, false )
-      : jq_throttle( delay, callback, at_begin !== false );
+      ? jq_throttle(delay, at_begin, false)
+      : jq_throttle(delay, callback, at_begin !== false);
   };
 
 })(this);

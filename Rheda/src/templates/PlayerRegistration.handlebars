@@ -262,11 +262,12 @@
             <form action="" method="post" id="id_map_form">
                 <input type="hidden" name="action_type" value="save_local_ids"/>
                 <input type="hidden" name="map_json" value="" id="local_id_map_json"/>
-                <div>{{_t 'This will update current local id mapping. See "Predefined seating" page for details'}}</div>
-                <div><input tabindex="{{lastindex}}" type="button"
+                <div class="form-group">
+                <label>{{_t 'This will update current local id mapping. See "Predefined seating" page for details'}}</label>
+                <input class="form-control btn btn-primary" tabindex="{{lastindex}}" type="button"
                             value="{{_t 'Save local IDs'}}"
-                            onclick="saveLocalIds('local-id-selector', 'local_id_map_json', 'id_map_form')"
-                            class="btn btn-primary"/></div>
+                            onclick="saveLocalIds('local-id-selector', 'local_id_map_json', 'id_map_form')"/></div>
+                </div>
             </form>
         {{/prescriptedEvent}}
         {{#teamEvent}}

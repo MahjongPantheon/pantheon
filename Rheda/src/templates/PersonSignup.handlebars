@@ -21,7 +21,7 @@
 {{/error}}
 {{^success}}
   <div class="row">
-    <div class="col-6">
+    <div class="col-12">
       {{_t "Please enter your e-mail address and password. We will send authentication link to your email, so you will be able to sign in and fill your personal data"}}
       <form action="" method="post" class="well"
             autocomplete="off">
@@ -54,10 +54,10 @@
           {{/error_password}}
         </div>
         <div class="row">
-            <div class="col-5">
+            <div class="col-4" style="text-align: center">
                 <img src="{{captcha}}" alt="captcha" />
             </div>
-            <div class="col-7">
+            <div class="col-8">
                 <div class="form-group">
                     <label for="signup_captcha">{{_t 'Please enter symbols to make sure you\'re not a robot:'}}</label>
                     <input id="signup_captcha"
