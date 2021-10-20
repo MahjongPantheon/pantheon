@@ -64,21 +64,32 @@
             Note: in-event links should use {#a} to put proper event id into
             the link automatically, but global links should use <a>.
         *}}
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <ul class="navbar-nav mr-auto">
             {{#eventSelected}}
-                <li class="nav-item"><a class='nav-link' href='/'>{{_t 'To event list'}}</a></li>
-                <li class="nav-item">{{#a class='nav-link' href='/last'}}{{_t 'Recent games'}}{{/a}}</li>
-                <li class="nav-item">{{#a class='nav-link' href='/stat'}}{{_t 'Rating table'}}{{/a}}</li>
-                {{#isTeam}}
-                    <li class="nav-item">{{#a class='nav-link' href='/stat/team'}}{{_t 'Team table'}}{{/a}}</li>
-                {{/isTeam}}
-                {{^isAggregated}}
-                    {{#isOnline}}
-                        {{^hideAddReplayButton}}
-                            <li class="nav-item">{{#a class='nav-link' href='/add-online'}}{{_t 'Add online game' }}{{/a}}</li>
-                        {{/hideAddReplayButton}}
-                    {{/isOnline}}
-                {{/isAggregated}}
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navigationMenuButton"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{_t 'Navigation' }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu" aria-labelledby="navigationMenuButton">
+                        <a class='dropdown-item' href='/'>{{_t 'To event list'}}</a>
+                        {{#a class='dropdown-item' href='/last'}}{{_t 'Recent games'}}{{/a}}
+                        {{#a class='dropdown-item' href='/stat'}}{{_t 'Rating table'}}{{/a}}
+                        {{#isTeam}}
+                            {{#a class='dropdown-item' href='/stat/team'}}{{_t 'Team table'}}{{/a}}
+                        {{/isTeam}}
+                        {{^isAggregated}}
+                            {{#isOnline}}
+                                {{^hideAddReplayButton}}
+                                    {{#a class='dropdown-item' href='/add-online'}}{{_t 'Add online game' }}{{/a}}
+                                {{/hideAddReplayButton}}
+                            {{/isOnline}}
+                            {{#useTimer}}
+                                {{#a class='dropdown-item' href='/timer' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}
+                            {{/useTimer}}
+                        {{/isAggregated}}
+                    </div>
+                </li>
                 {{#userHasAdminRights}}
                     <li class="nav-item dropdown">
                         <a href="#"
@@ -110,33 +121,25 @@
                         </div>
                     </li>
                 {{/userHasAdminRights}}
-                {{^isAggregated}}
-                    {{#useTimer}}
-                        <li class="nav-item">{{#a class='nav-link' href='/timer' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}</li>
-                    {{/useTimer}}
-                {{/isAggregated}}
             {{/eventSelected}}
-            {{#isSuperadmin}}
-                <li class="nav-item"><a class='nav-link' href='/privileges'>{{_t 'Rights and privileges'}}</a></li>
-            {{/isSuperadmin}}
-            {{#isLoggedIn}}
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="userActionsMenuButton"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{_t 'Actions' }}
-                    </a>
-                    <div class="dropdown-menu dropdown-menu" aria-labelledby="userActionsMenuButton">
-                        <a class='dropdown-item' href='/cp/manageEvents'>{{_t 'Manage ratings and tournaments'}}</a>
-                    </div>
-                </li>
-            {{/isLoggedIn}}
         </ul>
         <ul class="navbar-nav justify-content-end">
             {{#isLoggedIn}}
-                <li class="nav-item"><a class='nav-link' href='/profile'
-                                        title="{{currentPerson.email}} :: {{currentPerson.id}}">{{currentPerson.title}}</a>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="userMenuButton"
+                       title="{{currentPerson.email}} :: {{currentPerson.id}}"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{_t '%1: actions' currentPerson.title}}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userMenuButton">
+                        <a class='dropdown-item' href='/cp/manageEvents'>{{_t 'Manage ratings and tournaments'}}</a>
+                        {{#isSuperadmin}}
+                            <a class='dropdown-item' href='/privileges'>{{_t 'Rights and privileges'}}</a>
+                        {{/isSuperadmin}}
+                        <a class='dropdown-item' href='/profile'>{{_t 'Manage my profile'}}</a>
+                        <a class='dropdown-item' href='/profile/logout'>{{_t 'Log out'}}</a>
+                    </div>
                 </li>
-                <li class="nav-item"><a class='nav-link' href='/profile/logout'>{{_t 'Log out'}}</a></li>
             {{/isLoggedIn}}
             {{^isLoggedIn}}
                 <li class="nav-item"><a class='nav-link' href='/profile/login'>{{_t 'Sign in'}}</a></li>

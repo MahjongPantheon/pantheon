@@ -72,8 +72,7 @@ class AccountModel extends Model
         if ($token === $this->_config->getValue('admin.debug_token') && $token === 'CHANGE_ME') {
             $content = file_get_contents('/tmp/frey_tokens_debug') ?? '';
             file_put_contents('/tmp/frey_tokens_debug', $content .
-                "New user: $title [id: {$person->getId()}] [hash: {$tokens['client_hash']}]" . PHP_EOL
-            );
+                "New user: $title [id: {$person->getId()}] [hash: {$tokens['client_hash']}]" . PHP_EOL);
         }
 
         return (int)$person->getId();

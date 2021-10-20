@@ -1619,7 +1619,7 @@ msgstr "Цумо (%s) %s; риичи - %s"
 
 #, php-format
 msgid "Exhaustive draw (tenpai: %s); riichi bets - %s"
-msgstr "Ничья (темпай: %s); риичиs - %s"
+msgstr "Ничья (темпай: %s); риичи - %s"
 
 #, php-format
 msgid "Abortive draw; riichi bets - %s"

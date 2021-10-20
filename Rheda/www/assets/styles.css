@@ -174,3 +174,7 @@ body {
   -moz-animation:spin 1s linear infinite;
   animation:spin 1s linear infinite;
 }
+
+.tables-controls .form-control {
+  height: auto;
+}

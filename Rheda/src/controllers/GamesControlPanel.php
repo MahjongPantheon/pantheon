@@ -117,6 +117,7 @@ class GamesControlPanel extends Controller
 
         return [
             'reason' => '',
+            'isTournament' => false,
             'tables' => $tablesFormatted
         ];
     }
