@@ -77,6 +77,14 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         {
             return 'noreply@localhost';
         }
+
+        /**
+         * @return string
+         */
+        public static function DEBUG_TOKEN()
+        {
+            return 'CHANGE_ME'; // TODO: Change this on your prod server!
+        }
     }
 }
 

@@ -230,7 +230,7 @@ abstract class Controller
         $client = $this->_mimir->getClient()->getHttpClient();
 
         $client->withHeaders([
-            'X-Debug-Token: aehbntyrey',
+            'X-Debug-Token: ' . Sysconf::DEBUG_TOKEN(),
             'X-Auth-Token: ' . $this->_authToken,
             'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
             'X-Current-Person-Id: ' . $this->_currentPersonId ?: '0',
