@@ -1,3 +1,14 @@
+.prescript-players-list .input-group-sm input {
+  width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 4px !important;
+  background-color: transparent;
+}
+.prescript-players-list .input-group-sm .input-group-text {
+  padding: 3px !important;
+}
+
 @media (max-width: 575.98px) {
   .mobile-flex-tr {
     display: block;
@@ -16,5 +27,18 @@
 
   .mobile-flex-player-points {
     padding: 0 52px;
+  }
+
+  .prescript-players-list .input-group-sm {
+    width: 100%;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .prescript-players-list .input-group-sm input {
+    width: 230px;
+  }
+  .prescript-players-list {
+    margin-bottom: 16px;
   }
 }

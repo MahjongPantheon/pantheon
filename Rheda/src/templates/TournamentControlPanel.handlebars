@@ -44,91 +44,7 @@
         {{_t 'Total count of registered players is not divisible by 4. Use the "Add player" and "Players management" pages to add or remove players. Special replacement player accounts may be used to complete the table.'}}
     {{/stageNotReady}}
     {{#stageReadyButNotStarted}}
-        {{^isPrescripted}}
-            <h3>{{_t 'Ready to generate seating'}}</h3>
-            {{_t 'Select seating mode and press the appropriate button.'}}
-            <hr/>
-        {{/isPrescripted}}
-        <table class="table table-striped">
-            <tr><td>
-                <h3>{{_t 'Hide/show rating table'}}</h3>
-                {{> partials/TournamentHideResults }}
-            </td></tr>
-            {{#isPrescripted}}
-                <tr><td>
-                    <h3>{{_t 'Predefined seating'}}</h3>
-                    <div>{{_t 'This tournament has predefined seating. See Admin actions / Predefined seating page for seating configuration. Next seating is listed below.'}}</div>
-                    <hr />
-                    {{#noNextPrescript}}
-                        {{_t 'No seating defined for next game. Looks like the tournament is finished'}}
-                    {{/noNextPrescript}}
-                    {{^noNextPrescript}}
-                        <table class="table table-striped">
-                            {{#nextPrescriptedSeating}}{{#@index}}
-                                <tr>
-                                    <td><b>{{_t 'Table #'}}{{@index}}</b></td>
-                                    <td><b>{{this.0.display_name}}</b> (# {{this.0.local_id}})</td>
-                                    <td><b>{{this.1.display_name}}</b> (# {{this.1.local_id}})</td>
-                                    <td><b>{{this.2.display_name}}</b> (# {{this.2.local_id}})</td>
-                                    <td><b>{{this.3.display_name}}</b> (# {{this.3.local_id}})</td>
-                                </tr>
-                            {{/@index}}{{/nextPrescriptedSeating}}
-                        </table>
-                        {{#form action='/tourn/predefinedSeating/' method='post'}}
-                            <label for="rndseat">
-                                <input type="hidden" name="rndseat" value="" />
-                                <input type="checkbox" checked="checked" name="rndseat" value="1" id="rndseat">
-                                {{_t 'Randomize winds seating at each table'}}
-                            </label><br/>
-                            <input type="button" class="btn btn-lg btn-primary actionButton"
-                                   onclick="return window.confirm('{{_t 'Use this seating for new game?'}}') && disableTemporarily(this);"
-                                   value="{{_t 'Use this seating'}}">
-                    {{/form}}
-                    {{/noNextPrescript}}
-            {{/isPrescripted}}
-            {{^isPrescripted}}
-                {{#withAutoSeating}}
-                    <tr><td>
-                        <h3>{{_t 'Random seating'}}</h3>
-                        <div>{{_t 'This will randomize players at all tables - useful when making a first game in tournament.'}}</div>
-                        {{#form action='/tourn/shuffledSeating/' method='post'}}
-                            <input type="button" class="btn btn-lg btn-primary actionButton"
-                                   onclick="return window.confirm('{{_t 'Use random seating for new game?'}}') && disableTemporarily(this);"
-                                   value="{{_t 'Use random seating'}}">
-                        {{/form}}
-                    </td></tr>
-                    <tr><td>
-                        {{#form action='/tourn/swissSeating/' method='post'}}
-                            <h3>{{_t 'Swiss seating'}}</h3>
-                            <div>{{_t 'This seating uses current player rating to place higher ranked players together, with exception of players who already played on the same table.'}}</div>
-                            <div>{{_t 'In case of small number of players and large number of games, this seating will create tables with as few crossings as possible.'}}</div>
-                            <input type="button" class="btn btn-lg btn-success actionButton"
-                                   onclick="return window.confirm('{{_t 'Use swiss seating for new game?'}}') && disableTemporarily(this);"
-                                   value="{{_t 'Use swiss seating'}}">
-                        {{/form}}
-                    </td></tr>
-                {{/withAutoSeating}}
-                <tr><td>
-                    <h3>{{_t 'Interval seating'}}</h3>
-                    {{#form action='/tourn/intervalSeating/' method='post'}}
-                        {{_t 'Players will be assigned to tables according to current rating table with selected interval'}}<br>
-                        {{_t 'Note that seating starts from the top of rating table, so the rest of players at bottom will be placed with step 1.'}}<br>
-                        {{_t 'Example: 3 tables (12 players) with step 2 will be formed as 1-3-5-7, 2-4-6-8 and 9-10-11-12'}}<br>
-                        <select name="step" class="custom-select">
-                            <option value="1">Step 1 (1-2-3-4)</option>
-                            <option value="2">Step 2 (1-3-5-7)</option>
-                            <option value="3">Step 3 (1-4-7-10)</option>
-                            <option value="4">Step 4 (1-5-9-13)</option>
-                            <option value="5">Step 5 (1-6-11-17)</option>
-                            <option value="6">Step 6 (1-7-13-19)</option>
-                        </select>
-                        <input type="button" class="btn btn-lg btn-warning actionButton"
-                               onclick="return window.confirm('{{_t 'Use interval seating for new game?' }}') && disableTemporarily(this);"
-                               value="{{_t 'Use interval seating'}}">
-                    {{/form}}
-                </td></tr>
-            {{/isPrescripted}}
-        </table>
+        {{> partials/TournamentControlsStageReady }}
     {{/stageReadyButNotStarted}}
     {{#stageSeatingInProgress}}
         <h3>{{_t 'Tables are being prepared...'}}</h3>
@@ -137,55 +53,12 @@
         {{> partials/TournamentTablesState }}
     {{/stageSeatingInProgress}}
     {{#stageSeatingReady}}
-        <h3>{{_t 'Start timer and games'}}</h3>
-        {{_t 'Press next button to start the timer and begin the games.'}}
-        {{#form action='/tourn/startTimer/' method='post'}}
-            <input type="button" class="btn btn-lg btn-danger actionButton"
-                   onclick="return window.confirm('{{_t 'Start games and timer?'}}') && disableTemporarily(this);"
-                   value="{{_t 'Start games!'}}">
-        {{/form}}
-        <hr />
-        {{> partials/TournamentTablesState }}
+        {{> partials/TournamentControlsStageSeatingReady }}
     {{/stageSeatingReady}}
     {{#stageStarted}}
-        <table class="table actionTable">
-            <tr>
-                <td>
-                    <h3>{{_t 'Reset the timer'}}</h3>
-                    {{_t 'Pressing this button will reset the timer to its initial value. Be careful: you should not need this usually.'}}
-                    {{#form action='/tourn/startTimer/' method='post'}}
-                        <input type="button" class="btn btn-lg btn-danger actionButton"
-                               onclick="return window.confirm('{{_t 'Really reset the timer?'}}') && disableTemporarily(this);"
-                               value="{{_t 'Reset the timer'}}">
-                    {{/form}}
-                </td>
-                <td>
-                    {{> partials/TournamentHideResults }}
-                </td>
-            </tr>
-        </table>
-        <hr />
-        {{> partials/TournamentTablesState }}
+        {{> partials/TournamentControlsStageStarted }}
     {{/stageStarted}}
     {{#stagePrefinished}}
-        <table class="table actionTable">
-            <tr>
-                <td>
-                    <h3>{{_t 'Finish all the games'}}</h3>
-                    {{_t 'After this button is pressed, you won\'t be able to cancel any rounds, and all the results will become visible to all players in rating table.'}}
-
-                    {{#form action='/tourn/finalizeSessions/' method='post'}}
-                        <input type="button" class="btn btn-lg btn-primary actionButton"
-                               onclick="return window.confirm('{{_t "Finish the games? You will not be able to cancel rounds anymore!"}}') && disableTemporarily(this);"
-                               value="{{_t 'Confirm the results and finish all games'}}">
-                    {{/form}}
-                </td>
-                <td>
-                    {{> partials/TournamentHideResults }}
-                </td>
-            </tr>
-        </table>
-        <hr />
-        {{> partials/TournamentTablesState }}
+        {{> partials/TournamentControlsStagePrefinished }}
     {{/stagePrefinished}}
 {{/error}}

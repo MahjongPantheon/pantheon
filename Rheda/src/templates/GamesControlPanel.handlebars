@@ -73,8 +73,6 @@
                             onclick="return cancelRoundConfirmation('{roundInfo}')"
                         }}{{_t 'Cancel last played round'}}{{/a}}
                     {{/last_round}}
-                </td>
-                <td>
                     {{^last_round}}{{!-- Mistake proofing: show cancel game button only if there are no completed rounds --}}
                     {{#gameIsCancellable}}
                         {{#a

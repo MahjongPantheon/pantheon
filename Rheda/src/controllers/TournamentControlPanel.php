@@ -165,6 +165,7 @@ class TournamentControlPanel extends Controller
 
         return [
             'error' => null,
+            'isTournament' => true, // false in games control panel controller
             'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
             'tables' => $tablesFormatted,
             'stageNotReady' => $currentStage == self::STAGE_NOT_READY,

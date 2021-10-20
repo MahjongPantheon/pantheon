@@ -75,8 +75,7 @@
                 {{^isAggregated}}
                     {{#isOnline}}
                         {{^hideAddReplayButton}}
-                            <li class="nav-item">{{#a class='nav-link' href='/add-online'}}{{_t
-                                'Add online game' }}{{/a}}</li>
+                            <li class="nav-item">{{#a class='nav-link' href='/add-online'}}{{_t 'Add online game' }}{{/a}}</li>
                         {{/hideAddReplayButton}}
                     {{/isOnline}}
                 {{/isAggregated}}
@@ -93,8 +92,7 @@
                             {{^isAggregated}}
                                 {{^isOnline}}
                                     {{#isTournament}}
-                                        {{#a class='dropdown-item' href='/tourn'}}{{_t
-                                            'Tournament control panel'}}{{/a}}
+                                        {{#a class='dropdown-item' href='/tourn'}}{{_t 'Tournament control panel'}}{{/a}}
                                     {{/isTournament}}
                                     {{^isTournament}}
                                         {{#a class='dropdown-item' href='/games'}}{{_t 'Games control panel'}}{{/a}}
@@ -114,8 +112,7 @@
                 {{/userHasAdminRights}}
                 {{^isAggregated}}
                     {{#useTimer}}
-                        <li class="nav-item">{{#a class='nav-link' href='/timer' target='_blank'}}{{_t
-                            'Timer & seating'}}{{/a}}</li>
+                        <li class="nav-item">{{#a class='nav-link' href='/timer' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}</li>
                     {{/useTimer}}
                 {{/isAggregated}}
             {{/eventSelected}}

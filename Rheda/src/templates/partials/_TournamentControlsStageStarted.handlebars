@@ -1,0 +1,18 @@
+<table class="table actionTable">
+    <tr>
+        <td>
+            <h3>{{_t 'Reset the timer'}}</h3>
+            {{_t 'Pressing this button will reset the timer to its initial value. Be careful: you should not need this usually.'}}
+            {{#form action='/tourn/startTimer/' method='post'}}
+                <input type="button" class="btn btn-lg btn-danger actionButton"
+                       onclick="return window.confirm('{{_t 'Really reset the timer?'}}') && disableTemporarily(this);"
+                       value="{{_t 'Reset the timer'}}">
+            {{/form}}
+        </td>
+        <td>
+            {{> partials/TournamentHideResults }}
+        </td>
+    </tr>
+</table>
+<hr />
+{{> partials/TournamentTablesState }}

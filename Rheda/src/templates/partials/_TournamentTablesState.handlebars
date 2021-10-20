@@ -2,43 +2,92 @@
     function cancelRoundConfirmation(roundInfo) {
         return window.confirm('{{_t 'Confirm round cancellation: '}}' + roundInfo);
     }
+    function definalizeConfirmation() {
+        return window.confirm('{{_t 'Confirm game definalization. Note that you will need to cancel last round by hand after that.'}}');
+    }
+    function cancelGameConfirmation(list) {
+        return window.confirm('{{_t 'Confirm game cancellation: '}}' + list);
+    }
 </script>
 
-<h3>{{_t 'Tables state:'}}</h3>
-<table class="table table-bordered">
-    {{#tables}}
-        <tr>
-            <td>#{{table_index}}</td>
-            {{#players}}
-                <td>{{display_name}}{{#local_id}} (# {{local_id}}){{/local_id}}</td>
-            {{/players}}
-            <td><span class="badge {{#finished}}badge-success{{/finished}}{{#prefinished}}badge-warning{{/prefinished}}">{{status}}</span></td>
-        </tr>
-        <tr>
-            <td colspan="6" style="font-weight: bold; font-size: 16px">
-                {{_t 'Last played round:'}}
-                {{^last_round}}{{_t '(no rounds are played yet)'}}{{/last_round}}
-                {{#last_round}}
-                    {{last_round}}
-                    {{#a
+<div class="row">
+    <div class="col-12">
+        <h3>{{_t 'Tables state:'}}</h3>
+    </div>
+</div>
+
+{{#tables}}
+    <div class="row">
+        <div class="col-2">
+            <div>#{{table_index}}</div>
+            <div>
+                <span class="badge {{#finished}}badge-success{{/finished}}{{#prefinished}}badge-warning{{/prefinished}}">{{status}}</span>
+            </div>
+        </div>
+        <div class="col-4">
+            <ul>
+                {{#players}}
+                    <li>{{display_name}}{{#local_id}} (#{{local_id}}){{/local_id}}</li>
+                {{/players}}
+            </ul>
+        </div>
+        <div class="col-6"><!-- Controls -->
+            {{#isTournament}}
+                {{#stageStarted}}
+                    {{#last_round}}
+                        {{#a
                             href="/tourn/dropLastRound/{hash}/"
-                            class="btn btn-large btn-warning actionButton"
+                            class="btn btn-warning form-control"
                             onclick="return cancelRoundConfirmation('{round}')"
+                        }}{{_t 'Cancel last played round'}}{{/a}}
+                    {{/last_round}}
+                {{/stageStarted}}
+            {{/isTournament}}
+            {{^isTournament}}
+                {{#last_round}}
+                    {{#a
+                        href="/games/dropLastRound/{hash}/"
+                        class="btn btn-warning form-control"
+                        onclick="return cancelRoundConfirmation('{roundInfo}')"
                     }}{{_t 'Cancel last played round'}}{{/a}}
                 {{/last_round}}
-            </td>
-        </tr>
-        <tr>
-            <td style="font-weight: bold; font-size: 16px">
-                {{_t 'Penalties:'}}
-            </td>
-            <td colspan="5">
-                <ul>
-                    {{#penalties}}
-                        <li>{{_p '%s - %s points of penalty. Reason: %s' who amount reason}}</li>
-                    {{/penalties}}
-                </ul>
-            </td>
-        </tr>
-    {{/tables}}
-</table>
+                {{^last_round}}{{!-- Mistake proofing: show cancel game button only if there are no completed rounds --}}
+                    {{#gameIsCancellable}}
+                        {{#a
+                            href="/games/cancelGame/{hash}/"
+                            class="btn btn-danger form-control"
+                            onclick="return cancelGameConfirmation('{playersFlatList}')"
+                        }}{{_t 'Cancel game'}}{{/a}}
+                    {{/gameIsCancellable}}
+                {{/last_round}}
+                {{#may_definalize}}
+                    {{#a
+                        href="/games/definalize/{hash}/"
+                        class="btn btn-warning form-control"
+                        onclick="return definalizeConfirmation()"
+                    }}{{_t 'Definalize game'}}{{/a}}
+                {{/may_definalize}}
+            {{/isTournament}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {{_t 'Last played round:'}}
+            {{^last_round}}{{_t '(no rounds are played yet)'}}{{/last_round}}
+            {{#last_round}}{{last_round}}{{/last_round}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            {{_t 'Penalties:'}}
+        </div>
+        <div class="col-9">
+            <ul>
+                {{#penalties}}
+                    <li>{{_p '%s - %s points of penalty. Reason: %s' who amount reason}}</li>
+                {{/penalties}}
+            </ul>
+        </div>
+    </div>
+    <hr />
+{{/tables}}
