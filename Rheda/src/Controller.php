@@ -313,7 +313,7 @@ abstract class Controller
                     'currentPerson' => $this->_personalData,
                     'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),
                     'isLoggedIn' => !empty($this->_personalData),
-                    'isSuperadmin' => true // TODO
+                    'isSuperadmin' => $this->_superadmin,
                 ]);
             }
         }

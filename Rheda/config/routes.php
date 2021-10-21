@@ -26,7 +26,6 @@ return [ // Omit trailing slashes in keys when possible
     '/game'           => 'Game',
     '/game/(?<hash>[0-9a-f]+)' => 'Game',
     '/reg'            => 'PlayerRegistration',
-    '/reg/(?<print>print)' => 'PlayerRegistration',
     '/stat/team'      => 'TeamTable',
     '/stat'           => 'RatingTable',
     '/stat/.+'        => 'RatingTable',
@@ -64,6 +63,7 @@ return [ // Omit trailing slashes in keys when possible
 
     '!/signup'                              => 'PersonSignup',
     '!/confirm/(?<code>[0-9a-f]+)'          => 'PersonSignupConfirm',
+    '!/signupAdmin'                         => 'PersonSignupAdministrative',
     '!/profile/(?<action>login)'            => 'PersonLogin',
     '!/profile/(?<action>logout)'           => 'PersonLogin',
     '!/profile'                             => 'PersonProfileEdit',

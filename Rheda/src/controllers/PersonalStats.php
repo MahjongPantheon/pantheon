@@ -21,7 +21,7 @@ require_once __DIR__ . '/../helpers/YakuMap.php';
 
 class PersonalStats extends Controller
 {
-    protected $_mainTemplate = 'User';
+    protected $_mainTemplate = 'PersonalStats';
     /**
      * @var string
      */
@@ -120,6 +120,7 @@ class PersonalStats extends Controller
             $labelColorThreshold = $this->_mainEventRules->subtractStartPoints() ? 0 : $this->_mainEventRules->startPoints();
 
             return [
+                'isSuperadmin' => $this->_superadmin,
                 'playerData' => $playerData,
                 'data' => empty($data['score_history']) ? null : [
                     'labelThreshold'    => $labelColorThreshold,

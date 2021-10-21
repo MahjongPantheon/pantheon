@@ -24,7 +24,10 @@
 
     {{#playerData}}
         <h3>{{_p '%s: personal stats' display_name}}</h3>
-        <small>id: {{id}}</small>
+        {{#isSuperadmin}}
+            <small>id: {{id}}</small> |
+            <a href="/profile/edit/{{id}}">{{_t 'Edit player information'}}</a>
+        {{/isSuperadmin}}
         <hr/>
 
         {{^data}}
