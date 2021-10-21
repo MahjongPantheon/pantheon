@@ -79,7 +79,7 @@ class PersonSignupAdministrative extends Controller
             $data['title'],
             $data['city'],
             $data['phone'],
-            $data['tenhouid'] ?? ''
+            $data['tenhou_id'] ?? ''
         );
     }
 

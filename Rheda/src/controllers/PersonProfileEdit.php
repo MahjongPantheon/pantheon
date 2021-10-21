@@ -111,8 +111,8 @@ class PersonProfileEdit extends Controller
             $data['country'],
             $data['city'],
             $data['email'],
-            $data['phone'] ?? '',
-            $data['tenhouid'] ?? ''
+            $data['phone'] ?: '',
+            $data['tenhou_id'] ?: ''
         );
     }
 
