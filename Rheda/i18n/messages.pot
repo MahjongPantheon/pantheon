@@ -141,7 +141,7 @@ msgstr ""
 msgid "Predefined seating"
 msgstr ""
 
-msgid "%1: actions"
+msgid "%s: actions"
 msgstr ""
 
 msgid "Manage ratings and tournaments"

@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, fuzzy
-msgid "%1: actions"
+msgid "%s: actions"
 msgstr "Admin Aktionen"
 
 msgid "%d - %d (%d total)"
