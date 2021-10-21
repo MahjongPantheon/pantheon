@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-12">
+        <h3>{{_t 'Finish all the games'}}</h3>
+        {{_t 'After this button is pressed, you won\'t be able to cancel any rounds, and all the results will become visible to all players in rating table.'}}
+        <br>
+        {{#form action='/tourn/finalizeSessions/' method='post'}}
+            <input type="button" class="btn btn-primary form-control"
+                   onclick="return window.confirm('{{_t "Finish the games? You will not be able to cancel rounds anymore!"}}') && disableTemporarily(this);"
+                   value="{{_t 'Confirm the results and finish all games'}}">
+        {{/form}}
+    </div>
+</div>
+<hr />
+{{> partials/TournamentHideResults }}
+{{> partials/TournamentTablesState }}

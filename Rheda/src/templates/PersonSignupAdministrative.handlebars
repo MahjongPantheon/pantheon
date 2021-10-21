@@ -1,0 +1,91 @@
+{{!*  Rheda: visualizer and control panel
+*  Copyright (C) 2016  o.klimenko aka ctizen
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 3 of the License, or
+*  (at your option) any later version.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*}}
+<h3>{{_t 'Create new user'}}</h3>
+<br>
+{{#error}}
+    <div class="alert alert-danger" role="alert">{{error}}</div>
+{{/error}}
+{{^success}}
+    <div class="row">
+        <div class="col-12">
+            <form action="" method="post" class="well"
+                  autocomplete="off">
+                <input type="hidden" name="save" value="1"/>
+                <hr/>
+                <div class="form-group">
+                    <label for="title">{{_t 'Person name'}}</label>
+                    <input type="text" class="form-control{{#error_title}} is-invalid{{/error_title}}" id="title"
+                           value="{{title}}"
+                           name="title">
+                    {{#error_title}}
+                        <div class="invalid-feedback">{{error_title}}</div>
+                    {{/error_title}}
+                </div>
+                <div class="form-group">
+                    <label for="email">{{_t 'E-mail address'}}</label>
+                    <input type="text" class="form-control{{#error_email}} is-invalid{{/error_email}}"
+                           id="email" name="email"
+                           autocomplete="off"
+                           value="{{email}}">
+                    {{#error_email}}
+                        <div class="invalid-feedback">{{error_email}}</div>
+                    {{/error_email}}
+                </div>
+                <div class="form-group">
+                    <label for="password">{{_t 'Password'}}</label>
+                    <input type="password" class="form-control{{#error_password}} is-invalid{{/error_password}}"
+                           id="password"
+                           autocomplete="new-password"
+                           name="password">
+                </div>
+                <div class="form-group">
+                    <label for="city">{{_t 'City'}}</label>
+                    <input type="text" class="form-control{{#error_city}} is-invalid{{/error_city}}" id="city"
+                           value="{{city}}"
+                           name="city">
+                    {{#error_city}}
+                        <div class="invalid-feedback">{{error_city}}</div>
+                    {{/error_city}}
+                </div>
+                <div class="form-group">
+                    <label for="phone">{{_t 'Phone'}}</label>
+                    <input type="text" class="form-control{{#error_phone}} is-invalid{{/error_phone}}" id="phone"
+                           value="{{phone}}"
+                           name="phone">
+                    {{#error_phone}}
+                        <div class="invalid-feedback">{{error_phone}}</div>
+                    {{/error_phone}}
+                </div>
+                <div class="form-group">
+                    <label for="tenhou_id">{{_t 'Tenhou ID (nickname)'}}</label>
+                    <input type="text" class="form-control{{#error_tenhou_id}} is-invalid{{/error_tenhou_id}}"
+                           id="tenhou_id"
+                           value="{{tenhou_id}}"
+                           name="tenhou_id">
+                    {{#error_tenhou_id}}
+                        <div class="invalid-feedback">{{error_tenhou_id}}</div>
+                    {{/error_tenhou_id}}
+                </div>
+                <button type="submit" class="btn btn-primary" id="reg_button">{{_t 'Create account'}}</button>
+            </form>
+            <hr/>
+        </div>
+    </div>
+{{/success}}
+{{#success}}
+    {{_t 'Successfully register new user!'}}
+{{/success}}

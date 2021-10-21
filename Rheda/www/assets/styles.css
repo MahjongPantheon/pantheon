@@ -100,12 +100,8 @@ li, .table th, .table td {
     width: 30px;
 }
 
-.navbar {
-    height: 48px;
-}
-
 body {
-    padding-top: 58px;
+    padding-top: 72px;
 }
 
 .table th, .table td {
@@ -137,9 +133,6 @@ body {
 }
 .local-id-selector {
     width: 100px;
-}
-.team-name-selector {
-    max-width: 200px;
 }
 
 .centered-content {
@@ -177,4 +170,8 @@ body {
   -webkit-animation:spin 1s linear infinite;
   -moz-animation:spin 1s linear infinite;
   animation:spin 1s linear infinite;
+}
+
+.tables-controls .form-control {
+  height: auto;
 }

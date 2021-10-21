@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c486092758be258392d126565ad0f879",
+    "content-hash": "b25fd09902af2478dba20189ff430ec2",
     "packages": [
         {
             "name": "chillerlan/php-qrcode",
@@ -362,6 +362,113 @@
                 "source": "https://github.com/justinrainbow/json-schema/tree/master"
             },
             "time": "2016-12-22T16:43:46+00:00"
+        },
+        {
+            "name": "lorddashme/php-simple-captcha",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LordDashMe/php-simple-captcha.git",
+                "reference": "147e4d2664fab28c7053c8f7710bf5b6480a79c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LordDashMe/php-simple-captcha/zipball/147e4d2664fab28c7053c8f7710bf5b6480a79c1",
+                "reference": "147e4d2664fab28c7053c8f7710bf5b6480a79c1",
+                "shasum": ""
+            },
+            "require": {
+                "lorddashme/php-static-class-interface": "1.*",
+                "php": ">=5.6 || >=7.0 || >=7.1 || >=7.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "1.*",
+                "phpunit/phpunit": "5.* || 6.* || 7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LordDashMe\\SimpleCaptcha\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joshua Clifford Reyes",
+                    "email": "reyesjoshuaclifford@gmail.com",
+                    "homepage": "https://lorddashme.github.io/"
+                }
+            ],
+            "description": "A simple captcha package that suite to any type of web application built on php.",
+            "homepage": "https://github.com/lorddashme/php-simple-captcha",
+            "keywords": [
+                "Simple",
+                "captcha",
+                "github",
+                "php",
+                "security"
+            ],
+            "support": {
+                "issues": "https://github.com/LordDashMe/php-simple-captcha/issues",
+                "source": "https://github.com/LordDashMe/php-simple-captcha/tree/master"
+            },
+            "time": "2018-10-01T08:15:53+00:00"
+        },
+        {
+            "name": "lorddashme/php-static-class-interface",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LordDashMe/php-static-class-interface.git",
+                "reference": "6f3de1372118850c36b7b49cf74b0d623df7e36e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LordDashMe/php-static-class-interface/zipball/6f3de1372118850c36b7b49cf74b0d623df7e36e",
+                "reference": "6f3de1372118850c36b7b49cf74b0d623df7e36e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6 || >=7.0 || >=7.1 || >=7.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "1.*",
+                "phpunit/phpunit": "5.* || 6.* || 7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LordDashMe\\StaticClassInterface\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Joshua Clifford Reyes",
+                    "email": "reyesjoshuaclifford@gmail.com",
+                    "homepage": "https://lorddashme.github.io/"
+                }
+            ],
+            "description": "A simple package that convert a service class into a static-like class.",
+            "homepage": "https://github.com/lorddashme/php-static-class-interface",
+            "keywords": [
+                "facade",
+                "github",
+                "php",
+                "static",
+                "static-interface"
+            ],
+            "support": {
+                "issues": "https://github.com/LordDashMe/php-static-class-interface/issues",
+                "source": "https://github.com/LordDashMe/php-static-class-interface/tree/master"
+            },
+            "time": "2018-09-27T10:55:30+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",

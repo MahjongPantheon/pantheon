@@ -33,8 +33,12 @@
                         <input class="form-control" id="next_index" type="text" name="next_session_index" value="{{next_session_index}}">
                     </div>
                 </div>
-                <textarea name="prescript" style="width:100%; min-height: 500px">{{prescript}}</textarea>
-                <input type="submit" value="{{_t 'Update predefined seating config'}}" class="btn btn-primary btn-large">
+                <div class="form-group">
+                    <textarea class="form-control" name="prescript" style="width:100%; min-height: 500px">{{prescript}}</textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="{{_t 'Update predefined seating config'}}" class="btn btn-primary btn-large">
+                </div>
             </form>
         </div>
         <div class="col-sm">

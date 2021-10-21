@@ -1,0 +1,58 @@
+{{#withAutoSeating}}
+    <div class="row">
+        <div class="col-12">
+            <h3>{{_t 'Random seating'}}</h3>
+            <div>{{_t 'This will randomize players at all tables - useful when making a first game in tournament.'}}</div>
+            <br/>
+            {{#form action='/tourn/shuffledSeating/' method='post' class='form-group'}}
+                <input type="button" class="btn btn-primary form-control"
+                       onclick="return window.confirm('{{_t 'Use random seating for new game?'}}') && disableTemporarily(this);"
+                       value="{{_t 'Use random seating'}}">
+            {{/form}}
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <h3>{{_t 'Swiss seating'}}</h3>
+            <div>{{_t 'This seating uses current player rating to place higher ranked players together, with exception of players who already played on the same table.'}}</div>
+            <div>{{_t 'In case of small number of players and large number of games, this seating will create tables with as few crossings as possible.'}}</div>
+            <br/>
+            {{#form action='/tourn/swissSeating/' method='post' class='from-group'}}
+                <input type="button" class="btn btn-success form-control"
+                       onclick="return window.confirm('{{_t 'Use swiss seating for new game?'}}') && disableTemporarily(this);"
+                       value="{{_t 'Use swiss seating'}}">
+            {{/form}}
+        </div>
+    </div>
+    <hr />
+{{/withAutoSeating}}
+<div class="row">
+    <div class="col-12">
+        <h3>{{_t 'Interval seating'}}</h3>
+        <div>{{_t 'Players will be assigned to tables according to current rating table with selected interval'}}</div>
+        <div>{{_t 'Note that seating starts from the top of rating table, so the rest of players at bottom will be placed with step 1.'}}</div>
+        <div>{{_t 'Example: 3 tables (12 players) with step 2 will be formed as 1-3-5-7, 2-4-6-8 and 9-10-11-12'}}</div>
+        <br/>
+        {{#form action='/tourn/intervalSeating/' method='post' class='form-inline'}}
+            <div class="row">
+                <div class="form-group col">
+                    <select name="step" class="form-control">
+                        <option value="1">{{_t 'Step 1 (1-2-3-4)'}}</option>
+                        <option value="2">{{_t 'Step 2 (1-3-5-7)'}}</option>
+                        <option value="3">{{_t 'Step 3 (1-4-7-10)'}}</option>
+                        <option value="4">{{_t 'Step 4 (1-5-9-13)'}}</option>
+                        <option value="5">{{_t 'Step 5 (1-6-11-17)'}}</option>
+                        <option value="6">{{_t 'Step 6 (1-7-13-19)'}}</option>
+                    </select>
+                </div>
+                <div class="form-group col">
+                    <input type="button" class="btn btn-info form-control"
+                           onclick="return window.confirm('{{_t 'Use interval seating for new game?' }}') && disableTemporarily(this);"
+                           value="{{_t 'Use interval seating'}}">
+                </div>
+            </div>
+        {{/form}}
+    </div>
+</div>
+<hr />

@@ -253,6 +253,13 @@ shell_frey: get_docker_id
 		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'export PS1="|$(RED)Pantheon container$(NC) ~> $$PS1" && cd /var/www/html/Frey && /bin/sh' ; \
 	fi
 
+.PHONY: dump_users
+dump_users: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Pantheon container is not running, can't get to shell.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cat /tmp/frey_tokens_debug' ; \
+	fi
 
 # Some shortcuts for common tasks
 

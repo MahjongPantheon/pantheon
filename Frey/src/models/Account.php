@@ -40,7 +40,7 @@ class AccountModel extends Model
      *
      * @return int id
      *
-     * @throws \Exception
+     * @throws InvalidParametersException
      */
     public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null, $superadmin = false): int
     {
@@ -66,6 +66,15 @@ class AccountModel extends Model
         if (!$person->save()) {
             throw new \Exception('Couldn\'t save person to DB', 403);
         }
+
+        // TODO: do something with this workaround for docker debug
+        $token = empty($_SERVER['HTTP_X_DEBUG_TOKEN']) ? '' : $_SERVER['HTTP_X_DEBUG_TOKEN'];
+        if ($token === $this->_config->getValue('admin.debug_token') && $token === 'CHANGE_ME') {
+            $content = file_get_contents('/tmp/frey_tokens_debug') ?? '';
+            file_put_contents('/tmp/frey_tokens_debug', $content .
+                "New user: $title [id: {$person->getId()}] [hash: {$tokens['client_hash']}]" . PHP_EOL);
+        }
+
         return (int)$person->getId();
     }
 

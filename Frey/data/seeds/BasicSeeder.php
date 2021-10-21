@@ -30,6 +30,9 @@ class BasicSeeder extends AbstractSeed
 
         // cleanup. Don't use truncate() - it won't work with FKs
         foreach ($tables as $t) {
+            if (trim($t) === 'phinxlog') {
+                continue;
+            }
             $this->table($t)->getAdapter()->execute('DELETE FROM "' . trim($t) . '"');
         }
 

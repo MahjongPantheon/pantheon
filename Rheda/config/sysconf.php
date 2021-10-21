@@ -39,27 +39,51 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         const FREY_INTERNAL_QUERY_SECRET = 'CHANGE_ME'; // TODO: change this in your local config!
 
         /**
-         * @return array|false|string
+         * @return string
          */
         public static function API_URL()
         {
-            return getenv('MIMIR_URL');
+            return (string)getenv('MIMIR_URL');
         }
 
         /**
-         * @return array|false|string
+         * @return string
          */
         public static function MOBILE_CLIENT_URL()
         {
-            return getenv('TYR_URL');
+            return (string)getenv('TYR_URL');
         }
 
         /**
-         * @return array|false|string
+         * @return string
          */
         public static function AUTH_API_URL()
         {
-            return getenv('FREY_URL');
+            return (string)getenv('FREY_URL');
+        }
+
+        /**
+         * @return string
+         */
+        public static function GUI_URL()
+        {
+            return (string)getenv('RHEDA_URL');
+        }
+
+        /**
+         * @return string
+         */
+        public static function MAILER_ADDR()
+        {
+            return 'noreply@localhost';
+        }
+
+        /**
+         * @return string
+         */
+        public static function DEBUG_TOKEN()
+        {
+            return 'CHANGE_ME'; // TODO: Change this on your prod server!
         }
     }
 }

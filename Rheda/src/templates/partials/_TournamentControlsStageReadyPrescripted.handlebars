@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-12">
+        <h3>{{_t 'Predefined seating'}}</h3>
+        <div>{{_t 'This tournament has predefined seating. See Admin actions / Predefined seating page for seating configuration. Next seating is listed below.'}}</div>
+        <hr />
+    </div>
+</div>
+{{#noNextPrescript}}
+    <div class="row">
+        <div class="col-12">
+            {{_t 'No seating defined for next game. Looks like the tournament is finished'}}
+        </div>
+    </div>
+{{/noNextPrescript}}
+{{^noNextPrescript}}
+    <div class="row">
+        <div class="col-12">
+            {{#nextPrescriptedSeating}}{{#@index}}
+                <div class="row">
+                    <div class="col-12 form-inline">
+                        <b>{{_t 'Table #'}}{{@index}}</b>&nbsp;
+                        <div class="prescript-players-list form-inline">
+                            <div class="input-group input-group-sm m-1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">東</span>
+                                </div>
+                                <input type="text" class="form-control" disabled="disabled"
+                                       value="{{this.0.display_name}}" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">#{{this.0.local_id}}</span>
+                                </div>
+                            </div>
+                            <div class="input-group input-group-sm m-1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">南</span>
+                                </div>
+                                <input type="text" class="form-control" disabled="disabled"
+                                       value="{{this.1.display_name}}" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">#{{this.1.local_id}}</span>
+                                </div>
+                            </div>
+                            <div class="input-group input-group-sm m-1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">西</span>
+                                </div>
+                                <input type="text" class="form-control" disabled="disabled"
+                                       value="{{this.2.display_name}}" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">#{{this.2.local_id}}</span>
+                                </div>
+                            </div>
+                            <div class="input-group input-group-sm m-1">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">北</span>
+                                </div>
+                                <input type="text" class="form-control" disabled="disabled"
+                                       value="{{this.3.display_name}}" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">#{{this.3.local_id}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/@index}}{{/nextPrescriptedSeating}}
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            {{#form action='/tourn/predefinedSeating/' method='post'}}
+                <div class="form-group form-check">
+                    <input type="hidden" name="rndseat" value="" />
+                    <input type="checkbox" checked="checked" name="rndseat" value="1" id="rndseat" class="form-check-input">
+                    <label class="form-check-label" for="rndseat">{{_t 'Randomize winds seating at each table'}}</label>
+                </div>
+                <input type="button" class="btn btn-primary form-control"
+                       onclick="return window.confirm('{{_t 'Use this seating for new game?'}}') && disableTemporarily(this);"
+                       value="{{_t 'Use this seating'}}">
+            {{/form}}
+        </div>
+    </div>
+    <hr />
+{{/noNextPrescript}}
+

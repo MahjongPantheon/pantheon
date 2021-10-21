@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-12">
+        <h3>{{_t 'Start timer and games'}}</h3>
+        <div>{{_t 'Press next button to start the timer and begin the games.'}}</div>
+
+        {{#form action='/tourn/startTimer/' method='post'}}
+            <input type="button" class="btn form-control btn-danger"
+                   onclick="return window.confirm('{{_t 'Start games and timer?'}}') && disableTemporarily(this);"
+                   value="{{_t 'Start games!'}}">
+        {{/form}}
+    </div>
+</div>
+<hr />
+
+{{> partials/TournamentTablesState }}

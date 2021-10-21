@@ -26,7 +26,6 @@ return [ // Omit trailing slashes in keys when possible
     '/game'           => 'Game',
     '/game/(?<hash>[0-9a-f]+)' => 'Game',
     '/reg'            => 'PlayerRegistration',
-    '/reg/(?<print>print)' => 'PlayerRegistration',
     '/stat/team'      => 'TeamTable',
     '/stat'           => 'RatingTable',
     '/stat/.+'        => 'RatingTable',
@@ -42,8 +41,6 @@ return [ // Omit trailing slashes in keys when possible
     '/tourn/(?<action>startTimer)'                         => 'TournamentControlPanel',
     '/tourn/(?<action>toggleHideResults)'                  => 'TournamentControlPanel',
     '/tourn/(?<action>finalizeSessions)'                   => 'TournamentControlPanel',
-
-    '/tablestat/(?<password>[a-z]+)' => 'TableStatus',
 
     '/prescript' => 'PrescriptControls',
 
@@ -64,10 +61,13 @@ return [ // Omit trailing slashes in keys when possible
 
     '!/signup'                              => 'PersonSignup',
     '!/confirm/(?<code>[0-9a-f]+)'          => 'PersonSignupConfirm',
+    '!/signupAdmin'                         => 'PersonSignupAdministrative',
     '!/profile/(?<action>login)'            => 'PersonLogin',
     '!/profile/(?<action>logout)'           => 'PersonLogin',
     '!/profile'                             => 'PersonProfileEdit',
-    '!/profile/(?<action>edit)/(?<id>\d+)'   => 'PersonProfileEdit',
+    '!/profile/(?<action>edit)/(?<id>\d+)'  => 'PersonProfileEdit',
+    '!/passwordRecovery'                    => 'PersonRecoverPassword',
+    '!/passwordRecovery/(?<code>[0-9a-f]+)/(?<email>[a-z0-9_.@-]+)' => 'PersonRecoverPassword',
 
     '!/privileges'                  => 'Privileges',
     '!/privileges/uid(?<id>\d+)'    => 'PrivilegesOfUser',

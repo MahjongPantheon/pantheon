@@ -17,47 +17,63 @@
 <h3>{{_t 'Manage owned events'}}</h3>
 
 <script type="text/javascript">
-  function confirmClose(id, title) {
-    return confirm(
-      "{{_p "Really finish event #id (#title)? You won't be able to add games after event is finished."}}"
-        .replace('#id', id)
-        .replace('#title', title)
-    );
-  }
+    function confirmClose(id, title) {
+        return confirm(
+            "{{_p "Really finish event #id (#title)? You won't be able to add games after event is finished."}}"
+                .replace('#id', id)
+                .replace('#title', title)
+        );
+    }
 </script>
 
+<style>
+    .event-row {
+        padding: 6px 0;
+    }
+    .event-row:nth-of-type(even) {
+        background-color: rgb(238, 238, 238);
+    }
+</style>
+
 <div class="container">
-  <div>
-    <a class='btn btn-secondary float-right m-sm-1' href='/cp/newClubEvent'>{{_t 'New club rating'}}</a>
-    <a class='btn btn-secondary float-right m-sm-1' href='/cp/newTournamentEvent'>{{_t 'New tournament'}}</a>
-    <a class='btn btn-secondary float-right m-sm-1' href='/cp/newOnlineEvent'>{{_t 'New online tournament'}}</a>
-    <div class="clearfix"></div>
-  </div>
+    <div class="form-inline">
+        <a class='form-control btn btn-secondary m-1' href='/cp/newClubEvent'>{{_t 'New club rating'}}</a>
+        <a class='form-control btn btn-secondary m-1' href='/cp/newTournamentEvent'>{{_t 'New tournament'}}</a>
+        <a class='form-control btn btn-secondary m-1' href='/cp/newOnlineEvent'>{{_t 'New online tournament'}}</a>
+        <div class="clearfix"></div>
+    </div>
 
-  <hr />
+    <hr/>
 
-  <table class="table table-striped table-condensed">
-    <tr>
-      <th>{{_t 'Event title'}}</th>
-      <th>{{_t 'Event description'}}</th>
-      <th>{{_t 'Event type'}}</th>
-      <th>{{_t 'Controls'}}</th>
-    </tr>
+    <div class="row" style="font-weight: bold">
+        <div class="col-6">{{_t 'Event'}}</div>
+        <div class="col-6">{{_t 'Controls'}}</div>
+    </div>
+
+    <hr/>
+
     {{#events}}
-      <tr>
-        <td>{{#a class='nav-link' href='/' id='{id}'}}{{title}}{{/a}}</td>
-        <td>{{description}}</td>
-        <td>{{type}}</td>
-        <td>
-          {{#finished}}<b class="badge badge-danger">{{_t 'Finished'}}</b>{{/finished}}
-          {{^finished}}
-            <a href="/cp/editEvent/{{id}}" class="btn btn-info">{{_t 'Edit'}}</a>
-            <a href="/cp/editEventAdmins/{{id}}" class="btn btn-warning">{{_t 'Privileges'}}</a>
-            <a href="/cp/finishEvent/{{id}}" class="btn btn-danger"
-               onclick="return confirmClose({{id}}, '{{title}}')">{{_t 'Finish'}}</a>
-          {{/finished}}
-        </td>
-      </tr>
+        <div class="row event-row">
+            <div class="col-6">
+                {{#a href='/' id='{id}'}}{{title}}{{/a}}
+                <div>{{description}}</div>
+                <div>{{type}}</div>
+            </div>
+            <div class="col-6 form-inline">
+                {{#finished}}<b class="badge badge-danger">{{_t 'Finished'}}</b>{{/finished}}
+                {{^finished}}
+                    <a href="/cp/editEvent/{{id}}" class="form-control m-1 btn btn-info">
+                        {{_t 'Edit'}}
+                    </a>
+                    <a href="/cp/editEventAdmins/{{id}}" class="form-control m-1 btn btn-warning">
+                        {{_t 'Privileges'}}
+                    </a>
+                    <a href="/cp/finishEvent/{{id}}" class="form-control m-1 btn btn-danger"
+                       onclick="return confirmClose({{id}}, '{{title}}')">
+                        {{_t 'Finish'}}
+                    </a>
+                {{/finished}}
+            </div>
+        </div>
     {{/events}}
-  </table>
 </div>

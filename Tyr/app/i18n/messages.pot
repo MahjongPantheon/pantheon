@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-14 22:27+0300\n"
+"POT-Creation-Date: 2021-10-22 01:20+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
-#: app/components/general/dropdown/PlayerDropdown.tsx:30:16
+#: app/components/general/dropdown/PlayerDropdown.tsx:31:16
 msgid "select player"
 msgstr ""
 
-#: app/components/general/number-select/NumberSelect.tsx:81:13
+#: app/components/general/number-select/NumberSelect.tsx:83:13
 msgid "something goes wrong, please contact your administrator"
 msgstr ""
 
-#: app/components/general/search-input/SearchInput.tsx:65:29
+#: app/components/general/search-input/SearchInput.tsx:67:29
 msgid "type to find someone"
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreen.tsx:32:58
+#: app/components/screens/event-select/EventSelectScreen.tsx:33:58
 msgid "name"
 msgstr ""
 
@@ -37,7 +37,7 @@ msgstr ""
 msgid "Select event"
 msgstr ""
 
-#: app/components/screens/home/HomeScreen.tsx:65:55
+#: app/components/screens/home/HomeScreen.tsx:66:55
 msgid "Event title"
 msgstr ""
 
@@ -74,12 +74,12 @@ msgid "yakuman"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:16:13
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:60:9
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:61:9
 msgid "%1 han"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:19:12
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:59:9
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:60:9
 msgid "%1 han %2 fu"
 msgstr ""
 
@@ -190,31 +190,31 @@ msgstr ""
 msgid "If in doubt, contact the tournament administrator for further instructions."
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:67:16
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:68:16
 msgid "Han from yaku"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:72:16
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:73:16
 msgid "Dora"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:79:20
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:80:20
 msgid "Ura dora"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:87:20
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:88:20
 msgid "Red fives"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:94:16
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:95:16
 msgid "Fu"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:106:14
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:107:14
 msgid "Yakuman"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreen.tsx:51:58
+#: app/components/screens/settings/SettingsScreen.tsx:56:58
 msgid "Player name"
 msgstr ""
 

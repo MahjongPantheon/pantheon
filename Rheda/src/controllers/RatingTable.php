@@ -226,6 +226,13 @@ class RatingTable extends Controller
         return [
             'error'             => $errMsg,
             'data'              => $data,
+            'titlePlayer'        => _t('Player'),
+            'titleTeam'          => _t('Team'),
+            'titleChips'         => _t('Chips'),
+            'titleRatingPoints'  => _t('Rating points'),
+            'titleAveragePlace'  => _t('Average place'),
+            'titleAveragePoints' => _t('Average points'),
+            'titleGamesPlayed'   => _t('Games played'),
 
             'orderDesc'         => $order == 'desc',
 

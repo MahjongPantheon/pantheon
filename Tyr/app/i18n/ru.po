@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-14 22:27+0300\n"
+"POT-Creation-Date: 2021-10-22 01:20+0300\n"
 "PO-Revision-Date: 2021-10-14 22:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -20,119 +20,60 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: app/components/general/dropdown/PlayerDropdown.tsx:30:16
-msgid "select player"
-msgstr "выбрать игрока"
-
-#: app/components/general/number-select/NumberSelect.tsx:81:13
-msgid "something goes wrong, please contact your administrator"
-msgstr "что-то пошло не так, свяжитесь с администратором системы"
-
-#: app/components/general/search-input/SearchInput.tsx:65:29
-msgid "type to find someone"
-msgstr "начните вводить чтобы найти игроков"
-
-#: app/components/screens/event-select/EventSelectScreen.tsx:32:58
-msgid "name"
-msgstr "имя"
-
-#: app/components/screens/event-select/EventSelectScreenView.tsx:33:62
-msgid "Select event"
-msgstr "Выбрать событие"
-
-#: app/components/screens/home/HomeScreen.tsx:65:55
-msgid "Event title"
-msgstr "Название события"
-
-#: app/components/screens/home/HomeScreenView.tsx:56:20
-msgid "New game"
-msgstr "Новая игра"
-
-#: app/components/screens/home/HomeScreenView.tsx:63:20
-msgid "Current game"
-msgstr "Текущая игра"
-
-#: app/components/screens/home/HomeScreenView.tsx:69:20
-msgid "Previous game"
-msgstr "Предыдущая раздача"
-
-#: app/components/screens/home/HomeScreenView.tsx:75:20
-msgid "Other playing tables"
-msgstr "Другие столы"
-
-#: app/components/screens/home/HomeScreenView.tsx:81:20
-msgid "Statistics"
-msgstr "Статистика"
-
-#: app/components/screens/log/view/LogScreenView.tsx:39:72
-msgid "No results found"
-msgstr "Результаты отсутствуют"
-
-#: app/components/screens/log/view/LogScreenView.tsx:71:17
-msgid "Game log"
-msgstr "Лог игры"
-
-#: app/components/screens/log/view/RoundSelectors.ts:13:12
-msgid "yakuman"
-msgstr "якуман"
+#: app/components/screens/table/base/TableInfo.tsx:74:18
+msgid "%1 deal left"
+msgid_plural "%1 deals left"
+msgstr[0] "Осталась %1 раздача"
+msgstr[1] "Осталось %1 раздачи"
+msgstr[2] "Осталось %1 раздач"
 
 #: app/components/screens/log/view/RoundSelectors.ts:16:13
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:60:9
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:61:9
 msgid "%1 han"
 msgstr "%1 хан"
 
 #: app/components/screens/log/view/RoundSelectors.ts:19:12
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:59:9
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:60:9
 msgid "%1 han %2 fu"
 msgstr "%1 хан, %2 фу"
-
-#: app/components/screens/log/view/RoundSelectors.ts:25:10
-msgid "Pao from: %1"
-msgstr "Пао с: %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:29:10
-msgid "Honba: %1"
-msgstr "Хонба: %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:33:10
-msgid "Tempai: %1"
-msgstr "Темпай: %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:47:10
-msgid "Riichi bets: %1"
-msgstr "Ставок риичи: %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:51:19
-msgid "dora %1"
-msgstr "дора %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:61:14
-msgid "Ron, %1"
-msgstr "Рон, %1"
 
 #: app/components/screens/log/view/RoundSelectors.ts:62:14
 msgid "%1 ← %2"
 msgstr "%1 ← %2"
 
-#: app/components/screens/log/view/RoundSelectors.ts:78:14
-msgid "Multiron, from %1"
-msgstr "Мультирон с %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:108:14
-msgid "Tsumo, %1"
-msgstr "Цумо, %1"
-
-#: app/components/screens/log/view/RoundSelectors.ts:125:14
-#: app/components/screens/table/TableHelper.ts:114:13
-#: app/store/selectors/commonSelectors.ts:11:25
-msgid "Exhaustive draw"
-msgstr "Ничья"
+#: app/components/screens/table/TableHelper.ts:428:15
+msgid "Abort"
+msgstr "Абортивная ничья"
 
 #: app/components/screens/log/view/RoundSelectors.ts:137:14
 #: app/components/screens/table/TableHelper.ts:128:17
 #: app/store/selectors/commonSelectors.ts:12:26
 msgid "Abortive draw"
 msgstr "Абортивная ничья"
+
+#: app/primitives/yaku.ts:371:34 app/primitives/yaku.ts:372:39
+msgid "Chankan"
+msgstr "Чанкан"
+
+#: app/primitives/yaku.ts:263:34 app/primitives/yaku.ts:264:39
+msgid "Chanta"
+msgstr "Чанта"
+
+#: app/primitives/yaku.ts:359:34 app/primitives/yaku.ts:360:39
+msgid "Chiihou"
+msgstr "Чихо"
+
+#: app/primitives/yaku.ts:305:34 app/primitives/yaku.ts:306:39
+msgid "Chiitoitsu"
+msgstr "Чиитойцу"
+
+#: app/primitives/yaku.ts:287:34 app/primitives/yaku.ts:288:39
+msgid "Chinitsu"
+msgstr "Чиницу"
+
+#: app/primitives/yaku.ts:275:34 app/primitives/yaku.ts:276:39
+msgid "Chinroutou"
+msgstr "Чинрото"
 
 #: app/components/screens/log/view/RoundSelectors.ts:150:14
 #: app/components/screens/table/TableHelper.ts:118:13
@@ -141,370 +82,100 @@ msgstr "Абортивная ничья"
 msgid "Chombo"
 msgstr "Чомбо"
 
-#: app/components/screens/log/view/RoundSelectors.ts:163:14
-#: app/components/screens/table/TableHelper.ts:138:17
-#: app/store/selectors/commonSelectors.ts:14:28
-msgid "Nagashi mangan"
-msgstr "Нагаши манган"
-
-#: app/components/screens/login/EnterCredentialsView.tsx:18:10
-msgid "Pantheon: log in"
-msgstr "Pantheon: вход в систему"
-
-#: app/components/screens/login/EnterCredentialsView.tsx:23:17
-msgid "Email"
-msgstr "Email"
-
-#: app/components/screens/login/EnterCredentialsView.tsx:27:17
-msgid "Password"
-msgstr "Пароль"
-
-#: app/components/screens/login/EnterCredentialsView.tsx:31:12
-#: app/components/screens/login/LoginErrorView.tsx:35:12
-msgid "OK"
-msgstr "ОК"
-
-#: app/components/screens/login/LoginErrorView.tsx:14:7
-msgctxt "Name of registration link"
-msgid "register"
-msgstr "регистрация"
-
-#: app/components/screens/login/LoginErrorView.tsx:20:10
-msgid "Pantheon"
-msgstr "Pantheon"
-
-#: app/components/screens/login/LoginErrorView.tsx:24:12
-msgid "Login attempt has failed. Possible reasons are:"
-msgstr "Попытка входа в систему не удалась. Возможные причины:"
-
-#: app/components/screens/login/LoginErrorView.tsx:27:16
-msgid "E-mail is not registered in Pantheon database (%1)"
-msgstr "E-mail не зарегистрирован в базе данных Pantheon (%1)"
-
-#: app/components/screens/login/LoginErrorView.tsx:28:16
-msgid "Password check has failed"
-msgstr "Пароль введен некорректно"
-
-#: app/components/screens/login/LoginErrorView.tsx:29:16
-msgid "Unexpected server error"
-msgstr "Неожиданная ошибка сервера"
-
-#: app/components/screens/login/LoginErrorView.tsx:31:15
-msgid ""
-"If in doubt, contact the tournament administrator for further instructions."
-msgstr "Обратитесь к администратору турнира для дальнейших инструкций."
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:67:16
-msgid "Han from yaku"
-msgstr "Хан из яку"
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:72:16
-msgid "Dora"
-msgstr "Дора"
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:79:20
-msgid "Ura dora"
-msgstr "Урадора"
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:87:20
-msgid "Red fives"
-msgstr "Акадоры"
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:94:16
-msgid "Fu"
-msgstr "Фу"
-
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:106:14
-msgid "Yakuman"
-msgstr "Якуман"
-
-#: app/components/screens/settings/SettingsScreen.tsx:51:58
-msgid "Player name"
-msgstr "Имя игрока"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:48:57
-msgid "Language"
-msgstr "Язык"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:60:57
-msgid "Theme"
-msgstr "Оформление"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:79:54
-msgid "Select another event"
-msgstr "Выбрать другое событие"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:93:32
-msgid "Log out"
-msgstr "Выйти из системы"
-
-#: app/components/screens/table/base/TableInfo.tsx:74:18
-msgid "%1 deal left"
-msgid_plural "%1 deals left"
-msgstr[0] "Осталась %1 раздача"
-msgstr[1] "Осталось %1 раздачи"
-msgstr[2] "Осталось %1 раздач"
-
-#: app/components/screens/table/base/TableInfo.tsx:83:14
-msgid "Table #%1"
-msgstr "Стол №%1"
-
-#: app/components/screens/table/TableHelper.ts:106:13
-#: app/components/screens/table/TableHelper.ts:422:15
-#: app/store/selectors/commonSelectors.ts:9:24
-msgid "Ron"
-msgstr "Рон"
-
-#: app/components/screens/table/TableHelper.ts:110:13
-#: app/components/screens/table/TableHelper.ts:424:15
-#: app/store/selectors/commonSelectors.ts:10:26
-msgid "Tsumo"
-msgstr "Цумо"
-
-#: app/components/screens/table/TableHelper.ts:174:16
-msgid "Penalty"
-msgstr "Штраф"
-
-#: app/components/screens/table/TableHelper.ts:331:25
-msgid "empty outcome"
-msgstr "пустой исход"
-
-#: app/components/screens/table/TableHelper.ts:340:22
-#: app/components/screens/table/TableHelper.ts:353:22
-msgid "Winner"
-msgstr "Победитель"
-
-#: app/components/screens/table/TableHelper.ts:343:22
-msgid "Loser"
-msgstr "Проигравший"
-
-#: app/components/screens/table/TableHelper.ts:358:27
-msgid "wrong outcome for paoSelect"
-msgstr "неверный исход для выбора пао"
-
-#: app/components/screens/table/TableHelper.ts:405:17
-msgid "Select pao"
-msgstr "Выбрать пао"
-
-#: app/components/screens/table/TableHelper.ts:410:16
-msgid "Select tempai"
-msgstr "Выбрать темпай"
-
-#: app/components/screens/table/TableHelper.ts:426:15
-msgid "Draw"
-msgstr "Ничья"
-
-#: app/components/screens/table/TableHelper.ts:428:15
-msgid "Abort"
-msgstr "Абортивная ничья"
-
-#: app/components/screens/table/TableHelper.ts:432:14
-msgid "Nagashi"
-msgstr "Нагаши манган"
-
-#: app/primitives/yaku.ts:125:34 app/primitives/yaku.ts:126:39
-msgid "Opened hand"
-msgstr "Открытая рука"
-
-#: app/primitives/yaku.ts:131:34 app/primitives/yaku.ts:132:39
-msgid "Toitoi"
-msgstr "Тойтой"
-
-#: app/primitives/yaku.ts:137:34 app/primitives/yaku.ts:138:39
-msgid "Honroutou"
-msgstr "Хонрото"
-
-#: app/primitives/yaku.ts:143:34 app/primitives/yaku.ts:144:39
-msgid "Sanankou"
-msgstr "Сананко"
-
-#: app/primitives/yaku.ts:149:34 app/primitives/yaku.ts:150:39
-msgid "Sankantsu"
-msgstr "Санканцу"
-
-#: app/primitives/yaku.ts:155:34 app/primitives/yaku.ts:156:39
-msgid "Suukantsu"
-msgstr "Сууканцу"
-
-#: app/primitives/yaku.ts:161:34 app/primitives/yaku.ts:162:39
-msgid "Suuankou"
-msgstr "Сууанко"
-
-#: app/primitives/yaku.ts:167:34 app/primitives/yaku.ts:168:39
-msgid "Pinfu"
-msgstr "Пин-фу"
-
-#: app/primitives/yaku.ts:173:34 app/primitives/yaku.ts:174:39
-msgid "Iipeikou"
-msgstr "Иипейко"
-
-#: app/primitives/yaku.ts:179:34 app/primitives/yaku.ts:180:39
-msgid "Ryanpeikou"
-msgstr "Рянпейко"
-
-#: app/primitives/yaku.ts:185:34 app/primitives/yaku.ts:186:39
-msgid "Sanshoku"
-msgstr "Саншоку"
-
-#: app/primitives/yaku.ts:191:34 app/primitives/yaku.ts:192:39
-msgid "Sanshoku doukou"
-msgstr "Саншоку доко"
-
-#: app/primitives/yaku.ts:197:34 app/primitives/yaku.ts:198:39
-msgid "Ittsu"
-msgstr "Иццу"
-
-#: app/primitives/yaku.ts:203:34
-msgid "Yakuhai x1"
-msgstr "Якухай 1"
-
-#: app/primitives/yaku.ts:204:39
-msgid "Yakuhai"
-msgstr "Якухай"
-
-#: app/primitives/yaku.ts:209:34
-msgid "Yakuhai x2"
-msgstr "Якухай 2"
-
-#: app/primitives/yaku.ts:210:39
-msgid "x2"
-msgstr "х2"
-
-#: app/primitives/yaku.ts:215:34
-msgid "Yakuhai x3"
-msgstr "Якухай 3"
-
-#: app/primitives/yaku.ts:216:39
-msgid "x3"
-msgstr "х3"
-
-#: app/primitives/yaku.ts:221:34
-msgid "Yakuhai x4"
-msgstr "Якухай 4"
-
-#: app/primitives/yaku.ts:222:39
-msgid "x4"
-msgstr "х4"
-
-#: app/primitives/yaku.ts:227:34 app/primitives/yaku.ts:228:39
-msgid "Shousangen"
-msgstr "Шосанген"
-
-#: app/primitives/yaku.ts:233:34 app/primitives/yaku.ts:234:39
-msgid "Daisangen"
-msgstr "Дайсанген"
-
-#: app/primitives/yaku.ts:239:34 app/primitives/yaku.ts:240:39
-msgid "Shousuushii"
-msgstr "Шосуши"
-
-#: app/primitives/yaku.ts:245:34 app/primitives/yaku.ts:246:39
-msgid "Daisuushii"
-msgstr "Дайсуши"
-
-#: app/primitives/yaku.ts:251:34 app/primitives/yaku.ts:252:39
-msgid "Tsuuiisou"
-msgstr "Цуисо"
-
-#: app/primitives/yaku.ts:257:34 app/primitives/yaku.ts:258:39
-msgid "Tanyao"
-msgstr "Тан-яо"
-
-#: app/primitives/yaku.ts:263:34 app/primitives/yaku.ts:264:39
-msgid "Chanta"
-msgstr "Чанта"
-
-#: app/primitives/yaku.ts:269:34 app/primitives/yaku.ts:270:39
-msgid "Junchan"
-msgstr "Джунчан"
-
-#: app/primitives/yaku.ts:275:34 app/primitives/yaku.ts:276:39
-msgid "Chinroutou"
-msgstr "Чинрото"
-
-#: app/primitives/yaku.ts:281:34 app/primitives/yaku.ts:282:39
-msgid "Honitsu"
-msgstr "Хоницу"
-
-#: app/primitives/yaku.ts:287:34 app/primitives/yaku.ts:288:39
-msgid "Chinitsu"
-msgstr "Чиницу"
-
 #: app/primitives/yaku.ts:293:34 app/primitives/yaku.ts:294:39
 msgid "Chuuren poutou"
 msgstr "Чууренпото"
 
-#: app/primitives/yaku.ts:299:34 app/primitives/yaku.ts:300:39
-msgid "Ryuuiisou"
-msgstr "Рюисо"
-
-#: app/primitives/yaku.ts:305:34 app/primitives/yaku.ts:306:39
-msgid "Chiitoitsu"
-msgstr "Чиитойцу"
-
-#: app/primitives/yaku.ts:311:34 app/primitives/yaku.ts:312:39
-msgid "Kokushi musou"
-msgstr "Кокушимусо"
-
-#: app/primitives/yaku.ts:317:34 app/primitives/yaku.ts:318:39
-msgid "Riichi"
-msgstr "Риичи"
-
-#: app/primitives/yaku.ts:323:34
-msgid "Daburu riichi"
-msgstr "Дабл-риичи"
+#: app/components/screens/home/HomeScreenView.tsx:63:20
+msgid "Current game"
+msgstr "Текущая игра"
 
 #: app/primitives/yaku.ts:324:39
 msgid "Daburu"
 msgstr "Дабури"
 
-#: app/primitives/yaku.ts:329:34 app/primitives/yaku.ts:330:39
-msgid "Ippatsu"
-msgstr "Иппацу"
+#: app/primitives/yaku.ts:323:34
+msgid "Daburu riichi"
+msgstr "Дабл-риичи"
 
-#: app/primitives/yaku.ts:335:34 app/primitives/yaku.ts:336:39
-msgid "Menzentsumo"
-msgstr "Мензенцумо"
+#: app/primitives/yaku.ts:233:34 app/primitives/yaku.ts:234:39
+msgid "Daisangen"
+msgstr "Дайсанген"
+
+#: app/primitives/yaku.ts:245:34 app/primitives/yaku.ts:246:39
+msgid "Daisuushii"
+msgstr "Дайсуши"
+
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:73:16
+msgid "Dora"
+msgstr "Дора"
+
+#: app/components/screens/table/TableHelper.ts:426:15
+msgid "Draw"
+msgstr "Ничья"
+
+#: app/components/screens/login/LoginErrorView.tsx:27:16
+msgid "E-mail is not registered in Pantheon database (%1)"
+msgstr "E-mail не зарегистрирован в базе данных Pantheon (%1)"
+
+#: app/components/screens/login/EnterCredentialsView.tsx:23:17
+msgid "Email"
+msgstr "Email"
+
+#: app/components/screens/home/HomeScreen.tsx:66:55
+msgid "Event title"
+msgstr "Название события"
+
+#: app/components/screens/log/view/RoundSelectors.ts:125:14
+#: app/components/screens/table/TableHelper.ts:114:13
+#: app/store/selectors/commonSelectors.ts:11:25
+msgid "Exhaustive draw"
+msgstr "Ничья"
+
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:95:16
+msgid "Fu"
+msgstr "Фу"
+
+#: app/components/screens/log/view/LogScreenView.tsx:71:17
+msgid "Game log"
+msgstr "Лог игры"
+
+#: app/store/selectors/mimirSelectors.ts:53:12
+msgid "Games overview"
+msgstr "Обзор игр"
 
 #: app/primitives/yaku.ts:341:34 app/primitives/yaku.ts:342:39
 msgid "Haitei"
 msgstr "Хайтей"
 
-#: app/primitives/yaku.ts:347:34
-msgid "Rinshan kaihou"
-msgstr "Риншан кайхо"
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:68:16
+msgid "Han from yaku"
+msgstr "Хан из яку"
 
-#: app/primitives/yaku.ts:348:39
-msgid "Rinshan"
-msgstr "Риншан"
+#: app/components/screens/log/view/RoundSelectors.ts:29:10
+msgid "Honba: %1"
+msgstr "Хонба: %1"
 
-#: app/primitives/yaku.ts:353:34 app/primitives/yaku.ts:354:39
-msgid "Tenhou"
-msgstr "Тенхо"
+#: app/primitives/yaku.ts:281:34 app/primitives/yaku.ts:282:39
+msgid "Honitsu"
+msgstr "Хоницу"
 
-#: app/primitives/yaku.ts:359:34 app/primitives/yaku.ts:360:39
-msgid "Chiihou"
-msgstr "Чихо"
-
-#: app/primitives/yaku.ts:365:34
-msgid "Houtei raoyui"
-msgstr "Хотей раоюй"
+#: app/primitives/yaku.ts:137:34 app/primitives/yaku.ts:138:39
+msgid "Honroutou"
+msgstr "Хонрото"
 
 #: app/primitives/yaku.ts:366:39
 msgid "Houtei"
 msgstr "Хотей"
 
-#: app/primitives/yaku.ts:371:34 app/primitives/yaku.ts:372:39
-msgid "Chankan"
-msgstr "Чанкан"
+#: app/primitives/yaku.ts:365:34
+msgid "Houtei raoyui"
+msgstr "Хотей раоюй"
 
-#: app/primitives/yaku.ts:377:34 app/primitives/yaku.ts:378:39
-msgid "Renhou"
-msgstr "Ренхо"
-
-#: app/primitives/yaku.ts:383:34 app/primitives/yaku.ts:384:39
-msgid "Open riichi"
-msgstr "Опен риичи"
+#: app/components/screens/login/LoginErrorView.tsx:31:15
+msgid ""
+"If in doubt, contact the tournament administrator for further instructions."
+msgstr "Обратитесь к администратору турнира для дальнейших инструкций."
 
 #: app/store/middlewares/yaku.ts:12:15 app/store/middlewares/yaku.ts:20:19
 msgid ""
@@ -514,11 +185,339 @@ msgstr ""
 "Если вы хотите выбрать яку риичи, вернитесь назад и отметьте ставку риичи "
 "для выигравшего"
 
-#: app/store/selectors/mimirSelectors.ts:53:12
-msgid "Games overview"
-msgstr "Обзор игр"
+#: app/primitives/yaku.ts:173:34 app/primitives/yaku.ts:174:39
+msgid "Iipeikou"
+msgstr "Иипейко"
+
+#: app/primitives/yaku.ts:329:34 app/primitives/yaku.ts:330:39
+msgid "Ippatsu"
+msgstr "Иппацу"
+
+#: app/primitives/yaku.ts:197:34 app/primitives/yaku.ts:198:39
+msgid "Ittsu"
+msgstr "Иццу"
+
+#: app/primitives/yaku.ts:269:34 app/primitives/yaku.ts:270:39
+msgid "Junchan"
+msgstr "Джунчан"
+
+#: app/primitives/yaku.ts:311:34 app/primitives/yaku.ts:312:39
+msgid "Kokushi musou"
+msgstr "Кокушимусо"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:48:57
+msgid "Language"
+msgstr "Язык"
 
 #: app/store/selectors/mimirSelectors.ts:55:63
 msgid "Loading..."
 msgstr "Загрузка..."
 
+#: app/components/screens/settings/SettingsScreenView.tsx:93:32
+msgid "Log out"
+msgstr "Выйти из системы"
+
+#: app/components/screens/login/LoginErrorView.tsx:24:12
+msgid "Login attempt has failed. Possible reasons are:"
+msgstr "Попытка входа в систему не удалась. Возможные причины:"
+
+#: app/components/screens/table/TableHelper.ts:343:22
+msgid "Loser"
+msgstr "Проигравший"
+
+#: app/primitives/yaku.ts:335:34 app/primitives/yaku.ts:336:39
+msgid "Menzentsumo"
+msgstr "Мензенцумо"
+
+#: app/components/screens/log/view/RoundSelectors.ts:78:14
+msgid "Multiron, from %1"
+msgstr "Мультирон с %1"
+
+#: app/components/screens/table/TableHelper.ts:432:14
+msgid "Nagashi"
+msgstr "Нагаши манган"
+
+#: app/components/screens/log/view/RoundSelectors.ts:163:14
+#: app/components/screens/table/TableHelper.ts:138:17
+#: app/store/selectors/commonSelectors.ts:14:28
+msgid "Nagashi mangan"
+msgstr "Нагаши манган"
+
+#: app/components/screens/home/HomeScreenView.tsx:56:20
+msgid "New game"
+msgstr "Новая игра"
+
+#: app/components/screens/log/view/LogScreenView.tsx:39:72
+msgid "No results found"
+msgstr "Результаты отсутствуют"
+
+#: app/components/screens/login/EnterCredentialsView.tsx:31:12
+#: app/components/screens/login/LoginErrorView.tsx:35:12
+msgid "OK"
+msgstr "ОК"
+
+#: app/primitives/yaku.ts:383:34 app/primitives/yaku.ts:384:39
+msgid "Open riichi"
+msgstr "Опен риичи"
+
+#: app/primitives/yaku.ts:125:34 app/primitives/yaku.ts:126:39
+msgid "Opened hand"
+msgstr "Открытая рука"
+
+#: app/components/screens/home/HomeScreenView.tsx:75:20
+msgid "Other playing tables"
+msgstr "Другие столы"
+
+#: app/components/screens/login/LoginErrorView.tsx:20:10
+msgid "Pantheon"
+msgstr "Pantheon"
+
+#: app/components/screens/login/EnterCredentialsView.tsx:18:10
+msgid "Pantheon: log in"
+msgstr "Pantheon: вход в систему"
+
+#: app/components/screens/log/view/RoundSelectors.ts:25:10
+msgid "Pao from: %1"
+msgstr "Пао с: %1"
+
+#: app/components/screens/login/EnterCredentialsView.tsx:27:17
+msgid "Password"
+msgstr "Пароль"
+
+#: app/components/screens/login/LoginErrorView.tsx:28:16
+msgid "Password check has failed"
+msgstr "Пароль введен некорректно"
+
+#: app/components/screens/table/TableHelper.ts:174:16
+msgid "Penalty"
+msgstr "Штраф"
+
+#: app/primitives/yaku.ts:167:34 app/primitives/yaku.ts:168:39
+msgid "Pinfu"
+msgstr "Пин-фу"
+
+#: app/components/screens/settings/SettingsScreen.tsx:56:58
+msgid "Player name"
+msgstr "Имя игрока"
+
+#: app/components/screens/home/HomeScreenView.tsx:69:20
+msgid "Previous game"
+msgstr "Предыдущая раздача"
+
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:88:20
+msgid "Red fives"
+msgstr "Акадоры"
+
+#: app/primitives/yaku.ts:377:34 app/primitives/yaku.ts:378:39
+msgid "Renhou"
+msgstr "Ренхо"
+
+#: app/primitives/yaku.ts:317:34 app/primitives/yaku.ts:318:39
+msgid "Riichi"
+msgstr "Риичи"
+
+#: app/components/screens/log/view/RoundSelectors.ts:47:10
+msgid "Riichi bets: %1"
+msgstr "Ставок риичи: %1"
+
+#: app/primitives/yaku.ts:348:39
+msgid "Rinshan"
+msgstr "Риншан"
+
+#: app/primitives/yaku.ts:347:34
+msgid "Rinshan kaihou"
+msgstr "Риншан кайхо"
+
+#: app/components/screens/table/TableHelper.ts:106:13
+#: app/components/screens/table/TableHelper.ts:422:15
+#: app/store/selectors/commonSelectors.ts:9:24
+msgid "Ron"
+msgstr "Рон"
+
+#: app/components/screens/log/view/RoundSelectors.ts:61:14
+msgid "Ron, %1"
+msgstr "Рон, %1"
+
+#: app/primitives/yaku.ts:179:34 app/primitives/yaku.ts:180:39
+msgid "Ryanpeikou"
+msgstr "Рянпейко"
+
+#: app/primitives/yaku.ts:299:34 app/primitives/yaku.ts:300:39
+msgid "Ryuuiisou"
+msgstr "Рюисо"
+
+#: app/primitives/yaku.ts:143:34 app/primitives/yaku.ts:144:39
+msgid "Sanankou"
+msgstr "Сананко"
+
+#: app/primitives/yaku.ts:149:34 app/primitives/yaku.ts:150:39
+msgid "Sankantsu"
+msgstr "Санканцу"
+
+#: app/primitives/yaku.ts:185:34 app/primitives/yaku.ts:186:39
+msgid "Sanshoku"
+msgstr "Саншоку"
+
+#: app/primitives/yaku.ts:191:34 app/primitives/yaku.ts:192:39
+msgid "Sanshoku doukou"
+msgstr "Саншоку доко"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:79:54
+msgid "Select another event"
+msgstr "Выбрать другое событие"
+
+#: app/components/screens/event-select/EventSelectScreenView.tsx:33:62
+msgid "Select event"
+msgstr "Выбрать событие"
+
+#: app/components/screens/table/TableHelper.ts:405:17
+msgid "Select pao"
+msgstr "Выбрать пао"
+
+#: app/components/screens/table/TableHelper.ts:410:16
+msgid "Select tempai"
+msgstr "Выбрать темпай"
+
+#: app/primitives/yaku.ts:227:34 app/primitives/yaku.ts:228:39
+msgid "Shousangen"
+msgstr "Шосанген"
+
+#: app/primitives/yaku.ts:239:34 app/primitives/yaku.ts:240:39
+msgid "Shousuushii"
+msgstr "Шосуши"
+
+#: app/components/screens/home/HomeScreenView.tsx:81:20
+msgid "Statistics"
+msgstr "Статистика"
+
+#: app/primitives/yaku.ts:161:34 app/primitives/yaku.ts:162:39
+msgid "Suuankou"
+msgstr "Сууанко"
+
+#: app/primitives/yaku.ts:155:34 app/primitives/yaku.ts:156:39
+msgid "Suukantsu"
+msgstr "Сууканцу"
+
+#: app/components/screens/table/base/TableInfo.tsx:83:14
+msgid "Table #%1"
+msgstr "Стол №%1"
+
+#: app/primitives/yaku.ts:257:34 app/primitives/yaku.ts:258:39
+msgid "Tanyao"
+msgstr "Тан-яо"
+
+#: app/components/screens/log/view/RoundSelectors.ts:33:10
+msgid "Tempai: %1"
+msgstr "Темпай: %1"
+
+#: app/primitives/yaku.ts:353:34 app/primitives/yaku.ts:354:39
+msgid "Tenhou"
+msgstr "Тенхо"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:60:57
+msgid "Theme"
+msgstr "Оформление"
+
+#: app/primitives/yaku.ts:131:34 app/primitives/yaku.ts:132:39
+msgid "Toitoi"
+msgstr "Тойтой"
+
+#: app/components/screens/table/TableHelper.ts:110:13
+#: app/components/screens/table/TableHelper.ts:424:15
+#: app/store/selectors/commonSelectors.ts:10:26
+msgid "Tsumo"
+msgstr "Цумо"
+
+#: app/components/screens/log/view/RoundSelectors.ts:108:14
+msgid "Tsumo, %1"
+msgstr "Цумо, %1"
+
+#: app/primitives/yaku.ts:251:34 app/primitives/yaku.ts:252:39
+msgid "Tsuuiisou"
+msgstr "Цуисо"
+
+#: app/components/screens/login/LoginErrorView.tsx:29:16
+msgid "Unexpected server error"
+msgstr "Неожиданная ошибка сервера"
+
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:80:20
+msgid "Ura dora"
+msgstr "Урадора"
+
+#: app/components/screens/table/TableHelper.ts:340:22
+#: app/components/screens/table/TableHelper.ts:353:22
+msgid "Winner"
+msgstr "Победитель"
+
+#: app/primitives/yaku.ts:204:39
+msgid "Yakuhai"
+msgstr "Якухай"
+
+#: app/primitives/yaku.ts:203:34
+msgid "Yakuhai x1"
+msgstr "Якухай 1"
+
+#: app/primitives/yaku.ts:209:34
+msgid "Yakuhai x2"
+msgstr "Якухай 2"
+
+#: app/primitives/yaku.ts:215:34
+msgid "Yakuhai x3"
+msgstr "Якухай 3"
+
+#: app/primitives/yaku.ts:221:34
+msgid "Yakuhai x4"
+msgstr "Якухай 4"
+
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:107:14
+msgid "Yakuman"
+msgstr "Якуман"
+
+#: app/components/screens/log/view/RoundSelectors.ts:51:19
+msgid "dora %1"
+msgstr "дора %1"
+
+#: app/components/screens/table/TableHelper.ts:331:25
+msgid "empty outcome"
+msgstr "пустой исход"
+
+#: app/components/screens/event-select/EventSelectScreen.tsx:33:58
+msgid "name"
+msgstr "имя"
+
+#: app/components/screens/login/LoginErrorView.tsx:14:7
+msgctxt "Name of registration link"
+msgid "register"
+msgstr "регистрация"
+
+#: app/components/general/dropdown/PlayerDropdown.tsx:31:16
+msgid "select player"
+msgstr "выбрать игрока"
+
+#: app/components/general/number-select/NumberSelect.tsx:83:13
+msgid "something goes wrong, please contact your administrator"
+msgstr "что-то пошло не так, свяжитесь с администратором системы"
+
+#: app/components/general/search-input/SearchInput.tsx:67:29
+msgid "type to find someone"
+msgstr "начните вводить чтобы найти игроков"
+
+#: app/components/screens/table/TableHelper.ts:358:27
+msgid "wrong outcome for paoSelect"
+msgstr "неверный исход для выбора пао"
+
+#: app/primitives/yaku.ts:210:39
+msgid "x2"
+msgstr "х2"
+
+#: app/primitives/yaku.ts:216:39
+msgid "x3"
+msgstr "х3"
+
+#: app/primitives/yaku.ts:222:39
+msgid "x4"
+msgstr "х4"
+
+#: app/components/screens/log/view/RoundSelectors.ts:13:12
+msgid "yakuman"
+msgstr "якуман"
