@@ -20,6 +20,7 @@ namespace Rheda;
 use LordDashMe\SimpleCaptcha\Captcha;
 
 require_once __DIR__ . '/../helpers/Url.php';
+require_once __DIR__ . '/../helpers/Passwords.php';
 
 class PersonSignup extends Controller
 {
@@ -76,7 +77,7 @@ class PersonSignup extends Controller
             $emailError = _t('E-mail is invalid or not supported. Note that non-latin e-mail domains are not supported.');
         }
 
-        if ($this->_calcPasswordStrength($data['signup_password']) < 14) {
+        if (Passwords::calcPasswordStrength($data['signup_password']) < 14) {
             $passwordError = _t('Password is too weak. Try adding some digits, uppercase letters or punctuation to it, or increase its length.');
         }
 
@@ -132,38 +133,5 @@ Pantheon support team
                 'success' => false
             ];
         }
-    }
-
-    /**
-     * Calc strength of password by simple algorithm:
-     * - 1 base point for every 2 symbols in password
-     * - Multiply by 2 for every symbol class in password
-     *
-     * So:
-     * - "123456" password will have strength of 3 * 2 = 6 (very weak)
-     * - "Simple123" will have strength of 6 * 2 * 2 * 2 = 48 (normal)
-     * - "thisismypasswordandidontcare" will have strength of 14 * 2 = 28 (below normal)
-     *
-     * Passwords with calculated strength less than 14 should be considered weak.
-     *
-     * @see also Frey/src/models/Auth.php:_calcPasswordStrength - functions should match!
-     * @param string $password
-     * @return float|int
-     */
-    protected function _calcPasswordStrength(string $password)
-    {
-        $hasLatinSymbols = preg_match('#[a-z]#', $password);
-        $hasUppercaseLatinSymbols = preg_match('#[A-Z]#', $password);
-        $hasDigits = preg_match('#[0-9]#', $password);
-        $hasPunctuation = preg_match('#[-@\#\$%\^&*\(\),\./\\"\']#', $password);
-        $hasOtherSymbols = mb_strlen((string)preg_replace('#[-a-z0-9@\#\$%\^&*\(\),\./\\"\']#ius', '', $password)) > 0;
-
-        return ceil(mb_strlen($password) / 2)
-            * ($hasDigits ? 2 : 1)
-            * ($hasUppercaseLatinSymbols ? 2 : 1)
-            * ($hasPunctuation ? 2 : 1)
-            * ($hasOtherSymbols ? 2 : 1)
-            * ($hasLatinSymbols ? 2 : 1)
-        ;
     }
 }

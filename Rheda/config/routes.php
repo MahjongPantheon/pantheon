@@ -67,7 +67,9 @@ return [ // Omit trailing slashes in keys when possible
     '!/profile/(?<action>login)'            => 'PersonLogin',
     '!/profile/(?<action>logout)'           => 'PersonLogin',
     '!/profile'                             => 'PersonProfileEdit',
-    '!/profile/(?<action>edit)/(?<id>\d+)'   => 'PersonProfileEdit',
+    '!/profile/(?<action>edit)/(?<id>\d+)'  => 'PersonProfileEdit',
+    '!/passwordRecovery'                    => 'PersonRecoverPassword',
+    '!/passwordRecovery/(?<code>[0-9a-f]+)/(?<email>[a-z0-9_.@-]+)' => 'PersonRecoverPassword',
 
     '!/privileges'                  => 'Privileges',
     '!/privileges/uid(?<id>\d+)'    => 'PrivilegesOfUser',
