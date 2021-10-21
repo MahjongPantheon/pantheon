@@ -30,7 +30,9 @@
     <div class="tables-row">
         <div class="row">
             <div class="col-4">
-                <div>#{{table_index}}</div>
+                {{#isTournament}}
+                    <div>#{{table_index}}</div>
+                {{/isTournament}}
                 <div>
                     <span class="badge {{#finished}}badge-success{{/finished}}{{#prefinished}}badge-warning{{/prefinished}}">{{status}}</span>
                 </div>
@@ -63,6 +65,7 @@
                 </ul>
             </div>
         </div>
+        <hr />
         <div class="row">
             <div class="col-12 tables-controls"><!-- Controls -->
                 {{#isTournament}}

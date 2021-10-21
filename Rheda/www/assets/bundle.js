@@ -293,6 +293,7 @@
   wnd.plotRating = plotRating;
   wnd.plotHands = plotHands;
   wnd.saveLocalIds = saveLocalIds;
+  wnd.saveTeamNames = saveTeamNames;
   wnd.registerAccessTypeSelectors = registerAccessTypeSelectors;
   wnd.dispatchEvent(new CustomEvent('bundleLoaded'));
 }

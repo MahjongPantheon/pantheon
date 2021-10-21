@@ -27,7 +27,7 @@
         display: none;
     }
 
-    .timer, .timer > * {
+    .timer {
         font-size: 300px;
         font-family: monospace;
         font-weight: bold;
@@ -36,7 +36,7 @@
         line-height: 1;
     }
 
-    .timer.mini, .timer.mini > * {
+    .timer.mini {
         font-size: 100px;
         margin-top: 0;
     }
@@ -145,29 +145,60 @@
 {{/isAggregated}}
 {{^isAggregated}}
     {{^waiting}}
-        <div class="timer">
-            <span id="time">{{initialTime}}</span>
+        <div class="row">
+            <div class="col-12" style="text-align: center">
+                <span class="timer" id="time">{{initialTime}}</span>
+            </div>
         </div>
     {{/waiting}}
-    <div class="seating">
-        <hr/>
-        <h3>{{_t 'SEATING'}}</h3>
-        <table class="table table-bordered">
-            <tr>
-                <th>{{_t 'Table #'}}</th>
-                <th>{{_t 'EAST'}}</th>
-                <th>{{_t 'SOUTH'}}</th>
-                <th>{{_t 'WEST'}}</th>
-                <th>{{_t 'NORTH'}}</th>
-            </tr>
-            {{#seating}}
-                <tr>
-                    <td>{{index}}</td>
-                    {{#players}}
-                        <td>{{display_name}} <span class="badge badge-{{zone}}">{{rating}}</span></td>
-                    {{/players}}
-                </tr>
-            {{/seating}}
-        </table>
+
+    {{#seating}}
+    <div class="row seating">
+        <div class="col-12 form-inline">
+            <b>{{_t 'Table #'}}{{index}}</b>&nbsp;
+            <div class="prescript-players-list form-inline">
+                <div class="input-group input-group-sm m-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">東</span>
+                    </div>
+                    <input type="text" class="form-control" disabled="disabled"
+                           value="{{players.0.display_name}}" />
+                    <div class="input-group-append">
+                        <span class="input-group-text"><span class="badge badge-{{players.0.zone}}">{{players.0.rating}}</span></span>
+                    </div>
+                </div>
+                <div class="input-group input-group-sm m-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">南</span>
+                    </div>
+                    <input type="text" class="form-control" disabled="disabled"
+                           value="{{players.1.display_name}}" />
+                    <div class="input-group-append">
+                        <span class="input-group-text"><span class="badge badge-{{players.1.zone}}">{{players.1.rating}}</span></span>
+                    </div>
+                </div>
+                <div class="input-group input-group-sm m-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">西</span>
+                    </div>
+                    <input type="text" class="form-control" disabled="disabled"
+                           value="{{players.2.display_name}}" />
+                    <div class="input-group-append">
+                        <span class="input-group-text"><span class="badge badge-{{players.2.zone}}">{{players.2.rating}}</span></span>
+                    </div>
+                </div>
+                <div class="input-group input-group-sm m-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">北</span>
+                    </div>
+                    <input type="text" class="form-control" disabled="disabled"
+                           value="{{players.3.display_name}}" />
+                    <div class="input-group-append">
+                        <span class="input-group-text"><span class="badge badge-{{players.3.zone}}">{{players.3.rating}}</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    {{/seating}}
 {{/isAggregated}}
