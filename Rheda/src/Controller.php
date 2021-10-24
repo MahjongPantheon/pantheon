@@ -234,6 +234,7 @@ abstract class Controller
             'X-Auth-Token: ' . $this->_authToken,
             'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
             'X-Current-Person-Id: ' . $this->_currentPersonId ?: '0',
+            'X-Internal-Query-Secret: ' . Sysconf::MIMIR_INTERNAL_QUERY_SECRET,
             'X-Locale: ' . $locale,
             // @phpstan-ignore-next-line
             'X-Api-Version: ' . Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR

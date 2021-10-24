@@ -34,7 +34,7 @@ return array_merge([
     // ---------- may be overridden in local settings -----------
     'admin'     => [
         'debug_token' => 'CHANGE_ME', // TODO: change this in your local config!
-        'internalQuerySecret' => 'CHANGE_ME' // TODO: change this in your local config!
+        'internalQuerySecret' => 'CHANGE_ME_INTERNAL' // TODO: change this in your local config!
     ],
     'db'        => require __DIR__ . '/db.php',
     'routes'    => require __DIR__ . '/routes.php',

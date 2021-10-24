@@ -61,7 +61,7 @@ class EventsController extends Controller
         $this->_log->addInfo('Creating new event with [' . $ruleset . '] rules');
 
         // Check we have rights to create new event
-        if (!$this->_meta->isSuperadmin()) {
+        if (!$this->_meta->getCurrentPersonId() || !$this->_meta->isInternalRequest()) {
             throw new BadActionException("You don't have enough privileges to create new event");
         }
 

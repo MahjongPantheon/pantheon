@@ -54,14 +54,17 @@ class Meta
      */
     protected $_accessRules;
     /**
-     * TODO: this is temporary lightweight hack; should be replaced with full-sized ACL in future.
-     * @var bool
-     */
-    protected $_eventadmin = false;
-    /**
      * @var bool
      */
     protected $_superadmin = false;
+    /**
+     * @var bool
+     */
+    protected $_isInternalRequest = false;
+    /**
+     * @var string
+     */
+    protected $_internalToken = '';
 
     /**
      * Meta constructor.
@@ -84,6 +87,15 @@ class Meta
         $testingToken = $config->getValue('testing_token');
         if (!empty($testingToken) && $this->_authToken == $testingToken) {
             $this->_superadmin = true;
+        }
+
+        // For direct calls from Rheda
+        if (!empty($_SERVER['HTTP_X_INTERNAL_QUERY_SECRET']) &&
+            $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] === $config->getValue('admin.internalQuerySecret')
+        ) {
+            $this->_isInternalRequest = true;
+            /* @phpstan-ignore-next-line */
+            $this->_internalToken = $config->getValue('admin.internalQuerySecret');
         }
     }
 
@@ -160,6 +172,7 @@ class Meta
                     $this->_authToken = null;
                 }
                 $this->_frey->getClient()->getHttpClient()->withHeaders([
+                    'X-Internal-Query-Secret: ' . $this->_internalToken,
                     'X-Auth-Token: ' . $this->_authToken,
                     'X-Current-Event-Id: ' . $this->_currentEventId ?: '0',
                     'X-Current-Person-Id: ' . $this->_currentPersonId
@@ -239,6 +252,16 @@ class Meta
             return true;
         }
         return false;
+    }
+
+    /**
+     * Check if query comes from internal services (Rheda).
+     *
+     * @return boolean
+     */
+    public function isInternalRequest()
+    {
+        return $this->_isInternalRequest;
     }
 
     /**
