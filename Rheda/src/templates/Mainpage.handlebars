@@ -49,6 +49,9 @@
 {{/isAggregated}}
 {{^isAggregated}}
   <h3>{{title}}</h3>
+  <br />
+  {{_t 'Event owners: '}}
+  <ul>{{#admins}}<li>{{#a href='/user/{id}/'}}{{name}}{{/a}}</li>{{/admins}}</ul>
   {{#description}}
     <hr>
     {{{description}}}
