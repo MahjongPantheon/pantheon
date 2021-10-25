@@ -19,6 +19,7 @@ namespace Frey;
 
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/../helpers/InternalRules.php';
+require_once __DIR__ . '/../helpers/AccessRules.php';
 require_once __DIR__ . '/../primitives/Group.php';
 require_once __DIR__ . '/../primitives/Person.php';
 require_once __DIR__ . '/../primitives/GroupAccess.php';
