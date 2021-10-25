@@ -309,6 +309,7 @@ class EventModel extends Model
             ->select('title')
             ->select('description')
             ->select('is_online')
+            ->select('finished')
             ->select('sync_start')
             ->orderByDesc('id')
             ->limit($limit)

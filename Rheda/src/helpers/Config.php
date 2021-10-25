@@ -203,6 +203,10 @@ class Config
      * @var int
      */
     protected $_chipsValue = 0;
+    /**
+     * @var bool
+     */
+    protected $_isFinished = false;
 
     /**
      * @var array
@@ -254,6 +258,7 @@ class Config
         'hideAddReplayButton' => false,
         'isPrescripted' => false,
         'minGamesCount' => 0,
+        'isFinished' => false,
     ];
 
     /**
@@ -593,6 +598,13 @@ class Config
     public function isTeam()
     {
         return $this->_isTeam;
+    }
+    /**
+     * @return bool
+     */
+    public function isFinished()
+    {
+        return $this->_isFinished;
     }
     /**
      * @return bool

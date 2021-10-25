@@ -55,6 +55,7 @@ class Mainpage extends Controller
             $ruleDescriptions = Config::getRuleDescriptions();
             return [
                 'admins' => $admins,
+                'finished' => $this->_mainEventRules->isFinished(),
                 'title' => $this->_mainEventRules->eventTitle(),
                 'description' => $this->_mainEventRules->eventDescription(),
                 'isLoggedIn' => $this->_userHasAdminRights(),

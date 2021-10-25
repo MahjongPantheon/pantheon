@@ -584,6 +584,7 @@ class EventsController extends Controller
             'hideAddReplayButton' => $hideAddReplayButton,
             'isPrescripted'       => (bool)$event[0]->getIsPrescripted(),
             'chipsValue'          => (int) $rules->chipsValue(),
+            'isFinished'          => (bool)$event[0]->getIsFinished(),
         ];
 
         $this->_log->addInfo('Successfully received config for event id# ' . $eventId);

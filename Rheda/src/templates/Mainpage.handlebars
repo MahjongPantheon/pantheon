@@ -48,7 +48,7 @@
   {{/eventsInfo}}
 {{/isAggregated}}
 {{^isAggregated}}
-  <h3>{{title}}</h3>
+  <h3>{{title}}{{#finished}} <b class="badge badge-danger">{{_t 'Finished'}}</b>{{/finished}}</h3>
   <br />
   {{_t 'Event owners: '}}
   <ul>{{#admins}}<li>{{#a href='/user/{id}/'}}{{name}}{{/a}}</li>{{/admins}}</ul>
@@ -70,7 +70,7 @@
         </span>
       </div>
 
-      <div id="RulesOverview" class="container" aria-labelledby="RulesHeading" data-parent="#Rules">
+      <div id="RulesOverview" class="container collapse" aria-labelledby="RulesHeading" data-parent="#Rules">
       {{> partials/RulesOverview }}
       </div>
     </div>
