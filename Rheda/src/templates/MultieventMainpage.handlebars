@@ -14,11 +14,20 @@
 *  You should have received a copy of the GNU General Public License
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
+<style>
+    .event-row {
+        padding: 6px 0;
+    }
+    .event-row:nth-of-type(even) {
+        background-color: rgb(238, 238, 238);
+    }
+</style>
+
 <h3>{{_t 'Rheda: mahjong statistic system'}}</h3>
 <hr/>
 
 {{#events}}
-    <div class="row">
+    <div class="row event-row">
         <div class="col-4">{{#a href='/' id='{id}'}}{{title}}{{/a}} ({{type}})</div>
         <div class="col-8">{{description}}</div>
     </div>
