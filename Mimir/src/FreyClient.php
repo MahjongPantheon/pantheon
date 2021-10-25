@@ -194,16 +194,17 @@ class FreyClient implements IFreyClient
     /**
      * @param string $id
      * @param string $title
+     * @param string $country
      * @param string $city
      * @param string $email
      * @param string $phone
      * @param string $tenhouId
      * @return bool
     */
-    public function updatePersonalInfo(string $id, string $title, string $city, string $email, string $phone, string $tenhouId): bool
+    public function updatePersonalInfo(string $id, string $title, string $country, string $city, string $email, string $phone, string $tenhouId): bool
     {
         /** @phpstan-ignore-next-line */
-        return (bool)$this->_client->execute('updatePersonalInfo', [$id, $title, $city, $email, $phone, $tenhouId]);
+        return (bool)$this->_client->execute('updatePersonalInfo', [$id, $title, $country, $city, $email, $phone, $tenhouId]);
     }
 
     /**
@@ -233,9 +234,8 @@ class FreyClient implements IFreyClient
     }
 
     /**
-     *  Fuzzy (pattern) search by title.
-     *  Query should not contain % or _ characters (they will be cut though)
-     *  Query should be more than 2 characters long.
+     *  Fuzzy search by title.
+     *  Query should 3 or more characters long.
      *
      * @param string $query
      * @return array
@@ -259,6 +259,19 @@ class FreyClient implements IFreyClient
     }
 
     /**
+     *  Get all event admins
+     *  Format: [[id => int, name => string], ...]
+     *
+     * @param int $eventId
+     * @return array
+    */
+    public function getEventAdmins(int $eventId): array
+    {
+        /** @phpstan-ignore-next-line */
+        return (array)$this->_client->execute('getEventAdmins', [$eventId]);
+    }
+
+    /**
      *  Client method to receive super-admin flag. Intended to be used only in Mimir/Rheda
      *  to determine if used has super-admin privileges independently of any event.
      *  Cached for 10 minutes.
@@ -273,6 +286,18 @@ class FreyClient implements IFreyClient
     }
 
     /**
+     *  Get list of event IDs where specified person has admin privileges.
+     *
+     * @param int $personId
+     * @return array
+    */
+    public function getOwnedEventIds(int $personId): array
+    {
+        /** @phpstan-ignore-next-line */
+        return (array)$this->_client->execute('getOwnedEventIds', [$personId]);
+    }
+
+    /**
      *  Get rule list with translations to selected locale
      *
      * @return array
@@ -281,6 +306,20 @@ class FreyClient implements IFreyClient
     {
         /** @phpstan-ignore-next-line */
         return (array)$this->_client->execute('getRulesList', []);
+    }
+
+    /**
+     *  Get all access rules for event.
+     *  - Method results are not cached!
+     *  - To be used in admin panel, but not in client side!
+     *
+     * @param int $eventId
+     * @return array
+    */
+    public function getAllEventRules(int $eventId): array
+    {
+        /** @phpstan-ignore-next-line */
+        return (array)$this->_client->execute('getAllEventRules', [$eventId]);
     }
 
     /**

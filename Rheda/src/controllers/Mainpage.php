@@ -43,11 +43,18 @@ class Mainpage extends Controller
             ];
         }
 
+        if ($this->_mainEventId) {
+            $admins = $this->_frey->getEventAdmins($this->_mainEventId);
+        } else {
+            $admins = [];
+        }
+
         /* All code below is for simple non-aggregated events.  */
         if ($this->_mainEventRules->seriesLength() == 0) {
             $rules = $this->_mainEventRules->toArray();
             $ruleDescriptions = Config::getRuleDescriptions();
             return [
+                'admins' => $admins,
                 'title' => $this->_mainEventRules->eventTitle(),
                 'description' => $this->_mainEventRules->eventDescription(),
                 'isLoggedIn' => $this->_userHasAdminRights(),
@@ -95,6 +102,7 @@ class Mainpage extends Controller
         }
 
         return [
+            'admins' => $admins,
             'data' => $formattedData,
             'hasData' => true,
             'title' => $this->_mainEventRules->eventTitle()

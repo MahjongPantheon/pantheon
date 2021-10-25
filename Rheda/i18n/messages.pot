@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 01:20+0300\n"
+"POT-Creation-Date: 2021-10-25 22:16+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,9 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Achievements"
+msgstr ""
 
 msgid "Achievement"
 msgstr ""
@@ -78,7 +81,7 @@ msgid_plural "%d riichi bets"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Achievements"
+msgid "Game details"
 msgstr ""
 
 msgid "The game has been successfully added!"
@@ -90,7 +93,28 @@ msgstr ""
 msgid "Add game"
 msgstr ""
 
-msgid "Game details"
+msgid "Aggregated event"
+msgstr ""
+
+msgid "Event owners: "
+msgstr ""
+
+msgid "Rules overview"
+msgstr ""
+
+msgid "Player"
+msgstr ""
+
+msgid "Points of best series"
+msgstr ""
+
+msgid "Points of last series"
+msgstr ""
+
+msgid "Best series"
+msgstr ""
+
+msgid "Last series"
 msgstr ""
 
 msgid "Recent games"
@@ -163,27 +187,6 @@ msgid "Sign in"
 msgstr ""
 
 msgid "Sign up"
-msgstr ""
-
-msgid "Aggregated event"
-msgstr ""
-
-msgid "Rules overview"
-msgstr ""
-
-msgid "Player"
-msgstr ""
-
-msgid "Points of best series"
-msgstr ""
-
-msgid "Points of last series"
-msgstr ""
-
-msgid "Best series"
-msgstr ""
-
-msgid "Last series"
 msgstr ""
 
 msgid "Rheda: mahjong statistic system"
@@ -287,6 +290,85 @@ msgid "Please enter new password for your account."
 msgstr ""
 
 msgid "Change password"
+msgstr ""
+
+msgid "Sign up confirmation"
+msgstr ""
+
+msgid "Thank you, your registration was successfully approved."
+msgstr ""
+
+msgid ""
+"You are required to log in with your email and password before proceeding"
+msgstr ""
+
+msgid "Player added successfully. Reload page to see results"
+msgstr ""
+
+msgid "Error occured while adding player: "
+msgstr ""
+
+msgid "Nobody"
+msgstr ""
+
+msgid "Players management"
+msgstr ""
+
+msgid "Register players"
+msgstr ""
+
+msgid "Enter part of name"
+msgstr ""
+
+msgid "Registered players (%d)"
+msgstr ""
+
+msgid "Include into seating"
+msgstr ""
+
+msgid "Exclude from seating"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove player %s?"
+msgstr ""
+
+msgid "Make event admin"
+msgstr ""
+
+msgid "Make %s event admin?"
+msgstr ""
+
+msgid "Revoke admin privileges"
+msgstr ""
+
+msgid "Revoke privileges for %s?"
+msgstr ""
+
+msgid "Replacement player"
+msgstr ""
+
+msgid "Local id"
+msgstr ""
+
+msgid "Team name"
+msgstr ""
+
+msgid ""
+"This will update current local id mapping. See \"Predefined seating\" page "
+"for details"
+msgstr ""
+
+msgid "Save local IDs"
+msgstr ""
+
+msgid ""
+"This will update current teams mapping. See \"Team table\" page for details"
+msgstr ""
+
+msgid "Save teams list"
 msgstr ""
 
 msgid ""
@@ -421,71 +503,16 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
-msgid "Sign up confirmation"
+msgid "Rights and privileges: %s"
 msgstr ""
 
-msgid "Thank you, your registration was successfully approved."
+msgid "Customize"
 msgstr ""
 
-msgid ""
-"You are required to log in with your email and password before proceeding"
+msgid "Title"
 msgstr ""
 
-msgid "Player added successfully. Reload page to see results"
-msgstr ""
-
-msgid "Error occured while adding player: "
-msgstr ""
-
-msgid "Nobody"
-msgstr ""
-
-msgid "Players management"
-msgstr ""
-
-msgid "Register players"
-msgstr ""
-
-msgid "Enter part of name"
-msgstr ""
-
-msgid "Registered players (%d)"
-msgstr ""
-
-msgid "Include into seating"
-msgstr ""
-
-msgid "Exclude from seating"
-msgstr ""
-
-msgid "Remove"
-msgstr ""
-
-msgid "Remove player %s?"
-msgstr ""
-
-msgid "Replacement player"
-msgstr ""
-
-msgid "Local id"
-msgstr ""
-
-msgid "Team name"
-msgstr ""
-
-msgid ""
-"This will update current local id mapping. See \"Predefined seating\" page "
-"for details"
-msgstr ""
-
-msgid "Save local IDs"
-msgstr ""
-
-msgid ""
-"This will update current teams mapping. See \"Team table\" page for details"
-msgstr ""
-
-msgid "Save teams list"
+msgid "Type"
 msgstr ""
 
 msgid "Predefined seating configuration"
@@ -516,31 +543,19 @@ msgid ""
 "between games and are defined at Admin actions / Manage players page."
 msgstr ""
 
-msgid "Rights and privileges: %s"
-msgstr ""
-
-msgid "Customize"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Type"
-msgstr ""
-
 msgid "Rating table has been hidden by tournament administrator"
 msgstr ""
 
 msgid "These results are visible only for tournament administrator"
 msgstr ""
 
-msgid "Team"
-msgstr ""
-
 msgid "No time left!"
 msgstr ""
 
 msgid "Table #"
+msgstr ""
+
+msgid "Team"
 msgstr ""
 
 msgid "Something went wrong: %s"
@@ -562,6 +577,119 @@ msgid "Tables are being prepared..."
 msgstr ""
 
 msgid "Please wait a while and reload the page."
+msgstr ""
+
+msgid "Manage events privileges: %s"
+msgstr ""
+
+msgid "Revoke privilege #title?"
+msgstr ""
+
+msgid "Privilege"
+msgstr ""
+
+msgid "Controls"
+msgstr ""
+
+msgid "global"
+msgstr ""
+
+msgid "Revoke"
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d han."
+msgstr ""
+
+msgid "Riichi bets: %s"
+msgstr ""
+
+msgid "Double ron:"
+msgstr ""
+
+msgid "Triple ron:"
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo), %d han."
+msgstr ""
+
+msgid "Exhaustive draw (tenpai: %s)."
+msgstr ""
+
+msgid "Exhaustive draw (everybody noten)."
+msgstr ""
+
+msgid "Abortive draw."
+msgstr ""
+
+msgid "Chombo: %s."
+msgstr ""
+
+msgid "Nagashi mangan: %s."
+msgstr ""
+
+msgid "Tenpai: %s."
+msgstr ""
+
+msgid "Manage owned events"
+msgstr ""
+
+msgid ""
+"Really finish event #id (#title)? You won't be able to add games after event "
+"is finished."
+msgstr ""
+
+msgid "New club rating"
+msgstr ""
+
+msgid "New tournament"
+msgstr ""
+
+msgid "New online tournament"
+msgstr ""
+
+msgid "Event"
+msgstr ""
+
+msgid "Finished"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Privileges"
+msgstr ""
+
+msgid "Finish"
 msgstr ""
 
 msgid "Update event"
@@ -632,119 +760,6 @@ msgstr ""
 msgid "Create event"
 msgstr ""
 
-msgid "Manage events privileges: %s"
-msgstr ""
-
-msgid "Revoke privilege #title?"
-msgstr ""
-
-msgid "Privilege"
-msgstr ""
-
-msgid "Controls"
-msgstr ""
-
-msgid "global"
-msgstr ""
-
-msgid "Revoke"
-msgstr ""
-
-msgid "Manage owned events"
-msgstr ""
-
-msgid ""
-"Really finish event #id (#title)? You won't be able to add games after event "
-"is finished."
-msgstr ""
-
-msgid "New club rating"
-msgstr ""
-
-msgid "New tournament"
-msgstr ""
-
-msgid "New online tournament"
-msgstr ""
-
-msgid "Event"
-msgstr ""
-
-msgid "Finished"
-msgstr ""
-
-msgid "Edit"
-msgstr ""
-
-msgid "Privileges"
-msgstr ""
-
-msgid "Finish"
-msgstr ""
-
-msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
-msgstr ""
-
-msgid "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s (<b>%s</b>), %d han."
-msgstr ""
-
-msgid "Riichi bets: %s"
-msgstr ""
-
-msgid "Double ron:"
-msgstr ""
-
-msgid "Triple ron:"
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo), %d han."
-msgstr ""
-
-msgid "Exhaustive draw (tenpai: %s)."
-msgstr ""
-
-msgid "Exhaustive draw (everybody noten)."
-msgstr ""
-
-msgid "Abortive draw."
-msgstr ""
-
-msgid "Chombo: %s."
-msgstr ""
-
-msgid "Nagashi mangan: %s."
-msgstr ""
-
-msgid "Tenpai: %s."
-msgstr ""
-
 msgid "View replay online"
 msgstr ""
 
@@ -791,26 +806,6 @@ msgid "Please enter your e-mail address and password."
 msgstr ""
 
 msgid "Forgot your password?"
-msgstr ""
-
-msgid "Finish all the games"
-msgstr ""
-
-msgid ""
-"After this button is pressed, you won't be able to cancel any rounds, and "
-"all the results will become visible to all players in rating table."
-msgstr ""
-
-msgid "Finish the games? You will not be able to cancel rounds anymore!"
-msgstr ""
-
-msgid "Confirm the results and finish all games"
-msgstr ""
-
-msgid "Ready to generate seating"
-msgstr ""
-
-msgid "Select seating mode and press the appropriate button."
 msgstr ""
 
 msgid "Random seating"
@@ -888,6 +883,38 @@ msgstr ""
 msgid "Use interval seating"
 msgstr ""
 
+msgid "Finish all the games"
+msgstr ""
+
+msgid ""
+"After this button is pressed, you won't be able to cancel any rounds, and "
+"all the results will become visible to all players in rating table."
+msgstr ""
+
+msgid "Finish the games? You will not be able to cancel rounds anymore!"
+msgstr ""
+
+msgid "Confirm the results and finish all games"
+msgstr ""
+
+msgid "Ready to generate seating"
+msgstr ""
+
+msgid "Select seating mode and press the appropriate button."
+msgstr ""
+
+msgid "Start timer and games"
+msgstr ""
+
+msgid "Press next button to start the timer and begin the games."
+msgstr ""
+
+msgid "Start games and timer?"
+msgstr ""
+
+msgid "Start games!"
+msgstr ""
+
 msgid ""
 "This tournament has predefined seating. See Admin actions / Predefined "
 "seating page for seating configuration. Next seating is listed below."
@@ -903,18 +930,6 @@ msgid "Use this seating for new game?"
 msgstr ""
 
 msgid "Use this seating"
-msgstr ""
-
-msgid "Start timer and games"
-msgstr ""
-
-msgid "Press next button to start the timer and begin the games."
-msgstr ""
-
-msgid "Start games and timer?"
-msgstr ""
-
-msgid "Start games!"
 msgstr ""
 
 msgid "Reset the timer"
@@ -1242,6 +1257,12 @@ msgid "Yakuhai: total"
 msgstr ""
 
 msgid "Players registration"
+msgstr ""
+
+msgid "Failed to assign administrator to event"
+msgstr ""
+
+msgid "Failed to remove administrator from event"
 msgstr ""
 
 msgid "Failed to register the player. Check your network connection."

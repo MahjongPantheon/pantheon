@@ -39,6 +39,9 @@
   <hr>
   {{#eventsInfo}}
     {{title}}
+    <br />
+    {{_t 'Event owners: '}}
+    <ul>{{#admins}}<li>{{#a href='/user/{id}/'}}{{name}}{{/a}}</li>{{/admins}}</ul>
     <br>
     {{description}}
     <hr>

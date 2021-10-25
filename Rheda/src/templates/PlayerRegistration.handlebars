@@ -201,12 +201,32 @@
                         {{/canUseSeatingIgnore}}
                         {{#showAddRemove}}
                             <form action="" method="post" class="d-inline-block">
-                                <input type="hidden" name="action_type" value="event_unreg"/>
+                                <input type="hidden" name="action_type" value="event_remove_admin"/>
                                 <input type="hidden" name="id" value="{{id}}"/>
+                                <input type="hidden" name="rule_id" value="{{adminRule}}"/>
                                 <input class="btn btn-danger" type="submit" value="{{_t 'Remove'}}"
                                        onclick="return confirm('{{_p 'Remove player %s?' display_name}}');"/>
                             </form>
                         {{/showAddRemove}}
+                        {{#showAdminRightsControls}}
+                            {{^adminAssigned}}
+                            <form action="" method="post" class="d-inline-block">
+                                <input type="hidden" name="action_type" value="event_add_admin"/>
+                                <input type="hidden" name="id" value="{{id}}"/>
+                                <input type="hidden" name="rule_id" value="{{adminRule}}"/>
+                                <input class="btn btn-danger" type="submit" value="{{_t 'Make event admin'}}"
+                                       onclick="return confirm('{{_p 'Make %s event admin?' display_name}}');"/>
+                            </form>
+                            {{/adminAssigned}}
+                            {{#adminAssigned}}
+                                <form action="" method="post" class="d-inline-block">
+                                    <input type="hidden" name="action_type" value="event_remove_admin"/>
+                                    <input type="hidden" name="id" value="{{id}}"/>
+                                    <input class="btn btn-danger" type="submit" value="{{_t 'Revoke admin privileges'}}"
+                                           onclick="return confirm('{{_p 'Revoke privileges for %s?' display_name}}');"/>
+                                </form>
+                            {{/adminAssigned}}
+                        {{/showAdminRightsControls}}
                     </div>
                 </div>
                 {{#showReplace}}

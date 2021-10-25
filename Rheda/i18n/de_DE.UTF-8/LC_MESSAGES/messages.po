@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 01:20+0300\n"
+"POT-Creation-Date: 2021-10-25 22:16+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -17,10 +17,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#, fuzzy
-msgid "%s: actions"
-msgstr "Admin Aktionen"
 
 msgid "%d - %d (%d total)"
 msgstr "%d - %d (%d gesamt)"
@@ -90,6 +86,10 @@ msgid "%s: %d yakuhai"
 msgid_plural "%s: %d yakuhais"
 msgstr[0] "%s: %d yakuhai"
 msgstr[1] "%s: %d yakuhais"
+
+#, fuzzy
+msgid "%s: actions"
+msgstr "Admin Aktionen"
 
 msgid "%s: personal stats"
 msgstr "%s: persönliche Statistiken"
@@ -468,6 +468,9 @@ msgstr ""
 msgid "Event not found in database"
 msgstr ""
 
+msgid "Event owners: "
+msgstr ""
+
 msgid "Example:"
 msgstr "Beispiel:"
 
@@ -494,6 +497,9 @@ msgid ""
 "Failed to assign administrative rights. Consult support and give them id #%s"
 msgstr ""
 
+msgid "Failed to assign administrator to event"
+msgstr ""
+
 msgid "Failed to finish event"
 msgstr ""
 
@@ -501,6 +507,9 @@ msgid "Failed to register the player. Check your network connection."
 msgstr ""
 "Der Spieler konnte nicht registriert werden. Überprüfen Sie Ihre "
 "Netzwerkverbindung."
+
+msgid "Failed to remove administrator from event"
+msgstr ""
 
 #, php-format
 msgid "Failed to save event #%s - this should not happen"
@@ -872,6 +881,12 @@ msgid "Log out"
 msgstr ""
 
 msgid "Main event is empty: this is unexpected behavior"
+msgstr ""
+
+msgid "Make %s event admin?"
+msgstr ""
+
+msgid "Make event admin"
 msgstr ""
 
 msgid "Manage events privileges: %s"
@@ -1263,8 +1278,15 @@ msgstr "Timer zurücksetzen"
 msgid "Revoke"
 msgstr ""
 
+msgid "Revoke admin privileges"
+msgstr ""
+
 msgid "Revoke privilege #title?"
 msgstr ""
+
+#, fuzzy
+msgid "Revoke privileges for %s?"
+msgstr "Spieler% s entfernen?"
 
 #, fuzzy
 msgid "Rheda: mahjong statistic system"

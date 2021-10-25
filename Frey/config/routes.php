@@ -44,6 +44,7 @@ return [
     'findByTenhouIds'      => ['PersonsController', 'findByTenhouIds'],
     'findByTitle'          => ['PersonsController', 'findByTitle'],
     'getGroups'            => ['PersonsController', 'getGroups'],
+    'getEventAdmins'       => ['AccessController', 'getEventAdmins'],
 
     // admin
     'getSuperadminFlag'      => ['AccessController', 'getSuperadminFlag'],

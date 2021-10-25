@@ -60,9 +60,17 @@ class PlayerRegistration extends Controller
         } else {
             try {
                 $registeredPlayers = $this->_mimir->getAllPlayers($this->_eventIdList);
+                $adminList = $this->_frey->getEventAdmins($this->_mainEventId);
+                $admins = [];
+                foreach ($adminList as $rule) {
+                    $admins[$rule['id']] = $rule['rule_id'];
+                }
                 usort($registeredPlayers, $sorter);
-                $registeredPlayers = array_map(function ($el, $index) {
+                $registeredPlayers = array_map(function ($el, $index) use (&$admins) {
                     $el['index'] = $index + 1;
+                    $el['showAdminRightsControls'] = ($el['id'] !== $this->_currentPersonId);
+                    $el['adminAssigned'] = !empty($admins[$el['id']]);
+                    $el['adminRule'] = $admins[$el['id']];
                     return $el;
                 }, $registeredPlayers, array_keys($registeredPlayers));
 
@@ -141,6 +149,32 @@ class PlayerRegistration extends Controller
                     break;
                 case 'save_teams':
                     $err = $this->_saveTeams($_POST['map_json']);
+                    break;
+                case 'event_add_admin':
+                    try {
+                        $success = $this->_frey->addRuleForPerson(
+                            FreyClient::PRIV_ADMIN_EVENT,
+                            true,
+                            'bool',
+                            intval($_POST['id']),
+                            $this->_mainEventId
+                        );
+                        if (!$success) {
+                            throw new \Exception(_t('Failed to assign administrator to event'));
+                        }
+                    } catch (\Exception $e) {
+                        $this->_lastError = $e->getMessage();
+                    }
+                    break;
+                case 'event_remove_admin':
+                    try {
+                        $success = $this->_frey->deleteRuleForPerson(intval($_POST['rule_id']));
+                        if (!$success) {
+                            throw new \Exception(_t('Failed to remove administrator from event'));
+                        }
+                    } catch (\Exception $e) {
+                        $this->_lastError = $e->getMessage();
+                    }
                     break;
                 case 'find_persons':
                     [$err, $result] = $this->_findPersons($_POST['query']);

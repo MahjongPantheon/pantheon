@@ -88,7 +88,7 @@ class FreyClientMock implements IFreyClient
         // TODO: Implement getRuleValue() method.
     }
 
-    public function updatePersonalInfo(string $id, string $title, string $city, string $email, string $phone, string $tenhouId): bool
+    public function updatePersonalInfo(string $id, string $title, string $city, string $country, string $email, string $phone, string $tenhouId): bool
     {
         // TODO: Implement updatePersonalInfo() method.
         return true;
@@ -266,5 +266,23 @@ class FreyClientMock implements IFreyClient
     {
         // TODO: Implement addSystemWideRuleForGroup() method.
         /* @phpstan-ignore-line */
+    }
+
+    public function getEventAdmins(int $eventId): array
+    {
+        // TODO: Implement getEventAdmins() method.
+        return [];
+    }
+
+    public function getOwnedEventIds(int $personId): array
+    {
+        // TODO: Implement getOwnedEventIds() method.
+        return [];
+    }
+
+    public function getAllEventRules(int $eventId): array
+    {
+        // TODO: Implement getAllEventRules() method.
+        return [];
     }
 }
