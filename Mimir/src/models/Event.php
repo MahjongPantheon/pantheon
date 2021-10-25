@@ -96,6 +96,9 @@ class EventModel extends Model
         }));
 
         $event = EventPrimitive::findById($this->_ds, [$eventId])[0];
+        if ($event->getIsFinished()) {
+            throw new \Exception('Event is already finished');
+        }
         if ($event->getAllowPlayerAppend()) { // club game mode
             $tablesCount = 10;
         } else {

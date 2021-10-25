@@ -108,7 +108,13 @@ class GamesControlPanel extends Controller
         }
 
         // Tables info
-        $tables = $this->_mimir->getTablesState($this->_mainEventId);
+        try {
+            $tables = $this->_mimir->getTablesState($this->_mainEventId);
+        } catch (\Exception $e) {
+            return [
+                'reason' => $e->getMessage()
+            ];
+        }
         $tablesFormatted = $formatter->formatTables(
             $tables,
             $this->_mainEventRules->gamesWaitingForTimer(),
