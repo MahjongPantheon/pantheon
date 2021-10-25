@@ -60,6 +60,10 @@ class InteractiveSessionModel extends Model
             throw new InvalidParametersException('Players list is not array');
         }
 
+        if ($event[0]->getIsFinished()) {
+            throw new InvalidParametersException('Event is already finished');
+        }
+
         $players = PlayerPrimitive::findById($this->_ds, $playerIds);
         $players = array_filter(array_map(function ($id) use (&$players) {
             // Re-sort players to match request order - important!

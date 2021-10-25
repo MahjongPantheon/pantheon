@@ -357,6 +357,14 @@ class SeatingController extends Controller
         if (!$this->_meta->isEventAdminById($eventId)) {
             throw new AuthFailedException('Authentication failed! Ask for some assistance from admin team', 403);
         }
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event #' . $eventId . ' not found in database');
+        }
+
+        if ($event[0]->getIsFinished()) {
+            throw new InvalidParametersException('Event is already finished');
+        }
     }
 
     /**
