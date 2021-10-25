@@ -37,7 +37,7 @@ class MultieventMainpage extends Controller
         $page = empty($this->_path['page']) ? 1 : intval($this->_path['page']);
         $limit = 20;
         $offset = $limit * ($page - 1);
-        $data = $this->_mimir->getEvents($limit, $offset);
+        $data = $this->_mimir->getEvents($limit, $offset, true);
 
         $hasNextButton = $offset + $limit < $data['total'];
         $hasPreviousButton = $page > 1;

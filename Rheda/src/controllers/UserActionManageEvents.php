@@ -87,7 +87,7 @@ class UserActionManageEvents extends Controller
 
         $eventIds = $this->_frey->getOwnedEventIds($this->_currentPersonId);
         if (in_array('__global', $eventIds)) {
-            $data = $this->_mimir->getEvents(self::PERPAGE, $this->_offset(self::PERPAGE));
+            $data = $this->_mimir->getEvents(self::PERPAGE, $this->_offset(self::PERPAGE), false);
             $events = $data['events'];
             $hasNextPage = ($this->_offset(self::PERPAGE) + self::PERPAGE) < $data['total'];
         } else {

@@ -264,15 +264,16 @@ class EventsController extends Controller
      *
      * @param int $limit
      * @param int $offset
+     * @param bool $filterFinished
      * @throws \Exception
      * @return array
      */
-    public function getEvents($limit, $offset)
+    public function getEvents($limit, $offset, $filterFinished = false)
     {
         $this->_log->addInfo('Listing all events with limit/offset [' . $limit . '/' . $offset . ']');
 
         $data = (new EventModel($this->_ds, $this->_config, $this->_meta))
-            ->getAllEvents($limit, $offset);
+            ->getAllEvents($limit, $offset, $filterFinished);
 
         $this->_log->addInfo('Successfully listed all events with limit/offset [' . $limit . '/' . $offset . ']');
         return $data;

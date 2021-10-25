@@ -46,9 +46,10 @@ interface IMimirClient
      *
      * @param int $limit
      * @param int $offset
+     * @param bool $filterFinished
      * @return array
     */
-    public function getEvents(int $limit, int $offset): array;
+    public function getEvents(int $limit, int $offset, bool $filterFinished): array;
 
     /**
      *  List available events by id list

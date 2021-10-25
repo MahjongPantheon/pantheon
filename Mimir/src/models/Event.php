@@ -296,10 +296,11 @@ class EventModel extends Model
      *
      * @param int $limit
      * @param int $offset
+     * @param bool $filterFinished
      * @throws \Exception
      * @return array
      */
-    public function getAllEvents(int $limit, int $offset)
+    public function getAllEvents(int $limit, int $offset, bool $filterFinished)
     {
         if ($limit > 100) {
             $limit = 100;
@@ -314,7 +315,11 @@ class EventModel extends Model
             ->select('is_online')
             ->select('finished')
             ->select('sync_start')
-            ->orderByDesc('id')
+            ->orderByDesc('id');
+        if ($filterFinished) {
+            $data = $data->where('finished', 0);
+        }
+        $data = $data
             ->limit($limit)
             ->offset($offset)
             ->findMany();
