@@ -35,6 +35,7 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         const COOKIE_ID_KEY = 'pantheon_currentPersonId';
         const COOKIE_EVENT_KEY = 'pantheon_currentEventId';
         const COOKIE_LANG_KEY = 'pantheon_currentLanguage';
+        const COOKIE_DOMAIN = '';
 
         const FREY_INTERNAL_QUERY_SECRET = 'CHANGE_ME_INTERNAL'; // TODO: change this in your local config!
         const MIMIR_INTERNAL_QUERY_SECRET = 'CHANGE_ME_INTERNAL'; // TODO: change this in your local config!

@@ -33,9 +33,9 @@ class PersonLogin extends Controller
         if (!empty($this->_currentPersonId)) {
             if ($this->_path['action'] === 'logout') {
                 // @phpstan-ignore-next-line
-                setcookie(Sysconf::COOKIE_TOKEN_KEY, '', time() - 365 * 24 * 3600, '/');
+                setcookie(Sysconf::COOKIE_TOKEN_KEY, '', time() - 365 * 24 * 3600, '/', Sysconf::COOKIE_DOMAIN);
                 // @phpstan-ignore-next-line
-                setcookie(Sysconf::COOKIE_ID_KEY, '', time() - 365 * 24 * 3600, '/');
+                setcookie(Sysconf::COOKIE_ID_KEY, '', time() - 365 * 24 * 3600, '/', Sysconf::COOKIE_DOMAIN);
                 header('Location: ' . '/');
             } else {
                 header('Location: ' . '/profile/' . $this->_currentPersonId);
@@ -67,9 +67,9 @@ class PersonLogin extends Controller
                 }
 
                 // @phpstan-ignore-next-line
-                setcookie(Sysconf::COOKIE_TOKEN_KEY, $authToken, time() + 365 * 24 * 3600, '/');
+                setcookie(Sysconf::COOKIE_TOKEN_KEY, $authToken, time() + 365 * 24 * 3600, '/', Sysconf::COOKIE_DOMAIN);
                 // @phpstan-ignore-next-line
-                setcookie(Sysconf::COOKIE_ID_KEY, $id, time() + 365 * 24 * 3600, '/');
+                setcookie(Sysconf::COOKIE_ID_KEY, $id, time() + 365 * 24 * 3600, '/', Sysconf::COOKIE_DOMAIN);
                 header('Location: ' . '/profile');
             } catch (\Exception $ex) {
                 $passwordError = _t('Password is incorrect or account not registered');

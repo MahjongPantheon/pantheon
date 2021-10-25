@@ -20,7 +20,7 @@
 
 import {EnvConfig} from "#/envConfig/interface";
 
-const defaultUrl = 'https://api.mjtop.net/';
+const defaultUrl = 'https://g.riichi.top/';
 let url: string;
 let guiFix: (src: string) => string;
 
@@ -50,14 +50,14 @@ switch (window.location.host) {
 export const environment: EnvConfig = {
   production: true,
   apiUrl: url,
-  uaUrl: 'https://u.mjtop.net/',
-  guiUrl: 'https://gui.mjtop.net/',
+  uaUrl: 'https://u.riichi.top/',
+  guiUrl: 'https://r.riichi.top/',
   idbTokenKey: 'pantheon_authToken',
   idbIdKey: 'pantheon_currentPersonId',
   idbEventKey: 'pantheon_currentEventId',
   idbLangKey: 'pantheon_currentLanguage',
   idbThemeKey: 'pantheon_currentTheme',
-  cookieDomain: 'mjtop.net',
+  cookieDomain: '.riichi.top',
   guiFix: guiFix,
   metrikaId: 64318630,
 
