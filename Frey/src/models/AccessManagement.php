@@ -206,13 +206,14 @@ class AccessManagementModel extends Model
     /**
      * @param int $eventId
      * @return array
+     * @throws \Exception
      */
     public function getEventAdmins($eventId)
     {
         $personRules = PersonAccessPrimitive::findByEvent($this->_db, [$eventId]);
-        $admins = array_filter($personRules, function ($rule) {
-            return $rule->getAclName() === AccessRules::ADMIN_EVENT;
-        });
+        $admins = array_values(array_filter($personRules, function ($rule) {
+            return $rule->getAclName() === AccessRules::ADMIN_EVENT && $rule->getEventId() !== null;
+        }));
         return array_map(function ($rule) {
             return [
                 'rule_id' => $rule->getId(),
