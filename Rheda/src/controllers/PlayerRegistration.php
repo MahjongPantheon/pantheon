@@ -46,7 +46,7 @@ class PlayerRegistration extends Controller
         $eventType = 'local'; // other types: tournament, online
 
         $sorter = function ($e1, $e2): int {
-            return strcmp($e1['display_name'], $e2['display_name']);
+            return strcmp($e1['title'], $e2['title']);
         };
 
         if (empty($this->_mainEventId)) {

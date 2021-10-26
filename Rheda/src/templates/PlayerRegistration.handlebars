@@ -180,7 +180,7 @@
             <div class="player-row">
                 <div class="row mb-2">
                     <div class="col-4" style="font-weight: bold">
-                        {{display_name}}{{#onlineEvent}} ({{tenhou_id}}){{/onlineEvent}}
+                        {{title}}{{#onlineEvent}} ({{tenhou_id}}){{/onlineEvent}}
                     </div>
                     <div class="col-8">
                         {{#canUseSeatingIgnore}}
@@ -205,7 +205,7 @@
                                 <input type="hidden" name="id" value="{{id}}"/>
                                 <input type="hidden" name="rule_id" value="{{adminRule}}"/>
                                 <input class="btn btn-danger" type="submit" value="{{_t 'Remove'}}"
-                                       onclick="return confirm('{{_p 'Remove player %s?' display_name}}');"/>
+                                       onclick="return confirm('{{_p 'Remove player %s?' title}}');"/>
                             </form>
                         {{/showAddRemove}}
                         {{#showAdminRightsControls}}
@@ -215,7 +215,7 @@
                                 <input type="hidden" name="id" value="{{id}}"/>
                                 <input type="hidden" name="rule_id" value="{{adminRule}}"/>
                                 <input class="btn btn-danger" type="submit" value="{{_t 'Make event admin'}}"
-                                       onclick="return confirm('{{_p 'Make %s event admin?' display_name}}');"/>
+                                       onclick="return confirm('{{_p 'Make %s event admin?' title}}');"/>
                             </form>
                             {{/adminAssigned}}
                             {{#adminAssigned}}
@@ -224,7 +224,7 @@
                                     <input type="hidden" name="id" value="{{id}}"/>
                                     <input type="hidden" name="rule_id" value="{{adminRule}}"/>
                                     <input class="btn btn-danger" type="submit" value="{{_t 'Revoke admin privileges'}}"
-                                           onclick="return confirm('{{_p 'Revoke privileges for %s?' display_name}}');"/>
+                                           onclick="return confirm('{{_p 'Revoke privileges for %s?' title}}');"/>
                                 </form>
                             {{/adminAssigned}}
                         {{/showAdminRightsControls}}
@@ -242,7 +242,7 @@
                                 <div class="dropdown">
                                     <div class="input-group">
                                         <input id="repl_input{{id}}"
-                                               value="{{replaced_by.display_name}}"
+                                               value="{{replaced_by.title}}"
                                                class="form-control"
                                                type="text" data-toggle="dropdown"
                                                onkeyup="updateReplacementsList('repl_list{{id}}', this, {{id}})"/>

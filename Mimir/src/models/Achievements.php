@@ -237,7 +237,7 @@ class AchievementsModel extends Model
         return array_map(
             function ($playerId, $feedsScore) use ($players) {
                 return [
-                    'name'  => $players[$playerId]['display_name'],
+                    'name'  => $players[$playerId]['title'],
                     'score' => round($feedsScore)
                 ];
             },
@@ -322,7 +322,7 @@ class AchievementsModel extends Model
         $riichiStat = [];
         foreach ($players as $playerId => $player) {
             $riichiStat[$playerId] = [
-                'name'  => $player['display_name'],
+                'name'  => $player['title'],
                 'won'   => 0,
                 'lost'  => 0,
                 'stole' => 0

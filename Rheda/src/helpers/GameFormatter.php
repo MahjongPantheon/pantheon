@@ -38,7 +38,7 @@ class GameFormatter
                 $finalScore = $game['final_results'][$playerId];
                 $players []= $this->_enrichWithInitials([
                     'tenhou_id' => $gamesData['players'][$playerId]['tenhou_id'],
-                    'display_name' => $gamesData['players'][$playerId]['display_name'],
+                    'title' => $gamesData['players'][$playerId]['title'],
                     'score' => number_format($finalScore['score'], 0, '.', ','),
                     'label' => ($finalScore['rating_delta'] > $labelColorThreshold
                         ? 'success'
@@ -110,7 +110,7 @@ class GameFormatter
                         continue;
                     }
 
-                    $winner = $gamesData['players'][$roundData['winner_id']]['display_name'];
+                    $winner = $gamesData['players'][$roundData['winner_id']]['title'];
 
                     if ($roundData['han'] < 0) { // yakuman
                         $bestHan = $bestFu = 200;
@@ -137,7 +137,7 @@ class GameFormatter
             }
 
             $penalties = array_map(function ($p) use ($gamesData) {
-                $p['who'] = $gamesData['players'][$p['who']]['display_name'];
+                $p['who'] = $gamesData['players'][$p['who']]['title'];
                 return $p;
             }, $game['penalties']);
 
@@ -175,8 +175,8 @@ class GameFormatter
     protected function _enrichWithInitials(array $array)
     {
         // TODO: make more universal
-        if (!empty($array['display_name'])) {
-            $nameparts = explode(' ', $array['display_name']);
+        if (!empty($array['title'])) {
+            $nameparts = explode(' ', $array['title']);
             $array['firstname'] = reset($nameparts);
             $array['surname'] = end($nameparts);
             $array['name_initial'] = mb_substr($nameparts[0], 0, 1, 'utf8');
@@ -250,9 +250,9 @@ class GameFormatter
                 'roundTypeMultiRon' => $round['outcome'] == 'multiron',
                 'roundTypeNagashi'  => $round['outcome'] == 'nagashi',
 
-                'winnerName'        => isset($round['winner_id']) ? $playersData[$round['winner_id']]['display_name'] : null,
-                'loserName'         => isset($round['loser_id']) ? $playersData[$round['loser_id']]['display_name'] : null,
-                'paoPlayerName'     => !empty($round['pao_player_id']) ? $playersData[$round['pao_player_id']]['display_name'] : null,
+                'winnerName'        => isset($round['winner_id']) ? $playersData[$round['winner_id']]['title'] : null,
+                'loserName'         => isset($round['loser_id']) ? $playersData[$round['loser_id']]['title'] : null,
+                'paoPlayerName'     => !empty($round['pao_player_id']) ? $playersData[$round['pao_player_id']]['title'] : null,
                 'yakuList'          => $this->_formatYaku($round),
                 'doras'             => isset($round['dora']) ? $round['dora'] : null,
                 'han'               => isset($round['han']) ? $round['han'] : null,
@@ -305,7 +305,7 @@ class GameFormatter
         if (!empty($round[$key])) {
             $list = array_map(
                 function ($el) use (&$playersData) {
-                    return $playersData[$el]['display_name'];
+                    return $playersData[$el]['title'];
                 },
                 explode(',', $round[$key])
             );
@@ -326,9 +326,9 @@ class GameFormatter
         if ($round['outcome'] == 'multiron' && !empty($round['wins'])) {
             $wins = array_map(function ($win) use (&$playersData, &$round) {
                 return $this->_enrichWithInitials([
-                    'winnerName'    => $playersData[$win['winner_id']]['display_name'],
-                    'loserName'     => $playersData[$round['loser_id']]['display_name'],
-                    'paoPlayerName' => empty($win['pao_player_id']) ? '' : $playersData[$win['pao_player_id']]['display_name'],
+                    'winnerName'    => $playersData[$win['winner_id']]['title'],
+                    'loserName'     => $playersData[$round['loser_id']]['title'],
+                    'paoPlayerName' => empty($win['pao_player_id']) ? '' : $playersData[$win['pao_player_id']]['title'],
                     'han'           => $win['han'],
                     'fu'            => $win['fu'],
                     'yakuman'       => $win['han'] < 0,
@@ -387,11 +387,11 @@ class GameFormatter
                 return $p;
             }, $t['players'], array_keys($t['players']));
             $t['playersFlatList'] = implode(', ', array_map(function ($p) {
-                return $p['display_name'];
+                return $p['title'];
             }, $t['players']));
 
             $t['penalties'] = array_map(function ($p) use (&$players) {
-                $p['who'] = $players[$p['who']]['display_name'];
+                $p['who'] = $players[$p['who']]['title'];
                 return $p;
             }, $t['penalties']);
             return $t;
@@ -412,7 +412,7 @@ class GameFormatter
 
         $namesOf = function ($list) use (&$players): string {
             return implode(', ', array_map(function ($e) use (&$players) {
-                return $players[$e]['display_name'];
+                return $players[$e]['title'];
             }, $list));
         };
 
@@ -430,15 +430,15 @@ class GameFormatter
             case 'ron':
                 return _p(
                     "Ron (%s from %s) %s; riichi bets - %s",
-                    $players[$roundData['winner']]['display_name'],
-                    $players[$roundData['loser']]['display_name'],
+                    $players[$roundData['winner']]['title'],
+                    $players[$roundData['loser']]['title'],
                     $handDesc($roundData),
                     $namesOf($roundData['riichi'])
                 );
             case 'tsumo':
                 return _p(
                     "Tsumo (%s) %s; riichi bets - %s",
-                    $players[$roundData['winner']]['display_name'],
+                    $players[$roundData['winner']]['title'],
                     $handDesc($roundData),
                     $namesOf($roundData['riichi'])
                 );
@@ -451,15 +451,15 @@ class GameFormatter
             case 'abort':
                 return _p("Abortive draw; riichi bets - %s", $namesOf($roundData['riichi']));
             case 'chombo':
-                return _p("Chombo (%s)", $players[$roundData['loser']]['display_name']);
+                return _p("Chombo (%s)", $players[$roundData['loser']]['title']);
             case 'multiron':
                 if (count($roundData['wins']) == 2) {
                     return _p(
                         'Double ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); riichi bets - %s',
-                        $players[$roundData['loser']]['display_name'],
-                        $players[$roundData['wins'][0]['winner']]['display_name'],
+                        $players[$roundData['loser']]['title'],
+                        $players[$roundData['wins'][0]['winner']]['title'],
                         $handDesc($roundData['wins'][0]),
-                        $players[$roundData['wins'][1]['winner']]['display_name'],
+                        $players[$roundData['wins'][1]['winner']]['title'],
                         $handDesc($roundData['wins'][1]),
                         $namesOf($roundData['riichi'])
                     );
@@ -468,12 +468,12 @@ class GameFormatter
                 if (count($roundData['wins']) == 3) {
                     return _p(
                         'Triple ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); winner #3 is %s (%s); riichi bets - %s',
-                        $players[$roundData['loser']]['display_name'],
-                        $players[$roundData['wins'][0]['winner']]['display_name'],
+                        $players[$roundData['loser']]['title'],
+                        $players[$roundData['wins'][0]['winner']]['title'],
                         $handDesc($roundData['wins'][0]),
-                        $players[$roundData['wins'][1]['winner']]['display_name'],
+                        $players[$roundData['wins'][1]['winner']]['title'],
                         $handDesc($roundData['wins'][1]),
-                        $players[$roundData['wins'][2]['winner']]['display_name'],
+                        $players[$roundData['wins'][2]['winner']]['title'],
                         $handDesc($roundData['wins'][2]),
                         $namesOf($roundData['riichi'])
                     );
@@ -484,7 +484,7 @@ class GameFormatter
                 if (count($roundData['nagashi']) == 1) {
                     return _p(
                         "Nagashi mangan - %s; riichi bets - %s; tenpai - %s",
-                        $players[$roundData['nagashi'][0]]['display_name'],
+                        $players[$roundData['nagashi'][0]]['title'],
                         $namesOf($roundData['riichi']),
                         $namesOf($roundData['tempai'])
                     );
@@ -493,8 +493,8 @@ class GameFormatter
                 if (count($roundData['nagashi']) == 2) {
                     return _p(
                         "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s",
-                        $players[$roundData['nagashi'][0]]['display_name'],
-                        $players[$roundData['nagashi'][1]]['display_name'],
+                        $players[$roundData['nagashi'][0]]['title'],
+                        $players[$roundData['nagashi'][1]]['title'],
                         $namesOf($roundData['riichi']),
                         $namesOf($roundData['tempai'])
                     );

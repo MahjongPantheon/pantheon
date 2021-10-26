@@ -350,14 +350,14 @@ class EventsController extends Controller
         $data = array_map(function (PlayerPrimitive $p) use (&$localMap, &$teamNames, &$ignoredPlayers, &$replacements) {
             return [
                 'id'            => $p->getId(),
-                'display_name'  => $p->getDisplayName(),
+                'title'         => $p->getDisplayName(),
                 'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
-                'team_name'  => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
+                'team_name'     => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
                 'tenhou_id'     => $p->getTenhouId(),
                 'ignore_seating' => in_array($p->getId(), $ignoredPlayers),
                 'replaced_by'   => empty($replacements[$p->getId()]) ? null : [
                     'id' => $replacements[$p->getId()]->getId(),
-                    'display_name' => $replacements[$p->getId()]->getDisplayName(),
+                    'title' => $replacements[$p->getId()]->getDisplayName(),
                 ],
             ];
         }, $players);

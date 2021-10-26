@@ -260,7 +260,7 @@ class FreyClient implements IFreyClient
 
     /**
      *  Get all event admins
-     *  Format: [[id => int, name => string], ...]
+     *  Format: [[rule_id => int, id => int, name => string], ...]
      *
      * @param int $eventId
      * @return array

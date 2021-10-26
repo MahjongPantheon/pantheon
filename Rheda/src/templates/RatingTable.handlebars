@@ -137,7 +137,7 @@
         <div class="row player-row{{#min_was_played}} row-min-was-played{{/min_was_played}}">
             <div class="col-1" style="padding-left: 15px">{{_index}}</div>
             <div class="col-3">
-                {{#a href='/user/{id}/'}}{{display_name}}{{/a}}
+                {{#a href='/user/{id}/'}}{{title}}{{/a}}
                 {{#if isOnlineTournament}} ({{tenhou_id}}){{/if}}
                 {{#isTeamTournament}}<div>{{_t 'Team'}} "{{team_name}}"</div>{{/isTeamTournament}}
             </div>

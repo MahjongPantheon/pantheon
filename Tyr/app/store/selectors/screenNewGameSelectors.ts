@@ -8,8 +8,6 @@ export const defaultPlayer: Readonly<LUser> = {
   displayName: '',
   id: DEFAULT_ID,
   tenhouId: '',
-  ident: '',
-  alias: ''
 };
 
 function _getPlayers(state: IAppState) {

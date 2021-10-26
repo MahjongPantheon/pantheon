@@ -49,7 +49,7 @@
           "id": {
             "type": "integer"
           },
-          "display_name": {
+          "title": {
             "type": "string"
           },
           "tenhou_id": {
@@ -58,7 +58,7 @@
         },
         "required": [
           "id",
-          "display_name",
+          "title",
           "tenhou_id"
         ]
       }

@@ -77,7 +77,7 @@ class EventModel extends Model
 
         return array_map(function ($seat) use (&$ratings, &$players) {
             $seat['rating'] = $ratings[$seat['player_id']];
-            $seat['display_name'] = $players[$seat['player_id']]['display_name'];
+            $seat['title'] = $players[$seat['player_id']]['title'];
             return $seat;
         }, $seatings);
     }
@@ -224,7 +224,7 @@ class EventModel extends Model
                             'id' => $pId,
                             // may be empty for excluded players in non-prescripted event, so it's fine.
                             'local_id' => empty($playerIdMap[$pId]) ? 0 : $playerIdMap[$pId],
-                            'display_name' => $p->getDisplayName()
+                            'title' => $p->getDisplayName()
                         ];
                     }, $game->getPlayers())
                 ];
@@ -283,7 +283,7 @@ class EventModel extends Model
         foreach ($players as $player) {
             $result[$player->getId()] = [
                 'id'            => (int) $player->getId(),
-                'display_name'  => $player->getDisplayName(),
+                'title'  => $player->getDisplayName(),
                 'tenhou_id'     => $player->getTenhouId()
             ];
         }

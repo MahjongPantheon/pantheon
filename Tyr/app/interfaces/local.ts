@@ -31,9 +31,7 @@ export type LCurrentGame = {
 export type LUser = {
   id: number;
   displayName: string;
-  ident: string;
   tenhouId: string;
-  alias: string;
 }
 
 export type LFreyAuthData = {

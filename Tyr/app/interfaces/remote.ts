@@ -145,7 +145,7 @@ export interface RSessionOverview {
   table_index: number;
   players: {
     id: number,
-    display_name: string,
+    title: string,
     ident: string
   }[];
   state: {
@@ -162,8 +162,7 @@ export interface RSessionOverview {
 
 export type RAllPlayersInEvent = {
   id: number;
-  alias: string;
-  display_name: string;
+  title: string;
   tenhou_id: string;
 }[]
 
@@ -175,25 +174,21 @@ export type RTablesState = {
   scores: { [key: number]: number };
   players: Array<{
     id: number;
-    display_name: string;
+    title: string;
   }>;
 }[]
 
 // for getPlayer
 export interface RUserInfo {
   id: number;
-  alias: string;
-  ident: string;
-  display_name: string;
+  title: string;
   tenhou_id: string;
 }
 
 // for current games info
 export interface RPlayerData {
   id: number;
-  alias: string;
-  ident: string;
-  display_name: string;
+  title: string;
   score: number;
   rating_delta: number;
 }

@@ -89,7 +89,7 @@ class AchievementsPrimitive extends Primitive
                 continue;
             }
 
-            $names []= $players[$round['winner_id']]['display_name'];
+            $names []= $players[$round['winner_id']]['title'];
         }
 
         return [
@@ -144,7 +144,7 @@ class AchievementsPrimitive extends Primitive
             if ($count < $bestCount) {
                 continue;
             }
-            $bestDealers []= $players[$id]['display_name'];
+            $bestDealers []= $players[$id]['title'];
         }
 
         return [
@@ -186,7 +186,7 @@ class AchievementsPrimitive extends Primitive
                 continue;
             }
 
-            $names []= $players[$round['winner_id']]['display_name'];
+            $names []= $players[$round['winner_id']]['title'];
         }
 
         return [
@@ -225,7 +225,7 @@ class AchievementsPrimitive extends Primitive
                 continue;
             }
 
-            $names []= $players[$round['winner_id']]['display_name'];
+            $names []= $players[$round['winner_id']]['title'];
         }
 
         return [
@@ -255,7 +255,7 @@ class AchievementsPrimitive extends Primitive
             ->findArray();
         $players = array_map(function ($round) use (&$players) {
             return [
-                'name' => (string)$players[$round['winner_id']]['display_name'],
+                'name' => (string)$players[$round['winner_id']]['title'],
                 'yaku' => (string)$round['yaku']
             ];
         }, $rounds);
@@ -292,7 +292,7 @@ class AchievementsPrimitive extends Primitive
                 continue;
             }
 
-            $names []= $players[$round['loser_id']]['display_name'];
+            $names []= $players[$round['loser_id']]['title'];
         }
 
         return [
@@ -323,11 +323,11 @@ class AchievementsPrimitive extends Primitive
 
         $namesWithZeroCount = [];
         $namesWithFeedCount = array_map(function ($round) {
-            return $round['display_name'];
+            return $round['title'];
         }, $rounds);
 
         foreach ($players as $player) {
-            $displayName = $player['display_name'];
+            $displayName = $player['title'];
             if (!in_array($displayName, $namesWithFeedCount)) {
                 array_push($namesWithZeroCount, $displayName);
             }
@@ -352,7 +352,7 @@ class AchievementsPrimitive extends Primitive
                 $names = [];
             }
 
-            $names []= $players[$round['loser_id']]['display_name'];
+            $names []= $players[$round['loser_id']]['title'];
         }
 
         return [
@@ -393,7 +393,7 @@ class AchievementsPrimitive extends Primitive
                 continue;
             }
 
-            $names []= $players[$round['winner_id']]['display_name'];
+            $names []= $players[$round['winner_id']]['title'];
         }
 
         return [
@@ -422,7 +422,7 @@ class AchievementsPrimitive extends Primitive
 
         $yakuhaiStats = [];
         foreach ($rounds as $round) {
-            $name = $players[$round['winner_id']]['display_name'];
+            $name = $players[$round['winner_id']]['title'];
             if (empty($yakuhaiStats[$name])) {
                 $yakuhaiStats[$name] = 0;
             }
@@ -486,7 +486,7 @@ class AchievementsPrimitive extends Primitive
 
         return array_map(function ($round) use (&$players) {
             return [
-                'name' => $players[$round['loser_id']]['display_name'],
+                'name' => $players[$round['loser_id']]['title'],
                 'hand' => ['han' => $round['han'], 'fu' => $round['han'] > 4 ? null : $round['fu']]
             ];
         }, array_slice($filteredRounds, 0, 10));
@@ -517,7 +517,7 @@ class AchievementsPrimitive extends Primitive
         $counts = [];
         if ($filteredRounds) {
             foreach ($filteredRounds as $round) {
-                $name = $players[$round['winner_id']]['display_name'];
+                $name = $players[$round['winner_id']]['title'];
                 if (empty($counts[$name])) {
                     $counts[$name] = 0;
                 }
@@ -565,7 +565,7 @@ class AchievementsPrimitive extends Primitive
         return array_map(
             function ($round) use (&$players) {
                 return [
-                    'name' => $players[$round['winner_id']]['display_name'],
+                    'name' => $players[$round['winner_id']]['title'],
                     'count' => sprintf('%.2f', $round['average'])
                 ];
             },
@@ -592,7 +592,7 @@ class AchievementsPrimitive extends Primitive
 
         $playersYaku = [];
         foreach ($rounds as $round) {
-            $name = $players[$round['winner_id']]['display_name'];
+            $name = $players[$round['winner_id']]['title'];
             if (empty($playersYaku[$name])) {
                 $playersYaku[$name] = [];
             }
@@ -679,7 +679,7 @@ class AchievementsPrimitive extends Primitive
         return array_map(
             function ($playerId, $payment) use ($players) {
                 return [
-                    'name' => $players[$playerId]['display_name'],
+                    'name' => $players[$playerId]['title'],
                     'score' => $payment
                 ];
             },
@@ -713,7 +713,7 @@ class AchievementsPrimitive extends Primitive
         $counts = [];
         if ($filteredRounds) {
             foreach ($filteredRounds as $round) {
-                $name = $players[$round['winner_id']]['display_name'];
+                $name = $players[$round['winner_id']]['title'];
                 if (empty($counts[$name])) {
                     $counts[$name] = 0;
                 }

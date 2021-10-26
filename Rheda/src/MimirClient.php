@@ -211,7 +211,7 @@ class MimirClient implements IMimirClient
      *       id => sessionId,
      *       players => [ ..[
      *           id => playerId,
-     *           display_name,
+     *           title,
      *           ident
      *       ].. ],
      *       state => [

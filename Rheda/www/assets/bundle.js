@@ -90,7 +90,7 @@
             '<div class="row ' + own + '">' +
             '<div class="col-6">' +
             winds[i] + ' ' +
-            playersMap[g[i].player_id].display_name +
+            playersMap[g[i].player_id].title +
             '</div>' +
             '<div class="col-3">' +
             '<span class="score">' + score + '</span>' +

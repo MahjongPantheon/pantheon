@@ -167,7 +167,7 @@ class GamesController extends Controller
      *      id => sessionId,
      *      players => [ ..[
      *          id => playerId,
-     *          display_name,
+     *          title,
      *          ident
      *      ].. ],
      *      state => [
@@ -203,12 +203,12 @@ class GamesController extends Controller
             'players' => array_map(function (PlayerPrimitive $player) use (&$playersReg) {
                 return [
                     'id' => $player->getId(),
-                    'display_name' => $player->getDisplayName(),
+                    'title' => $player->getDisplayName(),
                     'replaced_by' => empty($playersReg['replacements'][$player->getId()])
                         ? null
                         : [
                             'id' => $playersReg['replacements'][$player->getId()]->getId(),
-                            'display_name' => $playersReg['replacements'][$player->getId()]->getDisplayName(),
+                            'title' => $playersReg['replacements'][$player->getId()]->getDisplayName(),
                         ]
                 ];
             }, $playersReg['players']),

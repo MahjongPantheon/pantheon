@@ -141,7 +141,7 @@ interface IMimirClient
      *       id => sessionId,
      *       players => [ ..[
      *           id => playerId,
-     *           display_name,
+     *           title,
      *           ident
      *       ].. ],
      *       state => [

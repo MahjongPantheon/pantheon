@@ -21,8 +21,7 @@ Parameters:
 Returns: _array_ 
 
 Exceptions:
-* _\GeoIp2\Exception\AddressNotFoundException_ 
-* _\MaxMind\Db\Reader\InvalidDatabaseException_ 
+* _\Exception_ 
 
 ### getCountries
  Get available countries.
@@ -35,8 +34,7 @@ Parameters:
 Returns: _array_ 
 
 Exceptions:
-* _\GeoIp2\Exception\AddressNotFoundException_ 
-* _\MaxMind\Db\Reader\InvalidDatabaseException_ 
+* _\Exception_ 
 
 ### getEvents
  List all available events in system (paginated)
@@ -45,6 +43,7 @@ Exceptions:
 Parameters:
 * **$limit** (_int_) 
 * **$offset** (_int_) 
+* **$filterFinished** (_bool_) 
 
 Returns: _array_ 
 
@@ -189,7 +188,7 @@ Exceptions:
       id => sessionId,
       players => [ ..[
           id => playerId,
-          display_name,
+          title,
           ident
       ].. ],
       state => [
@@ -600,7 +599,7 @@ Exceptions:
 Parameters:
 * **$gameHashcode** (_string_) 
 
-Returns: _boolean_ Success?
+Returns: _bool_ Success?
 
 Exceptions:
 * _\Exception_ 
@@ -793,4 +792,6 @@ Parameters:
 * **$playerId** (_float_) 
 * **$error** (_string_) 
 * **$stack** (_string_) 
+
+Returns: _void_ 
 

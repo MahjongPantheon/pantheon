@@ -214,6 +214,16 @@ Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
 
+### getEventAdmins
+ Get all event admins
+ Format: [[rule_id => int, id => int, name => string], ...]
+
+
+Parameters:
+* **$eventId** (_int_) 
+
+Returns: _array_ 
+
 ### getSuperadminFlag
  Client method to receive super-admin flag. Intended to be used only in Mimir/Rheda
  to determine if used has super-admin privileges independently of any event.

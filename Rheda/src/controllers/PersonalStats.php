@@ -55,7 +55,7 @@ class PersonalStats extends Controller
             $currentUser = $this->_path['user'];
             $playerData = $this->_mimir->getPlayer((int)$currentUser);
             $data = $this->_mimir->getPlayerStats((int)$currentUser, $this->_eventIdList);
-            $this->_playerName = $playerData['display_name'];
+            $this->_playerName = $playerData['title'];
 
             $usersMap = [];
             foreach ($data['players_info'] as $player) {
