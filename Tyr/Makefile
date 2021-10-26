@@ -5,6 +5,7 @@ deps:
 PHONY: build
 build:
 	NODE_ENV=production ./node_modules/.bin/webpack --config webpack.prod.js
+	cp app/tyrico.png dist
 	cd dist && gzip -k -9 -f *.js *.css
 
 PHONY: cleanup_prebuilts
