@@ -30,16 +30,21 @@ export const EventSelectScreenView = React.memo(function (props: IProps) {
         <TopPanel onBackClick={onBackClick}/>
         <div className="page-event-select__name">{playerName}</div>
         <div className="page-event-select__section">
-          <div className="page-event-select__section-title">{loc._t('Select event')}</div>
-          <div className="page-event-select__section-content">
-            {events.map(event => (
-              <div
-                key={event.id}
-                className={classNames('radio-menuitem', {'radio-menuitem--active': event.id === currentEvent})}
-                onClick={() => onSelectEvent(event.id)}
-              >{event.title}</div>
-            ))}
-          </div>
+          {events.length > 0
+            ? <>
+                <div className="page-event-select__section-title">{loc._t('Select event')}</div>
+                <div className="page-event-select__section-content">
+                  {events.map(event => (
+                    <div
+                      key={event.id}
+                      className={classNames('radio-menuitem', {'radio-menuitem--active': event.id === currentEvent})}
+                      onClick={() => onSelectEvent(event.id)}
+                    >{event.title}</div>
+                  ))}
+                </div>
+              </>
+            : <div style={{ textAlign: 'center' }}>{loc._t('There is no events you participate in right now')}</div>
+            }
         </div>
       </div>
     </div>

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-27 02:03+0300\n"
-"PO-Revision-Date: 2021-10-27 02:03+0300\n"
+"POT-Creation-Date: 2021-10-27 02:29+0300\n"
+"PO-Revision-Date: 2021-10-27 02:30+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -369,7 +369,7 @@ msgstr "Саншоку доко"
 msgid "Select another event"
 msgstr "Выбрать другое событие"
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:33:62
+#: app/components/screens/event-select/EventSelectScreenView.tsx:35:68
 msgid "Select event"
 msgstr "Выбрать событие"
 
@@ -424,6 +424,10 @@ msgstr "Тенхо"
 #: app/components/screens/settings/SettingsScreenView.tsx:60:57
 msgid "Theme"
 msgstr "Оформление"
+
+#: app/components/screens/event-select/EventSelectScreenView.tsx:46:53
+msgid "There is no events you participate in right now"
+msgstr "На данный момент нет активных событий, в которых вы участвуете"
 
 #: app/primitives/yaku.ts:131:34 app/primitives/yaku.ts:132:39
 msgid "Toitoi"
