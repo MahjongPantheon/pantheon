@@ -18,6 +18,7 @@
 
   --color-success: #0DA678;
   --color-danger: #D32B2B;
+  --color-link: #1979E5;
 }
 
 .theme-night {
@@ -39,4 +40,5 @@
   --color-secondary-6: #262f40; /*HSL: L from 29 to 20*/
   --color-success: #43D8AB;
   --color-danger: #ff6969;
+  --color-link: #1979E5;
 }

@@ -36,13 +36,12 @@ img {
 }
 
 a {
-  color: #b6ddff;
+  color: var(--color-link);
   text-decoration: none;
   cursor: pointer;
 }
 
 ul {
-  color: #b6ddff;
   margin: 0;
 }
 

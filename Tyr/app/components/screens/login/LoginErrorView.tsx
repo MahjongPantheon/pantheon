@@ -10,9 +10,7 @@ type IProps = {
 
 export const LoginErrorView: React.FC<IProps> = ({onOkClick}) => {
   const loc = useContext(i18n);
-  const regLink = `<a href=${environment.guiUrl + 'signup'} target='_blank'>
-    ${loc._pt('Name of registration link', 'register')}
-  </a>`;
+  const regLink = `<a href=${environment.guiUrl + 'signup'} target='_blank'>${loc._pt('Name of registration link', 'register')}</a>`;
 
   return (
     <div className="page-login-error">
@@ -24,7 +22,7 @@ export const LoginErrorView: React.FC<IProps> = ({onOkClick}) => {
           {loc._t('Login attempt has failed. Possible reasons are:')}
         </div>
         <ul>
-          <li>{loc._t('E-mail is not registered in Pantheon database (%1)', [regLink])}</li>
+          <li dangerouslySetInnerHTML={{__html: loc._t('E-mail is not registered in Pantheon database (%1)', [regLink])}}/>
           <li>{loc._t('Password check has failed')}</li>
           <li>{loc._t('Unexpected server error')}</li>
         </ul>
