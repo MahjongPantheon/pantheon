@@ -265,7 +265,7 @@ class PlayersController extends Controller
                     return $pr->getEventId();
                 }, $regs)
             );
-            $evList = array_filter($evList, function($ev) {
+            $evList = array_filter($evList, function ($ev) {
                 return !$ev->getIsFinished();
             });
             $events = array_map(function (EventPrimitive $ev) {

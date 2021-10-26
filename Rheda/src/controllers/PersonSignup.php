@@ -45,7 +45,16 @@ class PersonSignup extends Controller
             if (!empty($code) && $_POST['signup_captcha'] === $code) {
                 return $this->_tryRegisterUser($_POST);
             } else {
+                $captcha = new Captcha();
+                $captcha->code();
+                $captcha->image();
+                $uniqid = md5((string)mt_rand());
+                file_put_contents('/tmp/mail_' . md5($uniqid), $captcha->getCode());
+
                 return [
+                    'email' => filter_var($_POST['signup_email'], FILTER_VALIDATE_EMAIL) ? $_POST['signup_email'] : '',
+                    'captcha' => $captcha->getImage(),
+                    'uniqid' => $uniqid,
                     'error' => _t('Captcha is invalid')
                 ];
             }
