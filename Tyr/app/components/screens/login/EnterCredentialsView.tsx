@@ -1,16 +1,19 @@
 import * as React from "react";
 import './page-enter-credentials.css'
-import {useContext, useState} from 'react';
+import {CSSProperties, useContext, useState} from 'react';
 import {i18n} from "#/components/i18n";
 
 type IProps = {
-  onSubmit: (email: string, password: string) => void
+  onSubmit: (email: string, password: string) => void;
+  signupLink: string;
 }
 
-export const EnterCredentialsView: React.FC<IProps> = ({onSubmit}) => {
+export const EnterCredentialsView: React.FC<IProps> = ({onSubmit, signupLink}) => {
   const loc = useContext(i18n);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // @ts-ignore
+  const btnStyle: CSSProperties = {'justify-self': 'end'};
 
   return (
     <div className="page-enter-credentials">
@@ -27,8 +30,13 @@ export const EnterCredentialsView: React.FC<IProps> = ({onSubmit}) => {
         <label>{loc._t('Password')}</label>
       </div>
       <div className="page-enter-credentials__button-container">
-        <button className="flat-btn flat-btn--large" onClick={() => onSubmit(email, password)}>
-          {loc._t('OK')}
+        <a className="flat-btn flat-btn--large" href={signupLink}>
+          {loc._t('Sign up')}
+        </a>
+        <button className="flat-btn flat-btn--large"
+                style={btnStyle}
+                onClick={() => onSubmit(email, password)}>
+          {loc._t('Log in')}
         </button>
       </div>
     </div>

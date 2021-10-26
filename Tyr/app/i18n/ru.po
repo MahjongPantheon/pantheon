@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 01:20+0300\n"
-"PO-Revision-Date: 2021-10-14 22:28+0300\n"
+"POT-Creation-Date: 2021-10-27 02:03+0300\n"
+"PO-Revision-Date: 2021-10-27 02:03+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -114,11 +114,11 @@ msgstr "Дора"
 msgid "Draw"
 msgstr "Ничья"
 
-#: app/components/screens/login/LoginErrorView.tsx:27:16
+#: app/components/screens/login/LoginErrorView.tsx:25:49
 msgid "E-mail is not registered in Pantheon database (%1)"
 msgstr "E-mail не зарегистрирован в базе данных Pantheon (%1)"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:23:17
+#: app/components/screens/login/EnterCredentialsView.tsx:26:17
 msgid "Email"
 msgstr "Email"
 
@@ -172,7 +172,7 @@ msgstr "Хотей"
 msgid "Houtei raoyui"
 msgstr "Хотей раоюй"
 
-#: app/components/screens/login/LoginErrorView.tsx:31:15
+#: app/components/screens/login/LoginErrorView.tsx:29:15
 msgid ""
 "If in doubt, contact the tournament administrator for further instructions."
 msgstr "Обратитесь к администратору турнира для дальнейших инструкций."
@@ -213,11 +213,15 @@ msgstr "Язык"
 msgid "Loading..."
 msgstr "Загрузка..."
 
+#: app/components/screens/login/EnterCredentialsView.tsx:39:12
+msgid "Log in"
+msgstr "Вход"
+
 #: app/components/screens/settings/SettingsScreenView.tsx:93:32
 msgid "Log out"
 msgstr "Выйти из системы"
 
-#: app/components/screens/login/LoginErrorView.tsx:24:12
+#: app/components/screens/login/LoginErrorView.tsx:22:12
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr "Попытка входа в систему не удалась. Возможные причины:"
 
@@ -251,8 +255,7 @@ msgstr "Новая игра"
 msgid "No results found"
 msgstr "Результаты отсутствуют"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:31:12
-#: app/components/screens/login/LoginErrorView.tsx:35:12
+#: app/components/screens/login/LoginErrorView.tsx:33:12
 msgid "OK"
 msgstr "ОК"
 
@@ -268,11 +271,11 @@ msgstr "Открытая рука"
 msgid "Other playing tables"
 msgstr "Другие столы"
 
-#: app/components/screens/login/LoginErrorView.tsx:20:10
+#: app/components/screens/login/LoginErrorView.tsx:18:10
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:18:10
+#: app/components/screens/login/EnterCredentialsView.tsx:21:10
 msgid "Pantheon: log in"
 msgstr "Pantheon: вход в систему"
 
@@ -280,11 +283,11 @@ msgstr "Pantheon: вход в систему"
 msgid "Pao from: %1"
 msgstr "Пао с: %1"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:27:17
+#: app/components/screens/login/EnterCredentialsView.tsx:30:17
 msgid "Password"
 msgstr "Пароль"
 
-#: app/components/screens/login/LoginErrorView.tsx:28:16
+#: app/components/screens/login/LoginErrorView.tsx:26:16
 msgid "Password check has failed"
 msgstr "Пароль введен некорректно"
 
@@ -386,6 +389,10 @@ msgstr "Шосанген"
 msgid "Shousuushii"
 msgstr "Шосуши"
 
+#: app/components/screens/login/EnterCredentialsView.tsx:34:12
+msgid "Sign up"
+msgstr "Регистрация"
+
 #: app/components/screens/home/HomeScreenView.tsx:81:20
 msgid "Statistics"
 msgstr "Статистика"
@@ -436,7 +443,7 @@ msgstr "Цумо, %1"
 msgid "Tsuuiisou"
 msgstr "Цуисо"
 
-#: app/components/screens/login/LoginErrorView.tsx:29:16
+#: app/components/screens/login/LoginErrorView.tsx:27:16
 msgid "Unexpected server error"
 msgstr "Неожиданная ошибка сервера"
 
@@ -485,7 +492,7 @@ msgstr "пустой исход"
 msgid "name"
 msgstr "имя"
 
-#: app/components/screens/login/LoginErrorView.tsx:14:7
+#: app/components/screens/login/LoginErrorView.tsx:13:79
 msgctxt "Name of registration link"
 msgid "register"
 msgstr "регистрация"

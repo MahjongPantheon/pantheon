@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 22:16+0300\n"
+"POT-Creation-Date: 2021-10-27 02:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,50 +144,57 @@ msgstr ""
 msgid "Nagashi mangan"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:18:10
+#: app/components/screens/login/EnterCredentialsView.tsx:21:10
 msgid "Pantheon: log in"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:23:17
+#: app/components/screens/login/EnterCredentialsView.tsx:26:17
 msgid "Email"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:27:17
+#: app/components/screens/login/EnterCredentialsView.tsx:30:17
 msgid "Password"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:31:12
-#: app/components/screens/login/LoginErrorView.tsx:35:12
-msgid "OK"
+#: app/components/screens/login/EnterCredentialsView.tsx:34:12
+msgid "Sign up"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:14:7
+#: app/components/screens/login/EnterCredentialsView.tsx:39:12
+msgid "Log in"
+msgstr ""
+
+#: app/components/screens/login/LoginErrorView.tsx:13:79
 msgctxt "Name of registration link"
 msgid "register"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:20:10
+#: app/components/screens/login/LoginErrorView.tsx:18:10
 msgid "Pantheon"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:24:12
+#: app/components/screens/login/LoginErrorView.tsx:22:12
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:27:16
+#: app/components/screens/login/LoginErrorView.tsx:25:49
 msgid "E-mail is not registered in Pantheon database (%1)"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:28:16
+#: app/components/screens/login/LoginErrorView.tsx:26:16
 msgid "Password check has failed"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:29:16
+#: app/components/screens/login/LoginErrorView.tsx:27:16
 msgid "Unexpected server error"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:31:15
+#: app/components/screens/login/LoginErrorView.tsx:29:15
 msgid "If in doubt, contact the tournament administrator for further instructions."
+msgstr ""
+
+#: app/components/screens/login/LoginErrorView.tsx:33:12
+msgid "OK"
 msgstr ""
 
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:68:16
