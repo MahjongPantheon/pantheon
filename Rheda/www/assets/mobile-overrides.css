@@ -32,6 +32,11 @@
   .prescript-players-list .input-group-sm {
     width: 100%;
   }
+
+  .mobile-flex-max-width > div {
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 @media (max-width: 991.98px) {
