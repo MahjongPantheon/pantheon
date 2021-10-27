@@ -1420,7 +1420,7 @@ msgid ""
 "Set length of game series. Separate rating table for series will be "
 "available."
 msgstr ""
-"Укажите длину игровый серий. Для серий будет доступна отдельная рейтинговая "
+"Укажите длину игровых серий. Для серий будет доступна отдельная рейтинговая "
 "таблица."
 
 msgid "Shou sangen"
