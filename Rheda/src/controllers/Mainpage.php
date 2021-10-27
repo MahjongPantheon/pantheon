@@ -53,35 +53,22 @@ class Mainpage extends Controller
         if ($this->_mainEventRules->seriesLength() == 0) {
             $rules = $this->_mainEventRules->toArray();
             $ruleDescriptions = Config::getRuleDescriptions();
+            $rulesInfo = array_values(array_filter(array_map(function ($key, $value) use (&$ruleDescriptions) {
+                return !isset($ruleDescriptions[$key]) ? null : [
+                    'name' => $key,
+                    'value' => $value === true || $value === false
+                        ? ($value === true ? _t('yes') : _t('no'))
+                        : $value,
+                    'description' => $ruleDescriptions[$key]
+                ];
+            }, array_keys($rules), array_values($rules))));
             return [
                 'admins' => $admins,
                 'finished' => $this->_mainEventRules->isFinished(),
                 'title' => $this->_mainEventRules->eventTitle(),
                 'description' => $this->_mainEventRules->eventDescription(),
                 'isLoggedIn' => $this->_userHasAdminRights(),
-                'rules' => array_values(array_filter(array_map(function ($key, $value) use (&$ruleDescriptions) {
-                    if ($key == 'allowedYaku' ||
-                        $key == 'tenboDivider' ||
-                        $key == 'ratingDivider' ||
-                        $key == 'gameExpirationTime' ||
-                        $key == 'eventTitle' ||
-                        $key == 'eventDescription' ||
-                        $key == 'eventStatHost' ||
-                        $key == 'isTextlog' ||
-                        $key == 'gamesStatus' ||
-                        $key == 'hideResults' ||
-                        $key == 'hideAddReplayButton'
-                    ) { // don't display this for now
-                        return null;
-                    }
-                    return $value === null ? null : [
-                        'name' => $key,
-                        'value' => $value === true || $value === false
-                            ? ($value === true ? _t('yes') : _t('no'))
-                            : $value,
-                        'description' => $ruleDescriptions[$key]
-                    ];
-                }, array_keys($rules), array_values($rules))))
+                'rules' => $rulesInfo
             ];
         }
 

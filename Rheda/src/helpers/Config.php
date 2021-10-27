@@ -269,7 +269,6 @@ class Config
     public static function getRuleDescriptions(): array
     {
         return [
-            'allowedYaku' => _t('Allowed yaku'),
             'startPoints' => _t('Points to start with'),
             'goalPoints' => _t('Points to end game'),
             'playAdditionalRounds' => _t('Play additional rounds'),
@@ -280,8 +279,6 @@ class Config
             'withNagashiMangan' => _t('If nagashi mangan is allowed'),
             'withAtamahane' => _t('If atamahane is enabled'),
             'rulesetTitle' => _t('Basic ruleset name'),
-            'tenboDivider' => null, // not intended to be shown in rule overview
-            'ratingDivider' => null, // not intended to be shown in rule overview
             'tonpuusen' => _t('If games have east rounds only'),
             'startRating' => _t('Rating initial points amount'),
             'riichiGoesToWinner' => _t('If riichi bets left on the table go to winner of the hanchan'),
@@ -290,13 +287,9 @@ class Config
             'withKuitan' => _t('If tanyao in open hand is allowed'),
             'withButtobi' => _t('If game ends when any player goes bankrupt'),
             'withMultiYakumans' => _t('If multiple yakumans are enabled'),
-            'gameExpirationTime' => null, // not intended to be shown in rule overview
             'minPenalty' => _t('Minimal arbitrary penalty amount'),
             'maxPenalty' => _t('Maximal arbitrary penalty amount'),
             'penaltyStep' => _t('Step of penalty amounts'),
-            'eventTitle' => null, // not intended to be shown in rule overview
-            'eventDescription' => null, // not intended to be shown in rule overview
-            'eventStatHost' => null, // not intended to be shown in rule overview
             'redZone' => _t('Red zone duration'),
             'yellowZone' => _t('Yellow zone duration'),
             'timerPolicy' => _t('Timer policy'),
@@ -305,7 +298,6 @@ class Config
             'isTeam' => _t('Team event'),
             'gameDuration' => _t('Game duration in minutes'),
             'withLeadingDealerGameover' => _t('If game ends when leading dealer wins in last round'),
-            'isTextlog' => null, // not intended to be shown in rule overview
             'syncStart' => _t('If all the games should be started simultaneously (tournament mode)'),
             'syncEnd' => _t('If all the games should be finished simultaneously (tournament mode)'),
             'sortByGames' => _t('If rating table should first be sorted by number of games played'),
@@ -313,9 +305,6 @@ class Config
             'useTimer' => _t('If timer should be used'),
             'usePenalty' => _t('If arbitrary penalties are enabled'),
             'seriesLength' => _t('If game series are enabled'),
-            'gamesStatus' => null, // not intended to be shown in rule overview
-            'hideResults' => null, // not intended to be shown in rule overview
-            'hideAddReplayButton' => null, // not intended to be shown in rule overview
             'isPrescripted' => _t('If seating for all games is entered in advance'),
             'minGamesCount' => _t('Minimal amount of games to be played for passing to finals'),
             'chipsValue' => _t('Chips value')
