@@ -69,8 +69,10 @@ class PersonRecoverPassword extends Controller
     private function _sendConfirmationMail($mail, $captcha)
     {
         $debugMessage = '';
+        $emailSanitized = '';
         try {
-            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $emailSanitized = strtolower(trim($mail));
+            if (!filter_var($emailSanitized, FILTER_VALIDATE_EMAIL)) {
                 throw new \Exception(_t('E-mail is invalid'));
             }
 
@@ -80,7 +82,7 @@ class PersonRecoverPassword extends Controller
                 throw new \Exception(_t('Captcha is invalid'));
             }
 
-            $approvalToken = $this->_frey->requestResetPassword($_POST['email']);
+            $approvalToken = $this->_frey->requestResetPassword($emailSanitized);
             $message = _p("Hello!
 
 You have just requested password recovery for your account
@@ -92,11 +94,11 @@ If you didn't attempt to recover password, you can safely ignore this message.
 
 Sincerely yours,
 Pantheon support team
-", Sysconf::GUI_URL() . '/passwordRecovery/' . $approvalToken . '/' . $_POST['email']);
+", Sysconf::GUI_URL() . '/passwordRecovery/' . $approvalToken . '/' . $emailSanitized);
             /* @phpstan-ignore-next-line */
             if (!Sysconf::DEBUG_MODE) {
                 mail(
-                    $_POST['email'],
+                    $emailSanitized,
                     _t('Pantheon: password recovery request'),
                     $message,
                     [
@@ -124,7 +126,7 @@ Pantheon support team
 
             return [
                 'recoverRequest' => true,
-                'email' => $mail,
+                'email' => $emailSanitized,
                 'captcha' => $captcha->getImage(),
                 'uniqid' => $uniqid,
                 'error' => $e->getMessage()
@@ -157,13 +159,14 @@ Pantheon support team
             }
         } else {
             try {
-                if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                $emailSanitized = strtolower(trim($_POST['email'] ?? ''));
+                if (!filter_var($emailSanitized, FILTER_VALIDATE_EMAIL)) {
                     throw new \Exception(_t('E-mail is invalid'));
                 }
                 if (Passwords::calcPasswordStrength($_POST['new_password']) < 14) {
                     throw new \Exception(_t('Password is too weak. Try adding some digits, uppercase letters or punctuation to it, or increase its length.'));
                 }
-                $this->_frey->changePassword($_POST['email'], $_POST['old_password'], $_POST['new_password']);
+                $this->_frey->changePassword($emailSanitized, $_POST['old_password'], $_POST['new_password']);
                 return [
                     'recoverRequest' => false,
                     'error' => false,
@@ -173,7 +176,7 @@ Pantheon support team
                 return [
                     'recoverRequest' => false,
                     'newTmpPassword' => $_POST['old_password'],
-                    'email' => $_POST['email'],
+                    'email' => $emailSanitized,
                     'error' => $e->getMessage()
                 ];
             }

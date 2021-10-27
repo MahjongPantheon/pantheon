@@ -96,9 +96,11 @@ class PersonSignupAdministrative extends Controller
             $checkedData['error_title'] = _t('Player name must be at least 4 characters length. Please enter your real name (and surname).');
         }
 
-        if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+        $emailSanitized = strtolower(trim($data['email']));
+        if (!filter_var($emailSanitized, FILTER_VALIDATE_EMAIL)) {
             $checkedData['error_email'] = _t('Invalid email provided');
         }
+        $checkedData['email'] = $emailSanitized;
 
         if (!empty($data['phone'])) {
             $phoneUtil = PhoneNumberUtil::getInstance();

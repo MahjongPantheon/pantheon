@@ -40,6 +40,7 @@ class PersonSignup extends Controller
         }
 
         if (!empty($_POST['signup_email'])) {
+            $emailSanitized = strtolower(trim($_POST['signup_email']));
             $code = file_get_contents('/tmp/mail_' . md5($_POST['uniqid']));
             @unlink('/tmp/mail_' . md5($_POST['uniqid']));
             if (!empty($code) && $_POST['signup_captcha'] === $code) {
@@ -52,7 +53,7 @@ class PersonSignup extends Controller
                 file_put_contents('/tmp/mail_' . md5($uniqid), $captcha->getCode());
 
                 return [
-                    'email' => filter_var($_POST['signup_email'], FILTER_VALIDATE_EMAIL) ? $_POST['signup_email'] : '',
+                    'email' => filter_var($emailSanitized, FILTER_VALIDATE_EMAIL) ? $emailSanitized : '',
                     'captcha' => $captcha->getImage(),
                     'uniqid' => $uniqid,
                     'error' => _t('Captcha is invalid')
@@ -82,7 +83,9 @@ class PersonSignup extends Controller
         $emailError = null;
         $passwordError = null;
 
-        if (!filter_var($data['signup_email'], FILTER_VALIDATE_EMAIL)) {
+        $emailSanitized = strtolower(trim($data['signup_email']));
+
+        if (!filter_var($emailSanitized, FILTER_VALIDATE_EMAIL)) {
             $emailError = _t('E-mail is invalid or not supported. Note that non-latin e-mail domains are not supported.');
         }
 
@@ -91,7 +94,15 @@ class PersonSignup extends Controller
         }
 
         if (!empty($emailError) || !empty($passwordError)) {
+            $captcha = new Captcha();
+            $captcha->code();
+            $captcha->image();
+            $uniqid = md5((string)mt_rand());
+            file_put_contents('/tmp/mail_' . md5($uniqid), $captcha->getCode());
+
             return [
+                'captcha' => $captcha->getImage(),
+                'uniqid' => $uniqid,
                 'email' => $data['signup_email'],
                 'error' => _t('Some errors occured, see below'),
                 'error_email' => $emailError,

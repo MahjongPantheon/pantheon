@@ -54,14 +54,16 @@ class PersonLogin extends Controller
     {
         $emailError = null;
         $passwordError = null;
+        $emailSanitized = '';
 
         if (!empty($_POST['password'])) {
-            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $emailSanitized = strtolower(trim($_POST['email'] ?? ''));
+            if (!filter_var($emailSanitized, FILTER_VALIDATE_EMAIL)) {
                 $emailError = _t('E-mail is invalid');
             }
 
             try {
-                list($id, $authToken) = $this->_frey->authorize($_POST['email'], $_POST['password']);
+                list($id, $authToken) = $this->_frey->authorize($emailSanitized, $_POST['password']);
                 if (empty($id) || empty($authToken)) {
                     throw new \Exception();
                 }
@@ -79,7 +81,7 @@ class PersonLogin extends Controller
         return [
             'error_email' => $emailError,
             'error_password' => $passwordError,
-            'email' => empty($_POST['email']) ? null : $_POST['email']
+            'email' => empty($emailSanitized) ? null : $emailSanitized
         ];
     }
 }

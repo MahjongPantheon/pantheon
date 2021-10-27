@@ -131,7 +131,8 @@ class PersonProfileEdit extends Controller
         }
 
         if ($this->_superadmin) {
-            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $emailSanitized = strtolower(trim($data['email']));
+            if (!filter_var($emailSanitized, FILTER_VALIDATE_EMAIL)) {
                 $checkedData['error_email'] = _t('Invalid email provided');
             }
         } else {
