@@ -493,6 +493,9 @@ class PlayerStatModel extends Model
             throw new InvalidParametersException('Attempt to use deidented primitive');
         }
         $sessions = SessionPrimitive::findByPlayerAndEvent($this->_ds, $pId, $eId);
+        if (empty($sessions)) {
+            return [];
+        }
 
         $sessionIds = array_map(function (SessionPrimitive $s) {
             return $s->getId();
