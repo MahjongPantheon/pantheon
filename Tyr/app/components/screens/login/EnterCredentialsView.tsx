@@ -13,7 +13,7 @@ export const EnterCredentialsView: React.FC<IProps> = ({onSubmit, signupLink}) =
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // @ts-ignore
-  const btnStyle: CSSProperties = {'justify-self': 'end'};
+  const btnStyle: CSSProperties = {'justify-self': 'end', width: '100%'};
 
   return (
     <div className="page-enter-credentials">
@@ -30,7 +30,7 @@ export const EnterCredentialsView: React.FC<IProps> = ({onSubmit, signupLink}) =
         <label>{loc._t('Password')}</label>
       </div>
       <div className="page-enter-credentials__button-container">
-        <a className="flat-btn flat-btn--large" href={signupLink}>
+        <a className="flat-btn flat-btn--large" href={signupLink} style={{ width: '100%' }}>
           {loc._t('Sign up')}
         </a>
         <button className="flat-btn flat-btn--large"
