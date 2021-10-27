@@ -65,6 +65,11 @@
             the link automatically, but global links should use <a>.
         *}}
         <ul class="navbar-nav mr-auto">
+            {{^eventSelected}}
+                <li class="nav-item">
+                    <a class='nav-link' target='_blank' href='{{tyrUrl}}'>{{_t 'Open game control app'}}</a>
+                </li>
+            {{/eventSelected}}
             {{#eventSelected}}
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navigationMenuButton"
@@ -73,6 +78,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu" aria-labelledby="navigationMenuButton">
                         <a class='dropdown-item' href='/'>{{_t 'To event list'}}</a>
+                        <a class='dropdown-item' target="_blank" href='{{tyrUrl}}'>{{_t 'Open game control app'}}</a>
                         {{#a class='dropdown-item' href='/last'}}{{_t 'Recent games'}}{{/a}}
                         {{#a class='dropdown-item' href='/stat'}}{{_t 'Rating table'}}{{/a}}
                         {{#isTeam}}

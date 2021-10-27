@@ -299,6 +299,7 @@ abstract class Controller
             } else {
                 /* Simple events. */
                 echo $templateEngine->render('Layout', [
+                    'tyrUrl' => Sysconf::MOBILE_CLIENT_URL(),
                     'isOnline' => $this->_mainEventRules->isOnline(),
                     'isTeam' => $this->_mainEventRules->isTeam(),
                     'useTimer' => $this->_mainEventRules->useTimer(),

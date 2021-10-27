@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-27 23:56+0300\n"
+"POT-Creation-Date: 2021-10-28 00:26+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,15 +29,15 @@ msgstr ""
 msgid "type to find someone"
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreen.tsx:33:58
+#: app/components/screens/event-select/EventSelectScreen.tsx:38:58
 msgid "name"
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:35:68
+#: app/components/screens/event-select/EventSelectScreenView.tsx:46:68
 msgid "Select event"
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:46:53
+#: app/components/screens/event-select/EventSelectScreenView.tsx:57:53
 msgid "There is no events you participate in right now"
 msgstr ""
 
@@ -241,11 +241,11 @@ msgstr ""
 msgid "Theme"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:79:54
+#: app/components/screens/settings/SettingsScreenView.tsx:81:54
 msgid "Select another event"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:93:32
+#: app/components/screens/settings/SettingsScreenView.tsx:95:32
 msgid "Log out"
 msgstr ""
 

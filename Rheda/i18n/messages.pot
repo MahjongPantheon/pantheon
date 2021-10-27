@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-27 23:56+0300\n"
+"POT-Creation-Date: 2021-10-28 00:26+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -108,6 +108,36 @@ msgstr ""
 msgid "Earlier"
 msgstr ""
 
+msgid "Aggregated event"
+msgstr ""
+
+msgid "Event owners: "
+msgstr ""
+
+msgid "Finished"
+msgstr ""
+
+msgid "Rules overview"
+msgstr ""
+
+msgid "Player"
+msgstr ""
+
+msgid "Points of best series"
+msgstr ""
+
+msgid "Points of last series"
+msgstr ""
+
+msgid "Best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Open game control app"
+msgstr ""
+
 msgid "Navigation"
 msgstr ""
 
@@ -163,33 +193,6 @@ msgid "Sign in"
 msgstr ""
 
 msgid "Sign up"
-msgstr ""
-
-msgid "Aggregated event"
-msgstr ""
-
-msgid "Event owners: "
-msgstr ""
-
-msgid "Finished"
-msgstr ""
-
-msgid "Rules overview"
-msgstr ""
-
-msgid "Player"
-msgstr ""
-
-msgid "Points of best series"
-msgstr ""
-
-msgid "Points of last series"
-msgstr ""
-
-msgid "Best series"
-msgstr ""
-
-msgid "Last series"
 msgstr ""
 
 msgid "Rheda: mahjong statistic system"
@@ -328,6 +331,16 @@ msgid ""
 "instructions."
 msgstr ""
 
+msgid "Sign up confirmation"
+msgstr ""
+
+msgid "Thank you, your registration was successfully approved."
+msgstr ""
+
+msgid ""
+"You are required to log in with your email and password before proceeding"
+msgstr ""
+
 msgid "Create new user"
 msgstr ""
 
@@ -338,16 +351,6 @@ msgid "Password"
 msgstr ""
 
 msgid "Successfully register new user!"
-msgstr ""
-
-msgid "Sign up confirmation"
-msgstr ""
-
-msgid "Thank you, your registration was successfully approved."
-msgstr ""
-
-msgid ""
-"You are required to log in with your email and password before proceeding"
 msgstr ""
 
 msgid "Personal stats"

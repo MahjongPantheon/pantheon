@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-27 23:56+0300\n"
+"POT-Creation-Date: 2021-10-28 00:26+0300\n"
 "PO-Revision-Date: 2021-10-27 23:56+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -217,7 +217,7 @@ msgstr "Загрузка..."
 msgid "Log in"
 msgstr "Вход"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:93:32
+#: app/components/screens/settings/SettingsScreenView.tsx:95:32
 msgid "Log out"
 msgstr "Выйти из системы"
 
@@ -369,11 +369,11 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:79:54
+#: app/components/screens/settings/SettingsScreenView.tsx:81:54
 msgid "Select another event"
 msgstr "Выбрать другое событие"
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:35:68
+#: app/components/screens/event-select/EventSelectScreenView.tsx:46:68
 msgid "Select event"
 msgstr "Выбрать событие"
 
@@ -429,7 +429,7 @@ msgstr "Тенхо"
 msgid "Theme"
 msgstr "Оформление"
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:46:53
+#: app/components/screens/event-select/EventSelectScreenView.tsx:57:53
 msgid "There is no events you participate in right now"
 msgstr "На данный момент нет активных событий, в которых вы участвуете"
 
@@ -496,7 +496,7 @@ msgstr "дора %1"
 msgid "empty outcome"
 msgstr "пустой исход"
 
-#: app/components/screens/event-select/EventSelectScreen.tsx:33:58
+#: app/components/screens/event-select/EventSelectScreen.tsx:38:58
 msgid "name"
 msgstr "имя"
 
