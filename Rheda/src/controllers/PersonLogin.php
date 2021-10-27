@@ -38,7 +38,7 @@ class PersonLogin extends Controller
                 setcookie(Sysconf::COOKIE_ID_KEY, '', time() - 365 * 24 * 3600, '/', Sysconf::COOKIE_DOMAIN);
                 header('Location: ' . '/');
             } else {
-                header('Location: ' . '/profile/' . $this->_currentPersonId);
+                header('Location: ' . '/profile');
             }
             return false;
         }
