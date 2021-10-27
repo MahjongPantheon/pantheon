@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-27 02:29+0300\n"
+"POT-Creation-Date: 2021-10-27 23:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1374,9 +1374,6 @@ msgid "Control panel: manage events"
 msgstr ""
 
 msgid "Failed to finish event"
-msgstr ""
-
-msgid "Allowed yaku"
 msgstr ""
 
 msgid "Points to start with"

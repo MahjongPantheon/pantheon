@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-27 02:29+0300\n"
+"POT-Creation-Date: 2021-10-27 23:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,6 +39,10 @@ msgstr ""
 
 #: app/components/screens/event-select/EventSelectScreenView.tsx:46:53
 msgid "There is no events you participate in right now"
+msgstr ""
+
+#: app/components/screens/game-result/GameResultScreenView.tsx:76:58
+msgid "No games found"
 msgstr ""
 
 #: app/components/screens/home/HomeScreen.tsx:66:55

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-25 22:16+0300\n"
+"POT-Creation-Date: 2021-10-27 23:56+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -200,9 +200,6 @@ msgstr ""
 
 msgid "All players"
 msgstr "Alle Spielerliste"
-
-msgid "Allowed yaku"
-msgstr ""
 
 #, fuzzy
 msgid "And your riichi bet, please"

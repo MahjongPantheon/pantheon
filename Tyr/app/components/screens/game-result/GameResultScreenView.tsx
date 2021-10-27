@@ -3,6 +3,8 @@ import './page-game-result.css'
 import classNames from 'classnames';
 import {Icon} from '#/components/general/icon/Icon';
 import {IconType} from '#/components/general/icon/IconType';
+import {i18n} from "#/components/i18n";
+import {useContext} from "react";
 
 type IProps = {
   showRepeatButton?: boolean
@@ -20,6 +22,7 @@ export type PlayerScore = {
 export class GameResultScreenView extends React.Component<IProps> {
   render() {
     const {players, showRepeatButton, onCheckClick, onRepeatClick} = this.props;
+    const loc = useContext(i18n);
 
     return (
       <div className="page-game-result">
@@ -70,7 +73,7 @@ export class GameResultScreenView extends React.Component<IProps> {
         )}
         {players.length === 0 && (
           <>
-            <div className="page-game-result__no-games">No games found</div>
+            <div className="page-game-result__no-games">{loc._t('No games found')}</div>
 
             <div className="page-game-result__buttons">
               <div className="flat-btn flat-btn--large" onClick={onCheckClick}>
