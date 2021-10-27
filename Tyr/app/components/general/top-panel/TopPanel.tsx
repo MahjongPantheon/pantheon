@@ -5,9 +5,9 @@ import {IconType} from '#/components/general/icon/IconType';
 import {SearchInput} from '#/components/general/search-input/SearchInput';
 
 type IProps = {
-  onBackClick?: () => void
-  showSearch?: boolean
-  onSearchChange?: (value: string) => void
+  onBackClick?: () => void;
+  showSearch?: boolean;
+  onSearchChange?: (value: string) => void;
 }
 
 export const TopPanel = React.memo(function (props: IProps) {

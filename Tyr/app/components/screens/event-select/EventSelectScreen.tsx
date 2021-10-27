@@ -3,7 +3,7 @@ import {EventSelectScreenView} from '#/components/screens/event-select/EventSele
 import {IComponentProps} from '#/components/IComponentProps';
 import {
   EVENTS_GET_LIST_INIT,
-  GOTO_PREV_SCREEN,
+  GOTO_PREV_SCREEN, OPEN_SETTINGS,
   SELECT_EVENT,
 } from '#/store/actions/interfaces';
 import {Preloader} from "#/components/general/preloader/Preloader";
@@ -15,6 +15,11 @@ export class EventSelectScreen extends React.PureComponent<IComponentProps>{
   private onBackClick() {
     const {dispatch} = this.props;
     dispatch({ type: GOTO_PREV_SCREEN });
+  }
+
+  private onSettingsClick() {
+    const {dispatch} = this.props;
+    dispatch({ type: OPEN_SETTINGS });
   }
 
   private onSelectEvent(eventId: number) {
@@ -38,6 +43,7 @@ export class EventSelectScreen extends React.PureComponent<IComponentProps>{
         events={state.eventsList}
         currentEvent={state.currentEventId}
         onBackClick={this.onBackClick.bind(this)}
+        onSettingClick={this.onSettingsClick.bind(this)}
         onSelectEvent={this.onSelectEvent.bind(this)}
       />
     )

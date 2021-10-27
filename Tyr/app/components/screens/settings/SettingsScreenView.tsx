@@ -76,7 +76,9 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
         </div>
         <div className="page-setting__section">
           <div className="page-setting__section-content">
-            <button onClick={() => onEventSelect()}>{loc._t('Select another event')}</button>
+            <button className="flat-btn flat-btn--large"
+                    style={{ width: '100%' }}
+                    onClick={() => onEventSelect()}>{loc._t('Select another event')}</button>
           </div>
         </div>
         {/*<div className="page-setting__section">*/}

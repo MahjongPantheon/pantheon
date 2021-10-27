@@ -5,12 +5,15 @@ import classNames from 'classnames';
 import {LEventsList} from "#/interfaces/local";
 import {useContext} from "react";
 import {i18n} from "#/components/i18n";
+import {Icon} from "#/components/general/icon/Icon";
+import {IconType} from "#/components/general/icon/IconType";
 
 interface IProps {
   playerName: string;
   events: LEventsList;
   currentEvent: number | undefined;
   onBackClick: () => void;
+  onSettingClick: () => void;
   onSelectEvent: (eventId: number) => void;
 }
 
@@ -20,6 +23,7 @@ export const EventSelectScreenView = React.memo(function (props: IProps) {
     playerName,
     events,
     onBackClick,
+    onSettingClick,
     onSelectEvent,
     currentEvent
   } = props;
@@ -27,7 +31,14 @@ export const EventSelectScreenView = React.memo(function (props: IProps) {
   return (
     <div className="flex-container page-event-select">
       <div className="flex-container__content">
-        <TopPanel onBackClick={onBackClick}/>
+        <div className="top-panel top-panel--between">
+          <div className="svg-button" onClick={onBackClick}>
+            <Icon type={IconType.BACK} />
+          </div>
+          <div className="svg-button svg-button--small" onClick={onSettingClick}>
+            <Icon type={IconType.SETTINGS} />
+          </div>
+        </div>
         <div className="page-event-select__name">{playerName}</div>
         <div className="page-event-select__section">
           {events.length > 0

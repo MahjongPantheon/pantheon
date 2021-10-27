@@ -18,6 +18,10 @@
   display: flex;
 }
 
+.page-setting__section-content button {
+  font-size: var(--font-size-primary);
+}
+
 .page-setting__section-content > div {
   margin-right: 24px;
 }

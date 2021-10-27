@@ -23,6 +23,7 @@ export const persistentMw = (storage: IDBImpl) => (mw: MiddlewareAPI<Dispatch<Ap
     case LOGIN_SUCCESS:
       storage.set(environment.idbTokenKey, 'string', action.payload.token);
       storage.set(environment.idbIdKey, 'int', action.payload.personId);
+      storage.delete([environment.idbEventKey]);
       mw.dispatch({ type: SET_CREDENTIALS, payload: { authToken: action.payload.token, personId: action.payload.personId } });
       break;
     case LOGIN_INIT:
