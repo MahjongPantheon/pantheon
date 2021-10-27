@@ -158,8 +158,8 @@ Pantheon support team
                 ];
             }
         } else {
+            $emailSanitized = strtolower(trim($_POST['email'] ?? ''));
             try {
-                $emailSanitized = strtolower(trim($_POST['email'] ?? ''));
                 if (!filter_var($emailSanitized, FILTER_VALIDATE_EMAIL)) {
                     throw new \Exception(_t('E-mail is invalid'));
                 }

@@ -262,9 +262,7 @@ class Config
     ];
 
     /**
-     * @return (mixed|null)[]
-     *
-     * @psalm-return array{allowedYaku: mixed, startPoints: mixed, goalPoints: mixed, playAdditionalRounds: mixed, subtractStartPoints: mixed, withKazoe: mixed, withKiriageMangan: mixed, withAbortives: mixed, withNagashiMangan: mixed, withAtamahane: mixed, rulesetTitle: mixed, tenboDivider: null, ratingDivider: null, tonpuusen: mixed, startRating: mixed, riichiGoesToWinner: mixed, extraChomboPayments: mixed, chomboPenalty: mixed, withKuitan: mixed, withButtobi: mixed, withMultiYakumans: mixed, gameExpirationTime: null, minPenalty: mixed, maxPenalty: mixed, penaltyStep: mixed, eventTitle: null, eventDescription: null, eventStatHost: null, redZone: mixed, yellowZone: mixed, timerPolicy: mixed, autoSeating: mixed, isOnline: mixed, isTeam: mixed, gameDuration: mixed, withLeadingDealerGameover: mixed, isTextlog: null, syncStart: mixed, syncEnd: mixed, sortByGames: mixed, allowPlayerAppend: mixed, useTimer: mixed, usePenalty: mixed, seriesLength: mixed, gamesStatus: null, hideResults: null, hideAddReplayButton: null, isPrescripted: mixed, minGamesCount: mixed}
+     * @return array
      */
     public static function getRuleDescriptions(): array
     {
