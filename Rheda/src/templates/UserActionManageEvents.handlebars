@@ -65,9 +65,11 @@
                     <a href="/cp/editEvent/{{id}}" class="form-control m-1 btn btn-info">
                         {{_t 'Edit'}}
                     </a>
+                    {{#isSuperadmin}}
                     <a href="/cp/editEventAdmins/{{id}}" class="form-control m-1 btn btn-warning">
                         {{_t 'Privileges'}}
                     </a>
+                    {{/isSuperadmin}}
                     <a href="/cp/finishEvent/{{id}}" class="form-control m-1 btn btn-danger"
                        onclick="return confirmClose({{id}}, '{{title}}')">
                         {{_t 'Finish'}}
