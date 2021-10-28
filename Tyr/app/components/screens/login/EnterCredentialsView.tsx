@@ -12,9 +12,6 @@ export const EnterCredentialsView: React.FC<IProps> = ({onSubmit, signupLink}) =
   const loc = useContext(i18n);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // @ts-ignore
-  const btnStyle: CSSProperties = {'justify-self': 'end', width: '100%'};
-
   return (
     <div className="page-enter-credentials">
       <div className="page-enter-credentials__title">
@@ -34,7 +31,7 @@ export const EnterCredentialsView: React.FC<IProps> = ({onSubmit, signupLink}) =
           {loc._t('Sign up')}
         </a>
         <button className="flat-btn flat-btn--large"
-                style={btnStyle}
+                style={{'justifySelf': 'end', width: '100%'}}
                 onClick={() => onSubmit(email, password)}>
           {loc._t('Log in')}
         </button>
