@@ -134,8 +134,28 @@ class PlayerPrimitive extends Primitive
         if (empty($sessions)) {
             return [];
         }
-        $playerRegData = PlayerRegistrationPrimitive::fetchPlayerRegDataByIds($ds, [$sessions[0]->getEventId()], $sessions[0]->getPlayersIds());
-        return self::_findPlayers($ds, $playerRegData);
+        $playerRegData = PlayerRegistrationPrimitive::fetchPlayerRegDataByIds(
+            $ds,
+            [$sessions[0]->getEventId()],
+            $sessions[0]->getPlayersIds()
+        );
+        $playersData = self::_findPlayers($ds, $playerRegData);
+
+        // Reorder players according to session
+        $playersIndexed = [];
+        /** @var PlayerPrimitive $player */
+        foreach ($playersData['players'] as $player) {
+            $playersIndexed[$player->getId()] = $player;
+        }
+
+        $playersOrdered = array_map(function($playerId) use (&$playersIndexed) {
+            return $playersIndexed[$playerId];
+        }, $sessions[0]->getPlayersIds());
+
+        return [
+            'players' => $playersOrdered,
+            'replacements' => $playersData['replacements']
+        ];
     }
 
     /**
