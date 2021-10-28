@@ -201,9 +201,8 @@
                         {{/canUseSeatingIgnore}}
                         {{#showAddRemove}}
                             <form action="" method="post" class="d-inline-block">
-                                <input type="hidden" name="action_type" value="event_remove_admin"/>
+                                <input type="hidden" name="action_type" value="event_unreg"/>
                                 <input type="hidden" name="id" value="{{id}}"/>
-                                <input type="hidden" name="rule_id" value="{{adminRule}}"/>
                                 <input class="btn btn-danger" type="submit" value="{{_t 'Remove'}}"
                                        onclick="return confirm('{{_p 'Remove player %s?' title}}');"/>
                             </form>
