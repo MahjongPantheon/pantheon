@@ -148,7 +148,7 @@ class PlayerPrimitive extends Primitive
             $playersIndexed[$player->getId()] = $player;
         }
 
-        $playersOrdered = array_map(function($playerId) use (&$playersIndexed) {
+        $playersOrdered = array_map(function ($playerId) use (&$playersIndexed) {
             return $playersIndexed[$playerId];
         }, $sessions[0]->getPlayersIds());
 
