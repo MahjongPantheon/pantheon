@@ -278,7 +278,7 @@ class PlayersController extends Controller
         }
 
         $this->_log->addInfo('Successfully got all active events for current user');
-        return $events;
+        return array_values($events);
     }
 
     /**
