@@ -1,13 +1,11 @@
-import { Dispatch, MiddlewareAPI } from 'redux';
+import {Dispatch, MiddlewareAPI} from 'redux';
 import {
   AppActionTypes,
-  LOGIN_FAIL,
-  LOGIN_INIT,
-  LOGIN_SUCCESS,
   FORCE_LOGOUT,
   GET_ALL_PLAYERS_FAIL,
   GET_ALL_PLAYERS_INIT,
-  GET_ALL_PLAYERS_SUCCESS, GET_ALL_ROUNDS_INIT,
+  GET_ALL_PLAYERS_SUCCESS,
+  GET_ALL_ROUNDS_INIT,
   GET_CHANGES_OVERVIEW_FAIL,
   GET_CHANGES_OVERVIEW_INIT,
   GET_GAME_OVERVIEW_FAIL,
@@ -16,6 +14,10 @@ import {
   GET_LAST_RESULTS_INIT,
   GET_OTHER_TABLE_INIT,
   GET_OTHER_TABLES_LIST_INIT,
+  GET_USERINFO_SUCCESS,
+  LOGIN_FAIL,
+  LOGIN_INIT,
+  LOGIN_SUCCESS,
   SETTINGS_SAVE_LANG,
   START_GAME_FAIL,
   TRACK_ARBITRARY_EVENT,
@@ -23,8 +25,8 @@ import {
   UPDATE_CURRENT_GAMES_FAIL,
   UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
-import { MetrikaService } from '#/services/metrika';
-import { IAppState } from "#/store/interfaces";
+import {MetrikaService} from '#/services/metrika';
+import {IAppState} from "#/store/interfaces";
 
 export const metrika = (ms: MetrikaService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   switch (action.type) {
@@ -55,8 +57,10 @@ export const metrika = (ms: MetrikaService) => (mw: MiddlewareAPI<Dispatch<AppAc
         message: action.payload.toString()
       });
       break;
+    case GET_USERINFO_SUCCESS:
+      ms.setUserId(action.payload.id);
+      break;
     case UPDATE_CURRENT_GAMES_SUCCESS:
-      ms.setUserId(action.payload.playerInfo.id);
       ms.track(MetrikaService.CONFIG_RECEIVED);
       break;
     case UPDATE_CURRENT_GAMES_FAIL:

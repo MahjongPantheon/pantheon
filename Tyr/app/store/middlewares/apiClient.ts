@@ -32,6 +32,9 @@ import {
   GET_OTHER_TABLES_LIST_INIT,
   GET_OTHER_TABLES_LIST_RELOAD,
   GET_OTHER_TABLES_LIST_SUCCESS,
+  GET_USERINFO_FAIL,
+  GET_USERINFO_INIT,
+  GET_USERINFO_SUCCESS,
   GO_TO_CURRENT_GAME,
   GOTO_EVENT_SELECT,
   LOGIN_FAIL,
@@ -50,7 +53,7 @@ import {
   UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
 import {RiichiApiService} from '#/services/riichiApi';
-import {LCurrentGame, LGameConfig, LTimerState, LUser} from '#/interfaces/local';
+import {LCurrentGame, LGameConfig, LTimerState} from '#/interfaces/local';
 import {RemoteError} from '#/services/remoteError';
 import {IAppState} from '../interfaces';
 import {SessionState} from "#/interfaces/remote";
@@ -176,19 +179,30 @@ function loginWithRetry(data: { email: string, password: string }, api: RiichiAp
   runWithRetry();
 }
 
+function getUserinfo(personId: number, api: RiichiApiService, next: Dispatch) {
+  next({ type: GET_USERINFO_INIT });
+  api.getUserInfo([personId])
+    .then((overview) => next({ type: GET_USERINFO_SUCCESS, payload: overview[0] }))
+    .catch((error: RemoteError) => next({ type: GET_USERINFO_FAIL, payload: error }));
+}
+
+/*
+Promise<LUser[]>,
+    api.getUserInfo([currentPersonId]),
+ */
+
 function updateCurrentGames(api: RiichiApiService, dispatchNext: Dispatch, dispatchToStore: Dispatch, currentPersonId: number, eventId: number) {
   dispatchNext({ type: UPDATE_CURRENT_GAMES_INIT });
 
   // TODO: make single method? should become faster!
-  const promises: [Promise<LCurrentGame[]>, Promise<LUser[]>, Promise<LGameConfig>, Promise<LTimerState>] = [
+  const promises: [Promise<LCurrentGame[]>,  Promise<LGameConfig>, Promise<LTimerState>] = [
     api.getCurrentGames(currentPersonId, eventId),
-    api.getUserInfo([currentPersonId]),
     api.getGameConfig(eventId),
     api.getTimerState(eventId)
   ];
 
-  Promise.all(promises).then(([games, [playerInfo], gameConfig, timerState]) => {
-    dispatchNext({ type: UPDATE_CURRENT_GAMES_SUCCESS, payload: { games, playerInfo, gameConfig, timerState }});
+  Promise.all(promises).then(([games, gameConfig, timerState]) => {
+    dispatchNext({ type: UPDATE_CURRENT_GAMES_SUCCESS, payload: { games, gameConfig, timerState }});
     if (games.length > 0) {
       dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: games[0].hashcode } );
     }
@@ -310,6 +324,7 @@ function startupWithAuth(
       type: SET_CREDENTIALS,
       payload: {authToken: token, personId: personId}
     });
+    getUserinfo(personId, api, dispatchNext);
     if (!eventId) {
       dispatchToStore({type: GOTO_EVENT_SELECT});
     } else {

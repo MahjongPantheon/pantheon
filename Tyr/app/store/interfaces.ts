@@ -95,6 +95,7 @@ export interface IAppState {
   showAdditionalTableInfo: boolean;
 
   updateCurrentGamesError?: ErrorState;
+  getUserinfoError?: ErrorState;
 
   isUniversalWatcher: boolean;
   settings: {

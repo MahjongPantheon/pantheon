@@ -54,6 +54,9 @@ export const UPDATE_CURRENT_GAMES_FAIL = 'UPDATE_CURRENT_GAMES_FAIL';
 export const GET_GAME_OVERVIEW_INIT = 'GET_GAME_OVERVIEW_INIT';
 export const GET_GAME_OVERVIEW_SUCCESS = 'GET_GAME_OVERVIEW_SUCCESS';
 export const GET_GAME_OVERVIEW_FAIL = 'GET_GAME_OVERVIEW_FAIL';
+export const GET_USERINFO_INIT = 'GET_USERINFO_INIT';
+export const GET_USERINFO_SUCCESS = 'GET_USERINFO_SUCCESS';
+export const GET_USERINFO_FAIL = 'GET_USERINFO_FAIL';
 export const FORCE_LOGOUT = 'FORCE_LOGOUT';
 export const GET_OTHER_TABLES_LIST_INIT = 'GET_OTHER_TABLES_LIST_INIT';
 export const GET_OTHER_TABLES_LIST_RELOAD = 'GET_OTHER_TABLES_LIST_RELOAD';
@@ -277,7 +280,6 @@ interface UpdateCurrentGamesActionSuccess {
   type: typeof UPDATE_CURRENT_GAMES_SUCCESS;
   payload: {
     games: LCurrentGame[];
-    playerInfo: LUser;
     gameConfig: LGameConfig;
     timerState: LTimerState;
   }
@@ -296,6 +298,18 @@ interface GetGameOverviewActionSuccess {
 }
 interface GetGameOverviewActionFail {
   type: typeof GET_GAME_OVERVIEW_FAIL;
+  payload: RemoteError;
+}
+interface GetUserinfoActionInit {
+  type: typeof GET_USERINFO_INIT;
+  payload: number;
+}
+interface GetUserinfoActionSuccess {
+  type: typeof GET_USERINFO_SUCCESS;
+  payload: LUser;
+}
+interface GetUserinfoActionFail {
+  type: typeof GET_USERINFO_FAIL;
   payload: RemoteError;
 }
 interface ForceLogoutAction {
@@ -599,6 +613,9 @@ export type AppActionTypes =
   | GetAllRoundsActionInit
   | GetAllRoundsActionSuccess
   | GetAllRoundsActionFail
+  | GetUserinfoActionInit
+  | GetUserinfoActionSuccess
+  | GetUserinfoActionFail
   | SetTimerAction
   | UpdateTimerDataAction
   | GetChangesOverviewActionSuccess

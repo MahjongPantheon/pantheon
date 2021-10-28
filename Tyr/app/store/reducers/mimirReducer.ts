@@ -27,7 +27,7 @@ import {
   GET_OTHER_TABLE_SUCCESS,
   GET_OTHER_TABLES_LIST_FAIL,
   GET_OTHER_TABLES_LIST_INIT,
-  GET_OTHER_TABLES_LIST_SUCCESS,
+  GET_OTHER_TABLES_LIST_SUCCESS, GET_USERINFO_FAIL, GET_USERINFO_INIT, GET_USERINFO_SUCCESS,
   HISTORY_INIT,
   LOGIN_FAIL,
   LOGIN_INIT,
@@ -103,6 +103,36 @@ export function mimirReducer(
         currentScreen: 'login', //todo remove
         loginError: undefined
       };
+    case GET_USERINFO_INIT:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          players: true
+        }
+      };
+    case GET_USERINFO_SUCCESS:
+      return {
+        ...state,
+        currentPlayerId: action.payload.id,
+        currentPlayerDisplayName: action.payload.displayName,
+        loading: {
+          ...state.loading,
+          players: false
+        }
+      };
+    case GET_USERINFO_FAIL:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          players: false
+        },
+        getUserinfoError: { // Stored for conformity, but is not displayed anywhere now.
+          details: action.payload,
+          message: action.payload.message
+        }
+      };
     case UPDATE_CURRENT_GAMES_INIT:
       return {
         ...state,
@@ -133,8 +163,6 @@ export function mimirReducer(
       return {
         ...state,
         gameConfig: action.payload.gameConfig,
-        currentPlayerId: action.payload.playerInfo.id,
-        currentPlayerDisplayName: action.payload.playerInfo.displayName,
         currentSessionHash: action.payload.games[0] && action.payload.games[0].hashcode,
         players,
         mapIdToPlayer,
@@ -174,7 +202,7 @@ export function mimirReducer(
         allPlayersError: undefined
       };
     case GET_ALL_PLAYERS_SUCCESS:
-      let nextState = {
+      return {
         ...state,
         loading: {
           ...state.loading,
@@ -183,8 +211,6 @@ export function mimirReducer(
         allPlayers: action.payload,
         allPlayersError: undefined
       }
-
-      return nextState;
     case GET_ALL_PLAYERS_FAIL:
       return {
         ...state,
