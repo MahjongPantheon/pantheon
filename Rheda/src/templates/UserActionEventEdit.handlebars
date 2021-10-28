@@ -105,7 +105,9 @@
         {{^isTournament}}
           <div class="form-group">
             <label for="seriesLength">{{_t 'Series'}}</label>
-            <input type="number" class="form-control{{#error_seriesLength}} is-invalid{{/error_seriesLength}}" id="seriesLength"
+            <input type="number" class="form-control{{#error_seriesLength}} is-invalid{{/error_seriesLength}}"
+                   id="seriesLength"
+                   min="0"
                    value="{{seriesLength}}"
                    name="seriesLength">
             {{#error_seriesLength}}
@@ -118,7 +120,9 @@
 
           <div class="form-group">
             <label for="minGames">{{_t 'Minimal games count'}}</label>
-            <input type="number" class="form-control{{#error_minGames}} is-invalid{{/error_minGames}}" id="minGames"
+            <input type="number" class="form-control{{#error_minGames}} is-invalid{{/error_minGames}}"
+                   id="minGames"
+                   min="0"
                    value="{{minGames}}"
                    name="minGames">
             {{#error_minGames}}

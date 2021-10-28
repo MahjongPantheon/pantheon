@@ -245,12 +245,12 @@ class UserActionEventEdit extends Controller
             $checkedData['error_lobbyId'] = _t('Lobby id must be in format: C####, where # is a digit');
         }
 
-        if (!empty($data['seriesLength']) && !is_numeric($data['seriesLength'])) {
-            $checkedData['error_seriesLength'] = _t('Series length must be numeric value');
+        if (!empty($data['seriesLength']) && (!is_numeric($data['seriesLength']) || $data['seriesLength'] < 0)) {
+            $checkedData['error_seriesLength'] = _t('Series length must be positive numeric value');
         }
 
-        if (!empty($data['minGames']) && !is_numeric($data['minGames'])) {
-            $checkedData['error_minGames'] = _t('Minimal games count must be numeric value');
+        if (!empty($data['minGames']) && (!is_numeric($data['minGames']) || $data['minGames'] < 0)) {
+            $checkedData['error_minGames'] = _t('Minimal games count must be positive numeric value');
         }
 
         foreach ($checkedData as $key => $val) {
