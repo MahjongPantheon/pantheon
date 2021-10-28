@@ -158,6 +158,12 @@ export function screenManageReducer(
       };
     case GOTO_PREV_SCREEN:
       if (!state.gameConfig) {
+        if (state.currentScreen === 'settings') {
+          return {
+            ...state,
+            currentScreen: 'eventSelector'
+          };
+        }
         return state;
       }
 
@@ -169,10 +175,10 @@ export function screenManageReducer(
           currentOutcome = undefined;
           break;
         case 'otherTablesList':
-        case 'settings':
         case 'newGame':
         case 'currentGame':
         case 'eventSelector':
+        case 'settings':
           if (state.currentEventId) {
             prevScreen = 'overview';
           }

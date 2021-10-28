@@ -32,9 +32,11 @@ export const EventSelectScreenView = React.memo(function (props: IProps) {
     <div className="flex-container page-event-select">
       <div className="flex-container__content">
         <div className="top-panel top-panel--between">
-          <div className="svg-button" onClick={onBackClick}>
-            <Icon type={IconType.BACK} />
-          </div>
+          {events.length > 0
+            ? <div className="svg-button" onClick={onBackClick}>
+                <Icon type={IconType.BACK} />
+              </div>
+            : null}
           <div className="svg-button svg-button--small" onClick={onSettingClick}>
             <Icon type={IconType.SETTINGS} />
           </div>
