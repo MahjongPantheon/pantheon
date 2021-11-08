@@ -29,6 +29,8 @@ class Mailer
      */
     protected static function _send(string $to, string $subject, string $message, array $additionalHeaders, string $additionalParams)
     {
+        $subject = '=?utf-8?B?' . base64_encode($subject) . '?=';
+
         /* @phpstan-ignore-next-line */
         if (Sysconf::MAIL_MODE === 'local_mta') {
             mail($to, $subject, $message, $additionalHeaders, $additionalParams);
