@@ -68,7 +68,6 @@ class PersonRecoverPassword extends Controller
      */
     private function _sendConfirmationMail($mail, $captcha)
     {
-        $debugMessage = '';
         $emailSanitized = '';
         try {
             $emailSanitized = strtolower(trim($mail));
@@ -83,35 +82,7 @@ class PersonRecoverPassword extends Controller
             }
 
             $approvalToken = $this->_frey->requestResetPassword($emailSanitized);
-            $message = _p("Hello!
-
-You have just requested password recovery for your account
-in the Pantheon system. Please follow next link to reset your password:
-
-%s
-
-If you didn't attempt to recover password, you can safely ignore this message.
-
-Sincerely yours,
-Pantheon support team
-", Sysconf::GUI_URL() . '/passwordRecovery/' . $approvalToken . '/' . $emailSanitized);
-            /* @phpstan-ignore-next-line */
-            if (!Sysconf::DEBUG_MODE) {
-                mail(
-                    $emailSanitized,
-                    _t('Pantheon: password recovery request'),
-                    $message,
-                    [
-                        'MIME-Version' => '1.0',
-                        'Content-Type' => 'text/plain; charset=utf-8',
-                        'List-Unsubscribe' => Sysconf::MAILER_ADDR(),
-                        'X-Mailer' => 'PantheonNotifier/2.0'
-                    ],
-                    '-f ' . Sysconf::MAILER_ADDR()
-                );
-            } else {
-                $debugMessage = $message;
-            }
+            $debugMessage = Mailer::sendPasswordRecovery($approvalToken, $emailSanitized);
             return [
                 'debugMessage' => $debugMessage,
                 'recoverRequest' => true,
