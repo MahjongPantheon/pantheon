@@ -31,7 +31,7 @@ class Mailer
     {
         $additionalHeaders['Content-Transfer-Encoding'] = 'base64';
 
-        $message = preg_replace('#https://(\S+)#is', '<a href="$0">$0</a>', $message);
+        $message = preg_replace('#https://(\S+)#is', '<a href="$0">$0</a>', nl2br($message));
         $message = "<html><head><meta charset='UTF-8'><title>$subject</title></head><body>$message</body></html>";
         $message = base64_encode($message);
         $subject = '=?utf-8?B?' . base64_encode($subject) . '?=';
