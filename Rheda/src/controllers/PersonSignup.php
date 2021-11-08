@@ -104,7 +104,7 @@ class PersonSignup extends Controller
             return [
                 'captcha' => $captcha->getImage(),
                 'uniqid' => $uniqid,
-                'email' => $data['signup_email'],
+                'email' => $emailSanitized,
                 'error' => _t('Some errors occured, see below'),
                 'error_email' => $emailError,
                 'error_password' => $passwordError
@@ -112,9 +112,9 @@ class PersonSignup extends Controller
         }
 
         try {
-            $approvalCode = $this->_frey->requestRegistration($data['signup_email'], $data['signup_password']);
+            $approvalCode = $this->_frey->requestRegistration($emailSanitized, $data['signup_password']);
             $url = Url::makeConfirmation($approvalCode);
-            $debugUrl = Mailer::sendSignupMail($data['signup_email'], $url);
+            $debugUrl = Mailer::sendSignupMail($emailSanitized, $url);
 
             return [
                 'error' => null,

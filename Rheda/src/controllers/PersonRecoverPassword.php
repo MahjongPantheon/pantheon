@@ -69,10 +69,10 @@ class PersonRecoverPassword extends Controller
      */
     private function _sendConfirmationMail($mail, $captcha)
     {
-        $emailSanitized = '';
+        $emailSanitized = strtolower(trim($mail));
         try {
-            $emailSanitized = strtolower(trim($mail));
             if (!filter_var($emailSanitized, FILTER_VALIDATE_EMAIL)) {
+                $emailSanitized = '';
                 throw new \Exception(_t('E-mail is invalid'));
             }
 
