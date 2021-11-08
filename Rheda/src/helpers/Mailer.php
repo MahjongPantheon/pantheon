@@ -29,6 +29,11 @@ class Mailer
      */
     protected static function _send(string $to, string $subject, string $message, array $additionalHeaders, string $additionalParams)
     {
+        $additionalHeaders['Content-Transfer-Encoding'] = 'base64';
+
+        $message = preg_replace('#https://(\S+)#is', '<a href="$0">$0</a>', $message);
+        $message = "<html><head><meta charset='UTF-8'><title>$subject</title></head><body>$message</body></html>";
+        $message = base64_encode($message);
         $subject = '=?utf-8?B?' . base64_encode($subject) . '?=';
 
         /* @phpstan-ignore-next-line */
@@ -83,7 +88,7 @@ Pantheon support team
 ", Sysconf::GUI_URL() . $regLink),
             [
                 'MIME-Version' => '1.0',
-                'Content-Type' => 'text/plain; charset=utf-8',
+                'Content-Type' => 'text/html; charset=UTF-8',
                 'List-Unsubscribe' => Sysconf::MAILER_ADDR(),
                 'X-Mailer' => 'PantheonNotifier/2.0'
             ],
@@ -124,7 +129,7 @@ Pantheon support team
                 $message,
                 [
                     'MIME-Version' => '1.0',
-                    'Content-Type' => 'text/plain; charset=utf-8',
+                    'Content-Type' => 'text/html; charset=UTF-8',
                     'List-Unsubscribe' => Sysconf::MAILER_ADDR(),
                     'X-Mailer' => 'PantheonNotifier/2.0'
                 ],
