@@ -21,6 +21,7 @@ use LordDashMe\SimpleCaptcha\Captcha;
 
 require_once __DIR__ . '/../helpers/Url.php';
 require_once __DIR__ . '/../helpers/Passwords.php';
+require_once __DIR__ . '/../helpers/Mailer.php';
 
 class PersonSignup extends Controller
 {
