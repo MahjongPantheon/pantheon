@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Hoa\Compiler\Llk\Rule\Rule;
+
 require_once __DIR__ . '/../models/Event.php';
 require_once __DIR__ . '/../models/EventSeries.php';
 require_once __DIR__ . '/../models/EventUserManagement.php';
@@ -40,6 +42,7 @@ class EventsController extends Controller
      * @param int $lobbyId Tenhou lobby id for online tournaments
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
+     * @param string $rulesetChangesJson Json-encoded changes for base ruleset
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -56,7 +59,8 @@ class EventsController extends Controller
         $minGamesCount,
         $lobbyId,
         $isTeam,
-        $isPrescripted
+        $isPrescripted,
+        $rulesetChangesJson
     ) {
         $this->_log->addInfo('Creating new event with [' . $ruleset . '] rules');
 
@@ -69,6 +73,12 @@ class EventsController extends Controller
             throw new BadActionException(' Unsupported type of event requested');
         }
 
+        try {
+            $rulesetChanges = json_decode($rulesetChangesJson, true);
+        } catch (\Exception $e) {
+            $rulesetChanges = [];
+        }
+
         /** @phpstan-ignore-next-line */
         $statHost = $this->_config->getValue('rhedaUrl') . '/eid' . EventPrimitive::ID_PLACEHOLDER;
         $event = (new EventPrimitive($this->_ds))
@@ -79,6 +89,7 @@ class EventsController extends Controller
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
             ->setRuleset(Ruleset::instance($ruleset))
+            ->setRulesetChanges($rulesetChanges)
             ->setStatHost($statHost)
         ;
 
@@ -151,6 +162,7 @@ class EventsController extends Controller
      * @param int $lobbyId Tenhou lobby id for online tournaments
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
+     * @param string $rulesetChangesJson Json-encoded changes for base ruleset
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -167,7 +179,8 @@ class EventsController extends Controller
         $minGamesCount,
         $lobbyId,
         $isTeam,
-        $isPrescripted
+        $isPrescripted,
+        $rulesetChangesJson
     ) {
         $this->_log->addInfo('Updating event with [' . $ruleset . '] rules');
 
@@ -182,6 +195,12 @@ class EventsController extends Controller
             throw new BadActionException("You don't have enough privileges to modify this event");
         }
 
+        try {
+            $rulesetChanges = json_decode($rulesetChangesJson, true);
+        } catch (\Exception $e) {
+            $rulesetChanges = [];
+        }
+
         $event->setTitle($title)
             ->setDescription($description)
             ->setGameDuration($gameDuration)
@@ -189,6 +208,7 @@ class EventsController extends Controller
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
             ->setRuleset(Ruleset::instance($ruleset))
+            ->setRulesetChanges($rulesetChanges)
         ;
 
         if ($event->getSyncStart()) { // Should be a tournament
@@ -252,7 +272,8 @@ class EventsController extends Controller
             'seriesLength' => $event->getSeriesLength(),
             'minGames' => $event->getMinGamesCount(),
             'isTeam' => $event->getIsTeam(),
-            'isPrescripted' => $event->getIsPrescripted()
+            'isPrescripted' => $event->getIsPrescripted(),
+            'rulesetChanges' => json_encode($event->getRulesetChanges())
         ];
 
         $this->_log->addInfo('Successfully got event settings for event #' . $id);
@@ -957,19 +978,32 @@ class EventsController extends Controller
     /**
      * Get available rulesets list
      *
-     * @return string[]
+     * @return array
      */
     public function getRulesets()
     {
         $this->_log->addInfo('Receiving rulesets list');
         $list = [
-            'ema' => 'European Mahjong Association rules',
-            'jpmlA' => 'Japanese Professional Mahjong League A rules',
-            'wrc' => 'World Riichi Championship rules',
-            'tenhounet' => 'Tenhou.net compatible rules'
+            'ema' => [
+                'description' => 'European Mahjong Association rules',
+                'originalRules' => Ruleset::instance('ema')->getRawRuleset()
+            ],
+            'jpmlA' => [
+                'description' => 'Japanese Professional Mahjong League A rules',
+                'originalRules' => Ruleset::instance('jpmlA')->getRawRuleset()
+            ],
+            'wrc' => [
+                'description' => 'World Riichi Championship rules',
+                'originalRules' => Ruleset::instance('wrc')->getRawRuleset()
+            ],
+            'tenhounet' => [
+                'description' => 'Tenhou.net compatible rules',
+                'originalRules' => Ruleset::instance('tenhounet')->getRawRuleset()
+            ]
         ];
+
         $this->_log->addInfo('Successfully received rulesets');
-        return $list;
+        return ['rules' => $list, 'fields' => Ruleset::fieldTypes()];
     }
 
     /**

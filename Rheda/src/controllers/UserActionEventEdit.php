@@ -179,24 +179,28 @@ class UserActionEventEdit extends Controller
             'isTournament' => !!($prevData['isTournament'] ?? 0),
             'isOnline' => !!($prevData['isOnline'] ?? 0),
             'lobbyId' => 'C' . substr($prevData['lobbyId'], 1),
-            'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset']),
+            'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset'], $prevData['rulesetChanges']),
             'available_timezones' => $this->_getTimezones(empty($prevData['timezone']) ? '' : $prevData['timezone']),
         ]);
     }
 
     /**
      * @param string $current
+     * @param array $changes
      * @return array
      */
-    protected function _getRulesets($current)
+    protected function _getRulesets($current, $changes = [])
     {
         $rulesets = $this->_mimir->getRulesets();
         $output = [];
-        foreach ($rulesets as $ident => $name) {
+        foreach ($rulesets['rules'] as $ident => $data) {
             $output []= [
                 'ident' => $ident,
-                'name' => $name,
-                'selected' => $current === $ident
+                'name' => $data['description'],
+                'originalRules' => $data['originalRules'],
+                'changes' => $current === $ident ? $changes : [],
+                'selected' => $current === $ident,
+                'fields' => $rulesets['fields']
             ];
         }
         return $output;
@@ -284,7 +288,8 @@ class UserActionEventEdit extends Controller
             intval($checkData['minGames'] ?? 0),
             empty($checkData['lobbyId']) ? 0 : intval('1' . str_replace('C', '', $checkData['lobbyId'])),
             empty($checkData['isTeam']) ? false : true,
-            empty($checkData['isPrescripted']) ? false : true
+            empty($checkData['isPrescripted']) ? false : true,
+            empty($checkData['changes']) ? '{}' : $checkData['changes']
         );
         $ruleId = $this->_frey->addRuleForPerson(
             FreyClient::PRIV_ADMIN_EVENT,
@@ -321,7 +326,8 @@ class UserActionEventEdit extends Controller
             intval($checkData['minGames'] ?? 0),
             empty($checkData['lobbyId']) ? 0 : intval('1' . str_replace('C', '', $checkData['lobbyId'])),
             empty($checkData['isTeam']) ? false : true,
-            empty($checkData['isPrescripted']) ? false : true
+            empty($checkData['isPrescripted']) ? false : true,
+            empty($checkData['changes']) ? '{}' : $checkData['changes']
         );
         if (!$success) {
             $this->_error = [

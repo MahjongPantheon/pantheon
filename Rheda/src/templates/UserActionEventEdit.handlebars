@@ -16,6 +16,15 @@
 *}}
 {{#id}}<h3>{{_t 'Update event'}}</h3>{{/id}}
 {{^id}}<h3>{{_t 'Create new event'}}</h3>{{/id}}
+
+{{!*
+    TODO:
+    - take changes from available_rulesets.changes
+    - take field types from available_rulesets.fields
+    - take original rules from available_rulesets.originalRules (as array)
+    - add 'changes' field containing JSON of all changes in ruleset
+*}}
+
 <br>
 {{#error}}
   <div class="alert alert-danger" role="alert">{{error}}</div>
