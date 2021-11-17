@@ -17,7 +17,7 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/Ruleset.php';
+require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
 require_once __DIR__ . '/../../src/primitives/Session.php';
 require_once __DIR__ . '/../../src/primitives/Round.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';

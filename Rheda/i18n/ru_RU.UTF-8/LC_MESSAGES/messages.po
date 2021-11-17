@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-29 00:09+0300\n"
+"POT-Creation-Date: 2021-11-23 00:37+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -782,7 +782,7 @@ msgid "If automatic seating is allowed"
 msgstr "Включена ли автоматическая рассадка"
 
 msgid "If chombo should be payed in points"
-msgstr "Должно ли быть чомбо выплачено сразу"
+msgstr "Должно ли быть чомбо выплачено сразу как обратный манган"
 
 msgid "If event is online"
 msgstr "Является ли рейтинг онлайновым"
@@ -1311,6 +1311,9 @@ msgstr "Игрок замены"
 msgid "Reset the timer"
 msgstr "Сбросить таймер"
 
+msgid "Reset to default"
+msgstr "Сброс к умолчанию"
+
 msgid "Revoke"
 msgstr "Отозвать"
 
@@ -1372,6 +1375,9 @@ msgstr "Обзор правил"
 msgid "Ruleset"
 msgstr "Правила"
 
+msgid "Ruleset tuning"
+msgstr "Настройка рулсета"
+
 msgid "Ryan peikou"
 msgstr "Рянпейко"
 
@@ -1432,6 +1438,9 @@ msgstr "Шосанген"
 
 msgid "Shou suushii"
 msgstr "Шосуши"
+
+msgid "Should uma bonus be divided equally in case of score equality"
+msgstr "Должна ли быть ума разделена поровну в случае равенства очков"
 
 msgid "Sign in"
 msgstr "Войти"
@@ -1678,6 +1687,9 @@ msgstr "Цуисо"
 
 msgid "Type"
 msgstr "Тип"
+
+msgid "Uma bonus size"
+msgstr "Ума"
 
 msgid "Unable to generate seating"
 msgstr "Невозможно сгенерировать рассадку"

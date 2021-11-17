@@ -273,7 +273,7 @@ class EventsController extends Controller
             'minGames' => $event->getMinGamesCount(),
             'isTeam' => $event->getIsTeam(),
             'isPrescripted' => $event->getIsPrescripted(),
-            'rulesetChanges' => json_encode($event->getRulesetChanges())
+            'rulesetChanges' => json_encode($event->getRulesetChanges() ?: [])
         ];
 
         $this->_log->addInfo('Successfully got event settings for event #' . $id);

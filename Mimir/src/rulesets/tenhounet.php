@@ -16,6 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Mimir;
+
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
 return [

@@ -19,22 +19,27 @@ namespace Mimir;
 
 class Ruleset
 {
+    /**
+     * @param string $rulesetName
+     * @return Ruleset
+     * @throws \Exception
+     */
     public static function instance($rulesetName)
     {
         $ruleset = new Ruleset();
         $ruleset->_title = $rulesetName;
         switch ($rulesetName) {
             case 'ema':
-                $ruleset->_ruleset = require_once './ema.php';
+                $ruleset->_ruleset = require __DIR__ . '/ema.php';
                 break;
             case 'wrc':
-                $ruleset->_ruleset = require_once './wrc.php';
+                $ruleset->_ruleset = require __DIR__ . '/wrc.php';
                 break;
             case 'jpmlA':
-                $ruleset->_ruleset = require_once './jpmlA.php';
+                $ruleset->_ruleset = require __DIR__ . '/jpmlA.php';
                 break;
             case 'tenhounet':
-                $ruleset->_ruleset = require_once './tenhounet.php';
+                $ruleset->_ruleset = require __DIR__ . '/tenhounet.php';
                 break;
             default:
                 throw new \Exception('Ruleset not found');
@@ -81,7 +86,8 @@ class Ruleset
             'withLeadingDealerGameOver' => 'bool',
             'replacementPlayerFixedPoints' => 'int',
             'replacementPlayerOverrideUma' => 'int',
-            'allowedYaku'           => 'select'
+            'allowedYaku'           => 'select',
+            'chipsValue'            => 'int',
         ];
     }
 
@@ -133,11 +139,11 @@ class Ruleset
     protected function complexUma($scores = [])
     {
         rsort($scores);
-        $minusedPlayers = array_reduce($scores, function($acc, $score) {
+        $minusedPlayers = array_reduce($scores, function ($acc, $score) {
             return $acc + ($score < $this->startPoints() ? 1 : 0);
         }, 0);
 
-        switch($minusedPlayers) {
+        switch ($minusedPlayers) {
             case 3:
                 $uma = [1 => 120, -10, -30, -80];
                 break;
@@ -169,7 +175,7 @@ class Ruleset
     }
 
     /**
-     * @param $changes
+     * @param array $changes
      * @return Ruleset
      */
     public function applyChanges($changes)

@@ -179,7 +179,8 @@ class UserActionEventEdit extends Controller
             'isTournament' => !!($prevData['isTournament'] ?? 0),
             'isOnline' => !!($prevData['isOnline'] ?? 0),
             'lobbyId' => 'C' . substr($prevData['lobbyId'], 1),
-            'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset'], $prevData['rulesetChanges']),
+            'currentRuleset' => $prevData['ruleset'],
+            'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset'], json_decode($prevData['rulesetChanges'], true)),
             'available_timezones' => $this->_getTimezones(empty($prevData['timezone']) ? '' : $prevData['timezone']),
         ]);
     }
@@ -197,10 +198,11 @@ class UserActionEventEdit extends Controller
             $output []= [
                 'ident' => $ident,
                 'name' => $data['description'],
-                'originalRules' => $data['originalRules'],
-                'changes' => $current === $ident ? $changes : [],
+                'originalRules' => json_encode($data['originalRules']),
+                'changes' => ($current === $ident && $changes != null) ? json_encode($changes) : '{}',
                 'selected' => $current === $ident,
-                'fields' => $rulesets['fields']
+                'fields' => json_encode($rulesets['fields']),
+                'fields_names' => json_encode(Config::getRuleDescriptions())
             ];
         }
         return $output;
@@ -255,6 +257,18 @@ class UserActionEventEdit extends Controller
 
         if (!empty($data['minGames']) && (!is_numeric($data['minGames']) || $data['minGames'] < 0)) {
             $checkedData['error_minGames'] = _t('Minimal games count must be positive numeric value');
+        }
+
+        $checkedData['rulesetChanges'] = [];
+        foreach ($checkedData as $key => $val) {
+            if (strpos($key, 'tuning_') === 0) {
+                unset($checkedData[$key]);
+                if ($val === 'on') {
+                    $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = true;
+                } else if (is_numeric($val)) {
+                    $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = intval($val);
+                }
+            }
         }
 
         foreach ($checkedData as $key => $val) {
@@ -327,7 +341,7 @@ class UserActionEventEdit extends Controller
             empty($checkData['lobbyId']) ? 0 : intval('1' . str_replace('C', '', $checkData['lobbyId'])),
             empty($checkData['isTeam']) ? false : true,
             empty($checkData['isPrescripted']) ? false : true,
-            empty($checkData['changes']) ? '{}' : $checkData['changes']
+            empty($checkData['rulesetChanges']) ? '{}' : (json_encode($checkData['rulesetChanges']) ?: '{}')
         );
         if (!$success) {
             $this->_error = [

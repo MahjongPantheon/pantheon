@@ -443,7 +443,7 @@ class EventPrimitive extends Primitive
      */
     public function getRuleset()
     {
-        return $this->_ruleset->applyChanges($this->_rulesetChanges);
+        return $this->_ruleset->applyChanges($this->_rulesetChanges ?: []);
     }
 
     /**
@@ -457,7 +457,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param $changes
+     * @param array $changes
      * @return EventPrimitive
      */
     public function setRulesetChanges($changes)

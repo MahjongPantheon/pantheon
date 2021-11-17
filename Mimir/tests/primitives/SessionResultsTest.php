@@ -17,7 +17,7 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/Ruleset.php';
+require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
 require_once __DIR__ . '/../../src/primitives/SessionResults.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
 require_once __DIR__ . '/../../src/primitives/Round.php';
@@ -70,6 +70,8 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $this->_ruleset->setRule('subtractStartPoints', true);
         $this->_ruleset->setRule('uma', [1 => 15, 5, -5, -15]);
         $this->_ruleset->setRule('oka', 0);
+        $this->_ruleset->setRule('chomboPenalty', 20);
+        $this->_ruleset->setRule('equalizeUma', false);
         $this->_ruleset->setRule('replacementPlayerFixedPoints', -30000);
         $this->_ruleset->setRule('replacementPlayerOverrideUma', 0);
 

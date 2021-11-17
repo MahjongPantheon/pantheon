@@ -17,19 +17,18 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/Ruleset.php';
-require_once __DIR__ . '/../../config/rulesets/ema.php';
+require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
 
 class EmaRulesetTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var RulesetEma
+     * @var Ruleset
      */
     protected $_ruleset;
 
     public function setUp()
     {
-        $this->_ruleset = new RulesetEma();
+        $this->_ruleset = Ruleset::instance('ema');
     }
 
     public function testUma()
