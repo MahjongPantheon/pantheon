@@ -288,6 +288,89 @@
     }
   }
 
+  function resetToDefault(idList) {
+    idList.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) {
+        return;
+      }
+      if (el.type === 'number') {
+        el.value = el.getAttribute('data-default');
+      } else if (el.type === 'checkbox') {
+        el.checked = el.getAttribute('data-default') === 'true';
+      }
+    });
+
+    return false;
+  }
+
+  function buildRulesetsTable(rulesets, targetDiv, currentRuleset, resetTitle) {
+    currentRuleset = currentRuleset || 'ema';
+    let fields = [];
+
+    for (let field in rulesets[currentRuleset].fields) {
+      if (!rulesets[currentRuleset].fieldsNames[field]) {
+        continue;
+      }
+      let value = (rulesets[currentRuleset].changes || {})[field] || rulesets[currentRuleset].original[field];
+      switch (rulesets[currentRuleset].fields[field]) {
+        case 'int':
+          fields.push('<div class="form-group">\n' +
+            '<label for="tuning_' + field + '">' + rulesets[currentRuleset].fieldsNames[field] +
+            ' (<a href="#" onclick="return resetToDefault([\'tuning_' + field + '\'])">' + resetTitle + '</a>)</label>\n' +
+            '<input type="number" class="form-control"\n' +
+            '       id="tuning_' + field + '"\n' +
+            '       data-default="' + rulesets[currentRuleset].original[field] + '"\n' +
+            '       value="' + value + '"\n' +
+            '       name="tuning_' + field + '">\n' +
+            '</div>');
+          break;
+        case 'bool':
+          fields.push('<div class="form-group"><div class="form-check">\n' +
+            '<input type="checkbox" class="form-check-input"\n' +
+            '       id="tuning_' + field + '"\n' +
+            '       ' + (value ? 'checked="checked"\n' : '') +
+            '       data-default="' + rulesets[currentRuleset].original[field] + '"\n' +
+            '       name="tuning_' + field + '">\n' +
+            '<label for="tuning_' + field + '">' + rulesets[currentRuleset].fieldsNames[field] +
+            ' (<a href="#" onclick="return resetToDefault([\'tuning_' + field + '\'])">' + resetTitle + '</a>)</label>\n' +
+            '</div></div>');
+          break;
+        case 'int[]':
+          fields.push(
+            '<div class="form-group">\n' +
+            '<label for="tuning_' + field + '_1">' + rulesets[currentRuleset].fieldsNames[field] +
+            ' (<a href="#" onclick="return resetToDefault([\'tuning_' + field + '_1\', \'tuning_' + field + '_2\', \'tuning_' + field + '_3\', \'tuning_' + field + '_4\'])">' + resetTitle + '</a>)</label>\n' +
+            '<input type="number" class="form-control"\n' +
+            '       id="tuning_' + field + '_1"\n' +
+            '       value="' + value[1] + '"\n' +
+            '       data-default="' + rulesets[currentRuleset].original[field][1] + '"\n' +
+            '       name="tuning_' + field + '[]">\n' +
+            '<input type="number" class="form-control"\n' +
+            '       id="tuning_' + field + '_2"\n' +
+            '       value="' + value[2] + '"\n' +
+            '       data-default="' + rulesets[currentRuleset].original[field][2] + '"\n' +
+            '       name="tuning_' + field + '[]">\n' +
+            '<input type="number" class="form-control"\n' +
+            '       id="tuning_' + field + '_3"\n' +
+            '       value="' + value[3] + '"\n' +
+            '       data-default="' + rulesets[currentRuleset].original[field][3] + '"\n' +
+            '       name="tuning_' + field + '[]">\n' +
+            '<input type="number" class="form-control"\n' +
+            '       id="tuning_' + field + '_3"\n' +
+            '       value="' + value[4] + '"\n' +
+            '       data-default="' + rulesets[currentRuleset].original[field][4] + '"\n' +
+            '       name="tuning_' + field + '[]">\n' +
+            '</div>'
+          );
+          break;
+        case 'select':
+      }
+    }
+
+    targetDiv.innerHTML = fields.join('');
+  }
+
 
 //// Exports to global object ////
   wnd.plotRating = plotRating;
@@ -296,6 +379,8 @@
   wnd.saveTeamNames = saveTeamNames;
   wnd.registerAccessTypeSelectors = registerAccessTypeSelectors;
   wnd.dispatchEvent(new CustomEvent('bundleLoaded'));
+  wnd.buildRulesetsTable = buildRulesetsTable;
+  wnd.resetToDefault = resetToDefault;
 }
 (window);
 

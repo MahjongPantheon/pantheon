@@ -33,7 +33,7 @@ class MimirClient implements IMimirClient
     /**
      *  Get available rulesets list
      *
-     * @return string[]
+     * @return array
     */
     public function getRulesets(): array
     {
@@ -346,12 +346,13 @@ class MimirClient implements IMimirClient
      * @param int $lobbyId
      * @param bool $isTeam
      * @param bool $isPrescripted
+     * @param string $rulesetChangesJson
      * @return int
     */
-    public function createEvent(string $type, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted): int
+    public function createEvent(string $type, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): int
     {
         /** @phpstan-ignore-next-line */
-        return (int)$this->_client->execute('createEvent', [$type, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted]);
+        return (int)$this->_client->execute('createEvent', [$type, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted, $rulesetChangesJson]);
     }
 
     /**
@@ -368,12 +369,13 @@ class MimirClient implements IMimirClient
      * @param int $lobbyId
      * @param bool $isTeam
      * @param bool $isPrescripted
+     * @param string $rulesetChangesJson
      * @return bool
     */
-    public function updateEvent(int $id, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted): bool
+    public function updateEvent(int $id, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): bool
     {
         /** @phpstan-ignore-next-line */
-        return (bool)$this->_client->execute('updateEvent', [$id, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted]);
+        return (bool)$this->_client->execute('updateEvent', [$id, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted, $rulesetChangesJson]);
     }
 
     /**

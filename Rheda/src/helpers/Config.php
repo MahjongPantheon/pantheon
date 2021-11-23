@@ -277,6 +277,8 @@ class Config
             'withNagashiMangan' => _t('If nagashi mangan is allowed'),
             'withAtamahane' => _t('If atamahane is enabled'),
             'rulesetTitle' => _t('Basic ruleset name'),
+            'uma' => _t('Uma bonus size'),
+            'equalizeUma' => _t('Should uma bonus be divided equally in case of score equality'),
             'tonpuusen' => _t('If games have east rounds only'),
             'startRating' => _t('Rating initial points amount'),
             'riichiGoesToWinner' => _t('If riichi bets left on the table go to winner of the hanchan'),

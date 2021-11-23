@@ -17,7 +17,7 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/Ruleset.php';
+require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
 require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';
 require_once __DIR__ . '/../../src/models/OnlineSession.php';
@@ -173,7 +173,16 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             ->setIsOnline(1)
             ->setLobbyId('1111')
             ->setAllowPlayerAppend(1)
-            ->setRuleset(Ruleset::instance('onlineChips'));
+            ->setRuleset(Ruleset::instance('tenhounet'))
+            ->setRulesetChanges([
+                'tenboDivider' => 1,
+                'oka' => 0,
+                'startRating' => 0,
+                'startPoints' => 30000,
+                'uma' => [1 => 15000, 5000, -5000, -15000],
+                'chipsValue' => 2000,
+                'withWinningDealerHonbaSkipped' => true,
+            ]);
         $this->_event->save();
 
         $this->playersRegistration(['player1', 'player2', 'player3', 'player4']);

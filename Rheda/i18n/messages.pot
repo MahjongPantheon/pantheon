@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-29 00:09+0300\n"
+"POT-Creation-Date: 2021-11-24 03:22+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -558,12 +558,6 @@ msgstr ""
 msgid "Team"
 msgstr ""
 
-msgid "No time left!"
-msgstr ""
-
-msgid "Table #"
-msgstr ""
-
 msgid "Something went wrong: %s"
 msgstr ""
 
@@ -585,10 +579,19 @@ msgstr ""
 msgid "Please wait a while and reload the page."
 msgstr ""
 
+msgid "No time left!"
+msgstr ""
+
+msgid "Table #"
+msgstr ""
+
 msgid "Update event"
 msgstr ""
 
 msgid "Create new event"
+msgstr ""
+
+msgid "Reset to default"
 msgstr ""
 
 msgid "Please enter title for this event with at least 4 characters."
@@ -648,6 +651,9 @@ msgstr ""
 msgid ""
 "Choose this if you want to define your own custom seating for tournament by "
 "hand"
+msgstr ""
+
+msgid "Ruleset tuning"
 msgstr ""
 
 msgid "Create event"
@@ -1190,25 +1196,6 @@ msgstr ""
 msgid "Captcha is invalid"
 msgstr ""
 
-#, php-format
-msgid ""
-"Hello!\n"
-"\n"
-"You have just requested password recovery for your account\n"
-"in the Pantheon system. Please follow next link to reset your password:\n"
-"\n"
-"%s\n"
-"\n"
-"If you didn't attempt to recover password, you can safely ignore this "
-"message.\n"
-"\n"
-"Sincerely yours,\n"
-"Pantheon support team\n"
-msgstr ""
-
-msgid "Pantheon: password recovery request"
-msgstr ""
-
 msgid ""
 "Password is too weak. Try adding some digits, uppercase letters or "
 "punctuation to it, or increase its length."
@@ -1223,24 +1210,6 @@ msgid ""
 msgstr ""
 
 msgid "Some errors occured, see below"
-msgstr ""
-
-msgid "Pantheon: confirm your registration"
-msgstr ""
-
-#, php-format
-msgid ""
-"Hello!\n"
-"\n"
-"You have just registered your account in the Pantheon system,\n"
-"please follow next link to confirm your registration:\n"
-"\n"
-"%s\n"
-"\n"
-"If you didn't attempt to register, you can safely ignore this message.\n"
-"\n"
-"Sincerely yours,\n"
-"Pantheon support team\n"
 msgstr ""
 
 msgid "Only global administrators can register players"
@@ -1409,6 +1378,12 @@ msgstr ""
 msgid "Basic ruleset name"
 msgstr ""
 
+msgid "Uma bonus size"
+msgstr ""
+
+msgid "Should uma bonus be divided equally in case of score equality"
+msgstr ""
+
 msgid "If games have east rounds only"
 msgstr ""
 
@@ -1545,6 +1520,43 @@ msgstr ""
 
 #, php-format
 msgid "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s"
+msgstr ""
+
+msgid "Pantheon: confirm your registration"
+msgstr ""
+
+#, php-format
+msgid ""
+"Hello!\n"
+"\n"
+"You have just registered your account in the Pantheon system,\n"
+"please follow next link to confirm your registration:\n"
+"\n"
+"%s\n"
+"\n"
+"If you didn't attempt to register, you can safely ignore this message.\n"
+"\n"
+"Sincerely yours,\n"
+"Pantheon support team\n"
+msgstr ""
+
+#, php-format
+msgid ""
+"Hello!\n"
+"\n"
+"You have just requested password recovery for your account\n"
+"in the Pantheon system. Please follow next link to reset your password:\n"
+"\n"
+"%s\n"
+"\n"
+"If you didn't attempt to recover password, you can safely ignore this "
+"message.\n"
+"\n"
+"Sincerely yours,\n"
+"Pantheon support team\n"
+msgstr ""
+
+msgid "Pantheon: password recovery request"
 msgstr ""
 
 msgid "Daburu riichi"

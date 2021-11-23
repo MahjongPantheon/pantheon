@@ -17,19 +17,18 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/Ruleset.php';
-require_once __DIR__ . '/../../config/rulesets/jpmlA.php';
+require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
 
 class JPMLARulesetTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var RulesetJpmlA
+     * @var Ruleset
      */
     protected $_ruleset;
 
     public function setUp()
     {
-        $this->_ruleset = new RulesetJpmlA();
+        $this->_ruleset = Ruleset::instance('jpmlA');
     }
 
     public function testUma()

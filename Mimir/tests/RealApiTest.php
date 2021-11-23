@@ -19,7 +19,7 @@ namespace Mimir;
 
 require_once __DIR__ . '/../src/Db.php';
 require_once __DIR__ . '/../src/primitives/Event.php';
-require_once __DIR__ . '/../src/Ruleset.php';
+require_once __DIR__ . '/../src/rulesets/Ruleset.php';
 use JsonRPC\Client;
 
 /**

@@ -19,7 +19,7 @@ namespace Mimir;
 
 require_once __DIR__ . '/../Primitive.php';
 require_once __DIR__ . '/PlayerRegistration.php';
-require_once __DIR__ . '/../Ruleset.php';
+require_once __DIR__ . '/../rulesets/Ruleset.php';
 
 /**
  * Class EventPrimitive
@@ -53,6 +53,7 @@ class EventPrimitive extends Primitive
         'stat_host'         => '_statHost',
         'lobby_id'          => '_lobbyId',
         'ruleset'           => '_ruleset',
+        'ruleset_changes'   => '_rulesetChanges',
         'timezone'          => '_timezone',
         'series_length'     => '_seriesLength',
         'games_status'      => '_gamesStatus',
@@ -94,6 +95,18 @@ class EventPrimitive extends Primitive
                 },
                 'deserialize' => function ($rulesId) {
                     return Ruleset::instance($rulesId);
+                }
+            ],
+            '_rulesetChanges'     => [
+                'serialize' => function ($changes) {
+                    return empty($changes) ? '{}' : json_encode($changes);
+                },
+                'deserialize' => function ($changesJson) {
+                    try {
+                        return json_decode($changesJson, true);
+                    } catch (\Exception $e) {
+                        return [];
+                    }
                 }
             ]
         ];
@@ -211,6 +224,11 @@ class EventPrimitive extends Primitive
      * @var Ruleset
      */
     protected $_ruleset;
+    /**
+     * Changes to base ruleset for current event
+     * @var array
+     */
+    protected $_rulesetChanges;
     /**
      * How many games should be in the series
      * @var integer
@@ -425,7 +443,7 @@ class EventPrimitive extends Primitive
      */
     public function getRuleset()
     {
-        return $this->_ruleset;
+        return $this->_ruleset->applyChanges($this->_rulesetChanges ?: []);
     }
 
     /**
@@ -436,6 +454,24 @@ class EventPrimitive extends Primitive
     {
         $this->_ruleset = $rules;
         return $this;
+    }
+
+    /**
+     * @param array $changes
+     * @return EventPrimitive
+     */
+    public function setRulesetChanges($changes)
+    {
+        $this->_rulesetChanges = $changes;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRulesetChanges()
+    {
+        return $this->_rulesetChanges;
     }
 
     /**

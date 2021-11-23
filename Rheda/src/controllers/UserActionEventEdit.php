@@ -179,24 +179,30 @@ class UserActionEventEdit extends Controller
             'isTournament' => !!($prevData['isTournament'] ?? 0),
             'isOnline' => !!($prevData['isOnline'] ?? 0),
             'lobbyId' => 'C' . substr($prevData['lobbyId'], 1),
-            'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset']),
+            'currentRuleset' => $prevData['ruleset'],
+            'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset'], json_decode($prevData['rulesetChanges'], true)),
             'available_timezones' => $this->_getTimezones(empty($prevData['timezone']) ? '' : $prevData['timezone']),
         ]);
     }
 
     /**
      * @param string $current
+     * @param array $changes
      * @return array
      */
-    protected function _getRulesets($current)
+    protected function _getRulesets($current, $changes = [])
     {
         $rulesets = $this->_mimir->getRulesets();
         $output = [];
-        foreach ($rulesets as $ident => $name) {
+        foreach ($rulesets['rules'] as $ident => $data) {
             $output []= [
                 'ident' => $ident,
-                'name' => $name,
-                'selected' => $current === $ident
+                'name' => $data['description'],
+                'originalRules' => json_encode($data['originalRules']),
+                'changes' => ($current === $ident && $changes != null) ? json_encode($changes) : '{}',
+                'selected' => $current === $ident,
+                'fields' => json_encode($rulesets['fields']),
+                'fields_names' => json_encode(Config::getRuleDescriptions())
             ];
         }
         return $output;
@@ -253,6 +259,18 @@ class UserActionEventEdit extends Controller
             $checkedData['error_minGames'] = _t('Minimal games count must be positive numeric value');
         }
 
+        $checkedData['rulesetChanges'] = [];
+        foreach ($checkedData as $key => $val) {
+            if (strpos($key, 'tuning_') === 0) {
+                unset($checkedData[$key]);
+                if ($val === 'on') {
+                    $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = true;
+                } else if (is_numeric($val)) {
+                    $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = intval($val);
+                }
+            }
+        }
+
         foreach ($checkedData as $key => $val) {
             if (strpos($key, 'error_') === 0) {
                 $checkedData['haveErrors'] = true;
@@ -284,7 +302,8 @@ class UserActionEventEdit extends Controller
             intval($checkData['minGames'] ?? 0),
             empty($checkData['lobbyId']) ? 0 : intval('1' . str_replace('C', '', $checkData['lobbyId'])),
             empty($checkData['isTeam']) ? false : true,
-            empty($checkData['isPrescripted']) ? false : true
+            empty($checkData['isPrescripted']) ? false : true,
+            empty($checkData['changes']) ? '{}' : $checkData['changes']
         );
         $ruleId = $this->_frey->addRuleForPerson(
             FreyClient::PRIV_ADMIN_EVENT,
@@ -321,7 +340,8 @@ class UserActionEventEdit extends Controller
             intval($checkData['minGames'] ?? 0),
             empty($checkData['lobbyId']) ? 0 : intval('1' . str_replace('C', '', $checkData['lobbyId'])),
             empty($checkData['isTeam']) ? false : true,
-            empty($checkData['isPrescripted']) ? false : true
+            empty($checkData['isPrescripted']) ? false : true,
+            empty($checkData['rulesetChanges']) ? '{}' : (json_encode($checkData['rulesetChanges']) ?: '{}')
         );
         if (!$success) {
             $this->_error = [

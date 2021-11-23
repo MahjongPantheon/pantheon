@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-29 00:09+0300\n"
+"POT-Creation-Date: 2021-11-23 00:37+0300\n"
 "PO-Revision-Date: 2021-10-27 23:56+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -118,11 +118,11 @@ msgstr "Ничья"
 msgid "E-mail is not registered in Pantheon database (%1)"
 msgstr "E-mail не зарегистрирован в базе данных Pantheon (%1)"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:26:17
+#: app/components/screens/login/EnterCredentialsView.tsx:23:17
 msgid "Email"
 msgstr "Email"
 
-#: app/components/screens/home/HomeScreen.tsx:66:55
+#: app/components/screens/home/HomeScreen.tsx:68:55
 msgid "Event title"
 msgstr "Название события"
 
@@ -213,7 +213,7 @@ msgstr "Язык"
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: app/components/screens/login/EnterCredentialsView.tsx:39:12
+#: app/components/screens/login/EnterCredentialsView.tsx:36:12
 msgid "Log in"
 msgstr "Вход"
 
@@ -251,7 +251,7 @@ msgstr "Нагаши манган"
 msgid "New game"
 msgstr "Новая игра"
 
-#: app/components/screens/game-result/GameResultScreenView.tsx:76:58
+#: app/components/screens/game-result/GameResultScreenView.tsx:75:56
 msgid "No games found"
 msgstr "Игры не найдены"
 
@@ -279,7 +279,7 @@ msgstr "Другие столы"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:21:10
+#: app/components/screens/login/EnterCredentialsView.tsx:18:10
 msgid "Pantheon: log in"
 msgstr "Pantheon: вход в систему"
 
@@ -287,7 +287,7 @@ msgstr "Pantheon: вход в систему"
 msgid "Pao from: %1"
 msgstr "Пао с: %1"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:30:17
+#: app/components/screens/login/EnterCredentialsView.tsx:27:17
 msgid "Password"
 msgstr "Пароль"
 
@@ -393,7 +393,7 @@ msgstr "Шосанген"
 msgid "Shousuushii"
 msgstr "Шосуши"
 
-#: app/components/screens/login/EnterCredentialsView.tsx:34:12
+#: app/components/screens/login/EnterCredentialsView.tsx:31:12
 msgid "Sign up"
 msgstr "Регистрация"
 

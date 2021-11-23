@@ -17,7 +17,7 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/Ruleset.php';
+require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
 require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';
 require_once __DIR__ . '/../../src/models/PlayerStat.php';

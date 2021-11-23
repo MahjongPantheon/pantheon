@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-29 00:09+0300\n"
+"POT-Creation-Date: 2021-11-24 03:22+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -753,8 +753,9 @@ msgstr ""
 msgid "If arbitrary penalties are enabled"
 msgstr ""
 
+#, fuzzy
 msgid "If atamahane is enabled"
-msgstr ""
+msgstr "Nagashi mangan: %s."
 
 msgid "If automatic seating is allowed"
 msgstr ""
@@ -802,8 +803,9 @@ msgstr ""
 msgid "If start points should be subtracted from result"
 msgstr ""
 
+#, fuzzy
 msgid "If tanyao in open hand is allowed"
-msgstr ""
+msgstr "Nagashi mangan: %s."
 
 msgid ""
 "If this is non-zero N, only those who played more than N games will be shown "
@@ -1276,6 +1278,9 @@ msgstr "Spieler auswählen"
 msgid "Reset the timer"
 msgstr "Timer zurücksetzen"
 
+msgid "Reset to default"
+msgstr ""
+
 msgid "Revoke"
 msgstr ""
 
@@ -1339,6 +1344,9 @@ msgstr ""
 msgid "Ruleset"
 msgstr ""
 
+msgid "Ruleset tuning"
+msgstr ""
+
 msgid "Ryan peikou"
 msgstr "Ryan peikou"
 
@@ -1398,6 +1406,9 @@ msgstr "Shou sangen"
 
 msgid "Shou suushii"
 msgstr "Shou suushii"
+
+msgid "Should uma bonus be divided equally in case of score equality"
+msgstr ""
 
 msgid "Sign in"
 msgstr ""
@@ -1633,6 +1644,9 @@ msgid "Tsuu iisou"
 msgstr "Tsuu iisou"
 
 msgid "Type"
+msgstr ""
+
+msgid "Uma bonus size"
 msgstr ""
 
 msgid "Unable to generate seating"

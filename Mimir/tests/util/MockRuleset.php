@@ -17,13 +17,13 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/Ruleset.php';
+require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
 class MockRuleset extends Ruleset
 {
-    public static $_title = 'mock';
-    protected static $_ruleset = [];
+    public $_title = 'mock';
+    protected $_ruleset = [];
 
     /**
      * @var array
@@ -71,7 +71,7 @@ class MockRuleset extends Ruleset
      */
     public function setRule($name, $value)
     {
-        self::$_ruleset[$name] = $value;
+        $this->_ruleset[$name] = $value;
     }
 
     /**
