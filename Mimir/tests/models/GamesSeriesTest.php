@@ -17,7 +17,7 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
+require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';
 require_once __DIR__ . '/../../src/models/PlayerStat.php';
@@ -65,7 +65,7 @@ class GamesSeriesTest extends \PHPUnit\Framework\TestCase
             ->setTimezone('UTC')
             ->setDescription('desc')
             ->setSeriesLength(5)
-            ->setRuleset(Ruleset::instance('ema'));
+            ->setRuleset(\Common\Ruleset::instance('ema'));
         $this->_event->save();
 
         $this->_players = PlayerPrimitive::findById($this->_ds, [

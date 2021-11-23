@@ -267,37 +267,11 @@ class Config
     public static function getRuleDescriptions(): array
     {
         return [
-            'startPoints' => _t('Points to start with'),
-            'goalPoints' => _t('Points to end game'),
-            'playAdditionalRounds' => _t('Play additional rounds'),
-            'subtractStartPoints' => _t('If start points should be subtracted from result'),
-            'withKazoe' => _t('If kazoe should be yakuman, not sanbaiman'),
-            'withKiriageMangan' => _t('If 4/30 and 3/60 should be rounded to mangan'),
-            'withAbortives' => _t('If abortive draws are allowed'),
-            'withNagashiMangan' => _t('If nagashi mangan is allowed'),
-            'withAtamahane' => _t('If atamahane is enabled'),
             'rulesetTitle' => _t('Basic ruleset name'),
-            'uma' => _t('Uma bonus size'),
-            'equalizeUma' => _t('Should uma bonus be divided equally in case of score equality'),
-            'tonpuusen' => _t('If games have east rounds only'),
-            'startRating' => _t('Rating initial points amount'),
-            'riichiGoesToWinner' => _t('If riichi bets left on the table go to winner of the hanchan'),
-            'extraChomboPayments' => _t('If chombo should be payed in points'),
-            'chomboPenalty' => _t('Chombo penalty in rating points'),
-            'withKuitan' => _t('If tanyao in open hand is allowed'),
-            'withButtobi' => _t('If game ends when any player goes bankrupt'),
-            'withMultiYakumans' => _t('If multiple yakumans are enabled'),
-            'minPenalty' => _t('Minimal arbitrary penalty amount'),
-            'maxPenalty' => _t('Maximal arbitrary penalty amount'),
-            'penaltyStep' => _t('Step of penalty amounts'),
-            'redZone' => _t('Red zone duration'),
-            'yellowZone' => _t('Yellow zone duration'),
-            'timerPolicy' => _t('Timer policy'),
             'autoSeating' => _t('If automatic seating is allowed'),
             'isOnline' => _t('If event is online'),
             'isTeam' => _t('Team event'),
             'gameDuration' => _t('Game duration in minutes'),
-            'withLeadingDealerGameOver' => _t('If game ends when leading dealer wins in last round'),
             'syncStart' => _t('If all the games should be started simultaneously (tournament mode)'),
             'syncEnd' => _t('If all the games should be finished simultaneously (tournament mode)'),
             'sortByGames' => _t('If rating table should first be sorted by number of games played'),
@@ -307,7 +281,6 @@ class Config
             'seriesLength' => _t('If game series are enabled'),
             'isPrescripted' => _t('If seating for all games is entered in advance'),
             'minGamesCount' => _t('Minimal amount of games to be played for passing to finals'),
-            'chipsValue' => _t('Chips value')
         ];
     }
 
@@ -343,13 +316,6 @@ class Config
         return $arr;
     }
 
-    /**
-     * @return array
-     */
-    public function allowedYaku()
-    {
-        return $this->_allowedYaku;
-    }
     /**
      * @return int
      */

@@ -304,19 +304,22 @@
     return false;
   }
 
-  function buildRulesetsTable(rulesets, targetDiv, currentRuleset, resetTitle) {
+  function buildRulesetsTable(rulesets, targetDiv, fieldsList, fieldsNames, allYaku, paoYaku, yakuTranslations, currentRuleset, isOnlineTournament, resetTitle) {
     currentRuleset = currentRuleset || 'ema';
     let fields = [];
 
-    for (let field in rulesets[currentRuleset].fields) {
-      if (!rulesets[currentRuleset].fieldsNames[field]) {
+    for (let field in fieldsList) {
+      if (!fieldsNames[field] || rulesets[currentRuleset].original['_invalidCustomFields'].includes(field)) {
         continue;
       }
-      let value = (rulesets[currentRuleset].changes || {})[field] || rulesets[currentRuleset].original[field];
-      switch (rulesets[currentRuleset].fields[field]) {
+      if (!isOnlineTournament && field === 'chipsValue') { // chips exist only in online tournaments
+        continue;
+      }
+      let value = ((rulesets[currentRuleset].changes || {}).rulesetChanges || {})[field] || rulesets[currentRuleset].original[field];
+      switch (fieldsList[field]) {
         case 'int':
           fields.push('<div class="form-group">\n' +
-            '<label for="tuning_' + field + '">' + rulesets[currentRuleset].fieldsNames[field] +
+            '<label for="tuning_' + field + '">' + fieldsNames[field] +
             ' (<a href="#" onclick="return resetToDefault([\'tuning_' + field + '\'])">' + resetTitle + '</a>)</label>\n' +
             '<input type="number" class="form-control"\n' +
             '       id="tuning_' + field + '"\n' +
@@ -332,7 +335,7 @@
             '       ' + (value ? 'checked="checked"\n' : '') +
             '       data-default="' + rulesets[currentRuleset].original[field] + '"\n' +
             '       name="tuning_' + field + '">\n' +
-            '<label for="tuning_' + field + '">' + rulesets[currentRuleset].fieldsNames[field] +
+            '<label for="tuning_' + field + '">' + fieldsNames[field] +
             ' (<a href="#" onclick="return resetToDefault([\'tuning_' + field + '\'])">' + resetTitle + '</a>)</label>\n' +
             '</div></div>');
           break;
@@ -340,7 +343,7 @@
           if (value) {
             fields.push(
               '<div class="form-group">\n' +
-              '<label for="tuning_' + field + '_1">' + rulesets[currentRuleset].fieldsNames[field] +
+              '<label for="tuning_' + field + '_1">' + fieldsNames[field] +
               ' (<a href="#" onclick="return resetToDefault([\'tuning_' + field + '_1\', \'tuning_' + field + '_2\', \'tuning_' + field + '_3\', \'tuning_' + field + '_4\'])">' + resetTitle + '</a>)</label>\n' +
               '<input type="number" class="form-control"\n' +
               '       id="tuning_' + field + '_1"\n' +
@@ -367,7 +370,17 @@
           }
           break;
         case 'select':
-          // TODO
+          if (field === 'yakuWithPao' || field === 'allowedYaku') {
+            fields.push('<div class="form-group">\n' +
+              '<label>' + fieldsNames[field] + '</label><hr />' +
+              (field === 'yakuWithPao' ? paoYaku : allYaku).map((id) => '<div class="form-check"><input type="checkbox" class="form-check-input"\n' +
+                '       value="' + id + '"\n' +
+                '       id="tuning_' + field + '_' + id + '"\n' +
+                '       ' + (value.includes(id) ? 'checked="checked"' : '') + '\n' +
+                '       name="tuning_' + field + '[]"> <label for="tuning_' + field + '_' + id + '">' + yakuTranslations[id] + '</label></div>\n'
+              ).join('\n') +
+              '</div><hr />');
+          }
       }
     }
 

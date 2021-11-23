@@ -1,13 +1,6 @@
 <?php
 
-namespace Rheda;
-
-define('TEXT_DOMAIN', 'messages');
-bindtextdomain(TEXT_DOMAIN, realpath(__DIR__ . '/../../i18n') ?: '');
-textdomain(TEXT_DOMAIN);
-bind_textdomain_codeset(TEXT_DOMAIN, 'UTF-8');
-
-require_once __DIR__ . '/../../../Common/i18n.php';
+namespace Common;
 
 /**
  * @param string $entry
@@ -15,7 +8,7 @@ require_once __DIR__ . '/../../../Common/i18n.php';
  */
 function _t(string $entry): string
 {
-    return \Common\_t($entry);
+    return gettext($entry);
 }
 
 /**
@@ -27,7 +20,7 @@ function _t(string $entry): string
  */
 function _n(string $entry, string $plural, $count): string
 {
-    return \Common\_n($entry, $plural, $count);
+    return sprintf(ngettext($entry, $plural, intval($count)), $count);
 }
 
 /**
@@ -39,7 +32,7 @@ function _n(string $entry, string $plural, $count): string
  */
 function _p(string $entry, ...$args): string
 {
-    return \Common\_p($entry, ...$args);
+    return vsprintf(gettext($entry), $args);
 }
 
 /**
@@ -52,5 +45,5 @@ function _p(string $entry, ...$args): string
  */
 function _np(string $entry, string $plural, $count, ...$args): string
 {
-    return \Common\_np($entry, $plural, $count, ...$args);
+    return vsprintf(ngettext($entry, $plural, intval($count)), $args);
 }

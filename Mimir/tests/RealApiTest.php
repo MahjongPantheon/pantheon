@@ -19,7 +19,7 @@ namespace Mimir;
 
 require_once __DIR__ . '/../src/Db.php';
 require_once __DIR__ . '/../src/primitives/Event.php';
-require_once __DIR__ . '/../src/rulesets/Ruleset.php';
+require_once __DIR__ . '/../src/Ruleset.php';
 use JsonRPC\Client;
 
 /**
@@ -37,7 +37,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     {
         $ds = DataSource::__getCleanTestingInstance();
         $evt = (new EventPrimitive($ds))
-            ->setRuleset(Ruleset::instance('ema')) // TODO: why 'tenhounet' rules fail? o_0
+            ->setRuleset(\Common\Ruleset::instance('ema')) // TODO: why 'tenhounet' rules fail? o_0
             ->setTimezone('UTC')
             ->setTitle('test')
             ->setDescription('test')

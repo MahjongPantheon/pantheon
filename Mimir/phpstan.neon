@@ -5,6 +5,7 @@ parameters:
     - vendor/ctizen/idiorm
     - vendor/fguillot/json-rpc
     - vendor/monolog/monolog
+    - ../Common
   bootstrapFiles:
     - src/helpers/YakuMap.php
   level: 8

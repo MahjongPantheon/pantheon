@@ -17,7 +17,7 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
+require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';
 require_once __DIR__ . '/../../src/models/OnlineSession.php';
@@ -85,7 +85,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             ->setDescription('desc')
             ->setLobbyId('1111')
             ->setAllowPlayerAppend(1)
-            ->setRuleset(Ruleset::instance('tenhounet'));
+            ->setRuleset(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $this->_gameContent = file_get_contents(__DIR__ . '/testdata/full_hanchan.xml');
@@ -173,7 +173,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             ->setIsOnline(1)
             ->setLobbyId('1111')
             ->setAllowPlayerAppend(1)
-            ->setRuleset(Ruleset::instance('tenhounet'))
+            ->setRuleset(\Common\Ruleset::instance('tenhounet'))
             ->setRulesetChanges([
                 'tenboDivider' => 1,
                 'oka' => 0,

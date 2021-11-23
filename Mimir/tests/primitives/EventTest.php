@@ -17,7 +17,7 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
+require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/Db.php';
@@ -45,7 +45,7 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setAutoSeating(1)
             ->setSortByGames(1)
             ->setSyncStart(1)
-            ->setRuleset(Ruleset::instance('jpmlA'));
+            ->setRuleset(\Common\Ruleset::instance('jpmlA'));
 
         $this->assertEquals('event1', $newEvent->getTitle());
         $this->assertEquals('eventdesc1', $newEvent->getDescription());
@@ -68,7 +68,7 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setTitle('event1')
             ->setDescription('eventdesc1')
             ->setTimezone('UTC')
-            ->setRuleset(Ruleset::instance('jpmlA'))
+            ->setRuleset(\Common\Ruleset::instance('jpmlA'))
             ->save();
 
         $eventCopy = EventPrimitive::findById($this->_ds, [$newEvent->getId()]);
@@ -84,7 +84,7 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setTitle('event1')
             ->setDescription('eventdesc1')
             ->setTimezone('UTC')
-            ->setRuleset(Ruleset::instance('jpmlA'))
+            ->setRuleset(\Common\Ruleset::instance('jpmlA'))
             ->setLobbyId(123)
             ->save();
 
@@ -101,7 +101,7 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setTitle('event1')
             ->setDescription('eventdesc1')
             ->setTimezone('UTC')
-            ->setRuleset(Ruleset::instance('jpmlA'))
+            ->setRuleset(\Common\Ruleset::instance('jpmlA'))
             ->save();
 
         $eventCopy = EventPrimitive::findById($this->_ds, [$newEvent->getId()]);

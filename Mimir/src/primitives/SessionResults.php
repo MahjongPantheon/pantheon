@@ -397,12 +397,12 @@ class SessionResultsPrimitive extends Primitive
     }
 
     /**
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      * @param SessionState $results
      * @param int[] $playerIds
      * @return SessionResultsPrimitive
      */
-    public function calc(Ruleset $rules, SessionState $results, array $playerIds)
+    public function calc(\Common\Ruleset $rules, SessionState $results, array $playerIds)
     {
         $withChips = $rules->chipsValue() > 0;
         if ($withChips) {
@@ -496,13 +496,13 @@ class SessionResultsPrimitive extends Primitive
     /**
      * Calculates rating change
      *
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      * @param int[] $allScores
      *
      * @return float|int
      * @throws InvalidParametersException
      */
-    protected function _calcRatingDelta(Ruleset $rules, array $allScores)
+    protected function _calcRatingDelta(\Common\Ruleset $rules, array $allScores)
     {
         $reg = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $this->_playerId, $this->_eventId);
         if (empty($reg)) {

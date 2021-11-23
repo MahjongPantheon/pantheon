@@ -92,7 +92,7 @@ Pantheon support team
                 'List-Unsubscribe' => Sysconf::MAILER_ADDR(),
                 'X-Mailer' => 'PantheonNotifier/2.0'
             ],
-            '-f ' . Sysconf::MAILER_ADDR()
+            '-F "Pantheon mail service" -f ' . Sysconf::MAILER_ADDR()
         );
 
         return '';
@@ -133,7 +133,7 @@ Pantheon support team
                     'List-Unsubscribe' => Sysconf::MAILER_ADDR(),
                     'X-Mailer' => 'PantheonNotifier/2.0'
                 ],
-                '-f ' . Sysconf::MAILER_ADDR()
+                '-F "Pantheon mail service" -f ' . Sysconf::MAILER_ADDR()
             );
         }
 

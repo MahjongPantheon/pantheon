@@ -18,6 +18,8 @@
 namespace Rheda;
 
 require_once __DIR__ . '/../helpers/Url.php';
+require_once __DIR__ . '/../../../Common/rulesets/Ruleset.php';
+require_once __DIR__ . '/../../../Common/YakuMap.php';
 
 class UserActionEventEdit extends Controller
 {
@@ -127,10 +129,16 @@ class UserActionEventEdit extends Controller
      */
     protected function _newClubEvent($prevData)
     {
+        $rulesets = $this->_getRulesets($prevData['ruleset'] ?? '', $prevData);
         return array_merge($this->_defaultSettings, $prevData, [
             'isTournament' => false,
             'isOnline' => false,
-            'available_rulesets' => $this->_getRulesets($prevData['ruleset'] ?? ''),
+            'available_rulesets' => $rulesets['rulesets'],
+            'ruleset_fields' => $rulesets['fields'],
+            'ruleset_fields_names' => $rulesets['fields_names'],
+            'all_yaku' => $rulesets['all_yaku'],
+            'pao_yaku' => $rulesets['pao_yaku'],
+            'yaku_translations' => $rulesets['yaku_translations'],
             'available_timezones' => $this->_getTimezones($prevData['timezone'] ?? ''),
         ]);
     }
@@ -141,10 +149,16 @@ class UserActionEventEdit extends Controller
      */
     protected function _newTournamentEvent($prevData)
     {
+        $rulesets = $this->_getRulesets($prevData['ruleset'] ?? '', $prevData);
         return array_merge($this->_defaultSettings, $prevData, [
             'isTournament' => true,
             'isOnline' => false,
-            'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset']),
+            'available_rulesets' => $rulesets['rulesets'],
+            'ruleset_fields' => $rulesets['fields'],
+            'ruleset_fields_names' => $rulesets['fields_names'],
+            'all_yaku' => $rulesets['all_yaku'],
+            'pao_yaku' => $rulesets['pao_yaku'],
+            'yaku_translations' => $rulesets['yaku_translations'],
             'available_timezones' => $this->_getTimezones(empty($prevData['timezone']) ? '' : $prevData['timezone']),
         ]);
     }
@@ -155,10 +169,16 @@ class UserActionEventEdit extends Controller
      */
     protected function _newOnlineEvent($prevData)
     {
+        $rulesets = $this->_getRulesets($prevData['ruleset'] ?? '', $prevData);
         return array_merge($this->_defaultSettings, $prevData, [
             'isTournament' => false,
             'isOnline' => true,
-            'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset']),
+            'available_rulesets' => $rulesets['rulesets'],
+            'ruleset_fields' => $rulesets['fields'],
+            'ruleset_fields_names' => $rulesets['fields_names'],
+            'all_yaku' => $rulesets['all_yaku'],
+            'pao_yaku' => $rulesets['pao_yaku'],
+            'yaku_translations' => $rulesets['yaku_translations'],
             'available_timezones' => $this->_getTimezones(empty($prevData['timezone']) ? '' : $prevData['timezone']),
         ]);
     }
@@ -174,13 +194,19 @@ class UserActionEventEdit extends Controller
         } else {
             $prevData = $this->_mimir->getEventForEdit($eventId);
         }
+        $rulesets = $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset'], json_decode($prevData['rulesetChanges'], true));
         return array_merge($this->_defaultSettings, $prevData, [
             'id' => $this->_path['id'],
             'isTournament' => !!($prevData['isTournament'] ?? 0),
             'isOnline' => !!($prevData['isOnline'] ?? 0),
             'lobbyId' => 'C' . substr($prevData['lobbyId'], 1),
             'currentRuleset' => $prevData['ruleset'],
-            'available_rulesets' => $this->_getRulesets(empty($prevData['ruleset']) ? '' : $prevData['ruleset'], json_decode($prevData['rulesetChanges'], true)),
+            'available_rulesets' => $rulesets['rulesets'],
+            'ruleset_fields' => $rulesets['fields'],
+            'ruleset_fields_names' => $rulesets['fields_names'],
+            'all_yaku' => $rulesets['all_yaku'],
+            'pao_yaku' => $rulesets['pao_yaku'],
+            'yaku_translations' => $rulesets['yaku_translations'],
             'available_timezones' => $this->_getTimezones(empty($prevData['timezone']) ? '' : $prevData['timezone']),
         ]);
     }
@@ -200,12 +226,17 @@ class UserActionEventEdit extends Controller
                 'name' => $data['description'],
                 'originalRules' => json_encode($data['originalRules']),
                 'changes' => ($current === $ident && $changes != null) ? json_encode($changes) : '{}',
-                'selected' => $current === $ident,
-                'fields' => json_encode($rulesets['fields']),
-                'fields_names' => json_encode(Config::getRuleDescriptions())
+                'selected' => $current === $ident
             ];
         }
-        return $output;
+        return [
+            'rulesets' => $output,
+            'fields' => json_encode($rulesets['fields']),
+            'fields_names' => json_encode(\Common\Ruleset::fieldDescriptions()),
+            'all_yaku' => json_encode(\Common\YakuMap::allYaku()),
+            'pao_yaku' => json_encode(\Common\YakuMap::allPaoYaku()),
+            'yaku_translations' => json_encode(\Common\YakuMap::getTranslations())
+        ];
     }
 
     /**
@@ -235,6 +266,9 @@ class UserActionEventEdit extends Controller
         if (mb_strlen($data['title']) < 4) {
             $checkedData['error_title'] = _t('Title must be at least 4 characters length');
         }
+
+        $fieldsTypes = json_decode($checkedData['fields_json'], true);
+        unset($checkedData['fields_json']);
 
         // Little sanitization and reforamtting
         if (empty($data['description'])) {
@@ -269,7 +303,16 @@ class UserActionEventEdit extends Controller
                     $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = intval($val);
                 } else if (is_array($val) && $key === 'tuning_uma') {
                     $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = [1 => $val[0], $val[1], $val[2], $val[3]];
+                } else {
+                    $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = array_map('intval', $val);
                 }
+            }
+        }
+
+        // Force boolean flags to false
+        foreach ($fieldsTypes as $name => $type) {
+            if ($type === 'bool' && !isset($checkedData['rulesetChanges'][$name])) {
+                $checkedData['rulesetChanges'][$name] = false;
             }
         }
 

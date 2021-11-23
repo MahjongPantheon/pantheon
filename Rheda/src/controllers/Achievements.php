@@ -19,7 +19,7 @@
 namespace Rheda;
 
 require_once __DIR__ . '/../helpers/Array.php';
-include_once __DIR__ . "/../helpers/YakuMap.php";
+include_once __DIR__ . "/../../../Common/YakuMap.php";
 
 class Achievements extends Controller
 {
@@ -169,7 +169,7 @@ class Achievements extends Controller
     {
         $list = array_map(
             function ($yaku) {
-                return Yaku::getMap()[(int)$yaku];
+                return \Common\YakuMap::getTranslations()[(int)$yaku];
             },
             explode(',', $yakumanIDs)
         );

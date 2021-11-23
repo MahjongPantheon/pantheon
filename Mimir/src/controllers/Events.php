@@ -88,7 +88,7 @@ class EventsController extends Controller
             ->setTimeZone($timezone)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
-            ->setRuleset(Ruleset::instance($ruleset))
+            ->setRuleset(\Common\Ruleset::instance($ruleset))
             ->setRulesetChanges($rulesetChanges)
             ->setStatHost($statHost)
         ;
@@ -207,7 +207,7 @@ class EventsController extends Controller
             ->setTimeZone($timezone)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
-            ->setRuleset(Ruleset::instance($ruleset))
+            ->setRuleset(\Common\Ruleset::instance($ruleset))
             ->setRulesetChanges($rulesetChanges)
         ;
 
@@ -986,24 +986,24 @@ class EventsController extends Controller
         $list = [
             'ema' => [
                 'description' => 'European Mahjong Association rules',
-                'originalRules' => Ruleset::instance('ema')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('ema')->getRawRuleset()
             ],
             'jpmlA' => [
                 'description' => 'Japanese Professional Mahjong League A rules',
-                'originalRules' => Ruleset::instance('jpmlA')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('jpmlA')->getRawRuleset()
             ],
             'wrc' => [
                 'description' => 'World Riichi Championship rules',
-                'originalRules' => Ruleset::instance('wrc')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('wrc')->getRawRuleset()
             ],
             'tenhounet' => [
                 'description' => 'Tenhou.net compatible rules',
-                'originalRules' => Ruleset::instance('tenhounet')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('tenhounet')->getRawRuleset()
             ]
         ];
 
         $this->_log->addInfo('Successfully received rulesets');
-        return ['rules' => $list, 'fields' => Ruleset::fieldTypes()];
+        return ['rules' => $list, 'fields' => \Common\Ruleset::fieldTypes()];
     }
 
     /**

@@ -19,7 +19,7 @@ namespace Mimir;
 
 require_once __DIR__ . '/../Primitive.php';
 require_once __DIR__ . '/PlayerRegistration.php';
-require_once __DIR__ . '/../rulesets/Ruleset.php';
+require_once __DIR__ . '/../Ruleset.php';
 
 /**
  * Class EventPrimitive
@@ -90,11 +90,11 @@ class EventPrimitive extends Primitive
             '_minGamesCount'      => $this->_integerTransform(),
             '_finished'           => $this->_integerTransform(),
             '_ruleset'            => [
-                'serialize' => function (Ruleset $rules) {
+                'serialize' => function (\Common\Ruleset $rules) {
                     return $rules->title();
                 },
                 'deserialize' => function ($rulesId) {
-                    return Ruleset::instance($rulesId);
+                    return \Common\Ruleset::instance($rulesId);
                 }
             ],
             '_rulesetChanges'     => [
@@ -221,7 +221,7 @@ class EventPrimitive extends Primitive
     protected $_lobbyId;
     /**
      * Rules to apply to the event
-     * @var Ruleset
+     * @var \Common\Ruleset
      */
     protected $_ruleset;
     /**
@@ -439,7 +439,7 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @return Ruleset
+     * @return \Common\Ruleset
      */
     public function getRuleset()
     {
@@ -447,10 +447,10 @@ class EventPrimitive extends Primitive
     }
 
     /**
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      * @return EventPrimitive
      */
-    public function setRuleset(Ruleset $rules)
+    public function setRuleset(\Common\Ruleset $rules)
     {
         $this->_ruleset = $rules;
         return $this;
