@@ -146,7 +146,7 @@ class Config
     /**
      * @var bool
      */
-    protected $_withLeadingDealerGameover = false;
+    protected $_withLeadingDealerGameOver = false;
     /**
      * @var bool
      */
@@ -244,7 +244,7 @@ class Config
         'autoSeating' => false,
         'isOnline' => false,
         'gameDuration' => 0,
-        'withLeadingDealerGameover' => false,
+        'withLeadingDealerGameOver' => false,
         'isTextlog' => false,
         'syncStart' => false,
         'syncEnd' => false,
@@ -297,7 +297,7 @@ class Config
             'isOnline' => _t('If event is online'),
             'isTeam' => _t('Team event'),
             'gameDuration' => _t('Game duration in minutes'),
-            'withLeadingDealerGameover' => _t('If game ends when leading dealer wins in last round'),
+            'withLeadingDealerGameOver' => _t('If game ends when leading dealer wins in last round'),
             'syncStart' => _t('If all the games should be started simultaneously (tournament mode)'),
             'syncEnd' => _t('If all the games should be finished simultaneously (tournament mode)'),
             'sortByGames' => _t('If rating table should first be sorted by number of games played'),
@@ -598,9 +598,9 @@ class Config
     /**
      * @return bool
      */
-    public function withLeadingDealerGameover()
+    public function withLeadingDealerGameOver()
     {
-        return $this->_withLeadingDealerGameover;
+        return $this->_withLeadingDealerGameOver;
     }
     /**
      * @return bool

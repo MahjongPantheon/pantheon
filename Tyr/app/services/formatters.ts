@@ -134,7 +134,7 @@ export function gameConfigFormatter(config: RGameConfig): LGameConfig {
     withButtobi: !!config.withButtobi,
     withMultiYakumans: !!config.withMultiYakumans,
     gameExpirationTime: parseInt(config.gameExpirationTime.toString(), 10),
-    withLeadingDealerGameover: !!config.withLeadingDealerGameover,
+    withLeadingDealerGameOver: !!config.withLeadingDealerGameOver,
     redZone: config.redZone ? parseInt(config.redZone.toString(), 10) : null,
     yellowZone: config.yellowZone ? parseInt(config.yellowZone.toString(), 10) : null,
     timerPolicy: (config.timerPolicy === 'yellowZone' || config.timerPolicy === 'redZone') ? config.timerPolicy : 'none',

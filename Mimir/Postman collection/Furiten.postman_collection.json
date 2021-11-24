@@ -160,7 +160,7 @@
 									"        \"autoSeating\": {",
 									"            \"type\": \"boolean\"",
 									"        },",
-									"        \"withLeadingDealerGameover\": {",
+									"        \"withLeadingDealerGameOver\": {",
 									"            \"type\": \"boolean\"",
 									"        }",
 									"      }",
@@ -294,7 +294,7 @@
 							],
 							"cookie": [],
 							"responseTime": "261",
-							"body": "{\"jsonrpc\":\"2.0\",\"result\":{\"allowedYaku\":[34,19,21,25,9,35,12,32,36,8,33,38,30,10,3,5,11,4,7,6,23,39,1,37,27,2,41,22,42,24,31,28,26,40,29,18,20,13,14,15,16,17],\"startPoints\":30000,\"withKazoe\":false,\"withKiriageMangan\":false,\"withAbortives\":false,\"withNagashiMangan\":false,\"withAtamahane\":false,\"rulesetTitle\":\"ema\",\"tenboDivider\":1,\"ratingDivider\":1,\"tonpuusen\":false,\"startRating\":0,\"riichiGoesToWinner\":true,\"extraChomboPayments\":false,\"chomboPenalty\":20000,\"withKuitan\":true,\"withButtobi\":false,\"withMultiYakumans\":false,\"autoRegisterUsers\":false,\"gameExpirationTime\":false,\"minPenalty\":100,\"maxPenalty\":20000,\"penaltyStep\":100,\"eventTitle\":\"\\u0421\\u0435\\u0439\\u0445\\u043e\\u043a\\u0443\",\"eventStatHost\":\"seihoku.furiten.ru\",\"timerPolicy\":\"yellowZone\",\"redZone\":0,\"yellowZone\":900,\"gameDuration\":95,\"isOnline\":false,\"autoSeating\":false,\"withLeadingDealerGameover\":false},\"id\":\"b15be0af-de8e-4d2e-80aa-e5f74b36ab39\"}"
+							"body": "{\"jsonrpc\":\"2.0\",\"result\":{\"allowedYaku\":[34,19,21,25,9,35,12,32,36,8,33,38,30,10,3,5,11,4,7,6,23,39,1,37,27,2,41,22,42,24,31,28,26,40,29,18,20,13,14,15,16,17],\"startPoints\":30000,\"withKazoe\":false,\"withKiriageMangan\":false,\"withAbortives\":false,\"withNagashiMangan\":false,\"withAtamahane\":false,\"rulesetTitle\":\"ema\",\"tenboDivider\":1,\"ratingDivider\":1,\"tonpuusen\":false,\"startRating\":0,\"riichiGoesToWinner\":true,\"extraChomboPayments\":false,\"chomboPenalty\":20000,\"withKuitan\":true,\"withButtobi\":false,\"withMultiYakumans\":false,\"autoRegisterUsers\":false,\"gameExpirationTime\":false,\"minPenalty\":100,\"maxPenalty\":20000,\"penaltyStep\":100,\"eventTitle\":\"\\u0421\\u0435\\u0439\\u0445\\u043e\\u043a\\u0443\",\"eventStatHost\":\"seihoku.furiten.ru\",\"timerPolicy\":\"yellowZone\",\"redZone\":0,\"yellowZone\":900,\"gameDuration\":95,\"isOnline\":false,\"autoSeating\":false,\"withLeadingDealerGameOver\":false},\"id\":\"b15be0af-de8e-4d2e-80aa-e5f74b36ab39\"}"
 						}
 					]
 				},
@@ -422,7 +422,7 @@
 							],
 							"cookie": [],
 							"responseTime": "201",
-							"body": "{\"jsonrpc\":\"2.0\",\"result\":{\"allowedYaku\":[34,19,21,25,9,35,12,32,36,8,33,38,30,10,3,5,11,4,7,6,23,39,1,37,27,2,41,22,42,24,31,28,26,40,29,18,20,13,14,15,16,17],\"startPoints\":30000,\"withKazoe\":false,\"withKiriageMangan\":false,\"withAbortives\":false,\"withNagashiMangan\":false,\"withAtamahane\":false,\"rulesetTitle\":\"ema\",\"tenboDivider\":1,\"ratingDivider\":1,\"tonpuusen\":false,\"startRating\":0,\"riichiGoesToWinner\":true,\"extraChomboPayments\":false,\"chomboPenalty\":20000,\"withKuitan\":true,\"withButtobi\":false,\"withMultiYakumans\":false,\"autoRegisterUsers\":false,\"gameExpirationTime\":false,\"minPenalty\":100,\"maxPenalty\":20000,\"penaltyStep\":100,\"eventTitle\":\"\\u0421\\u0435\\u0439\\u0445\\u043e\\u043a\\u0443\",\"eventStatHost\":\"seihoku.furiten.ru\",\"timerPolicy\":\"yellowZone\",\"redZone\":0,\"yellowZone\":900,\"gameDuration\":95,\"isOnline\":false,\"autoSeating\":false,\"withLeadingDealerGameover\":false},\"id\":\"523ab74c-e932-490e-8e41-8b1b25b7920f\"}"
+							"body": "{\"jsonrpc\":\"2.0\",\"result\":{\"allowedYaku\":[34,19,21,25,9,35,12,32,36,8,33,38,30,10,3,5,11,4,7,6,23,39,1,37,27,2,41,22,42,24,31,28,26,40,29,18,20,13,14,15,16,17],\"startPoints\":30000,\"withKazoe\":false,\"withKiriageMangan\":false,\"withAbortives\":false,\"withNagashiMangan\":false,\"withAtamahane\":false,\"rulesetTitle\":\"ema\",\"tenboDivider\":1,\"ratingDivider\":1,\"tonpuusen\":false,\"startRating\":0,\"riichiGoesToWinner\":true,\"extraChomboPayments\":false,\"chomboPenalty\":20000,\"withKuitan\":true,\"withButtobi\":false,\"withMultiYakumans\":false,\"autoRegisterUsers\":false,\"gameExpirationTime\":false,\"minPenalty\":100,\"maxPenalty\":20000,\"penaltyStep\":100,\"eventTitle\":\"\\u0421\\u0435\\u0439\\u0445\\u043e\\u043a\\u0443\",\"eventStatHost\":\"seihoku.furiten.ru\",\"timerPolicy\":\"yellowZone\",\"redZone\":0,\"yellowZone\":900,\"gameDuration\":95,\"isOnline\":false,\"autoSeating\":false,\"withLeadingDealerGameOver\":false},\"id\":\"523ab74c-e932-490e-8e41-8b1b25b7920f\"}"
 						}
 					]
 				},

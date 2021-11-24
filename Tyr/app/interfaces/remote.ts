@@ -121,7 +121,7 @@ export interface RGameConfig {
   withButtobi: boolean;
   withMultiYakumans: boolean;
   gameExpirationTime: number;
-  withLeadingDealerGameover: boolean;
+  withLeadingDealerGameOver: boolean;
   redZone: number | null;
   yellowZone: number | null;
   timerPolicy: string | null;

@@ -597,7 +597,7 @@ class EventsController extends Controller
             'syncEnd'             => (bool)$event[0]->getSyncEnd(),
             'sortByGames'         => (bool)$event[0]->getSortByGames(),
             'allowPlayerAppend'   => (bool)$event[0]->getAllowPlayerAppend(),
-            'withLeadingDealerGameover' => $rules->withLeadingDealerGameOver(),
+            'withLeadingDealerGameOver' => $rules->withLeadingDealerGameOver(),
             'subtractStartPoints' => $rules->subtractStartPoints(),
             'seriesLength'        => $event[0]->getSeriesLength(),
             'minGamesCount'        => $event[0]->getMinGamesCount(),
