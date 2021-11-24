@@ -267,6 +267,8 @@ class UserActionEventEdit extends Controller
                     $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = true;
                 } else if (is_numeric($val)) {
                     $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = intval($val);
+                } else if (is_array($val) && $key === 'tuning_uma') {
+                    $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = [1 => $val[0], $val[1], $val[2], $val[3]];
                 }
             }
         }
@@ -303,7 +305,7 @@ class UserActionEventEdit extends Controller
             empty($checkData['lobbyId']) ? 0 : intval('1' . str_replace('C', '', $checkData['lobbyId'])),
             empty($checkData['isTeam']) ? false : true,
             empty($checkData['isPrescripted']) ? false : true,
-            empty($checkData['changes']) ? '{}' : $checkData['changes']
+            empty($checkData['rulesetChanges']) ? '{}' : (json_encode($checkData['rulesetChanges']) ?: '{}')
         );
         $ruleId = $this->_frey->addRuleForPerson(
             FreyClient::PRIV_ADMIN_EVENT,
