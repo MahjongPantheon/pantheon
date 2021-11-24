@@ -855,7 +855,7 @@ class EventPrimitive extends Primitive
         $mainEvent = $eventList[0];
 
         foreach ($eventList as $event) {
-            if ($event->getRuleset() !== $mainEvent->getRuleset()) {
+            if ($event->getRuleset()->title() !== $mainEvent->getRuleset()->title()) {
                 return false;
             }
         }
