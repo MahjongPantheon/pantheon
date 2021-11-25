@@ -44,6 +44,11 @@ abstract class Controller
     protected $_meta;
 
     /**
+     * @var array
+     */
+    protected $_timers = [];
+
+    /**
      * Controller constructor.
      * @param IDb $db
      * @param Logger $log
@@ -66,17 +71,20 @@ abstract class Controller
 
     protected function _logStart(string $method, array $args): void
     {
+        $this->_timers[__CLASS__ . '->' . $method] = microtime(true);
         $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: started');
     }
 
     protected function _logSuccess(string $method, array $args): void
     {
-        $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: success');
+        $t = microtime(true) - $this->_timers[__CLASS__ . '->' . $method];
+        $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: success in ' . $t . 'sec');
     }
 
     protected function _logError(string $method, array $args): void
     {
-        $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: failed');
+        $t = microtime(true) - $this->_timers[__CLASS__ . '->' . $method];
+        $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: failed in ' . $t . 'sec');
     }
 
     protected function _depersonalizeEmail(string $email): string

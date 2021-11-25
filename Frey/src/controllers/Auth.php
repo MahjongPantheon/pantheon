@@ -91,7 +91,13 @@ class AuthController extends Controller
     public function quickAuthorize($id, $clientSideToken)
     {
         $this->_logStart(__METHOD__, [$id, /*$clientSideToken*/'******']);
+
+        xhprof_enable(XHPROF_FLAGS_NO_BUILTINS | XHPROF_FLAGS_CPU);
         $success = $this->_getModel()->quickAuthorize($id, $clientSideToken);
+
+        $xhprofData = xhprof_disable();
+        $this->_log->addDebug(print_r($xhprofData, true));
+
         $this->_logSuccess(__METHOD__, [$id, /*$clientSideToken*/'******']);
         return $success;
     }

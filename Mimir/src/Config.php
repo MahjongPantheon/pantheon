@@ -86,4 +86,12 @@ class Config
         $val = $this->getValue('db.credentials');
         return $val;
     }
+
+    /**
+     * @return array
+     */
+    public function getDbDriverOptions()
+    {
+        return [\PDO::ATTR_PERSISTENT => true];
+    }
 }

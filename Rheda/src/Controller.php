@@ -193,7 +193,12 @@ abstract class Controller
         if (!empty($this->_currentPersonId)) {
             $authorized = false;
             try {
+                $t1 = microtime(true);
                 $authorized = $this->_frey->quickAuthorize($this->_currentPersonId, $this->_authToken);
+                $t1 = microtime(true) - $t1;
+                if ($_GET['DEBUG']) {
+                    echo 'quickAuthorize: ' . $t1 . PHP_EOL;
+                }
             } catch (\Exception $e) {
             } // keep false on exception
 
@@ -201,7 +206,7 @@ abstract class Controller
                 $this->_currentPersonId = null;
                 $this->_authToken = null;
             } else {
-                $this->_frey->getClient()->getHttpClient()->withHeaders([
+                $this->_frey->getClient()->getHttpClient()->withoutSslVerification()->withHeaders([
                     'X-Auth-Token: ' . $this->_authToken,
                     'X-Locale: ' . $locale,
                     'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
@@ -211,25 +216,40 @@ abstract class Controller
 
                 if (!empty($this->_mainEventId)) {
                     // TODO: access rules for aggregated events?
+                    $t1 = microtime(true);
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_mainEventId);
+                    $t1 = microtime(true) - $t1;
+                    if ($_GET['DEBUG']) {
+                        echo 'getAccessRules: ' . $t1 . PHP_EOL;
+                    }
                     if ($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN]) {
                         $this->_superadmin = true;
                     }
                     if ($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT]) {
                         $this->_eventadmin = true;
                     }
-                } else if (!empty($this->_currentPersonId)) {
+                } else {
+                    $t1 = microtime(true);
                     $this->_superadmin = $this->_frey->getSuperadminFlag($this->_currentPersonId);
+                    $t1 = microtime(true) - $t1;
+                    if ($_GET['DEBUG']) {
+                        echo 'getSuperadminFlag: ' . $t1 . PHP_EOL;
+                    }
                 }
 
+                $t1 = microtime(true);
                 $this->_personalData = $this->_frey->getPersonalInfo([$this->_currentPersonId])[0];
+                $t1 = microtime(true) - $t1;
+                if ($_GET['DEBUG']) {
+                    echo 'getPersonalInfo: ' . $t1 . PHP_EOL;
+                }
             }
         }
 
         /** @var HttpClient $client */
         $client = $this->_mimir->getClient()->getHttpClient();
 
-        $client->withHeaders([
+        $client->withoutSslVerification()->withHeaders([
             'X-Debug-Token: ' . Sysconf::DEBUG_TOKEN(),
             'X-Auth-Token: ' . $this->_authToken,
             'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
