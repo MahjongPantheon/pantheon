@@ -48,7 +48,10 @@ class Config
         $parts = explode('.', $path);
         $current = $this->_data;
         while ($part = array_shift($parts)) {
-            $current = $current[$part];
+            if ($current === '') {
+                return '';
+            }
+            $current = $current[$part] ?? '';
         }
 
         return $current;

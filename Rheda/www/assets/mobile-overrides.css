@@ -17,6 +17,14 @@
   .mobile-flex-td {
     max-width: inherit;
   }
+
+  * {
+    font-size: 16px;
+  }
+
+  .label, .badge {
+    font-size: 14px !important;
+  }
 }
 
 @media (max-width: 767.98px) {

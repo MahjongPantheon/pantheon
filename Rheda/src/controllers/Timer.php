@@ -47,19 +47,24 @@ class Timer extends Controller
             ];
         }
 
+        $zonesDuration = (
+            $this->_mainEventRules->timerPolicy() === 'redZone' ? $this->_mainEventRules->redZone() : 0
+        ) + (
+            $this->_mainEventRules->timerPolicy() === 'yellowZone' ? $this->_mainEventRules->yellowZone() : 0
+        );
         $timerState = $this->_mimir->getTimerState($this->_mainEventId);
+        $remaining = $timerState['time_remaining'] - $zonesDuration;
         $currentSeating = $this->_formatSeating($this->_mimir->getCurrentSeating($this->_mainEventId));
-        $durationWithoutSeating = $this->_mainEventRules->gameDuration() - 5;
+        $durationWithoutSeating = $this->_mainEventRules->gameDuration() - 5 - ($zonesDuration / 60);
 
         if ($timerState['started'] && $timerState['time_remaining']) {
-            $formattedTime = (int)($timerState['time_remaining'] / 60) . ':'
-                           . (floor(($timerState['time_remaining'] % 60) / 10) * 10);
+            $formattedTime = (int)($remaining / 60) . ':'
+                           . (floor(($remaining % 60) / 10) * 10);
             return [
                 'redZoneLength' => $this->_mainEventRules->redZone() / 60,
                 'yellowZoneLength' => $this->_mainEventRules->yellowZone() / 60,
                 'redZone' => $this->_mainEventRules->timerPolicy() === 'redZone',
                 'yellowZone' => $this->_mainEventRules->timerPolicy() === 'yellowZone',
-                'gameDuration' => $this->_mainEventRules->gameDuration(), // already in minutes
                 'gameDurationWithoutSeating' => $durationWithoutSeating,
                 'initialTime' => $formattedTime,
                 'seating' => $currentSeating
@@ -72,7 +77,6 @@ class Timer extends Controller
             'yellowZoneLength' => $this->_mainEventRules->yellowZone() / 60,
             'redZone' => $this->_mainEventRules->timerPolicy() === 'redZone',
             'yellowZone' => $this->_mainEventRules->timerPolicy() === 'yellowZone',
-            'gameDuration' => $this->_mainEventRules->gameDuration(), // already in minutes
             'gameDurationWithoutSeating' => $durationWithoutSeating,
             'initialTime' => $this->_mainEventRules->gamesWaitingForTimer() ? '99:99' : '00:00',
             'seating' => $currentSeating
