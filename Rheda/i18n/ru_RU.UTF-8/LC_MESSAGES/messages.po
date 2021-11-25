@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 03:22+0300\n"
+"POT-Creation-Date: 2021-11-25 03:39+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1007,9 +1007,6 @@ msgstr ""
 msgid "No stats are available yet"
 msgstr "На данный момент статистика отсутствует"
 
-msgid "No time left!"
-msgstr "СТОП!"
-
 msgid "Nobody"
 msgstr "Никто"
 
@@ -1173,7 +1170,7 @@ msgstr ""
 "дополнить ваши личные данные."
 
 msgid "Please enter your real name and surname (if you have it)."
-msgstr "Пожалуйста, введите свои настоящие имя и фамилию."
+msgstr "Пожалуйста, введите свои настоящие фамилию и имя (в этом порядке)."
 
 msgid "Please wait a while and reload the page."
 msgstr "Подождите немного и перезагрузите страницу."
@@ -1986,6 +1983,9 @@ msgstr "да"
 
 #~ msgid "NORTH"
 #~ msgstr "СЕВЕР"
+
+#~ msgid "No time left!"
+#~ msgstr "СТОП!"
 
 #~ msgid ""
 #~ "Note: if a player is already added to the rating, adding him again will "
