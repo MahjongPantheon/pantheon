@@ -147,7 +147,7 @@ class AuthModel extends Model
             throw new EntityNotFoundException('Requested person ID is not known to auth system', 405);
         }
 
-        return $this->_checkPasswordQuick($clientSideToken, $person[0]->getAuthHash());
+        return Model::checkPasswordQuick($clientSideToken, $person[0]->getAuthHash());
     }
 
     /**
@@ -312,18 +312,6 @@ class AuthModel extends Model
     public function checkPasswordFull($password, string $authHash, string $authSalt): bool
     {
         $clientSideToken = $this->_makeClientSideToken($password, $authSalt);
-        return $this->_checkPasswordQuick($clientSideToken, $authHash);
-    }
-
-    /**
-     * Check if client-side auth token matches save password hash
-     *
-     * @param string $clientSideToken
-     * @param string $authHash
-     * @return bool
-     */
-    protected function _checkPasswordQuick(string $clientSideToken, string $authHash): bool
-    {
-        return password_verify($clientSideToken, $authHash);
+        return Model::checkPasswordQuick($clientSideToken, $authHash);
     }
 }
