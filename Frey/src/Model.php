@@ -94,12 +94,31 @@ abstract class Model
         $persons = PersonPrimitive::findById($this->_db, [$this->_meta->getCurrentPersonId()]);
 
         if (!empty($persons)) {
-            if (password_verify($this->_meta->getAuthToken(), $persons[0]->getAuthHash())) {
+            if (self::checkPasswordQuick($this->_meta->getAuthToken(), $persons[0]->getAuthHash())) {
                 return $persons[0];
             }
         }
 
         return null;
+    }
+
+    /**
+     * Check if client-side auth token matches save password hash
+     *
+     * @param string $clientSideToken
+     * @param string $authHash
+     * @return bool
+     */
+    public static function checkPasswordQuick(string $clientSideToken, string $authHash): bool
+    {
+        $pwd = apcu_fetch('pwcheck_' . $clientSideToken . $authHash);
+        if ($pwd !== false) {
+            return $pwd === 1;
+        }
+
+        $pwd = password_verify($clientSideToken, $authHash);
+        apcu_store('pwcheck_' . $clientSideToken . $authHash, $pwd ? 1 : 0, 60 * 60 * 24 * 7);
+        return $pwd;
     }
 
     /**

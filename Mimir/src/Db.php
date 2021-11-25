@@ -57,6 +57,7 @@ class Db implements IDb
         $credentials = $cfg->getDbConnectionCredentials();
 
         ORM::configure($this->_connString);
+        ORM::configure('driver_options', $cfg->getDbDriverOptions());
         if (!empty($credentials)) {
             ORM::configure('username', $credentials['username']);
             ORM::configure('password', $credentials['password']);
