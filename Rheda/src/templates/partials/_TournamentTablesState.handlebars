@@ -69,15 +69,13 @@
         <div class="row">
             <div class="col-12 tables-controls"><!-- Controls -->
                 {{#isTournament}}
-                    {{#stageStarted}}
-                        {{#last_round}}
-                            {{#a
-                                href="/tourn/dropLastRound/{hash}/"
-                                class="btn btn-warning form-control"
-                                onclick="return cancelRoundConfirmation('{round}')"
-                            }}{{_t 'Cancel last played round'}}{{/a}}
-                        {{/last_round}}
-                    {{/stageStarted}}
+                    {{#last_round}}
+                        {{#a
+                            href="/tourn/dropLastRound/{hash}/"
+                            class="btn btn-warning form-control"
+                            onclick="return cancelRoundConfirmation('{round}')"
+                        }}{{_t 'Cancel last played round'}}{{/a}}
+                    {{/last_round}}
                 {{/isTournament}}
                 {{^isTournament}}
                     {{#last_round}}

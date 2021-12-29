@@ -371,6 +371,16 @@
     targetDiv.innerHTML = fields.join('');
   }
 
+  function disableTemporarily(what) {
+    $(what).attr('disabled', true);
+    var timer = window.setTimeout(function() {
+      $(what).attr('disabled', false);
+      window.clearTimeout(timer);
+    }, 3000);
+    $(what).parents('form').submit();
+    return true;
+  }
+
 
 //// Exports to global object ////
   wnd.plotRating = plotRating;
@@ -381,6 +391,7 @@
   wnd.dispatchEvent(new CustomEvent('bundleLoaded'));
   wnd.buildRulesetsTable = buildRulesetsTable;
   wnd.resetToDefault = resetToDefault;
+  wnd.disableTemporarily = disableTemporarily;
 }
 (window);
 

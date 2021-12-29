@@ -15,18 +15,6 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
 
-<script>
-    function disableTemporarily(what) {
-        $(what).attr('disabled', true);
-        var timer = window.setTimeout(function() {
-            $(what).attr('disabled', false);
-            window.clearTimeout(timer);
-        }, 3000);
-        $(what).parent('form').submit();
-        return true;
-    }
-</script>
-
 {{#error}}<h3>{{_p 'Something went wrong: %s' error}}</h3>{{/error}}
 {{^error}}
     {{#prescriptedEventErrorDescription}}
