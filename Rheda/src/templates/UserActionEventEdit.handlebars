@@ -37,6 +37,11 @@
             };
         {{/available_rulesets}}
         buildRulesetsTable(rulesets, document.getElementById('_rulesetsTable'), '{{currentRuleset}}', '{{_t 'Reset to default'}}');
+
+        window.updateRulesetTables = function() {
+            const current = document.getElementById('ruleset').value;
+            buildRulesetsTable(rulesets, document.getElementById('_rulesetsTable'), current, '{{_t 'Reset to default'}}');
+        };
     });
 </script>
 
@@ -100,7 +105,7 @@
 
                 <div class="form-group">
                     <label for="ruleset">{{_t 'Ruleset'}}</label>
-                    <select class="form-control" id="ruleset" name="ruleset">
+                    <select class="form-control" id="ruleset" name="ruleset" onchange="updateRulesetTables()">
                         {{#available_rulesets}}
                             <option value="{{ident}}"{{#selected}} selected="selected"{{/selected}}>{{name}}</option>
                         {{/available_rulesets}}

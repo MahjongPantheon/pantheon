@@ -337,34 +337,37 @@
             '</div></div>');
           break;
         case 'int[]':
-          fields.push(
-            '<div class="form-group">\n' +
-            '<label for="tuning_' + field + '_1">' + rulesets[currentRuleset].fieldsNames[field] +
-            ' (<a href="#" onclick="return resetToDefault([\'tuning_' + field + '_1\', \'tuning_' + field + '_2\', \'tuning_' + field + '_3\', \'tuning_' + field + '_4\'])">' + resetTitle + '</a>)</label>\n' +
-            '<input type="number" class="form-control"\n' +
-            '       id="tuning_' + field + '_1"\n' +
-            '       value="' + value[1] + '"\n' +
-            '       data-default="' + rulesets[currentRuleset].original[field][1] + '"\n' +
-            '       name="tuning_' + field + '[]">\n' +
-            '<input type="number" class="form-control"\n' +
-            '       id="tuning_' + field + '_2"\n' +
-            '       value="' + value[2] + '"\n' +
-            '       data-default="' + rulesets[currentRuleset].original[field][2] + '"\n' +
-            '       name="tuning_' + field + '[]">\n' +
-            '<input type="number" class="form-control"\n' +
-            '       id="tuning_' + field + '_3"\n' +
-            '       value="' + value[3] + '"\n' +
-            '       data-default="' + rulesets[currentRuleset].original[field][3] + '"\n' +
-            '       name="tuning_' + field + '[]">\n' +
-            '<input type="number" class="form-control"\n' +
-            '       id="tuning_' + field + '_3"\n' +
-            '       value="' + value[4] + '"\n' +
-            '       data-default="' + rulesets[currentRuleset].original[field][4] + '"\n' +
-            '       name="tuning_' + field + '[]">\n' +
-            '</div>'
-          );
+          if (value) {
+            fields.push(
+              '<div class="form-group">\n' +
+              '<label for="tuning_' + field + '_1">' + rulesets[currentRuleset].fieldsNames[field] +
+              ' (<a href="#" onclick="return resetToDefault([\'tuning_' + field + '_1\', \'tuning_' + field + '_2\', \'tuning_' + field + '_3\', \'tuning_' + field + '_4\'])">' + resetTitle + '</a>)</label>\n' +
+              '<input type="number" class="form-control"\n' +
+              '       id="tuning_' + field + '_1"\n' +
+              '       value="' + value[1] + '"\n' +
+              '       data-default="' + rulesets[currentRuleset].original[field][1] + '"\n' +
+              '       name="tuning_' + field + '[]">\n' +
+              '<input type="number" class="form-control"\n' +
+              '       id="tuning_' + field + '_2"\n' +
+              '       value="' + value[2] + '"\n' +
+              '       data-default="' + rulesets[currentRuleset].original[field][2] + '"\n' +
+              '       name="tuning_' + field + '[]">\n' +
+              '<input type="number" class="form-control"\n' +
+              '       id="tuning_' + field + '_3"\n' +
+              '       value="' + value[3] + '"\n' +
+              '       data-default="' + rulesets[currentRuleset].original[field][3] + '"\n' +
+              '       name="tuning_' + field + '[]">\n' +
+              '<input type="number" class="form-control"\n' +
+              '       id="tuning_' + field + '_3"\n' +
+              '       value="' + value[4] + '"\n' +
+              '       data-default="' + rulesets[currentRuleset].original[field][4] + '"\n' +
+              '       name="tuning_' + field + '[]">\n' +
+              '</div>'
+            );
+          }
           break;
         case 'select':
+          // TODO
       }
     }
 
