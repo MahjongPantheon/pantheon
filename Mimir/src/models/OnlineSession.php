@@ -103,13 +103,13 @@ class OnlineSessionModel extends Model
      * Check if game is not older than some amount of time defined in ruleset
      *
      * @param string $gameLink
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      *
      * @throws ParseException
      *
      * @return void
      */
-    protected function _checkGameExpired(string $gameLink, Ruleset $rules): void
+    protected function _checkGameExpired(string $gameLink, \Common\Ruleset $rules): void
     {
         if (!$rules->gameExpirationTime()) {
             return;

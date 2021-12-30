@@ -291,7 +291,7 @@ class OnlineParser
         $yakuList = (string)$reader->getAttribute('yaku');
         $yakumanList = (string)$reader->getAttribute('yakuman');
 
-        $yakuData = YakuMap::fromTenhou($yakuList, $yakumanList);
+        $yakuData = \Common\YakuMap::fromTenhou($yakuList, $yakumanList);
 
         if (!$this->_lastTokenIsAgari) { // single ron, or first ron in sequence
             $riichi = $this->_getRiichi();

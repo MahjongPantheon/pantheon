@@ -3,6 +3,7 @@ parameters:
   reportUnmatchedIgnoredErrors: false
   scanDirectories:
     - vendor/fguillot/json-rpc
+    - ../Common
   level: 8
   paths:
     - src

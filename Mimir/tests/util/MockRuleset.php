@@ -17,10 +17,10 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
+require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/helpers/YakuMap.php';
 
-class MockRuleset extends Ruleset
+class MockRuleset extends \Common\Ruleset
 {
     public $_title = 'mock';
     protected $_ruleset = [];
@@ -61,7 +61,7 @@ class MockRuleset extends Ruleset
 
     public function allowedYaku()
     {
-        return YakuMap::allYaku();
+        return \Common\YakuMap::allYaku();
     }
 
     /**

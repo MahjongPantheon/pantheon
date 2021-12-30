@@ -112,7 +112,7 @@ class PlayerStatModel extends Model
     /**
      * Scores and rating deltas of all players
      *
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      * @param array $games
      * @throws \Exception
      * @return array
@@ -346,13 +346,13 @@ class PlayerStatModel extends Model
     /**
      * Get riichi win/lose summary stats for player
      *
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      * @param int $playerId
      * @param RoundPrimitive[] $rounds
      * @return array
      * @throws \Exception
      */
-    protected function _getRiichiSummary(Ruleset $rules, int $playerId, array $rounds)
+    protected function _getRiichiSummary(\Common\Ruleset $rules, int $playerId, array $rounds)
     {
         $acc = [
             'riichi_won'        => 0,

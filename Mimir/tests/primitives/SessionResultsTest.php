@@ -17,7 +17,7 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
+require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/primitives/SessionResults.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
 require_once __DIR__ . '/../../src/primitives/Round.php';
@@ -243,7 +243,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testTwoEqualScoreWithEqualityRule()
     {
-        $this->_ruleset = Ruleset::instance('ema');
+        $this->_ruleset = \Common\Ruleset::instance('ema');
         $this->_event->setRuleset($this->_ruleset)->save();
 
         $round = (new RoundPrimitive($this->_ds))

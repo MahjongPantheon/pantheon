@@ -8,7 +8,7 @@ require_once __DIR__ . '/../../src/primitives/PlayerHistory.php';
 require_once __DIR__ . '/../textlogImport/Model.php';
 require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';
-require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
+require_once __DIR__ . '/../../src/Ruleset.php';
 
 class TournamentSeeder extends AbstractSeed
 {
@@ -50,7 +50,7 @@ class TournamentSeeder extends AbstractSeed
             ->setUsePenalty(1)
             ->setUseTimer(1)
             ->setGameDuration(20)
-            ->setRuleset(\Mimir\Ruleset::instance('ema'));
+            ->setRuleset(\Common\Ruleset::instance('ema'));
         $event->save();
         return $event;
     }

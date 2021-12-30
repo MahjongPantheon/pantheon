@@ -42,7 +42,7 @@ class PointsCalc
     }
 
     /**
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      * @param bool $isDealer
      * @param int[] $currentScores
      * @param int $winnerId
@@ -61,7 +61,7 @@ class PointsCalc
      * @throws InvalidParametersException
      */
     public static function ron(
-        Ruleset $rules,
+        \Common\Ruleset $rules,
         bool $isDealer,
         array $currentScores,
         int $winnerId,
@@ -135,7 +135,7 @@ class PointsCalc
     }
 
     /**
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      * @param int $currentDealer
      * @param int[] $currentScores
      * @param int $winnerId
@@ -150,7 +150,7 @@ class PointsCalc
      * @throws InvalidParametersException
      */
     public static function tsumo(
-        Ruleset $rules,
+        \Common\Ruleset $rules,
         int $currentDealer,
         array $currentScores,
         int $winnerId,
@@ -327,7 +327,7 @@ class PointsCalc
     }
 
     /**
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      * @param int $currentDealer
      * @param int $loserId
      * @param int[] $currentScores
@@ -336,7 +336,7 @@ class PointsCalc
      * @throws InvalidParametersException
      */
     public static function chombo(
-        Ruleset $rules,
+        \Common\Ruleset $rules,
         int $currentDealer,
         int $loserId,
         array $currentScores
@@ -424,7 +424,7 @@ class PointsCalc
     }
 
     /**
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      * @param int $han
      * @param int|null $fu
      * @param bool $tsumo
@@ -433,7 +433,7 @@ class PointsCalc
      *
      * @psalm-return array{winner: int, dealer?: int, player?: int, loser?: int}
      */
-    protected static function _calcPoints(Ruleset $rules, int $han, ?int $fu, bool $tsumo, bool $dealer): array
+    protected static function _calcPoints(\Common\Ruleset $rules, int $han, ?int $fu, bool $tsumo, bool $dealer): array
     {
         if ($han > 0 && $han < 5) {
             $basePoints = $fu * pow(2, 2 + $han);

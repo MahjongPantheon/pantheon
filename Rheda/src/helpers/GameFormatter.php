@@ -18,7 +18,7 @@
 namespace Rheda;
 
 include_once __DIR__ . "/../helpers/Array.php";
-include_once __DIR__ . "/../helpers/YakuMap.php";
+include_once __DIR__ . "/../../../Common/YakuMap.php";
 
 class GameFormatter
 {
@@ -283,7 +283,7 @@ class GameFormatter
                 ', ',
                 array_map(
                     function ($yaku) {
-                        return Yaku::getMap()[(int)$yaku];
+                        return \Common\YakuMap::getTranslations()[(int)$yaku];
                     },
                     explode(',', $round['yaku'])
                 )

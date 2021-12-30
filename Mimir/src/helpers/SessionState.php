@@ -28,7 +28,7 @@ require_once __DIR__ . '/PointsCalc.php';
 class SessionState
 {
     /**
-     * @var Ruleset
+     * @var \Common\Ruleset
      */
     protected $_rules;
     /**
@@ -89,11 +89,11 @@ class SessionState
 
     /**
      * SessionState constructor.
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      * @param int[] $playersIds
      * @throws InvalidParametersException
      */
-    public function __construct(Ruleset $rules, array $playersIds)
+    public function __construct(\Common\Ruleset $rules, array $playersIds)
     {
         $this->_rules = $rules;
         if (count($playersIds) != 4) {
@@ -143,7 +143,7 @@ class SessionState
     }
 
     /**
-     * @param Ruleset $rules
+     * @param \Common\Ruleset $rules
      * @param int[] $playersIds
      * @param string $json
      *
@@ -151,7 +151,7 @@ class SessionState
      * @throws InvalidParametersException
      *
      */
-    public static function fromJson(Ruleset $rules, array $playersIds, string $json)
+    public static function fromJson(\Common\Ruleset $rules, array $playersIds, string $json)
     {
         if (empty($json)) {
             $ret = [];

@@ -31,16 +31,36 @@
         {{#available_rulesets}}
             rulesets['{{ident}}'] = {
                 'original': {{{originalRules}}},
-                'changes': {{{changes}}},
-                'fields': {{{fields}}},
-                'fieldsNames': {{{fields_names}}}
+                'changes': {'rulesetChanges': {{{changes}}} }
             };
         {{/available_rulesets}}
-        buildRulesetsTable(rulesets, document.getElementById('_rulesetsTable'), '{{currentRuleset}}', '{{_t 'Reset to default'}}');
+        buildRulesetsTable(
+            rulesets,
+            document.getElementById('_rulesetsTable'),
+            {{{ruleset_fields}}},
+            {{{ruleset_fields_names}}},
+            {{{all_yaku}}},
+            {{{pao_yaku}}},
+            {{{yaku_translations}}},
+            '{{currentRuleset}}',
+            {{#isOnline}}true{{/isOnline}}{{^isOnline}}false{{/isOnline}},
+            '{{_t 'Reset to default'}}'
+        );
 
         window.updateRulesetTables = function() {
             const current = document.getElementById('ruleset').value;
-            buildRulesetsTable(rulesets, document.getElementById('_rulesetsTable'), current, '{{_t 'Reset to default'}}');
+            buildRulesetsTable(
+                rulesets,
+                document.getElementById('_rulesetsTable'),
+                {{{ruleset_fields}}},
+                {{{ruleset_fields_names}}},
+                {{{all_yaku}}},
+                {{{pao_yaku}}},
+                {{{yaku_translations}}},
+                current,
+                {{#isOnline}}true{{/isOnline}}{{^isOnline}}false{{/isOnline}},
+                '{{_t 'Reset to default'}}'
+            );
         };
     });
 </script>
@@ -57,6 +77,7 @@
         <div class="col-12">
             <form action="" method="post" class="well">
                 <input type="hidden" name="save" value="1"/>
+                <input type="hidden" name="fields_json" value="{{{ruleset_fields}}}" />
                 {{#isTournament}}<input type="hidden" name="isTournament" value="1"/>{{/isTournament}}
                 {{#isOnline}}<input type="hidden" name="isOnline" value="1"/>{{/isOnline}}
                 {{#id}}<input type="hidden" name="id" value="{{id}}"/>{{/id}}

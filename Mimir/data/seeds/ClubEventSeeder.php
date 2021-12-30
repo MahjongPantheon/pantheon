@@ -8,7 +8,7 @@ require_once __DIR__ . '/../../src/primitives/PlayerHistory.php';
 require_once __DIR__ . '/../textlogImport/Model.php';
 require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';
-require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
+require_once __DIR__ . '/../../src/Ruleset.php';
 
 class ClubEventSeeder extends AbstractSeed
 {
@@ -47,7 +47,7 @@ class ClubEventSeeder extends AbstractSeed
             ->setAutoSeating(0)
             ->setSyncStart(0)
             ->setUsePenalty(1)
-            ->setRuleset(\Mimir\Ruleset::instance('ema'));
+            ->setRuleset(\Common\Ruleset::instance('ema'));
         $event->save();
         return $event;
     }

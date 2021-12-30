@@ -59,7 +59,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
             ->setTitle('title')
             ->setTimezone('UTC')
             ->setDescription('desc')
-            ->setRuleset(Ruleset::instance('jpmlA'));
+            ->setRuleset(\Common\Ruleset::instance('jpmlA'));
         $this->_event->save();
 
         $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);

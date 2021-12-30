@@ -131,6 +131,7 @@ pantheon_run: get_docker_id get_docker_idle_id
 				-v `pwd`/Mimir:/var/www/html/Mimir:z \
 				-v `pwd`/Rheda:/var/www/html/Rheda:z \
 				-v `pwd`/Frey:/var/www/html/Frey:z \
+				-v `pwd`/Common:/var/www/html/Common:z \
 				-v `pwd`/:/var/www/html/pantheon:z \
 				--name=pantheondev \
 				pantheondev; \

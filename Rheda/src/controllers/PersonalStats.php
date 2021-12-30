@@ -17,7 +17,7 @@
  */
 namespace Rheda;
 
-require_once __DIR__ . '/../helpers/YakuMap.php';
+require_once __DIR__ . '/../../../Common/YakuMap.php';
 
 class PersonalStats extends Controller
 {
@@ -90,7 +90,7 @@ class PersonalStats extends Controller
             $yakuStats = [];
             $totalYakuhai = 0;
             foreach ($data['yaku_summary'] as $yaku => $count) {
-                $yakuStats []= [$count, Yaku::getMap()[$yaku]];
+                $yakuStats []= [$count, \Common\YakuMap::getTranslations()[$yaku]];
                 switch ($yaku) {
                     case 13:
                         $totalYakuhai += 1 * $count;

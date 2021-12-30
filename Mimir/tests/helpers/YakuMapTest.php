@@ -26,7 +26,7 @@ class YakuMapTest extends \PHPUnit\Framework\TestCase
         $yakuList = '1,1,2,1,24,2,52,2,53,1,54,3';
         $yakumanList = '46';
 
-        $result = YakuMap::fromTenhou($yakuList, $yakumanList);
+        $result = \Common\YakuMap::fromTenhou($yakuList, $yakumanList);
         $expected = [
             Y_RIICHI,
             Y_IPPATSU,

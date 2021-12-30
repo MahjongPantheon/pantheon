@@ -17,7 +17,7 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
+require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/models/InteractiveSession.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
 require_once __DIR__ . '/../../src/primitives/PlayerRegistration.php';
@@ -63,7 +63,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
             ->setTimezone('UTC')
             ->setDescription('desc')
             ->setUsePenalty(1)
-            ->setRuleset(Ruleset::instance('jpmlA'));
+            ->setRuleset(\Common\Ruleset::instance('jpmlA'));
         $this->_event->save();
 
         $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
@@ -557,7 +557,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(Ruleset::instance('tenhounet'));
+            ->setRuleset(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -598,7 +598,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(Ruleset::instance('tenhounet'));
+            ->setRuleset(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -644,7 +644,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(Ruleset::instance('tenhounet'));
+            ->setRuleset(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -676,7 +676,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(Ruleset::instance('tenhounet'));
+            ->setRuleset(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -767,7 +767,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
     public function testRiichiSplitForThreePlayers()
     {
         $this->_event
-            ->setRuleset(Ruleset::instance('ema'));
+            ->setRuleset(\Common\Ruleset::instance('ema'));
         $this->_event->save();
 
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);

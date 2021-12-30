@@ -146,6 +146,7 @@ RUN mkdir -p /var/www/html/Tyr
 RUN mkdir -p /var/www/html/Mimir
 RUN mkdir -p /var/www/html/Rheda
 RUN mkdir -p /var/www/html/Frey
+RUN mkdir -p /var/www/html/Common
 RUN mkdir -p /var/www/html/pantheon
 
 # Entry point

@@ -17,7 +17,7 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../../src/rulesets/Ruleset.php';
+require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/primitives/Round.php';
 require_once __DIR__ . '/../../src/primitives/Session.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
@@ -56,7 +56,7 @@ class PlayerHistoryPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setTitle('title')
             ->setDescription('desc')
             ->setTimezone('UTC')
-            ->setRuleset(Ruleset::instance('jpmlA'));
+            ->setRuleset(\Common\Ruleset::instance('jpmlA'));
         $this->_event->save();
 
         $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);

@@ -15,7 +15,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Mimir;
+namespace Common;
+require_once __DIR__ . '/../i18n.php';
 
 class Ruleset
 {
@@ -50,20 +51,72 @@ class Ruleset
     /**
      * @return array
      */
+    public static function fieldDescriptions()
+    {
+        return [
+            'allowedYaku' => _t('List of allowed yaku'),
+            'chipsValue' => _t('Chips value'),
+            'chomboPenalty' => _t('Chombo penalty in rating points'),
+            'doubleronHonbaAtamahane' => _t('Should honda bonus be given by atamahane rule in case of double/triple ron (given to all if not)'),
+            'doubleronRiichiAtamahane' => _t('Should riichi sticks be given by atamahane rule in case of double/triple ron'),
+            'equalizeUma' => _t('Should uma bonus be divided equally in case of score equality'),
+            'extraChomboPayments' => _t('If chombo should be payed in points'),
+            'goalPoints' => _t('Points to end game'),
+            'maxPenalty' => _t('Maximal arbitrary penalty amount'),
+            'minPenalty' => _t('Minimal arbitrary penalty amount'),
+            'oka' => _t('Oka (first place) bonus size'),
+            'penaltyStep' => _t('Step of penalty amounts'),
+            'playAdditionalRounds' => _t('Play additional rounds'),
+            'ratingDivider' => _t('Secondary divider (applied after primary) to make rating points from uma/oka compliant points'),
+            'redZone' => _t('Red zone duration'),
+            'replacementPlayerFixesPoints' => _t('Amount of points to be given to replacement player'),
+            'replacementPlayerOverrideUma' => _t('Amount of uma bonus to be given to replacement player'),
+            'riichiGoesToWinner' => _t('If riichi bets left on the table go to winner of the hanchan'),
+            'startPoints' => _t('Points to start with'),
+            'startRating' => _t('Rating initial points amount'),
+            'subtractStartPoints' => _t('If start points should be subtracted from result'),
+            'tenboDivider' => _t('Primary divider to make game points comply with uma/oka amount'),
+            'timerPolicy' => _t('Timer policy'),
+            'tonpuusen' => _t('If games have east rounds only'),
+            'uma' => _t('Uma (rank) bonus size'),
+            'withAbortives' => _t('If abortive draws are allowed'),
+            'withAtamahane' => _t('If atamahane is enabled'),
+            'withButtobi' => _t('If game ends when any player goes bankrupt'),
+            'withKazoe' => _t('If kazoe should be yakuman, not sanbaiman'),
+            'withKiriageMangan' => _t('If 4/30 and 3/60 should be rounded to mangan'),
+            'withKuitan' => _t('If tanyao in open hand is allowed'),
+            'withLeadingDealerGameover' => _t('If game ends when leading dealer wins in last round'),
+            'withMultiYakumans' => _t('If multiple yakumans are enabled'),
+            'withNagashiMangan' => _t('If nagashi mangan is allowed'),
+            'withWinningDealerHonbaSkipped' => _t('If game should proceed to next round if dealer wins (i.e. no honba/renchan)'),
+            'yakuWithPao' => _t('List of yakumans that use pao rule'),
+            'yellowZone' => _t('Yellow zone duration'),
+
+            // Don't allow to customize this for now
+//            'complexUma' => _t('Use JPML-like complex uma bonus (overrides uma amount setting)'),
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public static function fieldTypes()
     {
         return [
+            'allowedYaku'           => 'select',
             'tenboDivider'          => 'int',
             'ratingDivider'         => 'int',
+            'tonpuusen'             => 'bool',
             'startRating'           => 'int',
-            'oka'                   => 'int',
             'uma'                   => 'int[]',
-            'equalizeUma'           => 'bool',
+            'oka'                   => 'int',
             'startPoints'           => 'int',
             'goalPoints'            => 'int',
             'playAdditionalRounds'  => 'bool',
             'subtractStartPoints'   => 'bool',
             'riichiGoesToWinner'    => 'bool',
+            'doubleronRiichiAtamahane' => 'bool',
+            'doubleronHonbaAtamahane' => 'bool',
             'extraChomboPayments'   => 'bool',
             'chomboPenalty'         => 'int',
             'withAtamahane'         => 'bool',
@@ -71,23 +124,24 @@ class Ruleset
             'withKuitan'            => 'bool',
             'withKazoe'             => 'bool',
             'withButtobi'           => 'bool',
+            'withLeadingDealerGameOver' => 'bool',
             'withMultiYakumans'     => 'bool',
             'withNagashiMangan'     => 'bool',
             'withKiriageMangan'     => 'bool',
-            'tonpuusen'             => 'bool',
             'gameExpirationTime'    => 'bool',
-            'yakuWithPao'           => 'select',
             'minPenalty'            => 'int',
             'maxPenalty'            => 'int',
             'penaltyStep'           => 'int',
-            'timerPolicy'           => 'select',
-            'yellowZone'            => 'int',
+            'yakuWithPao'           => 'select',
             'redZone'               => 'int',
-            'withLeadingDealerGameOver' => 'bool',
+            'yellowZone'            => 'int',
+            'timerPolicy'           => 'select',
             'replacementPlayerFixedPoints' => 'int',
             'replacementPlayerOverrideUma' => 'int',
-            'allowedYaku'           => 'select',
+            'withWinningDealerHonbaSkipped' => 'bool',
             'chipsValue'            => 'int',
+            'equalizeUma'           => 'bool',
+            'complexUma'            => 'bool'
         ];
     }
 
