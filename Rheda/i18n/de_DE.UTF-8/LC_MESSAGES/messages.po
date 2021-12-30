@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-25 03:39+0300\n"
+"POT-Creation-Date: 2021-12-30 20:10+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -200,6 +200,12 @@ msgstr ""
 
 msgid "All players"
 msgstr "Alle Spielerliste"
+
+msgid "Amount of points to be given to replacement player"
+msgstr ""
+
+msgid "Amount of uma bonus to be given to replacement player"
+msgstr ""
 
 #, fuzzy
 msgid "And your riichi bet, please"
@@ -775,6 +781,10 @@ msgstr ""
 msgid "If game series are enabled"
 msgstr ""
 
+msgid ""
+"If game should proceed to next round if dealer wins (i.e. no honba/renchan)"
+msgstr ""
+
 msgid "If games have east rounds only"
 msgstr ""
 
@@ -866,6 +876,12 @@ msgstr "Später"
 
 msgid "Latest games"
 msgstr "Neueste Spiele"
+
+msgid "List of allowed yaku"
+msgstr ""
+
+msgid "List of yakumans that use pao rule"
+msgstr ""
 
 msgid "Lobby id must be in format: C####, where # is a digit"
 msgstr ""
@@ -990,6 +1006,9 @@ msgstr "Nominierte"
 msgid ""
 "Note that seating starts from the top of rating table, so the rest of "
 "players at bottom will be placed with step 1."
+msgstr ""
+
+msgid "Oka (first place) bonus size"
 msgstr ""
 
 msgid "Only global administrators can register players"
@@ -1178,6 +1197,9 @@ msgstr ""
 "Durch Drücken dieser Taste wird der Timer auf seinen Anfangswert "
 "zurückgesetzt. Seien Sie vorsichtig: Sie sollten das normalerweise nicht "
 "brauchen."
+
+msgid "Primary divider to make game points comply with uma/oka amount"
+msgstr ""
 
 msgid "Privacy policy overview"
 msgstr ""
@@ -1371,6 +1393,11 @@ msgstr ""
 msgid "Save teams list"
 msgstr ""
 
+msgid ""
+"Secondary divider (applied after primary) to make rating points from uma/oka "
+"compliant points"
+msgstr ""
+
 msgid "Select basic ruleset for event."
 msgstr ""
 
@@ -1403,6 +1430,15 @@ msgstr "Shou sangen"
 
 msgid "Shou suushii"
 msgstr "Shou suushii"
+
+msgid ""
+"Should honda bonus be given by atamahane rule in case of double/triple ron "
+"(given to all if not)"
+msgstr ""
+
+msgid ""
+"Should riichi sticks be given by atamahane rule in case of double/triple ron"
+msgstr ""
 
 msgid "Should uma bonus be divided equally in case of score equality"
 msgstr ""
@@ -1643,7 +1679,7 @@ msgstr "Tsuu iisou"
 msgid "Type"
 msgstr ""
 
-msgid "Uma bonus size"
+msgid "Uma (rank) bonus size"
 msgstr ""
 
 msgid "Unable to generate seating"

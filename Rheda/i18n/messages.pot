@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-25 03:39+0300\n"
+"POT-Creation-Date: 2021-12-30 20:10+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1345,82 +1345,7 @@ msgstr ""
 msgid "Failed to finish event"
 msgstr ""
 
-msgid "Points to start with"
-msgstr ""
-
-msgid "Points to end game"
-msgstr ""
-
-msgid "Play additional rounds"
-msgstr ""
-
-msgid "If start points should be subtracted from result"
-msgstr ""
-
-msgid "If kazoe should be yakuman, not sanbaiman"
-msgstr ""
-
-msgid "If 4/30 and 3/60 should be rounded to mangan"
-msgstr ""
-
-msgid "If abortive draws are allowed"
-msgstr ""
-
-msgid "If nagashi mangan is allowed"
-msgstr ""
-
-msgid "If atamahane is enabled"
-msgstr ""
-
 msgid "Basic ruleset name"
-msgstr ""
-
-msgid "Uma bonus size"
-msgstr ""
-
-msgid "Should uma bonus be divided equally in case of score equality"
-msgstr ""
-
-msgid "If games have east rounds only"
-msgstr ""
-
-msgid "Rating initial points amount"
-msgstr ""
-
-msgid "If riichi bets left on the table go to winner of the hanchan"
-msgstr ""
-
-msgid "If chombo should be payed in points"
-msgstr ""
-
-msgid "Chombo penalty in rating points"
-msgstr ""
-
-msgid "If tanyao in open hand is allowed"
-msgstr ""
-
-msgid "If game ends when any player goes bankrupt"
-msgstr ""
-
-msgid "If multiple yakumans are enabled"
-msgstr ""
-
-msgid "Minimal arbitrary penalty amount"
-msgstr ""
-
-msgid "Maximal arbitrary penalty amount"
-msgstr ""
-
-msgid "Step of penalty amounts"
-msgstr ""
-
-msgid "Red zone duration"
-msgstr ""
-
-msgid "Yellow zone duration"
-msgstr ""
-
-msgid "Timer policy"
 msgstr ""
 
 msgid "If automatic seating is allowed"
@@ -1433,9 +1358,6 @@ msgid "Team event"
 msgstr ""
 
 msgid "Game duration in minutes"
-msgstr ""
-
-msgid "If game ends when leading dealer wins in last round"
 msgstr ""
 
 msgid "If all the games should be started simultaneously (tournament mode)"
@@ -1463,9 +1385,6 @@ msgid "If seating for all games is entered in advance"
 msgstr ""
 
 msgid "Minimal amount of games to be played for passing to finals"
-msgstr ""
-
-msgid "Chips value"
 msgstr ""
 
 msgid "yakuman"
@@ -1686,4 +1605,121 @@ msgid "Yakuhai x5"
 msgstr ""
 
 msgid "Open riichi"
+msgstr ""
+
+msgid "List of allowed yaku"
+msgstr ""
+
+msgid "Chips value"
+msgstr ""
+
+msgid "Chombo penalty in rating points"
+msgstr ""
+
+msgid ""
+"Should honda bonus be given by atamahane rule in case of double/triple ron "
+"(given to all if not)"
+msgstr ""
+
+msgid ""
+"Should riichi sticks be given by atamahane rule in case of double/triple ron"
+msgstr ""
+
+msgid "Should uma bonus be divided equally in case of score equality"
+msgstr ""
+
+msgid "If chombo should be payed in points"
+msgstr ""
+
+msgid "Points to end game"
+msgstr ""
+
+msgid "Maximal arbitrary penalty amount"
+msgstr ""
+
+msgid "Minimal arbitrary penalty amount"
+msgstr ""
+
+msgid "Oka (first place) bonus size"
+msgstr ""
+
+msgid "Step of penalty amounts"
+msgstr ""
+
+msgid "Play additional rounds"
+msgstr ""
+
+msgid ""
+"Secondary divider (applied after primary) to make rating points from uma/oka "
+"compliant points"
+msgstr ""
+
+msgid "Red zone duration"
+msgstr ""
+
+msgid "Amount of points to be given to replacement player"
+msgstr ""
+
+msgid "Amount of uma bonus to be given to replacement player"
+msgstr ""
+
+msgid "If riichi bets left on the table go to winner of the hanchan"
+msgstr ""
+
+msgid "Points to start with"
+msgstr ""
+
+msgid "Rating initial points amount"
+msgstr ""
+
+msgid "If start points should be subtracted from result"
+msgstr ""
+
+msgid "Primary divider to make game points comply with uma/oka amount"
+msgstr ""
+
+msgid "Timer policy"
+msgstr ""
+
+msgid "If games have east rounds only"
+msgstr ""
+
+msgid "Uma (rank) bonus size"
+msgstr ""
+
+msgid "If abortive draws are allowed"
+msgstr ""
+
+msgid "If atamahane is enabled"
+msgstr ""
+
+msgid "If game ends when any player goes bankrupt"
+msgstr ""
+
+msgid "If kazoe should be yakuman, not sanbaiman"
+msgstr ""
+
+msgid "If 4/30 and 3/60 should be rounded to mangan"
+msgstr ""
+
+msgid "If tanyao in open hand is allowed"
+msgstr ""
+
+msgid "If game ends when leading dealer wins in last round"
+msgstr ""
+
+msgid "If multiple yakumans are enabled"
+msgstr ""
+
+msgid "If nagashi mangan is allowed"
+msgstr ""
+
+msgid ""
+"If game should proceed to next round if dealer wins (i.e. no honba/renchan)"
+msgstr ""
+
+msgid "List of yakumans that use pao rule"
+msgstr ""
+
+msgid "Yellow zone duration"
 msgstr ""
