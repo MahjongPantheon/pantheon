@@ -16,7 +16,7 @@ import {
   GET_LAST_RESULTS_INIT,
   GET_ALL_PLAYERS_SUCCESS,
   SET_NEWGAME_PLAYERS,
-  ADD_ROUND_SUCCESS, SHOW_GAME_LOG, GET_ALL_ROUNDS_INIT,
+  ADD_ROUND_SUCCESS, SHOW_GAME_LOG, GET_ALL_ROUNDS_INIT, GET_GAME_OVERVIEW_INIT,
 } from '../actions/interfaces';
 import {AppScreen, IAppState} from '../interfaces';
 import {getWinningUsers} from '#/store/selectors/mimirSelectors';
@@ -29,6 +29,15 @@ export const screenManageMw = () => (mw: MiddlewareAPI<Dispatch<AppActionTypes>,
 
   switch (action.type) {
     case GOTO_NEXT_SCREEN:
+      if (mw.getState().currentScreen === 'currentGame') {
+        const hash = mw.getState().currentSessionHash;
+        if (hash) {
+          mw.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: hash });
+        }
+        next(action);
+        break;
+      }
+
       next({ type: GOTO_NEXT_SCREEN });
 
       state = mw.getState();
