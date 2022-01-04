@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-30 20:10+0300\n"
+"POT-Creation-Date: 2022-01-05 01:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "The game has been successfully added!"
+msgstr ""
+
+msgid "Add online game"
+msgstr ""
+
+msgid "Add game"
+msgstr ""
 
 msgid "Achievement"
 msgstr ""
@@ -78,34 +87,7 @@ msgid_plural "%d riichi bets"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Achievements"
-msgstr ""
-
-msgid "The game has been successfully added!"
-msgstr ""
-
-msgid "Add online game"
-msgstr ""
-
-msgid "Add game"
-msgstr ""
-
 msgid "Game details"
-msgstr ""
-
-msgid "Recent games"
-msgstr ""
-
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
-msgstr ""
-
-msgid "Later"
-msgstr ""
-
-msgid "Earlier"
 msgstr ""
 
 msgid "Open game control app"
@@ -115,6 +97,9 @@ msgid "Navigation"
 msgstr ""
 
 msgid "To event list"
+msgstr ""
+
+msgid "Recent games"
 msgstr ""
 
 msgid "Rating table"
@@ -142,6 +127,9 @@ msgid "Manage players"
 msgstr ""
 
 msgid "Predefined seating"
+msgstr ""
+
+msgid "Achievements"
 msgstr ""
 
 msgid "%s: actions"
@@ -198,24 +186,10 @@ msgstr ""
 msgid "Rheda: mahjong statistic system"
 msgstr ""
 
-msgid "Additional penalties"
+msgid "Later"
 msgstr ""
 
-msgid ""
-"A penalty may be applied only to player currently in game. Otherwise error "
-"will occur."
-msgstr ""
-
-msgid "Penalty amount"
-msgstr ""
-
-msgid "Penalty reason"
-msgstr ""
-
-msgid "Check twice penalty data. You won't be able to cancel the penalty"
-msgstr ""
-
-msgid "Apply penalty"
+msgid "Earlier"
 msgstr ""
 
 msgid "Manage profile: %s"
@@ -269,6 +243,32 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+msgid "No games has been played yet"
+msgstr ""
+
+msgid "%d - %d (%d total)"
+msgstr ""
+
+msgid "Additional penalties"
+msgstr ""
+
+msgid ""
+"A penalty may be applied only to player currently in game. Otherwise error "
+"will occur."
+msgstr ""
+
+msgid "Penalty amount"
+msgstr ""
+
+msgid "Penalty reason"
+msgstr ""
+
+msgid "Check twice penalty data. You won't be able to cancel the penalty"
+msgstr ""
+
+msgid "Apply penalty"
+msgstr ""
+
 msgid "Recover your password"
 msgstr ""
 
@@ -296,6 +296,85 @@ msgid "Please enter new password for your account."
 msgstr ""
 
 msgid "Change password"
+msgstr ""
+
+msgid "Sign up confirmation"
+msgstr ""
+
+msgid "Thank you, your registration was successfully approved."
+msgstr ""
+
+msgid ""
+"You are required to log in with your email and password before proceeding"
+msgstr ""
+
+msgid "Player added successfully. Reload page to see results"
+msgstr ""
+
+msgid "Error occured while adding player: "
+msgstr ""
+
+msgid "Nobody"
+msgstr ""
+
+msgid "Players management"
+msgstr ""
+
+msgid "Register players"
+msgstr ""
+
+msgid "Enter part of name"
+msgstr ""
+
+msgid "Registered players (%d)"
+msgstr ""
+
+msgid "Include into seating"
+msgstr ""
+
+msgid "Exclude from seating"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove player %s?"
+msgstr ""
+
+msgid "Make event admin"
+msgstr ""
+
+msgid "Make %s event admin?"
+msgstr ""
+
+msgid "Revoke admin privileges"
+msgstr ""
+
+msgid "Revoke privileges for %s?"
+msgstr ""
+
+msgid "Replacement player"
+msgstr ""
+
+msgid "Local id"
+msgstr ""
+
+msgid "Team name"
+msgstr ""
+
+msgid ""
+"This will update current local id mapping. See \"Predefined seating\" page "
+"for details"
+msgstr ""
+
+msgid "Save local IDs"
+msgstr ""
+
+msgid ""
+"This will update current teams mapping. See \"Team table\" page for details"
+msgstr ""
+
+msgid "Save teams list"
 msgstr ""
 
 msgid ""
@@ -341,16 +420,6 @@ msgid "Password"
 msgstr ""
 
 msgid "Successfully register new user!"
-msgstr ""
-
-msgid "Sign up confirmation"
-msgstr ""
-
-msgid "Thank you, your registration was successfully approved."
-msgstr ""
-
-msgid ""
-"You are required to log in with your email and password before proceeding"
 msgstr ""
 
 msgid "Personal stats"
@@ -440,73 +509,16 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
-msgid "Player added successfully. Reload page to see results"
+msgid "Rights and privileges: %s"
 msgstr ""
 
-msgid "Error occured while adding player: "
+msgid "Customize"
 msgstr ""
 
-msgid "Nobody"
+msgid "Title"
 msgstr ""
 
-msgid "Players management"
-msgstr ""
-
-msgid "Register players"
-msgstr ""
-
-msgid "Enter part of name"
-msgstr ""
-
-msgid "Registered players (%d)"
-msgstr ""
-
-msgid "Include into seating"
-msgstr ""
-
-msgid "Exclude from seating"
-msgstr ""
-
-msgid "Remove"
-msgstr ""
-
-msgid "Remove player %s?"
-msgstr ""
-
-msgid "Make event admin"
-msgstr ""
-
-msgid "Make %s event admin?"
-msgstr ""
-
-msgid "Revoke admin privileges"
-msgstr ""
-
-msgid "Revoke privileges for %s?"
-msgstr ""
-
-msgid "Replacement player"
-msgstr ""
-
-msgid "Local id"
-msgstr ""
-
-msgid "Team name"
-msgstr ""
-
-msgid ""
-"This will update current local id mapping. See \"Predefined seating\" page "
-"for details"
-msgstr ""
-
-msgid "Save local IDs"
-msgstr ""
-
-msgid ""
-"This will update current teams mapping. See \"Team table\" page for details"
-msgstr ""
-
-msgid "Save teams list"
+msgid "Type"
 msgstr ""
 
 msgid "Predefined seating configuration"
@@ -537,28 +549,10 @@ msgid ""
 "between games and are defined at Admin actions / Manage players page."
 msgstr ""
 
-msgid "Rights and privileges: %s"
-msgstr ""
-
-msgid "Customize"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Type"
-msgstr ""
-
 msgid "Rating table has been hidden by tournament administrator"
 msgstr ""
 
 msgid "These results are visible only for tournament administrator"
-msgstr ""
-
-msgid "Team"
-msgstr ""
-
-msgid "Table #"
 msgstr ""
 
 msgid "Something went wrong: %s"
@@ -580,6 +574,59 @@ msgid "Tables are being prepared..."
 msgstr ""
 
 msgid "Please wait a while and reload the page."
+msgstr ""
+
+msgid "Team"
+msgstr ""
+
+msgid "Manage owned events"
+msgstr ""
+
+msgid ""
+"Really finish event #id (#title)? You won't be able to add games after event "
+"is finished."
+msgstr ""
+
+msgid "New club rating"
+msgstr ""
+
+msgid "New tournament"
+msgstr ""
+
+msgid "New online tournament"
+msgstr ""
+
+msgid "Event"
+msgstr ""
+
+msgid "Controls"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Privileges"
+msgstr ""
+
+msgid "Finish"
+msgstr ""
+
+msgid "Table #"
+msgstr ""
+
+msgid "Manage events privileges: %s"
+msgstr ""
+
+msgid "Revoke privilege #title?"
+msgstr ""
+
+msgid "Privilege"
+msgstr ""
+
+msgid "global"
+msgstr ""
+
+msgid "Revoke"
 msgstr ""
 
 msgid "Update event"
@@ -656,51 +703,52 @@ msgstr ""
 msgid "Create event"
 msgstr ""
 
-msgid "Manage events privileges: %s"
+msgid "Please enter your e-mail address and password."
 msgstr ""
 
-msgid "Revoke privilege #title?"
+msgid "Forgot your password?"
 msgstr ""
 
-msgid "Privilege"
+msgid "Rating"
 msgstr ""
 
-msgid "Controls"
+msgid "Rating graph"
 msgstr ""
 
-msgid "global"
+msgid "Hands value"
 msgstr ""
 
-msgid "Revoke"
+msgid "Han"
 msgstr ""
 
-msgid "Manage owned events"
+msgid "Yaku collected over all time"
 msgstr ""
 
-msgid ""
-"Really finish event #id (#title)? You won't be able to add games after event "
-"is finished."
+msgid "View replay online"
 msgstr ""
 
-msgid "New club rating"
+msgid "Best hand: <b>%s</b> - %s"
 msgstr ""
 
-msgid "New tournament"
+msgid "Ron hands: %d"
 msgstr ""
 
-msgid "New online tournament"
+msgid "Tsumo hands: %d"
 msgstr ""
 
-msgid "Event"
+msgid "Drawn rounds: %d"
 msgstr ""
 
-msgid "Edit"
+msgid "Chombo penalties: %s"
 msgstr ""
 
-msgid "Privileges"
+msgid "Additional penalties:"
 msgstr ""
 
-msgid "Finish"
+msgid "%s - %d points (%s)"
+msgstr ""
+
+msgid "Full game log:"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -766,54 +814,6 @@ msgstr ""
 msgid "Tenpai: %s."
 msgstr ""
 
-msgid "View replay online"
-msgstr ""
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr ""
-
-msgid "Ron hands: %d"
-msgstr ""
-
-msgid "Tsumo hands: %d"
-msgstr ""
-
-msgid "Drawn rounds: %d"
-msgstr ""
-
-msgid "Chombo penalties: %s"
-msgstr ""
-
-msgid "Additional penalties:"
-msgstr ""
-
-msgid "%s - %d points (%s)"
-msgstr ""
-
-msgid "Full game log:"
-msgstr ""
-
-msgid "Rating"
-msgstr ""
-
-msgid "Rating graph"
-msgstr ""
-
-msgid "Hands value"
-msgstr ""
-
-msgid "Han"
-msgstr ""
-
-msgid "Yaku collected over all time"
-msgstr ""
-
-msgid "Please enter your e-mail address and password."
-msgstr ""
-
-msgid "Forgot your password?"
-msgstr ""
-
 msgid "Finish all the games"
 msgstr ""
 
@@ -828,10 +828,85 @@ msgstr ""
 msgid "Confirm the results and finish all games"
 msgstr ""
 
+msgid "Start timer and games"
+msgstr ""
+
+msgid "Press next button to start the timer and begin the games."
+msgstr ""
+
+msgid "Start games and timer?"
+msgstr ""
+
+msgid "Start games!"
+msgstr ""
+
+msgid "Reset the timer"
+msgstr ""
+
+msgid ""
+"Pressing this button will reset the timer to its initial value. Be careful: "
+"you should not need this usually."
+msgstr ""
+
+msgid "Really reset the timer?"
+msgstr ""
+
 msgid "Ready to generate seating"
 msgstr ""
 
 msgid "Select seating mode and press the appropriate button."
+msgstr ""
+
+msgid ""
+"This tournament has predefined seating. See Admin actions / Predefined "
+"seating page for seating configuration. Next seating is listed below."
+msgstr ""
+
+msgid "No seating defined for next game. Looks like the tournament is finished"
+msgstr ""
+
+msgid "Randomize winds seating at each table"
+msgstr ""
+
+msgid "Use this seating for new game?"
+msgstr ""
+
+msgid "Use this seating"
+msgstr ""
+
+msgid "Confirm round cancellation: "
+msgstr ""
+
+msgid ""
+"Confirm game definalization. Note that you will need to cancel last round by "
+"hand after that."
+msgstr ""
+
+msgid "Confirm game cancellation: "
+msgstr ""
+
+msgid "Tables state:"
+msgstr ""
+
+msgid "Last played round:"
+msgstr ""
+
+msgid "(no rounds are played yet)"
+msgstr ""
+
+msgid "Penalties:"
+msgstr ""
+
+msgid "%s - %s points of penalty. Reason: %s"
+msgstr ""
+
+msgid "Cancel last played round"
+msgstr ""
+
+msgid "Cancel game"
+msgstr ""
+
+msgid "Definalize game"
 msgstr ""
 
 msgid "Random seating"
@@ -909,46 +984,6 @@ msgstr ""
 msgid "Use interval seating"
 msgstr ""
 
-msgid ""
-"This tournament has predefined seating. See Admin actions / Predefined "
-"seating page for seating configuration. Next seating is listed below."
-msgstr ""
-
-msgid "No seating defined for next game. Looks like the tournament is finished"
-msgstr ""
-
-msgid "Randomize winds seating at each table"
-msgstr ""
-
-msgid "Use this seating for new game?"
-msgstr ""
-
-msgid "Use this seating"
-msgstr ""
-
-msgid "Start timer and games"
-msgstr ""
-
-msgid "Press next button to start the timer and begin the games."
-msgstr ""
-
-msgid "Start games and timer?"
-msgstr ""
-
-msgid "Start games!"
-msgstr ""
-
-msgid "Reset the timer"
-msgstr ""
-
-msgid ""
-"Pressing this button will reset the timer to its initial value. Be careful: "
-"you should not need this usually."
-msgstr ""
-
-msgid "Really reset the timer?"
-msgstr ""
-
 msgid "Hide/show rating table"
 msgstr ""
 
@@ -961,41 +996,6 @@ msgid "Rating table is hidden. Show"
 msgstr ""
 
 msgid "Rating table is visible. Hide"
-msgstr ""
-
-msgid "Confirm round cancellation: "
-msgstr ""
-
-msgid ""
-"Confirm game definalization. Note that you will need to cancel last round by "
-"hand after that."
-msgstr ""
-
-msgid "Confirm game cancellation: "
-msgstr ""
-
-msgid "Tables state:"
-msgstr ""
-
-msgid "Last played round:"
-msgstr ""
-
-msgid "(no rounds are played yet)"
-msgstr ""
-
-msgid "Penalties:"
-msgstr ""
-
-msgid "%s - %s points of penalty. Reason: %s"
-msgstr ""
-
-msgid "Cancel last played round"
-msgstr ""
-
-msgid "Cancel game"
-msgstr ""
-
-msgid "Definalize game"
 msgstr ""
 
 msgid "<h2>Oops.</h2>Failed to get event configuration!"
@@ -1235,6 +1235,9 @@ msgid "Failed to remove administrator from event"
 msgstr ""
 
 msgid "Failed to register the player. Check your network connection."
+msgstr ""
+
+msgid "Player already registered to this event"
 msgstr ""
 
 msgid "Failed to save local ids mapping. Check your network connection."

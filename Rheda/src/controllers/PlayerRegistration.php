@@ -228,7 +228,14 @@ class PlayerRegistration extends Controller
                 $errorMsg = _t('Failed to register the player. Check your network connection.');
             }
         } catch (\Exception $e) {
-            $errorMsg = $e->getMessage();
+            $message = explode("\n\n", $e->getMessage())[0];
+            switch ($message) {
+                case 'Player already registered to this event':
+                    $errorMsg = _t('Player already registered to this event');
+                    break;
+                default:
+                    $errorMsg = $message;
+            }
         };
 
         return $errorMsg;

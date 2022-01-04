@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-30 20:10+0300\n"
+"POT-Creation-Date: 2022-01-05 01:04+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1132,6 +1132,9 @@ msgstr "Игрок"
 
 msgid "Player added successfully. Reload page to see results"
 msgstr "Игрок успешно добавлен. Обновите страницу чтобы увидеть результаты"
+
+msgid "Player already registered to this event"
+msgstr "Игрок уже зарегистрирован"
 
 msgid "Player name"
 msgstr "Имя игрока"
