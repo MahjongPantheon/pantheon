@@ -116,7 +116,7 @@ class PlayersController extends Controller
                                 'title' => $regData['replacements'][$p->getId()]->getDisplayName(),
                             ],
                     ];
-                }, $regData['players'], $session->getCurrentState()->getScores())
+                }, $session->getPlayers(), $session->getCurrentState()->getScores())
             ];
         }, $sessions);
 
