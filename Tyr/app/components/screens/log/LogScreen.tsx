@@ -25,7 +25,7 @@ export const LogScreen: React.FC<IComponentProps> = props => {
   let results: IRoundResult[] = [];
   let rounds: IRoundOverviewInfo[] = [];
 
-  let playersList = state.currentOtherTablePlayers || state.players;
+  let playersList = state.currentOtherTable ? state.currentOtherTablePlayers : state.players;
 
   if (!state.allRoundsOverviewErrorCode && state.allRoundsOverview && playersList) {
     playersList.forEach(player => {
