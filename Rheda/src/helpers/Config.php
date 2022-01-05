@@ -48,14 +48,6 @@ class Config
      */
     protected $_rulesetTitle = '';
     /**
-     * @var int
-     */
-    protected $_tenboDivider = 1;
-    /**
-     * @var int
-     */
-    protected $_ratingDivider = 1;
-    /**
      * @var bool
      */
     protected $_tonpuusen = false;
@@ -221,8 +213,6 @@ class Config
         'withNagashiMangan' => false,
         'withAtamahane' => false,
         'rulesetTitle' => 'blank',
-        'tenboDivider' => 1,
-        'ratingDivider' => 1,
         'tonpuusen' => false,
         'startRating' => 0,
         'riichiGoesToWinner' => false,
@@ -385,20 +375,6 @@ class Config
     public function rulesetTitle()
     {
         return $this->_rulesetTitle;
-    }
-    /**
-     * @return int
-     */
-    public function tenboDivider()
-    {
-        return $this->_tenboDivider;
-    }
-    /**
-     * @return int
-     */
-    public function ratingDivider()
-    {
-        return $this->_ratingDivider;
     }
     /**
      * @return bool

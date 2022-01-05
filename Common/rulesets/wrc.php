@@ -23,19 +23,18 @@ return [
     'allowedYaku' => YakuMap::listExcept([
         Y_OPENRIICHI
     ]),
-    'chomboPenalty'         => 200,
+    'chomboPenalty'         => 20000,
     'doubleronHonbaAtamahane' => false,
     'doubleronRiichiAtamahane' => false,
     'equalizeUma'           => true,
     'extraChomboPayments'   => false,
     'gameExpirationTime'    => false,
     'goalPoints'            => 0,
-    'maxPenalty'            => 200,
-    'minPenalty'            => 10,
+    'maxPenalty'            => 20000,
+    'minPenalty'            => 100,
     'oka'                   => 0,
-    'penaltyStep'           => 10,
+    'penaltyStep'           => 100,
     'playAdditionalRounds'  => false,
-    'ratingDivider'         => 10,
     'redZone'               => 300, // 5min
     'replacementPlayerFixedPoints' => -15000,
     'replacementPlayerOverrideUma' => -15000,
@@ -43,10 +42,9 @@ return [
     'startPoints'           => 30000,
     'startRating'           => 0,
     'subtractStartPoints'   => true,
-    'tenboDivider'          => 100,
     'timerPolicy'           => 'redZone',
     'tonpuusen'             => false,
-    'uma'                   => [1 => 150, 50, -50, -150],
+    'uma'                   => [1 => 15000, 5000, -5000, -15000],
     'withAbortives'         => false,
     'withAtamahane'         => true,
     'withButtobi'           => false,
@@ -62,6 +60,6 @@ return [
     '_invalidCustomFields' => [
         'chipsValue',
         'withWinningDealerHonbaSkipped', 'timerPolicy', 'redZone',
-        'startRating', 'subtractStartPoints', 'complexUma', 'tenboDivider', 'ratingDivider',
+        'startRating', 'subtractStartPoints', 'complexUma',
     ],
 ];

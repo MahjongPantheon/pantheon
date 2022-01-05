@@ -563,8 +563,6 @@ class EventsController extends Controller
             'withNagashiMangan'   => $rules->withNagashiMangan(),
             'withAtamahane'       => $rules->withAtamahane(),
             'rulesetTitle'        => $rules->title(),
-            'tenboDivider'        => $rules->tenboDivider(),
-            'ratingDivider'       => $rules->ratingDivider(),
             'tonpuusen'           => $rules->tonpuusen(),
             'startRating'         => $rules->startRating(),
             'riichiGoesToWinner'  => $rules->riichiGoesToWinner(),

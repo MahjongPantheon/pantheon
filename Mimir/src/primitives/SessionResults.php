@@ -426,9 +426,7 @@ class SessionResultsPrimitive extends Primitive
         }
 
         if (!empty($results->getPenalties()[$this->_playerId])) { // final chombing
-            $this->_ratingDelta += (
-                $results->getPenalties()[$this->_playerId] / (float)$rules->ratingDivider()
-            );
+            $this->_ratingDelta += $results->getPenalties()[$this->_playerId];
         }
 
         return $this;
@@ -518,9 +516,9 @@ class SessionResultsPrimitive extends Primitive
             : $rules->uma($allScores)[$this->_place];
 
         return (
-            $score / (float)$rules->tenboDivider()
+            $score
             + $rules->oka($this->_place)
             + $uma
-        ) / (float)$rules->ratingDivider();
+        );
     }
 }

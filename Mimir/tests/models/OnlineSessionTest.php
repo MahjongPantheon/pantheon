@@ -175,7 +175,6 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             ->setAllowPlayerAppend(1)
             ->setRuleset(\Common\Ruleset::instance('tenhounet'))
             ->setRulesetChanges([
-                'tenboDivider' => 1,
                 'oka' => 0,
                 'startRating' => 0,
                 'startPoints' => 30000,
