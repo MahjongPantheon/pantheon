@@ -315,7 +315,8 @@
       if (!isOnlineTournament && field === 'chipsValue') { // chips exist only in online tournaments
         continue;
       }
-      let value = ((rulesets[currentRuleset].changes || {}).rulesetChanges || {})[field] || rulesets[currentRuleset].original[field];
+      let rulesetValue = ((rulesets[currentRuleset].changes || {}).rulesetChanges || {})[field];
+      let value = (rulesetValue === undefined || rulesetValue === null) ? rulesets[currentRuleset].original[field] : rulesetValue;
       switch (fieldsList[field]) {
         case 'int':
           fields.push('<div class="form-group">\n' +
