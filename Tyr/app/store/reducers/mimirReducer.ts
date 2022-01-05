@@ -136,6 +136,10 @@ export function mimirReducer(
     case UPDATE_CURRENT_GAMES_INIT:
       return {
         ...state,
+        currentOtherTable: undefined,
+        currentOtherTablePlayers: [],
+        currentOtherTableHash: undefined,
+        currentOtherTableIndex: 0,
         loading: {
           ...state.loading,
           games: true
@@ -421,6 +425,10 @@ export function mimirReducer(
     case GET_GAME_OVERVIEW_INIT:
       return {
         ...state,
+        currentOtherTable: undefined,
+        currentOtherTablePlayers: [],
+        currentOtherTableHash: undefined,
+        currentOtherTableIndex: 0,
         gameOverviewReady: false
       };
     case GET_GAME_OVERVIEW_SUCCESS:

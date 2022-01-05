@@ -512,7 +512,7 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
   // todo show for showAdditionalTableInfo while confirmation
 
   let showTableNumber = false;
-  let tableNumber = state.tableIndex;
+  let tableNumber = state.currentOtherTable?.tableIndex ?? state.tableIndex;
   let showRoundInfo = true;
   let showTimer = false;
   let currentTime: string | undefined = undefined;
@@ -548,9 +548,9 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
     showTableNumber,
     showTimer,
     gamesLeft,
-    round: roundToString(state.currentRound),
-    honbaCount: state.honba,
-    riichiCount: state.riichiOnTable,
+    round: roundToString(state.currentOtherTable?.currentRound ?? state.currentRound),
+    honbaCount: state.currentOtherTable?.honba ?? state.honba,
+    riichiCount: state.currentOtherTable?.riichiOnTable ?? state.riichiOnTable,
     currentTime,
     tableNumber,
     onTableInfoToggle: onTableInfoToggle(state, dispatch),
