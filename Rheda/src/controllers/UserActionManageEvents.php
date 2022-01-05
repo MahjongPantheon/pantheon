@@ -65,6 +65,13 @@ class UserActionManageEvents extends Controller
                     return false;
                 }
                 break;
+            case 'rebuildScoring':
+                if (!empty($this->_path['id'])) {
+                    $this->_mimir->rebuildScoring(intval($this->_path['id']));
+                    header('Location: /cp/manageEvents', false, 302);
+                    return false;
+                }
+                break;
             default:
         }
 

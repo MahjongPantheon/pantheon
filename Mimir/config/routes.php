@@ -56,6 +56,7 @@ return [
 
     // admin
     'getEventForEdit'    => ['EventsController', 'getEventForEdit'],
+    'rebuildScoring'     => ['EventsController', 'rebuildEventScoring'],
     'createEvent'        => ['EventsController', 'createEvent'],
     'updateEvent'        => ['EventsController', 'updateEvent'],
     'finishEvent'        => ['EventsController', 'finishEvent'],

@@ -8,7 +8,7 @@ Api methods
 
 Parameters:
 
-Returns: _string[]_ 
+Returns: _array_ 
 
 ### getTimezones
  Get available timezones.
@@ -321,6 +321,17 @@ Exceptions:
 * _InvalidParametersException_ 
 * _\Exception_ 
 
+### rebuildScoring
+
+
+Parameters:
+* **$eventId** (_int_) 
+
+Returns: _bool_ 
+
+Exceptions:
+* _BadActionException_ 
+
 ### createEvent
 
 
@@ -336,6 +347,7 @@ Parameters:
 * **$lobbyId** (_int_) Tenhou lobby id for online tournaments
 * **$isTeam** (_bool_) If event is team tournament
 * **$isPrescripted** (_bool_) If tournament should have predefined seating
+* **$rulesetChangesJson** (_string_) Json-encoded changes for base ruleset
 
 Returns: _int_ 
 
@@ -360,6 +372,7 @@ Parameters:
 * **$lobbyId** (_int_) Tenhou lobby id for online tournaments
 * **$isTeam** (_bool_) If event is team tournament
 * **$isPrescripted** (_bool_) If tournament should have predefined seating
+* **$rulesetChangesJson** (_string_) Json-encoded changes for base ruleset
 
 Returns: _bool_ 
 

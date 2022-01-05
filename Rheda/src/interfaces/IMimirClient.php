@@ -229,6 +229,12 @@ interface IMimirClient
     public function getEventForEdit(int $id): array;
 
     /**
+     * @param int $eventId
+     * @return bool
+    */
+    public function rebuildScoring(int $eventId): bool;
+
+    /**
      * @param string $type
      * @param string $title
      * @param string $description

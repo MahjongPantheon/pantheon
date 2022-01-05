@@ -335,6 +335,16 @@ class MimirClient implements IMimirClient
     }
 
     /**
+     * @param int $eventId
+     * @return bool
+    */
+    public function rebuildScoring(int $eventId): bool
+    {
+        /** @phpstan-ignore-next-line */
+        return (bool)$this->_client->execute('rebuildScoring', [$eventId]);
+    }
+
+    /**
      * @param string $type
      * @param string $title
      * @param string $description
