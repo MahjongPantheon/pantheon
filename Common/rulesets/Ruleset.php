@@ -85,7 +85,7 @@ class Ruleset
             'withKazoe' => _t('If kazoe should be yakuman, not sanbaiman'),
             'withKiriageMangan' => _t('If 4/30 and 3/60 should be rounded to mangan'),
             'withKuitan' => _t('If tanyao in open hand is allowed'),
-            'withLeadingDealerGameover' => _t('If game ends when leading dealer wins in last round'),
+            'withLeadingDealerGameOver' => _t('If game ends when leading dealer wins in last round'),
             'withMultiYakumans' => _t('If multiple yakumans are enabled'),
             'withNagashiMangan' => _t('If nagashi mangan is allowed'),
             'withWinningDealerHonbaSkipped' => _t('If game should proceed to next round if dealer wins (i.e. no honba/renchan)'),
