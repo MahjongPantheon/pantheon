@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 01:04+0300\n"
+"POT-Creation-Date: 2022-01-05 20:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-
-msgid "The game has been successfully added!"
-msgstr ""
-
-msgid "Add online game"
-msgstr ""
-
-msgid "Add game"
-msgstr ""
 
 msgid "Achievement"
 msgstr ""
@@ -87,7 +78,16 @@ msgid_plural "%d riichi bets"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Game details"
+msgid "Achievements"
+msgstr ""
+
+msgid "The game has been successfully added!"
+msgstr ""
+
+msgid "Add online game"
+msgstr ""
+
+msgid "Add game"
 msgstr ""
 
 msgid "Open game control app"
@@ -127,9 +127,6 @@ msgid "Manage players"
 msgstr ""
 
 msgid "Predefined seating"
-msgstr ""
-
-msgid "Achievements"
 msgstr ""
 
 msgid "%s: actions"
@@ -192,6 +189,9 @@ msgstr ""
 msgid "Earlier"
 msgstr ""
 
+msgid "Game details"
+msgstr ""
+
 msgid "Manage profile: %s"
 msgstr ""
 
@@ -243,12 +243,6 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
-msgstr ""
-
 msgid "Additional penalties"
 msgstr ""
 
@@ -269,33 +263,49 @@ msgstr ""
 msgid "Apply penalty"
 msgstr ""
 
-msgid "Recover your password"
+msgid "No games has been played yet"
 msgstr ""
 
-msgid "Confirmation e-mail was sent. Please check you inbox."
+msgid "%d - %d (%d total)"
 msgstr ""
 
 msgid ""
-"Please enter the e-mail address you've registered with. We will send you "
-"confirmation email to reset your password."
+"Please enter your e-mail address and password. We will send authentication "
+"link to your email, so you will be able to sign in and fill your personal "
+"data"
 msgstr ""
 
 msgid "Your e-mail address"
 msgstr ""
 
+msgid ""
+"Your e-mail will not be shared with anyone else and will not be visible "
+"anywhere."
+msgstr ""
+
+msgid "Your password"
+msgstr ""
+
+msgid ""
+"We never store passwords as plain text. But keep in mind that weak passwords "
+"will not be accepted by checker."
+msgstr ""
+
 msgid "Please enter symbols to make sure you're not a robot:"
 msgstr ""
 
-msgid "Send confirmation e-mail"
+msgid "I've read the privacy policy listed below and accept its terms"
 msgstr ""
 
-msgid "Your password was successfully updated. Please log in now."
+msgid "Create account"
 msgstr ""
 
-msgid "Please enter new password for your account."
+msgid "Privacy policy overview"
 msgstr ""
 
-msgid "Change password"
+msgid ""
+"Confirmation email has been sent. Please check your inbox for further "
+"instructions."
 msgstr ""
 
 msgid "Sign up confirmation"
@@ -377,39 +387,6 @@ msgstr ""
 msgid "Save teams list"
 msgstr ""
 
-msgid ""
-"Please enter your e-mail address and password. We will send authentication "
-"link to your email, so you will be able to sign in and fill your personal "
-"data"
-msgstr ""
-
-msgid ""
-"Your e-mail will not be shared with anyone else and will not be visible "
-"anywhere."
-msgstr ""
-
-msgid "Your password"
-msgstr ""
-
-msgid ""
-"We never store passwords as plain text. But keep in mind that weak passwords "
-"will not be accepted by checker."
-msgstr ""
-
-msgid "I've read the privacy policy listed below and accept its terms"
-msgstr ""
-
-msgid "Create account"
-msgstr ""
-
-msgid "Privacy policy overview"
-msgstr ""
-
-msgid ""
-"Confirmation email has been sent. Please check your inbox for further "
-"instructions."
-msgstr ""
-
 msgid "Create new user"
 msgstr ""
 
@@ -420,6 +397,29 @@ msgid "Password"
 msgstr ""
 
 msgid "Successfully register new user!"
+msgstr ""
+
+msgid "Recover your password"
+msgstr ""
+
+msgid "Confirmation e-mail was sent. Please check you inbox."
+msgstr ""
+
+msgid ""
+"Please enter the e-mail address you've registered with. We will send you "
+"confirmation email to reset your password."
+msgstr ""
+
+msgid "Send confirmation e-mail"
+msgstr ""
+
+msgid "Your password was successfully updated. Please log in now."
+msgstr ""
+
+msgid "Please enter new password for your account."
+msgstr ""
+
+msgid "Change password"
 msgstr ""
 
 msgid "Personal stats"
@@ -555,6 +555,9 @@ msgstr ""
 msgid "These results are visible only for tournament administrator"
 msgstr ""
 
+msgid "Team"
+msgstr ""
+
 msgid "Something went wrong: %s"
 msgstr ""
 
@@ -574,9 +577,6 @@ msgid "Tables are being prepared..."
 msgstr ""
 
 msgid "Please wait a while and reload the page."
-msgstr ""
-
-msgid "Team"
 msgstr ""
 
 msgid "Manage owned events"
@@ -627,6 +627,102 @@ msgid "global"
 msgstr ""
 
 msgid "Revoke"
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s (<b>%s</b>), %d han."
+msgstr ""
+
+msgid "Riichi bets: %s"
+msgstr ""
+
+msgid "Double ron:"
+msgstr ""
+
+msgid "Triple ron:"
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo), yakuman!"
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo), %d han, %d fu."
+msgstr ""
+
+msgid "<b>%s</b> - %s (tsumo), %d han."
+msgstr ""
+
+msgid "Exhaustive draw (tenpai: %s)."
+msgstr ""
+
+msgid "Exhaustive draw (everybody noten)."
+msgstr ""
+
+msgid "Abortive draw."
+msgstr ""
+
+msgid "Chombo: %s."
+msgstr ""
+
+msgid "Nagashi mangan: %s."
+msgstr ""
+
+msgid "Tenpai: %s."
+msgstr ""
+
+msgid "Please enter your e-mail address and password."
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr ""
+
+msgid "View replay online"
+msgstr ""
+
+msgid "Best hand: <b>%s</b> - %s"
+msgstr ""
+
+msgid "Ron hands: %d"
+msgstr ""
+
+msgid "Tsumo hands: %d"
+msgstr ""
+
+msgid "Drawn rounds: %d"
+msgstr ""
+
+msgid "Chombo penalties: %s"
+msgstr ""
+
+msgid "Additional penalties:"
+msgstr ""
+
+msgid "%s - %d points (%s)"
+msgstr ""
+
+msgid "Full game log:"
 msgstr ""
 
 msgid "Update event"
@@ -703,12 +799,6 @@ msgstr ""
 msgid "Create event"
 msgstr ""
 
-msgid "Please enter your e-mail address and password."
-msgstr ""
-
-msgid "Forgot your password?"
-msgstr ""
-
 msgid "Rating"
 msgstr ""
 
@@ -722,96 +812,6 @@ msgid "Han"
 msgstr ""
 
 msgid "Yaku collected over all time"
-msgstr ""
-
-msgid "View replay online"
-msgstr ""
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr ""
-
-msgid "Ron hands: %d"
-msgstr ""
-
-msgid "Tsumo hands: %d"
-msgstr ""
-
-msgid "Drawn rounds: %d"
-msgstr ""
-
-msgid "Chombo penalties: %s"
-msgstr ""
-
-msgid "Additional penalties:"
-msgstr ""
-
-msgid "%s - %d points (%s)"
-msgstr ""
-
-msgid "Full game log:"
-msgstr ""
-
-msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
-msgstr ""
-
-msgid "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s (<b>%s</b>), %d han."
-msgstr ""
-
-msgid "Riichi bets: %s"
-msgstr ""
-
-msgid "Double ron:"
-msgstr ""
-
-msgid "Triple ron:"
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo), yakuman!"
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo), %d han, %d fu."
-msgstr ""
-
-msgid "<b>%s</b> - %s (tsumo), %d han."
-msgstr ""
-
-msgid "Exhaustive draw (tenpai: %s)."
-msgstr ""
-
-msgid "Exhaustive draw (everybody noten)."
-msgstr ""
-
-msgid "Abortive draw."
-msgstr ""
-
-msgid "Chombo: %s."
-msgstr ""
-
-msgid "Nagashi mangan: %s."
-msgstr ""
-
-msgid "Tenpai: %s."
 msgstr ""
 
 msgid "Finish all the games"
@@ -828,85 +828,10 @@ msgstr ""
 msgid "Confirm the results and finish all games"
 msgstr ""
 
-msgid "Start timer and games"
-msgstr ""
-
-msgid "Press next button to start the timer and begin the games."
-msgstr ""
-
-msgid "Start games and timer?"
-msgstr ""
-
-msgid "Start games!"
-msgstr ""
-
-msgid "Reset the timer"
-msgstr ""
-
-msgid ""
-"Pressing this button will reset the timer to its initial value. Be careful: "
-"you should not need this usually."
-msgstr ""
-
-msgid "Really reset the timer?"
-msgstr ""
-
 msgid "Ready to generate seating"
 msgstr ""
 
 msgid "Select seating mode and press the appropriate button."
-msgstr ""
-
-msgid ""
-"This tournament has predefined seating. See Admin actions / Predefined "
-"seating page for seating configuration. Next seating is listed below."
-msgstr ""
-
-msgid "No seating defined for next game. Looks like the tournament is finished"
-msgstr ""
-
-msgid "Randomize winds seating at each table"
-msgstr ""
-
-msgid "Use this seating for new game?"
-msgstr ""
-
-msgid "Use this seating"
-msgstr ""
-
-msgid "Confirm round cancellation: "
-msgstr ""
-
-msgid ""
-"Confirm game definalization. Note that you will need to cancel last round by "
-"hand after that."
-msgstr ""
-
-msgid "Confirm game cancellation: "
-msgstr ""
-
-msgid "Tables state:"
-msgstr ""
-
-msgid "Last played round:"
-msgstr ""
-
-msgid "(no rounds are played yet)"
-msgstr ""
-
-msgid "Penalties:"
-msgstr ""
-
-msgid "%s - %s points of penalty. Reason: %s"
-msgstr ""
-
-msgid "Cancel last played round"
-msgstr ""
-
-msgid "Cancel game"
-msgstr ""
-
-msgid "Definalize game"
 msgstr ""
 
 msgid "Random seating"
@@ -982,6 +907,81 @@ msgid "Use interval seating for new game?"
 msgstr ""
 
 msgid "Use interval seating"
+msgstr ""
+
+msgid ""
+"This tournament has predefined seating. See Admin actions / Predefined "
+"seating page for seating configuration. Next seating is listed below."
+msgstr ""
+
+msgid "No seating defined for next game. Looks like the tournament is finished"
+msgstr ""
+
+msgid "Randomize winds seating at each table"
+msgstr ""
+
+msgid "Use this seating for new game?"
+msgstr ""
+
+msgid "Use this seating"
+msgstr ""
+
+msgid "Start timer and games"
+msgstr ""
+
+msgid "Press next button to start the timer and begin the games."
+msgstr ""
+
+msgid "Start games and timer?"
+msgstr ""
+
+msgid "Start games!"
+msgstr ""
+
+msgid "Confirm round cancellation: "
+msgstr ""
+
+msgid ""
+"Confirm game definalization. Note that you will need to cancel last round by "
+"hand after that."
+msgstr ""
+
+msgid "Confirm game cancellation: "
+msgstr ""
+
+msgid "Tables state:"
+msgstr ""
+
+msgid "Last played round:"
+msgstr ""
+
+msgid "(no rounds are played yet)"
+msgstr ""
+
+msgid "Penalties:"
+msgstr ""
+
+msgid "%s - %s points of penalty. Reason: %s"
+msgstr ""
+
+msgid "Cancel last played round"
+msgstr ""
+
+msgid "Cancel game"
+msgstr ""
+
+msgid "Definalize game"
+msgstr ""
+
+msgid "Reset the timer"
+msgstr ""
+
+msgid ""
+"Pressing this button will reset the timer to its initial value. Be careful: "
+"you should not need this usually."
+msgstr ""
+
+msgid "Really reset the timer?"
 msgstr ""
 
 msgid "Hide/show rating table"
@@ -1652,11 +1652,6 @@ msgstr ""
 msgid "Play additional rounds"
 msgstr ""
 
-msgid ""
-"Secondary divider (applied after primary) to make rating points from uma/oka "
-"compliant points"
-msgstr ""
-
 msgid "Red zone duration"
 msgstr ""
 
@@ -1676,9 +1671,6 @@ msgid "Rating initial points amount"
 msgstr ""
 
 msgid "If start points should be subtracted from result"
-msgstr ""
-
-msgid "Primary divider to make game points comply with uma/oka amount"
 msgstr ""
 
 msgid "Timer policy"

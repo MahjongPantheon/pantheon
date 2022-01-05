@@ -24,7 +24,7 @@ return [
         Y_IPPATSU,
         Y_OPENRIICHI
     ]),
-    'chomboPenalty'         => 200,
+    'chomboPenalty'         => 20000,
     'complexUma' => true,
     'doubleronHonbaAtamahane' => false,
     'doubleronRiichiAtamahane' => false,
@@ -32,12 +32,11 @@ return [
     'extraChomboPayments'   => false,
     'gameExpirationTime'    => false,
     'goalPoints'            => 0,
-    'maxPenalty'            => 200,
-    'minPenalty'            => 10,
+    'maxPenalty'            => 20000,
+    'minPenalty'            => 100,
     'oka'                   => 0,
-    'penaltyStep'           => 10,
+    'penaltyStep'           => 100,
     'playAdditionalRounds'  => false,
-    'ratingDivider'         => 10,
     'redZone'               => 300, // 5min
     'replacementPlayerFixedPoints' => false,
     'replacementPlayerOverrideUma' => false,
@@ -45,7 +44,6 @@ return [
     'startPoints'           => 30000,
     'startRating'           => 0,
     'subtractStartPoints'   => true,
-    'tenboDivider'          => 100,
     'timerPolicy'           => 'yellowZone',
     'tonpuusen'             => false,
     'withAbortives'         => true,
@@ -63,6 +61,6 @@ return [
     '_invalidCustomFields' => [
         'uma', 'chipsValue',
         'withWinningDealerHonbaSkipped', 'timerPolicy', 'redZone',
-        'startRating', 'subtractStartPoints', 'complexUma', 'tenboDivider', 'ratingDivider',
+        'startRating', 'subtractStartPoints', 'complexUma',
     ],
 ];

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 01:04+0300\n"
+"POT-Creation-Date: 2022-01-05 20:51+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1201,9 +1201,6 @@ msgstr ""
 "zurückgesetzt. Seien Sie vorsichtig: Sie sollten das normalerweise nicht "
 "brauchen."
 
-msgid "Primary divider to make game points comply with uma/oka amount"
-msgstr ""
-
 msgid "Privacy policy overview"
 msgstr ""
 
@@ -1394,11 +1391,6 @@ msgid "Save local IDs"
 msgstr ""
 
 msgid "Save teams list"
-msgstr ""
-
-msgid ""
-"Secondary divider (applied after primary) to make rating points from uma/oka "
-"compliant points"
 msgstr ""
 
 msgid "Select basic ruleset for event."

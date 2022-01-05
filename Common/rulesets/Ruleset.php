@@ -67,7 +67,6 @@ class Ruleset
             'oka' => _t('Oka (first place) bonus size'),
             'penaltyStep' => _t('Step of penalty amounts'),
             'playAdditionalRounds' => _t('Play additional rounds'),
-            'ratingDivider' => _t('Secondary divider (applied after primary) to make rating points from uma/oka compliant points'),
             'redZone' => _t('Red zone duration'),
             'replacementPlayerFixesPoints' => _t('Amount of points to be given to replacement player'),
             'replacementPlayerOverrideUma' => _t('Amount of uma bonus to be given to replacement player'),
@@ -75,7 +74,6 @@ class Ruleset
             'startPoints' => _t('Points to start with'),
             'startRating' => _t('Rating initial points amount'),
             'subtractStartPoints' => _t('If start points should be subtracted from result'),
-            'tenboDivider' => _t('Primary divider to make game points comply with uma/oka amount'),
             'timerPolicy' => _t('Timer policy'),
             'tonpuusen' => _t('If games have east rounds only'),
             'uma' => _t('Uma (rank) bonus size'),
@@ -104,8 +102,6 @@ class Ruleset
     {
         return [
             'allowedYaku'           => 'select',
-            'tenboDivider'          => 'int',
-            'ratingDivider'         => 'int',
             'tonpuusen'             => 'bool',
             'startRating'           => 'int',
             'uma'                   => 'int[]',
@@ -199,13 +195,13 @@ class Ruleset
 
         switch ($minusedPlayers) {
             case 3:
-                $uma = [1 => 120, -10, -30, -80];
+                $uma = [1 => 12000, -1000, -3000, -8000];
                 break;
             case 1:
-                $uma = [1 => 80, 30, 10, -120];
+                $uma = [1 => 8000, 3000, 1000, -12000];
                 break;
             default:
-                $uma = [1 => 80, 40, -40, -80];
+                $uma = [1 => 8000, 4000, -4000, -8000];
         }
 
         return $uma;
@@ -255,22 +251,6 @@ class Ruleset
     public function allowedYaku()
     {
         return $this->_ruleset['allowedYaku'];
-    }
-
-    /**
-     * @return float
-     */
-    public function tenboDivider()
-    {
-        return $this->_ruleset['tenboDivider'];
-    }
-
-    /**
-     * @return float
-     */
-    public function ratingDivider()
-    {
-        return $this->_ruleset['ratingDivider'];
     }
 
     /**

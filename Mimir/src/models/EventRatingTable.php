@@ -157,11 +157,7 @@ class EventRatingTableModel extends Model
                 'winner_zone'   => (
                     $mainEvent->getRuleset()->subtractStartPoints()
                         ? $el->getRating() >= $mainEvent->getRuleset()->startRating()
-                        : $el->getRating() >= (
-                            ($mainEvent->getRuleset()->startPoints() * $el->getGamesPlayed())
-                                /
-                            ($mainEvent->getRuleset()->tenboDivider() * $mainEvent->getRuleset()->ratingDivider())
-                        )
+                        : $el->getRating() >= ($mainEvent->getRuleset()->startPoints() * $el->getGamesPlayed())
                 ),
                 'avg_place'     => round($el->getAvgPlace(), 4),
                 'avg_score'     => $el->getGamesPlayed() == 0

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 01:04+0300\n"
+"POT-Creation-Date: 2022-01-05 20:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,26 +128,26 @@ msgid "Tsumo, %1"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:125:14
-#: app/components/screens/table/TableHelper.ts:114:13
+#: app/components/screens/table/TableHelper.ts:115:13
 #: app/store/selectors/commonSelectors.ts:11:25
 msgid "Exhaustive draw"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:137:14
-#: app/components/screens/table/TableHelper.ts:128:17
+#: app/components/screens/table/TableHelper.ts:129:17
 #: app/store/selectors/commonSelectors.ts:12:26
 msgid "Abortive draw"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:150:14
-#: app/components/screens/table/TableHelper.ts:118:13
-#: app/components/screens/table/TableHelper.ts:430:15
+#: app/components/screens/table/TableHelper.ts:119:13
+#: app/components/screens/table/TableHelper.ts:431:15
 #: app/store/selectors/commonSelectors.ts:13:27
 msgid "Chombo"
 msgstr ""
 
 #: app/components/screens/log/view/RoundSelectors.ts:163:14
-#: app/components/screens/table/TableHelper.ts:138:17
+#: app/components/screens/table/TableHelper.ts:139:17
 #: app/store/selectors/commonSelectors.ts:14:28
 msgid "Nagashi mangan"
 msgstr ""
@@ -259,56 +259,56 @@ msgstr[1] ""
 msgid "Table #%1"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:106:13
-#: app/components/screens/table/TableHelper.ts:422:15
+#: app/components/screens/table/TableHelper.ts:107:13
+#: app/components/screens/table/TableHelper.ts:423:15
 #: app/store/selectors/commonSelectors.ts:9:24
 msgid "Ron"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:110:13
-#: app/components/screens/table/TableHelper.ts:424:15
+#: app/components/screens/table/TableHelper.ts:111:13
+#: app/components/screens/table/TableHelper.ts:425:15
 #: app/store/selectors/commonSelectors.ts:10:26
 msgid "Tsumo"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:174:16
+#: app/components/screens/table/TableHelper.ts:175:16
 msgid "Penalty"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:331:25
+#: app/components/screens/table/TableHelper.ts:332:25
 msgid "empty outcome"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:340:22
-#: app/components/screens/table/TableHelper.ts:353:22
+#: app/components/screens/table/TableHelper.ts:341:22
+#: app/components/screens/table/TableHelper.ts:354:22
 msgid "Winner"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:343:22
+#: app/components/screens/table/TableHelper.ts:344:22
 msgid "Loser"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:358:27
+#: app/components/screens/table/TableHelper.ts:359:27
 msgid "wrong outcome for paoSelect"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:405:17
+#: app/components/screens/table/TableHelper.ts:406:17
 msgid "Select pao"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:410:16
+#: app/components/screens/table/TableHelper.ts:411:16
 msgid "Select tempai"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:426:15
+#: app/components/screens/table/TableHelper.ts:427:15
 msgid "Draw"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:428:15
+#: app/components/screens/table/TableHelper.ts:429:15
 msgid "Abort"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:432:14
+#: app/components/screens/table/TableHelper.ts:433:14
 msgid "Nagashi"
 msgstr ""
 

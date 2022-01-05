@@ -95,10 +95,7 @@ class Penalties extends Controller
             $players = $this->_mimir->getAllPlayers($this->_eventIdList);
             $settings = $this->_mimir->getGameConfig($this->_mainEventId);
             for ($i = $settings['minPenalty']; $i <= $settings['maxPenalty']; $i += $settings['penaltyStep']) {
-                $amounts []= [
-                    'view' => $i / (float)$settings['ratingDivider'],
-                    'value' => $i
-                ];
+                $amounts []= ['view' => $i, 'value' => $i];
             }
         } catch (\Exception $e) {
             $players = [];

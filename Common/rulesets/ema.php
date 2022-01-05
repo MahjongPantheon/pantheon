@@ -37,7 +37,6 @@ return [
     'oka'                   => 0,
     'penaltyStep'           => 100,
     'playAdditionalRounds'  => false,
-    'ratingDivider'         => 1,
     'redZone'               => 0,
     'replacementPlayerFixedPoints' => -15000,
     'replacementPlayerOverrideUma' => -15000,
@@ -45,7 +44,6 @@ return [
     'startPoints'           => 30000,
     'startRating'           => 0,
     'subtractStartPoints'   => true,
-    'tenboDivider'          => 1,
     'timerPolicy'           => 'yellowZone',
     'tonpuusen'             => false,
     'uma'                   => [1 => 15000, 5000, -5000, -15000],
@@ -63,6 +61,6 @@ return [
 
     '_invalidCustomFields' => [
         'chipsValue', 'withWinningDealerHonbaSkipped', 'timerPolicy', 'redZone',
-        'startRating', 'subtractStartPoints', 'complexUma', 'tenboDivider', 'ratingDivider',
+        'startRating', 'subtractStartPoints', 'complexUma',
     ],
 ];

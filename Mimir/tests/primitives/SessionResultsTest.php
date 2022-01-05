@@ -59,18 +59,16 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
 
         $this->_ruleset = new MockRuleset();
         $this->_ruleset->setRule('withButtobi', false);
-        $this->_ruleset->setRule('startRating', 1500);
+        $this->_ruleset->setRule('startRating', 0);
         $this->_ruleset->setRule('riichiGoesToWinner', false);
-        $this->_ruleset->setRule('tenboDivider', 1000.);
-        $this->_ruleset->setRule('ratingDivider', 1.);
         $this->_ruleset->setRule('tonpuusen', false);
         $this->_ruleset->setRule('timerPolicy', 'none');
         $this->_ruleset->setRule('withLeadingDealerGameOver', true);
         $this->_ruleset->setRule('startPoints', 30000);
         $this->_ruleset->setRule('subtractStartPoints', true);
-        $this->_ruleset->setRule('uma', [1 => 15, 5, -5, -15]);
+        $this->_ruleset->setRule('uma', [1 => 15000, 5000, -5000, -15000]);
         $this->_ruleset->setRule('oka', 0);
-        $this->_ruleset->setRule('chomboPenalty', 20);
+        $this->_ruleset->setRule('chomboPenalty', 20000);
         $this->_ruleset->setRule('equalizeUma', false);
         $this->_ruleset->setRule('replacementPlayerFixedPoints', -30000);
         $this->_ruleset->setRule('replacementPlayerOverrideUma', 0);
@@ -127,7 +125,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             );
         $result->save();
 
-        $this->assertEquals(-30, $result->getRatingDelta());
+        $this->assertEquals(-30000, $result->getRatingDelta());
     }
 
     public function testUmaRule()
@@ -142,13 +140,13 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             );
         $result->save();
 
-        $this->assertEquals(5, $result->getRatingDelta());
+        $this->assertEquals(5000, $result->getRatingDelta());
     }
 
     public function testOkaRule()
     {
         $this->_ruleset->setRule('startPoints', 25000);
-        $this->_ruleset->setRule('oka', 20);
+        $this->_ruleset->setRule('oka', 20000);
 
         $result = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[0])
@@ -160,7 +158,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             );
         $result->save();
 
-        $this->assertEquals(30, $result->getRatingDelta());
+        $this->assertEquals(30000, $result->getRatingDelta());
 
         $result = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[1])
@@ -235,10 +233,10 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             $result4->getScore()
         ])), 1);
 
-        $this->assertEquals(15, $result1->getRatingDelta()); // 1st place
-        $this->assertEquals(5, $result2->getRatingDelta()); // 2nd place
-        $this->assertEquals(-5, $result3->getRatingDelta()); // 3nd place
-        $this->assertEquals(-15, $result4->getRatingDelta()); // 4th place
+        $this->assertEquals(15000, $result1->getRatingDelta()); // 1st place
+        $this->assertEquals(5000, $result2->getRatingDelta()); // 2nd place
+        $this->assertEquals(-5000, $result3->getRatingDelta()); // 3nd place
+        $this->assertEquals(-15000, $result4->getRatingDelta()); // 4th place
     }
 
     public function testTwoEqualScoreWithEqualityRule()
@@ -303,6 +301,6 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $result1->save();
 
         $this->assertEquals(30000, $result1->getScore());
-        $this->assertEquals(-15, $result1->getRatingDelta()); // 2nd place = uma +5 + chombo -20
+        $this->assertEquals(-15000, $result1->getRatingDelta()); // 2nd place = uma +5 + chombo -20
     }
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 01:04+0300\n"
+"POT-Creation-Date: 2022-01-05 20:51+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1235,9 +1235,6 @@ msgstr ""
 "Нажатие на эту кнопку сбросить таймер в исходное значение. Будьте осторожны, "
 "как правило это не требуется."
 
-msgid "Primary divider to make game points comply with uma/oka amount"
-msgstr "Первичный делитель для очков"
-
 msgid "Privacy policy overview"
 msgstr "Обзор политики приватности"
 
@@ -1426,11 +1423,6 @@ msgstr "Сохранить локальные ID"
 
 msgid "Save teams list"
 msgstr "Сохранить список команд"
-
-msgid ""
-"Secondary divider (applied after primary) to make rating points from uma/oka "
-"compliant points"
-msgstr "Вторичный делитель для очков (ума/ока -> рейтинг)"
 
 msgid "Select basic ruleset for event."
 msgstr "Выберите базовый набор правил для события."
@@ -2073,6 +2065,9 @@ msgstr "да"
 #~ msgid "Pre-registration list (%d)"
 #~ msgstr "Список на утверждение (%d)"
 
+#~ msgid "Primary divider to make game points comply with uma/oka amount"
+#~ msgstr "Первичный делитель для очков"
+
 #~ msgid "Print PINs and QR codes"
 #~ msgstr "Печать PIN и QR кодов"
 
@@ -2106,6 +2101,11 @@ msgstr "да"
 
 #~ msgid "Seating controls"
 #~ msgstr "Управление рассадкой"
+
+#~ msgid ""
+#~ "Secondary divider (applied after primary) to make rating points from uma/"
+#~ "oka compliant points"
+#~ msgstr "Вторичный делитель для очков (ума/ока -> рейтинг)"
 
 #~ msgid "Select player"
 #~ msgstr "Выберите игрока"
