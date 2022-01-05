@@ -25,8 +25,10 @@ export const LogScreen: React.FC<IComponentProps> = props => {
   let results: IRoundResult[] = [];
   let rounds: IRoundOverviewInfo[] = [];
 
-  if (!state.allRoundsOverviewErrorCode && state.allRoundsOverview && state.players) {
-    state.players.forEach(player => {
+  let playersList = state.currentOtherTablePlayers || state.players;
+
+  if (!state.allRoundsOverviewErrorCode && state.allRoundsOverview && playersList) {
+    playersList.forEach(player => {
       players[player.id.toString()] = player.displayName
     })
 
