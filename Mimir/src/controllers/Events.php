@@ -1073,4 +1073,33 @@ class EventsController extends Controller
             'preferredByIp' => $preferredCountry
         ];
     }
+
+    /**
+     * @param int $eventId
+     * @return bool
+     * @throws BadActionException
+     */
+    public function rebuildEventScoring($eventId)
+    {
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to rebuild ratings for this event");
+        }
+
+        $results = SessionResultsPrimitive::findByEventId($this->_ds, [$eventId]);
+        foreach ($results as $res) {
+            $res->drop();
+        }
+
+        $playerResults = PlayerHistoryPrimitive::findAllByEvent($this->_ds, $eventId);
+        foreach ($playerResults as $item) {
+            $item->drop();
+        }
+
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, 'finished', 0, null, 'id', 'asc');
+        foreach ($sessions as $session) {
+            $session->recreateHistory();
+        }
+
+        return true;
+    }
 }

@@ -895,6 +895,15 @@ class SessionPrimitive extends Primitive
     }
 
     /**
+     * @throws \Exception
+     * @return void
+     */
+    public function recreateHistory()
+    {
+        $this->_finalizeGame();
+    }
+
+    /**
      * Get a list on unsaved session results primitives
      * @throws \Exception
      * @return SessionResultsPrimitive[]
