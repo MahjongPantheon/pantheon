@@ -17,6 +17,7 @@ import {ItemSelect} from '#/components/general/select-modal/ItemSelect';
 import {SelectModalProps} from '#/components/general/select-modal/SelectModal';
 import {
   ADD_ROUND_INIT,
+  GET_OTHER_TABLE_RELOAD,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   INIT_BLANK_OUTCOME,
@@ -479,7 +480,7 @@ export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dis
     onLogClick: onLogClick(dispatch),
     onAddClick: onAddClick(state, dispatch),
     onHomeClick: onHomeClick(dispatch),
-    onRefreshClick: onRefreshClick(dispatch),
+    onRefreshClick: onRefreshClick(state, dispatch),
   }
 }
 
@@ -751,8 +752,14 @@ function onHomeClick(dispatch: Dispatch) {
   return () => dispatch({ type: GOTO_PREV_SCREEN });
 }
 
-function onRefreshClick(dispatch: Dispatch) {
-  return () => dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
+function onRefreshClick(state: IAppState, dispatch: Dispatch) {
+  return () => {
+    if (state.currentScreen === 'otherTable') {
+      dispatch({ type: GET_OTHER_TABLE_RELOAD })
+    } else {
+      dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
+    }
+  }
 }
 
 function onNextClick(dispatch: Dispatch) {
