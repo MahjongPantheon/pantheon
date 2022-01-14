@@ -14,25 +14,6 @@
 *  You should have received a copy of the GNU General Public License
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *}}
-<style>
-    .col-1 {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    .player-row {
-        padding: 6px 0;
-    }
-    .player-row:nth-of-type(even) {
-        background-color: rgb(238, 238, 238);
-    }
-    .row-min-was-played:nth-of-type(even) {
-        background-color: rgb(191, 250, 218);
-    }
-    .row-min-was-played:nth-of-type(odd) {
-        background-color: rgb(219, 255, 235) !important;
-    }
-</style>
-
 <script>
     function onChange(showPlayers) {
       let href = new URL(location.href);
@@ -69,90 +50,69 @@
 {{/showAdminWarning}}
 
 {{^hideResults}}
-    <div class="row mobile-results-header-hidden" style="font-weight: bold; padding: 10px 0">
-        <div class="col-1" style="padding-left: 15px">#</div>
-        <div class="col-3">
-            {{#a href='/stat/?sort=name' title="{titlePlayer}"}}
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-                </svg>
-            {{/a}}
-            {{#orderByName}}
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
-                </svg>
-            {{/orderByName}}
-        </div>
-        <div class="col-2">
-            {{#a href='/stat/?sort=rating' title='{titleRatingPoints}'}}
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-bar-chart-fill" viewBox="0 0 16 16">
-                    <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
-                </svg>
-            {{/a}}
-            {{#orderByRating}}
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-                </svg>
-            {{/orderByRating}}
-        </div>
-        {{#if withChips}}
-            <div class="col-2" title="{{titleChips}}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-hypnotize" viewBox="0 0 16 16">
-                    <path d="m7.949 7.998.006-.003.003.009-.01-.006Zm.025-.028v-.03l.018.01-.018.02Zm0 .015.04-.022.01.006v.04l-.029.016-.021-.012v-.028Zm.049.057v-.014l-.008.01.008.004Zm-.05-.008h.006l-.006.004v-.004Z"/>
-                    <path fill-rule="evenodd" d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM4.965 1.69a6.972 6.972 0 0 1 3.861-.642c.722.767 1.177 1.887 1.177 3.135 0 1.656-.802 3.088-1.965 3.766 1.263.24 2.655-.815 3.406-2.742.38-.975.537-2.023.492-2.996a7.027 7.027 0 0 1 2.488 3.003c-.303 1.01-1.046 1.966-2.128 2.59-1.44.832-3.09.85-4.26.173l.008.021.012-.006-.01.01c.42 1.218 2.032 1.9 4.08 1.586a7.415 7.415 0 0 0 2.856-1.081 6.963 6.963 0 0 1-1.358 3.662c-1.03.248-2.235.084-3.322-.544-1.433-.827-2.272-2.236-2.279-3.58l-.012-.003c-.845.972-.63 2.71.666 4.327a7.415 7.415 0 0 0 2.37 1.935 6.972 6.972 0 0 1-3.86.65c-.727-.767-1.186-1.892-1.186-3.146 0-1.658.804-3.091 1.969-3.768l-.002-.007c-1.266-.25-2.666.805-3.42 2.74a7.415 7.415 0 0 0-.49 3.012 7.026 7.026 0 0 1-2.49-3.018C1.87 9.757 2.613 8.8 3.696 8.174c1.438-.83 3.084-.85 4.253-.176l.005-.006C7.538 6.77 5.924 6.085 3.872 6.4c-1.04.16-2.03.55-2.853 1.08a6.962 6.962 0 0 1 1.372-3.667l-.002.003c1.025-.243 2.224-.078 3.306.547 1.43.826 2.269 2.23 2.28 3.573L8 7.941c.837-.974.62-2.706-.673-4.319a7.415 7.415 0 0 0-2.362-1.931Z"/>
-                </svg>
-            </div>
-        {{/if}}
-        <div class="col-1">
-            {{#a href='/stat/?sort=avg_place' title='{titleAveragePlace}'}}
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
-                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
-                </svg>
-            {{/a}}
-            {{#orderByAvgPlace}}
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
-                </svg>
-            {{/orderByAvgPlace}}
-        </div>
-        <div class="col-2">
-            {{#a href='/stat/?sort=avg_score' title='{titleAveragePoints}'}}
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                </svg>
-            {{/a}}
-            {{#orderByAvgScore}}
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-                </svg>
-            {{/orderByAvgScore}}
-        </div>
-        <div class="col-1" title="{{titleGamesPlayed}}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-dice-5-fill" viewBox="0 0 16 16">
-                <path d="M3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3zm2.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM12 13.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM8 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-            </svg>
-        </div>
+    <div class="row">
+        <select class="form-control" onchange="location.href=this.value">
+            <option value="{{link href='/stat/?sort=rating'}}"{{#orderByRating}} selected="selected"{{/orderByRating}}>{{_t "Order by player rating"}}</option>
+            <option value="{{link href='/stat/?sort=name'}}"{{#orderByName}} selected="selected"{{/orderByName}}>{{_t "Order by player name"}}</option>
+            <option value="{{link href='/stat/?sort=avg_place'}}"{{#orderByAvgPlace}} selected="selected"{{/orderByAvgPlace}}>{{_t "Order by average place"}}</option>
+            <option value="{{link href='/stat/?sort=avg_score'}}"{{#orderByAvgScore}} selected="selected"{{/orderByAvgScore}}>{{_t "Order by average score"}}</option>
+        </select>
     </div>
-    {{#data}}
-        <div class="row player-row{{#min_was_played}} row-min-was-played{{/min_was_played}}">
-            <div class="col-1" style="padding-left: 15px">{{_index}}</div>
-            <div class="col-3">
-                {{#a href='/user/{id}/'}}{{title}}{{/a}}
-                {{#if isOnlineTournament}} ({{tenhou_id}}){{/if}}
-                {{#isTeamTournament}}<div>{{_t 'Team'}} "{{team_name}}"</div>{{/isTeamTournament}}
+    <div class="container">
+        <div class="row" style="font-weight: bold">
+            <div class="rating-name-row" style="height: 0"></div>
+            <div class="rating-data-row">
+                <div class="rating-rating no-left-border" title="{{titleRatingPoints}}"></div>
+                {{#if withChips}}
+                <div class="rating-chips" title="{{titleChips}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hypnotize" viewBox="0 0 16 16">
+                        <path d="m7.949 7.998.006-.003.003.009-.01-.006Zm.025-.028v-.03l.018.01-.018.02Zm0 .015.04-.022.01.006v.04l-.029.016-.021-.012v-.028Zm.049.057v-.014l-.008.01.008.004Zm-.05-.008h.006l-.006.004v-.004Z"/>
+                        <path fill-rule="evenodd" d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0ZM4.965 1.69a6.972 6.972 0 0 1 3.861-.642c.722.767 1.177 1.887 1.177 3.135 0 1.656-.802 3.088-1.965 3.766 1.263.24 2.655-.815 3.406-2.742.38-.975.537-2.023.492-2.996a7.027 7.027 0 0 1 2.488 3.003c-.303 1.01-1.046 1.966-2.128 2.59-1.44.832-3.09.85-4.26.173l.008.021.012-.006-.01.01c.42 1.218 2.032 1.9 4.08 1.586a7.415 7.415 0 0 0 2.856-1.081 6.963 6.963 0 0 1-1.358 3.662c-1.03.248-2.235.084-3.322-.544-1.433-.827-2.272-2.236-2.279-3.58l-.012-.003c-.845.972-.63 2.71.666 4.327a7.415 7.415 0 0 0 2.37 1.935 6.972 6.972 0 0 1-3.86.65c-.727-.767-1.186-1.892-1.186-3.146 0-1.658.804-3.091 1.969-3.768l-.002-.007c-1.266-.25-2.666.805-3.42 2.74a7.415 7.415 0 0 0-.49 3.012 7.026 7.026 0 0 1-2.49-3.018C1.87 9.757 2.613 8.8 3.696 8.174c1.438-.83 3.084-.85 4.253-.176l.005-.006C7.538 6.77 5.924 6.085 3.872 6.4c-1.04.16-2.03.55-2.853 1.08a6.962 6.962 0 0 1 1.372-3.667l-.002.003c1.025-.243 2.224-.078 3.306.547 1.43.826 2.269 2.23 2.28 3.573L8 7.941c.837-.974.62-2.706-.673-4.319a7.415 7.415 0 0 0-2.362-1.931Z"/>
+                    </svg>
+                </div>
+                {{/if}}
+                <div class="rating-avgplace" title="{{titleAveragePlace}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
+                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z"/>
+                    </svg>
+                </div>
+                <div class="rating-avgscore" title="{{titleAveragePoints}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                    </svg>
+                </div>
+                <div class="rating-games" title="{{titleGamesPlayed}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dice-5-fill" viewBox="0 0 16 16">
+                        <path d="M3 0a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3H3zm2.5 4a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm8 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM12 13.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zM5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zM8 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                    </svg>
+                </div>
             </div>
-            <div class="col-2">
-                <span class="badge
-                    {{#winner_zone}}badge-success{{/winner_zone}}
-                    {{^winner_zone}}badge-danger{{/winner_zone}}
-                ">{{rating}}</span>
-            </div>
-            {{#if withChips}}
-              <div class="col-2">{{chips}}</div>
-            {{/if}}
-            <div class="col-1">{{avg_place_less_precision}}</div>
-            <div class="col-2">{{avg_score_int}}</div>
-            <div class="col-1">{{games_played}}</div>
         </div>
-    {{/data}}
+            {{#data}}
+            <div class="row player-row{{#min_was_played}} row-min-was-played{{/min_was_played}}">
+                <div class="rating-index">{{_index}}</div>
+                <div class="rating-name-row">
+                    <span class="rating-name">
+                        {{#a href='/user/{id}/'}}{{title}}{{/a}}
+                        {{#if isOnlineTournament}}<br />ID: {{tenhou_id}}){{/if}}
+                        {{#isTeamTournament}}<br />{{_t 'Team:'}} "{{team_name}}"{{/isTeamTournament}}
+                    </span>
+                </div>
+                <div class="rating-data-row">
+                    <div class="rating-rating">
+                        <span class="badge
+                            {{#winner_zone}}badge-success{{/winner_zone}}
+                            {{^winner_zone}}badge-danger{{/winner_zone}}
+                        ">{{rating}}</span>
+                    </div>
+                    {{#if withChips}}
+                      <div class="rating-chips">12{{!chips}}</div>
+                    {{/if}}
+                    <div class="rating-avgplace">{{avg_place_less_precision}}</div>
+                    <div class="rating-avgscore">{{avg_score_int}}</div>
+                    <div class="rating-games">{{games_played}}</div>
+                </div>
+            </div>
+        {{/data}}
+    </div>
 {{/hideResults}}
