@@ -52,6 +52,80 @@ li, .table th, .table td {
     line-height: 24px;
 }
 
+/* rating table */
+
+.rating-name-row {
+  flex-basis: 250px;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+
+.rating-name-row > * {
+  margin: 6px 0;
+}
+
+.rating-index {
+  display: inline-block;
+  width: 50px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.rating-name {
+  display: inline-block;
+  padding: 0 10px;
+}
+
+.rating-data-row {
+  display: flex;
+  flex-basis: 270px;
+  flex-shrink: 0;
+}
+
+.rating-data-row > * {
+  text-align: center;
+  position: relative;
+  margin: 6px 0;
+}
+
+@media (min-width: 768px) {
+  .rating-data-row > *:not(.no-left-border)::before {
+    content: '';
+    height: calc(100% + 12px);
+    position: absolute;
+    width: 0;
+    top: -6px;
+    left: 0;
+    border-left: 1px solid #ccc;
+  }
+}
+
+.rating-rating, .rating-avgscore {
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rating-avgplace, .rating-games, .rating-chips, .rating-index {
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-row:nth-of-type(even) {
+  background-color: rgb(238, 238, 238);
+}
+.row-min-was-played:nth-of-type(even) {
+  background-color: rgb(191, 250, 218);
+}
+.row-min-was-played:nth-of-type(odd) {
+  background-color: rgb(219, 255, 235) !important;
+}
+
 /* graphs */
 .graphs .own {
     background-color: #ffff00 !important;

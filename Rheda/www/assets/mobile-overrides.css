@@ -28,11 +28,6 @@
 }
 
 @media (max-width: 767.98px) {
-  .mobile-results-header-hidden svg {
-    width: 16px;
-    height: 16px;
-  }
-
   .mobile-flex-player-points {
     padding: 0 52px;
   }
