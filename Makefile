@@ -159,6 +159,9 @@ frontdev: get_docker_id
 
 .PHONY: dev
 dev: run
+	@if [ -n $TMUX ]; then \
+     tmux split-window -dv '${MAKE} php_logs' ; \
+  fi
 	${MAKE} deps
 	${MAKE} migrate
 	${MAKE} frontdev
