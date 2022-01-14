@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 20:51+0300\n"
+"POT-Creation-Date: 2022-01-15 01:02+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1052,6 +1052,18 @@ msgstr "Открытых рук"
 msgid "Open riichi"
 msgstr "Опен риичи"
 
+msgid "Order by average place"
+msgstr "Сортировать по среднему месту"
+
+msgid "Order by average score"
+msgstr "Сортировать по средним очкам"
+
+msgid "Order by player name"
+msgstr "Сортировать по имени игрока"
+
+msgid "Order by player rating"
+msgstr "Сортировать по рейтингу"
+
 msgid "Over 9000 fu"
 msgstr "Over 9000 fu"
 
@@ -1296,6 +1308,9 @@ msgstr ""
 
 msgid "Really reset the timer?"
 msgstr "Действительно сбросить таймер?"
+
+msgid "Rebuild scoring"
+msgstr "Пересчитать рейтинги"
 
 msgid "Recent games"
 msgstr "Последние игры"
@@ -1577,6 +1592,9 @@ msgstr "Командный рейтинг"
 
 msgid "Team tournament"
 msgstr "Командный турнир"
+
+msgid "Team:"
+msgstr "Команда:"
 
 msgid "Tenhou"
 msgstr "Тенхо"

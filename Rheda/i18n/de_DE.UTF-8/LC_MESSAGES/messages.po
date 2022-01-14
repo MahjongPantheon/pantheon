@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 20:51+0300\n"
+"POT-Creation-Date: 2022-01-15 01:02+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1024,6 +1024,21 @@ msgstr "Geöffnete Hände"
 msgid "Open riichi"
 msgstr "Öffnen Riichi"
 
+#, fuzzy
+msgid "Order by average place"
+msgstr "Durchschnittlicher Platz"
+
+msgid "Order by average score"
+msgstr ""
+
+#, fuzzy
+msgid "Order by player name"
+msgstr "Spielerverwaltung"
+
+#, fuzzy
+msgid "Order by player rating"
+msgstr "Spielerregistrierung"
+
 msgid "Over 9000 fu"
 msgstr "Über 9000 fu"
 
@@ -1259,6 +1274,9 @@ msgstr ""
 
 msgid "Really reset the timer?"
 msgstr "Wirklich den Timer zurücksetzen?"
+
+msgid "Rebuild scoring"
+msgstr ""
 
 msgid "Recent games"
 msgstr "Letzte Spiele"
@@ -1542,6 +1560,9 @@ msgstr ""
 #, fuzzy
 msgid "Team tournament"
 msgstr "Echter Name"
+
+msgid "Team:"
+msgstr ""
 
 msgid "Tenhou"
 msgstr "Tenhou"
