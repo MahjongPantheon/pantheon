@@ -322,14 +322,13 @@ class AchievementsPrimitive extends Primitive
             ->findArray();
 
         $namesWithZeroCount = [];
-        $namesWithFeedCount = array_map(function ($round) {
-            return $round['title'];
+        $idsWithFeedCount = array_map(function ($round) {
+            return $round['loser_id'];
         }, $rounds);
 
         foreach ($players as $player) {
-            $displayName = $player['title'];
-            if (!in_array($displayName, $namesWithFeedCount)) {
-                array_push($namesWithZeroCount, $displayName);
+            if (!in_array($player['id'], $idsWithFeedCount)) {
+                array_push($namesWithZeroCount, $player['title']);
             }
         }
 
