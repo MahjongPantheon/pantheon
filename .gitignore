@@ -19,6 +19,8 @@ Rheda/vendor/
 Rheda/var/www-error.log
 Rheda/config/local/index.php
 
+Ratatosk/target
+
 Tyr/dist
 Tyr/tmp
 Tyr/node_modules

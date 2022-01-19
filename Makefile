@@ -127,11 +127,13 @@ pantheon_run: get_docker_id get_docker_idle_id
 				-p 127.0.0.1:4003:4003 \
 				-p 127.0.0.1:4004:4004 \
 				-p 127.0.0.1:5532:5532 \
+				-p 127.0.0.1:4006:4006 \
 				-v `pwd`/Tyr:/var/www/html/Tyr:z \
 				-v `pwd`/Mimir:/var/www/html/Mimir:z \
 				-v `pwd`/Rheda:/var/www/html/Rheda:z \
 				-v `pwd`/Frey:/var/www/html/Frey:z \
 				-v `pwd`/Common:/var/www/html/Common:z \
+				-v `pwd`/Ratatosk:/var/www/Ratatosk:z \
 				-v `pwd`/:/var/www/html/pantheon:z \
 				--name=pantheondev \
 				pantheondev; \
