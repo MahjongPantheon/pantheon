@@ -40,6 +40,7 @@ return array_merge([
     'routes'    => require __DIR__ . '/routes.php',
     'freyUrl'   => 'http://localhost:4004', // TODO: change this in your local config!
     'rhedaUrl'  => 'http://localhost:4002', // TODO: change this in your local config!
+    'ratatoskUrl' => 'ws://localhost:4006', // TODO: change this in your local config!
     'verbose'   => false,
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC',

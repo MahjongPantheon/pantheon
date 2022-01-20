@@ -5,15 +5,15 @@ use crate::{GameDataResponse, GenericResponseResult, RegDataResponse, STATUS_OK,
 
 pub(crate) fn run(ws: &mut WebSocket, sessions: &mut HashMap<Token, String>, token: Token, val: GenericResponseResult) {
   match val {
-    GenericResponseResult::GameData { game_hash, data }  => handle_game_data(game_hash, data, sessions, ws),
-    GenericResponseResult::RegData { game_hash } => handle_reg_data(game_hash, token, sessions, ws)
+    GenericResponseResult::GameState { game_hash, data }  => handle_game_data(game_hash, data, sessions, ws),
+    GenericResponseResult::Register { game_hash } => handle_reg_data(game_hash, token, sessions, ws)
   }
 }
 
 fn handle_game_data(game_hash: String, data: Value, sessions: &mut HashMap<Token, String>, ws: &mut WebSocket) {
   for peer in ws.get_connected().unwrap() {
     match sessions.get(&peer) {
-      Some(hash) => if hash.eq(&game_hash) {
+      Some(hash) => /*if hash.eq(&game_hash)*/ {
         let d = GameDataResponse { status: STATUS_OK, data: &data };
         let response = WebSocketEvent::TextMessage(serde_json::to_string(&d).unwrap());
         ws.send((peer, response));

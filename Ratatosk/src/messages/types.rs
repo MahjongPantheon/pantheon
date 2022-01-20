@@ -5,8 +5,8 @@ pub(crate) const STATUS_OK: &str = "ok";
 #[derive(Deserialize)]
 #[serde(tag = "t", content = "d")]
 pub(crate) enum GenericResponseResult {
-  RegData { game_hash: String },
-  GameData { game_hash: String, data: Value }
+  Register { game_hash: String },
+  GameState { game_hash: String, data: Value }
 }
 
 #[derive(Serialize)]

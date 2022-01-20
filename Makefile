@@ -97,6 +97,7 @@ pantheon_run: get_docker_id get_docker_idle_id
 		echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
 		echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
 		echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
+		echo "- ${YELLOW}Ratatosk${NC} is exposed on port 4006"; \
   		echo "----------------------------------------------------------------------------------"; \
   		echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
   		echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
@@ -166,7 +167,12 @@ dev: run
   fi
 	${MAKE} deps
 	${MAKE} migrate
+	${MAKE} run_ratatosk
 	${MAKE} frontdev
+
+.PHONY: run_ratatosk
+run_ratatosk: get_docker_id
+	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/Ratatosk && HOME=/home/user gosu user cargo run > /tmp/ratatosk.log &'
 
 .PHONY: migrate
 migrate: get_docker_id
