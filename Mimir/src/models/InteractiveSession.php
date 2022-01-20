@@ -18,6 +18,7 @@
 namespace Mimir;
 
 require_once __DIR__ . '/../Model.php';
+require_once __DIR__ . '/../WsClient.php';
 require_once __DIR__ . '/EventUserManagement.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
 require_once __DIR__ . '/../primitives/Player.php';

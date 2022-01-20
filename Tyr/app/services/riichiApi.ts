@@ -55,6 +55,13 @@ type GenericResponse = {
 export class RiichiApiService {
   private _authToken: string | null = null;
   private _personId: string | null = null;
+  private _ws: WebSocket = new WebSocket(environment.ratatoskUrl);
+
+  listenWsEvents() {
+    this._ws.addEventListener('message', (message) => {
+      console.log('Ratatosk sent: ', message)
+    });
+  }
 
   setCredentials(personId: number, token: string) {
     this._authToken = token;

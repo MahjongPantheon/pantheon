@@ -63,6 +63,8 @@ export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<
   let personId: number | undefined = mw.getState().currentPlayerId;
   let eventId: number | undefined = mw.getState().currentEventId;
 
+  api.listenWsEvents();
+
   switch (action.type) {
     case STARTUP_WITH_AUTH:
       if (!action.payload.token) { // Not logged in

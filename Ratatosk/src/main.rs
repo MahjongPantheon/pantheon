@@ -32,7 +32,9 @@ fn main() {
   loop {
     match ws.next() {
       (tok, WebSocketEvent::Connect) => {
-        println!("connected peer: {:?}", tok);
+        if cfg!(debug_assertions) {
+          println!("Connected peer: {:?}", tok);
+        }
       },
 
       (tok, WebSocketEvent::TextMessage(msg)) => {

@@ -167,12 +167,17 @@ dev: run
   fi
 	${MAKE} deps
 	${MAKE} migrate
+	${MAKE} build_ratatosk
 	${MAKE} run_ratatosk
 	${MAKE} frontdev
 
+.PHONY: build_ratatosk
+build_ratatosk: get_docker_id
+	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/Ratatosk && cargo build'
+
 .PHONY: run_ratatosk
 run_ratatosk: get_docker_id
-	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/Ratatosk && HOME=/home/user gosu user cargo run > /tmp/ratatosk.log &'
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'killall ratatosk; cd /var/www/Ratatosk && ./target/debug/ratatosk >> /var/log/php-errors.log &'
 
 .PHONY: migrate
 migrate: get_docker_id
