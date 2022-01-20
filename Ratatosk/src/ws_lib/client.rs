@@ -79,7 +79,7 @@ impl WebSocketClient {
     }
 
     fn notify(&mut self, msg: WebSocketEvent) {
-        self.tx.send((self.token, msg));
+        self.tx.send((self.token, msg)).expect("Can't send data to socket");
     }
 
     pub fn send_message(&mut self, msg: WebSocketEvent) -> Result<(), String> {
@@ -172,7 +172,7 @@ impl WebSocketClient {
                     trace!("{:?} wrote all bytes; switching to reading", self.token);
                     if let ClientState::Closing = self.state {
                         trace!("{:?} closing connection", self.token);
-                        self.socket.shutdown(Shutdown::Write);
+                        self.socket.shutdown(Shutdown::Write).expect("Can't shutdown socket");
                     }
                     self.interest.remove(EventSet::writable());
                     self.interest.insert(EventSet::readable());
@@ -289,7 +289,7 @@ impl WebSocketClient {
                         }
                     }
                     trace!("{:?} parsed {} frames", self.token, frames_cnt);
-                    buf = read_buf.flip();
+                    read_buf.flip();
                 }
             }
         }

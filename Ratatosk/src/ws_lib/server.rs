@@ -79,7 +79,7 @@ impl Handler for WebSocketServer {
                                       PollOpt::edge() | PollOpt::oneshot()).unwrap();
               },
         token => {
-                  let mut client = self.clients.get_mut(&token).unwrap();
+                  let client = self.clients.get_mut(&token).unwrap();
                   client.read();
                   event_loop.reregister(&client.socket, token, client.interest,
                                         PollOpt::edge() | PollOpt::oneshot()).unwrap();
@@ -88,7 +88,7 @@ impl Handler for WebSocketServer {
       }
 
       if events.is_writable() {
-          let mut client = self.clients.get_mut(&token).unwrap();
+          let client = self.clients.get_mut(&token).unwrap();
           client.write();
           event_loop.reregister(&client.socket, token, client.interest,
                                 PollOpt::edge() | PollOpt::oneshot()).unwrap();
@@ -97,7 +97,7 @@ impl Handler for WebSocketServer {
       if events.is_hup() {
           // Close connection
           let client = self.remove_client(&token).unwrap();
-          event_loop.deregister(&client.socket);
+          event_loop.deregister(&client.socket).expect("Can't deregister socket");
           trace!("{:?} hang up connection", token);
       }
   }
@@ -113,7 +113,7 @@ impl Handler for WebSocketServer {
               self.send_message(msg);
           },
           WebSocketInternalMessage::GetPeers(tx) => {
-              tx.send(self.get_peers());
+              tx.send(self.get_peers()).expect("Can't send data to socket");
           }
       }
   }

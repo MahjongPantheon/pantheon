@@ -15,7 +15,9 @@ use crate::ws_lib::server::{SERVER_TOKEN, WebSocketServer};
 pub enum WebSocketEvent {
     Connect,
     Close(StatusCode),
+    #[allow(dead_code)]
     Ping(Box<[u8]>),
+    #[allow(dead_code)]
     Pong(Box<[u8]>),
     TextMessage(String),
     BinaryMessage(Vec<u8>)
@@ -63,12 +65,12 @@ impl WebSocket {
 
     pub fn get_connected(&mut self) -> Result<Vec<Token>, mpsc::RecvError> {
         let (tx, rx) = mpsc::channel();
-        self.send_internal(WebSocketInternalMessage::GetPeers(tx));
+        self.send_internal(WebSocketInternalMessage::GetPeers(tx)).expect("Can't send data to socket");
         rx.recv()
     }
 
     pub fn send(&mut self, msg: (Token,WebSocketEvent)) {
-        self.send_internal(WebSocketInternalMessage::SendMessage(msg));
+        self.send_internal(WebSocketInternalMessage::SendMessage(msg)).expect("Can't send data to socket");
     }
 
     fn send_internal(&mut self, msg: WebSocketInternalMessage) -> Result<(), NotifyError<WebSocketInternalMessage>> {

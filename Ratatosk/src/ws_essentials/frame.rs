@@ -71,6 +71,7 @@ impl error::Error for ParseError {
     match *self {
       ParseError::InvalidOpCode(..) => "Invalid frame OpCode",
       ParseError::UnexpectedEof => "Reader unexpectedly returned 0 bytes",
+      #[allow(deprecated)]
       ParseError::Io(ref err) => err.description()
     }
   }
@@ -166,7 +167,7 @@ pub struct BufferedFrameReader {
   frame_mask: Option<[u8; 4]>,
 }
 
-fn fill_buf<R: Read>(input: &mut R, mut buf: &mut Vec<u8>, len: usize) -> io::Result<bool> {
+fn fill_buf<R: Read>(input: &mut R, buf: &mut Vec<u8>, len: usize) -> io::Result<bool> {
   io::copy(&mut input.take((len - buf.len()) as u64), buf)?;
   return Ok(buf.len() >= len);
 }
@@ -372,7 +373,7 @@ impl Frame {
       let status_code = &recv_frame.payload[0..2];
 
       let mut body = Vec::with_capacity(2);
-      body.write(status_code);
+      body.write(status_code).expect("Can't write to vector");
       body
     } else {
       Vec::new()
@@ -419,13 +420,13 @@ impl Frame {
     self.header.opcode.clone()
   }
 
-  pub fn is_close(&self) -> bool {
-    self.header.opcode == OpCode::ConnectionClose
-  }
+  // pub fn is_close(&self) -> bool {
+  //   self.header.opcode == OpCode::ConnectionClose
+  // }
 
-  pub fn is_fin(&self) -> bool {
-    self.header.fin
-  }
+  // pub fn is_fin(&self) -> bool {
+  //   self.header.fin
+  // }
 
   pub fn get_rsv_flags(&self) -> (bool, bool, bool) {
     (self.header.rsv1, self.header.rsv2, self.header.rsv3)
@@ -447,10 +448,6 @@ impl Frame {
 }
 
 mod test {
-  use std::io::Cursor;
-  use crate::ws_essentials::{BufferedFrameReader, Frame, FrameHeader, OpCode, StatusCode};
-  use crate::ws_essentials::frame::{PAYLOAD_LEN_U16, PAYLOAD_LEN_U64};
-
   #[test]
   fn opcode_numbers() {
     assert!(OpCode::from(1).is_some());
