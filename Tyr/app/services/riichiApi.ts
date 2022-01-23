@@ -99,6 +99,7 @@ export class RiichiApiService {
   }
 
   getGameOverview(sessionHashcode: string) {
+    this._ws.send(JSON.stringify({'t': 'Register', 'd': { 'game_hash': sessionHashcode }}));
     return this._jsonRpcRequest<RSessionOverview>('getGameOverview', sessionHashcode)
       .then<LSessionOverview>(gameOverviewFormatter);
   }

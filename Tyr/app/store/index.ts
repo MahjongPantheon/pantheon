@@ -41,9 +41,11 @@ export class Store {
     ]);
     const metrikaService = new MetrikaService();
     const idb = new IDB(metrikaService);
+    const riichiService = new RiichiApiService();
+    riichiService.listenWsEvents();
     const middleware = applyMiddleware(
       logging(`⇨ [middlewares]`),
-      apiClient(new RiichiApiService()),
+      apiClient(riichiService),
       metrika(metrikaService),
       history(),
       timerMw(this.timerSt),
