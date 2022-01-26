@@ -5,12 +5,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: Pantheon - Rheda\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-15 01:02+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
-"Language-Team: \n"
+"Language-Team: Jesterboxboy\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -311,7 +311,7 @@ msgstr "Chombo: %s."
 msgid ""
 "Choose single session duration in minutes (timer initial value). Default is "
 "90."
-msgstr "Dauer der Einzelsession in Minuten auswählen. Default ist 90"
+msgstr "Dauer einer Runde in Minuten. Default ist 90."
 
 msgid "Choose this for separate team rating"
 msgstr "Seperate Teamwertung"
@@ -751,16 +751,16 @@ msgid "Houtei"
 msgstr "Houtei"
 
 msgid "I saw them dancing"
-msgstr "Ich sah Sie tanzen"
+msgstr "Tanzt für mich!"
 
 msgid "I've read the privacy policy listed below and accept its terms"
 msgstr "Ich habe die Privacy Policy gelesen und akzeptiert"
 
 msgid "If 4/30 and 3/60 should be rounded to mangan"
-msgstr "4/30 und 3/60 werden auf Mangan aufgerundet"
+msgstr "Kiriage Mangan (4/30 und 3/60 werden auf Mangan aufgerundet)"
 
 msgid "If abortive draws are allowed"
-msgstr "Abortive Draws sind erlaubt"
+msgstr "Abortive Draws"
 
 msgid "If all the games should be finished simultaneously (tournament mode)"
 msgstr "Alle Spiele sollen gleichzeitig beendet werden(Turniermodus)"
@@ -772,7 +772,7 @@ msgid "If arbitrary penalties are enabled"
 msgstr "Beliebige Strafen erlaubt"
 
 msgid "If atamahane is enabled"
-msgstr "Headbump(Atamahane) ist erlaubt"
+msgstr "Atamahane, keine Mehrfachron"
 
 msgid "If automatic seating is allowed"
 msgstr "Automatische Sitzplatzierung ist erlaubt"
@@ -784,10 +784,10 @@ msgid "If event is online"
 msgstr "Event ist Online"
 
 msgid "If game ends when any player goes bankrupt"
-msgstr "Spiel wird beendet wenn ein Spieler all Punkte verliert(Tobi)"
+msgstr "Buttobi (Spiel endet wenn ein Spieler alle Punkte verliert)"
 
 msgid "If game ends when leading dealer wins in last round"
-msgstr "Spiel endet wenn Dealer führt und die letze Runde gewinnt(Agariyame)"
+msgstr "Agariyame (Spiel endet wenn Dealer führt und die letze Runde gewinnt)"
 
 msgid "If game series are enabled"
 msgstr "Spielserien sind aktiviert"
@@ -800,13 +800,13 @@ msgid "If games have east rounds only"
 msgstr "Nur Ostrunde"
 
 msgid "If kazoe should be yakuman, not sanbaiman"
-msgstr "13 Han zählen als Yakuman(default: Sanbaiman)"
+msgstr "Kazoe Yakuman (13 Han zählen als Yakuman, default: Sanbaiman)"
 
 msgid "If multiple yakumans are enabled"
-msgstr "Mehrfach Yakuman erlaubt"
+msgstr "Mehrfach Yakuman"
 
 msgid "If nagashi mangan is allowed"
-msgstr "Nagashi mangan: %s"
+msgstr "Nagashi mangan"
 
 msgid "If new players are allowed to join in the middle of event"
 msgstr "Neue Spieler dürfen während des Events hinzukommen"
@@ -815,7 +815,7 @@ msgid "If rating table should first be sorted by number of games played"
 msgstr "Wertungstabelle soll nach gespielten Spielen sortiert werden"
 
 msgid "If riichi bets left on the table go to winner of the hanchan"
-msgstr "Übrige Riichi Einsätze gehen an den Gewinner des Matches"
+msgstr "Verbliebene Riichieinsätze gehen an Gewinner"
 
 msgid "If seating for all games is entered in advance"
 msgstr "Sitzplatzzuordnung für alle Spiele wird im Vorhinein eingegeben"
@@ -824,14 +824,13 @@ msgid "If start points should be subtracted from result"
 msgstr "Startpunkte werden vom Matchresultat abgezogen"
 
 msgid "If tanyao in open hand is allowed"
-msgstr "Tanyao in offener Hand ist erlaubt"
+msgstr "Offenes Tanyao"
 
 msgid ""
 "If this is non-zero N, only those who played more than N games will be shown "
 "in rating table."
 msgstr ""
-"Mindestanzahl an Spielen damit ein Spieler in der Wertungstabelle angezeigt "
-"wird."
+"Nur Spieler die diese erreichen werden in der Wertungstabelle angezeigt."
 
 msgid "If timer should be used"
 msgstr "Zeitlimit soll benutzt werden"
@@ -894,7 +893,7 @@ msgid "List of allowed yaku"
 msgstr "Liste erlaubter Yaku"
 
 msgid "List of yakumans that use pao rule"
-msgstr "Liste von Yakuman für die Pao gilt"
+msgstr "Pao Regel gilt für:"
 
 msgid "Lobby id must be in format: C####, where # is a digit"
 msgstr "Lobby ID muss im format: C#### sein, wobei # für eine Ziffer steht"
@@ -915,7 +914,7 @@ msgid "Make %s event admin?"
 msgstr "%s als Eventadministrator setzen?"
 
 msgid "Make event admin"
-msgstr "Eventadministrator setzen"
+msgstr "Als Eventadministrator setzen"
 
 msgid "Manage events privileges: %s"
 msgstr "Eventrechte setzen: %s"
@@ -955,7 +954,7 @@ msgid "Minimal arbitrary penalty amount"
 msgstr "Minimale Strafsumme"
 
 msgid "Minimal games count"
-msgstr "Geringste Spielanzahl"
+msgstr "Mindestanzahl Spiele"
 
 msgid "Minimal games count must be positive numeric value"
 msgstr "Geringste Spielanzahl muss ein positiver numerischer Wert sein"
@@ -1029,7 +1028,7 @@ msgid "Only global administrators can register players"
 msgstr "Nur globale Administratoren können Spieler registrieren"
 
 msgid "Open game control app"
-msgstr "Spieleinstellungen"
+msgstr "Zur App"
 
 msgid "Open hands"
 msgstr "Geöffnete Hände"
@@ -1041,13 +1040,13 @@ msgid "Order by average place"
 msgstr "Sortieren nach durchschnittlicher Platzierung"
 
 msgid "Order by average score"
-msgstr "Sortieren nach durchschnittlicher Score"
+msgstr "Sortieren nach durchschnittlichem Score"
 
 msgid "Order by player name"
 msgstr "Sortieren nach Namen"
 
 msgid "Order by player rating"
-msgstr "Sortiern nach Spielerwertung"
+msgstr "Sortiern nach Punkten"
 
 msgid "Over 9000 fu"
 msgstr "Über 9000 fu"
@@ -1108,7 +1107,7 @@ msgid "Places stat:"
 msgstr "Platzierungsstatistik:"
 
 msgid "Play additional rounds"
-msgstr "Zusätzliche Runden spielen"
+msgstr "Zusätzliche Runde wenn Zielpunkte nicht erreicht werden"
 
 #, php-format
 msgid "Played at least %d game"
@@ -1143,7 +1142,7 @@ msgstr ""
 "eintragen."
 
 msgid "Players management"
-msgstr "Spielerverwaltung"
+msgstr "Spieler verwalten"
 
 msgid "Players registration"
 msgstr "Spielerregistrierung"
@@ -1169,10 +1168,10 @@ msgid ""
 "confirmation email to reset your password."
 msgstr ""
 "Bitte registrierte Email Adresse eintragen. Wir werden dir ein Email mit "
-"einem Link zum Zurücksetzen deines Passwortes zusenden."
+"einem Link zum Zurücksetzen deines Passwortes zusenden.%d"
 
 msgid "Please enter title for this event with at least 4 characters."
-msgstr "Bitte Eventname mit mindestens vier Zeichen eingeben."
+msgstr "Name des Events(4 Zeichen Minimum)"
 
 msgid "Please enter your e-mail address and password."
 msgstr "Bitte Email Adresse und Passwort eingeben."
@@ -1186,7 +1185,7 @@ msgstr ""
 "mit einem Link zur Bestätigung deiner Daten"
 
 msgid "Please enter your real name and surname (if you have it)."
-msgstr "Bitte Vor und Nachname eintragen."
+msgstr "Bitte tragen deinen vollständigen Namen ein"
 
 msgid "Please wait a while and reload the page."
 msgstr "Bitte laden Sie die Seite in Kürze neu."
@@ -1297,7 +1296,7 @@ msgid "Rebuild scoring"
 msgstr "Wertung neu berechnen"
 
 msgid "Recent games"
-msgstr "Letzte Spiele"
+msgstr "Gespielte Matches"
 
 msgid "Recover your password"
 msgstr "Passwort zurücksetzen"
@@ -1306,10 +1305,10 @@ msgid "Red zone duration"
 msgstr "Red Zone Dauer"
 
 msgid "Register new user"
-msgstr "Spieler (%d) anmelden"
+msgstr "Spieler anmelden"
 
 msgid "Register players"
-msgstr "Spieler (%d) anmelden"
+msgstr "Spieler anmelden"
 
 msgid "Registered players (%d)"
 msgstr "Registrierte Spieler (%d)"
@@ -1442,7 +1441,7 @@ msgid "Series length must be positive numeric value"
 msgstr "Serienlänge muss eine positive Zahl sein"
 
 msgid "Session duration"
-msgstr "Session dauer"
+msgstr "Rundenzeit"
 
 msgid ""
 "Set length of game series. Separate rating table for series will be "
@@ -1460,15 +1459,11 @@ msgstr "Shou suushii"
 msgid ""
 "Should honda bonus be given by atamahane rule in case of double/triple ron "
 "(given to all if not)"
-msgstr ""
-"Honba wird im Fall von mehreren gleichzeitigen Ron an den ersten Spieler "
-"gegeben(default: an alle Gewinner)"
+msgstr "Honba bei Mehrfachron gehen nur an ersten Spieler nach Verlierer"
 
 msgid ""
 "Should riichi sticks be given by atamahane rule in case of double/triple ron"
-msgstr ""
-"Riichi Sticks bei mehreren Ron gehen an den ersten Gewinner nach demjenigen "
-"der das Ron zahlt"
+msgstr "Riichieinsätze bei Mehrfachron gehen an ersten Spieler nach Verlierer"
 
 msgid "Should uma bonus be divided equally in case of score equality"
 msgstr "Uma Bonus wird bei Gleichstand aufgeteilt"
@@ -1555,7 +1550,7 @@ msgid "Tables are being prepared..."
 msgstr "Sitzplan wird vorbereitet."
 
 msgid "Tables state:"
-msgstr "Tischstatistiken:"
+msgstr "Laufende Matches:Letz"
 
 msgid "Tanyao"
 msgstr "Tanyao"
@@ -1585,7 +1580,7 @@ msgid "Tenhou ID (nickname)"
 msgstr "TenhouID(nickname)"
 
 msgid "Tenhou lobby ID"
-msgstr ""
+msgstr "Tenhou Lobby-ID"
 
 msgid "Tenpai: %s."
 msgstr "Tenpai: %s."
@@ -1660,13 +1655,13 @@ msgid "Timezone"
 msgstr "Zeitzone"
 
 msgid "Title"
-msgstr "Title"
+msgstr "Name des Events"
 
 msgid "Title must be at least 4 characters length"
 msgstr "Titel muss mindestens vier Zeichen lang sein"
 
 msgid "To event list"
-msgstr "Zur Event Liste"
+msgstr "Event Liste"
 
 msgid "Toi-toi"
 msgstr "Toi-toi"
@@ -1715,7 +1710,7 @@ msgid "Type"
 msgstr "Typ"
 
 msgid "Uma (rank) bonus size"
-msgstr "Uma Größe"
+msgstr "Uma"
 
 msgid "Unable to generate seating"
 msgstr "Sitzplätze können nicht generiert werden"
@@ -1814,8 +1809,8 @@ msgid ""
 "Your e-mail will not be shared with anyone else and will not be visible "
 "anywhere. If you want to change your e-mail, contact chief administrator."
 msgstr ""
-"Your e-mail will not be shared with anyone else and will not be visible "
-"anywhere. Wenn du sie ändern möchtest kontaktiere bitte den Administrator."
+"Deine Email Adresse wird nirgendwo angezeigt und mit niemandem geteilt. Wenn "
+"du sie ändern möchtest kontaktiere bitte den Administrator."
 
 msgid "Your password"
 msgstr "Dein Passwort"

@@ -3,13 +3,15 @@ import { TranslationJson } from 'i18n-proto';
 
 // TODO: exclude from primary bundle
 import langRu from '../i18n/ru.json';
+import langDe from '../i18n/de.json';
 import { IDB } from './idb';
 import { environment } from '#config';
 export const supportedLanguages = [
-  'en', 'ru'
+  'en', 'ru', 'de'
 ];
 const langs = {
-  'ru': langRu
+  'ru': langRu,
+  'de': langDe
 };
 
 export class I18nService {
@@ -21,6 +23,9 @@ export class I18nService {
       /* translationGetter: */(name: string, onReady: (name: string, contents: string) => void) => {
         switch (name) {
           case 'ru':
+            onReady(name, JSON.stringify(langs[name]));
+            break;
+          case 'de':
             onReady(name, JSON.stringify(langs[name]));
             break;
           case 'en':
