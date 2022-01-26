@@ -20,6 +20,7 @@ import { yaku } from './middlewares/yaku';
 import { reduceReducers } from "#/store/util";
 import { AppActionTypes } from "#/store/actions/interfaces";
 import {screenManageMw} from '#/store/middlewares/screenManage';
+import {ServiceWorkerClient} from "#/services/serviceWorkerClient";
 
 export class Store {
   private onUpdate: ((state: IAppState) => void) | undefined;
@@ -41,11 +42,11 @@ export class Store {
     ]);
     const metrikaService = new MetrikaService();
     const idb = new IDB(metrikaService);
-    const riichiService = new RiichiApiService();
-    riichiService.listenWsEvents();
+    const swClient = new ServiceWorkerClient();
+    const riichiService = new RiichiApiService(swClient);
     const middleware = applyMiddleware(
       logging(`⇨ [middlewares]`),
-      apiClient(riichiService),
+      apiClient(riichiService, swClient),
       metrika(metrikaService),
       history(),
       timerMw(this.timerSt),

@@ -37,6 +37,7 @@ import {
   GET_USERINFO_SUCCESS,
   GO_TO_CURRENT_GAME,
   GOTO_EVENT_SELECT,
+  INIT_WORKER_HANDLERS,
   LOGIN_FAIL,
   LOGIN_INIT,
   LOGIN_SUCCESS,
@@ -57,13 +58,23 @@ import {LCurrentGame, LGameConfig, LTimerState} from '#/interfaces/local';
 import {RemoteError} from '#/services/remoteError';
 import {IAppState} from '../interfaces';
 import {SessionState} from "#/interfaces/remote";
+import {ServiceWorkerClient} from "#/services/serviceWorkerClient";
+import {SwToClientEvents} from "#/services/serviceWorkerConfig";
 
-export const apiClient = (api: RiichiApiService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
+export const apiClient = (api: RiichiApiService, swClient: ServiceWorkerClient) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
   let personId: number | undefined = mw.getState().currentPlayerId;
   let eventId: number | undefined = mw.getState().currentEventId;
 
   switch (action.type) {
+    case INIT_WORKER_HANDLERS:
+      swClient.onEvent(SwToClientEvents.REGISTER_RESULTS, (message) => {
+        console.log('Message from worker', message);
+      });
+      swClient.onEvent(SwToClientEvents.ROUND_DATA, (message) => {
+        console.log('Message from worker', message);
+      })
+      break;
     case STARTUP_WITH_AUTH:
       if (!action.payload.token) { // Not logged in
         mw.dispatch({ type: FORCE_LOGOUT });

@@ -3,7 +3,11 @@
     "strict": true,
     "jsx": "react",
     "baseUrl": "",
-    "lib": ["es6", "dom"],
+    "lib": [
+      "es6",
+      "dom",
+      "webworker"
+    ],
     "mapRoot": "./",
     "module": "esnext",
     "moduleResolution": "node",

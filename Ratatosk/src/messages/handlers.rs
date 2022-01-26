@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use mio::Token;
 use serde_json::Value;
-use crate::{GameDataResponse, GenericResponseResult, RegDataResponse, STATUS_OK, WebSocket, WebSocketEvent};
+use crate::{GameDataResponse, GenericResponseResult, RegDataResponse, ROUND_DATA, REGISTER_RESULTS, STATUS_OK, WebSocket, WebSocketEvent};
 
 pub(crate) fn run(ws: &mut WebSocket, sessions: &mut HashMap<Token, String>, token: Token, val: GenericResponseResult) {
   match val {
@@ -17,7 +17,7 @@ fn handle_game_data(game_hash: String, data: Value, sessions: &mut HashMap<Token
   for peer in ws.get_connected().unwrap() {
     match sessions.get(&peer) {
       Some(hash) => if hash.eq(&game_hash) {
-        let d = GameDataResponse { status: STATUS_OK, data: &data };
+        let d = GameDataResponse { t: ROUND_DATA, status: STATUS_OK, data: &data };
         let response = WebSocketEvent::TextMessage(serde_json::to_string(&d).unwrap());
         if cfg!(debug_assertions) {
           println!("[Ratatosk] Sending game data: {} @ {}", peer.0, data);
@@ -35,7 +35,7 @@ fn handle_reg_data(game_hash: String, token: Token, sessions: &mut HashMap<Token
   }
   sessions.insert(token, String::from(game_hash));
   for peer in ws.get_connected().unwrap() {
-    let data = RegDataResponse { status: STATUS_OK };
+    let data = RegDataResponse { t: REGISTER_RESULTS, status: STATUS_OK };
     let response = WebSocketEvent::TextMessage(serde_json::to_string(&data).unwrap());
     ws.send((peer, response));
   }

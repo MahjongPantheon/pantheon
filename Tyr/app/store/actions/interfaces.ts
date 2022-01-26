@@ -21,6 +21,7 @@ import {IAppState} from '../interfaces';
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
 export const STARTUP_WITH_AUTH = 'STARTUP_WITH_AUTH';
+export const INIT_WORKER_HANDLERS = 'INIT_WORKER_HANDLERS';
 export const START_NEW_GAME = 'START_NEW_GAME';
 export const GO_TO_CURRENT_GAME = 'GO_TO_CURRENT_GAME';
 export const GOTO_EVENT_SELECT = 'GOTO_EVENT_SELECT';
@@ -571,8 +572,13 @@ interface HistoryInitAction {
   type: typeof HISTORY_INIT;
 }
 
+interface InitWorkerHandlers {
+  type: typeof INIT_WORKER_HANDLERS;
+}
+
 export type AppActionTypes =
   | InitStateAction
+  | InitWorkerHandlers
   | ResetStateAction
   | StartupWithAuthAction
   | StartNewGameAction

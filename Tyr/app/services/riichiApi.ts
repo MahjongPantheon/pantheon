@@ -45,6 +45,7 @@ import {
 } from './formatters';
 import {IAppState} from '#/store/interfaces';
 import {environment} from "#config";
+import {ServiceWorkerClient} from "#/services/serviceWorkerClient";
 
 type GenericResponse = {
   error?: { message: string, code: any },
@@ -55,13 +56,7 @@ type GenericResponse = {
 export class RiichiApiService {
   private _authToken: string | null = null;
   private _personId: string | null = null;
-  private _ws: WebSocket = new WebSocket(environment.ratatoskUrl);
-
-  listenWsEvents() {
-    this._ws.addEventListener('message', (message) => {
-      console.log('Ratatosk sent: ', message)
-    });
-  }
+  constructor(private _swClient: ServiceWorkerClient) {}
 
   setCredentials(personId: number, token: string) {
     this._authToken = token;
@@ -99,7 +94,7 @@ export class RiichiApiService {
   }
 
   getGameOverview(sessionHashcode: string) {
-    this._ws.send(JSON.stringify({'t': 'Register', 'd': { 'game_hash': sessionHashcode }}));
+    this._swClient.updateClientRegistration(sessionHashcode);
     return this._jsonRpcRequest<RSessionOverview>('getGameOverview', sessionHashcode)
       .then<LSessionOverview>(gameOverviewFormatter);
   }
