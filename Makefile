@@ -164,6 +164,7 @@ frontdev: get_docker_id
 dev: run
 	@if [ -n $TMUX ]; then \
      tmux split-window -dv '${MAKE} php_logs' ; \
+     tmux split-window -dh '${MAKE} rat_logs' ; \
   fi
 	${MAKE} deps
 	${MAKE} migrate
@@ -177,7 +178,7 @@ build_ratatosk: get_docker_id
 
 .PHONY: run_ratatosk
 run_ratatosk: get_docker_id
-	docker exec $(RUNNING_DOCKER_ID) sh -c 'killall ratatosk; cd /var/www/Ratatosk && ./target/debug/ratatosk >> /var/log/php-errors.log &'
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'killall ratatosk; cd /var/www/Ratatosk && ./target/debug/ratatosk >> /var/log/rat-errors.log &'
 
 .PHONY: migrate
 migrate: get_docker_id
@@ -228,6 +229,14 @@ php_logs: get_docker_id
 		echo "${RED}Pantheon container is not running, can't view logs.${NC}"; \
 	else \
 		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'tail -f /var/log/php-errors.log' ; \
+	fi
+
+.PHONY: rat_logs
+rat_logs: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Pantheon container is not running, can't view logs.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'tail -f /var/log/rat-errors.log' ; \
 	fi
 
 .PHONY: shell

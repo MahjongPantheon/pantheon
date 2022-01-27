@@ -19,18 +19,22 @@
  */
 
 export const enum ClientToSwEvents {
+  // Warning: Casing should match structures names in Ratatosk
   REGISTER = 'Register',
+  SET_LOCALE = 'SetLocale'
   // ...
 }
 
 export const enum SwToClientEvents {
   REGISTER_RESULTS = 'REGISTER_RESULTS',
   ROUND_DATA = 'ROUND_DATA',
+  NOTIFICATION = 'NOTIFICATION'
   // ...
 }
 
 export const validEventType = (type: string): type is SwToClientEvents => {
   return type === SwToClientEvents.ROUND_DATA ||
-    type === SwToClientEvents.REGISTER_RESULTS
+    type === SwToClientEvents.REGISTER_RESULTS ||
+    type === SwToClientEvents.NOTIFICATION
   ;
 }

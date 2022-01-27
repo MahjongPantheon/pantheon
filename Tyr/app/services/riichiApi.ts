@@ -93,8 +93,8 @@ export class RiichiApiService {
       .then<LUser[]>(userListFormatter);
   }
 
-  getGameOverview(sessionHashcode: string) {
-    this._swClient.updateClientRegistration(sessionHashcode);
+  getGameOverview(sessionHashcode: string, eventId: number) {
+    this._swClient.updateClientRegistration(sessionHashcode, eventId);
     return this._jsonRpcRequest<RSessionOverview>('getGameOverview', sessionHashcode)
       .then<LSessionOverview>(gameOverviewFormatter);
   }

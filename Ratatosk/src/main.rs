@@ -28,6 +28,7 @@ fn main() {
 
   let mut ws = WebSocket::new("0.0.0.0:4006".parse::<SocketAddr>().unwrap());
   let mut sessions: HashMap<Token, String> = HashMap::new();
+  let mut events: HashMap<Token, u32> = HashMap::new();
 
   loop {
     match ws.next() {
@@ -40,7 +41,13 @@ fn main() {
       (tok, WebSocketEvent::TextMessage(msg)) => {
         let data: Result<GenericResponseResult, _> = serde_json::from_str(msg.as_str());
         match data {
-          Ok(val) => handlers::run(ws.borrow_mut(), sessions.borrow_mut(), tok, val),
+          Ok(val) => handlers::run(
+            ws.borrow_mut(),
+            sessions.borrow_mut(),
+            events.borrow_mut(),
+            tok,
+            val
+          ),
           Err(_e) => println!("Failed to parse JSON: {}", msg)
         }
       },

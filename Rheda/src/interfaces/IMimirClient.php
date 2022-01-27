@@ -295,6 +295,13 @@ interface IMimirClient
     public function startTimer(int $eventId): bool;
 
     /**
+     * @param int $eventId
+     * @param array $notification
+     * @return void
+    */
+    public function sendNotification(int $eventId, array $notification): void;
+
+    /**
      *  Register for participation in event (from admin control panel)
      *
      * @param int $playerId

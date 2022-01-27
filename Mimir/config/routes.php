@@ -62,6 +62,7 @@ return [
     'finishEvent'        => ['EventsController', 'finishEvent'],
     'getTablesState'     => ['EventsController', 'getTablesState'],
     'startTimer'         => ['EventsController', 'startTimer'],
+    'sendNotification'   => ['EventsController', 'sendNotification'],
     'registerPlayerCP'   => ['EventsController', 'registerPlayerAdmin'],
     'unregisterPlayerCP' => ['EventsController', 'unregisterPlayerAdmin'],
     'updatePlayerSeatingFlagCP' => ['EventsController', 'updatePlayerSeatingFlag'],

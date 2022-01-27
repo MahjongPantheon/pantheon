@@ -37,6 +37,22 @@ class WsClient {
     }
 
     /**
+     * @param int $eventId
+     * @param array $localizedNotification
+     * @throws BadOpcodeException
+     */
+    public function publishNotification($eventId, $localizedNotification)
+    {
+        $this->_client->send(json_encode([
+            't' => 'Notification',
+            'd' => [
+                'event_id' => $eventId,
+                'localized_notification' => $localizedNotification
+            ]
+        ]));
+    }
+
+    /**
      * @param string $hash
      * @param array $data
      * @throws BadOpcodeException

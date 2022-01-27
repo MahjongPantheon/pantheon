@@ -425,6 +425,17 @@ class MimirClient implements IMimirClient
     }
 
     /**
+     * @param int $eventId
+     * @param array $notification
+     * @return void
+    */
+    public function sendNotification(int $eventId, array $notification): void
+    {
+        /** @phpstan-ignore-next-line */
+        $this->_client->execute('sendNotification', [$eventId, $notification]);
+    }
+
+    /**
      *  Register for participation in event (from admin control panel)
      *
      * @param int $playerId

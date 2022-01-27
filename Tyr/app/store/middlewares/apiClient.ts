@@ -44,7 +44,7 @@ import {
   RESET_STATE,
   SELECT_EVENT,
   SET_CREDENTIALS,
-  SET_TIMER,
+  SET_TIMER, SETTINGS_SAVE_LANG,
   START_GAME_FAIL,
   START_GAME_INIT,
   START_GAME_SUCCESS,
@@ -75,6 +75,9 @@ export const apiClient = (api: RiichiApiService, swClient: ServiceWorkerClient) 
         console.log('Message from worker', message);
       })
       break;
+    case SETTINGS_SAVE_LANG:
+      swClient.updateLocale(action.payload);
+      return next(action);
     case STARTUP_WITH_AUTH:
       if (!action.payload.token) { // Not logged in
         mw.dispatch({ type: FORCE_LOGOUT });
@@ -105,11 +108,11 @@ export const apiClient = (api: RiichiApiService, swClient: ServiceWorkerClient) 
       updateCurrentGames(api, next, mw.dispatch, personId, eventId);
       break;
     case GET_GAME_OVERVIEW_INIT:
-      if (!action.payload) {
+      if (!action.payload || !eventId) {
         mw.dispatch({ type: RESET_STATE });
         return;
       }
-      getGameOverview(action.payload, api, next);
+      getGameOverview(action.payload, eventId, api, next);
       break;
     case GET_OTHER_TABLES_LIST_INIT:
       if (!eventId) {
@@ -124,10 +127,16 @@ export const apiClient = (api: RiichiApiService, swClient: ServiceWorkerClient) 
       getOtherTablesListReload(api, next, eventId);
       break;
     case GET_OTHER_TABLE_INIT:
-      getOtherTable(action.payload, api, next);
+      if (!eventId) {
+        return;
+      }
+      getOtherTable(action.payload, eventId, api, next);
       break;
     case GET_OTHER_TABLE_RELOAD:
-      getOtherTableReload(mw.getState().currentOtherTableHash || '', api, next);
+      if (!eventId) {
+        return;
+      }
+      getOtherTableReload(mw.getState().currentOtherTableHash || '', eventId, api, next);
       break;
     case GET_OTHER_TABLE_LAST_ROUND_INIT:
       next(action);
@@ -230,23 +239,23 @@ function updateCurrentGames(api: RiichiApiService, dispatchNext: Dispatch, dispa
   });
 }
 
-function getGameOverview(currentSessionHash: string, api: RiichiApiService, next: Dispatch) {
+function getGameOverview(currentSessionHash: string, eventId: number, api: RiichiApiService, next: Dispatch) {
   next({ type: GET_GAME_OVERVIEW_INIT });
-  api.getGameOverview(currentSessionHash)
+  api.getGameOverview(currentSessionHash, eventId)
     .then((overview) => next({ type: GET_GAME_OVERVIEW_SUCCESS, payload: overview }))
     .catch((error: RemoteError) => next({ type: GET_GAME_OVERVIEW_FAIL, payload: error }));
 }
 
-function getOtherTable(sessionHash: string, api: RiichiApiService, dispatch: Dispatch) {
+function getOtherTable(sessionHash: string, eventId: number, api: RiichiApiService, dispatch: Dispatch) {
   dispatch({ type: GET_OTHER_TABLE_INIT, payload: sessionHash });
-  api.getGameOverview(sessionHash)
+  api.getGameOverview(sessionHash, eventId)
     .then((table) => dispatch({ type: GET_OTHER_TABLE_SUCCESS, payload: table }))
     .catch((e) => dispatch({ type: GET_OTHER_TABLE_FAIL, payload: e }));
 }
 
-function getOtherTableReload(sessionHash: string, api: RiichiApiService, dispatch: Dispatch) {
+function getOtherTableReload(sessionHash: string, eventId: number, api: RiichiApiService, dispatch: Dispatch) {
   dispatch({ type: GET_OTHER_TABLE_RELOAD });
-  api.getGameOverview(sessionHash)
+  api.getGameOverview(sessionHash, eventId)
     .then((table) => dispatch({ type: GET_OTHER_TABLE_SUCCESS, payload: table }))
     .catch((e) => dispatch({ type: GET_OTHER_TABLE_FAIL, payload: e }));
 }

@@ -21,18 +21,18 @@
 import { ClientToSwEvents, SwToClientEvents } from "#/services/serviceWorkerConfig";
 
 type Listeners = {
-  [SwToClientEvents.REGISTER_RESULTS]?: any
-  [SwToClientEvents.ROUND_DATA]?: any
+  [SwToClientEvents.REGISTER_RESULTS]?: any;
+  [SwToClientEvents.ROUND_DATA]?: any;
+  [SwToClientEvents.NOTIFICATION]?: any;
 };
 
 export class ServiceWorkerClient {
   private _listeners: Listeners = {};
+  private _regPromise: Promise<any> | null = null;
 
   constructor() {
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/serviceWorker.js');
-      });
+      this._regPromise = navigator.serviceWorker.register('/serviceWorker.js');
       navigator.serviceWorker.onmessage = (message) => {
         if (this._listeners[message.data.type as keyof Listeners]) {
           this._listeners[message.data.type as keyof Listeners](message.data.data);
@@ -41,8 +41,19 @@ export class ServiceWorkerClient {
     }
   }
 
-  public updateClientRegistration(sessionHashcode: string) {
-    navigator.serviceWorker?.controller?.postMessage({ type: ClientToSwEvents.REGISTER, sessionHashcode });
+  public updateClientRegistration(sessionHashcode: string, eventId: number) {
+    this._regPromise?.then(() => navigator.serviceWorker?.controller?.postMessage({
+      type: ClientToSwEvents.REGISTER,
+      sessionHashcode,
+      eventId
+    }));
+  }
+
+  public updateLocale(locale: string) {
+    this._regPromise?.then(() => navigator.serviceWorker?.controller?.postMessage({
+      type: ClientToSwEvents.SET_LOCALE,
+      locale
+    }));
   }
 
   public onEvent(eventType: SwToClientEvents, cb: (data: any) => void) {
