@@ -38,8 +38,16 @@ fn main() {
         }
       },
 
+      (tok, WebSocketEvent::Close(_status)) => {
+        if cfg!(debug_assertions) {
+          println!("Disconnected peer: {:?}", tok);
+        }
+        sessions.remove(&tok);
+        events.remove(&tok);
+      },
+
       (tok, WebSocketEvent::TextMessage(msg)) => {
-        let data: Result<GenericResponseResult, _> = serde_json::from_str(msg.as_str());
+        let data: Result<GenericIncomingRequest, _> = serde_json::from_str(msg.as_str());
         match data {
           Ok(val) => handlers::run(
             ws.borrow_mut(),

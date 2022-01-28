@@ -1,15 +1,21 @@
 use std::collections::HashMap;
 use mio::Token;
 use serde_json::Value;
-use crate::{GameDataResponse, GenericResponseResult, RegDataResponse, ROUND_DATA, REGISTER_RESULTS, STATUS_OK, WebSocket, WebSocketEvent, NOTIFICATION, NotificationResponse};
+use crate::{GameDataResponse, GenericIncomingRequest, RegDataResponse, ROUND_DATA, REGISTER_RESULTS, STATUS_OK, WebSocket, WebSocketEvent, NOTIFICATION, NotificationResponse};
 
-pub(crate) fn run(ws: &mut WebSocket, sessions: &mut HashMap<Token, String>, events: &mut HashMap<Token, u32>, token: Token, val: GenericResponseResult) {
+pub(crate) fn run(
+  ws: &mut WebSocket,
+  sessions: &mut HashMap<Token, String>,
+  events: &mut HashMap<Token, u32>,
+  token: Token,
+  val: GenericIncomingRequest
+) {
   match val {
-    GenericResponseResult::GameState { game_hash, data }
+    GenericIncomingRequest::GameState { game_hash, data }
       => handle_game_data(game_hash, data, sessions, ws),
-    GenericResponseResult::Register { game_hash, event_id }
+    GenericIncomingRequest::Register { game_hash, event_id }
       => handle_reg_data(game_hash, event_id, token, sessions, events, ws),
-    GenericResponseResult::Notification { event_id, localized_notification }
+    GenericIncomingRequest::Notification { event_id, localized_notification }
       => handle_notification(localized_notification, event_id, events, ws),
   }
 }
