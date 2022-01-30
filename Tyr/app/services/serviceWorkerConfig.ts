@@ -28,13 +28,15 @@ export const enum ClientToSwEvents {
 export const enum SwToClientEvents {
   REGISTER_RESULTS = 'REGISTER_RESULTS',
   ROUND_DATA = 'ROUND_DATA',
-  NOTIFICATION = 'NOTIFICATION'
+  NOTIFICATION = 'NOTIFICATION',
+  RECONNECTED = 'RECONNECTED',
   // ...
 }
 
 export const validEventType = (type: string): type is SwToClientEvents => {
   return type === SwToClientEvents.ROUND_DATA ||
     type === SwToClientEvents.REGISTER_RESULTS ||
-    type === SwToClientEvents.NOTIFICATION
+    type === SwToClientEvents.NOTIFICATION ||
+    type === SwToClientEvents.RECONNECTED
   ;
 }

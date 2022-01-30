@@ -56,7 +56,7 @@ type GenericResponse = {
 export class RiichiApiService {
   private _authToken: string | null = null;
   private _personId: string | null = null;
-  constructor(private _swClient: ServiceWorkerClient) {}
+  constructor(private _swClient: ServiceWorkerClient, protected onReconnect: () => void) {}
 
   setCredentials(personId: number, token: string) {
     this._authToken = token;

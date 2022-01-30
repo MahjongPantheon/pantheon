@@ -24,6 +24,7 @@ type Listeners = {
   [SwToClientEvents.REGISTER_RESULTS]?: any;
   [SwToClientEvents.ROUND_DATA]?: any;
   [SwToClientEvents.NOTIFICATION]?: any;
+  [SwToClientEvents.RECONNECTED]?: any;
 };
 
 export class ServiceWorkerClient {
