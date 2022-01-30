@@ -1,3 +1,7 @@
+/**
+ * Websocket implementation taken from https://github.com/nbaksalyar/mio-websocket
+ */
+
 use std::collections::HashMap;
 use std::fmt;
 use std::sync::mpsc;

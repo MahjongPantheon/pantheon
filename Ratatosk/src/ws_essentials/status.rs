@@ -1,3 +1,7 @@
+/**
+ * Websocket implementation taken from https://github.com/nbaksalyar/mio-websocket
+ */
+
 #[derive(Clone, Debug)]
 pub enum StatusCode {
     NormalClosure,

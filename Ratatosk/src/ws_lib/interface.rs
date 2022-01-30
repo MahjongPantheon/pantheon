@@ -1,3 +1,7 @@
+/**
+ * Websocket implementation taken from https://github.com/nbaksalyar/mio-websocket
+ */
+
 /// High-level WebSocket library interface
 
 use std::net::SocketAddr;

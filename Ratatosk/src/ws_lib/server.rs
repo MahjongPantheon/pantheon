@@ -1,3 +1,7 @@
+/**
+ * Websocket implementation taken from https://github.com/nbaksalyar/mio-websocket
+ */
+
 use std::collections::HashMap;
 use std::sync::mpsc;
 use log::{error, trace};

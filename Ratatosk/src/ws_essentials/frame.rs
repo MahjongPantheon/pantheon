@@ -1,3 +1,6 @@
+/**
+ * Websocket implementation taken from https://github.com/nbaksalyar/mio-websocket
+ */
 use std::{fmt, error, u16};
 use std::io::{self, Cursor, Read, Write};
 use std::error::Error;

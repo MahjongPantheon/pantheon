@@ -1,3 +1,7 @@
+/**
+ * Websocket implementation taken from https://github.com/nbaksalyar/mio-websocket
+ */
+
 use std::rc::Rc;
 use std::cell::RefCell;
 use std::collections::HashMap;
