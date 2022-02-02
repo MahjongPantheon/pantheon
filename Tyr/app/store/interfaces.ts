@@ -36,7 +36,12 @@ export type ErrorState = {
   message: string;
 };
 
+export type Features = {
+  wsClient: boolean;
+};
+
 export interface IAppState {
+  features: Features;
   currentScreen: AppScreen;
   currentSessionHash?: string;
   currentOutcome?: AppOutcome;

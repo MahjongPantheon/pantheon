@@ -4,6 +4,7 @@ import {
   ADD_ROUND_INIT,
   ADD_ROUND_SUCCESS,
   AppActionTypes,
+  ENABLE_FEATURE,
   EVENTS_GET_LIST_FAIL,
   EVENTS_GET_LIST_INIT,
   EVENTS_GET_LIST_SUCCESS,
@@ -44,7 +45,8 @@ import {
   RESET_STATE,
   SELECT_EVENT,
   SET_CREDENTIALS,
-  SET_TIMER, SETTINGS_SAVE_LANG,
+  SET_TIMER,
+  SETTINGS_SAVE_LANG,
   START_GAME_FAIL,
   START_GAME_INIT,
   START_GAME_SUCCESS,
@@ -75,6 +77,17 @@ export const apiClient = (api: RiichiApiService, swClient: ServiceWorkerClient) 
         console.log('Message from worker', message);
       })
       break;
+    case ENABLE_FEATURE:
+      switch (action.payload.feature) {
+        case 'wsClient':
+          if (action.payload.enable) {
+            swClient.initServiceWorker();
+          } else {
+            swClient.disableServiceWorker();
+          }
+          break;
+      }
+      return next(action);
     case SETTINGS_SAVE_LANG:
       swClient.updateLocale(action.payload);
       return next(action);

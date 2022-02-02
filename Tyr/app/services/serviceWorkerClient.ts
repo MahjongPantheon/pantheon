@@ -30,8 +30,20 @@ type Listeners = {
 export class ServiceWorkerClient {
   private _listeners: Listeners = {};
   private _regPromise: Promise<any> | null = null;
+  private _isInitialized = false;
 
-  constructor() {
+  public disableServiceWorker() {
+    if (window.navigator && navigator.serviceWorker) {
+      navigator.serviceWorker.getRegistrations()
+        .then((registrations) => {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        });
+    }
+  }
+
+  public initServiceWorker() {
     if ('serviceWorker' in navigator) {
       this._regPromise = navigator.serviceWorker.register('/serviceWorker.js');
       navigator.serviceWorker.onmessage = (message) => {
@@ -39,10 +51,14 @@ export class ServiceWorkerClient {
           this._listeners[message.data.type as keyof Listeners](message.data.data);
         }
       };
+      this._isInitialized = true;
     }
   }
 
   public updateClientRegistration(sessionHashcode: string, eventId: number) {
+    if (!this._isInitialized) {
+      return;
+    }
     this._regPromise?.then(() => navigator.serviceWorker?.controller?.postMessage({
       type: ClientToSwEvents.REGISTER,
       sessionHashcode,
@@ -51,6 +67,9 @@ export class ServiceWorkerClient {
   }
 
   public updateLocale(locale: string) {
+    if (!this._isInitialized) {
+      return;
+    }
     this._regPromise?.then(() => navigator.serviceWorker?.controller?.postMessage({
       type: ClientToSwEvents.SET_LOCALE,
       locale
