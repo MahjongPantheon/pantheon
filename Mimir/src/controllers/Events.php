@@ -79,7 +79,7 @@ class EventsController extends Controller
         }
 
         /** @phpstan-ignore-next-line */
-        $statHost = $this->_config->getValue('rhedaUrl') . '/eid' . EventPrimitive::ID_PLACEHOLDER;
+        $statHost = $this->_config->getStringValue('rhedaUrl') . '/eid' . EventPrimitive::ID_PLACEHOLDER;
         $event = (new EventPrimitive($this->_ds))
             ->setTitle($title)
             ->setDescription($description)
@@ -1111,8 +1111,8 @@ class EventsController extends Controller
     public function sendNotification($eventId, $notification)
     {
         $wsClient = new WsClient(
-            $this->_config->getValue('ratatoskUrl'),
-            $this->_config->getValue('ratatoskKey')
+            $this->_config->getStringValue('ratatoskUrl'),
+            $this->_config->getStringValue('ratatoskKey')
         );
         $wsClient->publishNotification($eventId, $notification);
     }

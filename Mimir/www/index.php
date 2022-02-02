@@ -22,9 +22,11 @@ require __DIR__ . '/../src/Api.php';
 
 use JsonRPC\Server;
 
-$configPath = null;
 if (!empty(getenv('OVERRIDE_CONFIG_PATH'))) {
     $configPath = getenv('OVERRIDE_CONFIG_PATH');
+}
+if (empty($configPath)) {
+    $configPath = null;
 }
 
 $server = new Server();

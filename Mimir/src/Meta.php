@@ -84,18 +84,17 @@ class Meta
         $this->_selectedLocale = $this->_initI18n();
 
         // for unit/integration testing purposes
-        $testingToken = $config->getValue('testing_token');
+        $testingToken = $config->getStringValue('testing_token');
         if (!empty($testingToken) && $this->_authToken == $testingToken) {
             $this->_superadmin = true;
         }
 
         // For direct calls from Rheda
         if (!empty($_SERVER['HTTP_X_INTERNAL_QUERY_SECRET']) &&
-            $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] === $config->getValue('admin.internalQuerySecret')
+            $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] === $config->getStringValue('admin.internalQuerySecret')
         ) {
             $this->_isInternalRequest = true;
-            /* @phpstan-ignore-next-line */
-            $this->_internalToken = $config->getValue('admin.internalQuerySecret');
+            $this->_internalToken = $config->getStringValue('admin.internalQuerySecret');
         }
     }
 
@@ -174,7 +173,7 @@ class Meta
                 $this->_frey->getClient()->getHttpClient()->withHeaders([
                     'X-Internal-Query-Secret: ' . $this->_internalToken,
                     'X-Auth-Token: ' . $this->_authToken,
-                    'X-Current-Event-Id: ' . $this->_currentEventId ?: '0',
+                    'X-Current-Event-Id: ' . ($this->_currentEventId ?: '0'),
                     'X-Current-Person-Id: ' . $this->_currentPersonId
                 ]);
                 if (!empty($this->_currentEventId) && !empty($this->_currentPersonId)) {

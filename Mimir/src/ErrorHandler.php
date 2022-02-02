@@ -100,7 +100,7 @@ class ErrorHandler
         ;
         $this->_log->error($message);
         /** @var string $path */
-        $path = $this->_config->getValue('verboseLog');
+        $path = $this->_config->getStringValue('verboseLog');
         file_put_contents($path, $message . PHP_EOL, FILE_APPEND);
         if ($exitOnError) {
             exit();

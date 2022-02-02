@@ -65,7 +65,7 @@ class Api
         $this->_config = new Config($cfgPath);
         $this->_db = new Db($this->_config);
         /** @var string $freyUrl */
-        $freyUrl = $this->_config->getValue('freyUrl');
+        $freyUrl = $this->_config->getStringValue('freyUrl');
         if ($freyUrl === '__mock__') { // testing purposes
             $this->_frey = new FreyClientMock('');
         } else {
@@ -81,7 +81,7 @@ class Api
         ]);
 
         // + some custom handler for testing errors
-        if ($this->_config->getValue('verbose')) {
+        if ($this->_config->getStringValue('verbose')) {
             (new ErrorHandler($this->_config, $this->_syslog))->register();
         }
     }
@@ -93,9 +93,7 @@ class Api
      */
     public function getDefaultServerTimezone()
     {
-        /** @var string $tz */
-        $tz = $this->_config->getValue('serverDefaultTimezone');
-        return $tz;
+        return $this->_config->getStringValue('serverDefaultTimezone');
     }
 
     public function registerImplAutoloading(): void

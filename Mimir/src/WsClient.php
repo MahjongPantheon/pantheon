@@ -19,11 +19,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Mimir;
-use WebSocket\BadOpcodeException;
+
 use WebSocket\Client;
 use WebSocket\Exception;
 
-class WsClient {
+class WsClient
+{
     /**
      * @var Client
      */
@@ -36,6 +37,7 @@ class WsClient {
 
     /**
      * @param string $url
+     * @param string $serverToken
      */
     public function __construct($url, $serverToken)
     {
@@ -44,43 +46,51 @@ class WsClient {
     }
 
     /**
-     * @param int $eventId
-     * @param array $localizedNotification
+     * @param mixed $payload
+     * @return void
      */
-    public function publishNotification($eventId, $localizedNotification)
+    protected function _send($payload)
     {
         try {
-            $this->_client->send(json_encode([
-                't' => 'Notification',
-                'd' => [
-                    'server_token' => $this->_serverToken,
-                    'event_id' => $eventId,
-                    'localized_notification' => $localizedNotification
-                ]
-            ]));
+            $val = json_encode($payload);
+            $this->_client->send($val ? $val : '');
         } catch (Exception $e) {
             // Failed to connect or wrong opcode, do nothing
         }
     }
 
     /**
+     * @param int $eventId
+     * @param array $localizedNotification
+     * @return void
+     */
+    public function publishNotification($eventId, $localizedNotification)
+    {
+        $this->_send([
+            't' => 'Notification',
+            'd' => [
+                'server_token' => $this->_serverToken,
+                'event_id' => $eventId,
+                'localized_notification' => $localizedNotification
+            ]
+        ]);
+    }
+
+    /**
      * @param string $hash
      * @param array $data
+     * @return void
      */
     public function publishGameState($hash, $data)
     {
-        try {
-            $this->_client->send(json_encode([
-                't' => 'GameState',
-                'd' => [
-                    'server_token' => $this->_serverToken,
-                    'game_hash' => $hash,
-                    'data' => $data
-                ]
-            ]));
-        } catch (Exception $e) {
-            // Failed to connect or wrong opcode, do nothing
-        }
+        $this->_send([
+            't' => 'GameState',
+            'd' => [
+                'server_token' => $this->_serverToken,
+                'game_hash' => $hash,
+                'data' => $data
+            ]
+        ]);
     }
 
     public function __destruct()

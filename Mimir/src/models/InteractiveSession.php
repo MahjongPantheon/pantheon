@@ -273,11 +273,11 @@ class InteractiveSessionModel extends Model
         if ($success) {
             $data = $session->updateCurrentState($round);
             $wsClient = new WsClient(
-                $this->_config->getValue('ratatoskUrl'),
-                $this->_config->getValue('ratatoskKey')
+                $this->_config->getStringValue('ratatoskUrl'),
+                $this->_config->getStringValue('ratatoskKey')
             );
-            $wsClient->publishGameState($gameHashcode, $data);
             if ($data) {
+                $wsClient->publishGameState($gameHashcode, $data);
                 $this->_trackUpdate($gameHashcode);
                 return $data;
             }
@@ -406,7 +406,7 @@ class InteractiveSessionModel extends Model
     protected function _trackUpdate(string $gameHashcode)
     {
         /** @var string $trackerUrl */
-        $trackerUrl = $this->_config->getValue('trackerUrl');
+        $trackerUrl = $this->_config->getStringValue('trackerUrl');
         if (!empty($trackerUrl)) {
             file_get_contents(sprintf($trackerUrl, $gameHashcode));
         }

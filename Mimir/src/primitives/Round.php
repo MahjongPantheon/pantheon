@@ -577,6 +577,7 @@ class RoundPrimitive extends Primitive
      */
     public function getRiichiIds()
     {
+        // @phpstan-ignore-next-line
         return $this->_riichiIds;
     }
 
@@ -587,6 +588,7 @@ class RoundPrimitive extends Primitive
     public function setRiichiUsers($riichiUsers)
     {
         $this->_riichiUsers = $riichiUsers;
+        // @phpstan-ignore-next-line
         $this->_riichiIds = array_map(function (PlayerPrimitive $player) {
             return $player->getId();
         }, $riichiUsers);
@@ -691,6 +693,7 @@ class RoundPrimitive extends Primitive
     public function setTempaiUsers($tempaiUsers)
     {
         $this->_tempaiUsers = $tempaiUsers;
+        // @phpstan-ignore-next-line
         $this->_tempaiIds = array_map(function (PlayerPrimitive $player) {
             return $player->getId();
         }, $tempaiUsers);

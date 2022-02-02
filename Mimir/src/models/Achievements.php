@@ -92,6 +92,7 @@ class AchievementsModel extends Model
         $this->_games = $this->_getGames($eventIdList);
         $this->_players = $this->_getPlayers($this->_games);
 
+        /** @var array $sessionIds */
         $sessionIds = array_map(function (SessionPrimitive $el) {
             return $el->getId();
         }, $this->_games);
