@@ -33,6 +33,9 @@ import { IAppState } from './interfaces';
 import { defaultPlayer } from './selectors/screenNewGameSelectors';
 
 export const initialState: IAppState = {
+  features: {
+    wsClient: false,
+  },
   currentOtherTableIndex: 0,
   isUniversalWatcher: false,
   settings: { currentLang: 'en', currentTheme: 'day' },

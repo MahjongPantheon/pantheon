@@ -572,6 +572,7 @@ class SessionPrimitive extends Primitive
     public function setPlayers($players)
     {
         $this->_players = $players;
+        // @phpstan-ignore-next-line
         $this->_playersIds = array_map(function (PlayerPrimitive $player) {
             return $player->getId();
         }, $players);
@@ -689,11 +690,12 @@ class SessionPrimitive extends Primitive
     }
 
     /**
-     * @param int[] $chips
+     * @param array<int|null, int> $chips
      * @return $this
      */
     public function setChips($chips)
     {
+        // @phpstan-ignore-next-line
         $this->_chips = $chips;
         return $this;
     }
@@ -727,7 +729,7 @@ class SessionPrimitive extends Primitive
      * WARNING: This should be called strictly AFTER round is saved to DB!
      *
      * @param RoundPrimitive $round
-     * @return bool|array
+     * @return false|array
      * @throws InvalidParametersException|EntityNotFoundException
      */
     public function updateCurrentState(RoundPrimitive $round)

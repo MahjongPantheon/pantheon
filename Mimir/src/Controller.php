@@ -52,8 +52,8 @@ abstract class Controller
         $this->_meta = $meta;
 
         $this->_meta->sendVersionHeader(
-            $this->_config->getValue('api.version_major'),
-            $this->_config->getValue('api.version_minor')
+            $this->_config->getStringValue('api.version_major'),
+            $this->_config->getStringValue('api.version_minor')
         );
     }
 

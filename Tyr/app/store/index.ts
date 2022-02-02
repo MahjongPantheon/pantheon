@@ -18,8 +18,9 @@ import { logging } from './middlewares/logging';
 import { I18nService } from '#/services/i18n';
 import { yaku } from './middlewares/yaku';
 import { reduceReducers } from "#/store/util";
-import { AppActionTypes } from "#/store/actions/interfaces";
+import {AppActionTypes, GET_GAME_OVERVIEW_INIT} from "#/store/actions/interfaces";
 import {screenManageMw} from '#/store/middlewares/screenManage';
+import {ServiceWorkerClient} from "#/services/serviceWorkerClient";
 
 export class Store {
   private onUpdate: ((state: IAppState) => void) | undefined;
@@ -41,9 +42,19 @@ export class Store {
     ]);
     const metrikaService = new MetrikaService();
     const idb = new IDB(metrikaService);
+    const swClient = new ServiceWorkerClient();
+    const riichiService = new RiichiApiService(swClient, () => {
+      if (this.store.getState().currentScreen === 'currentGame') {
+        const hash = this.store.getState().currentSessionHash;
+        if (hash) {
+          // Update game state and update websocket registration
+          this.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: hash });
+        }
+      }
+    });
     const middleware = applyMiddleware(
       logging(`⇨ [middlewares]`),
-      apiClient(new RiichiApiService()),
+      apiClient(riichiService, swClient),
       metrika(metrikaService),
       history(),
       timerMw(this.timerSt),

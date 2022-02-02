@@ -16,11 +16,12 @@ import {
   SessionState,
 } from '#/interfaces/remote';
 import {Table,  Outcome} from '#/interfaces/common';
-import {IAppState} from '../interfaces';
+import {Features, IAppState} from '../interfaces';
 
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
 export const STARTUP_WITH_AUTH = 'STARTUP_WITH_AUTH';
+export const INIT_WORKER_HANDLERS = 'INIT_WORKER_HANDLERS';
 export const START_NEW_GAME = 'START_NEW_GAME';
 export const GO_TO_CURRENT_GAME = 'GO_TO_CURRENT_GAME';
 export const GOTO_EVENT_SELECT = 'GOTO_EVENT_SELECT';
@@ -113,6 +114,7 @@ export const SET_SELECT_HAND_TAB = 'SET_SELECT_HAND_TAB';
 export const TRACK_ARBITRARY_EVENT = 'TRACK_ARBITRARY_EVENT';
 export const TRACK_SCREEN_ENTER = 'TRACK_SCREEN_ENTER';
 export const HISTORY_INIT = 'HISTORY_INIT';
+export const ENABLE_FEATURE = 'ENABLE_FEATURE';
 
 interface InitStateAction {
   type: typeof INIT_STATE;
@@ -571,8 +573,21 @@ interface HistoryInitAction {
   type: typeof HISTORY_INIT;
 }
 
+interface InitWorkerHandlers {
+  type: typeof INIT_WORKER_HANDLERS;
+}
+
+interface EnableFeature {
+  type: typeof ENABLE_FEATURE;
+  payload: {
+    feature: keyof Features;
+    enable: boolean;
+  }
+}
+
 export type AppActionTypes =
   | InitStateAction
+  | InitWorkerHandlers
   | ResetStateAction
   | StartupWithAuthAction
   | StartNewGameAction
@@ -667,5 +682,6 @@ export type AppActionTypes =
   | EventsGetListActionFail
   | SelectEventAction
   | HistoryInitAction
+  | EnableFeature
   ;
 

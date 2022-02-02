@@ -52,6 +52,7 @@ export const environment: EnvConfig = {
   apiUrl: url,
   uaUrl: 'https://u.riichi.top/',
   guiUrl: 'https://r.riichi.top/',
+  ratatoskUrl: 'wss://ws.riichi.top/',
   idbTokenKey: 'pantheon_authToken',
   idbIdKey: 'pantheon_currentPersonId',
   idbEventKey: 'pantheon_currentEventId',

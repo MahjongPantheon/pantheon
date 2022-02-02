@@ -26,7 +26,13 @@ export function registerFrontErrorHandler() {
   }
   if (window.onerror) {
     const prevHandler = window.onerror;
-    window.onerror = function(errorMsg, currentUrl, lineNumber, charNumber, err) {
+    window.onerror = function(
+      errorMsg: Event | string,
+      currentUrl: string | undefined,
+      lineNumber: number | undefined,
+      charNumber: number | undefined,
+      err: Error| undefined
+    ) {
       prevHandler(errorMsg, currentUrl, lineNumber, charNumber, err);
       errHandler(errorMsg, currentUrl, lineNumber, charNumber, err);
     }

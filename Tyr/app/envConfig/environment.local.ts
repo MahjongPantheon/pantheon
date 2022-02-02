@@ -31,6 +31,7 @@ export const environment: EnvConfig = {
   uaUrl: 'http://localhost:4004/',
   guiUrl: 'http://localhost:4002/',
   guiFix: (src: string) => src,
+  ratatoskUrl: 'ws://localhost:4006/',
   idbTokenKey: 'pantheon_authToken',
   idbIdKey: 'pantheon_currentPersonId',
   idbEventKey: 'pantheon_currentEventId',

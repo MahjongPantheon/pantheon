@@ -470,6 +470,7 @@ class PlayerStatModel extends Model
      */
     protected function _fetchRounds(array $games)
     {
+        /** @var array $sessionIds */
         $sessionIds = array_map(function ($item) {
             /** @var SessionPrimitive $session */
             $session = $item['session'];
@@ -497,6 +498,7 @@ class PlayerStatModel extends Model
             return [];
         }
 
+        /** @var array $sessionIds */
         $sessionIds = array_map(function (SessionPrimitive $s) {
             return $s->getId();
         }, $sessions);

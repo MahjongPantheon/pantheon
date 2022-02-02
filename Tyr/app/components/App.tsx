@@ -8,6 +8,7 @@ import {
   AppActionTypes,
   HISTORY_INIT,
   INIT_STATE,
+  INIT_WORKER_HANDLERS,
   SELECT_EVENT,
   SETTINGS_SAVE_LANG,
   STARTUP_WITH_AUTH
@@ -28,7 +29,7 @@ import {LogScreen} from '#/components/screens/log/LogScreen';
 import {environment} from '#config';
 import {EventSelectScreen} from "#/components/screens/event-select/EventSelectScreen";
 import {OtherTablesList} from "#/components/screens/other-tables-list/OtherTablesListScreen";
-import { i18n } from './i18n';
+import {i18n} from './i18n';
 
 interface IProps {
   state: IAppState;
@@ -80,6 +81,7 @@ export const App: React.FC<IProps> = (props: IProps) => {
 
   useEffect(() => {
     dispatch({type: INIT_STATE});
+    dispatch({type: INIT_WORKER_HANDLERS});
     i18nService.init((localeName) => {
       dispatch({type: SETTINGS_SAVE_LANG, payload: localeName});
     }, (err) => console.error(err));

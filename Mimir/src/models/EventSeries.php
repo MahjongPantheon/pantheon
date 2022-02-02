@@ -175,9 +175,16 @@ class EventSeriesModel extends Model
         uasort($seriesResults, function ($a, $b) {
             $diff = $a['placesSum'] - $b['placesSum'];
             if ($diff) {
-                return $diff;
+                return $diff > 0 ? 1 : -1;
             }
-            return $b['scoresSum'] - $a['scoresSum'];
+            $scoreDiff = $b['scoresSum'] - $a['scoresSum'];
+            if (abs($scoreDiff) < 0.00001) {
+                return 0;
+            } else if ($scoreDiff > 0) {
+                return 1;
+            } else {
+                return -1;
+            }
         });
 
         $players = EventModel::getPlayersOfGames($this->_ds, $games);

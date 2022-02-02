@@ -2,6 +2,7 @@ import * as React from 'react';
 import {SettingsScreenView} from '#/components/screens/settings/SettingsScreenView';
 import {IComponentProps} from '#/components/IComponentProps';
 import {
+  ENABLE_FEATURE,
   FORCE_LOGOUT,
   GOTO_EVENT_SELECT,
   GOTO_PREV_SCREEN,
@@ -49,6 +50,14 @@ export class SettingsScreen extends React.PureComponent<IComponentProps>{
     dispatch({ type: GOTO_EVENT_SELECT });
   }
 
+  private onWsEnable() {
+    this.props.dispatch({ type: ENABLE_FEATURE, payload: { feature: 'wsClient', enable: true } });
+  }
+
+  private onWsDisable() {
+    this.props.dispatch({ type: ENABLE_FEATURE, payload: { feature: 'wsClient', enable: false } });
+  }
+
   render() {
     const {state} = this.props;
     const loc = this.context as I18nService;
@@ -69,6 +78,9 @@ export class SettingsScreen extends React.PureComponent<IComponentProps>{
         onLangChange={this.onLangChange.bind(this)}
         onThemeSelect={this.onThemeSelect.bind(this)}
         onEventSelect={this.onEventSelect.bind(this)}
+        wsClientEnabled={state.features.wsClient}
+        onWsEnable={this.onWsEnable.bind(this)}
+        onWsDisable={this.onWsDisable.bind(this)}
       />
     )
   }

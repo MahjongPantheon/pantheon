@@ -39,7 +39,12 @@ class Templater
                 ['prefix' => '_']
             )
         ]);
-        self::$_inlineRenderer = new Handlebars(); // for block nesting
+        self::$_inlineRenderer = new Handlebars([
+            'partials_loader' => new \Handlebars\Loader\FilesystemLoader(
+                __DIR__ . '/templates/',
+                ['prefix' => '_']
+            )
+        ]); // for block nesting
 
         self::$_eventIdListString = implode('.', $eventIdList);
 

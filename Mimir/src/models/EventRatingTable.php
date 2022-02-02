@@ -254,7 +254,7 @@ class EventRatingTableModel extends Model
                     PlayerHistoryPrimitive $el2
                 ) {
                     if (abs($el1->getRating() - $el2->getRating()) < 0.0001) {
-                        return $el2->getAvgPlace() - $el1->getAvgPlace(); // lower avg place is better, so invert
+                        return ($el2->getAvgPlace() - $el1->getAvgPlace()) > 0 ? 1 : -1; // lower avg place is better, so invert
                     }
                     if ($el1->getRating() - $el2->getRating() < 0) { // higher rating is better
                         return -1;  // usort casts return result to int, so pass explicit int here.
@@ -269,7 +269,7 @@ class EventRatingTableModel extends Model
                     PlayerHistoryPrimitive $el2
                 ) {
                     if (abs($el1->getAvgPlace() - $el2->getAvgPlace()) < 0.0001) { // floats need epsilon
-                        return $el2->getRating() - $el1->getRating(); // lower rating is worse, so invert
+                        return ($el2->getRating() - $el1->getRating()) > 0 ? 1 : -1; // lower rating is worse, so invert
                     }
                     if ($el1->getAvgPlace() - $el2->getAvgPlace() < 0) { // higher avg place is worse
                         return -1; // usort casts return result to int, so pass explicit int here.
@@ -284,7 +284,7 @@ class EventRatingTableModel extends Model
                     PlayerHistoryPrimitive $el2
                 ) use ($startRating) {
                     if (abs($el1->getAvgScore($startRating) - $el2->getAvgScore($startRating)) < 0.0001) {
-                        return $el2->getAvgPlace() - $el1->getAvgPlace(); // lower avg place is better, so invert
+                        return ($el2->getAvgPlace() - $el1->getAvgPlace()) > 0 ? 1 : -1; // lower avg place is better, so invert
                     }
                     if ($el1->getAvgScore($startRating) - $el2->getAvgScore($startRating) < 0) { // higher rating is better
                         return -1;  // usort casts return result to int, so pass explicit int here.
@@ -316,7 +316,7 @@ class EventRatingTableModel extends Model
         }
 
         // Split the array in half
-        $halfway = count($array) / 2;
+        $halfway = intval(count($array) / 2);
         $array1 = array_slice($array, 0, $halfway);
         $array2 = array_slice($array, $halfway);
 

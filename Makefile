@@ -97,6 +97,7 @@ pantheon_run: get_docker_id get_docker_idle_id
 		echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
 		echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
 		echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
+		echo "- ${YELLOW}Ratatosk${NC} is exposed on port 4006"; \
   		echo "----------------------------------------------------------------------------------"; \
   		echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
   		echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
@@ -127,11 +128,13 @@ pantheon_run: get_docker_id get_docker_idle_id
 				-p 127.0.0.1:4003:4003 \
 				-p 127.0.0.1:4004:4004 \
 				-p 127.0.0.1:5532:5532 \
+				-p 127.0.0.1:4006:4006 \
 				-v `pwd`/Tyr:/var/www/html/Tyr:z \
 				-v `pwd`/Mimir:/var/www/html/Mimir:z \
 				-v `pwd`/Rheda:/var/www/html/Rheda:z \
 				-v `pwd`/Frey:/var/www/html/Frey:z \
 				-v `pwd`/Common:/var/www/html/Common:z \
+				-v `pwd`/Ratatosk:/var/www/Ratatosk:z \
 				-v `pwd`/:/var/www/html/pantheon:z \
 				--name=pantheondev \
 				pantheondev; \
@@ -161,10 +164,21 @@ frontdev: get_docker_id
 dev: run
 	@if [ -n $TMUX ]; then \
      tmux split-window -dv '${MAKE} php_logs' ; \
+     tmux split-window -dh '${MAKE} rat_logs' ; \
   fi
 	${MAKE} deps
 	${MAKE} migrate
+	${MAKE} build_ratatosk
+	${MAKE} run_ratatosk
 	${MAKE} frontdev
+
+.PHONY: build_ratatosk
+build_ratatosk: get_docker_id
+	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/Ratatosk && cargo build'
+
+.PHONY: run_ratatosk
+run_ratatosk: get_docker_id
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'killall ratatosk; cd /var/www/Ratatosk && ./target/debug/ratatosk >> /var/log/rat-errors.log &'
 
 .PHONY: migrate
 migrate: get_docker_id
@@ -215,6 +229,14 @@ php_logs: get_docker_id
 		echo "${RED}Pantheon container is not running, can't view logs.${NC}"; \
 	else \
 		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'tail -f /var/log/php-errors.log' ; \
+	fi
+
+.PHONY: rat_logs
+rat_logs: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Pantheon container is not running, can't view logs.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'tail -f /var/log/rat-errors.log' ; \
 	fi
 
 .PHONY: shell

@@ -41,6 +41,7 @@ return [ // Omit trailing slashes in keys when possible
     '/tourn/(?<action>startTimer)'                         => 'TournamentControlPanel',
     '/tourn/(?<action>toggleHideResults)'                  => 'TournamentControlPanel',
     '/tourn/(?<action>finalizeSessions)'                   => 'TournamentControlPanel',
+    '/tourn/(?<action>sendNotification)'                   => 'TournamentControlPanel',
 
     '/prescript' => 'PrescriptControls',
 
@@ -48,6 +49,7 @@ return [ // Omit trailing slashes in keys when possible
     '/games/(?<action>dropLastRound)/(?<hash>[0-9a-f]+)'   => 'GamesControlPanel',
     '/games/(?<action>definalize)/(?<hash>[0-9a-f]+)'      => 'GamesControlPanel',
     '/games/(?<action>cancelGame)/(?<hash>[0-9a-f]+)'      => 'GamesControlPanel',
+    '/games/(?<action>sendNotification)'                   => 'GamesControlPanel',
 
     '/penalties'       => 'Penalties',
     '/penalties/(?<action>apply)' => 'Penalties',

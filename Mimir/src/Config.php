@@ -58,6 +58,19 @@ class Config
     }
 
     /**
+     * @param string $path
+     * @return string
+     */
+    public function getStringValue(string $path)
+    {
+        $val = $this->getValue($path);
+        if (!is_string($val)) {
+            return '';
+        }
+        return $val;
+    }
+
+    /**
      * @return string PDO connection string
      *
      * @throws \RuntimeException
@@ -66,8 +79,7 @@ class Config
      */
     public function getDbConnectionString()
     {
-        /** @var string $value */
-        $value = $this->getValue('db.connection_string');
+        $value = $this->getStringValue('db.connection_string');
         if (empty($value)) {
             throw new \RuntimeException('DB connection string not found in configuration!');
         }

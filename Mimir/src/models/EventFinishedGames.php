@@ -63,6 +63,7 @@ class EventFinishedGamesModel extends Model
             SessionPrimitive::STATUS_FINISHED
         );
 
+        /** @var array $sessionIds */
         $sessionIds = array_map(function (SessionPrimitive $el) {
             return $el->getId();
         }, $games);

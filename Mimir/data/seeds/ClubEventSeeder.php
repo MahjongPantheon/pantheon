@@ -138,7 +138,7 @@ class ClubEventSeeder extends AbstractSeed
         ]);
 
         $db = new \Mimir\Db($cfg);
-        $frey = new \Mimir\FreyClient($cfg->getValue('freyUrl'));
+        $frey = new \Mimir\FreyClient($cfg->getStringValue('freyUrl'));
         $frey->getClient()->getHttpClient()->withHeaders([
             'X-Debug-Token: CHANGE_ME',
         ]);

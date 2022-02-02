@@ -112,7 +112,7 @@ class OnlineParser
      * Much simpler to get final scores by regex :)
      *
      * @param string $content
-     * @return array (player id => score)
+     * @return array<int|null, int> (player id => score)
      */
     protected function _parseOutcome(string $content)
     {
@@ -143,7 +143,7 @@ class OnlineParser
 
     /**
      * @param string $content
-     * @return array (player id => chips)
+     * @return array<int|null, int> (player id => chips)
      */
     protected function _parseChipsOutcome($content)
     {
@@ -388,6 +388,7 @@ class OnlineParser
         }
 
         // form array in form of [int 'player id' => bool 'tempai?']
+        /** @var array $combined */
         $combined = array_combine(
             array_map(
                 function (PlayerPrimitive $el) {

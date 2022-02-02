@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pantheon - Rheda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-15 01:02+0300\n"
+"POT-Creation-Date: 2022-02-02 22:18+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: Jesterboxboy\n"
@@ -877,6 +877,9 @@ msgstr "Genau nach Plan"
 msgid "Kokushi musou"
 msgstr "Kokushi musou"
 
+msgid "Language:"
+msgstr ""
+
 msgid "Last played round:"
 msgstr "Letzte gespielte Runde:"
 
@@ -1433,6 +1436,13 @@ msgstr "Ihr Land auswählen"
 
 msgid "Send confirmation e-mail"
 msgstr "Bestätigungsmail senden"
+
+#, fuzzy
+msgid "Send notification"
+msgstr "Bestätigungsmail senden"
+
+msgid "Send notification to players"
+msgstr ""
 
 msgid "Series"
 msgstr "Serie"
