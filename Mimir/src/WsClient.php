@@ -21,6 +21,7 @@
 namespace Mimir;
 use WebSocket\BadOpcodeException;
 use WebSocket\Client;
+use WebSocket\Exception;
 
 class WsClient {
     /**
@@ -45,35 +46,41 @@ class WsClient {
     /**
      * @param int $eventId
      * @param array $localizedNotification
-     * @throws BadOpcodeException
      */
     public function publishNotification($eventId, $localizedNotification)
     {
-        $this->_client->send(json_encode([
-            't' => 'Notification',
-            'd' => [
-                'server_token' => $this->_serverToken,
-                'event_id' => $eventId,
-                'localized_notification' => $localizedNotification
-            ]
-        ]));
+        try {
+            $this->_client->send(json_encode([
+                't' => 'Notification',
+                'd' => [
+                    'server_token' => $this->_serverToken,
+                    'event_id' => $eventId,
+                    'localized_notification' => $localizedNotification
+                ]
+            ]));
+        } catch (Exception $e) {
+            // Failed to connect or wrong opcode, do nothing
+        }
     }
 
     /**
      * @param string $hash
      * @param array $data
-     * @throws BadOpcodeException
      */
     public function publishGameState($hash, $data)
     {
-        $this->_client->send(json_encode([
-            't' => 'GameState',
-            'd' => [
-                'server_token' => $this->_serverToken,
-                'game_hash' => $hash,
-                'data' => $data
-            ]
-        ]));
+        try {
+            $this->_client->send(json_encode([
+                't' => 'GameState',
+                'd' => [
+                    'server_token' => $this->_serverToken,
+                    'game_hash' => $hash,
+                    'data' => $data
+                ]
+            ]));
+        } catch (Exception $e) {
+            // Failed to connect or wrong opcode, do nothing
+        }
     }
 
     public function __destruct()
