@@ -272,7 +272,10 @@ class InteractiveSessionModel extends Model
         $success = $round->save();
         if ($success) {
             $data = $session->updateCurrentState($round);
-            $wsClient = new WsClient($this->_config->getValue('ratatoskUrl'));
+            $wsClient = new WsClient(
+                $this->_config->getValue('ratatoskUrl'),
+                $this->_config->getValue('ratatoskKey')
+            );
             $wsClient->publishGameState($gameHashcode, $data);
             if ($data) {
                 $this->_trackUpdate($gameHashcode);

@@ -9,8 +9,8 @@ pub(crate) const NOTIFICATION: &str = "NOTIFICATION";
 #[serde(tag = "t", content = "d")]
 pub(crate) enum GenericIncomingRequest {
   Register { game_hash: String, event_id: u32 },
-  GameState { game_hash: String, data: Value },
-  Notification { event_id: u32, localized_notification: Value },
+  GameState { server_token: String, game_hash: String, data: Value },
+  Notification { server_token: String, event_id: u32, localized_notification: Value },
 }
 
 #[derive(Serialize)]

@@ -41,6 +41,7 @@ return array_merge([
     'freyUrl'   => 'http://localhost:4004', // TODO: change this in your local config!
     'rhedaUrl'  => 'http://localhost:4002', // TODO: change this in your local config!
     'ratatoskUrl' => 'ws://localhost:4006', // TODO: change this in your local config!
+    'ratatoskKey' => '84893fhduoc93rueh9f8y13huds9phrejdhglrqpe9843', // TODO: change this in your local config!
     'verbose'   => false,
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC',

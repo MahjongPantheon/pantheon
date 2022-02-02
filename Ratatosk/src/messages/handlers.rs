@@ -2,8 +2,10 @@ use std::collections::HashMap;
 use mio::Token;
 use serde_json::Value;
 use crate::{GameDataResponse, GenericIncomingRequest, RegDataResponse, ROUND_DATA, REGISTER_RESULTS, STATUS_OK, WebSocket, WebSocketEvent, NOTIFICATION, NotificationResponse};
+use crate::config::Settings;
 
 pub(crate) fn run(
+  settings: &Settings,
   ws: &mut WebSocket,
   sessions: &mut HashMap<Token, String>,
   events: &mut HashMap<Token, u32>,
@@ -11,12 +13,22 @@ pub(crate) fn run(
   val: GenericIncomingRequest
 ) {
   match val {
-    GenericIncomingRequest::GameState { game_hash, data }
-      => handle_game_data(game_hash, data, sessions, ws),
-    GenericIncomingRequest::Register { game_hash, event_id }
-      => handle_reg_data(game_hash, event_id, token, sessions, events, ws),
-    GenericIncomingRequest::Notification { event_id, localized_notification }
-      => handle_notification(localized_notification, event_id, events, ws),
+    // Server-side notifications, should check token
+    GenericIncomingRequest::GameState { server_token, game_hash, data } => {
+      if server_token.eq(&settings.server_token) {
+        handle_game_data(game_hash, data, sessions, ws)
+      }
+    },
+    GenericIncomingRequest::Notification { server_token, event_id, localized_notification } => {
+      if server_token.eq(&settings.server_token) {
+        handle_notification(localized_notification, event_id, events, ws)
+      }
+    },
+
+    // Client-side notifications, no check required
+    GenericIncomingRequest::Register { game_hash, event_id } => {
+      handle_reg_data(game_hash, event_id, token, sessions, events, ws)
+    },
   }
 }
 

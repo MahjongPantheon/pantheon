@@ -1,6 +1,7 @@
 mod ws_essentials;
 mod ws_lib;
 mod messages;
+mod config;
 extern crate mio;
 extern crate http_muncher;
 extern crate sha1;
@@ -15,18 +16,22 @@ extern crate serde_derive;
 extern crate serde_json;
 extern crate env_logger;
 
-use std::borrow::BorrowMut;
+use std::borrow::{Borrow, BorrowMut};
 use std::collections::HashMap;
 use std::net::SocketAddr;
 use mio::Token;
 use ws_lib::interface::*;
 use messages::types::*;
+use crate::config::get_config;
 use crate::messages::handlers;
 
 fn main() {
   env_logger::init().unwrap();
+  let settings = get_config();
 
-  let mut ws = WebSocket::new("0.0.0.0:4006".parse::<SocketAddr>().unwrap());
+  let mut listen_addr = String::from("0.0.0.0:");
+  listen_addr.push_str(settings.listen_port.to_string().as_str());
+  let mut ws = WebSocket::new(listen_addr.parse::<SocketAddr>().unwrap());
   let mut sessions: HashMap<Token, String> = HashMap::new();
   let mut events: HashMap<Token, u32> = HashMap::new();
 
@@ -50,6 +55,7 @@ fn main() {
         let data: Result<GenericIncomingRequest, _> = serde_json::from_str(msg.as_str());
         match data {
           Ok(val) => handlers::run(
+            settings.borrow(),
             ws.borrow_mut(),
             sessions.borrow_mut(),
             events.borrow_mut(),

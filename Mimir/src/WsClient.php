@@ -29,11 +29,17 @@ class WsClient {
     private Client $_client;
 
     /**
+     * @var string
+     */
+    private string $_serverToken;
+
+    /**
      * @param string $url
      */
-    public function __construct($url)
+    public function __construct($url, $serverToken)
     {
         $this->_client = new Client($url);
+        $this->_serverToken = $serverToken;
     }
 
     /**
@@ -46,6 +52,7 @@ class WsClient {
         $this->_client->send(json_encode([
             't' => 'Notification',
             'd' => [
+                'server_token' => $this->_serverToken,
                 'event_id' => $eventId,
                 'localized_notification' => $localizedNotification
             ]
@@ -62,6 +69,7 @@ class WsClient {
         $this->_client->send(json_encode([
             't' => 'GameState',
             'd' => [
+                'server_token' => $this->_serverToken,
                 'game_hash' => $hash,
                 'data' => $data
             ]

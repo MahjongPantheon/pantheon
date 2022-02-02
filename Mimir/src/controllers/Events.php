@@ -1110,7 +1110,10 @@ class EventsController extends Controller
      */
     public function sendNotification($eventId, $notification)
     {
-        $wsClient = new WsClient($this->_config->getValue('ratatoskUrl'));
+        $wsClient = new WsClient(
+            $this->_config->getValue('ratatoskUrl'),
+            $this->_config->getValue('ratatoskKey')
+        );
         $wsClient->publishNotification($eventId, $notification);
     }
 }
