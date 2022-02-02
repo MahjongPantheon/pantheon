@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-15 01:02+0300\n"
+"POT-Creation-Date: 2022-02-02 22:18+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -892,6 +892,9 @@ msgstr "Как и планировалось"
 msgid "Kokushi musou"
 msgstr "Кокуши мусо"
 
+msgid "Language:"
+msgstr "Язык:"
+
 msgid "Last played round:"
 msgstr "Последняя сыгранная раздача:"
 
@@ -1450,6 +1453,12 @@ msgstr "Выберите страну, которую вы представля�
 
 msgid "Send confirmation e-mail"
 msgstr "Выслать письмо с подтверждением"
+
+msgid "Send notification"
+msgstr "Послать уведомление"
+
+msgid "Send notification to players"
+msgstr "Послать уведомление игрокам"
 
 msgid "Series"
 msgstr "Серии игр"

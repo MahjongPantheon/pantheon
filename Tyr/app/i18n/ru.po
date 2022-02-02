@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 20:51+0300\n"
-"PO-Revision-Date: 2021-10-27 23:56+0300\n"
+"POT-Creation-Date: 2022-02-02 22:18+0300\n"
+"PO-Revision-Date: 2022-02-02 22:21+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -106,6 +106,10 @@ msgstr "Дайсанген"
 msgid "Daisuushii"
 msgstr "Дайсуши"
 
+#: app/components/screens/settings/SettingsScreenView.tsx:104:52
+msgid "Disable experimental updates"
+msgstr "Выключить экспериментальные обновления"
+
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:73:16
 msgid "Dora"
 msgstr "Дора"
@@ -121,6 +125,14 @@ msgstr "E-mail не зарегистрирован в базе данных Pant
 #: app/components/screens/login/EnterCredentialsView.tsx:23:17
 msgid "Email"
 msgstr "Email"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:113:73
+msgid "Enable Pantheon notifications"
+msgstr "Включить уведомления от Pantheon"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:95:51
+msgid "Enable experimental updates"
+msgstr "Включить экспериментальные обновления"
 
 #: app/components/screens/home/HomeScreen.tsx:68:55
 msgid "Event title"
@@ -205,7 +217,7 @@ msgstr "Джунчан"
 msgid "Kokushi musou"
 msgstr "Кокушимусо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:48:57
+#: app/components/screens/settings/SettingsScreenView.tsx:54:57
 msgid "Language"
 msgstr "Язык"
 
@@ -217,7 +229,7 @@ msgstr "Загрузка..."
 msgid "Log in"
 msgstr "Вход"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:95:32
+#: app/components/screens/settings/SettingsScreenView.tsx:142:32
 msgid "Log out"
 msgstr "Выйти из системы"
 
@@ -279,6 +291,14 @@ msgstr "Другие столы"
 msgid "Pantheon"
 msgstr "Pantheon"
 
+#: app/components/screens/settings/SettingsScreenView.tsx:127:14
+msgid "Pantheon notifications are disabled. See your browser settings."
+msgstr "Уведомления отключены. Проверьте настройки браузера."
+
+#: app/components/screens/settings/SettingsScreenView.tsx:120:16
+msgid "Pantheon notifications are enabled"
+msgstr "Уведомления Pantheon включены"
+
 #: app/components/screens/login/EnterCredentialsView.tsx:18:10
 msgid "Pantheon: log in"
 msgstr "Pantheon: вход в систему"
@@ -303,7 +323,7 @@ msgstr "Штраф"
 msgid "Pinfu"
 msgstr "Пин-фу"
 
-#: app/components/screens/settings/SettingsScreen.tsx:56:58
+#: app/components/screens/settings/SettingsScreen.tsx:65:58
 msgid "Player name"
 msgstr "Имя игрока"
 
@@ -369,7 +389,7 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:81:54
+#: app/components/screens/settings/SettingsScreenView.tsx:87:54
 msgid "Select another event"
 msgstr "Выбрать другое событие"
 
@@ -425,7 +445,7 @@ msgstr "Темпай: %1"
 msgid "Tenhou"
 msgstr "Тенхо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:60:57
+#: app/components/screens/settings/SettingsScreenView.tsx:66:57
 msgid "Theme"
 msgstr "Оформление"
 

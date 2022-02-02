@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-15 01:02+0300\n"
+"POT-Creation-Date: 2022-02-02 22:18+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -229,23 +229,43 @@ msgstr ""
 msgid "Yakuman"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreen.tsx:56:58
+#: app/components/screens/settings/SettingsScreen.tsx:65:58
 msgid "Player name"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:48:57
+#: app/components/screens/settings/SettingsScreenView.tsx:54:57
 msgid "Language"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:60:57
+#: app/components/screens/settings/SettingsScreenView.tsx:66:57
 msgid "Theme"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:81:54
+#: app/components/screens/settings/SettingsScreenView.tsx:87:54
 msgid "Select another event"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:95:32
+#: app/components/screens/settings/SettingsScreenView.tsx:95:51
+msgid "Enable experimental updates"
+msgstr ""
+
+#: app/components/screens/settings/SettingsScreenView.tsx:104:52
+msgid "Disable experimental updates"
+msgstr ""
+
+#: app/components/screens/settings/SettingsScreenView.tsx:113:73
+msgid "Enable Pantheon notifications"
+msgstr ""
+
+#: app/components/screens/settings/SettingsScreenView.tsx:120:16
+msgid "Pantheon notifications are enabled"
+msgstr ""
+
+#: app/components/screens/settings/SettingsScreenView.tsx:127:14
+msgid "Pantheon notifications are disabled. See your browser settings."
+msgstr ""
+
+#: app/components/screens/settings/SettingsScreenView.tsx:142:32
 msgid "Log out"
 msgstr ""
 

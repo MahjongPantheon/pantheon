@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-15 01:02+0300\n"
+"POT-Creation-Date: 2022-02-02 22:18+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,9 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "Game details"
+msgstr ""
 
 msgid "Achievements"
 msgstr ""
@@ -90,24 +93,6 @@ msgstr ""
 msgid "Add game"
 msgstr ""
 
-msgid "Game details"
-msgstr ""
-
-msgid "Recent games"
-msgstr ""
-
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
-msgstr ""
-
-msgid "Later"
-msgstr ""
-
-msgid "Earlier"
-msgstr ""
-
 msgid "Open game control app"
 msgstr ""
 
@@ -115,6 +100,9 @@ msgid "Navigation"
 msgstr ""
 
 msgid "To event list"
+msgstr ""
+
+msgid "Recent games"
 msgstr ""
 
 msgid "Rating table"
@@ -198,24 +186,10 @@ msgstr ""
 msgid "Rheda: mahjong statistic system"
 msgstr ""
 
-msgid "Additional penalties"
+msgid "Later"
 msgstr ""
 
-msgid ""
-"A penalty may be applied only to player currently in game. Otherwise error "
-"will occur."
-msgstr ""
-
-msgid "Penalty amount"
-msgstr ""
-
-msgid "Penalty reason"
-msgstr ""
-
-msgid "Check twice penalty data. You won't be able to cancel the penalty"
-msgstr ""
-
-msgid "Apply penalty"
+msgid "Earlier"
 msgstr ""
 
 msgid "Manage profile: %s"
@@ -269,6 +243,12 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+msgid "No games has been played yet"
+msgstr ""
+
+msgid "%d - %d (%d total)"
+msgstr ""
+
 msgid "Recover your password"
 msgstr ""
 
@@ -296,6 +276,26 @@ msgid "Please enter new password for your account."
 msgstr ""
 
 msgid "Change password"
+msgstr ""
+
+msgid "Additional penalties"
+msgstr ""
+
+msgid ""
+"A penalty may be applied only to player currently in game. Otherwise error "
+"will occur."
+msgstr ""
+
+msgid "Penalty amount"
+msgstr ""
+
+msgid "Penalty reason"
+msgstr ""
+
+msgid "Check twice penalty data. You won't be able to cancel the penalty"
+msgstr ""
+
+msgid "Apply penalty"
 msgstr ""
 
 msgid ""
@@ -331,6 +331,16 @@ msgid ""
 "instructions."
 msgstr ""
 
+msgid "Sign up confirmation"
+msgstr ""
+
+msgid "Thank you, your registration was successfully approved."
+msgstr ""
+
+msgid ""
+"You are required to log in with your email and password before proceeding"
+msgstr ""
+
 msgid "Create new user"
 msgstr ""
 
@@ -341,16 +351,6 @@ msgid "Password"
 msgstr ""
 
 msgid "Successfully register new user!"
-msgstr ""
-
-msgid "Sign up confirmation"
-msgstr ""
-
-msgid "Thank you, your registration was successfully approved."
-msgstr ""
-
-msgid ""
-"You are required to log in with your email and password before proceeding"
 msgstr ""
 
 msgid "Personal stats"
@@ -440,6 +440,34 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
+msgid "Predefined seating configuration"
+msgstr ""
+
+msgid "Next session index (starting from 1):"
+msgstr ""
+
+msgid "Update predefined seating config"
+msgstr ""
+
+msgid "Found errors:"
+msgstr ""
+
+msgid "No errors found."
+msgstr ""
+
+msgid ""
+"Predefined seating is entered as list of tables, one table per row. New game "
+"session should be indicated as an empty line."
+msgstr ""
+
+msgid "Example:"
+msgstr ""
+
+msgid ""
+"In this example, two tables play two games. Numbers in seating persist "
+"between games and are defined at Admin actions / Manage players page."
+msgstr ""
+
 msgid "Player added successfully. Reload page to see results"
 msgstr ""
 
@@ -509,34 +537,6 @@ msgstr ""
 msgid "Save teams list"
 msgstr ""
 
-msgid "Predefined seating configuration"
-msgstr ""
-
-msgid "Next session index (starting from 1):"
-msgstr ""
-
-msgid "Update predefined seating config"
-msgstr ""
-
-msgid "Found errors:"
-msgstr ""
-
-msgid "No errors found."
-msgstr ""
-
-msgid ""
-"Predefined seating is entered as list of tables, one table per row. New game "
-"session should be indicated as an empty line."
-msgstr ""
-
-msgid "Example:"
-msgstr ""
-
-msgid ""
-"In this example, two tables play two games. Numbers in seating persist "
-"between games and are defined at Admin actions / Manage players page."
-msgstr ""
-
 msgid "Rights and privileges: %s"
 msgstr ""
 
@@ -573,6 +573,41 @@ msgstr ""
 msgid "Table #"
 msgstr ""
 
+msgid "Manage owned events"
+msgstr ""
+
+msgid ""
+"Really finish event #id (#title)? You won't be able to add games after event "
+"is finished."
+msgstr ""
+
+msgid "New club rating"
+msgstr ""
+
+msgid "New tournament"
+msgstr ""
+
+msgid "New online tournament"
+msgstr ""
+
+msgid "Event"
+msgstr ""
+
+msgid "Controls"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Privileges"
+msgstr ""
+
+msgid "Rebuild scoring"
+msgstr ""
+
+msgid "Finish"
+msgstr ""
+
 msgid "Something went wrong: %s"
 msgstr ""
 
@@ -592,6 +627,21 @@ msgid "Tables are being prepared..."
 msgstr ""
 
 msgid "Please wait a while and reload the page."
+msgstr ""
+
+msgid "Manage events privileges: %s"
+msgstr ""
+
+msgid "Revoke privilege #title?"
+msgstr ""
+
+msgid "Privilege"
+msgstr ""
+
+msgid "global"
+msgstr ""
+
+msgid "Revoke"
 msgstr ""
 
 msgid "Update event"
@@ -668,54 +718,46 @@ msgstr ""
 msgid "Create event"
 msgstr ""
 
-msgid "Manage events privileges: %s"
+msgid "Please enter your e-mail address and password."
 msgstr ""
 
-msgid "Revoke privilege #title?"
+msgid "Forgot your password?"
 msgstr ""
 
-msgid "Privilege"
+msgid "Send notification to players"
 msgstr ""
 
-msgid "Controls"
+msgid "Language:"
 msgstr ""
 
-msgid "global"
+msgid "Send notification"
 msgstr ""
 
-msgid "Revoke"
+msgid "View replay online"
 msgstr ""
 
-msgid "Manage owned events"
+msgid "Best hand: <b>%s</b> - %s"
 msgstr ""
 
-msgid ""
-"Really finish event #id (#title)? You won't be able to add games after event "
-"is finished."
+msgid "Ron hands: %d"
 msgstr ""
 
-msgid "New club rating"
+msgid "Tsumo hands: %d"
 msgstr ""
 
-msgid "New tournament"
+msgid "Drawn rounds: %d"
 msgstr ""
 
-msgid "New online tournament"
+msgid "Chombo penalties: %s"
 msgstr ""
 
-msgid "Event"
+msgid "Additional penalties:"
 msgstr ""
 
-msgid "Edit"
+msgid "%s - %d points (%s)"
 msgstr ""
 
-msgid "Privileges"
-msgstr ""
-
-msgid "Rebuild scoring"
-msgstr ""
-
-msgid "Finish"
+msgid "Full game log:"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -781,31 +823,18 @@ msgstr ""
 msgid "Tenpai: %s."
 msgstr ""
 
-msgid "View replay online"
+msgid "Finish all the games"
 msgstr ""
 
-msgid "Best hand: <b>%s</b> - %s"
+msgid ""
+"After this button is pressed, you won't be able to cancel any rounds, and "
+"all the results will become visible to all players in rating table."
 msgstr ""
 
-msgid "Ron hands: %d"
+msgid "Finish the games? You will not be able to cancel rounds anymore!"
 msgstr ""
 
-msgid "Tsumo hands: %d"
-msgstr ""
-
-msgid "Drawn rounds: %d"
-msgstr ""
-
-msgid "Chombo penalties: %s"
-msgstr ""
-
-msgid "Additional penalties:"
-msgstr ""
-
-msgid "%s - %d points (%s)"
-msgstr ""
-
-msgid "Full game log:"
+msgid "Confirm the results and finish all games"
 msgstr ""
 
 msgid "Rating"
@@ -821,32 +850,6 @@ msgid "Han"
 msgstr ""
 
 msgid "Yaku collected over all time"
-msgstr ""
-
-msgid "Please enter your e-mail address and password."
-msgstr ""
-
-msgid "Forgot your password?"
-msgstr ""
-
-msgid "Finish all the games"
-msgstr ""
-
-msgid ""
-"After this button is pressed, you won't be able to cancel any rounds, and "
-"all the results will become visible to all players in rating table."
-msgstr ""
-
-msgid "Finish the games? You will not be able to cancel rounds anymore!"
-msgstr ""
-
-msgid "Confirm the results and finish all games"
-msgstr ""
-
-msgid "Ready to generate seating"
-msgstr ""
-
-msgid "Select seating mode and press the appropriate button."
 msgstr ""
 
 msgid "Random seating"
@@ -941,6 +944,47 @@ msgstr ""
 msgid "Use this seating"
 msgstr ""
 
+msgid "Confirm round cancellation: "
+msgstr ""
+
+msgid ""
+"Confirm game definalization. Note that you will need to cancel last round by "
+"hand after that."
+msgstr ""
+
+msgid "Confirm game cancellation: "
+msgstr ""
+
+msgid "Tables state:"
+msgstr ""
+
+msgid "Last played round:"
+msgstr ""
+
+msgid "(no rounds are played yet)"
+msgstr ""
+
+msgid "Penalties:"
+msgstr ""
+
+msgid "%s - %s points of penalty. Reason: %s"
+msgstr ""
+
+msgid "Cancel last played round"
+msgstr ""
+
+msgid "Cancel game"
+msgstr ""
+
+msgid "Definalize game"
+msgstr ""
+
+msgid "Ready to generate seating"
+msgstr ""
+
+msgid "Select seating mode and press the appropriate button."
+msgstr ""
+
 msgid "Start timer and games"
 msgstr ""
 
@@ -976,41 +1020,6 @@ msgid "Rating table is hidden. Show"
 msgstr ""
 
 msgid "Rating table is visible. Hide"
-msgstr ""
-
-msgid "Confirm round cancellation: "
-msgstr ""
-
-msgid ""
-"Confirm game definalization. Note that you will need to cancel last round by "
-"hand after that."
-msgstr ""
-
-msgid "Confirm game cancellation: "
-msgstr ""
-
-msgid "Tables state:"
-msgstr ""
-
-msgid "Last played round:"
-msgstr ""
-
-msgid "(no rounds are played yet)"
-msgstr ""
-
-msgid "Penalties:"
-msgstr ""
-
-msgid "%s - %s points of penalty. Reason: %s"
-msgstr ""
-
-msgid "Cancel last played round"
-msgstr ""
-
-msgid "Cancel game"
-msgstr ""
-
-msgid "Definalize game"
 msgstr ""
 
 msgid "<h2>Oops.</h2>Failed to get event configuration!"
