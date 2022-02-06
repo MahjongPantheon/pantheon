@@ -174,7 +174,7 @@ dev: run
 
 .PHONY: build_ratatosk
 build_ratatosk: get_docker_id
-	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/Ratatosk && cargo build'
+	docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/Ratatosk && HOME=/home/user gosu user /home/user/.cargo/bin/cargo build --target=x86_64-unknown-linux-musl'
 
 .PHONY: run_ratatosk
 run_ratatosk: get_docker_id
@@ -359,6 +359,11 @@ prod_deps:
 prod_build_tyr: get_docker_id # this is for automated builds, don't run it manually
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user gosu user make deps && make build';
 	cd Tyr && make cleanup_prebuilts && make prebuild
+
+.PHONY: prod_build_ratatosk
+prod_build_ratatosk: get_docker_id # this is for automated builds, don't run it manually
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/Ratatosk && HOME=/home/user gosu user /home/user/.cargo/bin/cargo build --release --target=x86_64-unknown-linux-musl';
+	cd Ratatosk && cp target/x86_64-unknown-linux-musl/release/ratatosk ../Ratatosk-prebuilt/ratatosk
 
 # i18n related
 .PHONY: i18n_extract

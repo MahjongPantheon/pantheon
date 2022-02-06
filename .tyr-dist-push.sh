@@ -5,10 +5,11 @@ setup_git() {
   git config --global user.name "Automatic build"
 }
 
-commit_built_tyr() {
+commit_built() {
   git checkout master
   git add Tyr-dist
-  git commit --message "[TYR] Auto build: $GITHUB_RUN_NUMBER"
+  git add Ratatosk-prebuilt
+  git commit --message "Auto build: $GITHUB_RUN_NUMBER"
 }
 
 upload_files() {
@@ -17,5 +18,5 @@ upload_files() {
 }
 
 setup_git
-commit_built_tyr
+commit_built
 upload_files

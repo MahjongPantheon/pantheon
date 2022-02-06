@@ -114,7 +114,16 @@ RUN if [[ -z "$NO_XDEBUG" ]] ; then echo -ne "zend_extension=xdebug.so\n \
           xdebug.client_port=9001\n" > /etc/php7/conf.d/50_xdebug.ini ; \
     fi
 
-RUN apk add --update rust cargo
+# ------------ Local user init (for make & build tasks) --------
+# Create user (workaround against too big uids)
+RUN echo "user:x:${LOCAL_USER_ID:9001}:${LOCAL_USER_ID:9001}::/home/user:" >> /etc/passwd
+## thanks for http://stackoverflow.com/a/1094354/535203 to compute the creation date
+RUN echo "user:!:$(($(date +%s) / 60 / 60 / 24)):0:99999:7:::" >> /etc/shadow
+RUN echo "user:x:${LOCAL_USER_ID:9001}:" >> /etc/group
+RUN mkdir /home/user && chown user: /home/user
+
+RUN apk add --update rustup build-base
+RUN HOME=/home/user gosu user rustup-init -y
 
 # Cleaning up
 RUN mkdir /www && \
