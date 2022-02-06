@@ -20,36 +20,9 @@
 
 import {EnvConfig} from "#/envConfig/interface";
 
-const defaultUrl = 'https://g.riichi.top/';
-let url: string;
-let guiFix: (src: string) => string;
-
-// TODO: make this more flexible; left as quick hack
-switch (window.location.host) {
-  case 'm1.mjtop.net':
-    url = 'http://api1.mjtop.net';
-    guiFix = (src: string) => src.replace(/gui\./ig, 'gui1.');
-    break;
-  case 'm2.mjtop.net':
-    url = 'http://api2.mjtop.net';
-    guiFix = (src: string) => src.replace(/gui\./ig, 'gui2.');
-    break;
-  case 'm3.mjtop.net':
-    url = 'http://api3.mjtop.net';
-    guiFix = (src: string) => src.replace(/gui\./ig, 'gui3.');
-    break;
-  case 'm4.mjtop.net':
-    url = 'http://api4.mjtop.net';
-    guiFix = (src: string) => src.replace(/gui\./ig, 'gui4.');
-    break;
-  default:
-    url = defaultUrl;
-    guiFix = (src: string) => src;
-}
-
 export const environment: EnvConfig = {
   production: true,
-  apiUrl: url,
+  apiUrl: 'https://g.riichi.top/',
   uaUrl: 'https://u.riichi.top/',
   guiUrl: 'https://r.riichi.top/',
   ratatoskUrl: 'wss://b.riichi.top/',
@@ -59,7 +32,7 @@ export const environment: EnvConfig = {
   idbLangKey: 'pantheon_currentLanguage',
   idbThemeKey: 'pantheon_currentTheme',
   cookieDomain: '.riichi.top',
-  guiFix: guiFix,
+  guiFix: (src: string) => src,
   metrikaId: 64318630,
 
   // Do not change this unless you really know what are you doing
