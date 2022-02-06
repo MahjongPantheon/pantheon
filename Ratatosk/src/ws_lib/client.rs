@@ -176,7 +176,10 @@ impl WebSocketClient {
           trace!("{:?} wrote all bytes; switching to reading", self.token);
           if let ClientState::Closing = self.state {
             trace!("{:?} closing connection", self.token);
-            self.socket.shutdown(Shutdown::Write).expect("Can't shutdown socket");
+            match self.socket.shutdown(Shutdown::Write) {
+              Ok(_) => {},
+              Err(_) => trace!("Can't shutdown socket: already closed")
+            }
           }
           self.interest.remove(EventSet::writable());
           self.interest.insert(EventSet::readable());

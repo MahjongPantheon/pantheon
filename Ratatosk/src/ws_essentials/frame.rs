@@ -295,6 +295,7 @@ impl BufferedFrameReader {
 #[derive(Debug, Clone)]
 pub struct Frame {
   header: FrameHeader,
+  #[allow(dead_code)]
   mask: Option<[u8; 4]>,
   payload: Vec<u8>,
 }
