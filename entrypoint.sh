@@ -1,20 +1,5 @@
 #!/bin/sh
 
-# ------------ Local user init (for make & build tasks) --------
-
-# Add local user
-# Either use the LOCAL_USER_ID if passed in at runtime or
-# fallback
-
-USER_ID=${LOCAL_USER_ID:-9001}
-
-# Create user (workaround against too big uids)
-echo "user:x:$USER_ID:$USER_ID::/home/user:" >> /etc/passwd
-## thanks for http://stackoverflow.com/a/1094354/535203 to compute the creation date
-echo "user:!:$(($(date +%s) / 60 / 60 / 24)):0:99999:7:::" >> /etc/shadow
-echo "user:x:$USER_ID:" >> /etc/group
-mkdir /home/user && chown user: /home/user
-
 export HOME=/home/user
 # yarn care
 mkdir /home/user/.yarn-cache
