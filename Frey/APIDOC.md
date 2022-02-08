@@ -61,6 +61,21 @@ Exceptions:
 * _EntityNotFoundException_ 
 * _\Exception_ 
 
+### me
+ Return information about person related to client token
+
+
+Parameters:
+* **$id** (_int_) 
+* **$clientSideToken** (_string_) 
+
+Returns: _array_ 
+
+Exceptions:
+* _EntityNotFoundException_ 
+* _AuthFailedException_ 
+* _\Exception_ 
+
 ### changePassword
  Change password when old password is known.
  Returns new client-side auth token on success

@@ -151,6 +151,40 @@ class AuthModel extends Model
     }
 
     /**
+     * Return information about person related to client token
+     *
+     * @param int $id
+     * @param string $clientSideToken
+     * @return array
+     * @throws EntityNotFoundException
+     * @throws AuthFailedException
+     * @throws \Exception
+     */
+    public function me(int $id, string $clientSideToken): array
+    {
+        $person = PersonPrimitive::findById($this->_db, [$id]);
+        if (empty($person)) {
+            throw new EntityNotFoundException('Requested person ID is not known to auth system', 405);
+        }
+
+        $person = $person[0];
+        if (!Model::checkPasswordQuick($clientSideToken, $person->getAuthHash())) {
+            throw new AuthFailedException('Invalid token', 405);
+        }
+
+        return [
+            'id' => $person->getId(),
+            'country' => $person->getCountry(),
+            'city' => $person->getCity(),
+            'email' => $person->getEmail(),
+            'phone' => $person->getPhone(),
+            'tenhou_id' => $person->getTenhouId(),
+            'groups' => $person->getGroupIds(),
+            'title' => $person->getTitle(),
+        ];
+    }
+
+    /**
      * Change password when old password is known.
      * Returns new client-side auth token on success, or throws exception on failure.
      *

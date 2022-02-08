@@ -34,6 +34,7 @@ return [
     'approveRegistration'  => ['AuthController', 'approveRegistration'],
     'authorize'            => ['AuthController', 'authorize'],
     'quickAuthorize'       => ['AuthController', 'quickAuthorize'],
+    'me'                   => ['AuthController', 'me'],
     'changePassword'       => ['AuthController', 'changePassword'],
     'requestResetPassword' => ['AuthController', 'requestResetPassword'],
     'approveResetPassword' => ['AuthController', 'approveResetPassword'],
