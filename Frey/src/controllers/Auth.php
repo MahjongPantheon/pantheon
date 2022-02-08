@@ -97,6 +97,24 @@ class AuthController extends Controller
     }
 
     /**
+     * Return information about person related to client token
+     *
+     * @param int $id
+     * @param string $clientSideToken
+     * @return array
+     * @throws EntityNotFoundException
+     * @throws AuthFailedException
+     * @throws \Exception
+     */
+    public function me($id, $clientSideToken)
+    {
+        $this->_logStart(__METHOD__, [$id, /*$clientSideToken*/'******']);
+        $result = $this->_getModel()->me($id, $clientSideToken);
+        $this->_logSuccess(__METHOD__, [$id, /*$clientSideToken*/'******']);
+        return $result;
+    }
+
+    /**
      * Change password when old password is known.
      * Returns new client-side auth token on success
      *
