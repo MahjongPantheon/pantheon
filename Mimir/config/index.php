@@ -49,7 +49,7 @@ return array_merge([
 
     // ---------- not intended for local override! ------------
     'api' => [
-        'version_major' => 1, // do not change this! Update your setup if version mismatches.
-        'version_minor' => 0
+        'version_major' => '1', // do not change this! Update your setup if version mismatches.
+        'version_minor' => '0'
     ]
 ], $locals);

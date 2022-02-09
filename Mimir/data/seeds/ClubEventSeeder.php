@@ -132,8 +132,8 @@ class ClubEventSeeder extends AbstractSeed
             'verbose'   => false,
             'verboseLog' => '',
             'api' => [
-                'version_major' => 1,
-                'version_minor' => 0
+                'version_major' => '1',
+                'version_minor' => '0'
             ]
         ]);
 
