@@ -267,12 +267,28 @@ class UserActionEventEdit extends Controller
             $checkedData['error_title'] = _t('Title must be at least 4 characters length');
         }
 
+        if (empty($data['titleEn'])) {
+            $checkedData['titleEn'] = $this->_transliterate($data['title']);
+        } else {
+            if (mb_strlen($data['titleEn']) < 4) {
+                $checkedData['error_titleEn'] = _t('Title must be at least 4 characters length');
+            } else {
+                $checkedData['titleEn'] = $data['titleEn'];
+            }
+        }
+
         $fieldsTypes = json_decode($checkedData['fields_json'], true);
         unset($checkedData['fields_json']);
 
         // Little sanitization and reforamtting
         if (empty($data['description'])) {
             $checkedData['description'] = '-';
+        }
+
+        if (empty($data['descriptionEn'])) {
+            $checkedData['descriptionEn'] = $this->_transliterate($data['description']);
+        } else {
+            $checkedData['descriptionEn'] = $data['description'];
         }
 
         if (empty($data['duration']) && !empty($data['isTournament'])) {
@@ -340,6 +356,8 @@ class UserActionEventEdit extends Controller
             $this->_typeMap[$this->_path['action']],
             $checkData['title'],
             $checkData['description'],
+            $checkData['titleEn'],
+            $checkData['descriptionEn'],
             $checkData['ruleset'],
             intval($checkData['duration'] ?? 0),
             $checkData['timezone'] ?? '',
@@ -378,6 +396,8 @@ class UserActionEventEdit extends Controller
             intval($this->_path['id']),
             $checkData['title'],
             $checkData['description'],
+            $checkData['titleEn'],
+            $checkData['descriptionEn'],
             $checkData['ruleset'],
             intval($checkData['duration'] ?? 0),
             $checkData['timezone'] ?? '',

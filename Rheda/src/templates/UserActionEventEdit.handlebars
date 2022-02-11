@@ -98,11 +98,35 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="titleEn">{{_t 'International title'}}</label>
+                    <input type="text" class="form-control{{#error_titleEn}} is-invalid{{/error_titleEn}}" id="titleEn"
+                           value="{{titleEn}}"
+                           name="titleEn">
+                    {{#error_titleEn}}
+                        <div class="invalid-feedback">{{error_titleEn}}</div>
+                    {{/error_titleEn}}
+                    {{^error_titleEn}}
+                        <small id="titleEnHelp" class="form-text text-muted">
+                            {{_t "Please enter title (in English) for this event with at least 4 characters. Leave this field empty for automatic transliteration. If primary title is already in English, it will be copied here automatically if this field is empty."}}
+                        </small>
+                    {{/error_titleEn}}
+                </div>
+
+                <div class="form-group">
                     <label for="description">{{_t 'Description'}}</label>
                     <textarea class="form-control" id="description"
                               name="description">{{description}}</textarea>
                     <small id="descriptionHelp" class="form-text text-muted">
                         {{_t "Enter short description. Markdown syntax is supported."}}
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="descriptionEn">{{_t 'International description'}}</label>
+                    <textarea class="form-control" id="descriptionEn"
+                              name="descriptionEn">{{descriptionEn}}</textarea>
+                    <small id="descriptionEnHelp" class="form-text text-muted">
+                        {{_t "Enter short description in English. Markdown syntax is supported. Leave this field empty for automatic transliteration. If primary description is already in English, it will be copied here automatically if this field is empty."}}
                     </small>
                 </div>
 

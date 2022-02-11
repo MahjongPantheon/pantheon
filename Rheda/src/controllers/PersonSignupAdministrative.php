@@ -77,6 +77,7 @@ class PersonSignupAdministrative extends Controller
             $data['email'],
             $data['password'],
             $data['title'],
+            $data['title_en'],
             $data['city'],
             $data['phone'],
             $data['tenhou_id'] ?? ''
@@ -94,6 +95,16 @@ class PersonSignupAdministrative extends Controller
 
         if (mb_strlen($data['title']) < 4) {
             $checkedData['error_title'] = _t('Player name must be at least 4 characters length. Please enter your real name (and surname).');
+        }
+
+        if (empty($data['title_en'])) {
+            $checkedData['title_en'] = $this->_transliterate($data['title']);
+        } else {
+            if (mb_strlen($data['title_en']) < 4) {
+                $checkedData['error_title_en'] = _t('Player name must be at least 4 characters length. Please enter your real name (and surname).');
+            } else {
+                $checkedData['title_en'] = $data['title_en'];
+            }
         }
 
         $emailSanitized = strtolower(trim($data['email']));

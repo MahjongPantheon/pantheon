@@ -36,6 +36,15 @@
                     {{/error_title}}
                 </div>
                 <div class="form-group">
+                    <label for="title_en">{{_t 'Person international name (in English)'}}</label>
+                    <input type="text" class="form-control{{#error_title_en}} is-invalid{{/error_title_en}}" id="title"
+                           value="{{title_en}}"
+                           name="title_en">
+                    {{#error_title_en}}
+                        <div class="invalid-feedback">{{error_title_en}}</div>
+                    {{/error_title_en}}
+                </div>
+                <div class="form-group">
                     <label for="email">{{_t 'E-mail address'}}</label>
                     <input type="text" class="form-control{{#error_email}} is-invalid{{/error_email}}"
                            id="email" name="email"

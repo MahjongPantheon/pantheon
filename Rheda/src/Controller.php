@@ -118,11 +118,6 @@ abstract class Controller
     protected $_frey;
 
     /**
-     * @var bool
-     */
-    protected $_useTranslit = false;
-
-    /**
      * Controller constructor.
      * @param string $url
      * @param string[] $path
@@ -166,11 +161,9 @@ abstract class Controller
             case 'de_CH':
             case 'de_LU':
                 $locale = 'de_DE.UTF-8';
-                $this->_useTranslit = true;
                 break;
             default:
                 $locale = 'en_US.UTF-8';
-                $this->_useTranslit = true;
         }
 
         if (setlocale(LC_ALL, $locale) === false) {
@@ -277,8 +270,6 @@ abstract class Controller
         if ($this->_beforeRun()) {
             $context = $this->_run();
 
-            $context = $this->_transliterate($context);
-
             $pageTitle = $this->_pageTitle(); // должно быть после run! чтобы могло использовать полученные данные
 
             $templateEngine = Templater::getInstance($this->_eventIdList);
@@ -324,22 +315,14 @@ abstract class Controller
     }
 
     /**
-     * @param string[] $data
-     * @return string[]
+     * @param string $data
+     * @return string
      */
-    protected function _transliterate(array $data)
+    protected function _transliterate(string $data)
     {
-        if (empty($data)) {
-            return $data;
-        }
-
-        if ($this->_useTranslit) {
-            $tr = \Transliterator::create('Cyrillic-Latin; Latin-ASCII');
-            if (!empty($tr)) {
-                array_walk_recursive($data, function (&$val, $index) use ($tr) {
-                    $val = $tr->transliterate($val);
-                });
-            }
+        $tr = \Transliterator::create('Cyrillic-Latin; Latin-ASCII');
+        if (!empty($tr)) {
+            $data = $tr->transliterate($data);
         }
         return $data;
     }
