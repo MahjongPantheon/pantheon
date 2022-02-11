@@ -263,6 +263,7 @@ class GroupsModel extends Model
                 'city' => $person->getCity(),
                 'tenhou_id' => $person->getTenhouId(),
                 'title' => $person->getTitle(),
+                'titleEn' => $person->getTitleEn(),
             ];
         }, $groups[0]->getPersons());
     }

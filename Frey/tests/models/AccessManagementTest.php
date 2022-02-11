@@ -103,6 +103,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
         $this->_authToken = $tokens['client_hash'];
         $this->_person = (new PersonPrimitive($this->_db))
             ->setTitle('Test person')
+            ->setTitleEn('Test person en')
             ->setEmail('test@test.com')
             ->setAuthHash($tokens['auth_hash'])
             ->setIsSuperadmin(true)

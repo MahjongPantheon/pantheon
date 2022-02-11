@@ -155,13 +155,14 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
 
         $title = 'testuser';
+        $titleEn = 'testuserEn';
         $city = 'testcity';
         $country = 'testcountry';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $success = $this->_client->execute('updatePersonalInfo', [
-            $userId, $title, $country, $city, $email, $phone, $tenhouId
+            $userId, $title, $titleEn, $country, $city, $email, $phone, $tenhouId
         ]);
         $this->assertInternalType('bool', $success);
 
@@ -170,6 +171,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($userId, $user[0]->getId());
         $this->assertEquals($email, $user[0]->getEmail());
         $this->assertEquals($title, $user[0]->getTitle());
+        $this->assertEquals($titleEn, $user[0]->getTitleEn());
         $this->assertEquals($city, $user[0]->getCity());
         $this->assertEquals($phone, $user[0]->getPhone());
         $this->assertEquals($tenhouId, $user[0]->getTenhouId());

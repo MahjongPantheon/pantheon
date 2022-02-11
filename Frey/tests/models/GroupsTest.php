@@ -52,6 +52,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
         $this->_meta = new Meta($_SERVER);
         $this->_person = (new PersonPrimitive($this->_db))
             ->setTitle('testPerson')
+            ->setTitleEn('testPersonEn')
             ->setEmail('test@email.com')
             ->setCity('test');
         $this->_person->save();
@@ -336,6 +337,7 @@ class GroupsModelTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, count($persons));
         $this->assertEquals($this->_person->getId(), $persons[0]['id']);
         $this->assertEquals($this->_person->getTitle(), $persons[0]['title']);
+        $this->assertEquals($this->_person->getTitleEn(), $persons[0]['titleEn']);
         $this->assertEquals($this->_person->getCity(), $persons[0]['city']);
         $this->assertEquals($this->_person->getTenhouId(), $persons[0]['tenhou_id']);
     }

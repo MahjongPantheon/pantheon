@@ -36,6 +36,7 @@ class PersonPrimitive extends Primitive
         'email'             => '_email',
         'phone'             => '_phone',
         'title'             => '_title',
+        'title_en'          => '_titleEn',
         'auth_hash'         => '_authHash',
         'auth_salt'         => '_authSalt',
         'auth_reset_token'  => '_authResetToken',
@@ -54,6 +55,7 @@ class PersonPrimitive extends Primitive
             '_email'    => $this->_stringTransform(),
             '_phone'    => $this->_stringTransform(),
             '_title'    => $this->_stringTransform(),
+            '_titleEn'  => $this->_stringTransform(),
             '_authHash' => $this->_stringTransform(),
             '_authSalt' => $this->_stringTransform(),
             '_authResetToken' => $this->_stringTransform(true),
@@ -87,10 +89,15 @@ class PersonPrimitive extends Primitive
      */
     protected $_phone;
     /**
-     * How person should be called across systems
+     * How person should be called across systems, localized
      * @var string
      */
     protected $_title;
+    /**
+     * How person should be called across systems, english transliteration
+     * @var string
+     */
+    protected $_titleEn;
     /**
      * Full stored password hash created as password_hash(client_side_token)
      * @var string
@@ -170,7 +177,7 @@ class PersonPrimitive extends Primitive
 
         $q = <<<QRY
             SELECT * FROM "person"
-            WHERE (to_tsvector('simple', coalesce(title, '')) @@ to_tsquery('simple', :query))
+            WHERE (to_tsvector('simple', title || ' ' || title_en) @@ to_tsquery('simple', :query))
             ORDER BY title LIMIT 10;
 QRY;
 
@@ -293,6 +300,24 @@ QRY;
     public function setTitle(string $title): PersonPrimitive
     {
         $this->_title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitleEn(): string
+    {
+        return $this->_titleEn;
+    }
+
+    /**
+     * @param string $titleEn
+     * @return PersonPrimitive
+     */
+    public function setTitleEn(string $titleEn): PersonPrimitive
+    {
+        $this->_titleEn = $titleEn;
         return $this;
     }
 

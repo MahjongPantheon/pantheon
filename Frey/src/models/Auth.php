@@ -86,6 +86,7 @@ class AuthModel extends Model
             ->setAuthSalt($reg[0]->getAuthSalt())
             ->setAuthHash($reg[0]->getAuthHash())
             ->setTitle($reg[0]->getEmail()) // temporary value
+            ->setTitleEn($reg[0]->getEmail()) // temporary value
             ->setDisabled(false);
 
         if (!$person->save()) {
@@ -181,6 +182,7 @@ class AuthModel extends Model
             'tenhou_id' => $person->getTenhouId(),
             'groups' => $person->getGroupIds(),
             'title' => $person->getTitle(),
+            'titleEn' => $person->getTitleEn(),
         ];
     }
 

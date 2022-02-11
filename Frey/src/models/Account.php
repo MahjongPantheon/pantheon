@@ -33,6 +33,7 @@ class AccountModel extends Model
      * @param string $email
      * @param string $password
      * @param string $title
+     * @param string $titleEn
      * @param string $city
      * @param string $phone
      * @param string|null $tenhouId
@@ -42,7 +43,7 @@ class AccountModel extends Model
      *
      * @throws InvalidParametersException
      */
-    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null, $superadmin = false): int
+    public function createAccount(string $email, string $password, string $title, string $titleEn, string $city, string $phone, $tenhouId = null, $superadmin = false): int
     {
         if (empty($email) || empty($password) || empty($title)) {
             throw new InvalidParametersException('Some of required fields are empty (email, password, title)', 401);
@@ -56,6 +57,7 @@ class AccountModel extends Model
         $tokens = $auth->makePasswordTokens($password);
         $person = (new PersonPrimitive($this->_db))
             ->setTitle($title)
+            ->setTitleEn($titleEn)
             ->setAuthHash($tokens['auth_hash'])
             ->setAuthSalt($tokens['salt'])
             ->setCity($city)
@@ -112,6 +114,7 @@ class AccountModel extends Model
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
+                'titleEn' => $person->getTitleEn(),
             ];
         }, $persons);
     }
@@ -121,6 +124,7 @@ class AccountModel extends Model
      *
      * @param string $id
      * @param string $title
+     * @param string $titleEn
      * @param string $country
      * @param string $city
      * @param string $email
@@ -130,7 +134,7 @@ class AccountModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePersonalInfo(string $id, string $title, string $country, string $city, string $email, string $phone, $tenhouId = null)
+    public function updatePersonalInfo(string $id, string $title, string $titleEn, string $country, string $city, string $email, string $phone, $tenhouId = null)
     {
         if (empty($this->_authorizedPerson) || $this->_authorizedPerson->getId() != $id) {
             $this->_checkAccessRights(InternalRules::UPDATE_PERSONAL_INFO);
@@ -155,6 +159,7 @@ class AccountModel extends Model
         }
 
         return $persons[0]->setTitle($title)
+            ->setTitleEn($titleEn)
             ->setCountry($country)
             ->setCity($city)
             ->setEmail($email)
@@ -184,6 +189,7 @@ class AccountModel extends Model
                 'city' => $person->getCity(),
                 'tenhou_id' => $person->getTenhouId(),
                 'title' => $person->getTitle(),
+                'titleEn' => $person->getTitleEn(),
             ];
         }, $persons);
     }
@@ -219,6 +225,7 @@ class AccountModel extends Model
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
+                'titleEn' => $person->getTitleEn(),
             ];
         }, $persons);
     }

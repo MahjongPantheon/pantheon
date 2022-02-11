@@ -34,6 +34,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPerson = new PersonPrimitive($this->_db);
         $newPerson
             ->setTitle('person1')
+            ->setTitleEn('person1_en')
             ->setEmail('test@mail.com')
             ->setAuthSalt('testsalt')
             ->setAuthHash('testhash')
@@ -43,6 +44,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setTenhouId('testtenhou');
 
         $this->assertEquals('person1', $newPerson->getTitle());
+        $this->assertEquals('person1_en', $newPerson->getTitleEn());
         $this->assertEquals('test@mail.com', $newPerson->getEmail());
         $this->assertEquals('testsalt', $newPerson->getAuthSalt());
         $this->assertEquals('testhash', $newPerson->getAuthHash());
@@ -64,6 +66,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPerson = new PersonPrimitive($this->_db);
         $newPerson
             ->setTitle('person1')
+            ->setTitleEn('person1_en')
             ->setEmail('test@mail.com')
             ->setCity('testcity')
             ->setPhone('testphone')
@@ -73,6 +76,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $personCopy = PersonPrimitive::findById($this->_db, [$newPerson->getId()]);
         $this->assertEquals(1, count($personCopy));
         $this->assertEquals('person1', $personCopy[0]->getTitle());
+        $this->assertEquals('person1_en', $personCopy[0]->getTitleEn());
         $this->assertTrue($newPerson !== $personCopy[0]); // different objects!
     }
 
@@ -84,6 +88,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPerson = new PersonPrimitive($this->_db);
         $newPerson
             ->setTitle('person1')
+            ->setTitleEn('person1_en')
             ->setEmail('test@mail.com')
             ->setCity('testcity')
             ->setPhone('testphone')
@@ -93,6 +98,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $personCopy = PersonPrimitive::findByTenhouId($this->_db, [$newPerson->getTenhouId()]);
         $this->assertEquals(1, count($personCopy));
         $this->assertEquals('person1', $personCopy[0]->getTitle());
+        $this->assertEquals('person1_en', $personCopy[0]->getTitleEn());
         $this->assertTrue($newPerson !== $personCopy[0]); // different objects!
     }
 
@@ -104,6 +110,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPerson = new PersonPrimitive($this->_db);
         $newPerson
             ->setTitle('person1')
+            ->setTitleEn('person1_en')
             ->setEmail('test@mail.com')
             ->setCity('testcity')
             ->setPhone('testphone')
@@ -113,6 +120,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $personCopy = PersonPrimitive::findByEmail($this->_db, [$newPerson->getEmail()]);
         $this->assertEquals(1, count($personCopy));
         $this->assertEquals('person1', $personCopy[0]->getTitle());
+        $this->assertEquals('person1_en', $personCopy[0]->getTitleEn());
         $this->assertTrue($newPerson !== $personCopy[0]); // different objects!
     }
 
@@ -121,6 +129,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPerson = new PersonPrimitive($this->_db);
         $newPerson
             ->setTitle('person1')
+            ->setTitleEn('person1_en')
             ->setEmail('test@mail.com')
             ->setCity('testcity')
             ->setPhone('testphone')
@@ -136,6 +145,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPerson = new PersonPrimitive($this->_db);
         $newPerson
             ->setTitle('person1')
+            ->setTitleEn('person1')
             ->setEmail('test@mail.com')
             ->setCity('testcity')
             ->setPhone('testphone')
@@ -151,6 +161,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPerson = new PersonPrimitive($this->_db);
         $newPerson
             ->setTitle('person1')
+            ->setTitleEn('english1')
             ->setEmail('test@mail.com')
             ->setCity('testcity')
             ->setPhone('testphone')
@@ -160,7 +171,14 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $personCopy = PersonPrimitive::findByTitleFuzzy($this->_db, 'pers');
         $this->assertEquals(1, count($personCopy));
         $this->assertEquals('person1', $personCopy[0]->getTitle());
+        $this->assertEquals('english1', $personCopy[0]->getTitleEn());
         $this->assertTrue($newPerson !== $personCopy[0]); // different objects!
+
+        $personCopy2 = PersonPrimitive::findByTitleFuzzy($this->_db, 'engl');
+        $this->assertEquals(1, count($personCopy2));
+        $this->assertEquals('person1', $personCopy2[0]->getTitle());
+        $this->assertEquals('english1', $personCopy2[0]->getTitleEn());
+        $this->assertTrue($newPerson !== $personCopy2[0]); // different objects!
     }
 
     /**
@@ -171,6 +189,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPerson = new PersonPrimitive($this->_db);
         $newPerson
             ->setTitle('person1')
+            ->setTitleEn('person1_en')
             ->setEmail('test@mail.com')
             ->setCity('testcity')
             ->setPhone('testphone')
@@ -178,10 +197,14 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->save();
 
         $personCopy = PersonPrimitive::findById($this->_db, [$newPerson->getId()]);
-        $personCopy[0]->setTitle('anotherperson')->save();
+        $personCopy[0]
+            ->setTitle('anotherperson')
+            ->setTitleEn('anotherperson_en')
+            ->save();
 
         $anotherPersonCopy = PersonPrimitive::findById($this->_db, [$newPerson->getId()]);
         $this->assertEquals('anotherperson', $anotherPersonCopy[0]->getTitle());
+        $this->assertEquals('anotherperson_en', $anotherPersonCopy[0]->getTitleEn());
     }
 
     /**
@@ -200,6 +223,7 @@ class PersonPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPerson = new PersonPrimitive($this->_db);
         $newPerson
             ->setTitle('person1')
+            ->setTitleEn('person1')
             ->setEmail('test@mail.com')
             ->setCity('testcity')
             ->setPhone('testphone')

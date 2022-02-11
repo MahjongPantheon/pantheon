@@ -31,7 +31,11 @@ class PersonAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
     {
         $this->_db = Db::__getCleanTestingInstance();
         $this->_person = new PersonPrimitive($this->_db);
-        $this->_person->setTitle('test')->setEmail('test@test.com')->save();
+        $this->_person
+            ->setTitle('test')
+            ->setTitleEn('test')
+            ->setEmail('test@test.com')
+            ->save();
     }
 
     /**

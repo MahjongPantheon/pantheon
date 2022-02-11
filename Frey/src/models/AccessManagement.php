@@ -193,6 +193,9 @@ class AccessManagementModel extends Model
                 'ownerTitle' => $rule instanceof PersonAccessPrimitive // TODO: db query inside loop, can be improved
                     ? $rule->getPerson()->getTitle()
                     : $rule->getGroup()->getTitle(),
+                'ownerTitleEn' => $rule instanceof PersonAccessPrimitive // TODO: db query inside loop, can be improved
+                    ? $rule->getPerson()->getTitleEn()
+                    : $rule->getGroup()->getTitle(), // TODO: english group names
                 'allowed_values' => $rule->getAllowedValues()
             ];
         };

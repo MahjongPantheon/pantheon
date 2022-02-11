@@ -92,6 +92,7 @@ class GroupPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newPerson = new PersonPrimitive($this->_db);
         $newPerson
             ->setTitle('person1')
+            ->setTitleEn('person1En')
             ->setEmail('test@mail.com')
             ->setCity('testcity')
             ->setPhone('testphone')
