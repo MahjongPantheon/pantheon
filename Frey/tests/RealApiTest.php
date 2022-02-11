@@ -185,13 +185,14 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
 
         $title = 'testuser';
+        $titleEn = 'testuserEn';
         $city = 'testcity';
         $country = 'testcountry';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $this->_client->execute('updatePersonalInfo', [
-            $userId, $title, $country, $city, $email, $phone, $tenhouId
+            $userId, $title, $titleEn, $country, $city, $email, $phone, $tenhouId
         ]);
 
         $response = $this->_client->execute('getPersonalInfo', [[$userId]]);
@@ -203,6 +204,8 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $response[0]['email']);
         $this->assertEquals($title, $response[0]['title']);
         $this->assertInternalType('string', $response[0]['title']);
+        $this->assertEquals($titleEn, $response[0]['title_en']);
+        $this->assertInternalType('string', $response[0]['title_en']);
         $this->assertEquals($city, $response[0]['city']);
         $this->assertInternalType('string', $response[0]['city']);
         $this->assertEquals($phone, $response[0]['phone']);
@@ -221,13 +224,14 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
 
         $title = 'newtestuser';
+        $titleEn = 'newtestuserEn';
         $city = 'testcity';
         $country = 'testcountry';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $this->_client->execute('updatePersonalInfo', [
-            $userId, $title, $country, $city, $email, $phone, $tenhouId
+            $userId, $title, $titleEn, $country, $city, $email, $phone, $tenhouId
         ]);
 
         $response = $this->_client->execute('findByTitle', ['new']);
@@ -251,12 +255,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '1234test!5678';
         $title = 'testuser';
+        $titleEn = 'testuser_en';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
         $this->assertInternalType('int', $userId);
@@ -365,12 +370,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '12345678';
         $title = 'testuser';
+        $titleEn = 'testuser_en';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
 
@@ -403,12 +409,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '12345678';
         $title = 'testuser';
+        $titleEn = 'testuser_en';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
 
@@ -436,12 +443,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '12345678';
         $title = 'testuser';
+        $titleEn = 'testuser';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
 
@@ -464,12 +472,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '12345678';
         $title = 'testuser';
+        $titleEn = 'testuser';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
 
@@ -504,12 +513,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '1234test!5678';
         $title = 'testuser';
+        $titleEn = 'testuserEn';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
         $eventId = self::CURRENT_EVENT_ID;
@@ -565,12 +575,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '1234test!5678';
         $title = 'testuser';
+        $titleEn = 'testuserEn';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
         $eventId = self::CURRENT_EVENT_ID;
@@ -630,12 +641,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '1234test!5678';
         $title = 'testuser';
+        $titleEn = 'testuser_en';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
         $eventId = self::CURRENT_EVENT_ID;
@@ -685,12 +697,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '1234test!5678';
         $title = 'testuser';
+        $titleEn = 'testuser_en';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
         $eventId = self::CURRENT_EVENT_ID;
@@ -756,12 +769,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '1234test!5678';
         $title = 'testuser';
+        $titleEn = 'testuser_en';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
         $eventId = self::CURRENT_EVENT_ID;
@@ -808,12 +822,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '1234test!5678';
         $title = 'testuser';
+        $titleEn = 'testuser_en';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
         $eventId = self::CURRENT_EVENT_ID;
@@ -856,12 +871,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '1234test!5678';
         $title = 'testuser';
+        $titleEn = 'testuser_en';
         $city = 'testcity';
         $phone = '123-456-7890';
         $tenhouId = 'testid';
 
         $userId = $this->_client->execute('createAccount', [
-            $email, $password, $title,
+            $email, $password, $title, $titleEn,
             $city, $phone, $tenhouId
         ]);
         $eventId = self::CURRENT_EVENT_ID;

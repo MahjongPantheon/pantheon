@@ -62,6 +62,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
             ->setTitle('title')
             ->setTitleEn('title')
             ->setTimezone('UTC')
+            ->setDescription('desc')
             ->setDescriptionEn('desc')
             ->setUsePenalty(1)
             ->setRuleset(\Common\Ruleset::instance('jpmlA'));

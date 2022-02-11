@@ -31,18 +31,19 @@ class PersonsController extends Controller
      * @param string $email
      * @param string $password
      * @param string $title
+     * @param string $titleEn
      * @param string $city
      * @param string $phone
      * @param string $tenhouId
      * @return int  new account id
      * @throws \Exception
      */
-    public function createAccount($email, $password, $title, $city, $phone, $tenhouId)
+    public function createAccount($email, $password, $title, $titleEn, $city, $phone, $tenhouId)
     {
-        $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $city, /*$phone*/'******', $tenhouId]);
+        $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $titleEn, $city, /*$phone*/'******', $tenhouId]);
         $personId = $this->_getAccountModel()
-            ->createAccount($email, $password, $title, $city, $phone, $tenhouId);
-        $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $city, /*$phone*/'******', $tenhouId]);
+            ->createAccount($email, $password, $title, $titleEn, $city, $phone, $tenhouId);
+        $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $titleEn, $city, /*$phone*/'******', $tenhouId]);
         return $personId;
     }
 
@@ -81,6 +82,7 @@ class PersonsController extends Controller
     /**
      * @param string $id
      * @param string $title
+     * @param string $titleEn
      * @param string $country
      * @param string $city
      * @param string $email
@@ -90,11 +92,11 @@ class PersonsController extends Controller
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePersonalInfo($id, $title, $country, $city, $email, $phone, $tenhouId)
+    public function updatePersonalInfo($id, $title, $titleEn, $country, $city, $email, $phone, $tenhouId)
     {
-        $this->_logStart(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
-        $success = $this->_getAccountModel()->updatePersonalInfo($id, $title, $country, $city, $email, $phone, $tenhouId);
-        $this->_logSuccess(__METHOD__, [$id, $title, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
+        $this->_logStart(__METHOD__, [$id, $title, $titleEn, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
+        $success = $this->_getAccountModel()->updatePersonalInfo($id, $title, $titleEn, $country, $city, $email, $phone, $tenhouId);
+        $this->_logSuccess(__METHOD__, [$id, $title, $titleEn, $city, $this->_depersonalizeEmail($email), /*$phone*/'******', $tenhouId]);
         return $success;
     }
 

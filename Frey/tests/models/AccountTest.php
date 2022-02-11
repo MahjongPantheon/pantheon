@@ -123,6 +123,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'test@email.com',
             'passwd',
             'test',
+            'test_en',
             'testcity',
             '111-111-111',
             'tid'
@@ -144,6 +145,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             '',
             'passwd',
             'test',
+            'test_en',
             'testcity',
             '111-111-111',
             'tid'
@@ -162,6 +164,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'test@email.com',
             '',
             'test',
+            'test_en',
             'testcity',
             '111-111-111',
             'tid'
@@ -180,6 +183,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'test@email.com',
             'passwd',
             '',
+            'test_en',
             'testcity',
             '111-111-111',
             'tid'
@@ -198,6 +202,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'testbademail.com',
             'passwd',
             'test',
+            'test_en',
             'testcity',
             '111-111-111',
             'tid'
@@ -214,6 +219,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'test@email.com',
             'passwd',
             'test',
+            'test_en',
             'testcity',
             '111-111-111',
             'tid'
@@ -283,6 +289,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'test@email.com',
             'passwd',
             'test',
+            'test_en',
             'testcity',
             '111-111-111',
             'tid'
@@ -327,6 +334,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'test@email.com',
             'passwd',
             'test',
+            'test_en',
             'testcity',
             '111-111-111',
             'tid'
@@ -334,6 +342,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $success = $model->updatePersonalInfo(
             $personId,
             'test2',
+            'test2_en',
             'testcountry2',
             'testcity2',
             'test2@email.com',
@@ -346,6 +355,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
 //        $this->assertEquals('test2@email.com', $data[0]['email']);
 //        $this->assertEquals('222-222-222', $data[0]['phone']);
         $this->assertEquals('test2', $data[0]['title']);
+        $this->assertEquals('test2_en', $data[0]['title_en']);
         $this->assertEquals('tid2', $data[0]['tenhou_id']);
         $this->assertEquals($personId, $data[0]['id']);
     }
@@ -403,6 +413,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'test@email.com',
             'passwd',
             'test',
+            'test_en',
             'testcity',
             '111-111-111',
             'tid'
@@ -410,6 +421,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $model->updatePersonalInfo(
             $personId,
             '',
+            'test_en',
             'testcountry2',
             'testcity2',
             'test2@email.com',
@@ -431,6 +443,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'test@email.com',
             'passwd',
             'test',
+            'test_en',
             'testcity',
             '111-111-111',
             'tid'
@@ -438,6 +451,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $model->updatePersonalInfo(
             $personId,
             'test2',
+            'test2_en',
             'testcountry2',
             'testcity2',
             '',
@@ -459,6 +473,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'test@email.com',
             'passwd',
             'test',
+            'test_en',
             'testcity',
             '111-111-111',
             'tid'
@@ -466,6 +481,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $model->updatePersonalInfo(
             $personId,
             'test2',
+            'test2_en',
             'testcountry2',
             'testcity2',
             'test2bademail.com',
@@ -485,6 +501,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'test@email.com',
             'passwd',
             'easyfindableperson',
+            'easyfindableperson_en',
             'testcity',
             '111-111-111',
             'tid'
