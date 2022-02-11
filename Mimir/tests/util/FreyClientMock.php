@@ -88,7 +88,7 @@ class FreyClientMock implements IFreyClient
         // TODO: Implement getRuleValue() method.
     }
 
-    public function updatePersonalInfo(string $id, string $title, string $city, string $country, string $email, string $phone, string $tenhouId): bool
+    public function updatePersonalInfo(string $id, string $title, string $titleEn, string $city, string $country, string $email, string $phone, string $tenhouId): bool
     {
         // TODO: Implement updatePersonalInfo() method.
         return true;
@@ -208,7 +208,7 @@ class FreyClientMock implements IFreyClient
         return true;
     }
 
-    public function createAccount(string $email, string $password, string $title, string $city, string $phone, string $tenhouId): int
+    public function createAccount(string $email, string $password, string $title, string $titleEn, string $city, string $phone, string $tenhouId): int
     {
         // TODO: Implement createAccount() method.
         return 0;
@@ -283,6 +283,12 @@ class FreyClientMock implements IFreyClient
     public function getAllEventRules(int $eventId): array
     {
         // TODO: Implement getAllEventRules() method.
+        return [];
+    }
+
+    public function me(int $id, string $clientSideToken): array
+    {
+        // TODO: Implement me() method.
         return [];
     }
 }

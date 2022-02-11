@@ -238,6 +238,8 @@ interface IMimirClient
      * @param string $type
      * @param string $title
      * @param string $description
+     * @param string $titleEn
+     * @param string $descriptionEn
      * @param string $ruleset
      * @param int $gameDuration
      * @param string $timezone
@@ -249,7 +251,7 @@ interface IMimirClient
      * @param string $rulesetChangesJson
      * @return int
     */
-    public function createEvent(string $type, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): int;
+    public function createEvent(string $type, string $title, string $description, string $titleEn, string $descriptionEn, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): int;
 
     /**
      *  Update settings of existing event
@@ -257,6 +259,8 @@ interface IMimirClient
      * @param int $id
      * @param string $title
      * @param string $description
+     * @param string $titleEn
+     * @param string $descriptionEn
      * @param string $ruleset
      * @param int $gameDuration
      * @param string $timezone
@@ -268,7 +272,7 @@ interface IMimirClient
      * @param string $rulesetChangesJson
      * @return bool
     */
-    public function updateEvent(int $id, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): bool;
+    public function updateEvent(int $id, string $title, string $description, string $titleEn, string $descriptionEn, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): bool;
 
     /**
      *  Finish event

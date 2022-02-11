@@ -55,6 +55,15 @@ interface IFreyClient
     public function quickAuthorize(int $id, string $clientSideToken): bool;
 
     /**
+     *  Return information about person related to client token
+     *
+     * @param int $id
+     * @param string $clientSideToken
+     * @return array
+    */
+    public function me(int $id, string $clientSideToken): array;
+
+    /**
      *  Change password when old password is known.
      *  Returns new client-side auth token on success
      *
@@ -115,6 +124,7 @@ interface IFreyClient
     /**
      * @param string $id
      * @param string $title
+     * @param string $titleEn
      * @param string $country
      * @param string $city
      * @param string $email
@@ -122,7 +132,7 @@ interface IFreyClient
      * @param string $tenhouId
      * @return bool
     */
-    public function updatePersonalInfo(string $id, string $title, string $country, string $city, string $email, string $phone, string $tenhouId): bool;
+    public function updatePersonalInfo(string $id, string $title, string $titleEn, string $country, string $city, string $email, string $phone, string $tenhouId): bool;
 
     /**
      *  Get personal info by id list.
@@ -330,12 +340,13 @@ interface IFreyClient
      * @param string $email
      * @param string $password
      * @param string $title
+     * @param string $titleEn
      * @param string $city
      * @param string $phone
      * @param string $tenhouId
      * @return int
     */
-    public function createAccount(string $email, string $password, string $title, string $city, string $phone, string $tenhouId): int;
+    public function createAccount(string $email, string $password, string $title, string $titleEn, string $city, string $phone, string $tenhouId): int;
 
     /**
      *  Create new group in admin interface
