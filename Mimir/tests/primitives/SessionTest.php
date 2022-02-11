@@ -45,7 +45,9 @@ class SessionPrimitiveTest extends \PHPUnit\Framework\TestCase
 
         $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
+            ->setTitleEn('title')
             ->setDescription('desc')
+            ->setDescriptionEn('desc')
             ->setTimezone('UTC')
             ->setRuleset(\Common\Ruleset::instance('jpmlA'));
         $this->_event->save();

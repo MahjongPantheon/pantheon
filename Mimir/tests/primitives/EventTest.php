@@ -38,7 +38,9 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newEvent = new EventPrimitive($this->_ds);
         $newEvent
             ->setTitle('event1')
+            ->setTitleEn('event1_en')
             ->setDescription('eventdesc1')
+            ->setDescriptionEn('eventdesc1_en')
             ->setIsOnline(1)
             ->setTimezone('UTC')
             ->setAllowPlayerAppend(0)
@@ -49,6 +51,8 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals('event1', $newEvent->getTitle());
         $this->assertEquals('eventdesc1', $newEvent->getDescription());
+        $this->assertEquals('event1_en', $newEvent->getTitleEn());
+        $this->assertEquals('eventdesc1_en', $newEvent->getDescriptionEn());
         $this->assertEquals(1, $newEvent->getIsOnline());
         $this->assertEquals(1, $newEvent->getAutoSeating());
         $this->assertEquals(1, $newEvent->getSortByGames());
@@ -66,7 +70,9 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newEvent = new EventPrimitive($this->_ds);
         $newEvent
             ->setTitle('event1')
+            ->setTitleEn('event1')
             ->setDescription('eventdesc1')
+            ->setDescriptionEn('eventdesc1')
             ->setTimezone('UTC')
             ->setRuleset(\Common\Ruleset::instance('jpmlA'))
             ->save();
@@ -82,7 +88,9 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newEvent = new EventPrimitive($this->_ds);
         $newEvent
             ->setTitle('event1')
+            ->setTitleEn('event1')
             ->setDescription('eventdesc1')
+            ->setDescriptionEn('eventdesc1')
             ->setTimezone('UTC')
             ->setRuleset(\Common\Ruleset::instance('jpmlA'))
             ->setLobbyId(123)
@@ -99,15 +107,19 @@ class EventPrimitiveTest extends \PHPUnit\Framework\TestCase
         $newEvent = new EventPrimitive($this->_ds);
         $newEvent
             ->setTitle('event1')
+            ->setTitleEn('event1')
             ->setDescription('eventdesc1')
+            ->setDescriptionEn('eventdesc1')
             ->setTimezone('UTC')
             ->setRuleset(\Common\Ruleset::instance('jpmlA'))
             ->save();
 
         $eventCopy = EventPrimitive::findById($this->_ds, [$newEvent->getId()]);
         $eventCopy[0]->setDescription('someanotherdesc')->save();
+        $eventCopy[0]->setDescriptionEn('someanotherdescEn')->save();
 
         $anotherEventCopy = EventPrimitive::findById($this->_ds, [$newEvent->getId()]);
         $this->assertEquals('someanotherdesc', $anotherEventCopy[0]->getDescription());
+        $this->assertEquals('someanotherdescEn', $anotherEventCopy[0]->getDescriptionEn());
     }
 }

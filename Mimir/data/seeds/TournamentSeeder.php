@@ -42,7 +42,9 @@ class TournamentSeeder extends AbstractSeed
     {
         $event = (new \Mimir\EventPrimitive($ds))
             ->setTitle('title')
+            ->setTitleEn('title_en')
             ->setDescription('desc')
+            ->setDescriptionEn('desc_en')
             ->setTimezone('Europe/Moscow')
             ->setAllowPlayerAppend(0)
             ->setAutoSeating(1)

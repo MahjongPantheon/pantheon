@@ -40,7 +40,9 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
             ->setRuleset(\Common\Ruleset::instance('ema')) // TODO: why 'tenhounet' rules fail? o_0
             ->setTimezone('UTC')
             ->setTitle('test')
+            ->setTitleEn('test')
             ->setDescription('test')
+            ->setDescriptionEn('test')
             ->setUseTimer(1)
             ->setAllowPlayerAppend(0)
             ->setGameDuration(1); // for timers check

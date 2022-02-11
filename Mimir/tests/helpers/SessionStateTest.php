@@ -57,8 +57,10 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
         $this->_ds = DataSource::__getCleanTestingInstance();
         $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
+            ->setTitleEn('title')
             ->setTimezone('UTC')
             ->setDescription('desc')
+            ->setDescriptionEn('desc')
             ->setRuleset(\Common\Ruleset::instance('jpmlA'));
         $this->_event->save();
 

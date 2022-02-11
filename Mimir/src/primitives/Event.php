@@ -37,6 +37,8 @@ class EventPrimitive extends Primitive
         'id'                => '_id',
         'title'             => '_title',
         'description'       => '_description',
+        'title_en'          => '_titleEn',
+        'description_en'    => '_descriptionEn',
         'start_time'        => '_startTime',
         'end_time'          => '_endTime',
         'game_duration'     => '_gameDuration',
@@ -127,6 +129,16 @@ class EventPrimitive extends Primitive
      * @var string
      */
     protected $_description;
+    /**
+     * Event title (english)
+     * @var string
+     */
+    protected $_titleEn;
+    /**
+     * Event description (english)
+     * @var string
+     */
+    protected $_descriptionEn;
     /**
      * Start date and time
      * @var string
@@ -320,6 +332,24 @@ class EventPrimitive extends Primitive
     }
 
     /**
+     * @param string $descriptionEn
+     * @return EventPrimitive
+     */
+    public function setDescriptionEn($descriptionEn)
+    {
+        $this->_descriptionEn = $descriptionEn;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescriptionEn()
+    {
+        return $this->_descriptionEn;
+    }
+
+    /**
      * @param string $description
      * @return EventPrimitive
      */
@@ -508,6 +538,24 @@ class EventPrimitive extends Primitive
     public function getStartTime()
     {
         return $this->_startTime;
+    }
+
+    /**
+     * @param string $titleEn
+     * @return EventPrimitive
+     */
+    public function setTitleEn($titleEn)
+    {
+        $this->_titleEn = $titleEn;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitleEn()
+    {
+        return $this->_titleEn;
     }
 
     /**

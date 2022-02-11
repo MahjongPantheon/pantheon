@@ -80,9 +80,11 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
         $this->_meta = new Meta($this->_ds->remote(), $this->_config, $_SERVER);
         $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
+            ->setTitleEn('title')
             ->setTimezone('UTC')
             ->setIsOnline(1)
             ->setDescription('desc')
+            ->setDescriptionEn('desc')
             ->setLobbyId('1111')
             ->setAllowPlayerAppend(1)
             ->setRuleset(\Common\Ruleset::instance('tenhounet'));
@@ -168,8 +170,10 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
     {
         $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
+            ->setTitleEn('title')
             ->setTimezone('UTC')
             ->setDescription('desc')
+            ->setDescriptionEn('desc')
             ->setIsOnline(1)
             ->setLobbyId('1111')
             ->setAllowPlayerAppend(1)

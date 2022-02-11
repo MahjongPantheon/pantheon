@@ -52,8 +52,10 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
 
         $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
+            ->setTitleEn('title')
             ->setTimezone('UTC')
             ->setDescription('desc')
+            ->setDescriptionEn('desc')
             ->setLobbyId('0')
             ->setRuleset(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();

@@ -62,8 +62,10 @@ class GamesSeriesTest extends \PHPUnit\Framework\TestCase
         $this->_meta = new Meta($this->_ds->remote(), $this->_config, $_SERVER);
         $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
+            ->setTitleEn('title')
             ->setTimezone('UTC')
             ->setDescription('desc')
+            ->setDescriptionEn('desc')
             ->setSeriesLength(5)
             ->setRuleset(\Common\Ruleset::instance('ema'));
         $this->_event->save();
