@@ -100,7 +100,12 @@ class FreyClientMock implements IFreyClient
             return $id < 1000;
         });
         return array_map(function ($id) {
-            return ['id' => $id, 'title' => 'player' . $id, 'tenhou_id' => 'player' . $id];
+            return [
+                'id' => $id,
+                'title' => 'player' . $id,
+                'titleEn' => 'playerEn' . $id,
+                'tenhou_id' => 'player' . $id
+            ];
         }, $ids);
     }
 
@@ -114,7 +119,12 @@ class FreyClientMock implements IFreyClient
             if (strpos($id, 'player') !== 0) {
                 return null;
             }
-            return ['id' => intval(str_replace('player', '', $id)), 'title' => $id, 'tenhou_id' => $id];
+            return [
+                'id' => intval(str_replace('player', '', $id)),
+                'title' => 'player' . $id,
+                'titleEn' => 'playerEn' . $id,
+                'tenhou_id' => $id
+            ];
         }, $ids));
     }
 

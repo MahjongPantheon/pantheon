@@ -28,7 +28,7 @@ class RatingTable extends Controller
         return _t('Rating table') . ' - ' . $this->_getByLang(
             $this->_mainEventRules->eventTitleEn(),
             $this->_mainEventRules->eventTitle()
-        );;
+        );
     }
 
     /**

@@ -137,7 +137,7 @@ abstract class Controller
 
         // i18n support
         // first step is getting browser language
-        $this->_currentLocale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        $this->_currentLocale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']) ?: 'en_US.UTF-8';
 
         // second step is checking cookie
         if (isset($_COOKIE[Sysconf::COOKIE_LANG_KEY])) {
@@ -340,9 +340,9 @@ abstract class Controller
     {
         $tr = \Transliterator::create('Cyrillic-Latin; Latin-ASCII');
         if (!empty($tr)) {
-            $data = $tr->transliterate($data);
+            $translit = $tr->transliterate($data);
         }
-        return $data;
+        return empty($translit) ? $data : $translit;
     }
 
     /**

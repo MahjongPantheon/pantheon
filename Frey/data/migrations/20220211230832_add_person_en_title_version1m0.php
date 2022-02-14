@@ -1,5 +1,6 @@
 <?php
 // @codingStandardsIgnoreFile
+use Idiorm\IdiormResultSet;
 use Phinx\Migration\AbstractMigration;
 
 require_once __DIR__ . '/../../src/helpers/BootstrapAccess.php';
@@ -17,6 +18,24 @@ class AddPersonEnTitleVersion1m0 extends AbstractMigration
         /** @var $db \Frey\Db */
         [$db, $cfg] = $this->_getConnection();
         $db->rawExec("CREATE INDEX titlesearch_en_idx ON person USING GIN (to_tsvector('simple', title_en));");
+
+        /** @var IdiormResultSet $persons */
+        $persons = $db->table('person')->select('id')->select('title')->findMany();
+        /** @var \Idiorm\ORM $person */
+        foreach ($persons as $person) {
+            $person->set('title_en', $this->_transliterate($person->get('title')))->save();
+        }
+
+        $this->getAdapter()->commitTransaction();
+    }
+
+    protected function _transliterate(string $data)
+    {
+        $tr = \Transliterator::create('Cyrillic-Latin; Latin-ASCII');
+        if (!empty($tr)) {
+            $data = $tr->transliterate($data);
+        }
+        return $data;
     }
 
     protected function _getConnection()

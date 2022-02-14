@@ -286,13 +286,13 @@ class GameFormatter
                 'roundTypeNagashi'  => $round['outcome'] == 'nagashi',
 
                 'winnerName'        => isset($round['winner_id'])
-                    ? $this->_getTranslation($playersData[$round['winner_id']]['titleEn'] , $playersData[$round['winner_id']]['title'])
+                    ? $this->_getTranslation($playersData[$round['winner_id']]['titleEn'], $playersData[$round['winner_id']]['title'])
                     : null,
                 'loserName'         => isset($round['loser_id'])
-                    ? $this->_getTranslation($playersData[$round['loser_id']]['titleEn'] , $playersData[$round['loser_id']]['title'])
+                    ? $this->_getTranslation($playersData[$round['loser_id']]['titleEn'], $playersData[$round['loser_id']]['title'])
                     : null,
                 'paoPlayerName'     => !empty($round['pao_player_id'])
-                    ? $this->_getTranslation($playersData[$round['pao_player_id']]['titleEn'] , $playersData[$round['pao_player_id']]['title'])
+                    ? $this->_getTranslation($playersData[$round['pao_player_id']]['titleEn'], $playersData[$round['pao_player_id']]['title'])
                     : null,
                 'yakuList'          => $this->_formatYaku($round),
                 'doras'             => isset($round['dora']) ? $round['dora'] : null,
