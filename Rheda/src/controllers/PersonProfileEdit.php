@@ -108,7 +108,7 @@ class PersonProfileEdit extends Controller
         return $this->_frey->updatePersonalInfo(
             (string)$personId, // TODO: should be int, check
             $data['title'],
-            $data['title_en'],
+            $data['titleEn'],
             $data['country'],
             $data['city'],
             $data['email'],
@@ -131,13 +131,13 @@ class PersonProfileEdit extends Controller
             $checkedData['error_title'] = _t('Player name must be at least 4 characters length. Please enter your real name (and surname).');
         }
 
-        if (empty($data['title_en'])) {
-            $checkedData['title_en'] = $this->_transliterate($data['title']);
+        if (empty($data['titleEn'])) {
+            $checkedData['titleEn'] = $this->_transliterate($data['title']);
         } else {
-            if (mb_strlen($data['title_en']) < 4) {
-                $checkedData['error_title_en'] = _t('Player name must be at least 4 characters length. Please enter your real name (and surname).');
+            if (mb_strlen($data['titleEn']) < 4) {
+                $checkedData['error_titleEn'] = _t('Player name must be at least 4 characters length. Please enter your real name (and surname).');
             } else {
-                $checkedData['title_en'] = $data['title_en'];
+                $checkedData['titleEn'] = $data['titleEn'];
             }
         }
 

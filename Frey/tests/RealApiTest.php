@@ -204,8 +204,8 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $response[0]['email']);
         $this->assertEquals($title, $response[0]['title']);
         $this->assertInternalType('string', $response[0]['title']);
-        $this->assertEquals($titleEn, $response[0]['title_en']);
-        $this->assertInternalType('string', $response[0]['title_en']);
+        $this->assertEquals($titleEn, $response[0]['titleEn']);
+        $this->assertInternalType('string', $response[0]['titleEn']);
         $this->assertEquals($city, $response[0]['city']);
         $this->assertInternalType('string', $response[0]['city']);
         $this->assertEquals($phone, $response[0]['phone']);

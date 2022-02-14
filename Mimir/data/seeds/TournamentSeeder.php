@@ -45,6 +45,7 @@ class TournamentSeeder extends AbstractSeed
             ->setTitleEn('title_en')
             ->setDescription('desc')
             ->setDescriptionEn('desc_en')
+            ->setDefaultLanguage('ru')
             ->setTimezone('Europe/Moscow')
             ->setAllowPlayerAppend(0)
             ->setAutoSeating(1)
@@ -66,6 +67,7 @@ class TournamentSeeder extends AbstractSeed
                 'test' . $id . '@test.te',
                 'pwd',
                 'player' . $id,
+                'player_en' . $id,
                 'City of sin',
                 '123-123-123',
                 'TH' . $id

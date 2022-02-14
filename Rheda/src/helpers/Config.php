@@ -106,6 +106,14 @@ class Config
     /**
      * @var string
      */
+    protected $_eventTitleEn = '';
+    /**
+     * @var string
+     */
+    protected $_eventDescriptionEn = '';
+    /**
+     * @var string
+     */
     protected $_eventStatHost = '';
     /**
      * @var int
@@ -199,6 +207,10 @@ class Config
      * @var bool
      */
     protected $_isFinished = false;
+    /**
+     * @var string
+     */
+    protected $_defaultLanguage = 'en';
 
     /**
      * @var array
@@ -227,6 +239,9 @@ class Config
         'penaltyStep' => 1,
         'eventTitle' => 'Rheda',
         'eventDescription' => '',
+        'eventTitleEn' => 'Rheda',
+        'eventDescriptionEn' => '',
+        'defaultLanguage' => 'en',
         'eventStatHost' => '',
         'redZone' => 0,
         'yellowZone' => 0,
@@ -477,6 +492,20 @@ class Config
     /**
      * @return string
      */
+    public function eventTitleEn()
+    {
+        return $this->_eventTitleEn;
+    }
+    /**
+     * @return string
+     */
+    public function eventDescriptionEn()
+    {
+        return $this->_eventDescriptionEn;
+    }
+    /**
+     * @return string
+     */
     public function eventStatHost()
     {
         return $this->_eventStatHost;
@@ -642,5 +671,13 @@ class Config
     public function isPrescripted()
     {
         return $this->_isPrescripted;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultLanguage()
+    {
+        return $this->_defaultLanguage;
     }
 }

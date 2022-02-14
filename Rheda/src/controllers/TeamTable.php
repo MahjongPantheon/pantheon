@@ -76,6 +76,7 @@ class TeamTable extends Controller
                 if ($this->_mainEventRules->isTeam()) {
                     $teamName = $teamNames[$el['id']];
                 }
+                $el['title'] = $this->_getByLang($el['titleEn'], $el['title']);
                 $el['short_name'] = $this->_makeShortName($el['title']);
                 $el['team_name'] = $teamName;
                 return $el;

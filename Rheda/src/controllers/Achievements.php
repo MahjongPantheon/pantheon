@@ -27,7 +27,10 @@ class Achievements extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Achievements') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Achievements') . ' - ' . $this->_getByLang(
+            $this->_mainEventRules->eventTitleEn(),
+            $this->_mainEventRules->eventTitle()
+        );
     }
 
     protected function _run()

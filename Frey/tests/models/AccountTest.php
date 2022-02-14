@@ -355,7 +355,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
 //        $this->assertEquals('test2@email.com', $data[0]['email']);
 //        $this->assertEquals('222-222-222', $data[0]['phone']);
         $this->assertEquals('test2', $data[0]['title']);
-        $this->assertEquals('test2_en', $data[0]['title_en']);
+        $this->assertEquals('test2_en', $data[0]['titleEn']);
         $this->assertEquals('tid2', $data[0]['tenhou_id']);
         $this->assertEquals($personId, $data[0]['id']);
     }

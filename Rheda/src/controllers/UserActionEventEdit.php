@@ -50,6 +50,7 @@ class UserActionEventEdit extends Controller
         'duration' => 90,
         'seriesLength' => 0,
         'minGames' => 0,
+        'available_langs' => ['en', 'ru', 'de'],
         'isTeam' => false,
         'isPrescripted' => false,
     ];
@@ -358,6 +359,7 @@ class UserActionEventEdit extends Controller
             $checkData['description'],
             $checkData['titleEn'],
             $checkData['descriptionEn'],
+            $checkData['lang'],
             $checkData['ruleset'],
             intval($checkData['duration'] ?? 0),
             $checkData['timezone'] ?? '',
@@ -398,6 +400,7 @@ class UserActionEventEdit extends Controller
             $checkData['description'],
             $checkData['titleEn'],
             $checkData['descriptionEn'],
+            $checkData['lang'],
             $checkData['ruleset'],
             intval($checkData['duration'] ?? 0),
             $checkData['timezone'] ?? '',

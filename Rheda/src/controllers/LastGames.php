@@ -25,7 +25,10 @@ class LastGames extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Latest games') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Latest games') . ' - ' . $this->_getByLang(
+            $this->_mainEventRules->eventTitleEn(),
+            $this->_mainEventRules->eventTitle()
+        );
     }
 
     /**
@@ -56,7 +59,7 @@ class LastGames extends Controller
 
         $gamesData = $this->_mimir->getLastGames($this->_eventIdList, $limit, $offset, 'end_date', 'desc');
 
-        $formatter = new GameFormatter();
+        $formatter = new GameFormatter($this->_getByLang('international', 'localized'));
 
         $totalGames = $gamesData['total_games'];
         $start = $offset + 1;

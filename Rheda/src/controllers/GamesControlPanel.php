@@ -31,7 +31,10 @@ class GamesControlPanel extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Games control panel') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Games control panel') . ' - ' . $this->_getByLang(
+            $this->_mainEventRules->eventTitleEn(),
+            $this->_mainEventRules->eventTitle()
+        );
     }
 
     /**
@@ -88,7 +91,7 @@ class GamesControlPanel extends Controller
      */
     protected function _run(): array
     {
-        $formatter = new GameFormatter();
+        $formatter = new GameFormatter($this->_getByLang('international', 'localized'));
 
         if (count($this->_eventIdList) > 1) {
             return [

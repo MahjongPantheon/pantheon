@@ -25,7 +25,10 @@ class RatingTable extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Rating table') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Rating table') . ' - ' . $this->_getByLang(
+            $this->_mainEventRules->eventTitleEn(),
+            $this->_mainEventRules->eventTitle()
+        );;
     }
 
     /**
@@ -169,6 +172,7 @@ class RatingTable extends Controller
                 }
 
                 $el['_index'] = $ctr++;
+                $el['title'] = $this->_getByLang($el['titleEn'], $el['title']);
                 $el['short_name'] = $this->_makeShortName($el['title']);
                 $el['avg_place_less_precision'] = sprintf('%.2f', $el['avg_place']);
                 $el['avg_score_int'] = round($el['avg_score']);

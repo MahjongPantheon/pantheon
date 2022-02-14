@@ -41,9 +41,10 @@ class ClubEventSeeder extends AbstractSeed
     {
         $event = (new \Mimir\EventPrimitive($src))
             ->setTitle('title')
-            ->setTitleEn('title')
+            ->setTitleEn('title_en')
             ->setDescription('desc')
-            ->setDescriptionEn('desc')
+            ->setDescriptionEn('desc_en')
+            ->setDefaultLanguage('ru')
             ->setTimezone('Europe/Moscow')
             ->setAllowPlayerAppend(1)
             ->setAutoSeating(0)
@@ -68,6 +69,7 @@ class ClubEventSeeder extends AbstractSeed
                 'test' . $id . '@test.te',
                 'pwd',
                 'player' . $id,
+                'player_en' . $id,
                 'City of sin',
                 '123-123-123',
                 'TH' . $id

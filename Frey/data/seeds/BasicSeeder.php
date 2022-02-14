@@ -90,7 +90,7 @@ class BasicSeeder extends AbstractSeed
         $playersIds = [];
         for ($i = 0; $i < 3; $i++) {
             $id = $model->createAccount(
-                "admin{$i}@test.com", 'test', "Admin $i",
+                "admin{$i}@test.com", 'test', "Admin $i", "AdminEn $i",
                 'Moscow', '123-456-78-90', ''
             );
             $groupModel->addPersonToGroup($id, $groupIds['admins']);
@@ -98,7 +98,7 @@ class BasicSeeder extends AbstractSeed
         }
         for ($i = 0; $i < 6; $i++) {
             $id = $model->createAccount(
-                "leader{$i}@test.com", 'test', "Leader $i",
+                "leader{$i}@test.com", 'test', "Leader $i", "LeaderEn $i",
                 'Moscow', '123-456-78-90', ''
             );
             $groupModel->addPersonToGroup($id, $groupIds['leaders']);
@@ -106,7 +106,7 @@ class BasicSeeder extends AbstractSeed
         }
         for ($i = 0; $i < 36; $i++) {
             $id = $model->createAccount(
-                "player{$i}@test.com", 'test', "Player $i",
+                "player{$i}@test.com", 'test', "Player $i", "PlayerEn $i",
                 'Moscow', '123-456-78-90', ''
             );
             $groupModel->addPersonToGroup($id, $groupIds['players']);

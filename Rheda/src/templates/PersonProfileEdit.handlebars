@@ -58,16 +58,16 @@
         </div>
 
         <div class="form-group">
-          <label for="title_en">{{_t 'Player international name'}}</label>
-          <input type="text" class="form-control{{#error_title_en}} is-invalid{{/error_title_en}}" id="title_en"
-                 value="{{title_en}}"
-                 name="title_en">
-          {{#error_title_en}}
-            <div class="invalid-feedback">{{error_title_en}}</div>
-          {{/error_title_en}}
-          {{^error_title_en}}
-            <small id="title_enHelp" class="form-text text-muted">{{_t "Please enter your real name and surname (if you have it), in latin symbols only. Leave this field empty for automatic transliteration. If your name already has only latin symbols, it will be copied here automatically if this field is empty."}}</small>
-          {{/error_title_en}}
+          <label for="titleEn">{{_t 'Player international name'}}</label>
+          <input type="text" class="form-control{{#error_titleEn}} is-invalid{{/error_titleEn}}" id="titleEn"
+                 value="{{titleEn}}"
+                 name="titleEn">
+          {{#error_titleEn}}
+            <div class="invalid-feedback">{{error_titleEn}}</div>
+          {{/error_titleEn}}
+          {{^error_titleEn}}
+            <small id="titleEnHelp" class="form-text text-muted">{{_t "Please enter your real name and surname (if you have it), in latin symbols only. Leave this field empty for automatic transliteration. If your name already has only latin symbols, it will be copied here automatically if this field is empty."}}</small>
+          {{/error_titleEn}}
         </div>
 
         <div class="form-group">

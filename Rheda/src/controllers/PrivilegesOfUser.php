@@ -32,7 +32,10 @@ class PrivilegesOfUser extends Controller
         if (empty($this->_selectedPersonData)) {
             return _t('Rights and privileges');
         }
-        return _p('%s : rights and privileges', $this->_selectedPersonData['title']);
+        return _p('%s : rights and privileges', $this->_getByLang(
+            $this->_selectedPersonData['titleEn'],
+            $this->_selectedPersonData['title']
+        ));
     }
 
     /**
@@ -114,7 +117,10 @@ class PrivilegesOfUser extends Controller
 
         return [
             'error' => false,
-            'personName' => empty($this->_selectedPersonData) ? '' : $this->_selectedPersonData['title'],
+            'personName' => empty($this->_selectedPersonData) ? '' : $this->_getByLang(
+                $this->_selectedPersonData['titleEn'],
+                $this->_selectedPersonData['title']
+            ),
             'rules' => $rules
         ];
     }

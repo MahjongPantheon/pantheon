@@ -100,6 +100,11 @@ abstract class Controller
     protected $_superadmin = false;
 
     /**
+     * @var string
+     */
+    protected $_currentLocale = 'en_US.UTF-8';
+
+    /**
      * [ 'id' => int,
      *   'city' => string,
      *   'email' => string | null,
@@ -132,27 +137,27 @@ abstract class Controller
 
         // i18n support
         // first step is getting browser language
-        $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        $this->_currentLocale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
         // second step is checking cookie
         if (isset($_COOKIE[Sysconf::COOKIE_LANG_KEY])) {
-            $locale = $_COOKIE[Sysconf::COOKIE_LANG_KEY];
+            $this->_currentLocale = $_COOKIE[Sysconf::COOKIE_LANG_KEY];
         }
 
         // third step is checking GET attribute
         if (isset($_GET['l'])) {
-            $locale = $_GET['l'];
-            setcookie(Sysconf::COOKIE_LANG_KEY, $locale, 0, '/');
+            $this->_currentLocale = $_GET['l'];
+            setcookie(Sysconf::COOKIE_LANG_KEY, $this->_currentLocale, 0, '/');
         }
 
         // List of locales
         // https://gcc.gnu.org/onlinedocs/libstdc++/manual/localization.html
-        switch ($locale) {
+        switch ($this->_currentLocale) {
             // map common lang ids to more specific
             case 'ru':
             case 'ru_RU':
             case 'ru_UA':
-                $locale = 'ru_RU.UTF-8';
+                $this->_currentLocale = 'ru_RU.UTF-8';
                 break;
             case 'de':
             case 'de_DE':
@@ -160,16 +165,16 @@ abstract class Controller
             case 'de_BE':
             case 'de_CH':
             case 'de_LU':
-                $locale = 'de_DE.UTF-8';
+                $this->_currentLocale = 'de_DE.UTF-8';
                 break;
             default:
-                $locale = 'en_US.UTF-8';
+                $this->_currentLocale = 'en_US.UTF-8';
         }
 
-        if (setlocale(LC_ALL, $locale) === false) {
-            throw new \Exception("Server error: The $locale locale is not installed");
+        if (setlocale(LC_ALL, $this->_currentLocale) === false) {
+            throw new \Exception("Server error: The {$this->_currentLocale} locale is not installed");
         }
-        putenv('LC_ALL=' . $locale);
+        putenv('LC_ALL=' . $this->_currentLocale);
 
         $this->_currentPersonId = (empty($_COOKIE[Sysconf::COOKIE_ID_KEY]) ? null : intval($_COOKIE[Sysconf::COOKIE_ID_KEY]));
         $this->_authToken = (empty($_COOKIE[Sysconf::COOKIE_TOKEN_KEY]) ? null : $_COOKIE[Sysconf::COOKIE_TOKEN_KEY]);
@@ -196,7 +201,7 @@ abstract class Controller
             } else {
                 $this->_frey->getClient()->getHttpClient()->withHeaders([
                     'X-Auth-Token: ' . $this->_authToken,
-                    'X-Locale: ' . $locale,
+                    'X-Locale: ' . $this->_currentLocale,
                     'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
                     'X-Current-Person-Id: ' . $this->_currentPersonId,
                     'X-Internal-Query-Secret: ' . Sysconf::FREY_INTERNAL_QUERY_SECRET
@@ -228,7 +233,7 @@ abstract class Controller
             'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
             'X-Current-Person-Id: ' . $this->_currentPersonId ?: '0',
             'X-Internal-Query-Secret: ' . Sysconf::MIMIR_INTERNAL_QUERY_SECRET,
-            'X-Locale: ' . $locale,
+            'X-Locale: ' . $this->_currentLocale,
             // @phpstan-ignore-next-line
             'X-Api-Version: ' . Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
         ]);
@@ -255,6 +260,19 @@ abstract class Controller
         }
 
         $this->_checkCompatibility($client->getLastHeaders());
+    }
+
+    /**
+     * @param string $internationalVariant
+     * @param string $localizedVariant
+     * @return string
+     */
+    protected function _getByLang($internationalVariant, $localizedVariant)
+    {
+        if ($this->_mainEventRules->getDefaultLanguage() === explode('_', $this->_currentLocale)[0]) {
+            return $localizedVariant;
+        }
+        return $internationalVariant;
     }
 
     /**

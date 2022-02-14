@@ -45,7 +45,8 @@ class MultieventMainpage extends Controller
         return [
             'events' => array_map(function ($event) {
                 $ellipsis = mb_strlen($event['description']) > 50 ? '...' : '';
-                $event['description'] = mb_substr($event['description'], 0, 50) . $ellipsis;
+                $event['title'] = $this->_getByLang($event['titleEn'], $event['title']);
+                $event['description'] = mb_substr($this->_getByLang($event['descriptionEn'], $event['description']), 0, 50) . $ellipsis;
                 return $event;
             }, $data['events']),
             'prevPage' => $page > 1 ? $page - 1 : 1,

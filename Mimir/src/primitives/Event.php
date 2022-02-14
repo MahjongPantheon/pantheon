@@ -39,6 +39,7 @@ class EventPrimitive extends Primitive
         'description'       => '_description',
         'title_en'          => '_titleEn',
         'description_en'    => '_descriptionEn',
+        'default_language'  => '_defaultLanguage',
         'start_time'        => '_startTime',
         'end_time'          => '_endTime',
         'game_duration'     => '_gameDuration',
@@ -83,6 +84,7 @@ class EventPrimitive extends Primitive
             '_sortByGames'        => $this->_integerTransform(),
             '_allowPlayerAppend'  => $this->_integerTransform(),
             '_timezone'           => $this->_stringTransform(),
+            '_defaultLanguage'    => $this->_stringTransform(),
             '_useTimer'           => $this->_integerTransform(),
             '_usePenalty'         => $this->_integerTransform(),
             '_statHost'           => $this->_stringTransform(),
@@ -139,6 +141,11 @@ class EventPrimitive extends Primitive
      * @var string
      */
     protected $_descriptionEn;
+    /**
+     * Default language to use with this event
+     * @var string
+     */
+    protected $_defaultLanguage;
     /**
      * Start date and time
      * @var string
@@ -574,6 +581,24 @@ class EventPrimitive extends Primitive
     public function getTitle()
     {
         return $this->_title;
+    }
+
+    /**
+     * @param string $lang
+     * @return EventPrimitive
+     */
+    public function setDefaultLanguage($lang)
+    {
+        $this->_defaultLanguage = $lang;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultLanguage()
+    {
+        return $this->_defaultLanguage;
     }
 
     /**

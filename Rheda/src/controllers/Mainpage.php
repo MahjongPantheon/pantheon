@@ -25,7 +25,10 @@ class Mainpage extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Statistics') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Statistics') . ' - ' . $this->_getByLang(
+            $this->_mainEventRules->eventTitleEn(),
+            $this->_mainEventRules->eventTitle()
+        );
     }
 
     /**
@@ -38,7 +41,10 @@ class Mainpage extends Controller
             return [
                 'isAggregated' => true,
                 'eventsInfo' => array_values(array_map(function ($rules) {
-                    return ['title' => $rules->eventTitle(), 'description' => $rules->eventDescription()];
+                    return [
+                        'title' => $this->_getByLang($rules->eventTitleEn(), $rules->eventTitle()),
+                        'description' => $this->_getByLang($rules->eventDescriptionEn(), $rules->eventDescription())
+                    ];
                 }, $this->_rulesList))
             ];
         }
@@ -93,7 +99,7 @@ class Mainpage extends Controller
             'admins' => $admins,
             'data' => $formattedData,
             'hasData' => true,
-            'title' => $this->_mainEventRules->eventTitle()
+            'title' => $this->_getByLang($this->_mainEventRules->eventTitleEn(), $this->_mainEventRules->eventTitle())
         ];
     }
 }

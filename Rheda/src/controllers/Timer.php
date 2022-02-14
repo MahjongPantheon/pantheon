@@ -94,6 +94,7 @@ class Timer extends Controller
 
         // assign colors first
         foreach ($seating as &$player) {
+            $player['title'] = $this->_getByLang($player['titleEn'], $player['title']);
             $player['zone'] = $player['rating'] >= $this->_mainEventRules->startRating() ? 'success' : 'danger';
         }
 

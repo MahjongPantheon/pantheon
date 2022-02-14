@@ -83,6 +83,18 @@
                 {{#id}}<input type="hidden" name="id" value="{{id}}"/>{{/id}}
 
                 <div class="form-group">
+                    <label for="lang">{{_t 'Default language'}}</label>
+                    <select class="form-control" id="lang" name="lang">
+                        {{#available_langs}}
+                            <option value="{{ident}}"{{#selected}} selected="selected"{{/selected}}>{{name}}</option>
+                        {{/available_langs}}
+                    </select>
+                    <small id="langHelp" class="form-text text-muted">
+                        {{_t "Select default language for event."}}
+                    </small>
+                </div>
+
+                <div class="form-group">
                     <label for="title">{{_t 'Title'}}</label>
                     <input type="text" class="form-control{{#error_title}} is-invalid{{/error_title}}" id="title"
                            value="{{title}}"

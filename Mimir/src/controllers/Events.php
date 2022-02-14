@@ -35,6 +35,7 @@ class EventsController extends Controller
      * @param string $description
      * @param string $titleEn
      * @param string $descriptionEn
+     * @param string $defaultLanguage
      * @param string $ruleset one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
      * @param int $gameDuration duration of game in this event in minutes
      * @param string $timezone name of timezone, 'Asia/Irkutsk' for example
@@ -55,6 +56,7 @@ class EventsController extends Controller
         $description,
         $titleEn,
         $descriptionEn,
+        $defaultLanguage,
         $ruleset,
         $gameDuration,
         $timezone,
@@ -89,6 +91,7 @@ class EventsController extends Controller
             ->setTitleEn($titleEn)
             ->setDescription($description)
             ->setDescriptionEn($descriptionEn)
+            ->setDefaultLanguage($defaultLanguage)
             ->setGameDuration($gameDuration)
             ->setTimeZone($timezone)
             ->setSeriesLength($series)
@@ -161,6 +164,7 @@ class EventsController extends Controller
      * @param string $description
      * @param string $titleEn
      * @param string $descriptionEn
+     * @param string $lang
      * @param string $ruleset one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
      * @param int $gameDuration duration of game in this event in minutes
      * @param string $timezone name of timezone, 'Asia/Irkutsk' for example
@@ -181,6 +185,7 @@ class EventsController extends Controller
         $description,
         $titleEn,
         $descriptionEn,
+        $lang,
         $ruleset,
         $gameDuration,
         $timezone,
@@ -214,6 +219,7 @@ class EventsController extends Controller
             ->setTitleEn($titleEn)
             ->setDescription($description)
             ->setDescriptionEn($descriptionEn)
+            ->setDefaultLanguage($lang)
             ->setGameDuration($gameDuration)
             ->setTimeZone($timezone)
             ->setSeriesLength($series)
@@ -278,6 +284,7 @@ class EventsController extends Controller
             'description' => $event->getDescription(),
             'titleEn' => $event->getTitleEn(),
             'descriptionEn' => $event->getDescriptionEn(),
+            'defaultLanguage' => $event->getDefaultLanguage(),
             'duration' => $event->getGameDuration(),
             'ruleset' => $event->getRuleset()->title(),
             'timezone' => $event->getTimezone(),
@@ -595,6 +602,7 @@ class EventsController extends Controller
             'eventDescription'    => $this->_mdTransform($event[0]->getDescription()),
             'eventTitleEn'        => $event[0]->getTitleEn(),
             'eventDescriptionEn'  => $this->_mdTransform($event[0]->getDescriptionEn()),
+            'defaultLanguage'     => $event[0]->getDefaultLanguage(),
             'eventStatHost'       => str_replace(EventPrimitive::ID_PLACEHOLDER, (string)$event[0]->getId(), $event[0]->getStatHost()),
             'useTimer'            => (bool)$event[0]->getUseTimer(),
             'usePenalty'          => (bool)$event[0]->getUsePenalty(),

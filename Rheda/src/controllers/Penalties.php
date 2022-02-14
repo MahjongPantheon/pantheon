@@ -30,7 +30,10 @@ class Penalties extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Penalties') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Penalties') . ' - ' . $this->_getByLang(
+            $this->_mainEventRules->eventTitleEn(),
+            $this->_mainEventRules->eventTitle()
+        );
     }
 
     /**
@@ -93,6 +96,9 @@ class Penalties extends Controller
         $amounts = [];
         try {
             $players = $this->_mimir->getAllPlayers($this->_eventIdList);
+            foreach ($players as &$player) {
+                $player['title'] = $this->_getByLang($player['titleEn'], $player['title']);
+            }
             $settings = $this->_mimir->getGameConfig($this->_mainEventId);
             for ($i = $settings['minPenalty']; $i <= $settings['maxPenalty']; $i += $settings['penaltyStep']) {
                 $amounts []= ['view' => $i, 'value' => $i];

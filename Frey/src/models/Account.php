@@ -114,7 +114,7 @@ class AccountModel extends Model
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
-                'title_en' => $person->getTitleEn(),
+                'titleEn' => $person->getTitleEn(),
             ];
         }, $persons);
     }
@@ -189,7 +189,7 @@ class AccountModel extends Model
                 'city' => $person->getCity(),
                 'tenhou_id' => $person->getTenhouId(),
                 'title' => $person->getTitle(),
-                'title_en' => $person->getTitleEn(),
+                'titleEn' => $person->getTitleEn(),
             ];
         }, $persons);
     }
@@ -225,7 +225,7 @@ class AccountModel extends Model
                 'tenhou_id' => $person->getTenhouId(),
                 'groups' => $person->getGroupIds(),
                 'title' => $person->getTitle(),
-                'title_en' => $person->getTitleEn(),
+                'titleEn' => $person->getTitleEn(),
             ];
         }, $persons);
     }

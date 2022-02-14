@@ -110,7 +110,7 @@ class TournamentControlPanel extends Controller
      */
     protected function _run(): array
     {
-        $formatter = new GameFormatter();
+        $formatter = new GameFormatter($this->_getByLang('international', 'localized'));
 
         if (count($this->_eventIdList) > 1) {
             return [

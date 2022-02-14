@@ -350,6 +350,7 @@ class MimirClient implements IMimirClient
      * @param string $description
      * @param string $titleEn
      * @param string $descriptionEn
+     * @param string $defaultLanguage
      * @param string $ruleset
      * @param int $gameDuration
      * @param string $timezone
@@ -361,10 +362,10 @@ class MimirClient implements IMimirClient
      * @param string $rulesetChangesJson
      * @return int
     */
-    public function createEvent(string $type, string $title, string $description, string $titleEn, string $descriptionEn, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): int
+    public function createEvent(string $type, string $title, string $description, string $titleEn, string $descriptionEn, string $defaultLanguage, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): int
     {
         /** @phpstan-ignore-next-line */
-        return (int)$this->_client->execute('createEvent', [$type, $title, $description, $titleEn, $descriptionEn, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted, $rulesetChangesJson]);
+        return (int)$this->_client->execute('createEvent', [$type, $title, $description, $titleEn, $descriptionEn, $defaultLanguage, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted, $rulesetChangesJson]);
     }
 
     /**
@@ -375,6 +376,7 @@ class MimirClient implements IMimirClient
      * @param string $description
      * @param string $titleEn
      * @param string $descriptionEn
+     * @param string $lang
      * @param string $ruleset
      * @param int $gameDuration
      * @param string $timezone
@@ -386,10 +388,10 @@ class MimirClient implements IMimirClient
      * @param string $rulesetChangesJson
      * @return bool
     */
-    public function updateEvent(int $id, string $title, string $description, string $titleEn, string $descriptionEn, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): bool
+    public function updateEvent(int $id, string $title, string $description, string $titleEn, string $descriptionEn, string $lang, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): bool
     {
         /** @phpstan-ignore-next-line */
-        return (bool)$this->_client->execute('updateEvent', [$id, $title, $description, $titleEn, $descriptionEn, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted, $rulesetChangesJson]);
+        return (bool)$this->_client->execute('updateEvent', [$id, $title, $description, $titleEn, $descriptionEn, $lang, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted, $rulesetChangesJson]);
     }
 
     /**

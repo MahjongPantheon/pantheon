@@ -25,7 +25,10 @@ class Game extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Game details') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Game details') . ' - ' . $this->_getByLang(
+            $this->_mainEventRules->eventTitleEn(),
+            $this->_mainEventRules->eventTitle()
+        );
     }
 
     /**
@@ -34,7 +37,7 @@ class Game extends Controller
     protected function _run(): array
     {
         try {
-            $formatter = new GameFormatter();
+            $formatter = new GameFormatter($this->_getByLang('international', 'localized'));
             $gameHash = $this->_path['hash'];
             $gamesData = $this->_mimir->getGame($gameHash);
             return [
