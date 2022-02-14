@@ -312,11 +312,13 @@ class SeatingController extends Controller
                     'id' => $playersMap[$player['id']]->getId(),
                     'local_id' => $player['local_id'],
                     'title' => $playersMap[$player['id']]->getDisplayName(),
+                    'titleEn' => $playersMap[$player['id']]->getDisplayNameEn(),
                     'replaced_by' => empty($replacementMapToPlayer[$player['id']])
                         ? null
                         : [
                             'id' => $replacementMapToPlayer[$player['id']]->getId(),
                             'title' => $replacementMapToPlayer[$player['id']]->getDisplayName(),
+                            'titleEn' => $replacementMapToPlayer[$player['id']]->getDisplayNameEn(),
                         ],
                 ];
             }, $table);

@@ -169,7 +169,8 @@ class PlayerStatModel extends Model
         $players = array_map(function (PlayerPrimitive $p) {
             return [
                 'id'            => (int)$p->getId(),
-                'title'  => $p->getDisplayName(),
+                'title'         => $p->getDisplayName(),
+                'titleEn'       => $p->getDisplayNameEn(),
                 'tenhou_id'     => $p->getTenhouId(),
             ];
         }, PlayerPrimitive::findById($this->_ds, $playerIds));

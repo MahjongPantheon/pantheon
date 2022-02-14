@@ -436,6 +436,7 @@ class GameFormatter
             $t['players'] = array_map(function ($p, $idx) use (&$t, &$winds) {
                 $p['current_wind'] = $winds[($t['current_round'] + $idx - 1) % 4];
                 $p['score'] = $t['scores'][$p['id']];
+                $p['title'] = $this->_getTranslation($p['titleEn'], $p['title']);
                 return $p;
             }, $t['players'], array_keys($t['players']));
             $t['playersFlatList'] = implode(', ', array_map(function ($p) {

@@ -150,7 +150,8 @@ class EventRatingTableModel extends Model
         $data = array_map(function (PlayerHistoryPrimitive $el) use ($playerItems, $mainEvent, $startRating) {
             return [
                 'id'            => (int)$el->getPlayerId(),
-                'title'  => $playerItems[$el->getPlayerId()]->getDisplayName(),
+                'title'         => $playerItems[$el->getPlayerId()]->getDisplayName(),
+                'titleEn'       => $playerItems[$el->getPlayerId()]->getDisplayNameEn(),
                 'tenhou_id'     => $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'        => (float)$el->getRating(),
                 'chips'         => (int)$el->getChips(),
@@ -242,6 +243,7 @@ class EventRatingTableModel extends Model
                     PlayerHistoryPrimitive $el1,
                     PlayerHistoryPrimitive $el2
                 ) use (&$playerItems) {
+                    // TODO: international sorting
                     return strcmp(
                         $playerItems[$el1->getPlayerId()]->getDisplayName(),
                         $playerItems[$el2->getPlayerId()]->getDisplayName()

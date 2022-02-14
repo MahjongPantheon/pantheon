@@ -39,6 +39,11 @@ class PlayerPrimitive extends Primitive
      */
     protected $_displayName;
     /**
+     * How to display in state
+     * @var string
+     */
+    protected $_displayNameEn;
+    /**
      * Tenhou username (actually not id!)
      * @var string
      */
@@ -70,6 +75,7 @@ class PlayerPrimitive extends Primitive
             return (new PlayerPrimitive($ds))
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
+                ->setDisplayNameEn($item['titleEn'])
                 ->_setId($item['id']);
         }, $data);
     }
@@ -91,6 +97,7 @@ class PlayerPrimitive extends Primitive
             return (new PlayerPrimitive($ds))
                 ->setTenhouId($item['tenhou_id'])
                 ->setDisplayName($item['title'])
+                ->setDisplayNameEn($item['titleEn'])
                 ->_setId($item['id']);
         }, $playersData);
 
@@ -207,6 +214,24 @@ class PlayerPrimitive extends Primitive
     protected function _deident()
     {
         $this->_id = null;
+    }
+
+    /**
+     * @param string $displayNameEn
+     * @return $this
+     */
+    public function setDisplayNameEn($displayNameEn)
+    {
+        $this->_displayNameEn = $displayNameEn;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDisplayNameEn()
+    {
+        return $this->_displayNameEn;
     }
 
     /**

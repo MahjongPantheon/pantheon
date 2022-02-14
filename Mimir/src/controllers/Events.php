@@ -392,6 +392,7 @@ class EventsController extends Controller
             return [
                 'id'            => $p->getId(),
                 'title'         => $p->getDisplayName(),
+                'titleEn'       => $p->getDisplayNameEn(),
                 'local_id'      => empty($localMap[$p->getId()]) ? null : $localMap[$p->getId()],
                 'team_name'     => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
                 'tenhou_id'     => $p->getTenhouId(),
@@ -399,6 +400,7 @@ class EventsController extends Controller
                 'replaced_by'   => empty($replacements[$p->getId()]) ? null : [
                     'id' => $replacements[$p->getId()]->getId(),
                     'title' => $replacements[$p->getId()]->getDisplayName(),
+                    'titleEn' => $replacements[$p->getId()]->getDisplayNameEn(),
                 ],
             ];
         }, $players);

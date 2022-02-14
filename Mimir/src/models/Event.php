@@ -224,7 +224,8 @@ class EventModel extends Model
                             'id' => $pId,
                             // may be empty for excluded players in non-prescripted event, so it's fine.
                             'local_id' => empty($playerIdMap[$pId]) ? 0 : $playerIdMap[$pId],
-                            'title' => $p->getDisplayName()
+                            'title' => $p->getDisplayName(),
+                            'titleEn' => $p->getDisplayNameEn(),
                         ];
                     }, $game->getPlayers())
                 ];
@@ -283,7 +284,8 @@ class EventModel extends Model
         foreach ($players as $player) {
             $result[$player->getId()] = [
                 'id'            => (int) $player->getId(),
-                'title'  => $player->getDisplayName(),
+                'title'         => $player->getDisplayName(),
+                'titleEn'       => $player->getDisplayNameEn(),
                 'tenhou_id'     => $player->getTenhouId()
             ];
         }

@@ -146,6 +146,9 @@ class TournamentControlPanel extends Controller
             $this->_mainEventRules->syncStart()
         );
         $players = $this->_mimir->getAllPlayers($this->_eventIdList);
+        foreach ($players as &$player) {
+            $player['title'] = $this->_getByLang($player['titleEn'], $player['title']);
+        }
 
         // filter $players who are ignored from seating
         $players = array_values(array_filter($players, function ($player) {

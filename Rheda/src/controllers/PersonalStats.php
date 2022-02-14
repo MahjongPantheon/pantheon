@@ -60,6 +60,8 @@ class PersonalStats extends Controller
 
             $usersMap = [];
             foreach ($data['players_info'] as $player) {
+                $player['title'] = $this->_getByLang($player['titleEn'], $player['title']);
+                unset($player['titleEn']);
                 $usersMap[$player['id']] = $player;
             }
 

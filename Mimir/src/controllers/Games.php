@@ -204,11 +204,13 @@ class GamesController extends Controller
                 return [
                     'id' => $player->getId(),
                     'title' => $player->getDisplayName(),
+                    'titleEn' => $player->getDisplayNameEn(),
                     'replaced_by' => empty($playersReg['replacements'][$player->getId()])
                         ? null
                         : [
                             'id' => $playersReg['replacements'][$player->getId()]->getId(),
                             'title' => $playersReg['replacements'][$player->getId()]->getDisplayName(),
+                            'titleEn' => $playersReg['replacements'][$player->getId()]->getDisplayNameEn(),
                         ]
                 ];
             }, $playersReg['players']),

@@ -71,6 +71,7 @@ class PlayerRegistration extends Controller
                     $el['showAdminRightsControls'] = ($el['id'] !== $this->_currentPersonId);
                     $el['adminAssigned'] = !empty($admins[$el['id']]);
                     $el['adminRule'] = $admins[$el['id']];
+                    $el['title'] = $this->_getByLang($el['titleEn'], $el['title']);
                     return $el;
                 }, $registeredPlayers, array_keys($registeredPlayers));
 
@@ -179,6 +180,10 @@ class PlayerRegistration extends Controller
                 case 'find_persons':
                     [$err, $result] = $this->_findPersons($_POST['query']);
                     if (empty($err)) {
+                        foreach ($result as &$player) {
+                            $player['title'] = $this->_getByLang($player['titleEn'], $player['title']);
+                            unset($player['titleEn']);
+                        }
                         echo json_encode($result);
                     } else {
                         echo json_encode(['error' => $err]);

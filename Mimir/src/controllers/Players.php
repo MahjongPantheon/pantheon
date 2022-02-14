@@ -51,6 +51,7 @@ class PlayersController extends Controller
         return [
             'id'            => $player[0]->getId(),
             'title'         => $player[0]->getDisplayName(),
+            'titleEn'       => $player[0]->getDisplayNameEn(),
             'tenhou_id'     => $player[0]->getTenhouId()
         ];
     }
@@ -108,12 +109,14 @@ class PlayersController extends Controller
                     return [
                         'id'            => $p->getId(),
                         'title'         => $p->getDisplayName(),
+                        'titleEn'       => $p->getDisplayNameEn(),
                         'score'         => $score,
                         'replaced_by' => empty($regData['replacements'][$p->getId()])
                             ? null
                             : [
                                 'id' => $regData['replacements'][$p->getId()]->getId(),
                                 'title' => $regData['replacements'][$p->getId()]->getDisplayName(),
+                                'titleEn' => $regData['replacements'][$p->getId()]->getDisplayNameEn(),
                             ],
                     ];
                 }, $session->getPlayers(), $session->getCurrentState()->getScores())
@@ -154,7 +157,8 @@ class PlayersController extends Controller
         $result = array_map(function (PlayerPrimitive $p) use (&$sessionResults) {
             return [
                 'id'            => $p->getId(),
-                'title'  => $p->getDisplayName(),
+                'title'         => $p->getDisplayName(),
+                'titleEn'       => $p->getDisplayNameEn(),
                 'score'         => $sessionResults[$p->getId()]->getScore(),
                 'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),
             ];
@@ -211,7 +215,8 @@ class PlayersController extends Controller
         $result = array_map(function (PlayerPrimitive $p) use (&$sessionResults) {
             return [
                 'id'            => $p->getId(),
-                'title'  => $p->getDisplayName(),
+                'title'         => $p->getDisplayName(),
+                'titleEn'       => $p->getDisplayNameEn(),
                 'score'         => $sessionResults[$p->getId()]->getScore(),
                 'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),
             ];
