@@ -12,7 +12,7 @@ chown user /home/user/.composer-cache
 chown -R postgres "$PGDATA"
 
 if [ -z "$(ls -A "$PGDATA")" ]; then
-    gosu postgres initdb
+    su-exec postgres initdb
     sed -ri "s/^#(listen_addresses\s*=\s*)\S+/\1'*'/" "$PGDATA"/postgresql.conf
 
     : ${POSTGRES_USER:="postgres"}
@@ -33,7 +33,7 @@ if [ -z "$(ls -A "$PGDATA")" ]; then
 
     if [ "$POSTGRES_DB" != 'postgres' ]; then
       createSql="CREATE DATABASE $POSTGRES_DB;"
-      echo $createSql | gosu postgres postgres --single -jE
+      echo $createSql | su-exec postgres postgres --single -jE
       echo
     fi
 
@@ -44,12 +44,12 @@ if [ -z "$(ls -A "$PGDATA")" ]; then
     fi
 
     userSql="$op USER $POSTGRES_USER WITH SUPERUSER $pass;"
-    echo $userSql | gosu postgres postgres --single -jE
+    echo $userSql | su-exec postgres postgres --single -jE
     echo
 
     # internal start of server in order to allow set-up using psql-client
     # does not listen on TCP/IP and waits until start finishes
-    gosu postgres pg_ctl -D "$PGDATA" \
+    su-exec postgres pg_ctl -D "$PGDATA" \
         -o "-c listen_addresses=''" \
         -w start
 
@@ -63,7 +63,7 @@ if [ -z "$(ls -A "$PGDATA")" ]; then
         echo
     done
 
-    gosu postgres pg_ctl -D "$PGDATA" -m fast -w stop
+    su-exec postgres pg_ctl -D "$PGDATA" -m fast -w stop
 
     { echo; echo "host all all 0.0.0.0/0 $authMethod"; } >> "$PGDATA"/pg_hba.conf
     { echo; echo "port = $DB_PORT"; } >> "$PGDATA"/postgresql.conf
@@ -82,7 +82,7 @@ php-fpm7 -R -F 2>&1 &
 PHP_FPM_PID=$!
 
 echo 'Starting PostgreSQL':
-gosu postgres pg_ctl -D "$PGDATA" -o "-c listen_addresses='*'" -w start
+su-exec postgres pg_ctl -D "$PGDATA" -o "-c listen_addresses='*'" -w start
 
 trap "TRAPPED_SIGNAL=true; kill -15 $NGINX_PID; kill -15 $PHP_FPM_PID;" SIGTERM  SIGINT
 
@@ -104,7 +104,7 @@ do
                 kill -15 $PHP_FPM_PID;
                 wait $PHP_FPM_PID;
             fi
-            gosu postgres pg_ctl -D "$PGDATA" -m fast -w stop
+            su-exec postgres pg_ctl -D "$PGDATA" -m fast -w stop
             exit 1;
         fi
     else
