@@ -1,4 +1,4 @@
-FROM alpine:3.14
+FROM --platform=linux/amd64 alpine:3.14
 
 ENV TIMEZONE            Europe/Moscow
 ENV PHP_MEMORY_LIMIT    512M
@@ -43,6 +43,7 @@ RUN apk update && \
     cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
     echo "${TIMEZONE}" > /etc/timezone && \
     apk add --update \
+    su-exec \
     curl \
     make \
     gettext \
@@ -79,9 +80,6 @@ RUN apk update && \
     php7-ctype \
     php7-fpm \
     php7-apcu
-
-RUN curl -o /usr/local/bin/gosu -sSL "https://github.com/tianon/gosu/releases/download/1.2/gosu-amd64" && \
-    chmod +x /usr/local/bin/gosu
 
 RUN npm config set unsafe-perm true
 RUN npm install -g xgettext-template i18n-stex i18n-po-json i18n-json-po yarn
@@ -123,7 +121,7 @@ RUN echo "user:x:${LOCAL_USER_ID:9001}:" >> /etc/group
 RUN mkdir /home/user && chown user: /home/user
 
 RUN apk add --update rustup build-base
-RUN HOME=/home/user gosu user rustup-init -y
+RUN HOME=/home/user su-exec user rustup-init -y
 
 # Cleaning up
 RUN mkdir /www && \
