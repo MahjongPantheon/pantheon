@@ -80,7 +80,8 @@ RUN apk update && \
     php81-fpm \
     php81-apcu
 
-RUN npm install -g xgettext-template i18n-stex i18n-po-json i18n-json-po yarn
+RUN npm install -g \
+    xgettext-template i18n-stex i18n-po-json i18n-json-po yarn
 RUN touch $PHP_LOGFILE
 RUN chown nobody $PHP_LOGFILE
 
