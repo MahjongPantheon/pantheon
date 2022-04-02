@@ -143,6 +143,7 @@ RUN chmod 755 /entrypoint.sh
 COPY Rheda/rheda-docker.nginx.conf /etc/nginx/http.d/rheda.conf
 COPY Mimir/mimir-docker.nginx.conf /etc/nginx/http.d/mimir.conf
 COPY Frey/frey-docker.nginx.conf /etc/nginx/http.d/frey.conf
+COPY Ratatosk/nginx/ratatosk-docker.nginx.conf /etc/nginx/http.d/ratatosk.conf
 
 # copy db init scripts
 RUN mkdir -p /docker-entrypoint-initdb.d
