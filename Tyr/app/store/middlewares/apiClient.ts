@@ -62,6 +62,7 @@ import {IAppState} from '../interfaces';
 import {SessionState} from "#/interfaces/remote";
 import {ServiceWorkerClient} from "#/services/serviceWorkerClient";
 import {SwToClientEvents} from "#/services/serviceWorkerConfig";
+import {gameOverviewFormatter} from "#/services/formatters";
 
 export const apiClient = (api: RiichiApiService, swClient: ServiceWorkerClient) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
@@ -74,7 +75,10 @@ export const apiClient = (api: RiichiApiService, swClient: ServiceWorkerClient) 
         console.log('Message from worker', message);
       });
       swClient.onEvent(SwToClientEvents.ROUND_DATA, (message) => {
-        console.log('Message from worker', message);
+        mw.dispatch({
+          type: GET_GAME_OVERVIEW_SUCCESS,
+          payload: gameOverviewFormatter(message.data)
+        });
       })
       break;
     case ENABLE_FEATURE:

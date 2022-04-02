@@ -3,9 +3,9 @@ import {useEffect} from 'react';
 import '../styles/base.css'
 import '../styles/themes.css'
 import '../styles/variables.css'
-import {IAppState} from '#/store/interfaces';
+import {Features, IAppState} from '#/store/interfaces';
 import {
-  AppActionTypes,
+  AppActionTypes, ENABLE_FEATURE,
   HISTORY_INIT,
   INIT_STATE,
   INIT_WORKER_HANDLERS,
@@ -82,6 +82,13 @@ export const App: React.FC<IProps> = (props: IProps) => {
   useEffect(() => {
     dispatch({type: INIT_STATE});
     dispatch({type: INIT_WORKER_HANDLERS});
+    const settings = storage.get(environment.idbSettingsKey, 'string');
+    if (settings) {
+      const settingsParsed: Features = JSON.parse(settings);
+      if (settingsParsed.wsClient) {
+        dispatch({ type: ENABLE_FEATURE, payload: { feature: 'wsClient', enable: true } });
+      }
+    }
     i18nService.init((localeName) => {
       dispatch({type: SETTINGS_SAVE_LANG, payload: localeName});
     }, (err) => console.error(err));

@@ -9,6 +9,7 @@ export type EnvConfig = {
   metrikaId: number;
   idbTokenKey: string;
   idbIdKey: string;
+  idbSettingsKey: string;
   idbEventKey: string;
   idbLangKey: string;
   idbThemeKey: string;

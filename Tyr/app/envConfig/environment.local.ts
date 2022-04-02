@@ -34,6 +34,7 @@ export const environment: EnvConfig = {
   ratatoskUrl: 'ws://localhost:4006/',
   idbTokenKey: 'pantheon_authToken',
   idbIdKey: 'pantheon_currentPersonId',
+  idbSettingsKey: 'pantheon_settings',
   idbEventKey: 'pantheon_currentEventId',
   idbLangKey: 'pantheon_currentLanguage',
   idbThemeKey: 'pantheon_currentTheme',

@@ -190,41 +190,8 @@ class GamesController extends Controller
     public function getSessionOverview($gameHashCode)
     {
         $this->_log->addInfo('Getting session overview for game # ' . $gameHashCode);
-        $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$gameHashCode]);
-        if (empty($session)) {
-            throw new InvalidParametersException("Couldn't find session in DB", 404);
-        }
-
-        $playersReg = PlayerPrimitive::findPlayersForSession($this->_ds, $gameHashCode);
-
-        $result = [
-            'id'    => $session[0]->getId(),
-            'table_index' => $session[0]->getTableIndex(),
-            'players' => array_map(function (PlayerPrimitive $player) use (&$playersReg) {
-                return [
-                    'id' => $player->getId(),
-                    'title' => $player->getDisplayName(),
-                    'replaced_by' => empty($playersReg['replacements'][$player->getId()])
-                        ? null
-                        : [
-                            'id' => $playersReg['replacements'][$player->getId()]->getId(),
-                            'title' => $playersReg['replacements'][$player->getId()]->getDisplayName(),
-                        ]
-                ];
-            }, $playersReg['players']),
-
-            'state' => [
-                'dealer'    => $session[0]->getCurrentState()->getCurrentDealer(),
-                'round'     => $session[0]->getCurrentState()->getRound(),
-                'riichi'    => $session[0]->getCurrentState()->getRiichiBets(),
-                'honba'     => $session[0]->getCurrentState()->getHonba(),
-                'scores'    => $session[0]->getCurrentState()->getScores(),
-                'finished'  => $session[0]->getCurrentState()->isFinished(),
-                'penalties' => $session[0]->getCurrentState()->getPenalties(),
-                'yellowZoneAlreadyPlayed' => $session[0]->getCurrentState()->yellowZoneAlreadyPlayed(),
-            ]
-        ];
-
+        $model = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
+        $result = $model->getSessionOverview($gameHashCode);
         $this->_log->addInfo('Successfully got session overview for game # ' . $gameHashCode);
         return $result;
     }

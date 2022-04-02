@@ -104,52 +104,64 @@ if (workbox) {
 
   let currentLocale = 'en';
   let socket: WebSocket;
-  createReconnectingSocket((ws) => {
-    // @ts-ignore
-    self.clients.matchAll(/* search options */).then((clients) => {
-      // console.log('sw clients length', clients.length);
-      if (clients && clients.length) {
-        clients.forEach((client: any) => client.postMessage({ type: SwToClientEvents.RECONNECTED }));
-      }
-    });
+  reconnect(() => {}); // first time
+  function reconnect(onReady: () => void) {
+    createReconnectingSocket((ws) => {
+      // @ts-ignore
+      self.clients.matchAll(/* search options */).then((clients) => {
+        // console.log('sw clients length', clients.length);
+        if (clients && clients.length) {
+          clients.forEach((client: any) => client.postMessage({type: SwToClientEvents.RECONNECTED}));
+        }
+      });
 
-    socket = ws;
-    ws.addEventListener('message', (message) => {
-      try {
-        const { t, ...data } = JSON.parse(message.data);
-        if (validEventType(t)) {
-          if (t === SwToClientEvents.NOTIFICATION) {
-            if (Notification.permission === 'granted') {
+      socket = ws;
+      ws.addEventListener('message', (message) => {
+        try {
+          const {t, ...data} = JSON.parse(message.data);
+          if (validEventType(t)) {
+            if (t === SwToClientEvents.NOTIFICATION) {
+              if (Notification.permission === 'granted') {
+                // @ts-ignore
+                self.registration.showNotification('Pantheon', {
+                  body: data.localized_notification[currentLocale],
+                  vibrate: [500, 100, 500],
+                });
+              }
+            } else {
               // @ts-ignore
-              self.registration.showNotification('Pantheon', {
-                body: data.localized_notification[currentLocale],
-                vibrate: [500, 100, 500],
+              self.clients.matchAll(/* search options */).then((clients) => {
+                // console.log('sw clients length', clients.length);
+                if (clients && clients.length) {
+                  clients.forEach((client: any) => client.postMessage({type: t, data}));
+                }
               });
             }
-          } else {
-            // @ts-ignore
-            self.clients.matchAll(/* search options */).then((clients) => {
-              // console.log('sw clients length', clients.length);
-              if (clients && clients.length) {
-                clients.forEach((client: any) => client.postMessage({type: t, data}));
-              }
-            });
           }
+        } catch (e) {
         }
-      } catch (e) {}
+      });
+      onReady();
     });
-  });
+  }
 
   self.onmessage = function(msg: MessageEvent) {
+    function regClient() {
+      socket.send(JSON.stringify({'t': ClientToSwEvents.REGISTER, 'd': {
+        'game_hash': msg.data.sessionHashcode,
+        'event_id': msg.data.eventId,
+      }}));
+    }
+
     switch (msg.data.type) {
       case ClientToSwEvents.REGISTER:
         if (!socket || socket.readyState !== WebSocket.OPEN) {
+          reconnect(() => regClient());
           return;
+        } else {
+          regClient();
         }
-        socket.send(JSON.stringify({'t': ClientToSwEvents.REGISTER, 'd': {
-          'game_hash': msg.data.sessionHashcode,
-          'event_id': msg.data.eventId,
-        }}));
+
         break;
       case ClientToSwEvents.SET_LOCALE:
         currentLocale = msg.data.locale;

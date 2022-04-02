@@ -277,12 +277,73 @@ class InteractiveSessionModel extends Model
                 $this->_config->getStringValue('ratatoskKey')
             );
             if ($data) {
-                $wsClient->publishGameState($gameHashcode, $data);
+                $wsClient->publishGameState($gameHashcode, $this->getSessionOverview($gameHashcode));
                 $this->_trackUpdate($gameHashcode);
                 return $data;
             }
         }
         return false;
+    }
+
+    /**
+     * Get session overview
+     * [
+     *      id => sessionId,
+     *      players => [ ..[
+     *          id => playerId,
+     *          title,
+     *          ident
+     *      ].. ],
+     *      state => [
+     *          dealer => playerId,
+     *          round => int,
+     *          riichi => [ ..playerId.. ],
+     *          honba => int,
+     *          scores => [ ..int.. ],
+     *          finished => bool,
+     *          penalties => [ playerId => penaltySize, ... ]
+     *      ]
+     * ]
+     * @param string $gameHashCode
+     * @return array
+     * @throws InvalidParametersException
+     */
+    public function getSessionOverview($gameHashCode)
+    {
+        $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$gameHashCode]);
+        if (empty($session)) {
+            throw new InvalidParametersException("Couldn't find session in DB", 404);
+        }
+
+        $playersReg = PlayerPrimitive::findPlayersForSession($this->_ds, $gameHashCode);
+
+        return [
+            'id'    => $session[0]->getId(),
+            'table_index' => $session[0]->getTableIndex(),
+            'players' => array_map(function (PlayerPrimitive $player) use (&$playersReg) {
+                return [
+                    'id' => $player->getId(),
+                    'title' => $player->getDisplayName(),
+                    'replaced_by' => empty($playersReg['replacements'][$player->getId()])
+                        ? null
+                        : [
+                            'id' => $playersReg['replacements'][$player->getId()]->getId(),
+                            'title' => $playersReg['replacements'][$player->getId()]->getDisplayName(),
+                        ]
+                ];
+            }, $playersReg['players']),
+
+            'state' => [
+                'dealer'    => $session[0]->getCurrentState()->getCurrentDealer(),
+                'round'     => $session[0]->getCurrentState()->getRound(),
+                'riichi'    => $session[0]->getCurrentState()->getRiichiBets(),
+                'honba'     => $session[0]->getCurrentState()->getHonba(),
+                'scores'    => $session[0]->getCurrentState()->getScores(),
+                'finished'  => $session[0]->getCurrentState()->isFinished(),
+                'penalties' => $session[0]->getCurrentState()->getPenalties(),
+                'yellowZoneAlreadyPlayed' => $session[0]->getCurrentState()->yellowZoneAlreadyPlayed(),
+            ]
+        ];
     }
 
     /**

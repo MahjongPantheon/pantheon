@@ -1,6 +1,6 @@
 import {Dispatch, MiddlewareAPI} from 'redux';
 import {
-  AppActionTypes,
+  AppActionTypes, ENABLE_FEATURE,
   FORCE_LOGOUT,
   LOGIN_FAIL,
   LOGIN_INIT,
@@ -44,6 +44,12 @@ export const persistentMw = (storage: IDBImpl) => (mw: MiddlewareAPI<Dispatch<Ap
       break;
     case SELECT_EVENT:
       storage.set(environment.idbEventKey, 'int', action.payload);
+      next(action);
+      break;
+    case ENABLE_FEATURE: // actually both enable and disable :|
+      const settings = JSON.parse(storage.get(environment.idbSettingsKey, 'string'));
+      settings[action.payload.feature] = action.payload.enable;
+      storage.set(environment.idbSettingsKey, 'string', JSON.stringify(settings));
       next(action);
       break;
     case SETTINGS_SAVE_LANG:

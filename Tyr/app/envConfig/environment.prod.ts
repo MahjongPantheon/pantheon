@@ -28,6 +28,7 @@ export const environment: EnvConfig = {
   ratatoskUrl: 'wss://b.riichi.top/',
   idbTokenKey: 'pantheon_authToken',
   idbIdKey: 'pantheon_currentPersonId',
+  idbSettingsKey: 'pantheon_settings',
   idbEventKey: 'pantheon_currentEventId',
   idbLangKey: 'pantheon_currentLanguage',
   idbThemeKey: 'pantheon_currentTheme',

@@ -30,6 +30,7 @@ export const environment: EnvConfig = {
   idbTokenKey: 'pantheon_authToken',
   idbIdKey: 'pantheon_currentPersonId',
   idbEventKey: 'pantheon_currentEventId',
+  idbSettingsKey: 'pantheon_settings',
   idbLangKey: 'pantheon_currentLanguage',
   idbThemeKey: 'pantheon_currentTheme',
   cookieDomain: null, // when working on localhost this must be omitted!
