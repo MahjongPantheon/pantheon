@@ -20,7 +20,6 @@ import { yaku } from './middlewares/yaku';
 import { reduceReducers } from "#/store/util";
 import {AppActionTypes, GET_GAME_OVERVIEW_INIT} from "#/store/actions/interfaces";
 import {screenManageMw} from '#/store/middlewares/screenManage';
-import {ServiceWorkerClient} from "#/services/serviceWorkerClient";
 
 export class Store {
   private onUpdate: ((state: IAppState) => void) | undefined;
@@ -42,8 +41,7 @@ export class Store {
     ]);
     const metrikaService = new MetrikaService();
     const idb = new IDB(metrikaService);
-    const swClient = new ServiceWorkerClient();
-    const riichiService = new RiichiApiService(swClient, () => {
+    const riichiService = new RiichiApiService(() => {
       if (this.store.getState().currentScreen === 'currentGame') {
         const hash = this.store.getState().currentSessionHash;
         if (hash) {
@@ -54,7 +52,7 @@ export class Store {
     });
     const middleware = applyMiddleware(
       logging(`⇨ [middlewares]`),
-      apiClient(riichiService, swClient),
+      apiClient(riichiService),
       metrika(metrikaService),
       history(),
       timerMw(this.timerSt),

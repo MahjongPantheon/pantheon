@@ -20,9 +20,6 @@ interface IProps {
   onLangChange: (lang: string) => void;
   onThemeSelect: (theme: string) => void;
   onEventSelect: () => void;
-  wsClientEnabled: boolean;
-  onWsEnable: () => void;
-  onWsDisable: () => void;
 }
 
 export const SettingsScreenView = React.memo(function (props: IProps) {
@@ -40,9 +37,6 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
     onLangChange,
     onThemeSelect,
     onEventSelect,
-    wsClientEnabled,
-    onWsEnable,
-    onWsDisable,
   } = props;
 
   return (
@@ -87,47 +81,6 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
                     onClick={() => onEventSelect()}>{loc._t('Select another event')}</button>
           </div>
         </div>
-        {!wsClientEnabled &&
-        <div className="page-setting__section">
-          <div className="page-setting__section-content">
-            <button className="flat-btn flat-btn--large"
-                    style={{width: '100%'}}
-                    onClick={() => onWsEnable()}>{loc._t('Enable experimental updates')}</button>
-          </div>
-        </div>
-        }
-        {wsClientEnabled &&
-        <div className="page-setting__section">
-          <div className="page-setting__section-content">
-            <button className="flat-btn flat-btn--large"
-                    style={{width: '100%'}}
-                    onClick={() => onWsDisable()}>{loc._t('Disable experimental updates')}</button>
-          </div>
-        </div>
-        }
-        {window.Notification && window.Notification.requestPermission !== undefined && Notification.permission !== 'granted' &&
-          <div className="page-setting__section">
-            <div className="page-setting__section-content">
-              <button className="flat-btn flat-btn--large"
-                      style={{width: '100%'}}
-                      onClick={() => Notification.requestPermission()}>{loc._t('Enable Pantheon notifications')}</button>
-            </div>
-          </div>
-        }
-        {window.Notification && Notification.permission === 'granted' &&
-          <div className="page-setting__section">
-            <div className="page-setting__section-content">
-              {loc._t('Pantheon notifications are enabled')}
-            </div>
-          </div>
-        }
-        {window.Notification && Notification.permission === 'denied' &&
-        <div className="page-setting__section">
-          <div className="page-setting__section-content">
-            {loc._t('Pantheon notifications are disabled. See your browser settings.')}
-          </div>
-        </div>
-        }
         {/*<div className="page-setting__section">*/}
         {/*  <div className="switch-setting">*/}
         {/*    <Switch switched={singleDeviceMode} onToggle={onSingleDeviceModeChange}/>*/}

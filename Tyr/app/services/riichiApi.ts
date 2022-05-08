@@ -45,7 +45,6 @@ import {
 } from './formatters';
 import {IAppState} from '#/store/interfaces';
 import {environment} from "#config";
-import {ServiceWorkerClient} from "#/services/serviceWorkerClient";
 
 type GenericResponse = {
   error?: { message: string, code: any },
@@ -56,7 +55,7 @@ type GenericResponse = {
 export class RiichiApiService {
   private _authToken: string | null = null;
   private _personId: string | null = null;
-  constructor(private _swClient: ServiceWorkerClient, protected onReconnect: () => void) {}
+  constructor(protected onReconnect: () => void) {}
 
   setCredentials(personId: number, token: string) {
     this._authToken = token;
@@ -94,7 +93,6 @@ export class RiichiApiService {
   }
 
   getGameOverview(sessionHashcode: string, eventId: number) {
-    this._swClient.updateClientRegistration(sessionHashcode, eventId);
     return this._jsonRpcRequest<RSessionOverview>('getGameOverview', sessionHashcode)
       .then<LSessionOverview>(gameOverviewFormatter);
   }

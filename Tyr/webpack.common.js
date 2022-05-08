@@ -32,17 +32,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
-    new WorkboxPlugin.InjectManifest({
-      swSrc: './app/serviceWorker.ts',
-      exclude: [
-        /app\/scripts/,
-        /\.map$/,
-        /manifest$/,
-        /\.htaccess$/,
-        /service-worker\.js$/,
-        /sw\.js$/,
-      ],
-    }),
   ],
   resolve: {
     alias: {

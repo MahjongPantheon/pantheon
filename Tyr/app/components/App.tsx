@@ -8,7 +8,6 @@ import {
   AppActionTypes,
   HISTORY_INIT,
   INIT_STATE,
-  INIT_WORKER_HANDLERS,
   SELECT_EVENT,
   SETTINGS_SAVE_LANG,
   STARTUP_WITH_AUTH
@@ -81,7 +80,6 @@ export const App: React.FC<IProps> = (props: IProps) => {
 
   useEffect(() => {
     dispatch({type: INIT_STATE});
-    dispatch({type: INIT_WORKER_HANDLERS});
     i18nService.init((localeName) => {
       dispatch({type: SETTINGS_SAVE_LANG, payload: localeName});
     }, (err) => console.error(err));

@@ -2,7 +2,6 @@ import deepclone from 'deep-clone';
 import {initialState} from '../state';
 import {
   AppActionTypes,
-  ENABLE_FEATURE,
   INIT_STATE,
   SELECT_MULTIRON_WINNER,
   SET_CREDENTIALS,
@@ -71,13 +70,6 @@ export function commonReducer(
       return {
         ...state,
         showAdditionalTableInfo: !state.showAdditionalTableInfo
-      };
-    case ENABLE_FEATURE:
-      return {
-        ...state,
-        features: {
-          [action.payload.feature]: action.payload.enable
-        }
       };
     default:
       return state;
