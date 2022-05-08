@@ -267,7 +267,7 @@ class UserActionEventEdit extends Controller
             $checkedData['error_title'] = _t('Title must be at least 4 characters length');
         }
 
-        $fieldsTypes = json_decode($checkedData['fields_json'], true);
+        $allFields = \Common\Ruleset::fieldTypes();
         unset($checkedData['fields_json']);
 
         // Little sanitization and reforamtting
@@ -310,7 +310,7 @@ class UserActionEventEdit extends Controller
         }
 
         // Force boolean flags to false
-        foreach ($fieldsTypes as $name => $type) {
+        foreach ($allFields as $name => $type) {
             if ($type === 'bool' && !isset($checkedData['rulesetChanges'][$name])) {
                 $checkedData['rulesetChanges'][$name] = false;
             }
