@@ -18,7 +18,6 @@
 namespace Mimir;
 
 require_once __DIR__ . '/../Model.php';
-require_once __DIR__ . '/../WsClient.php';
 require_once __DIR__ . '/EventUserManagement.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
 require_once __DIR__ . '/../primitives/Player.php';
@@ -272,12 +271,7 @@ class InteractiveSessionModel extends Model
         $success = $round->save();
         if ($success) {
             $data = $session->updateCurrentState($round);
-            $wsClient = new WsClient(
-                $this->_config->getStringValue('ratatoskUrl'),
-                $this->_config->getStringValue('ratatoskKey')
-            );
             if ($data) {
-                $wsClient->publishGameState($gameHashcode, $data);
                 $this->_trackUpdate($gameHashcode);
                 return $data;
             }

@@ -17,7 +17,6 @@
  */
 namespace Mimir;
 
-require_once __DIR__ . '/../WsClient.php';
 require_once __DIR__ . '/../models/Event.php';
 require_once __DIR__ . '/../models/EventSeries.php';
 require_once __DIR__ . '/../models/EventUserManagement.php';
@@ -1100,20 +1099,5 @@ class EventsController extends Controller
         }
 
         return true;
-    }
-
-    /**
-     * @param int $eventId
-     * @param array $notification
-     * @throws \WebSocket\BadOpcodeException
-     * @return void
-     */
-    public function sendNotification($eventId, $notification)
-    {
-        $wsClient = new WsClient(
-            $this->_config->getStringValue('ratatoskUrl'),
-            $this->_config->getStringValue('ratatoskKey')
-        );
-        $wsClient->publishNotification($eventId, $notification);
     }
 }

@@ -57,14 +57,6 @@ class TournamentControlPanel extends Controller
 
             try {
                 switch ($this->_path['action']) {
-                    case 'sendNotification':
-                        $this->_mimir->sendNotification($this->_mainEventId, [
-                            // Should match lang ids in Tyr
-                            'en' => $_POST['notification_en'],
-                            'ru' => $_POST['notification_ru'],
-                            'de' => $_POST['notification_de'],
-                        ]);
-                        break;
                     case 'shuffledSeating':
                         $this->_mimir->makeShuffledSeating($this->_mainEventId, 1, mt_rand(100000, 999999));
                         break;
