@@ -21,6 +21,7 @@
     ],
     "paths": {
       "#/*": ["app/*"],
+      "#proto/*": ["../Common/DataObjects/*"],
       "#config": ["app/envConfig/environment.prod.ts"]
     }
   },

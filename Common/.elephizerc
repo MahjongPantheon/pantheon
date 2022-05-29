@@ -1,0 +1,17 @@
+{
+  "src": "DataObjects/**/*.ts",
+  "outDir": "DataObjects/",
+  "quiet": false,
+  "bail": "none",
+  "dump": false,
+  "noZap": false,
+  "verbose": false,
+  "verboseUsage": false,
+  "printImportTree": true,
+  "rootNs": "",
+  "builtinsNs": "Builtins",
+  "baseDir": "DataObjects/",
+  "tsPaths": {
+    "#proto/*": ["DataObjects/*"]
+  }
+}

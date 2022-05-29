@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "typescript": "4.6.4",
+    "mkdirp": "^1.0.4",
+    "@vkontakte/elephize": "^2.16.0"
+  },
+  "scripts": {
+    "build": "yarn elephize -c .elephizerc"
+  }
+}

@@ -21,6 +21,8 @@ Rheda/config/local/index.php
 
 Ratatosk/target
 
+Common/node_modules
+
 Tyr/dist
 Tyr/tmp
 Tyr/node_modules
