@@ -79,6 +79,8 @@ class InteractiveSessionModel extends Model
             throw new InvalidUserException('Some players do not exist in DB, check ids');
         }
 
+        $event[0]->setNextGameStartTime(0)->save();
+
         $newSession = new SessionPrimitive($this->_ds);
         $success = $newSession
             ->setEvent($event[0])

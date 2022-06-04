@@ -90,6 +90,8 @@ return [
     'getNextPrescriptedSeating'    => ['SeatingController', 'getNextSeatingForPrescriptedEvent'],
     'getPrescriptedEventConfig'    => ['EventsController', 'getPrescriptedEventConfig'],
     'updatePrescriptedEventConfig' => ['EventsController', 'updatePrescriptedEventConfig'],
+    'initStartingTimer' => ['EventsController', 'initStartingTimer'],
+    'getStartingTimer' => ['EventsController', 'getStartingTimer'],
 
     'addErrorLog' => ['MiscController', 'addErrorLog'],
 ];

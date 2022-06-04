@@ -425,17 +425,6 @@ class MimirClient implements IMimirClient
     }
 
     /**
-     * @param int $eventId
-     * @param array $notification
-     * @return void
-    */
-    public function sendNotification(int $eventId, array $notification): void
-    {
-        /** @phpstan-ignore-next-line */
-        $this->_client->execute('sendNotification', [$eventId, $notification]);
-    }
-
-    /**
      *  Register for participation in event (from admin control panel)
      *
      * @param int $playerId
@@ -779,6 +768,26 @@ class MimirClient implements IMimirClient
     {
         /** @phpstan-ignore-next-line */
         return $this->_client->execute('updatePrescriptedEventConfig', [$eventId, $nextSessionIndex, $prescript]);
+    }
+
+    /**
+     * @param int $eventId
+     * @return bool
+    */
+    public function initStartingTimer(int $eventId): bool
+    {
+        /** @phpstan-ignore-next-line */
+        return (bool)$this->_client->execute('initStartingTimer', [$eventId]);
+    }
+
+    /**
+     * @param int $eventId
+     * @return int
+    */
+    public function getStartingTimer(int $eventId): int
+    {
+        /** @phpstan-ignore-next-line */
+        return (int)$this->_client->execute('getStartingTimer', [$eventId]);
     }
 
     /**

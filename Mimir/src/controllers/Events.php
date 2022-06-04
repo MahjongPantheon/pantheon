@@ -1079,6 +1079,7 @@ class EventsController extends Controller
      */
     public function rebuildEventScoring($eventId)
     {
+        $this->_log->addInfo('Rebuilding ratings for event #' . $eventId);
         if (!$this->_meta->isEventAdminById($eventId)) {
             throw new BadActionException("You don't have enough privileges to rebuild ratings for this event");
         }
@@ -1098,6 +1099,53 @@ class EventsController extends Controller
             $session->recreateHistory();
         }
 
+        $this->_log->addInfo('Rebuild ratings successful for event #' . $eventId);
         return true;
+    }
+
+    /**
+     * @param int $eventId
+     * @return bool
+     * @throws BadActionException
+     * @throws InvalidParametersException
+     */
+    public function initStartingTimer($eventId)
+    {
+        $this->_log->addInfo('Setting starting timer for event #' . $eventId);
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to init starting timer for this event");
+        }
+
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        $success = $event[0]->setNextGameStartTime(time() + $event[0]->getTimeToStart())->save();
+        if ($success) {
+            $this->_log->addInfo('Successfully set starting timer for event #' . $eventId);
+        } else {
+            $this->_log->addInfo('Failed to set starting timer for event #' . $eventId);
+        }
+
+        return $success;
+    }
+
+    /**
+     * @param int $eventId
+     * @return int seconds to start
+     * @throws InvalidParametersException
+     */
+    public function getStartingTimer($eventId)
+    {
+        $this->_log->addInfo('Getting starting timer for event #' . $eventId);
+
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        $this->_log->addInfo('Successfully got starting timer for event #' . $eventId);
+        return $event[0]->getNextGameStartTime() - time();
     }
 }

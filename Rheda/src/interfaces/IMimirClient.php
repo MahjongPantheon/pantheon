@@ -295,13 +295,6 @@ interface IMimirClient
     public function startTimer(int $eventId): bool;
 
     /**
-     * @param int $eventId
-     * @param array $notification
-     * @return void
-    */
-    public function sendNotification(int $eventId, array $notification): void;
-
-    /**
      *  Register for participation in event (from admin control panel)
      *
      * @param int $playerId
@@ -538,6 +531,18 @@ interface IMimirClient
      * @return mixed
     */
     public function updatePrescriptedEventConfig(int $eventId, int $nextSessionIndex, string $prescript);
+
+    /**
+     * @param int $eventId
+     * @return bool
+    */
+    public function initStartingTimer(int $eventId): bool;
+
+    /**
+     * @param int $eventId
+     * @return int
+    */
+    public function getStartingTimer(int $eventId): int;
 
     /**
      * @param string $facility
