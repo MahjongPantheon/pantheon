@@ -56,6 +56,15 @@ class Db implements IDb
         $this->_connString = $cfg->getDbConnectionString();
         $credentials = $cfg->getDbConnectionCredentials();
 
+        /*
+         * TODO:
+         *  - Заюзать https://github.com/noahheck/E_PDOStatement для логирования запросов
+         *  - Реанимировать рататоск, чтобы можно было иметь условную очередь на отдающей стороне
+         *  - на отдающей стороне - собираем запросы, складируем в рататоск, отправляем на другой конец обычным http-запросом
+         *  - на принимающей стороне - получаем запросы, отправляем в mimir/frey в строгом порядке появления
+         *  - + надо сделать программные точки входа в mimir/frey, куда можно отправлять запросы из рататоска.
+         */
+
         ORM::configure($this->_connString);
         ORM::configure('driver_options', $cfg->getDbDriverOptions());
         if (!empty($credentials)) {
