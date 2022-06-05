@@ -61,3 +61,14 @@
 .table-info__games-left-caption {
   font-size: 14px;
 }
+
+.table-info__autostart-hint {
+  text-align: center;
+}
+
+.table-info__autostart-separator {
+  color: #555;
+  background-color: #555;
+  height: 1px;
+  width: 100%;
+}

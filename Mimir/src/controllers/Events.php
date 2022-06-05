@@ -40,6 +40,7 @@ class EventsController extends Controller
      * @param int $lobbyId Tenhou lobby id for online tournaments
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
+     * @param int $autostartTimer Interval before games autostart
      * @param string $rulesetChangesJson Json-encoded changes for base ruleset
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -58,6 +59,7 @@ class EventsController extends Controller
         $lobbyId,
         $isTeam,
         $isPrescripted,
+        $autostartTimer,
         $rulesetChangesJson
     ) {
         $this->_log->addInfo('Creating new event with [' . $ruleset . '] rules');
@@ -113,6 +115,7 @@ class EventsController extends Controller
                     ->setUseTimer(1)
                     ->setUsePenalty(1)
                     ->setIsTeam($isTeam ? 1 : 0)
+                    ->setTimeToStart($autostartTimer)
                     ->setIsPrescripted($isPrescripted ? 1 : 0)
                 ;
                 break;
@@ -160,6 +163,7 @@ class EventsController extends Controller
      * @param int $lobbyId Tenhou lobby id for online tournaments
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
+     * @param int $autostartTimer Interval before games are started automatically
      * @param string $rulesetChangesJson Json-encoded changes for base ruleset
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -178,6 +182,7 @@ class EventsController extends Controller
         $lobbyId,
         $isTeam,
         $isPrescripted,
+        $autostartTimer,
         $rulesetChangesJson
     ) {
         $this->_log->addInfo('Updating event with [' . $ruleset . '] rules');
@@ -213,6 +218,7 @@ class EventsController extends Controller
             $event
                 ->setAutoSeating($isPrescripted ? 0 : 1)
                 ->setIsTeam($isTeam ? 1 : 0)
+                ->setTimeToStart($autostartTimer)
                 ->setIsPrescripted($isPrescripted ? 1 : 0)
             ;
         } elseif ($event->getIsOnline()) { // Should be online tournament
@@ -271,6 +277,7 @@ class EventsController extends Controller
             'minGames' => $event->getMinGamesCount(),
             'isTeam' => $event->getIsTeam(),
             'isPrescripted' => $event->getIsPrescripted(),
+            'autostart' => $event->getTimeToStart(),
             'rulesetChanges' => json_encode($event->getRulesetChanges() ?: [])
         ];
 
@@ -825,6 +832,8 @@ class EventsController extends Controller
         }
 
         $response['waiting_for_timer'] = ($event[0]->getGamesStatus() == EventPrimitive::GS_SEATING_READY);
+        $response['have_autostart'] = ($event[0]->getNextGameStartTime() > 0 && $event[0]->getTimeToStart() > 0);
+        $response['autostart_timer'] = $event[0]->getNextGameStartTime() - time();
 
         $this->_log->addInfo('Successfully got timer data for event id#' . $eventId);
 
@@ -1079,6 +1088,7 @@ class EventsController extends Controller
      */
     public function rebuildEventScoring($eventId)
     {
+        $this->_log->addInfo('Rebuilding ratings for event #' . $eventId);
         if (!$this->_meta->isEventAdminById($eventId)) {
             throw new BadActionException("You don't have enough privileges to rebuild ratings for this event");
         }
@@ -1098,6 +1108,53 @@ class EventsController extends Controller
             $session->recreateHistory();
         }
 
+        $this->_log->addInfo('Rebuild ratings successful for event #' . $eventId);
         return true;
+    }
+
+    /**
+     * @param int $eventId
+     * @return bool
+     * @throws BadActionException
+     * @throws InvalidParametersException
+     */
+    public function initStartingTimer($eventId)
+    {
+        $this->_log->addInfo('Setting starting timer for event #' . $eventId);
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to init starting timer for this event");
+        }
+
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        $success = $event[0]->setNextGameStartTime(time() + $event[0]->getTimeToStart())->save();
+        if ($success) {
+            $this->_log->addInfo('Successfully set starting timer for event #' . $eventId);
+        } else {
+            $this->_log->addInfo('Failed to set starting timer for event #' . $eventId);
+        }
+
+        return $success;
+    }
+
+    /**
+     * @param int $eventId
+     * @return int seconds to start
+     * @throws InvalidParametersException
+     */
+    public function getStartingTimer($eventId)
+    {
+        $this->_log->addInfo('Getting starting timer for event #' . $eventId);
+
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+
+        $this->_log->addInfo('Successfully got starting timer for event #' . $eventId);
+        return $event[0]->getNextGameStartTime() - time();
     }
 }

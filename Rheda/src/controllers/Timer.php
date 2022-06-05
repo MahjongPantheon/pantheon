@@ -53,6 +53,7 @@ class Timer extends Controller
             $this->_mainEventRules->timerPolicy() === 'yellowZone' ? $this->_mainEventRules->yellowZone() : 0
         );
         $timerState = $this->_mimir->getTimerState($this->_mainEventId);
+        $autostartTimer = $this->_mimir->getStartingTimer($this->_mainEventId);
         $remaining = $timerState['time_remaining'] - $zonesDuration;
         $currentSeating = $this->_formatSeating($this->_mimir->getCurrentSeating($this->_mainEventId));
         $durationWithoutSeating = $this->_mainEventRules->gameDuration() - 5 - ($zonesDuration / 60);
@@ -72,6 +73,8 @@ class Timer extends Controller
         }
 
         return [
+            'startingTimer' => $autostartTimer,
+            'haveStartingTimer' => $autostartTimer > 0,
             'waiting' => $this->_mainEventRules->gamesWaitingForTimer(),
             'redZoneLength' => $this->_mainEventRules->redZone() / 60,
             'yellowZoneLength' => $this->_mainEventRules->yellowZone() / 60,

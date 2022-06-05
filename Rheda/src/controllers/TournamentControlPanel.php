@@ -59,15 +59,22 @@ class TournamentControlPanel extends Controller
                 switch ($this->_path['action']) {
                     case 'shuffledSeating':
                         $this->_mimir->makeShuffledSeating($this->_mainEventId, 1, mt_rand(100000, 999999));
+                        $this->_mimir->initStartingTimer($this->_mainEventId);
                         break;
                     case 'intervalSeating':
                         $this->_mimir->makeIntervalSeating($this->_mainEventId, intval($_POST['step']));
+                        $this->_mimir->initStartingTimer($this->_mainEventId);
                         break;
                     case 'predefinedSeating':
                         $this->_mimir->makePrescriptedSeating($this->_mainEventId, isset($_POST['rndseat']) && $_POST['rndseat'] == 1);
+                        $this->_mimir->initStartingTimer($this->_mainEventId);
                         break;
                     case 'swissSeating':
                         $this->_mimir->makeSwissSeating($this->_mainEventId);
+                        $this->_mimir->initStartingTimer($this->_mainEventId);
+                        break;
+                    case 'resetStartingTimer':
+                        $this->_mimir->initStartingTimer($this->_mainEventId);
                         break;
                     case 'startTimer':
                         $this->_mimir->startTimer($this->_mainEventId);
@@ -163,8 +170,11 @@ class TournamentControlPanel extends Controller
             }
         }
 
+        $startingTimer = $this->_mimir->getStartingTimer($this->_mainEventId);
         return [
             'error' => null,
+            'startingTimer' => $startingTimer,
+            'haveStartingTimer' => $startingTimer > 0,
             'isTournament' => true, // false in games control panel controller
             'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
             'tables' => $tablesFormatted,

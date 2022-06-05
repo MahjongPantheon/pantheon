@@ -62,12 +62,12 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testTimer()
     {
         $response = $this->_client->execute('getTimerState', [1]);
-        $this->assertEquals([
-            'started' => false,
-            'finished' => false,
-            'time_remaining' => null,
-            'waiting_for_timer' => false
-        ], $response);
+
+        $this->assertFalse($response['started']);
+        $this->assertFalse($response['finished']);
+        $this->assertNull($response['time_remaining']);
+        $this->assertFalse($response['waiting_for_timer']);
+        $this->assertFalse($response['have_autostart']);
 
         $this->assertTrue($this->_client->execute('startTimer', [1]));
         $response = $this->_client->execute('getTimerState', [1]);

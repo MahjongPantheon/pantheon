@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-02 22:18+0300\n"
+"POT-Creation-Date: 2022-06-06 01:10+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,9 +15,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 msgid "%d - %d (%d total)"
 msgstr "%d - %d (всего %d)"
@@ -219,6 +219,9 @@ msgstr "И Ваша риичи палочка"
 
 msgid "Apply penalty"
 msgstr "Применить штраф"
+
+msgid "Autostart interval should be positive integer or zero"
+msgstr "Интервал автостарта должен быть положительным целым числом либо нулем"
 
 msgid "Average"
 msgstr "В среднем"
@@ -439,6 +442,14 @@ msgstr ""
 msgid "Drawn rounds: %d"
 msgstr "Ничьих: %d"
 
+msgid ""
+"Duration in seconds before games are started automatically after seating is "
+"ready. Set to 0 to disable autostart."
+msgstr ""
+"Время в секундах, по истечении которого игры начинаются автоматически после "
+"того, как рассадка была опубликована. Установите в 0 чтобы выключить "
+"автостарт."
+
 msgid "E-mail address"
 msgstr "Адрес e-mail"
 
@@ -589,11 +600,17 @@ msgstr "Подробнее об игре"
 msgid "Game duration in minutes"
 msgstr "Длительность игры в минутах"
 
+msgid "Games autostart interval"
+msgstr "Интервал автостарта игр"
+
 msgid "Games control panel"
 msgstr "Управление играми"
 
 msgid "Games played"
 msgstr "Сыграно игр"
+
+msgid "Games will be automatically started in: "
+msgstr "Игры будут автоматически запущены через:"
 
 msgid "Given for collecting a yakuman during tournament."
 msgstr "Дается за сбор якумана на турнире."
@@ -891,9 +908,6 @@ msgstr "Как и планировалось"
 
 msgid "Kokushi musou"
 msgstr "Кокуши мусо"
-
-msgid "Language:"
-msgstr "Язык:"
 
 msgid "Last played round:"
 msgstr "Последняя сыгранная раздача:"
@@ -1345,6 +1359,12 @@ msgstr "Ренхо"
 msgid "Replacement player"
 msgstr "Игрок замены"
 
+msgid "Reset autostart timer"
+msgstr "Сбросить таймер автостарта"
+
+msgid "Reset autostart timer?"
+msgstr "Сбросить таймер автостарта?"
+
 msgid "Reset the timer"
 msgstr "Сбросить таймер"
 
@@ -1421,6 +1441,9 @@ msgstr "Рянпейко"
 msgid "Ryuu iisou"
 msgstr "Рюисо"
 
+msgid "STARTING IN:"
+msgstr "НАЧАЛО ЧЕРЕЗ:"
+
 msgid "San ankou"
 msgstr "Сананко"
 
@@ -1442,6 +1465,13 @@ msgstr "Сохранить локальные ID"
 msgid "Save teams list"
 msgstr "Сохранить список команд"
 
+msgid ""
+"Seconds before tournament games are started automatically (after seating is "
+"ready)"
+msgstr ""
+"Число секунд перед тем как турнирные игры будут запущены автоматически "
+"(после генерации рассадки)"
+
 msgid "Select basic ruleset for event."
 msgstr "Выберите базовый набор правил для события."
 
@@ -1453,12 +1483,6 @@ msgstr "Выберите страну, которую вы представля�
 
 msgid "Send confirmation e-mail"
 msgstr "Выслать письмо с подтверждением"
-
-msgid "Send notification"
-msgstr "Послать уведомление"
-
-msgid "Send notification to players"
-msgstr "Послать уведомление игрокам"
 
 msgid "Series"
 msgstr "Серии игр"
@@ -1531,6 +1555,9 @@ msgid ""
 msgstr ""
 "Начните ввод и выберите город из списка, либо просто напишите полное "
 "название города"
+
+msgid "Starting now!"
+msgstr "Начинаем!"
 
 msgid "Statistics"
 msgstr "Статистика"
@@ -1836,6 +1863,13 @@ msgstr ""
 "Перед тем как продолжить, вам необходимо войти, используя адрес e-mail и "
 "пароль, указанные при регистрации"
 
+msgid ""
+"You can press next button to reset the timer. Also you can start games "
+"manually in any moment."
+msgstr ""
+"Вы можете нажать следующую кнопку для сброса таймера. Также вы можете в "
+"любой момент начать игры, не дожидаясь таймера."
+
 msgid "Your e-mail address"
 msgstr "Ваш адрес e-mail"
 
@@ -2037,6 +2071,9 @@ msgstr "да"
 #~ msgid "If tanyao counts on open hand"
 #~ msgstr "Засчитывается ли таняо на открытой руке"
 
+#~ msgid "Language:"
+#~ msgstr "Язык:"
+
 #~ msgid "Login"
 #~ msgstr "Вход"
 
@@ -2120,14 +2157,8 @@ msgstr "да"
 #~ "Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
 #~ "системой, в случае несоответствия будет выдано предупреждение."
 
-#~ msgid "SEATING"
-#~ msgstr "РАССАДКА"
-
 #~ msgid "SOUTH"
 #~ msgstr "ЮГ"
-
-#~ msgid "Seating controls"
-#~ msgstr "Управление рассадкой"
 
 #~ msgid ""
 #~ "Secondary divider (applied after primary) to make rating points from uma/"
@@ -2136,6 +2167,12 @@ msgstr "да"
 
 #~ msgid "Select player"
 #~ msgstr "Выберите игрока"
+
+#~ msgid "Send notification"
+#~ msgstr "Послать уведомление"
+
+#~ msgid "Send notification to players"
+#~ msgstr "Послать уведомление игрокам"
 
 #~ msgid "Sorry, this page is not available for mobile devices"
 #~ msgstr "Извините, эта страница недоступна для мобильных устройств"

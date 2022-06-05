@@ -47,6 +47,7 @@ class UserActionEventEdit extends Controller
      * @var array
      */
     protected $_defaultSettings = [
+        'startingTimer' => 600,
         'duration' => 90,
         'seriesLength' => 0,
         'minGames' => 0,
@@ -159,6 +160,7 @@ class UserActionEventEdit extends Controller
             'all_yaku' => $rulesets['all_yaku'],
             'pao_yaku' => $rulesets['pao_yaku'],
             'yaku_translations' => $rulesets['yaku_translations'],
+            'autostart' => $prevData['autostart'],
             'available_timezones' => $this->_getTimezones(empty($prevData['timezone']) ? '' : $prevData['timezone']),
         ]);
     }
@@ -206,6 +208,7 @@ class UserActionEventEdit extends Controller
             'ruleset_fields_names' => $rulesets['fields_names'],
             'all_yaku' => $rulesets['all_yaku'],
             'pao_yaku' => $rulesets['pao_yaku'],
+            'autostart' => $prevData['autostart'],
             'yaku_translations' => $rulesets['yaku_translations'],
             'available_timezones' => $this->_getTimezones(empty($prevData['timezone']) ? '' : $prevData['timezone']),
         ]);
@@ -279,6 +282,10 @@ class UserActionEventEdit extends Controller
             $checkedData['error_duration'] = _t('There must be non-zero duration for tournaments');
         }
 
+        if (!empty($data['autostart']) && is_numeric($data['autostart']) && !empty($data['isTournament']) && intval($data['autostart']) < 0) {
+            $checkedData['error_autostart'] = _t('Autostart interval should be positive integer or zero');
+        }
+
         if (!empty($data['isOnline']) && (
             empty($data['lobbyId']) || !preg_match('#^C\d+$#is', $data['lobbyId']))
         ) {
@@ -350,6 +357,7 @@ class UserActionEventEdit extends Controller
             empty($checkData['lobbyId']) ? 0 : intval('1' . str_replace('C', '', $checkData['lobbyId'])),
             empty($checkData['isTeam']) ? false : true,
             empty($checkData['isPrescripted']) ? false : true,
+            intval($checkData['autostart']),
             empty($checkData['rulesetChanges']) ? '{}' : (json_encode($checkData['rulesetChanges']) ?: '{}')
         );
         $ruleId = $this->_frey->addRuleForPerson(
@@ -388,6 +396,7 @@ class UserActionEventEdit extends Controller
             empty($checkData['lobbyId']) ? 0 : intval('1' . str_replace('C', '', $checkData['lobbyId'])),
             empty($checkData['isTeam']) ? false : true,
             empty($checkData['isPrescripted']) ? false : true,
+            intval($checkData['autostart']),
             empty($checkData['rulesetChanges']) ? '{}' : (json_encode($checkData['rulesetChanges']) ?: '{}')
         );
         if (!$success) {

@@ -69,7 +69,9 @@ export function timerFormatter(timer: RTimerState): LTimerState {
     started: !!timer.started,
     finished: !!timer.finished,
     timeRemaining: timer.time_remaining ? parseInt(timer.time_remaining.toString(), 10) : 0,
-    waitingForTimer: !!timer.waiting_for_timer
+    waitingForTimer: !!timer.waiting_for_timer,
+    haveAutostart: !!timer.have_autostart,
+    autostartTimer: timer.autostart_timer ? parseInt(timer.autostart_timer.toString(), 10) : 0,
   };
 }
 

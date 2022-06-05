@@ -55,7 +55,7 @@ import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
 import {roundToString} from '#/components/helpers/Utils';
 import {AppOutcome} from '#/interfaces/app';
 import {getNextWinnerWithPao} from '#/store/selectors/paoSelectors';
-import {formatTime, getTimeRemaining} from '#/store/selectors/overviewSelectors';
+import {formatTime, getAutostartTimeRemaining, getTimeRemaining} from '#/store/selectors/overviewSelectors';
 import {I18nService} from "#/services/i18n";
 
 // todo move to selectors most of code from here
@@ -516,6 +516,7 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
   let tableNumber = state.currentOtherTable?.tableIndex ?? state.tableIndex;
   let showRoundInfo = true;
   let showTimer = false;
+  let isAutostartTimer = false;
   let currentTime: string | undefined = undefined;
   let gamesLeft: number | undefined = undefined;
 
@@ -529,6 +530,13 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
       if (state.tableIndex) {
         showTableNumber = true;
         showRoundInfo = false;
+      }
+
+      const timeRemaining = getAutostartTimeRemaining(state);
+      if (timeRemaining !== undefined) {
+        showTimer = true;
+        isAutostartTimer = true;
+        currentTime = formatTime(timeRemaining.minutes, timeRemaining.seconds);
       }
     } else if (state.currentScreen === 'currentGame' || state.currentScreen === 'outcomeSelect') {
       const timeRemaining = getTimeRemaining(state);
@@ -548,6 +556,7 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
     showRoundInfo,
     showTableNumber,
     showTimer,
+    isAutostartTimer,
     gamesLeft,
     round: roundToString(state.currentOtherTable?.currentRound ?? state.currentRound),
     honbaCount: state.currentOtherTable?.honba ?? state.honba,

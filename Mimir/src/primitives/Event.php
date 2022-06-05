@@ -61,6 +61,8 @@ class EventPrimitive extends Primitive
         'is_prescripted'    => '_isPrescripted',
         'min_games_count'   => '_minGamesCount',
         'finished'          => '_finished',
+        'next_game_start_time' => '_nextGameStartTime',
+        'time_to_start'     => '_timeToStart'
     ];
 
     protected function _getFieldsTransforms()
@@ -89,6 +91,8 @@ class EventPrimitive extends Primitive
             '_hideResults'        => $this->_integerTransform(),
             '_minGamesCount'      => $this->_integerTransform(),
             '_finished'           => $this->_integerTransform(),
+            '_nextGameStartTime'  => $this->_integerTransform(),
+            '_timeToStart'        => $this->_integerTransform(),
             '_ruleset'            => [
                 'serialize' => function (\Common\Ruleset $rules) {
                     return $rules->title();
@@ -249,6 +253,16 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_finished;
+    /**
+     * What interval next game should start in
+     * @var integer
+     */
+    protected $_timeToStart;
+    /**
+     * Next game start time
+     * @var integer
+     */
+    protected $_nextGameStartTime;
     /**
      * Status of games in event: one of
      * - seating_ready
@@ -841,6 +855,42 @@ class EventPrimitive extends Primitive
     public function setIsFinished($isFinished)
     {
         $this->_finished = $isFinished;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeToStart()
+    {
+        return $this->_timeToStart;
+    }
+
+    /**
+     * @param int $time
+     * @return EventPrimitive
+     */
+    public function setTimeToStart($time)
+    {
+        $this->_timeToStart = $time;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNextGameStartTime()
+    {
+        return $this->_nextGameStartTime;
+    }
+
+    /**
+     * @param int $startTime
+     * @return EventPrimitive
+     */
+    public function setNextGameStartTime($startTime)
+    {
+        $this->_nextGameStartTime = $startTime;
         return $this;
     }
 

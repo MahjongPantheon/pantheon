@@ -29,6 +29,7 @@ export class Store {
   constructor(i18n: I18nService) {
     this.timerSt = {
       timer: undefined,
+      autostartTimer: undefined,
       setInterval: (callback: () => any, milliseconds: number) => window.setInterval(callback, milliseconds),
       clearInterval: (handle: number) => window.clearInterval(handle)
     };

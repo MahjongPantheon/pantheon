@@ -246,10 +246,11 @@ interface IMimirClient
      * @param int $lobbyId
      * @param bool $isTeam
      * @param bool $isPrescripted
+     * @param int $autostartTimer
      * @param string $rulesetChangesJson
      * @return int
     */
-    public function createEvent(string $type, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): int;
+    public function createEvent(string $type, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, int $autostartTimer, string $rulesetChangesJson): int;
 
     /**
      *  Update settings of existing event
@@ -265,10 +266,11 @@ interface IMimirClient
      * @param int $lobbyId
      * @param bool $isTeam
      * @param bool $isPrescripted
+     * @param int $autostartTimer
      * @param string $rulesetChangesJson
      * @return bool
     */
-    public function updateEvent(int $id, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): bool;
+    public function updateEvent(int $id, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, int $autostartTimer, string $rulesetChangesJson): bool;
 
     /**
      *  Finish event
@@ -293,13 +295,6 @@ interface IMimirClient
      * @return bool
     */
     public function startTimer(int $eventId): bool;
-
-    /**
-     * @param int $eventId
-     * @param array $notification
-     * @return void
-    */
-    public function sendNotification(int $eventId, array $notification): void;
 
     /**
      *  Register for participation in event (from admin control panel)
@@ -538,6 +533,18 @@ interface IMimirClient
      * @return mixed
     */
     public function updatePrescriptedEventConfig(int $eventId, int $nextSessionIndex, string $prescript);
+
+    /**
+     * @param int $eventId
+     * @return bool
+    */
+    public function initStartingTimer(int $eventId): bool;
+
+    /**
+     * @param int $eventId
+     * @return int
+    */
+    public function getStartingTimer(int $eventId): int;
 
     /**
      * @param string $facility

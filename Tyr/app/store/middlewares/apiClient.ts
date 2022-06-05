@@ -214,7 +214,9 @@ function updateCurrentGames(api: RiichiApiService, dispatchNext: Dispatch, dispa
     }
     dispatchToStore({ type: SET_TIMER, payload: {
       waiting: timerState.waitingForTimer,
-      secondsRemaining: timerState.timeRemaining
+      secondsRemaining: timerState.timeRemaining,
+      autostartSecondsRemaining: timerState.autostartTimer,
+      haveAutostart: timerState.haveAutostart,
     }});
   }).catch((e) => {
     if (e.code === 401) { // token has rotten

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pantheon - Rheda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-02 22:18+0300\n"
+"POT-Creation-Date: 2022-06-06 01:10+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: Jesterboxboy\n"
@@ -15,8 +15,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 msgid "%d - %d (%d total)"
 msgstr "%d - %d (%d gesamt)"
@@ -210,6 +210,9 @@ msgstr "Der Riichi Einsatz, Bitte"
 
 msgid "Apply penalty"
 msgstr "Strafe anwenden"
+
+msgid "Autostart interval should be positive integer or zero"
+msgstr ""
 
 msgid "Average"
 msgstr "Durchschnitt"
@@ -427,6 +430,11 @@ msgstr ""
 msgid "Drawn rounds: %d"
 msgstr "Unentschiedene Runden: %d"
 
+msgid ""
+"Duration in seconds before games are started automatically after seating is "
+"ready. Set to 0 to disable autostart."
+msgstr ""
+
 msgid "E-mail address"
 msgstr "Email Adresse"
 
@@ -581,11 +589,17 @@ msgstr "Spieldetails"
 msgid "Game duration in minutes"
 msgstr "Spieldauer in Minuten"
 
+msgid "Games autostart interval"
+msgstr ""
+
 msgid "Games control panel"
 msgstr "Spieleinstellungen"
 
 msgid "Games played"
 msgstr "Spiele gespielt"
+
+msgid "Games will be automatically started in: "
+msgstr ""
 
 msgid "Given for collecting a yakuman during tournament."
 msgstr "Für das Sammeln eines Yakuman während des Turniers."
@@ -876,9 +890,6 @@ msgstr "Genau nach Plan"
 
 msgid "Kokushi musou"
 msgstr "Kokushi musou"
-
-msgid "Language:"
-msgstr ""
 
 msgid "Last played round:"
 msgstr "Letzte gespielte Runde:"
@@ -1328,6 +1339,12 @@ msgstr "Renhou"
 msgid "Replacement player"
 msgstr "Ersatzspieler"
 
+msgid "Reset autostart timer"
+msgstr ""
+
+msgid "Reset autostart timer?"
+msgstr ""
+
 msgid "Reset the timer"
 msgstr "Timer zurücksetzen"
 
@@ -1404,6 +1421,9 @@ msgstr "Ryan peikou"
 msgid "Ryuu iisou"
 msgstr "Ryuu iisou"
 
+msgid "STARTING IN:"
+msgstr ""
+
 msgid "San ankou"
 msgstr "San ankou"
 
@@ -1425,6 +1445,11 @@ msgstr "Lokale IDs sichern"
 msgid "Save teams list"
 msgstr "Team Liste sichern"
 
+msgid ""
+"Seconds before tournament games are started automatically (after seating is "
+"ready)"
+msgstr ""
+
 msgid "Select basic ruleset for event."
 msgstr "Regelsatz für Event auswählen."
 
@@ -1436,13 +1461,6 @@ msgstr "Ihr Land auswählen"
 
 msgid "Send confirmation e-mail"
 msgstr "Bestätigungsmail senden"
-
-#, fuzzy
-msgid "Send notification"
-msgstr "Bestätigungsmail senden"
-
-msgid "Send notification to players"
-msgstr ""
 
 msgid "Series"
 msgstr "Serie"
@@ -1509,6 +1527,9 @@ msgid ""
 "Start typing and select your city from list, or just type it's whole name to "
 "add new city"
 msgstr "Wähle Stadt aus der Liste oder gib den Name manuell ein"
+
+msgid "Starting now!"
+msgstr ""
 
 msgid "Statistics"
 msgstr "Statistik"
@@ -1806,6 +1827,11 @@ msgid ""
 "You are required to log in with your email and password before proceeding"
 msgstr "Bitte mit Email und Passwort einloggen"
 
+msgid ""
+"You can press next button to reset the timer. Also you can start games "
+"manually in any moment."
+msgstr ""
+
 msgid "Your e-mail address"
 msgstr "Deine Email Adresse"
 
@@ -2043,17 +2069,15 @@ msgstr "ja"
 #~ "Zahlungsprüfungen durchgeführt: Im Falle einer Inkonsistenz wird der "
 #~ "Alarm angezeigt."
 
-#~ msgid "SEATING"
-#~ msgstr "SITZPLÄTZE"
-
 #~ msgid "SOUTH"
 #~ msgstr "SÜD"
 
-#~ msgid "Seating controls"
-#~ msgstr "Sitzsteuerungen"
-
 #~ msgid "Select player"
 #~ msgstr "Spieler auswählen"
+
+#, fuzzy
+#~ msgid "Send notification"
+#~ msgstr "Bestätigungsmail senden"
 
 #~ msgid "Sorry, this page is not available for mobile devices"
 #~ msgstr "Entschuldigung, diese Seite ist nicht für Mobilgeräte verfügbar"

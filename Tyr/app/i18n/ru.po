@@ -7,20 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-02 22:18+0300\n"
-"PO-Revision-Date: 2022-02-02 22:21+0300\n"
+"POT-Creation-Date: 2022-06-06 01:10+0300\n"
+"PO-Revision-Date: 2022-06-06 01:11+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: i18n-json2po\n"
+"X-Generator: Poedit 3.0.1\n"
 
-#: app/components/screens/table/base/TableInfo.tsx:74:18
+#: app/components/screens/table/base/TableInfo.tsx:76:18
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] "Осталась %1 раздача"
@@ -106,10 +106,6 @@ msgstr "Дайсанген"
 msgid "Daisuushii"
 msgstr "Дайсуши"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:104:52
-msgid "Disable experimental updates"
-msgstr "Выключить экспериментальные обновления"
-
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:73:16
 msgid "Dora"
 msgstr "Дора"
@@ -125,14 +121,6 @@ msgstr "E-mail не зарегистрирован в базе данных Pant
 #: app/components/screens/login/EnterCredentialsView.tsx:23:17
 msgid "Email"
 msgstr "Email"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:113:73
-msgid "Enable Pantheon notifications"
-msgstr "Включить уведомления от Pantheon"
-
-#: app/components/screens/settings/SettingsScreenView.tsx:95:51
-msgid "Enable experimental updates"
-msgstr "Включить экспериментальные обновления"
 
 #: app/components/screens/home/HomeScreen.tsx:68:55
 msgid "Event title"
@@ -217,7 +205,7 @@ msgstr "Джунчан"
 msgid "Kokushi musou"
 msgstr "Кокушимусо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:54:57
+#: app/components/screens/settings/SettingsScreenView.tsx:48:57
 msgid "Language"
 msgstr "Язык"
 
@@ -229,7 +217,7 @@ msgstr "Загрузка..."
 msgid "Log in"
 msgstr "Вход"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:142:32
+#: app/components/screens/settings/SettingsScreenView.tsx:95:32
 msgid "Log out"
 msgstr "Выйти из системы"
 
@@ -291,14 +279,6 @@ msgstr "Другие столы"
 msgid "Pantheon"
 msgstr "Pantheon"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:127:14
-msgid "Pantheon notifications are disabled. See your browser settings."
-msgstr "Уведомления отключены. Проверьте настройки браузера."
-
-#: app/components/screens/settings/SettingsScreenView.tsx:120:16
-msgid "Pantheon notifications are enabled"
-msgstr "Уведомления Pantheon включены"
-
 #: app/components/screens/login/EnterCredentialsView.tsx:18:10
 msgid "Pantheon: log in"
 msgstr "Pantheon: вход в систему"
@@ -323,7 +303,7 @@ msgstr "Штраф"
 msgid "Pinfu"
 msgstr "Пин-фу"
 
-#: app/components/screens/settings/SettingsScreen.tsx:65:58
+#: app/components/screens/settings/SettingsScreen.tsx:56:58
 msgid "Player name"
 msgstr "Имя игрока"
 
@@ -389,7 +369,7 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:87:54
+#: app/components/screens/settings/SettingsScreenView.tsx:81:54
 msgid "Select another event"
 msgstr "Выбрать другое событие"
 
@@ -429,7 +409,7 @@ msgstr "Сууанко"
 msgid "Suukantsu"
 msgstr "Сууканцу"
 
-#: app/components/screens/table/base/TableInfo.tsx:83:14
+#: app/components/screens/table/base/TableInfo.tsx:85:14
 msgid "Table #%1"
 msgstr "Стол №%1"
 
@@ -445,13 +425,17 @@ msgstr "Темпай: %1"
 msgid "Tenhou"
 msgstr "Тенхо"
 
-#: app/components/screens/settings/SettingsScreenView.tsx:66:57
+#: app/components/screens/settings/SettingsScreenView.tsx:60:57
 msgid "Theme"
 msgstr "Оформление"
 
 #: app/components/screens/event-select/EventSelectScreenView.tsx:59:53
 msgid "There is no events you participate in right now"
 msgstr "На данный момент нет активных событий, в которых вы участвуете"
+
+#: app/components/screens/table/base/TableInfo.tsx:87:143
+msgid "Time before game start:"
+msgstr "До начала игры:"
 
 #: app/primitives/yaku.ts:131:34 app/primitives/yaku.ts:132:39
 msgid "Toitoi"
@@ -556,3 +540,18 @@ msgstr "х4"
 #: app/components/screens/log/view/RoundSelectors.ts:13:12
 msgid "yakuman"
 msgstr "якуман"
+
+#~ msgid "Disable experimental updates"
+#~ msgstr "Выключить экспериментальные обновления"
+
+#~ msgid "Enable Pantheon notifications"
+#~ msgstr "Включить уведомления от Pantheon"
+
+#~ msgid "Enable experimental updates"
+#~ msgstr "Включить экспериментальные обновления"
+
+#~ msgid "Pantheon notifications are disabled. See your browser settings."
+#~ msgstr "Уведомления отключены. Проверьте настройки браузера."
+
+#~ msgid "Pantheon notifications are enabled"
+#~ msgstr "Уведомления Pantheon включены"

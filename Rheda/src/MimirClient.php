@@ -356,13 +356,14 @@ class MimirClient implements IMimirClient
      * @param int $lobbyId
      * @param bool $isTeam
      * @param bool $isPrescripted
+     * @param int $autostartTimer
      * @param string $rulesetChangesJson
      * @return int
     */
-    public function createEvent(string $type, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): int
+    public function createEvent(string $type, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, int $autostartTimer, string $rulesetChangesJson): int
     {
         /** @phpstan-ignore-next-line */
-        return (int)$this->_client->execute('createEvent', [$type, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted, $rulesetChangesJson]);
+        return (int)$this->_client->execute('createEvent', [$type, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted, $autostartTimer, $rulesetChangesJson]);
     }
 
     /**
@@ -379,13 +380,14 @@ class MimirClient implements IMimirClient
      * @param int $lobbyId
      * @param bool $isTeam
      * @param bool $isPrescripted
+     * @param int $autostartTimer
      * @param string $rulesetChangesJson
      * @return bool
     */
-    public function updateEvent(int $id, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, string $rulesetChangesJson): bool
+    public function updateEvent(int $id, string $title, string $description, string $ruleset, int $gameDuration, string $timezone, int $series, int $minGamesCount, int $lobbyId, bool $isTeam, bool $isPrescripted, int $autostartTimer, string $rulesetChangesJson): bool
     {
         /** @phpstan-ignore-next-line */
-        return (bool)$this->_client->execute('updateEvent', [$id, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted, $rulesetChangesJson]);
+        return (bool)$this->_client->execute('updateEvent', [$id, $title, $description, $ruleset, $gameDuration, $timezone, $series, $minGamesCount, $lobbyId, $isTeam, $isPrescripted, $autostartTimer, $rulesetChangesJson]);
     }
 
     /**
@@ -422,17 +424,6 @@ class MimirClient implements IMimirClient
     {
         /** @phpstan-ignore-next-line */
         return (bool)$this->_client->execute('startTimer', [$eventId]);
-    }
-
-    /**
-     * @param int $eventId
-     * @param array $notification
-     * @return void
-    */
-    public function sendNotification(int $eventId, array $notification): void
-    {
-        /** @phpstan-ignore-next-line */
-        $this->_client->execute('sendNotification', [$eventId, $notification]);
     }
 
     /**
@@ -779,6 +770,26 @@ class MimirClient implements IMimirClient
     {
         /** @phpstan-ignore-next-line */
         return $this->_client->execute('updatePrescriptedEventConfig', [$eventId, $nextSessionIndex, $prescript]);
+    }
+
+    /**
+     * @param int $eventId
+     * @return bool
+    */
+    public function initStartingTimer(int $eventId): bool
+    {
+        /** @phpstan-ignore-next-line */
+        return (bool)$this->_client->execute('initStartingTimer', [$eventId]);
+    }
+
+    /**
+     * @param int $eventId
+     * @return int
+    */
+    public function getStartingTimer(int $eventId): int
+    {
+        /** @phpstan-ignore-next-line */
+        return (int)$this->_client->execute('getStartingTimer', [$eventId]);
     }
 
     /**
