@@ -138,6 +138,8 @@ export interface RTimerState {
   finished: boolean;
   time_remaining: string;
   waiting_for_timer: boolean;
+  have_autostart: boolean;
+  autostart_timer: string;
 }
 
 export interface RSessionOverview {

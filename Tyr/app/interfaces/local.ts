@@ -50,6 +50,8 @@ export interface LTimerState {
   finished: boolean;
   timeRemaining: number;
   waitingForTimer: boolean;
+  haveAutostart: boolean;
+  autostartTimer: number;
 }
 
 export interface LWinItem {

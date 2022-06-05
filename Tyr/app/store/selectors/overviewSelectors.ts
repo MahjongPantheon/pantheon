@@ -25,7 +25,27 @@ function _getTimeRemaining(state: IAppState): {minutes: number, seconds: number}
   }
 }
 
+function _getAutostartTimeRemaining(state: IAppState): {minutes: number, seconds: number} | undefined {
+  if (!state.gameConfig?.useTimer || !state.timer?.waiting) {
+    return undefined;
+  }
+
+  let min = Math.floor((state.timer?.autostartSecondsRemaining || 0) / 60);
+
+  if (min < 0) {
+    return {
+      minutes: 0,
+      seconds: 0,
+    }
+  }
+  return {
+    minutes: min,
+    seconds: (state.timer?.autostartSecondsRemaining || 0) % 60
+  }
+}
+
 export const getTimeRemaining = memoize(_getTimeRemaining);
+export const getAutostartTimeRemaining = memoize(_getAutostartTimeRemaining);
 
 export function formatTime(minutes: number, seconds: number) {
   return minutes.toString() + ':' + (

@@ -10,6 +10,7 @@ export type TableInfoProps = {
   showRoundInfo?: boolean;
   showTableNumber?: boolean;
   showTimer?: boolean;
+  isAutostartTimer?: boolean;
   gamesLeft?: number;
   round?: string;
   honbaCount?: number;
@@ -29,6 +30,7 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
     showTableNumber,
     showRotators,
     showTimer,
+    isAutostartTimer,
     gamesLeft,
     round,
     honbaCount,
@@ -82,6 +84,12 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
           <div className="table-info__table-caption">
             {loc._t('Table #%1', [tableNumber])}
           </div>
+          {showTimer && isAutostartTimer && (<><hr className="table-info__autostart-separator" /><div className="table-info__autostart-hint">{loc._t('Time before game start:')}</div></>)}
+          {showTimer && (
+            <div className="table-info__timer">
+              {currentTime}
+            </div>
+          )}
         </>
       )}
     </div>

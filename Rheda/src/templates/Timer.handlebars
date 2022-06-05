@@ -62,14 +62,20 @@
                 $('.seating').show();
             }
             timer = window.setInterval(runTimer, 10000);
-            autostart = window.setInterval(function() {
-                $('.timer').addClass('mini');
-                autostartTimer--;
-                if (autostartTimer <= 0) {
-                    window.location.reload();
-                }
-                $('#autostart').html(Math.floor(autostartTimer / 60) + ':' + (autostartTimer % 60 < 10 ? '0' : '') + (autostartTimer % 60))
-            }, 1000);
+            if (autostartTimer && autostartTimer > 0) {
+                autostart = window.setInterval(function () {
+                    $('.timer').addClass('mini');
+                    autostartTimer--;
+                    if (autostartTimer <= 0) {
+                        window.clearInterval(autostart);
+                        $('#autostart').html('{{_t 'Starting now!'}}');
+                        window.setTimeout(function () {
+                            window.location.reload();
+                        }, 4000);
+                    }
+                    $('#autostart').html(Math.floor(autostartTimer / 60) + ':' + (autostartTimer % 60 < 10 ? '0' : '') + (autostartTimer % 60))
+                }, 1000);
+            }
         });
 
         function formatTime(minutes, seconds) {

@@ -176,7 +176,10 @@ export function mimirReducer(
           secondsRemaining: action.payload.timerState.timeRemaining || 0,
           lastUpdateSecondsRemaining: action.payload.timerState.timeRemaining || 0,
           lastUpdateTimestamp: Math.round((new Date()).getTime() / 1000),
-          waiting: action.payload.timerState.waitingForTimer
+          waiting: action.payload.timerState.waitingForTimer,
+          autostartSecondsRemaining: action.payload.timerState.autostartTimer || 0,
+          autostartLastUpdateSecondsRemaining: action.payload.timerState.autostartTimer || 0,
+          autostartLastUpdateTimestamp: Math.round((new Date()).getTime() / 1000),
         },
         loading: {
           ...state.loading,
