@@ -196,6 +196,10 @@ class Config
      */
     protected $_chipsValue = 0;
     /**
+     * @var int
+     */
+    protected $_startingTimer = 0;
+    /**
      * @var bool
      */
     protected $_isFinished = false;
@@ -249,6 +253,7 @@ class Config
         'isPrescripted' => false,
         'minGamesCount' => 0,
         'isFinished' => false,
+        'startingTimer' => 0,
     ];
 
     /**
@@ -267,6 +272,7 @@ class Config
             'sortByGames' => _t('If rating table should first be sorted by number of games played'),
             'allowPlayerAppend' => _t('If new players are allowed to join in the middle of event'),
             'useTimer' => _t('If timer should be used'),
+            'startingTimer' => _t('Seconds before tournament games are started automatically (after seating is ready)'),
             'usePenalty' => _t('If arbitrary penalties are enabled'),
             'seriesLength' => _t('If game series are enabled'),
             'isPrescripted' => _t('If seating for all games is entered in advance'),
@@ -592,6 +598,13 @@ class Config
     public function useTimer()
     {
         return $this->_useTimer;
+    }
+    /**
+     * @return int
+     */
+    public function startingTimer()
+    {
+        return $this->_startingTimer;
     }
     /**
      * @return bool

@@ -46,12 +46,14 @@
     !function () {
         var soundBeforeEnd = new Audio("/assets/5min.wav"); // buffers automatically when created
         var initialTime = '{{initialTime}}'.split(':');
+        var autostartTimer = {{startingTimer}};
         var minutes = parseInt(initialTime[0]);
         var seconds = parseInt(initialTime[1]) / 10;
         var redZone = '{{redZone}}' === '1';
         var yellowZone = '{{yellowZone}}' === '1';
         var waiting = '{{waiting}}';
         var timer;
+        var autostart;
 
         $(function () {
             runTimer();
@@ -60,6 +62,14 @@
                 $('.seating').show();
             }
             timer = window.setInterval(runTimer, 10000);
+            autostart = window.setInterval(function() {
+                $('.timer').addClass('mini');
+                autostartTimer--;
+                if (autostartTimer <= 0) {
+                    window.location.reload();
+                }
+                $('#autostart').html(Math.floor(autostartTimer / 60) + ':' + (autostartTimer % 60 < 10 ? '0' : '') + (autostartTimer % 60))
+            }, 1000);
         });
 
         function formatTime(minutes, seconds) {
@@ -131,6 +141,16 @@
             </div>
         </div>
     {{/waiting}}
+    {{#haveStartingTimer}}
+        <div class="row">
+            <div class="col-12" style="text-align: center">
+                {{_t 'STARTING IN:'}}
+            </div>
+            <div class="col-12" style="text-align: center">
+                <span class="timer" id="autostart">{{initialTime}}</span>
+            </div>
+        </div>
+    {{/haveStartingTimer}}
 
     {{#seating}}
     <div class="row seating">

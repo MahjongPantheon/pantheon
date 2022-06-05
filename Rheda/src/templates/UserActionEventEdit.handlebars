@@ -227,6 +227,21 @@
                             {{_t "Choose this if you want to define your own custom seating for tournament by hand"}}
                         </small>
                     </div>
+                    <div class="form-group">
+                        <label for="autostart">{{_t 'Games autostart interval'}}</label>
+                        <input type="number" class="form-control{{#error_autostart}} is-invalid{{/error_autostart}}"
+                               id="autostart"
+                               value="{{autostart}}"
+                               name="autostart">
+                        {{#error_autostart}}
+                            <div class="invalid-feedback">{{error_autostart}}</div>
+                        {{/error_autostart}}
+                        {{^error_autostart}}
+                            <small id="autostartHelp" class="form-text text-muted">
+                                {{_t "Duration in seconds before games are started automatically after seating is ready. Set to 0 to disable autostart."}}
+                            </small>
+                        {{/error_autostart}}
+                    </div>
                 {{/isTournament}}
 
                 <div class="form-group">

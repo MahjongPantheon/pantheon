@@ -40,6 +40,7 @@ class EventsController extends Controller
      * @param int $lobbyId Tenhou lobby id for online tournaments
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
+     * @param int $autostartTimer Interval before games autostart
      * @param string $rulesetChangesJson Json-encoded changes for base ruleset
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -58,6 +59,7 @@ class EventsController extends Controller
         $lobbyId,
         $isTeam,
         $isPrescripted,
+        $autostartTimer,
         $rulesetChangesJson
     ) {
         $this->_log->addInfo('Creating new event with [' . $ruleset . '] rules');
@@ -113,6 +115,7 @@ class EventsController extends Controller
                     ->setUseTimer(1)
                     ->setUsePenalty(1)
                     ->setIsTeam($isTeam ? 1 : 0)
+                    ->setTimeToStart($autostartTimer)
                     ->setIsPrescripted($isPrescripted ? 1 : 0)
                 ;
                 break;
@@ -160,6 +163,7 @@ class EventsController extends Controller
      * @param int $lobbyId Tenhou lobby id for online tournaments
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
+     * @param int $autostartTimer Interval before games are started automatically
      * @param string $rulesetChangesJson Json-encoded changes for base ruleset
      * @throws BadActionException
      * @throws InvalidParametersException
@@ -178,6 +182,7 @@ class EventsController extends Controller
         $lobbyId,
         $isTeam,
         $isPrescripted,
+        $autostartTimer,
         $rulesetChangesJson
     ) {
         $this->_log->addInfo('Updating event with [' . $ruleset . '] rules');
@@ -213,6 +218,7 @@ class EventsController extends Controller
             $event
                 ->setAutoSeating($isPrescripted ? 0 : 1)
                 ->setIsTeam($isTeam ? 1 : 0)
+                ->setTimeToStart($autostartTimer)
                 ->setIsPrescripted($isPrescripted ? 1 : 0)
             ;
         } elseif ($event->getIsOnline()) { // Should be online tournament
@@ -271,6 +277,7 @@ class EventsController extends Controller
             'minGames' => $event->getMinGamesCount(),
             'isTeam' => $event->getIsTeam(),
             'isPrescripted' => $event->getIsPrescripted(),
+            'autostart' => $event->getTimeToStart(),
             'rulesetChanges' => json_encode($event->getRulesetChanges() ?: [])
         ];
 

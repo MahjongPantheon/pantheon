@@ -42,6 +42,7 @@ return [ // Omit trailing slashes in keys when possible
     '/tourn/(?<action>toggleHideResults)'                  => 'TournamentControlPanel',
     '/tourn/(?<action>finalizeSessions)'                   => 'TournamentControlPanel',
     '/tourn/(?<action>sendNotification)'                   => 'TournamentControlPanel',
+    '/tourn/(?<action>resetStartingTimer)'                 => 'TournamentControlPanel',
 
     '/prescript' => 'PrescriptControls',
 

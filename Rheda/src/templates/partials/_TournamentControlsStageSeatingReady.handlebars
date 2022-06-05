@@ -1,13 +1,51 @@
+<script>
+    $(function() {
+        var initTime = {{startingTimer}}; // seconds
+        if (initTime > 0) {
+            var timer = window.setInterval(function () {
+                initTime--;
+                $('#autostartTimer').html(Math.floor(initTime / 60) + ':' + (initTime % 60 < 10 ? '0' : '') + (initTime % 60));
+                if (initTime <= 0) {
+                    window.location = '{{link href='/tourn/startTimer/'}}';
+                    window.clearInterval(timer);
+                }
+            }, 1000);
+        }
+    });
+</script>
 <div class="row">
     <div class="col-12">
         <h3>{{_t 'Start timer and games'}}</h3>
-        <div>{{_t 'Press next button to start the timer and begin the games.'}}</div>
 
-        {{#form action='/tourn/startTimer/' method='post'}}
-            <input type="button" class="btn form-control btn-danger"
-                   onclick="return window.confirm('{{_t 'Start games and timer?'}}') && disableTemporarily(this);"
-                   value="{{_t 'Start games!'}}">
-        {{/form}}
+        <div class="row">
+            <div class="col-6">
+                {{_t 'Press next button to start the timer and begin the games.'}}
+            </div>
+            <div class="col-6">
+                {{#form action='/tourn/startTimer/' method='post'}}
+                    <input type="button" class="btn form-control btn-danger"
+                           onclick="return window.confirm('{{_t 'Start games and timer?'}}') && disableTemporarily(this);"
+                           value="{{_t 'Start games!'}}">
+                {{/form}}
+            </div>
+        </div>
+        {{#haveStartingTimer}}
+            <hr />
+            <div class="row">
+                <div class="col-6">
+                    {{_t 'Games will be automatically started in: '}}
+                    <div id="autostartTimer" style="text-align: center; font-weight: bold; font-size: 24px"></div>
+                    {{_t 'You can press next button to reset the timer. Also you can start games manually in any moment.'}}
+                </div>
+                <div class="col-6">
+                    {{#form action='/tourn/resetStartingTimer/' method='post'}}
+                        <input type="button" class="btn form-control btn-warning"
+                               onclick="return window.confirm('{{_t 'Reset autostart timer?'}}') && disableTemporarily(this);"
+                               value="{{_t 'Reset autostart timer'}}">
+                    {{/form}}
+                </div>
+            </div>
+        {{/haveStartingTimer}}
     </div>
 </div>
 <hr />

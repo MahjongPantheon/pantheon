@@ -176,8 +176,11 @@ class TournamentControlPanel extends Controller
             }
         }
 
+        $startingTimer = $this->_mimir->getStartingTimer($this->_mainEventId);
         return [
             'error' => null,
+            'startingTimer' => $startingTimer,
+            'haveStartingTimer' => $startingTimer > 0,
             'isTournament' => true, // false in games control panel controller
             'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
             'tables' => $tablesFormatted,
