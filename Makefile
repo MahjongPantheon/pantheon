@@ -67,8 +67,8 @@ pgadmin_start: get_pgadmin_id get_pgadmin_idle_id
 			docker start $(IDLE_PGADMIN_ID) ; \
 		else \
 			docker pull dpage/pgadmin4 && \
-			docker run --link=pantheondev -p 5632:80 \
-				-e "PGADMIN_DEFAULT_EMAIL=dev@pantheon.local" \
+			docker run -it --link=pantheondev -p 5632:80 \
+				-e "PGADMIN_DEFAULT_EMAIL=dev@riichi.top" \
 				-e "PGADMIN_DEFAULT_PASSWORD=password" \
 				-d dpage/pgadmin4 \
 				pantheonpgadmin; \
@@ -102,7 +102,7 @@ pantheon_run: get_docker_id get_docker_idle_id
   		echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
   		echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
   		echo "    -> Login to PgAdmin4 as: "; \
-  		echo "    ->     Username: dev@pantheon.local "; \
+  		echo "    ->     Username: dev@riichi.top "; \
   		echo "    ->     Password: password "; \
   		echo "    -> PgAdmin4 pgsql connection credentials hint: "; \
   		echo "    ->     Hostname: pantheondev "; \

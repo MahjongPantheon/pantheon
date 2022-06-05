@@ -309,10 +309,12 @@ class UserActionEventEdit extends Controller
             }
         }
 
-        // Force boolean flags to false
+        $rulesets = $this->_mimir->getRulesets();
+        $originalRuleset = $rulesets['rules'][$checkedData['ruleset']];
+        // Force boolean flags to defaults
         foreach ($allFields as $name => $type) {
             if ($type === 'bool' && !isset($checkedData['rulesetChanges'][$name])) {
-                $checkedData['rulesetChanges'][$name] = false;
+                $checkedData['rulesetChanges'][$name] = $originalRuleset['originalRules'][$name];
             }
         }
 
