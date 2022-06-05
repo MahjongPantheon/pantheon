@@ -73,12 +73,6 @@ class TournamentControlPanel extends Controller
                         $this->_mimir->makeSwissSeating($this->_mainEventId);
                         $this->_mimir->initStartingTimer($this->_mainEventId);
                         break;
-                        /*
-                         * TODO:
-                         *  - доделать настройку в rheda
-                         *  - доделать таймер в rheda, там же из админки доделать автозапуск игр, кажется это проще чем городить кроны
-                         *  - доделать отображение таймера в tyr
-                         */
                     case 'resetStartingTimer':
                         $this->_mimir->initStartingTimer($this->_mainEventId);
                         break;
