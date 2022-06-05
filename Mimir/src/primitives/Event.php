@@ -858,22 +858,36 @@ class EventPrimitive extends Primitive
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getTimeToStart()
     {
         return $this->_timeToStart;
     }
 
+    /**
+     * @param int $time
+     * @return EventPrimitive
+     */
     public function setTimeToStart($time)
     {
         $this->_timeToStart = $time;
         return $this;
     }
 
+    /**
+     * @return int
+     */
     public function getNextGameStartTime()
     {
         return $this->_nextGameStartTime;
     }
 
+    /**
+     * @param int $startTime
+     * @return EventPrimitive
+     */
     public function setNextGameStartTime($startTime)
     {
         $this->_nextGameStartTime = $startTime;
