@@ -20,11 +20,18 @@
 
 import {EnvConfig} from "#/envConfig/interface";
 
+function replicaAppend(url: string) {
+  if (window.location.host.startsWith('ru.')) {
+    return url.replace('https://', 'https://ru.');
+  }
+  return url;
+}
+
 export const environment: EnvConfig = {
   production: true,
-  apiUrl: 'https://g.riichi.top/',
-  uaUrl: 'https://u.riichi.top/',
-  guiUrl: 'https://r.riichi.top/',
+  apiUrl: replicaAppend('https://g.riichi.top/'),
+  uaUrl: replicaAppend('https://u.riichi.top/'),
+  guiUrl: replicaAppend('https://r.riichi.top/'),
   ratatoskUrl: 'wss://b.riichi.top/',
   idbTokenKey: 'pantheon_authToken',
   idbIdKey: 'pantheon_currentPersonId',
