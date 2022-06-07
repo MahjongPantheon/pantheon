@@ -38,6 +38,9 @@ return array_merge([
     ],
     'db'        => require __DIR__ . '/db.php',
     'routes'    => require __DIR__ . '/routes.php',
+    'enableReplica' => false,
+    'hermodPort' => 4007,
+    'replicaSecret' => 'TEST_REPLICA_SECRET', // TODO: change this in your local config!
     'freyUrl'   => 'http://localhost:4004', // TODO: change this in your local config!
     'rhedaUrl'  => 'http://localhost:4002', // TODO: change this in your local config!
     'ratatoskUrl' => 'ws://localhost:4006', // TODO: change this in your local config!

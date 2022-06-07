@@ -38,6 +38,9 @@ return array_merge([
     ],
     'db'        => require __DIR__ . '/db.php',
     'routes'    => require __DIR__ . '/routes.php',
+    'enableReplica' => false,
+    'hermodPort' => 4007,
+    'replicaSecret' => 'TEST_REPLICA_SECRET', // TODO: change this in your local config!
     'verbose'   => false,
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC',

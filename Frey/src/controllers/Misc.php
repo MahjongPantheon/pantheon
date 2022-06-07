@@ -43,10 +43,14 @@ class MiscController extends Controller
 
     /**
      * @param string $query
+     * @param string $secret
      * @return void
      */
-    public function execQuery($query)
+    public function execQuery($query, $secret)
     {
+        if ($secret !== $this->_config->getValue('replicaSecret')) {
+            return;
+        }
         $this->_db->rawQuery($query);
     }
 
