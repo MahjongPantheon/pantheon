@@ -63,7 +63,7 @@ class Db implements IDb
             ORM::configure('logging', true);
             ORM::configure('logger', function ($query) use (&$cfg) {
                 $handle = curl_init();
-                curl_setopt($handle, CURLOPT_URL, 'http://localhost:' . $cfg->getValue('hermodPort') . '/addQuery');
+                curl_setopt($handle, CURLOPT_URL, 'http://localhost:' . $cfg->getStringValue('hermodPort') . '/addQuery');
                 curl_setopt($handle, CURLOPT_TIMEOUT, 5);
                 curl_setopt($handle, CURLOPT_POST, true);
                 curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query([

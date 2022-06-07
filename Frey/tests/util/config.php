@@ -28,6 +28,7 @@ return [
     'admin'     => [
         'debug_token' => '2-839489203hf2893'
     ],
+    'enableReplica' => false,
     'routes'    => require __DIR__ . '/../../config/routes.php',
     'verbose'   => true,
     'serverDefaultTimezone' => 'UTC',

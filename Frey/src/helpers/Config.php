@@ -54,6 +54,19 @@ class Config
     }
 
     /**
+     * @param string $path
+     * @return string
+     */
+    public function getStringValue(string $path)
+    {
+        $val = $this->getValue($path);
+        if (!is_string($val)) {
+            return '';
+        }
+        return $val;
+    }
+
+    /**
      * @return string  PDO connection string
      * @throws \RuntimeException
      */
