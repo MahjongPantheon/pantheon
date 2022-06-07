@@ -46,6 +46,7 @@ return [
     'findByTitle'          => ['PersonsController', 'findByTitle'],
     'getGroups'            => ['PersonsController', 'getGroups'],
     'getEventAdmins'       => ['AccessController', 'getEventAdmins'],
+    'execQuery'            => ['MiscController', 'execQuery'],
 
     // admin
     'getSuperadminFlag'      => ['AccessController', 'getSuperadminFlag'],

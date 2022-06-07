@@ -1,5 +1,5 @@
 <?php
-/*  Mimir: mahjong games storage
+/*  Frey: ACL & user data storage
  *  Copyright (C) 2016  o.klimenko aka ctizen
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-namespace Mimir;
+namespace Frey;
 
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
@@ -27,7 +27,7 @@ require_once __DIR__ . '/../Controller.php';
  * Class MiscController
  * For primitive logging and other misc tasks
  *
- * @package Mimir
+ * @package Frey
  */
 class MiscController extends Controller
 {
@@ -47,7 +47,7 @@ class MiscController extends Controller
      */
     public function execQuery($query)
     {
-        $this->_ds->local()->rawQuery($query);
+        $this->_db->rawQuery($query);
     }
 
     /**

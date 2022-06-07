@@ -32,6 +32,12 @@ interface IDb
     public function lastInsertId();
 
     /**
+     * @param string $query
+     * @return bool
+     */
+    public function rawQuery($query);
+
+    /**
      * @param string $table
      * @param array $data [ [ field => value, field2 => value2 ], [ ... ] ] - nested arrays should be monomorphic
      * @param string[] $tableUniqueField Names of unique constraint to check

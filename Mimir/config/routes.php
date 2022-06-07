@@ -53,6 +53,7 @@ return [
     'getLastRound'       => ['PlayersController', 'getLastRound'],
     'getAllRounds'       => ['PlayersController', 'getAllRoundsByHash'],
     'getLastRoundByHash' => ['PlayersController', 'getLastRoundByHashcode'],
+    'execQuery'          => ['MiscController', 'execQuery'],
 
     // admin
     'getEventForEdit'    => ['EventsController', 'getEventForEdit'],

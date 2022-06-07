@@ -108,7 +108,7 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.d/www.co
 RUN if [[ -z "$NO_XDEBUG" ]] ; then echo -ne "zend_extension=xdebug.so\n \
           xdebug.mode=debug\n \
           xdebug.start_with_request=yes\n \
-          xdebug.client_host=172.17.0.1\n \
+          xdebug.client_host=host.docker.internal\n \
           xdebug.client_port=9001\n" > /etc/php7/conf.d/50_xdebug.ini ; \
     fi
 
@@ -120,9 +120,6 @@ RUN echo "user:!:$(($(date +%s) / 60 / 60 / 24)):0:99999:7:::" >> /etc/shadow
 RUN echo "user:x:${LOCAL_USER_ID:9001}:" >> /etc/group
 RUN mkdir /home/user && chown user: /home/user
 
-RUN apk add --update rustup build-base
-RUN HOME=/home/user su-exec user rustup-init -y
-
 # Cleaning up
 RUN mkdir /www && \
     apk del tzdata && \
@@ -133,7 +130,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/php7/error.log
 
 # Expose ports
-EXPOSE 4001 4002 4003 4004 4006 $DB_PORT
+EXPOSE 4001 4002 4003 4004 $DB_PORT
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
@@ -158,7 +155,7 @@ RUN mkdir -p /var/www/html/Mimir
 RUN mkdir -p /var/www/html/Rheda
 RUN mkdir -p /var/www/html/Frey
 RUN mkdir -p /var/www/html/Common
-RUN mkdir -p /var/www/Ratatosk
+RUN mkdir -p /var/www/html/Hermod
 RUN mkdir -p /var/www/html/pantheon
 
 # Entry point

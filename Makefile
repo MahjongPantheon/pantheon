@@ -97,6 +97,7 @@ pantheon_run: get_docker_id get_docker_idle_id
 		echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
 		echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
 		echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
+		echo "- ${YELLOW}Hermod${NC} is exposed on port 4007"; \
   		echo "----------------------------------------------------------------------------------"; \
   		echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
   		echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
@@ -119,6 +120,7 @@ pantheon_run: get_docker_id get_docker_idle_id
   			docker start $(IDLE_DOCKER_ID) ; \
   		else \
 			docker run \
+			  --add-host=host.docker.internal:host-gateway \
 				-d -e LOCAL_USER_ID=$(UID) \
 				-e COVERALLS_REPO_TOKEN=$(COVERALLS_REPO_TOKEN) \
 				-e COVERALLS_RUN_LOCALLY=1 \
@@ -126,11 +128,13 @@ pantheon_run: get_docker_id get_docker_idle_id
 				-p 127.0.0.1:4002:4002 \
 				-p 127.0.0.1:4003:4003 \
 				-p 127.0.0.1:4004:4004 \
+				-p 127.0.0.1:4007:4007 \
 				-p 127.0.0.1:5532:5532 \
 				-v `pwd`/Tyr:/var/www/html/Tyr:z \
 				-v `pwd`/Mimir:/var/www/html/Mimir:z \
 				-v `pwd`/Rheda:/var/www/html/Rheda:z \
 				-v `pwd`/Frey:/var/www/html/Frey:z \
+				-v `pwd`/Hermod:/var/www/html/Hermod:z \
 				-v `pwd`/Common:/var/www/html/Common:z \
 				-v `pwd`/:/var/www/html/pantheon:z \
 				--name=pantheondev \
