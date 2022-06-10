@@ -21,7 +21,6 @@ require_once __DIR__ . '/../YakuMap.php';
 
 return [
     'allowedYaku' => YakuMap::listExcept([
-        Y_RENHOU,
         Y_OPENRIICHI
     ]),
     'chomboPenalty'         => 20000,
