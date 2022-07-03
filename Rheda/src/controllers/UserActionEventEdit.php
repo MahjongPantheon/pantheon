@@ -77,7 +77,7 @@ class UserActionEventEdit extends Controller
         }
 
         if (!empty($_POST['save'])) {
-            $checkData = $this->_checkData($_POST);
+            $checkData = $this->_checkData($_POST, empty($checkData['id']));
             if ($checkData['haveErrors']) { // non-critical errors
                 $this->_prevData = $checkData;
                 return true;
@@ -261,9 +261,10 @@ class UserActionEventEdit extends Controller
 
     /**
      * @param array $data
+     * @param boolean $replaceToDefaults if sanitizer should replace custom ruleset boolean settings to default
      * @return mixed
      */
-    protected function _checkData($data)
+    protected function _checkData($data, $replaceToDefaults = false)
     {
         $checkedData = $data;
         if (mb_strlen($data['title']) < 4) {
@@ -321,7 +322,7 @@ class UserActionEventEdit extends Controller
         // Force boolean flags to defaults
         foreach ($allFields as $name => $type) {
             if ($type === 'bool' && !isset($checkedData['rulesetChanges'][$name])) {
-                $checkedData['rulesetChanges'][$name] = $originalRuleset['originalRules'][$name];
+                $checkedData['rulesetChanges'][$name] = $replaceToDefaults ? $originalRuleset['originalRules'][$name] : false;
             }
         }
 
