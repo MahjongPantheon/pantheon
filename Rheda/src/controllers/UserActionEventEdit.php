@@ -77,7 +77,7 @@ class UserActionEventEdit extends Controller
         }
 
         if (!empty($_POST['save'])) {
-            $checkData = $this->_checkData($_POST, empty($checkData['id']));
+            $checkData = $this->_checkData($_POST, empty($_POST['id']));
             if ($checkData['haveErrors']) { // non-critical errors
                 $this->_prevData = $checkData;
                 return true;
