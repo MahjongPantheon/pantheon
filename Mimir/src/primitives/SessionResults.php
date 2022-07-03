@@ -504,7 +504,8 @@ class SessionResultsPrimitive extends Primitive
     {
         $reg = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $this->_playerId, $this->_eventId);
         if (empty($reg)) {
-            throw new InvalidParametersException('No player/event id pair found, can\'t calculate delta');
+            throw new InvalidParametersException('No player/event id pair found (' .
+                $this->_playerId . '/' . $this->_eventId . '), can\'t calculate delta');
         }
 
         $score = ($reg[0]->getReplacementPlayerId() && $rules->replacementPlayerFixedPoints() !== false)
