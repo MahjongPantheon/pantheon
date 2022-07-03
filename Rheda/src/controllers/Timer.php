@@ -73,7 +73,7 @@ class Timer extends Controller
         }
 
         return [
-            'startingTimer' => $autostartTimer,
+            'startingTimer' => $autostartTimer ?: '0',
             'haveStartingTimer' => $autostartTimer > 0,
             'waiting' => $this->_mainEventRules->gamesWaitingForTimer(),
             'redZoneLength' => $this->_mainEventRules->redZone() / 60,
