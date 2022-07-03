@@ -319,9 +319,13 @@ class UserActionEventEdit extends Controller
 
         $rulesets = $this->_mimir->getRulesets();
         $originalRuleset = $rulesets['rules'][$checkedData['ruleset']];
+
         // Force boolean flags to defaults
         foreach ($allFields as $name => $type) {
-            if ($type === 'bool' && !isset($checkedData['rulesetChanges'][$name])) {
+            if ($type === 'bool' &&
+                !isset($checkedData['rulesetChanges'][$name]) &&
+                !in_array($name, $originalRuleset['originalRules']['_invalidCustomFields'])
+            ) {
                 $checkedData['rulesetChanges'][$name] = $replaceToDefaults ? $originalRuleset['originalRules'][$name] : false;
             }
         }
