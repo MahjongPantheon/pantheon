@@ -35,15 +35,11 @@ class Downloader
         $replayHash = $this->getReplayHash($logUrl);
         $replayHash = $this->_decodeHash($replayHash);
 
-        $logUrl = base64_decode("aHR0cDovL2UubWp2LmpwLzAvbG9nL3BsYWluZmlsZXMuY2dpPw==") . $replayHash;
-        $fallbackLogUrl = base64_decode("aHR0cDovL2UubWp2LmpwLzAvbG9nL2FyY2hpdmVkLmNnaT8=") . $replayHash;
+        $logUrl = base64_decode("aHR0cHM6Ly90ZW5ob3UubmV0LzAvbG9nLz8=") . $replayHash;
 
         list ($content, $code) = $this->_download($logUrl);
         if (empty($content) || $code != 200) {
-            list ($content, $code) = $this->_download($fallbackLogUrl);
-            if (empty($content) || $code != 200) {
-                throw new DownloadException('Content fetch failed: format changed? Contact maintainer for instructions');
-            }
+            throw new DownloadException('Content fetch failed: format changed? Contact maintainer for instructions');
         }
 
         return [
