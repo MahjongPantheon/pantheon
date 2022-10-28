@@ -208,14 +208,32 @@ class PlayerStatModel extends Model
     protected function _getOutcomeSummary(int $playerId, array $rounds)
     {
         return array_reduce($rounds, function ($acc, RoundPrimitive $r) use ($playerId) {
+            $riichiIds = $r->getRiichiIds();
             switch ($r->getOutcome()) {
                 case 'ron':
                     if ($r->getLoserId() == $playerId) {
                         $acc['feed'] ++;
+                        if (!in_array($playerId, $riichiIds)) {
+                            if ($r->getOpenHand()) {
+                                $acc['unforced_feed_to_open']++;
+                            } else {
+                                if (in_array($r->getWinnerId(), $riichiIds)) {
+                                    $acc['unforced_feed_to_riichi']++;
+                                } else {
+                                    $acc['unforced_feed_to_dama']++;
+                                }
+                            }
+                        }
                     } else if ($r->getWinnerId() == $playerId) {
                         $acc['ron'] ++;
                         if ($r->getOpenHand()) {
                             $acc['openhand'] ++;
+                        } else {
+                            if (in_array($playerId, $riichiIds)) {
+                                $acc['wins_with_riichi']++;
+                            } else {
+                                $acc['wins_with_dama']++;
+                            }
                         }
                     }
                     break;
@@ -224,6 +242,12 @@ class PlayerStatModel extends Model
                         $acc['tsumo'] ++;
                         if ($r->getOpenHand()) {
                             $acc['openhand'] ++;
+                        } else {
+                            if (in_array($playerId, $riichiIds)) {
+                                $acc['wins_with_riichi']++;
+                            } else {
+                                $acc['wins_with_dama']++;
+                            }
                         }
                     } else {
                         $acc['tsumofeed'] ++;
@@ -240,12 +264,29 @@ class PlayerStatModel extends Model
                     foreach ($mr->rounds() as $round) {
                         if ($round->getWinnerId() == $playerId) {
                             $acc['ron'] ++;
-                            if ($mr->getOpenHand()) {
+                            if ($round->getOpenHand()) {
                                 $acc['openhand'] ++;
+                            } else {
+                                if (in_array($playerId, $riichiIds)) {
+                                    $acc['wins_with_riichi']++;
+                                } else {
+                                    $acc['wins_with_dama']++;
+                                }
                             }
                             break;
-                        } else if ($mr->getLoserId() == $playerId) {
+                        } else if ($round->getLoserId() == $playerId) {
                             $acc['feed'] ++;
+                            if (!in_array($playerId, $riichiIds)) {
+                                if ($round->getOpenHand()) {
+                                    $acc['unforced_feed_to_open']++;
+                                } else {
+                                    if (in_array($round->getWinnerId(), $riichiIds)) {
+                                        $acc['unforced_feed_to_riichi']++;
+                                    } else {
+                                        $acc['unforced_feed_to_dama']++;
+                                    }
+                                }
+                            }
                         }
                     }
                     break;
@@ -254,12 +295,17 @@ class PlayerStatModel extends Model
             }
             return $acc;
         }, [
-            'ron'       => 0,
-            'tsumo'     => 0,
-            'chombo'    => 0,
-            'feed'      => 0,
-            'tsumofeed' => 0,
-            'openhand'  => 0
+            'ron'                     => 0,
+            'tsumo'                   => 0,
+            'chombo'                  => 0,
+            'feed'                    => 0,
+            'tsumofeed'               => 0,
+            'openhand'                => 0, // maybe rename it to wins_with_open?
+            'wins_with_riichi'        => 0, // must be equal to riichi_won below
+            'wins_with_dama'          => 0,
+            'unforced_feed_to_open'   => 0,
+            'unforced_feed_to_riichi' => 0,
+            'unforced_feed_to_dama'   => 0,
         ]);
     }
 
