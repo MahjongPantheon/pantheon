@@ -253,6 +253,12 @@ class PlayerStatModel extends Model
                         $acc['tsumofeed'] ++;
                     }
                     break;
+                case 'draw':
+                    $acc['draw']++;
+                    if (in_array($playerId, $r->getTempaiIds())) {
+                        $acc['draw_tempai']++;
+                    }
+                    break;
                 case 'chombo':
                     if ($r->getLoserId() == $playerId) {
                         $acc['chombo'] ++;
@@ -306,6 +312,8 @@ class PlayerStatModel extends Model
             'unforced_feed_to_open'   => 0,
             'unforced_feed_to_riichi' => 0,
             'unforced_feed_to_dama'   => 0,
+            'draw'                    => 0,
+            'draw_tempai'             => 0,
         ]);
     }
 

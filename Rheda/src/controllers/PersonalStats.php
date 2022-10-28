@@ -118,6 +118,7 @@ class PersonalStats extends Controller
             $riichiTotal = $data['riichi_summary']['riichi_won'] + $data['riichi_summary']['riichi_lost'];
             $winCount = $data['win_summary']['ron'] + $data['win_summary']['tsumo'];
             $feedCount = $data['win_summary']['feed'];
+            $drawCount = $data['win_summary']['draw'];
             $labelColorThreshold = $this->_mainEventRules->subtractStartPoints() ? 0 : $this->_mainEventRules->startPoints();
 
             return [
@@ -142,6 +143,8 @@ class PersonalStats extends Controller
                     'tsumoCount'           => $data['win_summary']['tsumo'],
                     'winCount'             => $winCount,
                     'feedCount'            => $feedCount,
+                    'drawCount'            => $drawCount,
+                    'drawTempai'           => $data['win_summary']['draw_tempai'],
                     'feedUnderRiichi'      => $data['riichi_summary']['feed_under_riichi'],
                     'feedToOpenUnforced'   => $data['win_summary']['unforced_feed_to_open'],
                     'feedToRiichiUnforced' => $data['win_summary']['unforced_feed_to_riichi'],
@@ -198,6 +201,11 @@ class PersonalStats extends Controller
                         round($data['riichi_summary']['riichi_lost'] * 100. / ($riichiTotal), 2)
                         : 0,
                     'riichiTotalPercent' => round(($riichiTotal) * 100. / $data['total_played_rounds'], 2),
+
+                    'drawPercent' => round($drawCount * 100. / $data['total_played_rounds'], 2),
+                    'drawTempaiPercent' => $drawCount ?
+                        round($data['win_summary']['draw_tempai'] * 100. / $drawCount, 2)
+                        : 0,
 
                     'place1' => round($data['places_summary'][1] * 100. / array_sum($data['places_summary']), 2),
                     'place2' => round($data['places_summary'][2] * 100. / array_sum($data['places_summary']), 2),
