@@ -125,6 +125,7 @@
                     {{#best_series}}
                         {{#a href='/game/{hash}/'}}{{place}}{{/a}}
                     {{/best_series}}
+                    ({{best_series_avg_place}}, {{best_series_places}}/{{best_series.length}})
                 </div>
             </div>
             <div class="row">
@@ -134,6 +135,7 @@
                     {{#current_series}}
                         {{#a href='/game/{hash}/'}}{{place}}{{/a}}
                     {{/current_series}}
+                    ({{current_series_avg_place}}, {{current_series_places}}/{{current_series.length}})
                 </div>
             </div>
         </div>

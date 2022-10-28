@@ -165,10 +165,15 @@ class EventSeriesModel extends Model
                 $i += $item['score'];
                 return $i;
             }, 0);
+            $currentSeriesPlaces = array_reduce($currentSeries, function ($i, $item) {
+                $i += $item['place'];
+                return $i;
+            }, 0);
 
             $bestSeries['playerId'] = $playerId;
             $bestSeries['currentSeries'] = $currentSeriesSessionIds;
             $bestSeries['currentSeriesScores'] = $currentSeriesScores;
+            $bestSeries['currentSeriesPlaces'] = $currentSeriesPlaces;
             $seriesResults[] = $bestSeries;
         }
 
@@ -191,12 +196,19 @@ class EventSeriesModel extends Model
         $formattedResults = [];
         foreach ($seriesResults as $item) {
             $playerId = $item['playerId'];
+            $bestSeriesIds = $item['sessionIds'] ?? [];
+            $bestScoresSum = $item['scoresSum'] ?? 0;
+            $bestPlacesSum = $item['placesSum'] ?? 0;
             $formattedResults[] = [
                 'player' => $players[$item['playerId']],
-                'best_series_scores' => $item['scoresSum'] ?? 0,
-                'best_series' => $this->_formatSeries($playerId, $item['sessionIds'] ?? [], $games, $sessionResults),
+                'best_series' => $this->_formatSeries($playerId, $bestSeriesIds, $games, $sessionResults),
+                'best_series_scores' => $bestScoresSum,
+                'best_series_places' => $bestPlacesSum,
+                'best_series_avg_place' => $this->_formatAvgPlace($bestPlacesSum, count($bestSeriesIds)),
                 'current_series' => $this->_formatSeries($playerId, $item['currentSeries'], $games, $sessionResults),
                 'current_series_scores' => $item['currentSeriesScores'],
+                'current_series_places' => $item['currentSeriesPlaces'],
+                'current_series_avg_place' => $this->_formatAvgPlace($item['currentSeriesPlaces'], count($item['currentSeries'])),
             ];
         }
 
@@ -220,5 +232,16 @@ class EventSeriesModel extends Model
             ];
         }
         return $result;
+    }
+
+    /**
+     * @param int $placesSum
+     * @param int $gamesCount
+     * @return string
+     */
+    private function _formatAvgPlace($placesSum, $gamesCount)
+    {
+        $result = $gamesCount == 0 ? 0.0 : 1.0 * $placesSum / $gamesCount;
+        return number_format($result, 2);
     }
 }
