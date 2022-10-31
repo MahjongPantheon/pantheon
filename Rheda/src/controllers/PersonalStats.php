@@ -120,6 +120,7 @@ class PersonalStats extends Controller
             $winCount = $data['win_summary']['ron'] + $data['win_summary']['tsumo'];
             $feedCount = $data['win_summary']['feed'];
             $drawCount = $data['win_summary']['draw'];
+            $tsumoFeedCount = $data['win_summary']['tsumofeed'];
             $labelColorThreshold = $this->_mainEventRules->subtractStartPoints() ? 0 : $this->_mainEventRules->startPoints();
 
             return [
@@ -153,13 +154,17 @@ class PersonalStats extends Controller
                     'feedUnforced'         => $data['win_summary']['unforced_feed_to_open'] +
                         $data['win_summary']['unforced_feed_to_riichi'] +
                         $data['win_summary']['unforced_feed_to_dama'],
-                    'tsumoFeedCount'       => $data['win_summary']['tsumofeed'],
+                    'tsumoFeedCount'       => $tsumoFeedCount,
                     'chomboCount'          => $data['win_summary']['chombo'],
                     'riichiWon'            => $data['riichi_summary']['riichi_won'],
                     'riichiLost'           => $data['riichi_summary']['riichi_lost'],
                     'riichiTotal'          => $riichiTotal,
                     'averageDoraCount'     => $data['dora_stat']['average'],
                     'doraCount'            => $data['dora_stat']['count'],
+
+                    'pointsWon'            => $data['win_summary']['points_won'],
+                    'pointsLostRon'        => $data['win_summary']['points_lost_ron'],
+                    'pointsLostTsumo'      => $data['win_summary']['points_lost_tsumo'],
 
                     'minScores'     => number_format($scoresSummary['min_scores'], 0, '.', ','),
                     'maxScores'     => number_format($scoresSummary['max_scores'], 0, '.', ','),
@@ -176,7 +181,7 @@ class PersonalStats extends Controller
                     'feedUnderRiichiPercent' => $feedCount ?
                         round($data['riichi_summary']['feed_under_riichi'] * 100. / $feedCount, 2)
                         : 0,
-                    'tsumoFeedCountPercent'  => round($data['win_summary']['tsumofeed'] * 100. / $totalPlayedRounds, 2),
+                    'tsumoFeedCountPercent'  => round($tsumoFeedCount * 100. / $totalPlayedRounds, 2),
                     'chomboCountPercent'     => round($data['win_summary']['chombo'] * 100. / $totalPlayedRounds, 2),
                     'winsWithOpenPercent' => $winCount ?
                         round($data['win_summary']['wins_with_open'] * 100. / $winCount, 2)
@@ -213,6 +218,16 @@ class PersonalStats extends Controller
                     'drawPercent' => round($drawCount * 100. / $totalPlayedRounds, 2),
                     'drawTempaiPercent' => $drawCount ?
                         round($data['win_summary']['draw_tempai'] * 100. / $drawCount, 2)
+                        : 0,
+
+                    'pointsWonAverage' => $winCount ?
+                        round(1.0 * $data['win_summary']['points_won'] / $winCount, 2)
+                        : 0,
+                    'pointsLostRonAverage' => $feedCount ?
+                        round(1.0 * $data['win_summary']['points_lost_ron'] / $feedCount, 2)
+                        : 0,
+                    'pointsLostTsumoAverage' => $tsumoFeedCount ?
+                        round(1.0 * $data['win_summary']['points_lost_tsumo'] / $tsumoFeedCount, 2)
                         : 0,
 
                     'place1' => $data['places_summary'][1],

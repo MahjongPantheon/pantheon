@@ -201,6 +201,67 @@ class PlayerStatModel extends Model
     }
 
     /**
+     * @param \Common\Ruleset $rules
+     * @param int[] $currentScores
+     * @param int $han
+     * @param int|null $fu
+     * @param int $winnerId
+     * @param int|null $loserId
+     * @param int[] $riichiIds
+     * @param int $playerId
+     * @param int $dealerId
+     * @param int $honba
+     * @param int $riichiBetsCount
+     * @param bool $isTsumo
+     * @param int|null $paoPlayerId
+     * @return int
+     * @throws InvalidParametersException
+     */
+    protected function _getPointsDelta(\Common\Ruleset $rules, array $currentScores, int $han, ?int $fu, int $winnerId, ?int $loserId, array $riichiIds, int $playerId, int $dealerId, int $honba, int $riichiBetsCount, bool $isTsumo, ?int $paoPlayerId)
+    {
+        if ($isTsumo) {
+            $newScores = PointsCalc::tsumo($rules, $dealerId, $currentScores, $winnerId, $han, $fu, $riichiIds, $honba, $riichiBetsCount, $paoPlayerId);
+        } else {
+            $isDealer = $dealerId == $winnerId;
+            $newScores = PointsCalc::ron($rules, $isDealer, $currentScores, $winnerId, $loserId, $han, $fu, $riichiIds, $honba, $riichiBetsCount, $paoPlayerId, null, 0);
+        }
+        return $newScores[$playerId] - $currentScores[$playerId];
+    }
+
+    /**
+     * @param RoundPrimitive $r
+     * @param int $playerId
+     * @param bool $isTsumo
+     * @return int
+     * @throws EntityNotFoundException
+     * @throws InvalidParametersException
+     */
+    protected function _getPointsDeltaForRound(RoundPrimitive $r, int $playerId, bool $isTsumo)
+    {
+        $sessionState = $r->getLastSessionState();
+        if ($r->getWinnerId() == $playerId) {
+            $riichiIds = $r->getRiichiIds(); // if we win, our win cost also includes all riichi sticks from the current round
+        } else {
+            $riichiIds = array(); // if we deal-in or someone else takes tsumo, don't consider our riichi stick, since we are interested only in deal-in cost
+        }
+        return $this->_getPointsDelta(
+            $r->getEvent()->getRuleset(),
+            $sessionState->getScores(),
+            $r->getHan(),
+            $r->getFu(),
+            $r->getWinnerId(),
+            $r->getLoserId(),
+            $riichiIds,
+            $playerId,
+            $sessionState->getCurrentDealer(),
+            $sessionState->getHonba(),
+            $sessionState->getRiichiBets(),
+            $isTsumo,
+            $r->getPaoPlayerId(),
+        );
+    }
+
+    /**
      * @param int $playerId
      * @param RoundPrimitive[] $rounds
      * @return array
@@ -213,6 +274,7 @@ class PlayerStatModel extends Model
                 case 'ron':
                     if ($r->getLoserId() == $playerId) {
                         $acc['feed'] ++;
+                        $acc['points_lost_ron'] -= $this->_getPointsDeltaForRound($r, $playerId, false);
                         if (!in_array($playerId, $riichiIds)) {
                             if ($r->getOpenHand()) {
                                 $acc['unforced_feed_to_open']++;
@@ -226,6 +288,7 @@ class PlayerStatModel extends Model
                         }
                     } else if ($r->getWinnerId() == $playerId) {
                         $acc['ron'] ++;
+                        $acc['points_won'] += $this->_getPointsDeltaForRound($r, $playerId, false);
                         if ($r->getOpenHand()) {
                             $acc['wins_with_open'] ++;
                         } else {
@@ -240,6 +303,7 @@ class PlayerStatModel extends Model
                 case 'tsumo':
                     if ($r->getWinnerId() == $playerId) {
                         $acc['tsumo'] ++;
+                        $acc['points_won'] += $this->_getPointsDeltaForRound($r, $playerId, true);
                         if ($r->getOpenHand()) {
                             $acc['wins_with_open'] ++;
                         } else {
@@ -251,6 +315,7 @@ class PlayerStatModel extends Model
                         }
                     } else {
                         $acc['tsumofeed'] ++;
+                        $acc['points_lost_tsumo'] -= $this->_getPointsDeltaForRound($r, $playerId, true);
                     }
                     break;
                 case 'draw':
@@ -270,6 +335,7 @@ class PlayerStatModel extends Model
                     foreach ($mr->rounds() as $round) {
                         if ($round->getWinnerId() == $playerId) {
                             $acc['ron'] ++;
+                            $acc['points_won'] += $this->_getPointsDeltaForRound($round, $playerId, false);
                             if ($round->getOpenHand()) {
                                 $acc['wins_with_open'] ++;
                             } else {
@@ -282,6 +348,7 @@ class PlayerStatModel extends Model
                             break;
                         } else if ($round->getLoserId() == $playerId) {
                             $acc['feed'] ++;
+                            $acc['points_lost_ron'] -= $this->_getPointsDeltaForRound($round, $playerId, false);
                             if (!in_array($playerId, $riichiIds)) {
                                 if ($round->getOpenHand()) {
                                     $acc['unforced_feed_to_open']++;
@@ -314,6 +381,9 @@ class PlayerStatModel extends Model
             'unforced_feed_to_dama'   => 0,
             'draw'                    => 0,
             'draw_tempai'             => 0,
+            'points_won'              => 0,
+            'points_lost_ron'         => 0,
+            'points_lost_tsumo'       => 0,
         ]);
     }
 
