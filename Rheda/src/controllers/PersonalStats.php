@@ -116,6 +116,7 @@ class PersonalStats extends Controller
             $scoresSummary = $this->_getScoresSummary((int)$currentUser, $data['score_history']);
 
             $riichiTotal = $data['riichi_summary']['riichi_won'] + $data['riichi_summary']['riichi_lost'];
+            $totalPlayedRounds = $data['total_played_rounds'];
             $winCount = $data['win_summary']['ron'] + $data['win_summary']['tsumo'];
             $feedCount = $data['win_summary']['feed'];
             $drawCount = $data['win_summary']['draw'];
@@ -128,7 +129,7 @@ class PersonalStats extends Controller
                     'labelThreshold'    => $labelColorThreshold,
                     'currentPlayer'     => $currentUser,
                     'totalPlayedGames'  => $data['total_played_games'],
-                    'totalPlayedRounds' => $data['total_played_rounds'],
+                    'totalPlayedRounds' => $totalPlayedRounds,
 
                     'playersMap'     => json_encode($usersMap),
                     'points'         => json_encode($graphData),
@@ -161,20 +162,19 @@ class PersonalStats extends Controller
                     'maxScores'     => number_format($scoresSummary['max_scores'], 0, '.', ','),
                     'averageScores' => number_format($scoresSummary['average_scores'], 0, '.', ','),
 
-                    'ronCountPercent'        => round($data['win_summary']['ron']
-                        * 100. / $data['total_played_rounds'], 2),
-                    'tsumoCountPercent'      => round($data['win_summary']['tsumo']
-                        * 100. / $data['total_played_rounds'], 2),
-                    'winCountPercent'        => round(($data['win_summary']['ron'] + $data['win_summary']['tsumo'])
-                        * 100. / $data['total_played_rounds'], 2),
-                    'feedCountPercent'       => round($data['win_summary']['feed']
-                        * 100. / $data['total_played_rounds'], 2),
-                    'feedUnderRiichiPercent' => round($data['riichi_summary']['feed_under_riichi']
-                        * 100. / $data['total_played_rounds'], 2),
-                    'tsumoFeedCountPercent'  => round($data['win_summary']['tsumofeed']
-                        * 100. / $data['total_played_rounds'], 2),
-                    'chomboCountPercent'     => round($data['win_summary']['chombo']
-                        * 100. / $data['total_played_rounds'], 2),
+                    'ronCountPercent'        => $winCount ?
+                        round($data['win_summary']['ron'] * 100. / $winCount, 2)
+                        : 0,
+                    'tsumoCountPercent'      => $winCount ?
+                        round($data['win_summary']['tsumo'] * 100. / $winCount, 2)
+                        : 0,
+                    'winCountPercent'        => round($winCount * 100. / $totalPlayedRounds, 2),
+                    'feedCountPercent'       => round($feedCount * 100. / $totalPlayedRounds, 2),
+                    'feedUnderRiichiPercent' => $feedCount ?
+                        round($data['riichi_summary']['feed_under_riichi'] * 100. / $feedCount, 2)
+                        : 0,
+                    'tsumoFeedCountPercent'  => round($data['win_summary']['tsumofeed'] * 100. / $totalPlayedRounds, 2),
+                    'chomboCountPercent'     => round($data['win_summary']['chombo'] * 100. / $totalPlayedRounds, 2),
                     'winsWithOpenPercent' => $winCount ?
                         round($data['win_summary']['wins_with_open'] * 100. / $winCount, 2)
                         : 0,
@@ -195,14 +195,14 @@ class PersonalStats extends Controller
                         : 0,
 
                     'riichiWonPercent'   => $riichiTotal ?
-                        round($data['riichi_summary']['riichi_won'] * 100. / ($riichiTotal), 2)
+                        round($data['riichi_summary']['riichi_won'] * 100. / $riichiTotal, 2)
                         : 0,
                     'riichiLostPercent'  => $riichiTotal ?
-                        round($data['riichi_summary']['riichi_lost'] * 100. / ($riichiTotal), 2)
+                        round($data['riichi_summary']['riichi_lost'] * 100. / $riichiTotal, 2)
                         : 0,
-                    'riichiTotalPercent' => round(($riichiTotal) * 100. / $data['total_played_rounds'], 2),
+                    'riichiTotalPercent' => round($riichiTotal * 100. / $totalPlayedRounds, 2),
 
-                    'drawPercent' => round($drawCount * 100. / $data['total_played_rounds'], 2),
+                    'drawPercent' => round($drawCount * 100. / $totalPlayedRounds, 2),
                     'drawTempaiPercent' => $drawCount ?
                         round($data['win_summary']['draw_tempai'] * 100. / $drawCount, 2)
                         : 0,
