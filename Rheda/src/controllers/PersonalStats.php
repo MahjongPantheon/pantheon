@@ -207,10 +207,14 @@ class PersonalStats extends Controller
                         round($data['win_summary']['draw_tempai'] * 100. / $drawCount, 2)
                         : 0,
 
-                    'place1' => round($data['places_summary'][1] * 100. / array_sum($data['places_summary']), 2),
-                    'place2' => round($data['places_summary'][2] * 100. / array_sum($data['places_summary']), 2),
-                    'place3' => round($data['places_summary'][3] * 100. / array_sum($data['places_summary']), 2),
-                    'place4' => round($data['places_summary'][4] * 100. / array_sum($data['places_summary']), 2),
+                    'place1' => $data['places_summary'][1],
+                    'place2' => $data['places_summary'][2],
+                    'place3' => $data['places_summary'][3],
+                    'place4' => $data['places_summary'][4],
+                    'place1Percent' => round($data['places_summary'][1] * 100. / array_sum($data['places_summary']), 2),
+                    'place2Percent' => round($data['places_summary'][2] * 100. / array_sum($data['places_summary']), 2),
+                    'place3Percent' => round($data['places_summary'][3] * 100. / array_sum($data['places_summary']), 2),
+                    'place4Percent' => round($data['places_summary'][4] * 100. / array_sum($data['places_summary']), 2),
                 ],
                 'error' => null
             ];
