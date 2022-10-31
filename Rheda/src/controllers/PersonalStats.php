@@ -137,7 +137,7 @@ class PersonalStats extends Controller
                     'yakuStats'      => json_encode($yakuStats),
 
                     'ronCount'             => $data['win_summary']['ron'],
-                    'openHand'             => $data['win_summary']['openhand'],
+                    'winsWithOpen'         => $data['win_summary']['wins_with_open'],
                     'winsWithRiichi'       => $data['win_summary']['wins_with_riichi'],
                     'winsWithDama'         => $data['win_summary']['wins_with_dama'],
                     'tsumoCount'           => $data['win_summary']['tsumo'],
@@ -175,8 +175,8 @@ class PersonalStats extends Controller
                         * 100. / $data['total_played_rounds'], 2),
                     'chomboCountPercent'     => round($data['win_summary']['chombo']
                         * 100. / $data['total_played_rounds'], 2),
-                    'openHandPercent' => $winCount ?
-                        round($data['win_summary']['openhand'] * 100. / $winCount, 2)
+                    'winsWithOpenPercent' => $winCount ?
+                        round($data['win_summary']['wins_with_open'] * 100. / $winCount, 2)
                         : 0,
                     'winsWithRiichiPercent' => $winCount ?
                         round($data['win_summary']['wins_with_riichi'] * 100. / $winCount, 2)

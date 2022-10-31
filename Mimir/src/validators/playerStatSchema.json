@@ -107,7 +107,7 @@
         "tsumofeed": {
           "type": "integer"
         },
-        "openhand": {
+        "wins_with_open": {
           "type": "integer"
         },
         "wins_with_riichi": {

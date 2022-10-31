@@ -227,7 +227,7 @@ class PlayerStatModel extends Model
                     } else if ($r->getWinnerId() == $playerId) {
                         $acc['ron'] ++;
                         if ($r->getOpenHand()) {
-                            $acc['openhand'] ++;
+                            $acc['wins_with_open'] ++;
                         } else {
                             if (in_array($playerId, $riichiIds)) {
                                 $acc['wins_with_riichi']++;
@@ -241,7 +241,7 @@ class PlayerStatModel extends Model
                     if ($r->getWinnerId() == $playerId) {
                         $acc['tsumo'] ++;
                         if ($r->getOpenHand()) {
-                            $acc['openhand'] ++;
+                            $acc['wins_with_open'] ++;
                         } else {
                             if (in_array($playerId, $riichiIds)) {
                                 $acc['wins_with_riichi']++;
@@ -271,7 +271,7 @@ class PlayerStatModel extends Model
                         if ($round->getWinnerId() == $playerId) {
                             $acc['ron'] ++;
                             if ($round->getOpenHand()) {
-                                $acc['openhand'] ++;
+                                $acc['wins_with_open'] ++;
                             } else {
                                 if (in_array($playerId, $riichiIds)) {
                                     $acc['wins_with_riichi']++;
@@ -306,8 +306,8 @@ class PlayerStatModel extends Model
             'chombo'                  => 0,
             'feed'                    => 0,
             'tsumofeed'               => 0,
-            'openhand'                => 0, // maybe rename it to wins_with_open?
-            'wins_with_riichi'        => 0, // must be equal to riichi_won below
+            'wins_with_open'          => 0,
+            'wins_with_riichi'        => 0, // not always equal to riichi_won below, riichi_won is for self sticks
             'wins_with_dama'          => 0,
             'unforced_feed_to_open'   => 0,
             'unforced_feed_to_riichi' => 0,
