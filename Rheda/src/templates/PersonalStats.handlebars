@@ -59,22 +59,36 @@
                                 <td>{{_t 'Rounds played'}}</td>
                                 <td><b>{{totalPlayedRounds}}</b></td>
                             </tr>
-                            <tr>
-                                <td>{{_t 'Rounds won'}}</td>
-                                <td><b>{{winCount}}</b> &nbsp; ({{winCountPercent}}%)</td>
-                            </tr>
 
                             <tr>
                                 <td colspan="2" style="padding-left: 20px"><b>{{_t 'Round details:'}}</b></td>
                             </tr>
+
                             <tr>
-                                <td>{{_t 'Ron wins'}}</td>
+                                <td>{{_t 'Rounds won'}}</td>
+                                <td><b>{{winCount}}</b> &nbsp; ({{winCountPercent}}%)</td>
+                            </tr>
+                            <tr>
+                                <td>- {{_t 'ron wins'}}</td>
                                 <td><b>{{ronCount}}</b> &nbsp; ({{ronCountPercent}}%)</td>
                             </tr>
                             <tr>
-                                <td>{{_t 'Tsumo wins'}}</td>
+                                <td>- {{_t 'tsumo wins'}}</td>
                                 <td><b>{{tsumoCount}}</b> &nbsp; ({{tsumoCountPercent}}%)</td>
                             </tr>
+                            <tr>
+                                <td>- {{_t 'open hands won'}}</td>
+                                <td><b>{{openHand}}</b> &nbsp; ({{openHandPercent}}%)</td>
+                            </tr>
+                            <tr>
+                                <td>- {{_t 'riichi hands won'}}</td>
+                                <td><b>{{winsWithRiichi}}</b> &nbsp; ({{winsWithRiichiPercent}}%)</td>
+                            </tr>
+                            <tr>
+                                <td>- {{_t 'dama hands won'}}</td>
+                                <td><b>{{winsWithDama}}</b> &nbsp; ({{winsWithDamaPercent}}%)</td>
+                            </tr>
+
                             <tr>
                                 <td>{{_t 'Ron feeds'}}</td>
                                 <td><b>{{feedCount}}</b> &nbsp; ({{feedCountPercent}}%)</td>
@@ -84,41 +98,31 @@
                                 <td><b>{{feedUnderRiichi}}</b> &nbsp; ({{feedUnderRiichiPercent}}%)</td>
                             </tr>
                             <tr>
-                                <td>{{_t 'Tsumo losses'}}</td>
-                                <td><b>{{tsumoFeedCount}}</b> &nbsp; ({{tsumoFeedCountPercent}}%)</td>
-                            </tr>
-                            <tr>
-                                <td>{{_t 'Open hands'}}</td>
-                                <td><b>{{openHand}}</b> &nbsp; ({{openHandPercent}}%)</td>
-                            </tr>
-                            <tr>
-                                <td>{{_t 'Riichi hands won'}}</td>
-                                <td><b>{{winsWithRiichi}}</b> &nbsp; ({{winsWithRiichiPercent}}%)</td>
-                            </tr>
-                            <tr>
-                                <td>{{_t 'Dama hands won'}}</td>
-                                <td><b>{{winsWithDama}}</b> &nbsp; ({{winsWithDamaPercent}}%)</td>
-                            </tr>
-                            <tr>
-                                <td>{{_t 'Unforced losses to open hands'}}</td>
+                                <td>- {{_t 'unforced to open hands'}}</td>
                                 <td><b>{{feedToOpenUnforced}}</b> &nbsp; ({{feedToOpenUnforcedPercent}}%)</td>
                             </tr>
                             <tr>
-                                <td>{{_t 'Unforced losses to riichi hands'}}</td>
+                                <td>- {{_t 'unforced to riichi hands'}}</td>
                                 <td><b>{{feedToRiichiUnforced}}</b> &nbsp; ({{feedToRiichiUnforcedPercent}}%)</td>
                             </tr>
                             <tr>
-                                <td>{{_t 'Unforced losses to dama hands'}}</td>
+                                <td>- {{_t 'unforced to dama hands'}}</td>
                                 <td><b>{{feedToDamaUnforced}}</b> &nbsp; ({{feedToDamaUnforcedPercent}}%)</td>
                             </tr>
+                            <tr>
+                                <td>{{_t 'Tsumo losses'}}</td>
+                                <td><b>{{tsumoFeedCount}}</b> &nbsp; ({{tsumoFeedCountPercent}}%)</td>
+                            </tr>
+
                             <tr>
                                 <td>{{_t 'Draws'}}</td>
                                 <td><b>{{drawCount}}</b> &nbsp; ({{drawPercent}}%)</td>
                             </tr>
                             <tr>
-                                <td>{{_t 'Tempai at draw'}}</td>
+                                <td>- {{_t 'tempai at draw'}}</td>
                                 <td><b>{{drawTempai}}</b> &nbsp; ({{drawTempaiPercent}}%)</td>
                             </tr>
+
                             <tr>
                                 <td>{{_t 'Chombo penalties'}}</td>
                                 <td><b>{{chomboCount}}</b> &nbsp; ({{chomboCountPercent}}%)</td>
