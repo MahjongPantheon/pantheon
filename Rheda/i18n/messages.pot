@@ -398,6 +398,9 @@ msgstr ""
 msgid "because of riichi"
 msgstr ""
 
+msgid "not because of riichi"
+msgstr ""
+
 msgid "Tsumo losses"
 msgstr ""
 
@@ -410,13 +413,13 @@ msgstr ""
 msgid "dama hands won"
 msgstr ""
 
-msgid "unforced to open hands"
+msgid "to open hands"
 msgstr ""
 
-msgid "unforced to riichi hands"
+msgid "to riichi hands"
 msgstr ""
 
-msgid "unforced to dama hands"
+msgid "to dama hands"
 msgstr ""
 
 msgid "Draws"

@@ -1072,14 +1072,14 @@ msgstr "выигрышей с риичи"
 msgid "dama hands won"
 msgstr "выигрышей из даматена"
 
-msgid "unforced to open hands"
-msgstr "невынужденных в открытые руки"
+msgid "to open hands"
+msgstr "в открытые руки"
 
-msgid "unforced to riichi hands"
-msgstr "невынужденных в риичи"
+msgid "to riichi hands"
+msgstr "в риичи"
 
-msgid "unforced to dama hands"
-msgstr "невынужденных в даматен"
+msgid "to dama hands"
+msgstr "в даматен"
 
 msgid "Draws"
 msgstr "Ничьих"
@@ -1941,6 +1941,9 @@ msgstr ""
 
 msgid "because of riichi"
 msgstr "из-за риичи"
+
+msgid "not because of riichi"
+msgstr "не из-за риичи"
 
 msgid "bets lost"
 msgstr "из них потерянных"

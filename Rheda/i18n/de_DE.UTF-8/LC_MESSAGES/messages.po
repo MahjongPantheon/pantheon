@@ -1053,13 +1053,13 @@ msgstr ""
 msgid "dama hands won"
 msgstr ""
 
-msgid "unforced to open hands"
+msgid "to open hands"
 msgstr ""
 
-msgid "unforced to riichi hands"
+msgid "to riichi hands"
 msgstr ""
 
-msgid "unforced to dama hands"
+msgid "to dama hands"
 msgstr ""
 
 msgid "Draws"
@@ -1898,6 +1898,9 @@ msgstr ""
 
 msgid "because of riichi"
 msgstr "wegen Riichi"
+
+msgid "not because of riichi"
+msgstr ""
 
 msgid "bets lost"
 msgstr "Einsatz verloren"

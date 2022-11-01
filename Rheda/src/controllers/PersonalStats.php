@@ -150,6 +150,9 @@ class PersonalStats extends Controller
                     'feedToOpenUnforced'   => $data['win_summary']['unforced_feed_to_open'],
                     'feedToRiichiUnforced' => $data['win_summary']['unforced_feed_to_riichi'],
                     'feedToDamaUnforced'   => $data['win_summary']['unforced_feed_to_dama'],
+                    'feedUnforced'         => $data['win_summary']['unforced_feed_to_open'] +
+                        $data['win_summary']['unforced_feed_to_riichi'] +
+                        $data['win_summary']['unforced_feed_to_dama'],
                     'tsumoFeedCount'       => $data['win_summary']['tsumofeed'],
                     'chomboCount'          => $data['win_summary']['chombo'],
                     'riichiWon'            => $data['riichi_summary']['riichi_won'],
@@ -192,6 +195,11 @@ class PersonalStats extends Controller
                         : 0,
                     'feedToDamaUnforcedPercent' => $feedCount ?
                         round($data['win_summary']['unforced_feed_to_dama'] * 100. / $feedCount, 2)
+                        : 0,
+                    'feedUnforcedPercent' => $feedCount ?
+                        round(($data['win_summary']['unforced_feed_to_open'] +
+                            $data['win_summary']['unforced_feed_to_riichi'] +
+                            $data['win_summary']['unforced_feed_to_dama']) * 100. / $feedCount, 2)
                         : 0,
 
                     'riichiWonPercent'   => $riichiTotal ?
