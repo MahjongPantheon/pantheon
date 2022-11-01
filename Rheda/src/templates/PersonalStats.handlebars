@@ -49,7 +49,7 @@
                     <div class="col">
                         <table class="table table-striped table-condensed">
                             <tr>
-                                <td colspan="2" style="padding-left: 20px"><b>{{_t 'Common stats'}}</b></td>
+                                <td colspan="2"><b>{{_t 'Common stats'}}</b></td>
                             </tr>
                             <tr>
                                 <td>{{_t 'Games played'}}</td>
@@ -59,21 +59,37 @@
                                 <td>{{_t 'Rounds played'}}</td>
                                 <td><b>{{totalPlayedRounds}}</b></td>
                             </tr>
+
+                            <tr>
+                                <td colspan="2"><b>{{_t 'Win stats:'}}</b></td>
+                            </tr>
                             <tr>
                                 <td>{{_t 'Rounds won'}}</td>
                                 <td><b>{{winCount}}</b> &nbsp; ({{winCountPercent}}%)</td>
                             </tr>
-
                             <tr>
-                                <td colspan="2" style="padding-left: 20px"><b>{{_t 'Round details:'}}</b></td>
-                            </tr>
-                            <tr>
-                                <td>{{_t 'Ron wins'}}</td>
+                                <td>- {{_t 'ron wins'}}</td>
                                 <td><b>{{ronCount}}</b> &nbsp; ({{ronCountPercent}}%)</td>
                             </tr>
                             <tr>
-                                <td>{{_t 'Tsumo wins'}}</td>
+                                <td>- {{_t 'tsumo wins'}}</td>
                                 <td><b>{{tsumoCount}}</b> &nbsp; ({{tsumoCountPercent}}%)</td>
+                            </tr>
+                            <tr>
+                                <td>- {{_t 'open hands won'}}</td>
+                                <td><b>{{winsWithOpen}}</b> &nbsp; ({{winsWithOpenPercent}}%)</td>
+                            </tr>
+                            <tr>
+                                <td>- {{_t 'riichi hands won'}}</td>
+                                <td><b>{{winsWithRiichi}}</b> &nbsp; ({{winsWithRiichiPercent}}%)</td>
+                            </tr>
+                            <tr>
+                                <td>- {{_t 'dama hands won'}}</td>
+                                <td><b>{{winsWithDama}}</b> &nbsp; ({{winsWithDamaPercent}}%)</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2"><b>{{_t 'Loss stats:'}}</b></td>
                             </tr>
                             <tr>
                                 <td>{{_t 'Ron feeds'}}</td>
@@ -84,13 +100,38 @@
                                 <td><b>{{feedUnderRiichi}}</b> &nbsp; ({{feedUnderRiichiPercent}}%)</td>
                             </tr>
                             <tr>
+                                <td>- {{_t 'not because of riichi'}}</td>
+                                <td><b>{{feedUnforced}}</b> &nbsp; ({{feedUnforcedPercent}}%)</td>
+                            </tr>
+                            <tr>
+                                <td> &nbsp; - {{_t 'to open hands'}}</td>
+                                <td><b>{{feedToOpenUnforced}}</b> &nbsp; ({{feedToOpenUnforcedPercent}}%)</td>
+                            </tr>
+                            <tr>
+                                <td> &nbsp; - {{_t 'to riichi hands'}}</td>
+                                <td><b>{{feedToRiichiUnforced}}</b> &nbsp; ({{feedToRiichiUnforcedPercent}}%)</td>
+                            </tr>
+                            <tr>
+                                <td> &nbsp; - {{_t 'to dama hands'}}</td>
+                                <td><b>{{feedToDamaUnforced}}</b> &nbsp; ({{feedToDamaUnforcedPercent}}%)</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2"><b>{{_t 'Other stats:'}}</b></td>
+                            </tr>
+                            <tr>
                                 <td>{{_t 'Tsumo losses'}}</td>
                                 <td><b>{{tsumoFeedCount}}</b> &nbsp; ({{tsumoFeedCountPercent}}%)</td>
                             </tr>
                             <tr>
-                                <td>{{_t 'Open hands'}}</td>
-                                <td><b>{{openHand}}</b> &nbsp; ({{openHandPercent}}%)</td>
+                                <td>{{_t 'Draws'}}</td>
+                                <td><b>{{drawCount}}</b> &nbsp; ({{drawPercent}}%)</td>
                             </tr>
+                            <tr>
+                                <td>- {{_t 'tempai at draw'}}</td>
+                                <td><b>{{drawTempai}}</b> &nbsp; ({{drawTempaiPercent}}%)</td>
+                            </tr>
+
                             <tr>
                                 <td>{{_t 'Chombo penalties'}}</td>
                                 <td><b>{{chomboCount}}</b> &nbsp; ({{chomboCountPercent}}%)</td>
@@ -112,26 +153,26 @@
                                 <td><b>{{doraCount}}</b> &nbsp; ({{averageDoraCount}})</td>
                             </tr>
                             <tr>
-                                <td colspan="2" style="padding-left: 20px"><b>{{_t 'Places stat:'}}</b></td>
+                                <td colspan="2"><b>{{_t 'Places stat:'}}</b></td>
                             </tr>
                             <tr>
                                 <td>{{_t '1st place'}}</td>
-                                <td>{{place1}} %</td>
+                                <td><b>{{place1}}</b> &nbsp; ({{place1Percent}}%)</td>
                             </tr>
                             <tr>
                                 <td>{{_t '2nd place'}}</td>
-                                <td>{{place2}} %</td>
+                                <td><b>{{place2}}</b> &nbsp; ({{place2Percent}}%)</td>
                             </tr>
                             <tr>
                                 <td>{{_t '3rd place'}}</td>
-                                <td>{{place3}} %</td>
+                                <td><b>{{place3}}</b> &nbsp; ({{place3Percent}}%)</td>
                             </tr>
                             <tr>
                                 <td>{{_t '4th place'}}</td>
-                                <td>{{place4}} %</td>
+                                <td><b>{{place4}}</b> &nbsp; ({{place4Percent}}%)</td>
                             </tr>
                             <tr>
-                                <td colspan="2" style="padding-left: 20px"><b>{{_t 'Final game points:'}}</b></td>
+                                <td colspan="2"><b>{{_t 'Final game points:'}}</b></td>
                             </tr>
                             <tr>
                                 <td>{{_t 'Minimal'}}</td>

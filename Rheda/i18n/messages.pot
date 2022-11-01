@@ -377,13 +377,19 @@ msgstr ""
 msgid "Rounds won"
 msgstr ""
 
-msgid "Round details:"
+msgid "Win stats:"
 msgstr ""
 
-msgid "Ron wins"
+msgid "Loss stats:"
 msgstr ""
 
-msgid "Tsumo wins"
+msgid "Other stats:"
+msgstr ""
+
+msgid "ron wins"
+msgstr ""
+
+msgid "tsumo wins"
 msgstr ""
 
 msgid "Ron feeds"
@@ -392,10 +398,34 @@ msgstr ""
 msgid "because of riichi"
 msgstr ""
 
+msgid "not because of riichi"
+msgstr ""
+
 msgid "Tsumo losses"
 msgstr ""
 
-msgid "Open hands"
+msgid "open hands won"
+msgstr ""
+
+msgid "riichi hands won"
+msgstr ""
+
+msgid "dama hands won"
+msgstr ""
+
+msgid "to open hands"
+msgstr ""
+
+msgid "to riichi hands"
+msgstr ""
+
+msgid "to dama hands"
+msgstr ""
+
+msgid "Draws"
+msgstr ""
+
+msgid "tempai at draw"
 msgstr ""
 
 msgid "Chombo penalties"

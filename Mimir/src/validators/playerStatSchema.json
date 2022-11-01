@@ -107,7 +107,28 @@
         "tsumofeed": {
           "type": "integer"
         },
-        "openhand": {
+        "wins_with_open": {
+          "type": "integer"
+        },
+        "wins_with_riichi": {
+          "type": "integer"
+        },
+        "wins_with_dama": {
+          "type": "integer"
+        },
+        "unforced_feed_to_open": {
+          "type": "integer"
+        },
+        "unforced_feed_to_riichi": {
+          "type": "integer"
+        },
+        "unforced_feed_to_dama": {
+          "type": "integer"
+        },
+        "draw": {
+          "type": "integer"
+        },
+        "draw_tempai": {
           "type": "integer"
         }
       },

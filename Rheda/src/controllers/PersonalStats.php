@@ -116,7 +116,10 @@ class PersonalStats extends Controller
             $scoresSummary = $this->_getScoresSummary((int)$currentUser, $data['score_history']);
 
             $riichiTotal = $data['riichi_summary']['riichi_won'] + $data['riichi_summary']['riichi_lost'];
+            $totalPlayedRounds = $data['total_played_rounds'];
             $winCount = $data['win_summary']['ron'] + $data['win_summary']['tsumo'];
+            $feedCount = $data['win_summary']['feed'];
+            $drawCount = $data['win_summary']['draw'];
             $labelColorThreshold = $this->_mainEventRules->subtractStartPoints() ? 0 : $this->_mainEventRules->startPoints();
 
             return [
@@ -126,7 +129,7 @@ class PersonalStats extends Controller
                     'labelThreshold'    => $labelColorThreshold,
                     'currentPlayer'     => $currentUser,
                     'totalPlayedGames'  => $data['total_played_games'],
-                    'totalPlayedRounds' => $data['total_played_rounds'],
+                    'totalPlayedRounds' => $totalPlayedRounds,
 
                     'playersMap'     => json_encode($usersMap),
                     'points'         => json_encode($graphData),
@@ -134,54 +137,92 @@ class PersonalStats extends Controller
                     'handValueStats' => json_encode($handValueStats),
                     'yakuStats'      => json_encode($yakuStats),
 
-                    'ronCount'          => $data['win_summary']['ron'],
-                    'openHand'          => $data['win_summary']['openhand'],
-                    'tsumoCount'        => $data['win_summary']['tsumo'],
-                    'winCount'          => $winCount,
-                    'feedCount'         => $data['win_summary']['feed'],
-                    'feedUnderRiichi'   => $data['riichi_summary']['feed_under_riichi'],
-                    'tsumoFeedCount'    => $data['win_summary']['tsumofeed'],
-                    'chomboCount'       => $data['win_summary']['chombo'],
-                    'riichiWon'         => $data['riichi_summary']['riichi_won'],
-                    'riichiLost'        => $data['riichi_summary']['riichi_lost'],
-                    'riichiTotal'       => $riichiTotal,
-                    'averageDoraCount'  => $data['dora_stat']['average'],
-                    'doraCount'         => $data['dora_stat']['count'],
+                    'ronCount'             => $data['win_summary']['ron'],
+                    'winsWithOpen'         => $data['win_summary']['wins_with_open'],
+                    'winsWithRiichi'       => $data['win_summary']['wins_with_riichi'],
+                    'winsWithDama'         => $data['win_summary']['wins_with_dama'],
+                    'tsumoCount'           => $data['win_summary']['tsumo'],
+                    'winCount'             => $winCount,
+                    'feedCount'            => $feedCount,
+                    'drawCount'            => $drawCount,
+                    'drawTempai'           => $data['win_summary']['draw_tempai'],
+                    'feedUnderRiichi'      => $data['riichi_summary']['feed_under_riichi'],
+                    'feedToOpenUnforced'   => $data['win_summary']['unforced_feed_to_open'],
+                    'feedToRiichiUnforced' => $data['win_summary']['unforced_feed_to_riichi'],
+                    'feedToDamaUnforced'   => $data['win_summary']['unforced_feed_to_dama'],
+                    'feedUnforced'         => $data['win_summary']['unforced_feed_to_open'] +
+                        $data['win_summary']['unforced_feed_to_riichi'] +
+                        $data['win_summary']['unforced_feed_to_dama'],
+                    'tsumoFeedCount'       => $data['win_summary']['tsumofeed'],
+                    'chomboCount'          => $data['win_summary']['chombo'],
+                    'riichiWon'            => $data['riichi_summary']['riichi_won'],
+                    'riichiLost'           => $data['riichi_summary']['riichi_lost'],
+                    'riichiTotal'          => $riichiTotal,
+                    'averageDoraCount'     => $data['dora_stat']['average'],
+                    'doraCount'            => $data['dora_stat']['count'],
 
                     'minScores'     => number_format($scoresSummary['min_scores'], 0, '.', ','),
                     'maxScores'     => number_format($scoresSummary['max_scores'], 0, '.', ','),
                     'averageScores' => number_format($scoresSummary['average_scores'], 0, '.', ','),
 
-                    'ronCountPercent'        => round($data['win_summary']['ron']
-                        * 100. / $data['total_played_rounds'], 2),
-                    'tsumoCountPercent'      => round($data['win_summary']['tsumo']
-                        * 100. / $data['total_played_rounds'], 2),
-                    'winCountPercent'        => round(($data['win_summary']['ron'] + $data['win_summary']['tsumo'])
-                        * 100. / $data['total_played_rounds'], 2),
-                    'feedCountPercent'       => round($data['win_summary']['feed']
-                        * 100. / $data['total_played_rounds'], 2),
-                    'feedUnderRiichiPercent' => round($data['riichi_summary']['feed_under_riichi']
-                        * 100. / $data['total_played_rounds'], 2),
-                    'tsumoFeedCountPercent'  => round($data['win_summary']['tsumofeed']
-                        * 100. / $data['total_played_rounds'], 2),
-                    'chomboCountPercent'     => round($data['win_summary']['chombo']
-                        * 100. / $data['total_played_rounds'], 2),
-                    'openHandPercent' => $winCount ?
-                        round($data['win_summary']['openhand'] * 100. / $winCount, 2)
+                    'ronCountPercent'        => $winCount ?
+                        round($data['win_summary']['ron'] * 100. / $winCount, 2)
+                        : 0,
+                    'tsumoCountPercent'      => $winCount ?
+                        round($data['win_summary']['tsumo'] * 100. / $winCount, 2)
+                        : 0,
+                    'winCountPercent'        => round($winCount * 100. / $totalPlayedRounds, 2),
+                    'feedCountPercent'       => round($feedCount * 100. / $totalPlayedRounds, 2),
+                    'feedUnderRiichiPercent' => $feedCount ?
+                        round($data['riichi_summary']['feed_under_riichi'] * 100. / $feedCount, 2)
+                        : 0,
+                    'tsumoFeedCountPercent'  => round($data['win_summary']['tsumofeed'] * 100. / $totalPlayedRounds, 2),
+                    'chomboCountPercent'     => round($data['win_summary']['chombo'] * 100. / $totalPlayedRounds, 2),
+                    'winsWithOpenPercent' => $winCount ?
+                        round($data['win_summary']['wins_with_open'] * 100. / $winCount, 2)
+                        : 0,
+                    'winsWithRiichiPercent' => $winCount ?
+                        round($data['win_summary']['wins_with_riichi'] * 100. / $winCount, 2)
+                        : 0,
+                    'winsWithDamaPercent' => $winCount ?
+                        round($data['win_summary']['wins_with_dama'] * 100. / $winCount, 2)
+                        : 0,
+                    'feedToOpenUnforcedPercent' => $feedCount ?
+                        round($data['win_summary']['unforced_feed_to_open'] * 100. / $feedCount, 2)
+                        : 0,
+                    'feedToRiichiUnforcedPercent' => $feedCount ?
+                        round($data['win_summary']['unforced_feed_to_riichi'] * 100. / $feedCount, 2)
+                        : 0,
+                    'feedToDamaUnforcedPercent' => $feedCount ?
+                        round($data['win_summary']['unforced_feed_to_dama'] * 100. / $feedCount, 2)
+                        : 0,
+                    'feedUnforcedPercent' => $feedCount ?
+                        round(($data['win_summary']['unforced_feed_to_open'] +
+                            $data['win_summary']['unforced_feed_to_riichi'] +
+                            $data['win_summary']['unforced_feed_to_dama']) * 100. / $feedCount, 2)
                         : 0,
 
                     'riichiWonPercent'   => $riichiTotal ?
-                        round($data['riichi_summary']['riichi_won'] * 100. / ($riichiTotal), 2)
+                        round($data['riichi_summary']['riichi_won'] * 100. / $riichiTotal, 2)
                         : 0,
                     'riichiLostPercent'  => $riichiTotal ?
-                        round($data['riichi_summary']['riichi_lost'] * 100. / ($riichiTotal), 2)
+                        round($data['riichi_summary']['riichi_lost'] * 100. / $riichiTotal, 2)
                         : 0,
-                    'riichiTotalPercent' => round(($riichiTotal) * 100. / $data['total_played_rounds'], 2),
+                    'riichiTotalPercent' => round($riichiTotal * 100. / $totalPlayedRounds, 2),
 
-                    'place1' => round($data['places_summary'][1] * 100. / array_sum($data['places_summary']), 2),
-                    'place2' => round($data['places_summary'][2] * 100. / array_sum($data['places_summary']), 2),
-                    'place3' => round($data['places_summary'][3] * 100. / array_sum($data['places_summary']), 2),
-                    'place4' => round($data['places_summary'][4] * 100. / array_sum($data['places_summary']), 2),
+                    'drawPercent' => round($drawCount * 100. / $totalPlayedRounds, 2),
+                    'drawTempaiPercent' => $drawCount ?
+                        round($data['win_summary']['draw_tempai'] * 100. / $drawCount, 2)
+                        : 0,
+
+                    'place1' => $data['places_summary'][1],
+                    'place2' => $data['places_summary'][2],
+                    'place3' => $data['places_summary'][3],
+                    'place4' => $data['places_summary'][4],
+                    'place1Percent' => round($data['places_summary'][1] * 100. / array_sum($data['places_summary']), 2),
+                    'place2Percent' => round($data['places_summary'][2] * 100. / array_sum($data['places_summary']), 2),
+                    'place3Percent' => round($data['places_summary'][3] * 100. / array_sum($data['places_summary']), 2),
+                    'place4Percent' => round($data['places_summary'][4] * 100. / array_sum($data['places_summary']), 2),
                 ],
                 'error' => null
             ];

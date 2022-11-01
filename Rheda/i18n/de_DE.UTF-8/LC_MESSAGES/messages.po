@@ -1044,8 +1044,29 @@ msgstr "Nur globale Administratoren können Spieler registrieren"
 msgid "Open game control app"
 msgstr "Zur App"
 
-msgid "Open hands"
-msgstr "Geöffnete Hände"
+msgid "open hands won"
+msgstr ""
+
+msgid "riichi hands won"
+msgstr ""
+
+msgid "dama hands won"
+msgstr ""
+
+msgid "to open hands"
+msgstr ""
+
+msgid "to riichi hands"
+msgstr ""
+
+msgid "to dama hands"
+msgstr ""
+
+msgid "Draws"
+msgstr ""
+
+msgid "tempai at draw"
+msgstr ""
 
 msgid "Open riichi"
 msgstr "Geöffnetes Riichi"
@@ -1394,11 +1415,17 @@ msgstr "Für Ron bezahlt"
 msgid "Ron hands: %d"
 msgstr "Ron Hände: %d"
 
-msgid "Ron wins"
+msgid "ron wins"
 msgstr "Ron gewinnt"
 
-msgid "Round details:"
-msgstr "Rundendetails:"
+msgid "Win stats:"
+msgstr ""
+
+msgid "Loss stats:"
+msgstr ""
+
+msgid "Other stats:"
+msgstr ""
 
 msgid "Rounds played"
 msgstr "Runden gespielt"
@@ -1731,7 +1758,7 @@ msgstr "Tsumo Hände: %d"
 msgid "Tsumo losses"
 msgstr "Tsumo Verluste"
 
-msgid "Tsumo wins"
+msgid "tsumo wins"
 msgstr "Tsumo gewinnt"
 
 msgid "Tsuu iisou"
@@ -1871,6 +1898,9 @@ msgstr ""
 
 msgid "because of riichi"
 msgstr "wegen Riichi"
+
+msgid "not because of riichi"
+msgstr ""
 
 msgid "bets lost"
 msgstr "Einsatz verloren"

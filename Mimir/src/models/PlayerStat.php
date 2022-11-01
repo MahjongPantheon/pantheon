@@ -208,14 +208,32 @@ class PlayerStatModel extends Model
     protected function _getOutcomeSummary(int $playerId, array $rounds)
     {
         return array_reduce($rounds, function ($acc, RoundPrimitive $r) use ($playerId) {
+            $riichiIds = $r->getRiichiIds();
             switch ($r->getOutcome()) {
                 case 'ron':
                     if ($r->getLoserId() == $playerId) {
                         $acc['feed'] ++;
+                        if (!in_array($playerId, $riichiIds)) {
+                            if ($r->getOpenHand()) {
+                                $acc['unforced_feed_to_open']++;
+                            } else {
+                                if (in_array($r->getWinnerId(), $riichiIds)) {
+                                    $acc['unforced_feed_to_riichi']++;
+                                } else {
+                                    $acc['unforced_feed_to_dama']++;
+                                }
+                            }
+                        }
                     } else if ($r->getWinnerId() == $playerId) {
                         $acc['ron'] ++;
                         if ($r->getOpenHand()) {
-                            $acc['openhand'] ++;
+                            $acc['wins_with_open'] ++;
+                        } else {
+                            if (in_array($playerId, $riichiIds)) {
+                                $acc['wins_with_riichi']++;
+                            } else {
+                                $acc['wins_with_dama']++;
+                            }
                         }
                     }
                     break;
@@ -223,10 +241,22 @@ class PlayerStatModel extends Model
                     if ($r->getWinnerId() == $playerId) {
                         $acc['tsumo'] ++;
                         if ($r->getOpenHand()) {
-                            $acc['openhand'] ++;
+                            $acc['wins_with_open'] ++;
+                        } else {
+                            if (in_array($playerId, $riichiIds)) {
+                                $acc['wins_with_riichi']++;
+                            } else {
+                                $acc['wins_with_dama']++;
+                            }
                         }
                     } else {
                         $acc['tsumofeed'] ++;
+                    }
+                    break;
+                case 'draw':
+                    $acc['draw']++;
+                    if (in_array($playerId, $r->getTempaiIds())) {
+                        $acc['draw_tempai']++;
                     }
                     break;
                 case 'chombo':
@@ -240,12 +270,29 @@ class PlayerStatModel extends Model
                     foreach ($mr->rounds() as $round) {
                         if ($round->getWinnerId() == $playerId) {
                             $acc['ron'] ++;
-                            if ($mr->getOpenHand()) {
-                                $acc['openhand'] ++;
+                            if ($round->getOpenHand()) {
+                                $acc['wins_with_open'] ++;
+                            } else {
+                                if (in_array($playerId, $riichiIds)) {
+                                    $acc['wins_with_riichi']++;
+                                } else {
+                                    $acc['wins_with_dama']++;
+                                }
                             }
                             break;
-                        } else if ($mr->getLoserId() == $playerId) {
+                        } else if ($round->getLoserId() == $playerId) {
                             $acc['feed'] ++;
+                            if (!in_array($playerId, $riichiIds)) {
+                                if ($round->getOpenHand()) {
+                                    $acc['unforced_feed_to_open']++;
+                                } else {
+                                    if (in_array($round->getWinnerId(), $riichiIds)) {
+                                        $acc['unforced_feed_to_riichi']++;
+                                    } else {
+                                        $acc['unforced_feed_to_dama']++;
+                                    }
+                                }
+                            }
                         }
                     }
                     break;
@@ -254,12 +301,19 @@ class PlayerStatModel extends Model
             }
             return $acc;
         }, [
-            'ron'       => 0,
-            'tsumo'     => 0,
-            'chombo'    => 0,
-            'feed'      => 0,
-            'tsumofeed' => 0,
-            'openhand'  => 0
+            'ron'                     => 0,
+            'tsumo'                   => 0,
+            'chombo'                  => 0,
+            'feed'                    => 0,
+            'tsumofeed'               => 0,
+            'wins_with_open'          => 0,
+            'wins_with_riichi'        => 0, // not always equal to riichi_won below, riichi_won is for self sticks
+            'wins_with_dama'          => 0,
+            'unforced_feed_to_open'   => 0,
+            'unforced_feed_to_riichi' => 0,
+            'unforced_feed_to_dama'   => 0,
+            'draw'                    => 0,
+            'draw_tempai'             => 0,
         ]);
     }
 

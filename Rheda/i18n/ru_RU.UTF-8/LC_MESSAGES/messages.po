@@ -1063,8 +1063,29 @@ msgstr "Только администраторы могут регистрир�
 msgid "Open game control app"
 msgstr "Открыть игровой ассистент"
 
-msgid "Open hands"
-msgstr "Открытых рук"
+msgid "open hands won"
+msgstr "выигрышей с открытой рукой"
+
+msgid "riichi hands won"
+msgstr "выигрышей с риичи"
+
+msgid "dama hands won"
+msgstr "выигрышей из даматена"
+
+msgid "to open hands"
+msgstr "в открытые руки"
+
+msgid "to riichi hands"
+msgstr "в риичи"
+
+msgid "to dama hands"
+msgstr "в даматен"
+
+msgid "Draws"
+msgstr "Ничьих"
+
+msgid "tempai at draw"
+msgstr "темпаев при ничьей"
 
 msgid "Open riichi"
 msgstr "Опен риичи"
@@ -1414,11 +1435,20 @@ msgstr "Набросов в рон"
 msgid "Ron hands: %d"
 msgstr "Выигрышей по рон: %d"
 
-msgid "Ron wins"
-msgstr "Выигрышей по рон"
+msgid "ron wins"
+msgstr "выигрышей по рон"
 
 msgid "Round details:"
 msgstr "По итогам раздач:"
+
+msgid "Win stats:"
+msgstr "Статистика выигрышей:"
+
+msgid "Loss stats:"
+msgstr "Статистика набросов:"
+
+msgid "Other stats:"
+msgstr "Другая статистика:"
 
 msgid "Rounds played"
 msgstr "Сыграно раздач"
@@ -1765,8 +1795,8 @@ msgstr "Выигрышей по цумо: %d"
 msgid "Tsumo losses"
 msgstr "Выплат по цумо"
 
-msgid "Tsumo wins"
-msgstr "Выигрышей по цумо"
+msgid "tsumo wins"
+msgstr "выигрышей по цумо"
 
 msgid "Tsuu iisou"
 msgstr "Цуисо"
@@ -1910,7 +1940,10 @@ msgstr ""
 "не должны вводить сюда ваш пароль доступа к платформе tenhou!"
 
 msgid "because of riichi"
-msgstr "в том числе из-за риичи"
+msgstr "из-за риичи"
+
+msgid "not because of riichi"
+msgstr "не из-за риичи"
 
 msgid "bets lost"
 msgstr "из них потерянных"
