@@ -1441,6 +1441,15 @@ msgstr "выигрышей по рон"
 msgid "Round details:"
 msgstr "По итогам раздач:"
 
+msgid "Win stats:"
+msgstr "Статистика выигрышей:"
+
+msgid "Loss stats:"
+msgstr "Статистика набросов:"
+
+msgid "Other stats:"
+msgstr "Другая статистика:"
+
 msgid "Rounds played"
 msgstr "Сыграно раздач"
 

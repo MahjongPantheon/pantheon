@@ -377,7 +377,13 @@ msgstr ""
 msgid "Rounds won"
 msgstr ""
 
-msgid "Round details:"
+msgid "Win stats:"
+msgstr ""
+
+msgid "Loss stats:"
+msgstr ""
+
+msgid "Other stats:"
 msgstr ""
 
 msgid "ron wins"

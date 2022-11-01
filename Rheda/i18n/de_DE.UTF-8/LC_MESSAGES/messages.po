@@ -1418,8 +1418,14 @@ msgstr "Ron Hände: %d"
 msgid "ron wins"
 msgstr "Ron gewinnt"
 
-msgid "Round details:"
-msgstr "Rundendetails:"
+msgid "Win stats:"
+msgstr ""
+
+msgid "Loss stats:"
+msgstr ""
+
+msgid "Other stats:"
+msgstr ""
 
 msgid "Rounds played"
 msgstr "Runden gespielt"
