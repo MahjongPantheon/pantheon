@@ -224,8 +224,10 @@ class PlayerStatModel extends Model
         if ($isTsumo) {
             $newScores = PointsCalc::tsumo($rules, $dealerId, $currentScores, $winnerId, $han, $fu, $riichiIds, $honba, $riichiBetsCount, $paoPlayerId);
         } else {
+            /** @var int $nonnullLoserId */
+            $nonnullLoserId = $loserId;
             $isDealer = $dealerId == $winnerId;
-            $newScores = PointsCalc::ron($rules, $isDealer, $currentScores, $winnerId, $loserId, $han, $fu, $riichiIds, $honba, $riichiBetsCount, $paoPlayerId, $closestWinnerForMultiron, $totalRiichiInRoundForMultiron);
+            $newScores = PointsCalc::ron($rules, $isDealer, $currentScores, $winnerId, $nonnullLoserId, $han, $fu, $riichiIds, $honba, $riichiBetsCount, $paoPlayerId, $closestWinnerForMultiron, $totalRiichiInRoundForMultiron);
         }
         return $newScores[$playerId] - $currentScores[$playerId];
     }
@@ -234,7 +236,7 @@ class PlayerStatModel extends Model
      * @param RoundPrimitive $r
      * @param int $playerId
      * @param bool $isTsumo
-     * @param ?array $multironRiichiWinners
+     * @param array|null $multironRiichiWinners
      * @return int
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
