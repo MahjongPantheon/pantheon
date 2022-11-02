@@ -214,16 +214,18 @@ class PlayerStatModel extends Model
      * @param int $riichiBetsCount
      * @param bool $isTsumo
      * @param int|null $paoPlayerId
+     * @param int|null $closestWinnerForMultiron
+     * @param int $totalRiichiInRoundForMultiron
      * @return int
      * @throws InvalidParametersException
      */
-    protected function _getPointsDelta(\Common\Ruleset $rules, array $currentScores, int $han, ?int $fu, int $winnerId, ?int $loserId, array $riichiIds, int $playerId, int $dealerId, int $honba, int $riichiBetsCount, bool $isTsumo, ?int $paoPlayerId)
+    protected function _getPointsDelta(\Common\Ruleset $rules, array $currentScores, int $han, ?int $fu, int $winnerId, ?int $loserId, array $riichiIds, int $playerId, int $dealerId, int $honba, int $riichiBetsCount, bool $isTsumo, ?int $paoPlayerId, ?int $closestWinnerForMultiron = null, int $totalRiichiInRoundForMultiron = 0)
     {
         if ($isTsumo) {
             $newScores = PointsCalc::tsumo($rules, $dealerId, $currentScores, $winnerId, $han, $fu, $riichiIds, $honba, $riichiBetsCount, $paoPlayerId);
         } else {
             $isDealer = $dealerId == $winnerId;
-            $newScores = PointsCalc::ron($rules, $isDealer, $currentScores, $winnerId, $loserId, $han, $fu, $riichiIds, $honba, $riichiBetsCount, $paoPlayerId, null, 0);
+            $newScores = PointsCalc::ron($rules, $isDealer, $currentScores, $winnerId, $loserId, $han, $fu, $riichiIds, $honba, $riichiBetsCount, $paoPlayerId, $closestWinnerForMultiron, $totalRiichiInRoundForMultiron);
         }
         return $newScores[$playerId] - $currentScores[$playerId];
     }
@@ -232,32 +234,53 @@ class PlayerStatModel extends Model
      * @param RoundPrimitive $r
      * @param int $playerId
      * @param bool $isTsumo
+     * @param ?array $multironRiichiWinners
      * @return int
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      */
-    protected function _getPointsDeltaForRound(RoundPrimitive $r, int $playerId, bool $isTsumo)
+    protected function _getPointsDeltaForRound(RoundPrimitive $r, int $playerId, bool $isTsumo, ?array $multironRiichiWinners = null)
     {
         $sessionState = $r->getLastSessionState();
-        if ($r->getWinnerId() == $playerId) {
-            $riichiIds = $r->getRiichiIds(); // if we win, our win cost also includes all riichi sticks from the current round
+        $winnerId = $r->getWinnerId();
+        $riichiIds = $r->getRiichiIds();
+
+        if ($multironRiichiWinners !== null) {
+            $closestWinnerForMultiron = $multironRiichiWinners[$winnerId]['closest_winner'];
+            $totalRiichiInRoundForMultiron = count($riichiIds);
+            $riichiIds = $multironRiichiWinners[$winnerId]['from_players']; // overwrite for one ron instance of multiron
+            $honba = $multironRiichiWinners[$winnerId]['honba'];
+            $riichiBetsCount = $multironRiichiWinners[$winnerId]['from_table'];
         } else {
-            $riichiIds = array(); // if we deal-in or someone else takes tsumo, don't consider our riichi stick, since we are interested only in deal-in cost
+            $closestWinnerForMultiron = null;
+            $totalRiichiInRoundForMultiron = 0;
+            $honba = $sessionState->getHonba();
+            $riichiBetsCount = $sessionState->getRiichiBets();
         }
+
+        if ($winnerId != $playerId) {
+            // if we deal-in or someone else takes tsumo, don't consider any riichi sticks in the current round
+            // since we are interested only in deal-in cost
+            $riichiIds = array();
+            $totalRiichiInRoundForMultiron = 0;
+        }
+
         return $this->_getPointsDelta(
             $r->getEvent()->getRuleset(),
             $sessionState->getScores(),
             $r->getHan(),
             $r->getFu(),
-            $r->getWinnerId(),
+            $winnerId,
             $r->getLoserId(),
             $riichiIds,
             $playerId,
             $sessionState->getCurrentDealer(),
-            $sessionState->getHonba(),
-            $sessionState->getRiichiBets(),
+            $honba,
+            $riichiBetsCount,
             $isTsumo,
             $r->getPaoPlayerId(),
+            $closestWinnerForMultiron,
+            $totalRiichiInRoundForMultiron,
         );
     }
 
@@ -332,10 +355,21 @@ class PlayerStatModel extends Model
                 case 'multiron':
                     /** @var MultiRoundPrimitive $mr */
                     $mr = $r;
+
+                    // for calculating avg win/loss costs
+                    $lastSessionState = $mr->getLastSessionState();
+                    $multironRiichiWinners = PointsCalc::assignRiichiBets(
+                        $mr->rounds(),
+                        $mr->getLoserId(),
+                        $lastSessionState->getRiichiBets(),
+                        $lastSessionState->getHonba(),
+                        $mr->getSession()
+                    );
+
                     foreach ($mr->rounds() as $round) {
                         if ($round->getWinnerId() == $playerId) {
                             $acc['ron'] ++;
-                            $acc['points_won'] += $this->_getPointsDeltaForRound($round, $playerId, false);
+                            $acc['points_won'] += $this->_getPointsDeltaForRound($round, $playerId, false, $multironRiichiWinners);
                             if ($round->getOpenHand()) {
                                 $acc['wins_with_open'] ++;
                             } else {
@@ -348,7 +382,7 @@ class PlayerStatModel extends Model
                             break;
                         } else if ($round->getLoserId() == $playerId) {
                             $acc['feed'] ++;
-                            $acc['points_lost_ron'] -= $this->_getPointsDeltaForRound($round, $playerId, false);
+                            $acc['points_lost_ron'] -= $this->_getPointsDeltaForRound($round, $playerId, false, $multironRiichiWinners);
                             if (!in_array($playerId, $riichiIds)) {
                                 if ($round->getOpenHand()) {
                                     $acc['unforced_feed_to_open']++;
