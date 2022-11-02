@@ -428,6 +428,15 @@ msgstr ""
 msgid "tempai at draw"
 msgstr ""
 
+msgid "Average win cost"
+msgstr ""
+
+msgid "Average deal-in cost"
+msgstr ""
+
+msgid "Average tsumo loss cost"
+msgstr ""
+
 msgid "Chombo penalties"
 msgstr ""
 

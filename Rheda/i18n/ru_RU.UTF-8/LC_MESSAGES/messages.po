@@ -1087,6 +1087,15 @@ msgstr "Ничьих"
 msgid "tempai at draw"
 msgstr "темпаев при ничьей"
 
+msgid "Average win cost"
+msgstr "Средняя стоимость выигрыша"
+
+msgid "Average deal-in cost"
+msgstr "Средняя стоимость наброса"
+
+msgid "Average tsumo loss cost"
+msgstr "Средняя стоимость проигрыша по цумо"
+
 msgid "Open riichi"
 msgstr "Опен риичи"
 
