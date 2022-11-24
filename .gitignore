@@ -5,6 +5,8 @@
 .c9/
 *.launch
 .settings/
+*.swp
+*.code-workspace
 
 .DS_Store
 Thumbs.db
