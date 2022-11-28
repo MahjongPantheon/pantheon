@@ -110,6 +110,7 @@ export interface RGameConfig {
   eventTitle: string;
   withAtamahane: boolean;
   autoSeating: boolean;
+  isPrescripted: boolean;
   rulesetTitle: string;
   eventStatHost: string;
   tonpuusen: boolean;
