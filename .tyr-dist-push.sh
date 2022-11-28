@@ -13,7 +13,7 @@ commit_built() {
 }
 
 upload_files() {
-  git remote add origin-pntn https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/MahjongPantheon/pantheon.git > /dev/null 2>&1
+  git remote add origin-pntn https://${GITHUB_ACTOR}:${INPUT_GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY.git > /dev/null 2>&1
   git push --quiet --set-upstream origin-pntn master
 }
 

@@ -56,4 +56,5 @@ jobs:
         run: make prod_build_ratatosk
 
       - name: Push prod build to repo
+        if: github.repository=='MahjongPantheon/pantheon'
         run: ./.tyr-dist-push.sh

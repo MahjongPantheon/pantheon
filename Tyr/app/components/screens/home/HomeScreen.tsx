@@ -70,7 +70,7 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
     return (
       <HomeScreenView
         eventName={playerName}
-        canStartGame={!state.gameConfig.autoSeating && !state.isUniversalWatcher && !state.currentSessionHash}
+        canStartGame={!state.gameConfig.autoSeating && !state.isUniversalWatcher && !state.currentSessionHash && !state.gameConfig.isPrescripted}
         hasStartedGame={!!state.currentSessionHash && state.gameOverviewReady}
         hasPrevGame={!state.isUniversalWatcher /*&& state.lastResults !== undefined*/}
         canSeeOtherTables={true}

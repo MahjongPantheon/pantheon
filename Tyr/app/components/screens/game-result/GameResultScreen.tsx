@@ -24,7 +24,7 @@ export const GameResultScreen: React.FC<IComponentProps> = props => {
     })
   }
 
-  const canStartGame = !state.gameConfig.autoSeating && !state.isUniversalWatcher && !state.currentSessionHash
+  const canStartGame = !state.gameConfig.autoSeating && !state.isUniversalWatcher && !state.currentSessionHash && !state.gameConfig.isPrescripted
 
   const onCheckClick = useCallback(() => {
     dispatch({ type: GOTO_NEXT_SCREEN });

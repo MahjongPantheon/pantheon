@@ -96,6 +96,7 @@ export interface LGameConfig {
   eventStatHost: string;
   withAtamahane: boolean;
   autoSeating: boolean;
+  isPrescripted: boolean;
   rulesetTitle: string;
   tonpuusen: boolean;
   startRating: number;

@@ -125,6 +125,7 @@ export function gameConfigFormatter(config: RGameConfig): LGameConfig {
     eventTitle: config.eventTitle,
     withAtamahane: !!config.withAtamahane,
     autoSeating: !!config.autoSeating,
+    isPrescripted: !!config.isPrescripted,
     rulesetTitle: config.rulesetTitle,
     eventStatHost: environment.guiFix(config.eventStatHost),
     tonpuusen: !!config.tonpuusen,
