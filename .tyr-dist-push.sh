@@ -8,7 +8,6 @@ setup_git() {
 commit_built() {
   git checkout master
   git add Tyr-dist
-  git add Ratatosk-prebuilt
   git commit --message "Auto build: $GITHUB_RUN_NUMBER"
 }
 

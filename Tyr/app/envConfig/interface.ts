@@ -3,7 +3,6 @@ export type EnvConfig = {
   apiUrl: string;
   uaUrl: string;
   guiUrl: string;
-  ratatoskUrl: string;
   cookieDomain: string | null;
   guiFix: (src: string) => string;
   metrikaId: number;
