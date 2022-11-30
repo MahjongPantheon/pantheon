@@ -18,6 +18,10 @@ const roundsMap: {[key: number]: string} = {
   6: '南2',
   7: '南3',
   8: '南4',
+  9: '西1',
+  10: '西2',
+  11: '西3',
+  12: '西4',
 }
 
 export class OtherTablesListView extends React.PureComponent<IProps>{
