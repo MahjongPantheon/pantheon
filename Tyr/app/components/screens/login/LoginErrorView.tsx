@@ -5,10 +5,11 @@ import {useContext} from "react";
 import {i18n} from "#/components/i18n";
 
 type IProps = {
-  onOkClick: () => void
+  onOkClick: () => void;
+  recoveryLink: string;
 }
 
-export const LoginErrorView: React.FC<IProps> = ({onOkClick}) => {
+export const LoginErrorView: React.FC<IProps> = ({onOkClick, recoveryLink}) => {
   const loc = useContext(i18n);
   const regLink = `<a href=${environment.guiUrl + 'signup'} target='_blank'>${loc._pt('Name of registration link', 'register')}</a>`;
 
@@ -23,7 +24,7 @@ export const LoginErrorView: React.FC<IProps> = ({onOkClick}) => {
         </div>
         <ul>
           <li dangerouslySetInnerHTML={{__html: loc._t('E-mail is not registered in Pantheon database (%1)', [regLink])}}/>
-          <li>{loc._t('Password check has failed')}</li>
+          <li>{loc._t('Password check has failed')} - <a href={recoveryLink} target='_blank'>{loc._t('Forgot password?')}</a></li>
           <li>{loc._t('Unexpected server error')}</li>
         </ul>
         <div>{loc._t('If in doubt, contact the tournament administrator for further instructions.')}</div>
