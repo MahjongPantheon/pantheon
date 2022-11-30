@@ -421,8 +421,18 @@ class EventsController extends Controller
     {
         $this->_log->addInfo('Getting current seating for event #' . $eventId);
 
-        $games = SessionPrimitive::findByEventListAndStatus($this->_ds, [$eventId], SessionPrimitive::STATUS_FINISHED);
-        $players = EventModel::getPlayersOfGames($this->_ds, $games);
+        $regs = array_filter(PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId), function (PlayerRegistrationPrimitive $reg) {
+            return !$reg->getIgnoreSeating();
+        });
+
+        $ids = array_map(function (PlayerRegistrationPrimitive $reg) {
+            return $reg->getPlayerId();
+        }, $regs);
+
+        $players = [];
+        foreach (PlayerPrimitive::findById($this->_ds, $ids) as $player) {
+            $players[$player->getId()] = ['id' => $player->getId(), 'tenhou_id' => $player->getTenhouId(), 'title' => $player->getDisplayName()];
+        }
 
         $data = (new EventModel($this->_ds, $this->_config, $this->_meta))
             ->getCurrentSeating($eventId, $players);
