@@ -62,6 +62,9 @@ class Timer extends Controller
             $formattedTime = (int)($remaining / 60) . ':'
                            . (floor(($remaining % 60) / 10) * 10);
             return [
+                'startingTimer' => $autostartTimer ?: '0',
+                'haveStartingTimer' => $autostartTimer > 0,
+                'waiting' => $this->_mainEventRules->gamesWaitingForTimer(),
                 'redZoneLength' => $this->_mainEventRules->redZone() / 60,
                 'yellowZoneLength' => $this->_mainEventRules->yellowZone() / 60,
                 'redZone' => $this->_mainEventRules->timerPolicy() === 'redZone',
