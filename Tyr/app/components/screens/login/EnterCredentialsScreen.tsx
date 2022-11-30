@@ -15,5 +15,8 @@ export const EnterCredentialsScreen: React.FC<IComponentProps> = (props) => {
     }
   }, [dispatch]);
 
-  return <EnterCredentialsView onSubmit={onSubmit} signupLink={environment.guiUrl + 'signup'} />
+  return <EnterCredentialsView onSubmit={onSubmit}
+    signupLink={environment.guiUrl + 'signup'}
+    recoveryLink={environment.guiUrl + 'passwordRecovery'}
+  />
 }

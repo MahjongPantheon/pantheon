@@ -106,11 +106,13 @@ export function lastResultsFormatter(list: RPlayerData[]): LUserWithScore[] {
 }
 
 export function eventsListFormatter(list: REventsList): LEventsList {
-  return list.map((event) => ({
-    id: parseInt(event.id.toString(), 10),
-    description: event.description,
-    title: event.title
-  }));
+  return list
+    .filter((event) => !event.isOnline)
+    .map((event) => ({
+      id: parseInt(event.id.toString(), 10),
+      description: event.description,
+      title: event.title
+    }));
 }
 
 export function gameConfigFormatter(config: RGameConfig): LGameConfig {

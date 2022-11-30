@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-06 01:10+0300\n"
+"POT-Creation-Date: 2022-11-30 22:05+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -226,11 +226,20 @@ msgstr "Интервал автостарта должен быть положи
 msgid "Average"
 msgstr "В среднем"
 
+msgid "Average deal-in cost"
+msgstr "Средняя стоимость наброса"
+
 msgid "Average place"
 msgstr "Среднее место"
 
 msgid "Average points"
 msgstr "Средние очки"
+
+msgid "Average tsumo loss cost"
+msgstr "Средняя стоимость проигрыша по цумо"
+
+msgid "Average win cost"
+msgstr "Средняя стоимость выигрыша"
 
 msgid "Basic ruleset name"
 msgstr "Имя базового набора правил"
@@ -441,6 +450,9 @@ msgstr ""
 
 msgid "Drawn rounds: %d"
 msgstr "Ничьих: %d"
+
+msgid "Draws"
+msgstr "Ничьих"
 
 msgid ""
 "Duration in seconds before games are started automatically after seating is "
@@ -939,6 +951,9 @@ msgstr "Войти"
 msgid "Log out"
 msgstr "Выйти"
 
+msgid "Loss stats:"
+msgstr "Статистика набросов:"
+
 msgid "Main event is empty: this is unexpected behavior"
 msgstr "Основное событие пусто: это неожиданное поведение"
 
@@ -1063,39 +1078,6 @@ msgstr "Только администраторы могут регистрир�
 msgid "Open game control app"
 msgstr "Открыть игровой ассистент"
 
-msgid "open hands won"
-msgstr "выигрышей с открытой рукой"
-
-msgid "riichi hands won"
-msgstr "выигрышей с риичи"
-
-msgid "dama hands won"
-msgstr "выигрышей из даматена"
-
-msgid "to open hands"
-msgstr "в открытые руки"
-
-msgid "to riichi hands"
-msgstr "в риичи"
-
-msgid "to dama hands"
-msgstr "в даматен"
-
-msgid "Draws"
-msgstr "Ничьих"
-
-msgid "tempai at draw"
-msgstr "темпаев при ничьей"
-
-msgid "Average win cost"
-msgstr "Средняя стоимость выигрыша"
-
-msgid "Average deal-in cost"
-msgstr "Средняя стоимость наброса"
-
-msgid "Average tsumo loss cost"
-msgstr "Средняя стоимость проигрыша по цумо"
-
 msgid "Open riichi"
 msgstr "Опен риичи"
 
@@ -1110,6 +1092,9 @@ msgstr "Сортировать по имени игрока"
 
 msgid "Order by player rating"
 msgstr "Сортировать по рейтингу"
+
+msgid "Other stats:"
+msgstr "Другая статистика:"
 
 msgid "Over 9000 fu"
 msgstr "Over 9000 fu"
@@ -1443,21 +1428,6 @@ msgstr "Набросов в рон"
 
 msgid "Ron hands: %d"
 msgstr "Выигрышей по рон: %d"
-
-msgid "ron wins"
-msgstr "выигрышей по рон"
-
-msgid "Round details:"
-msgstr "По итогам раздач:"
-
-msgid "Win stats:"
-msgstr "Статистика выигрышей:"
-
-msgid "Loss stats:"
-msgstr "Статистика набросов:"
-
-msgid "Other stats:"
-msgstr "Другая статистика:"
 
 msgid "Rounds played"
 msgstr "Сыграно раздач"
@@ -1804,9 +1774,6 @@ msgstr "Выигрышей по цумо: %d"
 msgid "Tsumo losses"
 msgstr "Выплат по цумо"
 
-msgid "tsumo wins"
-msgstr "выигрышей по цумо"
-
 msgid "Tsuu iisou"
 msgstr "Цуисо"
 
@@ -1868,6 +1835,9 @@ msgid ""
 msgstr ""
 "Мы никогда не сохраняли и не будем сохранять ваши пароли в открытом виде. "
 "Обратите внимание, что слабые пароли не пройдут проверку."
+
+msgid "Win stats:"
+msgstr "Статистика выигрышей:"
 
 msgid "Wrong admin password"
 msgstr "Неправильный пароль администратора"
@@ -1951,20 +1921,47 @@ msgstr ""
 msgid "because of riichi"
 msgstr "из-за риичи"
 
-msgid "not because of riichi"
-msgstr "не из-за риичи"
-
 msgid "bets lost"
 msgstr "из них потерянных"
 
 msgid "bets won"
 msgstr "из них выигранных"
 
+msgid "dama hands won"
+msgstr "выигрышей из даматена"
+
 msgid "global"
 msgstr "Глобально"
 
 msgid "no"
 msgstr "нет"
+
+msgid "not because of riichi"
+msgstr "не из-за риичи"
+
+msgid "open hands won"
+msgstr "выигрышей с открытой рукой"
+
+msgid "riichi hands won"
+msgstr "выигрышей с риичи"
+
+msgid "ron wins"
+msgstr "выигрышей по рон"
+
+msgid "tempai at draw"
+msgstr "темпаев при ничьей"
+
+msgid "to dama hands"
+msgstr "в даматен"
+
+msgid "to open hands"
+msgstr "в открытые руки"
+
+msgid "to riichi hands"
+msgstr "в риичи"
+
+msgid "tsumo wins"
+msgstr "выигрышей по цумо"
 
 msgid "yakuman"
 msgstr "якуман"
@@ -2198,6 +2195,9 @@ msgstr "да"
 #~ msgstr ""
 #~ "Ренчаны/хонба просчитываются автоматически. Очки и выплаты контролируются "
 #~ "системой, в случае несоответствия будет выдано предупреждение."
+
+#~ msgid "Round details:"
+#~ msgstr "По итогам раздач:"
 
 #~ msgid "SOUTH"
 #~ msgstr "ЮГ"

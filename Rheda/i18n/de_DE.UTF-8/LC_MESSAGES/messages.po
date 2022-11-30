@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pantheon - Rheda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-06 01:10+0300\n"
+"POT-Creation-Date: 2022-11-30 22:05+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: Jesterboxboy\n"
@@ -217,11 +217,20 @@ msgstr ""
 msgid "Average"
 msgstr "Durchschnitt"
 
+msgid "Average deal-in cost"
+msgstr ""
+
 msgid "Average place"
 msgstr "Durchschnittsplatzierung"
 
 msgid "Average points"
 msgstr "Durchschnittliche Punkte"
+
+msgid "Average tsumo loss cost"
+msgstr ""
+
+msgid "Average win cost"
+msgstr ""
 
 msgid "Basic ruleset name"
 msgstr "Regelwerk"
@@ -429,6 +438,9 @@ msgstr ""
 
 msgid "Drawn rounds: %d"
 msgstr "Unentschiedene Runden: %d"
+
+msgid "Draws"
+msgstr ""
 
 msgid ""
 "Duration in seconds before games are started automatically after seating is "
@@ -921,6 +933,9 @@ msgstr "Login"
 msgid "Log out"
 msgstr "Logout"
 
+msgid "Loss stats:"
+msgstr ""
+
 msgid "Main event is empty: this is unexpected behavior"
 msgstr "Main event ist leer: Unerwarteter Fehler"
 
@@ -1044,39 +1059,6 @@ msgstr "Nur globale Administratoren können Spieler registrieren"
 msgid "Open game control app"
 msgstr "Zur App"
 
-msgid "open hands won"
-msgstr ""
-
-msgid "riichi hands won"
-msgstr ""
-
-msgid "dama hands won"
-msgstr ""
-
-msgid "to open hands"
-msgstr ""
-
-msgid "to riichi hands"
-msgstr ""
-
-msgid "to dama hands"
-msgstr ""
-
-msgid "Draws"
-msgstr ""
-
-msgid "tempai at draw"
-msgstr ""
-
-msgid "Average win cost"
-msgstr ""
-
-msgid "Average deal-in cost"
-msgstr ""
-
-msgid "Average tsumo loss cost"
-msgstr ""
-
 msgid "Open riichi"
 msgstr "Geöffnetes Riichi"
 
@@ -1091,6 +1073,9 @@ msgstr "Sortieren nach Namen"
 
 msgid "Order by player rating"
 msgstr "Sortiern nach Punkten"
+
+msgid "Other stats:"
+msgstr ""
 
 msgid "Over 9000 fu"
 msgstr "Über 9000 fu"
@@ -1424,18 +1409,6 @@ msgstr "Für Ron bezahlt"
 msgid "Ron hands: %d"
 msgstr "Ron Hände: %d"
 
-msgid "ron wins"
-msgstr "Ron gewinnt"
-
-msgid "Win stats:"
-msgstr ""
-
-msgid "Loss stats:"
-msgstr ""
-
-msgid "Other stats:"
-msgstr ""
-
 msgid "Rounds played"
 msgstr "Runden gespielt"
 
@@ -1767,9 +1740,6 @@ msgstr "Tsumo Hände: %d"
 msgid "Tsumo losses"
 msgstr "Tsumo Verluste"
 
-msgid "tsumo wins"
-msgstr "Tsumo gewinnt"
-
 msgid "Tsuu iisou"
 msgstr "Tsuu iisou"
 
@@ -1831,6 +1801,9 @@ msgid ""
 msgstr ""
 "Passwörter werden nicht im Klartext gespeichert. Zu schwache Passwörter "
 "werden aber abgelehnt."
+
+msgid "Win stats:"
+msgstr ""
 
 msgid "Wrong admin password"
 msgstr "Falsches Administratorpasswort"
@@ -1908,20 +1881,47 @@ msgstr ""
 msgid "because of riichi"
 msgstr "wegen Riichi"
 
-msgid "not because of riichi"
-msgstr ""
-
 msgid "bets lost"
 msgstr "Einsatz verloren"
 
 msgid "bets won"
 msgstr "Einsatz gewonnen"
 
+msgid "dama hands won"
+msgstr ""
+
 msgid "global"
 msgstr "global"
 
 msgid "no"
 msgstr "nein"
+
+msgid "not because of riichi"
+msgstr ""
+
+msgid "open hands won"
+msgstr ""
+
+msgid "riichi hands won"
+msgstr ""
+
+msgid "ron wins"
+msgstr "Ron gewinnt"
+
+msgid "tempai at draw"
+msgstr ""
+
+msgid "to dama hands"
+msgstr ""
+
+msgid "to open hands"
+msgstr ""
+
+msgid "to riichi hands"
+msgstr ""
+
+msgid "tsumo wins"
+msgstr "Tsumo gewinnt"
 
 msgid "yakuman"
 msgstr "Yakuman"
