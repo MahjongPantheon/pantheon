@@ -17,7 +17,6 @@ ENV MIMIR_URL http://localhost:4001
 ENV RHEDA_URL http://localhost:4002
 ENV TYR_URL   http://localhost:4003
 ENV FREY_URL  http://localhost:4004
-ENV RATATOSK_URL  http://localhost:4006
 
 ENV IS_DOCKER 1
 
@@ -143,7 +142,6 @@ RUN chmod 755 /entrypoint.sh
 COPY Rheda/rheda-docker.nginx.conf /etc/nginx/http.d/rheda.conf
 COPY Mimir/mimir-docker.nginx.conf /etc/nginx/http.d/mimir.conf
 COPY Frey/frey-docker.nginx.conf /etc/nginx/http.d/frey.conf
-COPY Ratatosk/nginx/ratatosk-docker.nginx.conf /etc/nginx/http.d/ratatosk.conf
 
 # copy db init scripts
 RUN mkdir -p /docker-entrypoint-initdb.d
@@ -158,7 +156,6 @@ RUN mkdir -p /var/www/html/Mimir
 RUN mkdir -p /var/www/html/Rheda
 RUN mkdir -p /var/www/html/Frey
 RUN mkdir -p /var/www/html/Common
-RUN mkdir -p /var/www/Ratatosk
 RUN mkdir -p /var/www/html/pantheon
 
 # Entry point

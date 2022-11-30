@@ -52,9 +52,6 @@ jobs:
       - name: Make prod Tyr build
         run: make prod_build_tyr
 
-      - name: Make prod Ratatosk build
-        run: make prod_build_ratatosk
-
       - name: Push prod build to repo
         if: github.repository=='MahjongPantheon/pantheon'
         run: ./.tyr-dist-push.sh
