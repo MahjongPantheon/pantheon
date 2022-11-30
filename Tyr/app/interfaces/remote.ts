@@ -336,6 +336,7 @@ export type REvent = {
   id: number;
   title: string;
   description: string;
+  isOnline: boolean;
 }
 
 export type REventsList = REvent[];

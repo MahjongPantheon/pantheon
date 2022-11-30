@@ -272,6 +272,7 @@ class PlayersController extends Controller
                 return [
                     'id' => $ev->getId(),
                     'title' => $ev->getTitle(),
+                    'isOnline' => $ev->getIsOnline(),
                     'description' => $this->_mdTransform($ev->getDescription())
                 ];
             }, $evList);
