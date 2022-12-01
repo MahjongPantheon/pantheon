@@ -103,18 +103,18 @@
             }).then((result) => result.json()).then((result) => {
                 document.getElementById(targetListId).innerHTML = `
                 <a class="dropdown-item" href="#"
-                   onclick="selectReplacement(id, -1, '{{_t 'Nobody'}}', this); return false;">{{_t 'Nobody'}}</a>
+                   onclick="selectReplacement(${id}, -1, '{{_t 'Nobody'}}', this); return false;">{{_t 'Nobody'}}</a>
                 ${result.map((item) => {
                     return `<a class="dropdown-item" href="#"
                                onclick="selectReplacement(${id}, ${item.id}, '${item.title}', this); return false;">
                             ${item.title}
                            </a>`;
                 }).join('')}
-            `;
+           `;
             }).catch(() => {
                 document.getElementById(targetListId).innerHTML = `
                 <a class="dropdown-item" href="#"
-                   onclick="selectReplacement(id, -1, '{{_t 'Nobody'}}', this); return false;">{{_t 'Nobody'}}</a>
+                   onclick="selectReplacement(${id}, -1, '{{_t 'Nobody'}}', this); return false;">{{_t 'Nobody'}}</a>
             `;
             })
         }
