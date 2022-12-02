@@ -105,17 +105,17 @@ abstract class Controller
 
     protected function _logStart($method, $args)
     {
-        $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: started');
+        $this->_log->info('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: started');
     }
 
     protected function _logSuccess($method, $args)
     {
-        $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: success');
+        $this->_log->info('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: success');
     }
 
     protected function _logError($method, $args)
     {
-        $this->_log->addInfo('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: failed');
+        $this->_log->info('[Frey][' . __CLASS__ . '->' . $method . '](' . implode(', ', $args) . ') :: failed');
     }
 
     protected function _depersonalizeEmail($email)

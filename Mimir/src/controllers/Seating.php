@@ -39,7 +39,7 @@ class SeatingController extends Controller
     public function makeShuffledSeating($eventId, $groupsCount, $seed)
     {
         $this->_checkIfAllowed($eventId);
-        $this->_log->addInfo('Creating new shuffled seating by seed #' . $seed . ' for event #' . $eventId);
+        $this->_log->info('Creating new shuffled seating by seed #' . $seed . ' for event #' . $eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
         list ($playersMap, $tables) = $this->_getData($eventId);
@@ -50,9 +50,9 @@ class SeatingController extends Controller
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
-        $this->_log->addInfo('Created new shuffled seating by seed #' . $seed . ' for event #' . $eventId);
+        $this->_log->info('Created new shuffled seating by seed #' . $seed . ' for event #' . $eventId);
         if ($gamesWillStart) {
-            $this->_log->addInfo('Started all games with shuffled seating by seed #' . $seed . ' for event #' . $eventId);
+            $this->_log->info('Started all games with shuffled seating by seed #' . $seed . ' for event #' . $eventId);
         }
         return true;
     }
@@ -70,7 +70,7 @@ class SeatingController extends Controller
     public function makeSwissSeating($eventId)
     {
         $this->_checkIfAllowed($eventId);
-        $this->_log->addInfo('Creating new swiss seating for event #' . $eventId);
+        $this->_log->info('Creating new swiss seating for event #' . $eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
         list ($playersMap, $tables) = $this->_getData($eventId);
@@ -81,9 +81,9 @@ class SeatingController extends Controller
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
-        $this->_log->addInfo('Created new swiss seating for event #' . $eventId);
+        $this->_log->info('Created new swiss seating for event #' . $eventId);
         if ($gamesWillStart) {
-            $this->_log->addInfo('Started all games with swiss seating for event #' . $eventId);
+            $this->_log->info('Started all games with swiss seating for event #' . $eventId);
         }
         return true;
     }
@@ -101,12 +101,12 @@ class SeatingController extends Controller
     public function generateSwissSeating($eventId)
     {
         $this->_checkIfAllowed($eventId);
-        $this->_log->addInfo('Generating new swiss seating for event #' . $eventId);
+        $this->_log->info('Generating new swiss seating for event #' . $eventId);
 
         list ($playersMap, $tables) = $this->_getData($eventId);
         $seating = array_chunk(array_keys(Seating::swissSeating($playersMap, $tables)), 4);
 
-        $this->_log->addInfo('Generated new swiss seating for event #' . $eventId);
+        $this->_log->info('Generated new swiss seating for event #' . $eventId);
         return $seating;
     }
 
@@ -126,7 +126,7 @@ class SeatingController extends Controller
     public function makeIntervalSeating($eventId, $step)
     {
         $this->_checkIfAllowed($eventId);
-        $this->_log->addInfo('Creating new interval seating for event #' . $eventId);
+        $this->_log->info('Creating new interval seating for event #' . $eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
 
         $eventList = EventPrimitive::findById($this->_db, [$eventId]);
@@ -152,9 +152,9 @@ class SeatingController extends Controller
                 ->startGame($eventId, $table, $tableIndex++); // TODO: here might be an exception inside loop!
         }
 
-        $this->_log->addInfo('Created new interval seating for event #' . $eventId);
+        $this->_log->info('Created new interval seating for event #' . $eventId);
         if ($gamesWillStart) {
-            $this->_log->addInfo('Started all games by interval seating for event #' . $eventId);
+            $this->_log->info('Started all games by interval seating for event #' . $eventId);
         }
         return true;
     }
@@ -171,7 +171,7 @@ class SeatingController extends Controller
      */
     public function makePrescriptedSeating($eventId, $randomizeAtTables = false)
     {
-        $this->_log->addInfo('Creating new prescripted seating for event #' . $eventId);
+        $this->_log->info('Creating new prescripted seating for event #' . $eventId);
         $seating = $this->_getNextPrescriptedSeating($eventId);
         $gamesWillStart = $this->_updateEventStatus($eventId);
         $tableIndex = 1;
@@ -182,7 +182,7 @@ class SeatingController extends Controller
             }, $table));
 
             if (empty($table) || count($table) != 4) {
-                $this->_log->addInfo('Failed to form a table from predefined seating at event #' . $eventId);
+                $this->_log->info('Failed to form a table from predefined seating at event #' . $eventId);
                 continue;
             }
 
@@ -199,9 +199,9 @@ class SeatingController extends Controller
         $prescript = EventPrescriptPrimitive::findByEventId($this->_db, [$eventId]);
         $prescript[0]->setNextGameIndex($prescript[0]->getNextGameIndex() + 1)->save();
 
-        $this->_log->addInfo('Created new prescripted seating for event #' . $eventId);
+        $this->_log->info('Created new prescripted seating for event #' . $eventId);
         if ($gamesWillStart) {
-            $this->_log->addInfo('Started all games by prescripted seating for event #' . $eventId);
+            $this->_log->info('Started all games by prescripted seating for event #' . $eventId);
         }
         return true;
     }
@@ -216,7 +216,7 @@ class SeatingController extends Controller
     protected function _getNextPrescriptedSeating($eventId)
     {
         $this->_checkIfAllowed($eventId);
-        $this->_log->addInfo('Getting next seating for event #' . $eventId);
+        $this->_log->info('Getting next seating for event #' . $eventId);
 
         $event = EventPrimitive::findById($this->_db, [$eventId]);
         if (empty($event)) {

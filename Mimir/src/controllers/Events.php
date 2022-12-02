@@ -41,7 +41,7 @@ class EventsController extends Controller
      */
     public function createEvent($title, $description, $type, $ruleset, $gameDuration, $timezone)
     {
-        $this->_log->addInfo('Creating new [' . $type . '] event with [' . $ruleset . '] rules');
+        $this->_log->info('Creating new [' . $type . '] event with [' . $ruleset . '] rules');
 
         $event = (new EventPrimitive($this->_db))
             ->setTitle($title)
@@ -58,7 +58,7 @@ class EventsController extends Controller
             throw new BadActionException('Somehow we couldn\'t create event - this should not happen');
         }
 
-        $this->_log->addInfo('Successfully create new event (id# ' . $event->getId() . ')');
+        $this->_log->info('Successfully create new event (id# ' . $event->getId() . ')');
         return $event->getId();
     }
 
@@ -71,7 +71,7 @@ class EventsController extends Controller
      */
     public function getAllRegisteredPlayers($eventIdList)
     {
-        $this->_log->addInfo('Getting all players for event ids: ' . implode(", ", $eventIdList));
+        $this->_log->info('Getting all players for event ids: ' . implode(", ", $eventIdList));
 
         if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
@@ -117,7 +117,7 @@ class EventsController extends Controller
             ];
         }, $players);
 
-        $this->_log->addInfo('Successfully received all players for event ids: ' . implode(", ", $eventIdList));
+        $this->_log->info('Successfully received all players for event ids: ' . implode(", ", $eventIdList));
 
         return $data;
     }
@@ -131,7 +131,7 @@ class EventsController extends Controller
      */
     public function getAllRegisteredPlayersFromToken()
     {
-        $this->_log->addInfo('Getting all players for event (by token)');
+        $this->_log->info('Getting all players for event (by token)');
         $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
         if (empty($data)) {
             throw new InvalidParametersException('Invalid player token', 401);
@@ -149,10 +149,10 @@ class EventsController extends Controller
      */
     public function getTablesState($eventId, $includeAllRounds = false)
     {
-        $this->_log->addInfo('Getting tables state for event #' . $eventId);
+        $this->_log->info('Getting tables state for event #' . $eventId);
         $data = (new EventModel($this->_db, $this->_config, $this->_meta))
             ->getTablesState($eventId, $includeAllRounds);
-        $this->_log->addInfo('Successfully got tables state for event #' . $eventId);
+        $this->_log->info('Successfully got tables state for event #' . $eventId);
         return $data;
     }
 
@@ -165,7 +165,7 @@ class EventsController extends Controller
      */
     public function getTablesStateFromToken()
     {
-        $this->_log->addInfo('Getting tables state for event (by token)');
+        $this->_log->info('Getting tables state for event (by token)');
         $eventModel = new EventModel($this->_db, $this->_config, $this->_meta);
 
         if ($this->_meta->isGlobalWatcher()) {
@@ -180,7 +180,7 @@ class EventsController extends Controller
             $data = $eventModel->getTablesState($reg->getEventId());
         }
 
-        $this->_log->addInfo('Successfully got tables state for event (by token)');
+        $this->_log->info('Successfully got tables state for event (by token)');
         return $data;
     }
 
@@ -195,10 +195,10 @@ class EventsController extends Controller
      */
     public function getCurrentSeating($eventId)
     {
-        $this->_log->addInfo('Getting current seating for event #' . $eventId);
+        $this->_log->info('Getting current seating for event #' . $eventId);
         $data = (new EventModel($this->_db, $this->_config, $this->_meta))
             ->getCurrentSeating($eventId);
-        $this->_log->addInfo('Successfully got current seating for event #' . $eventId);
+        $this->_log->info('Successfully got current seating for event #' . $eventId);
         return $data;
     }
 
@@ -211,10 +211,10 @@ class EventsController extends Controller
      */
     public function registerPlayer($pin)
     {
-        $this->_log->addInfo('Registering pin code #' . $pin);
+        $this->_log->info('Registering pin code #' . $pin);
         $authToken = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))
             ->registerPlayerPin($pin);
-        $this->_log->addInfo('Successfully registered pin code #' . $pin);
+        $this->_log->info('Successfully registered pin code #' . $pin);
         return $authToken;
     }
 
@@ -229,10 +229,10 @@ class EventsController extends Controller
      */
     public function registerPlayerAdmin($playerId, $eventId)
     {
-        $this->_log->addInfo('Registering player id# ' . $playerId . ' for event id# ' . $eventId);
+        $this->_log->info('Registering player id# ' . $playerId . ' for event id# ' . $eventId);
         $success = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))
             ->registerPlayer($playerId, $eventId);
-        $this->_log->addInfo('Successfully registered player id# ' . $playerId . ' for event id# ' . $eventId);
+        $this->_log->info('Successfully registered player id# ' . $playerId . ' for event id# ' . $eventId);
         return $success;
     }
 
@@ -246,9 +246,9 @@ class EventsController extends Controller
      */
     public function unregisterPlayerAdmin($playerId, $eventId)
     {
-        $this->_log->addInfo('Unregistering player id# ' . $playerId . ' for event id# ' . $eventId);
+        $this->_log->info('Unregistering player id# ' . $playerId . ' for event id# ' . $eventId);
         (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->unregisterPlayer($playerId, $eventId);
-        $this->_log->addInfo('Successfully unregistered player id# ' . $playerId . ' for event id# ' . $eventId);
+        $this->_log->info('Successfully unregistered player id# ' . $playerId . ' for event id# ' . $eventId);
     }
 
     /**
@@ -262,13 +262,13 @@ class EventsController extends Controller
      */
     public function updatePlayerSeatingFlag($playerId, $eventId, $ignoreSeating)
     {
-        $this->_log->addInfo('Update player seating flag id# ' . $playerId . ' for event id# ' . $eventId);
+        $this->_log->info('Update player seating flag id# ' . $playerId . ' for event id# ' . $eventId);
         $result = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->updateSeatingFlag(
             $playerId,
             $eventId,
             $ignoreSeating
         );
-        $this->_log->addInfo('Successfully updated player seating flag id# ' . $playerId . ' for event id# ' . $eventId);
+        $this->_log->info('Successfully updated player seating flag id# ' . $playerId . ' for event id# ' . $eventId);
         return $result;
     }
 
@@ -286,10 +286,10 @@ class EventsController extends Controller
      */
     public function enrollPlayer($playerId, $eventId)
     {
-        $this->_log->addInfo('Enrolling player id# ' . $playerId . ' for event id# ' . $eventId);
+        $this->_log->info('Enrolling player id# ' . $playerId . ' for event id# ' . $eventId);
         $pin = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))
             ->enrollPlayer($eventId, $playerId);
-        $this->_log->addInfo('Successfully enrolled player id# ' . $playerId . ' for event id# ' . $eventId);
+        $this->_log->info('Successfully enrolled player id# ' . $playerId . ' for event id# ' . $eventId);
         return $pin;
     }
 
@@ -304,10 +304,10 @@ class EventsController extends Controller
      */
     public function updateLocalIds($eventId, $idMap)
     {
-        $this->_log->addInfo('Updating players\' local ids for event id# ' . $eventId);
+        $this->_log->info('Updating players\' local ids for event id# ' . $eventId);
         $success = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))
             ->updateLocalIds($eventId, $idMap);
-        $this->_log->addInfo('Successfully updated players\' local ids for event id# ' . $eventId);
+        $this->_log->info('Successfully updated players\' local ids for event id# ' . $eventId);
         return $success;
     }
 
@@ -322,10 +322,10 @@ class EventsController extends Controller
      */
     public function updateTeamNames($eventId, $teamNameMap)
     {
-        $this->_log->addInfo('Updating players\' teams for event id# ' . $eventId);
+        $this->_log->info('Updating players\' teams for event id# ' . $eventId);
         $success = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))
             ->updateTeamNames($eventId, $teamNameMap);
-        $this->_log->addInfo('Successfully updated players\' teams for event id# ' . $eventId);
+        $this->_log->info('Successfully updated players\' teams for event id# ' . $eventId);
         return $success;
     }
 
@@ -338,7 +338,7 @@ class EventsController extends Controller
      */
     public function getAllEnrolledPlayers($eventId)
     {
-        $this->_log->addInfo('Getting all enrolled players for event id# ' . $eventId);
+        $this->_log->info('Getting all enrolled players for event id# ' . $eventId);
 
         $enrolled = PlayerEnrollmentPrimitive::findByEvent($this->_db, $eventId);
         $players = PlayerPrimitive::findById(
@@ -364,7 +364,7 @@ class EventsController extends Controller
             ];
         }, $players);
 
-        $this->_log->addInfo('Successfully received all enrolled players for event id# ' . $eventId);
+        $this->_log->info('Successfully received all enrolled players for event id# ' . $eventId);
         return $data;
     }
 
@@ -378,7 +378,7 @@ class EventsController extends Controller
      */
     public function getGameConfig($eventId)
     {
-        $this->_log->addInfo('Getting config for event id# ' . $eventId);
+        $this->_log->info('Getting config for event id# ' . $eventId);
 
         $event = EventPrimitive::findById($this->_db, [$eventId]);
         if (empty($event)) {
@@ -445,7 +445,7 @@ class EventsController extends Controller
             'chipsValue'          => (int) $rules->chipsValue(),
         ];
 
-        $this->_log->addInfo('Successfully received config for event id# ' . $eventId);
+        $this->_log->info('Successfully received config for event id# ' . $eventId);
         return $data;
     }
 
@@ -458,7 +458,7 @@ class EventsController extends Controller
      */
     public function getGameConfigFromToken()
     {
-        $this->_log->addInfo('Getting config for event (by token)');
+        $this->_log->info('Getting config for event (by token)');
         $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
         if (empty($data)) {
             throw new InvalidParametersException('Invalid player token', 401);
@@ -483,7 +483,7 @@ class EventsController extends Controller
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
-        $this->_log->addInfo('Getting rating table for event ids: ' . implode(", ", $eventIdList));
+        $this->_log->info('Getting rating table for event ids: ' . implode(", ", $eventIdList));
 
         $eventList = EventPrimitive::findById($this->_db, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
@@ -497,7 +497,7 @@ class EventsController extends Controller
         $table = (new EventRatingTableModel($this->_db, $this->_config, $this->_meta))
             ->getRatingTable($eventList, $orderBy, $order, $withPrefinished);
 
-        $this->_log->addInfo('Successfully received rating table for event ids: ' . implode(", ", $eventIdList));
+        $this->_log->info('Successfully received rating table for event ids: ' . implode(", ", $eventIdList));
 
         return $table;
     }
@@ -508,12 +508,12 @@ class EventsController extends Controller
      */
     public function getAchievementsList()
     {
-        $this->_log->addInfo('Getting achievements code list');
+        $this->_log->info('Getting achievements code list');
 
         $list = (new AchievementsModel($this->_db, $this->_config, $this->_meta))
             ->getAchievementsList();
 
-        $this->_log->addInfo('Successfully received achievements code list');
+        $this->_log->info('Successfully received achievements code list');
 
         return $list;
     }
@@ -533,7 +533,7 @@ class EventsController extends Controller
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
-        $this->_log->addInfo('Getting achievements list for event ids# ' . implode(", ", $eventIdList));
+        $this->_log->info('Getting achievements list for event ids# ' . implode(", ", $eventIdList));
 
         $eventList = EventPrimitive::findById($this->_db, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
@@ -547,7 +547,7 @@ class EventsController extends Controller
         $table = (new AchievementsModel($this->_db, $this->_config, $this->_meta))
             ->getAchievements($eventIdList, $achievementsList);
 
-        $this->_log->addInfo('Successfully received achievements list for event ids# ' . implode(", ", $eventIdList));
+        $this->_log->info('Successfully received achievements list for event ids# ' . implode(", ", $eventIdList));
 
         return $table;
     }
@@ -570,7 +570,7 @@ class EventsController extends Controller
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
-        $this->_log->addInfo('Getting games list [' . $limit . '/' . $offset . '] for event ids: ' . implode(", ", $eventIdList));
+        $this->_log->info('Getting games list [' . $limit . '/' . $offset . '] for event ids: ' . implode(", ", $eventIdList));
 
         $eventList = EventPrimitive::findById($this->_db, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
@@ -588,7 +588,7 @@ class EventsController extends Controller
         $table = (new EventFinishedGamesModel($this->_db, $this->_config, $this->_meta))
             ->getLastFinishedGames($eventList, $limit, $offset, $orderBy, $order);
 
-        $this->_log->addInfo('Successfully got games list [' . $limit . '/' . $offset . '] for event ids: ' . implode(", ", $eventIdList));
+        $this->_log->info('Successfully got games list [' . $limit . '/' . $offset . '] for event ids: ' . implode(", ", $eventIdList));
         return $table;
     }
 
@@ -602,7 +602,7 @@ class EventsController extends Controller
      */
     public function getGame($representationalHash)
     {
-        $this->_log->addInfo('Getting game for session hash#' . $representationalHash);
+        $this->_log->info('Getting game for session hash#' . $representationalHash);
 
         $session = SessionPrimitive::findByRepresentationalHash($this->_db, [$representationalHash]);
         if (empty($session)) {
@@ -611,7 +611,7 @@ class EventsController extends Controller
 
         $result = (new EventFinishedGamesModel($this->_db, $this->_config, $this->_meta))->getFinishedGame($session[0]);
 
-        $this->_log->addInfo('Successfully got game for session hash#' . $representationalHash);
+        $this->_log->info('Successfully got game for session hash#' . $representationalHash);
         return $result;
     }
 
@@ -625,7 +625,7 @@ class EventsController extends Controller
      */
     public function getGamesSeries($eventId)
     {
-        $this->_log->addInfo('Getting games series for event id# ' . $eventId);
+        $this->_log->info('Getting games series for event id# ' . $eventId);
 
         $event = EventPrimitive::findById($this->_db, [$eventId]);
         if (empty($event)) {
@@ -634,7 +634,7 @@ class EventsController extends Controller
 
         $data = (new EventSeriesModel($this->_db, $this->_config, $this->_meta))->getGamesSeries($event[0]);
 
-        $this->_log->addInfo('Successfully got games series for event id# ' . $eventId);
+        $this->_log->info('Successfully got games series for event id# ' . $eventId);
         return $data;
     }
 
@@ -646,7 +646,7 @@ class EventsController extends Controller
      */
     public function getTimerState($eventId)
     {
-        $this->_log->addInfo('Getting timer for event id#' . $eventId);
+        $this->_log->info('Getting timer for event id#' . $eventId);
 
         $event = EventPrimitive::findById($this->_db, [$eventId]);
         if (empty($event)) {
@@ -654,7 +654,7 @@ class EventsController extends Controller
         }
 
         if (!$event[0]->getUseTimer()) {
-            $this->_log->addInfo('Timer is not used for event id#' . $eventId);
+            $this->_log->info('Timer is not used for event id#' . $eventId);
             return [];
         }
 
@@ -683,7 +683,7 @@ class EventsController extends Controller
 
         $response['waiting_for_timer'] = ($event[0]->getGamesStatus() == EventPrimitive::GS_SEATING_READY);
 
-        $this->_log->addInfo('Successfully got timer data for event id#' . $eventId);
+        $this->_log->info('Successfully got timer data for event id#' . $eventId);
 
         return $response;
     }
@@ -695,7 +695,7 @@ class EventsController extends Controller
      */
     public function getTimerStateFromToken()
     {
-        $this->_log->addInfo('Getting timer for event (by token)');
+        $this->_log->info('Getting timer for event (by token)');
         $data = (new EventUserManagementModel($this->_db, $this->_config, $this->_meta))->dataFromToken();
         if (empty($data)) {
             throw new InvalidParametersException('Invalid player token', 401);
@@ -713,7 +713,7 @@ class EventsController extends Controller
      */
     public function startTimer($eventId)
     {
-        $this->_log->addInfo('Starting timer for event id#' . $eventId);
+        $this->_log->info('Starting timer for event id#' . $eventId);
 
         $event = EventPrimitive::findById($this->_db, [$eventId]);
         if (empty($event)) {
@@ -725,7 +725,7 @@ class EventsController extends Controller
         }
 
         $success = $event[0]->setLastTimer(time())->save();
-        $this->_log->addInfo('Successfully started timer for event id#' . $eventId);
+        $this->_log->info('Successfully started timer for event id#' . $eventId);
         return $success;
     }
 
@@ -739,7 +739,7 @@ class EventsController extends Controller
      */
     public function toggleHideResults($eventId)
     {
-        $this->_log->addInfo('Toggle hide results flag for event id#' . $eventId);
+        $this->_log->info('Toggle hide results flag for event id#' . $eventId);
 
         $event = EventPrimitive::findById($this->_db, [$eventId]);
         if (empty($event)) {
@@ -747,7 +747,7 @@ class EventsController extends Controller
         }
 
         $success = $event[0]->setHideResults($event[0]->getHideResults() == 1 ? 0 : 1)->save();
-        $this->_log->addInfo('Successfully toggle hide results flag for event id#' . $eventId);
+        $this->_log->info('Successfully toggle hide results flag for event id#' . $eventId);
         return $success;
     }
 
@@ -761,7 +761,7 @@ class EventsController extends Controller
      */
     public function getPrescriptedEventConfig($eventId)
     {
-        $this->_log->addInfo('Getting prescripted config for event id#' . $eventId);
+        $this->_log->info('Getting prescripted config for event id#' . $eventId);
 
         $event = EventPrimitive::findById($this->_db, [$eventId]);
         if (empty($event)) {
@@ -770,7 +770,7 @@ class EventsController extends Controller
 
         $config = (new EventModel($this->_db, $this->_config, $this->_meta))
             ->getPrescriptedConfig($eventId);
-        $this->_log->addInfo('Successfully received prescripted config for event id#' . $eventId);
+        $this->_log->info('Successfully received prescripted config for event id#' . $eventId);
         return $config;
     }
 
@@ -786,7 +786,7 @@ class EventsController extends Controller
      */
     public function updatePrescriptedEventConfig($eventId, $nextSessionIndex, $prescript)
     {
-        $this->_log->addInfo('Updating prescripted config for event id#' . $eventId);
+        $this->_log->info('Updating prescripted config for event id#' . $eventId);
 
         $event = EventPrimitive::findById($this->_db, [$eventId]);
         if (empty($event)) {
@@ -795,7 +795,7 @@ class EventsController extends Controller
 
         $success = (new EventModel($this->_db, $this->_config, $this->_meta))
             ->updatePrescriptedConfig($eventId, $nextSessionIndex - 1, $prescript);
-        $this->_log->addInfo('Successfully updated prescripted config for event id#' . $eventId);
+        $this->_log->info('Successfully updated prescripted config for event id#' . $eventId);
         return $success;
     }
 }
