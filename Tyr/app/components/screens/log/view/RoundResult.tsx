@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback} from 'react';
+import {ReactNode, useCallback} from 'react';
 import classNames from 'classnames';
 import {IRoundResult} from '#/components/screens/log/view/LogScreenView';
 
@@ -7,6 +7,7 @@ type RoundResultProps = IRoundResult & {
   index: number
   players: {[index: string]: string}
   selectRound: (index: number) => void
+  children: ReactNode;
 }
 
 export const RoundResult: React.FC<RoundResultProps> = (props) => {
