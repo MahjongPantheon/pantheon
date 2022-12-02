@@ -483,6 +483,14 @@ interface IMimirClient
     public function makeSwissSeating(int $eventId): bool;
 
     /**
+     *  Reset current seating in case of any mistake
+     *
+     * @param int $eventId
+     * @return void
+    */
+    public function resetSeating(int $eventId): void;
+
+    /**
      *  Generate a new swiss seating.
      *  It is here because of online tournaments.
      *

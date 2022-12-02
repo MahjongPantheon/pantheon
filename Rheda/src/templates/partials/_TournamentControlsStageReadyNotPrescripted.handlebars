@@ -12,6 +12,7 @@
         </div>
     </div>
     <hr />
+    {{^showOnlyShuffleSeating}}
     <div class="row">
         <div class="col-12">
             <h3>{{_t 'Swiss seating'}}</h3>
@@ -25,8 +26,10 @@
             {{/form}}
         </div>
     </div>
+    {{/showOnlyShuffleSeating}}
     <hr />
 {{/withAutoSeating}}
+{{^showOnlyShuffleSeating}}
 <div class="row">
     <div class="col-12">
         <h3>{{_t 'Interval seating'}}</h3>
@@ -55,3 +58,4 @@
         {{/form}}
     </div>
 </div>
+{{/showOnlyShuffleSeating}}

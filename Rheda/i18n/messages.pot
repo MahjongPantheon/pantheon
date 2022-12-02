@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-30 22:05+0300\n"
+"POT-Creation-Date: 2022-12-03 00:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,9 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-
-msgid "Achievements"
-msgstr ""
 
 msgid "Achievement"
 msgstr ""
@@ -80,6 +77,9 @@ msgid "%d riichi bet"
 msgid_plural "%d riichi bets"
 msgstr[0] ""
 msgstr[1] ""
+
+msgid "Achievements"
+msgstr ""
 
 msgid "The game has been successfully added!"
 msgstr ""
@@ -218,35 +218,6 @@ msgstr ""
 msgid "Apply penalty"
 msgstr ""
 
-msgid "Recover your password"
-msgstr ""
-
-msgid "Confirmation e-mail was sent. Please check you inbox."
-msgstr ""
-
-msgid ""
-"Please enter the e-mail address you've registered with. We will send you "
-"confirmation email to reset your password."
-msgstr ""
-
-msgid "Your e-mail address"
-msgstr ""
-
-msgid "Please enter symbols to make sure you're not a robot:"
-msgstr ""
-
-msgid "Send confirmation e-mail"
-msgstr ""
-
-msgid "Your password was successfully updated. Please log in now."
-msgstr ""
-
-msgid "Please enter new password for your account."
-msgstr ""
-
-msgid "Change password"
-msgstr ""
-
 msgid "Manage profile: %s"
 msgstr ""
 
@@ -298,19 +269,33 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-msgid "Create new user"
+msgid "Recover your password"
 msgstr ""
 
-msgid "Person name"
+msgid "Confirmation e-mail was sent. Please check you inbox."
 msgstr ""
 
-msgid "Password"
+msgid ""
+"Please enter the e-mail address you've registered with. We will send you "
+"confirmation email to reset your password."
 msgstr ""
 
-msgid "Create account"
+msgid "Your e-mail address"
 msgstr ""
 
-msgid "Successfully register new user!"
+msgid "Please enter symbols to make sure you're not a robot:"
+msgstr ""
+
+msgid "Send confirmation e-mail"
+msgstr ""
+
+msgid "Your password was successfully updated. Please log in now."
+msgstr ""
+
+msgid "Please enter new password for your account."
+msgstr ""
+
+msgid "Change password"
 msgstr ""
 
 msgid ""
@@ -335,6 +320,9 @@ msgstr ""
 msgid "I've read the privacy policy listed below and accept its terms"
 msgstr ""
 
+msgid "Create account"
+msgstr ""
+
 msgid "Privacy policy overview"
 msgstr ""
 
@@ -343,14 +331,16 @@ msgid ""
 "instructions."
 msgstr ""
 
-msgid "Sign up confirmation"
+msgid "Create new user"
 msgstr ""
 
-msgid "Thank you, your registration was successfully approved."
+msgid "Person name"
 msgstr ""
 
-msgid ""
-"You are required to log in with your email and password before proceeding"
+msgid "Password"
+msgstr ""
+
+msgid "Successfully register new user!"
 msgstr ""
 
 msgid "Personal stats"
@@ -479,6 +469,16 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
+msgid "Sign up confirmation"
+msgstr ""
+
+msgid "Thank you, your registration was successfully approved."
+msgstr ""
+
+msgid ""
+"You are required to log in with your email and password before proceeding"
+msgstr ""
+
 msgid "Player added successfully. Reload page to see results"
 msgstr ""
 
@@ -576,18 +576,6 @@ msgid ""
 "between games and are defined at Admin actions / Manage players page."
 msgstr ""
 
-msgid "Rights and privileges: %s"
-msgstr ""
-
-msgid "Customize"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Type"
-msgstr ""
-
 msgid "Rating table has been hidden by tournament administrator"
 msgstr ""
 
@@ -607,6 +595,18 @@ msgid "Order by average score"
 msgstr ""
 
 msgid "Team:"
+msgstr ""
+
+msgid "Rights and privileges: %s"
+msgstr ""
+
+msgid "Customize"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Type"
 msgstr ""
 
 msgid "Starting now!"
@@ -1004,6 +1004,15 @@ msgid "Start games and timer?"
 msgstr ""
 
 msgid "Start games!"
+msgstr ""
+
+msgid "Made a mistake in seating?"
+msgstr ""
+
+msgid "Reset seating?"
+msgstr ""
+
+msgid "Reset seating"
 msgstr ""
 
 msgid "Games will be automatically started in: "

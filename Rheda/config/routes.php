@@ -38,6 +38,7 @@ return [ // Omit trailing slashes in keys when possible
     '/tourn/(?<action>predefinedSeating)'                  => 'TournamentControlPanel',
     '/tourn/(?<action>intervalSeating)'                    => 'TournamentControlPanel',
     '/tourn/(?<action>swissSeating)'                       => 'TournamentControlPanel',
+    '/tourn/(?<action>resetSeating)'                       => 'TournamentControlPanel',
     '/tourn/(?<action>startTimer)'                         => 'TournamentControlPanel',
     '/tourn/(?<action>toggleHideResults)'                  => 'TournamentControlPanel',
     '/tourn/(?<action>finalizeSessions)'                   => 'TournamentControlPanel',

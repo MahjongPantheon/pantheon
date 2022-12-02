@@ -457,6 +457,18 @@ class SessionPrimitive extends Primitive
         return $success;
     }
 
+    /**
+     * @return Primitive
+     * @throws \Exception
+     */
+    public function drop()
+    {
+        $this->_ds->table(self::REL_USER)
+            ->where('session_id', $this->_id)
+            ->deleteMany();
+        return parent::drop();
+    }
+
     protected function _deident()
     {
         $this->_id = null;

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pantheon - Rheda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-30 22:05+0300\n"
+"POT-Creation-Date: 2022-12-03 00:05+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: Jesterboxboy\n"
@@ -936,6 +936,9 @@ msgstr "Logout"
 msgid "Loss stats:"
 msgstr ""
 
+msgid "Made a mistake in seating?"
+msgstr ""
+
 msgid "Main event is empty: this is unexpected behavior"
 msgstr "Main event ist leer: Unerwarteter Fehler"
 
@@ -1359,6 +1362,14 @@ msgstr ""
 
 msgid "Reset autostart timer?"
 msgstr ""
+
+#, fuzzy
+msgid "Reset seating"
+msgstr "Diese Sitzplatzierung benutzen"
+
+#, fuzzy
+msgid "Reset seating?"
+msgstr "Diese Sitzplatzierung benutzen"
 
 msgid "Reset the timer"
 msgstr "Timer zurücksetzen"
