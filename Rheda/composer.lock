@@ -4,29 +4,30 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b25fd09902af2478dba20189ff430ec2",
+    "content-hash": "8c144e364011c0a0e4e1dc2dc7e97efd",
     "packages": [
         {
             "name": "chillerlan/php-qrcode",
-            "version": "3.4.0",
+            "version": "4.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chillerlan/php-qrcode.git",
-                "reference": "d8bf297e6843a53aeaa8f3285ce04fc349d133d6"
+                "reference": "2ca4bf5ae048af1981d1023ee42a0a2a9d51e51d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chillerlan/php-qrcode/zipball/d8bf297e6843a53aeaa8f3285ce04fc349d133d6",
-                "reference": "d8bf297e6843a53aeaa8f3285ce04fc349d133d6",
+                "url": "https://api.github.com/repos/chillerlan/php-qrcode/zipball/2ca4bf5ae048af1981d1023ee42a0a2a9d51e51d",
+                "reference": "2ca4bf5ae048af1981d1023ee42a0a2a9d51e51d",
                 "shasum": ""
             },
             "require": {
-                "chillerlan/php-settings-container": "^1.2",
+                "chillerlan/php-settings-container": "^2.1.4",
                 "ext-mbstring": "*",
-                "php": "^7.2"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.5",
+                "phan/phan": "^5.3",
+                "phpunit/phpunit": "^9.5",
                 "setasign/fpdf": "^1.8.2"
             },
             "suggest": {
@@ -58,7 +59,7 @@
                     "homepage": "https://github.com/chillerlan/php-qrcode/graphs/contributors"
                 }
             ],
-            "description": "A QR code generator. PHP 7.2+",
+            "description": "A QR code generator. PHP 7.4+",
             "homepage": "https://github.com/chillerlan/php-qrcode",
             "keywords": [
                 "phpqrcode",
@@ -69,7 +70,7 @@
             ],
             "support": {
                 "issues": "https://github.com/chillerlan/php-qrcode/issues",
-                "source": "https://github.com/chillerlan/php-qrcode/tree/3.4.0"
+                "source": "https://github.com/chillerlan/php-qrcode/tree/4.3.4"
             },
             "funding": [
                 {
@@ -81,28 +82,29 @@
                     "type": "ko_fi"
                 }
             ],
-            "time": "2020-11-18T20:51:41+00:00"
+            "time": "2022-07-25T09:12:45+00:00"
         },
         {
             "name": "chillerlan/php-settings-container",
-            "version": "1.2.1",
+            "version": "2.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/chillerlan/php-settings-container.git",
-                "reference": "b9b0431dffd74102ee92348a63b4c33fc8ba639b"
+                "reference": "1beb7df3c14346d4344b0b2e12f6f9a74feabd4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chillerlan/php-settings-container/zipball/b9b0431dffd74102ee92348a63b4c33fc8ba639b",
-                "reference": "b9b0431dffd74102ee92348a63b4c33fc8ba639b",
+                "url": "https://api.github.com/repos/chillerlan/php-settings-container/zipball/1beb7df3c14346d4344b0b2e12f6f9a74feabd4a",
+                "reference": "1beb7df3c14346d4344b0b2e12f6f9a74feabd4a",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": "^7.2"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^8.3"
+                "phan/phan": "^5.3",
+                "phpunit/phpunit": "^9.5"
             },
             "type": "library",
             "autoload": {
@@ -121,11 +123,12 @@
                     "homepage": "https://github.com/codemasher"
                 }
             ],
-            "description": "A container class for immutable settings objects. Not a DI container. PHP 7.2+",
+            "description": "A container class for immutable settings objects. Not a DI container. PHP 7.4+",
             "homepage": "https://github.com/chillerlan/php-settings-container",
             "keywords": [
                 "PHP7",
                 "Settings",
+                "configuration",
                 "container",
                 "helper"
             ],
@@ -133,7 +136,17 @@
                 "issues": "https://github.com/chillerlan/php-settings-container/issues",
                 "source": "https://github.com/chillerlan/php-settings-container"
             },
-            "time": "2019-09-10T00:09:44+00:00"
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/donate?hosted_button_id=WLYUNAT9ZTJZ4",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://ko-fi.com/codemasher",
+                    "type": "ko_fi"
+                }
+            ],
+            "time": "2022-07-05T22:32:14+00:00"
         },
         {
             "name": "fguillot/json-rpc",
@@ -169,20 +182,20 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.12.15",
+            "version": "8.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "c1f328bface2745ff1a292639dd68cafc673a456"
+                "reference": "58285eaba7cb388f57b5b1b3689a566694b4e043"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/c1f328bface2745ff1a292639dd68cafc673a456",
-                "reference": "c1f328bface2745ff1a292639dd68cafc673a456",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/58285eaba7cb388f57b5b1b3689a566694b4e043",
+                "reference": "58285eaba7cb388f57b5b1b3689a566694b4e043",
                 "shasum": ""
             },
             "require": {
-                "giggsey/locale": "^1.7",
+                "giggsey/locale": "^1.7|^2.0",
                 "php": ">=5.3.2",
                 "symfony/polyfill-mbstring": "^1.17"
             },
@@ -192,7 +205,7 @@
                 "pear/versioncontrol_git": "^0.5",
                 "phing/phing": "^2.7",
                 "php-coveralls/php-coveralls": "^1.0|^2.0",
-                "symfony/console": "^2.8|^3.0",
+                "symfony/console": "^2.8|^3.0|^v4.4|^v5.2",
                 "symfony/phpunit-bridge": "^4.2 || ^5"
             },
             "type": "library",
@@ -234,40 +247,40 @@
                 "validation"
             ],
             "support": {
-                "irc": "irc://irc.appliedirc.com/lobby",
                 "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php"
             },
-            "time": "2020-12-15T10:15:17+00:00"
+            "time": "2022-11-28T12:02:06+00:00"
         },
         {
             "name": "giggsey/locale",
-            "version": "1.9",
+            "version": "2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/Locale.git",
-                "reference": "b07f1eace8072ccc61445ad8fbd493ff9d783043"
+                "reference": "5f035523740be40d40ac768a123c9bcc1ae12f56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/Locale/zipball/b07f1eace8072ccc61445ad8fbd493ff9d783043",
-                "reference": "b07f1eace8072ccc61445ad8fbd493ff9d783043",
+                "url": "https://api.github.com/repos/giggsey/Locale/zipball/5f035523740be40d40ac768a123c9bcc1ae12f56",
+                "reference": "5f035523740be40d40ac768a123c9bcc1ae12f56",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": ">=7.2"
             },
             "require-dev": {
+                "ext-json": "*",
                 "pear/pear-core-minimal": "^1.9",
                 "pear/pear_exception": "^1.0",
                 "pear/versioncontrol_git": "^0.5",
-                "phing/phing": "~2.7",
-                "php-coveralls/php-coveralls": "^1.0|^2.0",
-                "phpunit/phpunit": "^4.8|^5.0",
-                "symfony/console": "^2.8|^3.0|^4.0",
-                "symfony/filesystem": "^2.8|^3.0|^4.0",
-                "symfony/finder": "^2.8|^3.0|^4.0",
-                "symfony/process": "^2.8|^3.0|^4.0"
+                "phing/phing": "^2.7",
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpunit/phpunit": "^8.5|^9.5",
+                "symfony/console": "^5.0|^6.0",
+                "symfony/filesystem": "^5.0|^6.0",
+                "symfony/finder": "^5.0|^6.0",
+                "symfony/process": "^5.0|^6.0"
             },
             "type": "library",
             "autoload": {
@@ -283,37 +296,37 @@
                 {
                     "name": "Joshua Gigg",
                     "email": "giggsey@gmail.com",
-                    "homepage": "http://giggsey.com/"
+                    "homepage": "https://giggsey.com/"
                 }
             ],
             "description": "Locale functions required by libphonenumber-for-php",
             "support": {
                 "issues": "https://github.com/giggsey/Locale/issues",
-                "source": "https://github.com/giggsey/Locale/tree/master"
+                "source": "https://github.com/giggsey/Locale/tree/2.3"
             },
-            "time": "2020-07-07T11:16:24+00:00"
+            "time": "2022-10-19T20:03:30+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "4.1.0",
+            "version": "5.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "d39c56a46b3ebe1f3696479966cd2b9f50aaa24f"
+                "reference": "ad87d5a5ca981228e0e205c2bc7dfb8e24559b60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/d39c56a46b3ebe1f3696479966cd2b9f50aaa24f",
-                "reference": "d39c56a46b3ebe1f3696479966cd2b9f50aaa24f",
+                "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/ad87d5a5ca981228e0e205c2bc7dfb8e24559b60",
+                "reference": "ad87d5a5ca981228e0e205c2bc7dfb8e24559b60",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.2.20||~2.15.1",
                 "json-schema/json-schema-test-suite": "1.2.0",
-                "phpdocumentor/phpdocumentor": "~2",
-                "phpunit/phpunit": "^4.8.22"
+                "phpunit/phpunit": "^4.8.35"
             },
             "bin": [
                 "bin/validate-json"
@@ -321,7 +334,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0.x-dev"
+                    "dev-master": "5.0.x-dev"
                 }
             },
             "autoload": {
@@ -359,9 +372,9 @@
             ],
             "support": {
                 "issues": "https://github.com/justinrainbow/json-schema/issues",
-                "source": "https://github.com/justinrainbow/json-schema/tree/master"
+                "source": "https://github.com/justinrainbow/json-schema/tree/5.2.12"
             },
-            "time": "2016-12-22T16:43:46+00:00"
+            "time": "2022-04-13T08:02:27+00:00"
         },
         {
             "name": "lorddashme/php-simple-captcha",
@@ -472,20 +485,23 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.20.0",
+            "version": "v1.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "39d483bdf39be819deabf04ec872eb0b2410b531"
+                "reference": "8ad114f6b39e2c98a8b0e3bd907732c207c2b534"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/39d483bdf39be819deabf04ec872eb0b2410b531",
-                "reference": "39d483bdf39be819deabf04ec872eb0b2410b531",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/8ad114f6b39e2c98a8b0e3bd907732c207c2b534",
+                "reference": "8ad114f6b39e2c98a8b0e3bd907732c207c2b534",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
+            },
+            "provide": {
+                "ext-mbstring": "*"
             },
             "suggest": {
                 "ext-mbstring": "For best performance"
@@ -493,7 +509,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.20-dev"
+                    "dev-main": "1.27-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -501,12 +517,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
                 "files": [
                     "bootstrap.php"
-                ]
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -532,7 +548,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.20.0"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.27.0"
             },
             "funding": [
                 {
@@ -548,7 +564,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-10-23T14:02:19+00:00"
+            "time": "2022-11-03T14:55:06+00:00"
         },
         {
             "name": "xamin/handlebars.php",
@@ -602,20 +618,20 @@
     "packages-dev": [
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.59",
+            "version": "1.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "cf4107257c8ca2ad967efdd6a00f12b21acbb779"
+                "reference": "d6fdf01c53978b6429f1393ba4afeca39cc68afa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cf4107257c8ca2ad967efdd6a00f12b21acbb779",
-                "reference": "cf4107257c8ca2ad967efdd6a00f12b21acbb779",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d6fdf01c53978b6429f1393ba4afeca39cc68afa",
+                "reference": "d6fdf01c53978b6429f1393ba4afeca39cc68afa",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1|^8.0"
+                "php": "^7.2|^8.0"
             },
             "conflict": {
                 "phpstan/phpstan-shim": "*"
@@ -625,11 +641,6 @@
                 "phpstan.phar"
             ],
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.12-dev"
-                }
-            },
             "autoload": {
                 "files": [
                     "bootstrap.php"
@@ -640,9 +651,13 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
+            "keywords": [
+                "dev",
+                "static analysis"
+            ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.59"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.2"
             },
             "funding": [
                 {
@@ -650,28 +665,28 @@
                     "type": "github"
                 },
                 {
-                    "url": "https://www.patreon.com/phpstan",
-                    "type": "patreon"
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
                 },
                 {
                     "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-07T14:46:03+00:00"
+            "time": "2022-11-10T09:56:11+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.5.8",
+            "version": "3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "9d583721a7157ee997f235f327de038e7ea6dac4"
+                "reference": "1359e176e9307e906dc3d890bcc9603ff6d90619"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/9d583721a7157ee997f235f327de038e7ea6dac4",
-                "reference": "9d583721a7157ee997f235f327de038e7ea6dac4",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/1359e176e9307e906dc3d890bcc9603ff6d90619",
+                "reference": "1359e176e9307e906dc3d890bcc9603ff6d90619",
                 "shasum": ""
             },
             "require": {
@@ -714,7 +729,7 @@
                 "source": "https://github.com/squizlabs/PHP_CodeSniffer",
                 "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
             },
-            "time": "2020-10-23T02:01:07+00:00"
+            "time": "2022-06-18T07:21:10+00:00"
         }
     ],
     "aliases": [],
@@ -727,5 +742,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }

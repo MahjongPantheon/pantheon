@@ -50,35 +50,35 @@ RUN apk update && \
     git \
     icu-data-full \
     nginx \
-    postgresql \
-    postgresql-jit \
+    postgresql13 \
     nodejs \
     npm \
-    php81-pecl-ast \
-    php81-soap \
+    php81-apcu \
+    php81-fpm \
+    php81-ctype \
+    php81-curl \
     php81-gettext \
-    php81-intl \
-    php81-tokenizer \
-    php81-mbstring \
-    php81-simplexml \
-    php81-openssl \
-    php81-gmp \
-    php81-phar \
-    php81-json \
-    php81-pdo \
-    php81-pdo_pgsql \
-    php81-pgsql \
     php81-gd \
     php81-gettext \
-    php81-xmlreader \
-    php81-xmlwriter \
-    php81-xdebug \
-    php81-phpdbg \
+    php81-gmp \
     php81-iconv \
-    php81-curl \
-    php81-ctype \
-    php81-fpm \
-    php81-apcu
+    php81-intl \
+    php81-json \
+    php81-mbstring \
+    php81-openssl \
+    php81-pdo_pgsql \
+    php81-pdo \
+    php81-pecl-ast \
+    php81-pgsql \
+    php81-phar \
+    php81-phpdbg \
+    php81-simplexml \
+    php81-soap \
+    php81-tokenizer \
+    php81-xdebug \
+    php81-xml \
+    php81-xmlwriter \
+    php81-xmlreader
 
 RUN npm install -g xgettext-template i18n-stex i18n-po-json i18n-json-po yarn
 RUN touch $PHP_LOGFILE
