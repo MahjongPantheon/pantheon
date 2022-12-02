@@ -324,6 +324,28 @@ class SeatingController extends Controller
     }
 
     /**
+     * Reset current seating in case of any mistake
+     *
+     * @param int $eventId
+     * @throws \Exception
+     * @return void
+     */
+    public function resetSeating(int $eventId)
+    {
+        $this->_checkIfAllowed($eventId);
+        list($event) = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event) || $event->getGamesStatus() !== EventPrimitive::GS_SEATING_READY) {
+            throw new InvalidParametersException('Event not found in database or event is not in proper state');
+        }
+
+        $event->setGamesStatus(EventPrimitive::GS_STARTED)->save();
+        $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
+        foreach ($sessions as $session) {
+            $session->drop();
+        }
+    }
+
+    /**
      * Update event "seating ready" status.
      * This should be done before games start, or admin panel will show some inadequate data.
      * @param int $eventId

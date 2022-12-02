@@ -29,6 +29,19 @@
                 {{/form}}
             </div>
         </div>
+        <hr />
+        <div class="row">
+            <div class="col-6">
+                {{_t 'Made a mistake in seating?'}}
+            </div>
+            <div class="col-6">
+                {{#form action='/tourn/resetSeating/' method='post'}}
+                    <input type="button" class="btn form-control btn-danger"
+                           onclick="return window.confirm('{{_t 'Reset seating?'}}') && disableTemporarily(this);"
+                           value="{{_t 'Reset seating'}}">
+                {{/form}}
+            </div>
+        </div>
         {{#haveStartingTimer}}
             <hr />
             <div class="row">

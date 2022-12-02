@@ -697,6 +697,18 @@ class MimirClient implements IMimirClient
     }
 
     /**
+     *  Reset current seating in case of any mistake
+     *
+     * @param int $eventId
+     * @return void
+    */
+    public function resetSeating(int $eventId): void
+    {
+        /** @phpstan-ignore-next-line */
+        $this->_client->execute('resetSeating', [$eventId]);
+    }
+
+    /**
      *  Generate a new swiss seating.
      *  It is here because of online tournaments.
      *

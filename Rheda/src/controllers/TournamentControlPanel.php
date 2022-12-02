@@ -73,6 +73,9 @@ class TournamentControlPanel extends Controller
                         $this->_mimir->makeSwissSeating($this->_mainEventId);
                         $this->_mimir->initStartingTimer($this->_mainEventId);
                         break;
+                    case 'resetSeating':
+                        $this->_mimir->resetSeating($this->_mainEventId);
+                        break;
                     case 'resetStartingTimer':
                         $this->_mimir->initStartingTimer($this->_mainEventId);
                         break;
@@ -145,6 +148,7 @@ class TournamentControlPanel extends Controller
             $this->_mainEventRules->syncStart()
         );
         $players = $this->_mimir->getAllPlayers($this->_eventIdList);
+        $showOnlyShuffleSeating = empty($tables);
 
         // filter $players who are ignored from seating
         $players = array_values(array_filter($players, function ($player) {
@@ -175,6 +179,7 @@ class TournamentControlPanel extends Controller
             'error' => null,
             'startingTimer' => $startingTimer,
             'haveStartingTimer' => $startingTimer > 0,
+            'showOnlyShuffleSeating' => $showOnlyShuffleSeating,
             'isTournament' => true, // false in games control panel controller
             'tablesList' => empty($_POST['description']) ? '' : $_POST['description'],
             'tables' => $tablesFormatted,

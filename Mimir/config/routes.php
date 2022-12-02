@@ -84,6 +84,7 @@ return [
     'getCurrentSeating'    => ['EventsController', 'getCurrentSeating'],
     'makeShuffledSeating'  => ['SeatingController', 'makeShuffledSeating'],
     'makeSwissSeating'     => ['SeatingController', 'makeSwissSeating'],
+    'resetSeating'         => ['SeatingController', 'resetSeating'],
     'generateSwissSeating' => ['SeatingController', 'generateSwissSeating'],
     'makeIntervalSeating'  => ['SeatingController', 'makeIntervalSeating'],
     'makePrescriptedSeating'       => ['SeatingController', 'makePrescriptedSeating'],
