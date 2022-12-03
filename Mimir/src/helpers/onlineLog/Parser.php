@@ -122,9 +122,9 @@ class OnlineParser
         if (preg_match($regex, $content, $matches)) {
             $parts = explode(',', $matches[1]);
             $result = array_combine(
-                array_map(function (PlayerPrimitive $p) {
+                array_filter(array_map(function (PlayerPrimitive $p) {
                     return $p->getId();
-                }, $this->_players),
+                }, $this->_players)),
                 [
                     intval($parts[0] . '00'),
                     intval($parts[2] . '00'),
@@ -153,9 +153,9 @@ class OnlineParser
         if (preg_match($regex, $content, $matches)) {
             $parts = explode(',', $matches[1]);
             return array_combine(
-                array_map(function (PlayerPrimitive $p) {
+                array_filter(array_map(function (PlayerPrimitive $p) {
                     return $p->getId();
-                }, $this->_players),
+                }, $this->_players)),
                 [
                     intval($parts[8]),
                     intval($parts[10]),
@@ -390,12 +390,12 @@ class OnlineParser
         // form array in form of [int 'player id' => bool 'tempai?']
         /** @var array $combined */
         $combined = array_combine(
-            array_map(
+            array_filter(array_map(
                 function (PlayerPrimitive $el) {
                     return $el->getId();
                 },
                 $this->_players
-            ),
+            )),
             [
                 !!$reader->getAttribute('hai0'),
                 !!$reader->getAttribute('hai1'),
@@ -408,8 +408,8 @@ class OnlineParser
         }
         $tempai = array_filter($combined);
 
-        // Special case for nagashi
-        if ($rkType && $rkType == 'nm') {
+        // Special case for nagashi, implied that $rkType == 'nm'
+        if ($rkType) {
             $this->_roundData []= [
                 'outcome'   => 'nagashi',
                 'riichi'    => $this->_getRiichi(),

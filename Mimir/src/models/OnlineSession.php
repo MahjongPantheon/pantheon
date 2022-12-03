@@ -118,7 +118,7 @@ class OnlineSessionModel extends Model
         $regex = '#(?<year>\d{4})(?<month>\d{2})(?<day>\d{2})(?<hour>\d{2})gm#is';
         $matches = [];
         if (preg_match($regex, $gameLink, $matches)) {
-            $date = mktime($matches['hour'], 0, 0, $matches['month'], $matches['day'], $matches['year']);
+            $date = mktime((int)$matches['hour'], 0, 0, (int)$matches['month'], (int)$matches['day'], (int)$matches['year']);
             if (time() - $date < $rules->gameExpirationTime() * 60 * 60) {
                 return;
             }

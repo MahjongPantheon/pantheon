@@ -154,6 +154,11 @@ class EventSeriesModel extends Model
                 $offset++;
             }
 
+            // It't implied that $bestSeries is not null after the loop, so we add guard here by continue otherwise
+            if (!$bestSeries) {
+                continue;
+            }
+
             // it is useful to know current player series
             $offset = $gamesCount - $event->getSeriesLength();
             $limit = $event->getSeriesLength();
@@ -196,9 +201,9 @@ class EventSeriesModel extends Model
         $formattedResults = [];
         foreach ($seriesResults as $item) {
             $playerId = $item['playerId'];
-            $bestSeriesIds = $item['sessionIds'] ?? [];
-            $bestScoresSum = $item['scoresSum'] ?? 0;
-            $bestPlacesSum = $item['placesSum'] ?? 0;
+            $bestSeriesIds = $item['sessionIds'];
+            $bestScoresSum = $item['scoresSum'];
+            $bestPlacesSum = $item['placesSum'];
             $formattedResults[] = [
                 'player' => $players[$item['playerId']],
                 'best_series' => $this->_formatSeries($playerId, $bestSeriesIds, $games, $sessionResults),

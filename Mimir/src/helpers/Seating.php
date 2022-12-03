@@ -137,7 +137,7 @@ class Seating
             $previousSeatings = [];
         }
         /** @var array[] $groups */
-        $groups = array_chunk($playersMap, (int)ceil(count($playersMap) / $groupsCount), true); // 1)
+        $groups = array_chunk($playersMap, max(1, (int)ceil(count($playersMap) / $groupsCount)), true); // 1)
         for ($i = 0; $i < $maxIterations; $i++) {
             srand($randFactor + $i * 17); // 2)
             foreach ($groups as $k => $v) {
@@ -179,7 +179,7 @@ class Seating
         $crossings = [];
 
         $tablesCount = floor(count($seating) / 4);
-        $games = array_chunk($previousSeatings, (int)$tablesCount);
+        $games = array_chunk($previousSeatings, max(1, (int)$tablesCount));
 
         // push new seating to our array, but reformat it first
         $newSeating = [];

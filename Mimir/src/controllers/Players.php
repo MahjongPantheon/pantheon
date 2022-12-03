@@ -316,7 +316,7 @@ class PlayersController extends Controller
             throw new InvalidParametersException('Attempted to use deidented primitive');
         }
         $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$sId]);
-        /** @var MultiRoundPrimitive $lastRound */
+        /** @var MultiRoundPrimitive|null $lastRound */
         $lastRound = MultiRoundHelper::findLastRound($rounds);
 
         if (empty($lastRound)) {
@@ -361,7 +361,7 @@ class PlayersController extends Controller
         if (is_array($result['paoPlayer'])) {
             $players = array_filter($result['paoPlayer']);
             // pao player may be only one
-            $result['paoPlayer'] = (reset($players) or null);
+            $result['paoPlayer'] = reset($players) ?: null;
         }
 
         return $result;

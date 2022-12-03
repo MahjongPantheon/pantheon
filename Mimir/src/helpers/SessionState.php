@@ -103,9 +103,6 @@ class SessionState
             $playersIds,
             array_fill(0, 4, $rules->startPoints())
         );
-        if (empty($sc)) {
-            throw new InvalidParametersException('Attempt to combine inequal arrays');
-        }
         $this->_scores = $sc;
     }
 

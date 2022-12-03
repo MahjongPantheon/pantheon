@@ -106,11 +106,7 @@ class EventPrimitive extends Primitive
                     return empty($changes) ? '{}' : json_encode($changes);
                 },
                 'deserialize' => function ($changesJson) {
-                    try {
-                        return json_decode($changesJson, true);
-                    } catch (\Exception $e) {
-                        return [];
-                    }
+                    return json_decode($changesJson, true) ?? [];
                 }
             ]
         ];

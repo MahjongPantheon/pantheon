@@ -78,7 +78,7 @@ class Downloader
             throw new InvalidParametersException('Received parameter is not query string');
         }
         parse_str($queryString, $out);
-        return $out['log'];
+        return is_string($out['log']) ? $out['log'] : '';
     }
 
     /**

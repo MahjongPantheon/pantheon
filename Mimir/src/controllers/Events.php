@@ -73,11 +73,7 @@ class EventsController extends Controller
             throw new BadActionException(' Unsupported type of event requested');
         }
 
-        try {
-            $rulesetChanges = json_decode($rulesetChangesJson, true);
-        } catch (\Exception $e) {
-            $rulesetChanges = [];
-        }
+        $rulesetChanges = json_decode($rulesetChangesJson, true) ?? [];
 
         /** @phpstan-ignore-next-line */
         $statHost = $this->_config->getStringValue('rhedaUrl') . '/eid' . EventPrimitive::ID_PLACEHOLDER;
@@ -198,11 +194,7 @@ class EventsController extends Controller
             throw new BadActionException("You don't have enough privileges to modify this event");
         }
 
-        try {
-            $rulesetChanges = json_decode($rulesetChangesJson, true);
-        } catch (\Exception $e) {
-            $rulesetChanges = [];
-        }
+        $rulesetChanges = json_decode($rulesetChangesJson, true) ?? [];
 
         $event->setTitle($title)
             ->setDescription($description)
