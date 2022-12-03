@@ -133,11 +133,11 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 401
      */
     public function testCreateAccountEmptyEmail()
     {
+        $this->expectExceptionCode(401);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->createAccount(
             '',
@@ -151,11 +151,11 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 401
      */
     public function testCreateAccountEmptyPassword()
     {
+        $this->expectExceptionCode(401);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->createAccount(
             'test@email.com',
@@ -169,11 +169,11 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 401
      */
     public function testCreateAccountEmptyTitle()
     {
+        $this->expectExceptionCode(401);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->createAccount(
             'test@email.com',
@@ -187,11 +187,11 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @throws \Exception
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 402
      */
     public function testCreateAccountInvalidEmail()
     {
+        $this->expectExceptionCode(402);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->createAccount(
             'testbademail.com',
@@ -502,11 +502,11 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @throws InvalidParametersException
-     * @expectedException \Frey\InvalidParametersException
-     * @expectedExceptionCode 409
      */
     public function testFindByTitleFuzzyTooShortQuery()
     {
+        $this->expectExceptionCode(409);
+        $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $model->findByTitleFuzzy('w');
     }
