@@ -1,4 +1,18 @@
-<phpunit bootstrap="./tests/bootstrap.php" stopOnError="true" stopOnFailure="true" colors="true">
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./tests/bootstrap.php" stopOnError="true" stopOnFailure="true" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">src/controllers</directory>
+      <directory suffix=".php">src/exceptions</directory>
+      <directory suffix=".php">src/interfaces</directory>
+      <file>src/Api.php</file>
+      <file>src/Controller.php</file>
+      <file>src/ErrorHandler.php</file>
+    </exclude>
+  </coverage>
   <testsuites>
     <testsuite name="MimirTest">
       <directory>tests</directory>
@@ -9,17 +23,4 @@
     <const name="WEB_SERVER_PORT" value="1349"/>
     <const name="WEB_SERVER_DOCROOT" value="./www"/>
   </php>
-  <filter>
-    <whitelist processUncoveredFilesFromWhitelist="true">
-      <directory suffix=".php">src</directory>
-      <exclude>
-        <directory suffix=".php">src/controllers</directory>
-        <directory suffix=".php">src/exceptions</directory>
-        <directory suffix=".php">src/interfaces</directory>
-        <file>src/Api.php</file>
-        <file>src/Controller.php</file>
-        <file>src/ErrorHandler.php</file>
-      </exclude>
-    </whitelist>
-  </filter>
 </phpunit>
