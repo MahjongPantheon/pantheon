@@ -204,7 +204,7 @@ abstract class Controller
                 $this->_frey->getClient()->getHttpClient()->withHeaders([
                     'X-Auth-Token: ' . $this->_authToken,
                     'X-Locale: ' . $locale,
-                    'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
+                    'X-Current-Event-Id: ' . $this->_mainEventId,
                     'X-Current-Person-Id: ' . $this->_currentPersonId,
                     'X-Internal-Query-Secret: ' . Sysconf::FREY_INTERNAL_QUERY_SECRET
                 ]);
@@ -232,8 +232,8 @@ abstract class Controller
         $client->withHeaders([
             'X-Debug-Token: ' . Sysconf::DEBUG_TOKEN(),
             'X-Auth-Token: ' . $this->_authToken,
-            'X-Current-Event-Id: ' . $this->_mainEventId ?: '0',
-            'X-Current-Person-Id: ' . $this->_currentPersonId ?: '0',
+            'X-Current-Event-Id: ' . $this->_mainEventId,
+            'X-Current-Person-Id: ' . $this->_currentPersonId,
             'X-Internal-Query-Secret: ' . Sysconf::MIMIR_INTERNAL_QUERY_SECRET,
             'X-Locale: ' . $locale,
             // @phpstan-ignore-next-line
@@ -380,6 +380,7 @@ abstract class Controller
         self::_healthSpecialPath($url);
 
         $matches = [];
+        /** @var ?Controller $controllerInstance */
         $controllerInstance = null;
         $path = (string)parse_url($url, PHP_URL_PATH);
         foreach ($routes as $regex => $controller) {
@@ -406,9 +407,11 @@ abstract class Controller
         }
 
         if (!$controllerInstance) {
-            trigger_error('No available controller found for URL: ' . $url);
+            throw new \Exception('No available controller found for URL: ' . $url);
         }
 
+        // We know for sure that it's controller instance, but phpstan doesn't :(
+        // @phpstan-ignore-next-line
         return $controllerInstance;
     }
 

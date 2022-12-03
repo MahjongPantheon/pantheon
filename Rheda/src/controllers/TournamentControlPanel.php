@@ -25,7 +25,7 @@ class TournamentControlPanel extends Controller
 {
     protected $_mainTemplate = 'TournamentControlPanel';
     /**
-     * @var \Exception
+     * @var ?\Exception
      */
     protected $_lastEx = null;
 

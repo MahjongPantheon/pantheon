@@ -103,7 +103,7 @@ class HttpClient extends \JsonRPC\HttpClient
     /**
      * Callback called before the doing the request
      *
-     * @var callable
+     * @var \Closure
      */
     protected $beforeRequest;
 

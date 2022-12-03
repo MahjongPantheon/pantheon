@@ -10,9 +10,9 @@ use Handlebars\Handlebars;
 class Templater
 {
     /**
-     * @var Handlebars
+     * @var ?Handlebars
      */
-    protected static $_rootRenderer;
+    protected static $_rootRenderer = null;
     /**
      * @var Handlebars
      */
