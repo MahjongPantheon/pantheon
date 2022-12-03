@@ -92,7 +92,7 @@ class AccessManagementModelTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws \Exception
      */
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_db = Db::__getCleanTestingInstance();
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));

@@ -40,7 +40,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws \Exception
      */
-    public function setUp()
+    protected function setUp(): void
     {
         // Init db! Or bunch of PDOExceptions will appeal
         $this->_db = Db::__getCleanTestingInstance();

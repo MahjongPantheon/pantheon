@@ -85,7 +85,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
         $this->_meta->__setPersonId($this->_oldPersonId);
     }
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_db = Db::__getCleanTestingInstance();
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));

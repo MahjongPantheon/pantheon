@@ -27,7 +27,7 @@ class PersonAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
     /** @var PersonPrimitive */
     protected $_person;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_db = Db::__getCleanTestingInstance();
         $this->_person = new PersonPrimitive($this->_db);

@@ -37,7 +37,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
      */
     protected $_meta;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_db = Db::__getCleanTestingInstance();
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));

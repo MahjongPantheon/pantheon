@@ -52,7 +52,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
      */
     protected $_event;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_ds = DataSource::__getCleanTestingInstance();
         $this->_event = (new EventPrimitive($this->_ds))
@@ -82,7 +82,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
         }, $this->_players));
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
     }
 

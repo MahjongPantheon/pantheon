@@ -46,7 +46,7 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
      */
     protected $_session;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_ds = DataSource::__getCleanTestingInstance();
 

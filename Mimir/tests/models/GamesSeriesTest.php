@@ -51,7 +51,7 @@ class GamesSeriesTest extends \PHPUnit\Framework\TestCase
      */
     protected $_meta;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $playerNames = array_filter(preg_split('#\s#is', file_get_contents(__DIR__ . '/../models/testdata/players.txt')));
         $games = explode("\n\n\n", file_get_contents(__DIR__ . '/../models/testdata/games.txt'));

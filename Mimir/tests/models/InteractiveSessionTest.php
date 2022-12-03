@@ -52,7 +52,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
      */
     protected $_meta;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
 
