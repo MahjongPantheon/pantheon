@@ -70,7 +70,7 @@ class AccountModel extends Model
         // TODO: do something with this workaround for docker debug
         $token = empty($_SERVER['HTTP_X_DEBUG_TOKEN']) ? '' : $_SERVER['HTTP_X_DEBUG_TOKEN'];
         if ($token === $this->_config->getValue('admin.debug_token') && $token === 'CHANGE_ME') {
-            $content = file_get_contents('/tmp/frey_tokens_debug') ?? '';
+            $content = file_get_contents('/tmp/frey_tokens_debug') ?: '';
             file_put_contents('/tmp/frey_tokens_debug', $content .
                 "New user: $title [id: {$person->getId()}] [hash: {$tokens['client_hash']}]" . PHP_EOL);
         }

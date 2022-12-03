@@ -60,7 +60,7 @@ class GroupAccessPrimitive extends AccessPrimitive
     protected $_groupId;
     /**
      * Person this rule is applied to
-     * @var GroupPrimitive
+     * @var ?GroupPrimitive
      */
     protected $_group;
 
