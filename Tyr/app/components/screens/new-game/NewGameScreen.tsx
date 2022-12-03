@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {IComponentProps} from '#/components/IComponentProps';
 import {
+  CLEAR_NEWGAME_PLAYERS,
   GOTO_PREV_SCREEN,
   RANDOMIZE_NEWGAME_PLAYERS,
   SEARCH_PLAYER, START_GAME_INIT,
@@ -28,6 +29,10 @@ export class NewGameScreen extends React.PureComponent<IComponentProps>{
     this.props.dispatch({ type: SEARCH_PLAYER, payload: side });
   }
 
+  private onClearClick() {
+    this.props.dispatch({ type: CLEAR_NEWGAME_PLAYERS });
+  }
+
   private get canSave() {
     const {state} = this.props;
     if (!state.newGameSelectedUsers) {
@@ -53,6 +58,7 @@ export class NewGameScreen extends React.PureComponent<IComponentProps>{
         onBackClick={this.onBackClick.bind(this)}
         onShuffleClick={this.onShuffleClick.bind(this)}
         onSaveClick={this.onSaveClick.bind(this)}
+        onClearClick={this.onClearClick.bind(this)}
         onPlayerClick={this.onPlayerClick.bind(this)}
       />
     )

@@ -96,6 +96,7 @@ export const SELECT_EVENT = 'SELECT_EVENT';
 export const INIT_BLANK_OUTCOME = 'INIT_BLANK_OUTCOME';
 export const SELECT_MULTIRON_WINNER = 'SELECT_MULTIRON_WINNER';
 export const RANDOMIZE_NEWGAME_PLAYERS = 'RANDOMIZE_NEWGAME_PLAYERS';
+export const CLEAR_NEWGAME_PLAYERS = 'CLEAR_NEWGAME_PLAYERS';
 export const SET_NEWGAME_PLAYERS = 'SET_NEWGAME_PLAYERS';
 export const SELECT_NEWGAME_PLAYER_EAST = 'SELECT_NEWGAME_PLAYER_EAST';
 export const SELECT_NEWGAME_PLAYER_SOUTH = 'SELECT_NEWGAME_PLAYER_SOUTH';
@@ -496,6 +497,10 @@ interface RandomizeNewgamePlayersAction {
   type: typeof RANDOMIZE_NEWGAME_PLAYERS;
 }
 
+interface ClearNewgamePlayersAction {
+  type: typeof CLEAR_NEWGAME_PLAYERS;
+}
+
 interface SetNewgamePlayersAction {
   type: typeof SET_NEWGAME_PLAYERS;
 }
@@ -650,6 +655,7 @@ export type AppActionTypes =
   | InitBlankOutcomeAction
   | SelectMultironWinnerAction
   | RandomizeNewgamePlayersAction
+  | ClearNewgamePlayersAction
   | SelectNewgameNorthAction
   | SetNewgamePlayersAction
   | SelectNewgameEastAction
