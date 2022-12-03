@@ -480,9 +480,9 @@ QRY;
     public function setGroups($groups)
     {
         $this->_groups = $groups;
-        $this->_groupIds = array_map(function (GroupPrimitive $group) {
+        $this->_groupIds = array_filter(array_map(function (GroupPrimitive $group) {
             return $group->getId();
-        }, $groups);
+        }, $groups));
 
         return $this;
     }

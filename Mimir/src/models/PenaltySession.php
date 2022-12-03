@@ -88,7 +88,7 @@ class PenaltySessionModel extends Model
         $session->save();
 
         $ruleset = $event[0]->getRuleset();
-        $penalty = 1. * ($ruleset->replacementPlayerFixedPoints() ?? 0);
+        $penalty = 1. * ($ruleset->replacementPlayerFixedPoints() ?: 0);
         foreach ($players as $i => $player) {
             $result = (new SessionResultsPrimitive($this->_ds))
                 ->setPlayer($player)

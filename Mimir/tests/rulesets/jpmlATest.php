@@ -26,7 +26,7 @@ class JPMLARulesetTest extends \PHPUnit\Framework\TestCase
      */
     protected $_ruleset;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_ruleset = \Common\Ruleset::instance('jpmlA');
     }

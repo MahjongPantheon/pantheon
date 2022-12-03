@@ -26,7 +26,7 @@ class RoundsHelperTest extends \PHPUnit\Framework\TestCase
      * @var DataSource
      */
     protected $_ds;
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_ds = DataSource::__getCleanTestingInstance();
     }

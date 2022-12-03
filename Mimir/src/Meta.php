@@ -152,9 +152,9 @@ class Meta
     protected function _fillFrom(array $input): void
     {
         $this->_authToken = (empty($input['HTTP_X_AUTH_TOKEN']) ? '' : $input['HTTP_X_AUTH_TOKEN']);
-        list($this->_requestedVersionMajor, $this->_requestedVersionMinor) = explode('.', (
+        list($this->_requestedVersionMajor, $this->_requestedVersionMinor) = array_map('intval', explode('.', (
             empty($input['HTTP_X_API_VERSION']) ? '1.0' : $input['HTTP_X_API_VERSION']
-        ));
+        )));
 
         $this->_currentEventId = (empty($input['HTTP_X_CURRENT_EVENT_ID'])
             ? null

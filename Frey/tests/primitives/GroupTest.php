@@ -24,7 +24,7 @@ require_once __DIR__ . '/../../src/helpers/Db.php';
 class GroupPrimitiveTest extends \PHPUnit\Framework\TestCase
 {
     protected $_db;
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_db = Db::__getCleanTestingInstance();
     }

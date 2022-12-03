@@ -24,10 +24,12 @@ export class SelectModal extends React.Component<SelectModalProps> {
   }
 
   render() {
-    return ReactDOM.createPortal(
-      this.renderModal(),
-      this.element
-    );
+    return <>
+      {ReactDOM.createPortal(
+        this.renderModal(),
+        this.element
+      )}
+    </>;
   }
 
   private renderModal() {

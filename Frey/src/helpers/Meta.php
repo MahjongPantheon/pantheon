@@ -143,9 +143,9 @@ class Meta
             )
             : intval($input['HTTP_X_CURRENT_PERSON_ID']));
 
-        list($this->_requestedVersionMajor, $this->_requestedVersionMinor) = explode('.', (
+        list($this->_requestedVersionMajor, $this->_requestedVersionMinor) = array_map('intval', explode('.', (
             empty($input['HTTP_X_API_VERSION']) ? '1.0' : $input['HTTP_X_API_VERSION']
-        ));
+        )));
 
         $this->_requestedVersionMinor = $this->_requestedVersionMinor ? intval($this->_requestedVersionMinor) : 0;
         $this->_requestedVersionMajor = $this->_requestedVersionMajor ? intval($this->_requestedVersionMajor) : 1;

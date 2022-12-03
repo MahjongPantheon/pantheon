@@ -35,14 +35,14 @@ class PointsTest extends \PHPUnit\Framework\TestCase
         4 => 0
     ];
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_ruleset = new MockRuleset();
         $this->_ruleset->setRule('withKazoe', true);
         $this->_ruleset->setRule('withKiriageMangan', false);
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
     }
 

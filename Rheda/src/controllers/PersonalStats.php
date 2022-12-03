@@ -115,12 +115,12 @@ class PersonalStats extends Controller
 
             $scoresSummary = $this->_getScoresSummary((int)$currentUser, $data['score_history']);
 
-            $riichiTotal = $data['riichi_summary']['riichi_won'] + $data['riichi_summary']['riichi_lost'];
+            $riichiTotal = intval($data['riichi_summary']['riichi_won'] + $data['riichi_summary']['riichi_lost']);
             $totalPlayedRounds = $data['total_played_rounds'];
-            $winCount = $data['win_summary']['ron'] + $data['win_summary']['tsumo'];
-            $feedCount = $data['win_summary']['feed'];
-            $drawCount = $data['win_summary']['draw'];
-            $tsumoFeedCount = $data['win_summary']['tsumofeed'];
+            $winCount = intval($data['win_summary']['ron'] + $data['win_summary']['tsumo']);
+            $feedCount = intval($data['win_summary']['feed']);
+            $drawCount = intval($data['win_summary']['draw']);
+            $tsumoFeedCount = intval($data['win_summary']['tsumofeed']);
             $labelColorThreshold = $this->_mainEventRules->subtractStartPoints() ? 0 : $this->_mainEventRules->startPoints();
 
             return [

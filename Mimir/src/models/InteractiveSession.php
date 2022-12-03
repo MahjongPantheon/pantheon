@@ -403,10 +403,11 @@ class InteractiveSessionModel extends Model
     {
         /** @var string $trackerUrl */
         $trackerUrl = $this->_config->getStringValue('trackerUrl');
+        $out = '';
         if (!empty($trackerUrl)) {
-            file_get_contents(sprintf($trackerUrl, $gameHashcode));
+            $out = file_get_contents(sprintf($trackerUrl, $gameHashcode));
         }
 
-        return true;
+        return !empty($out);
     }
 }

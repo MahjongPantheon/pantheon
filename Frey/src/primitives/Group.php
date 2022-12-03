@@ -226,9 +226,9 @@ class GroupPrimitive extends Primitive
     public function setPersons($persons)
     {
         $this->_persons = $persons;
-        $this->_personIds = array_map(function (PersonPrimitive $person) {
+        $this->_personIds = array_filter(array_map(function (PersonPrimitive $person) {
             return $person->getId();
-        }, $persons);
+        }, $persons));
 
         return $this;
     }

@@ -3,7 +3,7 @@ import {
   ADD_ROUND_FAIL,
   ADD_ROUND_INIT,
   ADD_ROUND_SUCCESS,
-  AppActionTypes,
+  AppActionTypes, CLEAR_NEWGAME_PLAYERS,
   EVENTS_GET_LIST_FAIL,
   EVENTS_GET_LIST_INIT,
   EVENTS_GET_LIST_SUCCESS,
@@ -376,6 +376,12 @@ export function mimirReducer(
       return {
         ...state,
         newGameSelectedUsers: newArr
+      };
+    case CLEAR_NEWGAME_PLAYERS:
+      return {
+        ...state,
+        newGameSelectedUsers: [defaultPlayer, defaultPlayer, defaultPlayer, defaultPlayer],
+        newGameIdsToSet: undefined
       };
     case SET_NEWGAME_PLAYERS:
       if (!state.newGameIdsToSet) {

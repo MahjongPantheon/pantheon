@@ -70,7 +70,7 @@ class MiscController extends Controller
         if ($this->_frontErrorLogger === null) {
             $this->createLogger();
         }
-        $this->_frontErrorLogger->addError(
+        $this->_frontErrorLogger->error(
             '[' . $facility . ']' .
                 '[' . (empty($sessionHash) ? '-no session-' : $sessionHash) . ']' .
                 '[' . (empty($playerId) ? '-no player-' : $playerId) . ']' .

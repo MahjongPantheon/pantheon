@@ -33,7 +33,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
      */
     protected $_client;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $ds = DataSource::__getCleanTestingInstance();
         $evt = (new EventPrimitive($ds))

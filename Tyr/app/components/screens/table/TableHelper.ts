@@ -222,7 +222,13 @@ function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppSt
           if (points > 0) {
             points = `+${points}`
           }
-          pointsMode = PlayerPointsMode.ACTIVE;
+          if (points > 0) {
+            pointsMode = PlayerPointsMode.POSITIVE;
+          } else if (points < 0) {
+            pointsMode = PlayerPointsMode.NEGATIVE;
+          } else {
+            pointsMode = PlayerPointsMode.ACTIVE;
+          }
           penaltyPoints = undefined
         }
       }

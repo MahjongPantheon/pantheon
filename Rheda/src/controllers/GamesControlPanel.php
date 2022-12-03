@@ -25,7 +25,7 @@ class GamesControlPanel extends Controller
 {
     protected $_mainTemplate = 'GamesControlPanel';
     /**
-     * @var \Exception
+     * @var ?\Exception
      */
     protected $_lastEx = null;
 

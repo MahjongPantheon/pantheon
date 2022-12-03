@@ -27,7 +27,7 @@ class GroupAccessPrimitiveTest extends \PHPUnit\Framework\TestCase
     /** @var GroupPrimitive */
     protected $_group;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_db = Db::__getCleanTestingInstance();
         $this->_group = new GroupPrimitive($this->_db);

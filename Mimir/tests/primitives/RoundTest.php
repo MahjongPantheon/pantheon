@@ -43,7 +43,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
      */
     protected $_players;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_ds = DataSource::__getCleanTestingInstance();
 

@@ -259,7 +259,7 @@ class AchievementsPrimitive extends Primitive
                 'yaku' => (string)$round['yaku']
             ];
         }, $rounds);
-        return empty($players) ? 'No yakumans!' : $players;
+        return empty($players) ? [] : $players;
     }
 
     /**

@@ -61,7 +61,7 @@ class ErrorHandler
      */
     public function logError(int $num, ?string $str, ?string $file, ?int $line): void
     {
-        $this->logException(new \ErrorException($str ?? '', 0, $num ?? 0, $file ?? '', $line ?? 0));
+        $this->logException(new \ErrorException($str ?? '', 0, $num, $file ?? '', $line ?? 0));
     }
 
     /**
@@ -77,7 +77,7 @@ class ErrorHandler
      */
     public function logDebugError(int $num, ?string $str, ?string $file, ?int $line): void
     {
-        $this->logException(new \ErrorException($str ?? '', 0, $num ?? 0, $file ?? '', $line ?? 0), false);
+        $this->logException(new \ErrorException($str ?? '', 0, $num, $file ?? '', $line ?? 0), false);
     }
 
     /**

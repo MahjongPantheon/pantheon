@@ -160,9 +160,15 @@ frontdev: get_docker_id
 
 .PHONY: dev
 dev: run
+	@echo "${GREEN}Use 'make php_logs' to see errors in realtime${NC}"; \
+	${MAKE} deps
+	${MAKE} migrate
+	${MAKE} frontdev
+
+.PHONY: tdev
+tdev: run
 	@if [ -n $TMUX ]; then \
-     tmux split-window -dv '${MAKE} php_logs' ; \
-     tmux split-window -dh '${MAKE} rat_logs' ; \
+     tmux split-window -dv '${MAKE} php_logs | tee php-errors.log' ; \
   fi
 	${MAKE} deps
 	${MAKE} migrate
@@ -217,14 +223,6 @@ php_logs: get_docker_id
 		echo "${RED}Pantheon container is not running, can't view logs.${NC}"; \
 	else \
 		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'tail -f /var/log/php-errors.log' ; \
-	fi
-
-.PHONY: rat_logs
-rat_logs: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Pantheon container is not running, can't view logs.${NC}"; \
-	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'tail -f /var/log/rat-errors.log' ; \
 	fi
 
 .PHONY: shell

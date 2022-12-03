@@ -84,14 +84,22 @@ class TeamTable extends Controller
             $errMsg = $e->getMessage();
         }
 
-        # group players by team
+        // group players by team
         $teams = [];
         if (!empty($data)) {
             foreach ($data as $player) {
-                $teams[$player['team_name']]['players'][] = $player;
-                $teams[$player['team_name']]['team_name'] = $player['team_name'];
-                $teams[$player['team_name']]['total_rating'] += $player['rating'];
-                $teams[$player['team_name']]['winner_zone'] = $teams[$player['team_name']]['total_rating'] >= 0;
+                if (empty($teams[$player['team_name']])) {
+                    $teams[$player['team_name']] = [
+                        'players' => [$player],
+                        'team_name' => $player['team_name'],
+                        'total_rating' => intval($player['rating']),
+                        'winner_zone' => intval($player['rating']) >= 0
+                    ];
+                } else {
+                    $teams[$player['team_name']]['players'][] = $player;
+                    $teams[$player['team_name']]['total_rating'] += intval($player['rating']);
+                    $teams[$player['team_name']]['winner_zone'] = $teams[$player['team_name']]['total_rating'] >= 0;
+                }
             }
         }
 

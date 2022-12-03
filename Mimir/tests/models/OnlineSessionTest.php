@@ -72,7 +72,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
      */
     protected $_gameId;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
 

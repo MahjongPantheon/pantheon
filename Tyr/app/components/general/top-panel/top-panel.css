@@ -25,6 +25,7 @@
   border-radius: 0;
   border-bottom: 2px solid var(--color-secondary-4);
   outline: none;
+  color: var(--color-secondary-1);
 }
 
 .top-panel__search input::placeholder {

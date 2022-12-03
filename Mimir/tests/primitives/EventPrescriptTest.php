@@ -29,7 +29,7 @@ class EventPrescriptPrimitiveTest extends \PHPUnit\Framework\TestCase
      */
     protected $_ds;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->_ds = DataSource::__getCleanTestingInstance();
     }

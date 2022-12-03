@@ -41,13 +41,13 @@ class PlayersController extends Controller
      */
     public function get($id)
     {
-        $this->_log->addInfo('Fetching info of player id #' . $id);
+        $this->_log->info('Fetching info of player id #' . $id);
         $player = PlayerPrimitive::findById($this->_ds, [$id]);
         if (empty($player)) {
             throw new EntityNotFoundException('No player with id #' . $id . ' found');
         }
 
-        $this->_log->addInfo('Successfully fetched info of player id #' . $id);
+        $this->_log->info('Successfully fetched info of player id #' . $id);
         return [
             'id'            => $player[0]->getId(),
             'title'         => $player[0]->getDisplayName(),
@@ -68,7 +68,7 @@ class PlayersController extends Controller
             throw new InvalidParametersException('Event id list is not array or array is empty');
         }
 
-        $this->_log->addInfo('Getting stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
+        $this->_log->info('Getting stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
 
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
@@ -82,7 +82,7 @@ class PlayersController extends Controller
         $stats = (new PlayerStatModel($this->_ds, $this->_config, $this->_meta))
             ->getStats($eventIdList, $playerId);
 
-        $this->_log->addInfo('Successfully got stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
+        $this->_log->info('Successfully got stats for player id #' . $playerId . ' at event ids: ' . implode(", ", $eventIdList));
 
         return $stats;
     }
@@ -95,7 +95,7 @@ class PlayersController extends Controller
      */
     public function getCurrentSessions($playerId, $eventId)
     {
-        $this->_log->addInfo('Getting current sessions for player id #' . $playerId . ' at event id #' . $eventId);
+        $this->_log->info('Getting current sessions for player id #' . $playerId . ' at event id #' . $eventId);
         $sessions = SessionPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         $regData = PlayerPrimitive::findPlayersForEvents($this->_ds, [$eventId]);
 
@@ -120,7 +120,7 @@ class PlayersController extends Controller
             ];
         }, $sessions);
 
-        $this->_log->addInfo('Successfully got current sessions for player id #' . $playerId . ' at event id #' . $eventId);
+        $this->_log->info('Successfully got current sessions for player id #' . $playerId . ' at event id #' . $eventId);
         return $result;
     }
 
@@ -135,7 +135,7 @@ class PlayersController extends Controller
      */
     public function getPrefinishedSessionResults($playerId, $eventId)
     {
-        $this->_log->addInfo('Getting prefinished session results for player id #' . $playerId . ' at event id #' . $eventId);
+        $this->_log->info('Getting prefinished session results for player id #' . $playerId . ' at event id #' . $eventId);
 
         $session = SessionPrimitive::findLastByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_PREFINISHED);
         if (empty($session)) {
@@ -160,7 +160,7 @@ class PlayersController extends Controller
             ];
         }, $session->getPlayers());
 
-        $this->_log->addInfo('Successfully got prefinished session results for player id #' . $playerId . ' at event id #' . $eventId);
+        $this->_log->info('Successfully got prefinished session results for player id #' . $playerId . ' at event id #' . $eventId);
         return $result;
     }
 
@@ -175,7 +175,7 @@ class PlayersController extends Controller
      */
     public function getLastResults($playerId, $eventId)
     {
-        $this->_log->addInfo('Getting last session results for player id #' . $playerId . ' at event id #' . $eventId);
+        $this->_log->info('Getting last session results for player id #' . $playerId . ' at event id #' . $eventId);
         $event = EventPrimitive::findById($this->_ds, [$eventId]);
         if (empty($event)) {
             return null;
@@ -217,7 +217,7 @@ class PlayersController extends Controller
             ];
         }, $session->getPlayers());
 
-        $this->_log->addInfo('Successfully got last session results for player id #' . $playerId . ' at event id #' . $eventId);
+        $this->_log->info('Successfully got last session results for player id #' . $playerId . ' at event id #' . $eventId);
         return $result;
     }
 
@@ -230,14 +230,14 @@ class PlayersController extends Controller
      */
     public function getLastRoundByHashcode($hashcode)
     {
-        $this->_log->addInfo('Getting last round for hashcode ' . $hashcode);
+        $this->_log->info('Getting last round for hashcode ' . $hashcode);
         $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hashcode]);
         if (empty($session)) {
             return null;
         }
 
         $data = $this->_getLastRoundCommon($session[0]);
-        $this->_log->addInfo('Successfully got last round for hashcode ' . $hashcode);
+        $this->_log->info('Successfully got last round for hashcode ' . $hashcode);
         return $data;
     }
 
@@ -250,7 +250,7 @@ class PlayersController extends Controller
      */
     public function getMyEvents()
     {
-        $this->_log->addInfo('Getting all active events for current user');
+        $this->_log->info('Getting all active events for current user');
 
         if (empty($this->_meta->getCurrentPersonId())) {
             throw new InvalidParametersException('No player logged in', 404);
@@ -278,7 +278,7 @@ class PlayersController extends Controller
             }, $evList);
         }
 
-        $this->_log->addInfo('Successfully got all active events for current user');
+        $this->_log->info('Successfully got all active events for current user');
         return array_values($events);
     }
 
@@ -292,14 +292,14 @@ class PlayersController extends Controller
      */
     public function getLastRound($playerId, $eventId)
     {
-        $this->_log->addInfo('Getting last round for player id #' . $playerId . ' at event id #' . $eventId);
+        $this->_log->info('Getting last round for player id #' . $playerId . ' at event id #' . $eventId);
         $session = SessionPrimitive::findLastByPlayerAndEvent($this->_ds, $playerId, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         if (empty($session)) {
             return null;
         }
 
         $data = $this->_getLastRoundCommon($session);
-        $this->_log->addInfo('Successfully got last round for player id #' . $playerId . ' at event id #' . $eventId);
+        $this->_log->info('Successfully got last round for player id #' . $playerId . ' at event id #' . $eventId);
         return $data;
     }
 
@@ -316,7 +316,7 @@ class PlayersController extends Controller
             throw new InvalidParametersException('Attempted to use deidented primitive');
         }
         $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$sId]);
-        /** @var MultiRoundPrimitive $lastRound */
+        /** @var MultiRoundPrimitive|null $lastRound */
         $lastRound = MultiRoundHelper::findLastRound($rounds);
 
         if (empty($lastRound)) {
@@ -361,7 +361,7 @@ class PlayersController extends Controller
         if (is_array($result['paoPlayer'])) {
             $players = array_filter($result['paoPlayer']);
             // pao player may be only one
-            $result['paoPlayer'] = (reset($players) or null);
+            $result['paoPlayer'] = reset($players) ?: null;
         }
 
         return $result;
@@ -450,14 +450,14 @@ class PlayersController extends Controller
      */
     public function getAllRoundsByHash($hashcode)
     {
-        $this->_log->addInfo('Getting last all rounds for hashcode ' . $hashcode);
+        $this->_log->info('Getting last all rounds for hashcode ' . $hashcode);
         $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hashcode]);
         if (empty($session)) {
             return null;
         }
 
         $data = $this->_getAllRoundsCommon($session[0]);
-        $this->_log->addInfo('Successfully got last all rounds for hashcode ' . $hashcode);
+        $this->_log->info('Successfully got last all rounds for hashcode ' . $hashcode);
         return $data;
     }
 

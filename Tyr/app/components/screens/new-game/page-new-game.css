@@ -21,10 +21,14 @@
 
 .page-new-game__buttons {
   display: flex;
-  justify-content: center;
-  margin-top: 36px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 36px;
 }
 
-.page-new-game__buttons .flat-btn--medium:last-child {
-  margin-left: 24px;
+.page-new-game__buttons .flat-btn {
+  margin-top: 36px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-evenly;
 }

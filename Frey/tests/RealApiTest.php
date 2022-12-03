@@ -40,7 +40,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     /**
      * @throws \Exception
      */
-    public function setUp()
+    protected function setUp(): void
     {
         // Init db! Or bunch of PDOExceptions will appeal
         $this->_db = Db::__getCleanTestingInstance();
@@ -61,7 +61,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $email = 'test@test.com';
         $password = '1234test!5678';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
-        $this->assertInternalType('string', $approvalCode);
+        $this->assertIsString($approvalCode);
     }
 
     /**
@@ -73,7 +73,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $password = '12345test!678';
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
-        $this->assertInternalType('int', $userId);
+        $this->assertIsInt($userId);
         $user = PersonPrimitive::findByEmail($this->_db, [$email]);
         $this->assertNotEmpty($user);
         $this->assertEquals($userId, $user[0]->getId());
@@ -86,8 +86,8 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
         $this->_client->execute('approveRegistration', [$approvalCode]);
         list($id, $token) = $this->_client->execute('authorize', [$email, $password]);
-        $this->assertInternalType('integer', $id);
-        $this->assertInternalType('string', $token);
+        $this->assertIsInt($id);
+        $this->assertIsString($token);
     }
 
     // TODO: is this method required at all?
@@ -100,7 +100,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         list($id, $token) = $this->_client->execute('authorize', [$email, $password]);
 
         $response = $this->_client->execute('quickAuthorize', [$userId, $token]);
-        $this->assertInternalType('bool', $response);
+        $this->assertIsBool($response);
     }
 
     public function testChangePassword()
@@ -114,7 +114,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
 
         $this->_client->execute('changePassword', [$email, $password, $newPassword]);
         list($id, $newToken) = $this->_client->execute('authorize', [$email, $newPassword]);
-        $this->assertInternalType('string', $newToken);
+        $this->assertIsString($newToken);
     }
 
     public function testRequestResetPassword()
@@ -126,7 +126,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $this->_client->execute('authorize', [$email, $password]);
 
         $resetToken = $this->_client->execute('requestResetPassword', [$email]);
-        $this->assertInternalType('string', $resetToken);
+        $this->assertIsString($resetToken);
     }
 
     public function testApproveResetPassword()
@@ -139,7 +139,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
 
         $resetToken = $this->_client->execute('requestResetPassword', [$email]);
         $newPassword = $this->_client->execute('approveResetPassword', [$email, $resetToken]);
-        $this->assertInternalType('string', $newPassword);
+        $this->assertIsString($newPassword);
 
         $this->_client->execute('authorize', [$email, $newPassword]);
     }
@@ -163,7 +163,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $success = $this->_client->execute('updatePersonalInfo', [
             $userId, $title, $country, $city, $email, $phone, $tenhouId
         ]);
-        $this->assertInternalType('bool', $success);
+        $this->assertIsBool($success);
 
         $user = PersonPrimitive::findByEmail($this->_db, [$email]);
         $this->assertNotEmpty($user);
@@ -196,17 +196,17 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($response);
         $this->assertNotEmpty($response[0]);
         $this->assertEquals($userId, $response[0]['id']);
-        $this->assertInternalType('int', $response[0]['id']);
+        $this->assertIsInt($response[0]['id']);
         $this->assertEquals($email, $response[0]['email']);
-        $this->assertInternalType('string', $response[0]['email']);
+        $this->assertIsString($response[0]['email']);
         $this->assertEquals($title, $response[0]['title']);
-        $this->assertInternalType('string', $response[0]['title']);
+        $this->assertIsString($response[0]['title']);
         $this->assertEquals($city, $response[0]['city']);
-        $this->assertInternalType('string', $response[0]['city']);
+        $this->assertIsString($response[0]['city']);
         $this->assertEquals($phone, $response[0]['phone']);
-        $this->assertInternalType('string', $response[0]['phone']);
+        $this->assertIsString($response[0]['phone']);
         $this->assertEquals($tenhouId, $response[0]['tenhou_id']);
-        $this->assertInternalType('string', $response[0]['tenhou_id']);
+        $this->assertIsString($response[0]['tenhou_id']);
     }
 
     // TODO: testGetPersonalInfo with no admin rights should not output any personal data
@@ -232,13 +232,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($response);
         $this->assertNotEmpty($response[0]);
         $this->assertEquals($userId, $response[0]['id']);
-        $this->assertInternalType('int', $response[0]['id']);
+        $this->assertIsInt($response[0]['id']);
         $this->assertEquals($title, $response[0]['title']);
-        $this->assertInternalType('string', $response[0]['title']);
+        $this->assertIsString($response[0]['title']);
         $this->assertEquals($city, $response[0]['city']);
-        $this->assertInternalType('string', $response[0]['city']);
+        $this->assertIsString($response[0]['city']);
         $this->assertEquals($tenhouId, $response[0]['tenhou_id']);
-        $this->assertInternalType('string', $response[0]['tenhou_id']);
+        $this->assertIsString($response[0]['tenhou_id']);
     }
 
     /**
@@ -257,7 +257,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
             $email, $password, $title,
             $city, $phone, $tenhouId
         ]);
-        $this->assertInternalType('int', $userId);
+        $this->assertIsInt($userId);
         $user = PersonPrimitive::findByEmail($this->_db, [$email]);
         $this->assertNotEmpty($user);
         $this->assertEquals($userId, $user[0]->getId());
@@ -276,7 +276,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
             $title, $description, $color
         ]);
 
-        $this->assertInternalType('int', $grpId);
+        $this->assertIsInt($grpId);
         $grp = GroupPrimitive::findById($this->_db, [$grpId]);
         $this->assertNotEmpty($grp);
         $this->assertEquals($title, $grp[0]->getTitle());
@@ -295,13 +295,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $groups = $this->_client->execute('getGroups', [[$grpId]]);
         $this->assertNotEmpty($groups);
         $this->assertEquals($title, $groups[0]['title']);
-        $this->assertInternalType('string', $groups[0]['title']);
+        $this->assertIsString($groups[0]['title']);
         $this->assertEquals($description, $groups[0]['description']);
-        $this->assertInternalType('string', $groups[0]['description']);
+        $this->assertIsString($groups[0]['description']);
         $this->assertEquals($color, $groups[0]['label_color']);
-        $this->assertInternalType('string', $groups[0]['label_color']);
+        $this->assertIsString($groups[0]['label_color']);
         $this->assertEquals($grpId, $groups[0]['id']);
-        $this->assertInternalType('int', $groups[0]['id']);
+        $this->assertIsInt($groups[0]['id']);
     }
 
     /**
@@ -448,13 +448,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         $persons = $this->_client->execute('getPersonsOfGroup', [$grpId]);
         $this->assertNotEmpty($persons);
         $this->assertEquals($title, $persons[0]['title']);
-        $this->assertInternalType('string', $persons[0]['title']);
+        $this->assertIsString($persons[0]['title']);
         $this->assertEquals($city, $persons[0]['city']);
-        $this->assertInternalType('string', $persons[0]['city']);
+        $this->assertIsString($persons[0]['city']);
         $this->assertEquals($tenhouId, $persons[0]['tenhou_id']);
-        $this->assertInternalType('string', $persons[0]['tenhou_id']);
+        $this->assertIsString($persons[0]['tenhou_id']);
         $this->assertEquals($userId, $persons[0]['id']);
-        $this->assertInternalType('int', $persons[0]['id']);
+        $this->assertIsInt($persons[0]['id']);
     }
 
     public function testGetGroupsOfPerson()
@@ -485,13 +485,13 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
 
         $this->assertNotEmpty($groups);
         $this->assertEquals($title, $groups[0]['title']);
-        $this->assertInternalType('string', $groups[0]['title']);
+        $this->assertIsString($groups[0]['title']);
         $this->assertEquals($description, $groups[0]['description']);
-        $this->assertInternalType('string', $groups[0]['description']);
+        $this->assertIsString($groups[0]['description']);
         $this->assertEquals($color, $groups[0]['label_color']);
-        $this->assertInternalType('string', $groups[0]['label_color']);
+        $this->assertIsString($groups[0]['label_color']);
         $this->assertEquals($grpId, $groups[0]['id']);
-        $this->assertInternalType('int', $groups[0]['id']);
+        $this->assertIsInt($groups[0]['id']);
     }
 
     /**
@@ -516,7 +516,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
             'testrule', 'testval', AccessPrimitive::TYPE_ENUM,
             $userId, $eventId
         ]);
-        $this->assertInternalType('int', $ruleId);
+        $this->assertIsInt($ruleId);
         $this->assertGreaterThan(0, $ruleId);
 
         $rule = PersonAccessPrimitive::findById($this->_db, [$ruleId]);
@@ -545,7 +545,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
             $grpId, $eventId
         ]);
 
-        $this->assertInternalType('int', $ruleId);
+        $this->assertIsInt($ruleId);
         $this->assertGreaterThan(0, $ruleId);
 
         $rule = GroupAccessPrimitive::findById($this->_db, [$ruleId]);
