@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-03 00:05+0300\n"
+"POT-Creation-Date: 2022-12-03 20:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -269,39 +269,13 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-msgid "Recover your password"
-msgstr ""
-
-msgid "Confirmation e-mail was sent. Please check you inbox."
-msgstr ""
-
-msgid ""
-"Please enter the e-mail address you've registered with. We will send you "
-"confirmation email to reset your password."
-msgstr ""
-
-msgid "Your e-mail address"
-msgstr ""
-
-msgid "Please enter symbols to make sure you're not a robot:"
-msgstr ""
-
-msgid "Send confirmation e-mail"
-msgstr ""
-
-msgid "Your password was successfully updated. Please log in now."
-msgstr ""
-
-msgid "Please enter new password for your account."
-msgstr ""
-
-msgid "Change password"
-msgstr ""
-
 msgid ""
 "Please enter your e-mail address and password. We will send authentication "
 "link to your email, so you will be able to sign in and fill your personal "
 "data"
+msgstr ""
+
+msgid "Your e-mail address"
 msgstr ""
 
 msgid ""
@@ -315,6 +289,9 @@ msgstr ""
 msgid ""
 "We never store passwords as plain text. But keep in mind that weak passwords "
 "will not be accepted by checker."
+msgstr ""
+
+msgid "Please enter symbols to make sure you're not a robot:"
 msgstr ""
 
 msgid "I've read the privacy policy listed below and accept its terms"
@@ -331,6 +308,29 @@ msgid ""
 "instructions."
 msgstr ""
 
+msgid "Recover your password"
+msgstr ""
+
+msgid "Confirmation e-mail was sent. Please check you inbox."
+msgstr ""
+
+msgid ""
+"Please enter the e-mail address you've registered with. We will send you "
+"confirmation email to reset your password."
+msgstr ""
+
+msgid "Send confirmation e-mail"
+msgstr ""
+
+msgid "Your password was successfully updated. Please log in now."
+msgstr ""
+
+msgid "Please enter new password for your account."
+msgstr ""
+
+msgid "Change password"
+msgstr ""
+
 msgid "Create new user"
 msgstr ""
 
@@ -341,6 +341,16 @@ msgid "Password"
 msgstr ""
 
 msgid "Successfully register new user!"
+msgstr ""
+
+msgid "Sign up confirmation"
+msgstr ""
+
+msgid "Thank you, your registration was successfully approved."
+msgstr ""
+
+msgid ""
+"You are required to log in with your email and password before proceeding"
 msgstr ""
 
 msgid "Personal stats"
@@ -469,14 +479,32 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
-msgid "Sign up confirmation"
+msgid "Predefined seating configuration"
 msgstr ""
 
-msgid "Thank you, your registration was successfully approved."
+msgid "Next session index (starting from 1):"
+msgstr ""
+
+msgid "Update predefined seating config"
+msgstr ""
+
+msgid "Found errors:"
+msgstr ""
+
+msgid "No errors found."
 msgstr ""
 
 msgid ""
-"You are required to log in with your email and password before proceeding"
+"Predefined seating is entered as list of tables, one table per row. New game "
+"session should be indicated as an empty line."
+msgstr ""
+
+msgid "Example:"
+msgstr ""
+
+msgid ""
+"In this example, two tables play two games. Numbers in seating persist "
+"between games and are defined at Admin actions / Manage players page."
 msgstr ""
 
 msgid "Player added successfully. Reload page to see results"
@@ -548,32 +576,16 @@ msgstr ""
 msgid "Save teams list"
 msgstr ""
 
-msgid "Predefined seating configuration"
+msgid "Rights and privileges: %s"
 msgstr ""
 
-msgid "Next session index (starting from 1):"
+msgid "Customize"
 msgstr ""
 
-msgid "Update predefined seating config"
+msgid "Title"
 msgstr ""
 
-msgid "Found errors:"
-msgstr ""
-
-msgid "No errors found."
-msgstr ""
-
-msgid ""
-"Predefined seating is entered as list of tables, one table per row. New game "
-"session should be indicated as an empty line."
-msgstr ""
-
-msgid "Example:"
-msgstr ""
-
-msgid ""
-"In this example, two tables play two games. Numbers in seating persist "
-"between games and are defined at Admin actions / Manage players page."
+msgid "Type"
 msgstr ""
 
 msgid "Rating table has been hidden by tournament administrator"
@@ -597,18 +609,6 @@ msgstr ""
 msgid "Team:"
 msgstr ""
 
-msgid "Rights and privileges: %s"
-msgstr ""
-
-msgid "Customize"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Type"
-msgstr ""
-
 msgid "Starting now!"
 msgstr ""
 
@@ -628,8 +628,8 @@ msgid "Unable to generate seating"
 msgstr ""
 
 msgid ""
-"Total count of registered players is not divisible by 4. Use the \"Add player"
-"\" and \"Players management\" pages to add or remove players. Special "
+"Total count of registered players is not divisible by 4. Use the \"Add "
+"player\" and \"Players management\" pages to add or remove players. Special "
 "replacement player accounts may be used to complete the table."
 msgstr ""
 
