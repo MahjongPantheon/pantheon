@@ -40,11 +40,10 @@ module.exports = merge(common, {
           ecma: 5,
           comments: false,
           ascii_only: true
-        }
+        },
+        sourceMap: true,
       },
-      cache: true,
       parallel: true,
-      sourceMap: true
     })],
     splitChunks: {
       cacheGroups: {
