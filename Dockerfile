@@ -1,7 +1,7 @@
 FROM --platform=linux/amd64 alpine:3.17
 
 ENV TIMEZONE            Europe/Moscow
-ENV PHP_MEMORY_LIMIT    512M
+ENV PHP_MEMORY_LIMIT    1024M
 ENV PHP_LOGFILE         /var/log/php-errors.log
 ENV MAX_UPLOAD          50M
 ENV PHP_MAX_FILE_UPLOAD 200

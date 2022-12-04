@@ -25,7 +25,7 @@ jobs:
         run: make migrate
 
       - name: Run all tests with coverage
-        run: make check_covered
+        run: make check
   build:
     runs-on: ubuntu-latest
     env:
@@ -47,7 +47,7 @@ jobs:
         run: make migrate
 
       - name: Run all tests with coverage
-        run: make check_covered
+        run: make check
 
       - name: Make prod Tyr build
         run: make prod_build_tyr

@@ -119,6 +119,7 @@ pantheon_run: get_docker_id get_docker_idle_id
   			docker start $(IDLE_DOCKER_ID) ; \
   		else \
 			docker run \
+			  -m 1024m \
 				-d -e LOCAL_USER_ID=$(UID) \
 				-e COVERALLS_REPO_TOKEN=$(COVERALLS_REPO_TOKEN) \
 				-e COVERALLS_RUN_LOCALLY=1 \
