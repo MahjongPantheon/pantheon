@@ -309,10 +309,14 @@ class UserActionEventEdit extends Controller
                     $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = true;
                 } else if (is_numeric($val)) {
                     $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = intval($val);
-                } else if (is_array($val) && $key === 'tuning_uma') {
-                    $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = [1 => $val[0], $val[1], $val[2], $val[3]];
+                } else if (is_array($val)) {
+                    if ($key === 'tuning_uma') {
+                        $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = [1 => $val[0], $val[1], $val[2], $val[3]];
+                    } else {
+                        $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = array_map('intval', $val);
+                    }
                 } else {
-                    $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = array_map('intval', $val);
+                    $checkedData['rulesetChanges'][str_replace('tuning_', '', $key)] = $val;
                 }
             }
         }
