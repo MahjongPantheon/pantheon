@@ -5,6 +5,7 @@ export enum IconType {
   ROTATE_CCW = 'rotate-ccw',
   BACK = 'back',
   CLOSE = 'close',
+  DONATE = 'donate',
   HOME = 'home',
   HONBA = 'honba',
   INFO = 'info',

@@ -25,6 +25,7 @@ import {I18nService} from '#/services/i18n';
 import {GameResultScreen} from '#/components/screens/game-result/GameResultScreen';
 import {LoginScreen} from '#/components/screens/login/LoginScreen';
 import {LogScreen} from '#/components/screens/log/LogScreen';
+import {DonateScreen} from '#/components/screens/donate/DonateScreen';
 import {environment} from '#config';
 import {EventSelectScreen} from "#/components/screens/event-select/EventSelectScreen";
 import {OtherTablesList} from "#/components/screens/other-tables-list/OtherTablesListScreen";
@@ -69,6 +70,8 @@ const CurrentScreen: React.FC<IComponentProps> = (props) => {
       return <LogScreen {...props} />
     case 'otherTablesList':
       return <OtherTablesList {...props} />
+    case 'donate':
+      return <DonateScreen {...props} />
   }
 
   return null

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {IComponentProps} from '#/components/IComponentProps';
 import {
   GET_OTHER_TABLES_LIST_INIT,
-  GO_TO_CURRENT_GAME,
+  GO_TO_CURRENT_GAME, GO_TO_DONATE,
   OPEN_SETTINGS,
   SHOW_LAST_RESULTS,
   START_NEW_GAME,
@@ -51,6 +51,11 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
     }
   }
 
+  private onDonateClick() {
+    const {dispatch} = this.props;
+    dispatch({ type: GO_TO_DONATE });
+  }
+
   componentDidMount() {
     if (this.props.state.currentEventId) {
       const {dispatch} = this.props;
@@ -67,6 +72,12 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
 
     const playerName = state.gameConfig.eventTitle || loc._t('Event title');
 
+    // Show donate button only for russian locale and only for primary instance.
+    // TODO: make this configurable
+    const showDonate = this.props.state.settings.currentLang === 'ru' && (
+      window.location.host.startsWith('localhost') || window.location.host === 'm.riichi.top'
+    );
+
     return (
       <HomeScreenView
         eventName={playerName}
@@ -74,7 +85,9 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
         hasStartedGame={!!state.currentSessionHash && state.gameOverviewReady}
         hasPrevGame={!state.isUniversalWatcher /*&& state.lastResults !== undefined*/}
         canSeeOtherTables={true}
+        showDonate={showDonate}
         hasStat={!!state.gameConfig.eventStatHost && !state.isUniversalWatcher}
+        onDonateClick={this.onDonateClick.bind(this)}
         onSettingClick={this.onSettingClick.bind(this)}
         onRefreshClick={this.onRefreshClick.bind(this)}
         onOtherTablesClick={this.onOtherTablesClick.bind(this)}

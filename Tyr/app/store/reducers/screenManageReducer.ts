@@ -10,7 +10,7 @@ import {
   SHOW_OTHER_TABLE,
   SHOW_OTHER_TABLES_LIST,
   START_NEW_GAME,
-  GOTO_EVENT_SELECT,
+  GOTO_EVENT_SELECT, GO_TO_DONATE,
 } from '../actions/interfaces';
 import { winnerHasYakuWithPao } from '../util';
 import {AppOutcome} from '#/interfaces/app';
@@ -55,6 +55,11 @@ export function screenManageReducer(
       return {
         ...state,
         currentScreen: 'currentGame'
+      };
+    case GO_TO_DONATE:
+      return {
+        ...state,
+        currentScreen: 'donate'
       };
     case SEARCH_PLAYER:
       return {
@@ -179,6 +184,7 @@ export function screenManageReducer(
         case 'currentGame':
         case 'eventSelector':
         case 'settings':
+        case 'donate':
           if (state.currentEventId) {
             prevScreen = 'overview';
           }

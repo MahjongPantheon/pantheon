@@ -1,0 +1,16 @@
+.page-donate {
+  min-height: 580px;
+}
+
+.page-donate__meme, .page-donate__disclaimer {
+  padding: 15px;
+  font-size: 12px;
+}
+
+.page-donate__button {
+  padding: 15px;
+}
+
+.page-donate__meme img {
+  width: 100%;
+}

@@ -13,6 +13,8 @@ type IProps = {
   hasPrevGame: boolean
   canSeeOtherTables: boolean
   hasStat: boolean
+  showDonate: boolean
+  onDonateClick: () => void
   onSettingClick: () => void
   onRefreshClick: () => void
   onOtherTablesClick: () => void
@@ -31,6 +33,8 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
     hasPrevGame,
     canSeeOtherTables,
     hasStat,
+    showDonate,
+    onDonateClick,
     onSettingClick,
     onRefreshClick,
     onOtherTablesClick,
@@ -52,6 +56,9 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
       </div>
       <div className="page-home__title">{eventName}</div>
       <div className="page-home__bottom">
+        {showDonate ? <div className="svg-button" style={{ margin: '16px' }} onClick={onDonateClick}>
+          <Icon type={IconType.DONATE} svgProps={{ color: '#ddd' }} />
+        </div> : null}
         <HomeScreenButton
           caption={loc._t('New game')}
           isVisible={canStartGame}

@@ -11,7 +11,7 @@ export type AppScreen =
   'otherTablesList' | 'handSelect' | 'confirmation' |
   'newGame' | 'searchPlayer' | 'lastResults' |
   'gameLog' | 'login' | 'paoSelect' | 'settings' |
-  'nagashiSelect';
+  'nagashiSelect' | 'donate';
 
 export type LoadingSet = {
   games: boolean;

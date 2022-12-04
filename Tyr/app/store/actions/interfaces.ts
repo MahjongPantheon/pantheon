@@ -16,13 +16,14 @@ import {
   SessionState,
 } from '#/interfaces/remote';
 import {Table,  Outcome} from '#/interfaces/common';
-import {Features, IAppState} from '../interfaces';
+import {IAppState} from '../interfaces';
 
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
 export const STARTUP_WITH_AUTH = 'STARTUP_WITH_AUTH';
 export const START_NEW_GAME = 'START_NEW_GAME';
 export const GO_TO_CURRENT_GAME = 'GO_TO_CURRENT_GAME';
+export const GO_TO_DONATE = 'GO_TO_DONATE';
 export const GOTO_EVENT_SELECT = 'GOTO_EVENT_SELECT';
 export const SEARCH_PLAYER = 'SEARCH_PLAYER';
 export const SHOW_LAST_RESULTS = 'SHOW_LAST_RESULTS';
@@ -138,6 +139,10 @@ interface StartNewGameAction {
 
 interface GoToCurrentGameAction {
   type: typeof GO_TO_CURRENT_GAME;
+}
+
+interface GoToDonateAction {
+  type: typeof GO_TO_DONATE;
 }
 
 interface GoToEventSelectAction {
@@ -587,6 +592,7 @@ export type AppActionTypes =
   | StartNewGameAction
   | GoToCurrentGameAction
   | GoToEventSelectAction
+  | GoToDonateAction
   | SearchPlayerAction
   | ShowLastResultsAction
   | ShowGameLogAction
