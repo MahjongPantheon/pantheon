@@ -298,7 +298,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @param  string $payload
      * @return array
      */
-    public function execute($payload)
+    public function execute($payload, array $headers = [])
     {
         if (is_callable($this->beforeRequest)) {
             call_user_func_array($this->beforeRequest, array($this, $payload));
@@ -336,7 +336,7 @@ class HttpClient extends \JsonRPC\HttpClient
      * @param  string   $payload
      * @return resource
      */
-    protected function buildContext($payload)
+    protected function buildContext($payload, array $headers = [])
     {
         $headers = $this->headers;
 

@@ -31,9 +31,7 @@ deps: get_docker_id
 	else \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make deps'; \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make deps'; \
-		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make deps'; \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps'; \
-		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr.new && HOME=/home/user su-exec user make deps'; \
 	fi
 
 .PHONY: kill
@@ -164,7 +162,7 @@ frontdev: get_docker_id
 dev: run
 	${MAKE} deps
 	${MAKE} migrate
-	${MAKE} frontdev
+	#${MAKE} frontdev
 
 .PHONY: migrate
 migrate: get_docker_id
