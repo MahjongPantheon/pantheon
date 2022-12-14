@@ -199,6 +199,7 @@ class GamesController extends Controller
 
         $result = [
             'id'    => $session[0]->getId(),
+            'event_id' => $session[0]->getEventId(),
             'table_index' => $session[0]->getTableIndex(),
             'players' => array_map(function (PlayerPrimitive $player) use (&$playersReg) {
                 return [
