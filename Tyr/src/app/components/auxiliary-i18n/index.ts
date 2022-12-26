@@ -125,6 +125,9 @@ export class I18nComponent {
   get _REFRESH_PAGE() {
     return this.i18n._t('Refresh');
   }
+  get _UPDATE_MESSAGE() {
+    return this.i18n._t('Pantheon v1 shutdown');
+  }
   get _PREV_GAME_RESULTS() {
     return this.i18n._t('Previous game results');
   }

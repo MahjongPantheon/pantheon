@@ -50,6 +50,12 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
       <div className="page-home__title">{eventName}</div>
       <div className="page-home__bottom">
         <HomeScreenButton
+          caption="Pantheon v1 shutdown"
+          isVisible={true}
+          isWarning={true}
+          onClick={() => alert('This version of Pantheon will be shut down in March 2023. We strongly advise to migrate to newer version at https://m.riichi.top/\'')}
+        />
+        <HomeScreenButton
           caption="New game"
           isVisible={canStartGame}
           isActive={true}
@@ -91,6 +97,7 @@ type IButtonProps = {
   caption: string
   isVisible: boolean
   isActive?: boolean
+  isWarning?: boolean
   isBordered?: boolean
   iconType?: IconType
   isIconRight?: boolean
@@ -98,7 +105,7 @@ type IButtonProps = {
 }
 
 const HomeScreenButton = React.memo(function (props: IButtonProps) {
-  const {caption, isVisible, isActive, isBordered, iconType, isIconRight, onClick} = props;
+  const {caption, isVisible, isActive, isWarning, isBordered, iconType, isIconRight, onClick} = props;
 
   if (!isVisible) {
     return null
@@ -110,6 +117,7 @@ const HomeScreenButton = React.memo(function (props: IButtonProps) {
         'page-home__button',
         {
           'page-home__button--active': isActive,
+          'page-home__button--warning': isWarning,
           'page-home__button--bordered': isBordered,
         })}
       onClick={onClick}

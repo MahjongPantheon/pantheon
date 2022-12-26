@@ -21,6 +21,11 @@
   color: var(--secondary-text-color);
 }
 
+.page-home__button--warning {
+  background-color: #f34;
+  color: #333;
+}
+
 .page-home__button--active:active {
   background-color: var(--color-primary-active);
 }

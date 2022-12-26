@@ -27,7 +27,7 @@ import {EnvConfig} from "#/envConfig/interface";
 
 export const environment: EnvConfig = {
   production: false,
-  apiUrl: 'http://localhost:4001/',
+  apiUrl: 'https://api.mjtop.net/',
   guiFix: (src: string) => src,
   keyPrefix: 'tyr',
   cookieDomain: null, // when working on localhost this must be omitted!

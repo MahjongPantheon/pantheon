@@ -1,14 +1,14 @@
 # Translations template for PROJECT.
-# Copyright (C) 2020 
+# Copyright (C) 2022 
 # This file is distributed under the same license as the PROJECT project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-18 16:00+0300\n"
+"POT-Creation-Date: 2022-12-27 00:27+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -168,78 +168,82 @@ msgid "Refresh"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:129:12
-msgid "Previous game results"
+msgid "Pantheon v1 shutdown"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:132:12
-msgid "New game"
+msgid "Previous game results"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:135:12
-msgid "Statistics"
+msgid "New game"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:138:12
-msgid "Table #"
+msgid "Statistics"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:141:12
-msgid "Select preferred language"
+msgid "Table #"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:144:12
-msgid "Select preferred color scheme"
+msgid "Select preferred language"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:147:12
-msgid "Log out from system"
+msgid "Select preferred color scheme"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:150:12
-msgid "User actions"
+msgid "Log out from system"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:153:12
-msgid "Total: "
+msgid "User actions"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:156:12
-msgid " han"
+msgid "Total: "
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:159:12
-msgid " fu"
+msgid " han"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:162:12
-msgid "Yakuman!"
+msgid " fu"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:165:12
-msgid "Loading capturing tools..."
+msgid "Yakuman!"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:168:12
-msgid "Help and news"
+msgid "Loading capturing tools..."
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:171:12
-msgid "Useful links"
+msgid "Help and news"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:174:12
-msgid "News & announces"
+msgid "Useful links"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:177:12
-msgid "Description for whole Pantheon system is available at:"
+msgid "News & announces"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:180:12
-msgid "If in doubt, please email lead developer to get help:"
+msgid "Description for whole Pantheon system is available at:"
 msgstr ""
 
 #: src/app/components/auxiliary-i18n/index.ts:183:12
+msgid "If in doubt, please email lead developer to get help:"
+msgstr ""
+
+#: src/app/components/auxiliary-i18n/index.ts:186:12
 msgid "Russian-speaking support and announces also available at Telegram group:"
 msgstr ""
 
@@ -262,6 +266,10 @@ msgstr ""
 
 #: src/app/components/screen-overview/index.ts:86:27
 msgid "Hello, %1!"
+msgstr ""
+
+#: src/app/components/screen-overview/index.ts:96:31
+msgid "This version of Pantheon will be shut down in March 2023. We strongly advise to migrate to newer version at https://m.riichi.top/"
 msgstr ""
 
 #: src/app/components/screen-settings/index.ts:76:24

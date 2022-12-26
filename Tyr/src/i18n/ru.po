@@ -7,24 +7,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-04 19:24+0300\n"
-"PO-Revision-Date: 2020-12-04 19:26+0300\n"
+"POT-Creation-Date: 2022-12-27 00:27+0300\n"
+"PO-Revision-Date: 2022-12-27 00:28+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 2.2.1\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.2.1\n"
 
-#: src/app/components/auxiliary-i18n/index.ts:159:12
+#: src/app/components/auxiliary-i18n/index.ts:162:12
 msgid " fu"
 msgstr " фу"
 
-#: src/app/components/auxiliary-i18n/index.ts:156:12
+#: src/app/components/auxiliary-i18n/index.ts:159:12
 msgid " han"
 msgstr " хан"
 
@@ -121,7 +121,7 @@ msgstr "Дайсанген"
 msgid "Daisuushii"
 msgstr "Дайсуши"
 
-#: src/app/components/auxiliary-i18n/index.ts:177:12
+#: src/app/components/auxiliary-i18n/index.ts:180:12
 msgid "Description for whole Pantheon system is available at:"
 msgstr "Описание для системы Пантеон всегда доступно по ссылке:"
 
@@ -174,7 +174,7 @@ msgstr "Хайтей"
 msgid "Hello, %1!"
 msgstr "Привет, %1!"
 
-#: src/app/components/auxiliary-i18n/index.ts:168:12
+#: src/app/components/auxiliary-i18n/index.ts:171:12
 msgid "Help and news"
 msgstr "Помощь и анонсы"
 
@@ -194,7 +194,7 @@ msgstr "Хотей"
 msgid "Houtei raoyui"
 msgstr "Хотей раоюй"
 
-#: src/app/components/auxiliary-i18n/index.ts:180:12
+#: src/app/components/auxiliary-i18n/index.ts:183:12
 msgid "If in doubt, please email lead developer to get help:"
 msgstr ""
 "Если необходима личная помощь, можно обратиться непосредственно к "
@@ -237,7 +237,7 @@ msgstr "Последняя раздача не найдена"
 msgid "Latest results"
 msgstr "Последние результаты"
 
-#: src/app/components/auxiliary-i18n/index.ts:165:12
+#: src/app/components/auxiliary-i18n/index.ts:168:12
 msgid "Loading capturing tools..."
 msgstr "Загрузка инструментов захвата..."
 
@@ -245,7 +245,7 @@ msgstr "Загрузка инструментов захвата..."
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: src/app/components/auxiliary-i18n/index.ts:147:12
+#: src/app/components/auxiliary-i18n/index.ts:150:12
 msgid "Log out from system"
 msgstr "Выйти из системы"
 
@@ -274,11 +274,11 @@ msgstr "Нагаши манган"
 msgid "Nagashi: select tenpai"
 msgstr "Нагаши: выберите темпай"
 
-#: src/app/components/auxiliary-i18n/index.ts:132:12
+#: src/app/components/auxiliary-i18n/index.ts:135:12
 msgid "New game"
 msgstr "Новая игра"
 
-#: src/app/components/auxiliary-i18n/index.ts:174:12
+#: src/app/components/auxiliary-i18n/index.ts:177:12
 msgid "News & announces"
 msgstr "Новости и анонсы"
 
@@ -302,6 +302,10 @@ msgstr "Открытая рука"
 msgid "Other playing tables"
 msgstr "Другие столы"
 
+#: src/app/components/auxiliary-i18n/index.ts:129:12
+msgid "Pantheon v1 shutdown"
+msgstr "Отключение Pantheon v1"
+
 #: src/app/components/auxiliary-i18n/index.ts:78:12
 msgid "Pin code was already used on another device"
 msgstr "Текущий пин-код уже был использован на другом устройстве"
@@ -310,7 +314,7 @@ msgstr "Текущий пин-код уже был использован на �
 msgid "Pinfu"
 msgstr "Пин-фу"
 
-#: src/app/components/auxiliary-i18n/index.ts:129:12
+#: src/app/components/auxiliary-i18n/index.ts:132:12
 msgid "Previous game results"
 msgstr "Результаты последней игры"
 
@@ -345,7 +349,7 @@ msgstr "Риншан кайхо"
 msgid "Ron"
 msgstr "Рон"
 
-#: src/app/components/auxiliary-i18n/index.ts:183:12
+#: src/app/components/auxiliary-i18n/index.ts:186:12
 msgid ""
 "Russian-speaking support and announces also available at Telegram group:"
 msgstr "Русскоговорящая телеграм-группа с оперативными анонсами и поддержкой:"
@@ -378,11 +382,11 @@ msgstr "Саншоку доко"
 msgid "Save"
 msgstr "Сохранить"
 
-#: src/app/components/auxiliary-i18n/index.ts:144:12
+#: src/app/components/auxiliary-i18n/index.ts:147:12
 msgid "Select preferred color scheme"
 msgstr "Выбор цветовой схемы"
 
-#: src/app/components/auxiliary-i18n/index.ts:141:12
+#: src/app/components/auxiliary-i18n/index.ts:144:12
 msgid "Select preferred language"
 msgstr "Выбор языка"
 
@@ -398,7 +402,7 @@ msgstr "Шосанген"
 msgid "Shousuushii"
 msgstr "Шосуши"
 
-#: src/app/components/auxiliary-i18n/index.ts:135:12
+#: src/app/components/auxiliary-i18n/index.ts:138:12
 msgid "Statistics"
 msgstr "Статистика"
 
@@ -410,7 +414,7 @@ msgstr "Сууанко"
 msgid "Suukantsu"
 msgstr "Сууканцу"
 
-#: src/app/components/auxiliary-i18n/index.ts:138:12
+#: src/app/components/auxiliary-i18n/index.ts:141:12
 msgid "Table #"
 msgstr "Стол №"
 
@@ -438,6 +442,15 @@ msgstr "Ни один стол сейчас не играет"
 msgid "There's no games you've already played."
 msgstr "Еще нет ни одной сыгранной игры с вашим участием."
 
+#: src/app/components/screen-overview/index.ts:96:31
+msgid ""
+"This version of Pantheon will be shut down in March 2023. We strongly advise "
+"to migrate to newer version at https://m.riichi.top/"
+msgstr ""
+"Эта версия системы Pantheon будет отключена в марте 2023 года. Команда "
+"разработки настоятельно просит переходить на новую версию системы, которая "
+"располагается по адресу https://m.riichi.top/"
+
 #: src/app/components/auxiliary-i18n/index.ts:120:12
 msgid "Timer was not started yet. Unable to add a hand."
 msgstr "Таймер еще не запущен. Невозможно добавить раздачу."
@@ -446,7 +459,7 @@ msgstr "Таймер еще не запущен. Невозможно добав
 msgid "Toitoi"
 msgstr "Тойтой"
 
-#: src/app/components/auxiliary-i18n/index.ts:153:12
+#: src/app/components/auxiliary-i18n/index.ts:156:12
 msgid "Total: "
 msgstr "Всего: "
 
@@ -474,11 +487,11 @@ msgstr "Цуисо"
 msgid "Unexpected server error"
 msgstr "Неожиданная ошибка сервера"
 
-#: src/app/components/auxiliary-i18n/index.ts:171:12
+#: src/app/components/auxiliary-i18n/index.ts:174:12
 msgid "Useful links"
 msgstr "Полезные ссылки"
 
-#: src/app/components/auxiliary-i18n/index.ts:150:12
+#: src/app/components/auxiliary-i18n/index.ts:153:12
 msgid "User actions"
 msgstr "Действия пользователя"
 
@@ -510,7 +523,7 @@ msgstr "Якухай 3"
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 
-#: src/app/components/auxiliary-i18n/index.ts:162:12
+#: src/app/components/auxiliary-i18n/index.ts:165:12
 msgid "Yakuman!"
 msgstr "Якуман!"
 
@@ -533,4 +546,3 @@ msgstr "х3"
 #: src/app/primitives/yaku.ts:222:39
 msgid "x4"
 msgstr "х4"
-

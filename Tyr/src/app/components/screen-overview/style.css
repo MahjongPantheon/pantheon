@@ -163,6 +163,16 @@
     position: relative;
 }
 
+.newgame-button-important {
+  font-size: 24px;
+  flex: 1;
+  margin: 5px 5px;
+  padding: 1px 0;
+  position: relative;
+  color: #333;
+  background: #f34 !important;
+}
+
 .table-index {
     text-align: center;
     padding: 5px;

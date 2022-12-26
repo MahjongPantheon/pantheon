@@ -93,6 +93,7 @@ export class OverviewScreenComponent extends I18nComponent implements OnInit {
   playerClick(who: IAppState['overviewDiffBy']) { this.dispatch( { type: TOGGLE_OVERVIEW_DIFFBY, payload: who }); }
   otherTables() { this.dispatch({ type: SHOW_OTHER_TABLES_LIST }); }
   openHelp() { this.dispatch({ type: OPEN_HELP }); }
+  viewUpdateMessage() { alert(this.i18n._t('This version of Pantheon will be shut down in March 2023. We strongly advise to migrate to newer version at https://m.riichi.top/')); }
 
   gotoStat() {
     window.open(`https://${this.state.gameConfig.eventStatHost}/last/`);

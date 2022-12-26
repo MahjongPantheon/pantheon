@@ -28,6 +28,7 @@
   <div class="centered not-found">
     {{_NO_YOUR_GAMES_NOW}}
   </div>
+  <button class="newgame-button-important" (click)="viewUpdateMessage()" *ngIf="!state.isUniversalWatcher">{{_UPDATE_MESSAGE}}</button>
   <button class="newgame-button" (click)="reloadOverview()" *ngIf="!state.isUniversalWatcher">{{_REFRESH_PAGE}}</button>
   <button class="newgame-button" (click)="otherTables()">{{_OTHER_TABLES}}</button>
   <button class="newgame-button" (click)="lastResults()" *ngIf="!state.isUniversalWatcher">{{_PREV_GAME_RESULTS}}</button>
