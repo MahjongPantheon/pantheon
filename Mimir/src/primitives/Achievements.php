@@ -735,6 +735,29 @@ class AchievementsPrimitive extends Primitive
     }
 
     /**
+     * Get top 3 players with biggest score by the end of session
+     *
+     * @param DataSource $ds
+     * @param int[] $eventIdList
+     * @param array $players
+     * @return array
+     */
+    public static function getNeedMoreGold(DataSource $ds, array $eventIdList, array $players)
+    {
+        $results = $ds->local()->table('session_results')
+            ->select('player_id')
+            ->select('score')
+            ->whereIn('event_id', $eventIdList)
+            ->orderByDesc('score')
+            ->limit(3)
+            ->findArray();
+        foreach ($results as &$result) {
+            $result['title'] = $players[$result['player_id']]['title'];
+        }
+        return $results;
+    }
+
+    /**
      * @return bool
      */
     public function save()

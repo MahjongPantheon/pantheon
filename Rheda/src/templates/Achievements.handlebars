@@ -279,5 +279,17 @@
       {{/ninja.val}}
     </ul></div>
   {{/ninja}}
+
+  {{#needMoreGold}}
+    <h3>{{_t 'Achievement'}} - {{needMoreGold.name}}</h3>
+    <div class="paragraph-title">{{_t 'Description'}}</div>
+    <div class="description">{{needMoreGold.description}}</div>
+    <div class="paragraph-title">{{_t 'Nominees'}}</div>
+    <div class="nominees"><ul>
+      {{#needMoreGold.val}}
+        <li>{{title}}: {{_p '%s points' score}}</li>
+      {{/needMoreGold.val}}
+    </ul></div>
+  {{/needMoreGold}}
 </div>
 {{/error}}

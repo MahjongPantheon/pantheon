@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-03 20:47+0300\n"
+"POT-Creation-Date: 2022-12-31 16:49+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -269,13 +269,39 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+msgid "Recover your password"
+msgstr ""
+
+msgid "Confirmation e-mail was sent. Please check you inbox."
+msgstr ""
+
+msgid ""
+"Please enter the e-mail address you've registered with. We will send you "
+"confirmation email to reset your password."
+msgstr ""
+
+msgid "Your e-mail address"
+msgstr ""
+
+msgid "Please enter symbols to make sure you're not a robot:"
+msgstr ""
+
+msgid "Send confirmation e-mail"
+msgstr ""
+
+msgid "Your password was successfully updated. Please log in now."
+msgstr ""
+
+msgid "Please enter new password for your account."
+msgstr ""
+
+msgid "Change password"
+msgstr ""
+
 msgid ""
 "Please enter your e-mail address and password. We will send authentication "
 "link to your email, so you will be able to sign in and fill your personal "
 "data"
-msgstr ""
-
-msgid "Your e-mail address"
 msgstr ""
 
 msgid ""
@@ -291,9 +317,6 @@ msgid ""
 "will not be accepted by checker."
 msgstr ""
 
-msgid "Please enter symbols to make sure you're not a robot:"
-msgstr ""
-
 msgid "I've read the privacy policy listed below and accept its terms"
 msgstr ""
 
@@ -306,29 +329,6 @@ msgstr ""
 msgid ""
 "Confirmation email has been sent. Please check your inbox for further "
 "instructions."
-msgstr ""
-
-msgid "Recover your password"
-msgstr ""
-
-msgid "Confirmation e-mail was sent. Please check you inbox."
-msgstr ""
-
-msgid ""
-"Please enter the e-mail address you've registered with. We will send you "
-"confirmation email to reset your password."
-msgstr ""
-
-msgid "Send confirmation e-mail"
-msgstr ""
-
-msgid "Your password was successfully updated. Please log in now."
-msgstr ""
-
-msgid "Please enter new password for your account."
-msgstr ""
-
-msgid "Change password"
 msgstr ""
 
 msgid "Create new user"
@@ -479,34 +479,6 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
-msgid "Predefined seating configuration"
-msgstr ""
-
-msgid "Next session index (starting from 1):"
-msgstr ""
-
-msgid "Update predefined seating config"
-msgstr ""
-
-msgid "Found errors:"
-msgstr ""
-
-msgid "No errors found."
-msgstr ""
-
-msgid ""
-"Predefined seating is entered as list of tables, one table per row. New game "
-"session should be indicated as an empty line."
-msgstr ""
-
-msgid "Example:"
-msgstr ""
-
-msgid ""
-"In this example, two tables play two games. Numbers in seating persist "
-"between games and are defined at Admin actions / Manage players page."
-msgstr ""
-
 msgid "Player added successfully. Reload page to see results"
 msgstr ""
 
@@ -574,6 +546,34 @@ msgid ""
 msgstr ""
 
 msgid "Save teams list"
+msgstr ""
+
+msgid "Predefined seating configuration"
+msgstr ""
+
+msgid "Next session index (starting from 1):"
+msgstr ""
+
+msgid "Update predefined seating config"
+msgstr ""
+
+msgid "Found errors:"
+msgstr ""
+
+msgid "No errors found."
+msgstr ""
+
+msgid ""
+"Predefined seating is entered as list of tables, one table per row. New game "
+"session should be indicated as an empty line."
+msgstr ""
+
+msgid "Example:"
+msgstr ""
+
+msgid ""
+"In this example, two tables play two games. Numbers in seating persist "
+"between games and are defined at Admin actions / Manage players page."
 msgstr ""
 
 msgid "Rights and privileges: %s"
@@ -1152,6 +1152,9 @@ msgstr ""
 msgid "Ninja"
 msgstr ""
 
+msgid "We need more gold"
+msgstr ""
+
 msgid ""
 "Given for collecting the hand with biggest han count (independent of cost)."
 msgstr ""
@@ -1214,6 +1217,11 @@ msgid "Given for losing the smallest number of riichi bets."
 msgstr ""
 
 msgid "Given for winning the largest number of hands with damaten."
+msgstr ""
+
+msgid ""
+"Given for having biggest score in the end of the session across the "
+"tournament."
 msgstr ""
 
 msgid "Main event is empty: this is unexpected behavior"

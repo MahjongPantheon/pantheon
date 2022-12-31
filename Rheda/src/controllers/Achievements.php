@@ -43,6 +43,7 @@ class Achievements extends Controller
     const A_AND_YOUR_RIICHI_BET = 'andYourRiichiBet';
     const A_COVETOUS_KNIGHT = 'covetousKnight';
     const A_NINJA = 'ninja';
+    const A_NEED_MORE_GOLD = 'needMoreGold';
 
     protected function _pageTitle()
     {
@@ -123,7 +124,8 @@ class Achievements extends Controller
                 self::A_FAVORITE_ASAPIN_APPRENTICE => _t('The favorite apprentice of ASAPIN'),
                 self::A_AND_YOUR_RIICHI_BET => _t('And your riichi bet, please'),
                 self::A_COVETOUS_KNIGHT => _t('The Covetous Knight'),
-                self::A_NINJA => _t('Ninja')
+                self::A_NINJA => _t('Ninja'),
+                self::A_NEED_MORE_GOLD => _t('We need more gold'),
             ], [
                 self::A_BEST_HAND => _t('Given for collecting the hand with biggest han count (independent of cost).'),
                 self::A_BEST_FU => _t('Given for collecting the hand with biggest minipoints (fu) count.'),
@@ -144,6 +146,7 @@ class Achievements extends Controller
                 self::A_AND_YOUR_RIICHI_BET => _t('Given for collecting the largest amount of other players\' riichi bets during the tournament.'),
                 self::A_COVETOUS_KNIGHT => _t('Given for losing the smallest number of riichi bets.'),
                 self::A_NINJA => _t('Given for winning the largest number of hands with damaten.'),
+                self::A_NEED_MORE_GOLD => _t('Given for having biggest score in the end of the session across the tournament.'),
             ]
         ];
     }
@@ -178,7 +181,7 @@ class Achievements extends Controller
             $value = array_map(function ($value) {
                 $value['yaku'] = $this->_formatYakumanString($value['yaku']);
                 return $value;
-            }, $value['yakumans']);
+            }, $value);
         }
 
         return $value;

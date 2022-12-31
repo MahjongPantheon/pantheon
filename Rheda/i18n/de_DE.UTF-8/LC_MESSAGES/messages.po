@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pantheon - Rheda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-03 00:05+0300\n"
+"POT-Creation-Date: 2022-12-31 16:49+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: Jesterboxboy\n"
@@ -645,6 +645,12 @@ msgstr ""
 
 msgid "Given for getting largest number of ippatsu during tournament."
 msgstr "Fürdie meisten Ippatsu während des Turniers."
+
+#, fuzzy
+msgid ""
+"Given for having biggest score in the end of the session across the "
+"tournament."
+msgstr ""
 
 msgid "Given for largest count of dealer wins during the tournament."
 msgstr "Für die meisten Dealersiege während des Turniers."
@@ -1365,11 +1371,11 @@ msgstr ""
 
 #, fuzzy
 msgid "Reset seating"
-msgstr "Diese Sitzplatzierung benutzen"
+msgstr ""
 
 #, fuzzy
 msgid "Reset seating?"
-msgstr "Diese Sitzplatzierung benutzen"
+msgstr ""
 
 msgid "Reset the timer"
 msgstr "Timer zurücksetzen"
@@ -1718,8 +1724,8 @@ msgid "Toi-toi"
 msgstr "Toi-toi"
 
 msgid ""
-"Total count of registered players is not divisible by 4. Use the \"Add player"
-"\" and \"Players management\" pages to add or remove players. Special "
+"Total count of registered players is not divisible by 4. Use the \"Add "
+"player\" and \"Players management\" pages to add or remove players. Special "
 "replacement player accounts may be used to complete the table."
 msgstr ""
 "Die Gesamtanzahl registrierter Spieler ist nicht durch 4 teilbar. Verwenden "
@@ -1805,6 +1811,9 @@ msgid ""
 msgstr ""
 "WARNUNG: Niemals den tenhou login string weitergeben! Bitte nur den "
 "Benutzernamen angeben"
+
+msgid "We need more gold"
+msgstr ""
 
 msgid ""
 "We never store passwords as plain text. But keep in mind that weak passwords "

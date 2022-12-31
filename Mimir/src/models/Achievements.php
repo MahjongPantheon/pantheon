@@ -159,6 +159,9 @@ class AchievementsModel extends Model
             },
             'ninja' => function () use ($eventIdList): array {
                 return AchievementsPrimitive::getNinja($this->_ds, $eventIdList, $this->_players);
+            },
+            'needMoreGold' => function () use ($eventIdList): array {
+                return AchievementsPrimitive::getNeedMoreGold($this->_ds, $eventIdList, $this->_players);
             }
         ];
 
