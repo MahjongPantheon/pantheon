@@ -30,125 +30,179 @@
       gamesIdx.push(id);
     }
 
-    $.jqplot.eventListenerHooks.push(['jqplotClick', function () {
-      $('#chart_rating_info').html('');
-    }]);
+    var lastSelectionX = null;
+    var ico = new Image();
+    ico.src = '/assets/img/star.svg';
+    ico.height = ico.width = 24;
 
-    $.jqplot(
-      'chart_rating',
-      [points],
+    Chart.defaults.font.size = 16;
+    Chart.defaults.font.family = '"PT Sans Narrow", Arial';
+    var chart = new Chart(
+      document.getElementById('chart_rating'),
       {
-        title: i18n['_RATING_GRAPH'],
-        axes: {
-          xaxis: {
-            ticks: ticks,
-            tickInterval: 1,
-            tickOptions: {
-              formatString: '%d'
+        type: 'line',
+        options: {
+          onClick: function(e) {
+            var canvasPosition = Chart.helpers.getRelativePosition(e, chart);
+            var dataX = chart.scales.x.getValueForPixel(canvasPosition.x);
+            lastSelectionX = dataX;
+            var g = games[gamesIdx[dataX - 1]];
+            if (!g) {
+              return '';
+            }
+            var players = [];
+            var outcome = '';
+            var own = '';
+            var score;
+            var winds = ['東', '南', '西', '北'];
+            players.push('<div class="container">');
+
+            var gameHash = g[0]['session_hash'];
+            var eventId = g[0]['event_id'];
+            var url = '/eid' + eventId + '/game/' + gameHash;
+            players.push('<div class="row m-3"><a href="' + url + '">' + i18n._GAME_DETAILS + '</a></div>');
+
+            for (var i = 0; i < 4; i++) {
+              outcome = g[i].rating_delta < labelColorThreshold ? 'badge-danger' : 'badge-success';
+              own = g[i].player_id == currentUser ? 'own' : '';
+              score = g[i].score;
+              players.push(
+                '<div class="row ' + own + '">' +
+                '<div class="col-6">' +
+                winds[i] + ' ' +
+                playersMap[g[i].player_id].title +
+                '</div>' +
+                '<div class="col-3">' +
+                '<span class="score">' + score + '</span>' +
+                '</div><div class="col-3">' +
+                '<span class="badge ' + outcome + '">' + (
+                  g[i].rating_delta > labelColorThreshold ? '+' : ''
+                ) + parseFloat(g[i].rating_delta).toFixed(1) + '</span>' +
+                '</div></div>'
+              );
+            }
+            $('#chart_rating_info').html(players.join(''));
+            chart.update();
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              enabled: false
+            }
+          },
+          elements: {
+            point: {
+              radius: function customRadius(context) {
+                return context.dataIndex === lastSelectionX ? 8 : 2;
+              },
+              hoverRadius: 8,
+              hoverBorderWidth: 1,
+              pointStyle: function customStyle(context) {
+                if (context.dataIndex === 0) {
+                  return undefined;
+                }
+                var g = games[gamesIdx[context.dataIndex - 1]];
+                if (g.every((v) => v.player_id == currentUser || v.rating_delta < labelColorThreshold)) {
+                  return ico;
+                }
+                return undefined;
+              }
+            },
+            line: {
+              tension: 0.3
+            }
+          },
+          scales: {
+            x: {
+              position: 'bottom',
+              title: {
+                display: true,
+                text: i18n['_GAMES_PLAYED']
+              }
+            },
+            y: {
+              position: 'left',
+              title: {
+                display: true,
+                text: i18n['_LABEL_RATING']
+              }
             }
           }
         },
-        cursor: {
-          show: false
-        },
-        highlighter: {
-          show: true,
-          showTooltip: false,
-          sizeAdjust: 10
-        },
-        seriesDefaults: {
-          rendererOptions: {
-            smooth: true
-          }
+        data: {
+          labels: ticks,
+          datasets: [
+            {
+              data: points
+            }
+          ]
         }
-      }
-    );
-
-    $('#chart_rating').bind('jqplotDataClick',
-      function (ev, seriesIndex, pointIndex) {
-        var g = games[gamesIdx[pointIndex - 1]];
-        if (!g) {
-          return '';
-        }
-        var players = [];
-        var outcome = '';
-        var own = '';
-        var score;
-        var winds = ['東', '南', '西', '北'];
-        players.push('<div class="container">');
-
-        var gameHash = g[0]['session_hash'];
-        var eventId = g[0]['event_id'];
-        var url = '/eid' + eventId + '/game/' + gameHash;
-        players.push('<div class="row m-3"><a href="' + url + '">' + i18n._GAME_DETAILS + '</a></div>');
-
-        for (var i = 0; i < 4; i++) {
-          outcome = g[i].rating_delta < labelColorThreshold ? 'badge-danger' : 'badge-success';
-          own = g[i].player_id == currentUser ? 'own' : '';
-          score = $.jqplot.sprintf("%'i", g[i].score);
-          players.push(
-            '<div class="row ' + own + '">' +
-            '<div class="col-6">' +
-            winds[i] + ' ' +
-            playersMap[g[i].player_id].title +
-            '</div>' +
-            '<div class="col-3">' +
-            '<span class="score">' + score + '</span>' +
-            '</div><div class="col-3">' +
-            '<span class="badge ' + outcome + '">' + (
-              g[i].rating_delta > labelColorThreshold ? '+' : ''
-            ) + parseFloat(g[i].rating_delta).toFixed(1) + '</span>' +
-            '</div></div>'
-          );
-        }
-        $('#chart_rating_info').html(players.join(''));
       }
     );
   }
 
   function plotHands(handValueStats, yakuStats, i18n) {
-    $.jqplot('chart_hands', [handValueStats], {
-      title: i18n['_HANDS_VALUE'],
-      series: [{renderer: $.jqplot.BarRenderer}],
-      axesDefaults: {
-        tickOptions: {
-          fontSize: '12pt'
-        }
+    var handsBar = new Chart(document.getElementById('chart_hands'), {
+      type: 'bar',
+      data: {
+        datasets: [
+          {
+            data: handValueStats
+          }
+        ]
       },
-      axes: {
-        xaxis: {
-          label: i18n['_HAN'],
-          renderer: $.jqplot.CategoryAxisRenderer
+      options: {
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            position: 'bottom',
+            title: {
+              display: true,
+              text: i18n['_HANDS_VALUE']
+            }
+          },
         }
       }
     });
 
-    $.jqplot('chart_yaku', [yakuStats], {
-      height: 400,
-      title: i18n['_YAKU_OVERALLTIME'],
-      series: [{
-        renderer: $.jqplot.BarRenderer,
-        rendererOptions: {
-          barWidth: 7,
-          shadowOffset: 1,
-          barDirection: 'horizontal'
-        }
-      }],
-      axesDefaults: {
-        tickOptions: {
-          fontSize: '12pt'
-        }
-      },
-      axes: {
-        yaxis: {
-          renderer: $.jqplot.CategoryAxisRenderer
-        },
-        xaxis: {
-          min: 0,
-          tickInterval: 1,
-          tickOptions: {
-            formatString: '%d'
+    var yakuBar = new Chart(document.getElementById('chart_yaku'), {
+      type: 'bar',
+      data: {
+        datasets: [
+          {
+            data: yakuStats,
           }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        grouped: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            ticks: {
+              autoSkip: false
+            },
+          },
+          x: {
+            position: 'bottom',
+            title: {
+              display: true,
+              text: i18n['_YAKU_OVERALLTIME']
+            }
+          },
         }
       }
     });
@@ -290,7 +344,7 @@
 
   function resetToDefault(idList) {
     idList.forEach((id) => {
-      const el = document.getElementById(id);
+      var el = document.getElementById(id);
       if (!el) {
         return;
       }

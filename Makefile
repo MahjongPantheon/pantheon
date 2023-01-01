@@ -201,6 +201,16 @@ seed: get_docker_id migrate
 		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s ClubEventSeeder --verbose'; \
 	fi
 
+.PHONY: seed_bigevent
+seed_bigevent: get_docker_id migrate
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Pantheon container is not running, can't run seeding.${NC}"; \
+	else \
+	  docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s BasicSeeder --verbose'; \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && SEED_REPEAT=20 HOME=/home/user su-exec user bin/phinx seed:run -e docker -s ClubEventSeeder --verbose'; \
+	fi
+
+
 .PHONY: seed_tournament
 seed_tournament: get_docker_id migrate
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \

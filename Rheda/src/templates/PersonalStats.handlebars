@@ -39,7 +39,7 @@
             <div class="container">
                 <div class="row" style="display: block">
                     <div class="col-12">
-                        <div id='chart_rating'></div>
+                        <canvas id='chart_rating'></canvas>
                     </div>
                     <div class="col-12" id="chart_rating_info"></div>
                 </div>
@@ -202,9 +202,13 @@
                         </table>
                     </div>
                     <div class="col-12">
-                        <div id='chart_hands'></div>
+                        <div style="position: relative; height: 250px; width: 100%">
+                          <canvas id='chart_hands'></canvas>
+                        </div>
                         <hr/>
-                        <div id='chart_yaku'></div>
+                        <div style="position: relative; height: {{yakuStatsHeight}}px">
+                            <canvas id='chart_yaku'></canvas>
+                        </div>
                     </div>
                 </div>
             </div>

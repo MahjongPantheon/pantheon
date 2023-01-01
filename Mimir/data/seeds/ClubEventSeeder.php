@@ -24,7 +24,7 @@ class ClubEventSeeder extends AbstractSeed
         list($src, $config) = $this->_getConnection();
         $event = $this->_seedEvent($src);
         $idMap = $this->_seedPlayers($src, $event);
-        $this->_seedGames($src, $config, $event, $idMap);
+        $this->_seedGames($src, $config, $event, $idMap, intval(getenv('SEED_REPEAT') ?: '1'));
 
         echo '-----------------------------------------------------------------' . PHP_EOL;
         echo "New seeded event link: ' " . getenv('RHEDA_URL') . "/eid{$event->getId()}" . PHP_EOL;
@@ -82,12 +82,14 @@ class ClubEventSeeder extends AbstractSeed
      * @param \Mimir\DataSource $ds
      * @param \Mimir\Config $config
      * @param \Mimir\EventPrimitive $event
+     * @param $idMap
+     * @param int $repeat
      * @throws Exception
      * @throws \Mimir\InvalidParametersException
      * @throws \Mimir\MalformedPayloadException
      * @throws \Mimir\ParseException
      */
-    protected function _seedGames(\Mimir\DataSource $ds, \Mimir\Config $config, \Mimir\EventPrimitive $event, $idMap)
+    protected function _seedGames(\Mimir\DataSource $ds, \Mimir\Config $config, \Mimir\EventPrimitive $event, $idMap, $repeat)
     {
         $data = '%' . implode("%\n%", explode("\n", file_get_contents(__DIR__ . '/../../tests/models/testdata/games.txt'))) . '%';
         $games = array_map(function($game) {
@@ -108,8 +110,10 @@ class ClubEventSeeder extends AbstractSeed
         $meta = new \Mimir\Meta($ds->remote(), $config, $_SERVER);
         $model = new \Mimir\TextlogImportModel($ds, $config, $meta);
 
-        foreach ($games as $log) {
-            $model->addGame($event->getId(), $log, $idMap);
+        for ($i = 0; $i < $repeat; $i++) {
+            foreach ($games as $log) {
+                $model->addGame($event->getId(), $log, $idMap);
+            }
         }
     }
 
