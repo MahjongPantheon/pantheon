@@ -78,19 +78,23 @@ class PersonalStats extends Controller
             ksort($data['hands_value_summary']);
             foreach ($data['hands_value_summary'] as $han => $count) {
                 if ($han > 0) {
-                    $handValueStats []= [(string)$han, $count];
+                    $handValueStats []= ['x' => (string)$han, 'y' => $count];
                 } else {
                     $yakumanCount += $count;
                 }
             }
             if ($yakumanCount > 0) {
-                $handValueStats [] = ['★', $yakumanCount];
+                $handValueStats [] = ['x' => '★', 'y' => $yakumanCount];
+            } else {
+                $handValueStats [] = ['x' => '★', 'y' => 0];
             }
 
             $yakuStats = [];
             $totalYakuhai = 0;
             foreach ($data['yaku_summary'] as $yaku => $count) {
-                $yakuStats []= [$count, \Common\YakuMap::getTranslations()[$yaku]];
+                $yakuStats []= ['x' => $count, 'y' => \Common\YakuMap::getTranslations()[$yaku]];
+//                $yakuStats []= ['x' => $count, 'y' => \Common\YakuMap::getTranslations()[$yaku] . '1'];
+//                $yakuStats []= ['x' => $count, 'y' => \Common\YakuMap::getTranslations()[$yaku] . '2'];
                 switch ($yaku) {
                     case 13:
                         $totalYakuhai += 1 * $count;
@@ -110,7 +114,7 @@ class PersonalStats extends Controller
             }
 
             if ($totalYakuhai) {
-                $yakuStats[] = [$totalYakuhai, _t('Yakuhai: total')];
+                $yakuStats[] = ['x' => $totalYakuhai, 'y' => _t('Yakuhai: total')];
             }
 
             $scoresSummary = $this->_getScoresSummary((int)$currentUser, $data['score_history']);
@@ -137,6 +141,7 @@ class PersonalStats extends Controller
                     'games'          => json_encode($data['score_history']),
                     'handValueStats' => json_encode($handValueStats),
                     'yakuStats'      => json_encode($yakuStats),
+                    'yakuStatsHeight' => 40 + 20 * count($yakuStats), // pixels, 20px for each bar
 
                     'ronCount'             => $data['win_summary']['ron'],
                     'winsWithOpen'         => $data['win_summary']['wins_with_open'],

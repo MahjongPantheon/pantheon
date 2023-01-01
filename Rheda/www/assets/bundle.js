@@ -35,6 +35,8 @@
     ico.src = '/assets/img/star.svg';
     ico.height = ico.width = 24;
 
+    Chart.defaults.font.size = 16;
+    Chart.defaults.font.family = '"PT Sans Narrow", Arial';
     var chart = new Chart(
       document.getElementById('chart_rating'),
       {
@@ -133,7 +135,6 @@
           labels: ticks,
           datasets: [
             {
-              label: 'Rating',
               data: points
             }
           ]
@@ -143,51 +144,67 @@
   }
 
   function plotHands(handValueStats, yakuStats, i18n) {
-    // $.jqplot('chart_hands', [handValueStats], {
-    //   title: i18n['_HANDS_VALUE'],
-    //   series: [{renderer: $.jqplot.BarRenderer}],
-    //   axesDefaults: {
-    //     tickOptions: {
-    //       fontSize: '12pt'
-    //     }
-    //   },
-    //   axes: {
-    //     xaxis: {
-    //       label: i18n['_HAN'],
-    //       renderer: $.jqplot.CategoryAxisRenderer
-    //     }
-    //   }
-    // });
-    //
-    // $.jqplot('chart_yaku', [yakuStats], {
-    //   height: 400,
-    //   title: i18n['_YAKU_OVERALLTIME'],
-    //   series: [{
-    //     renderer: $.jqplot.BarRenderer,
-    //     rendererOptions: {
-    //       barWidth: 7,
-    //       shadowOffset: 1,
-    //       barDirection: 'horizontal'
-    //     }
-    //   }],
-    //   axesDefaults: {
-    //     tickOptions: {
-    //       fontSize: '12pt'
-    //     }
-    //   },
-    //   axes: {
-    //     yaxis: {
-    //       renderer: $.jqplot.CategoryAxisRenderer
-    //     },
-    //     xaxis: {
-    //       min: 0,
-    //       tickInterval: 1,
-    //       tickOptions: {
-    //         formatString: '%d'
-    //       }
-    //     }
-    //   }
-    // });
+    var handsBar = new Chart(document.getElementById('chart_hands'), {
+      type: 'bar',
+      data: {
+        datasets: [
+          {
+            data: handValueStats
+          }
+        ]
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            position: 'bottom',
+            title: {
+              display: true,
+              text: i18n['_HANDS_VALUE']
+            }
+          },
+        }
+      }
+    });
+
+    var yakuBar = new Chart(document.getElementById('chart_yaku'), {
+      type: 'bar',
+      data: {
+        datasets: [
+          {
+            data: yakuStats,
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        grouped: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            ticks: {
+              autoSkip: false
+            },
+          },
+          x: {
+            position: 'bottom',
+            title: {
+              display: true,
+              text: i18n['_YAKU_OVERALLTIME']
+            }
+          },
+        }
+      }
+    });
   }
 
   function saveLocalIds(selectorClass, targetInputId, formId) {
@@ -326,7 +343,7 @@
 
   function resetToDefault(idList) {
     idList.forEach((id) => {
-      const el = document.getElementById(id);
+      var el = document.getElementById(id);
       if (!el) {
         return;
       }
