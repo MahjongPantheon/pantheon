@@ -85,7 +85,7 @@
           },
           elements: {
             point: {
-              radius: 5,
+              radius: 2,
               hoverRadius: 8,
               hoverBorderWidth: 1
             },
