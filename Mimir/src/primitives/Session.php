@@ -436,7 +436,8 @@ class SessionPrimitive extends Primitive
             // Here we rely on fact that same group of players can't start several games in the same minute.
             $this->_representationalHash = sha1(
                 implode(',', $this->_playersIds) .
-                DateHelper::getDateWithoutSeconds($this->_startDate)
+                DateHelper::getDateWithoutSeconds($this->_startDate) .
+                (empty(getenv('SEED_REPEAT')) ? '' : mt_rand(0, 999999)) // additional randomness for big event seeder, not used in production
             );
         }
         return parent::save();
