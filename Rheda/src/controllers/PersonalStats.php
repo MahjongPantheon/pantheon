@@ -138,7 +138,7 @@ class PersonalStats extends Controller
                     'points'         => json_encode($graphData),
                     'games'          => json_encode($data['score_history']),
                     'handValueStats' => json_encode($handValueStats),
-                    'yakuStats'      => json_encode($yakuStats),
+                    'yakuStats'      => json_encode(array_reverse($yakuStats)),
                     'yakuStatsHeight' => 40 + 20 * count($yakuStats), // pixels, 20px for each bar
 
                     'ronCount'             => $data['win_summary']['ron'],
