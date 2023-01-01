@@ -131,12 +131,6 @@ li, .table th, .table td {
     background-color: #ffff00 !important;
 }
 
-.graphs .jqplot-highlighter-tooltip {
-    border: 1px solid #555;
-    -webkit-box-shadow: 4px 4px 24px 1px rgba(0, 0, 0, 0.7);
-    box-shadow: 4px 4px 24px 1px rgba(0, 0, 0, 0.7);
-}
-
 .graphs .table-plot-rating {
     background-color: #fff;
     padding-bottom: 0;

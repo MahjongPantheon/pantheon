@@ -93,8 +93,6 @@ class PersonalStats extends Controller
             $totalYakuhai = 0;
             foreach ($data['yaku_summary'] as $yaku => $count) {
                 $yakuStats []= ['x' => $count, 'y' => \Common\YakuMap::getTranslations()[$yaku]];
-//                $yakuStats []= ['x' => $count, 'y' => \Common\YakuMap::getTranslations()[$yaku] . '1'];
-//                $yakuStats []= ['x' => $count, 'y' => \Common\YakuMap::getTranslations()[$yaku] . '2'];
                 switch ($yaku) {
                     case 13:
                         $totalYakuhai += 1 * $count;
