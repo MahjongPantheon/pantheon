@@ -65,7 +65,7 @@ class PersonalStats extends Controller
             $graphData = [];
             $i = 0;
             foreach ($data['rating_history'] as $rating) {
-                $graphData []= [$i++, floor($rating)];
+                $graphData []= ['x' => $i++, 'y' => floor($rating)];
             }
 
             $handValueStats = [];

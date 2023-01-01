@@ -30,128 +30,220 @@
       gamesIdx.push(id);
     }
 
-    $.jqplot.eventListenerHooks.push(['jqplotClick', function () {
-      $('#chart_rating_info').html('');
-    }]);
-
-    $.jqplot(
-      'chart_rating',
-      [points],
+    var chart = new Chart(
+      document.getElementById('chart_rating'),
       {
-        title: i18n['_RATING_GRAPH'],
-        axes: {
-          xaxis: {
-            ticks: ticks,
-            tickInterval: 1,
-            tickOptions: {
-              formatString: '%d'
+        type: 'line',
+        options: {
+          onClick: function(e) {
+            var canvasPosition = Chart.helpers.getRelativePosition(e, chart);
+            var dataX = chart.scales.x.getValueForPixel(canvasPosition.x);
+            var g = games[gamesIdx[dataX - 1]];
+            if (!g) {
+              return '';
+            }
+            var players = [];
+            var outcome = '';
+            var own = '';
+            var score;
+            var winds = ['東', '南', '西', '北'];
+            players.push('<div class="container">');
+
+            var gameHash = g[0]['session_hash'];
+            var eventId = g[0]['event_id'];
+            var url = '/eid' + eventId + '/game/' + gameHash;
+            players.push('<div class="row m-3"><a href="' + url + '">' + i18n._GAME_DETAILS + '</a></div>');
+
+            for (var i = 0; i < 4; i++) {
+              outcome = g[i].rating_delta < labelColorThreshold ? 'badge-danger' : 'badge-success';
+              own = g[i].player_id == currentUser ? 'own' : '';
+              score = g[i].score;
+              players.push(
+                '<div class="row ' + own + '">' +
+                '<div class="col-6">' +
+                winds[i] + ' ' +
+                playersMap[g[i].player_id].title +
+                '</div>' +
+                '<div class="col-3">' +
+                '<span class="score">' + score + '</span>' +
+                '</div><div class="col-3">' +
+                '<span class="badge ' + outcome + '">' + (
+                  g[i].rating_delta > labelColorThreshold ? '+' : ''
+                ) + parseFloat(g[i].rating_delta).toFixed(1) + '</span>' +
+                '</div></div>'
+              );
+            }
+            $('#chart_rating_info').html(players.join(''));
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              enabled: false
+            }
+          },
+          elements: {
+            point: {
+              radius: 5,
+              hoverRadius: 8,
+              hoverBorderWidth: 1
+            },
+            line: {
+              tension: 0.3
+            }
+          },
+          scales: {
+            x: {
+              position: 'bottom',
+              title: {
+                display: true,
+                text: 'Games #'
+              }
+            },
+            y: {
+              position: 'left',
+              title: {
+                display: true,
+                text: 'Rating'
+              }
             }
           }
         },
-        cursor: {
-          show: false
-        },
-        highlighter: {
-          show: true,
-          showTooltip: false,
-          sizeAdjust: 10
-        },
-        seriesDefaults: {
-          rendererOptions: {
-            smooth: true
-          }
+        data: {
+          labels: ticks,
+          datasets: [
+            {
+              label: 'Rating',
+              data: points
+            }
+          ]
         }
       }
     );
 
-    $('#chart_rating').bind('jqplotDataClick',
-      function (ev, seriesIndex, pointIndex) {
-        var g = games[gamesIdx[pointIndex - 1]];
-        if (!g) {
-          return '';
-        }
-        var players = [];
-        var outcome = '';
-        var own = '';
-        var score;
-        var winds = ['東', '南', '西', '北'];
-        players.push('<div class="container">');
-
-        var gameHash = g[0]['session_hash'];
-        var eventId = g[0]['event_id'];
-        var url = '/eid' + eventId + '/game/' + gameHash;
-        players.push('<div class="row m-3"><a href="' + url + '">' + i18n._GAME_DETAILS + '</a></div>');
-
-        for (var i = 0; i < 4; i++) {
-          outcome = g[i].rating_delta < labelColorThreshold ? 'badge-danger' : 'badge-success';
-          own = g[i].player_id == currentUser ? 'own' : '';
-          score = $.jqplot.sprintf("%'i", g[i].score);
-          players.push(
-            '<div class="row ' + own + '">' +
-            '<div class="col-6">' +
-            winds[i] + ' ' +
-            playersMap[g[i].player_id].title +
-            '</div>' +
-            '<div class="col-3">' +
-            '<span class="score">' + score + '</span>' +
-            '</div><div class="col-3">' +
-            '<span class="badge ' + outcome + '">' + (
-              g[i].rating_delta > labelColorThreshold ? '+' : ''
-            ) + parseFloat(g[i].rating_delta).toFixed(1) + '</span>' +
-            '</div></div>'
-          );
-        }
-        $('#chart_rating_info').html(players.join(''));
-      }
-    );
+    // $.jqplot.eventListenerHooks.push(['jqplotClick', function () {
+    //   $('#chart_rating_info').html('');
+    // }]);
+    //
+    // $.jqplot(
+    //   'chart_rating',
+    //   [points],
+    //   {
+    //     title: i18n['_RATING_GRAPH'],
+    //     axes: {
+    //       xaxis: {
+    //         ticks: ticks,
+    //         tickInterval: 1,
+    //         tickOptions: {
+    //           formatString: '%d'
+    //         }
+    //       }
+    //     },
+    //     cursor: {
+    //       show: false
+    //     },
+    //     highlighter: {
+    //       show: true,
+    //       showTooltip: false,
+    //       sizeAdjust: 10
+    //     },
+    //     seriesDefaults: {
+    //       rendererOptions: {
+    //         smooth: true
+    //       }
+    //     }
+    //   }
+    // );
+    //
+    // $('#chart_rating').bind('jqplotDataClick',
+    //   function (ev, seriesIndex, pointIndex) {
+    //     var g = games[gamesIdx[pointIndex - 1]];
+    //     if (!g) {
+    //       return '';
+    //     }
+    //     var players = [];
+    //     var outcome = '';
+    //     var own = '';
+    //     var score;
+    //     var winds = ['東', '南', '西', '北'];
+    //     players.push('<div class="container">');
+    //
+    //     var gameHash = g[0]['session_hash'];
+    //     var eventId = g[0]['event_id'];
+    //     var url = '/eid' + eventId + '/game/' + gameHash;
+    //     players.push('<div class="row m-3"><a href="' + url + '">' + i18n._GAME_DETAILS + '</a></div>');
+    //
+    //     for (var i = 0; i < 4; i++) {
+    //       outcome = g[i].rating_delta < labelColorThreshold ? 'badge-danger' : 'badge-success';
+    //       own = g[i].player_id == currentUser ? 'own' : '';
+    //       score = $.jqplot.sprintf("%'i", g[i].score);
+    //       players.push(
+    //         '<div class="row ' + own + '">' +
+    //         '<div class="col-6">' +
+    //         winds[i] + ' ' +
+    //         playersMap[g[i].player_id].title +
+    //         '</div>' +
+    //         '<div class="col-3">' +
+    //         '<span class="score">' + score + '</span>' +
+    //         '</div><div class="col-3">' +
+    //         '<span class="badge ' + outcome + '">' + (
+    //           g[i].rating_delta > labelColorThreshold ? '+' : ''
+    //         ) + parseFloat(g[i].rating_delta).toFixed(1) + '</span>' +
+    //         '</div></div>'
+    //       );
+    //     }
+    //     $('#chart_rating_info').html(players.join(''));
+    //   }
+    // );
   }
 
   function plotHands(handValueStats, yakuStats, i18n) {
-    $.jqplot('chart_hands', [handValueStats], {
-      title: i18n['_HANDS_VALUE'],
-      series: [{renderer: $.jqplot.BarRenderer}],
-      axesDefaults: {
-        tickOptions: {
-          fontSize: '12pt'
-        }
-      },
-      axes: {
-        xaxis: {
-          label: i18n['_HAN'],
-          renderer: $.jqplot.CategoryAxisRenderer
-        }
-      }
-    });
-
-    $.jqplot('chart_yaku', [yakuStats], {
-      height: 400,
-      title: i18n['_YAKU_OVERALLTIME'],
-      series: [{
-        renderer: $.jqplot.BarRenderer,
-        rendererOptions: {
-          barWidth: 7,
-          shadowOffset: 1,
-          barDirection: 'horizontal'
-        }
-      }],
-      axesDefaults: {
-        tickOptions: {
-          fontSize: '12pt'
-        }
-      },
-      axes: {
-        yaxis: {
-          renderer: $.jqplot.CategoryAxisRenderer
-        },
-        xaxis: {
-          min: 0,
-          tickInterval: 1,
-          tickOptions: {
-            formatString: '%d'
-          }
-        }
-      }
-    });
+    // $.jqplot('chart_hands', [handValueStats], {
+    //   title: i18n['_HANDS_VALUE'],
+    //   series: [{renderer: $.jqplot.BarRenderer}],
+    //   axesDefaults: {
+    //     tickOptions: {
+    //       fontSize: '12pt'
+    //     }
+    //   },
+    //   axes: {
+    //     xaxis: {
+    //       label: i18n['_HAN'],
+    //       renderer: $.jqplot.CategoryAxisRenderer
+    //     }
+    //   }
+    // });
+    //
+    // $.jqplot('chart_yaku', [yakuStats], {
+    //   height: 400,
+    //   title: i18n['_YAKU_OVERALLTIME'],
+    //   series: [{
+    //     renderer: $.jqplot.BarRenderer,
+    //     rendererOptions: {
+    //       barWidth: 7,
+    //       shadowOffset: 1,
+    //       barDirection: 'horizontal'
+    //     }
+    //   }],
+    //   axesDefaults: {
+    //     tickOptions: {
+    //       fontSize: '12pt'
+    //     }
+    //   },
+    //   axes: {
+    //     yaxis: {
+    //       renderer: $.jqplot.CategoryAxisRenderer
+    //     },
+    //     xaxis: {
+    //       min: 0,
+    //       tickInterval: 1,
+    //       tickOptions: {
+    //         formatString: '%d'
+    //       }
+    //     }
+    //   }
+    // });
   }
 
   function saveLocalIds(selectorClass, targetInputId, formId) {
