@@ -19,7 +19,7 @@
 return [ // Omit trailing slashes in keys when possible
     ''                => 'Mainpage', // empty path for mainpage
     '/last'           => 'LastGames',
-    '/last/.+'        => 'LastGames',
+    '/last/page/(?<page>[0-9]+)' => 'LastGames',
     '/add-online'     => 'AddOnlineGame',
     '/user'           => 'PersonalStats',
     '/user/(?<user>[0-9]+)' => 'PersonalStats',
@@ -85,7 +85,7 @@ return [ // Omit trailing slashes in keys when possible
     '!/cp/(?<action>manageEvents)'                => 'UserActionManageEvents',
     '!/cp/(?<action>rebuildScoring)/(?<id>\d+)'   => 'UserActionManageEvents',
     '!/cp/(?<action>toggleListed)/(?<id>\d+)'     => 'UserActionManageEvents',
-    '!/cp/(?<action>manageEvents)/(?<page>\d+)'   => 'UserActionManageEvents',
+    '!/cp/(?<action>manageEvents)/page/(?<page>\d+)'   => 'UserActionManageEvents',
     '!/cp/(?<action>newClubEvent)'                => 'UserActionEventEdit',
     '!/cp/(?<action>newTournamentEvent)'          => 'UserActionEventEdit',
     '!/cp/(?<action>newOnlineEvent)'              => 'UserActionEventEdit',

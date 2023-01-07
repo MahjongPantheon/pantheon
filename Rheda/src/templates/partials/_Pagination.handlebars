@@ -1,0 +1,32 @@
+<ul class="pagination justify-content-center" style="margin-top: 20px">
+  <li class="pgn-link page-item{{#__firstPageActive}} disabled{{/__firstPageActive}}"{{#__firstPageActive}} tabindex="-1"{{/__firstPageActive}}>
+    <a class="page-link" href="{{^__firstPageActive}}{{__hrefFirst}}{{/__firstPageActive}}" aria-label="{{_t 'First page'}}">
+      &nbsp;<img src="/assets/img/first.svg" alt="" />
+      <span class="sr-only">{{_t 'First page'}}</span>
+    </a>
+  </li>
+  <li class="pgn-link page-item{{#__firstPageActive}} disabled{{/__firstPageActive}}"{{#__firstPageActive}} tabindex="-1"{{/__firstPageActive}}>
+    <a class="page-link" href="{{^__firstPageActive}}{{__hrefPrevious}}{{/__firstPageActive}}" aria-label="{{_t 'Previous page'}}">
+      &nbsp;<img src="/assets/img/prev.svg" alt="" />
+      <span class="sr-only">{{_t 'Previous page'}}</span>
+    </a>
+  </li>
+  {{#__pages}}
+    <li class="page-item{{#active}} active{{/active}}"{{#active}} tabindex="-1"{{/active}}>
+      {{#active}}<span class="page-link">{{text}}</span>{{/active}}
+      {{^active}}<a class="page-link" href="{{href}}">{{text}}</a>{{/active}}
+    </li>
+  {{/__pages}}
+  <li class="pgn-link page-item{{#__lastPageActive}} disabled{{/__lastPageActive}}"{{#__lastPageActive}} tabindex="-1"{{/__lastPageActive}}>
+    <a class="page-link" href="{{^__lastPageActive}}{{__hrefNext}}{{/__lastPageActive}}" aria-label="{{_t 'Next page'}}">
+      &nbsp;<img src="/assets/img/next.svg" alt="" />
+      <span class="sr-only">{{_t 'Next page'}}</span>
+    </a>
+  </li>
+  <li class="pgn-link page-item{{#__lastPageActive}} disabled{{/__lastPageActive}}"{{#__lastPageActive}} tabindex="-1"{{/__lastPageActive}}>
+    <a class="page-link" href="{{^__lastPageActive}}{{__hrefLast}}{{/__lastPageActive}}" aria-label="{{_t 'Last page'}}">
+      &nbsp;<img src="/assets/img/last.svg" alt="" />
+      <span class="sr-only">{{_t 'Last page'}}</span>
+    </a>
+  </li>
+</ul>

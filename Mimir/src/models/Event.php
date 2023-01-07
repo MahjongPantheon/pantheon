@@ -306,8 +306,7 @@ class EventModel extends Model
             $limit = 100;
         }
 
-        $count = $this->_ds->table('event')->count();
-
+        $count = $this->_ds->table('event');
         $data = $this->_ds->table('event')
             ->select('id')
             ->select('title')
@@ -317,9 +316,13 @@ class EventModel extends Model
             ->select('is_listed')
             ->select('sync_start')
             ->orderByDesc('id');
+
         if ($filterUnlisted) {
             $data = $data->where('is_listed', 1);
+            $count = $count->where('is_listed', 1);
         }
+
+        $count = $count->count();
         $data = $data
             ->limit($limit)
             ->offset($offset)
