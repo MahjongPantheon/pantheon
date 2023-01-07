@@ -72,13 +72,13 @@ class MimirClient implements IMimirClient
      *
      * @param int $limit
      * @param int $offset
-     * @param bool $filterFinished
+     * @param bool $filterUnlisted
      * @return array
     */
-    public function getEvents(int $limit, int $offset, bool $filterFinished): array
+    public function getEvents(int $limit, int $offset, bool $filterUnlisted): array
     {
         /** @phpstan-ignore-next-line */
-        return (array)$this->_client->execute('getEvents', [$limit, $offset, $filterFinished]);
+        return (array)$this->_client->execute('getEvents', [$limit, $offset, $filterUnlisted]);
     }
 
     /**
@@ -400,6 +400,18 @@ class MimirClient implements IMimirClient
     {
         /** @phpstan-ignore-next-line */
         return (bool)$this->_client->execute('finishEvent', [$eventId]);
+    }
+
+    /**
+     *  Toggle event visibility on mainpage
+     *
+     * @param int $eventId
+     * @return bool
+    */
+    public function toggleListed(int $eventId): bool
+    {
+        /** @phpstan-ignore-next-line */
+        return (bool)$this->_client->execute('toggleListed', [$eventId]);
     }
 
     /**

@@ -60,6 +60,7 @@ return [
     'createEvent'        => ['EventsController', 'createEvent'],
     'updateEvent'        => ['EventsController', 'updateEvent'],
     'finishEvent'        => ['EventsController', 'finishEvent'],
+    'toggleListed'       => ['EventsController', 'toggleListed'],
     'getTablesState'     => ['EventsController', 'getTablesState'],
     'startTimer'         => ['EventsController', 'startTimer'],
     'registerPlayerCP'   => ['EventsController', 'registerPlayerAdmin'],

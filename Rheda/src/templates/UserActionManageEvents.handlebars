@@ -77,6 +77,10 @@
                        onclick="return confirmClose({{id}}, '{{title}}')">
                         {{_t 'Finish'}}
                     </a>
+                    <a href="/cp/toggleListed/{{id}}" class="form-control m-1 btn btn-warning">
+                      {{#isListed}}{{_t 'Hide from main page'}}{{/isListed}}
+                      {{^isListed}}{{_t 'Show on main page'}}{{/isListed}}
+                    </a>
                 {{/finished}}
             </div>
         </div>
