@@ -358,6 +358,7 @@ class EventModel extends Model
             ->select('event.is_online', 'is_online')
             ->select('event.sync_start', 'sync_start')
             ->select('event.finished', 'finished')
+            ->select('event.is_listed', 'is_listed')
             ->selectExpr('count(session.id)', 'sessioncnt')
             ->leftOuterJoin('session', 'session.event_id = event.id')
             ->whereIn('event.id', $idList)
@@ -373,6 +374,7 @@ class EventModel extends Model
                 'title' => $event['title'],
                 'description' => $event['description'],
                 'finished' => !!$event['finished'],
+                'isListed' => !!$event['is_listed'],
                 'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
                 'type' => $type
             ];
