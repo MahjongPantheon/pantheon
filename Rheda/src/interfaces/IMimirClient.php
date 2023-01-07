@@ -46,10 +46,10 @@ interface IMimirClient
      *
      * @param int $limit
      * @param int $offset
-     * @param bool $filterFinished
+     * @param bool $filterUnlisted
      * @return array
     */
-    public function getEvents(int $limit, int $offset, bool $filterFinished): array;
+    public function getEvents(int $limit, int $offset, bool $filterUnlisted): array;
 
     /**
      *  List available events by id list
@@ -279,6 +279,14 @@ interface IMimirClient
      * @return bool
     */
     public function finishEvent(int $eventId): bool;
+
+    /**
+     *  Toggle event visibility on mainpage
+     *
+     * @param int $eventId
+     * @return bool
+    */
+    public function toggleListed(int $eventId): bool;
 
     /**
      *  Get tables state in tournament

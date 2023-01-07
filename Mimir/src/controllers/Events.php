@@ -282,16 +282,16 @@ class EventsController extends Controller
      *
      * @param int $limit
      * @param int $offset
-     * @param bool $filterFinished
-     * @throws \Exception
+     * @param bool $filterUnlisted
      * @return array
+     *@throws \Exception
      */
-    public function getEvents($limit, $offset, $filterFinished = false)
+    public function getEvents($limit, $offset, $filterUnlisted = false)
     {
         $this->_log->info('Listing all events with limit/offset [' . $limit . '/' . $offset . ']');
 
         $data = (new EventModel($this->_ds, $this->_config, $this->_meta))
-            ->getAllEvents($limit, $offset, $filterFinished);
+            ->getAllEvents($limit, $offset, $filterUnlisted);
 
         $this->_log->info('Successfully listed all events with limit/offset [' . $limit . '/' . $offset . ']');
         return $data;
@@ -949,6 +949,35 @@ class EventsController extends Controller
         $success = $event->setIsFinished(1)->save();
 
         $this->_log->info('Successfully finished event with id#' . $eventId);
+        return $success;
+    }
+
+    /**
+     * Toggle event visibility on mainpage
+     *
+     * @param int $eventId
+     * @return bool
+     * @throws InvalidParametersException
+     * @throws \Exception
+     */
+    public function toggleListed($eventId)
+    {
+        $this->_log->info('Toggling listed flag of event with id#' . $eventId);
+
+        $event = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($event)) {
+            throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
+        }
+        $event = $event[0];
+
+        // Check we have rights to update this event
+        if (!$this->_meta->isEventAdminById($eventId)) {
+            throw new BadActionException("You don't have enough privileges to modify this event");
+        }
+
+        $success = $event->setIsListed($event->getIsListed() === 0 ? 1 : 0)->save();
+
+        $this->_log->info('Successfully toggled listed flag of event with id#' . $eventId);
         return $success;
     }
 

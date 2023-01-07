@@ -62,7 +62,8 @@ class EventPrimitive extends Primitive
         'min_games_count'   => '_minGamesCount',
         'finished'          => '_finished',
         'next_game_start_time' => '_nextGameStartTime',
-        'time_to_start'     => '_timeToStart'
+        'time_to_start'     => '_timeToStart',
+        'is_listed'         => '_isListed',
     ];
 
     protected function _getFieldsTransforms()
@@ -93,6 +94,7 @@ class EventPrimitive extends Primitive
             '_finished'           => $this->_integerTransform(),
             '_nextGameStartTime'  => $this->_integerTransform(),
             '_timeToStart'        => $this->_integerTransform(),
+            '_isListed'           => $this->_integerTransform(),
             '_ruleset'            => [
                 'serialize' => function (\Common\Ruleset $rules) {
                     return $rules->title();
@@ -259,6 +261,11 @@ class EventPrimitive extends Primitive
      * @var integer
      */
     protected $_nextGameStartTime;
+    /**
+     * Is event listed on main page
+     * @var integer
+     */
+    protected $_isListed;
     /**
      * Status of games in event: one of
      * - seating_ready
@@ -887,6 +894,24 @@ class EventPrimitive extends Primitive
     public function setNextGameStartTime($startTime)
     {
         $this->_nextGameStartTime = $startTime;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsListed()
+    {
+        return $this->_isListed;
+    }
+
+    /**
+     * @param int $isListed
+     * @return EventPrimitive
+     */
+    public function setIsListed($isListed)
+    {
+        $this->_isListed = $isListed;
         return $this;
     }
 

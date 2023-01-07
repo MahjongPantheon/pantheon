@@ -296,11 +296,11 @@ class EventModel extends Model
      *
      * @param int $limit
      * @param int $offset
-     * @param bool $filterFinished
-     * @throws \Exception
+     * @param bool $filterUnlisted
      * @return array
+     * @throws \Exception
      */
-    public function getAllEvents(int $limit, int $offset, bool $filterFinished)
+    public function getAllEvents(int $limit, int $offset, bool $filterUnlisted)
     {
         if ($limit > 100) {
             $limit = 100;
@@ -314,10 +314,11 @@ class EventModel extends Model
             ->select('description')
             ->select('is_online')
             ->select('finished')
+            ->select('is_listed')
             ->select('sync_start')
             ->orderByDesc('id');
-        if ($filterFinished) {
-            $data = $data->where('finished', 0);
+        if ($filterUnlisted) {
+            $data = $data->where('is_listed', 1);
         }
         $data = $data
             ->limit($limit)
@@ -332,6 +333,7 @@ class EventModel extends Model
                     'title' => $event['title'],
                     'description' => $event['description'],
                     'finished' => !!$event['finished'],
+                    'isListed' => !!$event['is_listed'],
                     'type' => $event['is_online']
                         ? 'online'
                         : ($event['sync_start'] ? 'tournament' : 'local')

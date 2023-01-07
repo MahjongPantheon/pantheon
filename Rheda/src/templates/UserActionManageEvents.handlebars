@@ -17,13 +17,20 @@
 <h3>{{_t 'Manage owned events'}}</h3>
 
 <script type="text/javascript">
-    function confirmClose(id, title) {
-        return confirm(
-            "{{_p "Really finish event #id (#title)? You won't be able to add games after event is finished."}}"
-                .replace('#id', id)
-                .replace('#title', title)
+  $(function() {
+    $('#confirmFinish').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      var eventName = button.data('eventName');
+      var eventId = button.data('eventId');
+      $(this).find('.modal-body')
+        .text("{{_p "Really finish event #id (#title)? You won't be able to add games after event is finished."}}"
+          .replace('#id', eventId)
+          .replace('#title', eventName)
         );
-    }
+      var link = $(this).find('#confirmFinishLink');
+      link.attr("href", link.attr("href").replace('#id', eventId));
+    });
+  });
 </script>
 
 <style>
@@ -33,7 +40,30 @@
     .event-row:nth-of-type(even) {
         background-color: rgb(238, 238, 238);
     }
+    .control-buttons .btn img {
+        width: 24px;
+        fill: #fff;
+    }
 </style>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmFinish" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{_t 'Finish the event'}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="{{_t 'Close'}}">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <a id="confirmFinishLink" href="/cp/finishEvent/#id" class="btn btn-danger">{{_t 'Finish the event'}}</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{_t 'Cancel'}}</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="container">
     <div class="form-inline">
@@ -59,24 +89,31 @@
                 <div>{{description}}</div>
                 <div>{{type}}</div>
             </div>
-            <div class="col-6 form-inline">
-                {{#finished}}<b class="badge badge-danger">{{_t 'Finished'}}</b>{{/finished}}
+            <div class="col-6 form-inline control-buttons">
+                <a href="/cp/toggleListed/{{id}}" class="form-control m-1 btn btn-outline-secondary" title="{{_t 'Toggle visibility on main page'}}">
+                    {{#isListed}}<img src="/assets/img/listed_on.svg" alt="" />{{/isListed}}
+                    {{^isListed}}<img src="/assets/img/listed_off.svg" alt="" />{{/isListed}}
+                </a>
+                {{#finished}}<b class="badge badge-danger m-1">{{_t 'Finished'}}</b>{{/finished}}
                 {{^finished}}
-                    <a href="/cp/editEvent/{{id}}" class="form-control m-1 btn btn-info">
-                        {{_t 'Edit'}}
+                    <a href="/cp/editEvent/{{id}}" class="form-control m-1 btn btn-info" title="{{_t 'Edit'}}">
+                        <img src="/assets/img/edit.svg" alt="" />
                     </a>
                     {{#isSuperadmin}}
-                    <a href="/cp/editEventAdmins/{{id}}" class="form-control m-1 btn btn-warning">
-                        {{_t 'Privileges'}}
+                    <a href="/cp/editEventAdmins/{{id}}" class="form-control m-1 btn btn-warning" title="{{_t 'Privileges'}}">
+                        <img src="/assets/img/privileges.svg" alt="" />
                     </a>
-                    <a href="/cp/rebuildScoring/{{id}}" class="form-control m-1 btn btn-warning">
-                        {{_t 'Rebuild scoring'}}
+                    <a href="/cp/rebuildScoring/{{id}}" class="form-control m-1 btn btn-warning" title="{{_t 'Rebuild scoring'}}">
+                        <img src="/assets/img/rebuild.svg" alt="" />
                     </a>
                     {{/isSuperadmin}}
-                    <a href="/cp/finishEvent/{{id}}" class="form-control m-1 btn btn-danger"
-                       onclick="return confirmClose({{id}}, '{{title}}')">
-                        {{_t 'Finish'}}
-                    </a>
+                    <button type="button" class="btn btn-danger m-1" data-toggle="modal"
+                            data-target="#confirmFinish"
+                            title="{{_t 'Finish'}}"
+                            data-event-id="{{id}}"
+                            data-event-name="{{title}}">
+                      <img src="/assets/img/archive.svg" alt="" />
+                    </button>
                 {{/finished}}
             </div>
         </div>
