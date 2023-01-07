@@ -258,7 +258,7 @@ class Ruleset
      */
     public function tonpuusen()
     {
-        return $this->_ruleset['tonpuusen'];
+        return boolval($this->_ruleset['tonpuusen']);
     }
 
     /**
@@ -266,7 +266,7 @@ class Ruleset
      */
     public function startRating()
     {
-        return $this->_ruleset['startRating'];
+        return intval($this->_ruleset['startRating']);
     }
 
     /**
@@ -296,9 +296,9 @@ class Ruleset
     public function oka(int $place)
     {
         if ($place === 1) {
-            return (($this->_ruleset['oka']) * 0.75) ;
+            return (intval($this->_ruleset['oka']) * 0.75) ;
         } else {
-            return -($this->_ruleset['oka'] / 4);
+            return -(intval($this->_ruleset['oka']) / 4);
         }
     }
 
@@ -307,7 +307,7 @@ class Ruleset
      */
     public function startPoints()
     {
-        return $this->_ruleset['startPoints'];
+        return intval($this->_ruleset['startPoints']);
     }
 
     /**
@@ -315,7 +315,7 @@ class Ruleset
      */
     public function goalPoints()
     {
-        return $this->_ruleset['goalPoints'];
+        return intval($this->_ruleset['goalPoints']);
     }
 
     /**
@@ -323,7 +323,7 @@ class Ruleset
      */
     public function playAdditionalRounds()
     {
-        return $this->_ruleset['playAdditionalRounds'];
+        return boolval($this->_ruleset['playAdditionalRounds']);
     }
 
     /**
@@ -331,7 +331,7 @@ class Ruleset
      */
     public function subtractStartPoints()
     {
-        return $this->_ruleset['subtractStartPoints'];
+        return boolval($this->_ruleset['subtractStartPoints']);
     }
 
     /**
@@ -339,7 +339,7 @@ class Ruleset
      */
     public function riichiGoesToWinner()
     {
-        return $this->_ruleset['riichiGoesToWinner'];
+        return boolval($this->_ruleset['riichiGoesToWinner']);
     }
 
     /**
@@ -347,7 +347,7 @@ class Ruleset
      */
     public function doubleronRiichiAtamahane()
     {
-        return $this->_ruleset['doubleronRiichiAtamahane'] ?? false;
+        return boolval($this->_ruleset['doubleronRiichiAtamahane'] ?? false);
     }
 
     /**
@@ -355,7 +355,7 @@ class Ruleset
      */
     public function doubleronHonbaAtamahane()
     {
-        return $this->_ruleset['doubleronHonbaAtamahane'] ?? false;
+        return boolval($this->_ruleset['doubleronHonbaAtamahane'] ?? false);
     }
 
     /**
@@ -363,7 +363,7 @@ class Ruleset
      */
     public function extraChomboPayments()
     {
-        return $this->_ruleset['extraChomboPayments'];
+        return boolval($this->_ruleset['extraChomboPayments']);
     }
 
     /**
@@ -371,7 +371,7 @@ class Ruleset
      */
     public function chomboPenalty()
     {
-        return $this->_ruleset['chomboPenalty'];
+        return floatval($this->_ruleset['chomboPenalty']);
     }
 
     /**
@@ -379,7 +379,7 @@ class Ruleset
      */
     public function withAtamahane()
     {
-        return $this->_ruleset['withAtamahane'];
+        return boolval($this->_ruleset['withAtamahane']);
     }
 
     /**
@@ -387,7 +387,7 @@ class Ruleset
      */
     public function withAbortives()
     {
-        return $this->_ruleset['withAbortives'];
+        return boolval($this->_ruleset['withAbortives']);
     }
 
     /**
@@ -395,7 +395,7 @@ class Ruleset
      */
     public function withKuitan()
     {
-        return $this->_ruleset['withKuitan'];
+        return boolval($this->_ruleset['withKuitan']);
     }
 
     /**
@@ -403,7 +403,7 @@ class Ruleset
      */
     public function withKazoe()
     {
-        return $this->_ruleset['withKazoe'];
+        return boolval($this->_ruleset['withKazoe']);
     }
 
     /**
@@ -411,7 +411,7 @@ class Ruleset
      */
     public function withButtobi()
     {
-        return $this->_ruleset['withButtobi'];
+        return boolval($this->_ruleset['withButtobi']);
     }
 
     /**
@@ -419,7 +419,7 @@ class Ruleset
      */
     public function withLeadingDealerGameOver()
     {
-        return $this->_ruleset['withLeadingDealerGameOver'];
+        return boolval($this->_ruleset['withLeadingDealerGameOver']);
     }
 
     /**
@@ -427,7 +427,7 @@ class Ruleset
      */
     public function withMultiYakumans()
     {
-        return $this->_ruleset['withMultiYakumans'];
+        return boolval($this->_ruleset['withMultiYakumans']);
     }
 
     /**
@@ -435,7 +435,7 @@ class Ruleset
      */
     public function withNagashiMangan()
     {
-        return $this->_ruleset['withNagashiMangan'];
+        return boolval($this->_ruleset['withNagashiMangan']);
     }
 
     /**
@@ -443,7 +443,7 @@ class Ruleset
      */
     public function withKiriageMangan()
     {
-        return $this->_ruleset['withKiriageMangan'];
+        return boolval($this->_ruleset['withKiriageMangan']);
     }
 
     /**
@@ -451,7 +451,7 @@ class Ruleset
      */
     public function gameExpirationTime()
     {
-        return $this->_ruleset['gameExpirationTime'];
+        return floatval($this->_ruleset['gameExpirationTime']);
     }
 
     /**
@@ -459,7 +459,7 @@ class Ruleset
      */
     public function minPenalty()
     {
-        return $this->_ruleset['minPenalty'];
+        return floatval($this->_ruleset['minPenalty']);
     }
 
     /**
@@ -467,7 +467,7 @@ class Ruleset
      */
     public function maxPenalty()
     {
-        return $this->_ruleset['maxPenalty'];
+        return floatval($this->_ruleset['maxPenalty']);
     }
 
     /**
@@ -475,7 +475,7 @@ class Ruleset
      */
     public function penaltyStep()
     {
-        return $this->_ruleset['penaltyStep'];
+        return floatval($this->_ruleset['penaltyStep']);
     }
 
     /**
@@ -491,7 +491,7 @@ class Ruleset
      */
     public function redZone()
     {
-        return $this->_ruleset['redZone'];
+        return intval($this->_ruleset['redZone']);
     }
 
     /**
@@ -499,7 +499,7 @@ class Ruleset
      */
     public function yellowZone()
     {
-        return $this->_ruleset['yellowZone'];
+        return intval($this->_ruleset['yellowZone']);
     }
 
     /**
@@ -531,7 +531,7 @@ class Ruleset
      */
     public function withWinningDealerHonbaSkipped()
     {
-        return $this->_ruleset['withWinningDealerHonbaSkipped'] ?? false;
+        return boolval($this->_ruleset['withWinningDealerHonbaSkipped'] ?? false);
     }
 
     /**
@@ -539,6 +539,6 @@ class Ruleset
      */
     public function chipsValue()
     {
-        return $this->_ruleset['chipsValue'] ?? 0;
+        return intval($this->_ruleset['chipsValue'] ?? 0);
     }
 }
