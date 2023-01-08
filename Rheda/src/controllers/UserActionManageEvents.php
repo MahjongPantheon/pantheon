@@ -113,8 +113,10 @@ class UserActionManageEvents extends Controller
             $events = $data['events'];
             $hasNextPage = ($this->_offset(self::PERPAGE) + self::PERPAGE) < $data['total'];
         } else {
-            $events = $this->_mimir->getEventsById($eventIds);
-            $hasNextPage = false;
+            $pages = array_chunk($eventIds, self::PERPAGE);
+            $currentPageIds = $pages[$this->_offset(1)];
+            $events = $this->_mimir->getEventsById($currentPageIds);
+            $hasNextPage = $this->_offset(1) + 1 < count($pages);
         }
 
         return [

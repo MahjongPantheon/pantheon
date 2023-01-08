@@ -1,0 +1,20 @@
+<ul class="pagination" style="margin-top: 20px">
+  <li class="page-item{{#__firstPageActive}} disabled{{/__firstPageActive}}"{{#__firstPageActive}} tabindex="-1"{{/__firstPageActive}}>
+    <a class="page-link" href="{{^__firstPageActive}}{{__hrefPrevious}}{{/__firstPageActive}}" aria-label="{{_t 'Previous page'}}">
+      <span aria-hidden="true">&laquo;</span>
+      <span class="sr-only">{{_t 'Previous page'}}</span>
+    </a>
+  </li>
+  {{#__pages}}
+    <li class="page-item{{#active}} active{{/active}}"{{#active}} tabindex="-1"{{/active}}>
+      {{#active}}<span class="page-link">{{text}}</span>{{/active}}
+      {{^active}}<a class="page-link" href="{{href}}">{{text}}</a>{{/active}}
+    </li>
+  {{/__pages}}
+  <li class="page-item{{#__lastPageActive}} disabled{{/__lastPageActive}}"{{#__lastPageActive}} tabindex="-1"{{/__lastPageActive}}>
+    <a class="page-link" href="{{^__lastPageActive}}{{__hrefNext}}{{/__lastPageActive}}" aria-label="{{_t 'Next page'}}">
+      <span aria-hidden="true">&raquo;</span>
+      <span class="sr-only">{{_t 'Next page'}}</span>
+    </a>
+  </li>
+</ul>

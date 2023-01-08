@@ -51,6 +51,7 @@ class Templater
         self::$_rootRenderer->addHelper("a", ['Rheda\Templater', '_aHelper']);
         self::$_rootRenderer->addHelper("link", ['Rheda\Templater', '_linkHelper']);
         self::$_rootRenderer->addHelper("form", ['Rheda\Templater', '_formHelper']);
+
         // i18n
         self::$_rootRenderer->addHelper("_t", ['Rheda\Templater', '_tHelper']);
         self::$_rootRenderer->addHelper("_n", ['Rheda\Templater', '_nHelper']);

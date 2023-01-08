@@ -507,4 +507,47 @@ DATA;
     {
         return (intval($this->_path['page'] ?? 1) - 1) * $perpage;
     }
+
+    /**
+     * Usage in controller:
+     * return [ ...other data..., ...$this->_generatePaginationData(...) ];
+     *
+     * @param int $currentPage
+     * @param int $totalPages
+     * @param string $baseUrl should have trailing slash!
+     * @param int $range
+     * @param boolean $fromRoot
+     * @return array
+     */
+    protected function _generatePaginationData($currentPage, $totalPages, $baseUrl, $range = 3, $fromRoot = false)
+    {
+        $idList =  implode('.', $this->_eventIdList);
+        $pageNumbers = [$currentPage];
+        for ($i = 1; $i < $range; $i++) {
+            $pageNumbers = [$currentPage - $i, ...$pageNumbers, $currentPage + $i];
+        }
+        $pageNumbers = array_values(array_filter($pageNumbers, function($el) use ($totalPages, $currentPage) {
+            return $el === $currentPage || ($el > 0 && $el <= $totalPages);
+        }));
+
+        return [
+            '__firstPageActive' => $currentPage == 1,
+            '__hrefPrevious' => $fromRoot
+                ? $baseUrl . 'page/' . ($currentPage - 1)
+                : Url::make($baseUrl . 'page/' . ($currentPage - 1), $idList),
+            '__pages' => array_map(function($pageNum) use ($currentPage, $baseUrl, $idList, $fromRoot) {
+                return [
+                    'active' => $pageNum === $currentPage,
+                    'text' => $pageNum,
+                    'href' => $fromRoot
+                        ? $baseUrl . 'page/' . $pageNum
+                        : Url::make($baseUrl . 'page/' . $pageNum, $idList)
+                ];
+            }, $pageNumbers),
+            '__lastPageActive' => $currentPage == $totalPages,
+            '__hrefNext' => $fromRoot
+                ? $baseUrl . 'page/' . ($currentPage + 1)
+                : Url::make($baseUrl . 'page/' . ($currentPage + 1), $idList)
+        ];
+    }
 }

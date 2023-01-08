@@ -38,9 +38,8 @@ class MultieventMainpage extends Controller
         $limit = 20;
         $offset = $limit * ($page - 1);
         $data = $this->_mimir->getEvents($limit, $offset, true);
-
-        $hasNextButton = $offset + $limit < $data['total'];
-        $hasPreviousButton = $page > 1;
+        $totalPages = ceil(floatval($data['total']) / $limit);
+        $pagination = $this->_generatePaginationData($page, $totalPages, '/', 3, true);
 
         return [
             'events' => array_map(function ($event) {
@@ -48,10 +47,7 @@ class MultieventMainpage extends Controller
                 $event['description'] = mb_substr($event['description'], 0, 50) . $ellipsis;
                 return $event;
             }, $data['events']),
-            'prevPage' => $page > 1 ? $page - 1 : 1,
-            'nextPage' => $page + 1,
-            'hasNextButton' => $hasNextButton,
-            'hasPreviousButton' => $hasPreviousButton
+            ...$pagination
         ];
     }
 }
