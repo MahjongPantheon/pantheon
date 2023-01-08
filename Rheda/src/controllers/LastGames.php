@@ -49,31 +49,19 @@ class LastGames extends Controller
         $offset = 0;
         $currentPage = 1;
 
-        if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-            $currentPage = max(1, (int)$_GET['page']);
+        if (isset($this->_path['page'])) {
+            $currentPage = max(1, intval($this->_path['page']));
             $offset = ($currentPage - 1) * $limit;
         }
 
         $gamesData = $this->_mimir->getLastGames($this->_eventIdList, $limit, $offset, 'end_date', 'desc');
 
-        $formatter = new GameFormatter();
-
-        $totalGames = $gamesData['total_games'];
+        $totalPages = ceil(floatval($gamesData['total_games']) / $limit);
         $start = $offset + 1;
         $end = $offset + $limit;
+        $pagination = $this->_generatePaginationData($currentPage, $totalPages, '/last/', 5);
 
-        $hasNextButton = true;
-        $hasPreviousButton = true;
-
-        if ($end >= $totalGames) {
-            $end = $totalGames;
-            $hasNextButton = false;
-        }
-
-        if ($currentPage == 1) {
-            $hasPreviousButton = false;
-        }
-
+        $formatter = new GameFormatter();
         return [
             'noGames' => $gamesData['total_games'] == 0,
             'games' => $formatter->formatGamesData($gamesData, $this->_mainEventRules),
@@ -82,9 +70,8 @@ class LastGames extends Controller
             'gamesCount' => $gamesData['total_games'],
             'start' => $start,
             'end' => $end,
-            'hasNextButton' => $hasNextButton,
-            'hasPreviousButton' => $hasPreviousButton,
-            'isOnlineTournament' => $this->_mainEventRules->isOnline()
+            'isOnlineTournament' => $this->_mainEventRules->isOnline(),
+            ...$pagination
         ];
     }
 }

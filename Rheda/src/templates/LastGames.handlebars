@@ -23,14 +23,6 @@
     {{^noGames}}
         <p>{{_p '%d - %d (%d total)' start end gamesCount}}</p>
         {{> partials/Games }}
-        <ul class="pagination">
-            {{#hasPreviousButton}}
-                <li class="page-item">{{#a class='page-link' href='/last/?page={prevPage}'}}{{_t 'Later'}}{{/a}}</li>
-            {{/hasPreviousButton}}
-
-            {{#hasNextButton}}
-                <li class="page-item">{{#a class='page-link' href='/last/?page={nextPage}'}}{{_t 'Earlier'}}{{/a}}</li>
-            {{/hasNextButton}}
-        </ul>
+        {{> partials/Pagination }}
     {{/noGames}}
 </div>
