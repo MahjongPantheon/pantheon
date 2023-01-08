@@ -112,13 +112,10 @@ class UserActionManageEvents extends Controller
             $data = $this->_mimir->getEvents(self::PERPAGE, $this->_offset(self::PERPAGE), false);
             $events = $data['events'];
             $total = ceil(floatval($data['total']) / self::PERPAGE);
-            $hasNextPage = ($this->_offset(self::PERPAGE) + self::PERPAGE) < $data['total'];
         } else {
             $pages = array_chunk($eventIds, self::PERPAGE);
+            $events = $this->_mimir->getEventsById($pages[$this->_offset(1)]);
             $total = count($pages);
-            $currentPageIds = $pages[$this->_offset(1)];
-            $events = $this->_mimir->getEventsById($currentPageIds);
-            $hasNextPage = $this->_offset(1) + 1 < count($pages);
         }
         $pagination = $this->_generatePaginationData(intval($this->_path['page'] ?? 1), intval($total), '/cp/manageEvents/', 3, true);
 
@@ -126,7 +123,6 @@ class UserActionManageEvents extends Controller
             'critical' => false,
             'events' => $events,
             'isSuperadmin' => $isSuperadmin,
-            'hasNextPage' => $hasNextPage,
             ...$pagination
         ];
     }
