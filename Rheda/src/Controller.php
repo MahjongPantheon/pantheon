@@ -532,6 +532,9 @@ DATA;
 
         return [
             '__firstPageActive' => $currentPage == 1,
+            '__hrefFirst' => $fromRoot
+                ? $baseUrl . 'page/1'
+                : Url::make($baseUrl . 'page/1', $idList),
             '__hrefPrevious' => $fromRoot
                 ? $baseUrl . 'page/' . ($currentPage - 1)
                 : Url::make($baseUrl . 'page/' . ($currentPage - 1), $idList),
@@ -547,7 +550,10 @@ DATA;
             '__lastPageActive' => $currentPage == $totalPages,
             '__hrefNext' => $fromRoot
                 ? $baseUrl . 'page/' . ($currentPage + 1)
-                : Url::make($baseUrl . 'page/' . ($currentPage + 1), $idList)
+                : Url::make($baseUrl . 'page/' . ($currentPage + 1), $idList),
+            '__hrefLast' => $fromRoot
+                ? $baseUrl . 'page/' . $totalPages
+                : Url::make($baseUrl . 'page/' . $totalPages, $idList),
         ];
     }
 }

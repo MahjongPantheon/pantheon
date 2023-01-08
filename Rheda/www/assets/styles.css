@@ -256,3 +256,15 @@ body {
   max-width: 222px;
   overflow: hidden;
 }
+
+.pgn-link span {
+  line-height: 1.25 !important;
+}
+
+.pgn-link > .page-link img {
+  width: 16px;
+}
+
+.pgn-link.disabled > .page-link img {
+  opacity: 0.3;
+}
