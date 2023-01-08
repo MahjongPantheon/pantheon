@@ -59,7 +59,7 @@ class LastGames extends Controller
         $totalPages = ceil(floatval($gamesData['total_games']) / $limit);
         $start = $offset + 1;
         $end = $offset + $limit;
-        $pagination = $this->_generatePaginationData($currentPage, $totalPages, '/last/', 5);
+        $pagination = $this->_generatePaginationData($currentPage, intval($totalPages), '/last/', 5);
 
         $formatter = new GameFormatter();
         return [

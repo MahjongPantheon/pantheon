@@ -526,7 +526,7 @@ DATA;
         for ($i = 1; $i < $range; $i++) {
             $pageNumbers = [$currentPage - $i, ...$pageNumbers, $currentPage + $i];
         }
-        $pageNumbers = array_values(array_filter($pageNumbers, function($el) use ($totalPages, $currentPage) {
+        $pageNumbers = array_values(array_filter($pageNumbers, function ($el) use ($totalPages, $currentPage) {
             return $el === $currentPage || ($el > 0 && $el <= $totalPages);
         }));
 
@@ -538,7 +538,7 @@ DATA;
             '__hrefPrevious' => $fromRoot
                 ? $baseUrl . 'page/' . ($currentPage - 1)
                 : Url::make($baseUrl . 'page/' . ($currentPage - 1), $idList),
-            '__pages' => array_map(function($pageNum) use ($currentPage, $baseUrl, $idList, $fromRoot) {
+            '__pages' => array_map(function ($pageNum) use ($currentPage, $baseUrl, $idList, $fromRoot) {
                 return [
                     'active' => $pageNum === $currentPage,
                     'text' => $pageNum,

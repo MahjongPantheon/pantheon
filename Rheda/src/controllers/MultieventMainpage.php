@@ -39,7 +39,7 @@ class MultieventMainpage extends Controller
         $offset = $limit * ($page - 1);
         $data = $this->_mimir->getEvents($limit, $offset, true);
         $totalPages = ceil(floatval($data['total']) / $limit);
-        $pagination = $this->_generatePaginationData($page, $totalPages, '/', 3, true);
+        $pagination = $this->_generatePaginationData($page, intval($totalPages), '/', 3, true);
 
         return [
             'events' => array_map(function ($event) {

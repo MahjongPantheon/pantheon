@@ -120,7 +120,7 @@ class UserActionManageEvents extends Controller
             $events = $this->_mimir->getEventsById($currentPageIds);
             $hasNextPage = $this->_offset(1) + 1 < count($pages);
         }
-        $pagination = $this->_generatePaginationData(intval($this->_path['page'] ?? 1), $total, '/cp/manageEvents/', 3, true);
+        $pagination = $this->_generatePaginationData(intval($this->_path['page'] ?? 1), intval($total), '/cp/manageEvents/', 3, true);
 
         return [
             'critical' => false,
