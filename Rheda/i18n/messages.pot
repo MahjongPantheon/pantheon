@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-31 16:49+0300\n"
+"POT-Creation-Date: 2023-01-08 05:43+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,94 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-msgid "Achievement"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "Value"
-msgstr ""
-
-msgid "Nominees"
-msgstr ""
-
-msgid "%s fu"
-msgstr ""
-
-msgid "%s: %d yakuhai"
-msgid_plural "%s: %d yakuhais"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%d win"
-msgid_plural "%d wins"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%d quickest hand"
-msgid_plural "%d quickest hands"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%s han, %s fu"
-msgstr ""
-
-msgid "%s han"
-msgstr ""
-
-msgid "%s bet"
-msgid_plural "%s bets"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%s ippatsu"
-msgid_plural "%s ippatsu"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%s points"
-msgstr ""
-
-msgid "%s dora"
-msgstr ""
-
-msgid "%s yaku"
-msgstr ""
-
-msgid "%d riichi bet"
-msgid_plural "%d riichi bets"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "Achievements"
-msgstr ""
-
-msgid "The game has been successfully added!"
-msgstr ""
-
-msgid "Add online game"
-msgstr ""
-
-msgid "Add game"
-msgstr ""
-
 msgid "Game details"
-msgstr ""
-
-msgid "Recent games"
-msgstr ""
-
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
-msgstr ""
-
-msgid "Later"
-msgstr ""
-
-msgid "Earlier"
 msgstr ""
 
 msgid "Open game control app"
@@ -117,10 +30,16 @@ msgstr ""
 msgid "To event list"
 msgstr ""
 
+msgid "Recent games"
+msgstr ""
+
 msgid "Rating table"
 msgstr ""
 
 msgid "Team table"
+msgstr ""
+
+msgid "Add online game"
 msgstr ""
 
 msgid "Timer & seating"
@@ -142,6 +61,9 @@ msgid "Manage players"
 msgstr ""
 
 msgid "Predefined seating"
+msgstr ""
+
+msgid "Achievements"
 msgstr ""
 
 msgid "%s: actions"
@@ -168,54 +90,19 @@ msgstr ""
 msgid "Sign up"
 msgstr ""
 
-msgid "Aggregated event"
+msgid "No games has been played yet"
 msgstr ""
 
-msgid "Event owners: "
-msgstr ""
-
-msgid "Finished"
-msgstr ""
-
-msgid "Rules overview"
-msgstr ""
-
-msgid "Player"
-msgstr ""
-
-msgid "Points of best series"
-msgstr ""
-
-msgid "Points of last series"
-msgstr ""
-
-msgid "Best series"
-msgstr ""
-
-msgid "Last series"
+msgid "%d - %d (%d total)"
 msgstr ""
 
 msgid "Rheda: mahjong statistic system"
 msgstr ""
 
-msgid "Additional penalties"
+msgid "The game has been successfully added!"
 msgstr ""
 
-msgid ""
-"A penalty may be applied only to player currently in game. Otherwise error "
-"will occur."
-msgstr ""
-
-msgid "Penalty amount"
-msgstr ""
-
-msgid "Penalty reason"
-msgstr ""
-
-msgid "Check twice penalty data. You won't be able to cancel the penalty"
-msgstr ""
-
-msgid "Apply penalty"
+msgid "Add game"
 msgstr ""
 
 msgid "Manage profile: %s"
@@ -353,6 +240,153 @@ msgid ""
 "You are required to log in with your email and password before proceeding"
 msgstr ""
 
+msgid "Aggregated event"
+msgstr ""
+
+msgid "Event owners: "
+msgstr ""
+
+msgid "Finished"
+msgstr ""
+
+msgid "Rules overview"
+msgstr ""
+
+msgid "Player"
+msgstr ""
+
+msgid "Points of best series"
+msgstr ""
+
+msgid "Points of last series"
+msgstr ""
+
+msgid "Best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Additional penalties"
+msgstr ""
+
+msgid ""
+"A penalty may be applied only to player currently in game. Otherwise error "
+"will occur."
+msgstr ""
+
+msgid "Penalty amount"
+msgstr ""
+
+msgid "Penalty reason"
+msgstr ""
+
+msgid "Check twice penalty data. You won't be able to cancel the penalty"
+msgstr ""
+
+msgid "Apply penalty"
+msgstr ""
+
+msgid "Achievement"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+msgid "Nominees"
+msgstr ""
+
+msgid "%s fu"
+msgstr ""
+
+msgid "%s: %d yakuhai"
+msgid_plural "%s: %d yakuhais"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d win"
+msgid_plural "%d wins"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d quickest hand"
+msgid_plural "%d quickest hands"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%s han, %s fu"
+msgstr ""
+
+msgid "%s han"
+msgstr ""
+
+msgid "%s bet"
+msgid_plural "%s bets"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%s ippatsu"
+msgid_plural "%s ippatsu"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%s points"
+msgstr ""
+
+msgid "%s dora"
+msgstr ""
+
+msgid "%s yaku"
+msgstr ""
+
+msgid "%d riichi bet"
+msgid_plural "%d riichi bets"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Rights and privileges: %s"
+msgstr ""
+
+msgid "Customize"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+msgid "Predefined seating configuration"
+msgstr ""
+
+msgid "Next session index (starting from 1):"
+msgstr ""
+
+msgid "Update predefined seating config"
+msgstr ""
+
+msgid "Found errors:"
+msgstr ""
+
+msgid "No errors found."
+msgstr ""
+
+msgid ""
+"Predefined seating is entered as list of tables, one table per row. New game "
+"session should be indicated as an empty line."
+msgstr ""
+
+msgid "Example:"
+msgstr ""
+
+msgid ""
+"In this example, two tables play two games. Numbers in seating persist "
+"between games and are defined at Admin actions / Manage players page."
+msgstr ""
+
 msgid "Personal stats"
 msgstr ""
 
@@ -479,6 +513,48 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
+msgid "Rating table has been hidden by tournament administrator"
+msgstr ""
+
+msgid "These results are visible only for tournament administrator"
+msgstr ""
+
+msgid "Order by player rating"
+msgstr ""
+
+msgid "Order by player name"
+msgstr ""
+
+msgid "Order by average place"
+msgstr ""
+
+msgid "Order by average score"
+msgstr ""
+
+msgid "Team:"
+msgstr ""
+
+msgid "Something went wrong: %s"
+msgstr ""
+
+msgid "Something went wrong:"
+msgstr ""
+
+msgid "Unable to generate seating"
+msgstr ""
+
+msgid ""
+"Total count of registered players is not divisible by 4. Use the \"Add "
+"player\" and \"Players management\" pages to add or remove players. Special "
+"replacement player accounts may be used to complete the table."
+msgstr ""
+
+msgid "Tables are being prepared..."
+msgstr ""
+
+msgid "Please wait a while and reload the page."
+msgstr ""
+
 msgid "Player added successfully. Reload page to see results"
 msgstr ""
 
@@ -548,65 +624,51 @@ msgstr ""
 msgid "Save teams list"
 msgstr ""
 
-msgid "Predefined seating configuration"
-msgstr ""
-
-msgid "Next session index (starting from 1):"
-msgstr ""
-
-msgid "Update predefined seating config"
-msgstr ""
-
-msgid "Found errors:"
-msgstr ""
-
-msgid "No errors found."
+msgid "Manage owned events"
 msgstr ""
 
 msgid ""
-"Predefined seating is entered as list of tables, one table per row. New game "
-"session should be indicated as an empty line."
+"Really finish event #id (#title)? You won't be able to add games after event "
+"is finished."
 msgstr ""
 
-msgid "Example:"
+msgid "Finish the event"
 msgstr ""
 
-msgid ""
-"In this example, two tables play two games. Numbers in seating persist "
-"between games and are defined at Admin actions / Manage players page."
+msgid "Close"
 msgstr ""
 
-msgid "Rights and privileges: %s"
+msgid "Cancel"
 msgstr ""
 
-msgid "Customize"
+msgid "New club rating"
 msgstr ""
 
-msgid "Title"
+msgid "New tournament"
 msgstr ""
 
-msgid "Type"
+msgid "New online tournament"
 msgstr ""
 
-msgid "Rating table has been hidden by tournament administrator"
+msgid "Event"
 msgstr ""
 
-msgid "These results are visible only for tournament administrator"
+msgid "Controls"
 msgstr ""
 
-msgid "Order by player rating"
+msgid "Toggle visibility on main page"
 msgstr ""
 
-msgid "Order by player name"
+msgid "Edit"
 msgstr ""
 
-msgid "Order by average place"
+msgid "Privileges"
 msgstr ""
 
-msgid "Order by average score"
+msgid "Rebuild scoring"
 msgstr ""
 
-msgid "Team:"
+msgid "Finish"
 msgstr ""
 
 msgid "Starting now!"
@@ -616,27 +678,6 @@ msgid "STARTING IN:"
 msgstr ""
 
 msgid "Table #"
-msgstr ""
-
-msgid "Something went wrong: %s"
-msgstr ""
-
-msgid "Something went wrong:"
-msgstr ""
-
-msgid "Unable to generate seating"
-msgstr ""
-
-msgid ""
-"Total count of registered players is not divisible by 4. Use the \"Add "
-"player\" and \"Players management\" pages to add or remove players. Special "
-"replacement player accounts may be used to complete the table."
-msgstr ""
-
-msgid "Tables are being prepared..."
-msgstr ""
-
-msgid "Please wait a while and reload the page."
 msgstr ""
 
 msgid "Update event"
@@ -721,56 +762,6 @@ msgstr ""
 msgid "Create event"
 msgstr ""
 
-msgid "Manage events privileges: %s"
-msgstr ""
-
-msgid "Revoke privilege #title?"
-msgstr ""
-
-msgid "Privilege"
-msgstr ""
-
-msgid "Controls"
-msgstr ""
-
-msgid "global"
-msgstr ""
-
-msgid "Revoke"
-msgstr ""
-
-msgid "Manage owned events"
-msgstr ""
-
-msgid ""
-"Really finish event #id (#title)? You won't be able to add games after event "
-"is finished."
-msgstr ""
-
-msgid "New club rating"
-msgstr ""
-
-msgid "New tournament"
-msgstr ""
-
-msgid "New online tournament"
-msgstr ""
-
-msgid "Event"
-msgstr ""
-
-msgid "Edit"
-msgstr ""
-
-msgid "Privileges"
-msgstr ""
-
-msgid "Rebuild scoring"
-msgstr ""
-
-msgid "Finish"
-msgstr ""
-
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
 msgstr ""
 
@@ -834,6 +825,24 @@ msgstr ""
 msgid "Tenpai: %s."
 msgstr ""
 
+msgid "Please enter your e-mail address and password."
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr ""
+
+msgid "First page"
+msgstr ""
+
+msgid "Previous page"
+msgstr ""
+
+msgid "Next page"
+msgstr ""
+
+msgid "Last page"
+msgstr ""
+
 msgid "View replay online"
 msgstr ""
 
@@ -861,6 +870,27 @@ msgstr ""
 msgid "Full game log:"
 msgstr ""
 
+msgid "Ready to generate seating"
+msgstr ""
+
+msgid "Select seating mode and press the appropriate button."
+msgstr ""
+
+msgid "Manage events privileges: %s"
+msgstr ""
+
+msgid "Revoke privilege #title?"
+msgstr ""
+
+msgid "Privilege"
+msgstr ""
+
+msgid "global"
+msgstr ""
+
+msgid "Revoke"
+msgstr ""
+
 msgid "Rating"
 msgstr ""
 
@@ -874,12 +904,6 @@ msgid "Han"
 msgstr ""
 
 msgid "Yaku collected over all time"
-msgstr ""
-
-msgid "Please enter your e-mail address and password."
-msgstr ""
-
-msgid "Forgot your password?"
 msgstr ""
 
 msgid "Finish all the games"
@@ -896,10 +920,29 @@ msgstr ""
 msgid "Confirm the results and finish all games"
 msgstr ""
 
-msgid "Ready to generate seating"
+msgid "Reset the timer"
 msgstr ""
 
-msgid "Select seating mode and press the appropriate button."
+msgid ""
+"Pressing this button will reset the timer to its initial value. Be careful: "
+"you should not need this usually."
+msgstr ""
+
+msgid "Really reset the timer?"
+msgstr ""
+
+msgid "Hide/show rating table"
+msgstr ""
+
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+
+msgid "Rating table is hidden. Show"
+msgstr ""
+
+msgid "Rating table is visible. Hide"
 msgstr ""
 
 msgid "Random seating"
@@ -1027,31 +1070,6 @@ msgid "Reset autostart timer?"
 msgstr ""
 
 msgid "Reset autostart timer"
-msgstr ""
-
-msgid "Reset the timer"
-msgstr ""
-
-msgid ""
-"Pressing this button will reset the timer to its initial value. Be careful: "
-"you should not need this usually."
-msgstr ""
-
-msgid "Really reset the timer?"
-msgstr ""
-
-msgid "Hide/show rating table"
-msgstr ""
-
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-
-msgid "Rating table is hidden. Show"
-msgstr ""
-
-msgid "Rating table is visible. Hide"
 msgstr ""
 
 msgid "Confirm round cancellation: "
@@ -1451,6 +1469,9 @@ msgid "Control panel: manage events"
 msgstr ""
 
 msgid "Failed to finish event"
+msgstr ""
+
+msgid "Failed to toggle listed flag of the event"
 msgstr ""
 
 msgid "Basic ruleset name"

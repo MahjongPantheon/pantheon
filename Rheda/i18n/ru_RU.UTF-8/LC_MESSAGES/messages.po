@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-31 16:49+0300\n"
+"POT-Creation-Date: 2023-01-08 05:43+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -272,6 +272,9 @@ msgstr ""
 "Невозможно перейти к регистрации: пожалуйста, выйдите из системы перед "
 "созданием нового пользователя"
 
+msgid "Cancel"
+msgstr "Отмена"
+
 msgid "Cancel game"
 msgstr "Отменить игру"
 
@@ -350,6 +353,9 @@ msgstr "Чууренпото"
 
 msgid "City"
 msgstr "Город"
+
+msgid "Close"
+msgstr "Закрыть"
 
 msgid "Common stats"
 msgstr "Общая статистика"
@@ -476,9 +482,6 @@ msgstr ""
 "поддерживаются адреса, содержащие кириллические, иероглифические и прочие "
 "нелатинские символы."
 
-msgid "Earlier"
-msgstr "Раньше"
-
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -571,6 +574,9 @@ msgstr "Не удалось сохранить игрока замены. Про
 msgid "Failed to save teams mapping. Check your network connection."
 msgstr "Не удалось сохранить имена команд. Проверьте сетевое соединение."
 
+msgid "Failed to toggle listed flag of the event"
+msgstr "Не удалось скрыть/показать событие на главной странице"
+
 msgid ""
 "Failed to update personal information: insufficient privileges or server "
 "error"
@@ -591,11 +597,17 @@ msgstr "Завершить"
 msgid "Finish all the games"
 msgstr "Завершить все игры"
 
+msgid "Finish the event"
+msgstr "Завершить событие"
+
 msgid "Finish the games? You will not be able to cancel rounds anymore!"
 msgstr "Завершить игры? Отменить раздачу станет невозможно!"
 
 msgid "Finished"
 msgstr "Завершен"
+
+msgid "First page"
+msgstr "Первая страница"
 
 msgid "Forgot your password?"
 msgstr "Забыли пароль?"
@@ -622,7 +634,7 @@ msgid "Games played"
 msgstr "Сыграно игр"
 
 msgid "Games will be automatically started in: "
-msgstr "Игры будут автоматически запущены через:"
+msgstr "Игры будут автоматически запущены через: "
 
 msgid "Given for collecting a yakuman during tournament."
 msgstr "Дается за сбор якумана на турнире."
@@ -927,14 +939,14 @@ msgstr "Как и планировалось"
 msgid "Kokushi musou"
 msgstr "Кокуши мусо"
 
+msgid "Last page"
+msgstr "Последняя страница"
+
 msgid "Last played round:"
 msgstr "Последняя сыгранная раздача:"
 
 msgid "Last series"
 msgstr "Текущая серия"
-
-msgid "Later"
-msgstr "Позже"
 
 msgid "Latest games"
 msgstr "Последние игры"
@@ -1038,6 +1050,9 @@ msgstr "Новый онлайн-турнир"
 
 msgid "New tournament"
 msgstr "Новый турнир"
+
+msgid "Next page"
+msgstr "Следующая страница"
 
 msgid "Next session index (starting from 1):"
 msgstr "Номер следующей игры (начиная с 1):"
@@ -1287,6 +1302,9 @@ msgid ""
 msgstr ""
 "Нажатие на эту кнопку сбросить таймер в исходное значение. Будьте осторожны, "
 "как правило это не требуется."
+
+msgid "Previous page"
+msgstr "Предыдущая страница"
 
 msgid "Privacy policy overview"
 msgstr "Обзор политики приватности"
@@ -1752,6 +1770,9 @@ msgstr "Название должно быть не менее 4 символо�
 msgid "To event list"
 msgstr "К списку рейтингов"
 
+msgid "Toggle visibility on main page"
+msgstr "Переключить видимость на главной странице"
+
 msgid "Toi-toi"
 msgstr "Тойтой"
 
@@ -2080,6 +2101,9 @@ msgstr "да"
 #~ "Каждое число - это номер игрока в текущем рейтинге. Пример рассадки с "
 #~ "шагом 4:"
 
+#~ msgid "Earlier"
+#~ msgstr "Раньше"
+
 #~ msgid "Enroll players"
 #~ msgstr "Добавление игроков в рейтинг"
 
@@ -2130,6 +2154,9 @@ msgstr "да"
 
 #~ msgid "Language:"
 #~ msgstr "Язык:"
+
+#~ msgid "Later"
+#~ msgstr "Позже"
 
 #~ msgid "Login"
 #~ msgstr "Вход"

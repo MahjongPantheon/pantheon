@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pantheon - Rheda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-31 16:49+0300\n"
+"POT-Creation-Date: 2023-01-08 05:43+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: Jesterboxboy\n"
@@ -261,6 +261,10 @@ msgstr "Profil Managment erst nach Login verfügbar"
 msgid "Can't proceed to registration: please log out to create new user"
 msgstr "Bitte ausloggen um einen neuen Benutzer anzulegen"
 
+#, fuzzy
+msgid "Cancel"
+msgstr "Spiel abbrechen"
+
 msgid "Cancel game"
 msgstr "Spiel abbrechen"
 
@@ -338,6 +342,9 @@ msgstr "Chuuren pooto"
 
 msgid "City"
 msgstr "Stadt"
+
+msgid "Close"
+msgstr ""
 
 msgid "Common stats"
 msgstr "Gemeinsame Statistiken"
@@ -458,9 +465,6 @@ msgid ""
 "not supported."
 msgstr "Email Adresse ist ungültig oder enthält nicht-lateinische Zeichen."
 
-msgid "Earlier"
-msgstr "Zurück"
-
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -559,6 +563,10 @@ msgstr ""
 "Teamzuweisung konnte nicht gesichert werden. Überprüfen Sie Ihre "
 "Netzwerkverbindung."
 
+#, fuzzy
+msgid "Failed to toggle listed flag of the event"
+msgstr "Administrator konnte dem Event nicht zugeordnet werden."
+
 msgid ""
 "Failed to update personal information: insufficient privileges or server "
 "error"
@@ -580,11 +588,19 @@ msgstr "Beenden"
 msgid "Finish all the games"
 msgstr "Alle Spiele beenden"
 
+#, fuzzy
+msgid "Finish the event"
+msgstr "Alle Spiele beenden"
+
 msgid "Finish the games? You will not be able to cancel rounds anymore!"
 msgstr "Beenden aller Spiele? Es können keine Runden mehr storniert werden!"
 
 msgid "Finished"
 msgstr "Beendet"
+
+#, fuzzy
+msgid "First page"
+msgstr "1. Platz"
 
 msgid "Forgot your password?"
 msgstr "Passwort vergessen?"
@@ -646,7 +662,6 @@ msgstr ""
 msgid "Given for getting largest number of ippatsu during tournament."
 msgstr "Fürdie meisten Ippatsu während des Turniers."
 
-#, fuzzy
 msgid ""
 "Given for having biggest score in the end of the session across the "
 "tournament."
@@ -909,14 +924,15 @@ msgstr "Genau nach Plan"
 msgid "Kokushi musou"
 msgstr "Kokushi musou"
 
+#, fuzzy
+msgid "Last page"
+msgstr "1. Platz"
+
 msgid "Last played round:"
 msgstr "Letzte gespielte Runde:"
 
 msgid "Last series"
 msgstr "Letzte Serie"
-
-msgid "Later"
-msgstr "Später"
 
 msgid "Latest games"
 msgstr "Neuesten Spiele"
@@ -1019,6 +1035,9 @@ msgstr "Neues Online-Turnier"
 
 msgid "New tournament"
 msgstr "Neues Turnier"
+
+msgid "Next page"
+msgstr ""
 
 msgid "Next session index (starting from 1):"
 msgstr "Nächster Session Index(von 1 beginnend)"
@@ -1270,6 +1289,9 @@ msgstr ""
 "zurückgesetzt. Seien Sie vorsichtig: Sie sollten das normalerweise nicht "
 "brauchen."
 
+msgid "Previous page"
+msgstr ""
+
 msgid "Privacy policy overview"
 msgstr "Privacy Policy Übersicht"
 
@@ -1369,11 +1391,9 @@ msgstr ""
 msgid "Reset autostart timer?"
 msgstr ""
 
-#, fuzzy
 msgid "Reset seating"
 msgstr ""
 
-#, fuzzy
 msgid "Reset seating?"
 msgstr ""
 
@@ -1720,6 +1740,9 @@ msgstr "Titel muss mindestens vier Zeichen lang sein"
 msgid "To event list"
 msgstr "Event Liste"
 
+msgid "Toggle visibility on main page"
+msgstr ""
+
 msgid "Toi-toi"
 msgstr "Toi-toi"
 
@@ -2028,6 +2051,9 @@ msgstr "ja"
 #~ "seating with step of 4: "
 #~ msgstr "Jede Nummer ist der aktuelle Platz eines Spielers in der Bewertung."
 
+#~ msgid "Earlier"
+#~ msgstr "Zurück"
+
 #~ msgid "Enroll players"
 #~ msgstr "Einschreiben Spieler"
 
@@ -2061,6 +2087,9 @@ msgstr "ja"
 
 #~ msgid "Hide rating table"
 #~ msgstr "Bewertungstabelle ausblenden"
+
+#~ msgid "Later"
+#~ msgstr "Später"
 
 #~ msgid "Login"
 #~ msgstr "Login"

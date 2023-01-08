@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-03 20:47+0300\n"
+"POT-Creation-Date: 2023-01-08 05:43+0300\n"
 "PO-Revision-Date: 2022-12-03 20:48+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -90,7 +90,7 @@ msgstr "Чууренпото"
 msgid "Clear players"
 msgstr "Очистить"
 
-#: app/components/screens/home/HomeScreenView.tsx:63:20
+#: app/components/screens/home/HomeScreenView.tsx:70:20
 msgid "Current game"
 msgstr "Текущая игра"
 
@@ -126,7 +126,7 @@ msgstr "E-mail не зарегистрирован в базе данных Pant
 msgid "Email"
 msgstr "Email"
 
-#: app/components/screens/home/HomeScreen.tsx:68:55
+#: app/components/screens/home/HomeScreen.tsx:73:55
 msgid "Event title"
 msgstr "Название события"
 
@@ -256,7 +256,7 @@ msgstr "Нагаши манган"
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
 
-#: app/components/screens/home/HomeScreenView.tsx:56:20
+#: app/components/screens/home/HomeScreenView.tsx:63:20
 msgid "New game"
 msgstr "Новая игра"
 
@@ -280,7 +280,7 @@ msgstr "Опен риичи"
 msgid "Opened hand"
 msgstr "Открытая рука"
 
-#: app/components/screens/home/HomeScreenView.tsx:75:20
+#: app/components/screens/home/HomeScreenView.tsx:82:20
 msgid "Other playing tables"
 msgstr "Другие столы"
 
@@ -316,7 +316,7 @@ msgstr "Пин-фу"
 msgid "Player name"
 msgstr "Имя игрока"
 
-#: app/components/screens/home/HomeScreenView.tsx:69:20
+#: app/components/screens/home/HomeScreenView.tsx:76:20
 msgid "Previous game"
 msgstr "Предыдущая игра"
 
@@ -414,7 +414,7 @@ msgstr "Регистрация"
 msgid "Start game"
 msgstr "Начать игру"
 
-#: app/components/screens/home/HomeScreenView.tsx:81:20
+#: app/components/screens/home/HomeScreenView.tsx:88:20
 msgid "Statistics"
 msgstr "Статистика"
 
