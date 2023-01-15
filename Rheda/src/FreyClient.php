@@ -64,13 +64,14 @@ class FreyClient implements IFreyClient
      *  Approval code is returned. It is intended to be sent to provided email address.
      *
      * @param string $email
+     * @param string $title
      * @param string $password
      * @return string
     */
-    public function requestRegistration(string $email, string $password): string
+    public function requestRegistration(string $email, string $title, string $password): string
     {
         /** @phpstan-ignore-next-line */
-        return (string)$this->_client->execute('requestRegistration', [$email, $password]);
+        return (string)$this->_client->execute('requestRegistration', [$email, $title, $password]);
     }
 
     /**
@@ -111,6 +112,19 @@ class FreyClient implements IFreyClient
     {
         /** @phpstan-ignore-next-line */
         return (bool)$this->_client->execute('quickAuthorize', [$id, $clientSideToken]);
+    }
+
+    /**
+     *  Return information about person related to client token
+     *
+     * @param int $id
+     * @param string $clientSideToken
+     * @return array
+    */
+    public function me(int $id, string $clientSideToken): array
+    {
+        /** @phpstan-ignore-next-line */
+        return (array)$this->_client->execute('me', [$id, $clientSideToken]);
     }
 
     /**

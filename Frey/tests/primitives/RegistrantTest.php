@@ -35,9 +35,11 @@ class RegistrantPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setAuthHash('hash')
             ->setAuthSalt('salt')
             ->setEmail('email')
+            ->setTitle('title')
             ->setApprovalCode('12345');
 
         $this->assertEquals('hash', $newRegistrant->getAuthHash());
+        $this->assertEquals('title', $newRegistrant->getTitle());
         $this->assertEquals('salt', $newRegistrant->getAuthSalt());
         $this->assertEquals('email', $newRegistrant->getEmail());
         $this->assertEquals('12345', $newRegistrant->getApprovalCode());
@@ -57,12 +59,14 @@ class RegistrantPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setAuthHash('hash')
             ->setAuthSalt('salt')
             ->setEmail('email')
+            ->setTitle('title')
             ->setApprovalCode('12345')
             ->save();
 
         $registrantCopy = RegistrantPrimitive::findById($this->_db, [$newRegistrant->getId()]);
         $this->assertEquals(1, count($registrantCopy));
         $this->assertEquals('email', $registrantCopy[0]->getEmail());
+        $this->assertEquals('title', $registrantCopy[0]->getTitle());
         $this->assertTrue($newRegistrant !== $registrantCopy[0]); // different objects!
     }
 
@@ -76,12 +80,14 @@ class RegistrantPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setAuthHash('hash')
             ->setAuthSalt('salt')
             ->setEmail('email')
+            ->setTitle('title')
             ->setApprovalCode('12345')
             ->save();
 
         $registrantCopy = RegistrantPrimitive::findByEmail($this->_db, [$newRegistrant->getEmail()]);
         $this->assertEquals(1, count($registrantCopy));
         $this->assertEquals('12345', $registrantCopy[0]->getApprovalCode());
+        $this->assertEquals('title', $registrantCopy[0]->getTitle());
         $this->assertTrue($newRegistrant !== $registrantCopy[0]); // different objects!
     }
 
@@ -114,13 +120,16 @@ class RegistrantPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setAuthHash('hash')
             ->setAuthSalt('salt')
             ->setEmail('email')
+            ->setEmail('title')
             ->setApprovalCode('12345')
             ->save();
 
         $registrantCopy = RegistrantPrimitive::findById($this->_db, [$newRegistrant->getId()]);
         $registrantCopy[0]->setEmail('anotherEmail')->save();
+        $registrantCopy[0]->setTitle('anotherTitle')->save();
 
         $anotherRegistrantCopy = RegistrantPrimitive::findById($this->_db, [$newRegistrant->getId()]);
         $this->assertEquals('anotherEmail', $anotherRegistrantCopy[0]->getEmail());
+        $this->assertEquals('anotherTitle', $anotherRegistrantCopy[0]->getTitle());
     }
 }

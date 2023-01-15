@@ -55,6 +55,7 @@ class PersonSignup extends Controller
 
                 return [
                     'email' => filter_var($emailSanitized, FILTER_VALIDATE_EMAIL) ? $emailSanitized : '',
+                    'title' => trim($_POST['signup_title']),
                     'captcha' => $captcha->getImage(),
                     'uniqid' => $uniqid,
                     'error' => _t('Captcha is invalid')
@@ -105,6 +106,7 @@ class PersonSignup extends Controller
                 'captcha' => $captcha->getImage(),
                 'uniqid' => $uniqid,
                 'email' => $emailSanitized,
+                'title' => trim($data['signup_title']),
                 'error' => _t('Some errors occured, see below'),
                 'error_email' => $emailError,
                 'error_password' => $passwordError
@@ -112,7 +114,7 @@ class PersonSignup extends Controller
         }
 
         try {
-            $approvalCode = $this->_frey->requestRegistration($emailSanitized, $data['signup_password']);
+            $approvalCode = $this->_frey->requestRegistration($emailSanitized, trim($data['signup_title']), $data['signup_password']);
             $url = Url::makeConfirmation($approvalCode);
             $debugUrl = Mailer::sendSignupMail($emailSanitized, $url);
 

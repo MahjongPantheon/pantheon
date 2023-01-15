@@ -41,6 +41,14 @@
                     {{/error_email}}
                 </div>
                 <div class="form-group">
+                    <label for="signup_title">{{_t 'How do we call you?'}}</label>
+                    <input type="text" class="form-control{{#error_email}} is-invalid{{/error_email}}"
+                           id="signup_title" name="signup_title"
+                           autocomplete="off"
+                           value="{{title}}">
+                    <small id="titleHelp" class="form-text text-muted">{{_t "Title is not required, you can add it later, but please don't forget to add it now or later."}}</small>
+                </div>
+                <div class="form-group">
                     <label for="signup_password">{{_t 'Your password'}}</label>
                     <input type="password" class="form-control{{#error_password}} is-invalid{{/error_password}}"
                            id="signup_password"

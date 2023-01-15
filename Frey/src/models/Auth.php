@@ -31,12 +31,13 @@ class AuthModel extends Model
      * Returns new approval code to be sent over email.
      *
      * @param string $email
+     * @param string $title
      * @param string $password
      * @return string
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function requestRegistration(string $email, string $password): string
+    public function requestRegistration(string $email, string $title, string $password): string
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidParametersException('Invalid email provided', 401);
@@ -50,6 +51,7 @@ class AuthModel extends Model
 
         $reg = (new RegistrantPrimitive($this->_db))
             ->setEmail($email)
+            ->setTitle($title)
             ->setApprovalCode(sha1($email . microtime(true)))
             ->setAuthSalt($pw['salt'])
             ->setAuthHash($pw['auth_hash']);
@@ -85,7 +87,7 @@ class AuthModel extends Model
             ->setEmail($reg[0]->getEmail())
             ->setAuthSalt($reg[0]->getAuthSalt())
             ->setAuthHash($reg[0]->getAuthHash())
-            ->setTitle($reg[0]->getEmail()) // temporary value
+            ->setTitle($reg[0]->getTitle())
             ->setDisabled(false);
 
         if (!$person->save()) {

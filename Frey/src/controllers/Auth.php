@@ -30,15 +30,16 @@ class AuthController extends Controller
      * Approval code is returned. It is intended to be sent to provided email address.
      *
      * @param string $email
+     * @param string $title
      * @param string $password
      * @return string
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function requestRegistration($email, $password)
+    public function requestRegistration($email, $title, $password)
     {
         $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
-        $approvalCode = $this->_getModel()->requestRegistration($email, $password);
+        $approvalCode = $this->_getModel()->requestRegistration($email, $title, $password);
         $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
         return $approvalCode;
     }
