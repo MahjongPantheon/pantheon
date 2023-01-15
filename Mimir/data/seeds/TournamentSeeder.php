@@ -50,6 +50,7 @@ class TournamentSeeder extends AbstractSeed
             ->setUsePenalty(1)
             ->setUseTimer(1)
             ->setGameDuration(20)
+            ->setIsListed(1)
             ->setRuleset(\Common\Ruleset::instance('ema'));
         $event->save();
         return $event;

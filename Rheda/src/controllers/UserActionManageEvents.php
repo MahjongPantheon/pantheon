@@ -79,6 +79,20 @@ class UserActionManageEvents extends Controller
                     return false;
                 }
                 break;
+            case 'toggleRatingShown':
+                if (!empty($this->_path['id'])) {
+                    $success = $this->_mimir->toggleHideResults(intval($this->_path['id']));
+                    if (!$success) {
+                        $this->_error = [
+                            'error' => _t("Failed to toggle rating shown flag of the event"),
+                            'critical' => true
+                        ];
+                        return true;
+                    }
+                    header('Location: /cp/manageEvents', false, 302);
+                    return false;
+                }
+                break;
             case 'rebuildScoring':
                 if (!empty($this->_path['id'])) {
                     $this->_mimir->rebuildScoring(intval($this->_path['id']));
