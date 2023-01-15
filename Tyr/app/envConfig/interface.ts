@@ -11,5 +11,6 @@ export type EnvConfig = {
   idbEventKey: string;
   idbLangKey: string;
   idbThemeKey: string;
+  idbDeviceModeKey: string;
   apiVersion: [number, number];
 };

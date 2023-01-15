@@ -1,18 +1,23 @@
 import * as React from "react";
 import './switch.css'
+import {useCallback} from "react";
 
 type SwitchProps = {
-  onToggle?: () => void,
-  switched: boolean
+  onChange: (value: boolean) => void,
+  value: boolean
 }
 
 export const Switch = React.memo(function (props: SwitchProps) {
-  const {onToggle, switched} = props;
+  const {onChange, value} = props;
+
+  const onClick = useCallback(() => {
+    onChange(!value)
+  }, [value, onChange])
 
   return (
-    <div className='switch' onClick={onToggle}>
-      <div className={'switch__box' + (switched ? ' switch__box--on' : '')} />
-      <div className={'switch__button' + (switched ? ' switch__button--on' : '')} />
+    <div className='switch' onClick={onClick}>
+      <div className={'switch__box' + (value ? ' switch__box--on' : '')} />
+      <div className={'switch__button' + (value ? ' switch__button--on' : '')} />
     </div>
   );
 })

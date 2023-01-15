@@ -65,7 +65,10 @@ export function getPlayerTopInfo(loc: I18nService, state: IAppState, dispatch: D
   const playerBase = getToimen(state, purpose);
   const wind = getSeatToimen(state, purpose);
 
-  return getPlayer(loc, playerBase, wind, state, dispatch)
+  const result = getPlayer(loc, playerBase, wind, state, dispatch)
+  result.rotated = state.settings.singleDeviceMode && ['currentGame', 'outcomeSelect', 'confirmation'].includes(state.currentScreen)
+
+  return result
 }
 
 export function getPlayerLeftInfo(loc: I18nService, state: IAppState, dispatch: Dispatch) {
@@ -190,7 +193,6 @@ function getPlayerPaymentResult(loc: I18nService, player: Player, state: IAppSta
 }
 
 function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppState, dispatch: Dispatch): PlayerProps {
-  let rotated = false; //todo singleDeviceMode
   let pointsMode = PlayerPointsMode.IDLE; //todo check
   let points: number | string | undefined = player.score;
   let penaltyPoints: number | undefined = player.penalties; //todo check
@@ -387,7 +389,6 @@ function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppSt
     points: points,
     penaltyPoints: penaltyPoints,
     pointsMode: pointsMode,
-    rotated: rotated,
     inlineWind: inlineWind,
     winButton: winButton,
     loseButton: loseButton,

@@ -109,6 +109,7 @@ export const TABLE_ROTATE_COUNTERCLOCKWISE = 'TABLE_ROTATE_COUNTERCLOCKWISE';
 export const TABLE_ROTATE_CLOCKWISE = 'TABLE_ROTATE_CLOCKWISE';
 export const SETTINGS_SAVE_THEME = 'SETTINGS_SAVE_THEME';
 export const SETTINGS_SAVE_LANG = 'SETTINGS_SAVE_LANG';
+export const SETTINGS_SAVE_SINGLE_DEVICE_MODE = 'SETTINGS_SAVE_SINGLE_DEVICE_MODE';
 export const UPDATE_STATE_SETTINGS = 'UPDATE_STATE_SETTINGS';
 export const SET_STATE_SETTINGS = 'SET_STATE_SETTINGS';
 export const SET_SELECT_HAND_TAB = 'SET_SELECT_HAND_TAB';
@@ -557,6 +558,11 @@ interface SettingsSaveLangAction {
   payload: string;
 }
 
+interface SettingsSaveSingleDeviceMode {
+  type: typeof SETTINGS_SAVE_SINGLE_DEVICE_MODE;
+  payload: boolean;
+}
+
 interface UpdateStateSettingsAction {
   type: typeof UPDATE_STATE_SETTINGS;
 }
@@ -672,6 +678,7 @@ export type AppActionTypes =
   | TableRotateClockwiseAction
   | TableRotateCounterclockwiseAction
   | SettingsSaveLangAction
+  | SettingsSaveSingleDeviceMode
   | SettingsSaveThemeAction
   | UpdateStateSettingsAction
   | SetStateSettingsAction
