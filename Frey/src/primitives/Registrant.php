@@ -33,6 +33,7 @@ class RegistrantPrimitive extends Primitive
     protected static $_fieldsMapping = [
         'id'            => '_id',
         'email'         => '_email',
+        'title'         => '_title',
         'auth_hash'     => '_authHash',
         'auth_salt'     => '_authSalt',
         'approval_code' => '_approvalCode',
@@ -43,6 +44,7 @@ class RegistrantPrimitive extends Primitive
         return [
             '_id'           => $this->_integerTransform(true),
             '_email'        => $this->_stringTransform(),
+            '_title'        => $this->_stringTransform(),
             '_authHash'     => $this->_stringTransform(),
             '_authSalt'     => $this->_stringTransform(),
             '_approvalCode' => $this->_stringTransform(),
@@ -55,10 +57,15 @@ class RegistrantPrimitive extends Primitive
      */
     protected $_id;
     /**
-     * Registrant's email. Used both as primary identifier and contact info.
+     * Registrant's email. Used as primary identifier.
      * @var string
      */
     protected $_email;
+    /**
+     * Registrant's initial title. Used as contact info.
+     * @var string
+     */
+    protected $_title;
     /**
      * Full stored password hash created as password_hash(client_side_token)
      * @var string
@@ -153,6 +160,24 @@ class RegistrantPrimitive extends Primitive
     public function setEmail(string $email): RegistrantPrimitive
     {
         $this->_email = $email;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->_title;
+    }
+
+    /**
+     * @param string $title
+     * @return RegistrantPrimitive
+     */
+    public function setTitle(string $title): RegistrantPrimitive
+    {
+        $this->_title = $title;
         return $this;
     }
 

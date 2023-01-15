@@ -60,7 +60,8 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     {
         $email = 'test@test.com';
         $password = '1234test!5678';
-        $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
+        $title = 'test testov';
+        $approvalCode = $this->_client->execute('requestRegistration', [$email, $title, $password]);
         $this->assertIsString($approvalCode);
     }
 
@@ -71,7 +72,8 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     {
         $email = 'test@test.com';
         $password = '12345test!678';
-        $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
+        $title = 'test testov';
+        $approvalCode = $this->_client->execute('requestRegistration', [$email, $title, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
         $this->assertIsInt($userId);
         $user = PersonPrimitive::findByEmail($this->_db, [$email]);
@@ -83,7 +85,8 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     {
         $email = 'test@test.com';
         $password = '1234test!5678';
-        $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
+        $title = 'test testov';
+        $approvalCode = $this->_client->execute('requestRegistration', [$email, $title, $password]);
         $this->_client->execute('approveRegistration', [$approvalCode]);
         list($id, $token) = $this->_client->execute('authorize', [$email, $password]);
         $this->assertIsInt($id);
@@ -95,7 +98,8 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     {
         $email = 'test@test.com';
         $password = '1234test!5678';
-        $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
+        $title = 'test testov';
+        $approvalCode = $this->_client->execute('requestRegistration', [$email, $title, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
         list($id, $token) = $this->_client->execute('authorize', [$email, $password]);
 
@@ -106,9 +110,10 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testChangePassword()
     {
         $email = 'test@test.com';
+        $title = 'test testov';
         $password = '1234test!5678';
         $newPassword = '8765test!4321';
-        $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
+        $approvalCode = $this->_client->execute('requestRegistration', [$email, $title, $password]);
         $this->_client->execute('approveRegistration', [$approvalCode]);
         $this->_client->execute('authorize', [$email, $password]);
 
@@ -121,7 +126,8 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     {
         $email = 'test@test.com';
         $password = '1234test!5678';
-        $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
+        $title = 'test testov';
+        $approvalCode = $this->_client->execute('requestRegistration', [$email, $title, $password]);
         $this->_client->execute('approveRegistration', [$approvalCode]);
         $this->_client->execute('authorize', [$email, $password]);
 
@@ -133,7 +139,8 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     {
         $email = 'test@test.com';
         $password = '1234test!5678';
-        $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
+        $title = 'test testov';
+        $approvalCode = $this->_client->execute('requestRegistration', [$email, $title, $password]);
         $this->_client->execute('approveRegistration', [$approvalCode]);
         $this->_client->execute('authorize', [$email, $password]);
 
@@ -150,8 +157,9 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testUpdatePersonalInfo()
     {
         $email = 'test@test.com';
+        $title = 'test testov';
         $password = '1234test!5678';
-        $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
+        $approvalCode = $this->_client->execute('requestRegistration', [$email, $title, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
 
         $title = 'testuser';
@@ -179,7 +187,8 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     {
         $email = 'test@test.com';
         $password = '1234test!5678';
-        $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
+        $title = 'test testov';
+        $approvalCode = $this->_client->execute('requestRegistration', [$email, $title, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
 
         $title = 'testuser';
@@ -214,8 +223,9 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
     public function testFindByTitle()
     {
         $email = 'test@test.com';
+        $title = 'test testov';
         $password = '1234test!5678';
-        $approvalCode = $this->_client->execute('requestRegistration', [$email, $password]);
+        $approvalCode = $this->_client->execute('requestRegistration', [$email, $title, $password]);
         $userId = $this->_client->execute('approveRegistration', [$approvalCode]);
 
         $title = 'newtestuser';

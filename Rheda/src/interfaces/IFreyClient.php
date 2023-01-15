@@ -21,10 +21,11 @@ interface IFreyClient
      *  Approval code is returned. It is intended to be sent to provided email address.
      *
      * @param string $email
+     * @param string $title
      * @param string $password
      * @return string
     */
-    public function requestRegistration(string $email, string $password): string;
+    public function requestRegistration(string $email, string $title, string $password): string;
 
     /**
      *  Approve registration with approval code.
@@ -53,6 +54,15 @@ interface IFreyClient
      * @return bool
     */
     public function quickAuthorize(int $id, string $clientSideToken): bool;
+
+    /**
+     *  Return information about person related to client token
+     *
+     * @param int $id
+     * @param string $clientSideToken
+     * @return array
+    */
+    public function me(int $id, string $clientSideToken): array;
 
     /**
      *  Change password when old password is known.

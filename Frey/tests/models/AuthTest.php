@@ -51,7 +51,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     public function testRequestRegistration()
     {
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $this->assertNotEmpty($approvalCode);
     }
 
@@ -64,7 +64,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionCode(401);
         $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $model->requestRegistration('bademail.com', 'greatpassword');
+        $model->requestRegistration('bademail.com', 'mytitle', 'greatpassword');
     }
 
     /**
@@ -76,7 +76,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionCode(411);
         $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $model->requestRegistration('test@email.com', 'badpw');
+        $model->requestRegistration('test@email.com', 'mytitle', 'badpw');
     }
 
     /**
@@ -87,7 +87,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     public function testApproveRegistration()
     {
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $personId = $model->approveRegistration($approvalCode);
         $this->assertGreaterThan(0, $personId);
     }
@@ -114,9 +114,9 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionCode(410);
         $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $model->approveRegistration($approvalCode);
-        $approvalCode = $model->requestRegistration('test@test.com', 'passwordagain');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'passwordagain');
         $model->approveRegistration($approvalCode); // Here should be an exception
     }
 
@@ -129,7 +129,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     public function testAuthorize()
     {
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $model->approveRegistration($approvalCode);
         list($id, $authToken) = $model->authorize('test@test.com', 'greatpassword');
         $this->assertNotEmpty($authToken);
@@ -146,7 +146,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionCode(403);
         $this->expectException(\Frey\EntityNotFoundException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $model->approveRegistration($approvalCode);
         $model->authorize('te1st@test.com', 'greatpassword');
     }
@@ -162,7 +162,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionCode(404);
         $this->expectException(\Frey\AuthFailedException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $model->approveRegistration($approvalCode);
         $model->authorize('test@test.com', 'greatpassword123');
     }
@@ -176,7 +176,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     public function testQuickAuthorize()
     {
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $personId = $model->approveRegistration($approvalCode);
         list($id, $authToken) = $model->authorize('test@test.com', 'greatpassword');
         $this->assertEquals($personId, $id);
@@ -203,7 +203,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     public function testQuickAuthorizeWrongToken()
     {
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $personId = $model->approveRegistration($approvalCode);
         $this->assertFalse($model->quickAuthorize($personId, 'kahfkjhsafljflkjfa'));
     }
@@ -217,7 +217,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     public function testChangePassword()
     {
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $model->approveRegistration($approvalCode);
         $authToken = $model->changePassword(
             'test@test.com',
@@ -254,7 +254,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionCode(404);
         $this->expectException(\Frey\AuthFailedException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $model->approveRegistration($approvalCode);
         $model->changePassword('test@test.com', 'great1password', 'newpassword');
     }
@@ -267,7 +267,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     public function testRequestResetPassword()
     {
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $model->approveRegistration($approvalCode);
         $passwordResetToken = $model->requestResetPassword('test@test.com');
         $this->assertNotEmpty($passwordResetToken);
@@ -294,7 +294,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
     public function testApproveResetPassword()
     {
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $model->approveRegistration($approvalCode);
         $passwordResetToken = $model->requestResetPassword('test@test.com');
         $newPassword = $model->approveResetPassword('test@test.com', $passwordResetToken);
@@ -315,7 +315,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionCode(408);
         $this->expectException(\Frey\EntityNotFoundException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $model->approveRegistration($approvalCode);
         $passwordResetToken = $model->requestResetPassword('test@test.com');
         $model->approveResetPassword('te12st@test.com', $passwordResetToken);
@@ -332,7 +332,7 @@ class AuthModelTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionCode(409);
         $this->expectException(\Frey\AuthFailedException::class);
         $model = new AuthModel($this->_db, $this->_config, $this->_meta);
-        $approvalCode = $model->requestRegistration('test@test.com', 'greatpassword');
+        $approvalCode = $model->requestRegistration('test@test.com', 'mytitle', 'greatpassword');
         $model->approveRegistration($approvalCode);
         $model->approveResetPassword('test@test.com', '12354523');
     }
