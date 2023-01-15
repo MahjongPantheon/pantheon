@@ -1,10 +1,10 @@
 import * as React from "react";
 import './page-game-result.css'
 import classNames from 'classnames';
-import {Icon} from '#/components/general/icon/Icon';
-import {IconType} from '#/components/general/icon/IconType';
 import {i18n} from "#/components/i18n";
 import {useContext} from "react";
+import RepeatIcon from '../../../img/repeat.svg?svgr';
+import SaveIcon from '../../../img/save.svg?svgr';
 
 type IProps = {
   showRepeatButton?: boolean
@@ -55,16 +55,16 @@ export const GameResultScreenView =  React.memo(function (props: IProps) {
             {showRepeatButton && (
               <>
                 <div className="flat-btn flat-btn--medium" onClick={onRepeatClick}>
-                  <Icon type={IconType.REPEAT} />
+                  <RepeatIcon />
                 </div>
                 <div className="flat-btn flat-btn--medium" onClick={onCheckClick}>
-                  <Icon type={IconType.SAVE} />
+                  <SaveIcon />
                 </div>
               </>
             )}
             {!showRepeatButton && (
               <div className="flat-btn flat-btn--large" onClick={onCheckClick}>
-                <Icon type={IconType.SAVE} />
+                <SaveIcon />
               </div>
             )}
           </div>
@@ -76,7 +76,7 @@ export const GameResultScreenView =  React.memo(function (props: IProps) {
 
           <div className="page-game-result__buttons">
             <div className="flat-btn flat-btn--large" onClick={onCheckClick}>
-              <Icon type={IconType.SAVE} />
+              <SaveIcon />
             </div>
           </div>
         </>

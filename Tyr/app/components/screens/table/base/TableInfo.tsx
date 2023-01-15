@@ -1,10 +1,12 @@
 import * as React from 'react';
 import './page-table.css';
-import {IconType} from '#/components/general/icon/IconType';
 import {TableTenbou} from '#/components/screens/table/base/TableTenbou';
-import {Icon} from "#/components/general/icon/Icon";
 import {useContext} from "react";
 import {i18n} from "#/components/i18n";
+import RiichiIcon from '../../../../img/riichi-small.svg?svgr';
+import HonbaIcon from '../../../../img/honba.svg?svgr';
+import RotateCWIcon from '../../../../img/rotate-cw.svg?svgr';
+import RotateCCWIcon from '../../../../img/rotate-ccw.svg?svgr';
 
 export type TableInfoProps = {
   showRoundInfo?: boolean;
@@ -48,8 +50,12 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
 
   return (<div className="table-info">
     {showRotators && <>
-      <div className="table-info__rotator_ccw" onClick={onRotateCcwClick}><Icon type={IconType.ROTATE_CCW} /></div>
-      <div className="table-info__rotator_cw" onClick={onRotateCwClick}><Icon type={IconType.ROTATE_CW} /></div>
+      <div className="table-info__rotator_ccw" onClick={onRotateCcwClick}>
+        <RotateCWIcon />
+      </div>
+      <div className="table-info__rotator_cw" onClick={onRotateCwClick}>
+        <RotateCCWIcon />
+      </div>
     </>}
     <div className="table-info__info" onClick={onTableInfoToggle}>
       {showRoundInfo && (
@@ -60,10 +66,10 @@ export const TableInfo = React.memo(function (props: TableInfoProps) {
             </div>
           )}
           {riichiCount !== undefined && (
-            <TableTenbou iconType={IconType.RIICHI_SMALL} count={riichiCount}/>
+            <TableTenbou icon={<RiichiIcon />} count={riichiCount}/>
           )}
           {honbaCount !== undefined && (
-            <TableTenbou iconType={IconType.HONBA} count={honbaCount}/>
+            <TableTenbou icon={<HonbaIcon />} count={honbaCount}/>
           )}
           {showTimer && (
             <div className="table-info__timer">

@@ -1,10 +1,13 @@
 import * as React from "react";
 import './page-home.css'
-import {Icon} from '#/components/general/icon/Icon';
-import {IconType} from '#/components/general/icon/IconType';
 import classNames from 'classnames';
-import {useContext} from "react";
+import {ReactNode, useContext} from "react";
 import {i18n} from "#/components/i18n";
+import RefreshIcon from '../../../img/refresh.svg?svgr';
+import SettingsIcon from '../../../img/settings.svg?svgr';
+import DonateIcon from '../../../img/donate.svg?svgr';
+import PlusIcon from '../../../img/plus.svg?svgr';
+import LinkIcon from '../../../img/link.svg?svgr';
 
 type IProps = {
   eventName: string
@@ -48,22 +51,22 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
     <div className="page-home">
       <div className="top-panel top-panel--between">
         <div className="svg-button svg-button--small" onClick={onRefreshClick}>
-          <Icon type={IconType.REFRESH} />
+          <RefreshIcon />
         </div>
         <div className="svg-button svg-button--small" onClick={onSettingClick}>
-          <Icon type={IconType.SETTINGS} />
+          <SettingsIcon />
         </div>
       </div>
       <div className="page-home__title">{eventName}</div>
       <div className="page-home__bottom">
         {showDonate ? <div className="svg-button" style={{ margin: '16px' }} onClick={onDonateClick}>
-          <Icon type={IconType.DONATE} svgProps={{ color: '#ddd' }} />
+          <DonateIcon />
         </div> : null}
         <HomeScreenButton
           caption={loc._t('New game')}
           isVisible={canStartGame}
           isActive={true}
-          iconType={IconType.PLUS}
+          icon={<PlusIcon />}
           onClick={onNewGameClick}
         />
         <HomeScreenButton
@@ -88,7 +91,7 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
           caption={loc._t('Statistics')}
           isVisible={hasStat}
           isBordered={(!canStartGame && !hasStartedGame) || hasPrevGame || canSeeOtherTables}
-          iconType={IconType.LINK}
+          icon={<LinkIcon />}
           isIconRight={true}
           onClick={onStatClick}
         />
@@ -102,13 +105,13 @@ type IButtonProps = {
   isVisible: boolean
   isActive?: boolean
   isBordered?: boolean
-  iconType?: IconType
+  icon?: ReactNode
   isIconRight?: boolean
   onClick: () => void
 }
 
 const HomeScreenButton = React.memo(function (props: IButtonProps) {
-  const {caption, isVisible, isActive, isBordered, iconType, isIconRight, onClick} = props;
+  const {caption, isVisible, isActive, isBordered, icon, isIconRight, onClick} = props;
 
   if (!isVisible) {
     return null
@@ -125,9 +128,9 @@ const HomeScreenButton = React.memo(function (props: IButtonProps) {
       onClick={onClick}
     >
       <div className="page-home__button-content">
-        {iconType && (
+        {icon && (
           <div className={classNames('icon', {'icon--right': isIconRight})}>
-            <Icon type={iconType} />
+            {icon}
           </div>
         )}
         {caption}
