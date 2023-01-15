@@ -38,7 +38,7 @@ export const initialState: IAppState = {
   },
   currentOtherTableIndex: 0,
   isUniversalWatcher: false,
-  settings: { currentLang: 'en', currentTheme: 'day' },
+  settings: { currentLang: 'en', currentTheme: 'day', singleDeviceMode: false },
   timer: undefined,
   yakuList: undefined,
 

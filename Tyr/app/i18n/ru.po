@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-08 05:43+0300\n"
-"PO-Revision-Date: 2022-12-03 20:48+0300\n"
+"POT-Creation-Date: 2023-01-15 20:57+0300\n"
+"PO-Revision-Date: 2023-01-15 19:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "Generated-By: i18n-json2po\n"
-"X-Generator: Poedit 3.2.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: app/components/screens/table/base/TableInfo.tsx:76:18
 msgid "%1 deal left"
@@ -41,12 +41,12 @@ msgstr "%1 хан, %2 фу"
 msgid "%1 ← %2"
 msgstr "%1 ← %2"
 
-#: app/components/screens/table/TableHelper.ts:435:15
+#: app/components/screens/table/TableHelper.ts:436:15
 msgid "Abort"
 msgstr "Абортивная ничья"
 
 #: app/components/screens/log/view/RoundSelectors.ts:137:14
-#: app/components/screens/table/TableHelper.ts:129:17
+#: app/components/screens/table/TableHelper.ts:132:17
 #: app/store/selectors/commonSelectors.ts:12:26
 msgid "Abortive draw"
 msgstr "Абортивная ничья"
@@ -76,8 +76,8 @@ msgid "Chinroutou"
 msgstr "Чинрото"
 
 #: app/components/screens/log/view/RoundSelectors.ts:150:14
-#: app/components/screens/table/TableHelper.ts:119:13
-#: app/components/screens/table/TableHelper.ts:437:15
+#: app/components/screens/table/TableHelper.ts:122:13
+#: app/components/screens/table/TableHelper.ts:438:15
 #: app/store/selectors/commonSelectors.ts:13:27
 msgid "Chombo"
 msgstr "Чомбо"
@@ -114,7 +114,7 @@ msgstr "Дайсуши"
 msgid "Dora"
 msgstr "Дора"
 
-#: app/components/screens/table/TableHelper.ts:433:15
+#: app/components/screens/table/TableHelper.ts:434:15
 msgid "Draw"
 msgstr "Ничья"
 
@@ -131,7 +131,7 @@ msgid "Event title"
 msgstr "Название события"
 
 #: app/components/screens/log/view/RoundSelectors.ts:125:14
-#: app/components/screens/table/TableHelper.ts:115:13
+#: app/components/screens/table/TableHelper.ts:118:13
 #: app/store/selectors/commonSelectors.ts:11:25
 msgid "Exhaustive draw"
 msgstr "Ничья"
@@ -234,7 +234,7 @@ msgstr "Выйти из системы"
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr "Попытка входа в систему не удалась. Возможные причины:"
 
-#: app/components/screens/table/TableHelper.ts:350:22
+#: app/components/screens/table/TableHelper.ts:352:22
 msgid "Loser"
 msgstr "Проигравший"
 
@@ -246,12 +246,12 @@ msgstr "Мензенцумо"
 msgid "Multiron, from %1"
 msgstr "Мультирон с %1"
 
-#: app/components/screens/table/TableHelper.ts:439:14
+#: app/components/screens/table/TableHelper.ts:440:14
 msgid "Nagashi"
 msgstr "Нагаши манган"
 
 #: app/components/screens/log/view/RoundSelectors.ts:163:14
-#: app/components/screens/table/TableHelper.ts:139:17
+#: app/components/screens/table/TableHelper.ts:142:17
 #: app/store/selectors/commonSelectors.ts:14:28
 msgid "Nagashi mangan"
 msgstr "Нагаши манган"
@@ -304,7 +304,7 @@ msgstr "Пароль"
 msgid "Password check has failed"
 msgstr "Пароль введен некорректно"
 
-#: app/components/screens/table/TableHelper.ts:175:16
+#: app/components/screens/table/TableHelper.ts:178:16
 msgid "Penalty"
 msgstr "Штраф"
 
@@ -344,8 +344,8 @@ msgstr "Риншан"
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
-#: app/components/screens/table/TableHelper.ts:107:13
-#: app/components/screens/table/TableHelper.ts:429:15
+#: app/components/screens/table/TableHelper.ts:110:13
+#: app/components/screens/table/TableHelper.ts:430:15
 #: app/store/selectors/commonSelectors.ts:9:24
 msgid "Ron"
 msgstr "Рон"
@@ -386,11 +386,11 @@ msgstr "Выбрать другое событие"
 msgid "Select event"
 msgstr "Выбрать событие"
 
-#: app/components/screens/table/TableHelper.ts:412:17
+#: app/components/screens/table/TableHelper.ts:413:17
 msgid "Select pao"
 msgstr "Выбрать пао"
 
-#: app/components/screens/table/TableHelper.ts:417:16
+#: app/components/screens/table/TableHelper.ts:418:16
 msgid "Select tempai"
 msgstr "Выбрать темпай"
 
@@ -409,6 +409,10 @@ msgstr "Перемешать"
 #: app/components/screens/login/EnterCredentialsView.tsx:38:12
 msgid "Sign up"
 msgstr "Регистрация"
+
+#: app/components/screens/settings/SettingsScreenView.tsx:88:57
+msgid "Single device mode"
+msgstr "Режим одного устройства"
 
 #: app/components/screens/new-game/NewGameScreenView.tsx:50:23
 msgid "Start game"
@@ -458,8 +462,8 @@ msgstr "До начала игры:"
 msgid "Toitoi"
 msgstr "Тойтой"
 
-#: app/components/screens/table/TableHelper.ts:111:13
-#: app/components/screens/table/TableHelper.ts:431:15
+#: app/components/screens/table/TableHelper.ts:114:13
+#: app/components/screens/table/TableHelper.ts:432:15
 #: app/store/selectors/commonSelectors.ts:10:26
 msgid "Tsumo"
 msgstr "Цумо"
@@ -472,6 +476,10 @@ msgstr "Цумо, %1"
 msgid "Tsuuiisou"
 msgstr "Цуисо"
 
+#: app/components/screens/settings/SettingsScreenView.tsx:89:54
+msgid "Turn on if you use a single device for all players"
+msgstr "Включите, если вы используете одно устройство для всех игроков"
+
 #: app/components/screens/login/LoginErrorView.tsx:28:16
 msgid "Unexpected server error"
 msgstr "Неожиданная ошибка сервера"
@@ -480,8 +488,8 @@ msgstr "Неожиданная ошибка сервера"
 msgid "Ura dora"
 msgstr "Урадора"
 
-#: app/components/screens/table/TableHelper.ts:347:22
-#: app/components/screens/table/TableHelper.ts:360:22
+#: app/components/screens/table/TableHelper.ts:349:22
+#: app/components/screens/table/TableHelper.ts:362:22
 msgid "Winner"
 msgstr "Победитель"
 
@@ -513,7 +521,7 @@ msgstr "Якуман"
 msgid "dora %1"
 msgstr "дора %1"
 
-#: app/components/screens/table/TableHelper.ts:338:25
+#: app/components/screens/table/TableHelper.ts:340:25
 msgid "empty outcome"
 msgstr "пустой исход"
 
@@ -538,7 +546,7 @@ msgstr "что-то пошло не так, свяжитесь с админис
 msgid "type to find someone"
 msgstr "начните вводить чтобы найти игроков"
 
-#: app/components/screens/table/TableHelper.ts:365:27
+#: app/components/screens/table/TableHelper.ts:367:27
 msgid "wrong outcome for paoSelect"
 msgstr "неверный исход для выбора пао"
 

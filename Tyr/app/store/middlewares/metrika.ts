@@ -19,6 +19,8 @@ import {
   LOGIN_INIT,
   LOGIN_SUCCESS,
   SETTINGS_SAVE_LANG,
+  SETTINGS_SAVE_SINGLE_DEVICE_MODE,
+  SETTINGS_SAVE_THEME,
   START_GAME_FAIL,
   TRACK_ARBITRARY_EVENT,
   TRACK_SCREEN_ENTER,
@@ -149,6 +151,16 @@ export const metrika = (ms: MetrikaService) => (mw: MiddlewareAPI<Dispatch<AppAc
     case SETTINGS_SAVE_LANG:
       ms.track(MetrikaService.LANG_CHANGED, {
         localeName: action.payload
+      });
+      break;
+    case SETTINGS_SAVE_THEME:
+      ms.track(MetrikaService.THEME_CHANGED, {
+        themeName: action.payload
+      });
+      break;
+    case SETTINGS_SAVE_SINGLE_DEVICE_MODE:
+      ms.track(MetrikaService.SINGLE_DEVICE_MODE_CHANGED, {
+        value: action.payload
       });
       break;
     default:

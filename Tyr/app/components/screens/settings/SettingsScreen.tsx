@@ -5,7 +5,7 @@ import {
   FORCE_LOGOUT,
   GOTO_EVENT_SELECT,
   GOTO_PREV_SCREEN,
-  SETTINGS_SAVE_LANG,
+  SETTINGS_SAVE_LANG, SETTINGS_SAVE_SINGLE_DEVICE_MODE,
   SETTINGS_SAVE_THEME
 } from '#/store/actions/interfaces';
 import {I18nService, supportedLanguages} from '#/services/i18n';
@@ -24,9 +24,9 @@ export class SettingsScreen extends React.PureComponent<IComponentProps>{
     dispatch({ type: FORCE_LOGOUT });
   }
 
-  private onSingleDeviceModeChange() {
+  private onSingleDeviceModeChange(value: boolean) {
     const {dispatch} = this.props;
-    //todo
+    dispatch({ type: SETTINGS_SAVE_SINGLE_DEVICE_MODE, payload: value })
   }
 
   private onLangChange(lang: string) {
@@ -62,7 +62,7 @@ export class SettingsScreen extends React.PureComponent<IComponentProps>{
         currentLanguage={state.settings.currentLang || 'en'}
         supportedThemes={themes}
         currentTheme={state.settings.currentTheme || 'day'}
-        singleDeviceMode={false} //todo
+        singleDeviceMode={state.settings.singleDeviceMode || false}
         onBackClick={this.onBackClick.bind(this)}
         onLogout={this.onLogout.bind(this)}
         onSingleDeviceModeChange={this.onSingleDeviceModeChange.bind(this)}

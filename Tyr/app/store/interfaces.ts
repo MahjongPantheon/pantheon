@@ -109,6 +109,7 @@ export interface IAppState {
   settings: {
     currentLang: string;
     currentTheme: string;
+    singleDeviceMode: boolean;
   }
 
   loginError?: ErrorState;

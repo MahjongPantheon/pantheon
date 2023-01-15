@@ -10,6 +10,7 @@ import {
   SET_CREDENTIALS,
   SET_STATE_SETTINGS,
   SETTINGS_SAVE_LANG,
+  SETTINGS_SAVE_SINGLE_DEVICE_MODE,
   SETTINGS_SAVE_THEME,
   UPDATE_STATE_SETTINGS,
 } from '../actions/interfaces';
@@ -50,10 +51,15 @@ export const persistentMw = (storage: IDBImpl) => (mw: MiddlewareAPI<Dispatch<Ap
       storage.set(environment.idbLangKey, 'string', action.payload);
       next(action);
       break;
+    case SETTINGS_SAVE_SINGLE_DEVICE_MODE:
+      storage.set(environment.idbDeviceModeKey, 'string', action.payload);
+      next(action);
+      break;
     case UPDATE_STATE_SETTINGS:
       const data = {
         currentTheme: storage.get(environment.idbThemeKey, 'string'),
         currentLang: storage.get(environment.idbLangKey, 'string'),
+        singleDeviceMode: storage.get(environment.idbDeviceModeKey, 'string'),
       };
 
       mw.dispatch({ type: SET_STATE_SETTINGS, payload: data });

@@ -9,6 +9,7 @@ import {
   SET_STATE_SETTINGS,
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_THEME,
+  SETTINGS_SAVE_SINGLE_DEVICE_MODE,
   TOGGLE_ADDITIONAL_TABLE_INFO,
   TOGGLE_OVERVIEW_DIFFBY,
 } from '../actions/interfaces';
@@ -47,13 +48,22 @@ export function commonReducer(
           currentLang: action.payload
         }
       };
+    case SETTINGS_SAVE_SINGLE_DEVICE_MODE:
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          singleDeviceMode: action.payload
+        }
+      };
     case SET_STATE_SETTINGS:
       return {
         ...state,
         settings: {
           ...state.settings,
           currentLang: (action.payload || state.settings)['currentLang'],
-          currentTheme: (action.payload || state.settings)['currentTheme']
+          currentTheme: (action.payload || state.settings)['currentTheme'],
+          singleDeviceMode: (action.payload || state.settings)['singleDeviceMode']
         }
       };
     case SET_SELECT_HAND_TAB:
