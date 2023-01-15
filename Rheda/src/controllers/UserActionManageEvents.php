@@ -127,10 +127,11 @@ class UserActionManageEvents extends Controller
             $events = $data['events'];
             $total = ceil(floatval($data['total']) / self::PERPAGE);
         } else {
-            $pages = array_chunk($eventIds, self::PERPAGE);
-            $events = $this->_mimir->getEventsById($pages[$this->_offset(1)]);
+            $pages = array_chunk($eventIds, self::PERPAGE) ?: [];
+            $events = empty($pages) ? [] : $this->_mimir->getEventsById($pages[$this->_offset(1)]);
             $total = count($pages);
         }
+
         $pagination = $this->_generatePaginationData(intval($this->_path['page'] ?? 1), intval($total), '/cp/manageEvents/', 3, true);
 
         return [
