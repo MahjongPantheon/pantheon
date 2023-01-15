@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pantheon - Rheda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-08 05:43+0300\n"
+"POT-Creation-Date: 2023-01-15 21:57+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: Jesterboxboy\n"
@@ -567,6 +567,10 @@ msgstr ""
 msgid "Failed to toggle listed flag of the event"
 msgstr "Administrator konnte dem Event nicht zugeordnet werden."
 
+#, fuzzy
+msgid "Failed to toggle rating shown flag of the event"
+msgstr "Administrator konnte dem Event nicht zugeordnet werden."
+
 msgid ""
 "Failed to update personal information: insufficient privileges or server "
 "error"
@@ -796,6 +800,9 @@ msgstr "Honroutou"
 
 msgid "Houtei"
 msgstr "Houtei"
+
+msgid "How do we call you?"
+msgstr ""
 
 msgid "I saw them dancing"
 msgstr "Tanzt für mich!"
@@ -1734,11 +1741,20 @@ msgstr "Zeitzone"
 msgid "Title"
 msgstr "Name des Events"
 
+msgid ""
+"Title is not required, you can add it later, but please don't forget to add "
+"it now or later."
+msgstr ""
+
 msgid "Title must be at least 4 characters length"
 msgstr "Titel muss mindestens vier Zeichen lang sein"
 
 msgid "To event list"
 msgstr "Event Liste"
+
+#, fuzzy
+msgid "Toggle rating table visibility"
+msgstr "Wertungstabelle ist sichtbar. Ausblenden"
 
 msgid "Toggle visibility on main page"
 msgstr ""

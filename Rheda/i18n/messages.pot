@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 20:57+0300\n"
+"POT-Creation-Date: 2023-01-15 21:57+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,7 +78,7 @@ msgid_plural "%d riichi bets"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Game details"
+msgid "Achievements"
 msgstr ""
 
 msgid "The game has been successfully added!"
@@ -90,16 +90,7 @@ msgstr ""
 msgid "Add game"
 msgstr ""
 
-msgid "Achievements"
-msgstr ""
-
-msgid "Recent games"
-msgstr ""
-
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
+msgid "Game details"
 msgstr ""
 
 msgid "Open game control app"
@@ -109,6 +100,9 @@ msgid "Navigation"
 msgstr ""
 
 msgid "To event list"
+msgstr ""
+
+msgid "Recent games"
 msgstr ""
 
 msgid "Rating table"
@@ -160,6 +154,12 @@ msgid "Sign in"
 msgstr ""
 
 msgid "Sign up"
+msgstr ""
+
+msgid "No games has been played yet"
+msgstr ""
+
+msgid "%d - %d (%d total)"
 msgstr ""
 
 msgid "Aggregated event"
@@ -263,18 +263,52 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
+msgid "Recover your password"
+msgstr ""
+
+msgid "Confirmation e-mail was sent. Please check you inbox."
+msgstr ""
+
+msgid ""
+"Please enter the e-mail address you've registered with. We will send you "
+"confirmation email to reset your password."
+msgstr ""
+
+msgid "Your e-mail address"
+msgstr ""
+
+msgid "Please enter symbols to make sure you're not a robot:"
+msgstr ""
+
+msgid "Send confirmation e-mail"
+msgstr ""
+
+msgid "Your password was successfully updated. Please log in now."
+msgstr ""
+
+msgid "Please enter new password for your account."
+msgstr ""
+
+msgid "Change password"
+msgstr ""
+
 msgid ""
 "Please enter your e-mail address and password. We will send authentication "
 "link to your email, so you will be able to sign in and fill your personal "
 "data"
 msgstr ""
 
-msgid "Your e-mail address"
-msgstr ""
-
 msgid ""
 "Your e-mail will not be shared with anyone else and will not be visible "
 "anywhere."
+msgstr ""
+
+msgid "How do we call you?"
+msgstr ""
+
+msgid ""
+"Title is not required, you can add it later, but please don't forget to add "
+"it now or later."
 msgstr ""
 
 msgid "Your password"
@@ -283,9 +317,6 @@ msgstr ""
 msgid ""
 "We never store passwords as plain text. But keep in mind that weak passwords "
 "will not be accepted by checker."
-msgstr ""
-
-msgid "Please enter symbols to make sure you're not a robot:"
 msgstr ""
 
 msgid "I've read the privacy policy listed below and accept its terms"
@@ -302,16 +333,6 @@ msgid ""
 "instructions."
 msgstr ""
 
-msgid "Sign up confirmation"
-msgstr ""
-
-msgid "Thank you, your registration was successfully approved."
-msgstr ""
-
-msgid ""
-"You are required to log in with your email and password before proceeding"
-msgstr ""
-
 msgid "Create new user"
 msgstr ""
 
@@ -324,27 +345,14 @@ msgstr ""
 msgid "Successfully register new user!"
 msgstr ""
 
-msgid "Recover your password"
+msgid "Sign up confirmation"
 msgstr ""
 
-msgid "Confirmation e-mail was sent. Please check you inbox."
+msgid "Thank you, your registration was successfully approved."
 msgstr ""
 
 msgid ""
-"Please enter the e-mail address you've registered with. We will send you "
-"confirmation email to reset your password."
-msgstr ""
-
-msgid "Send confirmation e-mail"
-msgstr ""
-
-msgid "Your password was successfully updated. Please log in now."
-msgstr ""
-
-msgid "Please enter new password for your account."
-msgstr ""
-
-msgid "Change password"
+"You are required to log in with your email and password before proceeding"
 msgstr ""
 
 msgid "Personal stats"
@@ -473,40 +481,6 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
-msgid "Predefined seating configuration"
-msgstr ""
-
-msgid "Next session index (starting from 1):"
-msgstr ""
-
-msgid "Update predefined seating config"
-msgstr ""
-
-msgid "Found errors:"
-msgstr ""
-
-msgid "No errors found."
-msgstr ""
-
-msgid ""
-"Predefined seating is entered as list of tables, one table per row. New game "
-"session should be indicated as an empty line."
-msgstr ""
-
-msgid "Example:"
-msgstr ""
-
-msgid ""
-"In this example, two tables play two games. Numbers in seating persist "
-"between games and are defined at Admin actions / Manage players page."
-msgstr ""
-
-msgid "Rating table has been hidden by tournament administrator"
-msgstr ""
-
-msgid "These results are visible only for tournament administrator"
-msgstr ""
-
 msgid "Player added successfully. Reload page to see results"
 msgstr ""
 
@@ -576,6 +550,34 @@ msgstr ""
 msgid "Save teams list"
 msgstr ""
 
+msgid "Predefined seating configuration"
+msgstr ""
+
+msgid "Next session index (starting from 1):"
+msgstr ""
+
+msgid "Update predefined seating config"
+msgstr ""
+
+msgid "Found errors:"
+msgstr ""
+
+msgid "No errors found."
+msgstr ""
+
+msgid ""
+"Predefined seating is entered as list of tables, one table per row. New game "
+"session should be indicated as an empty line."
+msgstr ""
+
+msgid "Example:"
+msgstr ""
+
+msgid ""
+"In this example, two tables play two games. Numbers in seating persist "
+"between games and are defined at Admin actions / Manage players page."
+msgstr ""
+
 msgid "Rights and privileges: %s"
 msgstr ""
 
@@ -597,6 +599,27 @@ msgstr ""
 msgid "Table #"
 msgstr ""
 
+msgid "Rating table has been hidden by tournament administrator"
+msgstr ""
+
+msgid "These results are visible only for tournament administrator"
+msgstr ""
+
+msgid "Order by player rating"
+msgstr ""
+
+msgid "Order by player name"
+msgstr ""
+
+msgid "Order by average place"
+msgstr ""
+
+msgid "Order by average score"
+msgstr ""
+
+msgid "Team:"
+msgstr ""
+
 msgid "Something went wrong: %s"
 msgstr ""
 
@@ -616,68 +639,6 @@ msgid "Tables are being prepared..."
 msgstr ""
 
 msgid "Please wait a while and reload the page."
-msgstr ""
-
-msgid "Manage events privileges: %s"
-msgstr ""
-
-msgid "Revoke privilege #title?"
-msgstr ""
-
-msgid "Privilege"
-msgstr ""
-
-msgid "Controls"
-msgstr ""
-
-msgid "global"
-msgstr ""
-
-msgid "Revoke"
-msgstr ""
-
-msgid "Manage owned events"
-msgstr ""
-
-msgid ""
-"Really finish event #id (#title)? You won't be able to add games after event "
-"is finished."
-msgstr ""
-
-msgid "Finish the event"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "Cancel"
-msgstr ""
-
-msgid "New club rating"
-msgstr ""
-
-msgid "New tournament"
-msgstr ""
-
-msgid "New online tournament"
-msgstr ""
-
-msgid "Event"
-msgstr ""
-
-msgid "Toggle visibility on main page"
-msgstr ""
-
-msgid "Edit"
-msgstr ""
-
-msgid "Privileges"
-msgstr ""
-
-msgid "Rebuild scoring"
-msgstr ""
-
-msgid "Finish"
 msgstr ""
 
 msgid "Update event"
@@ -762,34 +723,72 @@ msgstr ""
 msgid "Create event"
 msgstr ""
 
-msgid "Order by player rating"
+msgid "Manage events privileges: %s"
 msgstr ""
 
-msgid "Order by player name"
+msgid "Revoke privilege #title?"
 msgstr ""
 
-msgid "Order by average place"
+msgid "Privilege"
 msgstr ""
 
-msgid "Order by average score"
+msgid "Controls"
 msgstr ""
 
-msgid "Team:"
+msgid "global"
+msgstr ""
+
+msgid "Revoke"
+msgstr ""
+
+msgid "Manage owned events"
+msgstr ""
+
+msgid ""
+"Really finish event #id (#title)? You won't be able to add games after event "
+"is finished."
+msgstr ""
+
+msgid "Finish the event"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "New club rating"
+msgstr ""
+
+msgid "New tournament"
+msgstr ""
+
+msgid "New online tournament"
+msgstr ""
+
+msgid "Event"
+msgstr ""
+
+msgid "Toggle visibility on main page"
+msgstr ""
+
+msgid "Toggle rating table visibility"
 msgstr ""
 
 msgid "Rating"
 msgstr ""
 
-msgid "Rating graph"
+msgid "Edit"
 msgstr ""
 
-msgid "Hands value"
+msgid "Privileges"
 msgstr ""
 
-msgid "Han"
+msgid "Rebuild scoring"
 msgstr ""
 
-msgid "Yaku collected over all time"
+msgid "Finish"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -855,24 +854,6 @@ msgstr ""
 msgid "Tenpai: %s."
 msgstr ""
 
-msgid "First page"
-msgstr ""
-
-msgid "Previous page"
-msgstr ""
-
-msgid "Next page"
-msgstr ""
-
-msgid "Last page"
-msgstr ""
-
-msgid "Please enter your e-mail address and password."
-msgstr ""
-
-msgid "Forgot your password?"
-msgstr ""
-
 msgid "View replay online"
 msgstr ""
 
@@ -898,6 +879,50 @@ msgid "%s - %d points (%s)"
 msgstr ""
 
 msgid "Full game log:"
+msgstr ""
+
+msgid "Rating graph"
+msgstr ""
+
+msgid "Hands value"
+msgstr ""
+
+msgid "Han"
+msgstr ""
+
+msgid "Yaku collected over all time"
+msgstr ""
+
+msgid "Please enter your e-mail address and password."
+msgstr ""
+
+msgid "Forgot your password?"
+msgstr ""
+
+msgid "First page"
+msgstr ""
+
+msgid "Previous page"
+msgstr ""
+
+msgid "Next page"
+msgstr ""
+
+msgid "Last page"
+msgstr ""
+
+msgid "Finish all the games"
+msgstr ""
+
+msgid ""
+"After this button is pressed, you won't be able to cancel any rounds, and "
+"all the results will become visible to all players in rating table."
+msgstr ""
+
+msgid "Finish the games? You will not be able to cancel rounds anymore!"
+msgstr ""
+
+msgid "Confirm the results and finish all games"
 msgstr ""
 
 msgid "Ready to generate seating"
@@ -981,45 +1006,6 @@ msgstr ""
 msgid "Use interval seating"
 msgstr ""
 
-msgid "Finish all the games"
-msgstr ""
-
-msgid ""
-"After this button is pressed, you won't be able to cancel any rounds, and "
-"all the results will become visible to all players in rating table."
-msgstr ""
-
-msgid "Finish the games? You will not be able to cancel rounds anymore!"
-msgstr ""
-
-msgid "Confirm the results and finish all games"
-msgstr ""
-
-msgid "Reset the timer"
-msgstr ""
-
-msgid ""
-"Pressing this button will reset the timer to its initial value. Be careful: "
-"you should not need this usually."
-msgstr ""
-
-msgid "Really reset the timer?"
-msgstr ""
-
-msgid "Hide/show rating table"
-msgstr ""
-
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-
-msgid "Rating table is hidden. Show"
-msgstr ""
-
-msgid "Rating table is visible. Hide"
-msgstr ""
-
 msgid ""
 "This tournament has predefined seating. See Admin actions / Predefined "
 "seating page for seating configuration. Next seating is listed below."
@@ -1070,6 +1056,31 @@ msgid "Reset autostart timer?"
 msgstr ""
 
 msgid "Reset autostart timer"
+msgstr ""
+
+msgid "Reset the timer"
+msgstr ""
+
+msgid ""
+"Pressing this button will reset the timer to its initial value. Be careful: "
+"you should not need this usually."
+msgstr ""
+
+msgid "Really reset the timer?"
+msgstr ""
+
+msgid "Hide/show rating table"
+msgstr ""
+
+msgid ""
+"Hiding rating table for all players may be useful to keep everybody "
+"intrigued at the end of tournament"
+msgstr ""
+
+msgid "Rating table is hidden. Show"
+msgstr ""
+
+msgid "Rating table is visible. Hide"
 msgstr ""
 
 msgid "Confirm round cancellation: "
@@ -1472,6 +1483,9 @@ msgid "Failed to finish event"
 msgstr ""
 
 msgid "Failed to toggle listed flag of the event"
+msgstr ""
+
+msgid "Failed to toggle rating shown flag of the event"
 msgstr ""
 
 msgid "Basic ruleset name"
