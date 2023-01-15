@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@svgr/webpack": "^6.5.1",
     "@types/node": "^18.11.10",
     "@types/react": "^18.0.26",
     "@types/react-dom": "latest",
