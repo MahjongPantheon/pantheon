@@ -94,6 +94,13 @@
                     {{#isListed}}<img src="/assets/img/listed_on.svg" alt="" />{{/isListed}}
                     {{^isListed}}<img src="/assets/img/listed_off.svg" alt="" />{{/isListed}}
                 </a>
+                {{#finished}}
+                    <a href="/cp/toggleRatingShown/{{id}}" class="form-control m-1 btn btn-outline-secondary" title="{{_t 'Toggle rating table visibility'}}">
+                        {{#isRatingShown}}<img src="/assets/img/listed_on.svg" alt="" />{{/isRatingShown}}
+                        {{^isRatingShown}}<img src="/assets/img/listed_off.svg" alt="" />{{/isRatingShown}}
+                        {{_t 'Rating'}}
+                    </a>
+                {{/finished}}
                 {{#finished}}<b class="badge badge-danger m-1">{{_t 'Finished'}}</b>{{/finished}}
                 {{^finished}}
                     <a href="/cp/editEvent/{{id}}" class="form-control m-1 btn btn-info" title="{{_t 'Edit'}}">

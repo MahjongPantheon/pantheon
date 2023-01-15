@@ -314,6 +314,7 @@ class EventModel extends Model
             ->select('is_online')
             ->select('finished')
             ->select('is_listed')
+            ->select('hide_results')
             ->select('sync_start')
             ->orderByDesc('id');
 
@@ -337,6 +338,7 @@ class EventModel extends Model
                     'description' => $event['description'],
                     'finished' => !!$event['finished'],
                     'isListed' => !!$event['is_listed'],
+                    'isRatingShown' => !!$event['hide_results'],
                     'type' => $event['is_online']
                         ? 'online'
                         : ($event['sync_start'] ? 'tournament' : 'local')
@@ -362,6 +364,7 @@ class EventModel extends Model
             ->select('event.sync_start', 'sync_start')
             ->select('event.finished', 'finished')
             ->select('event.is_listed', 'is_listed')
+            ->select('event.hide_results', 'hide_results')
             ->selectExpr('count(session.id)', 'sessioncnt')
             ->leftOuterJoin('session', 'session.event_id = event.id')
             ->whereIn('event.id', $idList)
@@ -378,6 +381,7 @@ class EventModel extends Model
                 'description' => $event['description'],
                 'finished' => !!$event['finished'],
                 'isListed' => !!$event['is_listed'],
+                'isRatingShown' => !!$event['hide_results'],
                 'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
                 'type' => $type
             ];

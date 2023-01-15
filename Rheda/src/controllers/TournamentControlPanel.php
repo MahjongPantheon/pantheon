@@ -220,12 +220,26 @@ class TournamentControlPanel extends Controller
             if ($this->_mainEventRules->syncEnd() && $prefinishedTablesCount == count($tables) && $notFinishedTablesCount != 0) {
                 return self::STAGE_PREFINISHED;
             }
-            if ($this->_mainEventRules->gamesWaitingForTimer() && $notFinishedTablesCount !== (count($players) / 4)) {
-                return self::STAGE_SEATING_INPROGRESS;
+
+            if ($this->_mainEventRules->gamesWaitingForTimer()) {
+                if (!$this->_mainEventRules->isPrescripted()) {
+                    if ($notFinishedTablesCount === (count($players) / 4)) {
+                        return self::STAGE_SEATING_READY;
+                    } else {
+                        return self::STAGE_SEATING_INPROGRESS;
+                    }
+                } else {
+                    $assignedPlayers = array_filter($players, function ($player) {
+                        return !empty($player['local_id']);
+                    });
+                    if ($notFinishedTablesCount === (count($assignedPlayers) / 4)) {
+                        return self::STAGE_SEATING_READY;
+                    } else {
+                        return self::STAGE_SEATING_INPROGRESS;
+                    }
+                }
             }
-            if ($this->_mainEventRules->gamesWaitingForTimer() && $notFinishedTablesCount === (count($players) / 4)) {
-                return self::STAGE_SEATING_READY;
-            }
+
             if ($notFinishedTablesCount !== 0) {
                 return self::STAGE_STARTED;
             }
