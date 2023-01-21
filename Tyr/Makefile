@@ -2,6 +2,16 @@ PHONY: deps
 deps:
 	if [ -e "`which yarn`" ]; then yarn; else npm install; fi
 
+PHONY: lint
+lint:
+	./node_modules/.bin/eslint . --ext .js,.ts,.tsx
+	./node_modules/.bin/prettier -c ./app
+
+PHONY: autofix
+autofix:
+	./node_modules/.bin/eslint . --ext .js,.ts,.tsx --fix
+	./node_modules/.bin/prettier -w ./app
+
 PHONY: build
 build:
 	NODE_ENV=production ./node_modules/.bin/webpack --config webpack.prod.js
