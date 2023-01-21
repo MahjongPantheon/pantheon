@@ -42,7 +42,7 @@ export class DimensionsWrapper extends React.Component<IProps, IState> {
 
   private getDimension() {
     const { selector } = this.props;
-    return document.querySelector(selector)!.clientHeight + 'px';
+    return `${document.querySelector(selector)!.clientHeight}px`;
   }
 
   render() {

@@ -131,7 +131,7 @@ export const apiClient =
         if (!eventId) {
           return;
         }
-        getOtherTableReload(mw.getState().currentOtherTableHash || '', eventId, api, next);
+        getOtherTableReload(mw.getState().currentOtherTableHash ?? '', eventId, api, next);
         break;
       case GET_OTHER_TABLE_LAST_ROUND_INIT:
         next(action);
@@ -406,7 +406,7 @@ function startupWithAuth(
   api.setCredentials(personId, token);
   api
     .quickAuthorize()
-    .then((isAuthorized) => {
+    .then((_isAuthorized) => {
       dispatchToStore({
         type: SET_CREDENTIALS,
         payload: { authToken: token, personId: personId },

@@ -18,7 +18,7 @@ type IProps = {
 
 export const TopRightArrow = React.memo(function TopRightArrow(props: IProps) {
   const { offsetX, offsetY, width, height, arrows } = props;
-  const arrow = arrows.TopRight || arrows.RightTop;
+  const arrow = arrows.TopRight ?? arrows.RightTop;
 
   if (!arrow) {
     return null;

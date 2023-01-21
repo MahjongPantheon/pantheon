@@ -37,13 +37,9 @@ export class IDBCookieImpl implements IDBImpl {
     date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
     const expires = ';expires=' + date.toUTCString();
     const domain = this.cookieDomain ? ';domain=.' + this.cookieDomain : '';
-    document.cookie =
-      key +
-      '=' +
-      (type === 'object' ? JSON.stringify(value) : value) +
-      expires +
-      domain +
-      '; path=/';
+    document.cookie = `${key}=${
+      type === 'object' ? JSON.stringify(value) : value
+    }${expires}${domain}; path=/`;
     if (key !== '__meta') {
       this.meta[key] = true;
       this.updateMeta();

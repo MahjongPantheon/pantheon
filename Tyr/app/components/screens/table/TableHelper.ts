@@ -419,6 +419,7 @@ function getPlayer(
       }
 
       break;
+    default:
   }
 
   return {
@@ -460,6 +461,7 @@ function getTitleForOutcome(
         return loc._t('Select tempai');
       }
       break;
+    default:
   }
 
   return getOutcomeName(loc, selectedOutcome);

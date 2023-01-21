@@ -61,7 +61,7 @@ export class MetrikaService {
 
     window.ym(this._metrikaId, 'reachGoal', 'TYR_MTT_' + action, {
       eventId:
-        (eventId ? eventId.toString() : (this._eventId || '').toString()) ||
+        (eventId ? eventId.toString() : (this._eventId ?? '').toString()) ||
         MetrikaService.NOT_INITIALIZED,
       ...params,
     });

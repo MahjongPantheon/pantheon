@@ -592,5 +592,5 @@ export function unpack(list: string): Y[] {
   let index = 0;
   return yakuList.reduce((acc: Y[], el) => {
     return list[index++] === '+' ? acc.concat(el.id) : acc;
-  }, <Y[]>[]);
+  }, [] as Y[]);
 }

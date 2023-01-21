@@ -48,7 +48,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
   }
 
   private onBackClick() {
-    const { state, dispatch } = this.props;
+    const { dispatch } = this.props;
     //todo maybe for total open table instead of yaku select?
     dispatch({ type: GOTO_PREV_SCREEN });
   }
@@ -69,11 +69,11 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     });
   }
 
-  private onUraDoraSelected(value: number) {
+  private onUraDoraSelected(_value: number) {
     //todo
   }
 
-  private onRedFivesSelected(value: number) {
+  private onRedFivesSelected(_value: number) {
     //todo
   }
 

@@ -40,7 +40,7 @@ export const GameResultScreenView = React.memo(function (props: IProps) {
                       { 'player-result__delta--success': player.delta > 0 }
                     )}
                   >
-                    {player.delta <= 0 ? player.delta : '+' + player.delta}
+                    {player.delta <= 0 ? player.delta : `+${player.delta}`}
                   </div>
                 </div>
               </div>

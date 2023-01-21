@@ -55,8 +55,6 @@ import { IAppState } from '#/store/interfaces';
 import { getDora, getFu, getHan } from '#/store/selectors/hanFu';
 import { getSelectedYaku } from '#/store/selectors/yaku';
 import { environment } from '#config';
-import { Simulate } from 'react-dom/test-utils';
-import dragEnd = Simulate.dragEnd;
 
 export function gameOverviewFormatter(overview: RSessionOverview): LSessionOverview {
   return {
@@ -308,6 +306,8 @@ export function formatRoundToRemote(state: IAppState): RRound | undefined {
         outcome: 'chombo',
         loser_id: getLosingUsers(state)[0].id,
       };
+    default:
+      return undefined;
   }
 }
 
@@ -317,7 +317,7 @@ export function tablesStateFormatter(tables: RTablesState): Table[] {
     .map((t) => ({
       hash: t.hash,
       currentRound: parseInt(t.current_round.toString(), 10),
-      index: parseInt((t.table_index || '').toString(), 10),
+      index: parseInt((t.table_index ?? '').toString(), 10),
       players: t.players.map((p) => ({
         id: parseInt(p.id.toString(), 10),
         displayName: p.title,
@@ -329,7 +329,7 @@ export function tablesStateFormatter(tables: RTablesState): Table[] {
 
 export function freyAuthFormatter(data: RFreyAuthData): LFreyAuthData {
   return {
-    personId: parseInt((data[0] || 0).toString(), 10),
+    personId: parseInt((data[0] ?? 0).toString(), 10),
     token: data[1],
   };
 }

@@ -11,7 +11,7 @@ export const defaultPlayer: Readonly<LUser> = {
 };
 
 function _getPlayers(state: IAppState) {
-  const players = [...(state.allPlayers || [])];
+  const players = [...(state.allPlayers ?? [])];
   const currentUserIndex = players.findIndex((element) => element.id == state.currentPlayerId);
   const currentPlayer = players.splice(currentUserIndex, 1);
   const otherPlayers = players

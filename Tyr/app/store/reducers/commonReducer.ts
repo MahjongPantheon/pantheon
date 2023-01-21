@@ -58,9 +58,9 @@ export function commonReducer(state: IAppState, action: AppActionTypes): IAppSta
         ...state,
         settings: {
           ...state.settings,
-          currentLang: (action.payload || state.settings)['currentLang'],
-          currentTheme: (action.payload || state.settings)['currentTheme'],
-          singleDeviceMode: (action.payload || state.settings)['singleDeviceMode'],
+          currentLang: (action.payload ?? state.settings)['currentLang'],
+          currentTheme: (action.payload ?? state.settings)['currentTheme'],
+          singleDeviceMode: (action.payload ?? state.settings)['singleDeviceMode'],
         },
       };
     case SET_SELECT_HAND_TAB:

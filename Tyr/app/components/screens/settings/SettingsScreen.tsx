@@ -57,7 +57,7 @@ export class SettingsScreen extends React.PureComponent<IComponentProps> {
     const { state } = this.props;
     const loc = this.context as I18nService;
 
-    const playerName = state.currentPlayerDisplayName || loc._t('Player name');
+    const playerName = state.currentPlayerDisplayName ?? loc._t('Player name');
 
     return (
       <SettingsScreenView

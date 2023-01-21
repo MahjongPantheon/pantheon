@@ -41,12 +41,12 @@ function _getPayment(
   }
 
   const p = overview.payments;
-  const directPayment12 = (p.direct && p.direct[player2.id + '<-' + player1.id]) || 0;
-  const directPayment21 = (p.direct && p.direct[player1.id + '<-' + player2.id]) || 0;
-  const riichiPayment12 = (p.riichi && p.riichi[player2.id + '<-' + player1.id]) || 0;
-  const riichiPayment21 = (p.riichi && p.riichi[player1.id + '<-' + player2.id]) || 0;
-  const honbaPayment12 = (p.honba && p.honba[player2.id + '<-' + player1.id]) || 0;
-  const honbaPayment21 = (p.honba && p.honba[player1.id + '<-' + player2.id]) || 0;
+  const directPayment12 = (p.direct && p.direct[`${player2.id}<-${player1.id}`]) || 0;
+  const directPayment21 = (p.direct && p.direct[`${player1.id}<-${player2.id}`]) || 0;
+  const riichiPayment12 = (p.riichi && p.riichi[`${player2.id}<-${player1.id}`]) || 0;
+  const riichiPayment21 = (p.riichi && p.riichi[`${player1.id}<-${player2.id}`]) || 0;
+  const honbaPayment12 = (p.honba && p.honba[`${player2.id}<-${player1.id}`]) || 0;
+  const honbaPayment21 = (p.honba && p.honba[`${player1.id}<-${player2.id}`]) || 0;
 
   // multiple nagashi
   if (directPayment12 === directPayment21 && directPayment12 !== 0) {
@@ -109,7 +109,7 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | u
       }
       return {
         round: s.currentOtherTable.currentRound,
-        currentPlayerId: s.currentOtherTablePlayers[(s.overviewViewShift || 0) % 4].id,
+        currentPlayerId: s.currentOtherTablePlayers[(s.overviewViewShift ?? 0) % 4].id,
         players: s.currentOtherTablePlayers as [Player, Player, Player, Player],
         riichiBets: [],
         penaltyFor: undefined,
@@ -125,7 +125,7 @@ const getSeatData = (s: IAppState, purpose: Csp) => {
   }
   return getSeating(
     overview.round,
-    s.overviewViewShift || 0,
+    s.overviewViewShift ?? 0,
     overview.currentPlayerId,
     overview.players,
     overview.riichiBets,

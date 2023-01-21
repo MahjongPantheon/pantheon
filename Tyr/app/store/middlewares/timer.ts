@@ -29,9 +29,9 @@ export const timerMw =
               return;
             }
             // Calc delta to support mobile suspending with js timers stopping
-            const delta = now() - (mw.getState().timer?.autostartLastUpdateTimestamp || 0);
+            const delta = now() - (mw.getState().timer?.autostartLastUpdateTimestamp ?? 0);
             const timeRemaining =
-              (mw.getState().timer?.autostartLastUpdateSecondsRemaining || 0) - delta;
+              (mw.getState().timer?.autostartLastUpdateSecondsRemaining ?? 0) - delta;
             if (timeRemaining <= 0) {
               // timer is finished
               next({
@@ -83,8 +83,8 @@ export const timerMw =
               return;
             }
             // Calc delta to support mobile suspending with js timers stopping
-            const delta = now() - (mw.getState().timer?.lastUpdateTimestamp || 0);
-            const timeRemaining = (mw.getState().timer?.lastUpdateSecondsRemaining || 0) - delta;
+            const delta = now() - (mw.getState().timer?.lastUpdateTimestamp ?? 0);
+            const timeRemaining = (mw.getState().timer?.lastUpdateSecondsRemaining ?? 0) - delta;
             if (timeRemaining <= 0) {
               // timer is finished
               next({

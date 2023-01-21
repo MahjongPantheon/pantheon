@@ -37,7 +37,7 @@ export function getRequiredYaku(state: IAppState, currentWinner?: number): YakuI
       }
       break;
     case 'ron':
-      const winner = currentWinner || state.multironCurrentWinner;
+      const winner = currentWinner ?? state.multironCurrentWinner;
       if (!winner) {
         throw new Error('No winner selected');
       }

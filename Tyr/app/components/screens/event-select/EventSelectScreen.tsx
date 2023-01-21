@@ -36,7 +36,7 @@ export class EventSelectScreen extends React.PureComponent<IComponentProps> {
   render() {
     const { state } = this.props;
     const loc = this.context as I18nService;
-    const playerName = state.currentPlayerDisplayName || loc._t('name');
+    const playerName = state.currentPlayerDisplayName ?? loc._t('name');
 
     return state.loading.events ? (
       <Preloader />

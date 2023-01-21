@@ -196,7 +196,7 @@ export class PlayerBase extends React.Component<IProps> {
                 {showInlineRiichi && <RiichiBigIcon className='player__inline-riichi' />}
               </p>
               {!!penaltyPoints && (
-                <div className='player__penalty'>{penaltyPoints / 1000 + 'k'}</div>
+                <div className='player__penalty'>{`${penaltyPoints / 1000}k`}</div>
               )}
             </div>
           </div>

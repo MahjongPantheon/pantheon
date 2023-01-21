@@ -3,7 +3,7 @@ import { Point, ArrowList } from '../base';
 import { getPayment } from '../utils';
 import { RiichiBet } from '../base-components/RiichiBet';
 import { RIICHI_HEIGHT, RIICHI_WIDTH, TEXT_PATH_OFFSET } from '../vars';
-import { ArrowEndByAnge } from '../base-components/ArrowEnd';
+import { ArrowEndByAngle } from '../base-components/ArrowEnd';
 import { PlayerSide } from '#/components/general/result-arrows/ResultArrowsProps';
 
 type IProps = {
@@ -14,7 +14,7 @@ type IProps = {
 
 export const LeftRightArrow = React.memo(function LeftRightArrow(props: IProps) {
   const { width, height, arrows } = props;
-  const arrow = arrows.LeftRight || arrows.RightLeft;
+  const arrow = arrows.LeftRight ?? arrows.RightLeft;
 
   if (!arrow) {
     return null;
@@ -32,8 +32,8 @@ export const LeftRightArrow = React.memo(function LeftRightArrow(props: IProps) 
   return (
     <g>
       <path id={id} d={`M ${0} ${height / 2} H ${width}`} stroke='currentColor' fill='none' />
-      {!fromLeftToRight && <ArrowEndByAnge offset={new Point(0, height / 2)} angle={0} />}
-      {fromLeftToRight && <ArrowEndByAnge offset={new Point(width, height / 2)} angle={180} />}
+      {!fromLeftToRight && <ArrowEndByAngle offset={new Point(0, height / 2)} angle={0} />}
+      {fromLeftToRight && <ArrowEndByAngle offset={new Point(width, height / 2)} angle={180} />}
 
       {payment !== '0' && (
         <text transform={`translate(${0} ${-TEXT_PATH_OFFSET})`}>

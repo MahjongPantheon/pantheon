@@ -71,6 +71,7 @@ export const persistentMw =
 
         mw.dispatch({ type: SET_STATE_SETTINGS, payload: data });
         break;
+      default:
     }
 
     return next(action);

@@ -51,7 +51,7 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
           stateUpdated.currentOutcome,
           stateUpdated.currentOutcome.selectedOutcome,
           yId,
-          stateUpdated.gameConfig?.allowedYaku || [],
+          stateUpdated.gameConfig?.allowedYaku ?? [],
           stateUpdated.yakuList,
           stateUpdated.currentOutcome.riichiBets
         );
@@ -67,7 +67,7 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
           stateUpdated.currentOutcome.wins[targetPlayer],
           stateUpdated.currentOutcome.selectedOutcome,
           yId,
-          stateUpdated.gameConfig?.allowedYaku || [],
+          stateUpdated.gameConfig?.allowedYaku ?? [],
           stateUpdated.yakuList,
           stateUpdated.currentOutcome.riichiBets
         );
@@ -161,10 +161,9 @@ export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppSt
         return state;
       }
 
-      const riichiList =
-        outcome?.riichiBets.indexOf(playerId) === -1
-          ? [...outcome.riichiBets, playerId]
-          : outcome?.riichiBets.filter((id) => id !== playerId);
+      const riichiList = outcome?.riichiBets.includes(playerId)
+        ? outcome?.riichiBets.filter((id) => id !== playerId)
+        : [...(outcome?.riichiBets ?? []), playerId];
 
       // Custom logic which disables tempai and/or riichi
       if (outcome?.selectedOutcome === 'draw' || outcome?.selectedOutcome === 'nagashi') {

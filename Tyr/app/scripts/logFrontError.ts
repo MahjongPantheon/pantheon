@@ -16,7 +16,7 @@ function errHandler(
       'Tyr',
       ((window as any).__debugInfo || {}).sh,
       ((window as any).__debugInfo || {}).p,
-      errorMsg + '\n' + '@' + currentUrl + ':' + lineNumber + ':' + charNumber,
+      `${errorMsg}\n@${currentUrl}:${lineNumber}:${charNumber}`,
       err && err.stack,
     ],
     id: Math.round(1000000 * Math.random()),

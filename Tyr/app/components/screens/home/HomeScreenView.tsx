@@ -9,6 +9,39 @@ import DonateIcon from '../../../img/donate.svg?svgr';
 import PlusIcon from '../../../img/plus.svg?svgr';
 import LinkIcon from '../../../img/link.svg?svgr';
 
+type IButtonProps = {
+  caption: string;
+  isVisible: boolean;
+  isActive?: boolean;
+  isBordered?: boolean;
+  icon?: ReactNode;
+  isIconRight?: boolean;
+  onClick: () => void;
+};
+
+const HomeScreenButton = React.memo(function (props: IButtonProps) {
+  const { caption, isVisible, isActive, isBordered, icon, isIconRight, onClick } = props;
+
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
+    <div
+      className={classNames('page-home__button', {
+        'page-home__button--active': isActive,
+        'page-home__button--bordered': isBordered,
+      })}
+      onClick={onClick}
+    >
+      <div className='page-home__button-content'>
+        {icon && <div className={classNames('icon', { 'icon--right': isIconRight })}>{icon}</div>}
+        {caption}
+      </div>
+    </div>
+  );
+});
+
 type IProps = {
   eventName: string;
   canStartGame: boolean;
@@ -97,39 +130,6 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
           isIconRight={true}
           onClick={onStatClick}
         />
-      </div>
-    </div>
-  );
-});
-
-type IButtonProps = {
-  caption: string;
-  isVisible: boolean;
-  isActive?: boolean;
-  isBordered?: boolean;
-  icon?: ReactNode;
-  isIconRight?: boolean;
-  onClick: () => void;
-};
-
-const HomeScreenButton = React.memo(function (props: IButtonProps) {
-  const { caption, isVisible, isActive, isBordered, icon, isIconRight, onClick } = props;
-
-  if (!isVisible) {
-    return null;
-  }
-
-  return (
-    <div
-      className={classNames('page-home__button', {
-        'page-home__button--active': isActive,
-        'page-home__button--bordered': isBordered,
-      })}
-      onClick={onClick}
-    >
-      <div className='page-home__button-content'>
-        {icon && <div className={classNames('icon', { 'icon--right': isIconRight })}>{icon}</div>}
-        {caption}
       </div>
     </div>
   );

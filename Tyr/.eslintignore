@@ -2,3 +2,5 @@
 node_modules/
 webpack.*.js
 typings.d.ts
+*.spec.ts
+app/primitives/memoize.ts

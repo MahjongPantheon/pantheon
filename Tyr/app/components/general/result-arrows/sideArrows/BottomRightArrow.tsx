@@ -18,7 +18,7 @@ type IProps = {
 
 export const BottomRightArrow = React.memo(function BottomRightArrow(props: IProps) {
   const { offsetX, offsetY, width, height, arrows } = props;
-  const arrow = arrows.BottomRight || arrows.RightBottom;
+  const arrow = arrows.BottomRight ?? arrows.RightBottom;
 
   if (!arrow) {
     return null;

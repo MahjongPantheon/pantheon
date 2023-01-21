@@ -149,6 +149,7 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
         case 'confirmation':
           nextScreen = 'overview';
           break;
+        default:
       }
 
       if (nextScreen === state.currentScreen) {

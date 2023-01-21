@@ -18,7 +18,7 @@ type IProps = {
 
 export const TopLeftArrow = React.memo(function TopLeftArrow(props: IProps) {
   const { offsetX, offsetY, width, height, arrows } = props;
-  const arrow = arrows.TopLeft || arrows.LeftTop;
+  const arrow = arrows.TopLeft ?? arrows.LeftTop;
 
   if (!arrow) {
     return null;

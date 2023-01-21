@@ -44,7 +44,7 @@ export class Graph<T> {
     return this;
   }
 
-  getNodeById(id: string | number): Node<T> | void {
+  getNodeById(id: string | number): Node<T> | null {
     return this._nodes[id.toString()] || null;
   }
 
@@ -113,9 +113,9 @@ export class Graph<T> {
     }
 
     const finalNodeList = [];
-    for (const node of newNodeList) {
-      if (!nodesToRemove.includes(node)) {
-        finalNodeList.push(node);
+    for (const newNode of newNodeList) {
+      if (!nodesToRemove.includes(newNode)) {
+        finalNodeList.push(newNode);
       }
     }
 

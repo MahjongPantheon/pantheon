@@ -29,9 +29,9 @@ export function modifyWinOutcomeCommons(state: IAppState, fields: WinOutcomeProp
           ...fields,
         } as AppOutcome, // hacked, ts does not understand this :(
       };
+    default:
+      return state;
   }
-
-  return state;
 }
 
 export function modifyWinOutcome(

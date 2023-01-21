@@ -31,7 +31,7 @@ export const ArrowText = React.memo(function ArrowText(props: IProps) {
     <text transform={`translate(${offsetX} ${offsetY})`}>
       <textPath
         xlinkHref={'#' + pathId}
-        startOffset={50 + '%'}
+        startOffset={'50%'}
         textAnchor='middle'
         fill='currentColor'
       >

@@ -3,6 +3,21 @@ import { ItemSelect } from './ItemSelect';
 import * as ReactDOM from 'react-dom';
 import './select-modal.css';
 
+const ModalItem = React.memo(function (props: ItemSelect) {
+  const { text, onSelect } = props;
+
+  const onClick = (e: any) => {
+    e.stopPropagation();
+    onSelect();
+  };
+
+  return (
+    <div className='select-modal__item' onClick={onClick}>
+      {text}
+    </div>
+  );
+});
+
 export type SelectModalProps = {
   items: ItemSelect[];
   onHide: () => void;
@@ -48,18 +63,3 @@ export class SelectModal extends React.Component<SelectModalProps> {
     );
   }
 }
-
-const ModalItem = React.memo(function (props: ItemSelect) {
-  const { text, onSelect } = props;
-
-  const onClick = (e: any) => {
-    e.stopPropagation();
-    onSelect();
-  };
-
-  return (
-    <div className='select-modal__item' onClick={onClick}>
-      {text}
-    </div>
-  );
-});

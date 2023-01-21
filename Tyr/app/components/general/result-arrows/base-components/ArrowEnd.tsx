@@ -11,26 +11,12 @@ type IProps = {
   direction: Direction;
 };
 
-export const ArrowEnd = React.memo(function ArrowEnd(props: IProps) {
-  const { start, center, end, inverted, direction } = props;
-
-  if (inverted) {
-    const l = [Direction.TOP_RIGHT, Direction.BOTTOM_LEFT].includes(direction) ? 1 : -1;
-    const angle = getArrowAngle(start, center, end) * l;
-    return <ArrowEndByAnge offset={start} angle={angle} />;
-  } else {
-    const l = [Direction.TOP_LEFT, Direction.BOTTOM_RIGHT].includes(direction) ? 1 : -1;
-    const angle = getArrowAngle(end, center, start) * l;
-    return <ArrowEndByAnge offset={end} angle={angle} />;
-  }
-});
-
 type ArrowEndInnerProps = {
   offset: Point;
   angle: number;
 };
 
-export const ArrowEndByAnge = React.memo(function ArrowEnd(props: ArrowEndInnerProps) {
+export const ArrowEndByAngle = React.memo(function ArrowEndByAngle(props: ArrowEndInnerProps) {
   const { offset, angle } = props;
 
   return (
@@ -50,4 +36,18 @@ export const ArrowEndByAnge = React.memo(function ArrowEnd(props: ArrowEndInnerP
       </g>
     </g>
   );
+});
+
+export const ArrowEnd = React.memo(function ArrowEnd(props: IProps) {
+  const { start, center, end, inverted, direction } = props;
+
+  if (inverted) {
+    const l = [Direction.TOP_RIGHT, Direction.BOTTOM_LEFT].includes(direction) ? 1 : -1;
+    const angle = getArrowAngle(start, center, end) * l;
+    return <ArrowEndByAngle offset={start} angle={angle} />;
+  } else {
+    const l = [Direction.TOP_LEFT, Direction.BOTTOM_RIGHT].includes(direction) ? 1 : -1;
+    const angle = getArrowAngle(end, center, start) * l;
+    return <ArrowEndByAngle offset={end} angle={angle} />;
+  }
 });

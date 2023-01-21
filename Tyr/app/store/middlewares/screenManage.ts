@@ -78,6 +78,7 @@ export const screenManageMw =
               mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId } });
             }
             break;
+          default:
         }
         break;
       case GOTO_PREV_SCREEN:
@@ -96,6 +97,7 @@ export const screenManageMw =
               mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId } });
             }
             break;
+          default:
         }
         break;
       case START_NEW_GAME:
@@ -125,7 +127,7 @@ export const screenManageMw =
       case SHOW_GAME_LOG:
         next(action);
         state = mw.getState();
-        const sessionHash = state.currentSessionHash || state.currentOtherTableHash;
+        const sessionHash = state.currentSessionHash ?? state.currentOtherTableHash;
         if (sessionHash) {
           mw.dispatch({ type: GET_ALL_ROUNDS_INIT, payload: sessionHash });
         }

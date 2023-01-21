@@ -63,7 +63,6 @@ import { Player } from '#/interfaces/common';
 import { LUser } from '#/interfaces/local';
 
 export function mimirReducer(state: IAppState, action: AppActionTypes): IAppState {
-  let error;
   let player;
   switch (action.type) {
     case LOGIN_INIT:
@@ -147,7 +146,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
           games: true,
         },
       };
-    case UPDATE_CURRENT_GAMES_SUCCESS:
+    case UPDATE_CURRENT_GAMES_SUCCESS: {
       if (!action.payload.games[0]) {
         state = {
           ...state,
@@ -190,6 +189,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
           games: false,
         },
       };
+    }
     case UPDATE_CURRENT_GAMES_FAIL:
       return {
         ...state,
@@ -297,12 +297,12 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
           allRoundsOverviewErrorCode: 404,
         };
       }
-    case GET_ALL_ROUNDS_FAIL:
-      const code = 418;
+    case GET_ALL_ROUNDS_FAIL: {
+      let code = 418;
       if (!action.payload) {
-        error = 404;
+        code = 404;
       } else {
-        error = action.payload.code;
+        code = action.payload.code;
       }
 
       return {
@@ -314,6 +314,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         allRoundsOverview: undefined,
         allRoundsOverviewErrorCode: code,
       };
+    }
     case GET_LAST_RESULTS_INIT:
       return {
         ...state,
@@ -377,12 +378,13 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
           message: action.payload.message,
         },
       };
-    case RANDOMIZE_NEWGAME_PLAYERS:
-      const newArr = rand((<LUser[]>[]).concat(state.newGameSelectedUsers || []));
+    case RANDOMIZE_NEWGAME_PLAYERS: {
+      const newArr = rand(([] as LUser[]).concat(state.newGameSelectedUsers ?? []));
       return {
         ...state,
         newGameSelectedUsers: newArr,
       };
+    }
     case CLEAR_NEWGAME_PLAYERS:
       return {
         ...state,
@@ -395,7 +397,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
       }
 
       const selectedUsers = state.newGameIdsToSet.map((id) => {
-        return state.allPlayers?.find((p) => p.id === id) || defaultPlayer;
+        return state.allPlayers?.find((p) => p.id === id) ?? defaultPlayer;
       });
 
       return {
@@ -404,38 +406,38 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         newGameIdsToSet: undefined,
       };
     case SELECT_NEWGAME_PLAYER_EAST:
-      player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
+      player = state.allPlayers?.find((p) => p.id === action.payload) ?? defaultPlayer;
       return {
         ...state,
-        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 0, player),
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers ?? [], 0, player),
       };
     case SELECT_NEWGAME_PLAYER_SOUTH:
-      player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
+      player = state.allPlayers?.find((p) => p.id === action.payload) ?? defaultPlayer;
       return {
         ...state,
-        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 1, player),
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers ?? [], 1, player),
       };
     case SELECT_NEWGAME_PLAYER_WEST:
-      player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
+      player = state.allPlayers?.find((p) => p.id === action.payload) ?? defaultPlayer;
       return {
         ...state,
-        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 2, player),
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers ?? [], 2, player),
       };
     case SELECT_NEWGAME_PLAYER_NORTH:
-      player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
+      player = state.allPlayers?.find((p) => p.id === action.payload) ?? defaultPlayer;
       return {
         ...state,
-        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 3, player),
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers ?? [], 3, player),
       };
     case TABLE_ROTATE_CLOCKWISE:
       return {
         ...state,
-        overviewViewShift: ((state.overviewViewShift || 0) + 1) % 4,
+        overviewViewShift: ((state.overviewViewShift ?? 0) + 1) % 4,
       };
     case TABLE_ROTATE_COUNTERCLOCKWISE:
       return {
         ...state,
-        overviewViewShift: ((state.overviewViewShift || 0) + 3) % 4,
+        overviewViewShift: ((state.overviewViewShift ?? 0) + 3) % 4,
       };
     case GET_GAME_OVERVIEW_INIT:
       return {

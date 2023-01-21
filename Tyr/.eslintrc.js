@@ -19,7 +19,7 @@ module.exports = {
   rules: {
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     'react/jsx-props-no-spreading': 'off',
-    'react/require-default-props': [1, { ignoreFunctionalComponents: true }],
+    'react/require-default-props': 'off',
     'react/no-array-index-key': 'off',
     'unused-imports/no-unused-imports': 'error',
     'array-callback-return': ['error'],

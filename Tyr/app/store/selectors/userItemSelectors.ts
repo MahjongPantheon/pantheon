@@ -47,6 +47,8 @@ export function showPaoButton(state: IAppState) {
         }
       }
       return true;
+    default:
+      return undefined;
   }
 }
 
@@ -158,6 +160,6 @@ export function nagashiDisabled(state: IAppState, userData: Player) {
   return getNagashiUsers(state).length >= 3 && -1 === getNagashiUsers(state).indexOf(userData);
 }
 
-export function paoDisabled(state: IAppState, userData: Player) {}
+export function paoDisabled(_state: IAppState, _userData: Player) {}
 
 // riichi & dead hand can't be disabled

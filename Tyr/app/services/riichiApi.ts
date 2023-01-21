@@ -109,7 +109,7 @@ export class RiichiApiService {
     );
   }
 
-  getGameOverview(sessionHashcode: string, eventId: number) {
+  getGameOverview(sessionHashcode: string) {
     return this._jsonRpcRequest<RSessionOverview>(
       'getGameOverview',
       sessionHashcode
@@ -137,7 +137,7 @@ export class RiichiApiService {
   }
 
   getChangesOverview(state: IAppState) {
-    const gameHashcode: string = state.currentSessionHash || '';
+    const gameHashcode: string = state.currentSessionHash ?? '';
     const roundData = formatRoundToRemote(state);
     return this._jsonRpcRequest<RRoundPaymentsInfo>('addRound', gameHashcode, roundData, true);
   }
@@ -160,7 +160,7 @@ export class RiichiApiService {
   }
 
   addRound(state: IAppState) {
-    const gameHashcode: string = state.currentSessionHash || '';
+    const gameHashcode: string = state.currentSessionHash ?? '';
     const roundData = formatRoundToRemote(state);
     return this._jsonRpcRequest<boolean | SessionState>('addRound', gameHashcode, roundData, false);
   }
@@ -189,8 +189,8 @@ export class RiichiApiService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('X-Api-Version', environment.apiVersion.map((v) => v.toString()).join('.'));
-    headers.append('X-Auth-Token', this._authToken || '');
-    headers.append('X-Current-Person-Id', this._personId || '');
+    headers.append('X-Auth-Token', this._authToken ?? '');
+    headers.append('X-Current-Person-Id', this._personId ?? '');
 
     const jsonRpcBody = {
       jsonrpc: '2.0',
@@ -224,8 +224,8 @@ export class RiichiApiService {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('X-Api-Version', environment.apiVersion.map((v) => v.toString()).join('.'));
-    headers.append('X-Auth-Token', this._authToken || '');
-    headers.append('X-Current-Person-Id', this._personId || '');
+    headers.append('X-Auth-Token', this._authToken ?? '');
+    headers.append('X-Current-Person-Id', this._personId ?? '');
 
     const jsonRpcBody = {
       jsonrpc: '2.0',

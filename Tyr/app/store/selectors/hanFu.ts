@@ -27,7 +27,7 @@ function _getHan(state: IAppState, user?: number) {
     case 'tsumo':
       return outcome.han;
     case 'ron':
-      const selected = user || state.multironCurrentWinner;
+      const selected = user ?? state.multironCurrentWinner;
       if (!selected) {
         return 0; // data not loaded yet
       }
@@ -53,7 +53,7 @@ function _getFu(state: IAppState, user?: number) {
       }
       return fu;
     case 'ron':
-      const selected = user || state.multironCurrentWinner;
+      const selected = user ?? state.multironCurrentWinner;
       if (!selected) {
         return 0; // data not loaded yet
       }
@@ -93,7 +93,7 @@ function _getDora(state: IAppState, user?: number): number {
     case 'tsumo':
       return outcome.dora;
     case 'ron':
-      const selected = user || state.multironCurrentWinner;
+      const selected = user ?? state.multironCurrentWinner;
       if (!selected) {
         return 0; // data not loaded yet
       }

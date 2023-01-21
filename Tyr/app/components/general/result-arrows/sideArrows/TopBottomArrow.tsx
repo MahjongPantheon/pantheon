@@ -3,7 +3,7 @@ import { Point, ArrowList } from '../base';
 import { getPayment } from '../utils';
 import { RiichiBet } from '../base-components/RiichiBet';
 import { RIICHI_HEIGHT, RIICHI_WIDTH, TEXT_PATH_OFFSET } from '../vars';
-import { ArrowEndByAnge } from '../base-components/ArrowEnd';
+import { ArrowEndByAngle } from '../base-components/ArrowEnd';
 import { PlayerSide } from '#/components/general/result-arrows/ResultArrowsProps';
 
 type IProps = {
@@ -14,7 +14,7 @@ type IProps = {
 
 export const TopBottomArrow = React.memo(function TopBottomArrow(props: IProps) {
   const { width, height, arrows } = props;
-  const arrow = arrows.BottomTop || arrows.TopBottom;
+  const arrow = arrows.BottomTop ?? arrows.TopBottom;
 
   if (!arrow) {
     return null;
@@ -33,8 +33,8 @@ export const TopBottomArrow = React.memo(function TopBottomArrow(props: IProps) 
     <g>
       <g>
         <path id={id} d={`M ${width / 2} ${0} V ${height}`} stroke='currentColor' fill='none' />
-        {fromTopToBottom && <ArrowEndByAnge offset={new Point(width / 2, height)} angle={-90} />}
-        {!fromTopToBottom && <ArrowEndByAnge offset={new Point(width / 2, 0)} angle={90} />}
+        {fromTopToBottom && <ArrowEndByAngle offset={new Point(width / 2, height)} angle={-90} />}
+        {!fromTopToBottom && <ArrowEndByAngle offset={new Point(width / 2, 0)} angle={90} />}
 
         {payment !== '0' && (
           <text transform={`translate(${TEXT_PATH_OFFSET} ${0})`}>

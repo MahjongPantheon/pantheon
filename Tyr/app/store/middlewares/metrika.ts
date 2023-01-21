@@ -32,7 +32,7 @@ import { IAppState } from '#/store/interfaces';
 
 export const metrika =
   (ms: MetrikaService) =>
-  (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
+  (_mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) =>
   (action: AppActionTypes) => {
     switch (action.type) {

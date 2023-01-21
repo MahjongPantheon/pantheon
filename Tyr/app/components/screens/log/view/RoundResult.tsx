@@ -3,6 +3,30 @@ import { ReactNode, useCallback } from 'react';
 import classNames from 'classnames';
 import { IRoundResult } from '#/components/screens/log/view/LogScreenView';
 
+type RoundResultCellProps = {
+  delta: number;
+  score: number;
+};
+
+export const RoundResultCell: React.FC<RoundResultCellProps> = (props) => {
+  const { delta, score } = props;
+
+  return (
+    <div className='page-log__cell'>
+      <div
+        className={classNames(
+          'page-log__delta',
+          { 'page-log__delta--success': delta > 0 },
+          { 'page-log__delta--danger': delta < 0 }
+        )}
+      >
+        {delta > 0 ? `+${delta}` : delta}
+      </div>
+      <div className='page-log__score'>{score}</div>
+    </div>
+  );
+};
+
 type RoundResultProps = IRoundResult & {
   index: number;
   players: { [index: string]: string };
@@ -26,30 +50,6 @@ export const RoundResult: React.FC<RoundResultProps> = (props) => {
         ))}
       </div>
       {children}
-    </div>
-  );
-};
-
-type RoundResultCellProps = {
-  delta: number;
-  score: number;
-};
-
-export const RoundResultCell: React.FC<RoundResultCellProps> = (props) => {
-  const { delta, score } = props;
-
-  return (
-    <div className='page-log__cell'>
-      <div
-        className={classNames(
-          'page-log__delta',
-          { 'page-log__delta--success': delta > 0 },
-          { 'page-log__delta--danger': delta < 0 }
-        )}
-      >
-        {delta > 0 ? '+' + delta : delta}
-      </div>
-      <div className='page-log__score'>{score}</div>
     </div>
   );
 };

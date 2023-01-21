@@ -48,6 +48,8 @@ function _getWins(
         });
       }
       return wins;
+    default:
+      return undefined;
   }
 }
 

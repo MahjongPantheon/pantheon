@@ -19,12 +19,13 @@
  */
 
 import jsQR from 'jsqr';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const crc32 = require('crc/crc32').default;
 
 export class QrService {
   private _video: HTMLVideoElement | null = null;
-  private _onReadyStateChange = (loading: boolean) => {};
-  private _onPinReceived = (pin: string) => {};
+  private _onReadyStateChange = (_loading: boolean) => {};
+  private _onPinReceived = (_pin: string) => {};
 
   onReadyStateChange(cb: (loading: boolean) => void) {
     this._onReadyStateChange = cb;
@@ -46,17 +47,6 @@ export class QrService {
   scanQr(canvasElement: HTMLCanvasElement) {
     this._video = document.createElement('video');
     const canvas = canvasElement.getContext('2d');
-
-    // Use facingMode: environment to attempt to get the front camera on phones
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then((stream) => {
-      if (!this._video) {
-        return;
-      }
-      this._video.srcObject = stream;
-      this._video.setAttribute('playsinline', 'true'); // required to tell iOS safari we don't want fullscreen
-      this._video.play();
-      requestAnimationFrame(tick);
-    });
 
     const tick = () => {
       this._onReadyStateChange(true);
@@ -99,6 +89,17 @@ export class QrService {
 
       requestAnimationFrame(tick);
     };
+
+    // Use facingMode: environment to attempt to get the front camera on phones
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then((stream) => {
+      if (!this._video) {
+        return;
+      }
+      this._video.srcObject = stream;
+      this._video.setAttribute('playsinline', 'true'); // required to tell iOS safari we don't want fullscreen
+      this._video.play();
+      requestAnimationFrame(tick);
+    });
   }
 
   _stopVideo() {

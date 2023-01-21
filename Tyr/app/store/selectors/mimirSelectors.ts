@@ -94,10 +94,11 @@ export function getOutcome(state: IAppState) {
 function _getWinningUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'tsumo':
+    case 'tsumo': {
       const foundWinner = outcome.winner && state.players?.find((val) => val.id === outcome.winner);
       return foundWinner ? [foundWinner] : [];
-    case 'ron':
+    }
+    case 'ron': {
       const users: Player[] = [];
       for (const w in outcome.wins) {
         if (!outcome.wins.hasOwnProperty(w)) {
@@ -109,6 +110,7 @@ function _getWinningUsers(state: IAppState): Player[] {
         }
       }
       return users;
+    }
     case 'draw':
     case 'nagashi':
       return outcome.tempai
@@ -138,11 +140,12 @@ export const getLosingUsers: typeof _getLosingUsers = memoize(_getLosingUsers);
 function _getPaoUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'tsumo':
+    case 'tsumo': {
       const foundPao =
         outcome.paoPlayerId && state.players?.find((val) => val.id === outcome.paoPlayerId);
       return foundPao ? [foundPao] : [];
-    case 'ron':
+    }
+    case 'ron': {
       return Object.keys(outcome.wins).reduce<Player[]>((acc, playerId) => {
         if (outcome.wins[playerId].paoPlayerId) {
           const foundPao = state.players?.find(
@@ -154,6 +157,7 @@ function _getPaoUsers(state: IAppState): Player[] {
         }
         return acc;
       }, []);
+    }
     default:
       return [];
   }
