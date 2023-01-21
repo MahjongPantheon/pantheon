@@ -1,4 +1,4 @@
-import {PlayerArrow} from '#/components/general/result-arrows/ResultArrowsProps';
+import { PlayerArrow } from '#/components/general/result-arrows/ResultArrowsProps';
 
 export class Point {
   x: number;
@@ -18,19 +18,19 @@ export enum Direction {
 }
 
 export type ArrowList = {
-  TopLeft?: PlayerArrow
-  TopRight?: PlayerArrow
-  TopBottom?: PlayerArrow
+  TopLeft?: PlayerArrow;
+  TopRight?: PlayerArrow;
+  TopBottom?: PlayerArrow;
 
-  LeftTop?: PlayerArrow
-  LeftRight?: PlayerArrow
-  LeftBottom?: PlayerArrow
+  LeftTop?: PlayerArrow;
+  LeftRight?: PlayerArrow;
+  LeftBottom?: PlayerArrow;
 
-  RightTop?: PlayerArrow
-  RightLeft?: PlayerArrow
-  RightBottom?: PlayerArrow
+  RightTop?: PlayerArrow;
+  RightLeft?: PlayerArrow;
+  RightBottom?: PlayerArrow;
 
-  BottomTop?: PlayerArrow
-  BottomLeft?: PlayerArrow
-  BottomRight?: PlayerArrow
-}
+  BottomTop?: PlayerArrow;
+  BottomLeft?: PlayerArrow;
+  BottomRight?: PlayerArrow;
+};

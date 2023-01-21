@@ -1,5 +1,5 @@
 export interface ItemSelect {
-  text: string
-  onSelect: () => void
-  unavailable?: boolean
+  text: string;
+  onSelect: () => void;
+  unavailable?: boolean;
 }

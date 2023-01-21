@@ -3,7 +3,8 @@ import {
   ADD_ROUND_FAIL,
   ADD_ROUND_INIT,
   ADD_ROUND_SUCCESS,
-  AppActionTypes, CLEAR_NEWGAME_PLAYERS,
+  AppActionTypes,
+  CLEAR_NEWGAME_PLAYERS,
   EVENTS_GET_LIST_FAIL,
   EVENTS_GET_LIST_INIT,
   EVENTS_GET_LIST_SUCCESS,
@@ -27,7 +28,10 @@ import {
   GET_OTHER_TABLE_SUCCESS,
   GET_OTHER_TABLES_LIST_FAIL,
   GET_OTHER_TABLES_LIST_INIT,
-  GET_OTHER_TABLES_LIST_SUCCESS, GET_USERINFO_FAIL, GET_USERINFO_INIT, GET_USERINFO_SUCCESS,
+  GET_OTHER_TABLES_LIST_SUCCESS,
+  GET_USERINFO_FAIL,
+  GET_USERINFO_INIT,
+  GET_USERINFO_SUCCESS,
   HISTORY_INIT,
   LOGIN_FAIL,
   LOGIN_INIT,
@@ -49,19 +53,16 @@ import {
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
-import {IAppState} from '../interfaces';
-import {makeYakuGraph} from '#/primitives/yaku-compat';
-import {modifyArray} from './util';
-import {defaultPlayer} from '../selectors/screenNewGameSelectors';
-import {rand} from '#/primitives/rand';
-import {initialState} from '../state';
-import {Player} from "#/interfaces/common";
-import {LUser} from "#/interfaces/local";
+import { IAppState } from '../interfaces';
+import { makeYakuGraph } from '#/primitives/yaku-compat';
+import { modifyArray } from './util';
+import { defaultPlayer } from '../selectors/screenNewGameSelectors';
+import { rand } from '#/primitives/rand';
+import { initialState } from '../state';
+import { Player } from '#/interfaces/common';
+import { LUser } from '#/interfaces/local';
 
-export function mimirReducer(
-  state: IAppState,
-  action: AppActionTypes
-): IAppState {
+export function mimirReducer(state: IAppState, action: AppActionTypes): IAppState {
   let error;
   let player;
   switch (action.type) {
@@ -70,46 +71,46 @@ export function mimirReducer(
         ...state,
         loading: {
           ...state.loading,
-          login: true
+          login: true,
         },
-        loginError: undefined
+        loginError: undefined,
       };
     case LOGIN_SUCCESS:
       return {
         ...state,
         loading: {
           ...state.loading,
-          login: false
+          login: false,
         },
         currentPlayerId: action.payload.personId || undefined,
         isLoggedIn: true,
         currentScreen: 'eventSelector',
-        loginError: undefined
+        loginError: undefined,
       };
     case LOGIN_FAIL:
       return {
         ...state,
         loading: {
           ...state.loading,
-          login: false
+          login: false,
         },
         isLoggedIn: false,
         currentScreen: 'login',
-        loginError: { details: action.payload, message: action.payload.message }
+        loginError: { details: action.payload, message: action.payload.message },
       };
     case RESET_LOGIN_ERROR:
       return {
         ...state,
         currentScreen: 'login', //todo remove
-        loginError: undefined
+        loginError: undefined,
       };
     case GET_USERINFO_INIT:
       return {
         ...state,
         loading: {
           ...state.loading,
-          players: true
-        }
+          players: true,
+        },
       };
     case GET_USERINFO_SUCCESS:
       return {
@@ -118,20 +119,21 @@ export function mimirReducer(
         currentPlayerDisplayName: action.payload.displayName,
         loading: {
           ...state.loading,
-          players: false
-        }
+          players: false,
+        },
       };
     case GET_USERINFO_FAIL:
       return {
         ...state,
         loading: {
           ...state.loading,
-          players: false
+          players: false,
         },
-        getUserinfoError: { // Stored for conformity, but is not displayed anywhere now.
+        getUserinfoError: {
+          // Stored for conformity, but is not displayed anywhere now.
           details: action.payload,
-          message: action.payload.message
-        }
+          message: action.payload.message,
+        },
       };
     case UPDATE_CURRENT_GAMES_INIT:
       return {
@@ -142,24 +144,26 @@ export function mimirReducer(
         currentOtherTableIndex: 0,
         loading: {
           ...state.loading,
-          games: true
-        }
+          games: true,
+        },
       };
     case UPDATE_CURRENT_GAMES_SUCCESS:
       if (!action.payload.games[0]) {
         state = {
           ...state,
-          currentScreen: ['otherTablesList', 'otherTable', 'lastResults'].includes(state.currentScreen)
+          currentScreen: ['otherTablesList', 'otherTable', 'lastResults'].includes(
+            state.currentScreen
+          )
             ? state.currentScreen
-            : 'overview'
+            : 'overview',
         };
       }
 
-      let mapIdToPlayer: { [key: string]: Player } = {};
+      const mapIdToPlayer: { [key: string]: Player } = {};
       let players = undefined;
       if (action.payload.games[0]) {
         players = action.payload.games[0].players;
-        for (let p of players) {
+        for (const p of players) {
           mapIdToPlayer[p.id.toString()] = p;
         }
       }
@@ -175,124 +179,126 @@ export function mimirReducer(
           ...state.timer,
           secondsRemaining: action.payload.timerState.timeRemaining || 0,
           lastUpdateSecondsRemaining: action.payload.timerState.timeRemaining || 0,
-          lastUpdateTimestamp: Math.round((new Date()).getTime() / 1000),
+          lastUpdateTimestamp: Math.round(new Date().getTime() / 1000),
           waiting: action.payload.timerState.waitingForTimer,
           autostartSecondsRemaining: action.payload.timerState.autostartTimer || 0,
           autostartLastUpdateSecondsRemaining: action.payload.timerState.autostartTimer || 0,
-          autostartLastUpdateTimestamp: Math.round((new Date()).getTime() / 1000),
+          autostartLastUpdateTimestamp: Math.round(new Date().getTime() / 1000),
         },
         loading: {
           ...state.loading,
-          games: false
-        }
+          games: false,
+        },
       };
     case UPDATE_CURRENT_GAMES_FAIL:
       return {
         ...state,
         loading: {
           ...state.loading,
-          games: false
+          games: false,
         },
-        updateCurrentGamesError: { // Stored for conformity, but is not displayed anywhere now.
+        updateCurrentGamesError: {
+          // Stored for conformity, but is not displayed anywhere now.
           details: action.payload,
-          message: action.payload.message
-        }
+          message: action.payload.message,
+        },
       };
     case GET_ALL_PLAYERS_INIT:
       return {
         ...state,
         loading: {
           ...state.loading,
-          players: true
+          players: true,
         },
         allPlayers: undefined,
-        allPlayersError: undefined
+        allPlayersError: undefined,
       };
     case GET_ALL_PLAYERS_SUCCESS:
       return {
         ...state,
         loading: {
           ...state.loading,
-          players: false
+          players: false,
         },
         allPlayers: action.payload,
-        allPlayersError: undefined
-      }
+        allPlayersError: undefined,
+      };
     case GET_ALL_PLAYERS_FAIL:
       return {
         ...state,
         loading: {
           ...state.loading,
-          players: false
+          players: false,
         },
         allPlayers: undefined,
-        allPlayersError: { details: action.payload, message: action.payload.message }
+        allPlayersError: { details: action.payload, message: action.payload.message },
       };
     case GET_CHANGES_OVERVIEW_INIT:
       return {
         ...state,
         loading: {
           ...state.loading,
-          overview: true
-        }
+          overview: true,
+        },
       };
     case GET_CHANGES_OVERVIEW_SUCCESS:
       return {
         ...state,
         loading: {
           ...state.loading,
-          overview: false
+          overview: false,
         },
         changesOverview: action.payload,
-        changesOverviewError: undefined
+        changesOverviewError: undefined,
       };
     case GET_CHANGES_OVERVIEW_FAIL:
       return {
         ...state,
         loading: {
           ...state.loading,
-          overview: false
+          overview: false,
         },
         changesOverview: undefined,
         changesOverviewError: {
           message: action.payload.message,
-          details: action.payload
-        }
+          details: action.payload,
+        },
       };
     case GET_ALL_ROUNDS_INIT:
       return {
         ...state,
         loading: {
           ...state.loading,
-          overview: true
+          overview: true,
         },
         allRoundsOverview: undefined,
-        allRoundsOverviewErrorCode: undefined
+        allRoundsOverviewErrorCode: undefined,
       };
     case GET_ALL_ROUNDS_SUCCESS:
-      if (action.payload) { // check for success: in some cases we can get 404 for this request
+      if (action.payload) {
+        // check for success: in some cases we can get 404 for this request
         return {
           ...state,
           loading: {
             ...state.loading,
-            overview: false
+            overview: false,
           },
           allRoundsOverview: action.payload,
-          allRoundsOverviewErrorCode: undefined
+          allRoundsOverviewErrorCode: undefined,
         };
       } else {
         return {
           ...state,
           loading: {
             ...state.loading,
-            overview: false
+            overview: false,
           },
           allRoundsOverview: undefined,
-          allRoundsOverviewErrorCode: 404
+          allRoundsOverviewErrorCode: 404,
         };
       }
     case GET_ALL_ROUNDS_FAIL:
-      let code = 418;
+      const code = 418;
       if (!action.payload) {
         error = 404;
       } else {
@@ -303,94 +309,94 @@ export function mimirReducer(
         ...state,
         loading: {
           ...state.loading,
-          overview: false
+          overview: false,
         },
         allRoundsOverview: undefined,
-        allRoundsOverviewErrorCode: code
+        allRoundsOverviewErrorCode: code,
       };
     case GET_LAST_RESULTS_INIT:
       return {
         ...state,
         loading: {
           ...state.loading,
-          overview: true
+          overview: true,
         },
         lastResults: undefined,
-        lastResultsError: undefined
+        lastResultsError: undefined,
       };
     case GET_LAST_RESULTS_SUCCESS:
       return {
         ...state,
         loading: {
           ...state.loading,
-          overview: false
+          overview: false,
         },
         lastResults: action.payload,
-        lastResultsError: undefined
+        lastResultsError: undefined,
       };
     case GET_LAST_RESULTS_FAIL:
       return {
         ...state,
         loading: {
           ...state.loading,
-          overview: false
+          overview: false,
         },
         lastResults: undefined,
         lastResultsError: {
           details: action.payload,
-          message: action.payload.message
-        }
+          message: action.payload.message,
+        },
       };
     case START_GAME_INIT:
       return {
         ...state,
         loading: {
           ...state.loading,
-          games: true
+          games: true,
         },
-        newGameStartError: undefined
+        newGameStartError: undefined,
       };
     case START_GAME_SUCCESS:
       return {
         ...state,
         loading: {
           ...state.loading,
-          games: false
+          games: false,
         },
-        newGameStartError: undefined
+        newGameStartError: undefined,
       };
     case START_GAME_FAIL:
       return {
         ...state,
         loading: {
           ...state.loading,
-          games: false
+          games: false,
         },
         newGameStartError: {
           details: action.payload,
-          message: action.payload.message
-        }
+          message: action.payload.message,
+        },
       };
     case RANDOMIZE_NEWGAME_PLAYERS:
       const newArr = rand((<LUser[]>[]).concat(state.newGameSelectedUsers || []));
       return {
         ...state,
-        newGameSelectedUsers: newArr
+        newGameSelectedUsers: newArr,
       };
     case CLEAR_NEWGAME_PLAYERS:
       return {
         ...state,
         newGameSelectedUsers: [defaultPlayer, defaultPlayer, defaultPlayer, defaultPlayer],
-        newGameIdsToSet: undefined
+        newGameIdsToSet: undefined,
       };
     case SET_NEWGAME_PLAYERS:
       if (!state.newGameIdsToSet) {
         return state;
       }
 
-      const selectedUsers = state.newGameIdsToSet.map(id => {
-        return  state.allPlayers?.find((p) => p.id === id) || defaultPlayer;
-      })
+      const selectedUsers = state.newGameIdsToSet.map((id) => {
+        return state.allPlayers?.find((p) => p.id === id) || defaultPlayer;
+      });
 
       return {
         ...state,
@@ -401,35 +407,35 @@ export function mimirReducer(
       player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
       return {
         ...state,
-        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 0, player)
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 0, player),
       };
     case SELECT_NEWGAME_PLAYER_SOUTH:
       player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
       return {
         ...state,
-        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 1, player)
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 1, player),
       };
     case SELECT_NEWGAME_PLAYER_WEST:
       player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
       return {
         ...state,
-        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 2, player)
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 2, player),
       };
     case SELECT_NEWGAME_PLAYER_NORTH:
       player = state.allPlayers?.find((p) => p.id === action.payload) || defaultPlayer;
       return {
         ...state,
-        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 3, player)
+        newGameSelectedUsers: modifyArray(state.newGameSelectedUsers || [], 3, player),
       };
     case TABLE_ROTATE_CLOCKWISE:
       return {
         ...state,
-        overviewViewShift: ((state.overviewViewShift || 0) + 1) % 4
+        overviewViewShift: ((state.overviewViewShift || 0) + 1) % 4,
       };
     case TABLE_ROTATE_COUNTERCLOCKWISE:
       return {
         ...state,
-        overviewViewShift: ((state.overviewViewShift || 0) + 3) % 4
+        overviewViewShift: ((state.overviewViewShift || 0) + 3) % 4,
       };
     case GET_GAME_OVERVIEW_INIT:
       return {
@@ -438,85 +444,85 @@ export function mimirReducer(
         currentOtherTablePlayers: [],
         currentOtherTableHash: undefined,
         currentOtherTableIndex: 0,
-        gameOverviewReady: false
+        gameOverviewReady: false,
       };
     case GET_GAME_OVERVIEW_SUCCESS:
       return {
         ...state,
         gameOverviewReady: true,
-        ...(action.payload)
+        ...action.payload,
       };
     case GET_GAME_OVERVIEW_FAIL:
       return {
         ...state,
-        currentScreen: 'login'
+        currentScreen: 'login',
       };
     case GET_OTHER_TABLES_LIST_INIT:
       return {
         ...state,
         loading: {
           ...state.loading,
-          otherTables: true
+          otherTables: true,
         },
-        otherTablesListError: undefined
+        otherTablesListError: undefined,
       };
     case GET_OTHER_TABLES_LIST_SUCCESS:
       return {
         ...state,
         loading: {
           ...state.loading,
-          otherTables: false
+          otherTables: false,
         },
         otherTablesList: action.payload,
         currentScreen: 'otherTablesList',
-        otherTablesListError: undefined
+        otherTablesListError: undefined,
       };
     case GET_OTHER_TABLES_LIST_FAIL:
       return {
         ...state,
         loading: {
           ...state.loading,
-          otherTables: false
+          otherTables: false,
         },
         currentScreen: 'otherTablesList',
         otherTablesListError: {
           message: action.payload.message,
-          details: action.payload
-        }
+          details: action.payload,
+        },
       };
     case GET_OTHER_TABLE_INIT:
       return {
         ...state,
         loading: {
           ...state.loading,
-          otherTable: true
+          otherTable: true,
         },
         currentOtherTable: undefined,
         currentOtherTableHash: action.payload,
         currentOtherTableIndex: 0,
         allRoundsOverview: undefined,
         currentOtherTablePlayers: [],
-        otherTableError: undefined
+        otherTableError: undefined,
       };
     case GET_OTHER_TABLE_SUCCESS:
       return {
         ...state,
         loading: {
           ...state.loading,
-          otherTable: false
+          otherTable: false,
         },
         currentScreen: 'otherTable',
         currentOtherTable: action.payload,
         currentOtherTableIndex: action.payload.tableIndex,
         currentOtherTablePlayers: action.payload.players,
-        otherTableError: undefined
+        otherTableError: undefined,
       };
     case GET_OTHER_TABLE_FAIL:
       return {
         ...state,
         loading: {
           ...state.loading,
-          otherTable: false
+          otherTable: false,
         },
         currentScreen: 'otherTable',
         currentOtherTable: undefined,
@@ -526,16 +532,16 @@ export function mimirReducer(
         currentOtherTablePlayers: [],
         otherTableError: {
           message: action.payload.message,
-          details: action.payload
-        }
+          details: action.payload,
+        },
       };
     case ADD_ROUND_INIT:
       return {
         ...state,
         loading: {
           ...state.loading,
-          addRound: true
-        }
+          addRound: true,
+        },
       };
     case ADD_ROUND_SUCCESS:
       if (action.payload._isFinished) {
@@ -552,29 +558,29 @@ export function mimirReducer(
           isIos: state.isIos,
           yakuList: state.yakuList,
           isUniversalWatcher: state.isUniversalWatcher,
-          settings: state.settings
+          settings: state.settings,
         };
       }
       return {
         ...state,
         loading: {
           ...state.loading,
-          addRound: false
+          addRound: false,
         },
         currentOutcome: undefined,
-        currentScreen: 'currentGame'
+        currentScreen: 'currentGame',
       };
     case ADD_ROUND_FAIL:
       return {
         ...state,
         loading: {
           ...state.loading,
-          addRound: false
+          addRound: false,
         },
         changesOverviewError: {
           details: action.payload,
-          message: action.payload.message
-        }
+          message: action.payload.message,
+        },
       };
     case EVENTS_GET_LIST_INIT:
       return {
@@ -582,38 +588,38 @@ export function mimirReducer(
         eventsListError: undefined,
         loading: {
           ...state.loading,
-          events: true
-        }
+          events: true,
+        },
       };
     case EVENTS_GET_LIST_SUCCESS:
       return {
         ...state,
         loading: {
           ...state.loading,
-          events: false
+          events: false,
         },
         currentOutcome: undefined,
-        eventsList: action.payload
+        eventsList: action.payload,
       };
     case EVENTS_GET_LIST_FAIL:
       return {
         ...state,
         loading: {
           ...state.loading,
-          events: false
+          events: false,
         },
-        eventsListError: action.payload
+        eventsListError: action.payload,
       };
     case SELECT_EVENT:
       return {
         ...state,
         currentEventId: action.payload,
-        currentScreen: 'overview'
+        currentScreen: 'overview',
       };
     case HISTORY_INIT:
       return {
         ...state,
-        historyInitialized: true
+        historyInitialized: true,
       };
     default:
       return state;

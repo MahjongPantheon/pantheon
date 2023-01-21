@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {EnvConfig} from "#/envConfig/interface";
+import { EnvConfig } from '#/envConfig/interface';
 
 export const environment: EnvConfig = {
   production: false,
@@ -36,5 +36,5 @@ export const environment: EnvConfig = {
   metrikaId: 101010101, // dummy number for testing
 
   // Do not change this unless you really know what are you doing
-  apiVersion: [1, 0]
+  apiVersion: [1, 0],
 };

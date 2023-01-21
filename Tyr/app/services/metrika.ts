@@ -18,10 +18,9 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {environment} from "#config";
+import { environment } from '#config';
 
 export class MetrikaService {
-
   public static readonly NOT_INITIALIZED = 'not_initialized';
   public static readonly APP_INIT = 'app_init';
   public static readonly LOGOUT = 'logout';
@@ -38,7 +37,7 @@ export class MetrikaService {
   public static readonly LOAD_SUCCESS = 'load_success';
   public static readonly LOAD_ERROR = 'load_error';
   private _eventId: number | null = null;
-  private _metrikaId: number | null = null;
+  private readonly _metrikaId: number | null = null;
 
   constructor() {
     this._metrikaId = environment.metrikaId;
@@ -61,8 +60,10 @@ export class MetrikaService {
     }
 
     window.ym(this._metrikaId, 'reachGoal', 'TYR_MTT_' + action, {
-      eventId: (eventId ? eventId.toString() : (this._eventId || '').toString()) || MetrikaService.NOT_INITIALIZED,
-      ...params
+      eventId:
+        (eventId ? eventId.toString() : (this._eventId || '').toString()) ||
+        MetrikaService.NOT_INITIALIZED,
+      ...params,
     });
   }
 }

@@ -32,7 +32,7 @@ export type LUser = {
   id: number;
   displayName: string;
   tenhouId: string;
-}
+};
 
 export type LFreyAuthData = {
   personId: number;
@@ -43,7 +43,7 @@ export type LUserWithScore = LUser & {
   score: number;
   ratingDelta: number;
   penalties: number;
-}
+};
 
 export interface LTimerState {
   started: boolean;
@@ -71,7 +71,7 @@ export type LEvent = {
   id: number;
   title: string;
   description: string;
-}
+};
 
 export type LEventsList = LEvent[];
 

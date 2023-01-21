@@ -26,7 +26,7 @@ export interface Node<T> {
 export enum EdgeType {
   Combines = 1,
   Suppresses,
-  IsSuppressed
+  IsSuppressed,
 }
 
 export class Graph<T> {
@@ -68,7 +68,10 @@ export class Graph<T> {
   private _isClique(nodeList: Node<T>[]) {
     for (let i = 0; i < nodeList.length; i++) {
       for (let j = i + 1; j < nodeList.length; j++) {
-        if (!this.edgeExists(nodeList[i], nodeList[j]) || !this.edgeExists(nodeList[j], nodeList[i])) {
+        if (
+          !this.edgeExists(nodeList[i], nodeList[j]) ||
+          !this.edgeExists(nodeList[j], nodeList[i])
+        ) {
           return false;
         }
       }
@@ -81,16 +84,18 @@ export class Graph<T> {
    * if there are any nodes to be excluded after current node is added.
    */
   tryAddAllowedNode(nodeList: Node<T>[], node: Node<T>) {
-    let newNodeList = [node].concat(nodeList);
+    const newNodeList = [node].concat(nodeList);
     if (!this._isClique(newNodeList)) {
       throw new Error('Node list is not a valid clique of this graph after addition of new node');
     }
 
     // remove suppressed nodes
-    let nodesToRemove = [];
+    const nodesToRemove = [];
     for (let i = 0; i < newNodeList.length; i++) {
       for (let j = i + 1; j < newNodeList.length; j++) {
-        switch (this._edges[this._edgeId(newNodeList[i].id.toString(), newNodeList[j].id.toString())]) {
+        switch (
+          this._edges[this._edgeId(newNodeList[i].id.toString(), newNodeList[j].id.toString())]
+        ) {
           case EdgeType.Suppresses:
             nodesToRemove.push(newNodeList[j]);
             break;
@@ -107,9 +112,9 @@ export class Graph<T> {
       return newNodeList;
     }
 
-    let finalNodeList = [];
-    for (let node of newNodeList) {
-      if (nodesToRemove.indexOf(node) === -1) {
+    const finalNodeList = [];
+    for (const node of newNodeList) {
+      if (!nodesToRemove.includes(node)) {
         finalNodeList.push(node);
       }
     }
@@ -128,23 +133,23 @@ export class Graph<T> {
     }
 
     // 2) Make list of nodes to check
-    let nodesToCheck: Node<T>[] = [];
-    let nodeListById: { [key: string]: Node<T> } = {};
-    for (let node of nodeList) {
+    const nodesToCheck: Node<T>[] = [];
+    const nodeListById: { [key: string]: Node<T> } = {};
+    for (const node of nodeList) {
       nodeListById[node.id.toString()] = node;
     }
-    for (let node in this._nodes) {
+    for (const node in this._nodes) {
       if (!nodeListById[this._nodes[node].id.toString()]) {
         nodesToCheck.push(this._nodes[node]);
       }
     }
 
     // 3) Get all nodes that are connected to all nodes from list
-    let allowedNodes = nodesToCheck.filter((node) => this._isClique([node].concat(nodeList)));
+    const allowedNodes = nodesToCheck.filter((node) => this._isClique([node].concat(nodeList)));
 
     // 4) Remove nodes suppressed by nodes from list
     return allowedNodes.filter((n1) => {
-      for (let n2 of nodeList) {
+      for (const n2 of nodeList) {
         if (this._edges[this._edgeId(n2.id.toString(), n1.id.toString())] === EdgeType.Suppresses) {
           return false;
         }

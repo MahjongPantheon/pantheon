@@ -1,6 +1,6 @@
-import {PlayerButtonMode} from '#/components/types/PlayerEnums';
+import { PlayerButtonMode } from '#/components/types/PlayerEnums';
 
 export type PlayerButtonProps = {
-  mode: PlayerButtonMode
-  onClick: () => void
-}
+  mode: PlayerButtonMode;
+  onClick: () => void;
+};

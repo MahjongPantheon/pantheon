@@ -6,7 +6,7 @@ export function intersect(arr1: any[], arr2: any[]) {
   const len = arr1.length;
   for (let i = 0; i < len; i++) {
     const elem = arr1[i];
-    if (arr2.indexOf(elem) > -1 && result.indexOf(elem) == -1) {
+    if (arr2.includes(elem) && !result.includes(elem)) {
       result.push(elem);
     }
   }

@@ -1,5 +1,5 @@
 import deepclone from 'deep-clone';
-import {initialState} from '../state';
+import { initialState } from '../state';
 import {
   AppActionTypes,
   INIT_STATE,
@@ -13,48 +13,45 @@ import {
   TOGGLE_ADDITIONAL_TABLE_INFO,
   TOGGLE_OVERVIEW_DIFFBY,
 } from '../actions/interfaces';
-import {IAppState} from '../interfaces';
+import { IAppState } from '../interfaces';
 
-export function commonReducer(
-  state: IAppState,
-  action: AppActionTypes
-): IAppState {
+export function commonReducer(state: IAppState, action: AppActionTypes): IAppState {
   switch (action.type) {
     case INIT_STATE:
       return deepclone(initialState);
     case SET_CREDENTIALS:
       return {
         ...state,
-        currentPlayerId: action.payload.personId
+        currentPlayerId: action.payload.personId,
       };
     case SELECT_MULTIRON_WINNER:
       return {
         ...state,
-        multironCurrentWinner: action.payload.winner
+        multironCurrentWinner: action.payload.winner,
       };
     case SETTINGS_SAVE_THEME:
       return {
         ...state,
         settings: {
           ...state.settings,
-          currentTheme: action.payload
-        }
+          currentTheme: action.payload,
+        },
       };
     case SETTINGS_SAVE_LANG:
       return {
         ...state,
         settings: {
           ...state.settings,
-          currentLang: action.payload
-        }
+          currentLang: action.payload,
+        },
       };
     case SETTINGS_SAVE_SINGLE_DEVICE_MODE:
       return {
         ...state,
         settings: {
           ...state.settings,
-          singleDeviceMode: action.payload
-        }
+          singleDeviceMode: action.payload,
+        },
       };
     case SET_STATE_SETTINGS:
       return {
@@ -63,23 +60,23 @@ export function commonReducer(
           ...state.settings,
           currentLang: (action.payload || state.settings)['currentLang'],
           currentTheme: (action.payload || state.settings)['currentTheme'],
-          singleDeviceMode: (action.payload || state.settings)['singleDeviceMode']
-        }
+          singleDeviceMode: (action.payload || state.settings)['singleDeviceMode'],
+        },
       };
     case SET_SELECT_HAND_TAB:
       return {
         ...state,
-        currentSelectHandTab: action.payload
+        currentSelectHandTab: action.payload,
       };
     case TOGGLE_OVERVIEW_DIFFBY:
       return {
         ...state,
-        overviewDiffBy: state.overviewDiffBy === action.payload ? undefined : action.payload
+        overviewDiffBy: state.overviewDiffBy === action.payload ? undefined : action.payload,
       };
     case TOGGLE_ADDITIONAL_TABLE_INFO:
       return {
         ...state,
-        showAdditionalTableInfo: !state.showAdditionalTableInfo
+        showAdditionalTableInfo: !state.showAdditionalTableInfo,
       };
     default:
       return state;

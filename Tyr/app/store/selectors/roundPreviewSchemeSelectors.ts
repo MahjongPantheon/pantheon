@@ -4,7 +4,7 @@ import { memoize } from '#/primitives/memoize';
 import { getSeating } from './commonSelectors';
 import { getPaoUsers, getRiichiUsers } from './mimirSelectors';
 
-export type RoundPreviewSchemePurpose = 'overview' | 'other_overview' | 'confirmation'
+export type RoundPreviewSchemePurpose = 'overview' | 'other_overview' | 'confirmation';
 type Csp = RoundPreviewSchemePurpose; // alias for shorter name
 
 export type PaymentInfo = {
@@ -22,7 +22,12 @@ type RoundPaymentInfoShort = {
   paoPlayer?: number;
 };
 
-function _getPayment(state: IAppState, purpose: Csp, player1: Player, player2: Player): PaymentInfo | undefined {
+function _getPayment(
+  state: IAppState,
+  purpose: Csp,
+  player1: Player,
+  player2: Player
+): PaymentInfo | undefined {
   let overview;
   switch (purpose) {
     case 'other_overview': //todo check
@@ -36,12 +41,12 @@ function _getPayment(state: IAppState, purpose: Csp, player1: Player, player2: P
   }
 
   const p = overview.payments;
-  const directPayment12 = p.direct && p.direct[player2.id + '<-' + player1.id] || 0;
-  const directPayment21 = p.direct && p.direct[player1.id + '<-' + player2.id] || 0;
-  const riichiPayment12 = p.riichi && p.riichi[player2.id + '<-' + player1.id] || 0;
-  const riichiPayment21 = p.riichi && p.riichi[player1.id + '<-' + player2.id] || 0;
-  const honbaPayment12 = p.honba && p.honba[player2.id + '<-' + player1.id] || 0;
-  const honbaPayment21 = p.honba && p.honba[player1.id + '<-' + player2.id] || 0;
+  const directPayment12 = (p.direct && p.direct[player2.id + '<-' + player1.id]) || 0;
+  const directPayment21 = (p.direct && p.direct[player1.id + '<-' + player2.id]) || 0;
+  const riichiPayment12 = (p.riichi && p.riichi[player2.id + '<-' + player1.id]) || 0;
+  const riichiPayment21 = (p.riichi && p.riichi[player1.id + '<-' + player2.id]) || 0;
+  const honbaPayment12 = (p.honba && p.honba[player2.id + '<-' + player1.id]) || 0;
+  const honbaPayment21 = (p.honba && p.honba[player1.id + '<-' + player2.id]) || 0;
 
   // multiple nagashi
   if (directPayment12 === directPayment21 && directPayment12 !== 0) {
@@ -52,17 +57,13 @@ function _getPayment(state: IAppState, purpose: Csp, player1: Player, player2: P
     return {
       backward: false,
       riichi: riichiPayment12 > 0,
-      title: [directPayment12, honbaPayment12]
-        .filter(e => !!e)
-        .join(' + ')
+      title: [directPayment12, honbaPayment12].filter((e) => !!e).join(' + '),
     };
   } else if (directPayment21 + riichiPayment21 > 0) {
     return {
       backward: true,
       riichi: riichiPayment21 > 0,
-      title: [directPayment21, honbaPayment21]
-        .filter(e => !!e)
-        .join(' + ')
+      title: [directPayment21, honbaPayment21].filter((e) => !!e).join(' + '),
     };
   } else {
     return undefined;
@@ -86,7 +87,7 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | u
         players: s.players,
         riichiBets: [],
         penaltyFor: undefined,
-        paoPlayer: undefined
+        paoPlayer: undefined,
       };
     case 'confirmation':
       if (!s.currentOutcome || !s.players) {
@@ -98,9 +99,10 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | u
         currentPlayerId: s.currentPlayerId,
         players: s.players,
         riichiBets: getRiichiUsers(s).map((p) => p.id.toString()),
-        penaltyFor: s.currentOutcome.selectedOutcome === 'chombo' ? s.currentOutcome.loser : undefined,
-        paoPlayer: pao && pao.id
-      }
+        penaltyFor:
+          s.currentOutcome.selectedOutcome === 'chombo' ? s.currentOutcome.loser : undefined,
+        paoPlayer: pao && pao.id,
+      };
     case 'other_overview':
       if (!s.currentOtherTable) {
         return undefined;
@@ -111,8 +113,8 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | u
         players: s.currentOtherTablePlayers as [Player, Player, Player, Player],
         riichiBets: [],
         penaltyFor: undefined,
-        paoPlayer: undefined
-      }
+        paoPlayer: undefined,
+      };
   }
 };
 
@@ -121,9 +123,16 @@ const getSeatData = (s: IAppState, purpose: Csp) => {
   if (!overview) {
     throw new Error('No round overview found');
   }
-  return getSeating(overview.round, s.overviewViewShift || 0, overview.currentPlayerId,
-    overview.players, overview.riichiBets, overview.penaltyFor, overview.paoPlayer);
-}
+  return getSeating(
+    overview.round,
+    s.overviewViewShift || 0,
+    overview.currentPlayerId,
+    overview.players,
+    overview.riichiBets,
+    overview.penaltyFor,
+    overview.paoPlayer
+  );
+};
 
 export const getSelf = (s: IAppState, p: Csp) => getSeatData(s, p).players[0];
 export const getShimocha = (s: IAppState, p: Csp) => getSeatData(s, p).players[1];
@@ -146,15 +155,22 @@ export const getPaoShimocha = (s: IAppState, p: Csp) => getSeatData(s, p).pao[1]
 export const getPaoToimen = (s: IAppState, p: Csp) => getSeatData(s, p).pao[2];
 export const getPaoKamicha = (s: IAppState, p: Csp) => getSeatData(s, p).pao[3];
 export const getRound = (state: IAppState, p: Csp) => getRoundOverview(state, p)?.round;
-export const getTopLeftPayment = (s: IAppState, p: Csp) => getPayment(s, p, getToimen(s, p), getKamicha(s, p));
-export const getTopRightPayment = (s: IAppState, p: Csp) => getPayment(s, p, getToimen(s, p), getShimocha(s, p));
-export const getTopBottomPayment = (s: IAppState, p: Csp) => getPayment(s, p, getToimen(s, p), getSelf(s, p));
-export const getBottomLeftPayment = (s: IAppState, p: Csp) => getPayment(s, p, getSelf(s, p), getKamicha(s, p));
-export const getBottomRightPayment = (s: IAppState, p: Csp) => getPayment(s, p, getSelf(s, p), getShimocha(s, p));
-export const getLeftRightPayment = (s: IAppState, p: Csp) => getPayment(s, p, getKamicha(s, p), getShimocha(s, p));
-export const getIfAnyPaymentsOccured = (s: IAppState, p: Csp) => getTopLeftPayment(s, p) !== undefined
-  || getTopRightPayment(s, p) !== undefined
-  || getTopBottomPayment(s, p) !== undefined
-  || getBottomLeftPayment(s, p) !== undefined
-  || getBottomRightPayment(s, p) !== undefined
-  || getLeftRightPayment(s, p) !== undefined;
+export const getTopLeftPayment = (s: IAppState, p: Csp) =>
+  getPayment(s, p, getToimen(s, p), getKamicha(s, p));
+export const getTopRightPayment = (s: IAppState, p: Csp) =>
+  getPayment(s, p, getToimen(s, p), getShimocha(s, p));
+export const getTopBottomPayment = (s: IAppState, p: Csp) =>
+  getPayment(s, p, getToimen(s, p), getSelf(s, p));
+export const getBottomLeftPayment = (s: IAppState, p: Csp) =>
+  getPayment(s, p, getSelf(s, p), getKamicha(s, p));
+export const getBottomRightPayment = (s: IAppState, p: Csp) =>
+  getPayment(s, p, getSelf(s, p), getShimocha(s, p));
+export const getLeftRightPayment = (s: IAppState, p: Csp) =>
+  getPayment(s, p, getKamicha(s, p), getShimocha(s, p));
+export const getIfAnyPaymentsOccured = (s: IAppState, p: Csp) =>
+  getTopLeftPayment(s, p) !== undefined ||
+  getTopRightPayment(s, p) !== undefined ||
+  getTopBottomPayment(s, p) !== undefined ||
+  getBottomLeftPayment(s, p) !== undefined ||
+  getBottomRightPayment(s, p) !== undefined ||
+  getLeftRightPayment(s, p) !== undefined;

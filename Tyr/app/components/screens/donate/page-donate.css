@@ -2,7 +2,8 @@
   min-height: 580px;
 }
 
-.page-donate__meme, .page-donate__disclaimer {
+.page-donate__meme,
+.page-donate__disclaimer {
   padding: 15px;
   font-size: 12px;
 }

@@ -25,7 +25,7 @@ import {
   AppOutcomeDraw,
   AppOutcomeAbort,
   AppOutcomeChombo,
-  AppOutcomeNagashi
+  AppOutcomeNagashi,
 } from '#/interfaces/app';
 import { Outcome as OutcomeType } from '#/interfaces/common';
 import { getFixedFu } from '#/primitives/yaku-values';
@@ -96,7 +96,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         loserIsDealer: false,
         multiRon: 0,
         riichiBets: [],
-        wins: {}
+        wins: {},
       };
       out = outcomeMultiRon;
       break;
@@ -112,7 +112,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         yaku: '', // empty string is ok for empty yaku list
         riichiBets: [],
         dora: 0,
-        openHand: false
+        openHand: false,
       };
       out = outcomeTsumo;
       break;
@@ -122,7 +122,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         roundIndex: round,
         riichiBets: [],
         tempai: [],
-        deadhands: []
+        deadhands: [],
       };
       out = outcomeDraw;
       break;
@@ -133,7 +133,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         riichiBets: [],
         tempai: [],
         deadhands: [],
-        nagashi: []
+        nagashi: [],
       };
       out = outcomeNagashi;
       break;
@@ -142,7 +142,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         selectedOutcome: 'abort',
         roundIndex: round,
         riichiBets: [],
-        deadhands: []
+        deadhands: [],
       };
       out = outcomeAbort;
       break;
@@ -151,7 +151,7 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
         selectedOutcome: 'chombo',
         roundIndex: round,
         loser: undefined,
-        loserIsDealer: false
+        loserIsDealer: false,
       };
       out = outcomeChombo;
       break;
@@ -159,4 +159,3 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
 
   return out;
 }
-

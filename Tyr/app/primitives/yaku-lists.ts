@@ -23,113 +23,58 @@ import { yakuList, YakuId } from './yaku';
 
 export function filterAllowed(group: Yaku[][], allowed: number[]) {
   return group
-    .map((ySet: Yaku[]) => ySet.filter((y: Yaku) => y.id === YakuId.__OPENHAND || allowed.indexOf(y.id) !== -1))
+    .map((ySet: Yaku[]) =>
+      ySet.filter((y: Yaku) => y.id === YakuId.__OPENHAND || allowed.includes(y.id))
+    )
     .filter((ySet: Yaku[]) => ySet.length > 0);
 }
 
 export const yakuGroups = [
-  yakuList.filter((y: Yaku) => [
-    YakuId.__OPENHAND
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.__OPENHAND].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.RIICHI,
-    YakuId.IPPATSU,
-    YakuId.MENZENTSUMO
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.RIICHI, YakuId.IPPATSU, YakuId.MENZENTSUMO].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.PINFU,
-    YakuId.TANYAO
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.PINFU, YakuId.TANYAO].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.YAKUHAI1,
-    YakuId.YAKUHAI2,
-    YakuId.YAKUHAI3
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.YAKUHAI1, YakuId.YAKUHAI2, YakuId.YAKUHAI3].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.ITTSU,
-    YakuId.HONITSU,
-    YakuId.CHINITSU
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.ITTSU, YakuId.HONITSU, YakuId.CHINITSU].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.TOITOI,
-    YakuId.CHIITOITSU
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.TOITOI, YakuId.CHIITOITSU].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.CHANTA,
-    YakuId.JUNCHAN
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.CHANTA, YakuId.JUNCHAN].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.SANSHOKUDOUJUN,
-    YakuId.IIPEIKOU
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.SANSHOKUDOUJUN, YakuId.IIPEIKOU].includes(y.id)),
 ];
 
 export const yakuRareGroups = [
-  yakuList.filter((y: Yaku) => [
-    YakuId.DOUBLERIICHI,
-    YakuId.OPENRIICHI
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.DOUBLERIICHI, YakuId.OPENRIICHI].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.HONROTO,
-    YakuId.SHOSANGEN,
-    YakuId.YAKUHAI4
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.HONROTO, YakuId.SHOSANGEN, YakuId.YAKUHAI4].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.SANANKOU,
-    YakuId.SANSHOKUDOUKOU,
-    YakuId.SANKANTSU
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) =>
+    [YakuId.SANANKOU, YakuId.SANSHOKUDOUKOU, YakuId.SANKANTSU].includes(y.id)
+  ),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.RYANPEIKOU
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.RYANPEIKOU].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.HAITEI,
-    YakuId.HOUTEI,
-    YakuId.RINSHANKAIHOU
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.HAITEI, YakuId.HOUTEI, YakuId.RINSHANKAIHOU].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.CHANKAN,
-    YakuId.RENHOU
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.CHANKAN, YakuId.RENHOU].includes(y.id)),
 ];
 
 export const yakumanGroups = [
-  yakuList.filter((y: Yaku) => [
-    YakuId.TENHOU,
-    YakuId.CHIHOU
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.TENHOU, YakuId.CHIHOU].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.DAISANGEN,
-    YakuId.DAISUUSHII,
-    YakuId.SHOSUUSHII
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) =>
+    [YakuId.DAISANGEN, YakuId.DAISUUSHII, YakuId.SHOSUUSHII].includes(y.id)
+  ),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.SUUANKOU,
-    YakuId.SUUKANTSU
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.SUUANKOU, YakuId.SUUKANTSU].includes(y.id)),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.CHINROTO,
-    YakuId.TSUUIISOU,
-    YakuId.KOKUSHIMUSOU
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) =>
+    [YakuId.CHINROTO, YakuId.TSUUIISOU, YakuId.KOKUSHIMUSOU].includes(y.id)
+  ),
 
-  yakuList.filter((y: Yaku) => [
-    YakuId.RYUUIISOU,
-    YakuId.CHUURENPOUTO
-  ].indexOf(y.id) !== -1),
+  yakuList.filter((y: Yaku) => [YakuId.RYUUIISOU, YakuId.CHUURENPOUTO].includes(y.id)),
 ];

@@ -2,16 +2,26 @@ import { I18nService } from '#/services/i18n';
 import { AppOutcome } from '#/interfaces/app';
 import { Player } from '#/interfaces/common';
 import { memoize } from '#/primitives/memoize';
-import { IAppState } from '../interfaces';
 
-export function getOutcomeName(i18n: I18nService, outcome: AppOutcome['selectedOutcome'], winnersCount = 0, noMultiRon = false) {
+export function getOutcomeName(
+  i18n: I18nService,
+  outcome: AppOutcome['selectedOutcome'],
+  winnersCount = 0,
+  noMultiRon = false
+) {
   switch (outcome) {
-    case 'ron': return i18n._t('Ron');
-    case 'tsumo': return i18n._t('Tsumo');
-    case 'draw': return i18n._t('Exhaustive draw');
-    case 'abort': return i18n._t('Abortive draw');
-    case 'chombo': return i18n._t('Chombo');
-    case 'nagashi': return i18n._t('Nagashi mangan');
+    case 'ron':
+      return i18n._t('Ron');
+    case 'tsumo':
+      return i18n._t('Tsumo');
+    case 'draw':
+      return i18n._t('Exhaustive draw');
+    case 'abort':
+      return i18n._t('Abortive draw');
+    case 'chombo':
+      return i18n._t('Chombo');
+    case 'nagashi':
+      return i18n._t('Nagashi mangan');
   }
 }
 
@@ -42,20 +52,20 @@ function _getSeating(
   }
 
   // Riichi bets
-  let riichi = [ false, false, false, false ];
+  const riichi = [false, false, false, false];
   const riichiIds = (riichiBets || []).map((id: string) => parseInt(id, 10)); // TODO: get it out to formatters
   players.forEach((p, idx) => {
     riichi[idx] = riichiIds.includes(p.id);
   });
 
   // Chombo penalties
-  let chombo = [ false, false, false, false ];
+  const chombo = [false, false, false, false];
   players.forEach((p, idx) => {
     chombo[idx] = penaltyFor === p.id;
   });
 
   // Pao
-  let pao = [ false, false, false, false ];
+  const pao = [false, false, false, false];
   players.forEach((p, idx) => {
     pao[idx] = paoPlayer === p.id;
   });

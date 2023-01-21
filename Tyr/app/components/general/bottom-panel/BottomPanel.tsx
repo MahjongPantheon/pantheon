@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BottomPanelProps} from './BottomPanelProps';
+import { BottomPanelProps } from './BottomPanelProps';
 import './bottom-panel.css';
 import classNames from 'classnames';
 import BackIcon from '../../../img/back.svg?svgr';
@@ -12,16 +12,16 @@ import LogIcon from '../../../img/log.svg?svgr';
 
 export class BottomPanel extends React.Component<BottomPanelProps> {
   private onNextButtonClick() {
-    const {isNextDisabled, onNextClick} = this.props;
+    const { isNextDisabled, onNextClick } = this.props;
     if (onNextClick && !isNextDisabled) {
-      onNextClick()
+      onNextClick();
     }
   }
 
   private onSaveButtonClick() {
-    const {isSaveDisabled, onSaveClick} = this.props;
+    const { isSaveDisabled, onSaveClick } = this.props;
     if (onSaveClick && !isSaveDisabled) {
-      onSaveClick()
+      onSaveClick();
     }
   }
 
@@ -47,22 +47,18 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
     const needRenderEmptyButton = showBack && !!text && !showNext && !showSave;
 
     return (
-      <div className="bottom-panel">
-        <div className="bottom-panel__inner">
+      <div className='bottom-panel'>
+        <div className='bottom-panel__inner'>
           {showBack && (
-            <div className="svg-button" onClick={onBackClick}>
+            <div className='svg-button' onClick={onBackClick}>
               <BackIcon />
             </div>
           )}
-          {!!text && (
-            <div className="bottom-panel__text">
-              {text}
-            </div>
-          )}
-          {needRenderEmptyButton && <div className="svg-button" />}
+          {!!text && <div className='bottom-panel__text'>{text}</div>}
+          {needRenderEmptyButton && <div className='svg-button' />}
           {showNext && (
             <div
-              className={classNames('svg-button', {'svg-button--disabled': isNextDisabled})}
+              className={classNames('svg-button', { 'svg-button--disabled': isNextDisabled })}
               onClick={this.onNextButtonClick.bind(this)}
             >
               <NextIcon />
@@ -70,34 +66,34 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
           )}
           {showSave && (
             <div
-              className={classNames('svg-button', {'svg-button--disabled': isSaveDisabled})}
+              className={classNames('svg-button', { 'svg-button--disabled': isSaveDisabled })}
               onClick={this.onSaveButtonClick.bind(this)}
             >
               <SaveIcon />
             </div>
           )}
           {showHome && (
-            <div className="svg-button" onClick={onHomeClick}>
+            <div className='svg-button' onClick={onHomeClick}>
               <HomeIcon />
             </div>
           )}
           {showRefresh && (
-            <div className="svg-button" onClick={onRefreshClick}>
+            <div className='svg-button' onClick={onRefreshClick}>
               <RefreshIcon />
             </div>
           )}
           {showAdd && (
-            <div className="svg-button" onClick={onAddClick}>
+            <div className='svg-button' onClick={onAddClick}>
               <PlusIcon />
             </div>
           )}
           {showLog && (
-            <div className="svg-button" onClick={onLogClick}>
+            <div className='svg-button' onClick={onLogClick}>
               <LogIcon />
             </div>
           )}
         </div>
       </div>
-    )
+    );
   }
 }

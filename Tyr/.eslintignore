@@ -1,2 +1,4 @@
 .eslintrc.js
 node_modules/
+webpack.*.js
+typings.d.ts

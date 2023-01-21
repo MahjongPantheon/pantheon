@@ -20,9 +20,19 @@
 
 import { RemoteError } from './remoteError';
 import {
-  RTimerState, RGameConfig, RSessionOverview, RCurrentGames,
-  RUserInfo, RAllPlayersInEvent, RLastResults,
-  RRoundPaymentsInfo, RTablesState, SessionState, RRoundOverviewInfo, RFreyAuthData, REventsList,
+  RTimerState,
+  RGameConfig,
+  RSessionOverview,
+  RCurrentGames,
+  RUserInfo,
+  RAllPlayersInEvent,
+  RLastResults,
+  RRoundPaymentsInfo,
+  RTablesState,
+  SessionState,
+  RRoundOverviewInfo,
+  RFreyAuthData,
+  REventsList,
 } from '#/interfaces/remote';
 import {
   LCurrentGame,
@@ -30,7 +40,9 @@ import {
   LUserWithScore,
   LTimerState,
   LSessionOverview,
-  LGameConfig, LFreyAuthData, LEventsList
+  LGameConfig,
+  LFreyAuthData,
+  LEventsList,
 } from '#/interfaces/local';
 import { Table } from '#/interfaces/common';
 import {
@@ -41,15 +53,17 @@ import {
   timerFormatter,
   gameConfigFormatter,
   tablesStateFormatter,
-  gameOverviewFormatter, freyAuthFormatter, eventsListFormatter
+  gameOverviewFormatter,
+  freyAuthFormatter,
+  eventsListFormatter,
 } from './formatters';
-import {IAppState} from '#/store/interfaces';
-import {environment} from "#config";
+import { IAppState } from '#/store/interfaces';
+import { environment } from '#config';
 
 type GenericResponse = {
-  error?: { message: string, code: any },
-  headers: any,
-  result: any
+  error?: { message: string; code: any };
+  headers: any;
+  result: any;
 };
 
 export class RiichiApiService {
@@ -68,43 +82,50 @@ export class RiichiApiService {
   }
 
   getMyEvents() {
-    return this._jsonRpcRequest<REventsList>('getMyEvents')
-      .then<LEventsList>(eventsListFormatter);
+    return this._jsonRpcRequest<REventsList>('getMyEvents').then<LEventsList>(eventsListFormatter);
   }
 
   getGameConfig(eventId: number) {
-    return this._jsonRpcRequest<RGameConfig>('getGameConfig', eventId)
-      .then<LGameConfig>(gameConfigFormatter);
+    return this._jsonRpcRequest<RGameConfig>('getGameConfig', eventId).then<LGameConfig>(
+      gameConfigFormatter
+    );
   }
 
   getTimerState(eventId: number) {
-    return this._jsonRpcRequest<RTimerState>('getTimerState', eventId)
-      .then<LTimerState>(timerFormatter);
+    return this._jsonRpcRequest<RTimerState>('getTimerState', eventId).then<LTimerState>(
+      timerFormatter
+    );
   }
 
   getLastResults(playerId: number, eventId: number) {
-    return this._jsonRpcRequest<RLastResults>('getLastResults', playerId, eventId)
-      .then<LUserWithScore[]>(lastResultsFormatter);
+    return this._jsonRpcRequest<RLastResults>('getLastResults', playerId, eventId).then<
+      LUserWithScore[]
+    >(lastResultsFormatter);
   }
 
   getAllPlayers(eventId: number) {
-    return this._jsonRpcRequest<RAllPlayersInEvent>('getAllPlayers', [eventId])
-      .then<LUser[]>(userListFormatter);
+    return this._jsonRpcRequest<RAllPlayersInEvent>('getAllPlayers', [eventId]).then<LUser[]>(
+      userListFormatter
+    );
   }
 
   getGameOverview(sessionHashcode: string, eventId: number) {
-    return this._jsonRpcRequest<RSessionOverview>('getGameOverview', sessionHashcode)
-      .then<LSessionOverview>(gameOverviewFormatter);
+    return this._jsonRpcRequest<RSessionOverview>(
+      'getGameOverview',
+      sessionHashcode
+    ).then<LSessionOverview>(gameOverviewFormatter);
   }
 
   getCurrentGames(playerId: number, eventId: number): Promise<LCurrentGame[]> {
-    return this._jsonRpcRequest<RCurrentGames>('getCurrentGames', playerId, eventId)
-      .then<LCurrentGame[]>(currentGamesFormatter);
+    return this._jsonRpcRequest<RCurrentGames>('getCurrentGames', playerId, eventId).then<
+      LCurrentGame[]
+    >(currentGamesFormatter);
   }
 
   getUserInfo(personIds: number[]) {
-    return this._jsonRpcRequestFrey<RUserInfo[]>('getPersonalInfo', personIds)
-      .then<LUser[]>(userListFormatter);
+    return this._jsonRpcRequestFrey<RUserInfo[]>('getPersonalInfo', personIds).then<LUser[]>(
+      userListFormatter
+    );
   }
 
   /**
@@ -122,11 +143,12 @@ export class RiichiApiService {
   }
 
   getLastRoundByHash(sessionHashcode: string) {
-    return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundByHash', sessionHashcode)
-      .then((result) => {
+    return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundByHash', sessionHashcode).then(
+      (result) => {
         result.sessionHash = sessionHashcode;
         return result;
-      });
+      }
+    );
   }
 
   getLastRound(playerId: number, eventId: number) {
@@ -144,8 +166,9 @@ export class RiichiApiService {
   }
 
   getTablesState(eventId: number) {
-    return this._jsonRpcRequest<RTablesState>('getTablesState', eventId)
-      .then<Table[]>(tablesStateFormatter);
+    return this._jsonRpcRequest<RTablesState>('getTablesState', eventId).then<Table[]>(
+      tablesStateFormatter
+    );
   }
 
   quickAuthorize() {
@@ -153,14 +176,17 @@ export class RiichiApiService {
   }
 
   authorize(email: string, password: string) {
-    return this._jsonRpcRequestFrey<RFreyAuthData>('authorize', email, password)
-      .then<LFreyAuthData>(freyAuthFormatter);
+    return this._jsonRpcRequestFrey<RFreyAuthData>(
+      'authorize',
+      email,
+      password
+    ).then<LFreyAuthData>(freyAuthFormatter);
   }
 
   /////////////////////////////////////////////////////////////////////////////////////
 
   private _jsonRpcRequest<RET_TYPE>(methodName: string, ...params: any[]): Promise<RET_TYPE> {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('X-Api-Version', environment.apiVersion.map((v) => v.toString()).join('.'));
     headers.append('X-Auth-Token', this._authToken || '');
@@ -170,14 +196,14 @@ export class RiichiApiService {
       jsonrpc: '2.0',
       method: methodName,
       params: params,
-      id: Math.round(1000000 * Math.random()) // TODO: bind request to response?
+      id: Math.round(1000000 * Math.random()), // TODO: bind request to response?
     };
 
     const fetchInit: RequestInit = {
       method: 'post',
       headers,
       // mode: 'same-origin', //todo please help
-      body: JSON.stringify(jsonRpcBody)
+      body: JSON.stringify(jsonRpcBody),
     };
 
     return fetch(environment.apiUrl, fetchInit)
@@ -195,7 +221,7 @@ export class RiichiApiService {
   }
 
   private _jsonRpcRequestFrey<RET_TYPE>(methodName: string, ...params: any[]): Promise<RET_TYPE> {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('X-Api-Version', environment.apiVersion.map((v) => v.toString()).join('.'));
     headers.append('X-Auth-Token', this._authToken || '');
@@ -205,14 +231,14 @@ export class RiichiApiService {
       jsonrpc: '2.0',
       method: methodName,
       params: params,
-      id: Math.round(1000000 * Math.random()) // TODO: bind request to response?
+      id: Math.round(1000000 * Math.random()), // TODO: bind request to response?
     };
 
     const fetchInit: RequestInit = {
       method: 'post',
       headers,
       // mode: 'same-origin', //todo please help
-      body: JSON.stringify(jsonRpcBody)
+      body: JSON.stringify(jsonRpcBody),
     };
 
     return fetch(environment.uaUrl, fetchInit)

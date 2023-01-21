@@ -11,12 +11,12 @@ import { I18nService } from '#/services/i18n';
 function _getWins(state: IAppState): LWinItem[] {
   switch (state.currentOutcome?.selectedOutcome) {
     case 'ron':
-      let wins: LWinItem[] = [];
-      for (let i in state.currentOutcome.wins) {
+      const wins: LWinItem[] = [];
+      for (const i in state.currentOutcome.wins) {
         if (!state.currentOutcome.wins.hasOwnProperty(i)) {
           continue;
         }
-        let v = state.currentOutcome.wins[i];
+        const v = state.currentOutcome.wins[i];
         wins.push({
           winner: v.winner,
           han: v.han,
@@ -27,7 +27,7 @@ function _getWins(state: IAppState): LWinItem[] {
           kandora: 0,
           kanuradora: 0,
           yaku: unpack(v.yaku),
-          openHand: v.openHand
+          openHand: v.openHand,
         });
       }
       return wins;
@@ -39,7 +39,7 @@ function _getWins(state: IAppState): LWinItem[] {
 export const getWins: typeof _getWins = memoize(_getWins);
 
 export function getMultiRonCount(state: IAppState): number {
-  console.log('getMultiRonCount')
+  console.log('getMultiRonCount');
   switch (state.currentOutcome?.selectedOutcome) {
     case 'ron':
       return state.currentOutcome.multiRon;
@@ -52,7 +52,7 @@ export function getEventTitle(i18n: I18nService, state: IAppState): string {
   if (state.isUniversalWatcher) {
     return i18n._t('Games overview');
   } else {
-    return state.gameConfig && state.gameConfig.eventTitle || i18n._t('Loading...');
+    return (state.gameConfig && state.gameConfig.eventTitle) || i18n._t('Loading...');
   }
 }
 
@@ -76,7 +76,9 @@ function _winnerHasYakuWithPao(state: IAppState): boolean {
       return intersect(unpack(outcome.yaku), gameConfig.yakuWithPao).length > 0;
     case 'ron':
       return Object.keys(outcome.wins).reduce<boolean>((acc, playerId) => {
-        return acc || (intersect(unpack(outcome.wins[playerId].yaku), gameConfig.yakuWithPao).length > 0);
+        return (
+          acc || intersect(unpack(outcome.wins[playerId].yaku), gameConfig.yakuWithPao).length > 0
+        );
       }, false);
     default:
       throw new Error('No pao exist on this outcome');
@@ -96,8 +98,8 @@ function _getWinningUsers(state: IAppState): Player[] {
       const foundWinner = outcome.winner && state.players?.find((val) => val.id === outcome.winner);
       return foundWinner ? [foundWinner] : [];
     case 'ron':
-      let users: Player[] = [];
-      for (let w in outcome.wins) {
+      const users: Player[] = [];
+      for (const w in outcome.wins) {
         if (!outcome.wins.hasOwnProperty(w)) {
           continue;
         }
@@ -109,7 +111,8 @@ function _getWinningUsers(state: IAppState): Player[] {
       return users;
     case 'draw':
     case 'nagashi':
-      return outcome.tempai.map((t) => state.players?.find((val) => val.id === t))
+      return outcome.tempai
+        .map((t) => state.players?.find((val) => val.id === t))
         .filter((p: Player | undefined): p is Player => !!p);
     default:
       return [];
@@ -136,12 +139,15 @@ function _getPaoUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
     case 'tsumo':
-      const foundPao = outcome.paoPlayerId && state.players?.find((val) => val.id === outcome.paoPlayerId);
+      const foundPao =
+        outcome.paoPlayerId && state.players?.find((val) => val.id === outcome.paoPlayerId);
       return foundPao ? [foundPao] : [];
     case 'ron':
       return Object.keys(outcome.wins).reduce<Player[]>((acc, playerId) => {
         if (outcome.wins[playerId].paoPlayerId) {
-          const foundPao = state.players?.find((val) => val.id === outcome.wins[playerId].paoPlayerId);
+          const foundPao = state.players?.find(
+            (val) => val.id === outcome.wins[playerId].paoPlayerId
+          );
           if (foundPao) {
             acc.push(foundPao);
           }
@@ -160,7 +166,8 @@ function _getDeadhandUsers(state: IAppState): Player[] {
   switch (outcome?.selectedOutcome) {
     case 'draw':
     case 'nagashi':
-      return outcome.deadhands.map((t) => state.players?.find((val) => val.id === t))
+      return outcome.deadhands
+        .map((t) => state.players?.find((val) => val.id === t))
         .filter((p: Player | undefined): p is Player => !!p);
     default:
       return [];
@@ -173,7 +180,8 @@ function _getNagashiUsers(state: IAppState): Player[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
     case 'nagashi':
-      return outcome.nagashi.map((t) => state.players?.find((val) => val.id === t))
+      return outcome.nagashi
+        .map((t) => state.players?.find((val) => val.id === t))
         .filter((p: Player | undefined): p is Player => !!p);
     default:
       return [];
@@ -207,7 +215,8 @@ function _getRiichiUsers(state: IAppState): Player[] {
     case 'draw':
     case 'nagashi':
     case 'abort':
-      return outcome.riichiBets.map((r) => state.players?.find((val) => val.id === r))
+      return outcome.riichiBets
+        .map((r) => state.players?.find((val) => val.id === r))
         .filter((p: Player | undefined): p is Player => !!p);
     default:
       return [];
@@ -221,13 +230,21 @@ function _getCurrentTimerZone(state: IAppState) {
   switch (state.gameConfig?.timerPolicy) {
     case 'redZone':
       zoneLength = state.gameConfig.redZone;
-      if (zoneLength && ((state.timer?.secondsRemaining || 0) < zoneLength) && !state.timer?.waiting) {
+      if (
+        zoneLength &&
+        (state.timer?.secondsRemaining || 0) < zoneLength &&
+        !state.timer?.waiting
+      ) {
         return 'redZone';
       }
       break;
     case 'yellowZone':
       zoneLength = state.gameConfig.yellowZone;
-      if (zoneLength && ((state.timer?.secondsRemaining || 0) < zoneLength) && !state.timer?.waiting) {
+      if (
+        zoneLength &&
+        (state.timer?.secondsRemaining || 0) < zoneLength &&
+        !state.timer?.waiting
+      ) {
         return state.yellowZoneAlreadyPlayed ? 'redZone' : 'yellowZone';
       }
       break;

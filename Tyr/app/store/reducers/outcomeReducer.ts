@@ -12,7 +12,7 @@ import {
   TOGGLE_NAGASHI,
   TOGGLE_PAO,
   TOGGLE_RIICHI,
-  TOGGLE_WINNER
+  TOGGLE_WINNER,
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
 import {
@@ -22,12 +22,10 @@ import {
   modifyMultiwin,
   modifyWinOutcome,
   modifyWinOutcomeCommons,
-  removeYakuFromProps
+  removeYakuFromProps,
 } from './util';
 import { AppOutcome } from '#/interfaces/app';
 import { Player } from '#/interfaces/common';
-import { intersect } from '#/primitives/intersect';
-import { unpack } from '#/primitives/yaku-compat';
 import { getRequiredYaku } from '../selectors/yaku';
 import { YakuId } from '#/primitives/yaku';
 
@@ -86,24 +84,25 @@ function addYakuList(state: IAppState, yakuToAdd: YakuId[], targetPlayer?: numbe
   return stateUpdated;
 }
 
-export function outcomeReducer(
-  state: IAppState,
-  action: AppActionTypes
-): IAppState {
+export function outcomeReducer(state: IAppState, action: AppActionTypes): IAppState {
   let winProps;
   let playerId: number;
   switch (action.type) {
     case INIT_BLANK_OUTCOME:
       return {
         ...state,
-        currentOutcome: initBlankOutcome(state.currentRound, action.payload)
+        currentOutcome: initBlankOutcome(state.currentRound, action.payload),
       };
     case SET_DORA_COUNT:
-      return modifyWinOutcome(state, { 'dora': action.payload.count }, () => action.payload.winner);
+      return modifyWinOutcome(state, { dora: action.payload.count }, () => action.payload.winner);
     case SET_FU_COUNT:
-      return modifyWinOutcome(state, { 'fu': action.payload.count }, () => action.payload.winner);
+      return modifyWinOutcome(state, { fu: action.payload.count }, () => action.payload.winner);
     case ADD_YAKU:
-      return addYakuList(state, [action.payload.id].concat(getRequiredYaku(state)), action.payload.winner);
+      return addYakuList(
+        state,
+        [action.payload.id].concat(getRequiredYaku(state)),
+        action.payload.winner
+      );
     case INIT_REQUIRED_YAKU:
       switch (state.currentOutcome?.selectedOutcome) {
         case 'tsumo':
@@ -111,14 +110,18 @@ export function outcomeReducer(
         case 'ron':
           let stateModified = state;
           Object.keys(state.currentOutcome.wins).forEach((pId) => {
-            stateModified = addYakuList(stateModified, getRequiredYaku(state, parseInt(pId, 10)), parseInt(pId, 10));
+            stateModified = addYakuList(
+              stateModified,
+              getRequiredYaku(state, parseInt(pId, 10)),
+              parseInt(pId, 10)
+            );
           });
           return stateModified;
         default:
           return state;
       }
     case REMOVE_YAKU:
-      if (getRequiredYaku(state).indexOf(action.payload.id) !== -1) {
+      if (getRequiredYaku(state).includes(action.payload.id)) {
         // do not allow to disable required yaku
         return state;
       }
@@ -158,20 +161,21 @@ export function outcomeReducer(
         return state;
       }
 
-      const riichiList = outcome?.riichiBets.indexOf(playerId) === -1
-        ? [ ...outcome.riichiBets, playerId ]
-        : outcome?.riichiBets.filter((id) => id !== playerId);
+      const riichiList =
+        outcome?.riichiBets.indexOf(playerId) === -1
+          ? [...outcome.riichiBets, playerId]
+          : outcome?.riichiBets.filter((id) => id !== playerId);
 
       // Custom logic which disables tempai and/or riichi
       if (outcome?.selectedOutcome === 'draw' || outcome?.selectedOutcome === 'nagashi') {
-        if (outcome.tempai.indexOf(playerId) === -1 && outcome.deadhands.indexOf(playerId) === -1) {
+        if (!outcome.tempai.includes(playerId) && !outcome.deadhands.includes(playerId)) {
           return modifyDrawOutcome(state, {
-            tempai: [ ...outcome.tempai, playerId ],
-            riichiBets: riichiList
+            tempai: [...outcome.tempai, playerId],
+            riichiBets: riichiList,
           });
         }
 
-        if ( outcome.riichiBets.indexOf(playerId) !== -1 && outcome.deadhands.indexOf(playerId) !== -1) {
+        if (outcome.riichiBets.includes(playerId) && outcome.deadhands.includes(playerId)) {
           return modifyDrawOutcome(state, {
             deadhands: outcome.deadhands.filter((id) => id !== playerId),
             riichiBets: outcome.riichiBets.filter((id) => id !== playerId),
@@ -181,9 +185,13 @@ export function outcomeReducer(
 
       if (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo') {
         return modifyWinOutcomeCommons(state, { riichiBets: riichiList });
-      } else if (outcome?.selectedOutcome === 'draw' || outcome?.selectedOutcome === 'nagashi' || outcome?.selectedOutcome === 'abort') {
+      } else if (
+        outcome?.selectedOutcome === 'draw' ||
+        outcome?.selectedOutcome === 'nagashi' ||
+        outcome?.selectedOutcome === 'abort'
+      ) {
         return modifyDrawOutcome(state, {
-          riichiBets: riichiList
+          riichiBets: riichiList,
         });
       }
 
@@ -192,39 +200,43 @@ export function outcomeReducer(
       switch (state.currentOutcome?.selectedOutcome) {
         case 'tsumo':
           return modifyWinOutcome(state, {
-            winner: state.currentOutcome.winner === action.payload
-              ? undefined
-              : action.payload,
-            winnerIsDealer: state.currentOutcome.winner === undefined && state.players !== undefined &&
-              getDealerId(state.currentOutcome, state.players) === action.payload
+            winner: state.currentOutcome.winner === action.payload ? undefined : action.payload,
+            winnerIsDealer:
+              state.currentOutcome.winner === undefined &&
+              state.players !== undefined &&
+              getDealerId(state.currentOutcome, state.players) === action.payload,
           });
         case 'draw':
         case 'nagashi': // select tempai players for nagashi or draw
-          if (state.currentOutcome.riichiBets.indexOf(action.payload) === -1) {
-            if (state.currentOutcome.tempai.indexOf(action.payload) === -1) {
+          if (!state.currentOutcome.riichiBets.includes(action.payload)) {
+            if (!state.currentOutcome.tempai.includes(action.payload)) {
               return modifyDrawOutcome(state, {
-                tempai: [ ...state.currentOutcome.tempai, action.payload ]
-              })
+                tempai: [...state.currentOutcome.tempai, action.payload],
+              });
             }
 
             return modifyDrawOutcome(state, {
-              tempai: state.currentOutcome.tempai.filter((id) => id !== action.payload)
+              tempai: state.currentOutcome.tempai.filter((id) => id !== action.payload),
             });
           } else {
-            if (state.currentOutcome.tempai.indexOf(action.payload) !== -1 && state.currentOutcome.deadhands.indexOf(action.payload) === -1) {
+            if (
+              state.currentOutcome.tempai.includes(action.payload) &&
+              !state.currentOutcome.deadhands.includes(action.payload)
+            ) {
               return modifyDrawOutcome(state, {
-                deadhands: [ ...state.currentOutcome.deadhands, action.payload ],
-                tempai: state.currentOutcome.tempai.filter((id) => id !== action.payload)
-              })
+                deadhands: [...state.currentOutcome.deadhands, action.payload],
+                tempai: state.currentOutcome.tempai.filter((id) => id !== action.payload),
+              });
             } else {
-              throw Error('Tempai button cannot exist while deadhand button pressed')
+              throw Error('Tempai button cannot exist while deadhand button pressed');
             }
           }
         case 'ron':
           return modifyMultiwin(
             state,
             action.payload,
-            state.players !== undefined && getDealerId(state.currentOutcome, state.players) === action.payload,
+            state.players !== undefined &&
+              getDealerId(state.currentOutcome, state.players) === action.payload,
             !!state.currentOutcome.wins[action.payload]
           );
         default:
@@ -235,11 +247,11 @@ export function outcomeReducer(
         case 'ron':
         case 'chombo':
           return modifyLoseOutcome(state, {
-            loser: state.currentOutcome.loser === action.payload
-              ? undefined
-              : action.payload,
-            loserIsDealer: state.currentOutcome.loser === undefined && state.players !== undefined
-              && getDealerId(state.currentOutcome, state.players) === action.payload
+            loser: state.currentOutcome.loser === action.payload ? undefined : action.payload,
+            loserIsDealer:
+              state.currentOutcome.loser === undefined &&
+              state.players !== undefined &&
+              getDealerId(state.currentOutcome, state.players) === action.payload,
           });
         default:
           throw new Error('No losers exist on this outcome');
@@ -249,17 +261,22 @@ export function outcomeReducer(
       switch (state.currentOutcome?.selectedOutcome) {
         case 'tsumo':
           return modifyWinOutcome(state, {
-            paoPlayerId: state.currentOutcome.paoPlayerId === playerId
-              ? undefined
-              : playerId
+            paoPlayerId: state.currentOutcome.paoPlayerId === playerId ? undefined : playerId,
           });
         case 'ron':
           if (state.multironCurrentWinner) {
-            return modifyWinOutcome(state, {
-              paoPlayerId: state.currentOutcome.wins[state.multironCurrentWinner].paoPlayerId === playerId ? undefined : playerId
-            }, () => state.multironCurrentWinner);
+            return modifyWinOutcome(
+              state,
+              {
+                paoPlayerId:
+                  state.currentOutcome.wins[state.multironCurrentWinner].paoPlayerId === playerId
+                    ? undefined
+                    : playerId,
+              },
+              () => state.multironCurrentWinner
+            );
           }
-          return state
+          return state;
         default:
           throw new Error('No pao exist on this outcome');
       }
@@ -267,14 +284,17 @@ export function outcomeReducer(
       switch (state.currentOutcome?.selectedOutcome) {
         case 'draw':
         case 'nagashi':
-          if (state.currentOutcome.riichiBets.indexOf(action.payload) !== -1) {
-            if (state.currentOutcome.tempai.indexOf(action.payload) === -1 && state.currentOutcome.deadhands.indexOf(action.payload) !== -1) {
+          if (state.currentOutcome.riichiBets.includes(action.payload)) {
+            if (
+              !state.currentOutcome.tempai.includes(action.payload) &&
+              state.currentOutcome.deadhands.includes(action.payload)
+            ) {
               return modifyDrawOutcome(state, {
                 deadhands: state.currentOutcome.deadhands.filter((id) => id !== action.payload),
-                tempai: [ ...state.currentOutcome.tempai, action.payload ]
+                tempai: [...state.currentOutcome.tempai, action.payload],
               });
             } else {
-              throw Error('Deadhand button cannot exist while tempai button pressed')
+              throw Error('Deadhand button cannot exist while tempai button pressed');
             }
           } else {
             throw new Error('Deadhand button cannot exist without pressed riichi');
@@ -285,13 +305,13 @@ export function outcomeReducer(
     case TOGGLE_NAGASHI:
       switch (state.currentOutcome?.selectedOutcome) {
         case 'nagashi':
-          if (state.currentOutcome.nagashi.indexOf(action.payload) === -1) {
+          if (!state.currentOutcome.nagashi.includes(action.payload)) {
             return modifyDrawOutcome(state, {
-              nagashi: [ ...state.currentOutcome.nagashi, action.payload ]
+              nagashi: [...state.currentOutcome.nagashi, action.payload],
             });
           } else {
             return modifyDrawOutcome(state, {
-              nagashi: state.currentOutcome.nagashi.filter((id) => id !== action.payload)
+              nagashi: state.currentOutcome.nagashi.filter((id) => id !== action.payload),
             });
           }
         default:

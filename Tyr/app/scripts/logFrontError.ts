@@ -1,6 +1,12 @@
 import { environment } from '#config';
 
-function errHandler(errorMsg: Event | string, currentUrl: string | undefined, lineNumber: number | undefined, charNumber: number | undefined, err: Error | undefined) {
+function errHandler(
+  errorMsg: Event | string,
+  currentUrl: string | undefined,
+  lineNumber: number | undefined,
+  charNumber: number | undefined,
+  err: Error | undefined
+) {
   const http = new XMLHttpRequest();
   const url = environment.apiUrl;
   const rpcBody = {
@@ -11,9 +17,9 @@ function errHandler(errorMsg: Event | string, currentUrl: string | undefined, li
       ((window as any).__debugInfo || {}).sh,
       ((window as any).__debugInfo || {}).p,
       errorMsg + '\n' + '@' + currentUrl + ':' + lineNumber + ':' + charNumber,
-      err && err.stack
+      err && err.stack,
     ],
-    id: Math.round(1000000 * Math.random())
+    id: Math.round(1000000 * Math.random()),
   };
   http.open('POST', url, true);
   http.setRequestHeader('Content-type', 'application/json');
@@ -26,16 +32,16 @@ export function registerFrontErrorHandler() {
   }
   if (window.onerror) {
     const prevHandler = window.onerror;
-    window.onerror = function(
+    window.onerror = function (
       errorMsg: Event | string,
       currentUrl: string | undefined,
       lineNumber: number | undefined,
       charNumber: number | undefined,
-      err: Error| undefined
+      err: Error | undefined
     ) {
       prevHandler(errorMsg, currentUrl, lineNumber, charNumber, err);
       errHandler(errorMsg, currentUrl, lineNumber, charNumber, err);
-    }
+    };
   } else {
     window.onerror = errHandler;
   }

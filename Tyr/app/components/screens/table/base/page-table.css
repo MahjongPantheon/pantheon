@@ -6,10 +6,10 @@
 }
 
 .table-info {
-
 }
 
-.table-info__rotator_ccw, .table-info__rotator_cw {
+.table-info__rotator_ccw,
+.table-info__rotator_cw {
   display: inline-block;
   padding: 20px;
 }

@@ -1,12 +1,13 @@
 import { YakuId } from '#/primitives/yaku';
 import { RemoteError } from '#/services/remoteError';
 import {
-  LCurrentGame, LEventsList,
+  LCurrentGame,
+  LEventsList,
   LGameConfig,
   LSessionOverview,
   LTimerState,
   LUser,
-  LUserWithScore
+  LUserWithScore,
 } from '#/interfaces/local';
 import {
   RRoundOverviewInfo,
@@ -15,8 +16,8 @@ import {
   RRoundPaymentsInfoSingle,
   SessionState,
 } from '#/interfaces/remote';
-import {Table,  Outcome} from '#/interfaces/common';
-import {IAppState} from '../interfaces';
+import { Table, Outcome } from '#/interfaces/common';
+import { IAppState } from '../interfaces';
 
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
@@ -135,7 +136,7 @@ interface StartupWithAuthAction {
 
 interface StartNewGameAction {
   type: typeof START_NEW_GAME;
-  payload?: number[]
+  payload?: number[];
 }
 
 interface GoToCurrentGameAction {
@@ -152,7 +153,7 @@ interface GoToEventSelectAction {
 
 interface SearchPlayerAction {
   type: typeof SEARCH_PLAYER;
-  payload: IAppState['newGameSelectedPlayerSide'],
+  payload: IAppState['newGameSelectedPlayerSide'];
 }
 
 interface ShowLastResultsAction {
@@ -171,7 +172,7 @@ interface ShowOtherTableAction {
   type: typeof SHOW_OTHER_TABLE;
   payload: {
     hash: string;
-  }
+  };
 }
 
 interface OpenSettingsAction {
@@ -189,24 +190,24 @@ interface GotoPrevScreenAction {
 interface SetDoraCountAction {
   type: typeof SET_DORA_COUNT;
   payload: {
-    count: number,
-    winner?: number
+    count: number;
+    winner?: number;
   };
 }
 
 interface SetFuCountAction {
   type: typeof SET_FU_COUNT;
   payload: {
-    count: number,
-    winner?: number
+    count: number;
+    winner?: number;
   };
 }
 
 interface AddYakuAction {
   type: typeof ADD_YAKU;
   payload: {
-    id: YakuId,
-    winner?: number
+    id: YakuId;
+    winner?: number;
   };
 }
 
@@ -217,8 +218,8 @@ interface InitRequiredYakuAction {
 interface RemoveYakuAction {
   type: typeof REMOVE_YAKU;
   payload: {
-    id: YakuId,
-    winner?: number
+    id: YakuId;
+    winner?: number;
   };
 }
 
@@ -289,7 +290,7 @@ interface UpdateCurrentGamesActionSuccess {
     games: LCurrentGame[];
     gameConfig: LGameConfig;
     timerState: LTimerState;
-  }
+  };
 }
 interface UpdateCurrentGamesActionFail {
   type: typeof UPDATE_CURRENT_GAMES_FAIL;
@@ -382,7 +383,7 @@ interface SetTimerAction {
     secondsRemaining: number;
     autostartSecondsRemaining: number;
     haveAutostart: boolean;
-  }
+  };
 }
 interface UpdateTimerDataAction {
   type: typeof UPDATE_TIMER_DATA;
@@ -392,7 +393,7 @@ interface UpdateTimerDataAction {
     lastUpdateTimestamp?: number;
     autostartSecondsRemaining?: number;
     autostartLastUpdateTimestamp?: number;
-  }
+  };
 }
 
 interface GetChangesOverviewActionInit {
@@ -689,6 +690,4 @@ export type AppActionTypes =
   | EventsGetListActionSuccess
   | EventsGetListActionFail
   | SelectEventAction
-  | HistoryInitAction
-  ;
-
+  | HistoryInitAction;

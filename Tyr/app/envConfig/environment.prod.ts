@@ -18,7 +18,7 @@
  * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import {EnvConfig} from "#/envConfig/interface";
+import { EnvConfig } from '#/envConfig/interface';
 
 function replicaAppend(url: string) {
   if (window.location.host.startsWith('ru.')) {
@@ -43,5 +43,5 @@ export const environment: EnvConfig = {
   metrikaId: 64318630,
 
   // Do not change this unless you really know what are you doing
-  apiVersion: [1, 0]
+  apiVersion: [1, 0],
 };

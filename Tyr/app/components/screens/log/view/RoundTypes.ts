@@ -1,4 +1,3 @@
-
 export interface IRoundOverviewBase {
   riichiOnTable: number; // riichis on table
   honbaOnTable: number;
@@ -6,7 +5,7 @@ export interface IRoundOverviewBase {
 }
 
 export interface IRoundOverviewRon extends IRoundOverviewBase {
-  outcome: 'ron'
+  outcome: 'ron';
   loser: string;
   winner: string;
   paoPlayer?: string;
@@ -17,7 +16,7 @@ export interface IRoundOverviewRon extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewMultiRon extends IRoundOverviewBase {
-  outcome: 'multiron'
+  outcome: 'multiron';
   loser: string;
   winnerList: string[];
   paoPlayerList: (string | undefined)[];
@@ -28,7 +27,7 @@ export interface IRoundOverviewMultiRon extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewTsumo extends IRoundOverviewBase {
-  outcome: 'tsumo'
+  outcome: 'tsumo';
   winner: string;
   paoPlayer?: string;
   yakuList: string[];
@@ -38,23 +37,23 @@ export interface IRoundOverviewTsumo extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewDraw extends IRoundOverviewBase {
-  outcome: 'draw'
-  tempai: string[]
+  outcome: 'draw';
+  tempai: string[];
 }
 
 export interface IRoundOverviewAbort extends IRoundOverviewBase {
-  outcome: 'abort'
+  outcome: 'abort';
 }
 
 export interface IRoundOverviewChombo extends IRoundOverviewBase {
-  outcome: 'chombo'
+  outcome: 'chombo';
   penaltyFor: string;
 }
 
 export interface IRoundOverviewNagashi extends IRoundOverviewBase {
-  outcome: 'nagashi'
-  tempai: string[]
-  nagashi: string[]
+  outcome: 'nagashi';
+  tempai: string[];
+  nagashi: string[];
 }
 
 export type IRoundOverviewInfo =
@@ -64,4 +63,4 @@ export type IRoundOverviewInfo =
   | IRoundOverviewDraw
   | IRoundOverviewAbort
   | IRoundOverviewChombo
-  | IRoundOverviewNagashi
+  | IRoundOverviewNagashi;

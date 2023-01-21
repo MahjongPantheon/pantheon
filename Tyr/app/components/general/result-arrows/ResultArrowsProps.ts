@@ -1,15 +1,15 @@
 export type ResultArrowsProps = {
-  arrows: PlayerArrow[]
-}
+  arrows: PlayerArrow[];
+};
 
 export type PlayerArrow = {
-  points: number
-  honbaPoints: number
-  withRiichi: boolean
-  withPao: boolean
-  start: PlayerSide
-  end: PlayerSide
-}
+  points: number;
+  honbaPoints: number;
+  withRiichi: boolean;
+  withPao: boolean;
+  start: PlayerSide;
+  end: PlayerSide;
+};
 
 export enum PlayerSide {
   TOP,

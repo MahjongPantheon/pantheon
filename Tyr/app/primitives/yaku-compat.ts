@@ -71,7 +71,7 @@ export const limits = [
   Y.KOKUSHIMUSOU,
   Y.TENHOU,
   Y.CHIHOU,
-  Y.RENHOU
+  Y.RENHOU,
 ];
 
 // Meaning:
@@ -108,11 +108,11 @@ const suppressingYaku = [
 
   // [Y.__OPENHAND, Y.MENZENTSUMO], // Note: do not uncomment, this is handled on upper level by disabling buttons
   // [Y.MENZENTSUMO, Y.__OPENHAND], // Note: do not uncomment, this is handled on upper level by disabling buttons
-].concat(limits.map(
-  (limit) => yakuSuppressedByLimits.map(
-    (yaku) => [limit, yaku]
-  )
-).reduce((acc, arr) => acc.concat(arr)));
+].concat(
+  limits
+    .map((limit) => yakuSuppressedByLimits.map((yaku) => [limit, yaku]))
+    .reduce((acc, arr) => acc.concat(arr))
+);
 
 const combinableYaku = [
   [Y.__OPENHAND, Y.TOITOI],
@@ -525,38 +525,37 @@ const combinableYakumans = [
   [Y.KOKUSHIMUSOU, Y.CHIHOU],
 
   [Y.CHUURENPOUTO, Y.TENHOU],
-  [Y.CHUURENPOUTO, Y.CHIHOU]
+  [Y.CHUURENPOUTO, Y.CHIHOU],
 ];
 
-let nodes: { [key: string]: Node<Yaku> } = {};
-for (let yaku of yakuList) {
+const nodes: { [key: string]: Node<Yaku> } = {};
+for (const yaku of yakuList) {
   nodes[yaku.id] = { id: yaku.id, data: yaku };
 }
 
 export function makeYakuGraph(multiYakumans = false) {
-  let yakuGraph = new Graph<Yaku>();
-  for (let yaku of yakuList) {
+  const yakuGraph = new Graph<Yaku>();
+  for (const yaku of yakuList) {
     yakuGraph.addNode(nodes[yaku.id]);
   }
 
-  for (let comb of combinableYaku) {
+  for (const comb of combinableYaku) {
     yakuGraph.addBiEdge(nodes[comb[0]], nodes[comb[1]], EdgeType.Combines);
   }
 
   if (multiYakumans) {
-    for (let comb of combinableYakumans) {
+    for (const comb of combinableYakumans) {
       yakuGraph.addBiEdge(nodes[comb[0]], nodes[comb[1]], EdgeType.Combines);
     }
   }
 
-  for (let supr of suppressingYaku) {
+  for (const supr of suppressingYaku) {
     yakuGraph.addEdge(nodes[supr[0]], nodes[supr[1]], EdgeType.Suppresses);
     yakuGraph.addEdge(nodes[supr[1]], nodes[supr[0]], EdgeType.IsSuppressed);
   }
 
   return yakuGraph;
 }
-
 
 /*
   Идея для проверки совместимости яку:
@@ -568,24 +567,24 @@ export function makeYakuGraph(multiYakumans = false) {
 */
 
 export function addYakuToList(yakuGraph: Graph<Yaku>, yaku: Y, selectedYaku: Y[]): Y[] {
-  return yakuGraph.tryAddAllowedNode(
-    selectedYaku.map((id) => nodes[id]),
-    nodes[yaku]
-  ).map((node) => node.data.id);
+  return yakuGraph
+    .tryAddAllowedNode(
+      selectedYaku.map((id) => nodes[id]),
+      nodes[yaku]
+    )
+    .map((node) => node.data.id);
 }
 
 export function getAllowedYaku(yakuGraph: Graph<Yaku> | undefined, enabledYaku: Y[]): Y[] {
   if (!yakuGraph) {
     return [];
   }
-  return yakuGraph.getAllowedNodes(
-    enabledYaku.map((id) => nodes[id])
-  ).map((node) => node.data.id);
+  return yakuGraph.getAllowedNodes(enabledYaku.map((id) => nodes[id])).map((node) => node.data.id);
 }
 
 export function pack(list: Y[]): string {
   return yakuList.reduce((acc: string, el) => {
-    return acc + (list.indexOf(el.id) === -1 ? '.' : '+');
+    return acc + (!list.includes(el.id) ? '.' : '+');
   }, '');
 }
 

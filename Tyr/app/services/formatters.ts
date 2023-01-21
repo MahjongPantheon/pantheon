@@ -19,13 +19,27 @@
  */
 
 import {
-  RCurrentGames, RRound, RUserInfo,
-  RAllPlayersInEvent, RPlayerData,
-  RTimerState, RGameConfig, RTablesState, RSessionOverview, RFreyAuthData, REvent, REventsList
+  RCurrentGames,
+  RRound,
+  RUserInfo,
+  RAllPlayersInEvent,
+  RPlayerData,
+  RTimerState,
+  RGameConfig,
+  RTablesState,
+  RSessionOverview,
+  RFreyAuthData,
+  REventsList,
 } from '#/interfaces/remote';
 import {
-  LCurrentGame, LUser, LUserWithScore,
-  LTimerState, LGameConfig, LSessionOverview, LFreyAuthData, LEventsList
+  LCurrentGame,
+  LUser,
+  LUserWithScore,
+  LTimerState,
+  LGameConfig,
+  LSessionOverview,
+  LFreyAuthData,
+  LEventsList,
 } from '#/interfaces/local';
 import { Player, Table } from '#/interfaces/common';
 import { YakuId } from '#/primitives/yaku';
@@ -35,33 +49,35 @@ import {
   getPaoUsers,
   getRiichiUsers,
   getWinningUsers,
-  getWins
+  getWins,
 } from '#/store/selectors/mimirSelectors';
 import { IAppState } from '#/store/interfaces';
 import { getDora, getFu, getHan } from '#/store/selectors/hanFu';
 import { getSelectedYaku } from '#/store/selectors/yaku';
-import { environment } from "#config";
-import {Simulate} from "react-dom/test-utils";
+import { environment } from '#config';
+import { Simulate } from 'react-dom/test-utils';
 import dragEnd = Simulate.dragEnd;
 
 export function gameOverviewFormatter(overview: RSessionOverview): LSessionOverview {
   return {
     tableIndex: overview.table_index,
-    players: [...overview.players.map((pl) => {
-      return {
-        tenhouId: '', // TODO: workaround
-        ratingDelta: 0, // TODO: workaround
-        id: pl.id,
-        displayName: pl.title,
-        score: overview.state.scores[pl.id] || 0,
-        penalties: overview.state.penalties[pl.id] || 0
-      };
-    })] as [LUserWithScore, LUserWithScore, LUserWithScore, LUserWithScore],
+    players: [
+      ...overview.players.map((pl) => {
+        return {
+          tenhouId: '', // TODO: workaround
+          ratingDelta: 0, // TODO: workaround
+          id: pl.id,
+          displayName: pl.title,
+          score: overview.state.scores[pl.id] || 0,
+          penalties: overview.state.penalties[pl.id] || 0,
+        };
+      }),
+    ] as [LUserWithScore, LUserWithScore, LUserWithScore, LUserWithScore],
     currentRound: overview.state.round,
     riichiOnTable: overview.state.riichi,
     honba: overview.state.honba,
     yellowZoneAlreadyPlayed: overview.state.yellowZoneAlreadyPlayed,
-  }
+  };
 }
 
 export function timerFormatter(timer: RTimerState): LTimerState {
@@ -111,7 +127,7 @@ export function eventsListFormatter(list: REventsList): LEventsList {
     .map((event) => ({
       id: parseInt(event.id.toString(), 10),
       description: event.description,
-      title: event.title
+      title: event.title,
     }));
 }
 
@@ -142,7 +158,10 @@ export function gameConfigFormatter(config: RGameConfig): LGameConfig {
     withLeadingDealerGameOver: !!config.withLeadingDealerGameOver,
     redZone: config.redZone ? parseInt(config.redZone.toString(), 10) : null,
     yellowZone: config.yellowZone ? parseInt(config.yellowZone.toString(), 10) : null,
-    timerPolicy: (config.timerPolicy === 'yellowZone' || config.timerPolicy === 'redZone') ? config.timerPolicy : 'none',
+    timerPolicy:
+      config.timerPolicy === 'yellowZone' || config.timerPolicy === 'redZone'
+        ? config.timerPolicy
+        : 'none',
     useTimer: !!config.useTimer,
     isOnline: !!config.isOnline,
     isTextlog: !!config.isTextlog,
@@ -160,25 +179,32 @@ export function currentGamesFormatter(games: RCurrentGames): LCurrentGame[] {
     penalties: 0, // TODO?
   });
 
-  return games.map((game): LCurrentGame => ({
-    hashcode: game.hashcode,
-    tableIndex: game.table_index,
-    status: game.status,
-    players: [
-      formatPlayer(game.players[0]),
-      formatPlayer(game.players[1]),
-      formatPlayer(game.players[2]),
-      formatPlayer(game.players[3])
-    ]
-  }))
+  return games.map(
+    (game): LCurrentGame => ({
+      hashcode: game.hashcode,
+      tableIndex: game.table_index,
+      status: game.status,
+      players: [
+        formatPlayer(game.players[0]),
+        formatPlayer(game.players[1]),
+        formatPlayer(game.players[2]),
+        formatPlayer(game.players[3]),
+      ],
+    })
+  );
 }
 
 export function formatRoundToRemote(state: IAppState): RRound | undefined {
   switch (state.currentOutcome?.selectedOutcome) {
     case 'ron':
       let winIdx = 0;
-      let wins = getWins(state).map(win => {
-        let riichi = winIdx > 0 ? '' : getRiichiUsers(state).map((player) => player.id).join(',');
+      const wins = getWins(state).map((win) => {
+        const riichi =
+          winIdx > 0
+            ? ''
+            : getRiichiUsers(state)
+                .map((player) => player.id)
+                .join(',');
         winIdx++; // TODO: выпилить когда завезут вынос riichi из секции wins внутри апи
         return {
           riichi: riichi,
@@ -191,18 +217,19 @@ export function formatRoundToRemote(state: IAppState): RRound | undefined {
           kandora: win.kandora,
           kanuradora: win.kanuradora,
           yaku: win.yaku.filter((y: YakuId) => y > 0).join(','),
-          open_hand: win.yaku.indexOf(YakuId.__OPENHAND) !== -1
+          open_hand: win.yaku.includes(YakuId.__OPENHAND),
         };
       });
 
-      if (wins.length > 1) { // multiron
+      if (wins.length > 1) {
+        // multiron
         return {
           round_index: state.currentRound,
           honba: state.honba,
           outcome: 'multiron',
           loser_id: getLosingUsers(state)[0].id,
           multi_ron: wins.length,
-          wins: wins
+          wins: wins,
         };
       }
 
@@ -213,7 +240,7 @@ export function formatRoundToRemote(state: IAppState): RRound | undefined {
         outcome: 'ron',
         loser_id: getLosingUsers(state)[0].id,
         multi_ron: null,
-        ...wins[0]
+        ...wins[0],
       };
 
     case 'tsumo':
@@ -221,7 +248,9 @@ export function formatRoundToRemote(state: IAppState): RRound | undefined {
         round_index: state.currentRound,
         honba: state.honba,
         outcome: 'tsumo',
-        riichi: getRiichiUsers(state).map((player) => player.id).join(','),
+        riichi: getRiichiUsers(state)
+          .map((player) => player.id)
+          .join(','),
         winner_id: getWinningUsers(state)[0].id,
         pao_player_id: (getPaoUsers(state)[0] || { id: null }).id,
         han: getHan(state) + getDora(state),
@@ -231,39 +260,53 @@ export function formatRoundToRemote(state: IAppState): RRound | undefined {
         uradora: 0, // TODO
         kandora: 0, // TODO
         kanuradora: 0, // TODO
-        yaku: getSelectedYaku(state).filter(y => y > 0).join(','),
-        open_hand: getSelectedYaku(state).indexOf(YakuId.__OPENHAND) !== -1
+        yaku: getSelectedYaku(state)
+          .filter((y) => y > 0)
+          .join(','),
+        open_hand: getSelectedYaku(state).includes(YakuId.__OPENHAND),
       };
     case 'draw':
       return {
         round_index: state.currentRound,
         honba: state.honba,
         outcome: 'draw',
-        riichi: getRiichiUsers(state).map((player) => player.id).join(','),
-        tempai: getWinningUsers(state).map((player) => player.id).join(',')
+        riichi: getRiichiUsers(state)
+          .map((player) => player.id)
+          .join(','),
+        tempai: getWinningUsers(state)
+          .map((player) => player.id)
+          .join(','),
       };
     case 'nagashi':
       return {
         round_index: state.currentRound,
         honba: state.honba,
         outcome: 'nagashi',
-        riichi: getRiichiUsers(state).map((player) => player.id).join(','),
-        tempai: getWinningUsers(state).map((player) => player.id).join(','),
-        nagashi: getNagashiUsers(state).map((player) => player.id).join(',')
+        riichi: getRiichiUsers(state)
+          .map((player) => player.id)
+          .join(','),
+        tempai: getWinningUsers(state)
+          .map((player) => player.id)
+          .join(','),
+        nagashi: getNagashiUsers(state)
+          .map((player) => player.id)
+          .join(','),
       };
     case 'abort':
       return {
         round_index: state.currentRound,
         honba: state.honba,
         outcome: 'abort',
-        riichi: getRiichiUsers(state).map((player) => player.id).join(',')
+        riichi: getRiichiUsers(state)
+          .map((player) => player.id)
+          .join(','),
       };
     case 'chombo':
       return {
         round_index: state.currentRound,
         honba: state.honba,
         outcome: 'chombo',
-        loser_id: getLosingUsers(state)[0].id
+        loser_id: getLosingUsers(state)[0].id,
       };
   }
 }
@@ -280,13 +323,13 @@ export function tablesStateFormatter(tables: RTablesState): Table[] {
         displayName: p.title,
         score: parseInt(t.scores[p.id].toString(), 10),
         penalties: 0, // mock
-      }))
+      })),
     }));
 }
 
 export function freyAuthFormatter(data: RFreyAuthData): LFreyAuthData {
   return {
     personId: parseInt((data[0] || 0).toString(), 10),
-    token: data[1]
+    token: data[1],
   };
 }

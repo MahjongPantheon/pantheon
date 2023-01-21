@@ -26,23 +26,27 @@ export function modifyWinOutcomeCommons(state: IAppState, fields: WinOutcomeProp
         ...state,
         currentOutcome: {
           ...state.currentOutcome,
-          ...fields
-        } as AppOutcome // hacked, ts does not understand this :(
+          ...fields,
+        } as AppOutcome, // hacked, ts does not understand this :(
       };
   }
 
   return state;
 }
 
-export function modifyWinOutcome(state: IAppState, fields: WinOutcomeProps, winnerIdGetter?: () => number | undefined): IAppState {
+export function modifyWinOutcome(
+  state: IAppState,
+  fields: WinOutcomeProps,
+  winnerIdGetter?: () => number | undefined
+): IAppState {
   switch (state.currentOutcome?.selectedOutcome) {
     case 'tsumo':
       return {
         ...state,
         currentOutcome: {
           ...state.currentOutcome,
-          ...fields
-        } as AppOutcome // hacked, ts does not understand this :(
+          ...fields,
+        } as AppOutcome, // hacked, ts does not understand this :(
       };
     case 'ron':
       if (!winnerIdGetter) {
@@ -61,10 +65,10 @@ export function modifyWinOutcome(state: IAppState, fields: WinOutcomeProps, winn
             ...state.currentOutcome.wins,
             [winnerId]: {
               ...state.currentOutcome.wins[winnerId],
-              ...fields
-            }
-          }
-        } as AppOutcomeRon
+              ...fields,
+            },
+          },
+        } as AppOutcomeRon,
       };
     default:
       throw new Error('Wrong outcome modifier used');
@@ -79,8 +83,8 @@ export function modifyLoseOutcome(state: IAppState, fields: LoseOutcomeProps): I
         ...state,
         currentOutcome: {
           ...state.currentOutcome,
-          ...fields
-        } as AppOutcome // hacked, ts does not understand this :(
+          ...fields,
+        } as AppOutcome, // hacked, ts does not understand this :(
       };
     default:
       throw new Error('Wrong outcome modifier used');
@@ -94,7 +98,12 @@ export function modifyLoseOutcome(state: IAppState, fields: LoseOutcomeProps): I
  * @param winnerIsDealer
  * @param remove  do not replace, but remove the entry
  */
-export function modifyMultiwin(state: IAppState, winnerId: number, winnerIsDealer: boolean, remove = false): IAppState {
+export function modifyMultiwin(
+  state: IAppState,
+  winnerId: number,
+  winnerIsDealer: boolean,
+  remove = false
+): IAppState {
   if (state.currentOutcome?.selectedOutcome !== 'ron') {
     throw new Error('Wrong outcome modifier used');
   }
@@ -110,8 +119,8 @@ export function modifyMultiwin(state: IAppState, winnerId: number, winnerIsDeale
         multiRon: state.currentOutcome.wins[winnerId]
           ? state.currentOutcome.multiRon - 1
           : state.currentOutcome.multiRon,
-        wins
-      }
+        wins,
+      },
     };
   } else {
     return {
@@ -131,10 +140,10 @@ export function modifyMultiwin(state: IAppState, winnerId: number, winnerIsDeale
             possibleFu: [],
             yaku: '',
             dora: 0,
-            openHand: false
-          }
-        }
-      }
+            openHand: false,
+          },
+        },
+      },
     };
   }
 }
@@ -148,8 +157,8 @@ export function modifyDrawOutcome(state: IAppState, fields: DrawOutcomeProps): I
         ...state,
         currentOutcome: {
           ...state.currentOutcome,
-          ...fields
-        } as AppOutcome // hacked, ts does not understand this :(
+          ...fields,
+        } as AppOutcome, // hacked, ts does not understand this :(
       };
     default:
       throw new Error('Wrong outcome modifier used');
@@ -167,7 +176,10 @@ type YakuModException = (
 const yakuModAfterExceptions: YakuModException[] = [
   function ensureTsumoIfRiichi(outcome, winProps, yList) {
     if (outcome === 'tsumo') {
-      if ((yList.includes(YakuId.RIICHI) || yList.includes(YakuId.DOUBLERIICHI)) && !yList.includes(YakuId.MENZENTSUMO)) {
+      if (
+        (yList.includes(YakuId.RIICHI) || yList.includes(YakuId.DOUBLERIICHI)) &&
+        !yList.includes(YakuId.MENZENTSUMO)
+      ) {
         yList.push(YakuId.MENZENTSUMO);
       }
     }
@@ -181,7 +193,7 @@ const yakuModAfterExceptions: YakuModException[] = [
         if (pIdx !== -1) {
           yList.splice(pIdx, 1);
         }
-        if (yList.indexOf(YakuId.MENZENTSUMO) === -1) {
+        if (!yList.includes(YakuId.MENZENTSUMO)) {
           yList.push(YakuId.__OPENHAND);
         }
       } else if (yakuId === YakuId.__OPENHAND) {
@@ -189,13 +201,13 @@ const yakuModAfterExceptions: YakuModException[] = [
         if (pIdx !== -1) {
           yList.splice(pIdx, 1);
         }
-        if (yList.indexOf(YakuId.__OPENHAND) === -1) {
+        if (!yList.includes(YakuId.__OPENHAND)) {
           yList.push(YakuId.MENZENTSUMO);
         }
       }
     }
     return yList;
-  }
+  },
 ];
 
 const yakuModBeforeExceptions: YakuModException[] = [
@@ -206,7 +218,7 @@ const yakuModBeforeExceptions: YakuModException[] = [
       }
     }
     return yList;
-  }
+  },
 ];
 
 export function addYakuToProps(
@@ -217,27 +229,32 @@ export function addYakuToProps(
   yakuGraph: Graph<Yaku> | undefined,
   riichiPlayers: number[]
 ): WinProps | undefined {
-
   if (!yakuGraph) {
     return;
   }
 
   let yList = unpack(winProps.yaku);
-  if (yList.indexOf(yakuId) !== -1) {
+  if (yList.includes(yakuId)) {
     return undefined;
   }
 
   // reset dora count if limit is added
-  if (limits.indexOf(yakuId) !== -1) {
+  if (limits.includes(yakuId)) {
     winProps = {
       ...winProps,
-      dora: 0
+      dora: 0,
     };
   }
 
-  yList = yakuModBeforeExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers), yList);
+  yList = yakuModBeforeExceptions.reduce(
+    (list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers),
+    yList
+  );
   yList = addYakuToList(yakuGraph, yakuId, yList);
-  yList = yakuModAfterExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers), yList);
+  yList = yakuModAfterExceptions.reduce(
+    (list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers),
+    yList
+  );
 
   const packedList = pack(yList);
 
@@ -257,7 +274,7 @@ export function addYakuToProps(
       yaku: packedList,
       han,
       fu,
-      possibleFu
+      possibleFu,
     };
   }
 
@@ -270,20 +287,25 @@ export function removeYakuFromProps(
   yakuId: YakuId,
   riichiPlayers: number[]
 ): WinProps | undefined {
-
   let yList = unpack(winProps.yaku);
-  if (yList.indexOf(yakuId) === -1) {
+  if (!yList.includes(yakuId)) {
     return undefined;
   }
 
-  yList = yakuModBeforeExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers), yList);
+  yList = yakuModBeforeExceptions.reduce(
+    (list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers),
+    yList
+  );
 
   const pIdx = yList.indexOf(yakuId);
   if (pIdx !== -1) {
     yList.splice(pIdx, 1);
   }
 
-  yList = yakuModAfterExceptions.reduce((list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers), yList);
+  yList = yakuModAfterExceptions.reduce(
+    (list, ex) => ex(selectedOutcome, winProps, yList, yakuId, riichiPlayers),
+    yList
+  );
 
   const packedList = pack(yList);
 
@@ -291,7 +313,7 @@ export function removeYakuFromProps(
     let fu = winProps.fu;
     const han = getHan(yList);
     const possibleFu = getFixedFu(yList, selectedOutcome);
-    if (possibleFu.indexOf(fu) === -1) {
+    if (!possibleFu.includes(fu)) {
       fu = possibleFu[0];
     }
 
@@ -300,7 +322,7 @@ export function removeYakuFromProps(
       yaku: packedList,
       han,
       fu,
-      possibleFu
+      possibleFu,
     };
   }
 
@@ -308,5 +330,5 @@ export function removeYakuFromProps(
 }
 
 export function modifyArray<T>(arr: T[], index: number, value: T) {
-  return [...(arr.slice(0, index)), value, ...(arr.slice(index + 1))];
+  return [...arr.slice(0, index), value, ...arr.slice(index + 1)];
 }
