@@ -4,8 +4,19 @@ deps:
 
 PHONY: lint
 lint:
+	make -k -j4 typecheck eslint prettier
+
+PHONY: eslint
+eslint:
 	./node_modules/.bin/eslint . --ext .js,.ts,.tsx
+
+PHONY: prettier
+prettier:
 	./node_modules/.bin/prettier -c ./app
+
+PHONY: typecheck
+typecheck:
+	./node_modules/.bin/tsc --project tsconfig.json --noEmit
 
 PHONY: autofix
 autofix:
