@@ -1,35 +1,33 @@
 import { AppScreen, IAppState } from '../interfaces';
 import {
-  AppActionTypes, GO_TO_CURRENT_GAME,
+  AppActionTypes,
+  GO_TO_CURRENT_GAME,
   GOTO_NEXT_SCREEN,
   GOTO_PREV_SCREEN,
   OPEN_SETTINGS,
-  RESET_STATE, SEARCH_PLAYER,
+  RESET_STATE,
+  SEARCH_PLAYER,
   SHOW_LAST_RESULTS,
   SHOW_GAME_LOG,
   SHOW_OTHER_TABLE,
   SHOW_OTHER_TABLES_LIST,
   START_NEW_GAME,
-  GOTO_EVENT_SELECT, GO_TO_DONATE,
+  GOTO_EVENT_SELECT,
+  GO_TO_DONATE,
 } from '../actions/interfaces';
 import { winnerHasYakuWithPao } from '../util';
-import {AppOutcome} from '#/interfaces/app';
+import { AppOutcome } from '#/interfaces/app';
 
-export function screenManageReducer(
-  state: IAppState,
-  action: AppActionTypes
-): IAppState {
+export function screenManageReducer(state: IAppState, action: AppActionTypes): IAppState {
   switch (action.type) {
     case RESET_STATE:
       return {
         ...state,
-        currentScreen: (
+        currentScreen:
           // Workaround: reset should not exit watching mode
-          state.currentScreen === 'otherTable' ||
-          state.currentScreen === 'otherTablesList'
+          state.currentScreen === 'otherTable' || state.currentScreen === 'otherTablesList'
             ? state.currentScreen
-            : 'overview'
-        ),
+            : 'overview',
         currentRound: 1,
         currentOutcome: undefined,
         players: undefined,
@@ -38,60 +36,60 @@ export function screenManageReducer(
         honba: 0,
         currentSessionHash: '',
         multironCurrentWinner: undefined,
-        gameOverviewReady: true
+        gameOverviewReady: true,
       };
     case START_NEW_GAME:
       return {
         ...state,
         currentScreen: 'newGame',
-        newGameIdsToSet: action.payload
+        newGameIdsToSet: action.payload,
       };
     case GOTO_EVENT_SELECT:
       return {
         ...state,
-        currentScreen: 'eventSelector'
+        currentScreen: 'eventSelector',
       };
     case GO_TO_CURRENT_GAME:
       return {
         ...state,
-        currentScreen: 'currentGame'
+        currentScreen: 'currentGame',
       };
     case GO_TO_DONATE:
       return {
         ...state,
-        currentScreen: 'donate'
+        currentScreen: 'donate',
       };
     case SEARCH_PLAYER:
       return {
         ...state,
         currentScreen: 'searchPlayer',
-        newGameSelectedPlayerSide: action.payload
+        newGameSelectedPlayerSide: action.payload,
       };
     case SHOW_LAST_RESULTS:
       return {
         ...state,
-        currentScreen: 'lastResults'
+        currentScreen: 'lastResults',
       };
     case SHOW_GAME_LOG:
       return {
         ...state,
-        currentScreen: 'gameLog'
+        currentScreen: 'gameLog',
       };
     case SHOW_OTHER_TABLE:
       return {
         ...state,
         currentScreen: 'otherTable',
-        currentOtherTableHash: action.payload.hash
+        currentOtherTableHash: action.payload.hash,
       };
     case SHOW_OTHER_TABLES_LIST:
       return {
         ...state,
-        currentScreen: 'otherTablesList'
+        currentScreen: 'otherTablesList',
       };
     case OPEN_SETTINGS:
       return {
         ...state,
-        currentScreen: 'settings'
+        currentScreen: 'settings',
       };
     case GOTO_NEXT_SCREEN:
       if (!state.gameConfig) {
@@ -151,6 +149,7 @@ export function screenManageReducer(
         case 'confirmation':
           nextScreen = 'overview';
           break;
+        default:
       }
 
       if (nextScreen === state.currentScreen) {
@@ -166,7 +165,7 @@ export function screenManageReducer(
         if (state.currentScreen === 'settings') {
           return {
             ...state,
-            currentScreen: 'eventSelector'
+            currentScreen: 'eventSelector',
           };
         }
         return state;

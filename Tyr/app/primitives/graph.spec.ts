@@ -62,7 +62,7 @@ describe('Graph module', () => {
       { id: 'node2', data: 2 },
       { id: 'node3', data: 3 },
       { id: 'node4', data: 4 },
-      { id: 'node5', data: 5 }
+      { id: 'node5', data: 5 },
     ];
 
     nodes.forEach((node) => graph.addNode(node));
@@ -75,21 +75,9 @@ describe('Graph module', () => {
     graph.addBiEdge(nodes[3], nodes[1], EdgeType.Combines);
     graph.addBiEdge(nodes[4], nodes[3], EdgeType.Combines);
 
-    expect(graph.getAllowedNodes(
-      [nodes[0], nodes[1]]
-    )).toHaveSameItems(
-      [nodes[2]]
-      );
-    expect(graph.getAllowedNodes(
-      [nodes[1]]
-    )).toHaveSameItems(
-      [nodes[0], nodes[2], nodes[3]]
-      );
-    expect(graph.getAllowedNodes(
-      [nodes[4]]
-    )).toHaveSameItems(
-      [nodes[3]]
-      );
+    expect(graph.getAllowedNodes([nodes[0], nodes[1]])).toHaveSameItems([nodes[2]]);
+    expect(graph.getAllowedNodes([nodes[1]])).toHaveSameItems([nodes[0], nodes[2], nodes[3]]);
+    expect(graph.getAllowedNodes([nodes[4]])).toHaveSameItems([nodes[3]]);
   });
 
   it('should find allowed edges with suppressing edge type', () => {
@@ -100,7 +88,7 @@ describe('Graph module', () => {
       { id: 'node1', data: 1 },
       { id: 'node2', data: 2 },
       { id: 'node3', data: 3 },
-      { id: 'node4', data: 4 }
+      { id: 'node4', data: 4 },
     ];
 
     nodes.forEach((node) => graph.addNode(node));
@@ -116,23 +104,18 @@ describe('Graph module', () => {
     graph.addEdge(nodes[4], nodes[3], EdgeType.Suppresses);
 
     // clique nodes
-    expect(graph.getAllowedNodes(
-      [nodes[0], nodes[1]]
-    )).toHaveSameItems(
-      [nodes[2]]
-      );
+    expect(graph.getAllowedNodes([nodes[0], nodes[1]])).toHaveSameItems([nodes[2]]);
 
     // try to reach suppressed/suppressing nodes
-    expect(graph.getAllowedNodes(
-      [nodes[1]]
-    )).toHaveSameItems(
-      [nodes[0], nodes[2], nodes[3], nodes[4]]
-      );
+    expect(graph.getAllowedNodes([nodes[1]])).toHaveSameItems([
+      nodes[0],
+      nodes[2],
+      nodes[3],
+      nodes[4],
+    ]);
 
     // if [4] is in list, [3] should not be in allowed list
-    expect(graph.getAllowedNodes(
-      [nodes[1], nodes[4]]
-    )).toEqual([]);
+    expect(graph.getAllowedNodes([nodes[1], nodes[4]])).toEqual([]);
   });
 
   it('should add allowed nodes with combined edge type', () => {
@@ -143,7 +126,7 @@ describe('Graph module', () => {
       { id: 'node2', data: 2 },
       { id: 'node3', data: 3 },
       { id: 'node4', data: 4 },
-      { id: 'node5', data: 5 }
+      { id: 'node5', data: 5 },
     ];
 
     nodes.forEach((node) => graph.addNode(node));
@@ -156,12 +139,11 @@ describe('Graph module', () => {
     graph.addBiEdge(nodes[3], nodes[1], EdgeType.Combines);
     graph.addBiEdge(nodes[4], nodes[3], EdgeType.Combines);
 
-    expect(graph.tryAddAllowedNode(
-      [nodes[0], nodes[1]],
-      nodes[2]
-    )).toHaveSameItems(
-      [nodes[0], nodes[1], nodes[2]]
-      );
+    expect(graph.tryAddAllowedNode([nodes[0], nodes[1]], nodes[2])).toHaveSameItems([
+      nodes[0],
+      nodes[1],
+      nodes[2],
+    ]);
   });
 
   it('should add allowed nodes with suppressing edge type', () => {
@@ -170,7 +152,7 @@ describe('Graph module', () => {
     let nodes = [
       { id: 'node1', data: 1 },
       { id: 'node2', data: 2 },
-      { id: 'node3', data: 3 }
+      { id: 'node3', data: 3 },
     ];
 
     nodes.forEach((node) => graph.addNode(node));
@@ -181,12 +163,10 @@ describe('Graph module', () => {
     graph.addEdge(nodes[2], nodes[0], EdgeType.Suppresses);
     graph.addEdge(nodes[0], nodes[2], EdgeType.IsSuppressed);
 
-    expect(graph.tryAddAllowedNode(
-      [nodes[0], nodes[1]],
-      nodes[2]
-    )).toHaveSameItems(
-      [nodes[1], nodes[2]]
-      );
+    expect(graph.tryAddAllowedNode([nodes[0], nodes[1]], nodes[2])).toHaveSameItems([
+      nodes[1],
+      nodes[2],
+    ]);
   });
 
   it('should not add allowed nodes with suppressed edge type', () => {
@@ -195,7 +175,7 @@ describe('Graph module', () => {
     let nodes = [
       { id: 'node1', data: 1 },
       { id: 'node2', data: 2 },
-      { id: 'node3', data: 3 }
+      { id: 'node3', data: 3 },
     ];
 
     nodes.forEach((node) => graph.addNode(node));
@@ -206,11 +186,9 @@ describe('Graph module', () => {
     graph.addEdge(nodes[0], nodes[2], EdgeType.Suppresses);
     graph.addEdge(nodes[2], nodes[0], EdgeType.IsSuppressed);
 
-    expect(graph.tryAddAllowedNode(
-      [nodes[0], nodes[1]],
-      nodes[2]
-    )).toHaveSameItems(
-      [nodes[0], nodes[1]]
-      );
+    expect(graph.tryAddAllowedNode([nodes[0], nodes[1]], nodes[2])).toHaveSameItems([
+      nodes[0],
+      nodes[1],
+    ]);
   });
 });

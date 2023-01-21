@@ -1,19 +1,21 @@
 import {
-  IRoundOverviewAbort, IRoundOverviewChombo,
+  IRoundOverviewAbort,
+  IRoundOverviewChombo,
   IRoundOverviewDraw,
   IRoundOverviewInfo,
-  IRoundOverviewMultiRon, IRoundOverviewNagashi,
+  IRoundOverviewMultiRon,
+  IRoundOverviewNagashi,
   IRoundOverviewRon,
   IRoundOverviewTsumo,
 } from '#/components/screens/log/view/RoundTypes';
-import {I18nService} from "#/services/i18n";
+import { I18nService } from '#/services/i18n';
 
 function getHandAmount(loc: I18nService, han: number, fu?: number): string {
   if (han < 0) {
     return loc._t('yakuman');
   }
 
-  let str = loc._t('%1 han', [han]);
+  const str = loc._t('%1 han', [han]);
 
   if (han < 5 && fu) {
     return loc._t('%1 han %2 fu', [han, fu]);
@@ -38,7 +40,7 @@ function getRiichiLine(loc: I18nService, riichiPlayers: string[], riichiOnTable:
   if (riichiPlayers.length) {
     riichiStr = riichiPlayers.join(', ');
     if (riichiOnTable) {
-      riichiStr += ` + ${riichiOnTable}`
+      riichiStr += ` + ${riichiOnTable}`;
     }
   } else {
     riichiStr = riichiOnTable.toString();
@@ -49,15 +51,25 @@ function getRiichiLine(loc: I18nService, riichiPlayers: string[], riichiOnTable:
 
 function getYakuLine(loc: I18nService, yakuList: string[], dora?: number) {
   const doraStr = loc._t('dora %1', [dora]);
-  const yakuStr = [...yakuList, dora ? doraStr : null]
-    .filter(el => !!el).join(', ');
+  const yakuStr = [...yakuList, dora ? doraStr : null].filter((el) => !!el).join(', ');
   return `${yakuStr}`;
 }
 
 function getRoundDescriptionRon(info: IRoundOverviewRon, loc: I18nService) {
-  const {winner, loser, paoPlayer, han, fu, dora, yakuList, riichiPlayers, riichiOnTable, honbaOnTable} = info;
+  const {
+    winner,
+    loser,
+    paoPlayer,
+    han,
+    fu,
+    dora,
+    yakuList,
+    riichiPlayers,
+    riichiOnTable,
+    honbaOnTable,
+  } = info;
 
-  const lines: string[] = []
+  const lines: string[] = [];
   lines.push(loc._t('Ron, %1', [getHandAmount(loc, han, fu)]));
   lines.push(loc._t('%1 ← %2', [winner, loser]));
   lines.push(getYakuLine(loc, yakuList, dora));
@@ -66,15 +78,26 @@ function getRoundDescriptionRon(info: IRoundOverviewRon, loc: I18nService) {
   }
   lines.push('');
   lines.push(getRiichiLine(loc, riichiPlayers, riichiOnTable));
-  lines.push(getHonbaLine(loc , honbaOnTable));
+  lines.push(getHonbaLine(loc, honbaOnTable));
 
   return lines;
 }
 
 function getRoundDescriptionMultiron(info: IRoundOverviewMultiRon, loc: I18nService) {
-  const {loser, winnerList, hanList, fuList, doraList, yakuList, paoPlayerList, riichiPlayers, riichiOnTable, honbaOnTable} = info;
+  const {
+    loser,
+    winnerList,
+    hanList,
+    fuList,
+    doraList,
+    yakuList,
+    paoPlayerList,
+    riichiPlayers,
+    riichiOnTable,
+    honbaOnTable,
+  } = info;
 
-  const lines: string[] = []
+  const lines: string[] = [];
   lines.push(loc._t('Multiron, from %1', [loser]));
   lines.push('');
 
@@ -92,7 +115,7 @@ function getRoundDescriptionMultiron(info: IRoundOverviewMultiRon, loc: I18nServ
       lines.push(getPaoLine(loc, paoPlayer));
     }
     lines.push('');
-  })
+  });
 
   lines.push(getRiichiLine(loc, riichiPlayers, riichiOnTable));
   lines.push(getHonbaLine(loc, honbaOnTable));
@@ -100,11 +123,11 @@ function getRoundDescriptionMultiron(info: IRoundOverviewMultiRon, loc: I18nServ
   return lines;
 }
 
-
 function getRoundDescriptionTsumo(info: IRoundOverviewTsumo, loc: I18nService) {
-  const {winner, paoPlayer, han, fu, dora, yakuList, riichiPlayers, riichiOnTable, honbaOnTable} = info;
+  const { winner, paoPlayer, han, fu, dora, yakuList, riichiPlayers, riichiOnTable, honbaOnTable } =
+    info;
 
-  const lines: string[] = []
+  const lines: string[] = [];
   lines.push(loc._t('Tsumo, %1', [getHandAmount(loc, han, fu)]));
   lines.push(winner);
   lines.push(getYakuLine(loc, yakuList, dora));
@@ -119,7 +142,7 @@ function getRoundDescriptionTsumo(info: IRoundOverviewTsumo, loc: I18nService) {
 }
 
 function getRoundDescriptionDraw(info: IRoundOverviewDraw, loc: I18nService) {
-  const {tempai, riichiPlayers, riichiOnTable, honbaOnTable} = info;
+  const { tempai, riichiPlayers, riichiOnTable, honbaOnTable } = info;
 
   const lines: string[] = [];
   lines.push(loc._t('Exhaustive draw'));
@@ -131,7 +154,7 @@ function getRoundDescriptionDraw(info: IRoundOverviewDraw, loc: I18nService) {
 }
 
 function getRoundDescriptionAbort(info: IRoundOverviewAbort, loc: I18nService) {
-  const {riichiPlayers, riichiOnTable, honbaOnTable} = info;
+  const { riichiPlayers, riichiOnTable, honbaOnTable } = info;
 
   const lines: string[] = [];
   lines.push(loc._t('Abortive draw'));
@@ -144,7 +167,7 @@ function getRoundDescriptionAbort(info: IRoundOverviewAbort, loc: I18nService) {
 }
 
 function getRoundDescriptionChombo(info: IRoundOverviewChombo, loc: I18nService) {
-  const {penaltyFor, riichiPlayers, riichiOnTable, honbaOnTable} = info;
+  const { penaltyFor, riichiPlayers, riichiOnTable, honbaOnTable } = info;
 
   const lines: string[] = [];
   lines.push(loc._t('Chombo'));
@@ -157,7 +180,7 @@ function getRoundDescriptionChombo(info: IRoundOverviewChombo, loc: I18nService)
 }
 
 function getRoundDescriptionNagashi(info: IRoundOverviewNagashi, loc: I18nService) {
-  const {nagashi, tempai, riichiPlayers, riichiOnTable, honbaOnTable} = info;
+  const { nagashi, tempai, riichiPlayers, riichiOnTable, honbaOnTable } = info;
 
   const lines: string[] = [];
   lines.push(loc._t('Nagashi mangan'));

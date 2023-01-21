@@ -1,24 +1,19 @@
-import {getWinningUsers, hasYaku} from './mimirSelectors';
-import {IAppState} from '../interfaces';
-import {Yaku} from '#/interfaces/common';
-import {
-  filterAllowed,
-  yakuGroups,
-  yakumanGroups,
-  yakuRareGroups
-} from '#/primitives/yaku-lists';
+import { getWinningUsers, hasYaku } from './mimirSelectors';
+import { IAppState } from '../interfaces';
+import { Yaku } from '#/interfaces/common';
+import { filterAllowed, yakuGroups, yakumanGroups, yakuRareGroups } from '#/primitives/yaku-lists';
 import { memoize } from '#/primitives/memoize';
-import {getAllowedYaku} from './yaku';
+import { getAllowedYaku } from './yaku';
 
 export const shouldShowTabs = (state: IAppState) => getWinningUsers(state).length > 1;
 
-function _getYakuList(state: IAppState): {[id: number]: Yaku[][]} {
+function _getYakuList(state: IAppState): { [id: number]: Yaku[][] } {
   if (!state.gameConfig) {
     return {};
   }
 
-  const yakuList: { [key: number]: Yaku[][]} = {};
-  for (let user of getWinningUsers(state)) {
+  const yakuList: { [key: number]: Yaku[][] } = {};
+  for (const user of getWinningUsers(state)) {
     const simple = filterAllowed(yakuGroups, state.gameConfig.allowedYaku);
     const rare = filterAllowed(yakuRareGroups, state.gameConfig.allowedYaku);
     const yakuman = filterAllowed(yakumanGroups, state.gameConfig.allowedYaku);
@@ -32,8 +27,8 @@ export const getYakuList = memoize(_getYakuList);
 
 type DisabledYakuList = {
   [id: number]: {
-    [key: number]: boolean
-  }
+    [key: number]: boolean;
+  };
 };
 
 function _getDisabledYaku(state: IAppState): DisabledYakuList {
@@ -43,9 +38,9 @@ function _getDisabledYaku(state: IAppState): DisabledYakuList {
 
   return users.reduce((acc: DisabledYakuList, p) => {
     acc[p.id] = {};
-    for (let yGroup of yakuList[p.id]) {
-      for (let yaku of yGroup) {
-        if (allowedYaku.indexOf(yaku.id) === -1 && !hasYaku(state, yaku.id)) {
+    for (const yGroup of yakuList[p.id]) {
+      for (const yaku of yGroup) {
+        if (!allowedYaku.includes(yaku.id) && !hasYaku(state, yaku.id)) {
           acc[p.id][yaku.id] = true;
         }
       }

@@ -1,71 +1,70 @@
-import * as React from "react";
-import {useEffect, useState} from 'react';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
 import useDebounce from '#/components/general/search-input/UseDebounce';
-import {i18n} from "#/components/i18n";
-import {I18nService} from "#/services/i18n";
+import { i18n } from '#/components/i18n';
+import { I18nService } from '#/services/i18n';
 import CloseIcon from '../../../img/close.svg?svgr';
 
 type IProps = {
-  onChange: (value: string) => void
-}
+  onChange: (value: string) => void;
+};
 
 export const SearchInput = React.memo(function (props: IProps) {
-  const {onChange} = props;
+  const { onChange } = props;
 
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  useEffect(
-    () => {
-      if (debouncedSearchTerm) {
-        onChange(debouncedSearchTerm)
-      }
-    },
-    [debouncedSearchTerm]
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      onChange(debouncedSearchTerm);
+    }
+  }, [debouncedSearchTerm]);
+
+  return (
+    <SearchInputInner onChange={(value) => setSearchTerm(value)} onClear={() => onChange('')} />
   );
-
-  return <SearchInputInner onChange={value => setSearchTerm(value)} onClear={() => onChange('')} />
-})
-
+});
 
 type IInnerProps = IProps & {
-  onClear: () => void
-}
+  onClear: () => void;
+};
 
 type IState = {
-  searchValue: string
-}
+  searchValue: string;
+};
 
 class SearchInputInner extends React.Component<IInnerProps, IState> {
   state = {
-    searchValue: ''
+    searchValue: '',
   };
 
   private onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value
+    const value = e.target.value;
     this.setState({
-      searchValue: value
+      searchValue: value,
     });
-    this.props.onChange(value)
+    this.props.onChange(value);
   }
 
   private onClearClick() {
     this.setState({
-      searchValue: ''
+      searchValue: '',
     });
-    this.props.onClear()
+    this.props.onClear();
   }
 
   static contextType = i18n;
   render() {
-    const {searchValue} = this.state;
+    const { searchValue } = this.state;
     const loc = this.context as I18nService;
     return (
       <>
-        <input value={searchValue}
-               placeholder={loc._t('type to find someone')}
-               onChange={this.onInputChange.bind(this)}>
-        </input>
+        <input
+          value={searchValue}
+          placeholder={loc._t('type to find someone')}
+          onChange={this.onInputChange.bind(this)}
+        ></input>
         {!!searchValue && (
           <div onClick={this.onClearClick.bind(this)}>
             <CloseIcon />

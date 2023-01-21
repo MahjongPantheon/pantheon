@@ -3,7 +3,7 @@ import { memoize } from '#/primitives/memoize';
 import { LUserWithScore } from '#/interfaces/local';
 
 function _getSeating(state: IAppState, playersList: LUserWithScore[]) {
-  let players: LUserWithScore[] = (<LUserWithScore[]>[]).concat(playersList);
+  let players: LUserWithScore[] = ([] as LUserWithScore[]).concat(playersList);
 
   let roundOffset = 0;
   for (; roundOffset < 4; roundOffset++) {

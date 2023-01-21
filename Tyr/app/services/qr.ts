@@ -19,12 +19,13 @@
  */
 
 import jsQR from 'jsqr';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const crc32 = require('crc/crc32').default;
 
 export class QrService {
   private _video: HTMLVideoElement | null = null;
-  private _onReadyStateChange = (loading: boolean) => {};
-  private _onPinReceived = (pin: string) => {};
+  private _onReadyStateChange = (_loading: boolean) => {};
+  private _onPinReceived = (_pin: string) => {};
 
   onReadyStateChange(cb: (loading: boolean) => void) {
     this._onReadyStateChange = cb;
@@ -45,20 +46,7 @@ export class QrService {
 
   scanQr(canvasElement: HTMLCanvasElement) {
     this._video = document.createElement('video');
-    let canvas = canvasElement.getContext('2d');
-
-    // Use facingMode: environment to attempt to get the front camera on phones
-    navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: 'environment' } })
-      .then((stream) => {
-        if (!this._video) {
-          return;
-        }
-        this._video.srcObject = stream;
-        this._video.setAttribute('playsinline', 'true'); // required to tell iOS safari we don't want fullscreen
-        this._video.play();
-        requestAnimationFrame(tick);
-      });
+    const canvas = canvasElement.getContext('2d');
 
     const tick = () => {
       this._onReadyStateChange(true);
@@ -68,16 +56,17 @@ export class QrService {
         canvasElement.height = this._video.videoHeight;
         canvasElement.width = this._video.videoWidth;
         canvas.drawImage(this._video, 0, 0, canvasElement.width, canvasElement.height);
-        let imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-        let code = jsQR(imageData.data, imageData.width, imageData.height, {
+        const imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height, {
           inversionAttempts: 'dontInvert',
         });
 
         if (code) {
           let pincode = '';
-          let data = code.data.match(/^https?:\/\/(.*?)\/(\d+)_([\da-f]+)$/i);
+          const data = code.data.match(/^https?:\/\/(.*?)\/(\d+)_([\da-f]+)$/i);
           if (data) {
-            if (data[1].split(':')[0] === 'localhost') { // local debug
+            if (data[1].split(':')[0] === 'localhost') {
+              // local debug
               pincode = data[2];
             } else {
               if (
@@ -99,7 +88,18 @@ export class QrService {
       }
 
       requestAnimationFrame(tick);
-    }
+    };
+
+    // Use facingMode: environment to attempt to get the front camera on phones
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } }).then((stream) => {
+      if (!this._video) {
+        return;
+      }
+      this._video.srcObject = stream;
+      this._video.setAttribute('playsinline', 'true'); // required to tell iOS safari we don't want fullscreen
+      this._video.play();
+      requestAnimationFrame(tick);
+    });
   }
 
   _stopVideo() {
@@ -107,7 +107,7 @@ export class QrService {
       return;
     }
 
-    (this._video.srcObject as MediaStream).getTracks().forEach(function(track) {
+    (this._video.srcObject as MediaStream).getTracks().forEach(function (track) {
       track.stop();
     });
   }

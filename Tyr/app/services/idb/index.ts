@@ -2,7 +2,7 @@ import { IDBImpl } from './interface';
 import { IDBStorageImpl } from './localstorageImpl';
 import { IDBCookieImpl } from './cookiestorageImpl';
 import { MetrikaService } from '../metrika';
-import {environment} from "#config";
+import { environment } from '#config';
 
 /**
  * Implementation of persistent storage with synchronization
@@ -12,22 +12,25 @@ export class IDB implements IDBImpl {
   /**
    * Local storage. Treated as primary storage.
    */
-  private storageEngine: IDBImpl;
+  private readonly storageEngine: IDBImpl;
   /**
    * Cookie storage. Treated as secondary storage.
    */
-  private cookieEngine: IDBImpl;
-  private activeStorages: IDBImpl[] = [];
+  private readonly cookieEngine: IDBImpl;
+  private readonly activeStorages: IDBImpl[] = [];
 
-  constructor(private metrika: MetrikaService) {
+  constructor(private readonly metrika: MetrikaService) {
     // Assume we always have at least cookies.
     this.cookieEngine = new IDBCookieImpl(environment.cookieDomain);
     this.activeStorages.push(this.cookieEngine);
 
-    try { // check is local storage is sane
+    try {
+      // check is local storage is sane
       localStorage.setItem('testStorageItem', '1');
       if (localStorage.getItem('testStorageItem') !== '1') {
-        this.metrika.track(MetrikaService.LOCAL_ERROR, { message: 'Local storage not supported on device' });
+        this.metrika.track(MetrikaService.LOCAL_ERROR, {
+          message: 'Local storage not supported on device',
+        });
         throw new Error();
       }
       localStorage.removeItem('testStorageItem');
@@ -62,8 +65,8 @@ export class IDB implements IDBImpl {
    * @return any|null Received value or null if not found
    */
   public get(key: string, type: 'int' | 'string' | 'object'): any | null {
-    let valuePrimary = this.storageEngine.get(key, type);
-    let valueSecondary = this.cookieEngine.get(key, type);
+    const valuePrimary = this.storageEngine.get(key, type);
+    const valueSecondary = this.cookieEngine.get(key, type);
 
     if (valuePrimary === valueSecondary) {
       return valuePrimary;

@@ -1,13 +1,20 @@
-import {IAppState} from '#/store/interfaces';
-import {playerHasYakuWithPao} from '#/store/util';
+import { IAppState } from '#/store/interfaces';
+import { playerHasYakuWithPao } from '#/store/util';
 
 export function getFirstWinnerWithPao(state: IAppState): number | undefined {
-  return getNextWinnerWithPao(state, undefined)
+  return getNextWinnerWithPao(state, undefined);
 }
 
-export function getNextWinnerWithPao(state: IAppState, currentPlayerId: number | undefined): number | undefined {
-  const gameConfig = state.gameConfig
-  if (!gameConfig || state.currentScreen !== 'paoSelect' || state.currentOutcome?.selectedOutcome !== 'ron') {
+export function getNextWinnerWithPao(
+  state: IAppState,
+  currentPlayerId: number | undefined
+): number | undefined {
+  const gameConfig = state.gameConfig;
+  if (
+    !gameConfig ||
+    state.currentScreen !== 'paoSelect' ||
+    state.currentOutcome?.selectedOutcome !== 'ron'
+  ) {
     return undefined;
   }
 
@@ -23,7 +30,7 @@ export function getNextWinnerWithPao(state: IAppState, currentPlayerId: number |
   let index = 0;
 
   if (currentPlayerId) {
-    for(; index < winsIds.length && currentWinnerIndex === -1; index++) {
+    for (; index < winsIds.length && currentWinnerIndex === -1; index++) {
       const id = parseInt(winsIds[index].toString(), 10);
       if (id === currentPlayerId) {
         currentWinnerIndex = index;
@@ -31,7 +38,7 @@ export function getNextWinnerWithPao(state: IAppState, currentPlayerId: number |
     }
   }
 
-  for(; index < winsIds.length && nextPaoWinnerId === -1; index++) {
+  for (; index < winsIds.length && nextPaoWinnerId === -1; index++) {
     const id = parseInt(winsIds[index].toString(), 10);
     const winner = allWinners[winsIds[index]];
     if (playerHasYakuWithPao(winner.yaku, gameConfig)) {

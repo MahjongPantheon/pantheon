@@ -1,17 +1,35 @@
 import { AppOutcome } from '#/interfaces/app';
-import {Player, Table, Yaku} from '#/interfaces/common';
-import {LEventsList, LGameConfig, LSessionOverview, LUser, LUserWithScore} from '#/interfaces/local';
-import {RRoundOverviewInfo, RRoundPaymentsInfo} from '#/interfaces/remote';
-import {Graph} from '#/primitives/graph';
-import {RemoteError} from '#/services/remoteError';
+import { Player, Table, Yaku } from '#/interfaces/common';
+import {
+  LEventsList,
+  LGameConfig,
+  LSessionOverview,
+  LUser,
+  LUserWithScore,
+} from '#/interfaces/local';
+import { RRoundOverviewInfo, RRoundPaymentsInfo } from '#/interfaces/remote';
+import { Graph } from '#/primitives/graph';
+import { RemoteError } from '#/services/remoteError';
 
 export type AppScreen =
-  'eventSelector' | 'overview' | 'currentGame' |
-  'outcomeSelect' | 'playersSelect' | 'otherTable' |
-  'otherTablesList' | 'handSelect' | 'confirmation' |
-  'newGame' | 'searchPlayer' | 'lastResults' |
-  'gameLog' | 'login' | 'paoSelect' | 'settings' |
-  'nagashiSelect' | 'donate';
+  | 'eventSelector'
+  | 'overview'
+  | 'currentGame'
+  | 'outcomeSelect'
+  | 'playersSelect'
+  | 'otherTable'
+  | 'otherTablesList'
+  | 'handSelect'
+  | 'confirmation'
+  | 'newGame'
+  | 'searchPlayer'
+  | 'lastResults'
+  | 'gameLog'
+  | 'login'
+  | 'paoSelect'
+  | 'settings'
+  | 'nagashiSelect'
+  | 'donate';
 
 export type LoadingSet = {
   games: boolean;
@@ -98,7 +116,7 @@ export interface IAppState {
   overviewDiffBy?: number;
   overviewViewShift?: number;
 
-  currentSelectHandTab?: 'yaku' | 'total'
+  currentSelectHandTab?: 'yaku' | 'total';
 
   showAdditionalTableInfo: boolean;
 
@@ -110,7 +128,7 @@ export interface IAppState {
     currentLang: string;
     currentTheme: string;
     singleDeviceMode: boolean;
-  }
+  };
 
   loginError?: ErrorState;
 
@@ -127,4 +145,4 @@ export type TimerStorage = {
   autostartTimer?: number;
   setInterval: (callback: () => any, milliseconds: number) => number;
   clearInterval: (handle: number) => void;
-}
+};

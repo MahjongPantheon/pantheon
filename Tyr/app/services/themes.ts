@@ -1,6 +1,4 @@
-export const supportedThemes = [
-  'day', 'night'
-];
+export const supportedThemes = ['day', 'night'];
 
 const dayTheme = {
   name: 'day',
@@ -21,9 +19,9 @@ const nightTheme = {
 export const themes = [dayTheme, nightTheme];
 
 export type Theme = {
-  name: string
-  backgroundColor: string
-  primaryColor: string
-  secondaryColor: string
-  textColor: string
-}
+  name: string;
+  backgroundColor: string;
+  primaryColor: string;
+  secondaryColor: string;
+  textColor: string;
+};

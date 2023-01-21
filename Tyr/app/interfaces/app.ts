@@ -78,14 +78,13 @@ export interface AppOutcomeChombo extends Outcome {
   loserIsDealer: boolean;
 }
 
-export type AppOutcome
-  = AppOutcomeRon
+export type AppOutcome =
+  | AppOutcomeRon
   | AppOutcomeTsumo
   | AppOutcomeDraw
   | AppOutcomeAbort
   | AppOutcomeChombo
-  | AppOutcomeNagashi
-  ;
+  | AppOutcomeNagashi;
 
 export type WinOutcomeProps = Partial<AppOutcomeRon | AppOutcomeTsumo>;
 export type LoseOutcomeProps = Partial<AppOutcomeRon | AppOutcomeChombo>;

@@ -1,15 +1,16 @@
 import * as React from 'react';
-import {IComponentProps} from '#/components/IComponentProps';
+import { IComponentProps } from '#/components/IComponentProps';
 import {
   CLEAR_NEWGAME_PLAYERS,
   GOTO_PREV_SCREEN,
   RANDOMIZE_NEWGAME_PLAYERS,
-  SEARCH_PLAYER, START_GAME_INIT,
+  SEARCH_PLAYER,
+  START_GAME_INIT,
 } from '#/store/actions/interfaces';
-import {NewGameScreenView} from '#/components/screens/new-game/NewGameScreenView';
-import {Preloader} from '#/components/general/preloader/Preloader';
+import { NewGameScreenView } from '#/components/screens/new-game/NewGameScreenView';
+import { Preloader } from '#/components/general/preloader/Preloader';
 
-export class NewGameScreen extends React.PureComponent<IComponentProps>{
+export class NewGameScreen extends React.PureComponent<IComponentProps> {
   private onBackClick() {
     this.props.dispatch({ type: GOTO_PREV_SCREEN });
   }
@@ -19,9 +20,9 @@ export class NewGameScreen extends React.PureComponent<IComponentProps>{
   }
 
   private onSaveClick() {
-    const {dispatch, state} = this.props;
+    const { dispatch, state } = this.props;
     if (this.canSave && state.newGameSelectedUsers) {
-      dispatch({ type: START_GAME_INIT, payload: state.newGameSelectedUsers.map((p) => p.id) })
+      dispatch({ type: START_GAME_INIT, payload: state.newGameSelectedUsers.map((p) => p.id) });
     }
   }
 
@@ -34,17 +35,21 @@ export class NewGameScreen extends React.PureComponent<IComponentProps>{
   }
 
   private get canSave() {
-    const {state} = this.props;
+    const { state } = this.props;
     if (!state.newGameSelectedUsers) {
       return false;
     }
 
-    return state.newGameSelectedUsers.every(player => player.id !== -1)
+    return state.newGameSelectedUsers.every((player) => player.id !== -1);
   }
 
   render() {
-    const {state} = this.props;
-    if (!state.newGameSelectedUsers || state.newGameSelectedUsers.length !== 4 || state.loading.players) {
+    const { state } = this.props;
+    if (
+      !state.newGameSelectedUsers ||
+      state.newGameSelectedUsers.length !== 4 ||
+      state.loading.players
+    ) {
       return <Preloader />;
     }
 
@@ -61,6 +66,6 @@ export class NewGameScreen extends React.PureComponent<IComponentProps>{
         onClearClick={this.onClearClick.bind(this)}
         onPlayerClick={this.onPlayerClick.bind(this)}
       />
-    )
+    );
   }
 }

@@ -29,10 +29,17 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
     "classnames": "^2.3.2",
+    "eslint": "^8.32.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-react": "^7.32.1",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "i18n-json-po": "^1.0.7",
     "i18n-po-json": "^1.0.7",
     "i18n-stex": "^1.0.12",
+    "prettier": "^2.8.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "resolve-url-loader": "^5.0.0",

@@ -12,17 +12,14 @@ export class IDBStorageImpl implements IDBImpl {
     }
   }
 
-  public get(key: string, type: 'int' | 'string' | 'object'): any|null {
+  public get(key: string, type: 'int' | 'string' | 'object'): any | null {
     try {
-      let v = localStorage.getItem(key);
-      if (v === null) { // tslint:disable-line no-null-keyword
+      const v = localStorage.getItem(key);
+      if (v === null) {
+        // tslint:disable-line no-null-keyword
         throw new Error();
       }
-      return type === 'object'
-        ? JSON.parse(v)
-        : type === 'int'
-          ? parseInt(v, 10)
-          : v;
+      return type === 'object' ? JSON.parse(v) : type === 'int' ? parseInt(v, 10) : v;
     } catch (e) {
       return null;
     }
@@ -30,7 +27,7 @@ export class IDBStorageImpl implements IDBImpl {
 
   public set(key: string, type: 'int' | 'string' | 'object', value: any): boolean {
     try {
-      let v = type === 'object' ? JSON.stringify(value) : value;
+      const v = type === 'object' ? JSON.stringify(value) : value;
       this.meta[key] = true;
       localStorage.setItem(key, v);
       if (key !== '__meta') {
@@ -43,7 +40,7 @@ export class IDBStorageImpl implements IDBImpl {
   }
 
   public delete(keys: string[]): void {
-    for (let key of keys) {
+    for (const key of keys) {
       delete this.meta[key];
       localStorage.removeItem(key);
     }
@@ -51,7 +48,7 @@ export class IDBStorageImpl implements IDBImpl {
   }
 
   public clear(): void {
-    for (let k in this.meta) {
+    for (const k in this.meta) {
       if (this.meta.hasOwnProperty(k)) {
         localStorage.removeItem(k);
       }

@@ -4,28 +4,40 @@ import { I18nService } from '#/services/i18n';
 import { YakuId } from '#/primitives/yaku';
 import { IAppState } from '../interfaces';
 
-export const yaku = (i18n: I18nService) => (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) => (next: Dispatch<AppActionTypes>) => (action: AppActionTypes) => {
-  switch (action.type) {
-    case ADD_YAKU:
-    case REMOVE_YAKU:
-      if (action.payload.id === YakuId.RIICHI) {
-        alert(i18n._t('If you want to select a riichi, return back and press riichi button for the winner'));
-        return;
-      }
+export const yaku =
+  (i18n: I18nService) =>
+  (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
+  (next: Dispatch<AppActionTypes>) =>
+  (action: AppActionTypes) => {
+    switch (action.type) {
+      case ADD_YAKU:
+      case REMOVE_YAKU:
+        if (action.payload.id === YakuId.RIICHI) {
+          alert(
+            i18n._t(
+              'If you want to select a riichi, return back and press riichi button for the winner'
+            )
+          );
+          return;
+        }
 
-      if (action.payload.id === YakuId.DOUBLERIICHI) {
-        const outcome = mw.getState().currentOutcome;
-        if (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo') {
-          if (action.payload.winner && outcome.riichiBets.indexOf(action.payload.winner) === -1) {
-            alert(i18n._t('If you want to select a riichi, return back and press riichi button for the winner'));
-            return;
+        if (action.payload.id === YakuId.DOUBLERIICHI) {
+          const outcome = mw.getState().currentOutcome;
+          if (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo') {
+            if (action.payload.winner && !outcome.riichiBets.includes(action.payload.winner)) {
+              alert(
+                i18n._t(
+                  'If you want to select a riichi, return back and press riichi button for the winner'
+                )
+              );
+              return;
+            }
           }
         }
-      }
 
-      next(action);
-      break;
-    default:
-      next(action);
-  }
-};
+        next(action);
+        break;
+      default:
+        next(action);
+    }
+  };

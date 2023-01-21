@@ -17,28 +17,29 @@ import { initialState } from './state';
 import { logging } from './middlewares/logging';
 import { I18nService } from '#/services/i18n';
 import { yaku } from './middlewares/yaku';
-import { reduceReducers } from "#/store/util";
-import {AppActionTypes, GET_GAME_OVERVIEW_INIT} from "#/store/actions/interfaces";
-import {screenManageMw} from '#/store/middlewares/screenManage';
+import { reduceReducers } from '#/store/util';
+import { AppActionTypes, GET_GAME_OVERVIEW_INIT } from '#/store/actions/interfaces';
+import { screenManageMw } from '#/store/middlewares/screenManage';
 
 export class Store {
   private onUpdate: ((state: IAppState) => void) | undefined;
-  private store: ReduxStore<IAppState>;
+  private readonly store: ReduxStore<IAppState>;
   private readonly timerSt: TimerStorage;
 
   constructor(i18n: I18nService) {
     this.timerSt = {
       timer: undefined,
       autostartTimer: undefined,
-      setInterval: (callback: () => any, milliseconds: number) => window.setInterval(callback, milliseconds),
-      clearInterval: (handle: number) => window.clearInterval(handle)
+      setInterval: (callback: () => any, milliseconds: number) =>
+        window.setInterval(callback, milliseconds),
+      clearInterval: (handle: number) => window.clearInterval(handle),
     };
     const reducer = reduceReducers(initialState, [
       commonReducer,
       screenManageReducer,
       outcomeReducer,
       mimirReducer,
-      timerReducer
+      timerReducer,
     ]);
     const metrikaService = new MetrikaService();
     const idb = new IDB(metrikaService);
@@ -60,11 +61,16 @@ export class Store {
       persistentMw(idb),
       yaku(i18n),
       logging(`⇨ [reducers]`),
-      screenManageMw(),
+      screenManageMw()
     );
-    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
-      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) || compose;
-    this.store = createStore(reducer as Reducer<IAppState, AppActionTypes>, composeEnhancers(middleware));
+    const composeEnhancers =
+      (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })) ||
+      compose;
+    this.store = createStore(
+      reducer as Reducer<IAppState, AppActionTypes>,
+      composeEnhancers(middleware)
+    );
   }
 
   public subscribe(onUpdate: (state: IAppState) => void) {
@@ -72,7 +78,9 @@ export class Store {
     this.store.subscribe(() => this.onUpdate && this.onUpdate(this.store.getState()));
   }
 
-  get dispatch() { return this.store.dispatch.bind(this.store); }
+  get dispatch() {
+    return this.store.dispatch.bind(this.store);
+  }
 
   public get redux(): ReduxStore<IAppState> {
     return this.store;

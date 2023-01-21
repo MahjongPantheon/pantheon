@@ -1,31 +1,64 @@
-import * as React from "react";
-import './page-home.css'
+import * as React from 'react';
+import './page-home.css';
 import classNames from 'classnames';
-import {ReactNode, useContext} from "react";
-import {i18n} from "#/components/i18n";
+import { ReactNode, useContext } from 'react';
+import { i18n } from '#/components/i18n';
 import RefreshIcon from '../../../img/refresh.svg?svgr';
 import SettingsIcon from '../../../img/settings.svg?svgr';
 import DonateIcon from '../../../img/donate.svg?svgr';
 import PlusIcon from '../../../img/plus.svg?svgr';
 import LinkIcon from '../../../img/link.svg?svgr';
 
+type IButtonProps = {
+  caption: string;
+  isVisible: boolean;
+  isActive?: boolean;
+  isBordered?: boolean;
+  icon?: ReactNode;
+  isIconRight?: boolean;
+  onClick: () => void;
+};
+
+const HomeScreenButton = React.memo(function (props: IButtonProps) {
+  const { caption, isVisible, isActive, isBordered, icon, isIconRight, onClick } = props;
+
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
+    <div
+      className={classNames('page-home__button', {
+        'page-home__button--active': isActive,
+        'page-home__button--bordered': isBordered,
+      })}
+      onClick={onClick}
+    >
+      <div className='page-home__button-content'>
+        {icon && <div className={classNames('icon', { 'icon--right': isIconRight })}>{icon}</div>}
+        {caption}
+      </div>
+    </div>
+  );
+});
+
 type IProps = {
-  eventName: string
-  canStartGame: boolean
-  hasStartedGame: boolean
-  hasPrevGame: boolean
-  canSeeOtherTables: boolean
-  hasStat: boolean
-  showDonate: boolean
-  onDonateClick: () => void
-  onSettingClick: () => void
-  onRefreshClick: () => void
-  onOtherTablesClick: () => void
-  onPrevGameClick: () => void
-  onNewGameClick: () => void
-  onCurrentGameClick: () => void
-  onStatClick: () => void
-}
+  eventName: string;
+  canStartGame: boolean;
+  hasStartedGame: boolean;
+  hasPrevGame: boolean;
+  canSeeOtherTables: boolean;
+  hasStat: boolean;
+  showDonate: boolean;
+  onDonateClick: () => void;
+  onSettingClick: () => void;
+  onRefreshClick: () => void;
+  onOtherTablesClick: () => void;
+  onPrevGameClick: () => void;
+  onNewGameClick: () => void;
+  onCurrentGameClick: () => void;
+  onStatClick: () => void;
+};
 
 export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) {
   const loc = useContext(i18n);
@@ -48,20 +81,22 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
   } = props;
 
   return (
-    <div className="page-home">
-      <div className="top-panel top-panel--between">
-        <div className="svg-button svg-button--small" onClick={onRefreshClick}>
+    <div className='page-home'>
+      <div className='top-panel top-panel--between'>
+        <div className='svg-button svg-button--small' onClick={onRefreshClick}>
           <RefreshIcon />
         </div>
-        <div className="svg-button svg-button--small" onClick={onSettingClick}>
+        <div className='svg-button svg-button--small' onClick={onSettingClick}>
           <SettingsIcon />
         </div>
       </div>
-      <div className="page-home__title">{eventName}</div>
-      <div className="page-home__bottom">
-        {showDonate ? <div className="svg-button" style={{ margin: '16px' }} onClick={onDonateClick}>
-          <DonateIcon />
-        </div> : null}
+      <div className='page-home__title'>{eventName}</div>
+      <div className='page-home__bottom'>
+        {showDonate ? (
+          <div className='svg-button' style={{ margin: '16px' }} onClick={onDonateClick}>
+            <DonateIcon />
+          </div>
+        ) : null}
         <HomeScreenButton
           caption={loc._t('New game')}
           isVisible={canStartGame}
@@ -98,43 +133,4 @@ export const HomeScreenView = React.memo(function HomeScreenView(props: IProps) 
       </div>
     </div>
   );
-})
-
-type IButtonProps = {
-  caption: string
-  isVisible: boolean
-  isActive?: boolean
-  isBordered?: boolean
-  icon?: ReactNode
-  isIconRight?: boolean
-  onClick: () => void
-}
-
-const HomeScreenButton = React.memo(function (props: IButtonProps) {
-  const {caption, isVisible, isActive, isBordered, icon, isIconRight, onClick} = props;
-
-  if (!isVisible) {
-    return null
-  }
-
-  return (
-    <div
-      className={classNames(
-        'page-home__button',
-        {
-          'page-home__button--active': isActive,
-          'page-home__button--bordered': isBordered,
-        })}
-      onClick={onClick}
-    >
-      <div className="page-home__button-content">
-        {icon && (
-          <div className={classNames('icon', {'icon--right': isIconRight})}>
-            {icon}
-          </div>
-        )}
-        {caption}
-      </div>
-    </div>
-  )
-})
+});

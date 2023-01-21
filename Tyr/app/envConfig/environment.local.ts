@@ -23,7 +23,7 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `angular-cli.json`.
 
-import {EnvConfig} from "#/envConfig/interface";
+import { EnvConfig } from '#/envConfig/interface';
 
 export const environment: EnvConfig = {
   production: false,
@@ -41,5 +41,5 @@ export const environment: EnvConfig = {
   metrikaId: 0,
 
   // Do not change this unless you really know what are you doing
-  apiVersion: [1, 0]
+  apiVersion: [1, 0],
 };

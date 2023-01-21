@@ -1,5 +1,5 @@
-import {AppScreen, IAppState} from '#/store/interfaces';
-import {Dispatch} from 'redux';
+import { AppScreen, IAppState } from '#/store/interfaces';
+import { Dispatch } from 'redux';
 import {
   getKamicha,
   getSeatKamicha,
@@ -11,10 +11,10 @@ import {
   getToimen,
   RoundPreviewSchemePurpose,
 } from '#/store/selectors/roundPreviewSchemeSelectors';
-import {PlayerButtonMode, PlayerPointsMode} from '#/components/types/PlayerEnums';
-import {PlayerProps} from '#/components/general/players/PlayerProps';
-import {ItemSelect} from '#/components/general/select-modal/ItemSelect';
-import {SelectModalProps} from '#/components/general/select-modal/SelectModal';
+import { PlayerButtonMode, PlayerPointsMode } from '#/components/types/PlayerEnums';
+import { PlayerProps } from '#/components/general/players/PlayerProps';
+import { ItemSelect } from '#/components/general/select-modal/ItemSelect';
+import { SelectModalProps } from '#/components/general/select-modal/SelectModal';
 import {
   ADD_ROUND_INIT,
   GET_OTHER_TABLE_RELOAD,
@@ -35,7 +35,7 @@ import {
   TOGGLE_WINNER,
   UPDATE_CURRENT_GAMES_INIT,
 } from '#/store/actions/interfaces';
-import {Outcome as OutcomeType, Outcome, Player} from '#/interfaces/common';
+import { Outcome as OutcomeType, Outcome, Player } from '#/interfaces/common';
 import {
   deadPressed,
   loseDisabled,
@@ -47,16 +47,24 @@ import {
   winDisabled,
   winPressed,
 } from '#/store/selectors/userItemSelectors';
-import {PlayerButtonProps} from '#/components/types/PlayerButtonProps';
-import {TableMode} from '#/components/types/TableMode';
-import {mayGoNextFromPlayersSelect} from '#/store/selectors/navbarSelectors';
-import {PlayerArrow, PlayerSide, ResultArrowsProps} from '#/components/general/result-arrows/ResultArrowsProps';
-import {TableInfoProps} from '#/components/screens/table/base/TableInfo';
-import {roundToString} from '#/components/helpers/Utils';
-import {AppOutcome} from '#/interfaces/app';
-import {getNextWinnerWithPao} from '#/store/selectors/paoSelectors';
-import {formatTime, getAutostartTimeRemaining, getTimeRemaining} from '#/store/selectors/overviewSelectors';
-import {I18nService} from "#/services/i18n";
+import { PlayerButtonProps } from '#/components/types/PlayerButtonProps';
+import { TableMode } from '#/components/types/TableMode';
+import { mayGoNextFromPlayersSelect } from '#/store/selectors/navbarSelectors';
+import {
+  PlayerArrow,
+  PlayerSide,
+  ResultArrowsProps,
+} from '#/components/general/result-arrows/ResultArrowsProps';
+import { TableInfoProps } from '#/components/screens/table/base/TableInfo';
+import { roundToString } from '#/components/helpers/Utils';
+import { AppOutcome } from '#/interfaces/app';
+import { getNextWinnerWithPao } from '#/store/selectors/paoSelectors';
+import {
+  formatTime,
+  getAutostartTimeRemaining,
+  getTimeRemaining,
+} from '#/store/selectors/overviewSelectors';
+import { I18nService } from '#/services/i18n';
 
 // todo move to selectors most of code from here
 
@@ -65,92 +73,108 @@ export function getPlayerTopInfo(loc: I18nService, state: IAppState, dispatch: D
   const playerBase = getToimen(state, purpose);
   const wind = getSeatToimen(state, purpose);
 
-  const result = getPlayer(loc, playerBase, wind, state, dispatch)
-  result.rotated = state.settings.singleDeviceMode && ['currentGame', 'outcomeSelect', 'confirmation'].includes(state.currentScreen)
+  const result = getPlayer(loc, playerBase, wind, state, dispatch);
+  result.rotated =
+    state.settings.singleDeviceMode &&
+    ['currentGame', 'outcomeSelect', 'confirmation'].includes(state.currentScreen);
 
-  return result
+  return result;
 }
 
 export function getPlayerLeftInfo(loc: I18nService, state: IAppState, dispatch: Dispatch) {
-  const purpose = getPurposeForType(state)
-  const playerBase = getKamicha(state, purpose)
+  const purpose = getPurposeForType(state);
+  const playerBase = getKamicha(state, purpose);
   const wind = getSeatKamicha(state, purpose);
 
-  return getPlayer(loc, playerBase, wind, state, dispatch)
+  return getPlayer(loc, playerBase, wind, state, dispatch);
 }
 
 export function getPlayerRightInfo(loc: I18nService, state: IAppState, dispatch: Dispatch) {
-  const purpose = getPurposeForType(state)
-  const playerBase = getShimocha(state, purpose)
+  const purpose = getPurposeForType(state);
+  const playerBase = getShimocha(state, purpose);
   const wind = getSeatShimocha(state, purpose);
 
-  return getPlayer(loc, playerBase, wind, state, dispatch)
+  return getPlayer(loc, playerBase, wind, state, dispatch);
 }
 
 export function getPlayerBottomInfo(loc: I18nService, state: IAppState, dispatch: Dispatch) {
-  const purpose = getPurposeForType(state)
-  const playerBase = getSelf(state, purpose)
+  const purpose = getPurposeForType(state);
+  const playerBase = getSelf(state, purpose);
   const wind = getSeatSelf(state, purpose);
 
-  return getPlayer(loc, playerBase, wind, state, dispatch)
+  return getPlayer(loc, playerBase, wind, state, dispatch);
 }
 
-export function getOutcomeModalInfo(loc: I18nService, state: IAppState, dispatch: Dispatch): SelectModalProps | undefined {
+export function getOutcomeModalInfo(
+  loc: I18nService,
+  state: IAppState,
+  dispatch: Dispatch
+): SelectModalProps | undefined {
   if (state.currentScreen !== 'outcomeSelect') {
-    return undefined
+    return undefined;
   }
 
   const onItemSelect = (outcome: Outcome) => {
     dispatch({ type: INIT_BLANK_OUTCOME, payload: outcome });
     dispatch({ type: GOTO_NEXT_SCREEN });
-  }
+  };
 
   const items: ItemSelect[] = [
     {
       text: loc._t('Ron'),
-      onSelect: () => {onItemSelect('ron')},
+      onSelect: () => {
+        onItemSelect('ron');
+      },
     },
     {
       text: loc._t('Tsumo'),
-      onSelect: () => {onItemSelect('tsumo')},
+      onSelect: () => {
+        onItemSelect('tsumo');
+      },
     },
     {
       text: loc._t('Exhaustive draw'),
-      onSelect: () => {onItemSelect('draw')},
+      onSelect: () => {
+        onItemSelect('draw');
+      },
     },
     {
       text: loc._t('Chombo'),
-      onSelect: () => {onItemSelect('chombo')},
+      onSelect: () => {
+        onItemSelect('chombo');
+      },
     },
   ];
 
-  const gameConfig = state.gameConfig
+  const gameConfig = state.gameConfig;
   if (gameConfig) {
     if (gameConfig.withAbortives) {
-      items.push(
-        {
-          text: loc._t('Abortive draw'),
-          onSelect: () => {onItemSelect('abort')},
-          unavailable: false,
-        }
-      )
+      items.push({
+        text: loc._t('Abortive draw'),
+        onSelect: () => {
+          onItemSelect('abort');
+        },
+        unavailable: false,
+      });
     }
 
     if (gameConfig.withNagashiMangan) {
-      items.push(
-        {
-          text: loc._t('Nagashi mangan'),
-          onSelect: () => {onItemSelect('nagashi')},
-          unavailable: false,
-        }
-      )
+      items.push({
+        text: loc._t('Nagashi mangan'),
+        onSelect: () => {
+          onItemSelect('nagashi');
+        },
+        unavailable: false,
+      });
     }
   }
 
   return {
     items: items,
-    onHide: () => {dispatch({ type: GOTO_PREV_SCREEN });},
-  }
+    onHide: () => {
+      dispatch({ type: GOTO_PREV_SCREEN });
+    },
+  };
 }
 
 function getPurposeForType(state: IAppState): RoundPreviewSchemePurpose {
@@ -167,13 +191,21 @@ function getPurposeForType(state: IAppState): RoundPreviewSchemePurpose {
   }
 }
 
-function getPlayerPaymentResult(loc: I18nService, player: Player, state: IAppState): number | string {
+function getPlayerPaymentResult(
+  loc: I18nService,
+  player: Player,
+  state: IAppState
+): number | string {
   const paymentsInfo = getPaymentsInfo(state);
 
   //todo add reverse mangan tsumo (mimir)
-  if (paymentsInfo.length === 0 ) {
-    if (state.changesOverview && state.changesOverview.outcome === 'chombo' && !!state.changesOverview.penaltyFor) {
-      const penaltyFor = state.changesOverview.penaltyFor
+  if (paymentsInfo.length === 0) {
+    if (
+      state.changesOverview &&
+      state.changesOverview.outcome === 'chombo' &&
+      !!state.changesOverview.penaltyFor
+    ) {
+      const penaltyFor = state.changesOverview.penaltyFor;
       if (player.id === penaltyFor) {
         return loc._t('Penalty');
       }
@@ -181,18 +213,24 @@ function getPlayerPaymentResult(loc: I18nService, player: Player, state: IAppSta
   }
 
   let result = 0;
-  paymentsInfo.forEach(item => {
+  paymentsInfo.forEach((item) => {
     if ((item.from === player.id || item.to === player.id) && item.from !== item.to) {
       const payment = item.directAmount + item.riichiAmount + item.honbaAmount;
-      const factor =  item.from === player.id ? -1 : 1
+      const factor = item.from === player.id ? -1 : 1;
       result += payment * factor;
     }
-  })
+  });
 
-  return  result;
+  return result;
 }
 
-function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppState, dispatch: Dispatch): PlayerProps {
+function getPlayer(
+  loc: I18nService,
+  player: Player,
+  wind: string,
+  state: IAppState,
+  dispatch: Dispatch
+): PlayerProps {
   let pointsMode = PlayerPointsMode.IDLE; //todo check
   let points: number | string | undefined = player.score;
   let penaltyPoints: number | undefined = player.penalties; //todo check
@@ -215,14 +253,12 @@ function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppSt
 
       if (state.overviewDiffBy) {
         const diffByPlayer = (
-          state.currentScreen === 'currentGame'
-            ? state.players
-            : state.currentOtherTablePlayers
-        )?.find(x => x.id === state.overviewDiffBy);
+          state.currentScreen === 'currentGame' ? state.players : state.currentOtherTablePlayers
+        )?.find((x) => x.id === state.overviewDiffBy);
         if (diffByPlayer) {
           points = player.score - diffByPlayer.score;
           if (points > 0) {
-            points = `+${points}`
+            points = `+${points}`;
           }
           if (points > 0) {
             pointsMode = PlayerPointsMode.POSITIVE;
@@ -231,7 +267,7 @@ function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppSt
           } else {
             pointsMode = PlayerPointsMode.ACTIVE;
           }
-          penaltyPoints = undefined
+          penaltyPoints = undefined;
         }
       }
       break;
@@ -241,7 +277,7 @@ function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppSt
       if (typeof paymentResult === 'number') {
         if (paymentResult > 0) {
           pointsMode = PlayerPointsMode.POSITIVE;
-          points = `+${points}`
+          points = `+${points}`;
         } else if (paymentResult < 0) {
           pointsMode = PlayerPointsMode.NEGATIVE;
         }
@@ -252,7 +288,7 @@ function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppSt
       const riichiPayments = state.changesOverview?.payments.riichi;
       const currentPlayerId = player.id;
       const savedRiichiKey = `${currentPlayerId}<-${currentPlayerId}`;
-      if (riichiPayments && Object.keys(riichiPayments).indexOf(savedRiichiKey) !== -1) {
+      if (riichiPayments && Object.keys(riichiPayments).includes(savedRiichiKey)) {
         showInlineRiichi = true;
       }
       break;
@@ -266,7 +302,9 @@ function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppSt
       }
       const hasWinButton = ['ron', 'tsumo', 'draw', 'nagashi'].includes(selectedOutcome);
       const hasLoseButton = ['ron', 'chombo'].includes(selectedOutcome);
-      const hasRiichiButton = ['ron', 'tsumo', 'draw', 'abort', 'nagashi'].includes(selectedOutcome);
+      const hasRiichiButton = ['ron', 'tsumo', 'draw', 'abort', 'nagashi'].includes(
+        selectedOutcome
+      );
 
       showDeadButton = ['draw', 'nagashi'].includes(selectedOutcome) && deadPressed(state, player);
 
@@ -341,7 +379,7 @@ function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppSt
       }
 
       let paoButtonMode: PlayerButtonMode | undefined;
-      let hasPaoButton = false
+      let hasPaoButton = false;
 
       switch (currentOutcome.selectedOutcome) {
         case 'ron':
@@ -352,12 +390,12 @@ function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppSt
             points = loc._t('Loser');
             pointsMode = PlayerPointsMode.NEGATIVE;
           } else {
-            hasPaoButton = true
+            hasPaoButton = true;
           }
           break;
         case 'tsumo':
           if (currentOutcome.winner !== player.id) {
-            hasPaoButton = true
+            hasPaoButton = true;
           } else {
             points = loc._t('Winner');
             pointsMode = PlayerPointsMode.POSITIVE;
@@ -381,6 +419,7 @@ function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppSt
       }
 
       break;
+    default:
   }
 
   return {
@@ -396,21 +435,25 @@ function getPlayer(loc: I18nService, player: Player, wind: string, state: IAppSt
     showDeadButton: showDeadButton,
     onDeadButtonClick: onDeadButtonClick(dispatch, player.id),
     showInlineRiichi: showInlineRiichi,
-    onPlayerClick: onPlayerClick(state, dispatch, player.id)
-  }
+    onPlayerClick: onPlayerClick(state, dispatch, player.id),
+  };
 }
 
-function getTitleForOutcome(loc: I18nService, selectedOutcome: OutcomeType | undefined, currentScreen: AppScreen): string | undefined {
+function getTitleForOutcome(
+  loc: I18nService,
+  selectedOutcome: OutcomeType | undefined,
+  currentScreen: AppScreen
+): string | undefined {
   // todo add i18n
   if (selectedOutcome === undefined) {
-    return undefined
+    return undefined;
   }
 
   switch (selectedOutcome) {
     case 'ron':
     case 'tsumo':
       if (currentScreen === 'paoSelect') {
-        return  loc._t('Select pao');
+        return loc._t('Select pao');
       }
       break;
     case 'nagashi':
@@ -418,24 +461,25 @@ function getTitleForOutcome(loc: I18nService, selectedOutcome: OutcomeType | und
         return loc._t('Select tempai');
       }
       break;
+    default:
   }
 
-  return getOutcomeName(loc, selectedOutcome)
+  return getOutcomeName(loc, selectedOutcome);
 }
 
 // todo replace with common selector
 export function getOutcomeName(loc: I18nService, selectedOutcome: OutcomeType): string {
   switch (selectedOutcome) {
     case 'ron':
-      return  loc._t('Ron');
+      return loc._t('Ron');
     case 'tsumo':
-      return  loc._t('Tsumo');
+      return loc._t('Tsumo');
     case 'draw':
-      return  loc._t('Draw');
+      return loc._t('Draw');
     case 'abort':
-      return  loc._t('Abort');
+      return loc._t('Abort');
     case 'chombo':
-      return  loc._t('Chombo');
+      return loc._t('Chombo');
     case 'nagashi':
       return loc._t('Nagashi');
   }
@@ -445,30 +489,39 @@ export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dis
   const tableMode = getTableMode(state);
   const selectedOutcome = state.currentOutcome && state.currentOutcome.selectedOutcome;
 
-  const text = getTitleForOutcome(loc, selectedOutcome, state.currentScreen)
+  const text = getTitleForOutcome(loc, selectedOutcome, state.currentScreen);
 
-  const showBack = [TableMode.OTHER_PLAYER_TABLE, TableMode.SELECT_PLAYERS, TableMode.RESULT].includes(tableMode);
+  const showBack = [
+    TableMode.OTHER_PLAYER_TABLE,
+    TableMode.SELECT_PLAYERS,
+    TableMode.RESULT,
+  ].includes(tableMode);
   const showNext = tableMode === TableMode.SELECT_PLAYERS;
   const isNextDisabled = !canGoNext(state);
   const showSave = tableMode === TableMode.RESULT;
   const isSaveDisabled = false; //todo do we really need disabled state for save? seems no
 
   const showHome = [TableMode.GAME, TableMode.BEFORE_START].includes(tableMode);
-  const showRefresh = [TableMode.GAME, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
+  const showRefresh = [
+    TableMode.GAME,
+    TableMode.BEFORE_START,
+    TableMode.OTHER_PLAYER_TABLE,
+  ].includes(tableMode);
   const showAdd = tableMode === TableMode.GAME;
   const showLog = [TableMode.GAME, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
 
   // todo simplify
   const nextClickHandler = () => {
     if (state.currentScreen === 'paoSelect' && state.currentOutcome?.selectedOutcome === 'ron') {
-      const nextPaoWinnerId = getNextWinnerWithPao(state, state.multironCurrentWinner)
+      const nextPaoWinnerId = getNextWinnerWithPao(state, state.multironCurrentWinner);
       if (nextPaoWinnerId !== undefined) {
-        return () => dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: nextPaoWinnerId} });
+        return () =>
+          dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: nextPaoWinnerId } });
       }
     }
 
     return onNextClick(dispatch);
-  }
+  };
 
   return {
     text: text,
@@ -488,11 +541,11 @@ export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dis
     onAddClick: onAddClick(state, dispatch),
     onHomeClick: onHomeClick(dispatch),
     onRefreshClick: onRefreshClick(state, dispatch),
-  }
+  };
 }
 
 function canGoNext(state: IAppState) {
-  return mayGoNextFromPlayersSelect(state) //todo check (at least nagashi)
+  return mayGoNextFromPlayersSelect(state); //todo check (at least nagashi)
 }
 
 function getTableMode(state: IAppState): TableMode {
@@ -520,7 +573,7 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
   // todo show for showAdditionalTableInfo while confirmation
 
   let showTableNumber = false;
-  let tableNumber = state.currentOtherTable?.tableIndex ?? state.tableIndex;
+  const tableNumber = state.currentOtherTable?.tableIndex ?? state.tableIndex;
   let showRoundInfo = true;
   let showTimer = false;
   let isAutostartTimer = false;
@@ -550,9 +603,9 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
       if (timeRemaining !== undefined) {
         showTimer = true;
         if (timeRemaining.minutes === 0 && timeRemaining.seconds === 0) {
-          gamesLeft = state.yellowZoneAlreadyPlayed ? 1 : 2
+          gamesLeft = state.yellowZoneAlreadyPlayed ? 1 : 2;
         } else {
-          currentTime = formatTime(timeRemaining.minutes, timeRemaining.seconds)
+          currentTime = formatTime(timeRemaining.minutes, timeRemaining.seconds);
         }
       }
     }
@@ -573,20 +626,24 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
     onTableInfoToggle: onTableInfoToggle(state, dispatch),
     onRotateCwClick: () => dispatch({ type: TABLE_ROTATE_CLOCKWISE }),
     onRotateCcwClick: () => dispatch({ type: TABLE_ROTATE_COUNTERCLOCKWISE }),
-  }
+  };
 }
 
 type paymentInfo = {
-  from?: number,
-  to?: number,
-  directAmount: number,
-  riichiAmount: number,
-  honbaAmount: number,
-}
+  from?: number;
+  to?: number;
+  directAmount: number;
+  riichiAmount: number;
+  honbaAmount: number;
+};
 //todo add memorize
 function getPaymentsInfo(state: IAppState): paymentInfo[] {
   const changesOverview = state.changesOverview;
-  if (state.currentScreen !== 'confirmation' || changesOverview === undefined || state.loading.overview) {
+  if (
+    state.currentScreen !== 'confirmation' ||
+    changesOverview === undefined ||
+    state.loading.overview
+  ) {
     return [];
   }
 
@@ -594,7 +651,7 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
 
   const result: paymentInfo[] = [];
   const separator = '<-';
-  Object.keys(payments.direct || []).forEach(paymentItem => {
+  Object.keys(payments.direct || []).forEach((paymentItem) => {
     const players = paymentItem.split(separator);
 
     if (players.length === 2) {
@@ -616,9 +673,9 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
         result.push(item);
       }
     }
-  })
+  });
 
-  Object.keys(payments.riichi || []).forEach(paymentItem => {
+  Object.keys(payments.riichi || []).forEach((paymentItem) => {
     const players = paymentItem.split('<-');
     const riichiAmount = payments.riichi[paymentItem];
 
@@ -626,7 +683,7 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
       const from = players[1] ? parseInt(players[1], 10) : undefined;
       const to = players[0] ? parseInt(players[0], 10) : undefined;
 
-      const currentArrow = result.find(arrow => arrow.to === to && arrow.from === from);
+      const currentArrow = result.find((arrow) => arrow.to === to && arrow.from === from);
       if (currentArrow) {
         currentArrow.riichiAmount = riichiAmount;
       } else {
@@ -640,9 +697,9 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
         result.push(item);
       }
     }
-  })
+  });
 
-  Object.keys(payments.honba || []).forEach(paymentItem => {
+  Object.keys(payments.honba || []).forEach((paymentItem) => {
     const players = paymentItem.split('<-');
     const honbaAmount = payments.honba[paymentItem];
 
@@ -650,19 +707,23 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
       const from = parseInt(players[1], 10);
       const to = parseInt(players[0], 10);
 
-      const currentArrow = result.find(arrow => arrow.to === to && arrow.from === from);
+      const currentArrow = result.find((arrow) => arrow.to === to && arrow.from === from);
       if (currentArrow) {
         currentArrow.honbaAmount = honbaAmount;
       }
     }
-  })
+  });
 
   return result;
 }
 
 export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
   const changesOverview = state.changesOverview;
-  if (state.currentScreen !== 'confirmation' || changesOverview === undefined || state.loading.overview) {
+  if (
+    state.currentScreen !== 'confirmation' ||
+    changesOverview === undefined ||
+    state.loading.overview
+  ) {
     return undefined;
   }
 
@@ -671,7 +732,7 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
   //todo we get only one pao player from server, need to be fixes for multiron
   // const paoPlayer = changesOverview.paoPlayer
 
-  let paoPlayersByWinners: number[] = [];
+  const paoPlayersByWinners: number[] = [];
   if (changesOverview.paoPlayer) {
     if (state.currentOutcome?.selectedOutcome === 'tsumo') {
       if (state.currentOutcome.winner) {
@@ -679,12 +740,12 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
       }
     } else if (state.currentOutcome?.selectedOutcome === 'ron') {
       const wins = state.currentOutcome.wins;
-      Object.keys(wins).forEach(winnerKey => {
+      Object.keys(wins).forEach((winnerKey) => {
         const winner = wins[winnerKey];
         if (winner.paoPlayerId && winner.winner) {
-          paoPlayersByWinners[winner.winner] = winner.paoPlayerId
+          paoPlayersByWinners[winner.winner] = winner.paoPlayerId;
         }
-      })
+      });
     }
   }
 
@@ -697,8 +758,8 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
     [getSelf(state, 'confirmation').id]: PlayerSide.BOTTOM,
   };
 
-  const arrows: PlayerArrow[] = []
-  payments.forEach(item => {
+  const arrows: PlayerArrow[] = [];
+  payments.forEach((item) => {
     if (item.from && item.to) {
       const start = sideByPlayer[item.from];
       const end = sideByPlayer[item.to];
@@ -715,11 +776,11 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
 
       arrows.push(playerArrow);
     }
-  })
+  });
 
   return {
-      arrows: arrows
-    };
+    arrows: arrows,
+  };
 }
 
 ///////////////
@@ -727,31 +788,31 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
 //////////////
 
 function onWinButtonClick(dispatch: Dispatch, playerId: number) {
-  return () => dispatch({ type: TOGGLE_WINNER, payload: playerId })
+  return () => dispatch({ type: TOGGLE_WINNER, payload: playerId });
 }
 
 function onNagashiButtonClick(dispatch: Dispatch, playerId: number) {
-  return () => dispatch({ type: TOGGLE_NAGASHI, payload: playerId })
+  return () => dispatch({ type: TOGGLE_NAGASHI, payload: playerId });
 }
 
 function onPaoButtonClick(dispatch: Dispatch, playerId: number) {
-  return () => dispatch({ type: TOGGLE_PAO, payload: playerId })
+  return () => dispatch({ type: TOGGLE_PAO, payload: playerId });
 }
 
 function onDeadButtonClick(dispatch: Dispatch, playerId: number) {
-  return () => dispatch({ type: TOGGLE_DEADHAND, payload: playerId })
+  return () => dispatch({ type: TOGGLE_DEADHAND, payload: playerId });
 }
 
 function onLoseButtonClick(dispatch: Dispatch, playerId: number) {
-  return () => dispatch({ type: TOGGLE_LOSER, payload: playerId })
+  return () => dispatch({ type: TOGGLE_LOSER, payload: playerId });
 }
 
 function onRiichiButtonClick(dispatch: Dispatch, playerId: number) {
-  return () => dispatch({ type: TOGGLE_RIICHI, payload: playerId })
+  return () => dispatch({ type: TOGGLE_RIICHI, payload: playerId });
 }
 
 function onLogClick(dispatch: Dispatch) {
-  return () => dispatch({ type: SHOW_GAME_LOG })
+  return () => dispatch({ type: SHOW_GAME_LOG });
 }
 
 function onAddClick(state: IAppState, dispatch: Dispatch) {
@@ -761,7 +822,7 @@ function onAddClick(state: IAppState, dispatch: Dispatch) {
     } else if (state.currentScreen === 'outcomeSelect') {
       dispatch({ type: GOTO_PREV_SCREEN });
     }
-  }
+  };
 }
 
 function onHomeClick(dispatch: Dispatch) {
@@ -771,11 +832,11 @@ function onHomeClick(dispatch: Dispatch) {
 function onRefreshClick(state: IAppState, dispatch: Dispatch) {
   return () => {
     if (state.currentScreen === 'otherTable') {
-      dispatch({ type: GET_OTHER_TABLE_RELOAD })
+      dispatch({ type: GET_OTHER_TABLE_RELOAD });
     } else {
       dispatch({ type: UPDATE_CURRENT_GAMES_INIT });
     }
-  }
+  };
 }
 
 function onNextClick(dispatch: Dispatch) {
@@ -789,26 +850,26 @@ function onBackClick(dispatch: Dispatch) {
 }
 
 function onSaveClick(state: IAppState, dispatch: Dispatch) {
-  return () => dispatch({ type: ADD_ROUND_INIT, payload: state })
+  return () => dispatch({ type: ADD_ROUND_INIT, payload: state });
 }
 
 function onPlayerClick(state: IAppState, dispatch: Dispatch, playerId: number) {
-  if (!["currentGame", "otherTable"].includes(state.currentScreen) || state.timer?.waiting) {
-    return undefined
+  if (!['currentGame', 'otherTable'].includes(state.currentScreen) || state.timer?.waiting) {
+    return undefined;
   }
 
   return () => {
-    dispatch( { type: TOGGLE_OVERVIEW_DIFFBY, payload: playerId })
-  }
+    dispatch({ type: TOGGLE_OVERVIEW_DIFFBY, payload: playerId });
+  };
 }
 
 //todo make canShowAdditionalInfo selector
 function onTableInfoToggle(state: IAppState, dispatch: Dispatch) {
-  if (state.currentScreen !== "currentGame" && state.currentScreen !== "confirmation") {
+  if (state.currentScreen !== 'currentGame' && state.currentScreen !== 'confirmation') {
     return undefined;
   }
 
-  if (state.currentScreen === "currentGame") {
+  if (state.currentScreen === 'currentGame') {
     const tableNumber = state.tableIndex;
     if (!tableNumber) {
       return undefined;
@@ -816,6 +877,6 @@ function onTableInfoToggle(state: IAppState, dispatch: Dispatch) {
   }
 
   return () => {
-    dispatch( { type: TOGGLE_ADDITIONAL_TABLE_INFO})
-  }
+    dispatch({ type: TOGGLE_ADDITIONAL_TABLE_INFO });
+  };
 }

@@ -1,19 +1,19 @@
 export enum PlayerPointsMode {
-    IDLE,
-    POSITIVE,
-    NEGATIVE,
-    ACTIVE,
+  IDLE,
+  POSITIVE,
+  NEGATIVE,
+  ACTIVE,
 }
 
 export enum PlayerButtonMode {
-    IDLE,
-    DISABLE,
-    PRESSED,
+  IDLE,
+  DISABLE,
+  PRESSED,
 }
 
 export enum PlayerMode {
-    TOP,
-    RIGHT,
-    BOTTOM,
-    LEFT,
+  TOP,
+  RIGHT,
+  BOTTOM,
+  LEFT,
 }

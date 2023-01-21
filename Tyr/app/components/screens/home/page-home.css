@@ -29,7 +29,6 @@
   background-color: var(--color-secondary-6);
 }
 
-
 .page-home__button--bordered {
   padding: 0 12px;
 }
@@ -39,10 +38,9 @@
 }
 
 .page-home__button--bordered:active:before,
-.page-home__button--bordered:active:after  {
-  width: 100%
+.page-home__button--bordered:active:after {
+  width: 100%;
 }
-
 
 .page-home__button--bordered:before {
   width: calc(100% - 24px);
@@ -61,7 +59,6 @@
   display: block;
   position: absolute;
 }
-
 
 .page-home__button-content {
   width: 100%;

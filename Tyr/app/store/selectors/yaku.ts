@@ -32,19 +32,16 @@ export function getRequiredYaku(state: IAppState, currentWinner?: number): YakuI
   const existingYaku: YakuId[] = getSelectedYaku(state);
   switch (outcome.selectedOutcome) {
     case 'tsumo':
-      if (outcome.winner && outcome.riichiBets.indexOf(outcome.winner) !== -1) {
-        return [
-          YakuId.RIICHI,
-          YakuId.MENZENTSUMO
-        ].filter((y) => !existingYaku.includes(y));
+      if (outcome.winner && outcome.riichiBets.includes(outcome.winner)) {
+        return [YakuId.RIICHI, YakuId.MENZENTSUMO].filter((y) => !existingYaku.includes(y));
       }
       break;
     case 'ron':
-      const winner = currentWinner || state.multironCurrentWinner;
+      const winner = currentWinner ?? state.multironCurrentWinner;
       if (!winner) {
         throw new Error('No winner selected');
       }
-      if (outcome.riichiBets.indexOf(winner) !== -1) {
+      if (outcome.riichiBets.includes(winner)) {
         return [YakuId.RIICHI].filter((y) => !existingYaku.includes(y));
       }
       break;
@@ -81,11 +78,7 @@ export function getAllowedYaku(state: IAppState): YakuId[] {
         outcome.winner,
         yakuList,
         getAllowedYakuCompat(state.yakuList, yakuList),
-        [
-          YakuId.HOUTEI,
-          YakuId.CHANKAN,
-          YakuId.RENHOU
-        ]
+        [YakuId.HOUTEI, YakuId.CHANKAN, YakuId.RENHOU]
       );
     case 'ron':
       if (!state.multironCurrentWinner) {
@@ -97,76 +90,67 @@ export function getAllowedYaku(state: IAppState): YakuId[] {
         state.multironCurrentWinner,
         yakuList,
         getAllowedYakuCompat(state.yakuList, yakuList),
-        [
-          YakuId.MENZENTSUMO,
-          YakuId.HAITEI,
-          YakuId.TENHOU,
-          YakuId.CHIHOU
-        ]
+        [YakuId.MENZENTSUMO, YakuId.HAITEI, YakuId.TENHOU, YakuId.CHIHOU]
       );
     default:
       return [];
   }
 }
 
-function _excludeYaku(state: IAppState, winner: number | undefined, rawYakuList: YakuId[], list: YakuId[], toBeExcluded: YakuId[]) {
+function _excludeYaku(
+  state: IAppState,
+  winner: number | undefined,
+  rawYakuList: YakuId[],
+  list: YakuId[],
+  toBeExcluded: YakuId[]
+) {
   const outcome = state.currentOutcome;
   if (!winner || !outcome) {
     return [];
   }
 
   return list.filter((yaku: YakuId) => {
-    if ( // disable ippatsu if riichi or double riichi is not selected
-      yaku === YakuId.IPPATSU
-      && (
-        outcome?.selectedOutcome === 'ron'
-        || outcome?.selectedOutcome === 'tsumo'
-      )
-      && (rawYakuList.indexOf(YakuId.RIICHI) === -1 && rawYakuList.indexOf(YakuId.DOUBLERIICHI) === -1)
+    if (
+      // disable ippatsu if riichi or double riichi is not selected
+      yaku === YakuId.IPPATSU &&
+      (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo') &&
+      !rawYakuList.includes(YakuId.RIICHI) &&
+      !rawYakuList.includes(YakuId.DOUBLERIICHI)
     ) {
       return false;
     }
 
     if (
-      yaku === YakuId.__OPENHAND
-      && (
-        outcome?.selectedOutcome === 'ron'
-        || outcome?.selectedOutcome === 'tsumo'
-      )
-      && outcome.riichiBets.indexOf(winner) !== -1
+      yaku === YakuId.__OPENHAND &&
+      (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo') &&
+      outcome.riichiBets.includes(winner)
     ) {
       return false; // disable open hand if one won with riichi
     }
 
     if (
-      yaku === YakuId.RENHOU
-      && outcome?.selectedOutcome === 'ron'
-      && outcome.wins[winner].winnerIsDealer
+      yaku === YakuId.RENHOU &&
+      outcome?.selectedOutcome === 'ron' &&
+      outcome.wins[winner].winnerIsDealer
     ) {
       return false; // dealer can't win with renhou
     }
 
     if (
-      yaku === YakuId.TENHOU
-      && (
-        outcome?.selectedOutcome !== 'tsumo'
-        || !outcome.winnerIsDealer
-      )
+      yaku === YakuId.TENHOU &&
+      (outcome?.selectedOutcome !== 'tsumo' || !outcome.winnerIsDealer)
     ) {
       return false; // non-dealer can't win with tenhou
     }
 
     if (
-      yaku === YakuId.CHIHOU
-      && (
-        outcome?.selectedOutcome !== 'tsumo'
-        || outcome.winnerIsDealer
-      )
+      yaku === YakuId.CHIHOU &&
+      (outcome?.selectedOutcome !== 'tsumo' || outcome.winnerIsDealer)
     ) {
       return false; // dealer can't win with chihou
     }
 
-    return toBeExcluded.indexOf(yaku) === -1;
+    return !toBeExcluded.includes(yaku);
   });
 }
 
@@ -183,7 +167,7 @@ export function yakumanInYaku(state: IAppState): boolean {
       if (!state.multironCurrentWinner) {
         return false; // data not loaded yet
       }
-      let props = outcome.wins[state.multironCurrentWinner];
+      const props = outcome.wins[state.multironCurrentWinner];
       return _hasYakumanInYakuList(props);
     default:
       throw new Error('No yaku may exist on this outcome');
@@ -192,8 +176,8 @@ export function yakumanInYaku(state: IAppState): boolean {
 
 function _hasYakumanInYakuList(props: WinProps): boolean {
   const yakuList = unpack(props.yaku);
-  for (let y of yakuList) {
-    if (limits.indexOf(y) !== -1) {
+  for (const y of yakuList) {
+    if (limits.includes(y)) {
       return true;
     }
   }

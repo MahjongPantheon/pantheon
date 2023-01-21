@@ -1,10 +1,10 @@
 // Taken from https://github.com/anywhichway/nano-memoize as is - DON'T TOUCH THIS TRASH. You've been warned.
 
-let assign = Object.assign;
+const assign = Object.assign;
 function vrgs(f: any) {
-  let s = f + "",
-    i = s.indexOf("...");
-  return i >= 0 && (i < s.indexOf(")") || s.indexOf("arguments") >= 0);
+  const s = f + '',
+    i = s.indexOf('...');
+  return i >= 0 && (i < s.indexOf(')') || s.includes('arguments'));
 }
 
 export function memoize<T extends Function>(fn: T, o?: any): T {
@@ -24,7 +24,8 @@ export function memoize<T extends Function>(fn: T, o?: any): T {
     wm = new WeakMap(),
     d = function (key: any, c: any, k: any) {
       return setTimeout(function () {
-        if (k) { // dealing with multi-arg function, c and k are Arrays
+        if (k) {
+          // dealing with multi-arg function, c and k are Arrays
           c.splice(key, 1);
           k.splice(key, 1);
           return;
@@ -33,39 +34,48 @@ export function memoize<T extends Function>(fn: T, o?: any): T {
       }, o.maxAge);
     },
     c: any = o.maxAge > 0 && o.maxAge < Infinity ? d : 0, // cache change timeout,
-    eq = o.equals ? o.equals : function (a: any, b: any) {
-      return a === b;
-    },
+    eq = o.equals
+      ? o.equals
+      : function (a: any, b: any) {
+          return a === b;
+        },
     maxargs = o.maxArgs,
     srlz = o.serializer,
     f: any, // memoized function to return
     u: any; // flag indicating a unary arg function is in use for clear operation
   if (fn.length === 1 && !o.equals && !vargs) {
     // for single argument functions, just use a JS object key look-up
-    f = (function (a: any) {
+    f = function (a: any) {
       // strings must be serialized because cache[1] should not equal or overwrite cache["1"] for value = 1 and value = "1"
-      let t = typeof a;
+      const t = typeof a;
       // set chng timeout only when new value computed, hits will not push out the tte, but it is arguable they should not
-      if (!srlz && ((t === "object" && a) || t === "function")) {
+      if (!srlz && ((t === 'object' && a) || t === 'function')) {
         let r;
-        // @ts-ignore
-        return wm.get(a) || ((!c || c(a, wm)), wm.set(a, r = fn.call(this, a)), r);
+        // @ts-expect-error
+        return wm.get(a) || (!c || c(a, wm), wm.set(a, (r = fn.call(this, a))), r);
       }
-      let key = t === "number" || t === "boolean" || a == null ? a : t === "string" ? JSON.stringify(a) : srlz(a);
-      // @ts-ignore
-      return s[key] || ((!c || c(key, s)), s[key] = fn.call(this, a));
-      // @ts-ignore
-    }).bind(this);
+      const key =
+        t === 'number' || t === 'boolean' || a == null
+          ? a
+          : t === 'string'
+          ? JSON.stringify(a)
+          : srlz(a);
+      // @ts-expect-error
+      return s[key] || (!c || c(key, s), (s[key] = fn.call(this, a)));
+      // @ts-expect-error
+    }.bind(this);
     u = 1;
   } else {
     // for multiple arg functions, loop through a cache of all the args
     // looking at each arg separately so a test can abort as soon as possible
-    f = (function () {
+    f = function () {
       let l = maxargs || arguments.length,
         i;
-      for (i = k.length - 1; i >= 0; i--) { // an array of arrays of args, each array represents a call signature
+      for (i = k.length - 1; i >= 0; i--) {
+        // an array of arrays of args, each array represents a call signature
         if (!maxargs && k[i].length !== l) continue; // cache miss if called with a different number of args
-        for (let j = l - 1; j >= 0 && eq(k[i][j], arguments[j]); j--) {	// compare each arg
+        for (let j = l - 1; j >= 0 && eq(k[i][j], arguments[j]); j--) {
+          // compare each arg
           if (j === 0) {
             return v[i];
           } // the args matched
@@ -73,10 +83,10 @@ export function memoize<T extends Function>(fn: T, o?: any): T {
       }
       i = k.length - (i + 1);
       // set change timeout only when new value computed, hits will not push out the tte, but it is arguable they should not
-      // @ts-ignore
-      return (!c || c(i, v, k)), v[i] = fn.apply(this, k[i] = arguments);
-      // @ts-ignore
-    }).bind(this);
+      // @ts-expect-error
+      return !c || c(i, v, k), (v[i] = fn.apply(this, (k[i] = arguments)));
+      // @ts-expect-error
+    }.bind(this);
   }
   // reset all the caches
   f.clear = function () {

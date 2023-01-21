@@ -24,7 +24,7 @@ export function uniq(arr: any[], sorted: boolean | number, strings: boolean | nu
     }
     duplicate = duplicate || (lastAdded && lastAdded === elem);
     if (!duplicate && !sorted) {
-      duplicate = result.indexOf(elem) > -1;
+      duplicate = result.includes(elem);
     }
     if (!duplicate) {
       result.push(elem);

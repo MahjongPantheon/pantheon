@@ -19,8 +19,8 @@
  */
 
 export class RemoteError {
-  private _errcode: number;
-  private _message: string;
+  private readonly _errcode: number;
+  private readonly _message: string;
 
   constructor(message: string, code: string) {
     this._errcode = parseInt(code, 10);
@@ -36,6 +36,6 @@ export class RemoteError {
   }
 
   toString() {
-    return '[REMOTE ERROR] code:' + this.code + ', message: ' + this.message;
+    return `[REMOTE ERROR] code:${this.code}, message: ${this.message}`;
   }
 }

@@ -30,7 +30,6 @@
   margin-bottom: 4px;
 }
 
-
 .player--top .player__wind-container,
 .player--top .player__button-container,
 .player--top .player__riichi-button {
@@ -46,7 +45,6 @@
 .player--top .player__score {
   text-align: center;
 }
-
 
 .player--bottom {
   margin-top: 4px;
@@ -69,7 +67,6 @@
   text-align: center;
 }
 
-
 .player--left {
   margin-left: 16px;
   display: flex;
@@ -86,7 +83,6 @@
   margin-left: 6px;
 }
 
-
 .player--right {
   margin-right: 16px;
   display: flex;
@@ -102,7 +98,6 @@
 .player--right .player__score-container {
   margin-right: 6px;
 }
-
 
 .player--rotated.player--left,
 .player--rotated.player--right {

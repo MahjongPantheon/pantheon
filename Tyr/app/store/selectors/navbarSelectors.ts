@@ -2,7 +2,6 @@ import { IAppState } from '../interfaces';
 import { yakumanInYaku } from './yaku';
 import { getFu, getHan, getPossibleFu } from './hanFu';
 import { getLosingUsers, getNagashiUsers, getWinningUsers } from './mimirSelectors';
-import { I18nService } from '#/services/i18n';
 
 export function doraOptions(state: IAppState) {
   if (yakumanInYaku(state)) {
@@ -49,8 +48,9 @@ export function mayGoNextFromYakuSelect(state: IAppState) {
       return getHan(state) != 0;
     case 'ron':
       const out = state.currentOutcome;
-      return getWinningUsers(state)
-        .reduce((acc, user) => acc && (out.wins[user.id].han != 0), true);
+      return getWinningUsers(state).reduce((acc, user) => acc && out.wins[user.id].han != 0, true);
+    default:
+      return undefined;
   }
 }
 
@@ -63,10 +63,11 @@ export function mayGoNextFromPlayersSelect(state: IAppState) {
     case 'nagashi':
       return true;
     case 'ron':
-      return getWinningUsers(state).length >= 1
-        && getLosingUsers(state).length === 1;
+      return getWinningUsers(state).length >= 1 && getLosingUsers(state).length === 1;
     case 'chombo':
       return getLosingUsers(state).length === 1;
+    default:
+      return undefined;
   }
 }
 

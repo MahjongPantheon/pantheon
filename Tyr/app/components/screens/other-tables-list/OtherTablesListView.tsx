@@ -1,15 +1,15 @@
-import * as React from "react";
-import './other-tables-list.css'
-import {TopPanel} from '#/components/general/top-panel/TopPanel';
-import {Table} from "#/interfaces/common";
+import * as React from 'react';
+import './other-tables-list.css';
+import { TopPanel } from '#/components/general/top-panel/TopPanel';
+import { Table } from '#/interfaces/common';
 
 type IProps = {
-  tables: Table[]
-  onTableClick: (hash: string) => void
-  onBackClick: () => void
-}
+  tables: Table[];
+  onTableClick: (hash: string) => void;
+  onBackClick: () => void;
+};
 
-const roundsMap: {[key: number]: string} = {
+const roundsMap: { [key: number]: string } = {
   1: '東1',
   2: '東2',
   3: '東3',
@@ -22,20 +22,28 @@ const roundsMap: {[key: number]: string} = {
   10: '西2',
   11: '西3',
   12: '西4',
-}
+};
 
-export class OtherTablesListView extends React.PureComponent<IProps>{
+export class OtherTablesListView extends React.PureComponent<IProps> {
   render() {
-    const {onTableClick, onBackClick} = this.props;
+    const { onTableClick, onBackClick } = this.props;
 
     return (
-      <div className="page-other-tables-list">
+      <div className='page-other-tables-list'>
         <TopPanel onBackClick={onBackClick} />
-        <div className="page-other-tables-list__content">
-          {this.props.tables.map(table => (
-            <div key={table.hash} className="page-other-tables-list__table" onClick={() => onTableClick(table.hash)}>
+        <div className='page-other-tables-list__content'>
+          {this.props.tables.map((table) => (
+            <div
+              key={table.hash}
+              className='page-other-tables-list__table'
+              onClick={() => onTableClick(table.hash)}
+            >
               {roundsMap[table.currentRound]}
-              {table.players.map((player) => <div key={player.id}>{player.displayName}: {player.score}</div>)}
+              {table.players.map((player) => (
+                <div key={player.id}>
+                  {player.displayName}: {player.score}
+                </div>
+              ))}
             </div>
           ))}
         </div>

@@ -8,36 +8,36 @@ import {
   SHOW_GAME_LOG,
   SHOW_OTHER_TABLE,
   SHOW_OTHER_TABLES_LIST,
-  START_NEW_GAME
+  START_NEW_GAME,
 } from './interfaces';
 
 export function resetState(): AppActionTypes {
   return {
-    type: RESET_STATE
+    type: RESET_STATE,
   };
 }
 
 export function startNewGame(): AppActionTypes {
   return {
-    type: START_NEW_GAME
+    type: START_NEW_GAME,
   };
 }
 
 export function showLastResults(): AppActionTypes {
   return {
-    type: SHOW_LAST_RESULTS
+    type: SHOW_LAST_RESULTS,
   };
 }
 
 export function showGameLog(): AppActionTypes {
   return {
-    type: SHOW_GAME_LOG
+    type: SHOW_GAME_LOG,
   };
 }
 
 export function showOtherTablesList(): AppActionTypes {
   return {
-    type: SHOW_OTHER_TABLES_LIST
+    type: SHOW_OTHER_TABLES_LIST,
   };
 }
 
@@ -45,25 +45,25 @@ export function showOtherTable(hash: string): AppActionTypes {
   return {
     type: SHOW_OTHER_TABLE,
     payload: {
-      hash
-    }
+      hash,
+    },
   };
 }
 
 export function openSettings(): AppActionTypes {
   return {
-    type: OPEN_SETTINGS
+    type: OPEN_SETTINGS,
   };
 }
 
 export function gotoNextScreen(): AppActionTypes {
   return {
-    type: GOTO_NEXT_SCREEN
+    type: GOTO_NEXT_SCREEN,
   };
 }
 
 export function gotoPrevScreen(): AppActionTypes {
   return {
-    type: GOTO_PREV_SCREEN
+    type: GOTO_PREV_SCREEN,
   };
 }

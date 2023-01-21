@@ -102,7 +102,6 @@ p {
   height: 24px;
 }
 
-
 .radio-btn {
   border: 1px solid var(--primary-text-color);
   display: flex;
@@ -125,7 +124,6 @@ p {
 .radio-btn:not(.radio-btn--active):active {
   background-color: var(--color-secondary-6);
 }
-
 
 .flat-btn {
   display: flex;
@@ -160,7 +158,6 @@ p {
   height: 112px;
 }
 
-
 .flat-btn--success {
   border-color: var(--color-success);
   color: var(--color-success);
@@ -191,7 +188,6 @@ p {
   font-size: var(--font-size-small-2);
 }
 
-
 .link {
   text-decoration: underline;
   color: var(--color-primary);
@@ -204,7 +200,6 @@ p {
 }
 
 .flex-container__top {
-
 }
 
 .flex-container__content {
@@ -215,4 +210,3 @@ p {
 .flex-container__bottom {
   flex: 0 0 auto;
 }
-

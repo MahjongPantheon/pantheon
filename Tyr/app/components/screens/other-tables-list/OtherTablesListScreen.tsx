@@ -1,11 +1,8 @@
-import * as React from "react";
-import './other-tables-list.css'
-import {IComponentProps} from '#/components/IComponentProps';
-import {
-  GET_OTHER_TABLE_INIT,
-  GOTO_PREV_SCREEN,
-} from '#/store/actions/interfaces';
-import {OtherTablesListView} from "#/components/screens/other-tables-list/OtherTablesListView";
+import * as React from 'react';
+import './other-tables-list.css';
+import { IComponentProps } from '#/components/IComponentProps';
+import { GET_OTHER_TABLE_INIT, GOTO_PREV_SCREEN } from '#/store/actions/interfaces';
+import { OtherTablesListView } from '#/components/screens/other-tables-list/OtherTablesListView';
 
 export class OtherTablesList extends React.Component<IComponentProps> {
   private onBackClick() {
@@ -17,9 +14,10 @@ export class OtherTablesList extends React.Component<IComponentProps> {
   }
 
   render() {
-    const {state} = this.props;
-    if (state.otherTablesListError) { // TODO: localized message
-      return <div>{state.otherTablesListError.message}</div>
+    const { state } = this.props;
+    if (state.otherTablesListError) {
+      // TODO: localized message
+      return <div>{state.otherTablesListError.message}</div>;
     }
 
     return (

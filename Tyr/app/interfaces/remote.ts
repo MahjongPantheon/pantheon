@@ -89,15 +89,14 @@ export interface RRoundChombo {
   loser_id: number;
 }
 
-export type RRound
-  = RRoundRon
+export type RRound =
+  | RRoundRon
   | RRoundMultiRon
   | RRoundTsumo
   | RRoundDraw
   | RRoundAbort
   | RRoundChombo
-  | RRoundNagashi
-  ;
+  | RRoundNagashi;
 
 export interface RGameConfig {
   yakuWithPao: number[];
@@ -147,9 +146,9 @@ export interface RSessionOverview {
   id: number;
   table_index: number;
   players: {
-    id: number,
-    title: string,
-    ident: string
+    id: number;
+    title: string;
+    ident: string;
   }[];
   state: {
     dealer: number; // player id
@@ -160,14 +159,14 @@ export interface RSessionOverview {
     scores: { [key: number]: number };
     finished: boolean;
     penalties: { [key: number]: number };
-  }
+  };
 }
 
 export type RAllPlayersInEvent = {
   id: number;
   title: string;
   tenhou_id: string;
-}[]
+}[];
 
 export type RTablesState = {
   status: string;
@@ -179,7 +178,7 @@ export type RTablesState = {
     id: number;
     title: string;
   }>;
-}[]
+}[];
 
 // for getPlayer
 export interface RUserInfo {
@@ -217,9 +216,9 @@ export interface RRoundPaymentsInfoSingle {
   scores: number[];
   paoPlayer: number;
   payments: {
-    direct: { [key: string]: number },
-    riichi: { [key: string]: number },
-    honba: { [key: string]: number }
+    direct: { [key: string]: number };
+    riichi: { [key: string]: number };
+    honba: { [key: string]: number };
   };
 
   winner: number;
@@ -243,9 +242,9 @@ export interface RRoundPaymentsInfoMulti {
   honba: number;
   scores: number[];
   payments: {
-    direct: { [key: string]: number },
-    riichi: { [key: string]: number },
-    honba: { [key: string]: number }
+    direct: { [key: string]: number };
+    riichi: { [key: string]: number };
+    honba: { [key: string]: number };
   };
 
   winner: number[];
@@ -267,12 +266,12 @@ export interface RRoundOverviewBase {
   riichi: number; // riichis on table
   honba: number;
   riichiIds: string[]; // player ids
-  scores: {[index: number]: number}; // after payments
-  scoresDelta: {[index: number]: number};
+  scores: { [index: number]: number }; // after payments
+  scoresDelta: { [index: number]: number };
 }
 
 export interface RRoundOverviewRon extends RRoundOverviewBase {
-  outcome: 'ron'
+  outcome: 'ron';
   loser: number;
   winner: number;
   paoPlayer: number | null;
@@ -286,7 +285,7 @@ export interface RRoundOverviewRon extends RRoundOverviewBase {
 }
 
 export interface RRoundOverviewMultiRon extends RRoundOverviewBase {
-  outcome: 'multiron'
+  outcome: 'multiron';
   loser: number;
   winner: number[];
   paoPlayer: (number | null)[];
@@ -300,7 +299,7 @@ export interface RRoundOverviewMultiRon extends RRoundOverviewBase {
 }
 
 export interface RRoundOverviewTsumo extends RRoundOverviewBase {
-  outcome: 'tsumo'
+  outcome: 'tsumo';
   winner: number;
   paoPlayer: number | null;
   yaku: string;
@@ -337,7 +336,7 @@ export type REvent = {
   title: string;
   description: string;
   isOnline: boolean;
-}
+};
 
 export type REventsList = REvent[];
 
@@ -350,7 +349,7 @@ export type RRoundOverviewInfo =
   | RRoundOverviewDraw
   | RRoundOverviewAbort
   | RRoundOverviewChombo
-  | RRoundOverviewNagashi
+  | RRoundOverviewNagashi;
 
 export interface SessionState {
   /**
