@@ -1,8 +1,7 @@
 import * as React from "react";
 import './top-panel.css'
-import {Icon} from '#/components/general/icon/Icon';
-import {IconType} from '#/components/general/icon/IconType';
 import {SearchInput} from '#/components/general/search-input/SearchInput';
+import BackIcon from '../../../img/back.svg?svgr';
 
 type IProps = {
   onBackClick?: () => void;
@@ -16,7 +15,7 @@ export const TopPanel = React.memo(function (props: IProps) {
   return (
     <div className="top-panel">
       <div className="svg-button" onClick={onBackClick}>
-        <Icon type={IconType.BACK} />
+        <BackIcon />
       </div>
 
       {showSearch && onSearchChange && (

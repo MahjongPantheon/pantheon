@@ -1,12 +1,11 @@
 import * as React from "react";
 import './event-select.css'
-import {TopPanel} from '#/components/general/top-panel/TopPanel';
 import classNames from 'classnames';
 import {LEventsList} from "#/interfaces/local";
 import {useContext} from "react";
 import {i18n} from "#/components/i18n";
-import {Icon} from "#/components/general/icon/Icon";
-import {IconType} from "#/components/general/icon/IconType";
+import BackIcon from '../../../img/back.svg?svgr';
+import SettingsIcon from '../../../img/settings.svg?svgr';
 
 interface IProps {
   playerName: string;
@@ -34,11 +33,11 @@ export const EventSelectScreenView = React.memo(function (props: IProps) {
         <div className="top-panel top-panel--between">
           {events.length > 0
             ? <div className="svg-button" onClick={onBackClick}>
-                <Icon type={IconType.BACK} />
+                <BackIcon />
               </div>
             : null}
           <div className="svg-button svg-button--small" onClick={onSettingClick}>
-            <Icon type={IconType.SETTINGS} />
+            <SettingsIcon />
           </div>
         </div>
         <div className="page-event-select__name">{playerName}</div>

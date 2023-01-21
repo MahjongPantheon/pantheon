@@ -1,12 +1,11 @@
 import * as React from 'react';
-import {IconType} from '#/components/general/icon/IconType';
-import {Icon} from '#/components/general/icon/Icon';
+import {ReactNode} from "react";
 
-export const TableTenbou = React.memo(function ({iconType, count}: {iconType: IconType, count: number}) {
+export const TableTenbou = React.memo(function ({icon, count}: {icon: ReactNode, count: number}) {
   return (
     <div className="table-info__tenbou">
       <div className="svg-item">
-        <Icon type={iconType} />
+        {icon}
       </div>
       <div className="table-info__tenbou-count">
         {count}

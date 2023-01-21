@@ -1,10 +1,9 @@
 import * as React from "react";
-import {Icon} from '#/components/general/icon/Icon';
-import {IconType} from '#/components/general/icon/IconType';
 import {useEffect, useState} from 'react';
 import useDebounce from '#/components/general/search-input/UseDebounce';
 import {i18n} from "#/components/i18n";
 import {I18nService} from "#/services/i18n";
+import CloseIcon from '../../../img/close.svg?svgr';
 
 type IProps = {
   onChange: (value: string) => void
@@ -69,7 +68,7 @@ class SearchInputInner extends React.Component<IInnerProps, IState> {
         </input>
         {!!searchValue && (
           <div onClick={this.onClearClick.bind(this)}>
-            <Icon type={IconType.CLOSE} />
+            <CloseIcon />
           </div>
         )}
       </>

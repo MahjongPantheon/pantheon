@@ -5,9 +5,9 @@ import {SelectTotalPanel} from './SelectTotalPanel';
 import {Tab} from '#/components/general/tab/Tab';
 import {BottomPanel} from '#/components/general/bottom-panel/BottomPanel';
 import {ArrowState, SelectHandActiveTab, YakuGroup} from '#/components/screens/select-hand/YakuTypes';
-import {Icon} from '#/components/general/icon/Icon';
-import {IconType} from '#/components/general/icon/IconType';
 import classNames from 'classnames';
+import ArrowLeftIcon from '../../../../img/arrow-left.svg?svgr';
+import ArrowRightIcon from '../../../../img/arrow-right.svg?svgr';
 
 type IProps = {
   playerName: string
@@ -110,7 +110,7 @@ export class SelectHandScreenView extends React.Component<IProps> {
                 className={classNames('svg-button svg-button--xsmall', {'svg-button--disabled': leftArrowState === ArrowState.DISABLED})}
                 onClick={this.onLeftArrowClick.bind(this)}
               >
-                <Icon type={IconType.ARROW_LEFT} />
+                <ArrowLeftIcon />
               </div>
             )}
           </div>
@@ -121,7 +121,7 @@ export class SelectHandScreenView extends React.Component<IProps> {
                 className={classNames('svg-button svg-button--xsmall', {'svg-button--disabled': rightArrowState === ArrowState.DISABLED})}
                 onClick={this.onRightArrowClick.bind(this)}
               >
-                <Icon type={IconType.ARROW_RIGHT} />
+                <ArrowRightIcon />
               </div>
             )}
           </div>

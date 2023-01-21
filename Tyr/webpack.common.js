@@ -19,8 +19,35 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg|jpg)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(woff(2)?|ttf|eot|jpg)(\?v=\d+\.\d+\.\d+)?$/,
         type: 'asset/resource',
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        oneOf: [
+          {
+            resourceQuery: /svgr/,
+            use: [
+              {
+                loader: "@svgr/webpack",
+                options: {
+                  svgoConfig: {
+                    plugins: [
+                      {
+                        name: 'removeViewBox',
+                        active: false
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            type: "javascript/auto",
+          },
+          {
+            type: 'asset/resource',
+          }
+        ]
       }
     ],
   },

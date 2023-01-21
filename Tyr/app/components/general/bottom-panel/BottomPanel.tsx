@@ -1,9 +1,14 @@
 import * as React from 'react';
 import {BottomPanelProps} from './BottomPanelProps';
 import './bottom-panel.css';
-import {Icon} from '#/components/general/icon/Icon';
-import {IconType} from '#/components/general/icon/IconType';
 import classNames from 'classnames';
+import BackIcon from '../../../img/back.svg?svgr';
+import NextIcon from '../../../img/next.svg?svgr';
+import SaveIcon from '../../../img/save.svg?svgr';
+import HomeIcon from '../../../img/home.svg?svgr';
+import RefreshIcon from '../../../img/refresh.svg?svgr';
+import PlusIcon from '../../../img/plus.svg?svgr';
+import LogIcon from '../../../img/log.svg?svgr';
 
 export class BottomPanel extends React.Component<BottomPanelProps> {
   private onNextButtonClick() {
@@ -46,7 +51,7 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
         <div className="bottom-panel__inner">
           {showBack && (
             <div className="svg-button" onClick={onBackClick}>
-              <Icon type={IconType.BACK} />
+              <BackIcon />
             </div>
           )}
           {!!text && (
@@ -60,7 +65,7 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
               className={classNames('svg-button', {'svg-button--disabled': isNextDisabled})}
               onClick={this.onNextButtonClick.bind(this)}
             >
-              <Icon type={IconType.NEXT} />
+              <NextIcon />
             </div>
           )}
           {showSave && (
@@ -68,27 +73,27 @@ export class BottomPanel extends React.Component<BottomPanelProps> {
               className={classNames('svg-button', {'svg-button--disabled': isSaveDisabled})}
               onClick={this.onSaveButtonClick.bind(this)}
             >
-              <Icon type={IconType.SAVE} />
+              <SaveIcon />
             </div>
           )}
           {showHome && (
             <div className="svg-button" onClick={onHomeClick}>
-              <Icon type={IconType.HOME} />
+              <HomeIcon />
             </div>
           )}
           {showRefresh && (
             <div className="svg-button" onClick={onRefreshClick}>
-              <Icon type={IconType.REFRESH} />
+              <RefreshIcon />
             </div>
           )}
           {showAdd && (
             <div className="svg-button" onClick={onAddClick}>
-              <Icon type={IconType.PLUS} />
+              <PlusIcon />
             </div>
           )}
           {showLog && (
             <div className="svg-button" onClick={onLogClick}>
-              <Icon type={IconType.LOG} />
+              <LogIcon />
             </div>
           )}
         </div>

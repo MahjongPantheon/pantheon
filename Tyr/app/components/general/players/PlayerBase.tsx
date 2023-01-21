@@ -3,8 +3,9 @@ import './players.css';
 import {PlayerButtonMode, PlayerMode, PlayerPointsMode} from '../../types/PlayerEnums';
 import {PlayerProps} from './PlayerProps';
 import classNames from 'classnames';
-import {Icon} from '#/components/general/icon/Icon';
-import {IconType} from '#/components/general/icon/IconType';
+import RiichiBigIcon from '../../../img/riichi-big.svg?svgr';
+import WinIcon from '../../../img/win.svg?svgr';
+import LooseIcon from '../../../img/lose.svg?svgr';
 
 type IProps = PlayerProps & {
   mode: PlayerMode
@@ -48,7 +49,7 @@ export class PlayerBase extends React.Component<IProps> {
           {'player__riichi-button--empty': riichiButton.mode === PlayerButtonMode.IDLE}
         )}
         >
-          <Icon type={IconType.RIICHI_BIG} />
+          <RiichiBigIcon />
         </div>
       )
     }
@@ -97,7 +98,7 @@ export class PlayerBase extends React.Component<IProps> {
                 {'flat-btn--success': winButton.mode === PlayerButtonMode.PRESSED},
               )}
               >
-                <Icon type={IconType.WIN} />
+                <WinIcon />
               </div>
             )}
 
@@ -111,7 +112,7 @@ export class PlayerBase extends React.Component<IProps> {
                 {'flat-btn--danger': loseButton.mode === PlayerButtonMode.PRESSED},
               )}
               >
-                <Icon type={IconType.LOSE} />
+                <LooseIcon />
               </div>
             )}
 
@@ -185,7 +186,7 @@ export class PlayerBase extends React.Component<IProps> {
               <p>
                 {points}
                 {showInlineRiichi && (
-                  <Icon type={IconType.RIICHI_BIG} svgProps={{className: "player__inline-riichi"}} />
+                  <RiichiBigIcon className="player__inline-riichi" />
                 )}
               </p>
               {!!penaltyPoints && (

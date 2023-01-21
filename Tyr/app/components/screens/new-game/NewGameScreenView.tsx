@@ -2,10 +2,11 @@ import * as React from "react";
 import './page-new-game.css'
 import {TopPanel} from '#/components/general/top-panel/TopPanel';
 import {PlayerDropdown} from '#/components/general/dropdown/PlayerDropdown';
-import {IconType} from '#/components/general/icon/IconType';
-import {Icon} from '#/components/general/icon/Icon';
 import classNames from 'classnames';
 import {i18n} from "#/components/i18n";
+import CloseIcon from '../../../img/close.svg?svgr';
+import ShuffleIcon from '../../../img/shuffle.svg?svgr';
+import SaveIcon from '../../../img/save.svg?svgr';
 
 type IProps = {
   east?: string
@@ -35,18 +36,18 @@ export const NewGameScreenView = React.memo(function (props: IProps) {
           <PlayerDropdown wind="北" playerName={north} onPlayerClick={() => onPlayerClick('北')} />
           <div className="page-new-game__buttons">
             <div className="flat-btn" onClick={onClearClick}>
-              <Icon type={IconType.CLOSE} />
+              <CloseIcon />
               <label>{loc._t('Clear players')}</label>
             </div>
             <div className="flat-btn" onClick={onShuffleClick}>
-              <Icon type={IconType.SHUFFLE} />
+              <ShuffleIcon />
               <label>{loc._t('Shuffle players')}</label>
             </div>
             <div
               className={classNames('flat-btn', {'flat-btn--disabled': !canSave})}
               onClick={onSaveClick}
             >
-              <Icon type={IconType.SAVE} />
+              <SaveIcon />
               <label>{loc._t('Start game')}</label>
             </div>
           </div>
