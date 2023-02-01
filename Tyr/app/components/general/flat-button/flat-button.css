@@ -1,0 +1,62 @@
+.flat-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-secondary-4);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.flat-btn:not(.flat-btn--disabled):active {
+  background-color: var(--color-secondary-6);
+}
+
+.flat-btn--small {
+  width: 52px;
+  height: 52px;
+}
+
+.flat-btn--medium {
+  width: 72px;
+  height: 52px;
+}
+
+.flat-btn--large {
+  width: 112px;
+  height: 52px;
+}
+
+.flat-btn--v-large {
+  width: 52px;
+  height: 112px;
+}
+
+.flat-btn--success {
+  border-color: var(--color-success);
+  color: var(--color-success);
+}
+
+.flat-btn--danger {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.flat-btn--pressed {
+  border-color: var(--color-secondary-1);
+  color: var(--color-secondary-1);
+}
+
+.flat-btn--disabled {
+  border-color: var(--color-secondary-5);
+  color: var(--color-secondary-5);
+}
+
+.flat-btn svg {
+  width: 36px;
+  height: 36px;
+}
+
+.flat-btn__caption {
+  text-align: center;
+  font-size: var(--font-size-small-2);
+}

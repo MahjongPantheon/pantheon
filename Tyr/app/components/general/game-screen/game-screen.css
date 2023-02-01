@@ -1,0 +1,21 @@
+.game-screen {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
+}
+
+.game-screen__table {
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.game-screen__table-grid--size-3 {
+  grid-template: auto 1fr auto / auto 1fr auto;
+}
+
+.game-screen__table-grid--size-5 {
+  grid-template: auto auto 1fr auto auto / auto auto 1fr auto auto;
+}
+
+.game-screen__table-grid--size-7 {
+  grid-template: auto auto auto 1fr auto auto auto / auto auto auto 1fr auto auto auto;
+}

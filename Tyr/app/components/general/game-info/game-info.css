@@ -1,0 +1,16 @@
+.game-info__round {
+  font-size: var(--font-size-header);
+}
+
+.game-info__table-number {
+  font-size: var(--font-size-header);
+}
+
+.game-info__tenbou {
+  padding: 2px;
+}
+
+.game-info__tenbou-svg {
+  width: 31px;
+  height: 24px;
+}

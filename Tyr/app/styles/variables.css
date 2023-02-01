@@ -1,7 +1,12 @@
 :root {
   --font-size-primary: 18px;
+  --line-height-primary: 24px;
+
+
+  --font-size-header: 32px;
+  --line-height-header: 42px;
+
   --font-size-secondary: 24px;
   --font-size-small-1: 14px;
   --font-size-small-2: 16px;
-  --font-size-header: 32px;
 }
