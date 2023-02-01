@@ -127,6 +127,10 @@ export const Overview: React.FC<CurrentGameScreenProps> = (props) => {
   const [topScoreElement, leftScoreElement, rightScoreElement, bottomScoreElement] =
     usePlayerScores(topPlayer, leftPlayer, rightPlayer, bottomPlayer, diffById, onScoreClick);
 
+  // todo penalty
+
+  // todo click on center to get table number
+
   return (
     <GameScreen>
       <GameScreen.Table

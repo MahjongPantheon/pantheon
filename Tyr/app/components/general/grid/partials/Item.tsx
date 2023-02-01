@@ -1,4 +1,3 @@
-import { styled } from '@stitches/react';
 import React, { PropsWithChildren } from 'react';
 import classNames from 'classnames';
 

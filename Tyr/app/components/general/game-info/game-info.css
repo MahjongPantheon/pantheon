@@ -2,6 +2,10 @@
   font-size: var(--font-size-header);
 }
 
+.game-info__table-number-caption {
+  font-size: var(--font-size-primary);
+}
+
 .game-info__table-number {
   font-size: var(--font-size-header);
 }

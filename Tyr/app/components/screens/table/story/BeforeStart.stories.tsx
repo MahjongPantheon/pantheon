@@ -1,11 +1,10 @@
 import React from 'react';
-import { CurrentGameScreenView } from '#/components/screens/table/screens/CurrentGameScreenView';
-import { BeforeStartScreenView } from '#/components/screens/table/screens/BeforeStartScreenView';
 import { action } from '@storybook/addon-actions';
+import { BeforeStartScreenView } from '#/components/screens/table/screens/BeforeStartScreenView';
 
 export default {
   title: 'Screens/BeforeStart',
-  component: CurrentGameScreenView,
+  component: BeforeStartScreenView,
 };
 
 const data = {

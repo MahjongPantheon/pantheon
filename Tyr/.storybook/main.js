@@ -1,29 +1,29 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
-  "stories": [
-    "../app/**/*.stories.mdx",
-    "../app/**/*.stories.@(js|jsx|ts|tsx)"
+  stories: ['../app/**/*.stories.mdx', '../app/**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: [
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
   ],
-  "addons": [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions"
-  ],
-  "framework": "@storybook/react",
-  "core": {
-    "builder": "@storybook/builder-webpack5"
+  framework: '@storybook/react',
+  core: {
+    builder: '@storybook/builder-webpack5',
   },
-  webpackFinal: config => {
-    const resourcesRule = config.module.rules.find(rule =>
+  webpackFinal: (config) => {
+    const resourcesRule = config.module.rules.find((rule) =>
       rule.test
         .toString()
-        .includes('/\\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\\?.*)?$/')
-    )
+        .includes(
+          '/\\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\\?.*)?$/'
+        )
+    );
     if (resourcesRule) {
-      resourcesRule.test = /\.(ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/
+      resourcesRule.test =
+        /\.(ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/;
     } else {
-      throw new Error(`Default SVG loader won't work`)
+      throw new Error(`Default SVG loader won't work`);
     }
 
     config.module.rules.push({
@@ -33,36 +33,35 @@ module.exports = {
           resourceQuery: /svgr/,
           use: [
             {
-              loader: "@svgr/webpack",
+              loader: '@svgr/webpack',
               options: {
                 svgoConfig: {
                   plugins: [
                     {
                       name: 'removeViewBox',
-                      active: false
-                    }
-                  ]
-                }
-              }
-            }
+                      active: false,
+                    },
+                  ],
+                },
+              },
+            },
           ],
-          type: "javascript/auto",
+          type: 'javascript/auto',
         },
         {
           type: 'asset/resource',
-        }
-      ]
-    })
+        },
+      ],
+    });
 
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '#': path.resolve(__dirname, '../app'),
-    }
+      '#config': path.resolve(__dirname, '../app/envConfig/environment.local.ts'),
+    };
 
-    console.log(__dirname)
+    config.resolve.extensions.push('.ts', '.tsx');
 
-    config.resolve.extensions.push('.ts', '.tsx')
-
-    return config
-  }
-}
+    return config;
+  },
+};

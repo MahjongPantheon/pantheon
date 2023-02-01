@@ -1,22 +1,18 @@
-import '../app/styles/base.css'
-import '../app/styles/themes.css'
-import '../app/styles/variables.css'
+import '../app/styles/base.css';
+import '../app/styles/themes.css';
+import '../app/styles/variables.css';
+import { I18nDecorator } from './decorators/I18nDecorator';
+import { ThemeDecorator } from './decorators/ThemeDecorator';
 
 export const parameters = {
-  actions: { argTypesRegex: "^on[A-Z].*" },
+  actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
       color: /(background|color)$/i,
       date: /Date$/,
     },
   },
-  layout: 'fullscreen'
-}
+  layout: 'fullscreen',
+};
 
-export const decorators = [
-  (Story) => (
-      <div className="theme-day" style={{width: '100vw', height: '100vh'}}>
-        <Story/>
-      </div>
-    )
-]
+export const decorators = [ThemeDecorator, I18nDecorator];

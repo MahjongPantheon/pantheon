@@ -1,7 +1,7 @@
 import React from 'react';
-import { PlayerNameProps, PlayerText } from '#/components/general/player/partials/PlayerText';
+import { PlayerTextProps, PlayerText } from '#/components/general/player/partials/PlayerText';
 
-type NameProps = Omit<PlayerNameProps, 'size'> & {
+type NameProps = Omit<PlayerTextProps, 'size'> & {
   inlineWind?: string;
 };
 

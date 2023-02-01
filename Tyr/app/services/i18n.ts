@@ -15,8 +15,11 @@ const langs = {
 export class I18nService {
   protected i18nController: TranslationController;
   protected i18n: TranslationProvider;
+  private readonly storage: IDB;
 
-  constructor(private readonly storage: IDB) {
+  constructor(storage: IDB) {
+    this.storage = storage;
+
     this.i18nController = new TranslationController(
       /* translationGetter: */ (
         name: string,

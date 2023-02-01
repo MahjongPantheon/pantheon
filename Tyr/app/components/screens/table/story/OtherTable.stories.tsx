@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { CurrentGameScreenView } from '#/components/screens/table/screens/CurrentGameScreenView';
 import { OtherTableScreenView } from '#/components/screens/table/screens/OtherTableScreenView';
 
 export default {
   title: 'Screens/OtherTable',
-  component: CurrentGameScreenView,
+  component: OtherTableScreenView,
 };
 
 const data = {

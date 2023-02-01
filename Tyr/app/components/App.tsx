@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import '../styles/base.css';
+import '../styles/old.css';
 import '../styles/themes.css';
 import '../styles/variables.css';
 import { IAppState } from '#/store/interfaces';

@@ -15,7 +15,7 @@ export type TableProps<T extends PlayerSlot> = {
   right: [...T];
   bottom: [...T];
 
-  center: JSX.Element;
+  center?: JSX.Element;
 };
 
 /**
@@ -41,14 +41,14 @@ export function Table<T extends PlayerSlot>({
   return (
     <Grid.Item className='game-screen__table'>
       <Grid gap={6} className={classNames(TABLE_GRID_CLASS_NAME, sizeClassName)}>
-        {top.map((element) => (
-          <Grid.Item columnStart={1} columnEnd={-1}>
+        {top.map((element, i) => (
+          <Grid.Item key={i} columnStart={1} columnEnd={-1}>
             {element}
           </Grid.Item>
         ))}
 
-        {left.map((element) => (
-          <Grid.Item rowStart={leftRightSlotColumnStart} rowEnd={-1}>
+        {left.map((element, i) => (
+          <Grid.Item key={i} rowStart={leftRightSlotColumnStart} rowEnd={-1}>
             {element}
           </Grid.Item>
         ))}
@@ -62,14 +62,14 @@ export function Table<T extends PlayerSlot>({
           {center}
         </Grid.Item>
 
-        {right.map((element) => (
-          <Grid.Item rowStart={leftRightSlotColumnStart} rowEnd={-1}>
+        {right.map((element, i) => (
+          <Grid.Item key={i} rowStart={leftRightSlotColumnStart} rowEnd={-1}>
             {element}
           </Grid.Item>
         ))}
 
-        {bottom.map((element) => (
-          <Grid.Item columnStart={1} columnEnd={-1}>
+        {bottom.map((element, i) => (
+          <Grid.Item key={i} columnStart={1} columnEnd={-1}>
             {element}
           </Grid.Item>
         ))}

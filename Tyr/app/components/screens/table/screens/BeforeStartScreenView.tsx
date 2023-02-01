@@ -22,7 +22,7 @@ type BeforeStartProps = {
     displayName: string;
   };
   tableNumber?: number;
-  // todo timer
+  // todo timer before start
 
   onHomeClick: () => void;
   onRefreshClick: () => void;
