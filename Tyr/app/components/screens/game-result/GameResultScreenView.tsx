@@ -3,8 +3,8 @@ import './page-game-result.css';
 import classNames from 'classnames';
 import { i18n } from '#/components/i18n';
 import { useContext } from 'react';
-import RepeatIcon from '../../../img/repeat.svg?svgr';
-import SaveIcon from '../../../img/save.svg?svgr';
+import RepeatIcon from '../../../img/icons/repeat.svg?svgr';
+import SaveIcon from '../../../img/icons/check.svg?svgr';
 
 type IProps = {
   showRepeatButton?: boolean;

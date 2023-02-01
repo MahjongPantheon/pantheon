@@ -4,9 +4,9 @@ import { TopPanel } from '#/components/general/top-panel/TopPanel';
 import { PlayerDropdown } from '#/components/general/dropdown/PlayerDropdown';
 import classNames from 'classnames';
 import { i18n } from '#/components/i18n';
-import CloseIcon from '../../../img/close.svg?svgr';
-import ShuffleIcon from '../../../img/shuffle.svg?svgr';
-import SaveIcon from '../../../img/save.svg?svgr';
+import CloseIcon from '../../../img/icons/close.svg?svgr';
+import ShuffleIcon from '../../../img/icons/shuffle.svg?svgr';
+import SaveIcon from '../../../img/icons/check.svg?svgr';
 
 type IProps = {
   east?: string;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './top-panel.css';
 import { SearchInput } from '#/components/general/search-input/SearchInput';
-import BackIcon from '../../../img/back.svg?svgr';
+import BackIcon from '../../../img/icons/arrow-left.svg?svgr';
 
 type IProps = {
   onBackClick?: () => void;
