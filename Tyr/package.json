@@ -4,12 +4,22 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@storybook/addon-actions": "^6.5.15",
+    "@storybook/addon-essentials": "^6.5.15",
+    "@storybook/addon-interactions": "^6.5.15",
+    "@storybook/addon-links": "^6.5.15",
+    "@storybook/builder-webpack5": "^6.5.15",
+    "@storybook/manager-webpack5": "^6.5.15",
+    "@storybook/react": "^6.5.15",
+    "@storybook/testing-library": "^0.0.13",
     "@svgr/webpack": "^6.5.1",
     "@types/node": "^18.11.10",
     "@types/react": "^18.0.26",
     "@types/react-dom": "latest",
     "@types/reduce-reducers": "^1.0.0",
     "@types/workbox-sw": "^4.3.2",
+    "babel-loader": "^8.3.0",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.2",
     "deep-clone": "^3.0.3",
@@ -48,6 +58,8 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "build-dev": "webpack --config webpack.dev.js",
-    "dev": "webpack-dev-server --config webpack.dev.js"
+    "dev": "webpack-dev-server --config webpack.dev.js",
+    "storybook": "start-storybook -p 6009",
+    "build-storybook": "build-storybook"
   }
 }
