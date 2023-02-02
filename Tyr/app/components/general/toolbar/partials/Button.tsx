@@ -19,7 +19,7 @@ export const Button: React.FC<ButtonProps> = ({ disabled, onClick, children }) =
   </button>
 );
 
-type IconButtonProps = Pick<ButtonProps, 'onClick'>;
+type IconButtonProps = Omit<ButtonProps, 'children'>;
 
 export const Home: React.FC<IconButtonProps> = (props) => (
   <Button {...props}>

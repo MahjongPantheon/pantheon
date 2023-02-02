@@ -1,4 +1,5 @@
 .flat-btn {
+  all: unset;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,7 +8,12 @@
   box-sizing: border-box;
 }
 
-.flat-btn:not(.flat-btn--disabled):active {
+.flat-btn[disabled] {
+  border-color: var(--color-secondary-5);
+  color: var(--color-secondary-5);
+}
+
+.flat-btn:active {
   background-color: var(--color-secondary-6);
 }
 
@@ -44,11 +50,6 @@
 .flat-btn--pressed {
   border-color: var(--color-secondary-1);
   color: var(--color-secondary-1);
-}
-
-.flat-btn--disabled {
-  border-color: var(--color-secondary-5);
-  color: var(--color-secondary-5);
 }
 
 .flat-btn svg {

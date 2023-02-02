@@ -67,3 +67,34 @@
   color: var(--color-danger);
 }
 
+.player__riichi-button {
+  padding: 10px;
+}
+
+.player__riichi-button--rotated {
+  width: 16px;
+  height: 104px;
+}
+
+.player__riichi-button--rotated svg {
+  transform: rotate(90deg) translate(45px, 45px);
+  width: 104px;
+  height: 16px;
+}
+
+.player__riichi-button:not(.player__riichi-button--rotated) svg {
+  width: 104px;
+  height: 16px;
+}
+
+.player__riichi-button--empty {
+  color: var(--color-secondary-4);
+}
+
+.player__riichi-button:not(.player__riichi-button--empty) {
+  --riichi-circle-color: var(--color-danger);
+}
+
+.player__riichi-button:active {
+  --riichi-fill-color: var(--color-secondary-6);
+}

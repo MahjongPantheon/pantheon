@@ -1,29 +1,39 @@
 import classNames from 'classnames';
-import { PlayerButtonMode } from '#/components/types/PlayerEnums';
 import * as React from 'react';
 import { PropsWithChildren } from 'react';
 import './flat-button.css';
 
-type FlatButtonProps = PropsWithChildren<{
+export type FlatButtonState = 'idle' | 'active' | 'success' | 'danger';
+
+export type FlatButtonProps = PropsWithChildren<{
   size: 'small' | 'large' | 'v-large';
-  mode: PlayerButtonMode;
-  onClick?: () => void;
+  variant: FlatButtonState;
+  disabled?: boolean;
+  onClick: () => void;
 }>;
 
-export const FlatButton: React.FC<FlatButtonProps> = ({ size, mode, onClick, children }) => {
+export const FlatButton: React.FC<FlatButtonProps> = ({
+  size,
+  variant,
+  disabled,
+  onClick,
+  children,
+}) => {
   return (
-    <div
+    <button
       onClick={onClick}
       className={classNames(
         'flat-btn',
         { 'flat-btn--small': size === 'small' },
         { 'flat-btn--large': size === 'large' },
         { 'flat-btn--v-large': size === 'v-large' },
-        { 'flat-btn--disabled': mode === PlayerButtonMode.DISABLE },
-        { 'flat-btn--success': mode === PlayerButtonMode.PRESSED }
+        { 'flat-btn--pressed': variant === 'active' },
+        { 'flat-btn--success': variant === 'success' },
+        { 'flat-btn--danger': variant === 'danger' }
       )}
+      disabled={disabled}
     >
       {children}
-    </div>
+    </button>
   );
 };

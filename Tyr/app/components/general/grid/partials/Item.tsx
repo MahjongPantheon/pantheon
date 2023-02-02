@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import classNames from 'classnames';
+import { Flex, FlexProps } from '#/components/general/flex/Flex';
 
 const MAIN_CLASS_NAME = 'grid-container__item';
 
@@ -12,7 +13,9 @@ export type ItemProps = PropsWithChildren<{
   columnEnd?: CellNumber | -1;
   rowEnd?: CellNumber | -1;
   className?: string;
-}>;
+  flex?: boolean;
+}> &
+  FlexProps;
 
 export const Item: React.FC<ItemProps> = ({
   columnStart,
@@ -21,6 +24,8 @@ export const Item: React.FC<ItemProps> = ({
   rowEnd,
   className,
   children,
+  flex,
+  ...flexProps
 }) => {
   const columnStartClassName =
     columnStart !== undefined ? `${MAIN_CLASS_NAME}--column-start-${columnStart}` : '';
@@ -41,7 +46,7 @@ export const Item: React.FC<ItemProps> = ({
         className
       )}
     >
-      {children}
+      {flex ? <Flex {...flexProps}>{children}</Flex> : children}
     </div>
   );
 };
