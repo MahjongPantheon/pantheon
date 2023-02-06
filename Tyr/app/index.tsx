@@ -9,11 +9,28 @@ import { IAppState } from '#/store/interfaces';
 import { observe } from '#/scripts/dimensionsObserver';
 import { registerFrontErrorHandler } from '#/scripts/logFrontError';
 
+import { IDBCookieImpl } from '#/services/idb/cookiestorageImpl';
+
+// TODO: temporary measure until transition is finished
+if (window.location.host.startsWith('m.riichi.top')) {
+  const oldImpl = new IDBCookieImpl('.riichi.top');
+  window.location.replace('https://assist.riichimahjong.org/?migrate=' + oldImpl.export());
+}
+
 observe();
 registerFrontErrorHandler();
 
 const metrikaService = new MetrikaService();
 const storage = new IDB(metrikaService);
+
+// TODO: temporary measure until transition is finished
+if (
+  window.location.host.startsWith('assist.riichimahjong.org') &&
+  window.location.search.startsWith('?migrate=')
+) {
+  storage.import(window.location.search.replace('?migrate=', ''));
+}
+
 const i18nService = new I18nService(storage);
 const store = new Store(i18nService);
 const root = createRoot(document.getElementById('tyr-root')!);

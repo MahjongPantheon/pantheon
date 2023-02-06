@@ -20,25 +20,18 @@
 
 import { EnvConfig } from '#/envConfig/interface';
 
-function replicaAppend(url: string) {
-  if (window.location.host.startsWith('ru.')) {
-    return url.replace('https://', 'https://ru.');
-  }
-  return url;
-}
-
 export const environment: EnvConfig = {
   production: true,
-  apiUrl: replicaAppend('https://g.riichi.top/'),
-  uaUrl: replicaAppend('https://u.riichi.top/'),
-  guiUrl: replicaAppend('https://r.riichi.top/'),
+  apiUrl: 'https://gameapi.riichimahjong.org/',
+  uaUrl: 'https://userapi.riichimahjong.org/',
+  guiUrl: 'https://rating.riichimahjong.org/',
   idbTokenKey: 'pantheon_authToken',
   idbIdKey: 'pantheon_currentPersonId',
   idbEventKey: 'pantheon_currentEventId',
   idbLangKey: 'pantheon_currentLanguage',
   idbThemeKey: 'pantheon_currentTheme',
   idbDeviceModeKey: 'pantheon_singleDeviceMode',
-  cookieDomain: '.riichi.top',
+  cookieDomain: '.riichimahjong.org',
   guiFix: (src: string) => src,
   metrikaId: 64318630,
 

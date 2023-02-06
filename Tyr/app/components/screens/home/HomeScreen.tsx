@@ -82,7 +82,8 @@ export class HomeScreen extends React.PureComponent<IComponentProps> {
     // TODO: make this configurable
     const showDonate =
       this.props.state.settings.currentLang === 'ru' &&
-      (window.location.host.startsWith('localhost') || window.location.host === 'm.riichi.top');
+      (window.location.host.startsWith('localhost') ||
+        window.location.host === 'assist.riichimahjong.org');
 
     return (
       <HomeScreenView

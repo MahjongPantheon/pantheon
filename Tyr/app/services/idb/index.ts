@@ -65,20 +65,20 @@ export class IDB implements IDBImpl {
    * @return any|null Received value or null if not found
    */
   public get(key: string, type: 'int' | 'string' | 'object'): any | null {
-    const valuePrimary = this.storageEngine.get(key, type);
-    const valueSecondary = this.cookieEngine.get(key, type);
+    const valuePrimary = this.cookieEngine.get(key, type);
+    const valueSecondary = this.storageEngine.get(key, type);
 
     if (valuePrimary === valueSecondary) {
       return valuePrimary;
     }
 
     if (valuePrimary === null) {
-      this.storageEngine.set(key, type, valueSecondary);
+      this.cookieEngine.set(key, type, valueSecondary);
       return valueSecondary;
     }
 
     // We come here in case of values conflict only or absence of secondary value -> use primary value.
-    this.cookieEngine.set(key, type, valuePrimary);
+    this.storageEngine.set(key, type, valuePrimary);
     return valuePrimary;
   }
 
@@ -90,6 +90,19 @@ export class IDB implements IDBImpl {
    */
   public delete(keys: string[]) {
     this.activeStorages.forEach((s: IDBImpl) => s.delete(keys));
+  }
+
+  /**
+   * Import storage values from base64 cookie string
+   * @param str base64 cookie string
+   */
+  public import(str: string) {
+    (this.cookieEngine as IDBCookieImpl).import(str);
+    // sync with local storage
+    (this.cookieEngine as IDBCookieImpl).forEach(
+      // a little hack with 'string' to keep the type as is
+      (key, value) => this.storageEngine.set(key, 'string', value)
+    );
   }
 
   /**

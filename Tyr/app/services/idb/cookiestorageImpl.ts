@@ -36,7 +36,7 @@ export class IDBCookieImpl implements IDBImpl {
     const date = new Date();
     date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
     const expires = ';expires=' + date.toUTCString();
-    const domain = this.cookieDomain ? ';domain=.' + this.cookieDomain : '';
+    const domain = this.cookieDomain ? ';domain=' + this.cookieDomain : '';
     document.cookie = `${key}=${
       type === 'object' ? JSON.stringify(value) : value
     }${expires}${domain}; path=/`;
@@ -51,7 +51,7 @@ export class IDBCookieImpl implements IDBImpl {
     const date = new Date();
     date.setTime(date.getTime() + -1 * 24 * 60 * 60 * 1000); // time in past
     const expires = ';expires=' + date.toUTCString();
-    const domain = this.cookieDomain ? ';domain=.' + this.cookieDomain : '';
+    const domain = this.cookieDomain ? ';domain=' + this.cookieDomain : '';
 
     keys.forEach((key: string) => {
       document.cookie = key + '=' + expires + domain + '; path=/';
@@ -62,6 +62,29 @@ export class IDBCookieImpl implements IDBImpl {
 
   public clear(): void {
     this.delete(Object.keys(this.meta));
+  }
+
+  public export(): string {
+    return window.btoa(document.cookie);
+  }
+
+  public import(str: string) {
+    const date = new Date();
+    date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
+    const expires = ';expires=' + date.toUTCString();
+    const domain = this.cookieDomain ? ';domain=' + this.cookieDomain : '';
+    document.cookie = `${window.atob(str)}${expires}${domain}; path=/`;
+  }
+
+  public forEach(fn: (key: string, value: any) => void) {
+    Object.keys(this.get('__meta', 'object')).forEach((key) => {
+      const result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(
+        document.cookie
+      );
+      if (result) {
+        fn(key, result[1]);
+      }
+    });
   }
 
   private updateMeta() {
