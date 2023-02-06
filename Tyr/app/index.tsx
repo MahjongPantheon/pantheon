@@ -9,11 +9,11 @@ import { IAppState } from '#/store/interfaces';
 import { observe } from '#/scripts/dimensionsObserver';
 import { registerFrontErrorHandler } from '#/scripts/logFrontError';
 
-import { IDBCookieImpl } from '#/services/idb/cookiestorageImpl';
+import { IDBStorageImpl } from '#/services/idb/localstorageImpl';
 
 // TODO: temporary measure until transition is finished
 if (window.location.host.startsWith('m.riichi.top')) {
-  const oldImpl = new IDBCookieImpl('.riichi.top');
+  const oldImpl = new IDBStorageImpl();
   window.location.replace('https://assist.riichimahjong.org/?migrate=' + oldImpl.export());
 }
 

@@ -64,18 +64,7 @@ export class IDBCookieImpl implements IDBImpl {
     this.delete(Object.keys(this.meta));
   }
 
-  public export(): string {
-    return window.btoa(document.cookie);
-  }
-
-  public import(str: string) {
-    const date = new Date();
-    date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
-    const expires = ';expires=' + date.toUTCString();
-    const domain = this.cookieDomain ? ';domain=' + this.cookieDomain : '';
-    document.cookie = `${window.atob(str)}${expires}${domain}; path=/`;
-  }
-
+  // not used now, might be useful for sync
   public forEach(fn: (key: string, value: any) => void) {
     Object.keys(this.get('__meta', 'object')).forEach((key) => {
       const result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(

@@ -93,15 +93,15 @@ export class IDB implements IDBImpl {
   }
 
   /**
-   * Import storage values from base64 cookie string
-   * @param str base64 cookie string
+   * Import storage values from base64 data string
+   * @param str base64 data string
    */
   public import(str: string) {
-    (this.cookieEngine as IDBCookieImpl).import(str);
-    // sync with local storage
-    (this.cookieEngine as IDBCookieImpl).forEach(
+    (this.storageEngine as IDBStorageImpl).import(str);
+    // sync with cookie storage
+    (this.storageEngine as IDBStorageImpl).forEach(
       // a little hack with 'string' to keep the type as is
-      (key, value) => this.storageEngine.set(key, 'string', value)
+      (key, value) => this.cookieEngine.set(key, 'string', value)
     );
   }
 
