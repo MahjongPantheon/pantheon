@@ -74,7 +74,7 @@ export class IDBStorageImpl implements IDBImpl {
 
   public forEach(fn: (key: string, value: any) => void) {
     Object.keys(this.get('__meta', 'object')).forEach((key) => {
-      const result = localStorage.get(key);
+      const result = localStorage.getItem(key);
       if (result) {
         fn(key, result);
       }
