@@ -57,6 +57,30 @@ export class IDBStorageImpl implements IDBImpl {
     this.updateMeta();
   }
 
+  public export(): string {
+    return window.btoa(
+      JSON.stringify(
+        Object.keys(this.get('__meta', 'object')).map((key) => [key, localStorage.getItem(key)])
+      )
+    );
+  }
+
+  public import(str: string) {
+    try {
+      const obj = JSON.parse(window.atob(str)) as Array<[string, string]>;
+      obj.forEach(([key, value]) => localStorage.setItem(key, value));
+    } catch (e) {}
+  }
+
+  public forEach(fn: (key: string, value: any) => void) {
+    Object.keys(this.get('__meta', 'object')).forEach((key) => {
+      const result = localStorage.get(key);
+      if (result) {
+        fn(key, result);
+      }
+    });
+  }
+
   private updateMeta() {
     return this.set('__meta', 'object', this.meta);
   }
