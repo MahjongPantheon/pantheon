@@ -5,6 +5,7 @@ import classNames from 'classnames';
 export type PlayerTextProps = PropsWithChildren<{
   rotated?: 0 | 90 | 180 | 270;
   size?: 'large' | 'medium';
+  verticalMaxHeight?: boolean;
   onClick?: () => void;
   className?: string;
 }>;
@@ -15,6 +16,7 @@ const PLAYER_TEXT_CLASS_NAME = 'player__text';
 export const PlayerText: React.FC<PlayerTextProps> = ({
   rotated = 0,
   size,
+  verticalMaxHeight = false,
   className,
   onClick,
   children,
@@ -47,6 +49,7 @@ export const PlayerText: React.FC<PlayerTextProps> = ({
             className={classNames(ROTATED_CONTAINER_CLASS_NAME, {
               [`${ROTATED_CONTAINER_CLASS_NAME}--size-medium`]: size === 'medium',
               [`${ROTATED_CONTAINER_CLASS_NAME}--size-large`]: size === 'large',
+              [`${ROTATED_CONTAINER_CLASS_NAME}--max-height`]: verticalMaxHeight,
             })}
           >
             {innerElement}
