@@ -1,6 +1,13 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { RonScreenView } from '#/components/screens/table/screens/select-plyers/RonScreenView';
+import {
+  TsumoScreenView,
+  TsumoScreenViewProps,
+} from '#/components/screens/table/screens/select-plyers/TsumoScreenView';
+import {
+  DrawScreenView,
+  DrawScreenViewProps,
+} from '#/components/screens/table/screens/select-plyers/DrawScreenView';
 import {
   bottomPlayer,
   leftPlayer,
@@ -9,85 +16,47 @@ import {
 } from '#/components/screens/table/story/story-data/players';
 
 export default {
-  title: 'Screens/Ron',
-  component: RonScreenView,
+  title: 'Screens/Draw',
+  component: DrawScreenView,
 };
 
 const actions = {
   onWinClick: action('onWinClick'),
-  onLoseClick: action('onLoseClick'),
   onRiichiClick: action('onRiichiClick'),
   onBackClick: action('onBackClick'),
   onNextClick: action('onNextClick'),
+  onDeadHandClick: action('onDeadHandClick'),
 };
 
 const idleButtonState = {
   winButtonPressed: false,
-  winButtonDisabled: false,
-  loseButtonPressed: false,
-  loseButtonDisabled: false,
+  deadButtonPressed: false,
   isRiichiPressed: false,
 };
 
 export const Demo = () => {
   return (
-    <RonScreenView
+    <DrawScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,
-        winButtonPressed: true,
-        loseButtonDisabled: true,
-      }}
-      leftPlayer={{
-        ...leftPlayer,
-        ...idleButtonState,
-        loseButtonDisabled: true,
-      }}
-      rightPlayer={{
-        ...rightPlayer,
-        ...idleButtonState,
-        winButtonDisabled: true,
-        loseButtonPressed: true,
+        deadButtonPressed: true,
         isRiichiPressed: true,
-      }}
-      bottomPlayer={{
-        ...bottomPlayer,
-        ...idleButtonState,
-        loseButtonDisabled: true,
-        isRiichiPressed: true,
-      }}
-      {...actions}
-    />
-  );
-};
-
-export const Multiron = () => {
-  return (
-    <RonScreenView
-      topPlayer={{
-        ...topPlayer,
-        ...idleButtonState,
-        winButtonPressed: true,
-        loseButtonDisabled: true,
       }}
       leftPlayer={{
         ...leftPlayer,
         ...idleButtonState,
         winButtonPressed: true,
-        loseButtonDisabled: true,
       }}
       rightPlayer={{
         ...rightPlayer,
         ...idleButtonState,
-        winButtonDisabled: true,
-        loseButtonPressed: true,
+        winButtonPressed: true,
         isRiichiPressed: true,
       }}
       bottomPlayer={{
         ...bottomPlayer,
         ...idleButtonState,
-        loseButtonDisabled: true,
-        isRiichiPressed: true,
       }}
       {...actions}
     />
@@ -96,7 +65,7 @@ export const Multiron = () => {
 
 export const Idle = () => {
   return (
-    <RonScreenView
+    <DrawScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,
@@ -114,7 +83,6 @@ export const Idle = () => {
         ...idleButtonState,
       }}
       {...actions}
-      isNextDisabled
     />
   );
 };

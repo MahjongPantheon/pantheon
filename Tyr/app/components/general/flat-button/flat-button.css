@@ -6,6 +6,7 @@
   border: 2px solid var(--color-secondary-4);
   border-radius: 8px;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .flat-btn[disabled] {

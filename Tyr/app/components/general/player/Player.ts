@@ -2,7 +2,11 @@ import { Score } from '#/components/general/player/partials/Score';
 import { Name } from '#/components/general/player/partials/Name';
 import { StartWind } from '#/components/general/player/partials/StartWind';
 import './player.css';
-import { LoseButton, WinButton } from '#/components/general/player/partials/IconButton';
+import {
+  DeadHandButton,
+  LoseButton,
+  WinButton,
+} from '#/components/general/player/partials/IconButton';
 import { RiichiButton } from '#/components/general/player/partials/RiichiButton';
 
 export const Player = {
@@ -12,4 +16,5 @@ export const Player = {
   WinButton: WinButton,
   LoseButton: LoseButton,
   RiichiButton: RiichiButton,
+  DeadHandButton: DeadHandButton,
 };

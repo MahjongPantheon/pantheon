@@ -5,8 +5,9 @@ import { Toolbar } from '#/components/general/toolbar/Toolbar';
 import { i18n } from '#/components/i18n';
 import { Flex } from '#/components/general/flex/Flex';
 import { RiichiButton } from '#/components/general/player/partials/RiichiButton';
+import { useClickHandler } from '#/components/screens/table/screens/select-plyers/useClickHandler';
 
-type RonScreenPlayer = {
+export type RonScreenPlayer = {
   id: number;
   wind: string;
   displayName: string;
@@ -30,7 +31,7 @@ export type RonScreenViewProps = {
   onLoseClick: (id: number) => void;
   onRiichiClick: (id: number) => void;
 
-  isNextDisabled: boolean;
+  isNextDisabled?: boolean;
   onNextClick: () => void;
   onBackClick: () => void;
 };
@@ -44,18 +45,27 @@ export const RonScreenView: React.FC<RonScreenViewProps> = (props) => {
     onWinClick,
     onLoseClick,
     onRiichiClick,
-    isNextDisabled,
+    isNextDisabled = false,
     onNextClick,
     onBackClick,
   } = props;
 
   const loc = useContext(i18n);
 
-  // todo text
+  const playerIds = [topPlayer.id, leftPlayer.id, rightPlayer.id, bottomPlayer.id] as const;
 
-  const onRiichiClickHandler = () => {};
-  const onWinClickHandler = () => {};
-  const onLoseClickHandler = () => {};
+  const [playerTopWinClick, playerLeftWinClick, playerRightWinClick, playerBottomWinClick] =
+    useClickHandler(playerIds, onWinClick);
+
+  const [playerTopLoseClick, playerLeftLoseClick, playerRightLoseClick, playerBottomLoseClick] =
+    useClickHandler(playerIds, onLoseClick);
+
+  const [
+    playerTopRiichiClick,
+    playerLeftRiichiClick,
+    playerRightRiichiClick,
+    playerBottomRiichiClick,
+  ] = useClickHandler(playerIds, onRiichiClick);
 
   return (
     <GameScreen>
@@ -67,16 +77,16 @@ export const RonScreenView: React.FC<RonScreenViewProps> = (props) => {
               size='small'
               pressed={topPlayer.winButtonPressed}
               disabled={topPlayer.winButtonDisabled}
-              onClick={onWinClickHandler}
+              onClick={playerTopWinClick}
             />
             <Player.LoseButton
               size='small'
               pressed={topPlayer.loseButtonPressed}
               disabled={topPlayer.loseButtonDisabled}
-              onClick={onLoseClickHandler}
+              onClick={playerTopLoseClick}
             />
           </Flex>,
-          <RiichiButton pressed={topPlayer.isRiichiPressed} onClick={onRiichiClickHandler} />,
+          <RiichiButton pressed={topPlayer.isRiichiPressed} onClick={playerTopRiichiClick} />,
         ]}
         left={[
           <Player.Name inlineWind={leftPlayer.wind} rotated={90}>
@@ -87,39 +97,39 @@ export const RonScreenView: React.FC<RonScreenViewProps> = (props) => {
               size='small'
               pressed={leftPlayer.winButtonPressed}
               disabled={leftPlayer.winButtonDisabled}
-              onClick={onWinClickHandler}
+              onClick={playerLeftWinClick}
             />
             <Player.LoseButton
               size='small'
               pressed={leftPlayer.loseButtonPressed}
               disabled={leftPlayer.loseButtonDisabled}
-              onClick={onLoseClickHandler}
+              onClick={playerLeftLoseClick}
             />
           </Flex>,
           <RiichiButton
             orientation='vertical'
-            pressed={topPlayer.isRiichiPressed}
-            onClick={onRiichiClickHandler}
+            pressed={leftPlayer.isRiichiPressed}
+            onClick={playerLeftRiichiClick}
           />,
         ]}
         right={[
           <RiichiButton
             orientation='vertical'
             pressed={rightPlayer.isRiichiPressed}
-            onClick={onRiichiClickHandler}
+            onClick={playerRightRiichiClick}
           />,
           <Flex direction='column' justify='center' gap={8} maxHeight>
             <Player.WinButton
               size='small'
               pressed={rightPlayer.winButtonPressed}
               disabled={rightPlayer.winButtonDisabled}
-              onClick={onWinClickHandler}
+              onClick={playerRightWinClick}
             />
             <Player.LoseButton
               size='small'
               pressed={rightPlayer.loseButtonPressed}
               disabled={rightPlayer.loseButtonDisabled}
-              onClick={onLoseClickHandler}
+              onClick={playerRightLoseClick}
             />
           </Flex>,
           <Player.Name inlineWind={rightPlayer.wind} rotated={270}>
@@ -127,19 +137,19 @@ export const RonScreenView: React.FC<RonScreenViewProps> = (props) => {
           </Player.Name>,
         ]}
         bottom={[
-          <RiichiButton pressed={bottomPlayer.isRiichiPressed} onClick={onRiichiClickHandler} />,
+          <RiichiButton pressed={bottomPlayer.isRiichiPressed} onClick={playerBottomRiichiClick} />,
           <Flex justify='center' gap={8}>
             <Player.WinButton
               size='small'
               pressed={bottomPlayer.winButtonPressed}
               disabled={bottomPlayer.winButtonDisabled}
-              onClick={onWinClickHandler}
+              onClick={playerBottomWinClick}
             />
             <Player.LoseButton
               size='small'
               pressed={bottomPlayer.loseButtonPressed}
               disabled={bottomPlayer.loseButtonDisabled}
-              onClick={onLoseClickHandler}
+              onClick={playerBottomLoseClick}
             />
           </Flex>,
           <Player.Name inlineWind={bottomPlayer.wind}>{bottomPlayer.displayName}</Player.Name>,
