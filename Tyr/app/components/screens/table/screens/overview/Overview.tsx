@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { GameScreen } from '#/components/general/game-screen/GameScreen';
 import { Player } from '#/components/general/player/Player';
-import { ScoreProps } from '#/components/general/player/partials/Score';
+import { Status, StatusProps } from '#/components/general/player/partials/Status';
 import { PlayerData } from '#/components/screens/table/screens/types/PlayerData';
 
 function getDiffScore(
@@ -25,7 +25,7 @@ function getDiffScore(
   }
 }
 
-type ScoreMode = ScoreProps['variant'];
+type ScoreMode = StatusProps['variant'];
 
 type ScoreInfo = {
   value: string;
@@ -44,7 +44,7 @@ function getScoreData(score: number, diffScore: number | undefined): ScoreInfo {
 
   const value = points > 0 ? `+${points}` : points.toString();
 
-  const mode: ScoreMode = points > 0 ? 'positive' : points < 0 ? 'negative' : 'active';
+  const mode: ScoreMode = points > 0 ? 'success' : points < 0 ? 'danger' : 'active';
 
   return {
     value,
@@ -84,18 +84,18 @@ export function usePlayerScores(
   const bottomScore = getScoreData(bottomPlayer.score, diffScore);
 
   return [
-    <Player.Score variant={topScore.mode} onClick={onTopScoreClick}>
+    <Player.Status variant={topScore.mode} onClick={onTopScoreClick}>
       {topScore.value}
-    </Player.Score>,
-    <Player.Score variant={leftScore.mode} rotated={90} onClick={onLeftScoreClick}>
+    </Player.Status>,
+    <Player.Status variant={leftScore.mode} rotated={90} onClick={onLeftScoreClick}>
       {leftScore.value}
-    </Player.Score>,
-    <Player.Score variant={rightScore.mode} rotated={270} onClick={onRightScoreClick}>
+    </Player.Status>,
+    <Player.Status variant={rightScore.mode} rotated={270} onClick={onRightScoreClick}>
       {rightScore.value}
-    </Player.Score>,
-    <Player.Score variant={bottomScore.mode} onClick={onBottomScoreClick}>
+    </Player.Status>,
+    <Player.Status variant={bottomScore.mode} onClick={onBottomScoreClick}>
       {bottomScore.value}
-    </Player.Score>,
+    </Player.Status>,
   ];
 }
 

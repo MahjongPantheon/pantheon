@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { OtherTableScreenView } from '#/components/screens/table/screens/OtherTableScreenView';
+import { OtherTableScreenView } from '#/components/screens/table/screens/overview/OtherTableScreenView';
 import {
   bottomPlayer,
   leftPlayer,

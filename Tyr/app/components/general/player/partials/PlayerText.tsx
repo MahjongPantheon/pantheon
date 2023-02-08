@@ -5,6 +5,7 @@ import classNames from 'classnames';
 export type PlayerTextProps = PropsWithChildren<{
   rotated?: 0 | 90 | 180 | 270;
   size?: 'large' | 'medium';
+  variant?: 'idle' | 'active' | 'success' | 'danger';
   verticalMaxHeight?: boolean;
   onClick?: () => void;
   className?: string;
@@ -15,7 +16,8 @@ const PLAYER_TEXT_CLASS_NAME = 'player__text';
 
 export const PlayerText: React.FC<PlayerTextProps> = ({
   rotated = 0,
-  size,
+  size = 'medium',
+  variant = 'idle',
   verticalMaxHeight = false,
   className,
   onClick,
@@ -31,6 +33,9 @@ export const PlayerText: React.FC<PlayerTextProps> = ({
           [`${PLAYER_TEXT_CLASS_NAME}--rotated-90`]: rotated === 90,
           [`${PLAYER_TEXT_CLASS_NAME}--rotated-180`]: rotated === 180,
           [`${PLAYER_TEXT_CLASS_NAME}--rotated-270`]: rotated === 270,
+          [`${PLAYER_TEXT_CLASS_NAME}--variant-active`]: variant === 'active',
+          [`${PLAYER_TEXT_CLASS_NAME}--variant-positive`]: variant === 'success',
+          [`${PLAYER_TEXT_CLASS_NAME}--variant-negative`]: variant === 'danger',
         },
         className
       )}

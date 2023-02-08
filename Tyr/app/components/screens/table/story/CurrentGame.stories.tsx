@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CurrentGameScreenView } from '#/components/screens/table/screens/CurrentGameScreenView';
+import { CurrentGameScreenView } from '#/components/screens/table/screens/overview/CurrentGameScreenView';
 import {
   bottomPlayer,
   leftPlayer,

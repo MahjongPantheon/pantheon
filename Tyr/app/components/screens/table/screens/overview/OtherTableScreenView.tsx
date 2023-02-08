@@ -1,7 +1,7 @@
 import React from 'react';
 import { GameInfo } from '#/components/general/game-info/GameInfo';
 import { Toolbar } from '#/components/general/toolbar/Toolbar';
-import { Overview } from '#/components/screens/table/screens/Overview';
+import { Overview } from '#/components/screens/table/screens/overview/Overview';
 import { PlayerData } from '#/components/screens/table/screens/types/PlayerData';
 
 interface CurrentGameScreenProps {

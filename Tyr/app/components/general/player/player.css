@@ -79,13 +79,13 @@
   transform: rotate(180deg);
 }
 
-.player__score--variant-active {
+.player__text--variant-active {
   color: var(--color-primary-active);
 }
-.player__score--variant-positive {
+.player__text--variant-positive {
   color: var(--color-success);
 }
-.player__score--variant-negative {
+.player__text--variant-negative {
   color: var(--color-danger);
 }
 

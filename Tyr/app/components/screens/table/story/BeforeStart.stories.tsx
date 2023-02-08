@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { BeforeStartScreenView } from '#/components/screens/table/screens/BeforeStartScreenView';
+import { BeforeStartScreenView } from '#/components/screens/table/screens/overview/BeforeStartScreenView';
 import {
   bottomPlayer,
   leftPlayer,

@@ -6,7 +6,6 @@ import { i18n } from '#/components/i18n';
 import { Flex } from '#/components/general/flex/Flex';
 import { RiichiButton } from '#/components/general/player/partials/RiichiButton';
 import { useClickHandler } from '#/components/screens/table/screens/select-plyers/useClickHandler';
-import { GameInfo } from '#/components/general/game-info/GameInfo';
 
 type TsumoScreenPlayer = {
   id: number;

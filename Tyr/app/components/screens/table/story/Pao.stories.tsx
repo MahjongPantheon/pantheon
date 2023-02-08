@@ -1,59 +1,76 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import {
-  TsumoScreenView,
-  TsumoScreenViewProps,
-} from '#/components/screens/table/screens/select-plyers/TsumoScreenView';
-import {
   bottomPlayer,
   leftPlayer,
   rightPlayer,
   topPlayer,
 } from '#/components/screens/table/story/story-data/players';
+import { PaoScreenView } from '#/components/screens/table/screens/select-plyers/PaoScreenView';
 
 export default {
-  title: 'Screens/Tsumo',
-  component: TsumoScreenView,
+  title: 'Screens/Pao',
+  component: PaoScreenView,
 };
 
 const actions = {
-  onWinClick: action('onWinClick'),
-  onRiichiClick: action('onRiichiClick'),
+  onLoseClick: action('onLoseClick'),
   onBackClick: action('onBackClick'),
   onNextClick: action('onNextClick'),
 };
 
 const idleButtonState = {
-  winButtonPressed: false,
-  winButtonDisabled: false,
-  isRiichiPressed: false,
+  loseButtonPressed: false,
 };
 
-export const Demo = () => {
+export const Tsumo = () => {
   return (
-    <TsumoScreenView
+    <PaoScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,
-        winButtonPressed: true,
-        isRiichiPressed: true,
+        loseButtonPressed: true,
       }}
       leftPlayer={{
         ...leftPlayer,
         ...idleButtonState,
-        winButtonDisabled: true,
       }}
       rightPlayer={{
         ...rightPlayer,
         ...idleButtonState,
-        winButtonDisabled: true,
-        isRiichiPressed: true,
       }}
       bottomPlayer={{
         ...bottomPlayer,
         ...idleButtonState,
-        winButtonDisabled: true,
       }}
+      winnerId={rightPlayer.id}
+      {...actions}
+    />
+  );
+};
+
+export const Ron = () => {
+  return (
+    <PaoScreenView
+      topPlayer={{
+        ...topPlayer,
+        ...idleButtonState,
+        loseButtonPressed: true,
+      }}
+      leftPlayer={{
+        ...leftPlayer,
+        ...idleButtonState,
+      }}
+      rightPlayer={{
+        ...rightPlayer,
+        ...idleButtonState,
+      }}
+      bottomPlayer={{
+        ...bottomPlayer,
+        ...idleButtonState,
+      }}
+      winnerId={rightPlayer.id}
+      loserId={bottomPlayer.id}
       {...actions}
     />
   );
@@ -61,7 +78,7 @@ export const Demo = () => {
 
 export const Idle = () => {
   return (
-    <TsumoScreenView
+    <PaoScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,
@@ -78,6 +95,7 @@ export const Idle = () => {
         ...bottomPlayer,
         ...idleButtonState,
       }}
+      winnerId={rightPlayer.id}
       {...actions}
     />
   );
