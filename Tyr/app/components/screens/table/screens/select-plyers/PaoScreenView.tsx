@@ -6,12 +6,14 @@ import { i18n } from '#/components/i18n';
 import { Flex } from '#/components/general/flex/Flex';
 import { useClickHandler } from '#/components/screens/table/screens/select-plyers/useClickHandler';
 import { PlayerTextProps } from '#/components/general/player/partials/PlayerText';
+import './pao-screen.css';
 
 type PaoScreenPlayer = {
   id: number;
   wind: string;
   displayName: string;
 
+  // todo lose disabled?
   loseButtonPressed: boolean;
 };
 
@@ -31,18 +33,46 @@ export type PaoScreenViewProps = {
   onBackClick: () => void;
 };
 
-const WinnerOrLoser: React.FC<{
-  id: number;
+const ButtonOrStatus: React.FC<{
+  player: PaoScreenPlayer;
   winnerId: number;
+  loserId?: number;
   rotated?: PlayerTextProps['rotated'];
-}> = ({ id, winnerId, rotated }) =>
-  id === winnerId ? (
-    <Player.Status variant='success' rotated={rotated}>
-      Winner
-    </Player.Status>
-  ) : (
-    <Player.Status variant='danger'>Loser</Player.Status>
+  onClick: () => void;
+}> = ({ player, winnerId, loserId, rotated, onClick }) => {
+  const isVertical = rotated === 90 || rotated === 270;
+  const direction = isVertical ? 'column' : 'row';
+
+  if (player.id !== winnerId && player.id !== loserId) {
+    return (
+      <Flex direction={direction} maxHeight={isVertical} justify='center'>
+        <Player.LoseButton
+          size={isVertical ? 'v-large' : 'large'}
+          pressed={player.loseButtonPressed}
+          onClick={onClick}
+        />
+      </Flex>
+    );
+  }
+
+  return (
+    <Flex
+      direction={direction}
+      maxHeight={isVertical}
+      justify='center'
+      alignItems='end'
+      className={isVertical ? 'pao-screen__status-vertical' : 'pao-screen__status-horizontal'}
+    >
+      {player.id === winnerId ? (
+        <Player.Status variant='success' rotated={rotated}>
+          Winner
+        </Player.Status>
+      ) : (
+        <Player.Status variant='danger'>Loser</Player.Status>
+      )}
+    </Flex>
   );
+};
 
 export const PaoScreenView: React.FC<PaoScreenViewProps> = (props) => {
   const {
@@ -70,62 +100,44 @@ export const PaoScreenView: React.FC<PaoScreenViewProps> = (props) => {
       <GameScreen.Table
         top={[
           <Player.Name inlineWind={topPlayer.wind}>{topPlayer.displayName}</Player.Name>,
-          <Flex justify='center'>
-            {topPlayer.id !== winnerId && topPlayer.id !== loserId ? (
-              <Player.LoseButton
-                size='large'
-                pressed={topPlayer.loseButtonPressed}
-                onClick={playerTopLoseClick}
-              />
-            ) : (
-              <WinnerOrLoser id={topPlayer.id} winnerId={winnerId} />
-            )}
-          </Flex>,
+          <ButtonOrStatus
+            player={topPlayer}
+            onClick={playerTopLoseClick}
+            winnerId={winnerId}
+            loserId={loserId}
+          />,
         ]}
         left={[
           <Player.Name inlineWind={leftPlayer.wind} rotated={90}>
             {leftPlayer.displayName}
           </Player.Name>,
-          <Flex direction='column' justify='center' maxHeight>
-            {leftPlayer.id !== winnerId && leftPlayer.id !== loserId ? (
-              <Player.LoseButton
-                size='large'
-                pressed={leftPlayer.loseButtonPressed}
-                onClick={playerLeftLoseClick}
-              />
-            ) : (
-              <WinnerOrLoser id={leftPlayer.id} winnerId={winnerId} rotated={90} />
-            )}
-          </Flex>,
+          <ButtonOrStatus
+            player={leftPlayer}
+            onClick={playerLeftLoseClick}
+            winnerId={winnerId}
+            loserId={loserId}
+            rotated={90}
+          />,
         ]}
         right={[
-          <Flex direction='column' justify='center' maxHeight>
-            {rightPlayer.id !== winnerId && rightPlayer.id !== loserId ? (
-              <Player.LoseButton
-                size='large'
-                pressed={rightPlayer.loseButtonPressed}
-                onClick={playerLeftLoseClick}
-              />
-            ) : (
-              <WinnerOrLoser id={rightPlayer.id} winnerId={winnerId} rotated={270} />
-            )}
-          </Flex>,
+          <ButtonOrStatus
+            player={rightPlayer}
+            onClick={playerRightLoseClick}
+            winnerId={winnerId}
+            loserId={loserId}
+            rotated={270}
+          />,
           <Player.Name inlineWind={rightPlayer.wind} rotated={270}>
             {rightPlayer.displayName}
           </Player.Name>,
         ]}
         bottom={[
-          <Flex justify='center'>
-            {bottomPlayer.id !== winnerId && bottomPlayer.id !== loserId ? (
-              <Player.LoseButton
-                size='large'
-                pressed={bottomPlayer.loseButtonPressed}
-                onClick={playerLeftLoseClick}
-              />
-            ) : (
-              <WinnerOrLoser id={bottomPlayer.id} winnerId={winnerId} />
-            )}
-          </Flex>,
+          <ButtonOrStatus
+            player={bottomPlayer}
+            onClick={playerBottomLoseClick}
+            winnerId={winnerId}
+            loserId={loserId}
+          />,
           <Player.Name inlineWind={bottomPlayer.wind}>{bottomPlayer.displayName}</Player.Name>,
         ]}
       />

@@ -47,3 +47,16 @@ export const DiffBy = () => (
     {...actions}
   />
 );
+
+export const Penalties = () => (
+  <CurrentGameScreenView
+    topPlayer={{ ...topPlayer, penalties: 2000 }}
+    leftPlayer={{ ...leftPlayer, penalties: 20000 }}
+    rightPlayer={{ ...rightPlayer, penalties: 400 }}
+    bottomPlayer={{ ...bottomPlayer, penalties: 1200 }}
+    round='東1'
+    riichiCount={1}
+    honbaCount={3}
+    {...actions}
+  />
+);

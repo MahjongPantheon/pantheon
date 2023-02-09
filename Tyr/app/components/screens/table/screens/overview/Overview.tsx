@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
 import { GameScreen } from '#/components/general/game-screen/GameScreen';
 import { Player } from '#/components/general/player/Player';
-import { Status, StatusProps } from '#/components/general/player/partials/Status';
+import { StatusProps } from '#/components/general/player/partials/Status';
 import { PlayerData } from '#/components/screens/table/screens/types/PlayerData';
+import { Penalty } from '#/components/general/player/partials/Penalty';
 
 function getDiffScore(
   topPlayer: PlayerData,
@@ -83,17 +84,38 @@ export function usePlayerScores(
   const rightScore = getScoreData(rightPlayer.score, diffScore);
   const bottomScore = getScoreData(bottomPlayer.score, diffScore);
 
+  const topPenalty =
+    topPlayer.penalties !== 0 ? <Penalty>{topPlayer.penalties}</Penalty> : undefined;
+  const leftPenalty =
+    leftPlayer.penalties !== 0 ? <Penalty rotated={90}>{leftPlayer.penalties}</Penalty> : undefined;
+  const rightPenalty =
+    rightPlayer.penalties !== 0 ? (
+      <Penalty rotated={270}>{rightPlayer.penalties}</Penalty>
+    ) : undefined;
+  const bottomPenalty =
+    bottomPlayer.penalties !== 0 ? <Penalty>{bottomPlayer.penalties}</Penalty> : undefined;
+
   return [
-    <Player.Status variant={topScore.mode} onClick={onTopScoreClick}>
+    <Player.Status variant={topScore.mode} after={topPenalty} onClick={onTopScoreClick}>
       {topScore.value}
     </Player.Status>,
-    <Player.Status variant={leftScore.mode} rotated={90} onClick={onLeftScoreClick}>
+    <Player.Status
+      variant={leftScore.mode}
+      rotated={90}
+      after={leftPenalty}
+      onClick={onLeftScoreClick}
+    >
       {leftScore.value}
     </Player.Status>,
-    <Player.Status variant={rightScore.mode} rotated={270} onClick={onRightScoreClick}>
+    <Player.Status
+      variant={rightScore.mode}
+      rotated={270}
+      after={rightPenalty}
+      onClick={onRightScoreClick}
+    >
       {rightScore.value}
     </Player.Status>,
-    <Player.Status variant={bottomScore.mode} onClick={onBottomScoreClick}>
+    <Player.Status variant={bottomScore.mode} after={bottomPenalty} onClick={onBottomScoreClick}>
       {bottomScore.value}
     </Player.Status>,
   ];
@@ -126,8 +148,6 @@ export const Overview: React.FC<CurrentGameScreenProps> = (props) => {
 
   const [topScoreElement, leftScoreElement, rightScoreElement, bottomScoreElement] =
     usePlayerScores(topPlayer, leftPlayer, rightPlayer, bottomPlayer, diffById, onScoreClick);
-
-  // todo penalty
 
   // todo click on center to get table number
 

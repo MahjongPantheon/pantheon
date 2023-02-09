@@ -1,3 +1,8 @@
+:root {
+  --flat-btn-side-small: 52px;
+  --flat-btn-side-large: 112px;
+}
+
 .flat-btn {
   all: unset;
   display: flex;
@@ -19,8 +24,8 @@
 }
 
 .flat-btn--small {
-  width: 52px;
-  height: 52px;
+  width: var(--flat-btn-side-small);
+  height: var(--flat-btn-side-small);
 }
 
 .flat-btn--medium {
@@ -29,13 +34,13 @@
 }
 
 .flat-btn--large {
-  width: 112px;
-  height: 52px;
+  width: var(--flat-btn-side-large);
+  height: var(--flat-btn-side-small);
 }
 
 .flat-btn--v-large {
-  width: 52px;
-  height: 112px;
+  width: var(--flat-btn-side-small);
+  height: var(--flat-btn-side-large);
 }
 
 .flat-btn--success {

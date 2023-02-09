@@ -1,0 +1,7 @@
+.pao-screen__status-horizontal {
+  min-height: var(--flat-btn-side-small);
+}
+
+.pao-screen__status-vertical {
+  min-width: var(--flat-btn-side-small);
+}
