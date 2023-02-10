@@ -3,10 +3,10 @@ import './page-table.css';
 import { TableTenbou } from '#/components/screens/table/base/TableTenbou';
 import { useContext } from 'react';
 import { i18n } from '#/components/i18n';
-import RiichiIcon from '../../../../img/riichi-small.svg?svgr';
-import HonbaIcon from '../../../../img/honba.svg?svgr';
-import RotateCWIcon from '../../../../img/rotate-cw.svg?svgr';
-import RotateCCWIcon from '../../../../img/rotate-ccw.svg?svgr';
+import RiichiIcon from '../../../../img/icons/riichi-small.svg?svgr';
+import HonbaIcon from '../../../../img/icons/honba.svg?svgr';
+import RotateCWIcon from '../../../../img/icons/rotate-cw.svg?svgr';
+import RotateCCWIcon from '../../../../img/icons/rotate-ccw.svg?svgr';
 
 export type TableInfoProps = {
   showRoundInfo?: boolean;

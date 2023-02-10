@@ -3,9 +3,9 @@ import './players.css';
 import { PlayerButtonMode, PlayerMode, PlayerPointsMode } from '../../types/PlayerEnums';
 import { PlayerProps } from './PlayerProps';
 import classNames from 'classnames';
-import RiichiBigIcon from '../../../img/riichi-big.svg?svgr';
-import WinIcon from '../../../img/win.svg?svgr';
-import LooseIcon from '../../../img/lose.svg?svgr';
+import RiichiBigIcon from '../../../img/icons/riichi-big.svg?svgr';
+import WinIcon from '../../../img/icons/thumbs-up.svg?svgr';
+import LooseIcon from '../../../img/icons/thumbs-down.svg?svgr';
 
 type IProps = PlayerProps & {
   mode: PlayerMode;

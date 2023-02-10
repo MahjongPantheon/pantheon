@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { LEventsList } from '#/interfaces/local';
 import { useContext } from 'react';
 import { i18n } from '#/components/i18n';
-import BackIcon from '../../../img/back.svg?svgr';
-import SettingsIcon from '../../../img/settings.svg?svgr';
+import BackIcon from '../../../img/icons/arrow-left.svg?svgr';
+import SettingsIcon from '../../../img/icons/settings.svg?svgr';
 
 interface IProps {
   playerName: string;

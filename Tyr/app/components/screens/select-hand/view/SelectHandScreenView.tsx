@@ -10,8 +10,8 @@ import {
   YakuGroup,
 } from '#/components/screens/select-hand/YakuTypes';
 import classNames from 'classnames';
-import ArrowLeftIcon from '../../../../img/arrow-left.svg?svgr';
-import ArrowRightIcon from '../../../../img/arrow-right.svg?svgr';
+import ArrowLeftIcon from '../../../../img/icons/chevron-left.svg?svgr';
+import ArrowRightIcon from '../../../../img/icons/chevron-right.svg?svgr';
 
 type IProps = {
   playerName: string;

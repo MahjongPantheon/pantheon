@@ -3,11 +3,11 @@ import './page-home.css';
 import classNames from 'classnames';
 import { ReactNode, useContext } from 'react';
 import { i18n } from '#/components/i18n';
-import RefreshIcon from '../../../img/refresh.svg?svgr';
-import SettingsIcon from '../../../img/settings.svg?svgr';
+import RefreshIcon from '../../../img/icons/refresh.svg?svgr';
+import SettingsIcon from '../../../img/icons/settings.svg?svgr';
 import DonateIcon from '../../../img/donate.svg?svgr';
-import PlusIcon from '../../../img/plus.svg?svgr';
-import LinkIcon from '../../../img/link.svg?svgr';
+import PlusIcon from '../../../img/icons/plus.svg?svgr';
+import LinkIcon from '../../../img/icons/link.svg?svgr';
 
 type IButtonProps = {
   caption: string;

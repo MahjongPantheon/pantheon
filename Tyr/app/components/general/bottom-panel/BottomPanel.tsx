@@ -2,13 +2,13 @@ import * as React from 'react';
 import { BottomPanelProps } from './BottomPanelProps';
 import './bottom-panel.css';
 import classNames from 'classnames';
-import BackIcon from '../../../img/back.svg?svgr';
-import NextIcon from '../../../img/next.svg?svgr';
-import SaveIcon from '../../../img/save.svg?svgr';
-import HomeIcon from '../../../img/home.svg?svgr';
-import RefreshIcon from '../../../img/refresh.svg?svgr';
-import PlusIcon from '../../../img/plus.svg?svgr';
-import LogIcon from '../../../img/log.svg?svgr';
+import BackIcon from '../../../img/icons/arrow-left.svg?svgr';
+import NextIcon from '../../../img/icons/arrow-right.svg?svgr';
+import SaveIcon from '../../../img/icons/check.svg?svgr';
+import HomeIcon from '../../../img/icons/home.svg?svgr';
+import RefreshIcon from '../../../img/icons/refresh.svg?svgr';
+import PlusIcon from '../../../img/icons/plus.svg?svgr';
+import LogIcon from '../../../img/icons/log.svg?svgr';
 
 export class BottomPanel extends React.Component<BottomPanelProps> {
   private onNextButtonClick() {
