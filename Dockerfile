@@ -142,8 +142,8 @@ COPY Mimir/mimir-docker.nginx.conf /etc/nginx/http.d/mimir.conf
 COPY Frey/frey-docker.nginx.conf /etc/nginx/http.d/frey.conf
 
 # Copy protoc plugins
-COPY bin/protoc-gen-twirp_php /usr/bin/protoc-get-twirp_php
-RUN chmod +x /usr/bin/protoc-get-twirp_php
+COPY bin/protoc-gen-twirp_php /usr/bin/protoc-gen-twirp_php
+RUN chmod +x /usr/bin/protoc-gen-twirp_php
 
 # copy db init scripts
 RUN mkdir -p /docker-entrypoint-initdb.d

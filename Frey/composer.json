@@ -1,4 +1,10 @@
 {
+  "autoload": {
+    "psr-4": {
+      "Common\\": "../Common/",
+      "": "../Common/generated/"
+    }
+  },
   "repositories": [
     {
       "url": "https://github.com/ctizen/idiorm.git",
@@ -16,6 +22,7 @@
   "require": {
     "fguillot/json-rpc": "@stable",
     "ctizen/idiorm": "@stable",
+    "google/protobuf": "3.21.9",
     "monolog/monolog": "^3.1",
     "justinrainbow/json-schema": "^5.2",
     "ctizen/phinx": "@stable",
