@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { OtherTableScreenView } from '#/components/screens/table/screens/overview/OtherTableScreenView';
 import {
   bottomPlayer,
@@ -13,19 +13,26 @@ export default {
   component: OtherTableScreenView,
 };
 
+const actions = {
+  onScoreClick: action('onScoreClick'),
+  onHomeClick: action('onHomeClick'),
+  onRefreshClick: action('onRefreshClick'),
+  onLogClick: action('onLogClick'),
+  onRotateCwClick: action('onRotateCwClick'),
+  onRotateCcwClick: action('onRotateCcwClick'),
+};
+
 export const Demo = () => (
   <OtherTableScreenView
     topPlayer={topPlayer}
     leftPlayer={leftPlayer}
     rightPlayer={rightPlayer}
     bottomPlayer={bottomPlayer}
+    topRotated={false}
     round='東1'
     riichiCount={1}
     honbaCount={3}
-    onScoreClick={action('onScoreClick')}
-    onHomeClick={action('onHomeClick')}
-    onRefreshClick={action('onRefreshClick')}
-    onLogClick={action('onLogClick')}
+    {...actions}
   />
 );
 
@@ -35,13 +42,25 @@ export const DiffBy = () => (
     leftPlayer={leftPlayer}
     rightPlayer={rightPlayer}
     bottomPlayer={bottomPlayer}
+    topRotated={false}
     round='東1'
     riichiCount={1}
     honbaCount={3}
     diffById={bottomPlayer.id}
-    onScoreClick={action('onScoreClick')}
-    onHomeClick={action('onHomeClick')}
-    onRefreshClick={action('onRefreshClick')}
-    onLogClick={action('onLogClick')}
+    {...actions}
+  />
+);
+
+export const SingleDevice = () => (
+  <OtherTableScreenView
+    topPlayer={topPlayer}
+    leftPlayer={leftPlayer}
+    rightPlayer={rightPlayer}
+    bottomPlayer={bottomPlayer}
+    topRotated={true}
+    round='東1'
+    riichiCount={1}
+    honbaCount={3}
+    {...actions}
   />
 );

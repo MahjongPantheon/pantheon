@@ -21,6 +21,9 @@ type BeforeStartProps = {
     wind: string;
     displayName: string;
   };
+
+  topRotated: boolean;
+
   tableNumber?: number;
   // todo timer before start
 
@@ -34,6 +37,7 @@ export const BeforeStartScreenView: React.FC<BeforeStartProps> = (props) => {
     leftPlayer,
     rightPlayer,
     bottomPlayer,
+    topRotated,
     tableNumber,
     onHomeClick,
     onRefreshClick,
@@ -43,8 +47,8 @@ export const BeforeStartScreenView: React.FC<BeforeStartProps> = (props) => {
     <GameScreen>
       <GameScreen.Table
         top={[
-          <Player.Name>{topPlayer.displayName}</Player.Name>,
-          <Player.StartWind>{topPlayer.wind}</Player.StartWind>,
+          <Player.Name rotated={topRotated ? 180 : 0}>{topPlayer.displayName}</Player.Name>,
+          <Player.StartWind rotated={topRotated ? 180 : 0}>{topPlayer.wind}</Player.StartWind>,
         ]}
         left={[
           <Player.Name rotated={90}>{leftPlayer.displayName}</Player.Name>,
@@ -52,7 +56,7 @@ export const BeforeStartScreenView: React.FC<BeforeStartProps> = (props) => {
         ]}
         center={
           <GameInfo>
-            <GameInfo.TableNumber>#{tableNumber}</GameInfo.TableNumber>
+            <GameInfo.TableNumber>{tableNumber}</GameInfo.TableNumber>
           </GameInfo>
         }
         right={[

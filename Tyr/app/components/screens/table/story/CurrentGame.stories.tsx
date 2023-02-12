@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { CurrentGameScreenView } from '#/components/screens/table/screens/overview/CurrentGameScreenView';
 import {
   bottomPlayer,
@@ -7,6 +7,7 @@ import {
   topPlayer,
 } from '#/components/screens/table/story/story-data/players';
 import { action } from '@storybook/addon-actions';
+import { Outcome } from '#/interfaces/common';
 
 export default {
   title: 'Screens/CurrentGame',
@@ -19,6 +20,19 @@ const actions = {
   onAddClick: action('onAddClick'),
   onRefreshClick: action('onRefreshClick'),
   onLogClick: action('onLogClick'),
+  onCenterClick: action('onCenterClick'),
+  onOutcomeMenuClose: action('onModalClose'),
+  onOutcomeSelect: action('onOutcomeSelect'),
+};
+
+const defaultData = {
+  topRotated: false,
+  round: '東1',
+  riichiCount: 1,
+  honbaCount: 3,
+  isOutcomeMenuVisible: false,
+  isAbortiveDrawAvailable: false,
+  isNagashiAvailable: false,
 };
 
 export const Demo = () => (
@@ -27,9 +41,7 @@ export const Demo = () => (
     leftPlayer={leftPlayer}
     rightPlayer={rightPlayer}
     bottomPlayer={bottomPlayer}
-    round='東1'
-    riichiCount={1}
-    honbaCount={3}
+    {...defaultData}
     {...actions}
   />
 );
@@ -40,11 +52,9 @@ export const DiffBy = () => (
     leftPlayer={leftPlayer}
     rightPlayer={rightPlayer}
     bottomPlayer={bottomPlayer}
-    round='東1'
-    riichiCount={1}
-    honbaCount={3}
-    diffById={bottomPlayer.id}
+    {...defaultData}
     {...actions}
+    diffById={bottomPlayer.id}
   />
 );
 
@@ -54,9 +64,58 @@ export const Penalties = () => (
     leftPlayer={{ ...leftPlayer, penalties: 20000 }}
     rightPlayer={{ ...rightPlayer, penalties: 400 }}
     bottomPlayer={{ ...bottomPlayer, penalties: 1200 }}
-    round='東1'
-    riichiCount={1}
-    honbaCount={3}
+    {...defaultData}
     {...actions}
+  />
+);
+
+export const SingleDevice = () => (
+  <CurrentGameScreenView
+    topPlayer={topPlayer}
+    leftPlayer={leftPlayer}
+    rightPlayer={rightPlayer}
+    bottomPlayer={bottomPlayer}
+    {...defaultData}
+    {...actions}
+    topRotated={true}
+  />
+);
+
+export const CenterPressed = () => (
+  <CurrentGameScreenView
+    topPlayer={topPlayer}
+    leftPlayer={leftPlayer}
+    rightPlayer={rightPlayer}
+    bottomPlayer={bottomPlayer}
+    {...defaultData}
+    {...actions}
+    showTableNumber={true}
+    tableNumber={4}
+  />
+);
+
+export const OutcomeMenu = () => (
+  <CurrentGameScreenView
+    topPlayer={topPlayer}
+    leftPlayer={leftPlayer}
+    rightPlayer={rightPlayer}
+    bottomPlayer={bottomPlayer}
+    {...defaultData}
+    {...actions}
+    isOutcomeMenuVisible={true}
+  />
+);
+
+export const OutcomeMenuAll = () => (
+  <CurrentGameScreenView
+    topPlayer={topPlayer}
+    leftPlayer={leftPlayer}
+    rightPlayer={rightPlayer}
+    bottomPlayer={bottomPlayer}
+    {...defaultData}
+    {...actions}
+    isOutcomeMenuVisible={true}
+    isAbortiveDrawAvailable={true}
+    isNagashiAvailable={true}
   />
 );

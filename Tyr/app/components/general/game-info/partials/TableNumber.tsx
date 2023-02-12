@@ -7,7 +7,7 @@ export const TableNumber: React.FC<PropsWithChildren<{}>> = ({ children }) => {
   return (
     <>
       <div className='game-info__table-number-caption'>{loc._t('Table')}</div>
-      <div className='game-info__table-number'>{children}</div>
+      <div className='game-info__table-number'>#{children}</div>
     </>
   );
 };

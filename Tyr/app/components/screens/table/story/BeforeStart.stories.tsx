@@ -20,6 +20,22 @@ export const Demo = () => {
       leftPlayer={leftPlayer}
       rightPlayer={rightPlayer}
       bottomPlayer={bottomPlayer}
+      topRotated={false}
+      tableNumber={4}
+      onHomeClick={action('onHomeClick')}
+      onRefreshClick={action('onRefreshClick')}
+    />
+  );
+};
+
+export const SingleDevice = () => {
+  return (
+    <BeforeStartScreenView
+      topPlayer={topPlayer}
+      leftPlayer={leftPlayer}
+      rightPlayer={rightPlayer}
+      bottomPlayer={bottomPlayer}
+      topRotated={true}
       tableNumber={4}
       onHomeClick={action('onHomeClick')}
       onRefreshClick={action('onRefreshClick')}

@@ -7,11 +7,12 @@ const MAIN_CLASS_NAME = 'flex-container';
 export type FlexProps = PropsWithChildren<{
   alignItems?: 'start' | 'center' | 'end' | 'stretch';
   direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
-  gap?: 2 | 4 | 8 | 12 | 16;
+  gap?: 2 | 4 | 8 | 12 | 16 | 20;
   justify?: 'start' | 'center' | 'end' | 'space-between' | 'space-around' | 'space-evenly';
   maxWidth?: boolean;
   maxHeight?: boolean;
   className?: string;
+  onClick?: () => void;
 }>;
 
 export const Flex: React.FC<FlexProps> = ({
@@ -22,6 +23,7 @@ export const Flex: React.FC<FlexProps> = ({
   maxWidth,
   maxHeight,
   className,
+  onClick,
   children,
 }) => {
   const alignClassName = alignItems !== undefined ? `${MAIN_CLASS_NAME}--align-${alignItems}` : '';
@@ -44,6 +46,7 @@ export const Flex: React.FC<FlexProps> = ({
         },
         className
       )}
+      onClick={onClick}
     >
       {children}
     </div>

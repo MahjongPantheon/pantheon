@@ -10,6 +10,8 @@ interface CurrentGameScreenProps {
   rightPlayer: PlayerData;
   bottomPlayer: PlayerData;
 
+  topRotated: boolean;
+
   round: string;
   riichiCount: number;
   honbaCount: number;
@@ -20,18 +22,30 @@ interface CurrentGameScreenProps {
   onHomeClick: () => void;
   onRefreshClick: () => void;
   onLogClick: () => void;
+
+  onRotateCwClick: () => void;
+  onRotateCcwClick: () => void;
 }
 
 export const OtherTableScreenView: React.FC<CurrentGameScreenProps> = (props) => {
-  const { round, riichiCount, honbaCount, onHomeClick, onRefreshClick, onLogClick, ...restProps } =
-    props;
+  const {
+    round,
+    riichiCount,
+    honbaCount,
+    onHomeClick,
+    onRefreshClick,
+    onLogClick,
+    onRotateCwClick,
+    onRotateCcwClick,
+    ...restProps
+  } = props;
 
   return (
     <Overview
       {...restProps}
       gameInfo={
         <GameInfo>
-          {/* todo rotate buttons */}
+          <GameInfo.RotateControls onCwClick={onRotateCwClick} onCcwClick={onRotateCcwClick} />
           <GameInfo.Round>{round}</GameInfo.Round>
           <GameInfo.Honba value={honbaCount} />
           <GameInfo.Riichi value={riichiCount} />

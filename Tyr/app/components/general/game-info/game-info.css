@@ -18,3 +18,19 @@
   width: 31px;
   height: 24px;
 }
+
+.game-info__rotate-controls {
+  height: 64px
+}
+
+.game-info__rotate-button {
+  all: unset;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+}
+
+.game-info__rotate-button svg {
+  width: 24px;
+  height: 24px;
+}

@@ -12,6 +12,8 @@ import {
 import { Text } from '#/components/general/toolbar/partials/Text';
 import { Flex, FlexProps } from '#/components/general/flex/Flex';
 import './toolbar.css';
+import { Menu } from '#/components/general/toolbar/partials/Menu';
+import { MenuItem } from '#/components/general/toolbar/partials/MenuItem';
 
 export type ToolbarProps = PropsWithChildren<{}> & FlexProps;
 
@@ -34,6 +36,9 @@ interface Partials {
   Next: typeof Next;
   Back: typeof Back;
   Save: typeof Save;
+
+  Menu: typeof Menu;
+  MenuItem: typeof MenuItem;
 }
 
 Toolbar.Text = Text;
@@ -46,3 +51,6 @@ Toolbar.Log = Log;
 Toolbar.Next = Next;
 Toolbar.Back = Back;
 Toolbar.Save = Save;
+
+Toolbar.Menu = Menu;
+Toolbar.MenuItem = MenuItem;

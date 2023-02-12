@@ -1,4 +1,5 @@
 .game-screen {
+  background-color: var(--bg-color);
   grid-template-columns: 1fr;
   grid-template-rows: 1fr auto;
 }

@@ -44,6 +44,10 @@
   gap: 16px;
 }
 
+.flex-container--gap-20 {
+  gap: 20px;
+}
+
 .flex-container--justify-start {
   justify-content: flex-start;
 }
