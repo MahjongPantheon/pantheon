@@ -6,9 +6,12 @@ use Exception;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 
-require __DIR__ . '/controllers/Access.php';
-require __DIR__ . '/controllers/Persons.php';
-require __DIR__ . '/controllers/Auth.php';
+require_once __DIR__ . '/helpers/Config.php';
+require_once __DIR__ . '/helpers/Db.php';
+require_once __DIR__ . '/helpers/Meta.php';
+require_once __DIR__ . '/controllers/Access.php';
+require_once __DIR__ . '/controllers/Persons.php';
+require_once __DIR__ . '/controllers/Auth.php';
 
 /**
  * Thin mediator between new twirp API and existing controllers

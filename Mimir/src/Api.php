@@ -23,6 +23,7 @@ require_once __DIR__ . '/Db.php';
 require_once __DIR__ . '/Meta.php';
 require_once __DIR__ . '/ErrorHandler.php';
 require_once __DIR__ . '/FreyClient.php';
+require_once __DIR__ . '/FreyClientTwirp.php';
 
 use Monolog\Logger;
 use Monolog\Handler\ErrorLogHandler;
@@ -80,9 +81,15 @@ class Api
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 
-        $this->_frey->getClient()->getHttpClient()->withHeaders([
-            'X-Locale: ' . $this->_meta->getSelectedLocale(),
-        ]);
+        if (str_contains($freyUrl, '/v2')) {
+            $this->_frey->withHeaders([
+                'X-Locale' => $this->_meta->getSelectedLocale()
+            ]);
+        } else {
+            $this->_frey->getClient()->getHttpClient()->withHeaders([
+                'X-Locale: ' . $this->_meta->getSelectedLocale(),
+            ]);
+        }
 
         // + some custom handler for testing errors
         if ($this->_config->getStringValue('verbose')) {
