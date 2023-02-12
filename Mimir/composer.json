@@ -1,4 +1,10 @@
 {
+  "autoload": {
+    "psr-4": {
+      "Common\\": "../Common/",
+      "": "../Common/generated/"
+    }
+  },
   "repositories": [
     {
       "url": "https://github.com/ctizen/idiorm.git",

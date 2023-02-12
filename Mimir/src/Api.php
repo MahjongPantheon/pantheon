@@ -69,7 +69,11 @@ class Api
         if ($freyUrl === '__mock__') { // testing purposes
             $this->_frey = new FreyClientMock('');
         } else {
-            $this->_frey = new FreyClient($freyUrl);
+            if (str_contains($freyUrl, '/v2')) {
+                $this->_frey = new FreyClientTwirp($freyUrl);
+            } else {
+                $this->_frey = new FreyClient($freyUrl);
+            }
         }
         $this->_ds = new DataSource($this->_db, $this->_frey);
         $this->_meta = new Meta($this->_frey, $this->_config, $_SERVER);

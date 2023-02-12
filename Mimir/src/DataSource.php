@@ -26,7 +26,7 @@ require_once __DIR__ . '/../src/Config.php';
  * Class DataSource
  * @package Mimir
  *
- * Simple wrapper around Db and Remote dadta sources
+ * Simple wrapper around Db and Remote data sources
  */
 class DataSource
 {
