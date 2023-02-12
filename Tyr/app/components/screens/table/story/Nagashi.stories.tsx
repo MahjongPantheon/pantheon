@@ -1,16 +1,16 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { DrawScreenView } from '#/components/screens/table/screens/select-plyers/DrawScreenView';
 import {
   bottomPlayer,
   leftPlayer,
   rightPlayer,
   topPlayer,
 } from '#/components/screens/table/story/story-data/players';
+import { NagashiScreenView } from '#/components/screens/table/screens/select-plyers/NagashiScreenView';
 
 export default {
-  title: 'Screens/Draw',
-  component: DrawScreenView,
+  title: 'Screens/Nagashi/Select',
+  component: NagashiScreenView,
 };
 
 const actions = {
@@ -18,23 +18,20 @@ const actions = {
   onRiichiClick: action('onRiichiClick'),
   onBackClick: action('onBackClick'),
   onNextClick: action('onNextClick'),
-  onDeadHandClick: action('onDeadHandClick'),
 };
 
 const idleButtonState = {
   winButtonPressed: false,
-  deadButtonPressed: false,
-  isRiichiPressed: false,
+  winButtonDisabled: false,
 };
 
 export const Demo = () => {
   return (
-    <DrawScreenView
+    <NagashiScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,
-        deadButtonPressed: true,
-        isRiichiPressed: true,
+        winButtonPressed: true,
       }}
       leftPlayer={{
         ...leftPlayer,
@@ -44,13 +41,14 @@ export const Demo = () => {
       rightPlayer={{
         ...rightPlayer,
         ...idleButtonState,
-        winButtonPressed: true,
-        isRiichiPressed: true,
+        winButtonDisabled: true,
       }}
       bottomPlayer={{
         ...bottomPlayer,
         ...idleButtonState,
+        winButtonPressed: true,
       }}
+      isNextDisabled={false}
       {...actions}
     />
   );
@@ -58,7 +56,7 @@ export const Demo = () => {
 
 export const Idle = () => {
   return (
-    <DrawScreenView
+    <NagashiScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,
@@ -75,6 +73,7 @@ export const Idle = () => {
         ...bottomPlayer,
         ...idleButtonState,
       }}
+      isNextDisabled={true}
       {...actions}
     />
   );

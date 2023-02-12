@@ -34,3 +34,26 @@
   width: 24px;
   height: 24px;
 }
+
+.game-info__timer {
+  padding: 12px 0;
+  font-size: var(--font-size-secondary);
+}
+
+.game-info__deals-left {
+  padding: 12px 0;
+  font-size: var(--font-size-secondary);
+  color: var(--color-danger);
+}
+
+.game-info__start-in-splitter {
+  width: 100px;
+  height: 2px;
+  border-radius: 1px;
+  margin: 16px 0;
+  background-color: var(--color-secondary-3);
+}
+
+.game-info__start-in-timer {
+  font-size: var(--font-size-secondary);
+}

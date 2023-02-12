@@ -1,50 +1,43 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { DrawScreenView } from '#/components/screens/table/screens/select-plyers/DrawScreenView';
 import {
   bottomPlayer,
   leftPlayer,
   rightPlayer,
   topPlayer,
 } from '#/components/screens/table/story/story-data/players';
+import { AbortScreenView } from '#/components/screens/table/screens/select-plyers/AbortScreenView';
 
 export default {
-  title: 'Screens/Draw',
-  component: DrawScreenView,
+  title: 'Screens/Abort',
+  component: AbortScreenView,
 };
 
 const actions = {
-  onWinClick: action('onWinClick'),
   onRiichiClick: action('onRiichiClick'),
   onBackClick: action('onBackClick'),
   onNextClick: action('onNextClick'),
-  onDeadHandClick: action('onDeadHandClick'),
 };
 
 const idleButtonState = {
-  winButtonPressed: false,
-  deadButtonPressed: false,
   isRiichiPressed: false,
 };
 
 export const Demo = () => {
   return (
-    <DrawScreenView
+    <AbortScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,
-        deadButtonPressed: true,
         isRiichiPressed: true,
       }}
       leftPlayer={{
         ...leftPlayer,
         ...idleButtonState,
-        winButtonPressed: true,
       }}
       rightPlayer={{
         ...rightPlayer,
         ...idleButtonState,
-        winButtonPressed: true,
         isRiichiPressed: true,
       }}
       bottomPlayer={{
@@ -58,7 +51,7 @@ export const Demo = () => {
 
 export const Idle = () => {
   return (
-    <DrawScreenView
+    <AbortScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,

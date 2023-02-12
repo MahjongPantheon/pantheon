@@ -5,6 +5,9 @@ import { Flex } from '#/components/general/flex/Flex';
 import { TableNumber } from '#/components/general/game-info/partials/TableNumber';
 import './game-info.css';
 import { RotateControls } from '#/components/general/game-info/partials/RotateControls';
+import { Timer } from '#/components/general/game-info/partials/Timer';
+import { DealsLeft } from '#/components/general/game-info/partials/DealsLeft';
+import { StartInTimer } from '#/components/general/game-info/partials/StartInTimer';
 
 export type GameInfoProps = PropsWithChildren<{
   onClick?: () => void;
@@ -29,6 +32,9 @@ interface Partials {
   Riichi: typeof Riichi;
   Honba: typeof Honba;
   RotateControls: typeof RotateControls;
+  Timer: typeof Timer;
+  DealsLeft: typeof DealsLeft;
+  StartInTimer: typeof StartInTimer;
 }
 
 GameInfo.Round = Round;
@@ -36,3 +42,6 @@ GameInfo.TableNumber = TableNumber;
 GameInfo.Riichi = Riichi;
 GameInfo.Honba = Honba;
 GameInfo.RotateControls = RotateControls;
+GameInfo.Timer = Timer;
+GameInfo.DealsLeft = DealsLeft;
+GameInfo.StartInTimer = StartInTimer;

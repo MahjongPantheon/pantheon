@@ -1,9 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import {
-  TsumoScreenView,
-  TsumoScreenViewProps,
-} from '#/components/screens/table/screens/select-plyers/TsumoScreenView';
+import { TsumoScreenView } from '#/components/screens/table/screens/select-plyers/TsumoScreenView';
 import {
   bottomPlayer,
   leftPlayer,

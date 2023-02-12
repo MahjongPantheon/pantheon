@@ -36,6 +36,10 @@ interface CurrentGameScreenProps {
   isNagashiAvailable: boolean;
   onOutcomeMenuClose: () => void;
   onOutcomeSelect: (outcome: Outcome) => void;
+
+  // showTimer?: boolean
+  timer?: string;
+  dealsLeft?: number;
 }
 
 export const CurrentGameScreenView: React.FC<CurrentGameScreenProps> = (props) => {
@@ -55,6 +59,8 @@ export const CurrentGameScreenView: React.FC<CurrentGameScreenProps> = (props) =
     isNagashiAvailable,
     onOutcomeMenuClose,
     onOutcomeSelect,
+    timer,
+    dealsLeft,
     ...restProps
   } = props;
 
@@ -73,6 +79,11 @@ export const CurrentGameScreenView: React.FC<CurrentGameScreenProps> = (props) =
             <GameInfo.Round>{round}</GameInfo.Round>
             <GameInfo.Honba value={honbaCount} />
             <GameInfo.Riichi value={riichiCount} />
+            {dealsLeft !== undefined ? (
+              <GameInfo.DealsLeft>{dealsLeft}</GameInfo.DealsLeft>
+            ) : (
+              timer !== undefined && <GameInfo.Timer>{timer}</GameInfo.Timer>
+            )}
           </GameInfo>
         )
       }

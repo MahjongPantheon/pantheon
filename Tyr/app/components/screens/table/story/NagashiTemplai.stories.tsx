@@ -1,16 +1,17 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { DrawScreenView } from '#/components/screens/table/screens/select-plyers/DrawScreenView';
 import {
   bottomPlayer,
   leftPlayer,
   rightPlayer,
   topPlayer,
 } from '#/components/screens/table/story/story-data/players';
+import { NagashiScreenView } from '#/components/screens/table/screens/select-plyers/NagashiScreenView';
+import { NagashiTemplaiScreenView } from '#/components/screens/table/screens/select-plyers/NagashiTemplaiScreenView';
 
 export default {
-  title: 'Screens/Draw',
-  component: DrawScreenView,
+  title: 'Screens/Nagashi/Tempai',
+  component: NagashiScreenView,
 };
 
 const actions = {
@@ -29,7 +30,7 @@ const idleButtonState = {
 
 export const Demo = () => {
   return (
-    <DrawScreenView
+    <NagashiTemplaiScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,
@@ -58,7 +59,7 @@ export const Demo = () => {
 
 export const Idle = () => {
   return (
-    <DrawScreenView
+    <NagashiTemplaiScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,

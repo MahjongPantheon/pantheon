@@ -25,7 +25,8 @@ type BeforeStartProps = {
   topRotated: boolean;
 
   tableNumber?: number;
-  // todo timer before start
+
+  timer?: string;
 
   onHomeClick: () => void;
   onRefreshClick: () => void;
@@ -39,6 +40,7 @@ export const BeforeStartScreenView: React.FC<BeforeStartProps> = (props) => {
     bottomPlayer,
     topRotated,
     tableNumber,
+    timer,
     onHomeClick,
     onRefreshClick,
   } = props;
@@ -57,6 +59,7 @@ export const BeforeStartScreenView: React.FC<BeforeStartProps> = (props) => {
         center={
           <GameInfo>
             <GameInfo.TableNumber>{tableNumber}</GameInfo.TableNumber>
+            {timer !== undefined && <GameInfo.StartInTimer>{timer}</GameInfo.StartInTimer>}
           </GameInfo>
         }
         right={[

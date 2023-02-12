@@ -7,7 +7,6 @@ import {
   topPlayer,
 } from '#/components/screens/table/story/story-data/players';
 import { action } from '@storybook/addon-actions';
-import { Outcome } from '#/interfaces/common';
 
 export default {
   title: 'Screens/CurrentGame',
@@ -117,5 +116,29 @@ export const OutcomeMenuAll = () => (
     isOutcomeMenuVisible={true}
     isAbortiveDrawAvailable={true}
     isNagashiAvailable={true}
+  />
+);
+
+export const Timer = () => (
+  <CurrentGameScreenView
+    topPlayer={topPlayer}
+    leftPlayer={leftPlayer}
+    rightPlayer={rightPlayer}
+    bottomPlayer={bottomPlayer}
+    {...defaultData}
+    {...actions}
+    timer='12:05'
+  />
+);
+
+export const DealsLeft = () => (
+  <CurrentGameScreenView
+    topPlayer={topPlayer}
+    leftPlayer={leftPlayer}
+    rightPlayer={rightPlayer}
+    bottomPlayer={bottomPlayer}
+    {...defaultData}
+    {...actions}
+    dealsLeft={2}
   />
 );

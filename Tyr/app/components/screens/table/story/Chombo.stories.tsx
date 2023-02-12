@@ -1,56 +1,53 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { DrawScreenView } from '#/components/screens/table/screens/select-plyers/DrawScreenView';
 import {
   bottomPlayer,
   leftPlayer,
   rightPlayer,
   topPlayer,
 } from '#/components/screens/table/story/story-data/players';
+import { ChomboScreenView } from '#/components/screens/table/screens/select-plyers/ChomboScreenView';
 
 export default {
-  title: 'Screens/Draw',
-  component: DrawScreenView,
+  title: 'Screens/Chombo',
+  component: ChomboScreenView,
 };
 
 const actions = {
-  onWinClick: action('onWinClick'),
-  onRiichiClick: action('onRiichiClick'),
+  onLoseClick: action('onLoseClick'),
   onBackClick: action('onBackClick'),
   onNextClick: action('onNextClick'),
-  onDeadHandClick: action('onDeadHandClick'),
 };
 
 const idleButtonState = {
-  winButtonPressed: false,
-  deadButtonPressed: false,
-  isRiichiPressed: false,
+  loseButtonPressed: false,
+  loseButtonDisabled: false,
 };
 
 export const Demo = () => {
   return (
-    <DrawScreenView
+    <ChomboScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,
-        deadButtonPressed: true,
-        isRiichiPressed: true,
+        loseButtonDisabled: true,
       }}
       leftPlayer={{
         ...leftPlayer,
         ...idleButtonState,
-        winButtonPressed: true,
+        loseButtonDisabled: true,
       }}
       rightPlayer={{
         ...rightPlayer,
         ...idleButtonState,
-        winButtonPressed: true,
-        isRiichiPressed: true,
+        loseButtonPressed: true,
       }}
       bottomPlayer={{
         ...bottomPlayer,
         ...idleButtonState,
+        loseButtonDisabled: true,
       }}
+      isNextDisabled={false}
       {...actions}
     />
   );
@@ -58,7 +55,7 @@ export const Demo = () => {
 
 export const Idle = () => {
   return (
-    <DrawScreenView
+    <ChomboScreenView
       topPlayer={{
         ...topPlayer,
         ...idleButtonState,
@@ -75,6 +72,7 @@ export const Idle = () => {
         ...bottomPlayer,
         ...idleButtonState,
       }}
+      isNextDisabled={true}
       {...actions}
     />
   );

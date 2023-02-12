@@ -13,6 +13,11 @@ export default {
   component: BeforeStartScreenView,
 };
 
+const actions = {
+  onHomeClick: action('onHomeClick'),
+  onRefreshClick: action('onRefreshClick'),
+};
+
 export const Demo = () => {
   return (
     <BeforeStartScreenView
@@ -22,8 +27,7 @@ export const Demo = () => {
       bottomPlayer={bottomPlayer}
       topRotated={false}
       tableNumber={4}
-      onHomeClick={action('onHomeClick')}
-      onRefreshClick={action('onRefreshClick')}
+      {...actions}
     />
   );
 };
@@ -37,8 +41,22 @@ export const SingleDevice = () => {
       bottomPlayer={bottomPlayer}
       topRotated={true}
       tableNumber={4}
-      onHomeClick={action('onHomeClick')}
-      onRefreshClick={action('onRefreshClick')}
+      {...actions}
+    />
+  );
+};
+
+export const Timer = () => {
+  return (
+    <BeforeStartScreenView
+      topPlayer={topPlayer}
+      leftPlayer={leftPlayer}
+      rightPlayer={rightPlayer}
+      bottomPlayer={bottomPlayer}
+      topRotated={false}
+      tableNumber={4}
+      timer='5:12'
+      {...actions}
     />
   );
 };
