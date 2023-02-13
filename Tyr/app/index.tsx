@@ -7,9 +7,15 @@ import { IDB } from '#/services/idb';
 import { MetrikaService } from '#/services/metrika';
 import { IAppState } from '#/store/interfaces';
 import { observe } from '#/scripts/dimensionsObserver';
+import { clearStorages } from '#/scripts/clearStorages';
 import { registerFrontErrorHandler } from '#/scripts/logFrontError';
-
 import { IDBStorageImpl } from '#/services/idb/localstorageImpl';
+
+// Storage cleanup: use if some trouble happened during logging in
+if (window.location.search.startsWith('?clear')) {
+  clearStorages();
+  window.location.replace(window.location.protocol + '//' + window.location.host);
+}
 
 // TODO: temporary measure until transition is finished
 if (window.location.host.startsWith('m.riichi.top')) {
