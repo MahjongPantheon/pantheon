@@ -3,7 +3,6 @@ import '../app/styles/themes.css';
 import '../app/styles/variables.css';
 import { I18nDecorator } from './decorators/I18nDecorator';
 import { ThemeDecorator } from './decorators/ThemeDecorator';
-import { CanvasDecorator } from './decorators/CanvasDecorator';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -16,4 +15,4 @@ export const parameters = {
   layout: 'fullscreen',
 };
 
-export const decorators = [ThemeDecorator, I18nDecorator, CanvasDecorator];
+export const decorators = [ThemeDecorator, I18nDecorator];

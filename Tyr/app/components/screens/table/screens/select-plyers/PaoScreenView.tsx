@@ -5,7 +5,6 @@ import { Toolbar } from '#/components/general/toolbar/Toolbar';
 import { i18n } from '#/components/i18n';
 import { Flex } from '#/components/general/flex/Flex';
 import { useClickHandler } from '#/components/screens/table/screens/select-plyers/useClickHandler';
-import { PlayerTextProps } from '#/components/general/player/partials/PlayerText';
 import './pao-screen.css';
 
 type PaoScreenPlayer = {
@@ -37,7 +36,7 @@ const ButtonOrStatus: React.FC<{
   player: PaoScreenPlayer;
   winnerId: number;
   loserId?: number;
-  rotated?: PlayerTextProps['rotated'];
+  rotated?: 0 | 90 | 180 | 270;
   onClick: () => void;
 }> = ({ player, winnerId, loserId, rotated, onClick }) => {
   const isVertical = rotated === 90 || rotated === 270;

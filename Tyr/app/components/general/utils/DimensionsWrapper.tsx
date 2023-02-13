@@ -13,6 +13,7 @@ type IState = {
   dimension: string;
 };
 
+// todo remove
 export class DimensionsWrapper extends React.Component<IProps, IState> {
   state: IState = { dimension: 'initial' };
 

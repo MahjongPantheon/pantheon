@@ -85,15 +85,11 @@ export function usePlayerScores(
   const bottomScore = getScoreData(bottomPlayer.score, diffScore);
 
   const topPenalty =
-    topPlayer.penalties !== 0 ? (
-      <Penalty rotated={topRotated ? 180 : 0}>{topPlayer.penalties}</Penalty>
-    ) : undefined;
+    topPlayer.penalties !== 0 ? <Penalty>{topPlayer.penalties}</Penalty> : undefined;
   const leftPenalty =
-    leftPlayer.penalties !== 0 ? <Penalty rotated={90}>{leftPlayer.penalties}</Penalty> : undefined;
+    leftPlayer.penalties !== 0 ? <Penalty>{leftPlayer.penalties}</Penalty> : undefined;
   const rightPenalty =
-    rightPlayer.penalties !== 0 ? (
-      <Penalty rotated={270}>{rightPlayer.penalties}</Penalty>
-    ) : undefined;
+    rightPlayer.penalties !== 0 ? <Penalty>{rightPlayer.penalties}</Penalty> : undefined;
   const bottomPenalty =
     bottomPlayer.penalties !== 0 ? <Penalty>{bottomPlayer.penalties}</Penalty> : undefined;
 

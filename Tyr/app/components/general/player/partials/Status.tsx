@@ -1,13 +1,14 @@
-import { PlayerText, PlayerTextProps } from '#/components/general/player/partials/PlayerText';
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import classNames from 'classnames';
-import { Flex, FlexProps } from '#/components/general/flex/Flex';
+import { Flex } from '#/components/general/flex/Flex';
+import { RotatedContainer } from '#/components/general/player/partials/RotatedContainer';
 
-export type StatusProps = Pick<PlayerTextProps, 'rotated' | 'children'> & {
+export type StatusProps = PropsWithChildren<{
+  rotated?: 0 | 90 | 180 | 270;
   variant?: 'idle' | 'active' | 'success' | 'danger';
   onClick?: () => void;
   after?: JSX.Element;
-};
+}>;
 
 const TEXT_CLASS_NAME = 'player__status-text';
 const STATUS_CLASS_NAME = 'player__status-container';
@@ -19,46 +20,23 @@ export const Status: React.FC<StatusProps> = ({
   onClick,
   children,
 }) => {
-  const isVertical = rotated === 90 || rotated === 270;
-  let direction: FlexProps['direction'] = 'row';
-  switch (rotated) {
-    case 90:
-      direction = 'column';
-      break;
-    case 180:
-      direction = 'row-reverse';
-      break;
-    case 270:
-      direction = 'column-reverse';
-      break;
-  }
-
   return (
-    <Flex
-      className={STATUS_CLASS_NAME}
-      direction={direction}
-      justify='center'
-      alignItems='center'
-      maxHeight={isVertical}
-      gap={8}
-    >
-      <div style={{ visibility: 'hidden' }}></div>
-      <div
-        className={classNames(TEXT_CLASS_NAME, {
-          [`${TEXT_CLASS_NAME}--vertical`]: isVertical,
-          [`${TEXT_CLASS_NAME}--variant-active`]: variant === 'active',
-          [`${TEXT_CLASS_NAME}--variant-positive`]: variant === 'success',
-          [`${TEXT_CLASS_NAME}--variant-negative`]: variant === 'danger',
-        })}
-        onClick={onClick}
-      >
-        <PlayerText rotated={rotated} size='medium'>
+    <RotatedContainer rotated={rotated}>
+      <Flex maxWidth className={STATUS_CLASS_NAME} justify='center' alignItems='center' gap={8}>
+        <div style={{ visibility: 'hidden' }}></div>
+
+        <div
+          className={classNames(TEXT_CLASS_NAME, {
+            [`${TEXT_CLASS_NAME}--variant-active`]: variant === 'active',
+            [`${TEXT_CLASS_NAME}--variant-positive`]: variant === 'success',
+            [`${TEXT_CLASS_NAME}--variant-negative`]: variant === 'danger',
+          })}
+          onClick={onClick}
+        >
           {children}
-        </PlayerText>
-      </div>
-      <Flex direction={direction} justify='start'>
-        {after}
+        </div>
+        <Flex justify='start'>{after}</Flex>
       </Flex>
-    </Flex>
+    </RotatedContainer>
   );
 };
