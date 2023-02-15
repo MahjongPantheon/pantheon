@@ -929,6 +929,7 @@ class FreyClientTwirp implements IFreyClient
         $groups = $this->_client->GetGroupsOfPerson(
             $this->_ctx,
             (new \Common\Persons_GetGroupsOfPerson_Payload())
+                ->setPersonId($personId)
         )->getGroups();
 
         return array_map(function (\Common\Group $group) {

@@ -136,11 +136,6 @@ class AccountModel extends Model
             $this->_checkAccessRights(InternalRules::UPDATE_PERSONAL_INFO);
         }
 
-        $id = intval($id);
-        if (empty($id)) {
-            throw new InvalidParametersException('Id is empty or non-numeric', 405);
-        }
-
         $persons = PersonPrimitive::findById($this->_db, [$id]);
         if (empty($persons)) {
             throw new InvalidParametersException('Person id #' . $id . ' not found in DB', 406);
