@@ -170,12 +170,21 @@ class Meta
                     $this->_currentPersonId = null;
                     $this->_authToken = null;
                 }
-                $this->_frey->getClient()->getHttpClient()->withHeaders([
-                    'X-Internal-Query-Secret: ' . $this->_internalToken,
-                    'X-Auth-Token: ' . $this->_authToken,
-                    'X-Current-Event-Id: ' . ($this->_currentEventId ?: '0'),
-                    'X-Current-Person-Id: ' . $this->_currentPersonId
-                ]);
+                if ($this->_frey instanceof FreyClientTwirp) {
+                    $this->_frey->withHeaders([
+                        'X-Internal-Query-Secret' => $this->_internalToken,
+                        'X-Auth-Token' => $this->_authToken,
+                        'X-Current-Event-Id' => ($this->_currentEventId ?: '0'),
+                        'X-Current-Person-Id' => $this->_currentPersonId
+                    ]);
+                } else {
+                    $this->_frey->getClient()->getHttpClient()->withHeaders([
+                        'X-Internal-Query-Secret: ' . $this->_internalToken,
+                        'X-Auth-Token: ' . $this->_authToken,
+                        'X-Current-Event-Id: ' . ($this->_currentEventId ?: '0'),
+                        'X-Current-Person-Id: ' . $this->_currentPersonId
+                    ]);
+                }
                 if (!empty($this->_currentEventId) && !empty($this->_currentPersonId)) {
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);
                     if ($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN]) {

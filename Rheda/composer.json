@@ -1,4 +1,10 @@
 {
+  "autoload": {
+    "psr-4": {
+      "Common\\": "../Common/",
+      "": "../Common/generated/"
+    }
+  },
   "repositories": [
     {
       "url": "https://github.com/ctizen/JsonRPC.git",
@@ -11,10 +17,18 @@
     "xamin/handlebars.php": "dev-master",
     "chillerlan/php-qrcode": "^4.3",
     "giggsey/libphonenumber-for-php": "^8.13",
-    "lorddashme/php-simple-captcha": "^1.2"
+    "lorddashme/php-simple-captcha": "^1.2",
+    "php-http/discovery": "^1.15",
+    "php-http/guzzle7-adapter": "^1.0",
+    "twirp/twirp": "^0.9.1"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.7",
     "phpstan/phpstan": "^1.9"
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
   }
 }
