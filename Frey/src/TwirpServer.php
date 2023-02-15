@@ -9,6 +9,7 @@ use Monolog\Logger;
 require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/helpers/Db.php';
 require_once __DIR__ . '/helpers/Meta.php';
+require_once __DIR__ . '/helpers/ErrorHandler.php';
 require_once __DIR__ . '/controllers/Access.php';
 require_once __DIR__ . '/controllers/Persons.php';
 require_once __DIR__ . '/controllers/Auth.php';
@@ -50,7 +51,7 @@ final class TwirpServer implements Frey
         $this->_accessController = new AccessController($this->_db, $this->_syslog, $this->_config, $this->_meta);
     }
 
-    protected static function _toRuleValue(&$value): \Common\RuleValue
+    protected static function _toRuleValue($value): \Common\RuleValue
     {
         if (is_bool($value)) {
             return (new \Common\RuleValue())->setBoolValue($value);
@@ -72,7 +73,7 @@ final class TwirpServer implements Frey
         return $value->getStringValue();
     }
 
-    protected static function _toRuleListItem(&$value): \Common\EventRuleListItem
+    protected static function _toRuleListItem($value): \Common\EventRuleListItem
     {
         return (new \Common\EventRuleListItem())
             ->setIsGlobal($value['isGlobal'])
@@ -230,13 +231,14 @@ final class TwirpServer implements Frey
     public function GetPersonalInfo(array $ctx, \Common\Persons_GetPersonalInfo_Payload $req): \Common\Persons_GetPersonalInfo_Response
     {
         return (new \Common\Persons_GetPersonalInfo_Response())->setPersons(
-            array_map(function (&$person) {
+            array_map(function ($person) {
+                trigger_error(var_export($person, 1));
                 return (new \Common\PersonEx())
                     ->setId($person['id'])
                     ->setCountry($person['country'])
                     ->setCity($person['city'])
-                    ->setEmail($person['email'])
-                    ->setPhone($person['phone'])
+                    ->setEmail($person['email'] ?? '') // TODO: should this be null in proto?
+                    ->setPhone($person['phone'] ?? '') // TODO same
                     ->setTenhouId($person['tenhou_id'])
                     ->setGroups($person['groups'])
                     ->setTitle($person['title']);
@@ -250,7 +252,7 @@ final class TwirpServer implements Frey
     public function FindByTenhouIds(array $ctx, \Common\Persons_FindByTenhouIds_Payload $req): \Common\Persons_FindByTenhouIds_Response
     {
         return (new \Common\Persons_FindByTenhouIds_Response())
-            ->setPersons(array_map(function (&$person) {
+            ->setPersons(array_map(function ($person) {
                 return (new \Common\PersonEx())
                     ->setId($person['id'])
                     ->setCity($person['city'])
@@ -268,7 +270,7 @@ final class TwirpServer implements Frey
     public function FindByTitle(array $ctx, \Common\Persons_FindByTitle_Payload $req): \Common\Persons_FindByTitle_Response
     {
         return (new \Common\Persons_FindByTitle_Response())
-            ->setPersons(array_map(function (&$person) {
+            ->setPersons(array_map(function ($person) {
                 return (new \Common\Person())
                     ->setId($person['id'])
                     ->setCity($person['city'])
@@ -283,7 +285,7 @@ final class TwirpServer implements Frey
     public function GetGroups(array $ctx, \Common\Persons_GetGroups_Payload $req): \Common\Persons_GetGroups_Response
     {
         return (new \Common\Persons_GetGroups_Response())
-            ->setGroups(array_map(function (&$group) {
+            ->setGroups(array_map(function ($group) {
                 return (new \Common\Group())
                     ->setId($group['id'])
                     ->setTitle($group['title'])
@@ -295,7 +297,7 @@ final class TwirpServer implements Frey
     public function GetEventAdmins(array $ctx, \Common\Access_GetEventAdmins_Payload $req): \Common\Access_GetEventAdmins_Response
     {
         return (new \Common\Access_GetEventAdmins_Response())
-            ->setAdmins(array_map(function (&$rule) {
+            ->setAdmins(array_map(function ($rule) {
                 return (new \Common\EventAdmin())
                     ->setPersonId($rule['id'])
                     ->setPersonName($rule['name'])
@@ -383,7 +385,7 @@ final class TwirpServer implements Frey
         return (new \Common\Access_GetAllPersonAccess_Response())
             ->setRulesByEvent(array_combine(
                 array_keys($ret),
-                array_map(function (&$eventRules) {
+                array_map(function ($eventRules) {
                     return (new \Common\RuleListItemExMap())
                         ->setRules(
                             array_combine(
@@ -404,7 +406,7 @@ final class TwirpServer implements Frey
         return (new \Common\Access_GetAllGroupAccess_Response())
             ->setRulesByEvent(array_combine(
                 array_keys($ret),
-                array_map(function (&$eventRules) {
+                array_map(function ($eventRules) {
                     return (new \Common\RuleListItemExMap())
                         ->setRules(
                             array_combine(

@@ -23,7 +23,7 @@ class FreyClientTwirp implements IFreyClient
      */
     protected $_httpClient;
     /**
-     * @var
+     * @var array
      */
     protected $_ctx = [];
 
@@ -300,7 +300,7 @@ class FreyClientTwirp implements IFreyClient
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
-                'groups' => $person->getGroupIds(),
+                'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
             ];
         }, iterator_to_array($persons));

@@ -70,7 +70,7 @@ class Api
         if ($freyUrl === '__mock__') { // testing purposes
             $this->_frey = new FreyClientMock('');
         } else {
-            if (str_contains($freyUrl, '/v2')) {
+            if ($this->_config->getBooleanValue('useFreyTwirp')) {
                 $this->_frey = new FreyClientTwirp($freyUrl);
             } else {
                 $this->_frey = new FreyClient($freyUrl);
@@ -81,7 +81,7 @@ class Api
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 
-        if (str_contains($freyUrl, '/v2')) {
+        if ($this->_config->getBooleanValue('useFreyTwirp')) {
             $this->_frey->withHeaders([
                 'X-Locale' => $this->_meta->getSelectedLocale()
             ]);
@@ -92,7 +92,7 @@ class Api
         }
 
         // + some custom handler for testing errors
-        if ($this->_config->getStringValue('verbose')) {
+        if ($this->_config->getBooleanValue('verbose')) {
             (new ErrorHandler($this->_config, $this->_syslog))->register();
         }
     }

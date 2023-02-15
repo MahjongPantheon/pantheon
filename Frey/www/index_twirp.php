@@ -5,7 +5,7 @@ require __DIR__ . '/../../Common/generated/Common/FreyServer.php';
 require __DIR__ . '/../src/TwirpServer.php';
 
 $request = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();
-$handler = new \Common\FreyServer(new \Frey\TwirpServer());
+$handler = new \Common\FreyServer(new \Frey\TwirpServer(), null, null, null, '/v2');
 
 $response = $handler->handle($request);
 

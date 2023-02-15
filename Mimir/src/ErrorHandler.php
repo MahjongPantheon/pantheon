@@ -95,13 +95,16 @@ class ErrorHandler
             "Type:\t\t" . get_class($e) . "\n" .
             "File:\t\t{$e->getFile()}\n" .
             "Line:\t\t{$e->getLine()}\n" .
+            ($e instanceof \Common\TwirpError ? "TWIRP Meta:\t\t" . json_encode($e->getMetaMap()) . "\n" : "") .
             "Message:\t{$e->getMessage()}\n" .
             "Trace:\t\t" . str_replace("\n", "\n\t\t\t", $e->getTraceAsString()) . "\n\n"
         ;
         $this->_log->error($message);
         /** @var string $path */
         $path = $this->_config->getStringValue('verboseLog');
-        file_put_contents($path, $message . PHP_EOL, FILE_APPEND);
+        if (!empty($path)) {
+            file_put_contents($path, $message . PHP_EOL, FILE_APPEND);
+        }
         if ($exitOnError) {
             exit();
         }

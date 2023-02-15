@@ -38,7 +38,7 @@ return array_merge([
     ],
     'db'        => require __DIR__ . '/db.php',
     'routes'    => require __DIR__ . '/routes.php',
-    'verbose'   => false,
+    'verbose'   => true, // TODO: change this in your local config!
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC',
     'trackerUrl' => null, // should be string or null, %s is placeholder for game hash token
