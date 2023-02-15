@@ -51,6 +51,10 @@ final class TwirpServer implements Frey
         $this->_accessController = new AccessController($this->_db, $this->_syslog, $this->_config, $this->_meta);
     }
 
+    /**
+     * @param mixed $value
+     * @return \Common\RuleValue
+     */
     protected static function _toRuleValue($value): \Common\RuleValue
     {
         if (is_bool($value)) {
@@ -62,8 +66,15 @@ final class TwirpServer implements Frey
         }
     }
 
-    protected static function _fromRuleValue(\Common\RuleValue $value)
+    /**
+     * @param ?\Common\RuleValue $value
+     * @return bool|int|string
+     */
+    protected static function _fromRuleValue(?\Common\RuleValue $value)
     {
+        if (empty($value)) {
+            return false; // TODO: kludge
+        }
         if ($value->hasBoolValue()) {
             return $value->getBoolValue();
         }
@@ -73,6 +84,10 @@ final class TwirpServer implements Frey
         return $value->getStringValue();
     }
 
+    /**
+     * @param mixed $value
+     * @return \Common\EventRuleListItem
+     */
     protected static function _toRuleListItem($value): \Common\EventRuleListItem
     {
         return (new \Common\EventRuleListItem())
@@ -193,6 +208,7 @@ final class TwirpServer implements Frey
             ->setRules((new \Common\AccessRules())->setRules(
                 array_combine(
                     array_keys($ret),
+                    /** @phpstan-ignore-next-line */
                     array_map('self::_toRuleValue', array_values($ret))
                 )
             ));
@@ -232,7 +248,6 @@ final class TwirpServer implements Frey
     {
         return (new \Common\Persons_GetPersonalInfo_Response())->setPersons(
             array_map(function ($person) {
-                trigger_error(var_export($person, 1));
                 return (new \Common\PersonEx())
                     ->setId($person['id'])
                     ->setCountry($person['country'])
@@ -339,7 +354,9 @@ final class TwirpServer implements Frey
     {
         $rules = $this->_accessController->getAllEventRules($req->getEventId());
         return (new \Common\Access_GetAllEventRules_Response())
+            /** @phpstan-ignore-next-line */
             ->setGroupRules(array_map('self::_toRuleListItem', $rules['group']))
+            /** @phpstan-ignore-next-line */
             ->setPersonRules(array_map('self::_toRuleListItem', $rules['person']));
     }
 
@@ -353,6 +370,7 @@ final class TwirpServer implements Frey
             (new \Common\AccessRules())->setRules(
                 array_combine(
                     array_keys($ret),
+                    /** @phpstan-ignore-next-line */
                     array_map('self::_toRuleValue', array_values($ret))
                 )
             )
@@ -370,6 +388,7 @@ final class TwirpServer implements Frey
                 (new \Common\AccessRules())->setRules(
                     array_combine(
                         array_keys($ret),
+                        /** @phpstan-ignore-next-line */
                         array_map('self::_toRuleValue', array_values($ret))
                     )
                 )
@@ -390,6 +409,7 @@ final class TwirpServer implements Frey
                         ->setRules(
                             array_combine(
                                 array_keys($eventRules),
+                                /** @phpstan-ignore-next-line */
                                 array_map('self::_toRuleValue', array_values($eventRules))
                             )
                         );
@@ -411,6 +431,7 @@ final class TwirpServer implements Frey
                         ->setRules(
                             array_combine(
                                 array_keys($eventRules),
+                                /** @phpstan-ignore-next-line */
                                 array_map('self::_toRuleValue', array_values($eventRules))
                             )
                         );
@@ -431,7 +452,7 @@ final class TwirpServer implements Frey
                 $req->getRuleType(),
                 $req->getPersonId(),
                 $req->getEventId()
-            ));
+            ) ?? -1);
     }
 
     /**
@@ -447,7 +468,7 @@ final class TwirpServer implements Frey
                 $req->getRuleType(),
                 $req->getGroupId(),
                 $req->getEventId()
-            ));
+            ) ?? -1);
     }
 
     /**
@@ -619,7 +640,7 @@ final class TwirpServer implements Frey
                 self::_fromRuleValue($req->getRuleValue()),
                 $req->getRuleType(),
                 $req->getPersonId()
-            ));
+            ) ?? -1);
     }
 
     /**
@@ -634,6 +655,6 @@ final class TwirpServer implements Frey
                 self::_fromRuleValue($req->getRuleValue()),
                 $req->getRuleType(),
                 $req->getGroupId()
-            ));
+            ) ?? -1);
     }
 }

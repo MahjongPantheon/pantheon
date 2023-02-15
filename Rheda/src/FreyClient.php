@@ -58,7 +58,7 @@ class FreyClient implements IFreyClient
     {
         return $this->_client;
     }
-    
+
     /**
      *  Request new registration with given email and password.
      *  Approval code is returned. It is intended to be sent to provided email address.
@@ -206,7 +206,7 @@ class FreyClient implements IFreyClient
     }
 
     /**
-     * @param string $id
+     * @param int $id
      * @param string $title
      * @param string $country
      * @param string $city
@@ -215,7 +215,7 @@ class FreyClient implements IFreyClient
      * @param string $tenhouId
      * @return bool
     */
-    public function updatePersonalInfo(string $id, string $title, string $country, string $city, string $email, string $phone, string $tenhouId): bool
+    public function updatePersonalInfo(int $id, string $title, string $country, string $city, string $email, string $phone, string $tenhouId): bool
     {
         /** @phpstan-ignore-next-line */
         return (bool)$this->_client->execute('updatePersonalInfo', [$id, $title, $country, $city, $email, $phone, $tenhouId]);

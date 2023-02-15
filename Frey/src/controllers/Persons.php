@@ -79,7 +79,7 @@ class PersonsController extends Controller
     }
 
     /**
-     * @param string $id
+     * @param int $id
      * @param string $title
      * @param string $country
      * @param string $city

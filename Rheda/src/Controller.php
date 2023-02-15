@@ -208,6 +208,7 @@ abstract class Controller
                 $this->_authToken = null;
             } else {
                 if (empty($_COOKIE['usetwirp'])) {
+                    // @phpstan-ignore-next-line
                     $this->_frey->getClient()->getHttpClient()->withHeaders([
                         'X-Auth-Token: ' . $this->_authToken,
                         'X-Locale: ' . $locale,
@@ -216,6 +217,7 @@ abstract class Controller
                         'X-Internal-Query-Secret: ' . Sysconf::FREY_INTERNAL_QUERY_SECRET
                     ]);
                 } else {
+                    // @phpstan-ignore-next-line
                     $this->_frey->withHeaders([
                         'X-Auth-Token' => $this->_authToken,
                         'X-Locale' => $locale,
@@ -261,7 +263,9 @@ abstract class Controller
             $client->withDebug();
             $client->withCookies(['XDEBUG_SESSION=PHPSTORM']);
             if (empty($_COOKIE['usetwirp'])) {
+                // @phpstan-ignore-next-line
                 $this->_frey->getClient()->getHttpClient()->withDebug();
+                // @phpstan-ignore-next-line
                 $this->_frey->getClient()->getHttpClient()->withCookies(['XDEBUG_SESSION=PHPSTORM']);
             }
         }

@@ -82,10 +82,12 @@ class Api
         $this->_syslog->pushHandler(new ErrorLogHandler());
 
         if ($this->_config->getBooleanValue('useFreyTwirp')) {
+            // @phpstan-ignore-next-line
             $this->_frey->withHeaders([
                 'X-Locale' => $this->_meta->getSelectedLocale()
             ]);
         } else {
+            // @phpstan-ignore-next-line
             $this->_frey->getClient()->getHttpClient()->withHeaders([
                 'X-Locale: ' . $this->_meta->getSelectedLocale(),
             ]);

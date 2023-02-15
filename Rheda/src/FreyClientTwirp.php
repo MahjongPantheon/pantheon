@@ -15,8 +15,8 @@ require_once __DIR__ . '/interfaces/IFreyClient.php';
 class FreyClientTwirp implements IFreyClient
 {
     /**
-    * @var \Common\FreyClient
-    */
+     * @var \Common\FreyClient
+     */
     protected $_client;
     /**
      * @var \Psr\Http\Client\ClientInterface
@@ -38,15 +38,23 @@ class FreyClientTwirp implements IFreyClient
         );
     }
 
+    /**
+     * @param array $headers
+     * @return void
+     */
     public function withHeaders($headers)
     {
         $this->_ctx = Context::withHttpRequestHeaders($this->_ctx, $headers);
     }
 
-    protected static function _fromRuleValue(\Common\RuleValue | null $value)
+    /**
+     * @param ?\Common\RuleValue $value
+     * @return bool|int|string
+     */
+    protected static function _fromRuleValue(?\Common\RuleValue $value)
     {
         if (empty($value)) {
-            return null;
+            return false; // TODO: kludge
         }
         if ($value->hasBoolValue()) {
             return $value->getBoolValue();
@@ -57,6 +65,10 @@ class FreyClientTwirp implements IFreyClient
         return $value->getStringValue();
     }
 
+    /**
+     * @param mixed $value
+     * @return \Common\RuleValue
+     */
     protected static function _toRuleValue(&$value): \Common\RuleValue
     {
         if (is_bool($value)) {
@@ -71,6 +83,7 @@ class FreyClientTwirp implements IFreyClient
     /**
      * @return \Common\FreyClient
      */
+    // @phpstan-ignore-next-line
     public function getClient()
     {
         return $this->_client;
@@ -84,14 +97,14 @@ class FreyClientTwirp implements IFreyClient
      * @param string $title
      * @param string $password
      * @return string
-    */
+     */
     public function requestRegistration(string $email, string $title, string $password): string
     {
         return $this->_client->RequestRegistration(
             $this->_ctx,
             (new \Common\Auth_RequestRegistration_Payload())
-                ->setTitle($title)
                 ->setEmail($email)
+                ->setTitle($title)
                 ->setPassword($password)
         )->getApprovalCode();
     }
@@ -102,7 +115,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param string $approvalCode
      * @return int
-    */
+     */
     public function approveRegistration(string $approvalCode): int
     {
         return $this->_client->ApproveRegistration(
@@ -118,7 +131,7 @@ class FreyClientTwirp implements IFreyClient
      * @param string $email
      * @param string $password
      * @return array
-    */
+     */
     public function authorize(string $email, string $password): array
     {
         $ret = $this->_client->Authorize(
@@ -137,7 +150,7 @@ class FreyClientTwirp implements IFreyClient
      * @param int $id
      * @param string $clientSideToken
      * @return bool
-    */
+     */
     public function quickAuthorize(int $id, string $clientSideToken): bool
     {
         return $this->_client->QuickAuthorize(
@@ -156,7 +169,7 @@ class FreyClientTwirp implements IFreyClient
      * @param string $password
      * @param string $newPassword
      * @return string
-    */
+     */
     public function changePassword(string $email, string $password, string $newPassword): string
     {
         return $this->_client->ChangePassword(
@@ -174,7 +187,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param string $email
      * @return string
-    */
+     */
     public function requestResetPassword(string $email): string
     {
         return $this->_client->RequestResetPassword(
@@ -195,7 +208,7 @@ class FreyClientTwirp implements IFreyClient
      * @param string $email
      * @param string $resetApprovalCode
      * @return string
-    */
+     */
     public function approveResetPassword(string $email, string $resetApprovalCode): string
     {
         return $this->_client->ApproveResetPassword(
@@ -214,7 +227,7 @@ class FreyClientTwirp implements IFreyClient
      * @param int $personId
      * @param int $eventId
      * @return array
-    */
+     */
     public function getAccessRules(int $personId, int $eventId): array
     {
         $ret = $this->_client->GetAccessRules(
@@ -223,6 +236,10 @@ class FreyClientTwirp implements IFreyClient
                 ->setPersonId($personId)
                 ->setEventId($eventId)
         )->getRules();
+
+        if (empty($ret)) {
+            return []; // TODO log error
+        }
 
         $rules = [];
         foreach ($ret->getRules()->getIterator() as $k => $v) {
@@ -242,7 +259,7 @@ class FreyClientTwirp implements IFreyClient
      * @param int $eventId
      * @param string $ruleName
      * @return mixed
-    */
+     */
     public function getRuleValue(int $personId, int $eventId, string $ruleName)
     {
         return self::_fromRuleValue($this->_client->GetRuleValue(
@@ -255,7 +272,7 @@ class FreyClientTwirp implements IFreyClient
     }
 
     /**
-     * @param string $id
+     * @param int $id
      * @param string $title
      * @param string $country
      * @param string $city
@@ -263,8 +280,8 @@ class FreyClientTwirp implements IFreyClient
      * @param string $phone
      * @param string $tenhouId
      * @return bool
-    */
-    public function updatePersonalInfo(string $id, string $title, string $country, string $city, string $email, string $phone, string $tenhouId): bool
+     */
+    public function updatePersonalInfo(int $id, string $title, string $country, string $city, string $email, string $phone, string $tenhouId): bool
     {
         return $this->_client->UpdatePersonalInfo(
             $this->_ctx,
@@ -285,7 +302,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param array $ids
      * @return array
-    */
+     */
     public function getPersonalInfo(array $ids): array
     {
         $persons = $this->_client->GetPersonalInfo(
@@ -294,7 +311,7 @@ class FreyClientTwirp implements IFreyClient
                 ->setIds($ids)
         )->getPersons()->getIterator();
 
-        return array_map(function(\Common\PersonEx $person) {
+        return array_map(function (\Common\PersonEx $person) {
             return [
                 'id' => $person->getId(),
                 'country' => $person->getCountry(),
@@ -314,7 +331,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param array $ids
      * @return array
-    */
+     */
     public function findByTenhouIds(array $ids): array
     {
         $persons = $this->_client->FindByTenhouIds(
@@ -323,7 +340,7 @@ class FreyClientTwirp implements IFreyClient
                 ->setIds($ids)
         )->getPersons()->getIterator();
 
-        return array_map(function(\Common\PersonEx $person) {
+        return array_map(function (\Common\PersonEx $person) {
             return [
                 'id' => $person->getId(),
                 'country' => $person->getCountry(),
@@ -331,7 +348,7 @@ class FreyClientTwirp implements IFreyClient
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
-                'groups' => $person->getGroupIds(),
+                'groups' => $person->getGroups(),
                 'title' => $person->getTitle(),
             ];
         }, iterator_to_array($persons));
@@ -343,7 +360,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param string $query
      * @return array
-    */
+     */
     public function findByTitle(string $query): array
     {
         $persons = $this->_client->FindByTitle(
@@ -352,7 +369,7 @@ class FreyClientTwirp implements IFreyClient
                 ->setQuery($query)
         )->getPersons();
 
-        return array_map(function(\Common\Person $person) {
+        return array_map(function (\Common\Person $person) {
             return [
                 'id' => $person->getId(),
                 'city' => $person->getCity(),
@@ -367,7 +384,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param array $ids
      * @return array
-    */
+     */
     public function getGroups(array $ids): array
     {
         $groups = $this->_client->GetGroups(
@@ -376,7 +393,7 @@ class FreyClientTwirp implements IFreyClient
                 ->setIds($ids)
         )->getGroups();
 
-        return array_map(function(\Common\Group $group) {
+        return array_map(function (\Common\Group $group) {
             return [
                 'id' => $group->getId(),
                 'title' => $group->getTitle(),
@@ -392,7 +409,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param int $eventId
      * @return array
-    */
+     */
     public function getEventAdmins(int $eventId): array
     {
         $rules = $this->_client->GetEventAdmins(
@@ -417,7 +434,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param int $personId
      * @return bool
-    */
+     */
     public function getSuperadminFlag(int $personId): bool
     {
         return $this->_client->GetSuperadminFlag(
@@ -432,7 +449,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param int $personId
      * @return array
-    */
+     */
     public function getOwnedEventIds(int $personId): array
     {
         return iterator_to_array($this->_client->GetOwnedEventIds(
@@ -446,7 +463,7 @@ class FreyClientTwirp implements IFreyClient
      *  Get rule list with translations to selected locale
      *
      * @return array
-    */
+     */
     public function getRulesList(): array
     {
         $rules = $this->_client->GetRulesList(
@@ -470,7 +487,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param int $eventId
      * @return array
-    */
+     */
     public function getAllEventRules(int $eventId): array
     {
         $ret = $this->_client->GetAllEventRules(
@@ -483,8 +500,8 @@ class FreyClientTwirp implements IFreyClient
             return [
                 'isGlobal' => $rule->getIsGlobal(),
                 'id' => $rule->getId(),
-                'type' => is_bool($rule->getValue()) ? 'bool' : (is_integer($rule->getValue()) ? 'number' : 'string'),
-                'value' => self::_fromRuleValue($rule->getValue()),
+                'type' => $rule->getValue()?->hasBoolValue() ? 'bool' : ($rule->getValue()?->hasNumberValue() ? 'number' : 'string'),
+                'value' => $rule->getValue(),
                 'name' => $rule->getName(),
                 'ownerTitle' => $rule->getOwnerTitle(),
                 'allowed_values' => iterator_to_array($rule->getAllowedValues()->getIterator())
@@ -507,15 +524,19 @@ class FreyClientTwirp implements IFreyClient
      * @param int $personId
      * @param int|null $eventId
      * @return array
-    */
+     */
     public function getPersonAccess(int $personId, $eventId): array
     {
         $ret = $this->_client->GetPersonAccess(
             $this->_ctx,
             (new \Common\Access_GetPersonAccess_Payload())
                 ->setPersonId($personId)
-                ->setEventId($eventId)
+                ->setEventId($eventId ?? -1) // -1 for global
         )->getRules();
+
+        if (empty($ret)) {
+            return [];
+        }
 
         $rules = [];
         foreach ($ret->getRules()->getIterator() as $k => $v) {
@@ -535,15 +556,19 @@ class FreyClientTwirp implements IFreyClient
      * @param int $groupId
      * @param int|null $eventId
      * @return array
-    */
+     */
     public function getGroupAccess(int $groupId, $eventId): array
     {
         $ret = $this->_client->GetGroupAccess(
             $this->_ctx,
             (new \Common\Access_GetGroupAccess_Payload())
                 ->setGroupId($groupId)
-                ->setEventId($eventId)
+                ->setEventId($eventId ?? -1) // -1 for global
         )->getRules();
+
+        if (empty($ret)) {
+            return [];
+        }
 
         $rules = [];
         foreach ($ret->getRules()->getIterator() as $k => $v) {
@@ -560,7 +585,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param int $personId
      * @return array
-    */
+     */
     public function getAllPersonAccess(int $personId): array
     {
         $map = $this->_client->GetAllPersonAccess(
@@ -593,7 +618,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param int $groupId
      * @return array
-    */
+     */
     public function getAllGroupAccess(int $groupId): array
     {
         $map = $this->_client->GetAllGroupAccess(
@@ -630,7 +655,7 @@ class FreyClientTwirp implements IFreyClient
      * @param int $personId
      * @param int $eventId
      * @return int|null
-    */
+     */
     public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId)
     {
         return $this->_client->AddRuleForPerson(
@@ -655,7 +680,7 @@ class FreyClientTwirp implements IFreyClient
      * @param int $groupId
      * @param int $eventId
      * @return int|null
-    */
+     */
     public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, int $eventId)
     {
         return $this->_client->AddRuleForGroup(
@@ -676,7 +701,7 @@ class FreyClientTwirp implements IFreyClient
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @return bool
-    */
+     */
     public function updateRuleForPerson(int $ruleId, $ruleValue, string $ruleType): bool
     {
         return $this->_client->UpdateRuleForPerson(
@@ -695,7 +720,7 @@ class FreyClientTwirp implements IFreyClient
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @return bool
-    */
+     */
     public function updateRuleForGroup(int $ruleId, $ruleValue, string $ruleType): bool
     {
         return $this->_client->UpdateRuleForGroup(
@@ -712,7 +737,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param int $ruleId
      * @return bool
-    */
+     */
     public function deleteRuleForPerson(int $ruleId): bool
     {
         return $this->_client->DeleteRuleForPerson(
@@ -727,7 +752,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param int $ruleId
      * @return bool
-    */
+     */
     public function deleteRuleForGroup(int $ruleId): bool
     {
         return $this->_client->DeleteRuleForGroup(
@@ -745,7 +770,7 @@ class FreyClientTwirp implements IFreyClient
      * @param int $personId
      * @param int $eventId
      * @return bool
-    */
+     */
     public function clearAccessCache(int $personId, int $eventId): bool
     {
         return $this->_client->ClearAccessCache(
@@ -766,7 +791,7 @@ class FreyClientTwirp implements IFreyClient
      * @param string $phone
      * @param string $tenhouId
      * @return int
-    */
+     */
     public function createAccount(string $email, string $password, string $title, string $city, string $phone, string $tenhouId): int
     {
         return $this->_client->CreateAccount(
@@ -789,7 +814,7 @@ class FreyClientTwirp implements IFreyClient
      * @param string $description
      * @param string $color
      * @return int
-    */
+     */
     public function createGroup(string $title, string $description, string $color): int
     {
         return $this->_client->CreateGroup(
@@ -809,7 +834,7 @@ class FreyClientTwirp implements IFreyClient
      * @param string $description
      * @param string $color
      * @return bool
-    */
+     */
     public function updateGroup(int $id, string $title, string $description, string $color): bool
     {
         return $this->_client->UpdateGroup(
@@ -827,7 +852,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param int $id
      * @return bool
-    */
+     */
     public function deleteGroup(int $id): bool
     {
         return $this->_client->DeleteGroup(
@@ -843,7 +868,7 @@ class FreyClientTwirp implements IFreyClient
      * @param int $personId
      * @param int $groupId
      * @return bool
-    */
+     */
     public function addPersonToGroup(int $personId, int $groupId): bool
     {
         return $this->_client->AddPersonToGroup(
@@ -860,7 +885,7 @@ class FreyClientTwirp implements IFreyClient
      * @param int $personId
      * @param int $groupId
      * @return bool
-    */
+     */
     public function removePersonFromGroup(int $personId, int $groupId): bool
     {
         return $this->_client->RemovePersonFromGroup(
@@ -876,7 +901,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param int $groupId
      * @return array
-    */
+     */
     public function getPersonsOfGroup(int $groupId): array
     {
         $persons = $this->_client->GetPersonsOfGroup(
@@ -885,7 +910,7 @@ class FreyClientTwirp implements IFreyClient
                 ->setGroupId($groupId)
         )->getPersons();
 
-        return array_map(function(\Common\Person $person) {
+        return array_map(function (\Common\Person $person) {
             return [
                 'id' => $person->getId(),
                 'city' => $person->getCity(),
@@ -900,7 +925,7 @@ class FreyClientTwirp implements IFreyClient
      *
      * @param int $personId
      * @return array
-    */
+     */
     public function getGroupsOfPerson(int $personId): array
     {
         $groups = $this->_client->GetGroupsOfPerson(
@@ -908,7 +933,7 @@ class FreyClientTwirp implements IFreyClient
             (new \Common\Persons_GetGroupsOfPerson_Payload())
         )->getGroups();
 
-        return array_map(function(\Common\Group $group) {
+        return array_map(function (\Common\Group $group) {
             return [
                 'id' => $group->getId(),
                 'title' => $group->getTitle(),
@@ -928,7 +953,7 @@ class FreyClientTwirp implements IFreyClient
      * @param string $ruleType
      * @param int $personId
      * @return int|null
-    */
+     */
     public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId)
     {
         return $this->_client->AddSystemWideRuleForPerson(
@@ -944,12 +969,14 @@ class FreyClientTwirp implements IFreyClient
     /**
      *  Add new system-wide rule for a group.
      *
+     *
+     *
      * @param string $ruleName
      * @param string|int|boolean $ruleValue
      * @param string $ruleType
      * @param int $groupId
      * @return int|null
-    */
+     */
     public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId)
     {
         return $this->_client->AddSystemWideRuleForGroup(
@@ -961,7 +988,6 @@ class FreyClientTwirp implements IFreyClient
                 ->setGroupId($groupId)
         )->getRuleId();
     }
-
     /**
      * @param int $id
      * @param string $clientSideToken

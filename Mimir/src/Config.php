@@ -64,6 +64,7 @@ class Config
     public function getBooleanValue(string $path)
     {
         $val = $this->getValue($path);
+        // @phpstan-ignore-next-line
         if (is_bool($val)) {
             return $val;
         }

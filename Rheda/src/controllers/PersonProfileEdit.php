@@ -106,7 +106,7 @@ class PersonProfileEdit extends Controller
     protected function _saveData(array $data, int $personId)
     {
         return $this->_frey->updatePersonalInfo(
-            (string)$personId, // TODO: should be int, check
+            $personId,
             $data['title'],
             $data['country'],
             $data['city'],

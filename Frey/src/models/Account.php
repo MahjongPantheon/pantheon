@@ -119,7 +119,7 @@ class AccountModel extends Model
     /**
      * Update personal info of selected account
      *
-     * @param string $id
+     * @param int $id
      * @param string $title
      * @param string $country
      * @param string $city
@@ -130,7 +130,7 @@ class AccountModel extends Model
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function updatePersonalInfo(string $id, string $title, string $country, string $city, string $email, string $phone, $tenhouId = null)
+    public function updatePersonalInfo(int $id, string $title, string $country, string $city, string $email, string $phone, $tenhouId = null)
     {
         if (empty($this->_authorizedPerson) || $this->_authorizedPerson->getId() != $id) {
             $this->_checkAccessRights(InternalRules::UPDATE_PERSONAL_INFO);
