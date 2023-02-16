@@ -53,6 +53,7 @@ RUN apk update && \
     postgresql13 \
     nodejs \
     npm \
+    protoc \
     php81-apcu \
     php81-fpm \
     php81-ctype \
@@ -69,6 +70,7 @@ RUN apk update && \
     php81-pdo_pgsql \
     php81-pdo \
     php81-pecl-ast \
+    php81-pecl-protobuf \
     php81-pgsql \
     php81-phar \
     php81-phpdbg \
@@ -138,6 +140,10 @@ RUN chmod 755 /entrypoint.sh
 COPY Rheda/rheda-docker.nginx.conf /etc/nginx/http.d/rheda.conf
 COPY Mimir/mimir-docker.nginx.conf /etc/nginx/http.d/mimir.conf
 COPY Frey/frey-docker.nginx.conf /etc/nginx/http.d/frey.conf
+
+# Copy protoc plugins
+COPY bin/protoc-gen-twirp_php /usr/bin/protoc-gen-twirp_php
+RUN chmod +x /usr/bin/protoc-gen-twirp_php
 
 # copy db init scripts
 RUN mkdir -p /docker-entrypoint-initdb.d

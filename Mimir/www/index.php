@@ -40,6 +40,7 @@ foreach ($api->getMethods() as $proc => $method) {
 //    $api->log("Registered proc: $proc ({$method['className']}::{$method['method']})" . PHP_EOL);
     $server
         ->withLocalException('PDOException')
+        ->withLocalException('Common\TwirpError')
         ->getProcedureHandler()
         ->withClassAndMethod($proc, $method['instance'], $method['method']);
 }

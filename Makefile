@@ -233,7 +233,7 @@ php_logs: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Pantheon container is not running, can't view logs.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'tail -f /var/log/php-errors.log' ; \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'tail -f /var/log/php-errors.log | grep -v xdebug' ; \
 	fi
 
 .PHONY: shell

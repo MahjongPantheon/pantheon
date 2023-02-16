@@ -62,7 +62,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Authorize person ant return permanent client-side auth token.
+     * Authorize person and return permanent client-side auth token.
      *
      * @param string $email
      * @param string $password

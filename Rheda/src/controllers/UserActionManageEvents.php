@@ -122,7 +122,7 @@ class UserActionManageEvents extends Controller
 
         $eventIds = $this->_frey->getOwnedEventIds($this->_currentPersonId);
         $isSuperadmin = $this->_frey->getSuperadminFlag($this->_currentPersonId);
-        if (in_array('__global', $eventIds)) {
+        if (in_array(-1, $eventIds)) { // -1 === global privileges
             $data = $this->_mimir->getEvents(self::PERPAGE, $this->_offset(self::PERPAGE), false);
             $events = $data['events'];
             $total = ceil(floatval($data['total']) / self::PERPAGE);

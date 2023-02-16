@@ -21,6 +21,7 @@ require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/HttpClient.php';
 require_once __DIR__ . '/FreyClient.php';
+require_once __DIR__ . '/FreyClientTwirp.php';
 require_once __DIR__ . '/MimirClient.php';
 require_once __DIR__ . '/helpers/i18n.php';
 require_once __DIR__ . '/Templater.php';
@@ -133,7 +134,13 @@ abstract class Controller
         $this->_url = $url;
         $this->_path = $path;
         $this->_mimir = new \Rheda\MimirClient(Sysconf::API_URL()); // @phpstan-ignore-line
-        $this->_frey = new \Rheda\FreyClient(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
+
+        // @phpstan-ignore-next-line
+        if (Sysconf::USE_TWIRP_FREY) {
+            $this->_frey = new \Rheda\FreyClientTwirp(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
+        } else {
+            $this->_frey = new \Rheda\FreyClient(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
+        }
 
         // i18n support
         // first step is getting browser language
@@ -201,13 +208,26 @@ abstract class Controller
                 $this->_currentPersonId = null;
                 $this->_authToken = null;
             } else {
-                $this->_frey->getClient()->getHttpClient()->withHeaders([
-                    'X-Auth-Token: ' . $this->_authToken,
-                    'X-Locale: ' . $locale,
-                    'X-Current-Event-Id: ' . $this->_mainEventId,
-                    'X-Current-Person-Id: ' . $this->_currentPersonId,
-                    'X-Internal-Query-Secret: ' . Sysconf::FREY_INTERNAL_QUERY_SECRET
-                ]);
+                // @phpstan-ignore-next-line
+                if (Sysconf::USE_TWIRP_FREY) {
+                    // @phpstan-ignore-next-line
+                    $this->_frey->withHeaders([
+                        'X-Auth-Token' => $this->_authToken,
+                        'X-Locale' => $locale,
+                        'X-Current-Event-Id' => $this->_mainEventId,
+                        'X-Current-Person-Id' => $this->_currentPersonId,
+                        'X-Internal-Query-Secret' => Sysconf::FREY_INTERNAL_QUERY_SECRET
+                    ]);
+                } else {
+                    // @phpstan-ignore-next-line
+                    $this->_frey->getClient()->getHttpClient()->withHeaders([
+                        'X-Auth-Token: ' . $this->_authToken,
+                        'X-Locale: ' . $locale,
+                        'X-Current-Event-Id: ' . $this->_mainEventId,
+                        'X-Current-Person-Id: ' . $this->_currentPersonId,
+                        'X-Internal-Query-Secret: ' . Sysconf::FREY_INTERNAL_QUERY_SECRET
+                    ]);
+                }
 
                 if (!empty($this->_mainEventId)) {
                     // TODO: access rules for aggregated events?
@@ -244,8 +264,13 @@ abstract class Controller
         if (Sysconf::DEBUG_MODE) {
             $client->withDebug();
             $client->withCookies(['XDEBUG_SESSION=PHPSTORM']);
-            $this->_frey->getClient()->getHttpClient()->withDebug();
-            $this->_frey->getClient()->getHttpClient()->withCookies(['XDEBUG_SESSION=PHPSTORM']);
+            // @phpstan-ignore-next-line
+            if (!Sysconf::USE_TWIRP_FREY) {
+                // @phpstan-ignore-next-line
+                $this->_frey->getClient()->getHttpClient()->withDebug();
+                // @phpstan-ignore-next-line
+                $this->_frey->getClient()->getHttpClient()->withCookies(['XDEBUG_SESSION=PHPSTORM']);
+            }
         }
 
         $this->_rulesList = [];

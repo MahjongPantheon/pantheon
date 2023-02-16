@@ -39,8 +39,9 @@ return array_merge([
     'db'        => require __DIR__ . '/db.php',
     'routes'    => require __DIR__ . '/routes.php',
     'freyUrl'   => 'http://localhost:4004', // TODO: change this in your local config!
+    'useFreyTwirp' => false,
     'rhedaUrl'  => 'http://localhost:4002', // TODO: change this in your local config!
-    'verbose'   => false,
+    'verbose'   => true, // TODO: change this in your local config!
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC',
     'trackerUrl' => null, // should be string or null, %s is placeholder for game hash token

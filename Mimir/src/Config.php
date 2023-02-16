@@ -59,6 +59,20 @@ class Config
 
     /**
      * @param string $path
+     * @return bool
+     */
+    public function getBooleanValue(string $path)
+    {
+        $val = $this->getValue($path);
+        // @phpstan-ignore-next-line
+        if (is_bool($val)) {
+            return $val;
+        }
+        return !empty($val);
+    }
+
+    /**
+     * @param string $path
      * @return string
      */
     public function getStringValue(string $path)

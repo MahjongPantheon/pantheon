@@ -64,7 +64,7 @@ class PrivilegesOfUser extends Controller
         $allAccessData = $this->_frey->getAllPersonAccess((int)$this->_path['id']);
 
         $events = $this->_mimir->getEventsById(array_filter(array_keys($allAccessData), function ($v) {
-            return $v !='__global';
+            return $v != -1; // -1 === global privileges
         }));
 
         $eventTitles = array_combine(
@@ -79,7 +79,7 @@ class PrivilegesOfUser extends Controller
         $rules = array_map(function ($eventId) use (&$rulesList, &$allAccessData, &$eventTitles) {
             return [
                 'id' => $eventId,
-                'title' => $eventId == '__global' ? _t('Global privileges') : $eventTitles[$eventId],
+                'title' => $eventId == -1 ? _t('Global privileges') : $eventTitles[$eventId],
                 'rules' => array_map(function ($key, $ruleInfo) use (&$allAccessData, $eventId) {
                     $currentValue = isset($allAccessData[$eventId][$key]['value'])
                         ? $allAccessData[$eventId][$key]['value']

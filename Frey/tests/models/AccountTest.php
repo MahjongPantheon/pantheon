@@ -353,26 +353,6 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function testUpdatePersonalInfoBadId()
-    {
-        $this->expectExceptionCode(405);
-        $this->expectException(\Frey\InvalidParametersException::class);
-        $model = new AccountModel($this->_db, $this->_config, $this->_meta);
-        $model->updatePersonalInfo(
-            'kek',
-            'test2',
-            'testcountry2',
-            'testcity2',
-            'test2@email.com',
-            '222-222-222',
-            'tid2'
-        );
-    }
-
-    /**
-     * @throws InvalidParametersException
-     * @throws \Exception
-     */
     public function testUpdatePersonalInfoIdNotFound()
     {
         $this->expectExceptionCode(406);

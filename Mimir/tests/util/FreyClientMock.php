@@ -88,7 +88,7 @@ class FreyClientMock implements IFreyClient
         // TODO: Implement getRuleValue() method.
     }
 
-    public function updatePersonalInfo(string $id, string $title, string $city, string $country, string $email, string $phone, string $tenhouId): bool
+    public function updatePersonalInfo(int $id, string $title, string $city, string $country, string $email, string $phone, string $tenhouId): bool
     {
         // TODO: Implement updatePersonalInfo() method.
         return true;

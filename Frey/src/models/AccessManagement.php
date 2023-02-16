@@ -101,7 +101,7 @@ class AccessManagementModel extends Model
         $rules = PersonAccessPrimitive::findByPerson($this->_db, [$personId]);
         $resultingRules = [];
         foreach ($rules as $rule) {
-            $eventKey = $rule->getEventId() ?? '__global';
+            $eventKey = $rule->getEventId() ?? -1; // -1 === global privileges
             if (empty($resultingRules[$eventKey])) {
                 $resultingRules[$eventKey] = [];
             }
@@ -130,7 +130,7 @@ class AccessManagementModel extends Model
         $rules = PersonAccessPrimitive::findByPersonAndType($this->_db, [$personId], $type);
         $resultingRules = [];
         foreach ($rules as $rule) {
-            $eventKey = $rule->getEventId() ?? '__global';
+            $eventKey = $rule->getEventId() ?? -1; // -1 === global privileges
             if (empty($resultingRules[$eventKey])) {
                 $resultingRules[$eventKey] = [];
             }
@@ -156,7 +156,7 @@ class AccessManagementModel extends Model
         $rules = GroupAccessPrimitive::findByGroup($this->_db, [$groupId]);
         $resultingRules = [];
         foreach ($rules as $rule) {
-            $eventKey = $rule->getEventId() ?? '__global';
+            $eventKey = $rule->getEventId() ?? -1; // -1 === global privileges
             if (empty($resultingRules[$eventKey])) {
                 $resultingRules[$eventKey] = [];
             }
