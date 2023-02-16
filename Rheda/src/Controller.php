@@ -135,10 +135,11 @@ abstract class Controller
         $this->_path = $path;
         $this->_mimir = new \Rheda\MimirClient(Sysconf::API_URL()); // @phpstan-ignore-line
 
-        if (empty($_COOKIE['usetwirp'])) {
-            $this->_frey = new \Rheda\FreyClient(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
-        } else {
+        // @phpstan-ignore-next-line
+        if (Sysconf::USE_TWIRP_FREY) {
             $this->_frey = new \Rheda\FreyClientTwirp(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
+        } else {
+            $this->_frey = new \Rheda\FreyClient(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
         }
 
         // i18n support
@@ -207,16 +208,8 @@ abstract class Controller
                 $this->_currentPersonId = null;
                 $this->_authToken = null;
             } else {
-                if (empty($_COOKIE['usetwirp'])) {
-                    // @phpstan-ignore-next-line
-                    $this->_frey->getClient()->getHttpClient()->withHeaders([
-                        'X-Auth-Token: ' . $this->_authToken,
-                        'X-Locale: ' . $locale,
-                        'X-Current-Event-Id: ' . $this->_mainEventId,
-                        'X-Current-Person-Id: ' . $this->_currentPersonId,
-                        'X-Internal-Query-Secret: ' . Sysconf::FREY_INTERNAL_QUERY_SECRET
-                    ]);
-                } else {
+                // @phpstan-ignore-next-line
+                if (Sysconf::USE_TWIRP_FREY) {
                     // @phpstan-ignore-next-line
                     $this->_frey->withHeaders([
                         'X-Auth-Token' => $this->_authToken,
@@ -224,6 +217,15 @@ abstract class Controller
                         'X-Current-Event-Id' => $this->_mainEventId,
                         'X-Current-Person-Id' => $this->_currentPersonId,
                         'X-Internal-Query-Secret' => Sysconf::FREY_INTERNAL_QUERY_SECRET
+                    ]);
+                } else {
+                    // @phpstan-ignore-next-line
+                    $this->_frey->getClient()->getHttpClient()->withHeaders([
+                        'X-Auth-Token: ' . $this->_authToken,
+                        'X-Locale: ' . $locale,
+                        'X-Current-Event-Id: ' . $this->_mainEventId,
+                        'X-Current-Person-Id: ' . $this->_currentPersonId,
+                        'X-Internal-Query-Secret: ' . Sysconf::FREY_INTERNAL_QUERY_SECRET
                     ]);
                 }
 
@@ -262,7 +264,8 @@ abstract class Controller
         if (Sysconf::DEBUG_MODE) {
             $client->withDebug();
             $client->withCookies(['XDEBUG_SESSION=PHPSTORM']);
-            if (empty($_COOKIE['usetwirp'])) {
+            // @phpstan-ignore-next-line
+            if (!Sysconf::USE_TWIRP_FREY) {
                 // @phpstan-ignore-next-line
                 $this->_frey->getClient()->getHttpClient()->withDebug();
                 // @phpstan-ignore-next-line
