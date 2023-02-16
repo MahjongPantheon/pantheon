@@ -15,8 +15,10 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+namespace Frey;
 
 use Twirp\Context;
+
 require_once __DIR__ . '/../src/helpers/Db.php';
 
 /**
@@ -34,7 +36,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
      */
     protected $_db;
 
-    const CURRENT_EVENT_ID = 123;
+    const CURRENT_EVENT_ID = 124;
 
     /**
      * @throws \Exception
@@ -984,7 +986,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             [],
             (new \Common\Access_UpdateRuleForGroup_Payload())
                 ->setRuleId($ruleId)
-                ->setRuleValue((new \Common\RuleValue())->setNumberValue(123))
+                ->setRuleValue((new \Common\RuleValue())->setNumberValue(321))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_INT)
         )->getSuccess();
 
@@ -1418,26 +1420,24 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         )->getPersonId();
         $eventId = self::CURRENT_EVENT_ID;
 
-        $personRuleIds = [
-            $this->_client->AddRuleForPerson(
-                [],
-                (new \Common\Access_AddRuleForPerson_Payload())
-                    ->setRuleName('testrule1')
-                    ->setRuleValue((new \Common\RuleValue())->setStringValue('testval1'))
-                    ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
-                    ->setPersonId($userId)
-                    ->setEventId($eventId)
-            )->getRuleId(),
-            $this->_client->AddRuleForPerson(
-                [],
-                (new \Common\Access_AddRuleForPerson_Payload())
-                    ->setRuleName('testrule2')
-                    ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2'))
-                    ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
-                    ->setPersonId($userId)
-                    ->setEventId($eventId)
-            )->getRuleId()
-        ];
+        $this->_client->AddRuleForPerson(
+            [],
+            (new \Common\Access_AddRuleForPerson_Payload())
+                ->setRuleName('testrule1')
+                ->setRuleValue((new \Common\RuleValue())->setStringValue('testval1'))
+                ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
+                ->setPersonId($userId)
+                ->setEventId($eventId)
+        )->getRuleId();
+        $personRuleId = $this->_client->AddRuleForPerson(
+            [],
+            (new \Common\Access_AddRuleForPerson_Payload())
+                ->setRuleName('testrule2')
+                ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2_p'))
+                ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
+                ->setPersonId($userId)
+                ->setEventId($eventId)
+        )->getRuleId();
 
         $title = 'testgrp';
         $description = 'testgrp_description';
@@ -1452,26 +1452,25 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         )->getGroupId();
         $eventId = self::CURRENT_EVENT_ID;
 
-        $groupRuleIds = [
-            $this->_client->AddRuleForGroup(
-                [],
-                (new \Common\Access_AddRuleForGroup_Payload())
-                    ->setRuleName('testrule1')
-                    ->setRuleValue((new \Common\RuleValue())->setStringValue('testval1'))
-                    ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
-                    ->setGroupId($grpId)
-                    ->setEventId($eventId)
-            )->getRuleId(),
-            $this->_client->AddRuleForGroup(
-                [],
-                (new \Common\Access_AddRuleForGroup_Payload())
-                    ->setRuleName('testrule2')
-                    ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2'))
-                    ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
-                    ->setGroupId($grpId)
-                    ->setEventId($eventId)
-            )->getRuleId()
-        ];
+        $this->_client->AddRuleForGroup(
+            [],
+            (new \Common\Access_AddRuleForGroup_Payload())
+                ->setRuleName('testrule2')
+                ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2_g'))
+                ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
+                ->setGroupId($grpId)
+                ->setEventId($eventId)
+        )->getRuleId();
+
+        $groupRuleId = $this->_client->AddRuleForGroup(
+            [],
+            (new \Common\Access_AddRuleForGroup_Payload())
+                ->setRuleName('testrule3')
+                ->setRuleValue((new \Common\RuleValue())->setStringValue('testval3'))
+                ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
+                ->setGroupId($grpId)
+                ->setEventId($eventId)
+        )->getRuleId();
 
         $this->_client->AddPersonToGroup(
             [],
@@ -1500,15 +1499,15 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->_client->UpdateRuleForPerson(
             [],
             (new \Common\Access_UpdateRuleForPerson_Payload())
-                ->setRuleId($personRuleIds[1])
+                ->setRuleId($personRuleId)
                 ->setRuleValue((new \Common\RuleValue())->setNumberValue(123))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_INT)
         )->getSuccess();
 
-        $this->_client->UpdateRuleForPerson(
+        $this->_client->UpdateRuleForGroup(
             [],
-            (new \Common\Access_UpdateRuleForPerson_Payload())
-                ->setRuleId($groupRuleIds[1])
+            (new \Common\Access_UpdateRuleForGroup_Payload())
+                ->setRuleId($groupRuleId)
                 ->setRuleValue((new \Common\RuleValue())->setNumberValue(321))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_INT)
         )->getSuccess();

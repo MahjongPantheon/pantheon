@@ -4,8 +4,13 @@ require __DIR__ . '/../../vendor/autoload.php';
 require __DIR__ . '/../../../Common/generated/Common/FreyServer.php';
 require __DIR__ . '/../../src/TwirpServer.php';
 
+$configPath = null;
+if (!empty(getenv('OVERRIDE_CONFIG_PATH'))) {
+    $configPath = getenv('OVERRIDE_CONFIG_PATH');
+}
+
 $request = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();
-$handler = new \Common\FreyServer(new \Frey\TwirpServer(), null, null, null, '/v2');
+$handler = new \Common\FreyServer(new \Frey\TwirpServer($configPath), null, null, null, '/v2');
 
 $response = $handler->handle($request);
 
