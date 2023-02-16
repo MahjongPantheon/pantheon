@@ -1,0 +1,907 @@
+syntax = "proto3";
+
+package Common;
+
+service Mimir {
+  rpc GetRulesets (Events_GetRulesets_Payload) returns (Events_GetRulesets_Response);
+  rpc GetTimezones (Events_GetTimezones_Payload) returns (Events_GetTimezones_Response);
+  rpc GetCountries (Events_GetCountries_Payload) returns (Events_GetCountries_Response);
+  rpc GetEvents (Events_GetEvents_Payload) returns (Events_GetEvents_Response);
+  rpc GetEventsById (Events_GetEventsById_Payload) returns (Events_GetEventsById_Response);
+  rpc GetMyEvents (Players_GetMyEvents_Payload) returns (Players_GetMyEvents_Response);
+  rpc GetGameConfig (Generic_Event_Payload) returns (GameConfig);
+  rpc GetRatingTable (Events_GetRatingTable_Payload) returns (Events_GetRatingTable_Response);
+  rpc GetLastGames (Events_GetLastGames_Payload) returns (Events_GetLastGames_Response);
+  rpc GetGame (Events_GetGame_Payload) returns (Events_GetGame_Response);
+  rpc GetGamesSeries (Generic_Event_Payload) returns (Events_GetGamesSeries_Response);
+  rpc GetCurrentSessions (Players_GetCurrentSessions_Payload) returns (Players_GetCurrentSessions_Response);
+  rpc GetAllRegisteredPlayers (Events_GetAllRegisteredPlayers_Payload) returns (Events_GetAllRegisteredPlayers_Response);
+  rpc GetTimerState (Generic_Event_Payload) returns (Events_GetTimerState_Response);
+  rpc GetSessionOverview (Games_GetSessionOverview_Payload) returns (Games_GetSessionOverview_Response);
+  rpc GetPlayerStats (Players_GetPlayerStats_Payload) returns (Players_GetPlayerStats_Response);
+  rpc AddRound (Games_AddRound_Payload) returns (Games_AddRound_Response);
+  rpc PreviewRound (Games_PreviewRound_Payload) returns (Games_PreviewRound_Response);
+  rpc AddOnlineReplay (Games_AddOnlineReplay_Payload) returns (Games_AddOnlineReplay_Response);
+  rpc GetLastResults (Players_GetLastResults_Payload) returns (Players_GetLastResults_Response);
+  rpc GetLastRound (Players_GetLastRound_Payload) returns (Players_GetLastRound_Response);
+  rpc GetAllRounds (Players_GetAllRounds_Payload) returns (Players_GetAllRounds_Response);
+  rpc GetLastRoundByHash (Players_GetLastRoundByHash_Payload) returns (Players_GetLastRoundByHash_Response);
+  rpc GetEventForEdit (Events_GetEventForEdit_Payload) returns (Events_GetEventForEdit_Response);
+  rpc RebuildScoring (Generic_Event_Payload) returns (Generic_Success_Response);
+  rpc CreateEvent (EventData) returns (Generic_Event_Payload); // note: input data is EventData here
+  rpc UpdateEvent (Events_UpdateEvent_Payload) returns (Generic_Success_Response);
+  rpc FinishEvent (Generic_Event_Payload) returns (Generic_Success_Response);
+  rpc ToggleListed (Generic_Event_Payload) returns (Generic_Success_Response);
+  rpc GetTablesState (Generic_Event_Payload) returns (Events_GetTablesState_Response);
+  rpc StartTimer (Generic_Event_Payload) returns (Generic_Success_Response);
+  rpc RegisterPlayer (Events_RegisterPlayer_Payload) returns (Generic_Success_Response);
+  rpc UnregisterPlayer (Events_UnregisterPlayer_Payload) returns (Events_UnregisterPlayer_Response);
+  rpc UpdatePlayerSeatingFlag (Events_UpdatePlayerSeatingFlag_Payload) returns (Generic_Success_Response);
+  rpc GetAchievements (Events_GetAchievements_Payload) returns (Events_GetAchievements_Response);
+  rpc GetAchievementsList (Events_GetAchievementsList_Payload) returns (Events_GetAchievementsList_Response);
+  rpc ToggleHideResults (Generic_Event_Payload) returns (Generic_Success_Response);
+  rpc UpdatePlayersLocalIds (Events_UpdatePlayersLocalIds_Payload) returns (Generic_Success_Response);
+  rpc UpdatePlayerReplacement (Events_UpdatePlayerReplacement_Payload) returns (Generic_Success_Response);
+  rpc UpdatePlayersTeams (Events_UpdatePlayersTeams_Payload) returns (Generic_Success_Response);
+  rpc StartGame (Games_StartGame_Payload) returns (Games_StartGame_Response);
+  rpc EndGame (Games_EndGame_Payload) returns (Generic_Success_Response);
+  rpc CancelGame (Games_CancelGame_Payload) returns (Generic_Success_Response);
+  rpc FinalizeSessions (Generic_Event_Payload) returns (Generic_Success_Response);
+  rpc DropLastRound (Games_DropLastRound_Payload) returns (Generic_Success_Response);
+  rpc DefinalizeGame (Games_DefinalizeGame_Payload) returns (Generic_Success_Response);
+  rpc AddPenalty (Games_AddPenalty_Payload) returns (Generic_Success_Response);
+  rpc AddPenaltyGame (Games_AddPenaltyGame_Payload) returns (Games_AddPenaltyGame_Response);
+  rpc GetPlayer (Players_GetPlayer_Payload) returns (Players_GetPlayer_Response);
+  rpc GetCurrentSeating (Generic_Event_Payload) returns (Events_GetCurrentSeating_Response);
+  rpc MakeShuffledSeating (Seating_MakeShuffledSeating_Payload) returns (Generic_Success_Response);
+  rpc MakeSwissSeating (Generic_Event_Payload) returns (Generic_Success_Response);
+  rpc ResetSeating (Generic_Event_Payload) returns (Seating_ResetSeating_Response);
+  rpc GenerateSwissSeating (Generic_Event_Payload) returns (Seating_GenerateSwissSeating_Response);
+  rpc MakeIntervalSeating (Seating_MakeIntervalSeating_Payload) returns (Generic_Success_Response);
+  rpc MakePrescriptedSeating (Seating_MakePrescriptedSeating_Payload) returns (Generic_Success_Response);
+  rpc GetNextPrescriptedSeating (Generic_Event_Payload) returns (Seating_GetNextPrescriptedSeating_Response);
+  rpc GetPrescriptedEventConfig (Generic_Event_Payload) returns (Events_GetPrescriptedEventConfig_Response);
+  rpc UpdatePrescriptedEventConfig (Events_UpdatePrescriptedEventConfig_Payload) returns (Generic_Success_Response);
+  rpc InitStartingTimer (Generic_Event_Payload) returns (Generic_Success_Response);
+  rpc GetStartingTimer (Generic_Event_Payload) returns (Events_GetStartingTimer_Response);
+  rpc AddErrorLog (Misc_AddErrorLog_Payload) returns (Misc_AddErrorLog_Response);
+}
+
+message Events_GetRulesets_Payload {}
+
+message Ruleset {
+  string title = 1;
+  string defaultRules = 2; // stringified JSON
+  string fieldTypes = 3; // stringified JSON
+}
+
+message Events_GetRulesets_Response {
+  repeated Ruleset TODO = 1;
+}
+
+message Events_GetTimezones_Payload {
+  string addr = 1;
+}
+
+message Events_GetTimezones_Response {
+  string preferredByIp = 1;
+  repeated string timezones = 2;
+}
+
+message Country {
+  string code = 1;
+  string name = 2;
+}
+
+message Events_GetCountries_Payload {
+  string addr = 1;
+}
+
+message Events_GetCountries_Response {
+  string preferredByIp = 1;
+  repeated Country countries = 2;
+}
+
+message Events_GetEvents_Payload {
+  int32 limit = 1;
+  int32 offset = 2;
+  bool filterUnlisted = 3;
+}
+
+enum EventType {
+  ONLINE = 0;
+  TOURNAMENT = 1;
+  LOCAL = 2;
+}
+
+message Event {
+  int32 id = 1;
+  string title = 2;
+  string description = 3;
+  bool finished = 4;
+  bool isListed = 5;
+  bool isRatingShown = 6;
+  bool tournamentStarted = 7;
+  EventType type = 8;
+}
+
+message Events_GetEvents_Response {
+  int32 total = 1;
+  repeated Event events = 2;
+}
+
+message Events_GetEventsById_Payload {
+  repeated int32 ids = 1;
+}
+
+message Events_GetEventsById_Response {
+  repeated Event events = 1;
+}
+
+message Players_GetMyEvents_Payload {}
+
+message MyEvent {
+  int32 id = 1;
+  string title = 2;
+  string description = 3;
+  bool isOnline = 4;
+}
+
+message Players_GetMyEvents_Response {
+  repeated MyEvent events = 1;
+}
+
+enum TournamentGamesStatus {
+  NONE = 0; // for non-tournament events
+  SEATING_READY = 1;
+  STARTED = 2;
+}
+
+message GameConfig {
+  repeated int32 allowedYaku = 1; // ids array
+  int32 startPoints = 2;
+  int32 goalPoints = 3;
+  bool playAdditionalRounds = 4;
+  bool withKazoe = 5;
+  bool withKiriageMangan = 6;
+  bool withAbortives = 7;
+  bool withNagashiMangan = 8;
+  bool withAtamahane = 9;
+  string rulesetTitle = 10;
+  bool tonpuusen = 11;
+  int32 startRating = 12;
+  bool riichiGoesToWinner = 13;
+  bool doubleronRiichiAtamahane = 14;
+  bool doubleronHonbaAtamahane = 15;
+  bool extraChomboPayments = 16;
+  float chomboPenalty = 17;
+  bool withKuitan = 18;
+  bool withButtobi = 19;
+  bool withMultiYakumans = 20;
+  int32 gameExpirationTime = 21;
+  int32 minPenalty = 22;
+  int32 maxPenalty = 23;
+  int32 penaltyStep = 24;
+  repeated int32 yakuWithPao = 25; // ids array
+  string eventTitle = 26;
+  string eventDescription = 27;
+  string eventStatHost = 28;
+  bool useTimer = 29;
+  bool usePenalty = 30;
+  string timerPolicy = 31;
+  int32 redZone = 32; // seconds
+  int32 yellowZone = 33; // seconds
+  int32 gameDuration = 34; // minutes
+  string timezone = 35;
+  bool isOnline = 36;
+  bool isTeam = 37;
+  bool autoSeating = 38;
+  bool syncStart = 39;
+  bool syncEnd = 40;
+  bool sortByGames = 41;
+  bool allowPlayerAppend = 42;
+  bool withLeadingDealerGameOver = 43;
+  bool subtractStartPoints = 44;
+  int32 seriesLength = 45;
+  int32 minGamesCount = 46;
+  TournamentGamesStatus gamesStatus = 47;
+  bool hideResults = 48;
+  bool hideAddReplayButton = 49;
+  bool isPrescripted = 50;
+  int32 chipsValue = 51;
+  bool isFinished = 52;
+}
+
+message Events_GetRatingTable_Payload {
+  repeated int32 eventIdList = 1;
+  string orderBy = 2;
+  string order = 3;
+  bool withPrefinished = 4;
+}
+
+message PlayerInRating {
+  int32 id = 1;
+  string title = 2;
+  string tenhouId = 3;
+  float rating = 4;
+  int32 chips = 5;
+  bool winnerZone = 6;
+}
+
+message Events_GetRatingTable_Response {
+  repeated PlayerInRating list = 1;
+}
+
+message Events_GetLastGames_Payload {
+  repeated int32 eventIdList = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+  optional string orderBy = 4;
+  optional string order = 5;
+}
+
+message Player {
+  int32 id = 1;
+  string title = 2;
+  string tenhouId = 3;
+}
+
+message FinalResultOfSession {
+  int32 playerId = 1;
+  int32 score = 2;
+  float ratingDelta = 3;
+  int32 place = 4;
+}
+
+message Penalty {
+  int32 who = 1;
+  int32 amount = 2;
+  string reason = 3;
+}
+
+message RonResult {
+  int32 roundIndex = 1;
+  int32 winnerId = 3;
+  int32 loserId = 4;
+  int32 paoPlayerId = 5;
+  int32 han = 6;
+  int32 fu = 7;
+  repeated int32 yaku = 8; // yaku ids
+  repeated int32 riichiBets = 9; // player ids
+  int32 dora = 10;
+  int32 uradora = 11;
+  int32 kandora = 12;
+  int32 kanuradora = 13;
+  bool openHand = 14;
+}
+
+message MultironWin {
+  int32 winnerId = 1;
+  int32 paoPlayerId = 2;
+  int32 han = 3;
+  int32 fu = 4;
+  repeated int32 yaku = 5; // yaku ids
+  repeated int32 riichiBets = 6; // player ids
+  int32 dora = 7;
+  int32 uradora = 8;
+  int32 kandora = 9;
+  int32 kanuradora = 10;
+  bool openHand = 11;
+}
+
+message MultironResult {
+  int32 roundIndex = 1;
+  int32 loserId = 3;
+  int32 multiRon = 4; // count of players who won
+  repeated MultironWin wins = 5;
+}
+
+message TsumoResult {
+  int32 roundIndex = 1;
+  int32 winnerId = 3;
+  int32 paoPlayerId = 4;
+  int32 han = 5;
+  int32 fu = 6;
+  repeated int32 yaku = 7; // yaku ids
+  repeated int32 riichiBets = 8; // player ids
+  int32 dora = 9;
+  int32 uradora = 10;
+  int32 kandora = 11;
+  int32 kanuradora = 12;
+  bool openHand = 13;
+}
+
+message DrawResult {
+  int32 roundIndex = 1;
+  repeated int32 riichiBets = 3; // player ids
+  repeated int32 tempai = 4; // player ids
+}
+
+message AbortResult {
+  int32 roundIndex = 1;
+  repeated int32 riichiBets = 3; // player ids
+}
+
+message ChomboResult {
+  int32 roundIndex = 1;
+  int32 loserId = 3;
+}
+
+message NagashiResult {
+  int32 roundIndex = 1;
+  repeated int32 riichiBets = 3; // player ids
+  repeated int32 tempai = 4; // player ids
+  repeated int32 nagashi = 5; // player ids
+}
+
+message Round {
+  oneof outcome {
+    RonResult ron = 1;
+    TsumoResult tsumo = 2;
+    MultironResult multiron = 3;
+    DrawResult draw = 4;
+    AbortResult abort = 5;
+    ChomboResult chombo = 6;
+    NagashiResult nagashi = 7;
+  }
+}
+
+message GameResult {
+  string sessionHash = 1;
+  optional string date = 2;
+  string replayLink = 3;
+  repeated int32 players = 4;
+  repeated FinalResultOfSession finalResults = 5;
+  repeated Penalty penaltyLog = 6;
+  repeated Round rounds = 7;
+}
+
+message Events_GetLastGames_Response {
+  repeated GameResult games = 1;
+  repeated Player players = 2;
+  int32 totalGames = 3;
+}
+
+message Events_GetGame_Payload {
+  string sessionHash = 1;
+}
+
+message Events_GetGame_Response {
+  GameResult game = 1;
+  repeated Player players = 2;
+}
+
+message PlayerPlaceInSeries {
+  string sessionHash = 1;
+  int32 place = 2;
+}
+
+message SeriesResult {
+  Player player = 1;
+  repeated PlayerPlaceInSeries bestSeries = 2;
+  float bestSeriesScores = 3;
+  int32 bestSeriesPlaces = 4;
+  string bestSeriesAvgPlace = 5; // formatted numeric string
+  repeated PlayerPlaceInSeries currentSeries = 6;
+  float currentSeriesScores = 7;
+  int32 currentSeriesPlaces = 8;
+  string currentSeriesAvgPlace = 9; // formatted numeric string
+}
+
+message Events_GetGamesSeries_Response {
+  repeated SeriesResult results = 1;
+}
+
+message Players_GetCurrentSessions_Payload {
+  int32 playerId = 1;
+  int32 eventId = 2;
+}
+
+message ReplacementPlayer {
+  int32 id = 1;
+  string title = 2;
+}
+
+message PlayerInSession {
+  int32 id = 1;
+  string title = 2;
+  int32 score = 3;
+  optional ReplacementPlayer replacedBy = 4;
+}
+
+message CurrentSession {
+  string sessionHash = 1;
+  string status = 2;
+  optional int32 tableIndex = 3;
+  repeated PlayerInSession players = 4;
+}
+
+message Players_GetCurrentSessions_Response {
+  repeated CurrentSession sessions = 1;
+}
+
+message Events_GetAllRegisteredPlayers_Payload {
+  repeated int32 eventIds = 1;
+}
+
+message RegisteredPlayer {
+  int32 id = 1;
+  string title = 2;
+  optional int32 localId = 3;
+  optional string teamName = 4;
+  string tenhouId = 5;
+  bool ignoreSeating = 6;
+  optional ReplacementPlayer replacedBy = 7;
+}
+
+message Events_GetAllRegisteredPlayers_Response {
+  repeated RegisteredPlayer players = 1;
+}
+
+message Events_GetTimerState_Response {
+  bool started = 1;
+  bool finished = 2;
+  int32 timeRemaining = 3;
+  bool waitingForTimer = 4;
+  bool haveAutostart = 5;
+  bool autostartTimer = 6;
+}
+
+message Games_GetSessionOverview_Payload {
+  string sessionHash = 1;
+}
+
+message Games_GetSessionOverview_Response {
+  int32 id = 1;
+  int32 eventId = 2;
+  optional int32 tableIndex = 3;
+  repeated PlayerInSession players = 4;
+}
+
+message Players_GetPlayerStats_Payload {
+  int32 playerId = 1;
+  repeated int32 eventIdList = 2;
+}
+
+message SessionHistoryResult {
+  string sessionHash = 1;
+  int32 eventId = 2;
+  int32 playerId = 3;
+  int32 score = 4;
+  float ratingDelta = 5;
+  int32 place = 6;
+}
+
+message PlacesSummaryItem {
+  int32 place = 1;
+  int32 count = 2; // count of games finished on this particular place
+}
+
+message PlayerWinSummary {
+  int32 ron = 1;
+  int32 tsumo = 2;
+  int32 chombo = 3;
+  int32 feed = 4;
+  int32 tsumofeed = 5;
+  int32 winsWithOpen = 6;
+  int32 winsWithRiichi = 7;
+  int32 winsWithDama = 8;
+  int32 unforcedFeedToOpen = 9;
+  int32 unforcedFeedToRiichi = 10;
+  int32 unforcedFeedToDama = 11;
+  int32 draw = 12;
+  int32 drawTempai = 13;
+  int32 pointsWon = 14;
+  int32 pointsLostRon = 15;
+  int32 pointsLostTsumo = 16;
+}
+
+message HandValueStat {
+  int32 hanCount = 1;
+  int32 count = 2; // count of hands with this value
+}
+
+message YakuStat {
+  int32 yakuId = 1;
+  int32 count = 2; // count of hands contained this yaku
+}
+
+message RiichiSummary {
+  int32 riichiWon = 1;
+  int32 riichiLost = 2;
+  int32 feedUnderRiichi = 3;
+}
+
+message DoraSummary {
+  int32 count = 1;
+  float average = 2;
+}
+
+message Players_GetPlayerStats_Response {
+  repeated int32 ratingHistory = 1;
+  repeated SessionHistoryResult scoreHistory = 2;
+  repeated Player playersInfo = 3;
+  repeated PlacesSummaryItem placesSummary = 4;
+  int32 totalPlayedGames = 5;
+  int32 totalPlayedRounds = 6;
+  PlayerWinSummary winSummary = 7;
+  repeated HandValueStat handsValueSummary = 8;
+  repeated YakuStat yakuSummary = 9;
+  RiichiSummary riichiSummary = 10;
+  DoraSummary doraStat = 11;
+}
+
+message Games_AddRound_Payload {
+  string sessionHash = 1;
+  Round roundData = 2;
+}
+
+message IntermediateResultOfSession {
+  int32 playerId = 1;
+  int32 score = 2;
+  int32 penaltyScore = 3;
+}
+
+message Games_AddRound_Response {
+  repeated IntermediateResultOfSession scores = 1;
+  repeated string extraPenaltyLog = 2;
+  int32 round = 3; // current round number
+  int32 honba = 4;
+  int32 riichiBets = 5; // on the table from previous round
+  bool prematurelyFinished = 6; // if game has been finished prematurely (e.g. by timeout)
+  bool roundJustChanged = 7; // True if round has just changed useful to determine if current 4e or 4s is first one, no matter what honba count is. (Possible situation: draw in 3s or 3e, so first 4e or 4s has honba).
+  bool isFinished = 8;
+  bool yellowZoneAlreadyPlayed = 9; // True if timer policy refers to "yellow zone" rule AND first game in yellow zone was already recorded. In fact, this is a "red zone" flag, which means that hanchan will be finished when next round is recorded.
+  optional RoundOutcome lastOutcome = 10; // Outcome of previously recorded round. Useful to determine if certain rules should be applied in current case, e.g., agariyame should not be applied on chombo or abortive draw.
+}
+
+message Games_PreviewRound_Payload {
+  string sessionHash = 1;
+  Round roundData = 2;
+}
+
+enum RoundOutcome {
+  RON = 0;
+  TSUMO = 1;
+  DRAW = 2;
+  ABORT = 3;
+  CHOMBO = 4;
+  NAGASHI = 5;
+}
+
+message PaymentLogItem {
+  optional int32 from = 1;
+  optional int32 to = 2;
+  int32 amount = 3;
+}
+
+message PaymentLog {
+  repeated PaymentLogItem direct = 1;
+  repeated PaymentLogItem riichi = 2;
+  repeated PaymentLogItem honba = 3;
+}
+
+// TODO what about multiron
+message RoundState {
+  string sessionHash = 1;
+  int32 dealer = 2; // player id
+  int32 round = 3;
+  int32 riichi = 4; // riichis on table
+  repeated int32 riichiIds = 5; // player ids
+  RoundOutcome outcome = 6;
+  optional int32 penaltyFor = 7; // player id
+  int32 honba = 8;
+  repeated int32 scores = 9;
+  PaymentLog payments = 10;
+  int32 winner = 11;
+  int32 paoPlayer = 12;
+  repeated int32 yaku = 13;
+  int32 han = 14;
+  int32 fu = 15;
+  int32 dora = 16;
+  int32 kandora = 17;
+  int32 uradora = 18;
+  int32 kanuradora = 19;
+}
+
+message Games_PreviewRound_Response {
+  RoundState state = 1;
+}
+
+message Games_AddOnlineReplay_Payload {
+  int32 eventId = 1;
+  string link = 2;
+}
+
+message Games_AddOnlineReplay_Response {
+  GameResult game = 1;
+  repeated Player players = 2;
+}
+
+message Players_GetLastResults_Payload {
+  int32 playerId = 1;
+  int32 eventId = 2;
+}
+
+message Players_GetLastResults_Response {
+  repeated SessionHistoryResult results = 1;
+}
+
+message Players_GetLastRound_Payload {
+  int32 playerId = 1;
+  int32 eventId = 2;
+}
+
+message Players_GetLastRound_Response {
+  RoundState round = 1;
+}
+
+message Players_GetAllRounds_Payload {
+  string sessionHash = 1;
+}
+
+message Players_GetAllRounds_Response {
+  repeated RoundState round = 1;
+}
+
+message Players_GetLastRoundByHash_Payload {
+  string sessionHash = 1;
+}
+
+message Players_GetLastRoundByHash_Response {
+  RoundState round = 1;
+}
+
+message Events_GetEventForEdit_Payload {
+  int32 id = 1;
+}
+
+message EventData {
+  EventType type = 1;
+  string title = 2;
+  string description = 3;
+  int32 duration = 4;
+  string ruleset = 5; // ruleset title
+  string timezone = 6;
+  int32 lobbyId = 7; // xxxx for common lobby, 1xxxx for tournament lobby
+  int32 seriesLength = 8;
+  int32 minGames = 9;
+  bool isTeam = 10;
+  bool isPrescripted = 11;
+  int32 autostart = 12; // time until game autostart
+  string rulesetChanges = 13; // json-stringified ruleset changes
+}
+
+message Events_GetEventForEdit_Response {
+  int32 id = 1;
+  EventData event = 2;
+}
+
+message Events_UpdateEvent_Payload {
+  int32 id = 1;
+  EventData event = 2;
+}
+
+enum SessionStatus {
+  PLANNED = 0;
+  INPROGRESS = 1;
+  PREFINISHED = 2;
+  FINISHED = 3;
+  CANCELLED = 4;
+}
+
+message TableState {
+  SessionStatus status = 1;
+  bool mayDefinalize = 2;
+  string sessionHash = 3;
+  repeated Penalty penaltyLog = 4;
+  optional int32 tableIndex = 5;
+  optional Round lastRound = 6;
+  int32 currentRoundIndex = 7;
+  repeated IntermediateResultOfSession scores = 8;
+  repeated RegisteredPlayer players = 9;
+}
+
+message Events_GetTablesState_Response {
+  repeated TableState tables = 1;
+}
+
+message Events_RegisterPlayer_Payload {
+  int32 playerId = 1;
+  int32 eventId = 2;
+}
+
+message Events_UnregisterPlayer_Payload {
+  int32 playerId = 1;
+  int32 eventId = 2;
+}
+
+message Events_UnregisterPlayer_Response {}
+
+message Events_UpdatePlayerSeatingFlag_Payload {
+  int32 playerId = 1;
+  int32 eventId = 2;
+  bool ignoreSeating = 3;
+}
+
+message Events_GetAchievements_Payload {
+  repeated int32 eventIds = 1;
+  repeated string achievementsList = 2;
+}
+
+message Achievement {
+  string achievementId = 1;
+  string achieventData = 2; // JSON stringified data
+}
+
+message Events_GetAchievements_Response {
+  repeated Achievement achievements = 1;
+}
+
+message Events_GetAchievementsList_Payload {}
+
+message Events_GetAchievementsList_Response {
+  repeated string list = 1;
+}
+
+message LocalIdMapping {
+  int32 playerId = 1;
+  int32 localId = 2;
+}
+
+message Events_UpdatePlayersLocalIds_Payload {
+  int32 eventId = 1;
+  repeated LocalIdMapping idMap = 2;
+}
+
+message Events_UpdatePlayerReplacement_Payload {
+  int32 playerId = 1;
+  int32 eventId = 2;
+  int32 replacementId = 3;
+}
+
+message TeamMapping {
+  int32 playerId = 1;
+  string teamName = 2;
+}
+
+message Events_UpdatePlayersTeams_Payload {
+  int32 eventId = 1;
+  repeated TeamMapping teamNameMap = 2;
+}
+
+message Games_StartGame_Payload {
+  int32 eventId = 1;
+  repeated int32 players = 2; // ids list, e-s-w-n
+}
+
+message Games_StartGame_Response {
+  string sessionHash = 1;
+}
+
+message Games_EndGame_Payload {
+  string sessionHash = 1;
+}
+
+message Games_CancelGame_Payload {
+  string sessionHash = 1;
+}
+
+message Games_DropLastRound_Payload {
+  string sessionHash = 1;
+}
+
+message Games_DefinalizeGame_Payload {
+  string sessionHash = 1;
+}
+
+message Games_AddPenalty_Payload {
+  int32 eventId = 1;
+  int32 playerId = 2;
+  int32 amount = 3;
+  string reason = 4;
+}
+
+message Games_AddPenaltyGame_Payload {
+  int32 eventId = 1;
+  repeated int32 players = 2; // ids, e-s-w-n
+}
+
+message Games_AddPenaltyGame_Response {
+  string hash = 1;
+}
+
+message Players_GetPlayer_Payload {
+  int32 id = 1;
+}
+
+message Players_GetPlayer_Response {
+  Player players = 1;
+}
+
+message PlayerSeating {
+  int32 order = 1; // order at the table
+  int32 playerId = 2;
+  int32 sessionId = 3;
+  int32 tableIndex = 4;
+  float rating = 5;
+  string playerTitle = 6;
+}
+
+message Events_GetCurrentSeating_Response {
+  repeated PlayerSeating seating = 1;
+}
+
+message Seating_MakeShuffledSeating_Payload {
+  int32 eventId = 1;
+  int32 groupsCount = 2;
+  int32 seed = 3; // randomness factor
+}
+
+message Seating_ResetSeating_Response {}
+
+message PlayerSeatingSwiss {
+  int32 playerId = 1;
+  float rating = 2;
+}
+
+message TableItemSwiss {
+  repeated PlayerSeatingSwiss players = 1; // should be 4 elements
+}
+
+message Seating_GenerateSwissSeating_Response {
+  repeated TableItemSwiss tables = 1;
+}
+
+message Seating_MakeIntervalSeating_Payload {
+  int32 eventId = 1;
+  int32 step = 2;
+}
+
+message Seating_MakePrescriptedSeating_Payload {
+  int32 eventId = 1;
+  bool randomizeAtTables = 2;
+}
+
+message PrescriptedTable {
+  repeated RegisteredPlayer players = 1; // should be 4 elements
+}
+
+message Seating_GetNextPrescriptedSeating_Response {
+  repeated PrescriptedTable tables = 1;
+}
+
+message Events_GetPrescriptedEventConfig_Response {
+  int32 eventId = 1;
+  int32 nextSessionIndex = 2;
+  optional string prescript = 3;
+  repeated string errors = 4;
+}
+
+message Events_UpdatePrescriptedEventConfig_Payload {
+  int32 eventId = 1;
+  int32 nextSessionIndex = 2;
+  string prescript = 3;
+}
+
+message Events_GetStartingTimer_Response {
+  int32 timer = 1; // seconds to start
+}
+
+message Misc_AddErrorLog_Payload {
+  string facility = 1;
+  string sessionHash = 2;
+  int32 playerId = 3;
+  string error = 4;
+  string stack = 5;
+}
+
+message Misc_AddErrorLog_Response {}
+
+message Generic_Success_Response {
+  bool success = 1;
+}
+
+message Generic_Event_Payload {
+  int32 eventId = 1;
+}

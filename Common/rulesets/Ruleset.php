@@ -109,7 +109,7 @@ class Ruleset
             'doubleronRiichiAtamahane' => 'bool',
             'equalizeUma'           => 'bool',
             'extraChomboPayments'   => 'bool',
-            'gameExpirationTime'    => 'bool',
+            'gameExpirationTime'    => 'int',
             'goalPoints'            => 'int',
             'maxPenalty'            => 'int',
             'minPenalty'            => 'int',
@@ -447,35 +447,35 @@ class Ruleset
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function gameExpirationTime()
     {
-        return floatval($this->_ruleset['gameExpirationTime']);
+        return intval($this->_ruleset['gameExpirationTime']);
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function minPenalty()
     {
-        return floatval($this->_ruleset['minPenalty']);
+        return intval($this->_ruleset['minPenalty']);
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function maxPenalty()
     {
-        return floatval($this->_ruleset['maxPenalty']);
+        return intval($this->_ruleset['maxPenalty']);
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function penaltyStep()
     {
-        return floatval($this->_ruleset['penaltyStep']);
+        return intval($this->_ruleset['penaltyStep']);
     }
 
     /**

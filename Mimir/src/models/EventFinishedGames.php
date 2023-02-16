@@ -123,6 +123,7 @@ class EventFinishedGamesModel extends Model
             'players' => array_map('intval', $session->getPlayersIds()),
             'final_results' => $this->_arrayMapPreserveKeys(function (SessionResultsPrimitive $el) {
                 return [
+                    'player_id'     => (int) $el->getPlayerId(),
                     'score'         => (int) $el->getScore(),
                     'rating_delta'  => (float) $el->getRatingDelta(),
                     'place'         => (int) $el->getPlace()

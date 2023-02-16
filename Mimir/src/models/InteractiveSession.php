@@ -264,7 +264,7 @@ class InteractiveSessionModel extends Model
             if (is_array($result['paoPlayer'])) {
                 // pao player may be only one
                 $paoPlayers = array_filter($result['paoPlayer']);
-                $result['paoPlayer'] = reset($paoPlayers) or null;
+                $result['paoPlayer'] = (reset($paoPlayers) or null);
             }
 
             return $result;

@@ -62,7 +62,7 @@ class PlayersController extends Controller
      * @throws \Exception
      * @return array of statistics
      */
-    public function getStats($playerId, $eventIdList)
+    public function getPlayerStats($playerId, $eventIdList)
     {
         if (!is_array($eventIdList) || empty($eventIdList)) {
             throw new InvalidParametersException('Event id list is not array or array is empty');
