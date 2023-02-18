@@ -4,11 +4,11 @@ ini_set("memory_limit", "2048M");
 
 // Command that starts the built-in web server
 $command = sprintf(
-    'OVERRIDE_CONFIG_PATH=%s php -S %s:%d -t %s >/dev/null 2>&1 & echo $!',
+    'OVERRIDE_CONFIG_PATH=%s php -S %s:%d %s >/dev/null 2>&1 & echo $!',
     __DIR__ . '/util/config.php',
     WEB_SERVER_HOST,
     WEB_SERVER_PORT,
-    WEB_SERVER_DOCROOT
+    WEB_SERVER_ROUTESCRIPT
 );
 
 echo "Run: " . $command;
