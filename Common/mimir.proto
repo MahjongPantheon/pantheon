@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package Common;
 
+import "atoms.proto";
+
 service Mimir {
   rpc GetRulesets (Events_GetRulesets_Payload) returns (Events_GetRulesets_Response);
   rpc GetTimezones (Events_GetTimezones_Payload) returns (Events_GetTimezones_Response);
@@ -69,12 +71,6 @@ service Mimir {
 
 message Events_GetRulesets_Payload {}
 
-message Ruleset {
-  string title = 1;
-  string defaultRules = 2; // stringified JSON
-  string fieldTypes = 3; // stringified JSON
-}
-
 message Events_GetRulesets_Response {
   repeated Ruleset TODO = 1;
 }
@@ -86,11 +82,6 @@ message Events_GetTimezones_Payload {
 message Events_GetTimezones_Response {
   string preferredByIp = 1;
   repeated string timezones = 2;
-}
-
-message Country {
-  string code = 1;
-  string name = 2;
 }
 
 message Events_GetCountries_Payload {
@@ -108,23 +99,6 @@ message Events_GetEvents_Payload {
   bool filterUnlisted = 3;
 }
 
-enum EventType {
-  ONLINE = 0;
-  TOURNAMENT = 1;
-  LOCAL = 2;
-}
-
-message Event {
-  int32 id = 1;
-  string title = 2;
-  string description = 3;
-  bool finished = 4;
-  bool isListed = 5;
-  bool isRatingShown = 6;
-  bool tournamentStarted = 7;
-  EventType type = 8;
-}
-
 message Events_GetEvents_Response {
   int32 total = 1;
   repeated Event events = 2;
@@ -140,76 +114,8 @@ message Events_GetEventsById_Response {
 
 message Players_GetMyEvents_Payload {}
 
-message MyEvent {
-  int32 id = 1;
-  string title = 2;
-  string description = 3;
-  bool isOnline = 4;
-}
-
 message Players_GetMyEvents_Response {
   repeated MyEvent events = 1;
-}
-
-enum TournamentGamesStatus {
-  NONE = 0; // for non-tournament events
-  SEATING_READY = 1;
-  STARTED = 2;
-}
-
-message GameConfig {
-  repeated int32 allowedYaku = 1; // ids array
-  int32 startPoints = 2;
-  int32 goalPoints = 3;
-  bool playAdditionalRounds = 4;
-  bool withKazoe = 5;
-  bool withKiriageMangan = 6;
-  bool withAbortives = 7;
-  bool withNagashiMangan = 8;
-  bool withAtamahane = 9;
-  string rulesetTitle = 10;
-  bool tonpuusen = 11;
-  int32 startRating = 12;
-  bool riichiGoesToWinner = 13;
-  bool doubleronRiichiAtamahane = 14;
-  bool doubleronHonbaAtamahane = 15;
-  bool extraChomboPayments = 16;
-  float chomboPenalty = 17;
-  bool withKuitan = 18;
-  bool withButtobi = 19;
-  bool withMultiYakumans = 20;
-  int32 gameExpirationTime = 21;
-  int32 minPenalty = 22;
-  int32 maxPenalty = 23;
-  int32 penaltyStep = 24;
-  repeated int32 yakuWithPao = 25; // ids array
-  string eventTitle = 26;
-  string eventDescription = 27;
-  string eventStatHost = 28;
-  bool useTimer = 29;
-  bool usePenalty = 30;
-  string timerPolicy = 31;
-  int32 redZone = 32; // seconds
-  int32 yellowZone = 33; // seconds
-  int32 gameDuration = 34; // minutes
-  string timezone = 35;
-  bool isOnline = 36;
-  bool isTeam = 37;
-  bool autoSeating = 38;
-  bool syncStart = 39;
-  bool syncEnd = 40;
-  bool sortByGames = 41;
-  bool allowPlayerAppend = 42;
-  bool withLeadingDealerGameOver = 43;
-  bool subtractStartPoints = 44;
-  int32 seriesLength = 45;
-  int32 minGamesCount = 46;
-  TournamentGamesStatus gamesStatus = 47;
-  bool hideResults = 48;
-  bool hideAddReplayButton = 49;
-  bool isPrescripted = 50;
-  int32 chipsValue = 51;
-  bool isFinished = 52;
 }
 
 message Events_GetRatingTable_Payload {
@@ -217,15 +123,6 @@ message Events_GetRatingTable_Payload {
   string orderBy = 2;
   string order = 3;
   bool withPrefinished = 4;
-}
-
-message PlayerInRating {
-  int32 id = 1;
-  string title = 2;
-  string tenhouId = 3;
-  float rating = 4;
-  int32 chips = 5;
-  bool winnerZone = 6;
 }
 
 message Events_GetRatingTable_Response {
@@ -238,122 +135,6 @@ message Events_GetLastGames_Payload {
   int32 offset = 3;
   optional string orderBy = 4;
   optional string order = 5;
-}
-
-message Player {
-  int32 id = 1;
-  string title = 2;
-  string tenhouId = 3;
-}
-
-message FinalResultOfSession {
-  int32 playerId = 1;
-  int32 score = 2;
-  float ratingDelta = 3;
-  int32 place = 4;
-}
-
-message Penalty {
-  int32 who = 1;
-  int32 amount = 2;
-  string reason = 3;
-}
-
-message RonResult {
-  int32 roundIndex = 1;
-  int32 winnerId = 3;
-  int32 loserId = 4;
-  int32 paoPlayerId = 5;
-  int32 han = 6;
-  int32 fu = 7;
-  repeated int32 yaku = 8; // yaku ids
-  repeated int32 riichiBets = 9; // player ids
-  int32 dora = 10;
-  int32 uradora = 11;
-  int32 kandora = 12;
-  int32 kanuradora = 13;
-  bool openHand = 14;
-}
-
-message MultironWin {
-  int32 winnerId = 1;
-  int32 paoPlayerId = 2;
-  int32 han = 3;
-  int32 fu = 4;
-  repeated int32 yaku = 5; // yaku ids
-  repeated int32 riichiBets = 6; // player ids
-  int32 dora = 7;
-  int32 uradora = 8;
-  int32 kandora = 9;
-  int32 kanuradora = 10;
-  bool openHand = 11;
-}
-
-message MultironResult {
-  int32 roundIndex = 1;
-  int32 loserId = 3;
-  int32 multiRon = 4; // count of players who won
-  repeated MultironWin wins = 5;
-}
-
-message TsumoResult {
-  int32 roundIndex = 1;
-  int32 winnerId = 3;
-  int32 paoPlayerId = 4;
-  int32 han = 5;
-  int32 fu = 6;
-  repeated int32 yaku = 7; // yaku ids
-  repeated int32 riichiBets = 8; // player ids
-  int32 dora = 9;
-  int32 uradora = 10;
-  int32 kandora = 11;
-  int32 kanuradora = 12;
-  bool openHand = 13;
-}
-
-message DrawResult {
-  int32 roundIndex = 1;
-  repeated int32 riichiBets = 3; // player ids
-  repeated int32 tempai = 4; // player ids
-}
-
-message AbortResult {
-  int32 roundIndex = 1;
-  repeated int32 riichiBets = 3; // player ids
-}
-
-message ChomboResult {
-  int32 roundIndex = 1;
-  int32 loserId = 3;
-}
-
-message NagashiResult {
-  int32 roundIndex = 1;
-  repeated int32 riichiBets = 3; // player ids
-  repeated int32 tempai = 4; // player ids
-  repeated int32 nagashi = 5; // player ids
-}
-
-message Round {
-  oneof outcome {
-    RonResult ron = 1;
-    TsumoResult tsumo = 2;
-    MultironResult multiron = 3;
-    DrawResult draw = 4;
-    AbortResult abort = 5;
-    ChomboResult chombo = 6;
-    NagashiResult nagashi = 7;
-  }
-}
-
-message GameResult {
-  string sessionHash = 1;
-  optional string date = 2;
-  string replayLink = 3;
-  repeated int32 players = 4;
-  repeated FinalResultOfSession finalResults = 5;
-  repeated Penalty penaltyLog = 6;
-  repeated Round rounds = 7;
 }
 
 message Events_GetLastGames_Response {
@@ -371,23 +152,6 @@ message Events_GetGame_Response {
   repeated Player players = 2;
 }
 
-message PlayerPlaceInSeries {
-  string sessionHash = 1;
-  int32 place = 2;
-}
-
-message SeriesResult {
-  Player player = 1;
-  repeated PlayerPlaceInSeries bestSeries = 2;
-  float bestSeriesScores = 3;
-  int32 bestSeriesPlaces = 4;
-  string bestSeriesAvgPlace = 5; // formatted numeric string
-  repeated PlayerPlaceInSeries currentSeries = 6;
-  float currentSeriesScores = 7;
-  int32 currentSeriesPlaces = 8;
-  string currentSeriesAvgPlace = 9; // formatted numeric string
-}
-
 message Events_GetGamesSeries_Response {
   repeated SeriesResult results = 1;
 }
@@ -397,41 +161,12 @@ message Players_GetCurrentSessions_Payload {
   int32 eventId = 2;
 }
 
-message ReplacementPlayer {
-  int32 id = 1;
-  string title = 2;
-}
-
-message PlayerInSession {
-  int32 id = 1;
-  string title = 2;
-  int32 score = 3;
-  optional ReplacementPlayer replacedBy = 4;
-}
-
-message CurrentSession {
-  string sessionHash = 1;
-  string status = 2;
-  optional int32 tableIndex = 3;
-  repeated PlayerInSession players = 4;
-}
-
 message Players_GetCurrentSessions_Response {
   repeated CurrentSession sessions = 1;
 }
 
 message Events_GetAllRegisteredPlayers_Payload {
   repeated int32 eventIds = 1;
-}
-
-message RegisteredPlayer {
-  int32 id = 1;
-  string title = 2;
-  optional int32 localId = 3;
-  optional string teamName = 4;
-  string tenhouId = 5;
-  bool ignoreSeating = 6;
-  optional ReplacementPlayer replacedBy = 7;
 }
 
 message Events_GetAllRegisteredPlayers_Response {
@@ -463,60 +198,6 @@ message Players_GetPlayerStats_Payload {
   repeated int32 eventIdList = 2;
 }
 
-message SessionHistoryResult {
-  string sessionHash = 1;
-  int32 eventId = 2;
-  int32 playerId = 3;
-  int32 score = 4;
-  float ratingDelta = 5;
-  int32 place = 6;
-}
-
-message PlacesSummaryItem {
-  int32 place = 1;
-  int32 count = 2; // count of games finished on this particular place
-}
-
-message PlayerWinSummary {
-  int32 ron = 1;
-  int32 tsumo = 2;
-  int32 chombo = 3;
-  int32 feed = 4;
-  int32 tsumofeed = 5;
-  int32 winsWithOpen = 6;
-  int32 winsWithRiichi = 7;
-  int32 winsWithDama = 8;
-  int32 unforcedFeedToOpen = 9;
-  int32 unforcedFeedToRiichi = 10;
-  int32 unforcedFeedToDama = 11;
-  int32 draw = 12;
-  int32 drawTempai = 13;
-  int32 pointsWon = 14;
-  int32 pointsLostRon = 15;
-  int32 pointsLostTsumo = 16;
-}
-
-message HandValueStat {
-  int32 hanCount = 1;
-  int32 count = 2; // count of hands with this value
-}
-
-message YakuStat {
-  int32 yakuId = 1;
-  int32 count = 2; // count of hands contained this yaku
-}
-
-message RiichiSummary {
-  int32 riichiWon = 1;
-  int32 riichiLost = 2;
-  int32 feedUnderRiichi = 3;
-}
-
-message DoraSummary {
-  int32 count = 1;
-  float average = 2;
-}
-
 message Players_GetPlayerStats_Response {
   repeated int32 ratingHistory = 1;
   repeated SessionHistoryResult scoreHistory = 2;
@@ -536,12 +217,6 @@ message Games_AddRound_Payload {
   Round roundData = 2;
 }
 
-message IntermediateResultOfSession {
-  int32 playerId = 1;
-  int32 score = 2;
-  int32 penaltyScore = 3;
-}
-
 message Games_AddRound_Response {
   repeated IntermediateResultOfSession scores = 1;
   repeated string extraPenaltyLog = 2;
@@ -558,50 +233,6 @@ message Games_AddRound_Response {
 message Games_PreviewRound_Payload {
   string sessionHash = 1;
   Round roundData = 2;
-}
-
-enum RoundOutcome {
-  RON = 0;
-  TSUMO = 1;
-  DRAW = 2;
-  ABORT = 3;
-  CHOMBO = 4;
-  NAGASHI = 5;
-}
-
-message PaymentLogItem {
-  optional int32 from = 1;
-  optional int32 to = 2;
-  int32 amount = 3;
-}
-
-message PaymentLog {
-  repeated PaymentLogItem direct = 1;
-  repeated PaymentLogItem riichi = 2;
-  repeated PaymentLogItem honba = 3;
-}
-
-// TODO what about multiron
-message RoundState {
-  string sessionHash = 1;
-  int32 dealer = 2; // player id
-  int32 round = 3;
-  int32 riichi = 4; // riichis on table
-  repeated int32 riichiIds = 5; // player ids
-  RoundOutcome outcome = 6;
-  optional int32 penaltyFor = 7; // player id
-  int32 honba = 8;
-  repeated int32 scores = 9;
-  PaymentLog payments = 10;
-  int32 winner = 11;
-  int32 paoPlayer = 12;
-  repeated int32 yaku = 13;
-  int32 han = 14;
-  int32 fu = 15;
-  int32 dora = 16;
-  int32 kandora = 17;
-  int32 uradora = 18;
-  int32 kanuradora = 19;
 }
 
 message Games_PreviewRound_Response {
@@ -656,22 +287,6 @@ message Events_GetEventForEdit_Payload {
   int32 id = 1;
 }
 
-message EventData {
-  EventType type = 1;
-  string title = 2;
-  string description = 3;
-  int32 duration = 4;
-  string ruleset = 5; // ruleset title
-  string timezone = 6;
-  int32 lobbyId = 7; // xxxx for common lobby, 1xxxx for tournament lobby
-  int32 seriesLength = 8;
-  int32 minGames = 9;
-  bool isTeam = 10;
-  bool isPrescripted = 11;
-  int32 autostart = 12; // time until game autostart
-  string rulesetChanges = 13; // json-stringified ruleset changes
-}
-
 message Events_GetEventForEdit_Response {
   int32 id = 1;
   EventData event = 2;
@@ -680,26 +295,6 @@ message Events_GetEventForEdit_Response {
 message Events_UpdateEvent_Payload {
   int32 id = 1;
   EventData event = 2;
-}
-
-enum SessionStatus {
-  PLANNED = 0;
-  INPROGRESS = 1;
-  PREFINISHED = 2;
-  FINISHED = 3;
-  CANCELLED = 4;
-}
-
-message TableState {
-  SessionStatus status = 1;
-  bool mayDefinalize = 2;
-  string sessionHash = 3;
-  repeated Penalty penaltyLog = 4;
-  optional int32 tableIndex = 5;
-  optional Round lastRound = 6;
-  int32 currentRoundIndex = 7;
-  repeated IntermediateResultOfSession scores = 8;
-  repeated RegisteredPlayer players = 9;
 }
 
 message Events_GetTablesState_Response {
@@ -729,11 +324,6 @@ message Events_GetAchievements_Payload {
   repeated string achievementsList = 2;
 }
 
-message Achievement {
-  string achievementId = 1;
-  string achieventData = 2; // JSON stringified data
-}
-
 message Events_GetAchievements_Response {
   repeated Achievement achievements = 1;
 }
@@ -742,11 +332,6 @@ message Events_GetAchievementsList_Payload {}
 
 message Events_GetAchievementsList_Response {
   repeated string list = 1;
-}
-
-message LocalIdMapping {
-  int32 playerId = 1;
-  int32 localId = 2;
 }
 
 message Events_UpdatePlayersLocalIds_Payload {
@@ -758,11 +343,6 @@ message Events_UpdatePlayerReplacement_Payload {
   int32 playerId = 1;
   int32 eventId = 2;
   int32 replacementId = 3;
-}
-
-message TeamMapping {
-  int32 playerId = 1;
-  string teamName = 2;
 }
 
 message Events_UpdatePlayersTeams_Payload {
@@ -819,15 +399,6 @@ message Players_GetPlayer_Response {
   Player players = 1;
 }
 
-message PlayerSeating {
-  int32 order = 1; // order at the table
-  int32 playerId = 2;
-  int32 sessionId = 3;
-  int32 tableIndex = 4;
-  float rating = 5;
-  string playerTitle = 6;
-}
-
 message Events_GetCurrentSeating_Response {
   repeated PlayerSeating seating = 1;
 }
@@ -839,15 +410,6 @@ message Seating_MakeShuffledSeating_Payload {
 }
 
 message Seating_ResetSeating_Response {}
-
-message PlayerSeatingSwiss {
-  int32 playerId = 1;
-  float rating = 2;
-}
-
-message TableItemSwiss {
-  repeated PlayerSeatingSwiss players = 1; // should be 4 elements
-}
 
 message Seating_GenerateSwissSeating_Response {
   repeated TableItemSwiss tables = 1;
@@ -861,10 +423,6 @@ message Seating_MakeIntervalSeating_Payload {
 message Seating_MakePrescriptedSeating_Payload {
   int32 eventId = 1;
   bool randomizeAtTables = 2;
-}
-
-message PrescriptedTable {
-  repeated RegisteredPlayer players = 1; // should be 4 elements
 }
 
 message Seating_GetNextPrescriptedSeating_Response {
@@ -897,11 +455,3 @@ message Misc_AddErrorLog_Payload {
 }
 
 message Misc_AddErrorLog_Response {}
-
-message Generic_Success_Response {
-  bool success = 1;
-}
-
-message Generic_Event_Payload {
-  int32 eventId = 1;
-}
