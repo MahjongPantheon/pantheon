@@ -271,6 +271,12 @@ class SeatingController extends Controller
     public function getNextSeatingForPrescriptedEvent(int $eventId)
     {
         $this->_checkIfAllowed($eventId);
+
+        $ev = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($ev)) {
+            throw new InvalidParametersException('No event found with this id');
+        }
+
         $seating = $this->_getNextPrescriptedSeating($eventId);
         if (empty($seating)) {
             // No next seating: probably, all games are finished already.
@@ -292,6 +298,14 @@ class SeatingController extends Controller
             $playersMap[$player->getId()] = $player;
         }
 
+        $teamNames = [];
+        if ($ev[0]->getIsTeam()) {
+            $teamNames = PlayerRegistrationPrimitive::findTeamNameMapByEvent($this->_ds, $eventId);
+        }
+
+        // Players who should ignore seating
+        $ignoredPlayers = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, [$eventId]);
+
         $regs = PlayerRegistrationPrimitive::findByEventId($this->_ds, $eventId);
         $replacementMap = [];
         foreach ($regs as $reg) {
@@ -306,12 +320,17 @@ class SeatingController extends Controller
             $replacementMapToPlayer[$rep->getId()] = $rep;
         }
 
-        return array_map(function ($table) use (&$playersMap, &$replacementMapToPlayer) {
-            return array_map(function ($player) use (&$playersMap, &$replacementMapToPlayer) {
+        return array_map(function ($table) use (&$playersMap, &$replacementMapToPlayer, &$teamNames, &$ignoredPlayers) {
+            return array_map(function ($player) use (&$playersMap, &$replacementMapToPlayer, &$teamNames, &$ignoredPlayers) {
                 return [
-                    'id' => $playersMap[$player['id']]->getId(),
-                    'local_id' => $player['local_id'],
-                    'title' => $playersMap[$player['id']]->getDisplayName(),
+                    'id'            => $playersMap[$player['id']]->getId(),
+                    'title'         => $playersMap[$player['id']]->getDisplayName(),
+                    'local_id'      => $player['local_id'],
+                    'team_name'     => empty($teamNames[$playersMap[$player['id']]->getId()])
+                        ? null
+                        : $teamNames[$playersMap[$player['id']]->getId()],
+                    'tenhou_id'     => $playersMap[$player['id']]->getTenhouId(),
+                    'ignore_seating' => in_array($playersMap[$player['id']]->getId(), $ignoredPlayers),
                     'replaced_by' => empty($replacementMapToPlayer[$player['id']])
                         ? null
                         : [
@@ -328,7 +347,7 @@ class SeatingController extends Controller
      *
      * @param int $eventId
      * @throws \Exception
-     * @return void
+     * @return bool
      */
     public function resetSeating(int $eventId)
     {
@@ -343,6 +362,7 @@ class SeatingController extends Controller
         foreach ($sessions as $session) {
             $session->drop();
         }
+        return true;
     }
 
     /**

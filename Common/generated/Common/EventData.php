@@ -14,9 +14,11 @@ use Google\Protobuf\Internal\GPBUtil;
 class EventData extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>.Common.EventType type = 1;</code>
+     * required to add, not required for edit
+     *
+     * Generated from protobuf field <code>optional .Common.EventType type = 1;</code>
      */
-    protected $type = 0;
+    protected $type = null;
     /**
      * Generated from protobuf field <code>string title = 2;</code>
      */
@@ -81,6 +83,7 @@ class EventData extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type int $type
+     *           required to add, not required for edit
      *     @type string $title
      *     @type string $description
      *     @type int $duration
@@ -105,16 +108,30 @@ class EventData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.Common.EventType type = 1;</code>
+     * required to add, not required for edit
+     *
+     * Generated from protobuf field <code>optional .Common.EventType type = 1;</code>
      * @return int
      */
     public function getType()
     {
-        return $this->type;
+        return isset($this->type) ? $this->type : 0;
+    }
+
+    public function hasType()
+    {
+        return isset($this->type);
+    }
+
+    public function clearType()
+    {
+        unset($this->type);
     }
 
     /**
-     * Generated from protobuf field <code>.Common.EventType type = 1;</code>
+     * required to add, not required for edit
+     *
+     * Generated from protobuf field <code>optional .Common.EventType type = 1;</code>
      * @param int $var
      * @return $this
      */

@@ -22,9 +22,9 @@ class Penalty extends \Google\Protobuf\Internal\Message
      */
     protected $amount = 0;
     /**
-     * Generated from protobuf field <code>string reason = 3;</code>
+     * Generated from protobuf field <code>optional string reason = 3;</code>
      */
-    protected $reason = '';
+    protected $reason = null;
 
     /**
      * Constructor.
@@ -87,16 +87,26 @@ class Penalty extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string reason = 3;</code>
+     * Generated from protobuf field <code>optional string reason = 3;</code>
      * @return string
      */
     public function getReason()
     {
-        return $this->reason;
+        return isset($this->reason) ? $this->reason : '';
+    }
+
+    public function hasReason()
+    {
+        return isset($this->reason);
+    }
+
+    public function clearReason()
+    {
+        unset($this->reason);
     }
 
     /**
-     * Generated from protobuf field <code>string reason = 3;</code>
+     * Generated from protobuf field <code>optional string reason = 3;</code>
      * @param string $var
      * @return $this
      */

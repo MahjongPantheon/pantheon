@@ -29,6 +29,10 @@ class Games_GetSessionOverview_Response extends \Google\Protobuf\Internal\Messag
      * Generated from protobuf field <code>repeated .Common.PlayerInSession players = 4;</code>
      */
     private $players;
+    /**
+     * Generated from protobuf field <code>.Common.SessionState state = 5;</code>
+     */
+    protected $state = null;
 
     /**
      * Constructor.
@@ -40,6 +44,7 @@ class Games_GetSessionOverview_Response extends \Google\Protobuf\Internal\Messag
      *     @type int $eventId
      *     @type int $tableIndex
      *     @type array<\Common\PlayerInSession>|\Google\Protobuf\Internal\RepeatedField $players
+     *     @type \Common\SessionState $state
      * }
      */
     public function __construct($data = NULL) {
@@ -141,6 +146,38 @@ class Games_GetSessionOverview_Response extends \Google\Protobuf\Internal\Messag
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\PlayerInSession::class);
         $this->players = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.Common.SessionState state = 5;</code>
+     * @return \Common\SessionState|null
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    public function hasState()
+    {
+        return isset($this->state);
+    }
+
+    public function clearState()
+    {
+        unset($this->state);
+    }
+
+    /**
+     * Generated from protobuf field <code>.Common.SessionState state = 5;</code>
+     * @param \Common\SessionState $var
+     * @return $this
+     */
+    public function setState($var)
+    {
+        GPBUtil::checkMessage($var, \Common\SessionState::class);
+        $this->state = $var;
 
         return $this;
     }

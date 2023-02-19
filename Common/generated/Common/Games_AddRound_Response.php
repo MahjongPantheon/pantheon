@@ -18,7 +18,7 @@ class Games_AddRound_Response extends \Google\Protobuf\Internal\Message
      */
     private $scores;
     /**
-     * Generated from protobuf field <code>repeated string extraPenaltyLog = 2;</code>
+     * Generated from protobuf field <code>repeated .Common.Penalty extraPenaltyLog = 2;</code>
      */
     private $extraPenaltyLog;
     /**
@@ -73,7 +73,7 @@ class Games_AddRound_Response extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $scores
-     *     @type array<string>|\Google\Protobuf\Internal\RepeatedField $extraPenaltyLog
+     *     @type array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $extraPenaltyLog
      *     @type int $round
      *           current round number
      *     @type int $honba
@@ -118,7 +118,7 @@ class Games_AddRound_Response extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated string extraPenaltyLog = 2;</code>
+     * Generated from protobuf field <code>repeated .Common.Penalty extraPenaltyLog = 2;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getExtraPenaltyLog()
@@ -127,13 +127,13 @@ class Games_AddRound_Response extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated string extraPenaltyLog = 2;</code>
-     * @param array<string>|\Google\Protobuf\Internal\RepeatedField $var
+     * Generated from protobuf field <code>repeated .Common.Penalty extraPenaltyLog = 2;</code>
+     * @param array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setExtraPenaltyLog($var)
     {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\Penalty::class);
         $this->extraPenaltyLog = $arr;
 
         return $this;

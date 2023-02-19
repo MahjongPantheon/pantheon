@@ -9,8 +9,6 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * TODO what about multiron
- *
  * Generated from protobuf message <code>Common.RoundState</code>
  */
 class RoundState extends \Google\Protobuf\Internal\Message
@@ -56,6 +54,8 @@ class RoundState extends \Google\Protobuf\Internal\Message
      */
     protected $honba = 0;
     /**
+     * scores before payments
+     *
      * Generated from protobuf field <code>repeated int32 scores = 9;</code>
      */
     private $scores;
@@ -99,6 +99,10 @@ class RoundState extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>int32 kanuradora = 19;</code>
      */
     protected $kanuradora = 0;
+    /**
+     * Generated from protobuf field <code>bool openHand = 20;</code>
+     */
+    protected $openHand = false;
 
     /**
      * Constructor.
@@ -119,6 +123,7 @@ class RoundState extends \Google\Protobuf\Internal\Message
      *           player id
      *     @type int $honba
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $scores
+     *           scores before payments
      *     @type \Common\PaymentLog $payments
      *     @type int $winner
      *     @type int $paoPlayer
@@ -129,6 +134,7 @@ class RoundState extends \Google\Protobuf\Internal\Message
      *     @type int $kandora
      *     @type int $uradora
      *     @type int $kanuradora
+     *     @type bool $openHand
      * }
      */
     public function __construct($data = NULL) {
@@ -339,6 +345,8 @@ class RoundState extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     * scores before payments
+     *
      * Generated from protobuf field <code>repeated int32 scores = 9;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
@@ -348,6 +356,8 @@ class RoundState extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     * scores before payments
+     *
      * Generated from protobuf field <code>repeated int32 scores = 9;</code>
      * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
@@ -586,6 +596,28 @@ class RoundState extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->kanuradora = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool openHand = 20;</code>
+     * @return bool
+     */
+    public function getOpenHand()
+    {
+        return $this->openHand;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool openHand = 20;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setOpenHand($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->openHand = $var;
 
         return $this;
     }

@@ -37,7 +37,7 @@ service Mimir {
   rpc GetTablesState (Generic_Event_Payload) returns (Events_GetTablesState_Response);
   rpc StartTimer (Generic_Event_Payload) returns (Generic_Success_Response);
   rpc RegisterPlayer (Events_RegisterPlayer_Payload) returns (Generic_Success_Response);
-  rpc UnregisterPlayer (Events_UnregisterPlayer_Payload) returns (Events_UnregisterPlayer_Response);
+  rpc UnregisterPlayer (Events_UnregisterPlayer_Payload) returns (Generic_Success_Response);
   rpc UpdatePlayerSeatingFlag (Events_UpdatePlayerSeatingFlag_Payload) returns (Generic_Success_Response);
   rpc GetAchievements (Events_GetAchievements_Payload) returns (Events_GetAchievements_Response);
   rpc GetAchievementsList (Events_GetAchievementsList_Payload) returns (Events_GetAchievementsList_Response);
@@ -48,7 +48,7 @@ service Mimir {
   rpc StartGame (Games_StartGame_Payload) returns (Games_StartGame_Response);
   rpc EndGame (Games_EndGame_Payload) returns (Generic_Success_Response);
   rpc CancelGame (Games_CancelGame_Payload) returns (Generic_Success_Response);
-  rpc FinalizeSessions (Generic_Event_Payload) returns (Generic_Success_Response);
+  rpc FinalizeSession (Generic_Event_Payload) returns (Generic_Success_Response);
   rpc DropLastRound (Games_DropLastRound_Payload) returns (Generic_Success_Response);
   rpc DefinalizeGame (Games_DefinalizeGame_Payload) returns (Generic_Success_Response);
   rpc AddPenalty (Games_AddPenalty_Payload) returns (Generic_Success_Response);
@@ -57,7 +57,7 @@ service Mimir {
   rpc GetCurrentSeating (Generic_Event_Payload) returns (Events_GetCurrentSeating_Response);
   rpc MakeShuffledSeating (Seating_MakeShuffledSeating_Payload) returns (Generic_Success_Response);
   rpc MakeSwissSeating (Generic_Event_Payload) returns (Generic_Success_Response);
-  rpc ResetSeating (Generic_Event_Payload) returns (Seating_ResetSeating_Response);
+  rpc ResetSeating (Generic_Event_Payload) returns (Generic_Success_Response);
   rpc GenerateSwissSeating (Generic_Event_Payload) returns (Seating_GenerateSwissSeating_Response);
   rpc MakeIntervalSeating (Seating_MakeIntervalSeating_Payload) returns (Generic_Success_Response);
   rpc MakePrescriptedSeating (Seating_MakePrescriptedSeating_Payload) returns (Generic_Success_Response);
@@ -66,13 +66,13 @@ service Mimir {
   rpc UpdatePrescriptedEventConfig (Events_UpdatePrescriptedEventConfig_Payload) returns (Generic_Success_Response);
   rpc InitStartingTimer (Generic_Event_Payload) returns (Generic_Success_Response);
   rpc GetStartingTimer (Generic_Event_Payload) returns (Events_GetStartingTimer_Response);
-  rpc AddErrorLog (Misc_AddErrorLog_Payload) returns (Misc_AddErrorLog_Response);
+  rpc AddErrorLog (Misc_AddErrorLog_Payload) returns (Generic_Success_Response);
 }
 
 message Events_GetRulesets_Payload {}
 
 message Events_GetRulesets_Response {
-  repeated Ruleset TODO = 1;
+  repeated RulesetGenerated rulesets = 1;
 }
 
 message Events_GetTimezones_Payload {
@@ -191,6 +191,7 @@ message Games_GetSessionOverview_Response {
   int32 eventId = 2;
   optional int32 tableIndex = 3;
   repeated PlayerInSession players = 4;
+  SessionState state = 5;
 }
 
 message Players_GetPlayerStats_Payload {
@@ -219,7 +220,7 @@ message Games_AddRound_Payload {
 
 message Games_AddRound_Response {
   repeated IntermediateResultOfSession scores = 1;
-  repeated string extraPenaltyLog = 2;
+  repeated Penalty extraPenaltyLog = 2;
   int32 round = 3; // current round number
   int32 honba = 4;
   int32 riichiBets = 5; // on the table from previous round
@@ -272,7 +273,7 @@ message Players_GetAllRounds_Payload {
 }
 
 message Players_GetAllRounds_Response {
-  repeated RoundState round = 1;
+  repeated RoundResult round = 1;
 }
 
 message Players_GetLastRoundByHash_Payload {
@@ -310,8 +311,6 @@ message Events_UnregisterPlayer_Payload {
   int32 playerId = 1;
   int32 eventId = 2;
 }
-
-message Events_UnregisterPlayer_Response {}
 
 message Events_UpdatePlayerSeatingFlag_Payload {
   int32 playerId = 1;
@@ -409,8 +408,6 @@ message Seating_MakeShuffledSeating_Payload {
   int32 seed = 3; // randomness factor
 }
 
-message Seating_ResetSeating_Response {}
-
 message Seating_GenerateSwissSeating_Response {
   repeated TableItemSwiss tables = 1;
 }
@@ -453,5 +450,3 @@ message Misc_AddErrorLog_Payload {
   string error = 4;
   string stack = 5;
 }
-
-message Misc_AddErrorLog_Response {}

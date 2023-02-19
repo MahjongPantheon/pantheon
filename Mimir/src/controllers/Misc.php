@@ -63,7 +63,7 @@ class MiscController extends Controller
      * @param float $playerId
      * @param string $error
      * @param string $stack
-     * @return void
+     * @return bool
      */
     public function addErrorLog($facility, $sessionHash, $playerId, $error, $stack)
     {
@@ -77,5 +77,6 @@ class MiscController extends Controller
                 ' ' . $error,
             explode("\n", $stack)
         );
+        return true;
     }
 }

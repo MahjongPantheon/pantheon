@@ -14,9 +14,9 @@ use Google\Protobuf\Internal\GPBUtil;
 class Events_GetRulesets_Response extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>repeated .Common.Ruleset TODO = 1;</code>
+     * Generated from protobuf field <code>repeated .Common.RulesetGenerated rulesets = 1;</code>
      */
-    private $TODO;
+    private $rulesets;
 
     /**
      * Constructor.
@@ -24,7 +24,7 @@ class Events_GetRulesets_Response extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type array<\Common\Ruleset>|\Google\Protobuf\Internal\RepeatedField $TODO
+     *     @type array<\Common\RulesetGenerated>|\Google\Protobuf\Internal\RepeatedField $rulesets
      * }
      */
     public function __construct($data = NULL) {
@@ -33,23 +33,23 @@ class Events_GetRulesets_Response extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.Ruleset TODO = 1;</code>
+     * Generated from protobuf field <code>repeated .Common.RulesetGenerated rulesets = 1;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
-    public function getTODO()
+    public function getRulesets()
     {
-        return $this->TODO;
+        return $this->rulesets;
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.Ruleset TODO = 1;</code>
-     * @param array<\Common\Ruleset>|\Google\Protobuf\Internal\RepeatedField $var
+     * Generated from protobuf field <code>repeated .Common.RulesetGenerated rulesets = 1;</code>
+     * @param array<\Common\RulesetGenerated>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
-    public function setTODO($var)
+    public function setRulesets($var)
     {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\Ruleset::class);
-        $this->TODO = $arr;
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\RulesetGenerated::class);
+        $this->rulesets = $arr;
 
         return $this;
     }

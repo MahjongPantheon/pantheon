@@ -37,6 +37,18 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool winnerZone = 6;</code>
      */
     protected $winnerZone = false;
+    /**
+     * Generated from protobuf field <code>float avgPlace = 7;</code>
+     */
+    protected $avgPlace = 0.0;
+    /**
+     * Generated from protobuf field <code>float avgScore = 8;</code>
+     */
+    protected $avgScore = 0.0;
+    /**
+     * Generated from protobuf field <code>int32 gamesPlayed = 9;</code>
+     */
+    protected $gamesPlayed = 0;
 
     /**
      * Constructor.
@@ -50,6 +62,9 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
      *     @type float $rating
      *     @type int $chips
      *     @type bool $winnerZone
+     *     @type float $avgPlace
+     *     @type float $avgScore
+     *     @type int $gamesPlayed
      * }
      */
     public function __construct($data = NULL) {
@@ -185,6 +200,72 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->winnerZone = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>float avgPlace = 7;</code>
+     * @return float
+     */
+    public function getAvgPlace()
+    {
+        return $this->avgPlace;
+    }
+
+    /**
+     * Generated from protobuf field <code>float avgPlace = 7;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setAvgPlace($var)
+    {
+        GPBUtil::checkFloat($var);
+        $this->avgPlace = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>float avgScore = 8;</code>
+     * @return float
+     */
+    public function getAvgScore()
+    {
+        return $this->avgScore;
+    }
+
+    /**
+     * Generated from protobuf field <code>float avgScore = 8;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setAvgScore($var)
+    {
+        GPBUtil::checkFloat($var);
+        $this->avgScore = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 gamesPlayed = 9;</code>
+     * @return int
+     */
+    public function getGamesPlayed()
+    {
+        return $this->gamesPlayed;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 gamesPlayed = 9;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setGamesPlayed($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->gamesPlayed = $var;
 
         return $this;
     }

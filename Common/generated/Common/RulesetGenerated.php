@@ -9,9 +9,11 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.Ruleset</code>
+ * added suffix to avoid confusion with /Common/rulesets
+ *
+ * Generated from protobuf message <code>Common.RulesetGenerated</code>
  */
-class Ruleset extends \Google\Protobuf\Internal\Message
+class RulesetGenerated extends \Google\Protobuf\Internal\Message
 {
     /**
      * Generated from protobuf field <code>string title = 1;</code>

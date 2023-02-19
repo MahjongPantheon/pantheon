@@ -308,7 +308,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function UnregisterPlayer(array $ctx, \Common\Events_UnregisterPlayer_Payload $req): \Common\Events_UnregisterPlayer_Response;
+    public function UnregisterPlayer(array $ctx, \Common\Events_UnregisterPlayer_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -403,11 +403,11 @@ interface Mimir
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/FinalizeSessions</code>
+     * Generated from protobuf method <code>Common.Mimir/FinalizeSession</code>
      *
      * @throws \Twirp\Error
      */
-    public function FinalizeSessions(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
+    public function FinalizeSession(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -488,7 +488,7 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function ResetSeating(array $ctx, \Common\Generic_Event_Payload $req): \Common\Seating_ResetSeating_Response;
+    public function ResetSeating(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -569,5 +569,5 @@ interface Mimir
      *
      * @throws \Twirp\Error
      */
-    public function AddErrorLog(array $ctx, \Common\Misc_AddErrorLog_Payload $req): \Common\Misc_AddErrorLog_Response;
+    public function AddErrorLog(array $ctx, \Common\Misc_AddErrorLog_Payload $req): \Common\Generic_Success_Response;
 }

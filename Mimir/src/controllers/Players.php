@@ -208,10 +208,12 @@ class PlayersController extends Controller
             $sessionResults[$sr->getPlayerId()] = $sr;
         }
 
-        $result = array_map(function (PlayerPrimitive $p) use (&$sessionResults) {
+        $result = array_map(function (PlayerPrimitive $p) use (&$sessionResults, &$session) {
             return [
                 'id'            => $p->getId(),
-                'title'  => $p->getDisplayName(),
+                'session_hash'  => $session->getRepresentationalHash(),
+                'title'         => $p->getDisplayName(),
+                'place'         => $sessionResults[$p->getId()]->getPlace(),
                 'score'         => $sessionResults[$p->getId()]->getScore(),
                 'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),
             ];
@@ -416,12 +418,7 @@ class PlayersController extends Controller
                 'round'         => $round->getRoundIndex(),
                 'riichi'        => $lastState->getRiichiBets(),
                 'honba'         => $lastState->getHonba(),
-                'scores'        => $scoresAfter,
-                'scoresDelta'   => $scoresDelta,
-                'loser'         => $round->getLoserId(),
-                'tempai'        => $multiGet($round, 'getTempaiIds'),
                 'winner'        => $multiGet($round, 'getWinnerId'),
-                'nagashi'        => $multiGet($round, 'getNagashiIds'),
                 'paoPlayer'     => $multiGet($round, 'getPaoPlayerId'),
                 'yaku'          => $multiGet($round, 'getYaku'),
                 'han'           => $multiGet($round, 'getHan'),
@@ -431,6 +428,12 @@ class PlayersController extends Controller
                 'uradora'       => $multiGet($round, 'getUradora'),
                 'kanuradora'    => $multiGet($round, 'getKanuradora'),
                 'openHand'      => $multiGet($round, 'getOpenHand'),
+                // fields differing from RoundState
+                'scores'        => $scoresAfter,
+                'scoresDelta'   => $scoresDelta,
+                'loser'         => $round->getLoserId(),
+                'tempai'        => $multiGet($round, 'getTempaiIds'),
+                'nagashi'        => $multiGet($round, 'getNagashiIds'),
             ];
             array_push($result, $roundResult);
 

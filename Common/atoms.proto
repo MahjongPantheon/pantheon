@@ -107,10 +107,11 @@ enum SessionStatus {
   CANCELLED = 4;
 }
 
-message Ruleset {
+message RulesetGenerated { // added suffix to avoid confusion with /Common/rulesets
   string title = 1;
-  string defaultRules = 2; // stringified JSON
-  string fieldTypes = 3; // stringified JSON
+  string description = 2;
+  string defaultRules = 3; // stringified JSON
+  string fieldTypes = 4; // stringified JSON
 }
 
 message Country {
@@ -198,8 +199,10 @@ message PlayerInRating {
   float rating = 4;
   int32 chips = 5;
   bool winnerZone = 6;
+  float avgPlace = 7;
+  float avgScore = 8;
+  int32 gamesPlayed = 9;
 }
-
 
 message Player {
   int32 id = 1;
@@ -217,7 +220,7 @@ message FinalResultOfSession {
 message Penalty {
   int32 who = 1;
   int32 amount = 2;
-  string reason = 3;
+  optional string reason = 3;
 }
 
 message RonResult {
@@ -421,7 +424,7 @@ message DoraSummary {
 message IntermediateResultOfSession {
   int32 playerId = 1;
   int32 score = 2;
-  int32 penaltyScore = 3;
+  optional int32 penaltyScore = 3;
 }
 
 message PaymentLogItem {
@@ -436,7 +439,6 @@ message PaymentLog {
   repeated PaymentLogItem honba = 3;
 }
 
-// TODO what about multiron
 message RoundState {
   string sessionHash = 1;
   int32 dealer = 2; // player id
@@ -446,7 +448,7 @@ message RoundState {
   RoundOutcome outcome = 6;
   optional int32 penaltyFor = 7; // player id
   int32 honba = 8;
-  repeated int32 scores = 9;
+  repeated int32 scores = 9; // scores before payments
   PaymentLog payments = 10;
   int32 winner = 11;
   int32 paoPlayer = 12;
@@ -457,10 +459,39 @@ message RoundState {
   int32 kandora = 17;
   int32 uradora = 18;
   int32 kanuradora = 19;
+  bool openHand = 20;
+}
+
+message RoundResult {
+  // These fields match those in RoundState. Maybe move to separate entity?
+  RoundOutcome outcome = 1;
+  optional int32 penaltyFor = 2; // player id
+  repeated int32 riichiIds = 3; // player ids
+  int32 dealer = 4; // player id
+  int32 round = 5;
+  int32 riichi = 6; // riichis on table
+  int32 honba = 7;
+  int32 winner = 8;
+  int32 paoPlayer = 9;
+  repeated int32 yaku = 10;
+  int32 han = 11;
+  int32 fu = 12;
+  int32 dora = 13;
+  int32 kandora = 14;
+  int32 uradora = 15;
+  int32 kanuradora = 16;
+  bool openHand = 17;
+
+  // These fields don't match
+  repeated IntermediateResultOfSession scores = 18; // scores AFTER payments
+  repeated IntermediateResultOfSession scoresDelta = 19;
+  int32 loser = 20;
+  repeated int32 tempai = 21; // player ids
+  repeated int32 nagashi = 22; // player ids
 }
 
 message EventData {
-  EventType type = 1;
+  optional EventType type = 1; // required to add, not required for edit
   string title = 2;
   string description = 3;
   int32 duration = 4;
@@ -522,6 +553,17 @@ message TableItemSwiss {
 
 message PrescriptedTable {
   repeated RegisteredPlayer players = 1; // should be 4 elements
+}
+
+message SessionState {
+  int32 dealer = 1;
+  int32 roundIndex = 2;
+  int32 riichiCount = 3;
+  int32 honbaCount = 4;
+  repeated IntermediateResultOfSession scores = 5;
+  bool finished = 6;
+  repeated Penalty penalties = 7;
+  bool yellowZoneAlreadyPlayed = 8;
 }
 
 // Generics

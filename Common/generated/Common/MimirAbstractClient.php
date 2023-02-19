@@ -816,13 +816,13 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function UnregisterPlayer(array $ctx, \Common\Events_UnregisterPlayer_Payload $in): \Common\Events_UnregisterPlayer_Response
+    public function UnregisterPlayer(array $ctx, \Common\Events_UnregisterPlayer_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
         $ctx = Context::withMethodName($ctx, 'UnregisterPlayer');
 
-        $out = new \Common\Events_UnregisterPlayer_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -1069,19 +1069,19 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function FinalizeSessions(array $ctx, \Common\Generic_Event_Payload $in): \Common\Generic_Success_Response
+    public function FinalizeSession(array $ctx, \Common\Generic_Event_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
-        $ctx = Context::withMethodName($ctx, 'FinalizeSessions');
+        $ctx = Context::withMethodName($ctx, 'FinalizeSession');
 
         $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Mimir/FinalizeSessions';
+            $url = $url.'/Common.Mimir/FinalizeSession';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Mimir/FinalizeSessions';
+            $url = $url.'/'.$this->prefix.'/Common.Mimir/FinalizeSession';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -1276,13 +1276,13 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function ResetSeating(array $ctx, \Common\Generic_Event_Payload $in): \Common\Seating_ResetSeating_Response
+    public function ResetSeating(array $ctx, \Common\Generic_Event_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
         $ctx = Context::withMethodName($ctx, 'ResetSeating');
 
-        $out = new \Common\Seating_ResetSeating_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -1483,13 +1483,13 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function AddErrorLog(array $ctx, \Common\Misc_AddErrorLog_Payload $in): \Common\Misc_AddErrorLog_Response
+    public function AddErrorLog(array $ctx, \Common\Misc_AddErrorLog_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Mimir');
         $ctx = Context::withMethodName($ctx, 'AddErrorLog');
 
-        $out = new \Common\Misc_AddErrorLog_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {

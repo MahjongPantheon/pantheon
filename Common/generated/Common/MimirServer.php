@@ -216,8 +216,8 @@ final class MimirServer implements RequestHandlerInterface
                 return $this->handleEndGame($ctx, $req);
             case 'CancelGame':
                 return $this->handleCancelGame($ctx, $req);
-            case 'FinalizeSessions':
-                return $this->handleFinalizeSessions($ctx, $req);
+            case 'FinalizeSession':
+                return $this->handleFinalizeSession($ctx, $req);
             case 'DropLastRound':
                 return $this->handleDropLastRound($ctx, $req);
             case 'DefinalizeGame':
@@ -4861,7 +4861,7 @@ final class MimirServer implements RequestHandlerInterface
 
         return $resp;
     }
-    private function handleFinalizeSessions(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleFinalizeSession(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
         $header = $req->getHeaderLine('Content-Type');
         $i = strpos($header, ';');
@@ -4875,11 +4875,11 @@ final class MimirServer implements RequestHandlerInterface
 
         switch (trim(strtolower(substr($header, 0, $i)))) {
             case 'application/json':
-                $resp = $this->handleFinalizeSessionsJson($ctx, $req);
+                $resp = $this->handleFinalizeSessionJson($ctx, $req);
                 break;
 
             case 'application/protobuf':
-                $resp = $this->handleFinalizeSessionsProtobuf($ctx, $req);
+                $resp = $this->handleFinalizeSessionProtobuf($ctx, $req);
                 break;
 
             default:
@@ -4895,9 +4895,9 @@ final class MimirServer implements RequestHandlerInterface
         return $resp;
     }
 
-    private function handleFinalizeSessionsJson(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleFinalizeSessionJson(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
-        $ctx = Context::withMethodName($ctx, 'FinalizeSessions');
+        $ctx = Context::withMethodName($ctx, 'FinalizeSession');
 
         try {
             $ctx = $this->hook->requestRouted($ctx);
@@ -4905,10 +4905,10 @@ final class MimirServer implements RequestHandlerInterface
             $in = new \Common\Generic_Event_Payload();
             $in->mergeFromJsonString((string)$req->getBody(), true);
 
-            $out = $this->svc->FinalizeSessions($ctx, $in);
+            $out = $this->svc->FinalizeSession($ctx, $in);
 
             if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling FinalizeSessions. null responses are not supported'));
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling FinalizeSession. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);
@@ -4932,9 +4932,9 @@ final class MimirServer implements RequestHandlerInterface
         return $resp;
     }
 
-    private function handleFinalizeSessionsProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
+    private function handleFinalizeSessionProtobuf(array $ctx, ServerRequestInterface $req): ResponseInterface
     {
-        $ctx = Context::withMethodName($ctx, 'FinalizeSessions');
+        $ctx = Context::withMethodName($ctx, 'FinalizeSession');
 
         try {
             $ctx = $this->hook->requestRouted($ctx);
@@ -4942,10 +4942,10 @@ final class MimirServer implements RequestHandlerInterface
             $in = new \Common\Generic_Event_Payload();
             $in->mergeFromString((string)$req->getBody());
 
-            $out = $this->svc->FinalizeSessions($ctx, $in);
+            $out = $this->svc->FinalizeSession($ctx, $in);
 
             if ($out === null) {
-                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling FinalizeSessions. null responses are not supported'));
+                return $this->writeError($ctx, TwirpError::newError(ErrorCode::Internal, 'received a null response while calling FinalizeSession. null responses are not supported'));
             }
 
             $ctx = $this->hook->responsePrepared($ctx);

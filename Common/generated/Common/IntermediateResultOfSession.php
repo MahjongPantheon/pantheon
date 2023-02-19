@@ -22,9 +22,9 @@ class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
      */
     protected $score = 0;
     /**
-     * Generated from protobuf field <code>int32 penaltyScore = 3;</code>
+     * Generated from protobuf field <code>optional int32 penaltyScore = 3;</code>
      */
-    protected $penaltyScore = 0;
+    protected $penaltyScore = null;
 
     /**
      * Constructor.
@@ -87,16 +87,26 @@ class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 penaltyScore = 3;</code>
+     * Generated from protobuf field <code>optional int32 penaltyScore = 3;</code>
      * @return int
      */
     public function getPenaltyScore()
     {
-        return $this->penaltyScore;
+        return isset($this->penaltyScore) ? $this->penaltyScore : 0;
+    }
+
+    public function hasPenaltyScore()
+    {
+        return isset($this->penaltyScore);
+    }
+
+    public function clearPenaltyScore()
+    {
+        unset($this->penaltyScore);
     }
 
     /**
-     * Generated from protobuf field <code>int32 penaltyScore = 3;</code>
+     * Generated from protobuf field <code>optional int32 penaltyScore = 3;</code>
      * @param int $var
      * @return $this
      */

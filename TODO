@@ -1,0 +1,7 @@
+Note: TwirpClients in Mimir and Rheda are to be deleted after API is settled.
+
+      Until then, don't forget to add there any protocol changes.
+
+1. Implement TwirpServer in Mimir
+2. Fix tests and add new ones. Cover all methods in ideal.
+3. Generate TS clients.
