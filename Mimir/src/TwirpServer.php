@@ -446,6 +446,19 @@ final class TwirpServer implements Mimir
     }
 
     /**
+     * @param int $val
+     * @return string
+     */
+    protected static function _fromEventTypeEnum(int $val): string
+    {
+        return match ($val) {
+            EventType::ONLINE => 'online',
+            EventType::TOURNAMENT => 'tournament',
+            default => 'club',
+        };
+    }
+
+    /**
      * @param array $players
      * @return Player[]
      */
@@ -1061,8 +1074,8 @@ final class TwirpServer implements Mimir
             ->setYakuSummary(self::_toYakuStat($ret['yaku_summary']))
             ->setRiichiSummary((new RiichiSummary())
                 ->setRiichiWon($ret['riichi_summary']['riichi_won'])
-                ->setRiichiWon($ret['riichi_summary']['riichi_lost'])
-                ->setRiichiWon($ret['riichi_summary']['feed_under_riichi'])
+                ->setRiichiLost($ret['riichi_summary']['riichi_lost'])
+                ->setFeedUnderRiichi($ret['riichi_summary']['feed_under_riichi'])
             )
             ->setDoraStat((new DoraSummary())
                 ->setCount($ret['dora_stat']['count'])
@@ -1191,7 +1204,7 @@ final class TwirpServer implements Mimir
     {
         return (new Generic_Event_Payload())
             ->setEventId($this->_eventsController->createEvent(
-                $req->getType(),
+                self::_fromEventTypeEnum($req->getType()),
                 $req->getTitle(),
                 $req->getDescription(),
                 $req->getRuleset(),
@@ -1316,7 +1329,7 @@ final class TwirpServer implements Mimir
             ->setSuccess($this->_eventsController->updatePlayerSeatingFlag(
                 $req->getPlayerId(),
                 $req->getEventId(),
-                $req->getIgnoreSeating()
+                $req->getIgnoreSeating() ? 1 : 0
             ));
     }
 
