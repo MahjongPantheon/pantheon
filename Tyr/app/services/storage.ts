@@ -55,7 +55,7 @@ export class Storage implements IStorage {
   }
 
   public getSingleDeviceMode(): boolean {
-    return !!this.get(PERSON_ID_KEY, 'int');
+    return !!this.get(SINGLE_DEVICE_MODE_KEY, 'int');
   }
 
   public setAuthToken(token: string): IStorage {
@@ -118,7 +118,7 @@ export class Storage implements IStorage {
   }
 
   public deleteSingleDeviceMode(): IStorage {
-    this.delete(PERSON_ID_KEY);
+    this.delete(SINGLE_DEVICE_MODE_KEY);
     return this;
   }
 
