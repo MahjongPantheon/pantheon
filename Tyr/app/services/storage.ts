@@ -24,7 +24,6 @@ export interface IStorage {
 }
 
 // These should be same as in Rheda cookie interface (Storage.php)
-const META_KEY = '__meta';
 const AUTH_TOKEN_KEY = 'auth';
 const PERSON_ID_KEY = 'pid';
 const EVENT_ID_KEY = 'eid';
@@ -33,17 +32,7 @@ const THEME_KEY = 'thm';
 const SINGLE_DEVICE_MODE_KEY = 'sdm';
 
 export class Storage implements IStorage {
-  private readonly cookieDomain: string | null;
-  private meta: { [key: string]: any } = {};
-
-  constructor(cookieDomain: string | null) {
-    this.cookieDomain = cookieDomain;
-    this.meta = this.get(META_KEY, 'object');
-    if (this.meta === null) {
-      this.meta = {};
-      this.set(META_KEY, 'object', {});
-    }
-  }
+  constructor(private readonly cookieDomain: string | null) {}
 
   public getAuthToken(): string | null {
     return this.get(AUTH_TOKEN_KEY, 'string') as string | null;
@@ -95,83 +84,70 @@ export class Storage implements IStorage {
   }
 
   public setSingleDeviceMode(enabled: boolean): IStorage {
-    this.set(SINGLE_DEVICE_MODE_KEY, 'int', enabled ? 1 : 0);
+    if (enabled) {
+      this.set(SINGLE_DEVICE_MODE_KEY, 'int', 1);
+    } else {
+      this.deleteSingleDeviceMode();
+    }
     return this;
   }
 
   public deleteAuthToken(): IStorage {
-    this.delete([AUTH_TOKEN_KEY]);
+    this.delete(AUTH_TOKEN_KEY);
     return this;
   }
 
   public deletePersonId(): IStorage {
-    this.delete([PERSON_ID_KEY]);
+    this.delete(PERSON_ID_KEY);
     return this;
   }
 
   public deleteEventId(): IStorage {
-    this.delete([EVENT_ID_KEY]);
+    this.delete(EVENT_ID_KEY);
     return this;
   }
 
   public deleteLang(): IStorage {
-    this.delete([LANG_KEY]);
+    this.delete(LANG_KEY);
     return this;
   }
 
   public deleteTheme(): IStorage {
-    this.delete([THEME_KEY]);
+    this.delete(THEME_KEY);
     return this;
   }
 
   public deleteSingleDeviceMode(): IStorage {
-    this.delete([PERSON_ID_KEY]);
+    this.delete(PERSON_ID_KEY);
     return this;
   }
 
-  protected get(key: string, type: 'int' | 'string' | 'object'): any | null {
+  protected get(key: string, type: 'int' | 'string'): any | null {
     const result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(
       document.cookie
     );
 
     try {
-      return result
-        ? type === 'object'
-          ? JSON.parse(result[1])
-          : type === 'int'
-          ? parseInt(result[1], 10)
-          : result[1].toString()
-        : null;
+      return result ? (type === 'int' ? parseInt(result[1], 10) : result[1].toString()) : null;
     } catch (e) {
       return null;
     }
   }
 
-  protected set(key: string, type: 'int' | 'string' | 'object', value: any): void {
+  protected set(key: string, type: 'int' | 'string', value: any): void {
     const date = new Date();
     date.setTime(date.getTime() + 365 * 24 * 60 * 60 * 1000);
     const expires = ';expires=' + date.toUTCString();
     const domain = this.cookieDomain ? ';domain=' + this.cookieDomain : '';
-    document.cookie = `${key}=${
-      type === 'object' ? JSON.stringify(value) : value
-    }${expires}${domain}; path=/`;
-    if (key !== META_KEY) {
-      this.meta[key] = true;
-      this.updateMeta();
-    }
+    document.cookie = `${key}=${value}${expires}${domain}; path=/`;
   }
 
-  protected delete(keys: string[]): void {
+  protected delete(key: string): void {
     const date = new Date();
     date.setTime(date.getTime() + -1 * 24 * 60 * 60 * 1000); // time in past
     const expires = ';expires=' + date.toUTCString();
     const domain = this.cookieDomain ? ';domain=' + this.cookieDomain : '';
-
-    keys.forEach((key: string) => {
-      document.cookie = key + '=' + expires + domain + '; path=/';
-      delete this.meta[key];
-    });
-    this.updateMeta();
+    document.cookie = key + '=' + expires + domain + '; path=/';
   }
 
   public clear(): void {
@@ -188,11 +164,5 @@ export class Storage implements IStorage {
           ' ;path=/';
       });
     }
-    this.meta = {};
-    this.set(META_KEY, 'object', {});
-  }
-
-  private updateMeta() {
-    this.set(META_KEY, 'object', this.meta);
   }
 }

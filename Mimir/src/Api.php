@@ -17,6 +17,7 @@
  */
 namespace Mimir;
 
+require_once __DIR__ . '/../../Common/Storage.php';
 require_once __DIR__ . '/Config.php';
 require_once __DIR__ . '/DataSource.php';
 require_once __DIR__ . '/Db.php';
@@ -54,6 +55,10 @@ class Api
      * @var IFreyClient
      */
     protected $_frey;
+    /**
+     * @var \Common\Storage
+     */
+    protected $_storage;
 
     /**
      * Api constructor.
@@ -77,7 +82,8 @@ class Api
             }
         }
         $this->_ds = new DataSource($this->_db, $this->_frey);
-        $this->_meta = new Meta($this->_frey, $this->_config, $_SERVER);
+        $this->_storage = new \Common\Storage($this->_config->getStringValue('cookieDomain'));
+        $this->_meta = new Meta($this->_frey, $this->_storage, $this->_config, $_SERVER);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 

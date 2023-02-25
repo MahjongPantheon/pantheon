@@ -19,6 +19,7 @@ namespace Rheda;
 
 require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
+require_once __DIR__ . '/../../Common/Storage.php';
 require_once __DIR__ . '/HttpClient.php';
 require_once __DIR__ . '/FreyClient.php';
 require_once __DIR__ . '/FreyClientTwirp.php';
@@ -101,6 +102,11 @@ abstract class Controller
     protected $_superadmin = false;
 
     /**
+     * @var \Common\Storage
+     */
+    protected $_storage;
+
+    /**
      * [ 'id' => int,
      *   'city' => string,
      *   'email' => string | null,
@@ -134,6 +140,7 @@ abstract class Controller
         $this->_url = $url;
         $this->_path = $path;
         $this->_mimir = new \Rheda\MimirClient(Sysconf::API_URL()); // @phpstan-ignore-line
+        $this->_storage = new \Common\Storage(Sysconf::COOKIE_DOMAIN);
 
         // @phpstan-ignore-next-line
         if (Sysconf::USE_TWIRP_FREY) {
@@ -147,14 +154,14 @@ abstract class Controller
         $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
         // second step is checking cookie
-        if (isset($_COOKIE[Sysconf::COOKIE_LANG_KEY])) {
-            $locale = $_COOKIE[Sysconf::COOKIE_LANG_KEY];
+        if ($this->_storage->getLang()) {
+            $locale = $this->_storage->getLang();
         }
 
         // third step is checking GET attribute
         if (isset($_GET['l'])) {
             $locale = $_GET['l'];
-            setcookie(Sysconf::COOKIE_LANG_KEY, $locale, 0, '/');
+            $this->_storage->setLang($locale);
         }
 
         // List of locales
@@ -185,8 +192,8 @@ abstract class Controller
         }
         putenv('LC_ALL=' . $locale);
 
-        $this->_currentPersonId = (empty($_COOKIE[Sysconf::COOKIE_ID_KEY]) ? null : intval($_COOKIE[Sysconf::COOKIE_ID_KEY]));
-        $this->_authToken = (empty($_COOKIE[Sysconf::COOKIE_TOKEN_KEY]) ? null : $_COOKIE[Sysconf::COOKIE_TOKEN_KEY]);
+        $this->_currentPersonId = $this->_storage->getPersonId();
+        $this->_authToken = $this->_storage->getAuthToken();
 
         $eidMatches = [];
         if (empty($path['event']) || !preg_match('#eid(?<ids>\d+(?:\.\d+)*)#is', $path['event'], $eidMatches)) {

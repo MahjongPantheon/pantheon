@@ -41,6 +41,7 @@ return array_merge([
     'verbose'   => true, // TODO: change this in your local config!
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC',
+    'cookieDomain' => '.riichimahjong.org', // TODO: change this in your local config!
     'trackerUrl' => null, // should be string or null, %s is placeholder for game hash token
 
     // ---------- not intended for local override! ------------
