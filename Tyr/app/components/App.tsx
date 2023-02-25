@@ -18,7 +18,6 @@ import { HomeScreen } from '#/components/screens/home/HomeScreen';
 import { SettingsScreen } from '#/components/screens/settings/SettingsScreen';
 import { NewGameScreen } from '#/components/screens/new-game/NewGameScreen';
 import { SearchPlayerScreen } from '#/components/screens/search-players/SearchPlayerScreen';
-import { IDB } from '#/services/idb';
 import { TableScreen } from '#/components/screens/table/TableScreen';
 import { SelectHandScreen } from '#/components/screens/select-hand/SelectHandScreen';
 import { I18nService } from '#/services/i18n';
@@ -30,11 +29,12 @@ import { environment } from '#config';
 import { EventSelectScreen } from '#/components/screens/event-select/EventSelectScreen';
 import { OtherTablesList } from '#/components/screens/other-tables-list/OtherTablesListScreen';
 import { i18n } from './i18n';
+import { IStorage } from '#/services/storage';
 
 interface IProps {
   state: IAppState;
   dispatch: Dispatch<AppActionTypes>;
-  storage: IDB;
+  storage: IStorage;
   i18nService: I18nService;
 }
 

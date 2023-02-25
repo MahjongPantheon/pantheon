@@ -1,4 +1,4 @@
-import {Dispatch, MiddlewareAPI} from 'redux';
+import { Dispatch, MiddlewareAPI } from 'redux';
 import {
   AppActionTypes,
   FORCE_LOGOUT,
@@ -14,13 +14,13 @@ import {
   SETTINGS_SAVE_THEME,
   UPDATE_STATE_SETTINGS,
 } from '../actions/interfaces';
-import { IDBImpl } from '#/services/idb/interface';
 import { IAppState } from '../interfaces';
 import { RemoteError } from '#/services/remoteError';
 import { environment } from '#config';
+import { IStorage } from '#/services/storage';
 
 export const persistentMw =
-  (storage: IDBImpl) =>
+  (storage: IStorage) =>
   (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) =>
   (action: AppActionTypes) => {
@@ -40,10 +40,13 @@ export const persistentMw =
         mw.dispatch({ type: SET_CREDENTIALS, payload: { authToken: '', personId: 0 } });
         break;
       case FORCE_LOGOUT:
-        storage.delete([environment.idbTokenKey, environment.idbIdKey]);
+        storage.clear();
         mw.dispatch({ type: SET_CREDENTIALS, payload: { authToken: '', personId: 0 } });
         // TODO: looks like kludge. These two actions get user to the login screen.
-        mw.dispatch({ type: LOGIN_FAIL, payload: action.payload ?? new RemoteError('Not logged in', '403') });
+        mw.dispatch({
+          type: LOGIN_FAIL,
+          payload: action.payload ?? new RemoteError('Not logged in', '403'),
+        });
         mw.dispatch({ type: RESET_LOGIN_ERROR }); // this resets error screen
         break;
       case SETTINGS_SAVE_THEME:

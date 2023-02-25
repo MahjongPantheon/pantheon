@@ -12,7 +12,6 @@ import { timerMw } from './middlewares/timer';
 import { IAppState, TimerStorage } from './interfaces';
 import { commonReducer } from './reducers/commonReducer';
 import { persistentMw } from './middlewares/persistent';
-import { IDB } from '#/services/idb';
 import { initialState } from './state';
 import { logging } from './middlewares/logging';
 import { I18nService } from '#/services/i18n';
@@ -20,13 +19,14 @@ import { yaku } from './middlewares/yaku';
 import { reduceReducers } from '#/store/util';
 import { AppActionTypes, GET_GAME_OVERVIEW_INIT } from '#/store/actions/interfaces';
 import { screenManageMw } from '#/store/middlewares/screenManage';
+import { IStorage } from '#/services/storage';
 
 export class Store {
   private onUpdate: ((state: IAppState) => void) | undefined;
   private readonly store: ReduxStore<IAppState>;
   private readonly timerSt: TimerStorage;
 
-  constructor(i18n: I18nService) {
+  constructor(i18n: I18nService, storage: IStorage) {
     this.timerSt = {
       timer: undefined,
       autostartTimer: undefined,
@@ -42,7 +42,6 @@ export class Store {
       timerReducer,
     ]);
     const metrikaService = new MetrikaService();
-    const idb = new IDB(metrikaService);
     const riichiService = new RiichiApiService(() => {
       if (this.store.getState().currentScreen === 'currentGame') {
         const hash = this.store.getState().currentSessionHash;
@@ -58,7 +57,7 @@ export class Store {
       metrika(metrikaService),
       history(),
       timerMw(this.timerSt),
-      persistentMw(idb),
+      persistentMw(storage),
       yaku(i18n),
       logging(`⇨ [reducers]`),
       screenManageMw()

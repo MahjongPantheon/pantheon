@@ -1,7 +1,12 @@
-import { IDBImpl } from './interface';
+export interface IStorage {
+  set(key: string, type: 'int' | 'string' | 'object', value: any): boolean;
+  get(key: string, type: 'int' | 'string' | 'object'): any;
+  delete(keys: string[]): void;
+  clear(): void;
+}
 
-// Cookie driver
-export class IDBCookieImpl implements IDBImpl {
+// Cookie storage driver. Should be compatible with Rheda cookie interface
+export class Storage implements IStorage {
   private readonly cookieDomain: string | null;
   private meta: { [key: string]: any } = {};
 
@@ -61,19 +66,21 @@ export class IDBCookieImpl implements IDBImpl {
   }
 
   public clear(): void {
-    this.delete(Object.keys(this.meta));
-  }
-
-  // not used now, might be useful for sync
-  public forEach(fn: (key: string, value: any) => void) {
-    Object.keys(this.get('__meta', 'object')).forEach((key) => {
-      const result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(
-        document.cookie
-      );
-      if (result) {
-        fn(key, result[1]);
-      }
-    });
+    const cookies = document.cookie.split('; ');
+    for (const cookie of cookies) {
+      [
+        window.location.hostname,
+        '.' + window.location.hostname.split('.').slice(1).join('.'),
+      ].forEach((domain) => {
+        document.cookie =
+          encodeURIComponent(cookie.split(';')[0].split('=')[0]) +
+          '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=' +
+          domain +
+          ' ;path=/';
+      });
+    }
+    this.meta = {};
+    this.set('__meta', 'object', {});
   }
 
   private updateMeta() {
