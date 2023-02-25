@@ -12,7 +12,7 @@ export const EnterCredentialsScreen: React.FC<IComponentProps> = (props) => {
   const onSubmit = useCallback(
     (email: string, password: string) => {
       if (email.length > 0 && password.length > 0) {
-        dispatch({ type: LOGIN_INIT, payload: { email, password } });
+        dispatch({ type: LOGIN_INIT, payload: { email: email.toLowerCase(), password } });
       }
     },
     [dispatch]
