@@ -322,6 +322,7 @@ interface GetUserinfoActionFail {
 }
 interface ForceLogoutAction {
   type: typeof FORCE_LOGOUT;
+  payload: RemoteError | undefined;
 }
 interface GetOtherTablesListActionInit {
   type: typeof GET_OTHER_TABLES_LIST_INIT;
