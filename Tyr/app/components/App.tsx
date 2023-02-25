@@ -25,7 +25,6 @@ import { GameResultScreen } from '#/components/screens/game-result/GameResultScr
 import { LoginScreen } from '#/components/screens/login/LoginScreen';
 import { LogScreen } from '#/components/screens/log/LogScreen';
 import { DonateScreen } from '#/components/screens/donate/DonateScreen';
-import { environment } from '#config';
 import { EventSelectScreen } from '#/components/screens/event-select/EventSelectScreen';
 import { OtherTablesList } from '#/components/screens/other-tables-list/OtherTablesListScreen';
 import { i18n } from './i18n';
@@ -90,15 +89,15 @@ export const App: React.FC<IProps> = (props: IProps) => {
       (err) => console.error(err)
     );
     dispatch({ type: HISTORY_INIT });
-    const event = storage.get(environment.idbEventKey, 'int');
+    const event = storage.getEventId();
     if (event) {
       dispatch({ type: SELECT_EVENT, payload: event });
     }
     dispatch({
       type: STARTUP_WITH_AUTH,
       payload: {
-        token: storage.get(environment.idbTokenKey, 'string') || '',
-        personId: storage.get(environment.idbIdKey, 'int'),
+        token: storage.getAuthToken() ?? '',
+        personId: storage.getPersonId() ?? 0,
       },
     });
   }, []);

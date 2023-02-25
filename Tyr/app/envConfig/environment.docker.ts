@@ -26,12 +26,6 @@ export const environment: EnvConfig = {
   uaUrl: 'http://localhost:4004',
   guiUrl: 'http://localhost:4002',
   guiFix: (src: string) => src,
-  idbTokenKey: 'pantheon_authToken',
-  idbIdKey: 'pantheon_currentPersonId',
-  idbEventKey: 'pantheon_currentEventId',
-  idbLangKey: 'pantheon_currentLanguage',
-  idbThemeKey: 'pantheon_currentTheme',
-  idbDeviceModeKey: 'pantheon_singleDeviceMode',
   cookieDomain: null, // when working on localhost this must be omitted!
   metrikaId: 101010101, // dummy number for testing
 
