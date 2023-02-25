@@ -37,7 +37,6 @@ import {
   GET_USERINFO_SUCCESS,
   GO_TO_CURRENT_GAME,
   GOTO_EVENT_SELECT,
-  LOGIN_FAIL,
   LOGIN_INIT,
   LOGIN_SUCCESS,
   RESET_STATE,
@@ -70,7 +69,7 @@ export const apiClient =
       case STARTUP_WITH_AUTH:
         if (!action.payload.token) {
           // Not logged in
-          mw.dispatch({ type: FORCE_LOGOUT });
+          mw.dispatch({ type: FORCE_LOGOUT, payload: undefined });
           return;
         }
 
@@ -193,7 +192,7 @@ function loginWithRetry(
         }
 
         retriesCount = 0;
-        dispatch({ type: LOGIN_FAIL, payload: e });
+        dispatch({ type: FORCE_LOGOUT, payload: e });
       });
   };
 
@@ -251,7 +250,7 @@ function updateCurrentGames(
     .catch((e) => {
       if (e.code === 401) {
         // token has rotten
-        dispatchToStore({ type: FORCE_LOGOUT });
+        dispatchToStore({ type: FORCE_LOGOUT, payload: undefined });
       } else {
         dispatchNext({ type: UPDATE_CURRENT_GAMES_FAIL, payload: e });
       }
@@ -408,6 +407,6 @@ function startupWithAuth(
       }
     })
     .catch(() => {
-      dispatchToStore({ type: FORCE_LOGOUT });
+      dispatchToStore({ type: FORCE_LOGOUT, payload: undefined });
     });
 }

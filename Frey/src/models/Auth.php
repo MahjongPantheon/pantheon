@@ -267,6 +267,7 @@ class AuthModel extends Model
         $pw = $this->makePasswordTokens($newGeneratedPassword);
         $person[0]
             ->setEmail($email)
+            ->setAuthResetToken('')
             ->setAuthSalt($pw['salt'])
             ->setAuthHash($pw['auth_hash'])
             ->save();

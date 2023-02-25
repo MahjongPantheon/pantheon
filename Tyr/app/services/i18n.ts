@@ -4,8 +4,7 @@ import { TranslationJson } from 'i18n-proto';
 // TODO: exclude from primary bundle
 import langRu from '../i18n/ru.json';
 import langDe from '../i18n/de.json';
-import { IDB } from './idb';
-import { environment } from '#config';
+import { IStorage } from '#/services/storage';
 export const supportedLanguages = ['en', 'ru', 'de'];
 const langs = {
   ru: langRu,
@@ -16,7 +15,7 @@ export class I18nService {
   protected i18nController: TranslationController;
   protected i18n: TranslationProvider;
 
-  constructor(private readonly storage: IDB) {
+  constructor(private readonly storage: IStorage) {
     this.i18nController = new TranslationController(
       /* translationGetter: */ (
         name: string,
@@ -65,10 +64,10 @@ export class I18nService {
 
   public init(onReady: (localeName: string) => void, onError: (error: any) => void) {
     // See also app.component.ts where this item is set
-    const lang = this.storage.get(environment.idbLangKey, 'string');
+    const lang = this.storage.getLang();
     if (lang) {
       if (!supportedLanguages.includes(lang)) {
-        this.storage.delete([environment.idbLangKey]);
+        this.storage.deleteLang();
         // pass further if wrong lang is contained in local storage
       } else {
         this.i18nController.setLocale(lang, onReady, onError);

@@ -46,29 +46,25 @@ class Meta
 
     /**
      * Meta constructor.
+     * @param \Common\Storage $storage
      * @param array|null $input
-     * @param array|null $cookieInput
      * @throws \Exception
      */
-    public function __construct($input = null, $cookieInput = null)
+    public function __construct(\Common\Storage $storage, $input = null)
     {
         if (empty($input)) {
             $input = $_SERVER;
         }
 
-        if (empty($cookieInput)) {
-            $cookieInput = $_COOKIE;
-        }
-
-        $this->_fillFrom($input, $cookieInput);
-        $this->_selectedLocale = $this->_initI18n();
+        $this->_fillFrom($storage, $input);
+        $this->_selectedLocale = $this->_initI18n($storage->getLang());
     }
 
     /**
      * @return string
      * @throws \Exception
      */
-    protected function _initI18n()
+    protected function _initI18n(?string $langFromCookies)
     {
         $locale = 'en_US.UTF-8';
 
@@ -79,8 +75,8 @@ class Meta
         }
 
         // second step is checking cookie
-        if (isset($_COOKIE['language'])) {
-            $locale = $_COOKIE['language'];
+        if (!empty($langFromCookies)) {
+            $locale = $langFromCookies;
         } else if (!empty($_SERVER['HTTP_X_LOCALE'])) {
             // third step is checking headers (in case of mimir <-> frey interactions)
             $locale = $_SERVER['HTTP_X_LOCALE'];
@@ -114,32 +110,32 @@ class Meta
         return $locale;
     }
 
-    protected function _fillFrom(?array $input, ?array $cookieInput): void
+    protected function _fillFrom(\Common\Storage $storage, ?array $input): void
     {
         // Rheda and Mimir MUST pass authToken from cookie to Frey as X-Auth-Token header.
         // Also they MUST pass currentEventId as X-Current-Event-Id and currentPersonId as X-Current-Person-Id.
         // External services may choose to use either cookie or header.
         $this->_authToken = (empty($input['HTTP_X_AUTH_TOKEN'])
             ? (
-                empty($cookieInput['authToken'])
+                empty($storage->getAuthToken())
                 ? ''
-                : trim($cookieInput['authToken'])
+                : $storage->getAuthToken()
             )
             : trim($input['HTTP_X_AUTH_TOKEN']));
 
         $this->_currentEventId = (empty($input['HTTP_X_CURRENT_EVENT_ID'])
             ? (
-            empty($cookieInput['currentEventId'])
+            empty($storage->getEventId())
                 ? null
-                : intval($cookieInput['currentEventId'])
+                : $storage->getEventId()
             )
             : intval($input['HTTP_X_CURRENT_EVENT_ID']));
 
         $this->_currentPersonId = (empty($input['HTTP_X_CURRENT_PERSON_ID'])
             ? (
-            empty($cookieInput['currentPersonId'])
+            empty($storage->getPersonId())
                 ? null
-                : intval($cookieInput['currentPersonId'])
+                : $storage->getPersonId()
             )
             : intval($input['HTTP_X_CURRENT_PERSON_ID']));
 

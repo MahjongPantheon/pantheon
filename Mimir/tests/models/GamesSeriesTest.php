@@ -59,7 +59,7 @@ class GamesSeriesTest extends \PHPUnit\Framework\TestCase
         $this->_config = new Config(getenv('OVERRIDE_CONFIG_PATH'));
 
         $this->_ds = DataSource::__getCleanTestingInstance();
-        $this->_meta = new Meta($this->_ds->remote(), $this->_config, $_SERVER);
+        $this->_meta = new Meta($this->_ds->remote(), new \Common\Storage('localhost'), $this->_config, $_SERVER);
         $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setTimezone('UTC')

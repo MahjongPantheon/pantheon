@@ -32,6 +32,7 @@ return [
     'verbose'   => true,
     'serverDefaultTimezone' => 'UTC',
     'verboseLog' => __DIR__ . '/../data/verbose.log',
+    'cookieDomain' => 'localhost',
     'trackerUrl' => null,
     'api' => [
         'version_major' => 1,

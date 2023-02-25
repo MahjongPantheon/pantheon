@@ -32,6 +32,7 @@ return [
     'verbose'   => true,
     'verboseLog' => __DIR__ . '/../data/verbose.log',
     'trackerUrl' => null,
+    'cookieDomain' => 'localhost',
     'freyUrl' => '__mock__',
     'api' => [
         'version_major' => '1',

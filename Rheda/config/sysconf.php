@@ -32,10 +32,6 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         const DEBUG_MODE = true; // TODO -> to false in prod!
         const USE_TWIRP_FREY = false;
 
-        const COOKIE_TOKEN_KEY = 'pantheon_authToken';
-        const COOKIE_ID_KEY = 'pantheon_currentPersonId';
-        const COOKIE_EVENT_KEY = 'pantheon_currentEventId';
-        const COOKIE_LANG_KEY = 'pantheon_currentLanguage';
         const COOKIE_DOMAIN = '';
 
         // Mailer settings

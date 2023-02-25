@@ -43,6 +43,7 @@ return array_merge([
     'rhedaUrl'  => 'http://localhost:4002', // TODO: change this in your local config!
     'verbose'   => true, // TODO: change this in your local config!
     'verboseLog' => null,
+    'cookieDomain' => '.riichimahjong.org', // TODO: change this in your local config!
     'serverDefaultTimezone' => 'UTC',
     'trackerUrl' => null, // should be string or null, %s is placeholder for game hash token
 

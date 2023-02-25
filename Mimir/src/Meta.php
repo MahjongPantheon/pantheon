@@ -50,6 +50,10 @@ class Meta
      */
     protected $_frey;
     /**
+     * @var \Common\Storage
+     */
+    protected $_storage;
+    /**
      * @var array
      */
     protected $_accessRules;
@@ -73,13 +77,14 @@ class Meta
      * @param array|null $input
      * @throws \Exception
      */
-    public function __construct(IFreyClient $frey, Config $config, $input = null)
+    public function __construct(IFreyClient $frey, \Common\Storage $storage, Config $config, $input = null)
     {
         if (empty($input)) {
             $input = $_SERVER;
         }
 
         $this->_frey = $frey;
+        $this->_storage = $storage;
         $this->_fillFrom($input);
         $this->_selectedLocale = $this->_initI18n();
 
@@ -113,8 +118,8 @@ class Meta
         }
 
         // second step is checking cookie
-        if (isset($_COOKIE['language'])) {
-            $locale = $_COOKIE['language'];
+        if ($this->_storage->getLang()) {
+            $locale = $this->_storage->getLang();
         } else if (!empty($_SERVER['HTTP_X_LOCALE'])) {
             // third step is checking headers (in case of mimir <-> frey interactions)
             $locale = $_SERVER['HTTP_X_LOCALE'];

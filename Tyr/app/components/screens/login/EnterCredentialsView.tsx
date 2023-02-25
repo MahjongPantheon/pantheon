@@ -14,27 +14,34 @@ export const EnterCredentialsView: React.FC<IProps> = ({ onSubmit, signupLink, r
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (
-    <div className='page-enter-credentials'>
+    <form
+      className='page-enter-credentials'
+      onSubmit={(e) => {
+        onSubmit(email, password);
+        e.preventDefault();
+        return false;
+      }}
+    >
       <div className='page-enter-credentials__title'>{loc._t('Pantheon: log in')}</div>
       <div className='page-enter-credentials__form'>
         <input
-          className={'page-enter-credentials__input'}
-          type={'text'}
+          className='page-enter-credentials__input'
+          type='text'
+          placeholder={loc._t('Email')}
           onChange={(e) => setEmail(e.currentTarget.value)}
         />
-        <label>{loc._t('Email')}</label>
         <input
-          className={'page-enter-credentials__input'}
-          type={'password'}
+          className='page-enter-credentials__input'
+          type='password'
+          placeholder={loc._t('Password')}
           onChange={(e) => setPassword(e.currentTarget.value)}
         />
-        <label>{loc._t('Password')}</label>
       </div>
       <div className='page-enter-credentials__button-container'>
         <button
           className='flat-btn flat-btn--large'
           style={{ justifySelf: 'end', width: '100%' }}
-          onClick={() => onSubmit(email, password)}
+          type='submit'
         >
           {loc._t('Log in')}
         </button>
@@ -57,6 +64,6 @@ export const EnterCredentialsView: React.FC<IProps> = ({ onSubmit, signupLink, r
           {loc._t('Forgot password?')}
         </a>
       </div>
-    </div>
+    </form>
   );
 };

@@ -22,7 +22,7 @@ export class SettingsScreen extends React.PureComponent<IComponentProps> {
 
   private onLogout() {
     const { dispatch } = this.props;
-    dispatch({ type: FORCE_LOGOUT });
+    dispatch({ type: FORCE_LOGOUT, payload: undefined });
   }
 
   private onSingleDeviceModeChange(value: boolean) {

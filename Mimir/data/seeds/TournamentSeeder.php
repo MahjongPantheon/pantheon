@@ -104,7 +104,7 @@ class TournamentSeeder extends AbstractSeed
             }, $data
         )));
 
-        $meta = new \Mimir\Meta($ds->remote(), $config, $_SERVER);
+        $meta = new \Mimir\Meta($ds->remote(), new \Common\Storage('localhost'), $config, $_SERVER);
         $model = new \Mimir\TextlogImportModel($ds, $config, $meta);
 
         foreach ($games as $log) {
