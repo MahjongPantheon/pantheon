@@ -23,7 +23,7 @@ export interface IStorage {
   deleteSingleDeviceMode(): IStorage;
 }
 
-// These should be same as in Rheda cookie interface (Storage.php)
+// These should be same as in Common/Storage.php cookie interface
 const AUTH_TOKEN_KEY = 'auth';
 const PERSON_ID_KEY = 'pid';
 const EVENT_ID_KEY = 'eid';

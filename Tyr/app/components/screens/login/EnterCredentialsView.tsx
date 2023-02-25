@@ -14,11 +14,14 @@ export const EnterCredentialsView: React.FC<IProps> = ({ onSubmit, signupLink, r
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (
-    <form className='page-enter-credentials' onSubmit={(e) => {
-      onSubmit(email, password);
-      e.preventDefault();
-      return false;
-    }}>
+    <form
+      className='page-enter-credentials'
+      onSubmit={(e) => {
+        onSubmit(email, password);
+        e.preventDefault();
+        return false;
+      }}
+    >
       <div className='page-enter-credentials__title'>{loc._t('Pantheon: log in')}</div>
       <div className='page-enter-credentials__form'>
         <input
