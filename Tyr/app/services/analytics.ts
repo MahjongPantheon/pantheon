@@ -19,6 +19,7 @@
  */
 
 import { environment } from '#config';
+import debounce from 'lodash.debounce';
 import Plausible from 'plausible-tracker';
 
 export class Analytics {
@@ -41,16 +42,32 @@ export class Analytics {
   private _userId: number | null = null;
   private readonly _statDomain: string | null = null;
   private readonly _plausible: ReturnType<typeof Plausible> | null = null;
+  private readonly _track: typeof Analytics.prototype.track | null = null;
 
   constructor() {
     this._statDomain = environment.statDomain;
     if (!this._statDomain) {
       return;
     }
+
     this._plausible = Plausible({
       domain: window.location.hostname,
       apiHost: 'https://' + this._statDomain,
     });
+
+    this._track = debounce(
+      (action: string, params: { [key: string]: any } = {}, eventId?: number) => {
+        this._plausible?.trackEvent(action, {
+          props: {
+            eventId:
+              (eventId ? eventId.toString() : (this._eventId ?? '').toString()) ||
+              Analytics.NOT_INITIALIZED,
+            userId: (this._userId ?? '').toString() || Analytics.NOT_INITIALIZED,
+            ...params,
+          },
+        });
+      }
+    );
   }
 
   setUserId(userId: number) {
@@ -71,15 +88,6 @@ export class Analytics {
     if (!this._plausible) {
       return;
     }
-
-    this._plausible.trackEvent(action, {
-      props: {
-        eventId:
-          (eventId ? eventId.toString() : (this._eventId ?? '').toString()) ||
-          Analytics.NOT_INITIALIZED,
-        userId: (this._userId ?? '').toString() || Analytics.NOT_INITIALIZED,
-        ...params,
-      },
-    });
+    this._track?.(action, params, eventId);
   }
 }
