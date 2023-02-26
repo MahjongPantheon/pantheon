@@ -49,7 +49,7 @@ export class Analytics {
     }
     this._plausible = Plausible({
       domain: window.location.hostname,
-      apiHost: this._statDomain,
+      apiHost: 'https://' + this._statDomain,
     });
   }
 
