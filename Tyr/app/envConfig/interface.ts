@@ -5,6 +5,6 @@ export type EnvConfig = {
   guiUrl: string;
   cookieDomain: string | null;
   guiFix: (src: string) => string;
-  metrikaId: number;
+  statDomain: string | null;
   apiVersion: [number, number];
 };

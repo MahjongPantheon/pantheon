@@ -89,6 +89,14 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         {
             return 'CHANGE_ME'; // TODO: Change this on your prod server!
         }
+
+        /**
+         * @return string
+         */
+        public static function STAT_DOMAIN()
+        {
+            return '';
+        }
     }
 }
 

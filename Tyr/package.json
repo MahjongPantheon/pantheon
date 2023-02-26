@@ -39,6 +39,7 @@
     "i18n-json-po": "^1.0.7",
     "i18n-po-json": "^1.0.7",
     "i18n-stex": "^1.0.12",
+    "plausible-tracker": "^0.3.8",
     "prettier": "^2.8.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

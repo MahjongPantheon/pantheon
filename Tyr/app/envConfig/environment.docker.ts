@@ -27,7 +27,7 @@ export const environment: EnvConfig = {
   guiUrl: 'http://localhost:4002',
   guiFix: (src: string) => src,
   cookieDomain: null, // when working on localhost this must be omitted!
-  metrikaId: 101010101, // dummy number for testing
+  statDomain: null, // when working on localhost this must be omitted!
 
   // Do not change this unless you really know what are you doing
   apiVersion: [1, 0],

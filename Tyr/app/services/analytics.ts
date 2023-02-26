@@ -19,8 +19,9 @@
  */
 
 import { environment } from '#config';
+import Plausible from 'plausible-tracker';
 
-export class MetrikaService {
+export class Analytics {
   public static readonly NOT_INITIALIZED = 'not_initialized';
   public static readonly APP_INIT = 'app_init';
   public static readonly LOGOUT = 'logout';
@@ -37,33 +38,48 @@ export class MetrikaService {
   public static readonly LOAD_SUCCESS = 'load_success';
   public static readonly LOAD_ERROR = 'load_error';
   private _eventId: number | null = null;
-  private readonly _metrikaId: number | null = null;
+  private _userId: number | null = null;
+  private readonly _statDomain: string | null = null;
+  private readonly _plausible: ReturnType<typeof Plausible> | null = null;
 
   constructor() {
-    this._metrikaId = environment.metrikaId;
+    this._statDomain = environment.statDomain;
+    if (!this._statDomain) {
+      return;
+    }
+    this._plausible = Plausible({
+      domain: window.location.hostname,
+      apiHost: this._statDomain,
+    });
   }
 
   setUserId(userId: number) {
-    if (!this._metrikaId) {
+    if (!this._plausible) {
       return;
     }
-    window.ym(this._metrikaId, 'setUserID', userId.toString());
+    this._userId = userId;
   }
 
   setEventId(eventId: number) {
+    if (!this._plausible) {
+      return;
+    }
     this._eventId = eventId;
   }
 
   track(action: string, params: { [key: string]: any } = {}, eventId?: number) {
-    if (!this._metrikaId) {
+    if (!this._plausible) {
       return;
     }
 
-    window.ym(this._metrikaId, 'reachGoal', 'TYR_MTT_' + action, {
-      eventId:
-        (eventId ? eventId.toString() : (this._eventId ?? '').toString()) ||
-        MetrikaService.NOT_INITIALIZED,
-      ...params,
+    this._plausible.trackEvent(action, {
+      props: {
+        eventId:
+          (eventId ? eventId.toString() : (this._eventId ?? '').toString()) ||
+          Analytics.NOT_INITIALIZED,
+        userId: (this._userId ?? '').toString() || Analytics.NOT_INITIALIZED,
+        ...params,
+      },
     });
   }
 }

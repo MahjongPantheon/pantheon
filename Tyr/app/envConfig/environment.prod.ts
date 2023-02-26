@@ -26,8 +26,8 @@ export const environment: EnvConfig = {
   uaUrl: 'https://userapi.riichimahjong.org/',
   guiUrl: 'https://rating.riichimahjong.org/',
   cookieDomain: '.riichimahjong.org',
+  statDomain: 'pl.riichimahjong.org',
   guiFix: (src: string) => src,
-  metrikaId: 64318630,
 
   // Do not change this unless you really know what are you doing
   apiVersion: [1, 0],
