@@ -4,9 +4,9 @@ import { apiClient } from './middlewares/apiClient';
 import { RiichiApiService } from '#/services/riichiApi';
 import { mimirReducer } from './reducers/mimirReducer';
 import { outcomeReducer } from './reducers/outcomeReducer';
-import { metrika } from './middlewares/metrika';
+import { analytics } from './middlewares/analytics';
 import { history } from './middlewares/history';
-import { MetrikaService } from '#/services/metrika';
+import { Analytics } from '#/services/analytics';
 import { timerReducer } from './reducers/timerReducer';
 import { timerMw } from './middlewares/timer';
 import { IAppState, TimerStorage } from './interfaces';
@@ -41,7 +41,7 @@ export class Store {
       mimirReducer,
       timerReducer,
     ]);
-    const metrikaService = new MetrikaService();
+    const analyticsService = new Analytics();
     const riichiService = new RiichiApiService(() => {
       if (this.store.getState().currentScreen === 'currentGame') {
         const hash = this.store.getState().currentSessionHash;
@@ -54,7 +54,7 @@ export class Store {
     const middleware = applyMiddleware(
       logging(`⇨ [middlewares]`),
       apiClient(riichiService),
-      metrika(metrikaService),
+      analytics(analyticsService),
       history(),
       timerMw(this.timerSt),
       persistentMw(storage),
