@@ -27,6 +27,9 @@
     {{{css "/assets/styles.css"}}}
     {{{css "/assets/mobile-overrides.css"}}}
 
+    {{#statDomain}}
+      <script defer data-domain="{{dataDomain}}" src="https://{{statDomain}}/js/script.tagged-events.js"></script>
+    {{/statDomain}}
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">(function (m, e, t, r, i, k, a) {
         m[i] = m[i] || function () {
