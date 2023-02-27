@@ -6,5 +6,6 @@ export type EnvConfig = {
   cookieDomain: string | null;
   guiFix: (src: string) => string;
   statDomain: string | null;
+  siteId: string | null;
   apiVersion: [number, number];
 };

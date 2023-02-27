@@ -28,7 +28,9 @@ import {
   UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
 import { Analytics } from '#/services/analytics';
-import { IAppState } from '#/store/interfaces';
+import { AppScreen, IAppState } from '#/store/interfaces';
+
+let currentScreen: AppScreen | null = null;
 
 export const analytics =
   (an: Analytics) =>
@@ -170,6 +172,10 @@ export const analytics =
         });
         break;
       default:
+        if (currentScreen !== _mw.getState().currentScreen) {
+          currentScreen = _mw.getState().currentScreen;
+          an.trackView('screen:' + currentScreen);
+        }
     }
 
     return next(action);
