@@ -75,7 +75,7 @@ export class Analytics {
     });
   }
 
-  protected _trackEvent(eventType: string, eventValue: any, url: string) {
+  protected _trackEvent(eventName: string, eventData: any, url: string) {
     if (!this._statDomain) {
       return;
     }
@@ -86,8 +86,8 @@ export class Analytics {
       language: navigator.language,
       cache: null,
       url: url,
-      event_type: eventType,
-      event_value: eventValue,
+      event_name: eventName,
+      event_data: eventData,
     };
     fetch('https://' + this._statDomain + '/api/collect', {
       credentials: 'omit',
@@ -119,13 +119,11 @@ export class Analytics {
         this._trackEvent(
           action,
           {
-            props: {
-              eventId:
-                (eventId ? eventId.toString() : (this._eventId ?? '').toString()) ||
-                Analytics.NOT_INITIALIZED,
-              userId: (this._userId ?? '').toString() || Analytics.NOT_INITIALIZED,
-              ...params,
-            },
+            eventId:
+              (eventId ? eventId.toString() : (this._eventId ?? '').toString()) ||
+              Analytics.NOT_INITIALIZED,
+            userId: (this._userId ?? '').toString() || Analytics.NOT_INITIALIZED,
+            ...params,
           },
           window.location.hostname
         );
