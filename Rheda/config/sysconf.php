@@ -97,6 +97,14 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         {
             return '';
         }
+
+        /**
+         * @return string
+         */
+        public static function ANALYTICS_SITE_ID()
+        {
+            return '';
+        }
     }
 }
 

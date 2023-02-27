@@ -321,7 +321,7 @@ abstract class Controller
                 /* Aggregated events. */
                 echo $templateEngine->render('Layout', [
                     'eventTitle' => _t("Aggregated event"),
-                    'dataDomain' => str_replace(['https://', 'http://'], ['', ''], Sysconf::GUI_URL()),
+                    'analyticsSiteId' => empty(Sysconf::ANALYTICS_SITE_ID()) ? null : Sysconf::ANALYTICS_SITE_ID(),
                     'statDomain' => empty(Sysconf::STAT_DOMAIN()) ? null : Sysconf::STAT_DOMAIN(),
                     'pageTitle' => $pageTitle,
                     'currentPerson' => $this->_personalData,
@@ -341,7 +341,7 @@ abstract class Controller
                     'usePenalty' => $this->_mainEventRules->usePenalty(),
                     'syncStart' => $this->_mainEventRules->syncStart(),
                     'eventTitle' => $this->_mainEventRules->eventTitle(),
-                    'dataDomain' => str_replace(['https://', 'http://'], ['', ''], Sysconf::GUI_URL()),
+                    'analyticsSiteId' => empty(Sysconf::ANALYTICS_SITE_ID()) ? null : Sysconf::ANALYTICS_SITE_ID(),
                     'statDomain' => empty(Sysconf::STAT_DOMAIN()) ? null : Sysconf::STAT_DOMAIN(),
                     'isPrescripted' => $this->_mainEventRules->isPrescripted(),
                     'userHasAdminRights' => $this->_userHasAdminRights(),
