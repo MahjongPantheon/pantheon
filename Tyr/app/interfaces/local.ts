@@ -24,7 +24,7 @@ import { YakuId } from '#/primitives/yaku';
 export type LCurrentGame = {
   hashcode: string;
   tableIndex: number;
-  players: [Player, Player, Player, Player]; // players data
+  players: Player[]; // players data
   status: string; // should always be inprogress with current logic
 };
 
@@ -81,7 +81,7 @@ export interface LSessionOverview {
   honba: number;
   yellowZoneAlreadyPlayed: boolean;
   tableIndex: number;
-  players: [LUserWithScore, LUserWithScore, LUserWithScore, LUserWithScore];
+  players: LUserWithScore[];
 }
 
 export interface LGameConfig {

@@ -7,6 +7,7 @@ export interface IStorage {
   getLang(): string | null;
   getTheme(): string | null;
   getSingleDeviceMode(): boolean;
+  getTwirpEnabled(): boolean;
 
   setAuthToken(token: string): IStorage;
   setPersonId(id: number): IStorage;
@@ -14,6 +15,7 @@ export interface IStorage {
   setLang(lang: string): IStorage;
   setTheme(theme: string): IStorage;
   setSingleDeviceMode(enabled: boolean): IStorage;
+  setTwirpEnabled(enabled: boolean): IStorage;
 
   deleteAuthToken(): IStorage;
   deletePersonId(): IStorage;
@@ -21,6 +23,7 @@ export interface IStorage {
   deleteLang(): IStorage;
   deleteTheme(): IStorage;
   deleteSingleDeviceMode(): IStorage;
+  deleteTwirpEnabled(): IStorage;
 }
 
 // These should be same as in Common/Storage.php cookie interface
@@ -30,6 +33,7 @@ const EVENT_ID_KEY = 'eid';
 const LANG_KEY = 'lng';
 const THEME_KEY = 'thm';
 const SINGLE_DEVICE_MODE_KEY = 'sdm';
+const TWIRP_ENABLED = 'twrp';
 
 export class Storage implements IStorage {
   constructor(private readonly cookieDomain: string | null) {}
@@ -56,6 +60,10 @@ export class Storage implements IStorage {
 
   public getSingleDeviceMode(): boolean {
     return !!this.get(SINGLE_DEVICE_MODE_KEY, 'int');
+  }
+
+  public getTwirpEnabled(): boolean {
+    return !!this.get(TWIRP_ENABLED, 'int');
   }
 
   public setAuthToken(token: string): IStorage {
@@ -92,6 +100,15 @@ export class Storage implements IStorage {
     return this;
   }
 
+  public setTwirpEnabled(enabled: boolean): IStorage {
+    if (enabled) {
+      this.set(TWIRP_ENABLED, 'int', 1);
+    } else {
+      this.deleteTwirpEnabled();
+    }
+    return this;
+  }
+
   public deleteAuthToken(): IStorage {
     this.delete(AUTH_TOKEN_KEY);
     return this;
@@ -119,6 +136,11 @@ export class Storage implements IStorage {
 
   public deleteSingleDeviceMode(): IStorage {
     this.delete(SINGLE_DEVICE_MODE_KEY);
+    return this;
+  }
+
+  public deleteTwirpEnabled(): IStorage {
+    this.delete(TWIRP_ENABLED);
     return this;
   }
 

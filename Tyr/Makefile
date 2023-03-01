@@ -55,3 +55,7 @@ PHONY: i18n_update
 i18n_update:
 	./node_modules/.bin/pojson -s app/i18n/ru.po -o app/i18n/ru.json --withMeta
 	./node_modules/.bin/pojson -s app/i18n/de.po -o app/i18n/de.json --withMeta
+
+PHONY: gen_proto
+gen_proto:
+	./node_modules/.bin/twirpscript

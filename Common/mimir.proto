@@ -273,7 +273,7 @@ message Players_GetAllRounds_Payload {
 }
 
 message Players_GetAllRounds_Response {
-  repeated RoundResult round = 1;
+  repeated RoundState round = 1;
 }
 
 message Players_GetLastRoundByHash_Payload {

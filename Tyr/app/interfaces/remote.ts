@@ -248,7 +248,7 @@ export interface RRoundPaymentsInfoMulti {
   };
 
   winner: number[];
-  paoPlayer: number;
+  paoPlayer?: number;
   yaku: string[];
   han: number[];
   fu: number[];

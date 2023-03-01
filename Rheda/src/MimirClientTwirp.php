@@ -1189,7 +1189,7 @@ class MimirClientTwirp implements IMimirClient
             );
 
             return [
-                '_outcome' => self::_fromOutcome($ret->getLastOutcome()),
+                '_lastOutcome' => self::_fromOutcome($ret->getLastOutcome()),
                 '_scores' => self::_makeScores(iterator_to_array($ret->getScores())),
                 '_extraPenaltyLog' => self::_fromPenaltiesLog(iterator_to_array($ret->getExtraPenaltyLog())),
                 '_round' => $ret->getRound(),

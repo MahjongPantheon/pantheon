@@ -4272,6 +4272,11 @@ globby@^6.1.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
+google-protobuf@^3.21.0:
+  version "3.21.2"
+  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.21.2.tgz#4580a2bea8bbb291ee579d1fefb14d6fa3070ea4"
+  integrity sha512-3MSOYFO5U9mPGikIYCzK0SaThypfGgS6bHqrUGXG3DPHCrb+txNqeEcns1W0lkGfk0rCyNXm7xB9rMxnCiZOoA==
+
 gopd@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/gopd/-/gopd-1.0.1.tgz#29ff76de69dac7489b7c0918a5788e56477c332c"
@@ -5743,6 +5748,11 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
+prettier@^2.7.1:
+  version "2.8.4"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.4.tgz#34dd2595629bfbb79d344ac4a91ff948694463c3"
+  integrity sha512-vIS4Rlc2FNh0BySk3Wkd6xmwxB0FpOndW5fisM5H8hsZSxU2VWVB5CWIkIjWvrHjIhxk2g3bfMKM87zNTrZddw==
+
 prettier@^2.8.3:
   version "2.8.3"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.3.tgz#ab697b1d3dd46fb4626fbe2f543afe0cc98d8632"
@@ -5774,6 +5784,14 @@ prop-types@^15.8.1:
     loose-envify "^1.4.0"
     object-assign "^4.1.1"
     react-is "^16.13.1"
+
+protoscript@0.0.14:
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/protoscript/-/protoscript-0.0.14.tgz#01b6de8ee7285ffba2fe3e8866ab46db8aa80348"
+  integrity sha512-nTSldBC6ny8DjuL9sYAAS2+fdqK/7HWf1kzJKRnPR+Qhcxo9Yt03Fkmgek2DMYuGdToB7uHu916X40yN+GOh2Q==
+  dependencies:
+    google-protobuf "^3.21.0"
+    prettier "^2.7.1"
 
 proxy-addr@~2.0.7:
   version "2.0.7"
@@ -6767,6 +6785,13 @@ tsutils@^3.21.0:
   integrity sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==
   dependencies:
     tslib "^1.8.1"
+
+twirpscript@^0.0.66:
+  version "0.0.66"
+  resolved "https://registry.yarnpkg.com/twirpscript/-/twirpscript-0.0.66.tgz#2912f472e7616c9dd76abc7a1e6d0d40a1dbd26e"
+  integrity sha512-k5yh/1LXZFDrA1KXisUkUuAKRgdiqZ14Ho74CiIrcavg7gfNbczT+jfrJ0e7NMTrtxmLFweLxbjzmrVd2IAbnQ==
+  dependencies:
+    protoscript "0.0.14"
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
