@@ -143,7 +143,7 @@ abstract class Controller
         $this->_storage = new \Common\Storage(Sysconf::COOKIE_DOMAIN);
 
         // @phpstan-ignore-next-line
-        if (Sysconf::USE_TWIRP_FREY) {
+        if ($this->_storage->getTwirpEnabled()) {
             $this->_frey = new \Rheda\FreyClientTwirp(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
         } else {
             $this->_frey = new \Rheda\FreyClient(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
@@ -216,7 +216,7 @@ abstract class Controller
                 $this->_authToken = null;
             } else {
                 // @phpstan-ignore-next-line
-                if (Sysconf::USE_TWIRP_FREY) {
+                if ($this->_storage->getTwirpEnabled()) {
                     // @phpstan-ignore-next-line
                     $this->_frey->withHeaders([
                         'X-Auth-Token' => $this->_authToken,
@@ -272,7 +272,7 @@ abstract class Controller
             $client->withDebug();
             $client->withCookies(['XDEBUG_SESSION=PHPSTORM']);
             // @phpstan-ignore-next-line
-            if (!Sysconf::USE_TWIRP_FREY) {
+            if (!$this->_storage->getTwirpEnabled()) {
                 // @phpstan-ignore-next-line
                 $this->_frey->getClient()->getHttpClient()->withDebug();
                 // @phpstan-ignore-next-line

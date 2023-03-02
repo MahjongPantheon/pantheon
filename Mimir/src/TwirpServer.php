@@ -157,23 +157,24 @@ final class TwirpServer implements Mimir
     {
         $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
         $this->_config = new Config($cfgPath);
+        $this->_storage = new \Common\Storage($this->_config->getStringValue('cookieDomain'));
         $this->_db = new Db($this->_config);
         $freyUrl = $this->_config->getStringValue('freyUrl');
         if ($freyUrl === '__mock__') { // testing purposes
             $this->_frey = new FreyClientMock('');
         } else {
-            if ($this->_config->getBooleanValue('useFreyTwirp')) {
+            if ($this->_storage->getTwirpEnabled()) {
                 $this->_frey = new FreyClientTwirp($freyUrl);
             } else {
                 $this->_frey = new FreyClient($freyUrl);
             }
         }
         $this->_ds = new DataSource($this->_db, $this->_frey);
-        $this->_meta = new Meta($this->_frey, $this->_config, $_SERVER);
+        $this->_meta = new Meta($this->_frey, $this->_storage, $this->_config, $_SERVER);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 
-        if ($this->_config->getBooleanValue('useFreyTwirp')) {
+        if ($this->_storage->getTwirpEnabled()) {
             // @phpstan-ignore-next-line
             $this->_frey->withHeaders([
                 'X-Locale' => $this->_meta->getSelectedLocale()

@@ -30,7 +30,6 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         const API_VERSION_MAJOR = 1;
         const API_VERSION_MINOR = 0;
         const DEBUG_MODE = true; // TODO -> to false in prod!
-        const USE_TWIRP_FREY = false;
 
         const COOKIE_DOMAIN = '';
 
