@@ -7,7 +7,6 @@ use Common\Achievement;
 use Common\ChomboResult;
 use Common\Country;
 use Common\CurrentSession;
-use Common\DoraSummary;
 use Common\DrawResult;
 use Common\Event;
 use Common\EventData;
@@ -17,7 +16,6 @@ use Common\Events_GetAllRegisteredPlayers_Payload;
 use Common\Events_GetEventForEdit_Payload;
 use Common\Events_GetEventsById_Payload;
 use Common\Events_GetGame_Payload;
-use Common\Events_GetGamesSeries_Response;
 use Common\Events_GetRatingTable_Payload;
 use Common\Events_RegisterPlayer_Payload;
 use Common\Events_UnregisterPlayer_Payload;
@@ -73,7 +71,6 @@ use Common\RegisteredPlayer;
 use Common\RonResult;
 use Common\Round;
 use Common\RoundOutcome;
-use Common\RoundResult;
 use Common\RoundState;
 use Common\Seating_MakeIntervalSeating_Payload;
 use Common\Seating_MakePrescriptedSeating_Payload;
@@ -92,10 +89,8 @@ use Common\Events_GetTimezones_Payload;
 use Common\RulesetGenerated;
 use Common\TsumoResult;
 use Common\TwirpError;
-use Common\YakuMap;
 use Common\YakuStat;
 use Google\Protobuf\Internal\RepeatedField;
-use JetBrains\PhpStorm\ArrayShape;
 use Twirp\Context;
 
 require_once __DIR__ . '/HttpClient.php';
@@ -215,11 +210,14 @@ class MimirClientTwirp implements IMimirClient
     }
 
     /**
-     * @param RepeatedField $input
+     * @param ?RepeatedField $input
      * @return string
      */
-    protected static function _toCsvString(RepeatedField $input): string
+    protected static function _toCsvString(?RepeatedField $input): string
     {
+        if (empty($input)) {
+            return '';
+        }
         return implode(',', iterator_to_array($input));
     }
 
@@ -278,6 +276,18 @@ class MimirClientTwirp implements IMimirClient
     }
 
     /**
+     * @param \Traversable|null $iter
+     * @return array
+     */
+    protected static function _toArray(?\Traversable $iter)
+    {
+        if (empty($iter)) {
+            return [];
+        }
+        return iterator_to_array($iter);
+    }
+
+    /**
      * @param Round[] $rounds
      * @return array
      * @throws TwirpError
@@ -288,80 +298,80 @@ class MimirClientTwirp implements IMimirClient
             return match ($r->getOutcome()) {
                 'ron' => [
                     'outcome' => 'ron',
-                    'round_index' => $r->getRon()->getRoundIndex(),
-                    'winner_id' => $r->getRon()->getWinnerId(),
-                    'loser_id' => $r->getRon()->getLoserId(),
-                    'pao_player_id' => $r->getRon()->getPaoPlayerId(),
-                    'han' => $r->getRon()->getHan(),
-                    'fu' => $r->getRon()->getFu(),
-                    'yaku' => self::_toCsvString($r->getRon()->getYaku()),
-                    'riichi_bets' => self::_toCsvString($r->getRon()->getRiichiBets()),
-                    'dora' => $r->getRon()->getDora(),
-                    'uradora' => $r->getRon()->getUradora(),
-                    'kandora' => $r->getRon()->getKandora(),
-                    'kanuradora' => $r->getRon()->getKanuradora(),
-                    'open_hand' => $r->getRon()->getOpenHand(),
+                    'round_index' => $r->getRon()?->getRoundIndex(),
+                    'winner_id' => $r->getRon()?->getWinnerId(),
+                    'loser_id' => $r->getRon()?->getLoserId(),
+                    'pao_player_id' => $r->getRon()?->getPaoPlayerId(),
+                    'han' => $r->getRon()?->getHan(),
+                    'fu' => $r->getRon()?->getFu(),
+                    'yaku' => self::_toCsvString($r->getRon()?->getYaku()),
+                    'riichi_bets' => self::_toCsvString($r->getRon()?->getRiichiBets()),
+                    'dora' => $r->getRon()?->getDora(),
+                    'uradora' => $r->getRon()?->getUradora(),
+                    'kandora' => $r->getRon()?->getKandora(),
+                    'kanuradora' => $r->getRon()?->getKanuradora(),
+                    'open_hand' => $r->getRon()?->getOpenHand(),
                 ],
                 'multiron' => [
                     'outcome' => 'multiron',
-                    'round_index' => $r->getMultiron()->getRoundIndex(),
-                    'loser_id' => $r->getMultiron()->getLoserId(),
-                    'multi_ron' => $r->getMultiron()->getMultiRon(),
-                    'wins' => array_map(function (MultironWin $win) {
+                    'round_index' => $r->getMultiron()?->getRoundIndex(),
+                    'loser_id' => $r->getMultiron()?->getLoserId(),
+                    'multi_ron' => $r->getMultiron()?->getMultiRon(),
+                    'wins' => array_map(function (MultironWin $win) use ($r) {
                         return [
                             'winner_id' => $win->getWinnerId(),
                             'pao_player_id' => $win->getPaoPlayerId(),
                             'han' => $win->getHan(),
                             'fu' => $win->getFu(),
                             'yaku' => self::_toCsvString($win->getYaku()),
-                            'riichi_bets' => self::_toCsvString($win->getRiichiBets()),
+                            'riichi_bets' => self::_toCsvString($r->getMultiron()?->getRiichiBets()),
                             'dora' => $win->getDora(),
                             'uradora' => $win->getUradora(),
                             'kandora' => $win->getKandora(),
                             'kanuradora' => $win->getKanuradora(),
                             'open_hand' => $win->getOpenHand(),
                         ];
-                    }, iterator_to_array($r->getMultiron()->getWins()))
+                    }, self::_toArray($r->getMultiron()?->getWins()))
                 ],
                 'tsumo' => [
                     'outcome' => 'tsumo',
-                    'round_index' => $r->getTsumo()->getRoundIndex(),
-                    'winner_id' => $r->getTsumo()->getWinnerId(),
-                    'pao_player_id' => $r->getTsumo()->getPaoPlayerId(),
-                    'han' => $r->getTsumo()->getHan(),
-                    'fu' => $r->getTsumo()->getFu(),
-                    'yaku' => self::_toCsvString($r->getTsumo()->getYaku()),
-                    'riichi_bets' => self::_toCsvString($r->getTsumo()->getRiichiBets()),
-                    'dora' => $r->getTsumo()->getDora(),
-                    'uradora' => $r->getTsumo()->getUradora(),
-                    'kandora' => $r->getTsumo()->getKandora(),
-                    'kanuradora' => $r->getTsumo()->getKanuradora(),
-                    'open_hand' => $r->getTsumo()->getOpenHand(),
+                    'round_index' => $r->getTsumo()?->getRoundIndex(),
+                    'winner_id' => $r->getTsumo()?->getWinnerId(),
+                    'pao_player_id' => $r->getTsumo()?->getPaoPlayerId(),
+                    'han' => $r->getTsumo()?->getHan(),
+                    'fu' => $r->getTsumo()?->getFu(),
+                    'yaku' => self::_toCsvString($r->getTsumo()?->getYaku()),
+                    'riichi_bets' => self::_toCsvString($r->getTsumo()?->getRiichiBets()),
+                    'dora' => $r->getTsumo()?->getDora(),
+                    'uradora' => $r->getTsumo()?->getUradora(),
+                    'kandora' => $r->getTsumo()?->getKandora(),
+                    'kanuradora' => $r->getTsumo()?->getKanuradora(),
+                    'open_hand' => $r->getTsumo()?->getOpenHand(),
                 ],
                 'draw' => [
                     'outcome' => 'draw',
-                    'round_index' => $r->getDraw()->getRoundIndex(),
-                    'riichi_bets' => self::_toCsvString($r->getDraw()->getRiichiBets()),
-                    'tempai' => self::_toCsvString($r->getDraw()->getTempai()),
+                    'round_index' => $r->getDraw()?->getRoundIndex(),
+                    'riichi_bets' => self::_toCsvString($r->getDraw()?->getRiichiBets()),
+                    'tempai' => self::_toCsvString($r->getDraw()?->getTempai()),
                 ],
                 'abort' => [
                     'outcome' => 'abort',
-                    'round_index' => $r->getAbort()->getRoundIndex(),
-                    'riichi_bets' => self::_toCsvString($r->getAbort()->getRiichiBets()),
+                    'round_index' => $r->getAbort()?->getRoundIndex(),
+                    'riichi_bets' => self::_toCsvString($r->getAbort()?->getRiichiBets()),
                 ],
                 'chombo' => [
                     'outcome' => 'chombo',
-                    'round_index' => $r->getChombo()->getRoundIndex(),
-                    'loser_id' => $r->getChombo()->getLoserId(),
+                    'round_index' => $r->getChombo()?->getRoundIndex(),
+                    'loser_id' => $r->getChombo()?->getLoserId(),
                 ],
                 'nagashi' => [
                     'outcome' => 'nagashi',
-                    'round_index' => $r->getNagashi()->getRoundIndex(),
-                    'riichi_bets' => self::_toCsvString($r->getNagashi()->getRiichiBets()),
-                    'tempai' => self::_toCsvString($r->getNagashi()->getTempai()),
-                    'nagashi' => self::_toCsvString($r->getNagashi()->getNagashi()),
+                    'round_index' => $r->getNagashi()?->getRoundIndex(),
+                    'riichi_bets' => self::_toCsvString($r->getNagashi()?->getRiichiBets()),
+                    'tempai' => self::_toCsvString($r->getNagashi()?->getTempai()),
+                    'nagashi' => self::_toCsvString($r->getNagashi()?->getNagashi()),
                 ],
-                default => throw new TwirpError(500, 'Unsupported outcome specified'),
+                default => throw new TwirpError('500', 'Unsupported outcome specified'),
             };
         }, $rounds);
     }
@@ -398,7 +408,8 @@ class MimirClientTwirp implements IMimirClient
             RoundOutcome::DRAW => 'draw',
             RoundOutcome::ABORT => 'abort',
             RoundOutcome::CHOMBO => 'chombo',
-            RoundOutcome::NAGASHI => 'nagashi'
+            RoundOutcome::NAGASHI => 'nagashi',
+            default => throw new TwirpError('500', 'Unsupported outcome specified'),
         };
     }
 
@@ -410,19 +421,27 @@ class MimirClientTwirp implements IMimirClient
             SessionStatus::PREFINISHED => 'prefinished',
             SessionStatus::FINISHED => 'finished',
             SessionStatus::CANCELLED => 'cancelled',
+            default => throw new TwirpError('500', 'Unsupported outcome specified'),
         };
     }
 
     protected static function _fromPaymentLogPart(RepeatedField $info): array
     {
         return array_reduce(iterator_to_array($info), function ($acc, PaymentLogItem $val) {
-            $acc[($val->getTo() ?? '') . '<-' . ($val->getFrom() ?? '')] = $val->getAmount();
+            $acc[($val->hasTo() ? $val->getTo() : '') . '<-' . ($val->hasFrom() ? $val->getFrom() : '')] = $val->getAmount();
             return $acc;
         }, []);
     }
 
-    protected static function _fromPaymentsLog(PaymentLog $paymentsInfo): array
+    protected static function _fromPaymentsLog(?PaymentLog $paymentsInfo): array
     {
+        if (empty($paymentsInfo)) {
+            return [
+                'direct' => [],
+                'riichi' => [],
+                'honba' => []
+            ];
+        }
         return [
             'direct' => self::_fromPaymentLogPart($paymentsInfo->getDirect()),
             'riichi' => self::_fromPaymentLogPart($paymentsInfo->getRiichi()),
@@ -436,65 +455,32 @@ class MimirClientTwirp implements IMimirClient
      */
     protected static function _fromRoundState(?RoundState $ret): array
     {
-        if (empty($ret)) {
+        if (empty($ret) || empty($ret->getRound())) {
             return [];
         }
+
+        $round = self::_fromRounds([$ret->getRound()])[0];
         return [
+            ...$round,
             'outcome' => self::_fromOutcome($ret->getOutcome()),
             'payments' => self::_fromPaymentsLog($ret->getPayments()),
-            'yaku' => self::_toCsvString($ret->getYaku()),
-            'penaltyFor' => $ret->getPenaltyFor(),
-            'riichiIds' => $ret->getRiichiIds(),
+            'penaltyFor' => $ret->getOutcome() === RoundOutcome::CHOMBO ? $ret->getRound()->getChombo()?->getLoserId() : null,
+            'riichiIds' => $round['riichi_bets'],
             'dealer' => $ret->getDealer(),
             'round' => $ret->getRound(),
             'riichi' => $ret->getRiichi(),
             'honba' => $ret->getHonba(),
             'scores' => self::_makeScores(iterator_to_array($ret->getScores())),
-            'winner' => $ret->getWinner(),
-            'paoPlayer' => $ret->getPaoPlayer(),
-            'han' => $ret->getHan(),
-            'fu' => $ret->getFu(),
-            'dora' => $ret->getDora(),
-            'kandora' => $ret->getKandora(),
-            'uradora' => $ret->getUradora(),
-            'kanuradora' => $ret->getKanuradora(),
-            'openHand' => $ret->getOpenHand(),
-        ];
-    }
-
-    protected static function _fromRoundResult(?RoundResult $ret): array
-    {
-        if (empty($ret)) {
-            return [];
-        }
-        return [
-            'outcome' => self::_fromOutcome($ret->getOutcome()),
-            'yaku' => self::_toCsvString($ret->getYaku()),
-            'penaltyFor' => $ret->getPenaltyFor(),
-            'riichiIds' => $ret->getRiichiIds(),
-            'dealer' => $ret->getDealer(),
-            'round' => $ret->getRound(),
-            'riichi' => $ret->getRiichi(),
-            'honba' => $ret->getHonba(),
-            'scores' => self::_makeScores(iterator_to_array($ret->getScores())),
-            'winner' => $ret->getWinner(),
-            'paoPlayer' => $ret->getPaoPlayer(),
-            'han' => $ret->getHan(),
-            'fu' => $ret->getFu(),
-            'dora' => $ret->getDora(),
-            'kandora' => $ret->getKandora(),
-            'uradora' => $ret->getUradora(),
-            'kanuradora' => $ret->getKanuradora(),
-            'openHand' => $ret->getOpenHand(),
+            'winner' => $round['winner_id'],
+            'paoPlayer' => $round['pao_player_id'],
+            'openHand' => $round['open_hand'],
+            'loser' => $round['loser_id'],
             'scoresDelta' => self::_makeScores(iterator_to_array($ret->getScoresDelta())),
-            'loser' => $ret->getLoser(),
-            'tempai' => self::_toCsvString($ret->getTempai()),
-            'nagashi' => self::_toCsvString($ret->getNagashi())
         ];
     }
 
     /**
-     * @param $val
+     * @param string $val
      * @return int
      */
     protected static function _toEventTypeEnum($val): int
@@ -544,14 +530,17 @@ class MimirClientTwirp implements IMimirClient
                         ->setUradora($r['uradora'])
                         ->setKandora($r['kandora'])
                         ->setKanuradora($r['kanuradora'])
-                        ->setOpenHand($r['open_hand'])
-                    );
+                        ->setOpenHand($r['open_hand']));
                     break;
                 case 'multiron':
                     $round->setMultiron((new MultironResult())
                         ->setRoundIndex($r['round_index'])
                         ->setLoserId($r['loser_id'])
                         ->setMultiRon($r['multi_ron'])
+                        ->setRiichiBets(array_reduce($r['wins'], function ($win) {
+                            // @phpstan-ignore-next-line
+                            return self::_toIntArray($win['riichi_bets']);
+                        }, []))
                         ->setWins(array_map(function ($win) {
                             return (new MultironWin())
                                 ->setWinnerId($win['winner_id'])
@@ -559,14 +548,12 @@ class MimirClientTwirp implements IMimirClient
                                 ->setHan($win['han'])
                                 ->setFu($win['fu'])
                                 ->setYaku(self::_toIntArray($win['yaku']))
-                                ->setRiichiBets(self::_toIntArray($win['riichi_bets']))
                                 ->setDora($win['dora'])
                                 ->setUradora($win['uradora'])
                                 ->setKandora($win['kandora'])
                                 ->setKanuradora($win['kanuradora'])
                                 ->setOpenHand($win['open_hand']);
-                        }, $r['wins']))
-                    );
+                        }, $r['wins'])));
                     break;
                 case 'tsumo':
                     $round->setTsumo((new TsumoResult())
@@ -581,38 +568,33 @@ class MimirClientTwirp implements IMimirClient
                         ->setUradora($r['uradora'])
                         ->setKandora($r['kandora'])
                         ->setKanuradora($r['kanuradora'])
-                        ->setOpenHand($r['open_hand'])
-                    );
+                        ->setOpenHand($r['open_hand']));
                     break;
                 case 'draw':
                     $round->setDraw((new DrawResult())
                         ->setRoundIndex($r['round_index'])
                         ->setRiichiBets(self::_toIntArray($r['riichi_bets']))
-                        ->setTempai(self::_toIntArray($r['tempai']))
-                    );
+                        ->setTempai(self::_toIntArray($r['tempai'])));
                     break;
                 case 'abort':
                     $round->setAbort((new AbortResult())
                         ->setRoundIndex($r['round_index'])
-                        ->setRiichiBets(self::_toIntArray($r['riichi_bets']))
-                    );
+                        ->setRiichiBets(self::_toIntArray($r['riichi_bets'])));
                     break;
                 case 'chombo':
                     $round->setChombo((new ChomboResult())
                         ->setRoundIndex($r['round_index'])
-                        ->setLoserId($r['loser_id'])
-                    );
+                        ->setLoserId($r['loser_id']));
                     break;
                 case 'nagashi':
                     $round->setNagashi((new NagashiResult())
                         ->setRoundIndex($r['round_index'])
                         ->setRiichiBets(self::_toIntArray($r['riichi_bets']))
                         ->setTempai(self::_toIntArray($r['tempai']))
-                        ->setNagashi(self::_toIntArray($r['nagashi']))
-                    );
+                        ->setNagashi(self::_toIntArray($r['nagashi'])));
                     break;
                 default:
-                    throw new TwirpError(500, 'Unsupported outcome specified');
+                    throw new TwirpError('500', 'Unsupported outcome specified');
             }
 
             return $round;
@@ -970,15 +952,17 @@ class MimirClientTwirp implements IMimirClient
         )->getResults());
         return array_map(function (SeriesResult $r) {
             return [
-                'player' => self::_fromPlayers([$r->getPlayer()])[0],
-                'best_series' => array_reduce(iterator_to_array($r->getBestSeries()), function (PlayerPlaceInSeries $place) {
-                    return ['hash' => $place->getSessionHash(), 'place' => $place->getPlace()];
+                'player' => $r->getPlayer() ? self::_fromPlayers([$r->getPlayer()])[0] : [],
+                'best_series' => array_reduce(iterator_to_array($r->getBestSeries()), function ($acc, PlayerPlaceInSeries $place) {
+                    $acc []= ['hash' => $place->getSessionHash(), 'place' => $place->getPlace()];
+                    return $acc;
                 }, []),
                 'best_series_scores' => $r->getBestSeriesScores(),
                 'best_series_places' => $r->getBestSeriesPlaces(),
                 'best_series_avg_place' => $r->getBestSeriesAvgPlace(),
-                'current_series' => array_reduce(iterator_to_array($r->getCurrentSeries()), function (PlayerPlaceInSeries $place) {
-                    return ['hash' => $place->getSessionHash(), 'place' => $place->getPlace()];
+                'current_series' => array_reduce(iterator_to_array($r->getCurrentSeries()), function ($acc, PlayerPlaceInSeries $place) {
+                    $acc []= ['hash' => $place->getSessionHash(), 'place' => $place->getPlace()];
+                    return $acc;
                 }, []),
                 'current_series_scores' => $r->getCurrentSeriesScores(),
                 'current_series_places' => $r->getCurrentSeriesPlaces(),
@@ -1104,7 +1088,7 @@ class MimirClientTwirp implements IMimirClient
                 ];
             }, iterator_to_array($ret->getPlayers())),
             'state' => [
-                'dealer' => $ret->getState()->getDealer(),
+                'dealer' => $ret->getState()?->getDealer(),
             ]
         ];
     }
@@ -1130,33 +1114,33 @@ class MimirClientTwirp implements IMimirClient
             'total_played_games' => $ret->getTotalPlayedGames(),
             'total_played_rounds' => $ret->getTotalPlayedRounds(),
             'win_summary' => [
-                'ron' => $ret->getWinSummary()->getRon(),
-                'tsumo' => $ret->getWinSummary()->getTsumo(),
-                'chombo' => $ret->getWinSummary()->getChombo(),
-                'feed' => $ret->getWinSummary()->getFeed(),
-                'tsumofeed' => $ret->getWinSummary()->getTsumofeed(),
-                'wins_with_open' => $ret->getWinSummary()->getWinsWithOpen(),
-                'wins_with_riichi' => $ret->getWinSummary()->getWinsWithRiichi(),
-                'wins_with_dama' => $ret->getWinSummary()->getWinsWithDama(),
-                'unforced_feed_to_open' => $ret->getWinSummary()->getUnforcedFeedToOpen(),
-                'unforced_feed_to_riichi' => $ret->getWinSummary()->getUnforcedFeedToRiichi(),
-                'unforced_feed_to_dama' => $ret->getWinSummary()->getUnforcedFeedToDama(),
-                'draw' => $ret->getWinSummary()->getDraw(),
-                'draw_tempai' => $ret->getWinSummary()->getDrawTempai(),
-                'points_won' => $ret->getWinSummary()->getPointsWon(),
-                'points_lost_ron' => $ret->getWinSummary()->getPointsLostRon(),
-                'points_lost_tsumo' => $ret->getWinSummary()->getPointsLostTsumo(),
+                'ron' => $ret->getWinSummary()?->getRon(),
+                'tsumo' => $ret->getWinSummary()?->getTsumo(),
+                'chombo' => $ret->getWinSummary()?->getChombo(),
+                'feed' => $ret->getWinSummary()?->getFeed(),
+                'tsumofeed' => $ret->getWinSummary()?->getTsumofeed(),
+                'wins_with_open' => $ret->getWinSummary()?->getWinsWithOpen(),
+                'wins_with_riichi' => $ret->getWinSummary()?->getWinsWithRiichi(),
+                'wins_with_dama' => $ret->getWinSummary()?->getWinsWithDama(),
+                'unforced_feed_to_open' => $ret->getWinSummary()?->getUnforcedFeedToOpen(),
+                'unforced_feed_to_riichi' => $ret->getWinSummary()?->getUnforcedFeedToRiichi(),
+                'unforced_feed_to_dama' => $ret->getWinSummary()?->getUnforcedFeedToDama(),
+                'draw' => $ret->getWinSummary()?->getDraw(),
+                'draw_tempai' => $ret->getWinSummary()?->getDrawTempai(),
+                'points_won' => $ret->getWinSummary()?->getPointsWon(),
+                'points_lost_ron' => $ret->getWinSummary()?->getPointsLostRon(),
+                'points_lost_tsumo' => $ret->getWinSummary()?->getPointsLostTsumo(),
             ],
             'hands_value_summary' => self::_fromHandValueStat(iterator_to_array($ret->getHandsValueSummary())),
             'yaku_summary' => self::_fromYakuStat(iterator_to_array($ret->getYakuSummary())),
             'riichi_summary' => [
-                'riichi_won' => $ret->getRiichiSummary()->getRiichiWon(),
-                'riichi_lost' => $ret->getRiichiSummary()->getRiichiLost(),
-                'feed_under_riichi' => $ret->getRiichiSummary()->getFeedUnderRiichi(),
+                'riichi_won' => $ret->getRiichiSummary()?->getRiichiWon(),
+                'riichi_lost' => $ret->getRiichiSummary()?->getRiichiLost(),
+                'feed_under_riichi' => $ret->getRiichiSummary()?->getFeedUnderRiichi(),
             ],
             'dora_stat' => [
-                'count' => $ret->getDoraStat()->getCount(),
-                'average' => $ret->getDoraStat()->getAverage()
+                'count' => $ret->getDoraStat()?->getCount(),
+                'average' => $ret->getDoraStat()?->getAverage()
             ]
         ];
     }
@@ -1220,7 +1204,7 @@ class MimirClientTwirp implements IMimirClient
         );
 
         return [
-            'games' => self::_fromGames([$ret->getGame()]),
+            'games' => empty($ret->getGame()) ? [] : self::_fromGames([$ret->getGame()]),
             'players' => self::_fromPlayers(iterator_to_array($ret->getPlayers()))
         ];
     }
@@ -1274,7 +1258,8 @@ class MimirClientTwirp implements IMimirClient
             (new Players_GetAllRounds_Payload())
                 ->setSessionHash($hashcode)
         );
-        return array_map('self::_fromRoundResult', iterator_to_array($ret->getRound()));
+        // @phpstan-ignore-next-line
+        return array_map('self::_fromRoundState', iterator_to_array($ret->getRound()));
     }
 
     /**
@@ -1305,6 +1290,9 @@ class MimirClientTwirp implements IMimirClient
             (new Events_GetEventForEdit_Payload())
                 ->setId($id)
         );
+        if (empty($ret->getEvent())) {
+            return [];
+        }
         return [
             'id' => $ret->getId(),
             ...self::_fromEventData($ret->getEvent())
@@ -1397,8 +1385,7 @@ class MimirClientTwirp implements IMimirClient
                     ->setIsTeam($isTeam)
                     ->setIsPrescripted($isPrescripted)
                     ->setAutostart($autostartTimer)
-                    ->setRulesetChanges($rulesetChangesJson)
-            )
+                    ->setRulesetChanges($rulesetChangesJson))
         )->getSuccess();
     }
 
@@ -1498,11 +1485,11 @@ class MimirClientTwirp implements IMimirClient
      *
      * @param int $playerId
      * @param int $eventId
-     * @return void
+     * @return bool
      */
-    public function unregisterPlayerCP(int $playerId, int $eventId): void
+    public function unregisterPlayerCP(int $playerId, int $eventId): bool
     {
-        $this->_client->UnregisterPlayer(
+        return $this->_client->UnregisterPlayer(
             $this->_ctx,
             (new Events_UnregisterPlayer_Payload())
                 ->setEventId($eventId)
@@ -1778,11 +1765,12 @@ class MimirClientTwirp implements IMimirClient
      */
     public function getPlayer(int $id): array
     {
-        return self::_fromPlayers([$this->_client->GetPlayer(
+        $pl = $this->_client->GetPlayer(
             $this->_ctx,
             (new Players_GetPlayer_Payload())
                 ->setId($id)
-        )->getPlayers()])[0];
+        )->getPlayers();
+        return empty($pl) ? [] : self::_fromPlayers([$pl])[0];
     }
 
     /**
@@ -1849,11 +1837,11 @@ class MimirClientTwirp implements IMimirClient
      *  Reset current seating in case of any mistake
      *
      * @param int $eventId
-     * @return void
+     * @return bool
      */
-    public function resetSeating(int $eventId): void
+    public function resetSeating(int $eventId): bool
     {
-        $this->_client->ResetSeating(
+        return $this->_client->ResetSeating(
             $this->_ctx,
             (new Generic_Event_Payload())
                 ->setEventId($eventId)
@@ -2003,11 +1991,11 @@ class MimirClientTwirp implements IMimirClient
      * @param float $playerId
      * @param string $error
      * @param string $stack
-     * @return void
+     * @return bool
      */
-    public function addErrorLog(string $facility, string $sessionHash, float $playerId, string $error, string $stack): void
+    public function addErrorLog(string $facility, string $sessionHash, float $playerId, string $error, string $stack): bool
     {
-        $this->_client->AddErrorLog(
+        return $this->_client->AddErrorLog(
             $this->_ctx,
             (new Misc_AddErrorLog_Payload())
                 ->setFacility($facility)

@@ -31,7 +31,7 @@ class FreyClientMock implements IFreyClient
         };
     }
 
-    public function requestRegistration(string $email, string $password): string
+    public function requestRegistration(string $email, string $title, string $password): string
     {
         // TODO: Implement requestRegistration() method.
         return '';
@@ -283,6 +283,12 @@ class FreyClientMock implements IFreyClient
     public function getAllEventRules(int $eventId): array
     {
         // TODO: Implement getAllEventRules() method.
+        return [];
+    }
+
+    public function me(int $id, string $clientSideToken): array
+    {
+        // TODO: Implement me() method.
         return [];
     }
 }

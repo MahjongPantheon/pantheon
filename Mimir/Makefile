@@ -12,7 +12,7 @@ deps: hooks
 lint:
 	php vendor/bin/phpcs --config-set default_standard PSR2 > /dev/null
 	php vendor/bin/phpcs --config-set show_warnings 0 > /dev/null
-	php vendor/bin/phpcs src tests www
+	php vendor/bin/phpcs --ignore=*/generated/*,src/TwirpServer.php src tests www
 	php vendor/bin/phpstan clear-result-cache && php vendor/bin/phpstan analyse -c phpstan.neon
 
 unit:

@@ -171,12 +171,9 @@ class Meta
 
         if (!empty($this->_currentPersonId)) {
             try {
-                if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->getAuthToken() ?? '')) {
-                    $this->_currentPersonId = null;
-                    $this->_authToken = null;
-                }
                 if ($this->_frey instanceof FreyClientTwirp) {
                     $this->_frey->withHeaders([
+                        'X-Twirp' => 'true',
                         'X-Internal-Query-Secret' => $this->_internalToken,
                         'X-Auth-Token' => $this->_authToken,
                         'X-Current-Event-Id' => ($this->_currentEventId ?: '0'),
@@ -189,6 +186,11 @@ class Meta
                         'X-Current-Event-Id: ' . ($this->_currentEventId ?: '0'),
                         'X-Current-Person-Id: ' . $this->_currentPersonId
                     ]);
+                }
+
+                if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->getAuthToken() ?? '')) {
+                    $this->_currentPersonId = null;
+                    $this->_authToken = null;
                 }
                 if (!empty($this->_currentEventId) && !empty($this->_currentPersonId)) {
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);

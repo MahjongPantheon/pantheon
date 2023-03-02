@@ -20,6 +20,8 @@ namespace Mimir;
 require_once __DIR__ . '/../src/Db.php';
 require_once __DIR__ . '/../src/primitives/Event.php';
 require_once __DIR__ . '/../src/Ruleset.php';
+
+use DMS\PHPUnitExtensions\ArraySubset\Assert;
 use JsonRPC\Client;
 
 /**
@@ -171,7 +173,7 @@ class RealApiTest extends \PHPUnit\Framework\TestCase
         ];
 
         $dryRunData = $this->_client->execute('addRound', [$hashcode, $data, true]);
-        $this->assertEquals($expectedOutput, $dryRunData);
+        Assert::assertArraySubset($expectedOutput, $dryRunData);
     }
 
     public function testGetLastRoundInfo()

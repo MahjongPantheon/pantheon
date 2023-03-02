@@ -84,7 +84,7 @@ class MimirClient implements IMimirClient
     /**
      *  List available events by id list
      *
-     * @param array $ids
+     * @param int[] $ids
      * @return array
     */
     public function getEventsById(array $ids): array
@@ -456,12 +456,12 @@ class MimirClient implements IMimirClient
      *
      * @param int $playerId
      * @param int $eventId
-     * @return void
+     * @return bool
     */
-    public function unregisterPlayerCP(int $playerId, int $eventId): void
+    public function unregisterPlayerCP(int $playerId, int $eventId): bool
     {
         /** @phpstan-ignore-next-line */
-        $this->_client->execute('unregisterPlayerCP', [$playerId, $eventId]);
+        return (bool)$this->_client->execute('unregisterPlayerCP', [$playerId, $eventId]);
     }
 
     /**
@@ -712,12 +712,12 @@ class MimirClient implements IMimirClient
      *  Reset current seating in case of any mistake
      *
      * @param int $eventId
-     * @return void
+     * @return bool
     */
-    public function resetSeating(int $eventId): void
+    public function resetSeating(int $eventId): bool
     {
         /** @phpstan-ignore-next-line */
-        $this->_client->execute('resetSeating', [$eventId]);
+        return (bool)$this->_client->execute('resetSeating', [$eventId]);
     }
 
     /**
@@ -822,11 +822,11 @@ class MimirClient implements IMimirClient
      * @param float $playerId
      * @param string $error
      * @param string $stack
-     * @return void
+     * @return bool
     */
-    public function addErrorLog(string $facility, string $sessionHash, float $playerId, string $error, string $stack): void
+    public function addErrorLog(string $facility, string $sessionHash, float $playerId, string $error, string $stack): bool
     {
         /** @phpstan-ignore-next-line */
-        $this->_client->execute('addErrorLog', [$facility, $sessionHash, $playerId, $error, $stack]);
+        return (bool)$this->_client->execute('addErrorLog', [$facility, $sessionHash, $playerId, $error, $stack]);
     }
 }

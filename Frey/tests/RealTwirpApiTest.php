@@ -53,6 +53,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             '/v2'
         );
         $this->_client->withHeaders([
+            'X-Twirp' => 'true',
             'X-Auth-Token' => '198vdsh904hfbnkjv98whb2iusvd98b29bsdv98svbr9wghj',
             'X-Current-Event-Id' => self::CURRENT_EVENT_ID
         ]);

@@ -58,7 +58,7 @@ class FreyClient implements IFreyClient
     {
         return $this->_client;
     }
-
+    
     /**
      *  Request new registration with given email and password.
      *  Approval code is returned. It is intended to be sent to provided email address.
@@ -88,7 +88,7 @@ class FreyClient implements IFreyClient
     }
 
     /**
-     *  Authorize person ant return permanent client-side auth token.
+     *  Authorize person and return permanent client-side auth token.
      *
      * @param string $email
      * @param string $password

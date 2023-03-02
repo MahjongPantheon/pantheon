@@ -90,6 +90,7 @@ class Api
         if ($this->_storage->getTwirpEnabled()) {
             // @phpstan-ignore-next-line
             $this->_frey->withHeaders([
+                'X-Twirp' => 'true',
                 'X-Locale' => $this->_meta->getSelectedLocale()
             ]);
         } else {

@@ -337,11 +337,54 @@ class PlayersController extends Controller
             return $p->{$method}();
         };
 
+        $currentScores = $session->getCurrentState()->getScores();
+        $previousScores = $lastRound->getLastSessionState()->getScores();
+        $scoresBefore = [];
+        $scoresDelta = [];
+        for ($i = 0; $i < count($session->getPlayersIds()); $i++) {
+            $id = $session->getPlayersIds()[$i];
+            $scoresBefore[$id] = $previousScores[$id];
+            $scoresDelta[$id] = $currentScores[$id] - $previousScores[$id];
+        }
+
         // Warning: should match InteractiveSessionModel::addRound return format!
         $result = [
+            // Twirp interface compatibility
+            'session_hash' => $session->getRepresentationalHash(),
+            'scores_before'  => $scoresBefore,
+            'scores_delta'   => $scoresDelta,
+            'pao_player_id'  => $multiGet($lastRound, 'getPaoPlayerId'),
+            'round_index' => $multiGet($lastRound, 'getRoundIndex'),
+            'winner_id'     => $multiGet($lastRound, 'getWinnerId'),
+            'loser_id'     => $multiGet($lastRound, 'getLoserId'),
+            'open_hand'   => $multiGet($lastRound, 'getOpenHand'),
+            'multi_ron'     => $multiGet($lastRound, 'getMultiRon'),
+            'riichi_bets'   => $lastRound->getOutcome() === 'multiron' ? implode(',', array_filter(array_map(function (RoundPrimitive $r) {
+                return implode(',', $r->getRiichiIds());
+            }, $lastRound->rounds()))) : $lastRound->getRiichiIds(),
+            'tempai'     => ($lastRound->getOutcome() === 'draw' || $lastRound->getOutcome() === 'nagashi')
+                ? $lastRound->getTempaiIds()
+                : null,
+            'nagashi'    => $lastRound->getOutcome() === 'nagashi' ? $lastRound->getNagashiIds() : null,
+            'wins' => $lastRound->getOutcome() === 'multiron' ? array_map(function (RoundPrimitive $inner) {
+                return [
+                    'winner_id' => $inner->getWinnerId(),
+                    'pao_player_id' => $inner->getPaoPlayerId(),
+                    'han' => $inner->getHan(),
+                    'fu' => $inner->getFu(),
+                    'yaku' => $inner->getYaku(),
+                    'dora' => $inner->getDora(),
+                    'kandora' => $inner->getKandora(),
+                    'uradora' => $inner->getUradora(),
+                    'kanuradora' => $inner->getKanuradora(),
+                    'open_hand' => $inner->getOpenHand()
+                ];
+            }, $lastRound->rounds()) : [],
+            // /Twirp interface compatibility
+
             'outcome'    => $lastRound->getOutcome(),
             'penaltyFor' => $lastRound->getOutcome() === 'chombo' ? $lastRound->getLoserId() : null,
-            'riichiIds'  => $lastRound->getRiichiIds(),
+            'riichiIds'  => $multiGet($lastRound, 'getRiichiIds'),
             'dealer'     => $lastRound->getLastSessionState()->getCurrentDealer(),
             'round'      => $lastRound->getRoundIndex(),
             'riichi'     => $lastRound->getLastSessionState()->getRiichiBets(),
@@ -395,7 +438,7 @@ class PlayersController extends Controller
         };
 
         $result = [];
-        $currentState = $session -> getCurrentState();
+        $currentState = $session->getCurrentState();
         $index = count($rounds) - 1;
         while ($index > -1) {
             $round = $rounds[$index];

@@ -199,10 +199,10 @@ class EventModel extends Model
             list($ev) = EventPrimitive::findById($this->_ds, [$lastGames[0]->getEventId()]);
             $teamNames = [];
             if ($ev->getIsTeam()) {
-                $teamNames = PlayerRegistrationPrimitive::findTeamNameMapByEvent($this->_ds, $ev->getId());
+                $teamNames = PlayerRegistrationPrimitive::findTeamNameMapByEvent($this->_ds, $lastGames[0]->getEventId());
             }
             // Players who should ignore seating
-            $ignoredPlayers = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, [$ev->getId()]);
+            $ignoredPlayers = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, [$lastGames[0]->getEventId()]);
 
             foreach ($lastGames as $game) {
                 $game->setEvent($ev); // Preload event into session to prevent multiple fetches inside DateHelper::mayDefinalizeGame
@@ -220,10 +220,10 @@ class EventModel extends Model
                     'penalties' => $game->getCurrentState()->getPenaltiesLog(),
                     'table_index' => $game->getTableIndex(),
                     'last_round_detailed' => $lastRound ? Formatters::formatRound($lastRound) : null,
-                    'last_round' => $lastRound ? $this->_formatLastRound($lastRound) : [],
+                    'last_round' => $lastRound ? $this->_formatLastRound($lastRound, $game) : [],
                     'current_round' => $game->getCurrentState()->getRound(),
                     'scores' => $game->getCurrentState()->getScores(),
-                    'players' => array_map(function (PlayerPrimitive $p) use (&$playerIdMap, &$teamNames, &$ignoredPlayers, &$replacements) {
+                    'players' => array_map(function (PlayerPrimitive $p) use (&$playerIdMap, &$teamNames, &$ignoredPlayers) {
                         $pId = $p->getId();
                         if (empty($pId)) {
                             throw new InvalidParametersException('Attempted to use deidented primitive');
@@ -249,18 +249,51 @@ class EventModel extends Model
      * @param RoundPrimitive $round
      * @return array
      */
-    protected function _formatLastRound(RoundPrimitive $round): array
+    protected function _formatLastRound(RoundPrimitive $round, SessionPrimitive $session): array
     {
+        $currentScores = $session->getCurrentState()->getScores();
+        $previousScores = $round->getLastSessionState()->getScores();
+        $scoresBefore = [];
+        $scoresDelta = [];
+        for ($i = 0; $i < count($session->getPlayersIds()); $i++) {
+            $scoresBefore[$session->getPlayersIds()[$i]] = $previousScores[$i];
+            $scoresDelta[$session->getPlayersIds()[$i]] = $currentScores[$i] - $previousScores[$i];
+        }
         if ($round instanceof MultiRoundPrimitive) {
             return [
                 'outcome' => $round->getOutcome(),
                 'loser'   => $round->getLoserId(),
                 'riichi'  => $round->getRiichiIds(),
+                // Twirp compat
+                'session_hash' => $session->getRepresentationalHash(),
+                'scores_before'  => $scoresBefore,
+                'scores_delta'   => $scoresDelta,
+                'pao_player_id'  => $round->getPaoPlayerId(),
+                'round_index' => $round->getRoundIndex(),
+                'loser_id'     => $round->getLoserId(),
+                'open_hand'   => $round->getOpenHand(),
+                'tempai'     => ($round->getOutcome() === 'draw' || $round->getOutcome() === 'nagashi')
+                    ? $round->getTempaiIds()
+                    : null,
+                'nagashi'    => $round->getOutcome() === 'nagashi' ? $round->getNagashiIds() : null,
+                'multi_ron'     => $round->getMultiRon(),
+                'riichi_bets'   => implode(',', array_filter(array_map(function (RoundPrimitive $r) {
+                    return implode(',', $r->getRiichiIds());
+                }, $round->rounds()))),
+                // /Twirp compat
                 'wins'    => array_map(function (RoundPrimitive $round) {
                     return [
                         'winner' => $round->getWinnerId(),
                         'han'    => $round->getHan(),
-                        'fu'     => $round->getFu()
+                        'fu'     => $round->getFu(),
+                        'winner_id' => $round->getWinnerId(),
+                        'pao_player_id' => $round->getPaoPlayerId(),
+                        'yaku' => $round->getYaku(),
+                        'dora' => $round->getDora(),
+                        'kandora' => $round->getKandora(),
+                        'uradora' => $round->getUradora(),
+                        'kanuradora' => $round->getKanuradora(),
+                        'open_hand' => $round->getOpenHand()
                     ];
                 }, $round->rounds())
             ];
@@ -274,7 +307,18 @@ class EventModel extends Model
             'riichi'  => $round->getRiichiIds(),
             'nagashi' => $round->getNagashiIds(),
             'han'     => $round->getHan(),
-            'fu'      => $round->getFu()
+            'fu'      => $round->getFu(),
+
+            // Twirp compat
+            'session_hash' => $session->getRepresentationalHash(),
+            'scores_before'  => $scoresBefore,
+            'scores_delta'   => $scoresDelta,
+            'pao_player_id'  => $round->getPaoPlayerId(),
+            'riichi_bets' => $round->getRiichiIds(),
+            'round_index' => $round->getRoundIndex(),
+            'loser_id'     => $round->getLoserId(),
+            'open_hand'   => $round->getOpenHand(),
+            // /Twirp compat
         ];
     }
 

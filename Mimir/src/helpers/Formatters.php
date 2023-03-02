@@ -44,6 +44,7 @@ class Formatters
                 ];
             }, $sessionResults[$session->getId()]),
             'penalties' => $session->getCurrentState()->getPenaltiesLog(),
+            // @phpstan-ignore-next-line
             'rounds' => array_map('self::formatRound', $rounds[$session->getId()]),
         ];
     }
@@ -83,6 +84,9 @@ class Formatters
                     'outcome'       => $mRound->getOutcome(),
                     'loser_id'      => (int) $mRound->getLoserId(),
                     'multi_ron'     => (int) $rounds[0]->getMultiRon(),
+                    'riichi_bets'   => implode(',', array_filter(array_map(function (RoundPrimitive $r) {
+                        return implode(',', $r->getRiichiIds());
+                    }, $rounds))),
                     'wins'          => array_map(function (RoundPrimitive $round) {
                         return [
                             'winner_id'     => (int) $round->getWinnerId(),

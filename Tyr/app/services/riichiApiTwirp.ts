@@ -56,7 +56,12 @@ import {
 export class RiichiApiTwirpService implements IRiichiApi {
   private _authToken: string | null = null;
   private _personId: string | null = null;
-  private readonly _clientConf: ClientConfiguration = {};
+  private readonly _clientConfMimir: ClientConfiguration = {
+    prefix: '/v2',
+  };
+  private readonly _clientConfFrey: ClientConfiguration = {
+    prefix: '/v2',
+  };
 
   setCredentials(personId: number, token: string) {
     this._authToken = token;
@@ -65,9 +70,13 @@ export class RiichiApiTwirpService implements IRiichiApi {
     const headers = new Headers();
     headers.append('X-Api-Version', environment.apiVersion.map((v) => v.toString()).join('.'));
     headers.append('X-Auth-Token', this._authToken ?? '');
+    headers.append('X-Twirp', 'true');
     headers.append('X-Current-Person-Id', this._personId ?? '');
 
-    this._clientConf.rpcTransport = (url, opts) => {
+    this._clientConfMimir.baseURL = environment.apiUrl;
+    this._clientConfFrey.baseURL = environment.uaUrl;
+    // eslint-disable-next-line no-multi-assign
+    this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
       return fetch(url, { ...opts, headers });
     };
   }
@@ -79,16 +88,16 @@ export class RiichiApiTwirpService implements IRiichiApi {
         eventId,
         players: playerIds,
       },
-      this._clientConf
+      this._clientConfMimir
     ).then((val) => val.sessionHash);
   }
 
   getMyEvents() {
-    return GetMyEvents({}, this._clientConf).then((val) => val.events);
+    return GetMyEvents({}, this._clientConfMimir).then((val) => val.events);
   }
 
   getGameConfig(eventId: number) {
-    return GetGameConfig({ eventId }, this._clientConf).then((val) => ({
+    return GetGameConfig({ eventId }, this._clientConfMimir).then((val) => ({
       ...val,
       isTextlog: false,
       timerPolicy: val.timerPolicy as 'redZone' | 'yellowZone' | 'none', // TODO remove
@@ -96,7 +105,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
   }
 
   getTimerState(eventId: number) {
-    return GetTimerState({ eventId }, this._clientConf).then((val) => ({
+    return GetTimerState({ eventId }, this._clientConfMimir).then((val) => ({
       ...val,
       autostartTimer: 0, // TODO: fix this in https://github.com/MahjongPantheon/pantheon/issues/282
     }));
@@ -108,7 +117,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
         playerId,
         eventId,
       },
-      this._clientConf
+      this._clientConfMimir
     ).then((val) =>
       val.results.map((user) => ({
         ...user,
@@ -121,30 +130,32 @@ export class RiichiApiTwirpService implements IRiichiApi {
   }
 
   getAllPlayers(eventId: number) {
-    return GetAllRegisteredPlayers({ eventIds: [eventId] }, this._clientConf).then((val) =>
+    return GetAllRegisteredPlayers({ eventIds: [eventId] }, this._clientConfMimir).then((val) =>
       val.players.map((user) => ({ ...user, displayName: user.title }))
     );
   }
 
   getGameOverview(sessionHashcode: string) {
-    return GetSessionOverview({ sessionHash: sessionHashcode }, this._clientConf).then((val) => ({
-      ...val,
-      currentRound: val.state.roundIndex,
-      riichiOnTable: val.state.riichiCount,
-      honba: val.state.honbaCount,
-      yellowZoneAlreadyPlayed: val.state.yellowZoneAlreadyPlayed,
-      tableIndex: val.tableIndex ?? 0,
-      players: val.players.map((user) => ({
-        ...user,
-        tenhouId: '', // TODO?
-        displayName: user.title,
-        penalties: 0, // TODO?
-      })),
-    }));
+    return GetSessionOverview({ sessionHash: sessionHashcode }, this._clientConfMimir).then(
+      (val) => ({
+        ...val,
+        currentRound: val.state.roundIndex,
+        riichiOnTable: val.state.riichiCount,
+        honba: val.state.honbaCount,
+        yellowZoneAlreadyPlayed: val.state.yellowZoneAlreadyPlayed,
+        tableIndex: val.tableIndex ?? 0,
+        players: val.players.map((user) => ({
+          ...user,
+          tenhouId: '', // TODO?
+          displayName: user.title,
+          penalties: 0, // TODO?
+        })),
+      })
+    );
   }
 
   getCurrentGames(playerId: number, eventId: number) {
-    return GetCurrentSessions({ playerId, eventId }, this._clientConf).then((val) =>
+    return GetCurrentSessions({ playerId, eventId }, this._clientConfMimir).then((val) =>
       val.sessions.map((session) => ({
         ...session,
         hashcode: session.sessionHash,
@@ -160,7 +171,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
   }
 
   getUserInfo(personIds: number[]) {
-    return GetPersonalInfo({ ids: personIds }, this._clientConf).then((val) =>
+    return GetPersonalInfo({ ids: personIds }, this._clientConfFrey).then((val) =>
       val.persons.map((user) => ({
         ...user,
         tenhouId: '', // TODO?
@@ -260,24 +271,24 @@ export class RiichiApiTwirpService implements IRiichiApi {
 
     return PreviewRound(
       { sessionHash: state.currentSessionHash, roundData },
-      this._clientConf
+      this._clientConfMimir
     ).then((val) => RiichiApiTwirpService.makePaymentsInfo(val.state));
   }
 
   getLastRoundByHash(sessionHashcode: string) {
-    return GetLastRoundByHash({ sessionHash: sessionHashcode }, this._clientConf).then((val) =>
+    return GetLastRoundByHash({ sessionHash: sessionHashcode }, this._clientConfMimir).then((val) =>
       RiichiApiTwirpService.makePaymentsInfo(val.round)
     );
   }
 
   getLastRound(playerId: number, eventId: number) {
-    return GetLastRound({ playerId, eventId }, this._clientConf).then((val) =>
+    return GetLastRound({ playerId, eventId }, this._clientConfMimir).then((val) =>
       RiichiApiTwirpService.makePaymentsInfo(val.round)
     );
   }
 
   getAllRounds(sessionHashcode: string) {
-    return GetAllRounds({ sessionHash: sessionHashcode }, this._clientConf).then((val) =>
+    return GetAllRounds({ sessionHash: sessionHashcode }, this._clientConfMimir).then((val) =>
       // eslint-disable-next-line array-callback-return
       val.round.map((round) => {
         const base: RRoundOverviewBase = {
@@ -369,7 +380,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
     if (!sessionHash || !roundData) {
       return Promise.reject();
     }
-    return AddRound({ sessionHash, roundData }, this._clientConf).then((val) => ({
+    return AddRound({ sessionHash, roundData }, this._clientConfMimir).then((val) => ({
       ...val,
       _lastOutcome: fromTwirpOutcome(val.lastOutcome!),
       _scores: RiichiApiTwirpService.fromScores(val.scores),
@@ -386,7 +397,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
   }
 
   getTablesState(eventId: number) {
-    return GetTablesState({ eventId }, this._clientConf).then((v) =>
+    return GetTablesState({ eventId }, this._clientConfMimir).then((v) =>
       v.tables.map((table) => ({
         ...table,
         hash: table.sessionHash,
@@ -411,12 +422,12 @@ export class RiichiApiTwirpService implements IRiichiApi {
         personId: parseInt(this._personId, 10),
         authToken: this._authToken,
       },
-      this._clientConf
+      this._clientConfFrey
     ).then((v) => v.authSuccess);
   }
 
   authorize(email: string, password: string) {
-    return Authorize({ email, password }, this._clientConf).then((v) => ({
+    return Authorize({ email, password }, this._clientConfFrey).then((v) => ({
       ...v,
       token: v.authToken,
     }));

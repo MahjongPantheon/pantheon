@@ -6,7 +6,7 @@ require __DIR__ . '/../../src/TwirpServer.php';
 
 $configPath = null;
 if (!empty(getenv('OVERRIDE_CONFIG_PATH'))) {
-    $configPath = getenv('OVERRIDE_CONFIG_PATH');
+    $configPath = (string)getenv('OVERRIDE_CONFIG_PATH');
 }
 
 $request = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();

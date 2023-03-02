@@ -29,8 +29,9 @@ if ($_SERVER['REQUEST_URI'] == '/favicon.ico') {
 try {
     $controller = \Rheda\Controller::makeInstance($_SERVER['REQUEST_URI']);
 } catch (\Exception $ex) {
-    trigger_error('No controller found for path: ' . $_SERVER['REQUEST_URI']);
-    echo '404 Not found';
+    trigger_error('Exception for path: ' . $_SERVER['REQUEST_URI']);
+    echo 'Internal server error';
+    throw $ex;
 }
 
 if (!empty($controller)) {

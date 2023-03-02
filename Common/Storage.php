@@ -210,7 +210,7 @@ class Storage {
      */
     public function getTwirpEnabled(): ?bool
     {
-        return $this->_twirpEnabled;
+        return $this->_twirpEnabled || (isset($_SERVER['HTTP_X_TWIRP']) && $_SERVER['HTTP_X_TWIRP'] === 'true');
     }
 
     /**
