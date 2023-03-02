@@ -24,9 +24,9 @@ class RoundState extends \Google\Protobuf\Internal\Message
      */
     protected $dealer = 0;
     /**
-     * Generated from protobuf field <code>int32 round = 3;</code>
+     * Generated from protobuf field <code>int32 roundIndex = 3;</code>
      */
-    protected $round = 0;
+    protected $roundIndex = 0;
     /**
      * riichis on table
      *
@@ -34,75 +34,39 @@ class RoundState extends \Google\Protobuf\Internal\Message
      */
     protected $riichi = 0;
     /**
-     * player ids
+     * honba on table
      *
-     * Generated from protobuf field <code>repeated int32 riichiIds = 5;</code>
-     */
-    private $riichiIds;
-    /**
-     * Generated from protobuf field <code>.Common.RoundOutcome outcome = 6;</code>
-     */
-    protected $outcome = 0;
-    /**
-     * player id
-     *
-     * Generated from protobuf field <code>optional int32 penaltyFor = 7;</code>
-     */
-    protected $penaltyFor = null;
-    /**
-     * Generated from protobuf field <code>int32 honba = 8;</code>
+     * Generated from protobuf field <code>int32 honba = 5;</code>
      */
     protected $honba = 0;
     /**
-     * scores before payments
+     * player ids
      *
-     * Generated from protobuf field <code>repeated int32 scores = 9;</code>
+     * Generated from protobuf field <code>repeated int32 riichiIds = 6;</code>
+     */
+    private $riichiIds;
+    /**
+     * scores AFTER payments
+     *
+     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession scores = 7;</code>
      */
     private $scores;
     /**
-     * Generated from protobuf field <code>.Common.PaymentLog payments = 10;</code>
+     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession scoresDelta = 8;</code>
+     */
+    private $scoresDelta;
+    /**
+     * Generated from protobuf field <code>.Common.PaymentLog payments = 9;</code>
      */
     protected $payments = null;
     /**
-     * Generated from protobuf field <code>int32 winner = 11;</code>
+     * Generated from protobuf field <code>.Common.Round round = 10;</code>
      */
-    protected $winner = 0;
+    protected $round = null;
     /**
-     * Generated from protobuf field <code>int32 paoPlayer = 12;</code>
+     * Generated from protobuf field <code>.Common.RoundOutcome outcome = 11;</code>
      */
-    protected $paoPlayer = 0;
-    /**
-     * Generated from protobuf field <code>repeated int32 yaku = 13;</code>
-     */
-    private $yaku;
-    /**
-     * Generated from protobuf field <code>int32 han = 14;</code>
-     */
-    protected $han = 0;
-    /**
-     * Generated from protobuf field <code>int32 fu = 15;</code>
-     */
-    protected $fu = 0;
-    /**
-     * Generated from protobuf field <code>int32 dora = 16;</code>
-     */
-    protected $dora = 0;
-    /**
-     * Generated from protobuf field <code>int32 kandora = 17;</code>
-     */
-    protected $kandora = 0;
-    /**
-     * Generated from protobuf field <code>int32 uradora = 18;</code>
-     */
-    protected $uradora = 0;
-    /**
-     * Generated from protobuf field <code>int32 kanuradora = 19;</code>
-     */
-    protected $kanuradora = 0;
-    /**
-     * Generated from protobuf field <code>bool openHand = 20;</code>
-     */
-    protected $openHand = false;
+    protected $outcome = 0;
 
     /**
      * Constructor.
@@ -113,28 +77,19 @@ class RoundState extends \Google\Protobuf\Internal\Message
      *     @type string $sessionHash
      *     @type int $dealer
      *           player id
-     *     @type int $round
+     *     @type int $roundIndex
      *     @type int $riichi
      *           riichis on table
+     *     @type int $honba
+     *           honba on table
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $riichiIds
      *           player ids
-     *     @type int $outcome
-     *     @type int $penaltyFor
-     *           player id
-     *     @type int $honba
-     *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $scores
-     *           scores before payments
+     *     @type array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $scores
+     *           scores AFTER payments
+     *     @type array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $scoresDelta
      *     @type \Common\PaymentLog $payments
-     *     @type int $winner
-     *     @type int $paoPlayer
-     *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $yaku
-     *     @type int $han
-     *     @type int $fu
-     *     @type int $dora
-     *     @type int $kandora
-     *     @type int $uradora
-     *     @type int $kanuradora
-     *     @type bool $openHand
+     *     @type \Common\Round $round
+     *     @type int $outcome
      * }
      */
     public function __construct($data = NULL) {
@@ -191,23 +146,23 @@ class RoundState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 round = 3;</code>
+     * Generated from protobuf field <code>int32 roundIndex = 3;</code>
      * @return int
      */
-    public function getRound()
+    public function getRoundIndex()
     {
-        return $this->round;
+        return $this->roundIndex;
     }
 
     /**
-     * Generated from protobuf field <code>int32 round = 3;</code>
+     * Generated from protobuf field <code>int32 roundIndex = 3;</code>
      * @param int $var
      * @return $this
      */
-    public function setRound($var)
+    public function setRoundIndex($var)
     {
         GPBUtil::checkInt32($var);
-        $this->round = $var;
+        $this->roundIndex = $var;
 
         return $this;
     }
@@ -239,91 +194,9 @@ class RoundState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * player ids
+     * honba on table
      *
-     * Generated from protobuf field <code>repeated int32 riichiIds = 5;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
-     */
-    public function getRiichiIds()
-    {
-        return $this->riichiIds;
-    }
-
-    /**
-     * player ids
-     *
-     * Generated from protobuf field <code>repeated int32 riichiIds = 5;</code>
-     * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
-     * @return $this
-     */
-    public function setRiichiIds($var)
-    {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
-        $this->riichiIds = $arr;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>.Common.RoundOutcome outcome = 6;</code>
-     * @return int
-     */
-    public function getOutcome()
-    {
-        return $this->outcome;
-    }
-
-    /**
-     * Generated from protobuf field <code>.Common.RoundOutcome outcome = 6;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setOutcome($var)
-    {
-        GPBUtil::checkEnum($var, \Common\RoundOutcome::class);
-        $this->outcome = $var;
-
-        return $this;
-    }
-
-    /**
-     * player id
-     *
-     * Generated from protobuf field <code>optional int32 penaltyFor = 7;</code>
-     * @return int
-     */
-    public function getPenaltyFor()
-    {
-        return isset($this->penaltyFor) ? $this->penaltyFor : 0;
-    }
-
-    public function hasPenaltyFor()
-    {
-        return isset($this->penaltyFor);
-    }
-
-    public function clearPenaltyFor()
-    {
-        unset($this->penaltyFor);
-    }
-
-    /**
-     * player id
-     *
-     * Generated from protobuf field <code>optional int32 penaltyFor = 7;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setPenaltyFor($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->penaltyFor = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 honba = 8;</code>
+     * Generated from protobuf field <code>int32 honba = 5;</code>
      * @return int
      */
     public function getHonba()
@@ -332,7 +205,9 @@ class RoundState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 honba = 8;</code>
+     * honba on table
+     *
+     * Generated from protobuf field <code>int32 honba = 5;</code>
      * @param int $var
      * @return $this
      */
@@ -345,9 +220,35 @@ class RoundState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * scores before payments
+     * player ids
      *
-     * Generated from protobuf field <code>repeated int32 scores = 9;</code>
+     * Generated from protobuf field <code>repeated int32 riichiIds = 6;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
+     */
+    public function getRiichiIds()
+    {
+        return $this->riichiIds;
+    }
+
+    /**
+     * player ids
+     *
+     * Generated from protobuf field <code>repeated int32 riichiIds = 6;</code>
+     * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
+     * @return $this
+     */
+    public function setRiichiIds($var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
+        $this->riichiIds = $arr;
+
+        return $this;
+    }
+
+    /**
+     * scores AFTER payments
+     *
+     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession scores = 7;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getScores()
@@ -356,22 +257,44 @@ class RoundState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * scores before payments
+     * scores AFTER payments
      *
-     * Generated from protobuf field <code>repeated int32 scores = 9;</code>
-     * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
+     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession scores = 7;</code>
+     * @param array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setScores($var)
     {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\IntermediateResultOfSession::class);
         $this->scores = $arr;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>.Common.PaymentLog payments = 10;</code>
+     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession scoresDelta = 8;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
+     */
+    public function getScoresDelta()
+    {
+        return $this->scoresDelta;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession scoresDelta = 8;</code>
+     * @param array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $var
+     * @return $this
+     */
+    public function setScoresDelta($var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\IntermediateResultOfSession::class);
+        $this->scoresDelta = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.Common.PaymentLog payments = 9;</code>
      * @return \Common\PaymentLog|null
      */
     public function getPayments()
@@ -390,7 +313,7 @@ class RoundState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.Common.PaymentLog payments = 10;</code>
+     * Generated from protobuf field <code>.Common.PaymentLog payments = 9;</code>
      * @param \Common\PaymentLog $var
      * @return $this
      */
@@ -403,221 +326,55 @@ class RoundState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 winner = 11;</code>
-     * @return int
+     * Generated from protobuf field <code>.Common.Round round = 10;</code>
+     * @return \Common\Round|null
      */
-    public function getWinner()
+    public function getRound()
     {
-        return $this->winner;
+        return $this->round;
+    }
+
+    public function hasRound()
+    {
+        return isset($this->round);
+    }
+
+    public function clearRound()
+    {
+        unset($this->round);
     }
 
     /**
-     * Generated from protobuf field <code>int32 winner = 11;</code>
+     * Generated from protobuf field <code>.Common.Round round = 10;</code>
+     * @param \Common\Round $var
+     * @return $this
+     */
+    public function setRound($var)
+    {
+        GPBUtil::checkMessage($var, \Common\Round::class);
+        $this->round = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.Common.RoundOutcome outcome = 11;</code>
+     * @return int
+     */
+    public function getOutcome()
+    {
+        return $this->outcome;
+    }
+
+    /**
+     * Generated from protobuf field <code>.Common.RoundOutcome outcome = 11;</code>
      * @param int $var
      * @return $this
      */
-    public function setWinner($var)
+    public function setOutcome($var)
     {
-        GPBUtil::checkInt32($var);
-        $this->winner = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 paoPlayer = 12;</code>
-     * @return int
-     */
-    public function getPaoPlayer()
-    {
-        return $this->paoPlayer;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 paoPlayer = 12;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setPaoPlayer($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->paoPlayer = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated int32 yaku = 13;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
-     */
-    public function getYaku()
-    {
-        return $this->yaku;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated int32 yaku = 13;</code>
-     * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
-     * @return $this
-     */
-    public function setYaku($var)
-    {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
-        $this->yaku = $arr;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 han = 14;</code>
-     * @return int
-     */
-    public function getHan()
-    {
-        return $this->han;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 han = 14;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setHan($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->han = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 fu = 15;</code>
-     * @return int
-     */
-    public function getFu()
-    {
-        return $this->fu;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 fu = 15;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setFu($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->fu = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 dora = 16;</code>
-     * @return int
-     */
-    public function getDora()
-    {
-        return $this->dora;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 dora = 16;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setDora($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->dora = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 kandora = 17;</code>
-     * @return int
-     */
-    public function getKandora()
-    {
-        return $this->kandora;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 kandora = 17;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setKandora($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->kandora = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 uradora = 18;</code>
-     * @return int
-     */
-    public function getUradora()
-    {
-        return $this->uradora;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 uradora = 18;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setUradora($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->uradora = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 kanuradora = 19;</code>
-     * @return int
-     */
-    public function getKanuradora()
-    {
-        return $this->kanuradora;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 kanuradora = 19;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setKanuradora($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->kanuradora = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool openHand = 20;</code>
-     * @return bool
-     */
-    public function getOpenHand()
-    {
-        return $this->openHand;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool openHand = 20;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setOpenHand($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->openHand = $var;
+        GPBUtil::checkEnum($var, \Common\RoundOutcome::class);
+        $this->outcome = $var;
 
         return $this;
     }

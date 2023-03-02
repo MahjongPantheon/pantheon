@@ -35,6 +35,10 @@ class RoundOutcome
      * Generated from protobuf enum <code>NAGASHI = 5;</code>
      */
     const NAGASHI = 5;
+    /**
+     * Generated from protobuf enum <code>MULTIRON = 6;</code>
+     */
+    const MULTIRON = 6;
 
     private static $valueToName = [
         self::RON => 'RON',
@@ -43,6 +47,7 @@ class RoundOutcome
         self::ABORT => 'ABORT',
         self::CHOMBO => 'CHOMBO',
         self::NAGASHI => 'NAGASHI',
+        self::MULTIRON => 'MULTIRON',
     ];
 
     public static function name($value)

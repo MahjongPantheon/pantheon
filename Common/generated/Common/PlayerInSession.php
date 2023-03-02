@@ -29,6 +29,10 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>optional .Common.ReplacementPlayer replacedBy = 4;</code>
      */
     protected $replacedBy = null;
+    /**
+     * Generated from protobuf field <code>float ratingDelta = 5;</code>
+     */
+    protected $ratingDelta = 0.0;
 
     /**
      * Constructor.
@@ -40,6 +44,7 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
      *     @type string $title
      *     @type int $score
      *     @type \Common\ReplacementPlayer $replacedBy
+     *     @type float $ratingDelta
      * }
      */
     public function __construct($data = NULL) {
@@ -141,6 +146,28 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkMessage($var, \Common\ReplacementPlayer::class);
         $this->replacedBy = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>float ratingDelta = 5;</code>
+     * @return float
+     */
+    public function getRatingDelta()
+    {
+        return $this->ratingDelta;
+    }
+
+    /**
+     * Generated from protobuf field <code>float ratingDelta = 5;</code>
+     * @param float $var
+     * @return $this
+     */
+    public function setRatingDelta($var)
+    {
+        GPBUtil::checkFloat($var);
+        $this->ratingDelta = $var;
 
         return $this;
     }

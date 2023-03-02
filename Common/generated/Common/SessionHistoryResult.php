@@ -37,6 +37,10 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>int32 place = 6;</code>
      */
     protected $place = 0;
+    /**
+     * Generated from protobuf field <code>string title = 7;</code>
+     */
+    protected $title = '';
 
     /**
      * Constructor.
@@ -50,6 +54,7 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
      *     @type int $score
      *     @type float $ratingDelta
      *     @type int $place
+     *     @type string $title
      * }
      */
     public function __construct($data = NULL) {
@@ -185,6 +190,28 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->place = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string title = 7;</code>
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Generated from protobuf field <code>string title = 7;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setTitle($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->title = $var;
 
         return $this;
     }

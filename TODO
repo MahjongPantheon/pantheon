@@ -6,3 +6,4 @@ DONE 1. Implement TwirpServer in Mimir
 2. Fix tests and add new ones. Cover all methods in ideal.
 DONE 3. Generate TS clients.
 4. Integrate new Mimir client into Rheda
+5. Update servers and clients after proto update

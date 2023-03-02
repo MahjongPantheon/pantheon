@@ -36,29 +36,23 @@ class MultironWin extends \Google\Protobuf\Internal\Message
      */
     private $yaku;
     /**
-     * player ids
-     *
-     * Generated from protobuf field <code>repeated int32 riichiBets = 6;</code>
-     */
-    private $riichiBets;
-    /**
-     * Generated from protobuf field <code>int32 dora = 7;</code>
+     * Generated from protobuf field <code>int32 dora = 6;</code>
      */
     protected $dora = 0;
     /**
-     * Generated from protobuf field <code>int32 uradora = 8;</code>
+     * Generated from protobuf field <code>int32 uradora = 7;</code>
      */
     protected $uradora = 0;
     /**
-     * Generated from protobuf field <code>int32 kandora = 9;</code>
+     * Generated from protobuf field <code>int32 kandora = 8;</code>
      */
     protected $kandora = 0;
     /**
-     * Generated from protobuf field <code>int32 kanuradora = 10;</code>
+     * Generated from protobuf field <code>int32 kanuradora = 9;</code>
      */
     protected $kanuradora = 0;
     /**
-     * Generated from protobuf field <code>bool openHand = 11;</code>
+     * Generated from protobuf field <code>bool openHand = 10;</code>
      */
     protected $openHand = false;
 
@@ -74,8 +68,6 @@ class MultironWin extends \Google\Protobuf\Internal\Message
      *     @type int $fu
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $yaku
      *           yaku ids
-     *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $riichiBets
-     *           player ids
      *     @type int $dora
      *     @type int $uradora
      *     @type int $kandora
@@ -203,33 +195,7 @@ class MultironWin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * player ids
-     *
-     * Generated from protobuf field <code>repeated int32 riichiBets = 6;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
-     */
-    public function getRiichiBets()
-    {
-        return $this->riichiBets;
-    }
-
-    /**
-     * player ids
-     *
-     * Generated from protobuf field <code>repeated int32 riichiBets = 6;</code>
-     * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
-     * @return $this
-     */
-    public function setRiichiBets($var)
-    {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
-        $this->riichiBets = $arr;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 dora = 7;</code>
+     * Generated from protobuf field <code>int32 dora = 6;</code>
      * @return int
      */
     public function getDora()
@@ -238,7 +204,7 @@ class MultironWin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 dora = 7;</code>
+     * Generated from protobuf field <code>int32 dora = 6;</code>
      * @param int $var
      * @return $this
      */
@@ -251,7 +217,7 @@ class MultironWin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 uradora = 8;</code>
+     * Generated from protobuf field <code>int32 uradora = 7;</code>
      * @return int
      */
     public function getUradora()
@@ -260,7 +226,7 @@ class MultironWin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 uradora = 8;</code>
+     * Generated from protobuf field <code>int32 uradora = 7;</code>
      * @param int $var
      * @return $this
      */
@@ -273,7 +239,7 @@ class MultironWin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 kandora = 9;</code>
+     * Generated from protobuf field <code>int32 kandora = 8;</code>
      * @return int
      */
     public function getKandora()
@@ -282,7 +248,7 @@ class MultironWin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 kandora = 9;</code>
+     * Generated from protobuf field <code>int32 kandora = 8;</code>
      * @param int $var
      * @return $this
      */
@@ -295,7 +261,7 @@ class MultironWin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 kanuradora = 10;</code>
+     * Generated from protobuf field <code>int32 kanuradora = 9;</code>
      * @return int
      */
     public function getKanuradora()
@@ -304,7 +270,7 @@ class MultironWin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 kanuradora = 10;</code>
+     * Generated from protobuf field <code>int32 kanuradora = 9;</code>
      * @param int $var
      * @return $this
      */
@@ -317,7 +283,7 @@ class MultironWin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool openHand = 11;</code>
+     * Generated from protobuf field <code>bool openHand = 10;</code>
      * @return bool
      */
     public function getOpenHand()
@@ -326,7 +292,7 @@ class MultironWin extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool openHand = 11;</code>
+     * Generated from protobuf field <code>bool openHand = 10;</code>
      * @param bool $var
      * @return $this
      */

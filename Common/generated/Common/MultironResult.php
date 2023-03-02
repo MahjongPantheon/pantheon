@@ -31,6 +31,12 @@ class MultironResult extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>repeated .Common.MultironWin wins = 5;</code>
      */
     private $wins;
+    /**
+     * player ids
+     *
+     * Generated from protobuf field <code>repeated int32 riichiBets = 6;</code>
+     */
+    private $riichiBets;
 
     /**
      * Constructor.
@@ -43,6 +49,8 @@ class MultironResult extends \Google\Protobuf\Internal\Message
      *     @type int $multiRon
      *           count of players who won
      *     @type array<\Common\MultironWin>|\Google\Protobuf\Internal\RepeatedField $wins
+     *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $riichiBets
+     *           player ids
      * }
      */
     public function __construct($data = NULL) {
@@ -138,6 +146,32 @@ class MultironResult extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\MultironWin::class);
         $this->wins = $arr;
+
+        return $this;
+    }
+
+    /**
+     * player ids
+     *
+     * Generated from protobuf field <code>repeated int32 riichiBets = 6;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
+     */
+    public function getRiichiBets()
+    {
+        return $this->riichiBets;
+    }
+
+    /**
+     * player ids
+     *
+     * Generated from protobuf field <code>repeated int32 riichiBets = 6;</code>
+     * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
+     * @return $this
+     */
+    public function setRiichiBets($var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
+        $this->riichiBets = $arr;
 
         return $this;
     }

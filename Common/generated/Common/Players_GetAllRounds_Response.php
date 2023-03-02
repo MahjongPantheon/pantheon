@@ -14,7 +14,7 @@ use Google\Protobuf\Internal\GPBUtil;
 class Players_GetAllRounds_Response extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>repeated .Common.RoundResult round = 1;</code>
+     * Generated from protobuf field <code>repeated .Common.RoundState round = 1;</code>
      */
     private $round;
 
@@ -24,7 +24,7 @@ class Players_GetAllRounds_Response extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type array<\Common\RoundResult>|\Google\Protobuf\Internal\RepeatedField $round
+     *     @type array<\Common\RoundState>|\Google\Protobuf\Internal\RepeatedField $round
      * }
      */
     public function __construct($data = NULL) {
@@ -33,7 +33,7 @@ class Players_GetAllRounds_Response extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.RoundResult round = 1;</code>
+     * Generated from protobuf field <code>repeated .Common.RoundState round = 1;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRound()
@@ -42,13 +42,13 @@ class Players_GetAllRounds_Response extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.RoundResult round = 1;</code>
-     * @param array<\Common\RoundResult>|\Google\Protobuf\Internal\RepeatedField $var
+     * Generated from protobuf field <code>repeated .Common.RoundState round = 1;</code>
+     * @param array<\Common\RoundState>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setRound($var)
     {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\RoundResult::class);
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\RoundState::class);
         $this->round = $arr;
 
         return $this;
