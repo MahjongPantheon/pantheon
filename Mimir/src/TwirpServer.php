@@ -2,6 +2,20 @@
 
 namespace Mimir;
 
+require_once __DIR__ . '/../../Common/Storage.php';
+require_once __DIR__ . '/Config.php';
+require_once __DIR__ . '/DataSource.php';
+require_once __DIR__ . '/Db.php';
+require_once __DIR__ . '/Meta.php';
+require_once __DIR__ . '/ErrorHandler.php';
+require_once __DIR__ . '/FreyClient.php';
+require_once __DIR__ . '/FreyClientTwirp.php';
+require_once __DIR__ . '/controllers/Events.php';
+require_once __DIR__ . '/controllers/Games.php';
+require_once __DIR__ . '/controllers/Misc.php';
+require_once __DIR__ . '/controllers/Players.php';
+require_once __DIR__ . '/controllers/Seating.php';
+
 use Common\AbortResult;
 use Common\Achievement;
 use Common\ChomboResult;
@@ -14,6 +28,7 @@ use Common\EventData;
 use Common\PlayerSeating;
 use Common\PlayerSeatingSwiss;
 use Common\PrescriptedTable;
+use Common\SessionHistoryResultTable;
 use Common\Storage;
 use Common\TableItemSwiss;
 use Common\TeamMapping;
@@ -459,13 +474,17 @@ final class TwirpServer implements Mimir
             $reg = (new RegisteredPlayer())
                 ->setId($player['id'])
                 ->setTitle($player['title'])
-                ->setLocalId($player['local_id'])
-                ->setTeamName($player['team_name'])
                 ->setTenhouId($player['tenhou_id'])
                 ->setIgnoreSeating($player['ignore_seating']);
             $repl = self::_replacement($player);
             if (!empty($repl)) {
                 $reg->setReplacedBy($repl);
+            }
+            if (!empty($player['local_id'])) {
+                $reg->setLocalId($player['local_id']);
+            }
+            if (!empty($player['team_name'])) {
+                $reg->setTeamName($player['team_name']);
             }
             return $reg;
         }, $players);
@@ -809,7 +828,7 @@ final class TwirpServer implements Mimir
     public function GetGameConfig(array $ctx, Generic_Event_Payload $req): GameConfig
     {
         $ret = $this->_eventsController->getGameConfig($req->getEventId());
-        return (new GameConfig())
+        $gc = (new GameConfig())
             ->setAllowedYaku($ret['allowedYaku'])
             ->setStartPoints($ret['startPoints'])
             ->setGoalPoints($ret['goalPoints'])
@@ -843,7 +862,6 @@ final class TwirpServer implements Mimir
             ->setTimerPolicy($ret['timerPolicy'])
             ->setRedZone($ret['redZone'])
             ->setYellowZone($ret['yellowZone'])
-            ->setGameDuration($ret['gameDuration'])
             ->setTimezone($ret['timezone'])
             ->setIsOnline($ret['isOnline'])
             ->setIsTeam($ret['isTeam'])
@@ -856,12 +874,18 @@ final class TwirpServer implements Mimir
             ->setSubtractStartPoints($ret['subtractStartPoints'])
             ->setSeriesLength($ret['seriesLength'])
             ->setMinGamesCount($ret['minGamesCount'])
-            ->setGamesStatus($ret['gamesStatus'])
             ->setHideResults($ret['hideResults'])
             ->setHideAddReplayButton($ret['hideAddReplayButton'])
             ->setIsPrescripted($ret['isPrescripted'])
             ->setChipsValue($ret['chipsValue'])
             ->setIsFinished($ret['isFinished']);
+        if (!empty($ret['gameDuration'])) {
+            $gc->setGameDuration($ret['gameDuration']);
+        }
+        if (!empty($ret['gamesStatus'])) {
+            $gc->setGamesStatus($ret['gamesStatus']);
+        }
+        return $gc;
     }
 
     /**
@@ -899,8 +923,8 @@ final class TwirpServer implements Mimir
             iterator_to_array($req->getEventIdList()),
             $req->getLimit(),
             $req->getOffset(),
-            $req->getOrder(),
-            $req->getOrderBy()
+            $req->getOrderBy(),
+            $req->getOrder()
         );
         return (new Events_GetLastGames_Response())
             ->setTotalGames($ret['total_games'])
@@ -1046,7 +1070,10 @@ final class TwirpServer implements Mimir
         );
         return (new Players_GetPlayerStats_Response())
             ->setRatingHistory($ret['rating_history'])
-            ->setScoreHistory(self::_toResultsHistory($ret['score_history']))
+            ->setScoreHistory(array_map(function ($table) {
+                return (new SessionHistoryResultTable())
+                    ->setTable(self::_toResultsHistory($table));
+                }, array_values($ret['score_history'])))
             ->setPlayersInfo(self::_toPlayers($ret['players_info']))
             ->setPlacesSummary(self::_toPlacesSummary($ret['places_summary']))
             ->setTotalPlayedGames($ret['total_played_games'])

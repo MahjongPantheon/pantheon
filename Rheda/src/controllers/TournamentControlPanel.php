@@ -95,6 +95,7 @@ class TournamentControlPanel extends Controller
                         ;
                 }
             } catch (\Exception $e) {
+                $this->_handleTwirpEx($e);
                 $this->_lastEx = $e;
                 return true;
             }
@@ -165,6 +166,7 @@ class TournamentControlPanel extends Controller
                     array_unshift($nextPrescriptedSeating, []); // small hack to start from 1
                 }
             } catch (\Exception $e) {
+                $this->_handleTwirpEx($e);
                 return [
                     'error' => null,
                     'prescriptedEventErrorDescription' => $e->getCode() == 1404

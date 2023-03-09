@@ -180,6 +180,7 @@ class RatingTable extends Controller
                 return $el;
             }, $data);
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $errMsg = $e->getMessage();
         }
 

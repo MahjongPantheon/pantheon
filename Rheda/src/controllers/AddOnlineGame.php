@@ -47,6 +47,7 @@ class AddOnlineGame extends Controller
                 $successfullyAdded = true;
             }
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $errorMsg = $e->getMessage();
         }
 

@@ -148,7 +148,7 @@ export interface Players_GetPlayerStats_Payload {
 
 export interface Players_GetPlayerStats_Response {
   ratingHistory: number[];
-  scoreHistory: atoms.SessionHistoryResult[];
+  scoreHistory: atoms.SessionHistoryResultTable[];
   playersInfo: atoms.Player[];
   placesSummary: atoms.PlacesSummaryItem[];
   totalPlayedGames: number;
@@ -5110,7 +5110,7 @@ export const Players_GetPlayerStats_Response = {
       writer.writeRepeatedMessage(
         2,
         msg.scoreHistory as any,
-        atoms.SessionHistoryResult._writeMessage
+        atoms.SessionHistoryResultTable._writeMessage
       );
     }
     if (msg.playersInfo?.length) {
@@ -5186,8 +5186,8 @@ export const Players_GetPlayerStats_Response = {
           break;
         }
         case 2: {
-          const m = atoms.SessionHistoryResult.initialize();
-          reader.readMessage(m, atoms.SessionHistoryResult._readMessage);
+          const m = atoms.SessionHistoryResultTable.initialize();
+          reader.readMessage(m, atoms.SessionHistoryResultTable._readMessage);
           msg.scoreHistory.push(m);
           break;
         }
@@ -10800,7 +10800,7 @@ export const Players_GetPlayerStats_ResponseJSON = {
     }
     if (msg.scoreHistory?.length) {
       json["scoreHistory"] = msg.scoreHistory.map(
-        atoms.SessionHistoryResultJSON._writeMessage
+        atoms.SessionHistoryResultTableJSON._writeMessage
       );
     }
     if (msg.playersInfo?.length) {
@@ -10866,8 +10866,8 @@ export const Players_GetPlayerStats_ResponseJSON = {
     const _scoreHistory_ = json["scoreHistory"];
     if (_scoreHistory_) {
       for (const item of _scoreHistory_) {
-        const m = atoms.SessionHistoryResult.initialize();
-        atoms.SessionHistoryResultJSON._readMessage(m, item);
+        const m = atoms.SessionHistoryResultTable.initialize();
+        atoms.SessionHistoryResultTableJSON._readMessage(m, item);
         msg.scoreHistory.push(m);
       }
     }

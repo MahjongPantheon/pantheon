@@ -78,6 +78,7 @@ class PlayerRegistration extends Controller
                 $showAddRemovePlayer = count($ev) === 1 && !$ev[0]['tournamentStarted'];
                 $eventType = count($ev) === 1 ? $ev[0]['type'] : 'local';
             } catch (\Exception $e) {
+                $this->_handleTwirpEx($e);
                 $registeredPlayers = [];
                 $errorMsg = $e->getMessage();
             }
@@ -163,6 +164,7 @@ class PlayerRegistration extends Controller
                             throw new \Exception(_t('Failed to assign administrator to event'));
                         }
                     } catch (\Exception $e) {
+                        $this->_handleTwirpEx($e);
                         $this->_lastError = $e->getMessage();
                     }
                     break;
@@ -173,6 +175,7 @@ class PlayerRegistration extends Controller
                             throw new \Exception(_t('Failed to remove administrator from event'));
                         }
                     } catch (\Exception $e) {
+                        $this->_handleTwirpEx($e);
                         $this->_lastError = $e->getMessage();
                     }
                     break;
@@ -209,6 +212,7 @@ class PlayerRegistration extends Controller
         try {
             $result = $this->_frey->findByTitle($query);
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $errorMsg = $e->getMessage();
         };
 
@@ -228,6 +232,7 @@ class PlayerRegistration extends Controller
                 $errorMsg = _t('Failed to register the player. Check your network connection.');
             }
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $message = explode("\n\n", $e->getMessage())[0];
             switch ($message) {
                 case 'Player already registered to this event':
@@ -253,6 +258,7 @@ class PlayerRegistration extends Controller
                 $this->_mimir->unregisterPlayerCP($userId, $this->_mainEventId);
             }
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $errorMsg = $e->getMessage();
         };
 
@@ -273,6 +279,7 @@ class PlayerRegistration extends Controller
                 $errorMsg = _t('Failed to save local ids mapping. Check your network connection.');
             }
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $errorMsg = $e->getMessage();
         }
 
@@ -293,6 +300,7 @@ class PlayerRegistration extends Controller
                 $errorMsg = _t('Failed to save teams mapping. Check your network connection.');
             }
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $errorMsg = $e->getMessage();
         }
 
@@ -313,6 +321,7 @@ class PlayerRegistration extends Controller
                 $errorMsg = _t('Failed to save ignore seating flag. Check your network connection.');
             }
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $errorMsg = $e->getMessage();
         }
 
@@ -337,6 +346,7 @@ class PlayerRegistration extends Controller
                 $errorMsg = _t('Failed to save replacement player. Check your network connection.');
             }
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $errorMsg = $e->getMessage();
         }
 

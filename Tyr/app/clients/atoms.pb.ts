@@ -387,6 +387,10 @@ export interface SessionHistoryResult {
   title: string;
 }
 
+export interface SessionHistoryResultTable {
+  table: SessionHistoryResult[];
+}
+
 export interface PlacesSummaryItem {
   place: number;
   count: number;
@@ -4789,6 +4793,79 @@ export const SessionHistoryResult = {
         }
         case 7: {
           msg.title = reader.readString();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const SessionHistoryResultTable = {
+  /**
+   * Serializes SessionHistoryResultTable to protobuf.
+   */
+  encode: function (msg: Partial<SessionHistoryResultTable>): Uint8Array {
+    return SessionHistoryResultTable._writeMessage(
+      msg,
+      new BinaryWriter()
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes SessionHistoryResultTable from protobuf.
+   */
+  decode: function (bytes: ByteSource): SessionHistoryResultTable {
+    return SessionHistoryResultTable._readMessage(
+      SessionHistoryResultTable.initialize(),
+      new BinaryReader(bytes)
+    );
+  },
+
+  /**
+   * Initializes SessionHistoryResultTable with all fields set to their default value.
+   */
+  initialize: function (): SessionHistoryResultTable {
+    return {
+      table: [],
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<SessionHistoryResultTable>,
+    writer: BinaryWriter
+  ): BinaryWriter {
+    if (msg.table?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.table as any,
+        SessionHistoryResult._writeMessage
+      );
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: SessionHistoryResultTable,
+    reader: BinaryReader
+  ): SessionHistoryResultTable {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = SessionHistoryResult.initialize();
+          reader.readMessage(m, SessionHistoryResult._readMessage);
+          msg.table.push(m);
           break;
         }
         default: {
@@ -10653,6 +10730,65 @@ export const SessionHistoryResultJSON = {
     const _title_ = json["title"];
     if (_title_) {
       msg.title = _title_;
+    }
+    return msg;
+  },
+};
+
+export const SessionHistoryResultTableJSON = {
+  /**
+   * Serializes SessionHistoryResultTable to JSON.
+   */
+  encode: function (msg: Partial<SessionHistoryResultTable>): string {
+    return JSON.stringify(SessionHistoryResultTableJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes SessionHistoryResultTable from JSON.
+   */
+  decode: function (json: string): SessionHistoryResultTable {
+    return SessionHistoryResultTableJSON._readMessage(
+      SessionHistoryResultTableJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+
+  /**
+   * Initializes SessionHistoryResultTable with all fields set to their default value.
+   */
+  initialize: function (): SessionHistoryResultTable {
+    return {
+      table: [],
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<SessionHistoryResultTable>
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.table?.length) {
+      json["table"] = msg.table.map(SessionHistoryResultJSON._writeMessage);
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: SessionHistoryResultTable,
+    json: any
+  ): SessionHistoryResultTable {
+    const _table_ = json["table"];
+    if (_table_) {
+      for (const item of _table_) {
+        const m = SessionHistoryResult.initialize();
+        SessionHistoryResultJSON._readMessage(m, item);
+        msg.table.push(m);
+      }
     }
     return msg;
   },

@@ -68,6 +68,7 @@ class PersonLogin extends Controller
                 $this->_storage->setAuthToken($authToken)->setPersonId($id);
                 header('Location: ' . '/profile');
             } catch (\Exception $ex) {
+                $this->_handleTwirpEx($ex);
                 $passwordError = _t('Password is incorrect or account not registered');
             }
         }

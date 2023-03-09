@@ -17,7 +17,8 @@
  */
 namespace Rheda;
 
-use PHPUnit\Framework\SyntheticSkippedError;
+use Monolog\Handler\ErrorLogHandler;
+use Monolog\Logger;
 
 require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
@@ -133,6 +134,11 @@ abstract class Controller
     protected $_useTranslit = false;
 
     /**
+     * @var Logger
+     */
+    protected $_syslog;
+
+    /**
      * Controller constructor.
      * @param string $url
      * @param string[] $path
@@ -143,6 +149,8 @@ abstract class Controller
         $this->_url = $url;
         $this->_path = $path;
         $this->_storage = new \Common\Storage(Sysconf::COOKIE_DOMAIN);
+        $this->_syslog = new Logger('RiichiApi');
+        $this->_syslog->pushHandler(new ErrorLogHandler());
 
         // @phpstan-ignore-next-line
         if ($this->_storage->getTwirpEnabled()) {
@@ -612,5 +620,14 @@ DATA;
                 ? $baseUrl . 'page/' . $totalPages
                 : Url::make($baseUrl . 'page/' . $totalPages, $idList),
         ];
+    }
+
+    protected function _handleTwirpEx(\Throwable $e)
+    {
+        if ($e instanceof \Common\TwirpError) {
+            trigger_error('Exception for path: ' . $_SERVER['REQUEST_URI'] . PHP_EOL
+                . $e->getTraceAsString()
+                . json_encode($e->getMetaMap(), JSON_PRETTY_PRINT), E_USER_WARNING);
+        }
     }
 }

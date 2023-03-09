@@ -28,12 +28,16 @@ if ($_SERVER['REQUEST_URI'] == '/favicon.ico') {
 
 try {
     $controller = \Rheda\Controller::makeInstance($_SERVER['REQUEST_URI']);
+    if (!empty($controller)) {
+        $controller->run();
+    }
 } catch (\Exception $ex) {
-    trigger_error('Exception for path: ' . $_SERVER['REQUEST_URI']);
+    if ($ex instanceof \Common\TwirpError) {
+        trigger_error('Exception for path: ' . $_SERVER['REQUEST_URI'] . PHP_EOL
+            . $ex->getTraceAsString()
+            . json_encode($ex->getMetaMap(), JSON_PRETTY_PRINT), E_USER_WARNING);
+    } else {
+        throw $ex;
+    }
     echo 'Internal server error';
-    throw $ex;
-}
-
-if (!empty($controller)) {
-    $controller->run();
 }

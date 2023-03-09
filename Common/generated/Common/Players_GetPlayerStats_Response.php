@@ -18,7 +18,7 @@ class Players_GetPlayerStats_Response extends \Google\Protobuf\Internal\Message
      */
     private $ratingHistory;
     /**
-     * Generated from protobuf field <code>repeated .Common.SessionHistoryResult scoreHistory = 2;</code>
+     * Generated from protobuf field <code>repeated .Common.SessionHistoryResultTable scoreHistory = 2;</code>
      */
     private $scoreHistory;
     /**
@@ -65,7 +65,7 @@ class Players_GetPlayerStats_Response extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $ratingHistory
-     *     @type array<\Common\SessionHistoryResult>|\Google\Protobuf\Internal\RepeatedField $scoreHistory
+     *     @type array<\Common\SessionHistoryResultTable>|\Google\Protobuf\Internal\RepeatedField $scoreHistory
      *     @type array<\Common\Player>|\Google\Protobuf\Internal\RepeatedField $playersInfo
      *     @type array<\Common\PlacesSummaryItem>|\Google\Protobuf\Internal\RepeatedField $placesSummary
      *     @type int $totalPlayedGames
@@ -105,7 +105,7 @@ class Players_GetPlayerStats_Response extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.SessionHistoryResult scoreHistory = 2;</code>
+     * Generated from protobuf field <code>repeated .Common.SessionHistoryResultTable scoreHistory = 2;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getScoreHistory()
@@ -114,13 +114,13 @@ class Players_GetPlayerStats_Response extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.SessionHistoryResult scoreHistory = 2;</code>
-     * @param array<\Common\SessionHistoryResult>|\Google\Protobuf\Internal\RepeatedField $var
+     * Generated from protobuf field <code>repeated .Common.SessionHistoryResultTable scoreHistory = 2;</code>
+     * @param array<\Common\SessionHistoryResultTable>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setScoreHistory($var)
     {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\SessionHistoryResult::class);
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\SessionHistoryResultTable::class);
         $this->scoreHistory = $arr;
 
         return $this;

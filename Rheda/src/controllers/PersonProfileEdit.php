@@ -50,6 +50,7 @@ class PersonProfileEdit extends Controller
             $data = $this->_frey->getPersonalInfo([$personId]);
             $data[0]['available_countries'] = $this->_getCountries($data[0]['country'] ?? '');
         } catch (\Exception $ex) {
+            $this->_handleTwirpEx($ex);
             $data = null;
         }
 
@@ -82,6 +83,7 @@ class PersonProfileEdit extends Controller
                     'emailEditable' => $this->_superadmin,
                 ]);
             } catch (\Exception $ex) {
+                $this->_handleTwirpEx($ex);
                 return array_merge($checkedData, [
                     'error' => $ex->getMessage(),
                     'success' => false,

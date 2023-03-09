@@ -368,7 +368,6 @@ message RegisteredPlayer {
   optional ReplacementPlayer replacedBy = 7;
 }
 
-
 message SessionHistoryResult {
   string sessionHash = 1;
   int32 eventId = 2;
@@ -377,6 +376,10 @@ message SessionHistoryResult {
   float ratingDelta = 5;
   int32 place = 6;
   string title = 7;
+}
+
+message SessionHistoryResultTable {
+  repeated SessionHistoryResult table = 1;
 }
 
 message PlacesSummaryItem {

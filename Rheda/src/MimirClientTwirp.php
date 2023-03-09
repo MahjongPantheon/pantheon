@@ -77,6 +77,7 @@ use Common\Seating_MakePrescriptedSeating_Payload;
 use Common\Seating_MakeShuffledSeating_Payload;
 use Common\SeriesResult;
 use Common\SessionHistoryResult;
+use Common\SessionHistoryResultTable;
 use Common\SessionStatus;
 use Common\TableItemSwiss;
 use Common\TableState;
@@ -159,13 +160,14 @@ class MimirClientTwirp implements IMimirClient
      */
     protected static function _fromPlayers(array $players): array
     {
-        return array_map(function (Player $p) {
-            return [
+        return array_reduce($players, function ($acc, Player $p) {
+            $acc[$p->getId()] = [
                 'id' => $p->getId(),
                 'title' => $p->getTitle(),
                 'tenhou_id' => $p->getTenhouId()
             ];
-        }, $players);
+            return $acc;
+        }, []);
     }
 
     /**
@@ -181,14 +183,15 @@ class MimirClientTwirp implements IMimirClient
                 'replay_link' => $g->getReplayLink(),
                 'players' => iterator_to_array($g->getPlayers()),
                 'penalties' => self::_fromPenaltiesLog(iterator_to_array($g->getPenaltyLog())),
-                'final_results' => array_map(function (FinalResultOfSession $res) {
-                    return [
+                'final_results' => array_reduce(iterator_to_array($g->getFinalResults()), function ($acc, FinalResultOfSession $res) {
+                    $acc[$res->getPlayerId()] = [
                         'player_id' => $res->getPlayerId(),
                         'score' => $res->getScore(),
                         'rating_delta' => $res->getRatingDelta(),
                         'place' => $res->getPlace()
                     ];
-                }, iterator_to_array($g->getFinalResults())),
+                    return $acc;
+                }, []),
                 'rounds' => self::_fromRounds(iterator_to_array($g->getRounds()))
             ];
         }, $games);
@@ -952,7 +955,7 @@ class MimirClientTwirp implements IMimirClient
         )->getResults());
         return array_map(function (SeriesResult $r) {
             return [
-                'player' => $r->getPlayer() ? self::_fromPlayers([$r->getPlayer()])[0] : [],
+                'player' => $r->getPlayer() ? self::_fromPlayers([$r->getPlayer()])[$r->getPlayer()->getId()] : [],
                 'best_series' => array_reduce(iterator_to_array($r->getBestSeries()), function ($acc, PlayerPlaceInSeries $place) {
                     $acc []= ['hash' => $place->getSessionHash(), 'place' => $place->getPlace()];
                     return $acc;
@@ -1108,7 +1111,9 @@ class MimirClientTwirp implements IMimirClient
         );
         return [
             'rating_history' => $ret->getRatingHistory(),
-            'score_history' => self::_fromResultsHistory(iterator_to_array($ret->getScoreHistory())),
+            'score_history' => array_map(function(SessionHistoryResultTable $table) {
+                return self::_fromResultsHistory(iterator_to_array($table->getTable()));
+            }, iterator_to_array($ret->getScoreHistory())),
             'players_info' => self::_fromPlayers(iterator_to_array($ret->getPlayersInfo())),
             'places_summary' => self::_fromPlacesSummary(iterator_to_array($ret->getPlacesSummary())),
             'total_played_games' => $ret->getTotalPlayedGames(),
@@ -1770,7 +1775,7 @@ class MimirClientTwirp implements IMimirClient
             (new Players_GetPlayer_Payload())
                 ->setId($id)
         )->getPlayers();
-        return empty($pl) ? [] : self::_fromPlayers([$pl])[0];
+        return empty($pl) ? [] : self::_fromPlayers([$pl])[$pl->getId()];
     }
 
     /**

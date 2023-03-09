@@ -53,6 +53,7 @@ class PersonSignupConfirm extends Controller
                 'id' => $newId
             ];
         } catch (\Exception $ex) {
+            $this->_handleTwirpEx($ex);
             return [
                 'error' => $ex->getMessage(),
                 'success' => false

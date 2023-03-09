@@ -201,7 +201,7 @@ message Players_GetPlayerStats_Payload {
 
 message Players_GetPlayerStats_Response {
   repeated int32 ratingHistory = 1;
-  repeated SessionHistoryResult scoreHistory = 2;
+  repeated SessionHistoryResultTable scoreHistory = 2;
   repeated Player playersInfo = 3;
   repeated PlacesSummaryItem placesSummary = 4;
   int32 totalPlayedGames = 5;
