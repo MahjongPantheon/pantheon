@@ -33,6 +33,8 @@ password for every generated empty event is `password`.
 To create an event and fill it with some data, run `make seed` or `make seed_tournament` (with `sudo` if required). 
 Note: this command will perform a full cleanup of data!
 
+A separate [guide about debugging in PhpStorm IDE](./docs/technical/phpstorm.md) is available.
+
 Default ports for services are:
 - 4001 for **Mimir** JSON RPC API
 - 4002 for **Rheda** interface (http://localhost:4002/)
