@@ -226,6 +226,7 @@ message Penalty {
 
 message RonResult {
   int32 roundIndex = 1;
+  int32 honba = 2;
   int32 winnerId = 3;
   int32 loserId = 4;
   int32 paoPlayerId = 5;
@@ -255,6 +256,7 @@ message MultironWin {
 
 message MultironResult {
   int32 roundIndex = 1;
+  int32 honba = 2;
   int32 loserId = 3;
   int32 multiRon = 4; // count of players who won
   repeated MultironWin wins = 5;
@@ -263,6 +265,7 @@ message MultironResult {
 
 message TsumoResult {
   int32 roundIndex = 1;
+  int32 honba = 2;
   int32 winnerId = 3;
   int32 paoPlayerId = 4;
   int32 han = 5;
@@ -278,22 +281,26 @@ message TsumoResult {
 
 message DrawResult {
   int32 roundIndex = 1;
+  int32 honba = 2;
   repeated int32 riichiBets = 3; // player ids
   repeated int32 tempai = 4; // player ids
 }
 
 message AbortResult {
   int32 roundIndex = 1;
+  int32 honba = 2;
   repeated int32 riichiBets = 3; // player ids
 }
 
 message ChomboResult {
   int32 roundIndex = 1;
+  int32 honba = 2;
   int32 loserId = 3;
 }
 
 message NagashiResult {
   int32 roundIndex = 1;
+  int32 honba = 2;
   repeated int32 riichiBets = 3; // player ids
   repeated int32 tempai = 4; // player ids
   repeated int32 nagashi = 5; // player ids

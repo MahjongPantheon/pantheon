@@ -237,6 +237,7 @@ export interface Penalty {
 
 export interface RonResult {
   roundIndex: number;
+  honba: number;
   winnerId: number;
   loserId: number;
   paoPlayerId: number;
@@ -266,6 +267,7 @@ export interface MultironWin {
 
 export interface MultironResult {
   roundIndex: number;
+  honba: number;
   loserId: number;
   multiRon: number;
   wins: MultironWin[];
@@ -274,6 +276,7 @@ export interface MultironResult {
 
 export interface TsumoResult {
   roundIndex: number;
+  honba: number;
   winnerId: number;
   paoPlayerId: number;
   han: number;
@@ -289,22 +292,26 @@ export interface TsumoResult {
 
 export interface DrawResult {
   roundIndex: number;
+  honba: number;
   riichiBets: number[];
   tempai: number[];
 }
 
 export interface AbortResult {
   roundIndex: number;
+  honba: number;
   riichiBets: number[];
 }
 
 export interface ChomboResult {
   roundIndex: number;
+  honba: number;
   loserId: number;
 }
 
 export interface NagashiResult {
   roundIndex: number;
+  honba: number;
   riichiBets: number[];
   tempai: number[];
   nagashi: number[];
@@ -2964,6 +2971,7 @@ export const RonResult = {
   initialize: function (): RonResult {
     return {
       roundIndex: 0,
+      honba: 0,
       winnerId: 0,
       loserId: 0,
       paoPlayerId: 0,
@@ -2988,6 +2996,9 @@ export const RonResult = {
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
+    }
+    if (msg.honba) {
+      writer.writeInt32(2, msg.honba);
     }
     if (msg.winnerId) {
       writer.writeInt32(3, msg.winnerId);
@@ -3037,6 +3048,10 @@ export const RonResult = {
       switch (field) {
         case 1: {
           msg.roundIndex = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.honba = reader.readInt32();
           break;
         }
         case 3: {
@@ -3269,6 +3284,7 @@ export const MultironResult = {
   initialize: function (): MultironResult {
     return {
       roundIndex: 0,
+      honba: 0,
       loserId: 0,
       multiRon: 0,
       wins: [],
@@ -3285,6 +3301,9 @@ export const MultironResult = {
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
+    }
+    if (msg.honba) {
+      writer.writeInt32(2, msg.honba);
     }
     if (msg.loserId) {
       writer.writeInt32(3, msg.loserId);
@@ -3317,6 +3336,10 @@ export const MultironResult = {
       switch (field) {
         case 1: {
           msg.roundIndex = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.honba = reader.readInt32();
           break;
         }
         case 3: {
@@ -3375,6 +3398,7 @@ export const TsumoResult = {
   initialize: function (): TsumoResult {
     return {
       roundIndex: 0,
+      honba: 0,
       winnerId: 0,
       paoPlayerId: 0,
       han: 0,
@@ -3398,6 +3422,9 @@ export const TsumoResult = {
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
+    }
+    if (msg.honba) {
+      writer.writeInt32(2, msg.honba);
     }
     if (msg.winnerId) {
       writer.writeInt32(3, msg.winnerId);
@@ -3444,6 +3471,10 @@ export const TsumoResult = {
       switch (field) {
         case 1: {
           msg.roundIndex = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.honba = reader.readInt32();
           break;
         }
         case 3: {
@@ -3532,6 +3563,7 @@ export const DrawResult = {
   initialize: function (): DrawResult {
     return {
       roundIndex: 0,
+      honba: 0,
       riichiBets: [],
       tempai: [],
     };
@@ -3546,6 +3578,9 @@ export const DrawResult = {
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
+    }
+    if (msg.honba) {
+      writer.writeInt32(2, msg.honba);
     }
     if (msg.riichiBets?.length) {
       writer.writePackedInt32(3, msg.riichiBets);
@@ -3565,6 +3600,10 @@ export const DrawResult = {
       switch (field) {
         case 1: {
           msg.roundIndex = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.honba = reader.readInt32();
           break;
         }
         case 3: {
@@ -3617,6 +3656,7 @@ export const AbortResult = {
   initialize: function (): AbortResult {
     return {
       roundIndex: 0,
+      honba: 0,
       riichiBets: [],
     };
   },
@@ -3630,6 +3670,9 @@ export const AbortResult = {
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
+    }
+    if (msg.honba) {
+      writer.writeInt32(2, msg.honba);
     }
     if (msg.riichiBets?.length) {
       writer.writePackedInt32(3, msg.riichiBets);
@@ -3646,6 +3689,10 @@ export const AbortResult = {
       switch (field) {
         case 1: {
           msg.roundIndex = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.honba = reader.readInt32();
           break;
         }
         case 3: {
@@ -3693,6 +3740,7 @@ export const ChomboResult = {
   initialize: function (): ChomboResult {
     return {
       roundIndex: 0,
+      honba: 0,
       loserId: 0,
     };
   },
@@ -3706,6 +3754,9 @@ export const ChomboResult = {
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
+    }
+    if (msg.honba) {
+      writer.writeInt32(2, msg.honba);
     }
     if (msg.loserId) {
       writer.writeInt32(3, msg.loserId);
@@ -3725,6 +3776,10 @@ export const ChomboResult = {
       switch (field) {
         case 1: {
           msg.roundIndex = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.honba = reader.readInt32();
           break;
         }
         case 3: {
@@ -3768,6 +3823,7 @@ export const NagashiResult = {
   initialize: function (): NagashiResult {
     return {
       roundIndex: 0,
+      honba: 0,
       riichiBets: [],
       tempai: [],
       nagashi: [],
@@ -3783,6 +3839,9 @@ export const NagashiResult = {
   ): BinaryWriter {
     if (msg.roundIndex) {
       writer.writeInt32(1, msg.roundIndex);
+    }
+    if (msg.honba) {
+      writer.writeInt32(2, msg.honba);
     }
     if (msg.riichiBets?.length) {
       writer.writePackedInt32(3, msg.riichiBets);
@@ -3808,6 +3867,10 @@ export const NagashiResult = {
       switch (field) {
         case 1: {
           msg.roundIndex = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.honba = reader.readInt32();
           break;
         }
         case 3: {
@@ -9145,6 +9208,7 @@ export const RonResultJSON = {
   initialize: function (): RonResult {
     return {
       roundIndex: 0,
+      honba: 0,
       winnerId: 0,
       loserId: 0,
       paoPlayerId: 0,
@@ -9167,6 +9231,9 @@ export const RonResultJSON = {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
+    }
+    if (msg.honba) {
+      json["honba"] = msg.honba;
     }
     if (msg.winnerId) {
       json["winnerId"] = msg.winnerId;
@@ -9214,6 +9281,10 @@ export const RonResultJSON = {
     const _roundIndex_ = json["roundIndex"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
+    }
+    const _honba_ = json["honba"];
+    if (_honba_) {
+      msg.honba = _honba_;
     }
     const _winnerId_ = json["winnerId"];
     if (_winnerId_) {
@@ -9413,6 +9484,7 @@ export const MultironResultJSON = {
   initialize: function (): MultironResult {
     return {
       roundIndex: 0,
+      honba: 0,
       loserId: 0,
       multiRon: 0,
       wins: [],
@@ -9429,6 +9501,9 @@ export const MultironResultJSON = {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
+    }
+    if (msg.honba) {
+      json["honba"] = msg.honba;
     }
     if (msg.loserId) {
       json["loserId"] = msg.loserId;
@@ -9452,6 +9527,10 @@ export const MultironResultJSON = {
     const _roundIndex_ = json["roundIndex"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
+    }
+    const _honba_ = json["honba"];
+    if (_honba_) {
+      msg.honba = _honba_;
     }
     const _loserId_ = json["loserId"];
     if (_loserId_) {
@@ -9501,6 +9580,7 @@ export const TsumoResultJSON = {
   initialize: function (): TsumoResult {
     return {
       roundIndex: 0,
+      honba: 0,
       winnerId: 0,
       paoPlayerId: 0,
       han: 0,
@@ -9522,6 +9602,9 @@ export const TsumoResultJSON = {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
+    }
+    if (msg.honba) {
+      json["honba"] = msg.honba;
     }
     if (msg.winnerId) {
       json["winnerId"] = msg.winnerId;
@@ -9566,6 +9649,10 @@ export const TsumoResultJSON = {
     const _roundIndex_ = json["roundIndex"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
+    }
+    const _honba_ = json["honba"];
+    if (_honba_) {
+      msg.honba = _honba_;
     }
     const _winnerId_ = json["winnerId"];
     if (_winnerId_) {
@@ -9639,6 +9726,7 @@ export const DrawResultJSON = {
   initialize: function (): DrawResult {
     return {
       roundIndex: 0,
+      honba: 0,
       riichiBets: [],
       tempai: [],
     };
@@ -9651,6 +9739,9 @@ export const DrawResultJSON = {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
+    }
+    if (msg.honba) {
+      json["honba"] = msg.honba;
     }
     if (msg.riichiBets?.length) {
       json["riichiBets"] = msg.riichiBets;
@@ -9668,6 +9759,10 @@ export const DrawResultJSON = {
     const _roundIndex_ = json["roundIndex"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
+    }
+    const _honba_ = json["honba"];
+    if (_honba_) {
+      msg.honba = _honba_;
     }
     const _riichiBets_ = json["riichiBets"];
     if (_riichiBets_) {
@@ -9705,6 +9800,7 @@ export const AbortResultJSON = {
   initialize: function (): AbortResult {
     return {
       roundIndex: 0,
+      honba: 0,
       riichiBets: [],
     };
   },
@@ -9716,6 +9812,9 @@ export const AbortResultJSON = {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
+    }
+    if (msg.honba) {
+      json["honba"] = msg.honba;
     }
     if (msg.riichiBets?.length) {
       json["riichiBets"] = msg.riichiBets;
@@ -9730,6 +9829,10 @@ export const AbortResultJSON = {
     const _roundIndex_ = json["roundIndex"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
+    }
+    const _honba_ = json["honba"];
+    if (_honba_) {
+      msg.honba = _honba_;
     }
     const _riichiBets_ = json["riichiBets"];
     if (_riichiBets_) {
@@ -9763,6 +9866,7 @@ export const ChomboResultJSON = {
   initialize: function (): ChomboResult {
     return {
       roundIndex: 0,
+      honba: 0,
       loserId: 0,
     };
   },
@@ -9777,6 +9881,9 @@ export const ChomboResultJSON = {
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
     }
+    if (msg.honba) {
+      json["honba"] = msg.honba;
+    }
     if (msg.loserId) {
       json["loserId"] = msg.loserId;
     }
@@ -9790,6 +9897,10 @@ export const ChomboResultJSON = {
     const _roundIndex_ = json["roundIndex"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
+    }
+    const _honba_ = json["honba"];
+    if (_honba_) {
+      msg.honba = _honba_;
     }
     const _loserId_ = json["loserId"];
     if (_loserId_) {
@@ -9823,6 +9934,7 @@ export const NagashiResultJSON = {
   initialize: function (): NagashiResult {
     return {
       roundIndex: 0,
+      honba: 0,
       riichiBets: [],
       tempai: [],
       nagashi: [],
@@ -9838,6 +9950,9 @@ export const NagashiResultJSON = {
     const json: Record<string, unknown> = {};
     if (msg.roundIndex) {
       json["roundIndex"] = msg.roundIndex;
+    }
+    if (msg.honba) {
+      json["honba"] = msg.honba;
     }
     if (msg.riichiBets?.length) {
       json["riichiBets"] = msg.riichiBets;
@@ -9858,6 +9973,10 @@ export const NagashiResultJSON = {
     const _roundIndex_ = json["roundIndex"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
+    }
+    const _honba_ = json["honba"];
+    if (_honba_) {
+      msg.honba = _honba_;
     }
     const _riichiBets_ = json["riichiBets"];
     if (_riichiBets_) {

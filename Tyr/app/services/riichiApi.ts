@@ -205,7 +205,10 @@ export class RiichiApiService implements IRiichiApi {
       body: JSON.stringify(jsonRpcBody),
     };
 
-    return fetch(environment.apiUrl, fetchInit)
+    return fetch(
+      environment.apiUrl + (environment.production ? '' : '?XDEBUG_SESSION=start'),
+      fetchInit
+    )
       .then((r) => r.json())
       .then<RET_TYPE>((resp: GenericResponse) => {
         if (resp.error) {
@@ -240,7 +243,10 @@ export class RiichiApiService implements IRiichiApi {
       body: JSON.stringify(jsonRpcBody),
     };
 
-    return fetch(environment.uaUrl, fetchInit)
+    return fetch(
+      environment.uaUrl + (environment.production ? '' : '?XDEBUG_SESSION=start'),
+      fetchInit
+    )
       .then((r) => r.json())
       .then<RET_TYPE>((resp: GenericResponse) => {
         if (resp.error) {

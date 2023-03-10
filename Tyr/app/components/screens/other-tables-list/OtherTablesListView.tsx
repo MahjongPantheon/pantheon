@@ -2,6 +2,8 @@ import * as React from 'react';
 import './other-tables-list.css';
 import { TopPanel } from '#/components/general/top-panel/TopPanel';
 import { Table } from '#/interfaces/common';
+import { useContext } from 'react';
+import { i18n } from '#/components/i18n';
 
 type IProps = {
   tables: Table[];
@@ -24,30 +26,32 @@ const roundsMap: { [key: number]: string } = {
   12: '西4',
 };
 
-export class OtherTablesListView extends React.PureComponent<IProps> {
-  render() {
-    const { onTableClick, onBackClick } = this.props;
-
-    return (
-      <div className='page-other-tables-list'>
-        <TopPanel onBackClick={onBackClick} />
-        <div className='page-other-tables-list__content'>
-          {this.props.tables.map((table) => (
-            <div
-              key={table.hash}
-              className='page-other-tables-list__table'
-              onClick={() => onTableClick(table.hash)}
-            >
-              {roundsMap[table.currentRound]}
-              {table.players.map((player) => (
-                <div key={player.id}>
-                  {player.displayName}: {player.score}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
+export const OtherTablesListView: React.FC<IProps> = ({ onTableClick, onBackClick, tables }) => {
+  const loc = useContext(i18n);
+  return (
+    <div className='page-other-tables-list'>
+      <TopPanel onBackClick={onBackClick} />
+      <div className='page-other-tables-list__content'>
+        {tables.length === 0 && (
+          <div className='page-other-tables-list__empty'>
+            {loc._t('No tables are playing right now')}
+          </div>
+        )}
+        {tables.map((table) => (
+          <div
+            key={table.hash}
+            className='page-other-tables-list__table'
+            onClick={() => onTableClick(table.hash)}
+          >
+            {roundsMap[table.currentRound]}
+            {table.players.map((player) => (
+              <div key={player.id}>
+                {player.displayName}: {player.score}
+              </div>
+            ))}
+          </div>
+        ))}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};

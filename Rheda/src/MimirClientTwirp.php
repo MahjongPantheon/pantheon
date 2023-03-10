@@ -660,11 +660,11 @@ class MimirClientTwirp implements IMimirClient
             'rules' => array_reduce($data, function ($acc, RulesetGenerated $ruleset) {
                 $acc[$ruleset->getTitle()] = [
                     'description' => $ruleset->getDescription(),
-                    'originalRules' => json_decode($ruleset->getDefaultRules())
+                    'originalRules' => json_decode($ruleset->getDefaultRules(), true)
                 ];
                 return $acc;
             }, []),
-            'fields' => json_decode($data[0]->getFieldTypes())
+            'fields' => json_decode($data[0]->getFieldTypes(), true)
         ];
     }
 
@@ -1111,7 +1111,7 @@ class MimirClientTwirp implements IMimirClient
         );
         return [
             'rating_history' => $ret->getRatingHistory(),
-            'score_history' => array_map(function(SessionHistoryResultTable $table) {
+            'score_history' => array_map(function (SessionHistoryResultTable $table) {
                 return self::_fromResultsHistory(iterator_to_array($table->getTable()));
             }, iterator_to_array($ret->getScoreHistory())),
             'players_info' => self::_fromPlayers(iterator_to_array($ret->getPlayersInfo())),
@@ -1537,7 +1537,7 @@ class MimirClientTwirp implements IMimirClient
                 ->setAchievementsList($achievementsList)
         )->getAchievements());
         return array_reduce($ret, function ($acc, Achievement $ach) {
-            $acc[$ach->getAchievementId()] = json_decode($ach->getAchieventData());
+            $acc[$ach->getAchievementId()] = json_decode($ach->getAchieventData(), true);
             return $acc;
         }, []);
     }

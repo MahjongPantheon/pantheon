@@ -319,7 +319,7 @@ class FreyClientTwirp implements IFreyClient
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
-                'groups' => $person->getGroups(),
+                'groups' => iterator_to_array($person->getGroups()),
                 'title' => $person->getTitle(),
             ];
         }, iterator_to_array($persons));
@@ -348,7 +348,7 @@ class FreyClientTwirp implements IFreyClient
                 'email' => $person->getEmail(),
                 'phone' => $person->getPhone(),
                 'tenhou_id' => $person->getTenhouId(),
-                'groups' => $person->getGroups(),
+                'groups' => iterator_to_array($person->getGroups()),
                 'title' => $person->getTitle(),
             ];
         }, iterator_to_array($persons));
@@ -1008,7 +1008,7 @@ class FreyClientTwirp implements IFreyClient
             'email' => $ret->getEmail(),
             'phone' => $ret->getPhone(),
             'tenhou_id' => $ret->getTenhouId(),
-            'groups' => $ret->getGroups(),
+            'groups' => iterator_to_array($ret->getGroups()),
             'title' => $ret->getTitle(),
         ];
     }

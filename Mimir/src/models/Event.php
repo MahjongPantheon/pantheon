@@ -219,7 +219,7 @@ class EventModel extends Model
                     'hash' => $game->getRepresentationalHash(),
                     'penalties' => $game->getCurrentState()->getPenaltiesLog(),
                     'table_index' => $game->getTableIndex(),
-                    'last_round_detailed' => $lastRound ? Formatters::formatRound($lastRound) : null,
+                    'last_round_detailed' => $lastRound ? Formatters::formatRound($lastRound, $game) : null,
                     'last_round' => $lastRound ? $this->_formatLastRound($lastRound, $game) : [],
                     'current_round' => $game->getCurrentState()->getRound(),
                     'scores' => $game->getCurrentState()->getScores(),
@@ -256,8 +256,9 @@ class EventModel extends Model
         $scoresBefore = [];
         $scoresDelta = [];
         for ($i = 0; $i < count($session->getPlayersIds()); $i++) {
-            $scoresBefore[$session->getPlayersIds()[$i]] = $previousScores[$i];
-            $scoresDelta[$session->getPlayersIds()[$i]] = $currentScores[$i] - $previousScores[$i];
+            $id = $session->getPlayersIds()[$i];
+            $scoresBefore[$id] = $previousScores[$id];
+            $scoresDelta[$id] = $currentScores[$id] - $previousScores[$id];
         }
         if ($round instanceof MultiRoundPrimitive) {
             return [

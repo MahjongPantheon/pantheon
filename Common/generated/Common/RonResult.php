@@ -18,6 +18,10 @@ class RonResult extends \Google\Protobuf\Internal\Message
      */
     protected $roundIndex = 0;
     /**
+     * Generated from protobuf field <code>int32 honba = 2;</code>
+     */
+    protected $honba = 0;
+    /**
      * Generated from protobuf field <code>int32 winnerId = 3;</code>
      */
     protected $winnerId = 0;
@@ -77,6 +81,7 @@ class RonResult extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type int $roundIndex
+     *     @type int $honba
      *     @type int $winnerId
      *     @type int $loserId
      *     @type int $paoPlayerId
@@ -116,6 +121,28 @@ class RonResult extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->roundIndex = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 honba = 2;</code>
+     * @return int
+     */
+    public function getHonba()
+    {
+        return $this->honba;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 honba = 2;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setHonba($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->honba = $var;
 
         return $this;
     }

@@ -107,7 +107,6 @@ RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php81/php-fpm.d/www.c
     sed -i "s|;*opcache.fast_shutdown=.*|opcache.fast_shutdown=1|i" /etc/php81/php.ini
 RUN if [[ -z "$NO_XDEBUG" ]] ; then echo -ne "zend_extension=xdebug.so\n \
           xdebug.mode=debug\n \
-          xdebug.start_with_request=yes\n \
           xdebug.client_host=172.17.0.1\n \
           xdebug.client_port=9001\n" > /etc/php81/conf.d/50_xdebug.ini ; \
     fi

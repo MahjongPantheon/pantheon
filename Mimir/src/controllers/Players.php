@@ -211,6 +211,8 @@ class PlayersController extends Controller
         $result = array_map(function (PlayerPrimitive $p) use (&$sessionResults, &$session) {
             return [
                 'id'            => $p->getId(),
+                'event_id'      => $session->getEventId(),
+                'player_id'     => $p->getId(),
                 'session_hash'  => $session->getRepresentationalHash(),
                 'title'         => $p->getDisplayName(),
                 'place'         => $sessionResults[$p->getId()]->getPlace(),
@@ -354,11 +356,11 @@ class PlayersController extends Controller
             'scores_before'  => $scoresBefore,
             'scores_delta'   => $scoresDelta,
             'pao_player_id'  => $multiGet($lastRound, 'getPaoPlayerId'),
-            'round_index' => $multiGet($lastRound, 'getRoundIndex'),
+            'round_index' => $lastRound->getRoundIndex(),
             'winner_id'     => $multiGet($lastRound, 'getWinnerId'),
-            'loser_id'     => $multiGet($lastRound, 'getLoserId'),
+            'loser_id'     => $lastRound->getRoundIndex(),
             'open_hand'   => $multiGet($lastRound, 'getOpenHand'),
-            'multi_ron'     => $multiGet($lastRound, 'getMultiRon'),
+            'multi_ron'     => $lastRound->getMultiRon(),
             'riichi_bets'   => $lastRound->getOutcome() === 'multiron' ? implode(',', array_filter(array_map(function (RoundPrimitive $r) {
                 return implode(',', $r->getRiichiIds());
             }, $lastRound->rounds()))) : $lastRound->getRiichiIds(),
@@ -446,6 +448,7 @@ class PlayersController extends Controller
 
             $scoresBefore = $lastState->getScores();
             $scoresAfter = $currentState->getScores();
+            $paymentsInfo = $this->_formatLastRound($session, $round);
 
             $scoresDelta = [];
             foreach ($scoresBefore as $key => $value) {
@@ -472,9 +475,34 @@ class PlayersController extends Controller
                 'kanuradora'    => $multiGet($round, 'getKanuradora'),
                 'openHand'      => $multiGet($round, 'getOpenHand'),
                 // fields differing from RoundState
+                'wins' => $round->getOutcome() === 'multiron' ? array_map(function (RoundPrimitive $inner) {
+                    return [
+                        'winner_id' => $inner->getWinnerId(),
+                        'pao_player_id' => $inner->getPaoPlayerId(),
+                        'han' => $inner->getHan(),
+                        'fu' => $inner->getFu(),
+                        'yaku' => $inner->getYaku(),
+                        'dora' => $inner->getDora(),
+                        'kandora' => $inner->getKandora(),
+                        'uradora' => $inner->getUradora(),
+                        'kanuradora' => $inner->getKanuradora(),
+                        'open_hand' => $inner->getOpenHand()
+                    ];
+                }, $round->rounds()) : [],
+                'open_hand'     => $multiGet($round, 'getOpenHand'),
+                'multi_ron'     => $round->getMultiRon(),
+                'session_hash'  => $session->getRepresentationalHash(),
+                'riichi_bets'   => $round->getRiichiIds(),
+                'round_index'   => $round->getRoundIndex(),
+                'winner_id'     => $multiGet($round, 'getWinnerId'),
+                'pao_player_id' => $multiGet($round, 'getPaoPlayerId'),
                 'scores'        => $scoresAfter,
+                'scores_before' => $scoresBefore,
                 'scoresDelta'   => $scoresDelta,
+                'scores_delta'  => $scoresDelta,
+                'payments'      => $paymentsInfo,
                 'loser'         => $round->getLoserId(),
+                'loser_id'      => $round->getLoserId(),
                 'tempai'        => $multiGet($round, 'getTempaiIds'),
                 'nagashi'        => $multiGet($round, 'getNagashiIds'),
             ];

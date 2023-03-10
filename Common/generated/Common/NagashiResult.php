@@ -18,6 +18,10 @@ class NagashiResult extends \Google\Protobuf\Internal\Message
      */
     protected $roundIndex = 0;
     /**
+     * Generated from protobuf field <code>int32 honba = 2;</code>
+     */
+    protected $honba = 0;
+    /**
      * player ids
      *
      * Generated from protobuf field <code>repeated int32 riichiBets = 3;</code>
@@ -43,6 +47,7 @@ class NagashiResult extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type int $roundIndex
+     *     @type int $honba
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $riichiBets
      *           player ids
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $tempai
@@ -74,6 +79,28 @@ class NagashiResult extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->roundIndex = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 honba = 2;</code>
+     * @return int
+     */
+    public function getHonba()
+    {
+        return $this->honba;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 honba = 2;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setHonba($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->honba = $var;
 
         return $this;
     }

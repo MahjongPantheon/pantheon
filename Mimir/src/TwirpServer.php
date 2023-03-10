@@ -242,12 +242,16 @@ final class TwirpServer implements Mimir
     }
 
     /**
-     * @param string $csepString
+     * @param string|array $csepStringOrArray
      * @return int[]
      */
-    protected static function _toIntArray(string $csepString): array
+    protected static function _toIntArray($csepStringOrArray): array
     {
-        return array_map('intval', explode(',', $csepString));
+        if (is_string($csepStringOrArray)) {
+            return array_map('intval', explode(',', $csepStringOrArray));
+        } else {
+            return array_map('intval', $csepStringOrArray);
+        }
     }
 
     /**
@@ -260,6 +264,7 @@ final class TwirpServer implements Mimir
             return (new SessionHistoryResult())
                 ->setSessionHash($result['session_hash'])
                 ->setEventId($result['event_id'])
+                ->setTitle($result['title'])
                 ->setPlayerId($result['player_id'])
                 ->setScore($result['score'])
                 ->setRatingDelta($result['rating_delta'])
@@ -280,6 +285,7 @@ final class TwirpServer implements Mimir
             'abort' => RoundOutcome::ABORT,
             'chombo' => RoundOutcome::CHOMBO,
             'nagashi' => RoundOutcome::NAGASHI,
+            'multiron' => RoundOutcome::MULTIRON,
             default => throw new InvalidParametersException()
         };
     }
@@ -298,7 +304,7 @@ final class TwirpServer implements Mimir
 
     protected static function _toEventData(array $ret): EventData
     {
-        return (new EventData())
+        $data = (new EventData())
             ->setType($ret['isOnline']
                 ? EventType::ONLINE
                 : ($ret['isTournament']
@@ -306,16 +312,21 @@ final class TwirpServer implements Mimir
                     : EventType::LOCAL))
             ->setTitle($ret['title'])
             ->setDescription($ret['description'])
-            ->setDuration($ret['duration'])
             ->setRuleset($ret['ruleset'])
             ->setTimezone($ret['timezone'])
-            ->setLobbyId($ret['lobbyId'])
             ->setSeriesLength($ret['seriesLength'])
             ->setMinGames($ret['minGames'])
             ->setIsTeam($ret['isTeam'])
             ->setIsPrescripted($ret['isPrescripted'])
             ->setAutostart($ret['autostart'])
             ->setRulesetChanges($ret['rulesetChanges']);
+        if (!empty($ret['duration'])) {
+            $data->setDuration($ret['duration']);
+        }
+        if (!empty($ret['lobbyId'])) {
+            $data->setLobbyId($ret['lobbyId']);
+        }
+        return $data;
     }
 
     protected static function _toRoundState(array $ret): RoundState
@@ -329,9 +340,9 @@ final class TwirpServer implements Mimir
             ->setRiichi($ret['riichi'])
             ->setHonba($ret['honba'])
             ->setPayments(self::_toPaymentsLog($ret['payments']))
-            ->setSessionHash($ret['session_hash']) // TODO
-            ->setScores(self::_makeScores($ret['scores_before'])) // TODO
-            ->setScoresDelta(self::_makeScores($ret['scores_delta'])) // TODO
+            ->setSessionHash($ret['session_hash'])
+            ->setScores(self::_makeScores($ret['scores_before']))
+            ->setScoresDelta(self::_makeScores($ret['scores_delta']))
             ;
     }
 
@@ -514,79 +525,91 @@ final class TwirpServer implements Mimir
 
         switch ($r['outcome']) {
             case 'ron':
-                $round->setRon((new RonResult())
+                $res = (new RonResult())
                     ->setRoundIndex($r['round_index'])
+                    ->setHonba($r['honba'])
                     ->setWinnerId($r['winner_id'])
                     ->setLoserId($r['loser_id'])
-                    ->setPaoPlayerId($r['pao_player_id'])
                     ->setHan($r['han'])
-                    ->setFu($r['fu'])
+                    ->setFu($r['fu'] ?? 0)
                     ->setYaku(self::_toIntArray($r['yaku']))
                     ->setRiichiBets(self::_toIntArray($r['riichi_bets']))
-                    ->setDora($r['dora'])
-                    ->setUradora($r['uradora'])
-                    ->setKandora($r['kandora'])
-                    ->setKanuradora($r['kanuradora'])
-                    ->setOpenHand($r['open_hand']));
+                    ->setDora($r['dora'] ?? 0)
+                    ->setUradora($r['uradora'] ?? 0)
+                    ->setKandora($r['kandora'] ?? 0)
+                    ->setKanuradora($r['kanuradora'] ?? 0)
+                    ->setOpenHand($r['open_hand']);
+                if (!empty($r['pao_player_id'])) {
+                    $res->setPaoPlayerId($r['pao_player_id']);
+                }
+                $round->setRon($res);
                 break;
             case 'multiron':
                 $round->setMultiron((new MultironResult())
                     ->setRoundIndex($r['round_index'])
+                    ->setHonba($r['honba'])
                     ->setLoserId($r['loser_id'])
                     ->setMultiRon($r['multi_ron'])
-                    ->setRiichiBets(self::_toIntArray(implode(',', array_filter(
-                        array_map(function ($win) {
-                            return $win['riichi_bets'];
-                        }, $r['wins'])
-                    ))))
+                    ->setRiichiBets(self::_toIntArray($r['riichi_bets']))
                     ->setWins(array_map(function ($win) {
-                        return (new MultironWin())
+                        $res = (new MultironWin())
                             ->setWinnerId($win['winner_id'])
-                            ->setPaoPlayerId($win['pao_player_id'])
                             ->setHan($win['han'])
-                            ->setFu($win['fu'])
+                            ->setFu($win['fu'] ?? 0)
                             ->setYaku(self::_toIntArray($win['yaku']))
-                            ->setDora($win['dora'])
-                            ->setUradora($win['uradora'])
-                            ->setKandora($win['kandora'])
-                            ->setKanuradora($win['kanuradora'])
+                            ->setDora($win['dora'] ?? 0)
+                            ->setUradora($win['uradora'] ?? 0)
+                            ->setKandora($win['kandora'] ?? 0)
+                            ->setKanuradora($win['kanuradora'] ?? 0)
                             ->setOpenHand($win['open_hand']);
+                        if (!empty($win['pao_player_id'])) {
+                            $res->setPaoPlayerId($win['pao_player_id']);
+                        }
+                        return $res;
                     }, $r['wins'])));
                 break;
             case 'tsumo':
-                $round->setTsumo((new TsumoResult())
+                $res = (new TsumoResult())
                     ->setRoundIndex($r['round_index'])
+                    ->setHonba($r['honba'])
                     ->setWinnerId($r['winner_id'])
-                    ->setPaoPlayerId($r['pao_player_id'])
                     ->setHan($r['han'])
-                    ->setFu($r['fu'])
+                    ->setFu($r['fu'] ?? 0)
                     ->setYaku(self::_toIntArray($r['yaku']))
                     ->setRiichiBets(self::_toIntArray($r['riichi_bets']))
-                    ->setDora($r['dora'])
-                    ->setUradora($r['uradora'])
-                    ->setKandora($r['kandora'])
-                    ->setKanuradora($r['kanuradora'])
-                    ->setOpenHand($r['open_hand']));
+                    ->setDora($r['dora'] ?? 0)
+                    ->setUradora($r['uradora'] ?? 0)
+                    ->setKandora($r['kandora'] ?? 0)
+                    ->setKanuradora($r['kanuradora'] ?? 0)
+                    ->setOpenHand($r['open_hand']);
+                if (!empty($r['pao_player_id'])) {
+                    $res->setPaoPlayerId($r['pao_player_id']);
+                }
+                $round->setTsumo($res);
                 break;
             case 'draw':
                 $round->setDraw((new DrawResult())
                     ->setRoundIndex($r['round_index'])
+                    ->setHonba($r['honba'])
                     ->setRiichiBets(self::_toIntArray($r['riichi_bets']))
                     ->setTempai(self::_toIntArray($r['tempai'])));
                 break;
             case 'abort':
                 $round->setAbort((new AbortResult())
                     ->setRoundIndex($r['round_index'])
+                    ->setHonba($r['honba'])
                     ->setRiichiBets(self::_toIntArray($r['riichi_bets'])));
                 break;
             case 'chombo':
                 $round->setChombo((new ChomboResult())
                     ->setRoundIndex($r['round_index'])
+                    ->setHonba($r['honba'])
                     ->setLoserId($r['loser_id']));
                 break;
             case 'nagashi':
                 $round->setNagashi((new NagashiResult())
                     ->setRoundIndex($r['round_index'])
+                    ->setHonba($r['honba'])
                     ->setRiichiBets(self::_toIntArray($r['riichi_bets']))
                     ->setTempai(self::_toIntArray($r['tempai']))
                     ->setNagashi(self::_toIntArray($r['nagashi'])));
@@ -623,8 +646,10 @@ final class TwirpServer implements Mimir
                 'ron' => [
                     'outcome' => 'ron',
                     'round_index' => $round->getRon()?->getRoundIndex(),
+                    'honba' => $round->getRon()?->getHonba(),
                     'yaku' => implode(',', self::_toArray($round->getRon()?->getYaku())),
                     'riichi_bets' => implode(',', self::_toArray($round->getRon()?->getRiichiBets())),
+                    'riichi' => implode(',', self::_toArray($round->getRon()?->getRiichiBets())),
                     'winner_id' => $round->getRon()?->getWinnerId(),
                     'loser_id' => $round->getRon()?->getLoserId(),
                     'pao_player_id' => $round->getRon()?->getPaoPlayerId(),
@@ -639,13 +664,16 @@ final class TwirpServer implements Mimir
                 'multiron' => [
                     'outcome' => 'multiron',
                     'round_index' => $round->getMultiron()?->getRoundIndex(),
+                    'honba' => $round->getMultiron()?->getHonba(),
                     'loser_id' => $round->getMultiron()?->getLoserId(),
                     'multi_ron' => $round->getMultiron()?->getMultiRon(),
                     'riichi_bets' => implode(',', self::_toArray($round->getMultiron()?->getRiichiBets())),
+                    'riichi' => implode(',', self::_toArray($round->getMultiron()?->getRiichiBets())),
                     'wins' => array_map(function (MultironWin $win) use ($round) {
                         return [
                             'yaku' => implode(',', self::_toArray($win->getYaku())),
                             'riichi_bets' => implode(',', self::_toArray($round->getMultiron()?->getRiichiBets())),
+                            'riichi' => implode(',', self::_toArray($round->getMultiron()?->getRiichiBets())),
                             'winner_id' => $win->getWinnerId(),
                             'pao_player_id' => $win->getPaoPlayerId(),
                             'han' => $win->getHan(),
@@ -661,8 +689,10 @@ final class TwirpServer implements Mimir
                 'tsumo' => [
                     'outcome' => 'tsumo',
                     'round_index' => $round->getTsumo()?->getRoundIndex(),
+                    'honba' => $round->getTsumo()?->getHonba(),
                     'yaku' => implode(',', self::_toArray($round->getTsumo()?->getYaku())),
                     'riichi_bets' => implode(',', self::_toArray($round->getTsumo()?->getRiichiBets())),
+                    'riichi' => implode(',', self::_toArray($round->getTsumo()?->getRiichiBets())),
                     'winner_id' => $round->getTsumo()?->getWinnerId(),
                     'pao_player_id' => $round->getTsumo()?->getPaoPlayerId(),
                     'han' => $round->getTsumo()?->getHan(),
@@ -676,23 +706,30 @@ final class TwirpServer implements Mimir
                 'draw' => [
                     'outcome' => 'draw',
                     'round_index' => $round->getDraw()?->getRoundIndex(),
+                    'honba' => $round->getDraw()?->getHonba(),
                     'riichi_bets' => implode(',', self::_toArray($round->getDraw()?->getRiichiBets())),
+                    'riichi' => implode(',', self::_toArray($round->getDraw()?->getRiichiBets())),
                     'tempai' => implode(',', self::_toArray($round->getDraw()?->getTempai())),
                 ],
                 'abort' => [
                     'outcome' => 'abort',
                     'round_index' => $round->getAbort()?->getRoundIndex(),
+                    'honba' => $round->getAbort()?->getHonba(),
+                    'riichi' => implode(',', self::_toArray($round->getAbort()?->getRiichiBets())),
                     'riichi_bets' => implode(',', self::_toArray($round->getAbort()?->getRiichiBets())),
                 ],
                 'chombo' => [
                     'outcome' => 'chombo',
                     'round_index' => $round->getChombo()?->getRoundIndex(),
+                    'honba' => $round->getChombo()?->getHonba(),
                     'loser_id' => $round->getChombo()?->getLoserId(),
                 ],
                 'nagashi' => [
                     'outcome' => 'nagashi',
                     'round_index' => $round->getNagashi()?->getRoundIndex(),
+                    'honba' => $round->getNagashi()?->getHonba(),
                     'riichi_bets' => implode(',', self::_toArray($round->getNagashi()?->getRiichiBets())),
+                    'riichi' => implode(',', self::_toArray($round->getNagashi()?->getRiichiBets())),
                     'tempai' => implode(',', self::_toArray($round->getNagashi()?->getTempai())),
                     'nagashi' => implode(',', self::_toArray($round->getNagashi()?->getNagashi())),
                 ],
@@ -979,10 +1016,9 @@ final class TwirpServer implements Mimir
     {
         return (new Players_GetCurrentSessions_Response())
             ->setSessions(array_map(function ($session) {
-                return (new CurrentSession())
+                $sess = (new CurrentSession())
                     ->setSessionHash($session['hashcode'])
                     ->setStatus($session['status'])
-                    ->setTableIndex($session['table_index'])
                     ->setPlayers(array_map(function ($player) {
                         $reg = (new PlayerInSession())
                             ->setId($player['id'])
@@ -994,6 +1030,10 @@ final class TwirpServer implements Mimir
                         }
                         return $reg;
                     }, $session['players']));
+                if (!empty($session['table_index'])) {
+                    $sess->setTableIndex($session['table_index']);
+                }
+                return $sess;
             }, $this->_playersController->getCurrentSessions(
                 $req->getPlayerId(),
                 $req->getEventId()
@@ -1017,10 +1057,13 @@ final class TwirpServer implements Mimir
     public function GetTimerState(array $ctx, Generic_Event_Payload $req): Events_GetTimerState_Response
     {
         $ret = $this->_eventsController->getTimerState($req->getEventId());
+        if (empty($ret)) {
+            return new Events_GetTimerState_Response(); // not using timer -> not setting fields
+        }
         return (new Events_GetTimerState_Response())
             ->setStarted($ret['started'])
             ->setFinished($ret['finished'])
-            ->setTimeRemaining($ret['time_remaining'])
+            ->setTimeRemaining($ret['time_remaining'] ?? 0)
             ->setWaitingForTimer($ret['waiting_for_timer'])
             ->setHaveAutostart($ret['have_autostart'])
             ->setAutostartTimer($ret['autostart_time']);
@@ -1033,10 +1076,9 @@ final class TwirpServer implements Mimir
     public function GetSessionOverview(array $ctx, Games_GetSessionOverview_Payload $req): Games_GetSessionOverview_Response
     {
         $ret = $this->_gamesController->getSessionOverview($req->getSessionHash());
-        return (new Games_GetSessionOverview_Response())
+        $overview = (new Games_GetSessionOverview_Response())
             ->setId($ret['id'])
             ->setEventId($ret['event_id'])
-            ->setTableIndex($ret['table_index'])
             ->setPlayers(array_map(function ($player) {
                 $reg = (new PlayerInSession())
                     ->setId($player['id'])
@@ -1057,6 +1099,10 @@ final class TwirpServer implements Mimir
                 ->setFinished($ret['state']['finished'])
                 ->setPenalties(self::_makePenalties($ret['state']['penalties']))
                 ->setYellowZoneAlreadyPlayed($ret['state']['yellowZoneAlreadyPlayed']));
+        if (!empty($ret['table_index'])) {
+            $overview->setTableIndex($ret['table_index']);
+        }
+        return $overview;
     }
 
     /**
@@ -1073,7 +1119,7 @@ final class TwirpServer implements Mimir
             ->setScoreHistory(array_map(function ($table) {
                 return (new SessionHistoryResultTable())
                     ->setTable(self::_toResultsHistory($table));
-                }, array_values($ret['score_history'])))
+            }, array_values($ret['score_history'])))
             ->setPlayersInfo(self::_toPlayers($ret['players_info']))
             ->setPlacesSummary(self::_toPlacesSummary($ret['places_summary']))
             ->setTotalPlayedGames($ret['total_played_games'])
@@ -1114,7 +1160,7 @@ final class TwirpServer implements Mimir
     {
         $ret = $this->_gamesController->addRound(
             $req->getSessionHash(),
-            self::_toPlainRoundData(empty($req->getRoundData()) ? [] : [$req->getRoundData()])
+            empty($req->getRoundData()) ? [] : self::_toPlainRoundData([$req->getRoundData()])[0]
         );
         if (!is_array($ret)) {
             throw new InvalidParametersException();
@@ -1128,7 +1174,7 @@ final class TwirpServer implements Mimir
             ->setPrematurelyFinished($ret['_prematurelyFinished'])
             ->setRoundJustChanged($ret['_roundJustChanged'])
             ->setYellowZoneAlreadyPlayed($ret['_yellowZoneAlreadyPlayed'])
-            ->setLastOutcome(self::_toOutcome($ret['_outcome']))
+            ->setLastOutcome(self::_toOutcome($ret['_lastOutcome']))
             ->setIsFinished($ret['_isFinished']);
     }
 
@@ -1140,7 +1186,7 @@ final class TwirpServer implements Mimir
     {
         $ret = $this->_gamesController->addRound(
             $req->getSessionHash(),
-            self::_toPlainRoundData(empty($req->getRoundData()) ? [] : [$req->getRoundData()]),
+            empty($req->getRoundData()) ? [] : self::_toPlainRoundData([$req->getRoundData()])[0],
             true
         );
         if (!is_array($ret)) {
@@ -1314,12 +1360,14 @@ final class TwirpServer implements Mimir
                     ->setMayDefinalize($table['may_definalize'])
                     ->setSessionHash($table['hash'])
                     ->setPenaltyLog(self::_toPenaltiesLog($table['penalties']))
-                    ->setTableIndex($table['table_index'])
                     ->setCurrentRoundIndex($table['current_round'])
                     ->setScores(self::_makeScores($table['scores']))
                     ->setPlayers(self::_toRegisteredPlayers($table['players']));
                 if (!empty($table['last_round_detailed'])) {
                     $state->setLastRound(self::_formatRound($table['last_round_detailed']));
+                }
+                if (!empty($table['table_index'])) {
+                    $state->setTableIndex($table['table_index']);
                 }
                 return $state;
             }, $ret));

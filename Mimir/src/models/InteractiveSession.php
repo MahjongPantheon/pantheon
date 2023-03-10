@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\MultironResult;
+
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/EventUserManagement.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
@@ -219,6 +221,7 @@ class InteractiveSessionModel extends Model
         $currentDealer = $session->getCurrentState()->getCurrentDealer();
         $currentRiichi = $session->getCurrentState()->getRiichiBets();
         $currentScores = $session->getCurrentState()->getScores();
+
         if ($roundData['round_index'] != $currentRound || $roundData['honba'] != $currentHonba) {
             throw new InvalidParametersException('This round is already recorded (or other round index/honba mismatch)');
         }
@@ -254,15 +257,15 @@ class InteractiveSessionModel extends Model
                 'scores_before'  => $scoresBefore,
                 'scores_delta'   => $scoresDelta,
                 'pao_player_id'  => $multiGet($round, 'getPaoPlayerId'),
-                'round_index' => $multiGet($round, 'getRoundIndex'),
+                'round_index' => $currentRound,
                 'winner_id'     => $multiGet($round, 'getWinnerId'),
-                'loser_id'     => $multiGet($round, 'getLoserId'),
+                'loser_id'     => $round->getLoserId(),
                 'open_hand'   => $multiGet($round, 'getOpenHand'),
                 'tempai'     => ($round->getOutcome() === 'draw' || $round->getOutcome() === 'nagashi')
                     ? $round->getTempaiIds()
                     : null,
                 'nagashi'    => $round->getOutcome() === 'nagashi' ? $round->getNagashiIds() : null,
-                'multi_ron'     => $multiGet($round, 'getMultiRon'),
+                'multi_ron'     => $round->getMultiRon(),
                 'riichi_bets'   => $round instanceof MultiRoundPrimitive
                     ? implode(',', array_filter(array_map(function (RoundPrimitive $r) {
                         return implode(',', $r->getRiichiIds());

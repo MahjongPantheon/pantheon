@@ -502,12 +502,15 @@ class PointsCalc
      */
     public static function assignRiichiBets(array $rounds, int $loserId, int $riichiBets, int $honba, SessionPrimitive $session)
     {
-        $bets = [];
+        // TODO: should take bets from multi-round, not from wins
+        $bets = array_unique(array_reduce($rounds, function ($acc, RoundPrimitive $r) {
+            $acc = array_merge($acc, $r->getRiichiIds());
+            return $acc;
+        }, []));
         $winners = [];
 
         foreach ($rounds as $round) {
             $winners[$round->getWinnerId()] = [];
-            $bets = array_merge($bets, $round->getRiichiIds());
             foreach ($bets as $k => $player) {
                 if (isset($winners[$player])) {
                     $winners[$player] []= $round->getWinnerId(); // winner always gets back his bet
@@ -515,6 +518,8 @@ class PointsCalc
                 }
             }
         }
+
+        // Now we should have only non-winning riichi bets in $bets
 
         // Find player who gets non-winning riichi bets
         // First we double the array to form a ring to simplify traversal

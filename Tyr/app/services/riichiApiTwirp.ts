@@ -40,7 +40,12 @@ import { IRiichiApi } from '#/services/IRiichiApi';
 import { Authorize, GetPersonalInfo, QuickAuthorize } from '#/clients/frey.pb';
 import { formatRoundToTwirp, fromTwirpOutcome } from '#/services/formatters';
 import { ClientConfiguration } from 'twirpscript';
-import { IntermediateResultOfSession, PaymentLog, RoundState } from '#/clients/atoms.pb';
+import {
+  IntermediateResultOfSession,
+  PaymentLog,
+  RoundState,
+  SessionStatus,
+} from '#/clients/atoms.pb';
 import {
   RRoundOverviewAbort,
   RRoundOverviewBase,
@@ -77,7 +82,11 @@ export class RiichiApiTwirpService implements IRiichiApi {
     this._clientConfFrey.baseURL = environment.uaUrl;
     // eslint-disable-next-line no-multi-assign
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
-      return fetch(url, { ...opts, headers });
+      Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
+      return fetch(url + (environment.production ? '' : '?XDEBUG_SESSION=start'), {
+        ...opts,
+        headers,
+      });
     };
   }
 
@@ -396,20 +405,38 @@ export class RiichiApiTwirpService implements IRiichiApi {
     }));
   }
 
+  _fromTableStatus(status: string): string {
+    return (
+      {
+        [SessionStatus.PLANNED]: 'planned',
+        [SessionStatus.INPROGRESS]: 'inprogress',
+        [SessionStatus.PREFINISHED]: 'prefinished',
+        [SessionStatus.FINISHED]: 'finished',
+        [SessionStatus.CANCELLED]: 'cancelled',
+      }[status] ?? ''
+    );
+  }
+
   getTablesState(eventId: number) {
     return GetTablesState({ eventId }, this._clientConfMimir).then((v) =>
-      v.tables.map((table) => ({
-        ...table,
-        hash: table.sessionHash,
-        currentRound: table.currentRoundIndex,
-        players: table.players.map((user) => ({
-          ...user,
-          tenhouId: '', // TODO?
-          displayName: user.title,
-          score: table.scores.find((s) => s.playerId === user.id)?.score ?? 0,
-          penalties: 0, // TODO?
-        })),
-      }))
+      v.tables
+        .filter((t) => t.status === SessionStatus.INPROGRESS)
+        .map((table) => ({
+          ...table,
+          status: this._fromTableStatus(table.status),
+          penalties: table.penaltyLog,
+          // last_round_detailed: table.lastRound ? this._fromRound(table.lastRound) : null,
+          scores: RiichiApiTwirpService.fromScores(table.scores),
+          hash: table.sessionHash,
+          currentRound: table.currentRoundIndex,
+          players: table.players.map((user) => ({
+            ...user,
+            tenhouId: '', // TODO?
+            displayName: user.title,
+            score: table.scores.find((s) => s.playerId === user.id)?.score ?? 0,
+            penalties: 0, // TODO?
+          })),
+        }))
     );
   }
 

@@ -365,6 +365,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
         return {
           multiron: {
             roundIndex: state.currentRound,
+            honba: state.honba,
             loserId: getLosingUsers(state)[0].id,
             multiRon: wins.length,
             wins: wins,
@@ -377,6 +378,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
       return {
         ron: {
           roundIndex: state.currentRound,
+          honba: state.honba,
           riichiBets: getRiichiUsers(state).map((player) => player.id),
           loserId: getLosingUsers(state)[0].id,
           multiRon: null,
@@ -388,6 +390,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
       return {
         tsumo: {
           roundIndex: state.currentRound,
+          honba: state.honba,
           riichiBets: getRiichiUsers(state).map((player) => player.id),
           winnerId: getWinningUsers(state)[0].id,
           paoPlayerId: (getPaoUsers(state)[0] || { id: null }).id,
@@ -405,6 +408,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
       return {
         draw: {
           roundIndex: state.currentRound,
+          honba: state.honba,
           riichiBets: getRiichiUsers(state).map((player) => player.id),
           tempai: getWinningUsers(state).map((player) => player.id),
         } as DrawResult,
@@ -413,6 +417,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
       return {
         nagashi: {
           roundIndex: state.currentRound,
+          honba: state.honba,
           riichiBets: getRiichiUsers(state).map((player) => player.id),
           tempai: getWinningUsers(state).map((player) => player.id),
           nagashi: getNagashiUsers(state).map((player) => player.id),
@@ -422,6 +427,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
       return {
         abort: {
           roundIndex: state.currentRound,
+          honba: state.honba,
           riichiBets: getRiichiUsers(state).map((player) => player.id),
         } as AbortResult,
       };
@@ -429,6 +435,7 @@ export function formatRoundToTwirp(state: IAppState): Round | undefined {
       return {
         chombo: {
           roundIndex: state.currentRound,
+          honba: state.honba,
           loserId: getLosingUsers(state)[0].id,
         } as ChomboResult,
       };

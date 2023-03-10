@@ -44,22 +44,25 @@ class Formatters
                 ];
             }, $sessionResults[$session->getId()]),
             'penalties' => $session->getCurrentState()->getPenaltiesLog(),
-            // @phpstan-ignore-next-line
-            'rounds' => array_map('self::formatRound', $rounds[$session->getId()]),
+            'rounds' => array_map(function ($round) use ($session) {
+                return self::formatRound($round, $session);
+            }, $rounds[$session->getId()]),
         ];
     }
 
     /**
      * @param RoundPrimitive $round
+     * @param SessionPrimitive $session
      * @return array
      * @throws DatabaseException
      */
-    public static function formatRound(RoundPrimitive $round)
+    public static function formatRound(RoundPrimitive $round, SessionPrimitive $session)
     {
         switch ($round->getOutcome()) {
             case 'ron':
                 return [
                     'round_index'   => (int) $round->getRoundIndex(),
+                    'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
                     'winner_id'     => (int) $round->getWinnerId(),
                     'loser_id'      => (int) $round->getLoserId(),
@@ -81,6 +84,7 @@ class Formatters
 
                 return [
                     'round_index'   => (int) $rounds[0]->getRoundIndex(),
+                    'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $mRound->getOutcome(),
                     'loser_id'      => (int) $mRound->getLoserId(),
                     'multi_ron'     => (int) $rounds[0]->getMultiRon(),
@@ -106,6 +110,7 @@ class Formatters
             case 'tsumo':
                 return [
                     'round_index'   => (int) $round->getRoundIndex(),
+                    'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
                     'winner_id'     => (int) $round->getWinnerId(),
                     'pao_player_id' => (int) $round->getPaoPlayerId(),
@@ -122,6 +127,7 @@ class Formatters
             case 'draw':
                 return [
                     'round_index'   => (int) $round->getRoundIndex(),
+                    'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
                     'riichi_bets'   => implode(',', $round->getRiichiIds()),
                     'tempai'        => implode(',', $round->getTempaiIds())
@@ -129,18 +135,21 @@ class Formatters
             case 'abort':
                 return [
                     'round_index'   => $round->getRoundIndex(),
+                    'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
                     'riichi_bets'   => implode(',', $round->getRiichiIds())
                 ];
             case 'chombo':
                 return [
                     'round_index'   => (int) $round->getRoundIndex(),
+                    'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
                     'loser_id'      => (int) $round->getLoserId()
                 ];
             case 'nagashi':
                 return [
                     'round_index'   => (int) $round->getRoundIndex(),
+                    'honba'         => (int) $session->getCurrentState()->getHonba(),
                     'outcome'       => $round->getOutcome(),
                     'riichi_bets'   => implode(',', $round->getRiichiIds()),
                     'tempai'        => implode(',', $round->getTempaiIds()),
