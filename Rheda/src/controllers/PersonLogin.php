@@ -30,6 +30,14 @@ class PersonLogin extends Controller
 
     protected function _beforeRun()
     {
+        if ($this->_path['action'] === 'impersonate') {
+            $this->_storage
+                ->setPersonId($this->_path['id'])
+                ->setAuthToken($this->_path['token']);
+            header('Location: ' . '/profile');
+            return false;
+        }
+
         if (!empty($this->_currentPersonId)) {
             if ($this->_path['action'] === 'logout') {
                 $this->_storage->deleteAuthToken()->deletePersonId();
