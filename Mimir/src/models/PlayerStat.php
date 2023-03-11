@@ -67,8 +67,9 @@ class PlayerStatModel extends Model
         ksort($games);
 
         $rounds = $this->_fetchRounds($games);
+        $playerNames = $this->_fetchPlayerNames($games);
 
-        $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($mainEvent->getRuleset(), $games);
+        $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($mainEvent->getRuleset(), $games, $playerNames);
         return [
             'rating_history'        => $this->_getRatingHistorySequence($mainEvent, $playerId, $games),
             'score_history'         => $scoresAndPlayers['scores'],
@@ -114,22 +115,24 @@ class PlayerStatModel extends Model
      *
      * @param \Common\Ruleset $rules
      * @param array $games
+     * @param array $playerNames
      * @throws \Exception
      * @return array
      */
-    protected function _getScoreHistoryAndPlayers($rules, array $games)
+    protected function _getScoreHistoryAndPlayers($rules, array $games, array $playerNames)
     {
         $withChips = $rules->chipsValue() > 0;
-        $scoreHistory = array_map(function ($game) use ($withChips) {
+        $scoreHistory = array_map(function ($game) use ($withChips, &$playerNames) {
             /** @var SessionResultsPrimitive[] $results */
             $results = $game['results'];
             /** @var SessionPrimitive $session */
             $session = $game['session'];
 
-            return array_map(function ($playerId) use (&$results, &$session, $withChips) {
+            return array_map(function ($playerId) use (&$results, &$session, $withChips, &$playerNames) {
                 $result = [
                     'session_hash'  => (string) $session->getRepresentationalHash(),
                     'event_id'      => (int) $session->getEventId(),
+                    'title'         => $playerNames[$playerId],
                     'player_id'     => (int) $playerId,
                     'score'         => (int) $results[$playerId]->getScore(),
                     'rating_delta'  => (float) $results[$playerId]->getRatingDelta(),
@@ -681,6 +684,25 @@ class PlayerStatModel extends Model
         }, $games);
 
         return RoundPrimitive::findBySessionIds($this->_ds, $sessionIds);
+    }
+
+    /**
+     * @param array $games
+     * @throws \Exception
+     * @return array
+     */
+    protected function _fetchPlayerNames(array $games)
+    {
+        $playerIds = array_reduce($games, function ($acc, $item) {
+            /** @var SessionPrimitive $session */
+            $session = $item['session'];
+            return array_merge($acc, $session->getPlayersIds());
+        }, []);
+
+        return array_reduce(PlayerPrimitive::findById($this->_ds, $playerIds), function ($acc, PlayerPrimitive $p) {
+            $acc[$p->getId()] = $p->getDisplayName();
+            return $acc;
+        }, []);
     }
 
     /**

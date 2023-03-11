@@ -1592,9 +1592,12 @@ class MimirClientTwirp implements IMimirClient
             (new Events_UpdatePlayersLocalIds_Payload())
                 ->setEventId($eventId)
                 ->setIdMap(array_map(function ($key, $val) {
-                    return (new LocalIdMapping())
-                        ->setPlayerId($key)
-                        ->setLocalId($val);
+                    $map = (new LocalIdMapping())
+                        ->setPlayerId($key);
+                    if (!empty($val)) {
+                        $map->setLocalId($val);
+                    }
+                    return $map;
                 }, array_keys($idMap), array_values($idMap)))
         )->getSuccess();
     }

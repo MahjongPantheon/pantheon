@@ -90,15 +90,23 @@ class EventModel extends Model
      */
     public function getTablesState($eventId)
     {
-        $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);
-        $reggedPlayers = array_values(array_filter($reggedPlayers, function ($el) {
-            return !$el['ignore_seating'];
-        }));
-
         $event = EventPrimitive::findById($this->_ds, [$eventId])[0];
         if ($event->getIsFinished()) {
             throw new \Exception('Event is already finished');
         }
+
+        $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);
+        $reggedPlayers = array_values(array_filter($reggedPlayers, function ($player) use ($event) {
+            $includePlayer = true;
+            if ($player['ignore_seating']) {
+                $includePlayer = false;
+            }
+            if ($event->getIsPrescripted() && empty($player['local_id'])) {
+                $includePlayer = false;
+            }
+            return $includePlayer;
+        }));
+
         if ($event->getAllowPlayerAppend()) { // club game mode
             $tablesCount = 10;
         } else {
