@@ -157,7 +157,10 @@ export class RiichiApiTwirpService implements IRiichiApi {
           ...user,
           tenhouId: '', // TODO?
           displayName: user.title,
-          penalties: 0, // TODO?
+          penalties: val.state.penalties.reduce(
+            (acc, v) => (v.who === user.id ? acc + v.amount : acc),
+            0
+          ),
         })),
       })
     );
@@ -260,7 +263,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
         // TODO remove all of these when reworking api client layer, along with R/L types
         winner: (state.round[outcome] as any)?.winnerId,
         paoPlayer: (state.round[outcome] as any)?.paoPlayerId,
-        yaku: (state.round[outcome] as any)?.yaku.join(','),
+        yaku: (state.round[outcome] as any)?.yaku?.join(','),
         han: (state.round[outcome] as any)?.han,
         fu: (state.round[outcome] as any)?.fu,
         dora: (state.round[outcome] as any)?.dora,
@@ -434,7 +437,10 @@ export class RiichiApiTwirpService implements IRiichiApi {
             tenhouId: '', // TODO?
             displayName: user.title,
             score: table.scores.find((s) => s.playerId === user.id)?.score ?? 0,
-            penalties: 0, // TODO?
+            penalties: table.penaltyLog.reduce(
+              (acc, pen) => (pen.who === user.id ? acc + pen.amount : acc),
+              0
+            ),
           })),
         }))
     );

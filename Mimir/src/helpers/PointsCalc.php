@@ -341,7 +341,7 @@ class PointsCalc
         int $loserId,
         array $currentScores
     ) {
-        self::$_lastPaymentsInfo = [];
+        self::resetPaymentsInfo();
         if (empty($loserId)) {
             throw new InvalidParametersException('Chombo must have loser');
         }

@@ -88,6 +88,7 @@ use Common\Events_GetEvents_Payload;
 use Common\Events_GetRulesets_Payload;
 use Common\Events_GetTimezones_Payload;
 use Common\RulesetGenerated;
+use Common\TournamentGamesStatus;
 use Common\TsumoResult;
 use Common\TwirpError;
 use Common\YakuStat;
@@ -791,6 +792,15 @@ class MimirClientTwirp implements IMimirClient
         )->getEvents()));
     }
 
+    protected static function _fromGamesStatus(int $status): string
+    {
+        return match ($status) {
+            TournamentGamesStatus::SEATING_READY => 'seating_ready',
+            TournamentGamesStatus::STARTED => 'started',
+            default => ''
+        };
+    }
+
     /**
      *  Get event rules configuration
      *
@@ -851,7 +861,7 @@ class MimirClientTwirp implements IMimirClient
             'subtractStartPoints' => $ret->getSubtractStartPoints(),
             'seriesLength' => $ret->getSeriesLength(),
             'minGamesCount' => $ret->getMinGamesCount(),
-            'gamesStatus' => $ret->getGamesStatus(),
+            'gamesStatus' => self::_fromGamesStatus($ret->getGamesStatus()),
             'hideResults' => $ret->getHideResults(),
             'hideAddReplayButton' => $ret->getHideAddReplayButton(),
             'isPrescripted' => $ret->getIsPrescripted(),
@@ -1444,7 +1454,7 @@ class MimirClientTwirp implements IMimirClient
                     ? null
                     : self::_fromRounds([$table->getLastRound()])[0],
                 'scores' => self::_makeScores(iterator_to_array($table->getScores())),
-                'players' => self::_fromPlayers(iterator_to_array($table->getPlayers()))
+                'players' => self::_fromRegisteredPlayers($table->getPlayers())
             ];
         }, iterator_to_array($this->_client->GetTablesState(
             $this->_ctx,

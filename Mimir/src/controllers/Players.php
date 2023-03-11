@@ -151,10 +151,14 @@ class PlayersController extends Controller
             $sessionResults[$sr->getPlayerId()] = $sr;
         }
 
-        $result = array_map(function (PlayerPrimitive $p) use (&$sessionResults) {
+        $result = array_map(function (PlayerPrimitive $p) use (&$sessionResults, &$session) {
             return [
                 'id'            => $p->getId(),
-                'title'  => $p->getDisplayName(),
+                'event_id'      => $session->getEventId(),
+                'player_id'     => $p->getId(),
+                'session_hash'  => $session->getRepresentationalHash(),
+                'title'         => $p->getDisplayName(),
+                'place'         => $sessionResults[$p->getId()]->getPlace(),
                 'score'         => $sessionResults[$p->getId()]->getScore(),
                 'rating_delta'  => $sessionResults[$p->getId()]->getRatingDelta(),
             ];

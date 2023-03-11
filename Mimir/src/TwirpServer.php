@@ -144,6 +144,7 @@ use Common\SeriesResult;
 use Common\SessionHistoryResult;
 use Common\SessionStatus;
 use Common\TableState;
+use Common\TournamentGamesStatus;
 use Common\TsumoResult;
 use Common\TwirpError;
 use Common\YakuStat;
@@ -359,6 +360,15 @@ final class TwirpServer implements Mimir
                 ->setCount($count);
         }
         return $ret;
+    }
+
+    protected static function _toGamesStatus(string $status): int
+    {
+        return match ($status) {
+            'seating_ready' => TournamentGamesStatus::SEATING_READY,
+            'started' => TournamentGamesStatus::STARTED,
+            default => TournamentGamesStatus::NONE
+        };
     }
 
     /**
@@ -920,7 +930,7 @@ final class TwirpServer implements Mimir
             $gc->setGameDuration($ret['gameDuration']);
         }
         if (!empty($ret['gamesStatus'])) {
-            $gc->setGamesStatus($ret['gamesStatus']);
+            $gc->setGamesStatus(self::_toGamesStatus($ret['gamesStatus']));
         }
         return $gc;
     }
@@ -1066,7 +1076,7 @@ final class TwirpServer implements Mimir
             ->setTimeRemaining($ret['time_remaining'] ?? 0)
             ->setWaitingForTimer($ret['waiting_for_timer'])
             ->setHaveAutostart($ret['have_autostart'])
-            ->setAutostartTimer($ret['autostart_time']);
+            ->setAutostartTimer($ret['autostart_timer']);
     }
 
     /**
