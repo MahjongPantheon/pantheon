@@ -17,8 +17,6 @@
  */
 namespace Frey;
 
-use Twirp\Context;
-
 require_once __DIR__ . '/../src/helpers/Db.php';
 
 /**

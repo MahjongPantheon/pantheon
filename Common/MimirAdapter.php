@@ -7,7 +7,7 @@ use Google\Protobuf\Internal\Message;
 use Twirp\Context;
 
 // Specific adapter for testing purposes only
-final class FreyAdapter extends FreyAbstractClient implements Frey
+final class MimirAdapter extends MimirAbstractClient implements Mimir
 {
     /**
      * @var array
@@ -24,7 +24,7 @@ final class FreyAdapter extends FreyAbstractClient implements Frey
     }
 
     /**
-     * Method taken from generated FreyClient
+     * Method taken from generated MimirClient
      * @inheritDoc
      */
     protected function doRequest(array $ctx, string $url, Message $in, Message $out): void

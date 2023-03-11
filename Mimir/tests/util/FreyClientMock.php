@@ -10,6 +10,15 @@ class FreyClientMock implements IFreyClient
     {
     }
 
+    /**
+     * @param mixed $h
+     * @return bool
+     */
+    public function withHeaders($h)
+    {
+        return true;
+    }
+
     public function getClient()
     {
         /* @phpstan-ignore-next-line */

@@ -22,6 +22,8 @@
   "require": {
     "fguillot/json-rpc": "@stable",
     "ctizen/idiorm": "@stable",
+    "google/protobuf": "3.21.9",
+    "guzzlehttp/psr7": "2.4.3",
     "monolog/monolog": "^3.1",
     "justinrainbow/json-schema": "^5.2",
     "ctizen/phinx": "@stable",
