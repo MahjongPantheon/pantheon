@@ -106,11 +106,16 @@ export function losePressed(state: IAppState, userData: Player) {
 }
 
 export function paoPressed(state: IAppState, userData: Player) {
-  const currentWinnerId = state.multironCurrentWinner;
-  if (currentWinnerId && state.currentOutcome?.selectedOutcome === 'ron') {
-    return state.currentOutcome.wins[currentWinnerId].paoPlayerId === userData.id;
+  switch (state.currentOutcome?.selectedOutcome) {
+    case 'ron':
+      if (state.multironCurrentWinner) {
+        return state.currentOutcome.wins[state.multironCurrentWinner].paoPlayerId === userData.id;
+      }
+      break;
+    case 'tsumo':
+      return state.currentOutcome.paoPlayerId === userData.id;
+    default:
   }
-
   return false;
 }
 
