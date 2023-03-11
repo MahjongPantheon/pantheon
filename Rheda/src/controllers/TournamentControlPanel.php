@@ -177,7 +177,7 @@ class TournamentControlPanel extends Controller
                 return [
                     'error' => null,
                     // TODO: better error handlers for twirp interface: code is not passed through exceptions.
-                    'prescriptedEventErrorDescription' => ($e->getCode() == 1404 || strpos($e->getMessage(), 'Event prescript for') !== -1)
+                    'prescriptedEventErrorDescription' => ($e->getCode() == 1404 || str_contains($e->getMessage(), 'Event prescript for'))
                         ? _t('No seating defined. Check "Admin actions / Predefined seating" page to define seating for tournament')
                         : $e->getMessage()
                 ];

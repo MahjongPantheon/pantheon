@@ -622,6 +622,10 @@ DATA;
         ];
     }
 
+    /**
+     * @param \Throwable $e
+     * @return void
+     */
     protected function _handleTwirpEx(\Throwable $e)
     {
         if ($e instanceof \Common\TwirpError) {

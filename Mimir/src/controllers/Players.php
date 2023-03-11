@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use function GuzzleHttp\Promise\inspect;
+
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
 require_once __DIR__ . '/../primitives/Player.php';
@@ -362,7 +364,7 @@ class PlayersController extends Controller
             'pao_player_id'  => $multiGet($lastRound, 'getPaoPlayerId'),
             'round_index' => $lastRound->getRoundIndex(),
             'winner_id'     => $multiGet($lastRound, 'getWinnerId'),
-            'loser_id'     => $lastRound->getRoundIndex(),
+            'loser_id'     => $lastRound->getLoserId(),
             'open_hand'   => $multiGet($lastRound, 'getOpenHand'),
             'multi_ron'     => $lastRound->getMultiRon(),
             'riichi_bets'   => $lastRound->getOutcome() === 'multiron' ? implode(',', array_filter(array_map(function (RoundPrimitive $r) {
@@ -431,6 +433,7 @@ class PlayersController extends Controller
         if (empty($id)) {
             return [];
         }
+
         $rounds = RoundPrimitive::findBySessionIds($this->_ds, [$id]);
 
         $multiGet = function (RoundPrimitive $p, $method) {
@@ -447,6 +450,7 @@ class PlayersController extends Controller
         $currentState = $session->getCurrentState();
         $index = count($rounds) - 1;
         while ($index > -1) {
+            /** @var RoundPrimitive|MultiRoundPrimitive $round */
             $round = $rounds[$index];
             $lastState = $round->getLastSessionState();
 
@@ -479,7 +483,7 @@ class PlayersController extends Controller
                 'kanuradora'    => $multiGet($round, 'getKanuradora'),
                 'openHand'      => $multiGet($round, 'getOpenHand'),
                 // fields differing from RoundState
-                'wins' => $round->getOutcome() === 'multiron' ? array_map(function (RoundPrimitive $inner) {
+                'wins' => $round instanceof MultiRoundPrimitive ? array_map(function (RoundPrimitive $inner) {
                     return [
                         'winner_id' => $inner->getWinnerId(),
                         'pao_player_id' => $inner->getPaoPlayerId(),

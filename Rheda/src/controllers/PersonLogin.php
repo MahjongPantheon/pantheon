@@ -32,7 +32,7 @@ class PersonLogin extends Controller
     {
         if ($this->_path['action'] === 'impersonate') {
             $this->_storage
-                ->setPersonId($this->_path['id'])
+                ->setPersonId((int)$this->_path['id'])
                 ->setAuthToken($this->_path['token']);
             header('Location: ' . '/profile');
             return false;

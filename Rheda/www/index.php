@@ -28,9 +28,7 @@ if ($_SERVER['REQUEST_URI'] == '/favicon.ico') {
 
 try {
     $controller = \Rheda\Controller::makeInstance($_SERVER['REQUEST_URI']);
-    if (!empty($controller)) {
-        $controller->run();
-    }
+    $controller->run();
 } catch (\Exception $ex) {
     if ($ex instanceof \Common\TwirpError) {
         trigger_error('Exception for path: ' . $_SERVER['REQUEST_URI'] . PHP_EOL
