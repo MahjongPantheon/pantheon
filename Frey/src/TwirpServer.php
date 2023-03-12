@@ -278,10 +278,10 @@ final class TwirpServer implements Frey
     /**
      * @throws InvalidParametersException
      */
-    public function UpdatePersonalInfo(array $ctx, \Common\Persons_UpdatePersonalInfo_Payload $req): \Common\Persons_UpdatePersonalInfo_Response
+    public function UpdatePersonalInfo(array $ctx, \Common\Persons_UpdatePersonalInfo_Payload $req): \Common\Generic_Success_Response
     {
         try {
-            return (new \Common\Persons_UpdatePersonalInfo_Response())->setSuccess(
+            return (new \Common\Generic_Success_Response())->setSuccess(
                 $this->_personsController->updatePersonalInfo(
                     $req->getId(),
                     $req->getTitle(),
@@ -606,10 +606,10 @@ final class TwirpServer implements Frey
     /**
      * @throws EntityNotFoundException
      */
-    public function UpdateRuleForPerson(array $ctx, \Common\Access_UpdateRuleForPerson_Payload $req): \Common\Access_UpdateRuleForPerson_Response
+    public function UpdateRuleForPerson(array $ctx, \Common\Access_UpdateRuleForPerson_Payload $req): \Common\Generic_Success_Response
     {
         try {
-            return (new \Common\Access_UpdateRuleForPerson_Response())
+            return (new \Common\Generic_Success_Response())
                 ->setSuccess($this->_accessController->updateRuleForPerson(
                     $req->getRuleId(),
                     self::_fromRuleValue($req->getRuleValue()),
@@ -624,10 +624,10 @@ final class TwirpServer implements Frey
     /**
      * @throws EntityNotFoundException
      */
-    public function UpdateRuleForGroup(array $ctx, \Common\Access_UpdateRuleForGroup_Payload $req): \Common\Access_UpdateRuleForGroup_Response
+    public function UpdateRuleForGroup(array $ctx, \Common\Access_UpdateRuleForGroup_Payload $req): \Common\Generic_Success_Response
     {
         try {
-            return (new \Common\Access_UpdateRuleForGroup_Response())
+            return (new \Common\Generic_Success_Response())
                 ->setSuccess($this->_accessController->updateRuleForGroup(
                     $req->getRuleId(),
                     self::_fromRuleValue($req->getRuleValue()),
@@ -642,10 +642,10 @@ final class TwirpServer implements Frey
     /**
      * @throws EntityNotFoundException
      */
-    public function DeleteRuleForPerson(array $ctx, \Common\Access_DeleteRuleForPerson_Payload $req): \Common\Access_DeleteRuleForPerson_Response
+    public function DeleteRuleForPerson(array $ctx, \Common\Access_DeleteRuleForPerson_Payload $req): \Common\Generic_Success_Response
     {
         try {
-            return (new \Common\Access_DeleteRuleForPerson_Response())
+            return (new \Common\Generic_Success_Response())
                 ->setSuccess($this->_accessController->deleteRuleForPerson($req->getRuleId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -656,10 +656,10 @@ final class TwirpServer implements Frey
     /**
      * @throws EntityNotFoundException
      */
-    public function DeleteRuleForGroup(array $ctx, \Common\Access_DeleteRuleForGroup_Payload $req): \Common\Access_DeleteRuleForGroup_Response
+    public function DeleteRuleForGroup(array $ctx, \Common\Access_DeleteRuleForGroup_Payload $req): \Common\Generic_Success_Response
     {
         try {
-            return (new \Common\Access_DeleteRuleForGroup_Response())
+            return (new \Common\Generic_Success_Response())
                 ->setSuccess($this->_accessController->deleteRuleForGroup($req->getRuleId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -670,10 +670,10 @@ final class TwirpServer implements Frey
     /**
      * @throws Exception
      */
-    public function ClearAccessCache(array $ctx, \Common\Access_ClearAccessCache_Payload $req): \Common\Access_ClearAccessCache_Response
+    public function ClearAccessCache(array $ctx, \Common\Access_ClearAccessCache_Payload $req): \Common\Generic_Success_Response
     {
         try {
-            return (new \Common\Access_ClearAccessCache_Response())
+            return (new \Common\Generic_Success_Response())
                 ->setSuccess($this->_accessController->clearAccessCache(
                     $req->getPersonId(),
                     $req->getEventId()
@@ -726,10 +726,10 @@ final class TwirpServer implements Frey
     /**
      * @throws InvalidParametersException
      */
-    public function UpdateGroup(array $ctx, \Common\Persons_UpdateGroup_Payload $req): \Common\Persons_UpdateGroup_Response
+    public function UpdateGroup(array $ctx, \Common\Persons_UpdateGroup_Payload $req): \Common\Generic_Success_Response
     {
         try {
-            return (new \Common\Persons_UpdateGroup_Response())
+            return (new \Common\Generic_Success_Response())
                 ->setSuccess($this->_personsController->updateGroup(
                     $req->getGroupId(),
                     $req->getTitle(),
@@ -745,10 +745,10 @@ final class TwirpServer implements Frey
     /**
      * @throws InvalidParametersException
      */
-    public function DeleteGroup(array $ctx, \Common\Persons_DeleteGroup_Payload $req): \Common\Persons_DeleteGroup_Response
+    public function DeleteGroup(array $ctx, \Common\Persons_DeleteGroup_Payload $req): \Common\Generic_Success_Response
     {
         try {
-            return (new \Common\Persons_DeleteGroup_Response())
+            return (new \Common\Generic_Success_Response())
                 ->setSuccess($this->_personsController->deleteGroup($req->getGroupId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -760,10 +760,10 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      */
-    public function AddPersonToGroup(array $ctx, \Common\Persons_AddPersonToGroup_Payload $req): \Common\Persons_AddPersonToGroup_Response
+    public function AddPersonToGroup(array $ctx, \Common\Persons_AddPersonToGroup_Payload $req): \Common\Generic_Success_Response
     {
         try {
-            return (new \Common\Persons_AddPersonToGroup_Response())
+            return (new \Common\Generic_Success_Response())
                 ->setSuccess($this->_personsController->addPersonToGroup($req->getPersonId(), $req->getGroupId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -775,10 +775,10 @@ final class TwirpServer implements Frey
      * @throws EntityNotFoundException
      * @throws InvalidParametersException
      */
-    public function RemovePersonFromGroup(array $ctx, \Common\Persons_RemovePersonFromGroup_Payload $req): \Common\Persons_RemovePersonFromGroup_Response
+    public function RemovePersonFromGroup(array $ctx, \Common\Persons_RemovePersonFromGroup_Payload $req): \Common\Generic_Success_Response
     {
         try {
-            return (new \Common\Persons_RemovePersonFromGroup_Response())
+            return (new \Common\Generic_Success_Response())
                 ->setSuccess($this->_personsController->removePersonFromGroup($req->getPersonId(), $req->getGroupId()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);

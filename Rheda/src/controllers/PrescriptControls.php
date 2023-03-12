@@ -60,6 +60,7 @@ class PrescriptControls extends Controller
             try {
                 $eventConfig = $this->_mimir->getPrescriptedEventConfig($this->_mainEventId);
             } catch (\Exception $e) {
+                $this->_handleTwirpEx($e);
                 $eventConfig['check_errors'] = [$e->getMessage()];
                 $eventConfig['has_errors'] = true;
             }
@@ -122,6 +123,7 @@ class PrescriptControls extends Controller
                 $errorMsg = _t('Failed to update predefined seating. Check your network connection.');
             }
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $errorMsg = $e->getMessage();
         };
 

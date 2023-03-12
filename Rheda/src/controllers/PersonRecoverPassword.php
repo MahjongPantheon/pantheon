@@ -90,6 +90,7 @@ class PersonRecoverPassword extends Controller
                 'success' => true
             ];
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $captcha = new Captcha();
             $captcha->code();
             $captcha->image();
@@ -124,6 +125,7 @@ class PersonRecoverPassword extends Controller
                     'error' => false
                 ];
             } catch (\Exception $e) {
+                $this->_handleTwirpEx($e);
                 return [
                     'recoverRequest' => false,
                     'error' => $e->getMessage()
@@ -145,6 +147,7 @@ class PersonRecoverPassword extends Controller
                     'success' => true,
                 ];
             } catch (\Exception $e) {
+                $this->_handleTwirpEx($e);
                 return [
                     'recoverRequest' => false,
                     'newTmpPassword' => $_POST['old_password'],

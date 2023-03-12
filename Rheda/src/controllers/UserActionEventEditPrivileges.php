@@ -69,7 +69,7 @@ class UserActionEventEditPrivileges extends Controller
             return $this->_error;
         }
 
-        $event = $this->_mimir->getEventsById([$this->_path['id']]);
+        $event = $this->_mimir->getEventsById([(int)$this->_path['id']]);
         if (empty($event)) {
             return [
                 'critical' => true,

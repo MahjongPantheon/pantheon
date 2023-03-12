@@ -26,10 +26,10 @@ environments:
     testing:
         adapter: pgsql
         host: localhost
-        name: %%PHINX_DB_FREY_NAME_UNIT%%
-        user: %%PHINX_DB_FREY_USER%%
-        pass: %%PHINX_DB_FREY_PASS%%
-        port: %%PHINX_DB_FREY_PORT%%
+        name: frey_unit
+        user: frey
+        pass: pgpass
+        port: 5532
         charset: utf8
 
     docker:

@@ -55,6 +55,7 @@ class Penalties extends Controller
             try {
                 $this->_mimir->addPenalty($this->_mainEventId, $userId, $amount, $reason);
             } catch (\Exception $e) {
+                $this->_handleTwirpEx($e);
                 $this->_errors []= $e->getMessage();
                 return true;
             }
@@ -98,6 +99,7 @@ class Penalties extends Controller
                 $amounts []= ['view' => $i, 'value' => $i];
             }
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             $players = [];
             $this->_errors []= $e->getMessage();
         }

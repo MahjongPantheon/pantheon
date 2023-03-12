@@ -201,10 +201,11 @@ class GamesController extends Controller
             'id'    => $session[0]->getId(),
             'event_id' => $session[0]->getEventId(),
             'table_index' => $session[0]->getTableIndex(),
-            'players' => array_map(function (PlayerPrimitive $player) use (&$playersReg) {
+            'players' => array_map(function (PlayerPrimitive $player) use (&$playersReg, &$session) {
                 return [
                     'id' => $player->getId(),
                     'title' => $player->getDisplayName(),
+                    'score' => $session[0]->getCurrentState()->getScores()[$player->getId()],
                     'replaced_by' => empty($playersReg['replacements'][$player->getId()])
                         ? null
                         : [

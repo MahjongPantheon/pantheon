@@ -267,7 +267,7 @@ class MultiRoundPrimitive extends RoundPrimitive
 
     public function getMultiRon()
     {
-        throw new InvalidParametersException('MultiRound should not be treated as round');
+        return $this->_rounds[0]->getMultiRon();
     }
 
     public function setOutcome($outcome)

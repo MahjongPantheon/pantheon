@@ -300,7 +300,7 @@ class EventsController extends Controller
     /**
      * List available events by id list
      *
-     * @param array $ids
+     * @param int[] $ids
      * @throws \Exception
      * @return array
      */
@@ -456,14 +456,15 @@ class EventsController extends Controller
      * @param int $playerId
      * @param int $eventId
      * @throws \Exception
-     * @return void
+     * @return bool
      */
     public function unregisterPlayerAdmin($playerId, $eventId)
     {
         $this->_log->info('Unregistering player id# ' . $playerId . ' for event id# ' . $eventId);
-        (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))
+        $success = (new EventUserManagementModel($this->_ds, $this->_config, $this->_meta))
             ->unregisterPlayer($playerId, $eventId);
         $this->_log->info('Successfully unregistered player id# ' . $playerId . ' for event id# ' . $eventId);
+        return $success;
     }
 
     /**

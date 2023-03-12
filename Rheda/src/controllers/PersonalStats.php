@@ -245,6 +245,7 @@ class PersonalStats extends Controller
                 'error' => null
             ];
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             return [
                 'data' => null,
                 'error' => $e->getMessage()

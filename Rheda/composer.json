@@ -14,6 +14,7 @@
   "require": {
     "fguillot/json-rpc": "@stable",
     "justinrainbow/json-schema": "^5.2",
+    "monolog/monolog": "^3.1",
     "xamin/handlebars.php": "dev-master",
     "chillerlan/php-qrcode": "^4.3",
     "giggsey/libphonenumber-for-php": "^8.13",

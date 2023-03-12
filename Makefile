@@ -345,6 +345,11 @@ autofix: get_docker_id
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make autofix';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make autofix';
 
+.PHONY: proto_gen
+proto_gen: get_docker_id
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Common && HOME=/home/user su-exec user make proto_gen';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make proto_gen';
+
 # Prod related tasks & shortcuts
 
 .PHONY: prod_deps

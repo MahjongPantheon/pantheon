@@ -20,6 +20,7 @@ namespace Mimir;
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/Event.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
+require_once __DIR__ . '/../helpers/Formatters.php';
 require_once __DIR__ . '/../primitives/Event.php';
 require_once __DIR__ . '/../primitives/Session.php';
 require_once __DIR__ . '/../primitives/SessionResults.php';
@@ -78,7 +79,7 @@ class EventFinishedGamesModel extends Model
         ];
 
         foreach ($games as $session) {
-            $result['games'][] = $this->_formatGameResults($session, $sessionResults, $rounds);
+            $result['games'][] = Formatters::formatGameResults($session, $sessionResults, $rounds);
         }
 
         return $result;
@@ -100,36 +101,8 @@ class EventFinishedGamesModel extends Model
         $rounds = $this->_getRounds([$sId]);
 
         return [
-            'games' => [$this->_formatGameResults($session, $sessionResults, $rounds)],
+            'games' => [Formatters::formatGameResults($session, $sessionResults, $rounds)],
             'players' => EventModel::getPlayersOfGames($this->_ds, [$session])
-        ];
-    }
-
-    /**
-     * @param SessionPrimitive $session
-     * @param SessionResultsPrimitive[][] $sessionResults
-     * @param RoundPrimitive[][] $rounds
-     *
-     * @return array
-     * @throws \Exception
-     *
-     */
-    protected function _formatGameResults(SessionPrimitive $session, array $sessionResults, array $rounds)
-    {
-        return [
-            'hash' => $session->getRepresentationalHash(),
-            'date' => $session->getEndDate(),
-            'replay_link' => $session->getReplayLink(),
-            'players' => array_map('intval', $session->getPlayersIds()),
-            'final_results' => $this->_arrayMapPreserveKeys(function (SessionResultsPrimitive $el) {
-                return [
-                    'score'         => (int) $el->getScore(),
-                    'rating_delta'  => (float) $el->getRatingDelta(),
-                    'place'         => (int) $el->getPlace()
-                ];
-            }, $sessionResults[$session->getId()]),
-            'penalties' => $session->getCurrentState()->getPenaltiesLog(),
-            'rounds' => array_map([$this, '_formatRound'], $rounds[$session->getId()]),
         ];
     }
 
@@ -174,114 +147,5 @@ class EventFinishedGamesModel extends Model
         }
 
         return $result;
-    }
-
-    /**
-     * @param RoundPrimitive $round
-     * @return array
-     * @throws DatabaseException
-     */
-    protected function _formatRound(RoundPrimitive $round)
-    {
-        switch ($round->getOutcome()) {
-            case 'ron':
-                return [
-                    'round_index'   => (int) $round->getRoundIndex(),
-                    'outcome'       => $round->getOutcome(),
-                    'winner_id'     => (int) $round->getWinnerId(),
-                    'loser_id'      => (int) $round->getLoserId(),
-                    'pao_player_id' => (int) $round->getPaoPlayerId(),
-                    'han'           => (int) $round->getHan(),
-                    'fu'            => (int) $round->getFu(),
-                    'yaku'          => $round->getYaku(),
-                    'riichi_bets'   => implode(',', $round->getRiichiIds()),
-                    'dora'          => (int) $round->getDora(),
-                    'uradora'       => (int) $round->getUradora(), // TODO: not sure if we really need these guys
-                    'kandora'       => (int) $round->getKandora(),
-                    'kanuradora'    => (int) $round->getKanuradora(),
-                    'open_hand'     => $round->getOpenHand()
-                ];
-            case 'multiron':
-                /** @var MultiRoundPrimitive $mRound */
-                $mRound = $round;
-                $rounds = $mRound->rounds();
-
-                return [
-                    'round_index'   => (int) $rounds[0]->getRoundIndex(),
-                    'outcome'       => $mRound->getOutcome(),
-                    'loser_id'      => (int) $mRound->getLoserId(),
-                    'multi_ron'     => (int) $rounds[0]->getMultiRon(),
-                    'wins'          => array_map(function (RoundPrimitive $round) {
-                        return [
-                            'winner_id'     => (int) $round->getWinnerId(),
-                            'pao_player_id' => (int) $round->getPaoPlayerId(),
-                            'han'           => (int) $round->getHan(),
-                            'fu'            => (int) $round->getFu(),
-                            'yaku'          => $round->getYaku(),
-                            'riichi_bets'   => implode(',', $round->getRiichiIds()),
-                            'dora'          => (int) $round->getDora(),
-                            'uradora'       => (int) $round->getUradora(), // TODO: not sure if we really need these guys
-                            'kandora'       => (int) $round->getKandora(),
-                            'kanuradora'    => (int) $round->getKanuradora(),
-                            'open_hand'     => $round->getOpenHand()
-                        ];
-                    }, $rounds)
-                ];
-            case 'tsumo':
-                return [
-                    'round_index'   => (int) $round->getRoundIndex(),
-                    'outcome'       => $round->getOutcome(),
-                    'winner_id'     => (int) $round->getWinnerId(),
-                    'pao_player_id' => (int) $round->getPaoPlayerId(),
-                    'han'           => (int) $round->getHan(),
-                    'fu'            => (int) $round->getFu(),
-                    'yaku'          => $round->getYaku(),
-                    'riichi_bets'   => implode(',', $round->getRiichiIds()),
-                    'dora'          => (int) $round->getDora(),
-                    'uradora'       => (int) $round->getUradora(), // TODO: not sure if we really need these guys
-                    'kandora'       => (int) $round->getKandora(),
-                    'kanuradora'    => (int) $round->getKanuradora(),
-                    'open_hand'     => $round->getOpenHand()
-                ];
-            case 'draw':
-                return [
-                    'round_index'   => (int) $round->getRoundIndex(),
-                    'outcome'       => $round->getOutcome(),
-                    'riichi_bets'   => implode(',', $round->getRiichiIds()),
-                    'tempai'        => implode(',', $round->getTempaiIds())
-                ];
-            case 'abort':
-                return [
-                    'round_index'   => $round->getRoundIndex(),
-                    'outcome'       => $round->getOutcome(),
-                    'riichi_bets'   => implode(',', $round->getRiichiIds())
-                ];
-            case 'chombo':
-                return [
-                    'round_index'   => (int) $round->getRoundIndex(),
-                    'outcome'       => $round->getOutcome(),
-                    'loser_id'      => (int) $round->getLoserId()
-                ];
-            case 'nagashi':
-                return [
-                    'round_index'   => (int) $round->getRoundIndex(),
-                    'outcome'       => $round->getOutcome(),
-                    'riichi_bets'   => implode(',', $round->getRiichiIds()),
-                    'tempai'        => implode(',', $round->getTempaiIds()),
-                    'nagashi'       => implode(',', $round->getNagashiIds())
-                ];
-            default:
-                throw new DatabaseException('Wrong outcome detected! This should not happen - DB corrupted?');
-        }
-    }
-
-    /**
-     * @param callable $cb
-     * @param array $array
-     * @return array|false
-     */
-    protected function _arrayMapPreserveKeys(callable $cb, array $array)
-    {
-        return array_combine(array_keys($array), array_map($cb, array_values($array)));
     }
 }

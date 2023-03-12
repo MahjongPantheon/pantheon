@@ -16,6 +16,7 @@ Thumbs.db
 Mimir/config/local/*
 Mimir/vendor/
 Mimir/data/db.sqlite
+Mimir/data/verbose.log
 Mimir/tests/data/*
 
 Rheda/.vagrant
@@ -39,5 +40,6 @@ Tyr/yarn-error.log
 
 Frey/config/local/*
 Frey/vendor/
+Frey/data/verbose.log
 Frey/data/db.sqlite
 Frey/tests/data/*

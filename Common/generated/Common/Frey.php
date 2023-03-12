@@ -110,7 +110,7 @@ interface Frey
      *
      * @throws \Twirp\Error
      */
-    public function UpdatePersonalInfo(array $ctx, \Common\Persons_UpdatePersonalInfo_Payload $req): \Common\Persons_UpdatePersonalInfo_Response;
+    public function UpdatePersonalInfo(array $ctx, \Common\Persons_UpdatePersonalInfo_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -254,7 +254,7 @@ interface Frey
      *
      * @throws \Twirp\Error
      */
-    public function UpdateRuleForPerson(array $ctx, \Common\Access_UpdateRuleForPerson_Payload $req): \Common\Access_UpdateRuleForPerson_Response;
+    public function UpdateRuleForPerson(array $ctx, \Common\Access_UpdateRuleForPerson_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -263,7 +263,7 @@ interface Frey
      *
      * @throws \Twirp\Error
      */
-    public function UpdateRuleForGroup(array $ctx, \Common\Access_UpdateRuleForGroup_Payload $req): \Common\Access_UpdateRuleForGroup_Response;
+    public function UpdateRuleForGroup(array $ctx, \Common\Access_UpdateRuleForGroup_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -272,7 +272,7 @@ interface Frey
      *
      * @throws \Twirp\Error
      */
-    public function DeleteRuleForPerson(array $ctx, \Common\Access_DeleteRuleForPerson_Payload $req): \Common\Access_DeleteRuleForPerson_Response;
+    public function DeleteRuleForPerson(array $ctx, \Common\Access_DeleteRuleForPerson_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -281,7 +281,7 @@ interface Frey
      *
      * @throws \Twirp\Error
      */
-    public function DeleteRuleForGroup(array $ctx, \Common\Access_DeleteRuleForGroup_Payload $req): \Common\Access_DeleteRuleForGroup_Response;
+    public function DeleteRuleForGroup(array $ctx, \Common\Access_DeleteRuleForGroup_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -290,7 +290,7 @@ interface Frey
      *
      * @throws \Twirp\Error
      */
-    public function ClearAccessCache(array $ctx, \Common\Access_ClearAccessCache_Payload $req): \Common\Access_ClearAccessCache_Response;
+    public function ClearAccessCache(array $ctx, \Common\Access_ClearAccessCache_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -317,7 +317,7 @@ interface Frey
      *
      * @throws \Twirp\Error
      */
-    public function UpdateGroup(array $ctx, \Common\Persons_UpdateGroup_Payload $req): \Common\Persons_UpdateGroup_Response;
+    public function UpdateGroup(array $ctx, \Common\Persons_UpdateGroup_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -326,7 +326,7 @@ interface Frey
      *
      * @throws \Twirp\Error
      */
-    public function DeleteGroup(array $ctx, \Common\Persons_DeleteGroup_Payload $req): \Common\Persons_DeleteGroup_Response;
+    public function DeleteGroup(array $ctx, \Common\Persons_DeleteGroup_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -335,7 +335,7 @@ interface Frey
      *
      * @throws \Twirp\Error
      */
-    public function AddPersonToGroup(array $ctx, \Common\Persons_AddPersonToGroup_Payload $req): \Common\Persons_AddPersonToGroup_Response;
+    public function AddPersonToGroup(array $ctx, \Common\Persons_AddPersonToGroup_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *
@@ -344,7 +344,7 @@ interface Frey
      *
      * @throws \Twirp\Error
      */
-    public function RemovePersonFromGroup(array $ctx, \Common\Persons_RemovePersonFromGroup_Payload $req): \Common\Persons_RemovePersonFromGroup_Response;
+    public function RemovePersonFromGroup(array $ctx, \Common\Persons_RemovePersonFromGroup_Payload $req): \Common\Generic_Success_Response;
 
     /**
      *

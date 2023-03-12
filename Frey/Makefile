@@ -37,7 +37,7 @@ init_test_db:
 
 clean_test_db:
 	while read p; do \
-		PGPASSWORD=pgpass psql -p5532 -U frey frey_unit -c "DROP TABLE \"$$p\""; \
+		PGPASSWORD=pgpass psql -h127.0.0.1 -p5532 -U frey frey_unit -c "DROP TABLE \"$$p\""; \
 	done < ./data/tablelist.txt || true
 
 i18n_extract:

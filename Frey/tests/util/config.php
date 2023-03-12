@@ -16,13 +16,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// Duplicating data here to enable easier local test debugging in IDE
+// Should match env values in Dockerfile, otherwise results will differ.
+// See also init_test_db and clean_test_db tasks in Makefile.
+// See also phinx.yml
+$port = getenv('PHINX_DB_FREY_PORT') ?: 5532;
+$dbname = getenv('PHINX_DB_FREY_NAME_UNIT') ?: 'frey_unit';
+$user = getenv('PHINX_DB_FREY_USER') ?: 'frey';
+$pass = getenv('PHINX_DB_FREY_PASS') ?: 'pgpass';
+
 return [
     'db' => [
-        'connection_string' => 'pgsql:host=localhost;port=' . getenv('PHINX_DB_FREY_PORT')
-            . ';dbname=' . getenv('PHINX_DB_FREY_NAME_UNIT'),
+        'connection_string' => 'pgsql:host=localhost;port=' . $port . ';dbname=' . $dbname,
         'credentials' => [
-            'username' => getenv('PHINX_DB_FREY_USER'),
-            'password' => getenv('PHINX_DB_FREY_PASS')
+            'username' => $user,
+            'password' => $pass
         ]
     ],
     'admin'     => [
@@ -31,7 +39,7 @@ return [
     'routes'    => require __DIR__ . '/../../config/routes.php',
     'verbose'   => true,
     'serverDefaultTimezone' => 'UTC',
-    'verboseLog' => __DIR__ . '/../data/verbose.log',
+    'verboseLog' => __DIR__ . '/../../data/verbose.log',
     'cookieDomain' => 'localhost',
     'trackerUrl' => null,
     'api' => [

@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package Common;
 
+import "atoms.proto";
+
 service Frey {
   rpc RequestRegistration(Auth_RequestRegistration_Payload) returns (Auth_RequestRegistration_Response);
   rpc ApproveRegistration(Auth_ApproveRegistration_Payload) returns (Auth_ApproveRegistration_Response);
@@ -13,7 +15,7 @@ service Frey {
   rpc ApproveResetPassword(Auth_ApproveResetPassword_Payload) returns (Auth_ApproveResetPassword_Response);
   rpc GetAccessRules(Access_GetAccessRules_Payload) returns (Access_GetAccessRules_Response);
   rpc GetRuleValue(Access_GetRuleValue_Payload) returns (Access_GetRuleValue_Response);
-  rpc UpdatePersonalInfo(Persons_UpdatePersonalInfo_Payload) returns (Persons_UpdatePersonalInfo_Response);
+  rpc UpdatePersonalInfo(Persons_UpdatePersonalInfo_Payload) returns (Generic_Success_Response);
   rpc GetPersonalInfo(Persons_GetPersonalInfo_Payload) returns (Persons_GetPersonalInfo_Response);
   rpc FindByTenhouIds(Persons_FindByTenhouIds_Payload) returns (Persons_FindByTenhouIds_Response);
   rpc FindByTitle(Persons_FindByTitle_Payload) returns (Persons_FindByTitle_Response);
@@ -31,17 +33,17 @@ service Frey {
   rpc GetAllGroupAccess(Access_GetAllGroupAccess_Payload) returns (Access_GetAllGroupAccess_Response);
   rpc AddRuleForPerson(Access_AddRuleForPerson_Payload) returns (Access_AddRuleForPerson_Response);
   rpc AddRuleForGroup(Access_AddRuleForGroup_Payload) returns (Access_AddRuleForGroup_Response);
-  rpc UpdateRuleForPerson(Access_UpdateRuleForPerson_Payload) returns (Access_UpdateRuleForPerson_Response);
-  rpc UpdateRuleForGroup(Access_UpdateRuleForGroup_Payload) returns (Access_UpdateRuleForGroup_Response);
-  rpc DeleteRuleForPerson(Access_DeleteRuleForPerson_Payload) returns (Access_DeleteRuleForPerson_Response);
-  rpc DeleteRuleForGroup(Access_DeleteRuleForGroup_Payload) returns (Access_DeleteRuleForGroup_Response);
-  rpc ClearAccessCache(Access_ClearAccessCache_Payload) returns (Access_ClearAccessCache_Response);
+  rpc UpdateRuleForPerson(Access_UpdateRuleForPerson_Payload) returns (Generic_Success_Response);
+  rpc UpdateRuleForGroup(Access_UpdateRuleForGroup_Payload) returns (Generic_Success_Response);
+  rpc DeleteRuleForPerson(Access_DeleteRuleForPerson_Payload) returns (Generic_Success_Response);
+  rpc DeleteRuleForGroup(Access_DeleteRuleForGroup_Payload) returns (Generic_Success_Response);
+  rpc ClearAccessCache(Access_ClearAccessCache_Payload) returns (Generic_Success_Response);
   rpc CreateAccount(Persons_CreateAccount_Payload) returns (Persons_CreateAccount_Response);
   rpc CreateGroup(Persons_CreateGroup_Payload) returns (Persons_CreateGroup_Response);
-  rpc UpdateGroup(Persons_UpdateGroup_Payload) returns (Persons_UpdateGroup_Response);
-  rpc DeleteGroup(Persons_DeleteGroup_Payload) returns (Persons_DeleteGroup_Response);
-  rpc AddPersonToGroup(Persons_AddPersonToGroup_Payload) returns (Persons_AddPersonToGroup_Response);
-  rpc RemovePersonFromGroup(Persons_RemovePersonFromGroup_Payload) returns (Persons_RemovePersonFromGroup_Response);
+  rpc UpdateGroup(Persons_UpdateGroup_Payload) returns (Generic_Success_Response);
+  rpc DeleteGroup(Persons_DeleteGroup_Payload) returns (Generic_Success_Response);
+  rpc AddPersonToGroup(Persons_AddPersonToGroup_Payload) returns (Generic_Success_Response);
+  rpc RemovePersonFromGroup(Persons_RemovePersonFromGroup_Payload) returns (Generic_Success_Response);
   rpc GetPersonsOfGroup(Persons_GetPersonsOfGroup_Payload) returns (Persons_GetPersonsOfGroup_Response);
   rpc GetGroupsOfPerson(Persons_GetGroupsOfPerson_Payload) returns (Persons_GetGroupsOfPerson_Response);
 
@@ -49,82 +51,6 @@ service Frey {
   rpc AddSystemWideRuleForPerson(Access_AddSystemWideRuleForPerson_Payload) returns (Access_AddSystemWideRuleForPerson_Response);
   rpc AddSystemWideRuleForGroup(Access_AddSystemWideRuleForGroup_Payload) returns (Access_AddSystemWideRuleForGroup_Response);
 }
-
-// Atoms
-
-message AccessRules {
-  map<string, RuleValue> rules = 1;
-}
-
-message RuleValue {
-  oneof kind {
-    // Represents a double value.
-    int32 number_value = 2;
-    // Represents a string value.
-    string string_value = 3;
-    // Represents a boolean value.
-    bool bool_value = 4;
-  }
-}
-
-message EventAdmin {
-  int32 ruleId = 1;
-  int32 personId = 2;
-  string personName = 3;
-}
-
-message RuleListItem {
-  string default = 1;
-  string type = 2;
-  string title = 3;
-}
-
-message EventRuleListItem {
-  bool isGlobal = 1;
-  int32 id = 2;
-  RuleValue value = 3;
-  string name = 4;
-  string ownerTitle = 5;
-  repeated string allowedValues = 6;
-}
-
-message RuleListItemEx {
-  int32 id = 1;
-  string type = 2;
-  RuleValue value = 3;
-  repeated string allowedValues = 4;
-}
-
-message RuleListItemExMap {
-  map<string, RuleListItemEx> rules = 1;
-}
-
-message Person {
-  int32 id = 1;
-  string city = 2;
-  string tenhouId = 3;
-  string title = 4;
-}
-
-message PersonEx {
-  int32 id = 1;
-  string city = 2;
-  string tenhouId = 3;
-  string title = 4;
-  string country = 5;
-  string email = 6;
-  string phone = 7;
-  repeated int32 groups = 8;
-}
-
-message Group {
-  int32 id = 1;
-  string title = 2;
-  string color = 3;
-  string description = 4;
-}
-
-// Molecules
 
 message Auth_RequestRegistration_Payload {
   string email = 1;
@@ -328,43 +254,23 @@ message Access_UpdateRuleForPerson_Payload {
   string ruleType = 3;
 }
 
-message Access_UpdateRuleForPerson_Response {
-  bool success = 1;
-}
-
 message Access_UpdateRuleForGroup_Payload {
   int32 ruleId = 1;
   RuleValue ruleValue = 2;
   string ruleType = 3;
 }
 
-message Access_UpdateRuleForGroup_Response {
-  bool success = 1;
-}
-
 message Access_DeleteRuleForPerson_Payload {
   int32 ruleId = 1;
-}
-
-message Access_DeleteRuleForPerson_Response {
-  bool success = 1;
 }
 
 message Access_DeleteRuleForGroup_Payload {
   int32 ruleId = 1;
 }
 
-message Access_DeleteRuleForGroup_Response {
-  bool success = 1;
-}
-
 message Access_ClearAccessCache_Payload {
   int32 personId = 1;
   int32 eventId = 2;
-}
-
-message Access_ClearAccessCache_Response {
-  bool success = 1;
 }
 
 message Access_AddSystemWideRuleForPerson_Payload {
@@ -419,16 +325,8 @@ message Persons_UpdateGroup_Payload {
   string color = 4;
 }
 
-message Persons_UpdateGroup_Response {
-  bool success = 1;
-}
-
 message Persons_DeleteGroup_Payload {
   int32 groupId = 1;
-}
-
-message Persons_DeleteGroup_Response {
-  bool success = 1;
 }
 
 message Persons_AddPersonToGroup_Payload {
@@ -436,17 +334,9 @@ message Persons_AddPersonToGroup_Payload {
   int32 groupId = 2;
 }
 
-message Persons_AddPersonToGroup_Response {
-  bool success = 1;
-}
-
 message Persons_RemovePersonFromGroup_Payload {
   int32 personId = 1;
   int32 groupId = 2;
-}
-
-message Persons_RemovePersonFromGroup_Response {
-  bool success = 1;
 }
 
 message Persons_GetPersonsOfGroup_Payload {
@@ -473,10 +363,6 @@ message Persons_UpdatePersonalInfo_Payload {
   string email = 5;
   string phone = 6;
   string tenhouId = 7;
-}
-
-message Persons_UpdatePersonalInfo_Response {
-  bool success = 1;
 }
 
 message Persons_GetPersonalInfo_Payload {

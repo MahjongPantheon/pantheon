@@ -51,14 +51,14 @@ import {
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
-import { RiichiApiService } from '#/services/riichiApi';
 import { LCurrentGame, LGameConfig, LTimerState } from '#/interfaces/local';
 import { RemoteError } from '#/services/remoteError';
 import { IAppState } from '../interfaces';
 import { SessionState } from '#/interfaces/remote';
+import { IRiichiApi } from '#/services/IRiichiApi';
 
 export const apiClient =
-  (api: RiichiApiService) =>
+  (api: IRiichiApi) =>
   (mw: MiddlewareAPI<Dispatch<AppActionTypes>, IAppState>) =>
   (next: Dispatch<AppActionTypes>) =>
   (action: AppActionTypes) => {
@@ -170,7 +170,7 @@ export const apiClient =
 
 function loginWithRetry(
   data: { email: string; password: string },
-  api: RiichiApiService,
+  api: IRiichiApi,
   dispatch: Dispatch,
   next: Dispatch
 ) {
@@ -199,7 +199,7 @@ function loginWithRetry(
   runWithRetry();
 }
 
-function getUserinfo(personId: number, api: RiichiApiService, next: Dispatch) {
+function getUserinfo(personId: number, api: IRiichiApi, next: Dispatch) {
   next({ type: GET_USERINFO_INIT });
   api
     .getUserInfo([personId])
@@ -213,7 +213,7 @@ Promise<LUser[]>,
  */
 
 function updateCurrentGames(
-  api: RiichiApiService,
+  api: IRiichiApi,
   dispatchNext: Dispatch,
   dispatchToStore: Dispatch,
   currentPersonId: number,
@@ -257,7 +257,7 @@ function updateCurrentGames(
     });
 }
 
-function getGameOverview(currentSessionHash: string, api: RiichiApiService, next: Dispatch) {
+function getGameOverview(currentSessionHash: string, api: IRiichiApi, next: Dispatch) {
   next({ type: GET_GAME_OVERVIEW_INIT });
   api
     .getGameOverview(currentSessionHash)
@@ -265,7 +265,7 @@ function getGameOverview(currentSessionHash: string, api: RiichiApiService, next
     .catch((error: RemoteError) => next({ type: GET_GAME_OVERVIEW_FAIL, payload: error }));
 }
 
-function getOtherTable(sessionHash: string, api: RiichiApiService, dispatch: Dispatch) {
+function getOtherTable(sessionHash: string, api: IRiichiApi, dispatch: Dispatch) {
   dispatch({ type: GET_OTHER_TABLE_INIT, payload: sessionHash });
   api
     .getGameOverview(sessionHash)
@@ -273,7 +273,7 @@ function getOtherTable(sessionHash: string, api: RiichiApiService, dispatch: Dis
     .catch((e) => dispatch({ type: GET_OTHER_TABLE_FAIL, payload: e }));
 }
 
-function getOtherTableReload(sessionHash: string, api: RiichiApiService, dispatch: Dispatch) {
+function getOtherTableReload(sessionHash: string, api: IRiichiApi, dispatch: Dispatch) {
   dispatch({ type: GET_OTHER_TABLE_RELOAD });
   api
     .getGameOverview(sessionHash)
@@ -281,7 +281,7 @@ function getOtherTableReload(sessionHash: string, api: RiichiApiService, dispatc
     .catch((e) => dispatch({ type: GET_OTHER_TABLE_FAIL, payload: e }));
 }
 
-function getOtherTablesList(api: RiichiApiService, dispatch: Dispatch, eventId: number) {
+function getOtherTablesList(api: IRiichiApi, dispatch: Dispatch, eventId: number) {
   dispatch({ type: GET_OTHER_TABLES_LIST_INIT });
   api
     .getTablesState(eventId)
@@ -289,7 +289,7 @@ function getOtherTablesList(api: RiichiApiService, dispatch: Dispatch, eventId: 
     .catch((e) => dispatch({ type: GET_OTHER_TABLES_LIST_FAIL, payload: e }));
 }
 
-function getOtherTablesListReload(api: RiichiApiService, dispatch: Dispatch, eventId: number) {
+function getOtherTablesListReload(api: IRiichiApi, dispatch: Dispatch, eventId: number) {
   dispatch({ type: GET_OTHER_TABLES_LIST_RELOAD });
   api
     .getTablesState(eventId)
@@ -297,7 +297,7 @@ function getOtherTablesListReload(api: RiichiApiService, dispatch: Dispatch, eve
     .catch((e) => dispatch({ type: GET_OTHER_TABLES_LIST_FAIL, payload: e }));
 }
 
-function getAllRounds(sessionHash: string, api: RiichiApiService, dispatch: Dispatch) {
+function getAllRounds(sessionHash: string, api: IRiichiApi, dispatch: Dispatch) {
   dispatch({ type: GET_ALL_ROUNDS_INIT });
   api
     .getAllRounds(sessionHash)
@@ -305,7 +305,7 @@ function getAllRounds(sessionHash: string, api: RiichiApiService, dispatch: Disp
     .catch((e) => dispatch({ type: GET_ALL_ROUNDS_FAIL, payload: e }));
 }
 
-function getChangesOverview(state: IAppState, api: RiichiApiService, dispatch: Dispatch) {
+function getChangesOverview(state: IAppState, api: IRiichiApi, dispatch: Dispatch) {
   dispatch({ type: GET_CHANGES_OVERVIEW_INIT });
   api
     .getChangesOverview(state)
@@ -315,7 +315,7 @@ function getChangesOverview(state: IAppState, api: RiichiApiService, dispatch: D
 
 function addRound(
   state: IAppState,
-  api: RiichiApiService,
+  api: IRiichiApi,
   dispatch: Dispatch,
   dispatchToStore: Dispatch
 ) {
@@ -338,7 +338,7 @@ function addRound(
 }
 
 function getLastResults(
-  api: RiichiApiService,
+  api: IRiichiApi,
   dispatch: Dispatch,
   currentPersonId: number,
   eventId: number
@@ -350,7 +350,7 @@ function getLastResults(
     .catch((e) => dispatch({ type: GET_LAST_RESULTS_FAIL, payload: e }));
 }
 
-function getAllPlayers(api: RiichiApiService, dispatch: Dispatch, eventId: number) {
+function getAllPlayers(api: IRiichiApi, dispatch: Dispatch, eventId: number) {
   dispatch({ type: GET_ALL_PLAYERS_INIT });
   api
     .getAllPlayers(eventId)
@@ -360,7 +360,7 @@ function getAllPlayers(api: RiichiApiService, dispatch: Dispatch, eventId: numbe
 
 function startGame(
   playerIds: number[],
-  api: RiichiApiService,
+  api: IRiichiApi,
   dispatch: Dispatch,
   dispatchToStore: Dispatch,
   eventId: number
@@ -379,7 +379,7 @@ function startGame(
 }
 
 function startupWithAuth(
-  api: RiichiApiService,
+  api: IRiichiApi,
   dispatchToStore: Dispatch<AppActionTypes>,
   dispatchNext: Dispatch<AppActionTypes>,
   personId: number,

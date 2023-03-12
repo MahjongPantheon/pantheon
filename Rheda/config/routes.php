@@ -68,6 +68,7 @@ return [ // Omit trailing slashes in keys when possible
     '!/signupAdmin'                         => 'PersonSignupAdministrative',
     '!/profile/(?<action>login)'            => 'PersonLogin',
     '!/profile/(?<action>logout)'           => 'PersonLogin',
+    '!/profile/(?<action>impersonate)/(?<id>\d+)/(?<token>[a-f0-9]+)' => 'PersonLogin',
     '!/profile'                             => 'PersonProfileEdit',
     '!/profile/(?<action>edit)/(?<id>\d+)'  => 'PersonProfileEdit',
     '!/passwordRecovery'                    => 'PersonRecoverPassword',

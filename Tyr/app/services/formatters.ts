@@ -55,6 +55,18 @@ import { IAppState } from '#/store/interfaces';
 import { getDora, getFu, getHan } from '#/store/selectors/hanFu';
 import { getSelectedYaku } from '#/store/selectors/yaku';
 import { environment } from '#config';
+import {
+  AbortResult,
+  ChomboResult,
+  DrawResult,
+  MultironResult,
+  MultironWin,
+  NagashiResult,
+  RonResult,
+  Round,
+  RoundOutcome,
+  TsumoResult,
+} from '#/clients/atoms.pb';
 
 export function gameOverviewFormatter(overview: RSessionOverview): LSessionOverview {
   return {
@@ -305,6 +317,127 @@ export function formatRoundToRemote(state: IAppState): RRound | undefined {
         honba: state.honba,
         outcome: 'chombo',
         loser_id: getLosingUsers(state)[0].id,
+      };
+    default:
+      return undefined;
+  }
+}
+
+export function fromTwirpOutcome(outcome: RoundOutcome): RRound['outcome'] {
+  switch (outcome) {
+    case 'RON':
+      return 'ron';
+    case 'ABORT':
+      return 'abort';
+    case 'TSUMO':
+      return 'tsumo';
+    case 'DRAW':
+      return 'draw';
+    case 'CHOMBO':
+      return 'chombo';
+    case 'NAGASHI':
+      return 'nagashi';
+    case 'MULTIRON':
+      return 'multiron';
+  }
+}
+
+export function formatRoundToTwirp(state: IAppState): Round | undefined {
+  switch (state.currentOutcome?.selectedOutcome) {
+    case 'ron':
+      const wins = getWins(state).map((win) => {
+        return {
+          winnerId: win.winner,
+          paoPlayerId: win.paoPlayerId,
+          han: win.han + win.dora,
+          fu: getFu(state, win.winner),
+          dora: win.dora,
+          uradora: win.uradora,
+          kandora: win.kandora,
+          kanuradora: win.kanuradora,
+          yaku: win.yaku.filter((y: YakuId) => y > 0),
+          openHand: win.yaku.includes(YakuId.__OPENHAND),
+        } as MultironWin;
+      });
+
+      if (wins.length > 1) {
+        // multiron
+        return {
+          multiron: {
+            roundIndex: state.currentRound,
+            honba: state.honba,
+            loserId: getLosingUsers(state)[0].id,
+            multiRon: wins.length,
+            wins: wins,
+            riichiBets: getRiichiUsers(state).map((player) => player.id),
+          } as MultironResult,
+        };
+      }
+
+      // single winner ron
+      return {
+        ron: {
+          roundIndex: state.currentRound,
+          honba: state.honba,
+          riichiBets: getRiichiUsers(state).map((player) => player.id),
+          loserId: getLosingUsers(state)[0].id,
+          multiRon: null,
+          ...wins[0],
+        } as RonResult,
+      };
+
+    case 'tsumo':
+      return {
+        tsumo: {
+          roundIndex: state.currentRound,
+          honba: state.honba,
+          riichiBets: getRiichiUsers(state).map((player) => player.id),
+          winnerId: getWinningUsers(state)[0].id,
+          paoPlayerId: (getPaoUsers(state)[0] || { id: null }).id,
+          han: getHan(state) + getDora(state),
+          fu: getFu(state),
+          dora: getDora(state),
+          uradora: 0, // TODO
+          kandora: 0, // TODO
+          kanuradora: 0, // TODO
+          yaku: getSelectedYaku(state).filter((y) => y > 0),
+          openHand: getSelectedYaku(state).includes(YakuId.__OPENHAND),
+        } as TsumoResult,
+      };
+    case 'draw':
+      return {
+        draw: {
+          roundIndex: state.currentRound,
+          honba: state.honba,
+          riichiBets: getRiichiUsers(state).map((player) => player.id),
+          tempai: getWinningUsers(state).map((player) => player.id),
+        } as DrawResult,
+      };
+    case 'nagashi':
+      return {
+        nagashi: {
+          roundIndex: state.currentRound,
+          honba: state.honba,
+          riichiBets: getRiichiUsers(state).map((player) => player.id),
+          tempai: getWinningUsers(state).map((player) => player.id),
+          nagashi: getNagashiUsers(state).map((player) => player.id),
+        } as NagashiResult,
+      };
+    case 'abort':
+      return {
+        abort: {
+          roundIndex: state.currentRound,
+          honba: state.honba,
+          riichiBets: getRiichiUsers(state).map((player) => player.id),
+        } as AbortResult,
+      };
+    case 'chombo':
+      return {
+        chombo: {
+          roundIndex: state.currentRound,
+          honba: state.honba,
+          loserId: getLosingUsers(state)[0].id,
+        } as ChomboResult,
       };
     default:
       return undefined;

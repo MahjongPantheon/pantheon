@@ -12,7 +12,6 @@ import {
 import {
   RRoundOverviewInfo,
   RRoundPaymentsInfo,
-  RRoundPaymentsInfoMulti,
   RRoundPaymentsInfoSingle,
   SessionState,
 } from '#/interfaces/remote';
@@ -359,7 +358,7 @@ interface GetOtherTableLastRoundActionInit {
 }
 interface GetOtherTableLastRoundActionSuccess {
   type: typeof GET_OTHER_TABLE_LAST_ROUND_SUCCESS;
-  payload: RRoundPaymentsInfoSingle | RRoundPaymentsInfoMulti;
+  payload: RRoundPaymentsInfoSingle;
 }
 interface GetOtherTableLastRoundActionFail {
   type: typeof GET_OTHER_TABLE_LAST_ROUND_FAIL;

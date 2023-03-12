@@ -9,6 +9,10 @@
   overflow-y: scroll;
 }
 
+.page-other-tables-list__empty {
+  text-align: center;
+}
+
 .page-other-tables-list__table {
   margin: 0px 16px 20px 16px;
 }

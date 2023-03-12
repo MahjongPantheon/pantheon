@@ -90,15 +90,23 @@ class EventModel extends Model
      */
     public function getTablesState($eventId)
     {
-        $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);
-        $reggedPlayers = array_values(array_filter($reggedPlayers, function ($el) {
-            return !$el['ignore_seating'];
-        }));
-
         $event = EventPrimitive::findById($this->_ds, [$eventId])[0];
         if ($event->getIsFinished()) {
             throw new \Exception('Event is already finished');
         }
+
+        $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);
+        $reggedPlayers = array_values(array_filter($reggedPlayers, function ($player) use ($event) {
+            $includePlayer = true;
+            if ($player['ignore_seating']) {
+                $includePlayer = false;
+            }
+            if ($event->getIsPrescripted() && empty($player['local_id'])) {
+                $includePlayer = false;
+            }
+            return $includePlayer;
+        }));
+
         if ($event->getAllowPlayerAppend()) { // club game mode
             $tablesCount = 10;
         } else {
@@ -197,6 +205,13 @@ class EventModel extends Model
         if (count($lastGames) > 0) {
             // Assume that we don't use _formatTablesState for multiple events
             list($ev) = EventPrimitive::findById($this->_ds, [$lastGames[0]->getEventId()]);
+            $teamNames = [];
+            if ($ev->getIsTeam()) {
+                $teamNames = PlayerRegistrationPrimitive::findTeamNameMapByEvent($this->_ds, $lastGames[0]->getEventId());
+            }
+            // Players who should ignore seating
+            $ignoredPlayers = PlayerRegistrationPrimitive::findIgnoredPlayersIdsByEvent($this->_ds, [$lastGames[0]->getEventId()]);
+
             foreach ($lastGames as $game) {
                 $game->setEvent($ev); // Preload event into session to prevent multiple fetches inside DateHelper::mayDefinalizeGame
                 $gId = $game->getId();
@@ -212,19 +227,23 @@ class EventModel extends Model
                     'hash' => $game->getRepresentationalHash(),
                     'penalties' => $game->getCurrentState()->getPenaltiesLog(),
                     'table_index' => $game->getTableIndex(),
-                    'last_round' => $lastRound ? $this->_formatLastRound($lastRound) : [],
+                    'last_round_detailed' => $lastRound ? Formatters::formatRound($lastRound, $game) : null,
+                    'last_round' => $lastRound ? $this->_formatLastRound($lastRound, $game) : [],
                     'current_round' => $game->getCurrentState()->getRound(),
                     'scores' => $game->getCurrentState()->getScores(),
-                    'players' => array_map(function (PlayerPrimitive $p) use (&$playerIdMap) {
+                    'players' => array_map(function (PlayerPrimitive $p) use (&$playerIdMap, &$teamNames, &$ignoredPlayers) {
                         $pId = $p->getId();
                         if (empty($pId)) {
                             throw new InvalidParametersException('Attempted to use deidented primitive');
                         }
                         return [
-                            'id' => $pId,
-                            // may be empty for excluded players in non-prescripted event, so it's fine.
-                            'local_id' => empty($playerIdMap[$pId]) ? 0 : $playerIdMap[$pId],
-                            'title' => $p->getDisplayName()
+                            'id'            => $pId,
+                            'title'         => $p->getDisplayName(),
+                            'local_id'      => empty($playerIdMap[$p->getId()]) ? null : $playerIdMap[$p->getId()],
+                            'team_name'     => empty($teamNames[$p->getId()]) ? null : $teamNames[$p->getId()],
+                            'tenhou_id'     => $p->getTenhouId(),
+                            'ignore_seating' => in_array($p->getId(), $ignoredPlayers),
+                            'replaced_by'   => null // NOTE: always null here, replacement data is not fetched!
                         ];
                     }, $game->getPlayers())
                 ];
@@ -238,18 +257,52 @@ class EventModel extends Model
      * @param RoundPrimitive $round
      * @return array
      */
-    protected function _formatLastRound(RoundPrimitive $round): array
+    protected function _formatLastRound(RoundPrimitive $round, SessionPrimitive $session): array
     {
+        $currentScores = $session->getCurrentState()->getScores();
+        $previousScores = $round->getLastSessionState()->getScores();
+        $scoresBefore = [];
+        $scoresDelta = [];
+        for ($i = 0; $i < count($session->getPlayersIds()); $i++) {
+            $id = $session->getPlayersIds()[$i];
+            $scoresBefore[$id] = $previousScores[$id];
+            $scoresDelta[$id] = $currentScores[$id] - $previousScores[$id];
+        }
         if ($round instanceof MultiRoundPrimitive) {
             return [
                 'outcome' => $round->getOutcome(),
                 'loser'   => $round->getLoserId(),
                 'riichi'  => $round->getRiichiIds(),
+                // Twirp compat
+                'session_hash' => $session->getRepresentationalHash(),
+                'scores_before'  => $scoresBefore,
+                'scores_delta'   => $scoresDelta,
+                'pao_player_id'  => $round->getPaoPlayerId(),
+                'round_index' => $round->getRoundIndex(),
+                'loser_id'     => $round->getLoserId(),
+                'open_hand'   => $round->getOpenHand(),
+                'tempai'     => ($round->getOutcome() === 'draw' || $round->getOutcome() === 'nagashi')
+                    ? $round->getTempaiIds()
+                    : null,
+                'nagashi'    => $round->getOutcome() === 'nagashi' ? $round->getNagashiIds() : null,
+                'multi_ron'     => $round->getMultiRon(),
+                'riichi_bets'   => implode(',', array_filter(array_map(function (RoundPrimitive $r) {
+                    return implode(',', $r->getRiichiIds());
+                }, $round->rounds()))),
+                // /Twirp compat
                 'wins'    => array_map(function (RoundPrimitive $round) {
                     return [
                         'winner' => $round->getWinnerId(),
                         'han'    => $round->getHan(),
-                        'fu'     => $round->getFu()
+                        'fu'     => $round->getFu(),
+                        'winner_id' => $round->getWinnerId(),
+                        'pao_player_id' => $round->getPaoPlayerId(),
+                        'yaku' => $round->getYaku(),
+                        'dora' => $round->getDora(),
+                        'kandora' => $round->getKandora(),
+                        'uradora' => $round->getUradora(),
+                        'kanuradora' => $round->getKanuradora(),
+                        'open_hand' => $round->getOpenHand()
                     ];
                 }, $round->rounds())
             ];
@@ -263,7 +316,18 @@ class EventModel extends Model
             'riichi'  => $round->getRiichiIds(),
             'nagashi' => $round->getNagashiIds(),
             'han'     => $round->getHan(),
-            'fu'      => $round->getFu()
+            'fu'      => $round->getFu(),
+
+            // Twirp compat
+            'session_hash' => $session->getRepresentationalHash(),
+            'scores_before'  => $scoresBefore,
+            'scores_delta'   => $scoresDelta,
+            'pao_player_id'  => $round->getPaoPlayerId(),
+            'riichi_bets' => $round->getRiichiIds(),
+            'round_index' => $round->getRoundIndex(),
+            'loser_id'     => $round->getLoserId(),
+            'open_hand'   => $round->getOpenHand(),
+            // /Twirp compat
         ];
     }
 
@@ -307,19 +371,23 @@ class EventModel extends Model
         }
 
         $count = $this->_ds->table('event');
+
         $data = $this->_ds->table('event')
-            ->select('id')
-            ->select('title')
-            ->select('description')
-            ->select('is_online')
-            ->select('finished')
-            ->select('is_listed')
-            ->select('hide_results')
-            ->select('sync_start')
-            ->orderByDesc('id');
+            ->select('event.id', 'id')
+            ->select('event.title', 'title')
+            ->select('event.description', 'description')
+            ->select('event.is_online', 'is_online')
+            ->select('event.sync_start', 'sync_start')
+            ->select('event.finished', 'finished')
+            ->select('event.is_listed', 'is_listed')
+            ->select('event.hide_results', 'hide_results')
+            ->selectExpr('count(session.id)', 'sessioncnt')
+            ->leftOuterJoin('session', 'session.event_id = event.id')
+            ->groupBy('event.id')
+            ->orderByDesc('event.id');
 
         if ($filterUnlisted) {
-            $data = $data->where('is_listed', 1);
+            $data = $data->where('event.is_listed', 1);
             $count = $count->where('is_listed', 1);
         }
 
@@ -332,6 +400,9 @@ class EventModel extends Model
         return [
             'total' => $count,
             'events' => array_map(function ($event) {
+                $type = $event['is_online']
+                    ? 'online'
+                    : ($event['sync_start'] ? 'tournament' : 'local');
                 return [
                     'id' => $event['id'],
                     'title' => $event['title'],
@@ -339,9 +410,8 @@ class EventModel extends Model
                     'finished' => !!$event['finished'],
                     'isListed' => !!$event['is_listed'],
                     'isRatingShown' => !!$event['hide_results'],
-                    'type' => $event['is_online']
-                        ? 'online'
-                        : ($event['sync_start'] ? 'tournament' : 'local')
+                    'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
+                    'type' => $type
                 ];
             }, $data)
         ];

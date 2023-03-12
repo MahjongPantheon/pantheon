@@ -16,7 +16,7 @@ export type PaymentInfo = {
 type RoundPaymentInfoShort = {
   round: number;
   currentPlayerId: number;
-  players: [Player, Player, Player, Player];
+  players: Player[];
   riichiBets: string[];
   penaltyFor?: number;
   paoPlayer?: number;

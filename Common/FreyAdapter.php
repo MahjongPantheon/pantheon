@@ -6,6 +6,7 @@ use Google\Protobuf\Internal\GPBDecodeException;
 use Google\Protobuf\Internal\Message;
 use Twirp\Context;
 
+// Specific adapter for testing purposes only
 final class FreyAdapter extends FreyAbstractClient implements Frey
 {
     /**
@@ -41,7 +42,8 @@ final class FreyAdapter extends FreyAbstractClient implements Frey
         }
 
         if ($resp->getStatusCode() !== 200) {
-            throw $this->errorFromResponse($resp);
+            $err = $this->errorFromResponse($resp);
+            throw new \Exception($err->getMessage() . ' (remote): ' . $err->getMeta('cause'), $err->getCode());
         }
 
         try {

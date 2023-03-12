@@ -85,7 +85,7 @@ class EventUserManagementModel extends Model
      * @param int $playerId
      * @param int $eventId
      * @throws \Exception
-     * @return void
+     * @return bool
      */
     public function unregisterPlayer(int $playerId, int $eventId)
     {
@@ -95,10 +95,11 @@ class EventUserManagementModel extends Model
 
         $regItem = PlayerRegistrationPrimitive::findByPlayerAndEvent($this->_ds, $playerId, $eventId);
         if (empty($regItem)) {
-            return;
+            return false;
         }
 
         $regItem[0]->drop();
+        return true;
     }
 
     /**

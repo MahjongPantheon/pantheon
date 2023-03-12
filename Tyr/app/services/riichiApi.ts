@@ -59,6 +59,7 @@ import {
 } from './formatters';
 import { IAppState } from '#/store/interfaces';
 import { environment } from '#config';
+import { IRiichiApi } from '#/services/IRiichiApi';
 
 type GenericResponse = {
   error?: { message: string; code: any };
@@ -66,11 +67,9 @@ type GenericResponse = {
   result: any;
 };
 
-export class RiichiApiService {
+export class RiichiApiService implements IRiichiApi {
   private _authToken: string | null = null;
   private _personId: string | null = null;
-  constructor(protected onReconnect: () => void) {}
-
   setCredentials(personId: number, token: string) {
     this._authToken = token;
     this._personId = (personId || 0).toString();
@@ -146,7 +145,7 @@ export class RiichiApiService {
     return this._jsonRpcRequest<RRoundPaymentsInfo>('getLastRoundByHash', sessionHashcode).then(
       (result) => {
         result.sessionHash = sessionHashcode;
-        return result;
+        return result as RRoundPaymentsInfo & { sessionHash: string };
       }
     );
   }
@@ -206,7 +205,17 @@ export class RiichiApiService {
       body: JSON.stringify(jsonRpcBody),
     };
 
-    return fetch(environment.apiUrl, fetchInit)
+    return fetch(
+      environment.apiUrl + (environment.production ? '' : '?XDEBUG_SESSION=start'),
+      fetchInit
+    )
+      .then((r) => {
+        const release = r.headers.get('X-Release');
+        if (release && release !== environment.releaseTag) {
+          window.location.reload();
+        }
+        return r;
+      })
       .then((r) => r.json())
       .then<RET_TYPE>((resp: GenericResponse) => {
         if (resp.error) {
@@ -241,7 +250,10 @@ export class RiichiApiService {
       body: JSON.stringify(jsonRpcBody),
     };
 
-    return fetch(environment.uaUrl, fetchInit)
+    return fetch(
+      environment.uaUrl + (environment.production ? '' : '?XDEBUG_SESSION=start'),
+      fetchInit
+    )
       .then((r) => r.json())
       .then<RET_TYPE>((resp: GenericResponse) => {
         if (resp.error) {

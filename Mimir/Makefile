@@ -12,7 +12,7 @@ deps: hooks
 lint:
 	php vendor/bin/phpcs --config-set default_standard PSR2 > /dev/null
 	php vendor/bin/phpcs --config-set show_warnings 0 > /dev/null
-	php vendor/bin/phpcs src tests www
+	php vendor/bin/phpcs --ignore=*/generated/*,src/TwirpServer.php src tests www
 	php vendor/bin/phpstan clear-result-cache && php vendor/bin/phpstan analyse -c phpstan.neon
 
 unit:
@@ -43,10 +43,12 @@ req:
 	php bin/rpc.php "$(filter-out $@,$(MAKECMDGOALS))"
 
 init_test_db:
+	echo "Initializing test db..."
 	@php bin/phinx migrate -e testing
 
 clean_test_db:
+	echo "Cleaning test db..."
 	while read p; do \
-		PGPASSWORD=pgpass psql -p5532 -U mimir mimir_unit -c "DROP TABLE $$p"; \
+		PGPASSWORD=pgpass psql -h127.0.0.1 -p5532 -U mimir mimir_unit -c "DROP TABLE $$p"; \
 	done < ./data/tablelist.txt || true
 

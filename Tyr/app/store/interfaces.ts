@@ -70,7 +70,7 @@ export interface IAppState {
   currentPlayerDisplayName?: string;
   currentPlayerId?: number;
   currentEventId?: number;
-  players?: [Player, Player, Player, Player]; // e-s-w-n
+  players?: Player[]; // e-s-w-n
   mapIdToPlayer: { [key: number]: Player };
   riichiOnTable: number;
   honba: number;

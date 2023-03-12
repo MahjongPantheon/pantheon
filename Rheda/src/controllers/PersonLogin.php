@@ -30,6 +30,14 @@ class PersonLogin extends Controller
 
     protected function _beforeRun()
     {
+        if ($this->_path['action'] === 'impersonate') {
+            $this->_storage
+                ->setPersonId((int)$this->_path['id'])
+                ->setAuthToken($this->_path['token']);
+            header('Location: ' . '/profile');
+            return false;
+        }
+
         if (!empty($this->_currentPersonId)) {
             if ($this->_path['action'] === 'logout') {
                 $this->_storage->deleteAuthToken()->deletePersonId();
@@ -68,6 +76,7 @@ class PersonLogin extends Controller
                 $this->_storage->setAuthToken($authToken)->setPersonId($id);
                 header('Location: ' . '/profile');
             } catch (\Exception $ex) {
+                $this->_handleTwirpEx($ex);
                 $passwordError = _t('Password is incorrect or account not registered');
             }
         }

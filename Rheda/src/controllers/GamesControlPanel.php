@@ -63,6 +63,7 @@ class GamesControlPanel extends Controller
                         ;
                 }
             } catch (\Exception $e) {
+                $this->_handleTwirpEx($e);
                 $this->_lastEx = $e;
                 return true;
             }
@@ -111,6 +112,7 @@ class GamesControlPanel extends Controller
         try {
             $tables = $this->_mimir->getTablesState($this->_mainEventId);
         } catch (\Exception $e) {
+            $this->_handleTwirpEx($e);
             return [
                 'reason' => $e->getMessage()
             ];

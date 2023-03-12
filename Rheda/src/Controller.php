@@ -17,6 +17,9 @@
  */
 namespace Rheda;
 
+use Monolog\Handler\ErrorLogHandler;
+use Monolog\Logger;
+
 require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/../../Common/Storage.php';
@@ -24,6 +27,7 @@ require_once __DIR__ . '/HttpClient.php';
 require_once __DIR__ . '/FreyClient.php';
 require_once __DIR__ . '/FreyClientTwirp.php';
 require_once __DIR__ . '/MimirClient.php';
+require_once __DIR__ . '/MimirClientTwirp.php';
 require_once __DIR__ . '/helpers/i18n.php';
 require_once __DIR__ . '/Templater.php';
 
@@ -130,6 +134,11 @@ abstract class Controller
     protected $_useTranslit = false;
 
     /**
+     * @var Logger
+     */
+    protected $_syslog;
+
+    /**
      * Controller constructor.
      * @param string $url
      * @param string[] $path
@@ -139,14 +148,17 @@ abstract class Controller
     {
         $this->_url = $url;
         $this->_path = $path;
-        $this->_mimir = new \Rheda\MimirClient(Sysconf::API_URL()); // @phpstan-ignore-line
         $this->_storage = new \Common\Storage(Sysconf::COOKIE_DOMAIN);
+        $this->_syslog = new Logger('RiichiApi');
+        $this->_syslog->pushHandler(new ErrorLogHandler());
 
         // @phpstan-ignore-next-line
-        if (Sysconf::USE_TWIRP_FREY) {
+        if ($this->_storage->getTwirpEnabled()) {
             $this->_frey = new \Rheda\FreyClientTwirp(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
+            $this->_mimir = new \Rheda\MimirClientTwirp(Sysconf::API_URL()); // @phpstan-ignore-line
         } else {
             $this->_frey = new \Rheda\FreyClient(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
+            $this->_mimir = new \Rheda\MimirClient(Sysconf::API_URL()); // @phpstan-ignore-line
         }
 
         // i18n support
@@ -216,9 +228,10 @@ abstract class Controller
                 $this->_authToken = null;
             } else {
                 // @phpstan-ignore-next-line
-                if (Sysconf::USE_TWIRP_FREY) {
+                if ($this->_storage->getTwirpEnabled()) {
                     // @phpstan-ignore-next-line
                     $this->_frey->withHeaders([
+                        'X-Twirp' => 'true',
                         'X-Auth-Token' => $this->_authToken,
                         'X-Locale' => $locale,
                         'X-Current-Event-Id' => $this->_mainEventId,
@@ -253,26 +266,39 @@ abstract class Controller
             }
         }
 
-        /** @var HttpClient $client */
-        $client = $this->_mimir->getClient()->getHttpClient();
-
-        $client->withHeaders([
-            'X-Debug-Token: ' . Sysconf::DEBUG_TOKEN(),
-            'X-Auth-Token: ' . $this->_authToken,
-            'X-Current-Event-Id: ' . $this->_mainEventId,
-            'X-Current-Person-Id: ' . $this->_currentPersonId,
-            'X-Internal-Query-Secret: ' . Sysconf::MIMIR_INTERNAL_QUERY_SECRET,
-            'X-Locale: ' . $locale,
+        if ($this->_storage->getTwirpEnabled()) {
             // @phpstan-ignore-next-line
-            'X-Api-Version: ' . Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
-        ]);
-
-        // @phpstan-ignore-next-line
-        if (Sysconf::DEBUG_MODE) {
-            $client->withDebug();
-            $client->withCookies(['XDEBUG_SESSION=PHPSTORM']);
+            $client = $this->_mimir->withHeaders([
+                'X-Twirp' => 'true',
+                'X-Debug-Token' => Sysconf::DEBUG_TOKEN(),
+                'X-Auth-Token' => $this->_authToken,
+                'X-Current-Event-Id' => $this->_mainEventId,
+                'X-Current-Person-Id' => $this->_currentPersonId,
+                'X-Internal-Query-Secret' => Sysconf::MIMIR_INTERNAL_QUERY_SECRET,
+                'X-Locale' => $locale,
+                // @phpstan-ignore-next-line
+                'X-Api-Version' => Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
+            ]);
+        } else {
+            /** @var HttpClient $client */
             // @phpstan-ignore-next-line
-            if (!Sysconf::USE_TWIRP_FREY) {
+            $client = $this->_mimir->getClient()->getHttpClient();
+
+            $client->withHeaders([
+                'X-Debug-Token: ' . Sysconf::DEBUG_TOKEN(),
+                'X-Auth-Token: ' . $this->_authToken,
+                'X-Current-Event-Id: ' . $this->_mainEventId,
+                'X-Current-Person-Id: ' . $this->_currentPersonId,
+                'X-Internal-Query-Secret: ' . Sysconf::MIMIR_INTERNAL_QUERY_SECRET,
+                'X-Locale: ' . $locale,
+                // @phpstan-ignore-next-line
+                'X-Api-Version: ' . Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
+            ]);
+
+            // @phpstan-ignore-next-line
+            if (Sysconf::DEBUG_MODE) {
+                $client->withDebug();
+                $client->withCookies(['XDEBUG_SESSION=PHPSTORM']);
                 // @phpstan-ignore-next-line
                 $this->_frey->getClient()->getHttpClient()->withDebug();
                 // @phpstan-ignore-next-line
@@ -293,7 +319,10 @@ abstract class Controller
             $this->_mainEventRules = Config::fromRaw(Config::$_blankRules);
         }
 
-        $this->_checkCompatibility($client->getLastHeaders());
+        if (!$this->_storage->getTwirpEnabled()) {
+            // @phpstan-ignore-next-line
+            $this->_checkCompatibility($this->_mimir->getClient()->getHttpClient()->getLastHeaders());
+        }
     }
 
     /**
@@ -591,5 +620,18 @@ DATA;
                 ? $baseUrl . 'page/' . $totalPages
                 : Url::make($baseUrl . 'page/' . $totalPages, $idList),
         ];
+    }
+
+    /**
+     * @param \Throwable $e
+     * @return void
+     */
+    protected function _handleTwirpEx(\Throwable $e)
+    {
+        if ($e instanceof \Common\TwirpError) {
+            trigger_error('Exception for path: ' . $_SERVER['REQUEST_URI'] . PHP_EOL
+                . $e->getTraceAsString()
+                . json_encode($e->getMetaMap(), JSON_PRETTY_PRINT), E_USER_WARNING);
+        }
     }
 }

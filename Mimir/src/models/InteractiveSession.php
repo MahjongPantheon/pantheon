@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\MultironResult;
+
 require_once __DIR__ . '/../Model.php';
 require_once __DIR__ . '/EventUserManagement.php';
 require_once __DIR__ . '/../helpers/MultiRound.php';
@@ -219,6 +221,7 @@ class InteractiveSessionModel extends Model
         $currentDealer = $session->getCurrentState()->getCurrentDealer();
         $currentRiichi = $session->getCurrentState()->getRiichiBets();
         $currentScores = $session->getCurrentState()->getScores();
+
         if ($roundData['round_index'] != $currentRound || $roundData['honba'] != $currentHonba) {
             throw new InvalidParametersException('This round is already recorded (or other round index/honba mismatch)');
         }
@@ -226,7 +229,8 @@ class InteractiveSessionModel extends Model
         $round = RoundPrimitive::createFromData($this->_ds, $session, $roundData);
 
         if ($dry) {
-            list(, $paymentsInfo) = $session->dryRunUpdateCurrentState($round);
+            /** @var SessionState $clonedStateAfterUpdate */
+            list($clonedStateAfterUpdate, $paymentsInfo) = $session->dryRunUpdateCurrentState($round);
 
             $multiGet = function (RoundPrimitive $p, $method) {
                 if ($p instanceof MultiRoundPrimitive) {
@@ -238,11 +242,56 @@ class InteractiveSessionModel extends Model
                 return $p->{$method}();
             };
 
+            $scoresBefore = [];
+            $scoresDelta = [];
+            for ($i = 0; $i < count($session->getPlayersIds()); $i++) {
+                $id = $session->getPlayersIds()[$i];
+                $scoresBefore[$id] = $currentScores[$id];
+                $scoresDelta[$id] = $clonedStateAfterUpdate->getScores()[$id] - $currentScores[$id];
+            }
+
             // Warning! Should match PlayersController::getLastRound return format!
             $result = [
+                // Twirp interface compatibility
+                'session_hash' => $gameHashcode,
+                'scores_before'  => $scoresBefore,
+                'scores_delta'   => $scoresDelta,
+                'pao_player_id'  => $multiGet($round, 'getPaoPlayerId'),
+                'round_index' => $currentRound,
+                'winner_id'     => $multiGet($round, 'getWinnerId'),
+                'loser_id'     => $round->getLoserId(),
+                'open_hand'   => $multiGet($round, 'getOpenHand'),
+                'tempai'     => ($round->getOutcome() === 'draw' || $round->getOutcome() === 'nagashi')
+                    ? $round->getTempaiIds()
+                    : null,
+                'nagashi'    => $round->getOutcome() === 'nagashi' ? $round->getNagashiIds() : null,
+                'multi_ron'     => $round->getMultiRon(),
+                'riichi_bets'   => $round instanceof MultiRoundPrimitive
+                    ? implode(',', array_filter(array_map(function (RoundPrimitive $r) {
+                        return implode(',', $r->getRiichiIds());
+                    }, $round->rounds())))
+                    : $round->getRiichiIds(),
+                'wins' => $round instanceof MultiRoundPrimitive
+                    ? array_map(function (RoundPrimitive $inner) {
+                        return [
+                            'winner_id' => $inner->getWinnerId(),
+                            'pao_player_id' => $inner->getPaoPlayerId(),
+                            'han' => $inner->getHan(),
+                            'fu' => $inner->getFu(),
+                            'yaku' => $inner->getYaku(),
+                            'dora' => $inner->getDora(),
+                            'kandora' => $inner->getKandora(),
+                            'uradora' => $inner->getUradora(),
+                            'kanuradora' => $inner->getKanuradora(),
+                            'open_hand' => $inner->getOpenHand()
+                        ];
+                    }, $round->rounds())
+                    : [],
+                // /Twirp interface compatibility
+
                 'outcome'    => $round->getOutcome(),
                 'penaltyFor' => $round->getOutcome() === 'chombo' ? $round->getLoserId() : null,
-                'riichiIds'  => $round->getRiichiIds(),
+                'riichiIds'  => $multiGet($round, 'getRiichiIds'),
                 'dealer'     => $currentDealer,
                 'round'      => $currentRound,
                 'riichi'     => $currentRiichi,
@@ -264,7 +313,7 @@ class InteractiveSessionModel extends Model
             if (is_array($result['paoPlayer'])) {
                 // pao player may be only one
                 $paoPlayers = array_filter($result['paoPlayer']);
-                $result['paoPlayer'] = reset($paoPlayers) or null;
+                $result['paoPlayer'] = reset($paoPlayers);
             }
 
             return $result;

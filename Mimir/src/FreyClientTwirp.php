@@ -97,12 +97,13 @@ class FreyClientTwirp implements IFreyClient
      * @param string $password
      * @return string
     */
-    public function requestRegistration(string $email, string $password): string
+    public function requestRegistration(string $email, string $title, string $password): string
     {
         return $this->_client->RequestRegistration(
             $this->_ctx,
             (new \Common\Auth_RequestRegistration_Payload())
                 ->setEmail($email)
+                ->setTitle($title)
                 ->setPassword($password)
         )->getApprovalCode();
     }
@@ -986,5 +987,30 @@ class FreyClientTwirp implements IFreyClient
                 ->setRuleType($ruleType)
                 ->setGroupId($groupId)
         )->getRuleId();
+    }
+
+    /**
+     * @param int $id
+     * @param string $clientSideToken
+     * @return array
+     */
+    public function me(int $id, string $clientSideToken): array
+    {
+        $person = $this->_client->Me(
+            $this->_ctx,
+            (new \Common\Auth_Me_Payload())
+                ->setPersonId($id)
+                ->setAuthToken($clientSideToken)
+        );
+        return [
+            'id' => $person->getPersonId(),
+            'country' => $person->getCountry(),
+            'city' => $person->getCity(),
+            'email' => $person->getEmail(),
+            'phone' => $person->getPhone(),
+            'tenhou_id' => $person->getTenhouId(),
+            'groups' => $person->getGroups(),
+            'title' => $person->getTitle(),
+        ];
     }
 }

@@ -310,13 +310,13 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function UpdatePersonalInfo(array $ctx, \Common\Persons_UpdatePersonalInfo_Payload $in): \Common\Persons_UpdatePersonalInfo_Response
+    public function UpdatePersonalInfo(array $ctx, \Common\Persons_UpdatePersonalInfo_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'UpdatePersonalInfo');
 
-        $out = new \Common\Persons_UpdatePersonalInfo_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -678,13 +678,13 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function UpdateRuleForPerson(array $ctx, \Common\Access_UpdateRuleForPerson_Payload $in): \Common\Access_UpdateRuleForPerson_Response
+    public function UpdateRuleForPerson(array $ctx, \Common\Access_UpdateRuleForPerson_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'UpdateRuleForPerson');
 
-        $out = new \Common\Access_UpdateRuleForPerson_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -701,13 +701,13 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function UpdateRuleForGroup(array $ctx, \Common\Access_UpdateRuleForGroup_Payload $in): \Common\Access_UpdateRuleForGroup_Response
+    public function UpdateRuleForGroup(array $ctx, \Common\Access_UpdateRuleForGroup_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'UpdateRuleForGroup');
 
-        $out = new \Common\Access_UpdateRuleForGroup_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -724,13 +724,13 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function DeleteRuleForPerson(array $ctx, \Common\Access_DeleteRuleForPerson_Payload $in): \Common\Access_DeleteRuleForPerson_Response
+    public function DeleteRuleForPerson(array $ctx, \Common\Access_DeleteRuleForPerson_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'DeleteRuleForPerson');
 
-        $out = new \Common\Access_DeleteRuleForPerson_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -747,13 +747,13 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function DeleteRuleForGroup(array $ctx, \Common\Access_DeleteRuleForGroup_Payload $in): \Common\Access_DeleteRuleForGroup_Response
+    public function DeleteRuleForGroup(array $ctx, \Common\Access_DeleteRuleForGroup_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'DeleteRuleForGroup');
 
-        $out = new \Common\Access_DeleteRuleForGroup_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -770,13 +770,13 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function ClearAccessCache(array $ctx, \Common\Access_ClearAccessCache_Payload $in): \Common\Access_ClearAccessCache_Response
+    public function ClearAccessCache(array $ctx, \Common\Access_ClearAccessCache_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'ClearAccessCache');
 
-        $out = new \Common\Access_ClearAccessCache_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -839,13 +839,13 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function UpdateGroup(array $ctx, \Common\Persons_UpdateGroup_Payload $in): \Common\Persons_UpdateGroup_Response
+    public function UpdateGroup(array $ctx, \Common\Persons_UpdateGroup_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'UpdateGroup');
 
-        $out = new \Common\Persons_UpdateGroup_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -862,13 +862,13 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function DeleteGroup(array $ctx, \Common\Persons_DeleteGroup_Payload $in): \Common\Persons_DeleteGroup_Response
+    public function DeleteGroup(array $ctx, \Common\Persons_DeleteGroup_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'DeleteGroup');
 
-        $out = new \Common\Persons_DeleteGroup_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -885,13 +885,13 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function AddPersonToGroup(array $ctx, \Common\Persons_AddPersonToGroup_Payload $in): \Common\Persons_AddPersonToGroup_Response
+    public function AddPersonToGroup(array $ctx, \Common\Persons_AddPersonToGroup_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'AddPersonToGroup');
 
-        $out = new \Common\Persons_AddPersonToGroup_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
@@ -908,13 +908,13 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function RemovePersonFromGroup(array $ctx, \Common\Persons_RemovePersonFromGroup_Payload $in): \Common\Persons_RemovePersonFromGroup_Response
+    public function RemovePersonFromGroup(array $ctx, \Common\Persons_RemovePersonFromGroup_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'RemovePersonFromGroup');
 
-        $out = new \Common\Persons_RemovePersonFromGroup_Response();
+        $out = new \Common\Generic_Success_Response();
 
         $url = $this->addr;
         if (empty($this->prefix)) {

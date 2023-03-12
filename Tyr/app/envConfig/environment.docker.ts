@@ -29,6 +29,7 @@ export const environment: EnvConfig = {
   cookieDomain: null, // when working on localhost this must be omitted!
   statDomain: 'analytics.local', // for testing
   siteId: '123456', // for testing
+  releaseTag: process.env.RELEASE_TAG!,
 
   // Do not change this unless you really know what are you doing
   apiVersion: [1, 0],

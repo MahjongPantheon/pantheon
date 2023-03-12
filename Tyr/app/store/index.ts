@@ -17,9 +17,10 @@ import { logging } from './middlewares/logging';
 import { I18nService } from '#/services/i18n';
 import { yaku } from './middlewares/yaku';
 import { reduceReducers } from '#/store/util';
-import { AppActionTypes, GET_GAME_OVERVIEW_INIT } from '#/store/actions/interfaces';
+import { AppActionTypes } from '#/store/actions/interfaces';
 import { screenManageMw } from '#/store/middlewares/screenManage';
 import { IStorage } from '#/services/storage';
+import { RiichiApiTwirpService } from '#/services/riichiApiTwirp';
 
 export class Store {
   private onUpdate: ((state: IAppState) => void) | undefined;
@@ -42,15 +43,9 @@ export class Store {
       timerReducer,
     ]);
     const analyticsService = new Analytics();
-    const riichiService = new RiichiApiService(() => {
-      if (this.store.getState().currentScreen === 'currentGame') {
-        const hash = this.store.getState().currentSessionHash;
-        if (hash) {
-          // Update game state and update websocket registration
-          this.dispatch({ type: GET_GAME_OVERVIEW_INIT, payload: hash });
-        }
-      }
-    });
+    const riichiService = storage.getTwirpEnabled()
+      ? new RiichiApiTwirpService()
+      : new RiichiApiService();
     const middleware = applyMiddleware(
       logging(`⇨ [middlewares]`),
       apiClient(riichiService),

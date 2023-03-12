@@ -95,6 +95,7 @@ class TournamentControlPanel extends Controller
                         ;
                 }
             } catch (\Exception $e) {
+                $this->_handleTwirpEx($e);
                 $this->_lastEx = $e;
                 return true;
             }
@@ -152,7 +153,14 @@ class TournamentControlPanel extends Controller
 
         // filter $players who are ignored from seating
         $players = array_values(array_filter($players, function ($player) {
-            return !$player['ignore_seating'];
+            $includePlayer = true;
+            if ($player['ignore_seating']) {
+                $includePlayer = false;
+            }
+            if ($this->_mainEventRules->isPrescripted() && empty($player['local_id'])) {
+                $includePlayer = false;
+            }
+            return $includePlayer;
         }));
 
         $currentStage = $this->_determineStage($tablesFormatted, $players);
@@ -165,9 +173,11 @@ class TournamentControlPanel extends Controller
                     array_unshift($nextPrescriptedSeating, []); // small hack to start from 1
                 }
             } catch (\Exception $e) {
+                $this->_handleTwirpEx($e);
                 return [
                     'error' => null,
-                    'prescriptedEventErrorDescription' => $e->getCode() == 1404
+                    // TODO: better error handlers for twirp interface: code is not passed through exceptions.
+                    'prescriptedEventErrorDescription' => ($e->getCode() == 1404 || str_contains($e->getMessage(), 'Event prescript for'))
                         ? _t('No seating defined. Check "Admin actions / Predefined seating" page to define seating for tournament')
                         : $e->getMessage()
                 ];

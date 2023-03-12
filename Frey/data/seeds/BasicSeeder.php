@@ -39,7 +39,7 @@ class BasicSeeder extends AbstractSeed
         $this->table('player')->getAdapter()->commitTransaction();
 
         list($db, $config) = $this->_getConnection();
-        $meta = new \Frey\Meta($_SERVER);
+        $meta = new \Frey\Meta(new \Common\Storage('localhost'), $_SERVER);
 
         list($adminId, $adminGroupId) = \Frey\BootstrapAccess::create($db, $config, $meta, 'admin@localhost.localdomain', '123456');
 
@@ -129,7 +129,7 @@ class BasicSeeder extends AbstractSeed
      */
     protected function _seedGroupAccess(\Frey\Db $db, \Frey\Config $config, $groupIds)
     {
-        $meta = new \Frey\Meta($_SERVER);
+        $meta = new \Frey\Meta(new \Common\Storage('localhost'), $_SERVER);
         $model = new \Frey\AccessManagementModel($db, $config, $meta);
 
         // admins are system-wide
@@ -197,7 +197,7 @@ class BasicSeeder extends AbstractSeed
      */
     protected function _seedPersonAccess(\Frey\Db $db, \Frey\Config $config, $personIds)
     {
-        $meta = new \Frey\Meta($_SERVER);
+        $meta = new \Frey\Meta(new \Common\Storage('localhost'), $_SERVER);
         $model = new \Frey\AccessManagementModel($db, $config, $meta);
 
         // nullify some system-wide rules for last admin
