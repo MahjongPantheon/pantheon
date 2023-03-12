@@ -39,6 +39,7 @@ import {
   GOTO_EVENT_SELECT,
   LOGIN_INIT,
   LOGIN_SUCCESS,
+  RESET_LOGIN_ERROR,
   RESET_STATE,
   SELECT_EVENT,
   SET_CREDENTIALS,
@@ -70,6 +71,7 @@ export const apiClient =
         if (!action.payload.token) {
           // Not logged in
           mw.dispatch({ type: FORCE_LOGOUT, payload: undefined });
+          mw.dispatch({ type: RESET_LOGIN_ERROR }); // this resets error screen
           return;
         }
 
@@ -251,6 +253,7 @@ function updateCurrentGames(
       if (e.code === 401) {
         // token has rotten
         dispatchToStore({ type: FORCE_LOGOUT, payload: undefined });
+        dispatchToStore({ type: RESET_LOGIN_ERROR }); // this resets error screen
       } else {
         dispatchNext({ type: UPDATE_CURRENT_GAMES_FAIL, payload: e });
       }
@@ -390,7 +393,10 @@ function startupWithAuth(
   api.setCredentials(personId, token);
   api
     .quickAuthorize()
-    .then((_isAuthorized) => {
+    .then((isAuthorized) => {
+      if (!isAuthorized) {
+        throw new Error();
+      }
       dispatchToStore({
         type: SET_CREDENTIALS,
         payload: { authToken: token, personId: personId },
@@ -408,5 +414,6 @@ function startupWithAuth(
     })
     .catch(() => {
       dispatchToStore({ type: FORCE_LOGOUT, payload: undefined });
+      dispatchToStore({ type: RESET_LOGIN_ERROR }); // this resets error screen
     });
 }

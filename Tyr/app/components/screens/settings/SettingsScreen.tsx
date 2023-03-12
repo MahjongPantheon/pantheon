@@ -5,6 +5,7 @@ import {
   FORCE_LOGOUT,
   GOTO_EVENT_SELECT,
   GOTO_PREV_SCREEN,
+  RESET_LOGIN_ERROR,
   SETTINGS_SAVE_LANG,
   SETTINGS_SAVE_SINGLE_DEVICE_MODE,
   SETTINGS_SAVE_THEME,
@@ -23,6 +24,7 @@ export class SettingsScreen extends React.PureComponent<IComponentProps> {
   private onLogout() {
     const { dispatch } = this.props;
     dispatch({ type: FORCE_LOGOUT, payload: undefined });
+    dispatch({ type: RESET_LOGIN_ERROR }); // this resets error screen
   }
 
   private onSingleDeviceModeChange(value: boolean) {
