@@ -309,6 +309,7 @@ class Meta
     public function sendVersionHeader($major, $minor): void
     {
         header('X-Api-Version: ' . intval($major) . '.' . intval($minor));
+        header('X-Release: ' . trim(file_get_contents(__DIR__ . '/../../Common/ReleaseTag.txt') ?: ''));
     }
 
     public function isGlobalWatcher(): bool

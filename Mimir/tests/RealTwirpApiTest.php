@@ -333,8 +333,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             ->setRuleset('ema')
             ->setRulesetChanges('')
             ->setSeriesLength(3)
-            ->setTimezone('Asia/Novisibirsk')
-        )->getEventId();
+            ->setTimezone('Asia/Novisibirsk'))->getEventId();
 
         $event = EventPrimitive::findById($this->_ds, [$id])[0];
         $this->assertEquals('New Event', $event->getTitle());
@@ -376,9 +375,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
                 ->setRuleset('ema')
                 ->setRulesetChanges('')
                 ->setSeriesLength(3)
-                ->setTimezone('Asia/Novisibirsk')
-            )
-        )->getSuccess();
+                ->setTimezone('Asia/Novisibirsk')))->getSuccess();
 
         $this->assertTrue($ret);
         // reload data
@@ -513,7 +510,8 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('inprogress', $sessions[0]->getStatus());
 
         $this->assertTrue(
-            $this->_client->EndGame([], (new Games_EndGame_Payload())->setSessionHash($hash))->getSuccess());
+            $this->_client->EndGame([], (new Games_EndGame_Payload())->setSessionHash($hash))->getSuccess()
+        );
 
         $sessions = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
         $this->assertNotEmpty($sessions);
@@ -535,7 +533,6 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
     public function testEndGameTournament()
     {
-
     }
 
     public function testCancelGame()
@@ -553,7 +550,8 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('inprogress', $sessions[0]->getStatus());
 
         $this->assertTrue(
-            $this->_client->CancelGame([], (new Games_CancelGame_Payload())->setSessionHash($hash))->getSuccess());
+            $this->_client->CancelGame([], (new Games_CancelGame_Payload())->setSessionHash($hash))->getSuccess()
+        );
 
         $sessions = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
         $this->assertNotEmpty($sessions);
@@ -567,182 +565,145 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
     public function testFinalizeSession()
     {
-
     }
 
     public function testAddRound()
     {
-
     }
 
     public function testPreviewRound()
     {
-
     }
 
     public function testDropLastRound()
     {
-
     }
 
     public function testDefinalizeGame()
     {
-
     }
 
     public function testAddPenalty()
     {
-
     }
 
     public function testGetLastRound()
     {
-
     }
 
     public function testGetAllRounds()
     {
-
     }
 
     public function testGetLastRoundByHash()
     {
-
     }
 
     public function testAddOnlineReplay()
     {
-
     }
 
     public function testGetLastResults()
     {
-
     }
 
     public function testGetEventForEdit()
     {
-
     }
 
     public function testRebuildScoring()
     {
-
     }
 
     public function testGetTablesState()
     {
-
     }
 
     public function testStartTimer()
     {
-
     }
 
     public function testUpdatePlayerSeatingFlag()
     {
-
     }
 
     public function testGetAchievements()
     {
-
     }
 
     public function testGetAchievementsList()
     {
-
     }
 
     public function testToggleHideResults()
     {
-
     }
 
     public function testUpdatePlayersLocalIds()
     {
-
     }
 
     public function testUpdatePlayerReplacement()
     {
-
     }
 
     public function testUpdatePlayersTeams()
     {
-
     }
 
     public function testAddPenaltyGame()
     {
-
     }
 
     public function testGetPlayer()
     {
-
     }
 
     public function testGetCurrentSeating()
     {
-
     }
 
     public function testMakeShuffledSeating()
     {
-
     }
 
     public function testMakeSwissSeating()
     {
-
     }
 
     public function testResetSeating()
     {
-
     }
 
     public function testGenerateSwissSeating()
     {
-
     }
 
     public function testMakeIntervalSeating()
     {
-
     }
 
     public function testMakePrescriptedSeating()
     {
-
     }
 
     public function testGetNextPrescriptedSeating()
     {
-
     }
 
     public function testGetPrescriptedEventConfig()
     {
-
     }
 
     public function testUpdatePrescriptedEventConfig()
     {
-
     }
 
     public function testInitStartingTimer()
     {
-
     }
 
     public function testGetStartingTimer()
     {
-
     }
-
 }

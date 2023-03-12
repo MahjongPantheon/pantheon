@@ -209,6 +209,13 @@ export class RiichiApiService implements IRiichiApi {
       environment.apiUrl + (environment.production ? '' : '?XDEBUG_SESSION=start'),
       fetchInit
     )
+      .then((r) => {
+        const release = r.headers.get('X-Release');
+        if (release && release !== environment.releaseTag) {
+          window.location.reload();
+        }
+        return r;
+      })
       .then((r) => r.json())
       .then<RET_TYPE>((resp: GenericResponse) => {
         if (resp.error) {

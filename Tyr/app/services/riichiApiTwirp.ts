@@ -86,6 +86,12 @@ export class RiichiApiTwirpService implements IRiichiApi {
       return fetch(url + (environment.production ? '' : '?XDEBUG_SESSION=start'), {
         ...opts,
         headers,
+      }).then((r) => {
+        const release = r.headers.get('X-Release');
+        if (release && release !== environment.releaseTag) {
+          window.location.reload();
+        }
+        return r;
       });
     };
   }
