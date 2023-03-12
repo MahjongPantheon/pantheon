@@ -15,6 +15,8 @@
     "fguillot/json-rpc": "@stable",
     "justinrainbow/json-schema": "^5.2",
     "monolog/monolog": "^3.1",
+    "google/protobuf": "3.21.9",
+    "guzzlehttp/psr7": "2.4.3",
     "xamin/handlebars.php": "dev-master",
     "chillerlan/php-qrcode": "^4.3",
     "giggsey/libphonenumber-for-php": "^8.13",
