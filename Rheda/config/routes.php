@@ -63,6 +63,9 @@ return [ // Omit trailing slashes in keys when possible
     '!/page/(?<page>[0-9]+)' => 'MultieventMainpage',
     '!/favicon.ico'          => 'MultieventMainpage',
 
+    // TODO: remove after twirp experiments are over
+    '!/profile/(?<action>toggleProto)'       => 'MultieventMainpage',
+
     '!/signup'                              => 'PersonSignup',
     '!/confirm/(?<code>[0-9a-f]+)'          => 'PersonSignupConfirm',
     '!/signupAdmin'                         => 'PersonSignupAdministrative',

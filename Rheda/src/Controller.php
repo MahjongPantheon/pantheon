@@ -349,6 +349,7 @@ abstract class Controller
             if (count($this->_eventIdList) > 1) {
                 /* Aggregated events. */
                 echo $templateEngine->render('Layout', [
+                    'betaLabel' => $this->_storage->getTwirpEnabled(),
                     'eventTitle' => _t("Aggregated event"),
                     'analyticsSiteId' => empty(Sysconf::ANALYTICS_SITE_ID()) ? null : Sysconf::ANALYTICS_SITE_ID(),
                     'statDomain' => empty(Sysconf::STAT_DOMAIN()) ? null : Sysconf::STAT_DOMAIN(),
@@ -362,6 +363,7 @@ abstract class Controller
             } else {
                 /* Simple events. */
                 echo $templateEngine->render('Layout', [
+                    'betaLabel' => $this->_storage->getTwirpEnabled(),
                     'tyrUrl' => Sysconf::MOBILE_CLIENT_URL(),
                     'isOnline' => $this->_mainEventRules->isOnline(),
                     'isTeam' => $this->_mainEventRules->isTeam(),

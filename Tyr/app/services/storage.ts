@@ -175,6 +175,9 @@ export class Storage implements IStorage {
   public clear(): void {
     const cookies = document.cookie.split('; ');
     for (const cookie of cookies) {
+      if (cookie.split('=')[0] === TWIRP_ENABLED) {
+        continue;
+      }
       [
         window.location.hostname,
         '.' + window.location.hostname.split('.').slice(1).join('.'),

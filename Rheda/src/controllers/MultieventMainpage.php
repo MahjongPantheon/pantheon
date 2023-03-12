@@ -28,6 +28,16 @@ class MultieventMainpage extends Controller
         return _t('Event list');
     }
 
+    protected function _beforeRun()
+    {
+        if (!empty($this->_path['action']) && $this->_path['action'] === 'toggleProto') {
+            $this->_storage->setTwirpEnabled(!$this->_storage->getTwirpEnabled());
+            header('Location: /');
+            return false;
+        }
+        return true;
+    }
+
     /**
      * @return array
      * @throws \Exception
