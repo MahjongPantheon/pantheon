@@ -2,8 +2,6 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { DefinePlugin } = require('webpack');
-const releaseTag = require('fs').readFileSync(__dirname + '/../Common/ReleaseTag.txt', 'utf-8').trim();
 
 module.exports = {
   entry: './app/index.tsx',
@@ -59,9 +57,6 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: '[name].css',
-    }),
-    new DefinePlugin({
-      'process.env.RELEASE_TAG': '\'' + releaseTag + '\'',
     }),
   ],
   resolve: {

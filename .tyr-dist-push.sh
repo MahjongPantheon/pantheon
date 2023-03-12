@@ -9,9 +9,6 @@ commit_built() {
   git checkout master
   git add Tyr-dist
   git commit --message "Auto build: $GITHUB_RUN_NUMBER"
-  git rev-parse --short HEAD > Common/ReleaseTag.txt
-  git add Common/ReleaseTag.txt
-  git commit --message "Updated release tag after build: $GITHUB_RUN_NUMBER"
 }
 
 upload_files() {

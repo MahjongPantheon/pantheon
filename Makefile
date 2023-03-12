@@ -373,3 +373,9 @@ i18n_extract: get_docker_id
 i18n_compile: get_docker_id
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make i18n_compile';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make i18n_update';
+
+.PHONY: bump_release
+bump_release:
+	git rev-parse --short HEAD > Common/ReleaseTag.txt
+	git add Common/ReleaseTag.txt
+	git commit --message "Updated release tag"

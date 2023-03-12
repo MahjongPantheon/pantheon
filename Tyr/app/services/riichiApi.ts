@@ -60,6 +60,7 @@ import {
 import { IAppState } from '#/store/interfaces';
 import { environment } from '#config';
 import { IRiichiApi } from '#/services/IRiichiApi';
+import { getReleaseTag, handleReleaseTag } from '#/services/releaseTags';
 
 type GenericResponse = {
   error?: { message: string; code: any };
@@ -70,6 +71,7 @@ type GenericResponse = {
 export class RiichiApiService implements IRiichiApi {
   private _authToken: string | null = null;
   private _personId: string | null = null;
+  private readonly _releaseTag = getReleaseTag();
   setCredentials(personId: number, token: string) {
     this._authToken = token;
     this._personId = (personId || 0).toString();
@@ -209,13 +211,7 @@ export class RiichiApiService implements IRiichiApi {
       environment.apiUrl + (environment.production ? '' : '?XDEBUG_SESSION=start'),
       fetchInit
     )
-      .then((r) => {
-        const release = r.headers.get('X-Release');
-        if (release && release !== environment.releaseTag) {
-          window.location.reload();
-        }
-        return r;
-      })
+      .then(handleReleaseTag(this._releaseTag))
       .then((r) => r.json())
       .then<RET_TYPE>((resp: GenericResponse) => {
         if (resp.error) {

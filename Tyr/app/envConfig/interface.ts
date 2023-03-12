@@ -8,5 +8,4 @@ export type EnvConfig = {
   statDomain: string | null;
   siteId: string | null;
   apiVersion: [number, number];
-  releaseTag: string;
 };
