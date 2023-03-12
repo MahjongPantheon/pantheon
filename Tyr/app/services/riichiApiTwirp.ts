@@ -57,7 +57,7 @@ import {
   RRoundOverviewTsumo,
   RRoundPaymentsInfo,
 } from '#/interfaces/remote';
-import { getReleaseTag, handleReleaseTag } from '#/services/releaseTags';
+import { handleReleaseTag } from '#/services/releaseTags';
 
 export class RiichiApiTwirpService implements IRiichiApi {
   private _authToken: string | null = null;
@@ -68,7 +68,6 @@ export class RiichiApiTwirpService implements IRiichiApi {
   private readonly _clientConfFrey: ClientConfiguration = {
     prefix: '/v2',
   };
-  private readonly _releaseTag = getReleaseTag();
 
   setCredentials(personId: number, token: string) {
     this._authToken = token;
@@ -88,7 +87,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
       return fetch(url + (environment.production ? '' : '?XDEBUG_SESSION=start'), {
         ...opts,
         headers,
-      }).then(handleReleaseTag(this._releaseTag));
+      }).then(handleReleaseTag);
     };
   }
 
