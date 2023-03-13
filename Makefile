@@ -131,11 +131,13 @@ pantheon_run: get_docker_id get_docker_idle_id
 				-p 127.0.0.1:4004:4004 \
 				-p 127.0.0.1:5532:5532 \
 				-p 127.0.0.1:4005:4005 \
+				-p 127.0.0.1:4006:4006 \
 				-v `pwd`/Tyr:/var/www/html/Tyr:z \
 				-v `pwd`/Mimir:/var/www/html/Mimir:z \
 				-v `pwd`/Rheda:/var/www/html/Rheda:z \
 				-v `pwd`/Frey:/var/www/html/Frey:z \
 				-v `pwd`/Njord:/var/www/html/Njord:z \
+				-v `pwd`/Skadi:/var/www/html/Skadi:z \
 				-v `pwd`/Common:/var/www/html/Common:z \
 				-v `pwd`/:/var/www/html/pantheon:z \
 				--name=pantheondev \
@@ -323,6 +325,8 @@ lint: get_docker_id
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make lint';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make lint';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make lint';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Njord && HOME=/home/user su-exec user make lint';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Skadi && HOME=/home/user su-exec user make lint';
 
 .PHONY: check_covered
 check_covered: get_docker_id lint
@@ -347,11 +351,15 @@ autofix: get_docker_id
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make autofix';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make autofix';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make autofix';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Njord && HOME=/home/user su-exec user make autofix';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Skadi && HOME=/home/user su-exec user make autofix';
 
 .PHONY: proto_gen
 proto_gen: get_docker_id
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Common && HOME=/home/user su-exec user make proto_gen';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make proto_gen';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Njord && HOME=/home/user su-exec user make proto_gen';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Skadi && HOME=/home/user su-exec user make proto_gen';
 
 # Prod related tasks & shortcuts
 

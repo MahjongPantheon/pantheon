@@ -158,6 +158,7 @@ RUN mkdir -p /var/www/html/Mimir
 RUN mkdir -p /var/www/html/Rheda
 RUN mkdir -p /var/www/html/Frey
 RUN mkdir -p /var/www/html/Njord
+RUN mkdir -p /var/www/html/Skadi
 RUN mkdir -p /var/www/html/Common
 RUN mkdir -p /var/www/html/pantheon
 
