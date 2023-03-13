@@ -1,0 +1,18 @@
+{
+  "name": "njord",
+  "version": "1.0.0",
+  "description": "Riichi game server",
+  "main": "index.js",
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "typescript": "^4.9.5",
+    "twirpscript": "^0.0.66",
+    "uWebSockets.js": "uNetworking/uWebSockets.js#v20.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.1",
+    "ts-node": "^10.9.1",
+    "nodemon": "^2.0.21"
+  }
+}

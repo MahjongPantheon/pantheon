@@ -33,6 +33,7 @@ deps: get_docker_id
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make deps'; \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make deps'; \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps'; \
+		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Njord && HOME=/home/user su-exec user make deps'; \
 	fi
 
 .PHONY: kill
@@ -97,6 +98,7 @@ pantheon_run: get_docker_id get_docker_idle_id
 		echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
 		echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
 		echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
+		echo "- ${YELLOW}Njord${NC} is exposed on port 4005"; \
   		echo "----------------------------------------------------------------------------------"; \
   		echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
   		echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
@@ -128,11 +130,12 @@ pantheon_run: get_docker_id get_docker_idle_id
 				-p 127.0.0.1:4003:4003 \
 				-p 127.0.0.1:4004:4004 \
 				-p 127.0.0.1:5532:5532 \
-				-p 127.0.0.1:4006:4006 \
+				-p 127.0.0.1:4005:4005 \
 				-v `pwd`/Tyr:/var/www/html/Tyr:z \
 				-v `pwd`/Mimir:/var/www/html/Mimir:z \
 				-v `pwd`/Rheda:/var/www/html/Rheda:z \
 				-v `pwd`/Frey:/var/www/html/Frey:z \
+				-v `pwd`/Njord:/var/www/html/Njord:z \
 				-v `pwd`/Common:/var/www/html/Common:z \
 				-v `pwd`/:/var/www/html/pantheon:z \
 				--name=pantheondev \

@@ -17,6 +17,7 @@ ENV MIMIR_URL http://localhost:4001
 ENV RHEDA_URL http://localhost:4002
 ENV TYR_URL   http://localhost:4003
 ENV FREY_URL  http://localhost:4004
+ENV NJORD_URL  http://localhost:4005
 
 ENV IS_DOCKER 1
 
@@ -129,7 +130,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/php81/error.log
 
 # Expose ports
-EXPOSE 4001 4002 4003 4004 $DB_PORT
+EXPOSE 4001 4002 4003 4004 4005 $DB_PORT
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
@@ -156,6 +157,7 @@ RUN mkdir -p /var/www/html/Tyr
 RUN mkdir -p /var/www/html/Mimir
 RUN mkdir -p /var/www/html/Rheda
 RUN mkdir -p /var/www/html/Frey
+RUN mkdir -p /var/www/html/Njord
 RUN mkdir -p /var/www/html/Common
 RUN mkdir -p /var/www/html/pantheon
 
