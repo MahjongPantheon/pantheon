@@ -30,7 +30,8 @@ class AdminLogin extends Controller
 
     protected function _run()
     {
-        $error = null;
+	    $error = null;
+	    throw new Exception();
 
         if (!empty($_POST['secret'])) {
             $auth = $this->_getAdminAuth($_POST['secret']);

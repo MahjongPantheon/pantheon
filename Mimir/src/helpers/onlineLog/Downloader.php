@@ -36,7 +36,8 @@ class Downloader
         $replayHash = $this->_decodeHash($replayHash);
 
         $logUrl = base64_decode("aHR0cDovL2UubWp2LmpwLzAvbG9nL3BsYWluZmlsZXMuY2dpPw==") . $replayHash;
-        $fallbackLogUrl = base64_decode("aHR0cDovL2UubWp2LmpwLzAvbG9nL2FyY2hpdmVkLmNnaT8=") . $replayHash;
+	//$fallbackLogUrl = base64_decode("aHR0cDovL2UubWp2LmpwLzAvbG9nL2FyY2hpdmVkLmNnaT8=") . $replayHash;
+	$fallbackLogUrl = "https://tenhou.net/0/log/?" . $replayHash;
 
         list ($content, $code) = $this->_download($logUrl);
         if (empty($content) || $code != 200) {

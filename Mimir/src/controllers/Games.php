@@ -41,9 +41,9 @@ class GamesController extends Controller
     public function start($eventId, $players)
     {
         $this->_log->info('Starting game with players id# ' . implode(',', $players));
-        $gameHash = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->startGame($eventId, $players);
+        //$gameHash = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->startGame($eventId, $players);
         $this->_log->info('Successfully started game with players id# ' . implode(',', $players));
-        return $gameHash;
+        return ''; //$gameHash;
     }
 
     /**
@@ -156,9 +156,9 @@ class GamesController extends Controller
     public function addRound($gameHashcode, $roundData, $dry = false)
     {
         $this->_log->info('Adding new round to game # ' . $gameHashcode);
-        $result = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->addRound($gameHashcode, $roundData, $dry);
+        //$result = (new InteractiveSessionModel($this->_db, $this->_config, $this->_meta))->addRound($gameHashcode, $roundData, $dry);
         $this->_log->info(($result ? 'Successfully added' : 'Failed to add') . ' new round to game # ' . $gameHashcode);
-        return $result;
+        return false; // $result;
     }
 
     /**

@@ -123,17 +123,19 @@ abstract class Controller
         }
         putenv('LC_ALL=' . $locale);
 
-        $eidMatches = [];
-        if (empty($path['event']) || !preg_match('#eid(?<ids>\d+(?:\.\d+)*)#is', $path['event'], $eidMatches)) {
-            // TODO: убрать чтобы показать страницу со списком событий
-            //throw new Exception('No event id found! Use single-event mode, or choose proper event on main page');
-            exit(_t('Please select some event!'));
-        }
+	$eidMatches = [];
+	if (!empty($path['event'])) {
+		preg_match('#eid(?<ids>\d+(?:\.\d+)*)#is', $path['event'], $eidMatches);
+	}
+	if (!empty($eidMatches)) {
+            $ids = explode('.', $eidMatches[1]);
 
-        $ids = explode('.', $eidMatches[1]);
-
-        $this->_eventIdList = array_map('intval', $ids);
-        $this->_mainEventId = $this->_eventIdList[0];
+            $this->_eventIdList = array_map('intval', $ids);
+	    $this->_mainEventId = $this->_eventIdList[0];
+	} else {
+		$this->_eventIdList = [];
+		$this->_mainEventId = null;
+	}
 
         /** @var HttpClient $client */
         $client = $this->_api->getHttpClient();
@@ -149,19 +151,23 @@ abstract class Controller
 
         $this->_rulesList = [];
 
-        foreach ($this->_eventIdList as $eventId) {
-            $rules = Config::fromRaw($this->_api->execute('getGameConfig', [$eventId]));
-            $this->_rulesList[$eventId] = $rules;
-        }
+	if (!empty($this->_mainEventId)) {
+        	foreach ($this->_eventIdList as $eventId) {
+	            $rules = Config::fromRaw($this->_api->execute('getGameConfig', [$eventId]));
+        	    $this->_rulesList[$eventId] = $rules;
+        	}
 
-        $this->_mainEventRules = $this->_rulesList[$this->_mainEventId];
+		$this->_mainEventRules = $this->_rulesList[$this->_mainEventId];
+	} else {
+		$this->_mainEventRules = null;
+	}
 
         $this->_checkCompatibility($client->getLastHeaders());
     }
 
     public function run()
     {
-        if (empty($this->_mainEventRules->rulesetTitle())) {
+        if (!empty($this->_mainEventRules) && empty($this->_mainEventRules->rulesetTitle())) {
             echo _t('<h2>Oops.</h2>Failed to get event configuration!');
             return;
         }
@@ -188,22 +194,31 @@ abstract class Controller
                     'isLoggedIn' => $this->_adminAuthOk(),
                     'isAggregated' => true
                 ]);
-            } else {
+	    } else {
+		if (!empty($this->_mainEventRules)) {
                 /* Simple events. */
-                echo $templateEngine->render($add . 'Layout', [
-                    'isOnline' => $this->_mainEventRules->isOnline(),
-                    'isTeam' => $this->_mainEventRules->isTeam(),
-                    'useTimer' => $this->_mainEventRules->useTimer(),
-                    'isTournament' => !$this->_mainEventRules->allowPlayerAppend(),
-                    'usePenalty' => $this->_mainEventRules->usePenalty(),
-                    'syncStart' => $this->_mainEventRules->syncStart(),
-                    'eventTitle' => $this->_mainEventRules->eventTitle(),
-                    'isPrescripted' => $this->_mainEventRules->isPrescripted(),
-                    'pageTitle' => $pageTitle,
-                    'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
-                    'isLoggedIn' => $this->_adminAuthOk(),
-                    'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),
-                ]);
+			echo $templateEngine->render($add . 'Layout', [
+				'isOnline' => $this->_mainEventRules->isOnline(),
+				'isTeam' => $this->_mainEventRules->isTeam(),
+				'useTimer' => $this->_mainEventRules->useTimer(),
+				'isTournament' => !$this->_mainEventRules->allowPlayerAppend(),
+				'usePenalty' => $this->_mainEventRules->usePenalty(),
+				'syncStart' => $this->_mainEventRules->syncStart(),
+				'eventTitle' => $this->_mainEventRules->eventTitle(),
+				'isPrescripted' => $this->_mainEventRules->isPrescripted(),
+				'pageTitle' => $pageTitle,
+				'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
+				'isLoggedIn' => $this->_adminAuthOk(),
+				'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),
+			]);
+		} else {
+
+			echo $templateEngine->render($add . 'Layout', [
+				'eventTitle' => "Event list",
+				'pageTitle' => $pageTitle,
+				'content' => $templateEngine->render($add . $this->_mainTemplate, $context),
+			]);
+		}
             }
         }
 
@@ -295,6 +310,13 @@ abstract class Controller
                 $wNs = '\\Rheda\\' . $controller;
                 return new $wNs($url, $matches);
             }
+	}
+
+	if ($path == '/' || empty($path)) { // Multievent mainpage controller (Rheda home page)
+            $controller = $routes['!']; // Special path handling
+            require_once __DIR__ . "/controllers/{$controller}.php";
+            $wNs = '\\Rheda\\' . $controller;
+            return new $wNs($url, $matches);
         }
 
         return null;

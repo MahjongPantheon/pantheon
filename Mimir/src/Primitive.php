@@ -112,7 +112,7 @@ abstract class Primitive
             ->where($currentEntityField, $this->getId())
             ->findArray();
 
-        usort($items, function (&$item1, &$item2) {
+        usort($items, function ($item1, $item2) {
             return $item1['order'] - $item2['order'];
         });
 

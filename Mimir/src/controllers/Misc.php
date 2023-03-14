@@ -39,14 +39,14 @@ class MiscController extends Controller
     /**
      * @var string
      */
-    private $_logPath =  '/tmp/mimir_log_front_errors.log';
+    private $_logPath =  '/var/log/php-fpm/mimir_log_front_errors.log';
 
     public function createLogger()
     {
         if (!file_exists($this->_logPath)) {
             touch($this->_logPath);
         }
-        $handler = new StreamHandler($this->_logPath, Logger::DEBUG, true, null, true);
+        $handler = new StreamHandler($this->_logPath, Logger::DEBUG, true, null);
         $handler->setFormatter(new LineFormatter());
 
         $this->_frontErrorLogger = new Logger('Frontend');
