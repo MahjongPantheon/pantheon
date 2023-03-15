@@ -5,12 +5,12 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector';
 import { PointLight } from '@babylonjs/core/Lights/pointLight';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder';
 import { environment } from '#config';
-import { Tile } from '#/objects/tile';
 import { preloadResources, res } from '#/resources';
 import '@babylonjs/core/Debug';
 import '@babylonjs/inspector';
-import { Hand } from '#/objects/hand';
-import { Discard } from '#/objects/discard';
+import { TableDisplay } from '#/objects/tableDisplay';
+import { LoadingScreen } from '#/helpers/loadingScreen';
+import { DefaultRenderingPipeline } from '@babylonjs/core/PostProcesses/RenderPipeline/Pipelines/defaultRenderingPipeline';
 
 const TABLE_W = 90;
 const TABLE_H = 90;
@@ -21,65 +21,51 @@ const CAMERA_Z = -100;
 const canvas = document.getElementById('renderCanvas') as HTMLCanvasElement;
 const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
 
-const createScene = function () {
-  const scene = new Scene(engine);
-  preloadResources(scene);
-
-  if (!environment.production) {
-    // hide/show the Inspector
-    window.addEventListener('keypress', (ev) => {
-      if (ev.shiftKey && ev.code === 'KeyI') {
-        if (scene.debugLayer.isVisible()) {
-          scene.debugLayer.hide();
-        } else {
-          scene.debugLayer.show();
-        }
-      }
-    });
-  }
-
-  const camera = new ArcRotateCamera(
-    'name',
-    Math.PI / 2,
-    Math.PI / 5,
-    100,
-    new Vector3(0, -20, -20)
-  );
-  // Target the camera to scene origin
-  camera.setTarget(Vector3.Zero());
-  camera.attachControl(canvas, false);
-
+const makeScene = (scene: Scene) => {
   const l1 = new PointLight('light1', new Vector3(0, 10, 0), scene);
   l1.intensity = 1;
 
   const l2 = new PointLight('light1', new Vector3(100, 10, 0), scene);
   l2.intensity = 1;
 
-  const dis = new Discard();
-  dis
-    .addToScene(scene)
-    .addTile(Tile.new('CHUN'))
-    .addTile(Tile.new('TON'))
-    .addTile(Tile.new('SOU_1'))
-    .addTile(Tile.new('PIN_8'))
-    .addTile(Tile.new('MAN_5'))
-    .addTile(Tile.new('PIN_3'))
-    .addTile(Tile.new('CHUN'))
-    .addTile(Tile.new('HAKU'))
-    .addTile(Tile.new('MAN_3'))
-    .addTile(Tile.new('MAN_2'))
-    .addTile(Tile.new('NAN'))
-    .addTile(Tile.new('HAKU'))
-    .addTile(Tile.new('SOU_4'))
-    .addTile(Tile.new('SOU_3'))
-    .addTile(Tile.new('SHA'), true)
-    .addTile(Tile.new('HAKU'))
-    .addTile(Tile.new('PEI'))
-    .addTile(Tile.new('HATSU'))
-    .addTile(Tile.new('HATSU'))
-    .addTile(Tile.new('HATSU'))
-    .addTile(Tile.new('HATSU'))
-    .addTile(Tile.new('SOU_2'));
+  const display = new TableDisplay();
+  display.mesh.position.y = 1;
+  display.mesh.rotation.x = Math.PI / 2;
+  scene.addMesh(display.mesh);
+  display.setValue(5600, 0);
+
+  // const stick = RiichiStick.getNew();
+  // const stick2 = RiichiStick.getNew();
+  // stick2.position.z = 4;
+  // stick.position.z = -4;
+  // scene.addMesh(stick);
+  // scene.addMesh(stick2);
+
+  // const dis = new Discard();
+  // dis
+  //   .addToScene(scene)
+  //   .addTile(Tile.new('CHUN'))
+  //   .addTile(Tile.new('TON'))
+  //   .addTile(Tile.new('SOU_1'))
+  //   .addTile(Tile.new('PIN_8'))
+  //   .addTile(Tile.new('MAN_5'))
+  //   .addTile(Tile.new('PIN_3'))
+  //   .addTile(Tile.new('CHUN'))
+  //   .addTile(Tile.new('HAKU'))
+  //   .addTile(Tile.new('MAN_3'))
+  //   .addTile(Tile.new('MAN_2'))
+  //   .addTile(Tile.new('NAN'))
+  //   .addTile(Tile.new('HAKU'))
+  //   .addTile(Tile.new('SOU_4'))
+  //   .addTile(Tile.new('SOU_3'))
+  //   .addTile(Tile.new('SHA'), true)
+  //   .addTile(Tile.new('HAKU'))
+  //   .addTile(Tile.new('PEI'))
+  //   .addTile(Tile.new('HATSU'))
+  //   .addTile(Tile.new('HATSU'))
+  //   .addTile(Tile.new('HATSU'))
+  //   .addTile(Tile.new('HATSU'))
+  //   .addTile(Tile.new('SOU_2'));
 
   // const hand = new Hand();
   // hand
@@ -169,6 +155,39 @@ const createScene = function () {
   );
 
   ground.material = res.mat.table;
+};
+
+const createScene = function () {
+  const scene = new Scene(engine);
+
+  const camera = new ArcRotateCamera('name', 0, Math.PI / 4, 100, new Vector3(7.5, -7.5, 0));
+  camera.attachControl(canvas, false);
+  camera.fov = 120;
+  scene.addCamera(camera);
+
+  const defaultPipeline = new DefaultRenderingPipeline('default', true, scene, [camera]);
+  defaultPipeline.fxaaEnabled = true;
+
+  if (!environment.production) {
+    // hide/show the Inspector
+    window.addEventListener('keypress', (ev) => {
+      if (ev.shiftKey && ev.code === 'KeyI') {
+        if (scene.debugLayer.isVisible()) {
+          scene.debugLayer.hide();
+        } else {
+          scene.debugLayer.show();
+        }
+      }
+    });
+  }
+
+  engine.loadingScreen = new LoadingScreen();
+  engine.displayLoadingUI();
+
+  preloadResources(scene).then(() => {
+    makeScene(scene);
+    engine.hideLoadingUI();
+  });
 
   // Return the created scene
   return scene;

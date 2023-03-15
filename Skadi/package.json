@@ -1,7 +1,7 @@
 {
-  "name": "njord",
+  "name": "skadi",
   "version": "1.0.0",
-  "description": "Riichi game server",
+  "description": "Riichi game client",
   "main": "index.js",
   "type": "module",
   "license": "GPL-3.0-or-later",
