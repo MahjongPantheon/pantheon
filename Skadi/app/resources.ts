@@ -57,11 +57,13 @@ export function preloadResources(scene: Scene) {
 
       const mat = new StandardMaterial('tile_value_' + i, scene);
       mat.opacityTexture = mat.diffuseTexture = tex;
+      mat.specularColor = new Color3(0, 0, 0); // eliminating the specular highlights of the phong model
       res.mat.tileValues[i] = mat;
 
       const matAka = new StandardMaterial('tile_value_' + i, scene);
       matAka.opacityTexture = tex;
       matAka.diffuseColor = Color3.Red();
+      matAka.specularColor = new Color3(0, 0, 0); // eliminating the specular highlights of the phong model
       res.mat.tileValuesAka[i] = matAka;
     });
 

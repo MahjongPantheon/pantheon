@@ -10,6 +10,7 @@ import { preloadResources, res } from '#/resources';
 import '@babylonjs/core/Debug';
 import '@babylonjs/inspector';
 import { Hand } from '#/objects/hand';
+import { Discard } from '#/objects/discard';
 
 const TABLE_W = 90;
 const TABLE_H = 90;
@@ -54,18 +55,44 @@ const createScene = function () {
   const l2 = new PointLight('light1', new Vector3(100, 10, 0), scene);
   l2.intensity = 1;
 
-  const hand = new Hand();
-  hand
+  const dis = new Discard();
+  dis
     .addToScene(scene)
-    .take4([Tile.new('SOU_1'), Tile.new('SOU_1'), Tile.new('SOU_3'), Tile.new('SOU_3')])
-    .take4([Tile.new('MAN_1'), Tile.new('MAN_1'), Tile.new('MAN_3'), Tile.new('MAN_3')])
-    .take4([Tile.new('PIN_1'), Tile.new('PIN_2'), Tile.new('PIN_3'), Tile.new('PIN_4')])
-    .take1(Tile.new('HATSU'))
-    .takeTsumopai(Tile.new('CHUN'));
-  hand.getRoot().rotation.z = -Math.PI / 2;
-  hand.getRoot().position.y = Tile.H / 2;
+    .addTile(Tile.new('CHUN'))
+    .addTile(Tile.new('TON'))
+    .addTile(Tile.new('SOU_1'))
+    .addTile(Tile.new('PIN_8'))
+    .addTile(Tile.new('MAN_5'))
+    .addTile(Tile.new('PIN_3'))
+    .addTile(Tile.new('CHUN'))
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('MAN_3'))
+    .addTile(Tile.new('MAN_2'))
+    .addTile(Tile.new('NAN'))
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('SOU_4'))
+    .addTile(Tile.new('SOU_3'))
+    .addTile(Tile.new('SHA'), true)
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('PEI'))
+    .addTile(Tile.new('HATSU'))
+    .addTile(Tile.new('HATSU'))
+    .addTile(Tile.new('HATSU'))
+    .addTile(Tile.new('HATSU'))
+    .addTile(Tile.new('SOU_2'));
 
-  hand.claimDaiminkan(Tile.new('SOU_3'), [2, 3, 4], 'SHIMOCHA');
+  // const hand = new Hand();
+  // hand
+  //   .addToScene(scene)
+  //   .take4([Tile.new('SOU_1'), Tile.new('SOU_1'), Tile.new('SOU_3'), Tile.new('SOU_3')])
+  //   .take4([Tile.new('MAN_1'), Tile.new('MAN_1'), Tile.new('MAN_3'), Tile.new('MAN_3')])
+  //   .take4([Tile.new('PIN_1'), Tile.new('PIN_2'), Tile.new('PIN_3'), Tile.new('PIN_4')])
+  //   .take1(Tile.new('HATSU'))
+  //   .takeTsumopai(Tile.new('CHUN'));
+  // hand.getRoot().rotation.z = -Math.PI / 2;
+  // hand.getRoot().position.y = Tile.H / 2;
+  //
+  // hand.claimDaiminkan(Tile.new('SOU_3'), [2, 3, 4], 'SHIMOCHA');
   // hand.claimDaiminkan(Tile.new('MAN_3'), [4, 5, 6], 'TOIMEN');
   // hand.claimDaiminkan(Tile.new('MAN_1'), [2, 3, 4], 'TOIMEN');
   // hand.claimDaiminkan(Tile.new('MAN_1'), [0, 1, 2], 'TOIMEN');

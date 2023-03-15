@@ -2,8 +2,7 @@ import { N_ClaimedFrom } from '#/generated/njord.pb';
 import { Tile } from '#/objects/tile';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
 import { Scene } from '@babylonjs/core/scene';
-
-const rnd = () => 0.01 + Math.random() * 0.05;
+import { rnd } from '#/helpers/rnd';
 
 export interface CalledSet {
   getWidth(): number;
@@ -20,35 +19,37 @@ export interface CalledSet {
 // Last tile in input array is assumed to be the one that is claimed
 export class SimpleSet implements CalledSet {
   private readonly _rootNode: TransformNode;
+  private readonly _rndFactor: number = Math.random();
 
   protected static updateTilePositions(
     tiles: Tile[],
     claimedFrom: N_ClaimedFrom,
-    setWidth: number
+    setWidth: number,
+    factor: number
   ) {
     switch (claimedFrom) {
       case 'KAMICHA':
         // Position relative to the 3d center of the box
         tiles[2].getRoot().position.z = -(setWidth / 2);
-        tiles[0].getRoot().position.z = -(setWidth / 2) + (Tile.H / 2 + Tile.W / 2) + rnd();
-        tiles[1].getRoot().position.z =
-          -(setWidth / 2) + Tile.W + (Tile.H / 2 + Tile.W / 2) + rnd();
+        tiles[0].getRoot().position.z = -(setWidth / 2) + (Tile.H / 2 + Tile.W / 2) + 0.03;
+        tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + (Tile.H / 2 + Tile.W / 2) + 0.03;
         break;
       case 'SHIMOCHA':
         // Position relative to the 3d center of the box
         tiles[0].getRoot().position.z = -(setWidth / 2);
-        tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + rnd();
-        tiles[2].getRoot().position.z =
-          -(setWidth / 2) + Tile.W + (Tile.H / 2 + Tile.W / 2) + rnd();
+        tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + 0.03;
+        tiles[2].getRoot().position.z = -(setWidth / 2) + Tile.W + (Tile.H / 2 + Tile.W / 2) + 0.03;
         break;
       case 'TOIMEN':
         // Position relative to the 3d center of the box
         tiles[0].getRoot().position.z = -(setWidth / 2);
-        tiles[2].getRoot().position.z = -(setWidth / 2) + (Tile.H / 2 + Tile.W / 2) + rnd();
-        tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + Tile.H + rnd();
+        tiles[2].getRoot().position.z = -(setWidth / 2) + (Tile.H / 2 + Tile.W / 2) + 0.03;
+        tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + Tile.H + 0.03;
         break;
     }
-    tiles[2].getRoot().rotation.y = Math.PI / 2 + rnd();
+    tiles[0].getRoot().rotation.y = rnd(factor);
+    tiles[1].getRoot().rotation.y = rnd(factor * 2);
+    tiles[2].getRoot().rotation.y = Math.PI / 2 + rnd(factor * 3);
     tiles[2].getRoot().position.x = (Tile.H - Tile.W) / 2;
     return tiles;
   }
@@ -57,7 +58,7 @@ export class SimpleSet implements CalledSet {
     if (_tiles.length !== 3) {
       throw new Error('Wrong tiles count');
     }
-    SimpleSet.updateTilePositions(_tiles, _claimedFrom, this.getWidth());
+    SimpleSet.updateTilePositions(_tiles, _claimedFrom, this.getWidth(), this._rndFactor);
     this._rootNode = new TransformNode('set_pon');
     _tiles.forEach((t) => (t.getRoot().parent = this._rootNode));
   }
@@ -123,12 +124,13 @@ export class SimpleSet implements CalledSet {
 // Last tile in input array is assumed to be the one that is claimed
 export class Daiminkan implements CalledSet {
   private readonly _rootNode: TransformNode;
+  private readonly _rndFactor: number = Math.random();
 
   constructor(private _tiles: Tile[], private _claimedFrom: N_ClaimedFrom) {
     if (_tiles.length !== 4) {
       throw new Error('Wrong tiles count');
     }
-    Daiminkan.updateTilePositions(_tiles, _claimedFrom, this.getWidth());
+    Daiminkan.updateTilePositions(_tiles, _claimedFrom, this.getWidth(), this._rndFactor);
     this._rootNode = new TransformNode('set_pon');
     _tiles.forEach((t) => (t.getRoot().parent = this._rootNode));
   }
@@ -136,35 +138,40 @@ export class Daiminkan implements CalledSet {
   protected static updateTilePositions(
     tiles: Tile[],
     claimedFrom: N_ClaimedFrom,
-    setWidth: number
+    setWidth: number,
+    factor: number
   ) {
     switch (claimedFrom) {
       case 'KAMICHA':
         // Position relative to the 3d center of the box
         tiles[3].getRoot().position.z = -(setWidth / 2);
-        tiles[0].getRoot().position.z = -(setWidth / 2) + (Tile.H / 2 + Tile.W / 2) + rnd();
-        tiles[1].getRoot().position.z =
-          -(setWidth / 2) + Tile.W + (Tile.H / 2 + Tile.W / 2) + rnd();
+        tiles[0].getRoot().position.z = -(setWidth / 2) + (Tile.H / 2 + Tile.W / 2) + 0.03;
+        tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + (Tile.H / 2 + Tile.W / 2) + 0.03;
         tiles[2].getRoot().position.z =
-          -(setWidth / 2) + Tile.W + Tile.W + (Tile.H / 2 + Tile.W / 2) + rnd();
+          -(setWidth / 2) + Tile.W + Tile.W + (Tile.H / 2 + Tile.W / 2) + 0.03;
         break;
       case 'SHIMOCHA':
         // Position relative to the 3d center of the box
         tiles[0].getRoot().position.z = -(setWidth / 2);
-        tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + rnd();
-        tiles[2].getRoot().position.z = -(setWidth / 2) + Tile.W + Tile.W + rnd();
+        tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + 0.03;
+        tiles[2].getRoot().position.z = -(setWidth / 2) + Tile.W + Tile.W + 0.03;
         tiles[3].getRoot().position.z =
-          -(setWidth / 2) + Tile.W + Tile.W + (Tile.H / 2 + Tile.W / 2) + rnd();
+          -(setWidth / 2) + Tile.W + Tile.W + (Tile.H / 2 + Tile.W / 2) + 0.03;
         break;
       case 'TOIMEN':
         // Position relative to the 3d center of the box
         tiles[0].getRoot().position.z = -(setWidth / 2);
-        tiles[3].getRoot().position.z = -(setWidth / 2) + (Tile.H / 2 + Tile.W / 2) + rnd();
-        tiles[2].getRoot().position.z = -(setWidth / 2) + 2 * (Tile.H / 2 + Tile.W / 2) + rnd();
-        tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + Tile.W + Tile.H + rnd();
+        tiles[3].getRoot().position.z = -(setWidth / 2) + (Tile.H / 2 + Tile.W / 2) + 0.03;
+        tiles[2].getRoot().position.z = -(setWidth / 2) + 2 * (Tile.H / 2 + Tile.W / 2) + 0.03;
+        tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + Tile.W + Tile.H + 0.03;
         break;
     }
-    tiles[3].getRoot().rotation.y = Math.PI / 2 + rnd();
+
+    tiles[0].getRoot().rotation.y = rnd(factor);
+    tiles[1].getRoot().rotation.y = rnd(factor * 2);
+    tiles[2].getRoot().rotation.y = rnd(factor * 3);
+    tiles[3].getRoot().rotation.y = Math.PI / 2 + rnd(factor * 4);
+
     tiles[3].getRoot().position.x = (Tile.H - Tile.W) / 2;
     return tiles;
   }
@@ -203,24 +210,29 @@ export class Daiminkan implements CalledSet {
 // Last tile in input array is assumed to be the one that is claimed
 export class Ankan implements CalledSet {
   private readonly _rootNode: TransformNode;
+  private readonly _rndFactor: number = Math.random();
 
   constructor(private _tiles: Tile[]) {
     if (_tiles.length !== 4) {
       throw new Error('Wrong tiles count');
     }
-    Ankan.updateTilePositions(_tiles, this.getWidth());
+    Ankan.updateTilePositions(_tiles, this.getWidth(), this._rndFactor);
     this._rootNode = new TransformNode('set_pon');
     _tiles.forEach((t) => (t.getRoot().parent = this._rootNode));
   }
 
-  protected static updateTilePositions(tiles: Tile[], setWidth: number) {
+  protected static updateTilePositions(tiles: Tile[], setWidth: number, factor: number) {
     // Position relative to the 3d center of the box
     tiles[0].getRoot().position.z = -(setWidth / 2);
-    tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + rnd();
-    tiles[2].getRoot().position.z = -(setWidth / 2) + 2 * Tile.W + rnd();
-    tiles[3].getRoot().position.z = -(setWidth / 2) + 3 * Tile.W + rnd();
+    tiles[1].getRoot().position.z = -(setWidth / 2) + Tile.W + 0.03;
+    tiles[2].getRoot().position.z = -(setWidth / 2) + 2 * Tile.W + 0.03;
+    tiles[3].getRoot().position.z = -(setWidth / 2) + 3 * Tile.W + 0.03;
     tiles[0].getRoot().rotation.x = Math.PI;
     tiles[3].getRoot().rotation.x = Math.PI;
+    tiles[0].getRoot().rotation.y = rnd(factor);
+    tiles[1].getRoot().rotation.y = rnd(factor * 2);
+    tiles[2].getRoot().rotation.y = rnd(factor * 3);
+    tiles[3].getRoot().rotation.y = rnd(factor * 4);
     return tiles;
   }
 
