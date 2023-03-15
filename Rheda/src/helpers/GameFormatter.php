@@ -411,8 +411,11 @@ class GameFormatter
         }
 
         $namesOf = function ($list) use (&$players): string {
+            if (is_string($list)) {
+                $list = explode(',', $list);
+            }
             return implode(', ', array_map(function ($e) use (&$players) {
-                return $players[$e]['title'];
+                return $players[intval(trim($e))]['title'];
             }, $list));
         };
 

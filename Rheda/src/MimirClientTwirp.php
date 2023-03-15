@@ -304,12 +304,15 @@ class MimirClientTwirp implements IMimirClient
                     'outcome' => 'ron',
                     'round_index' => $r->getRon()?->getRoundIndex(),
                     'winner_id' => $r->getRon()?->getWinnerId(),
+                    'winner' => $r->getRon()?->getWinnerId(), // old rheda formatters compat
                     'loser_id' => $r->getRon()?->getLoserId(),
+                    'loser' => $r->getRon()?->getLoserId(), // old rheda formatters compat
                     'pao_player_id' => $r->getRon()?->getPaoPlayerId(),
                     'han' => $r->getRon()?->getHan(),
                     'fu' => $r->getRon()?->getFu(),
                     'yaku' => self::_toCsvString($r->getRon()?->getYaku()),
                     'riichi_bets' => self::_toCsvString($r->getRon()?->getRiichiBets()),
+                    'riichi' => self::_toCsvString($r->getRon()?->getRiichiBets()), // old rheda formatters compat
                     'dora' => $r->getRon()?->getDora(),
                     'uradora' => $r->getRon()?->getUradora(),
                     'kandora' => $r->getRon()?->getKandora(),
@@ -320,15 +323,18 @@ class MimirClientTwirp implements IMimirClient
                     'outcome' => 'multiron',
                     'round_index' => $r->getMultiron()?->getRoundIndex(),
                     'loser_id' => $r->getMultiron()?->getLoserId(),
+                    'loser' => $r->getMultiron()?->getLoserId(), // old rheda formatters compat
                     'multi_ron' => $r->getMultiron()?->getMultiRon(),
                     'wins' => array_map(function (MultironWin $win) use ($r) {
                         return [
                             'winner_id' => $win->getWinnerId(),
+                            'winner' => $win->getWinnerId(), // old rheda formatters compat
                             'pao_player_id' => $win->getPaoPlayerId(),
                             'han' => $win->getHan(),
                             'fu' => $win->getFu(),
                             'yaku' => self::_toCsvString($win->getYaku()),
                             'riichi_bets' => self::_toCsvString($r->getMultiron()?->getRiichiBets()),
+                            'riichi' => self::_toCsvString($r->getMultiron()?->getRiichiBets()), // old rheda formatters compat
                             'dora' => $win->getDora(),
                             'uradora' => $win->getUradora(),
                             'kandora' => $win->getKandora(),
@@ -341,11 +347,13 @@ class MimirClientTwirp implements IMimirClient
                     'outcome' => 'tsumo',
                     'round_index' => $r->getTsumo()?->getRoundIndex(),
                     'winner_id' => $r->getTsumo()?->getWinnerId(),
+                    'winner' => $r->getTsumo()?->getWinnerId(), // old rheda formatters compat
                     'pao_player_id' => $r->getTsumo()?->getPaoPlayerId(),
                     'han' => $r->getTsumo()?->getHan(),
                     'fu' => $r->getTsumo()?->getFu(),
                     'yaku' => self::_toCsvString($r->getTsumo()?->getYaku()),
                     'riichi_bets' => self::_toCsvString($r->getTsumo()?->getRiichiBets()),
+                    'riichi' => self::_toCsvString($r->getTsumo()?->getRiichiBets()), // old rheda formatters compat
                     'dora' => $r->getTsumo()?->getDora(),
                     'uradora' => $r->getTsumo()?->getUradora(),
                     'kandora' => $r->getTsumo()?->getKandora(),
@@ -356,22 +364,26 @@ class MimirClientTwirp implements IMimirClient
                     'outcome' => 'draw',
                     'round_index' => $r->getDraw()?->getRoundIndex(),
                     'riichi_bets' => self::_toCsvString($r->getDraw()?->getRiichiBets()),
+                    'riichi' => self::_toCsvString($r->getDraw()?->getRiichiBets()), // old rheda formatters compat
                     'tempai' => self::_toCsvString($r->getDraw()?->getTempai()),
                 ],
                 'abort' => [
                     'outcome' => 'abort',
                     'round_index' => $r->getAbort()?->getRoundIndex(),
                     'riichi_bets' => self::_toCsvString($r->getAbort()?->getRiichiBets()),
+                    'riichi' => self::_toCsvString($r->getAbort()?->getRiichiBets()), // old rheda formatters compat
                 ],
                 'chombo' => [
                     'outcome' => 'chombo',
                     'round_index' => $r->getChombo()?->getRoundIndex(),
                     'loser_id' => $r->getChombo()?->getLoserId(),
+                    'loser' => $r->getChombo()?->getLoserId(), // old rheda formatters compat
                 ],
                 'nagashi' => [
                     'outcome' => 'nagashi',
                     'round_index' => $r->getNagashi()?->getRoundIndex(),
                     'riichi_bets' => self::_toCsvString($r->getNagashi()?->getRiichiBets()),
+                    'riichi' => self::_toCsvString($r->getNagashi()?->getRiichiBets()), // old rheda formatters compat
                     'tempai' => self::_toCsvString($r->getNagashi()?->getTempai()),
                     'nagashi' => self::_toCsvString($r->getNagashi()?->getNagashi()),
                 ],
@@ -1443,6 +1455,9 @@ class MimirClientTwirp implements IMimirClient
     public function getTablesState(int $eventId): array
     {
         return array_map(function (TableState $table) {
+            $last = empty($table->getLastRound())
+                ? null
+                : self::_fromRounds([$table->getLastRound()])[0];
             return [
                 'may_definalize' => $table->getMayDefinalize(),
                 'hash' => $table->getSessionHash(),
@@ -1450,9 +1465,8 @@ class MimirClientTwirp implements IMimirClient
                 'current_round' => $table->getCurrentRoundIndex(),
                 'status' => self::_fromTableStatus($table->getStatus()),
                 'penalties' => self::_fromPenaltiesLog(iterator_to_array($table->getPenaltyLog())),
-                'last_round_detailed' => empty($table->getLastRound())
-                    ? null
-                    : self::_fromRounds([$table->getLastRound()])[0],
+                'last_round_detailed' => $last,
+                'last_round' => $last, // compat with old rheda formatter
                 'scores' => self::_makeScores(iterator_to_array($table->getScores())),
                 'players' => self::_fromRegisteredPlayers($table->getPlayers())
             ];
