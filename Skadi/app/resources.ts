@@ -4,11 +4,19 @@ import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial';
 import { Color3 } from '@babylonjs/core/Maths/math.color';
 import { N_TileValue } from '#/generated/njord.pb';
 import { MultiMaterial } from '@babylonjs/core/Materials/multiMaterial';
+import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader';
+import { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh';
+import { Vector3 } from '@babylonjs/core/Maths/math.vector';
+import '@babylonjs/loaders/glTF/glTFFileLoader';
 
 type Resources = {
+  mdl: {
+    tableCenter: AbstractMesh;
+  };
   tex: {
     tileValues: Texture[];
     table: Texture;
+    tableCenter: Texture;
     winds: HTMLImageElement[];
   };
   mat: {
@@ -25,6 +33,7 @@ type Resources = {
 };
 
 export const res: Resources = {
+  mdl: {},
   tex: {
     tileValues: [] as Texture[],
   },
@@ -51,6 +60,15 @@ const loadTileTexture: (scene: Scene, i: string) => Promise<Texture> = (scene, i
 
 export function preloadResources(scene: Scene): Promise<any> {
   const promises: Array<Promise<any>> = [];
+
+  // Models
+  promises.push(
+    SceneLoader.ImportMeshAsync('Cube', '/assets/', 'center.gltf', scene).then((result) => {
+      res.mdl.tableCenter = result.meshes[0];
+      res.mdl.tableCenter.scaling = new Vector3(15, 15, 15);
+      res.mdl.tableCenter.getChildMeshes()[0].material = res.mat.tableCenter;
+    })
+  );
 
   // Winds
   res.tex.winds = [new Image(), new Image(), new Image(), new Image()];
@@ -126,13 +144,30 @@ export function preloadResources(scene: Scene): Promise<any> {
     })
   );
 
+  // Table center
+  promises.push(
+    new Promise((resolve) => {
+      res.tex.tableCenter = new Texture(
+        '/assets/center.png',
+        scene,
+        undefined,
+        undefined,
+        undefined,
+        () => {
+          resolve(null);
+        }
+      );
+      res.tex.tableCenter.wAng = Math.PI;
+    })
+  );
+
   res.mat.table = new StandardMaterial('groundMat', scene);
   res.mat.table.specularColor = new Color3(0, 0, 0); // eliminating the specular highlights of the phong model
   res.mat.table.opacityTexture = res.mat.table.diffuseTexture = res.tex.table;
 
   res.mat.tableCenter = new StandardMaterial('centerMat', scene);
-  res.mat.tableCenter.diffuseColor = new Color3();
-  res.mat.table.specularColor = new Color3(0, 0, 0); // eliminating the specular highlights of the phong model
+  res.mat.tableCenter.opacityTexture = res.mat.tableCenter.diffuseTexture = res.tex.tableCenter;
+  res.mat.tableCenter.specularColor = new Color3(0, 0, 0); // eliminating the specular highlights of the phong model
 
   return Promise.all(promises);
 }

@@ -8,9 +8,11 @@ import { environment } from '#config';
 import { preloadResources, res } from '#/resources';
 import '@babylonjs/core/Debug';
 import '@babylonjs/inspector';
-import { TableDisplay } from '#/objects/tableDisplay';
 import { LoadingScreen } from '#/helpers/loadingScreen';
 import { DefaultRenderingPipeline } from '@babylonjs/core/PostProcesses/RenderPipeline/Pipelines/defaultRenderingPipeline';
+import { TableCenter } from '#/objects/tableCenter';
+import { Tile } from '#/objects/tile';
+import { Discard } from '#/objects/discard';
 
 const TABLE_W = 90;
 const TABLE_H = 90;
@@ -28,11 +30,21 @@ const makeScene = (scene: Scene) => {
   const l2 = new PointLight('light1', new Vector3(100, 10, 0), scene);
   l2.intensity = 1;
 
-  const display = new TableDisplay();
-  display.mesh.position.y = 1;
-  display.mesh.rotation.x = Math.PI / 2;
-  scene.addMesh(display.mesh);
-  display.setValue(5600, 0);
+  const center = new TableCenter();
+  center.addToScene(scene);
+  center.setDisplayValues([
+    { score: 10000, wind: 0 },
+    { score: 20000, wind: 1 },
+    { score: 30000, wind: 2 },
+    { score: 40000, wind: 3 },
+  ]);
+  center.setStick(2, true);
+
+  // const display = new TableDisplay();
+  // display.mesh.position.y = 1;
+  // display.mesh.rotation.x = Math.PI / 2;
+  // scene.addMesh(display.mesh);
+  // display.setValue(5600, 0);
 
   // const stick = RiichiStick.getNew();
   // const stick2 = RiichiStick.getNew();
@@ -41,17 +53,21 @@ const makeScene = (scene: Scene) => {
   // scene.addMesh(stick);
   // scene.addMesh(stick2);
 
-  // const dis = new Discard();
-  // dis
-  //   .addToScene(scene)
-  //   .addTile(Tile.new('CHUN'))
-  //   .addTile(Tile.new('TON'))
-  //   .addTile(Tile.new('SOU_1'))
-  //   .addTile(Tile.new('PIN_8'))
-  //   .addTile(Tile.new('MAN_5'))
-  //   .addTile(Tile.new('PIN_3'))
-  //   .addTile(Tile.new('CHUN'))
-  //   .addTile(Tile.new('HAKU'))
+  const dis = new Discard();
+  dis
+    .addToScene(scene)
+    .addTile(Tile.new('CHUN'))
+    .addTile(Tile.new('TON'))
+    .addTile(Tile.new('SOU_1'))
+    .addTile(Tile.new('PIN_8'))
+    .addTile(Tile.new('MAN_5'))
+    .addTile(Tile.new('PIN_3'))
+    .addTile(Tile.new('CHUN'))
+    .addTile(Tile.new('HAKU'));
+
+  dis.getRoot().position.x = 8;
+  dis.getRoot().position.z = -7;
+  dis.getRoot().position.y = Tile.D / 2;
   //   .addTile(Tile.new('MAN_3'))
   //   .addTile(Tile.new('MAN_2'))
   //   .addTile(Tile.new('NAN'))

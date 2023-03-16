@@ -13,6 +13,10 @@ export class Discard {
     this._rootNode = new TransformNode('discard');
   }
 
+  getRoot() {
+    return this._rootNode;
+  }
+
   getWidth() {
     return (Tile.W + 0.05) * 6;
   }
