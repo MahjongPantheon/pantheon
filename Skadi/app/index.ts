@@ -15,6 +15,7 @@ import { Tile } from '#/objects/tile';
 import { Discard } from '#/objects/discard';
 import { FxaaPostProcess } from '@babylonjs/core/PostProcesses/fxaaPostProcess';
 import { Hand } from './objects/hand';
+import { Wall } from '#/objects/wall';
 
 const TABLE_W = 75;
 const TABLE_H = 75;
@@ -68,8 +69,8 @@ const makeScene = (scene: Scene) => {
     .addTile(Tile.new('HATSU'))
     .addTile(Tile.new('SOU_2'));
 
-  dis.getRoot().position.x = 8;
-  dis.getRoot().position.z = -7;
+  dis.getRoot().position.x = 9;
+  dis.getRoot().position.z = -7.15;
   dis.getRoot().position.y = Tile.D / 2;
 
   const dis2 = new Discard();
@@ -95,8 +96,8 @@ const makeScene = (scene: Scene) => {
     .addTile(Tile.new('HATSU'))
     .addTile(Tile.new('SOU_2'));
 
-  dis2.getRoot().position.x = -7;
-  dis2.getRoot().position.z = -8;
+  dis2.getRoot().position.x = -7.15;
+  dis2.getRoot().position.z = -9;
   dis2.getRoot().rotation.y = Math.PI / 2;
   dis2.getRoot().position.y = Tile.D / 2;
 
@@ -123,8 +124,8 @@ const makeScene = (scene: Scene) => {
     .addTile(Tile.new('HATSU'))
     .addTile(Tile.new('SOU_2'));
 
-  dis3.getRoot().position.x = 7;
-  dis3.getRoot().position.z = 8;
+  dis3.getRoot().position.x = 7.15;
+  dis3.getRoot().position.z = 9;
   dis3.getRoot().rotation.y = -Math.PI / 2;
   dis3.getRoot().position.y = Tile.D / 2;
 
@@ -151,8 +152,8 @@ const makeScene = (scene: Scene) => {
     .addTile(Tile.new('HATSU'))
     .addTile(Tile.new('SOU_2'));
 
-  dis4.getRoot().position.x = -8;
-  dis4.getRoot().position.z = 7;
+  dis4.getRoot().position.x = -9;
+  dis4.getRoot().position.z = 7.15;
   dis4.getRoot().rotation.y = Math.PI;
   dis4.getRoot().position.y = Tile.D / 2;
 
@@ -166,7 +167,12 @@ const makeScene = (scene: Scene) => {
     .takeTsumopai(Tile.new('CHUN'));
   hand.getRoot().rotation.z = -Math.PI / 2;
   hand.getRoot().position.y = Tile.H / 2;
-  hand.getRoot().position.x = 25;
+  hand.getRoot().position.x = 30;
+
+  const wall = new Wall();
+  wall.addToScene(scene);
+  wall.setBreak(7, 'SOU_2');
+  (window as any).wall = wall;
 
   //
   // hand.claimDaiminkan(Tile.new('SOU_3'), [2, 3, 4], 'SHIMOCHA');
