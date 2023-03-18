@@ -41,6 +41,8 @@ export class Tile {
 
       const baseCropped = baseCsg.subtract(cropCsg).toMesh('csg_base', res.mat.tileBase);
       const backCropped = backCsg.intersect(cropCsg).toMesh('csg_back', res.mat.tileBack);
+      backCropped.receiveShadows = false;
+      baseCropped.receiveShadows = false;
       Tile._clonableBaseMesh = [baseCropped, backCropped];
 
       base.dispose();

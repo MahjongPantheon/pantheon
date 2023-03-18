@@ -32,7 +32,7 @@ engine.setHardwareScalingLevel(1 / window.devicePixelRatio);
 
 const makeScene = (scene: Scene) => {
   const lightbox = new Lightbox(scene);
-  lightbox.getRoot().position.y = 0;
+  lightbox.getRoot().position.y = 40;
   lightbox.setIntensity(0.2);
 
   const center = new TableCenter();
@@ -228,6 +228,13 @@ const makeScene = (scene: Scene) => {
   wall.setBreak(7, 'SOU_2');
   (window as any).wall = wall;
 
+  [dis, dis2, dis3, dis4, hand, hand2, hand3, hand4, wall].map((item) =>
+    item
+      .getRoot()
+      .getChildMeshes()
+      .map((m) => lightbox.addShadowCaster(m))
+  );
+
   //
   // const tiles = (
   //   [
@@ -299,6 +306,7 @@ const makeScene = (scene: Scene) => {
     scene
   );
 
+  ground.receiveShadows = true;
   ground.material = res.mat.table;
 };
 

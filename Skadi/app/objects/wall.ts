@@ -62,6 +62,10 @@ export class Wall {
     scene.addTransformNode(this._rootNode);
   }
 
+  public getRoot() {
+    return this._rootNode;
+  }
+
   protected _buildWall() {
     this._tiles.forEach((tile, idx) => {
       tile.getRoot().rotation.z = Math.PI;
