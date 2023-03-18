@@ -13,7 +13,7 @@ export class TableBorder {
   constructor(tableSize: number) {
     this._rootNode = new TransformNode('border');
 
-    const border = new RoundedBox(3, new Vector3(tableSize, Tile.D * 0.7, borderWidth), 0.4).toMesh(
+    const border = new RoundedBox(1, new Vector3(tableSize, Tile.D * 0.7, borderWidth), 0.4).toMesh(
       'b1'
     );
     const cropDistance = 2.55;

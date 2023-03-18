@@ -21,12 +21,12 @@ export class Tile {
   private static _clonableBaseMesh: [Mesh, Mesh] | null = null;
   protected static getBase(): [Mesh, Mesh] {
     if (!Tile._clonableBaseMesh) {
-      const boxBase = new RoundedBox(3, new Vector3(Tile.H, Tile.D, Tile.W), 0.2);
+      const boxBase = new RoundedBox(1, new Vector3(Tile.H, Tile.D, Tile.W), 0.2);
       const base = boxBase.toMesh('base');
       base.material = res.mat.tileBase;
       const baseCsg = CSG.FromMesh(base);
 
-      const backBase = new RoundedBox(3, new Vector3(Tile.H, Tile.D, Tile.W), 0.2);
+      const backBase = new RoundedBox(1, new Vector3(Tile.H, Tile.D, Tile.W), 0.2);
       const back = backBase.toMesh('back');
       back.material = res.mat.tileBack;
       const backCsg = CSG.FromMesh(back);
