@@ -83,6 +83,7 @@ export class TableCenter {
 
   setStick(index: number, visible: boolean) {
     this._sticks[index].visibility = visible ? 1 : 0;
+    return this;
   }
 
   addToScene(scene: Scene) {

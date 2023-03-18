@@ -13,15 +13,20 @@ import { DefaultRenderingPipeline } from '@babylonjs/core/PostProcesses/RenderPi
 import { TableCenter } from '#/objects/tableCenter';
 import { Tile } from '#/objects/tile';
 import { Discard } from '#/objects/discard';
+import { FxaaPostProcess } from '@babylonjs/core/PostProcesses/fxaaPostProcess';
+import { Hand } from './objects/hand';
 
-const TABLE_W = 90;
-const TABLE_H = 90;
-const CAMERA_X = 0;
-const CAMERA_Y = 30;
-const CAMERA_Z = -100;
+const TABLE_W = 75;
+const TABLE_H = 75;
+const CAMERA_POS = new Vector3(7.5, -1.5, 0);
+const CAMERA_DIR_ALPHA = 0;
+const CAMERA_DIR_BETA = Math.PI / 5;
+const CAMERA_DIR_RADIUS = 92;
+const CAMERA_FOV = 120;
 
 const canvas = document.getElementById('renderCanvas') as HTMLCanvasElement;
 const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+engine.setHardwareScalingLevel(1 / window.devicePixelRatio);
 
 const makeScene = (scene: Scene) => {
   const l1 = new PointLight('light1', new Vector3(0, 10, 0), scene);
@@ -38,20 +43,7 @@ const makeScene = (scene: Scene) => {
     { score: 30000, wind: 2 },
     { score: 40000, wind: 3 },
   ]);
-  center.setStick(2, true);
-
-  // const display = new TableDisplay();
-  // display.mesh.position.y = 1;
-  // display.mesh.rotation.x = Math.PI / 2;
-  // scene.addMesh(display.mesh);
-  // display.setValue(5600, 0);
-
-  // const stick = RiichiStick.getNew();
-  // const stick2 = RiichiStick.getNew();
-  // stick2.position.z = 4;
-  // stick.position.z = -4;
-  // scene.addMesh(stick);
-  // scene.addMesh(stick2);
+  center.setStick(2, true).setStick(0, true).setStick(1, true).setStick(3, true);
 
   const dis = new Discard();
   dis
@@ -63,36 +55,119 @@ const makeScene = (scene: Scene) => {
     .addTile(Tile.new('MAN_5'))
     .addTile(Tile.new('PIN_3'))
     .addTile(Tile.new('CHUN'))
-    .addTile(Tile.new('HAKU'));
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('MAN_3'))
+    .addTile(Tile.new('MAN_2'))
+    .addTile(Tile.new('NAN'))
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('SOU_4'))
+    .addTile(Tile.new('SOU_3'))
+    .addTile(Tile.new('SHA'), true)
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('PEI'))
+    .addTile(Tile.new('HATSU'))
+    .addTile(Tile.new('SOU_2'));
 
   dis.getRoot().position.x = 8;
   dis.getRoot().position.z = -7;
   dis.getRoot().position.y = Tile.D / 2;
-  //   .addTile(Tile.new('MAN_3'))
-  //   .addTile(Tile.new('MAN_2'))
-  //   .addTile(Tile.new('NAN'))
-  //   .addTile(Tile.new('HAKU'))
-  //   .addTile(Tile.new('SOU_4'))
-  //   .addTile(Tile.new('SOU_3'))
-  //   .addTile(Tile.new('SHA'), true)
-  //   .addTile(Tile.new('HAKU'))
-  //   .addTile(Tile.new('PEI'))
-  //   .addTile(Tile.new('HATSU'))
-  //   .addTile(Tile.new('HATSU'))
-  //   .addTile(Tile.new('HATSU'))
-  //   .addTile(Tile.new('HATSU'))
-  //   .addTile(Tile.new('SOU_2'));
 
-  // const hand = new Hand();
-  // hand
-  //   .addToScene(scene)
-  //   .take4([Tile.new('SOU_1'), Tile.new('SOU_1'), Tile.new('SOU_3'), Tile.new('SOU_3')])
-  //   .take4([Tile.new('MAN_1'), Tile.new('MAN_1'), Tile.new('MAN_3'), Tile.new('MAN_3')])
-  //   .take4([Tile.new('PIN_1'), Tile.new('PIN_2'), Tile.new('PIN_3'), Tile.new('PIN_4')])
-  //   .take1(Tile.new('HATSU'))
-  //   .takeTsumopai(Tile.new('CHUN'));
-  // hand.getRoot().rotation.z = -Math.PI / 2;
-  // hand.getRoot().position.y = Tile.H / 2;
+  const dis2 = new Discard();
+  dis2
+    .addToScene(scene)
+    .addTile(Tile.new('CHUN'))
+    .addTile(Tile.new('TON'))
+    .addTile(Tile.new('SOU_1'))
+    .addTile(Tile.new('PIN_8'))
+    .addTile(Tile.new('MAN_5'))
+    .addTile(Tile.new('PIN_3'))
+    .addTile(Tile.new('CHUN'))
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('MAN_3'))
+    .addTile(Tile.new('MAN_2'))
+    .addTile(Tile.new('NAN'))
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('SOU_4'))
+    .addTile(Tile.new('SOU_3'))
+    .addTile(Tile.new('SHA'), true)
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('PEI'))
+    .addTile(Tile.new('HATSU'))
+    .addTile(Tile.new('SOU_2'));
+
+  dis2.getRoot().position.x = -7;
+  dis2.getRoot().position.z = -8;
+  dis2.getRoot().rotation.y = Math.PI / 2;
+  dis2.getRoot().position.y = Tile.D / 2;
+
+  const dis3 = new Discard();
+  dis3
+    .addToScene(scene)
+    .addTile(Tile.new('CHUN'))
+    .addTile(Tile.new('TON'))
+    .addTile(Tile.new('SOU_1'))
+    .addTile(Tile.new('PIN_8'))
+    .addTile(Tile.new('MAN_5'))
+    .addTile(Tile.new('PIN_3'))
+    .addTile(Tile.new('CHUN'))
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('MAN_3'))
+    .addTile(Tile.new('MAN_2'))
+    .addTile(Tile.new('NAN'))
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('SOU_4'))
+    .addTile(Tile.new('SOU_3'))
+    .addTile(Tile.new('SHA'), true)
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('PEI'))
+    .addTile(Tile.new('HATSU'))
+    .addTile(Tile.new('SOU_2'));
+
+  dis3.getRoot().position.x = 7;
+  dis3.getRoot().position.z = 8;
+  dis3.getRoot().rotation.y = -Math.PI / 2;
+  dis3.getRoot().position.y = Tile.D / 2;
+
+  const dis4 = new Discard();
+  dis4
+    .addToScene(scene)
+    .addTile(Tile.new('CHUN'))
+    .addTile(Tile.new('TON'))
+    .addTile(Tile.new('SOU_1'))
+    .addTile(Tile.new('PIN_8'))
+    .addTile(Tile.new('MAN_5'))
+    .addTile(Tile.new('PIN_3'))
+    .addTile(Tile.new('CHUN'))
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('MAN_3'))
+    .addTile(Tile.new('MAN_2'))
+    .addTile(Tile.new('NAN'))
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('SOU_4'))
+    .addTile(Tile.new('SOU_3'))
+    .addTile(Tile.new('SHA'), true)
+    .addTile(Tile.new('HAKU'))
+    .addTile(Tile.new('PEI'))
+    .addTile(Tile.new('HATSU'))
+    .addTile(Tile.new('SOU_2'));
+
+  dis4.getRoot().position.x = -8;
+  dis4.getRoot().position.z = 7;
+  dis4.getRoot().rotation.y = Math.PI;
+  dis4.getRoot().position.y = Tile.D / 2;
+
+  const hand = new Hand();
+  hand
+    .addToScene(scene)
+    .take4([Tile.new('SOU_1'), Tile.new('SOU_1'), Tile.new('SOU_3'), Tile.new('SOU_3')])
+    .take4([Tile.new('MAN_1'), Tile.new('MAN_1'), Tile.new('MAN_3'), Tile.new('MAN_3')])
+    .take4([Tile.new('PIN_1'), Tile.new('PIN_2'), Tile.new('PIN_3'), Tile.new('PIN_4')])
+    .take1(Tile.new('HATSU'))
+    .takeTsumopai(Tile.new('CHUN'));
+  hand.getRoot().rotation.z = -Math.PI / 2;
+  hand.getRoot().position.y = Tile.H / 2;
+  hand.getRoot().position.x = 25;
+
   //
   // hand.claimDaiminkan(Tile.new('SOU_3'), [2, 3, 4], 'SHIMOCHA');
   // hand.claimDaiminkan(Tile.new('MAN_3'), [4, 5, 6], 'TOIMEN');
@@ -176,13 +251,21 @@ const makeScene = (scene: Scene) => {
 const createScene = function () {
   const scene = new Scene(engine);
 
-  const camera = new ArcRotateCamera('name', 0, Math.PI / 4, 100, new Vector3(7.5, -7.5, 0));
+  const camera = new ArcRotateCamera(
+    'Camera',
+    CAMERA_DIR_ALPHA,
+    CAMERA_DIR_BETA,
+    CAMERA_DIR_RADIUS,
+    CAMERA_POS
+  );
   camera.attachControl(canvas, false);
-  camera.fov = 120;
+  camera.fov = CAMERA_FOV;
   scene.addCamera(camera);
 
-  const defaultPipeline = new DefaultRenderingPipeline('default', true, scene, [camera]);
-  defaultPipeline.fxaaEnabled = true;
+  // const defaultPipeline = new DefaultRenderingPipeline('default', true, scene, [camera]);
+  // const postProcess = new FxaaPostProcess('fxaa', 1.0, camera);
+  // camera.attachPostProcess(postProcess);
+  // defaultPipeline.fxaaEnabled = true;
 
   if (!environment.production) {
     // hide/show the Inspector

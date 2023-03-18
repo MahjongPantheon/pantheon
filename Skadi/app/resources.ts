@@ -8,6 +8,7 @@ import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader';
 import { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector';
 import '@babylonjs/loaders/glTF/glTFFileLoader';
+import { Material } from '@babylonjs/core/Materials/material';
 
 type Resources = {
   mdl: {
@@ -42,6 +43,11 @@ export const res: Resources = {
     tileValuesAka: {},
   },
 } as Resources;
+
+// eliminating the specular highlights of the phong model
+const noSpec = (mat: StandardMaterial) => {
+  mat.specularColor = new Color3(0, 0, 0);
+};
 
 const loadTileTexture: (scene: Scene, i: string) => Promise<Texture> = (scene, i) => {
   return new Promise((resolve) => {
@@ -88,17 +94,18 @@ export function preloadResources(scene: Scene): Promise<any> {
   // Tiles
   res.mat.tileBack = new StandardMaterial('tile_back', scene);
   res.mat.tileBack.diffuseColor = new Color3(195 / 255, 149 / 255, 89 / 255);
-  res.mat.tileBack.specularColor = new Color3(0, 0, 0); // eliminating the specular highlights of the phong model
+  noSpec(res.mat.tileBack);
 
   res.mat.tileBase = new StandardMaterial('tile_base', scene);
   res.mat.tileBase.ambientColor = Color3.White();
+  noSpec(res.mat.tileBase);
 
   res.mat.riichiStickBase = new StandardMaterial('stick_base', scene);
   res.mat.riichiStickBase.diffuseColor = Color3.White();
-  res.mat.riichiStickBase.specularColor = new Color3(0, 0, 0);
+  noSpec(res.mat.riichiStickBase);
   res.mat.riichiStickDot = new StandardMaterial('stick_dot', scene);
   res.mat.riichiStickDot.diffuseColor = Color3.Red();
-  res.mat.riichiStickDot.specularColor = new Color3(0, 0, 0);
+  noSpec(res.mat.riichiStickDot);
   res.mat.riichiStick = new MultiMaterial('stick', scene);
   res.mat.riichiStick.subMaterials.push(res.mat.riichiStickBase, res.mat.riichiStickDot);
   // eliminating the specular highlights of the phong model
@@ -115,13 +122,13 @@ export function preloadResources(scene: Scene): Promise<any> {
 
           const mat = new StandardMaterial('tile_value_' + i, scene);
           mat.opacityTexture = mat.diffuseTexture = tex;
-          mat.specularColor = new Color3(0, 0, 0); // eliminating the specular highlights of the phong model
+          noSpec(mat);
           res.mat.tileValues[i] = mat;
 
           const matAka = new StandardMaterial('tile_value_' + i, scene);
           matAka.opacityTexture = tex;
           matAka.diffuseColor = Color3.Red();
-          matAka.specularColor = new Color3(0, 0, 0); // eliminating the specular highlights of the phong model
+          noSpec(matAka);
           res.mat.tileValuesAka[i] = matAka;
         })
       );
@@ -162,12 +169,12 @@ export function preloadResources(scene: Scene): Promise<any> {
   );
 
   res.mat.table = new StandardMaterial('groundMat', scene);
-  res.mat.table.specularColor = new Color3(0, 0, 0); // eliminating the specular highlights of the phong model
+  noSpec(res.mat.table);
   res.mat.table.opacityTexture = res.mat.table.diffuseTexture = res.tex.table;
 
   res.mat.tableCenter = new StandardMaterial('centerMat', scene);
   res.mat.tableCenter.opacityTexture = res.mat.tableCenter.diffuseTexture = res.tex.tableCenter;
-  res.mat.tableCenter.specularColor = new Color3(0, 0, 0); // eliminating the specular highlights of the phong model
+  noSpec(res.mat.tableCenter);
 
   return Promise.all(promises);
 }
