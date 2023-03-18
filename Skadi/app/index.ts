@@ -17,9 +17,10 @@ import { FxaaPostProcess } from '@babylonjs/core/PostProcesses/fxaaPostProcess';
 import { Hand } from './objects/hand';
 import { Wall } from '#/objects/wall';
 import { Lightbox } from '#/objects/lightbox';
+import { TableBorder } from '#/objects/tableBorder';
+import { Color3, Color4 } from '@babylonjs/core/Maths/math.color';
 
-const TABLE_W = 75;
-const TABLE_H = 75;
+const TABLE_SIZE = 75;
 const CAMERA_POS = new Vector3(7.5, -1.5, 0);
 const CAMERA_DIR_ALPHA = 0;
 const CAMERA_DIR_BETA = Math.PI / 5;
@@ -33,7 +34,9 @@ engine.setHardwareScalingLevel(1 / window.devicePixelRatio);
 const makeScene = (scene: Scene) => {
   const lightbox = new Lightbox(scene);
   lightbox.getRoot().position.y = 40;
-  lightbox.setIntensity(0.2);
+  lightbox.setIntensity(0.5);
+
+  const border = new TableBorder(TABLE_SIZE);
 
   const center = new TableCenter();
   center.addToScene(scene);
@@ -302,7 +305,7 @@ const makeScene = (scene: Scene) => {
 
   const ground = MeshBuilder.CreateGround(
     'ground1',
-    { width: TABLE_W, height: TABLE_H, subdivisions: 2, updatable: false },
+    { width: TABLE_SIZE, height: TABLE_SIZE, subdivisions: 2, updatable: false },
     scene
   );
 
@@ -312,6 +315,7 @@ const makeScene = (scene: Scene) => {
 
 const createScene = function () {
   const scene = new Scene(engine);
+  scene.clearColor = Color4.FromColor3(Color3.Black());
 
   const camera = new ArcRotateCamera(
     'Camera',

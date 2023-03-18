@@ -7,6 +7,9 @@ import { CombineAction, ExecuteCodeAction } from '@babylonjs/core/Actions/direct
 import { InterpolateValueAction } from '@babylonjs/core/Actions/interpolateValueAction';
 import { N_ClaimedFrom } from '#/generated/njord.pb';
 
+const rightOffset = 9.1;
+const bottomOffset = 2;
+
 export class Hand {
   private _closedPart: Tile[] = [];
   private _tsumopai?: Tile;
@@ -97,11 +100,12 @@ export class Hand {
 
   protected _rebuildTilePositions() {
     this._closedPart.forEach((tile, index) => {
-      tile.getRoot().position.z = -this._closedPartMaxWidth / 2 + index * Tile.W + Tile.W / 2;
+      tile.getRoot().position.z =
+        -this._closedPartMaxWidth / 2 + index * Tile.W + Tile.W / 2 + rightOffset;
     });
     if (this._tsumopai) {
       this._tsumopai.getRoot().position.z =
-        -this._closedPartMaxWidth / 2 + this._closedPartWidth - Tile.W / 2;
+        -this._closedPartMaxWidth / 2 + this._closedPartWidth - Tile.W / 2 + rightOffset;
     }
   }
 
@@ -114,11 +118,13 @@ export class Hand {
     pon.getRoot().parent = this._rootNode;
     pon.getRoot().rotation.z = Math.PI / 2;
     pon.getRoot().position.x = Tile.D / 2;
+    pon.getRoot().position.y = bottomOffset;
     pon.getRoot().position.z =
       // (1 + this._closedPart.length) * Tile.W +
       this._closedPartMaxWidth / 2 -
       this._openPart.reduce((acc, set) => acc + set.getWidth() + 0.3, 0) -
-      pon.getWidth() / 2;
+      pon.getWidth() / 2 +
+      rightOffset;
     this._openPart.push(pon);
   }
 
@@ -132,13 +138,17 @@ export class Hand {
     kan.getRoot().parent = this._rootNode;
     kan.getRoot().rotation.z = Math.PI / 2;
     kan.getRoot().position.x = Tile.D / 2;
+    kan.getRoot().position.y = bottomOffset;
     kan.getRoot().position.z =
       // (1 + this._closedPart.length) * Tile.W +
       this._closedPartMaxWidth / 2 -
       this._openPart.reduce((acc, set) => acc + set.getWidth() + 0.3, 0) -
-      kan.getWidth() / 2;
+      kan.getWidth() / 2 +
+      rightOffset;
     this._openPart.push(kan);
   }
+
+  // TODO: chi, shominkan, ankan
 
   discard(tile: Tile) {
     console.log('Discarded ' + tile.getType());

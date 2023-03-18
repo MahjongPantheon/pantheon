@@ -38,8 +38,8 @@ export class TableCenter {
     this._sticks[3].position.z = -6.3;
 
     this._sticks.forEach((d) => {
-      d.position.y = 0.5;
-      d.scaling = new Vector3(0.7, 0.7, 0.7);
+      d.position.y = 0.6;
+      d.scaling = new Vector3(0.75, 1, 0.8);
       d.parent = this._rootNode;
       d.visibility = 0;
     });

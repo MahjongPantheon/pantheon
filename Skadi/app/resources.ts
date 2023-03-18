@@ -27,6 +27,7 @@ type Resources = {
     tileValuesAka: Record<N_TileValue, StandardMaterial>;
     table: StandardMaterial;
     tableCenter: StandardMaterial;
+    tableBorder: StandardMaterial;
     riichiStickBase: StandardMaterial;
     riichiStickDot: StandardMaterial;
     riichiStick: MultiMaterial;
@@ -176,6 +177,10 @@ export function preloadResources(scene: Scene): Promise<any> {
   res.mat.tableCenter = new StandardMaterial('centerMat', scene);
   res.mat.tableCenter.opacityTexture = res.mat.tableCenter.diffuseTexture = res.tex.tableCenter;
   noSpec(res.mat.tableCenter);
+
+  res.mat.tableBorder = new StandardMaterial('borderMat', scene);
+  res.mat.tableBorder.diffuseColor = new Color3(120 / 255, 100 / 255, 90 / 255);
+  noSpec(res.mat.tableBorder);
 
   return Promise.all(promises);
 }

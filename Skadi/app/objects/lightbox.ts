@@ -15,13 +15,7 @@ export class Lightbox {
 
   constructor(scene: Scene) {
     this._rootNode = new TransformNode('lightbox');
-    this._lights = [
-      // [-1, 0],
-      // [0, -1],
-      // [1, 0],
-      // [0, 1],
-      [0, 0],
-    ].map((c) => {
+    this._lights = [[0, 0]].map((c) => {
       const light = new PointLight(
         `light_${c[0]}_${c[1]}`,
         new Vector3(c[0] * this._spreadDistance, 0, c[1] * this._spreadDistance),
@@ -40,7 +34,7 @@ export class Lightbox {
     light0.diffuse = new Color3(1, 1, 1);
     light0.specular = new Color3(1, 1, 1);
     light0.groundColor = new Color3(0, 0, 0);
-    light0.intensity = 0.8;
+    light0.intensity = 0.5;
 
     scene.addTransformNode(this._rootNode);
   }
