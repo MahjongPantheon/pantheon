@@ -16,6 +16,7 @@ import { Discard } from '#/objects/discard';
 import { FxaaPostProcess } from '@babylonjs/core/PostProcesses/fxaaPostProcess';
 import { Hand } from './objects/hand';
 import { Wall } from '#/objects/wall';
+import { Lightbox } from '#/objects/lightbox';
 
 const TABLE_W = 75;
 const TABLE_H = 75;
@@ -30,11 +31,9 @@ const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: 
 engine.setHardwareScalingLevel(1 / window.devicePixelRatio);
 
 const makeScene = (scene: Scene) => {
-  const l1 = new PointLight('light1', new Vector3(0, 10, 0), scene);
-  l1.intensity = 1;
-
-  const l2 = new PointLight('light1', new Vector3(100, 10, 0), scene);
-  l2.intensity = 1;
+  const lightbox = new Lightbox(scene);
+  lightbox.getRoot().position.y = 0;
+  lightbox.setIntensity(0.2);
 
   const center = new TableCenter();
   center.addToScene(scene);
@@ -168,17 +167,66 @@ const makeScene = (scene: Scene) => {
   hand.getRoot().rotation.z = -Math.PI / 2;
   hand.getRoot().position.y = Tile.H / 2;
   hand.getRoot().position.x = 30;
+  hand.claimDaiminkan(Tile.new('SOU_3'), [2, 3, 4], 'SHIMOCHA');
+  hand.claimDaiminkan(Tile.new('MAN_3'), [4, 5, 6], 'TOIMEN');
+  hand.claimDaiminkan(Tile.new('MAN_1'), [2, 3, 4], 'TOIMEN');
+  hand.claimDaiminkan(Tile.new('MAN_1'), [0, 1, 2], 'TOIMEN');
+
+  const hand2 = new Hand();
+  hand2
+    .addToScene(scene)
+    .take4([Tile.new('SOU_1'), Tile.new('SOU_1'), Tile.new('SOU_3'), Tile.new('SOU_3')])
+    .take4([Tile.new('MAN_1'), Tile.new('MAN_1'), Tile.new('MAN_3'), Tile.new('MAN_3')])
+    .take4([Tile.new('PIN_1'), Tile.new('PIN_2'), Tile.new('PIN_3'), Tile.new('PIN_4')])
+    .take1(Tile.new('HATSU'))
+    .takeTsumopai(Tile.new('CHUN'));
+  hand2.getRoot().rotation.z = -Math.PI / 2;
+  hand2.getRoot().rotation.y = -Math.PI / 2;
+  hand2.getRoot().position.y = Tile.H / 2;
+  hand2.getRoot().position.z = 30;
+  hand2.claimDaiminkan(Tile.new('SOU_3'), [2, 3, 4], 'SHIMOCHA');
+  // hand2.claimDaiminkan(Tile.new('MAN_3'), [4, 5, 6], 'TOIMEN');
+  // hand2.claimDaiminkan(Tile.new('MAN_1'), [2, 3, 4], 'TOIMEN');
+  hand2.claimDaiminkan(Tile.new('MAN_1'), [0, 1, 2], 'TOIMEN');
+
+  const hand3 = new Hand();
+  hand3
+    .addToScene(scene)
+    .take4([Tile.new('SOU_1'), Tile.new('SOU_1'), Tile.new('SOU_3'), Tile.new('SOU_3')])
+    .take4([Tile.new('MAN_1'), Tile.new('MAN_1'), Tile.new('MAN_3'), Tile.new('MAN_3')])
+    .take4([Tile.new('PIN_1'), Tile.new('PIN_2'), Tile.new('PIN_3'), Tile.new('PIN_4')])
+    .take1(Tile.new('HATSU'))
+    .takeTsumopai(Tile.new('CHUN'));
+  hand3.getRoot().rotation.z = -Math.PI / 2;
+  hand3.getRoot().rotation.y = Math.PI;
+  hand3.getRoot().position.y = Tile.H / 2;
+  hand3.getRoot().position.x = -30;
+  hand3.claimDaiminkan(Tile.new('SOU_3'), [2, 3, 4], 'SHIMOCHA');
+  // hand3.claimDaiminkan(Tile.new('MAN_3'), [4, 5, 6], 'TOIMEN');
+  // hand3.claimDaiminkan(Tile.new('MAN_1'), [2, 3, 4], 'TOIMEN');
+  hand3.claimDaiminkan(Tile.new('MAN_1'), [0, 1, 2], 'TOIMEN');
+
+  const hand4 = new Hand();
+  hand4
+    .addToScene(scene)
+    .take4([Tile.new('SOU_1'), Tile.new('SOU_1'), Tile.new('SOU_3'), Tile.new('SOU_3')])
+    .take4([Tile.new('MAN_1'), Tile.new('MAN_1'), Tile.new('MAN_3'), Tile.new('MAN_3')])
+    .take4([Tile.new('PIN_1'), Tile.new('PIN_2'), Tile.new('PIN_3'), Tile.new('PIN_4')])
+    .take1(Tile.new('HATSU'))
+    .takeTsumopai(Tile.new('CHUN'));
+  hand4.getRoot().rotation.z = -Math.PI / 2;
+  hand4.getRoot().rotation.y = Math.PI / 2;
+  hand4.getRoot().position.y = Tile.H / 2;
+  hand4.getRoot().position.z = -30;
+  hand4.claimDaiminkan(Tile.new('SOU_3'), [2, 3, 4], 'SHIMOCHA');
+  hand4.claimDaiminkan(Tile.new('MAN_3'), [4, 5, 6], 'TOIMEN');
+  hand4.claimDaiminkan(Tile.new('MAN_1'), [2, 3, 4], 'TOIMEN');
+  hand4.claimDaiminkan(Tile.new('MAN_1'), [0, 1, 2], 'TOIMEN');
 
   const wall = new Wall();
   wall.addToScene(scene);
   wall.setBreak(7, 'SOU_2');
   (window as any).wall = wall;
-
-  //
-  // hand.claimDaiminkan(Tile.new('SOU_3'), [2, 3, 4], 'SHIMOCHA');
-  // hand.claimDaiminkan(Tile.new('MAN_3'), [4, 5, 6], 'TOIMEN');
-  // hand.claimDaiminkan(Tile.new('MAN_1'), [2, 3, 4], 'TOIMEN');
-  // hand.claimDaiminkan(Tile.new('MAN_1'), [0, 1, 2], 'TOIMEN');
 
   //
   // const tiles = (

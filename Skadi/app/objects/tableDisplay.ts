@@ -32,6 +32,7 @@ export class TableDisplay {
     this._fontSettings = fontSize + 'px ' + font;
 
     this._mat = new StandardMaterial('Mat');
+    this._mat.maxSimultaneousLights = 5;
     this._mat.diffuseTexture = this._tex;
     this._mat.specularColor = new Color3(0, 0, 0);
     this._mesh = MeshBuilder.CreatePlane('table_display', {

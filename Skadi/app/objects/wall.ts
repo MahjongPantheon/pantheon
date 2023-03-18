@@ -67,9 +67,8 @@ export class Wall {
       tile.getRoot().rotation.z = Math.PI;
       tile.getRoot().position.y = Tile.D / 2 + (idx % 2 === 0 ? Tile.D : 0); // top and bottom tile
       tile.getRoot().position.z = -(
-        Tile.W / 2 -
-        this._wallWidth / 2 +
-        Math.floor((idx % 34) / 2) * Tile.W
+        // negative to take tiles clockwise
+        (Tile.W / 2 - this._wallWidth / 2 + Math.floor((idx % 34) / 2) * Tile.W)
       );
       tile.getRoot().parent = this._subNodes[Math.floor(idx / 34)];
     });

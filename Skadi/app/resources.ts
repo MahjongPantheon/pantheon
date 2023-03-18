@@ -47,6 +47,7 @@ export const res: Resources = {
 // eliminating the specular highlights of the phong model
 const noSpec = (mat: StandardMaterial) => {
   mat.specularColor = new Color3(0, 0, 0);
+  mat.maxSimultaneousLights = 5;
 };
 
 const loadTileTexture: (scene: Scene, i: string) => Promise<Texture> = (scene, i) => {
