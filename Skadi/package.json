@@ -14,6 +14,7 @@
     "@babylonjs/materials": "^5.50.1",
     "@babylonjs/serializers": "^5.50.1",
     "@types/earcut": "^2.1.1",
+    "assert": "^2.0.0",
     "earcut": "^2.2.4",
     "twirpscript": "^0.0.66",
     "typescript": "^4.9.5"

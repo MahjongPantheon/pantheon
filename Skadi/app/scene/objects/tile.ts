@@ -6,8 +6,8 @@ import { Vector3 } from '@babylonjs/core/Maths/math.vector';
 import { ActionManager } from '@babylonjs/core/Actions/actionManager';
 import { CSG } from '@babylonjs/core/Meshes/csg';
 import { N_TileValue } from '#/generated/njord.pb';
-import { res } from '#/resources';
-import { RoundedBox } from '#/objects/roundedBox';
+import { res } from '#/scene/resources';
+import { RoundedBox } from '#/scene/objects/roundedBox';
 
 export class Tile {
   private readonly _rootNode: TransformNode;
@@ -18,17 +18,15 @@ export class Tile {
   public static readonly W = 2.4;
   public static readonly D = 1.6;
 
-  private static _clonableBaseMesh: [Mesh, Mesh] | null = null;
-  protected static getBase(): [Mesh, Mesh] {
+  private static _clonableBaseMesh: Mesh | null = null;
+  protected static getBase(): Mesh {
     if (!Tile._clonableBaseMesh) {
       const boxBase = new RoundedBox(1, new Vector3(Tile.H, Tile.D, Tile.W), 0.2);
       const base = boxBase.toMesh('base');
-      base.material = res.mat.tileBase;
       const baseCsg = CSG.FromMesh(base);
 
       const backBase = new RoundedBox(1, new Vector3(Tile.H, Tile.D, Tile.W), 0.2);
       const back = backBase.toMesh('back');
-      back.material = res.mat.tileBack;
       const backCsg = CSG.FromMesh(back);
 
       const cropBox = MeshBuilder.CreateBox('crop', {
@@ -39,20 +37,18 @@ export class Tile {
       cropBox.position.y = -2.9;
       const cropCsg = CSG.FromMesh(cropBox);
 
-      const baseCropped = baseCsg.subtract(cropCsg).toMesh('csg_base', res.mat.tileBase);
-      const backCropped = backCsg.intersect(cropCsg).toMesh('csg_back', res.mat.tileBack);
-      backCropped.receiveShadows = false;
-      baseCropped.receiveShadows = false;
-      Tile._clonableBaseMesh = [baseCropped, backCropped];
+      Tile._clonableBaseMesh = baseCsg
+        .subtract(cropCsg)
+        .union(backCsg.intersect(cropCsg))
+        .toMesh('tile', res.mat.tile, undefined, true);
 
       base.dispose();
       back.dispose();
       cropBox.dispose();
-      baseCropped.getScene().removeMesh(baseCropped);
-      backCropped.getScene().removeMesh(backCropped);
+      Tile._clonableBaseMesh.getScene().removeMesh(Tile._clonableBaseMesh);
     }
 
-    return Tile._clonableBaseMesh.map((m) => m.clone()) as [Mesh, Mesh];
+    return Tile._clonableBaseMesh.clone();
   }
 
   public constructor() {
@@ -64,10 +60,7 @@ export class Tile {
     tileValue.rotation.x = Math.PI / 2;
     tileValue.position.y = Tile.D * 0.505;
     this._meshes.push(tileValue);
-
-    const [base, back] = Tile.getBase();
-    this._meshes.push(base);
-    this._meshes.push(back);
+    this._meshes.push(Tile.getBase());
 
     this._rootNode = new TransformNode('tile');
     this._meshes.forEach((n) => (n.parent = this._rootNode));

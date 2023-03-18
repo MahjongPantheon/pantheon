@@ -1,5 +1,5 @@
-import { Tile } from '#/objects/tile';
-import { CalledSet, Daiminkan, SimpleSet } from '#/objects/sets';
+import { Tile } from '#/scene/objects/tile';
+import { Ankan, CalledSet, Daiminkan, SimpleSet } from '#/scene/objects/sets';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
 import { Scene } from '@babylonjs/core/scene';
 import { ActionManager } from '@babylonjs/core/Actions/actionManager';
@@ -148,7 +148,30 @@ export class Hand {
     this._openPart.push(kan);
   }
 
-  // TODO: chi, shominkan, ankan
+  claimAnkan(tile: Tile, indicesInHand: number[]) {
+    const tile1 = this._closedPart[indicesInHand[0]];
+    const tile2 = this._closedPart[indicesInHand[1]];
+    const tile3 = this._closedPart[indicesInHand[2]];
+    const tile4 = this._closedPart[indicesInHand[3]];
+    this._closedPart = this._closedPart.filter(
+      (t) => t !== tile1 && t !== tile2 && t !== tile3 && t !== tile4
+    );
+    this._rebuildTilePositions();
+    const kan = new Ankan([tile1, tile2, tile3, tile]);
+    kan.getRoot().parent = this._rootNode;
+    kan.getRoot().rotation.z = Math.PI / 2;
+    kan.getRoot().position.x = Tile.D / 2;
+    kan.getRoot().position.y = bottomOffset;
+    kan.getRoot().position.z =
+      // (1 + this._closedPart.length) * Tile.W +
+      this._closedPartMaxWidth / 2 -
+      this._openPart.reduce((acc, set) => acc + set.getWidth() + 0.3, 0) -
+      kan.getWidth() / 2 +
+      rightOffset;
+    this._openPart.push(kan);
+  }
+
+  // TODO: chi, shominkan
 
   discard(tile: Tile) {
     console.log('Discarded ' + tile.getType());

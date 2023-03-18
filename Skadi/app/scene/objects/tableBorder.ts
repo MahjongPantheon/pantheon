@@ -1,9 +1,9 @@
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
-import { RoundedBox } from '#/objects/roundedBox';
+import { RoundedBox } from '#/scene/objects/roundedBox';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector';
-import { Tile } from '#/objects/tile';
+import { Tile } from '#/scene/objects/tile';
 import { CSG } from '@babylonjs/core/Meshes/csg';
-import { res } from '#/resources';
+import { res } from '#/scene/resources';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder';
 
 const borderWidth = 4;

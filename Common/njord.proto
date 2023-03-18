@@ -90,9 +90,14 @@ message N_OpenSet {
   N_ClaimedFrom from = 3;
 }
 
-message N_Hand {
+message N_ClosedPart {
   repeated N_Tile closedPart = 1;
+}
+
+message N_Hand {
+  optional N_ClosedPart closedPart = 1; // null for opponent hands
   repeated N_OpenSet openedPart = 2;
+  int32 closedPartLength = 3;
 }
 
 enum N_MoveState {
@@ -110,16 +115,14 @@ message N_TableState {
   N_RoundStatus roundStatus = 7;
   int32 riichiOnTable = 8; // riichi from previous rounds
   repeated N_Tile doraIndicators = 9;
+  int32 tilesInWallCount = 10;
 
   // Move related
-  N_MoveState moveState = 10;
-  N_Tile lastDiscard = 11;
-  int32 lastDiscardFrom = 12; // player index at the table
+  N_MoveState moveState = 11;
+  N_Tile lastDiscard = 12;
+  int32 lastDiscardFrom = 13; // player index at the table
 
   // Filtered fields, existing only on server
   // Some of the data _can_ get to clients, but this should be filtered carefully
-
-  repeated N_Tile wall = 20;
-  repeated N_Tile deadWall = 21;
-  repeated N_Hand hands = 22;
+  repeated N_Hand hands = 20;
 }

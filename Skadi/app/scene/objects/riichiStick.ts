@@ -1,9 +1,9 @@
 import { CSG } from '@babylonjs/core/Meshes/csg';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder';
 import { Mesh } from '@babylonjs/core/Meshes/mesh';
-import { RoundedBox } from '#/objects/roundedBox';
+import { RoundedBox } from '#/scene/objects/roundedBox';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector';
-import { res } from '#/resources';
+import { res } from '#/scene/resources';
 
 export class RiichiStick {
   private static _stick: Mesh;

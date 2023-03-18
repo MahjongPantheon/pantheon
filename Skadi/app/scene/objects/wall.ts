@@ -1,4 +1,4 @@
-import { Tile } from '#/objects/tile';
+import { Tile } from '#/scene/objects/tile';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
 import { Scene } from '@babylonjs/core/scene';
 import { N_TileValue } from '#/generated/njord.pb';

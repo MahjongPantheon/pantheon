@@ -21,15 +21,12 @@ type Resources = {
     winds: HTMLImageElement[];
   };
   mat: {
-    tileBack: StandardMaterial;
-    tileBase: StandardMaterial;
+    tile: MultiMaterial;
     tileValues: Record<N_TileValue, StandardMaterial>;
     tileValuesAka: Record<N_TileValue, StandardMaterial>;
     table: StandardMaterial;
     tableCenter: StandardMaterial;
     tableBorder: StandardMaterial;
-    riichiStickBase: StandardMaterial;
-    riichiStickDot: StandardMaterial;
     riichiStick: MultiMaterial;
   };
 };
@@ -94,23 +91,23 @@ export function preloadResources(scene: Scene): Promise<any> {
     );
   }
   // Tiles
-  res.mat.tileBack = new StandardMaterial('tile_back', scene);
-  res.mat.tileBack.diffuseColor = new Color3(195 / 255, 149 / 255, 89 / 255);
-  noSpec(res.mat.tileBack);
+  const tileBack = new StandardMaterial('tile_back', scene);
+  tileBack.diffuseColor = new Color3(195 / 255, 149 / 255, 89 / 255);
+  noSpec(tileBack);
+  const tileBase = new StandardMaterial('tile_base', scene);
+  tileBase.ambientColor = Color3.White();
+  noSpec(tileBase);
+  res.mat.tile = new MultiMaterial('tile', scene);
+  res.mat.tile.subMaterials.push(tileBase, tileBack);
 
-  res.mat.tileBase = new StandardMaterial('tile_base', scene);
-  res.mat.tileBase.ambientColor = Color3.White();
-  noSpec(res.mat.tileBase);
-
-  res.mat.riichiStickBase = new StandardMaterial('stick_base', scene);
-  res.mat.riichiStickBase.diffuseColor = Color3.White();
-  noSpec(res.mat.riichiStickBase);
-  res.mat.riichiStickDot = new StandardMaterial('stick_dot', scene);
-  res.mat.riichiStickDot.diffuseColor = Color3.Red();
-  noSpec(res.mat.riichiStickDot);
+  const riichiStickBase = new StandardMaterial('stick_base', scene);
+  riichiStickBase.diffuseColor = Color3.White();
+  noSpec(riichiStickBase);
+  const riichiStickDot = new StandardMaterial('stick_dot', scene);
+  riichiStickDot.diffuseColor = Color3.Red();
+  noSpec(riichiStickDot);
   res.mat.riichiStick = new MultiMaterial('stick', scene);
-  res.mat.riichiStick.subMaterials.push(res.mat.riichiStickBase, res.mat.riichiStickDot);
-  // eliminating the specular highlights of the phong model
+  res.mat.riichiStick.subMaterials.push(riichiStickBase, riichiStickDot);
 
   Object.values(N_TileValue)
     .filter(function (i): i is N_TileValue {

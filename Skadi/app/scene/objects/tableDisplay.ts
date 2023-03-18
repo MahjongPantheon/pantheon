@@ -3,7 +3,7 @@ import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial';
 import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder';
 import { Mesh } from '@babylonjs/core/Meshes/mesh';
 import { Color3 } from '@babylonjs/core/Maths/math.color';
-import { res } from '#/resources';
+import { res } from '#/scene/resources';
 import { Texture } from '@babylonjs/core/Materials/Textures/texture';
 
 const font = '"DSEG7 Classic Mini"';

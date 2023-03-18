@@ -1,10 +1,10 @@
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
 import { Mesh } from '@babylonjs/core/Meshes/mesh';
-import { res } from '#/resources';
+import { res } from '#/scene/resources';
 import { Scene } from '@babylonjs/core/scene';
-import { TableDisplay } from '#/objects/tableDisplay';
+import { TableDisplay } from '#/scene/objects/tableDisplay';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector';
-import { RiichiStick } from '#/objects/riichiStick';
+import { RiichiStick } from '#/scene/objects/riichiStick';
 
 export class TableCenter {
   private readonly _rootNode: TransformNode;
