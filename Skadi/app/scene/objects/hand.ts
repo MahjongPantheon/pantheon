@@ -5,7 +5,8 @@ import { Scene } from '@babylonjs/core/scene';
 import { ActionManager } from '@babylonjs/core/Actions/actionManager';
 import { CombineAction, ExecuteCodeAction } from '@babylonjs/core/Actions/directActions';
 import { InterpolateValueAction } from '@babylonjs/core/Actions/interpolateValueAction';
-import { N_ClaimedFrom } from '#/generated/njord.pb';
+import { N_ClaimedFrom, N_Hand } from '#/generated/njord.pb';
+import { RecursivePartial } from '#/helpers/partial';
 
 const rightOffset = 9.1;
 const bottomOffset = 2;
@@ -23,6 +24,13 @@ export class Hand {
 
   constructor() {
     this._rootNode = new TransformNode('hand');
+  }
+
+  setState(state?: RecursivePartial<N_Hand>) {
+    if (!state) {
+      return;
+    }
+    // TODO: update hand state according to input
   }
 
   getRoot(): TransformNode {

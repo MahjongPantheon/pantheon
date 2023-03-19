@@ -4,7 +4,7 @@ import { TranslationJson } from 'i18n-proto';
 // TODO: exclude from primary bundle
 import langRu from '../i18n/ru.json';
 import langDe from '../i18n/de.json';
-import { IStorage } from '#/services/storage';
+import { IStorage } from '../../../Common/storage';
 export const supportedLanguages = ['en', 'ru', 'de'];
 const langs = {
   ru: langRu,

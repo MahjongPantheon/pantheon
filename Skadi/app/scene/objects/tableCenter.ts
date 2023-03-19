@@ -5,6 +5,7 @@ import { Scene } from '@babylonjs/core/scene';
 import { TableDisplay } from '#/scene/objects/tableDisplay';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector';
 import { RiichiStick } from '#/scene/objects/riichiStick';
+import { State } from '#/helpers/state';
 
 export class TableCenter {
   private readonly _rootNode: TransformNode;
@@ -16,6 +17,10 @@ export class TableCenter {
     res.mdl.tableCenter.parent = this._rootNode;
     this._makeDisplays();
     this._makeSticks();
+  }
+
+  public setState(state: State) {
+    // TODO: update center state according to input
   }
 
   private _makeSticks() {

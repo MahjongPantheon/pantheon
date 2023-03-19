@@ -15,7 +15,9 @@
     "@babylonjs/serializers": "^5.50.1",
     "@types/earcut": "^2.1.1",
     "assert": "^2.0.0",
+    "deep-clone": "^3.0.3",
     "earcut": "^2.2.4",
+    "redux": "^4.2.1",
     "twirpscript": "^0.0.66",
     "typescript": "^4.9.5"
   },

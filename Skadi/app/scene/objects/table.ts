@@ -11,6 +11,7 @@ import { Wall } from '#/scene/objects/wall';
 import { Lightbox } from '#/scene/objects/lightbox';
 import { res } from '#/scene/resources';
 import { N_TileValue } from '#/generated/njord.pb';
+import { State } from '#/helpers/state';
 
 export const TABLE_SIZE = 75;
 const discardPositions = [
@@ -88,6 +89,17 @@ export class Table {
     // (window as any).wall = wall;
 
     this.resetState();
+  }
+
+  public setState(state: State) {
+    this._center.setState(state);
+    this._discards.forEach((dis, index) => {
+      dis.setState(state.currentRound?.discards?.[index]);
+    });
+    this._hands.forEach((hand, index) => {
+      hand.setState(state.currentRound?.hands?.[index]);
+    });
+    this._wall.setState(state.currentRound);
   }
 
   resetState() {

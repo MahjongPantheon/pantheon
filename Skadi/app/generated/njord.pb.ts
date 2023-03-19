@@ -9,7 +9,7 @@ import { BinaryReader, BinaryWriter } from "protoscript";
 //                 Types                  //
 //========================================//
 
-export type N_RoundStatus = "SEEDING" | "PLAYING" | "ENDED";
+export type N_RoundStatus = "NOT_STARTED" | "SEEDING" | "PLAYING" | "ENDED";
 
 export type N_TileValue =
   | "NIL"
@@ -52,7 +52,10 @@ export type N_SetKind = "PON" | "CHI" | "ANKAN" | "SHOMINKAN" | "DAIMINKAN";
 
 export type N_ClaimedFrom = "KAMICHA" | "TOIMEN" | "SHIMOCHA";
 
-export type N_MoveState = "WAITING_FOR_DISCARD" | "WAITING_FOR_CLAIM";
+export type N_MoveState =
+  | "WAITING"
+  | "WAITING_FOR_DISCARD"
+  | "WAITING_FOR_CLAIM";
 
 export interface N_Player {
   id: number;
@@ -78,30 +81,48 @@ export interface N_OpenSet {
   from: N_ClaimedFrom;
 }
 
-export interface N_Hand {
+export interface N_ClosedPart {
   closedPart: N_Tile[];
-  openedPart: N_OpenSet[];
 }
 
-export interface N_TableState {
+export interface N_Hand {
+  closedPart?: N_ClosedPart | null | undefined;
+  openedPart: N_OpenSet[];
+  closedPartLength: number;
+}
+
+export interface N_Move {
+  moveState: N_MoveState;
+  lastDiscard: N_Tile;
+  lastDiscardFrom: number;
+}
+
+export interface N_CurrentRound {
+  discards: N_Discard[];
+  tilesInWallCount: number;
+  doraIndicators: N_TileValue[];
+  currentRiichi: boolean[];
+  moveState: N_Move;
+  diceValue: number;
+  /**
+   * Filtered fields, existing only on server
+   * Some of the data _can_ get to clients, but this should be filtered carefully
+   */
+  hands: N_Hand[];
+}
+
+export interface N_GameState {
   players: N_Player[];
   currentScores: number[];
-  currentRiichi: boolean[];
-  discards: N_Discard[];
   currentRound: number;
   currentRenchan: number;
   roundStatus: N_RoundStatus;
   riichiOnTable: number;
-  doraIndicators: N_Tile[];
-  /**
-   * Move related
-   */
-  moveState: N_MoveState;
-  lastDiscard: N_Tile;
-  lastDiscardFrom: number;
-  wall: N_Tile[];
-  deadWall: N_Tile[];
-  hands: N_Hand[];
+}
+
+export interface N_TableState {
+  game: N_GameState;
+  currentRound: N_CurrentRound;
 }
 
 //========================================//
@@ -109,6 +130,7 @@ export interface N_TableState {
 //========================================//
 
 export const N_RoundStatus = {
+  NOT_STARTED: "NOT_STARTED",
   SEEDING: "SEEDING",
   PLAYING: "PLAYING",
   ENDED: "ENDED",
@@ -118,12 +140,15 @@ export const N_RoundStatus = {
   _fromInt: function (i: number): N_RoundStatus {
     switch (i) {
       case 0: {
-        return "SEEDING";
+        return "NOT_STARTED";
       }
       case 1: {
-        return "PLAYING";
+        return "SEEDING";
       }
       case 2: {
+        return "PLAYING";
+      }
+      case 3: {
         return "ENDED";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
@@ -137,14 +162,17 @@ export const N_RoundStatus = {
    */
   _toInt: function (i: N_RoundStatus): number {
     switch (i) {
-      case "SEEDING": {
+      case "NOT_STARTED": {
         return 0;
       }
-      case "PLAYING": {
+      case "SEEDING": {
         return 1;
       }
-      case "ENDED": {
+      case "PLAYING": {
         return 2;
+      }
+      case "ENDED": {
+        return 3;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -531,6 +559,7 @@ export const N_ClaimedFrom = {
 } as const;
 
 export const N_MoveState = {
+  WAITING: "WAITING",
   WAITING_FOR_DISCARD: "WAITING_FOR_DISCARD",
   WAITING_FOR_CLAIM: "WAITING_FOR_CLAIM",
   /**
@@ -539,9 +568,12 @@ export const N_MoveState = {
   _fromInt: function (i: number): N_MoveState {
     switch (i) {
       case 0: {
-        return "WAITING_FOR_DISCARD";
+        return "WAITING";
       }
       case 1: {
+        return "WAITING_FOR_DISCARD";
+      }
+      case 2: {
         return "WAITING_FOR_CLAIM";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
@@ -555,11 +587,14 @@ export const N_MoveState = {
    */
   _toInt: function (i: N_MoveState): number {
     switch (i) {
-      case "WAITING_FOR_DISCARD": {
+      case "WAITING": {
         return 0;
       }
-      case "WAITING_FOR_CLAIM": {
+      case "WAITING_FOR_DISCARD": {
         return 1;
+      }
+      case "WAITING_FOR_CLAIM": {
+        return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -878,6 +913,79 @@ export const N_OpenSet = {
   },
 };
 
+export const N_ClosedPart = {
+  /**
+   * Serializes N_ClosedPart to protobuf.
+   */
+  encode: function (msg: Partial<N_ClosedPart>): Uint8Array {
+    return N_ClosedPart._writeMessage(
+      msg,
+      new BinaryWriter()
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes N_ClosedPart from protobuf.
+   */
+  decode: function (bytes: ByteSource): N_ClosedPart {
+    return N_ClosedPart._readMessage(
+      N_ClosedPart.initialize(),
+      new BinaryReader(bytes)
+    );
+  },
+
+  /**
+   * Initializes N_ClosedPart with all fields set to their default value.
+   */
+  initialize: function (): N_ClosedPart {
+    return {
+      closedPart: [],
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<N_ClosedPart>,
+    writer: BinaryWriter
+  ): BinaryWriter {
+    if (msg.closedPart?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.closedPart as any,
+        N_Tile._writeMessage
+      );
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: N_ClosedPart,
+    reader: BinaryReader
+  ): N_ClosedPart {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = N_Tile.initialize();
+          reader.readMessage(m, N_Tile._readMessage);
+          msg.closedPart.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 export const N_Hand = {
   /**
    * Serializes N_Hand to protobuf.
@@ -898,8 +1006,9 @@ export const N_Hand = {
    */
   initialize: function (): N_Hand {
     return {
-      closedPart: [],
+      closedPart: undefined,
       openedPart: [],
+      closedPartLength: 0,
     };
   },
 
@@ -910,12 +1019,8 @@ export const N_Hand = {
     msg: Partial<N_Hand>,
     writer: BinaryWriter
   ): BinaryWriter {
-    if (msg.closedPart?.length) {
-      writer.writeRepeatedMessage(
-        1,
-        msg.closedPart as any,
-        N_Tile._writeMessage
-      );
+    if (msg.closedPart != undefined) {
+      writer.writeMessage(1, msg.closedPart, N_ClosedPart._writeMessage);
     }
     if (msg.openedPart?.length) {
       writer.writeRepeatedMessage(
@@ -923,6 +1028,9 @@ export const N_Hand = {
         msg.openedPart as any,
         N_OpenSet._writeMessage
       );
+    }
+    if (msg.closedPartLength) {
+      writer.writeInt32(3, msg.closedPartLength);
     }
     return writer;
   },
@@ -935,15 +1043,336 @@ export const N_Hand = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          const m = N_Tile.initialize();
-          reader.readMessage(m, N_Tile._readMessage);
-          msg.closedPart.push(m);
+          msg.closedPart = N_ClosedPart.initialize();
+          reader.readMessage(msg.closedPart, N_ClosedPart._readMessage);
           break;
         }
         case 2: {
           const m = N_OpenSet.initialize();
           reader.readMessage(m, N_OpenSet._readMessage);
           msg.openedPart.push(m);
+          break;
+        }
+        case 3: {
+          msg.closedPartLength = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const N_Move = {
+  /**
+   * Serializes N_Move to protobuf.
+   */
+  encode: function (msg: Partial<N_Move>): Uint8Array {
+    return N_Move._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  },
+
+  /**
+   * Deserializes N_Move from protobuf.
+   */
+  decode: function (bytes: ByteSource): N_Move {
+    return N_Move._readMessage(N_Move.initialize(), new BinaryReader(bytes));
+  },
+
+  /**
+   * Initializes N_Move with all fields set to their default value.
+   */
+  initialize: function (): N_Move {
+    return {
+      moveState: N_MoveState._fromInt(0),
+      lastDiscard: N_Tile.initialize(),
+      lastDiscardFrom: 0,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<N_Move>,
+    writer: BinaryWriter
+  ): BinaryWriter {
+    if (msg.moveState && N_MoveState._toInt(msg.moveState)) {
+      writer.writeEnum(11, N_MoveState._toInt(msg.moveState));
+    }
+    if (msg.lastDiscard) {
+      writer.writeMessage(12, msg.lastDiscard, N_Tile._writeMessage);
+    }
+    if (msg.lastDiscardFrom) {
+      writer.writeInt32(13, msg.lastDiscardFrom);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: N_Move, reader: BinaryReader): N_Move {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 11: {
+          msg.moveState = N_MoveState._fromInt(reader.readEnum());
+          break;
+        }
+        case 12: {
+          reader.readMessage(msg.lastDiscard, N_Tile._readMessage);
+          break;
+        }
+        case 13: {
+          msg.lastDiscardFrom = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const N_CurrentRound = {
+  /**
+   * Serializes N_CurrentRound to protobuf.
+   */
+  encode: function (msg: Partial<N_CurrentRound>): Uint8Array {
+    return N_CurrentRound._writeMessage(
+      msg,
+      new BinaryWriter()
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes N_CurrentRound from protobuf.
+   */
+  decode: function (bytes: ByteSource): N_CurrentRound {
+    return N_CurrentRound._readMessage(
+      N_CurrentRound.initialize(),
+      new BinaryReader(bytes)
+    );
+  },
+
+  /**
+   * Initializes N_CurrentRound with all fields set to their default value.
+   */
+  initialize: function (): N_CurrentRound {
+    return {
+      discards: [],
+      tilesInWallCount: 0,
+      doraIndicators: [],
+      currentRiichi: [],
+      moveState: N_Move.initialize(),
+      diceValue: 0,
+      hands: [],
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<N_CurrentRound>,
+    writer: BinaryWriter
+  ): BinaryWriter {
+    if (msg.discards?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.discards as any,
+        N_Discard._writeMessage
+      );
+    }
+    if (msg.tilesInWallCount) {
+      writer.writeInt32(2, msg.tilesInWallCount);
+    }
+    if (msg.doraIndicators?.length) {
+      writer.writePackedEnum(3, msg.doraIndicators.map(N_TileValue._toInt));
+    }
+    if (msg.currentRiichi?.length) {
+      writer.writePackedBool(4, msg.currentRiichi);
+    }
+    if (msg.moveState) {
+      writer.writeMessage(5, msg.moveState, N_Move._writeMessage);
+    }
+    if (msg.diceValue) {
+      writer.writeInt32(6, msg.diceValue);
+    }
+    if (msg.hands?.length) {
+      writer.writeRepeatedMessage(7, msg.hands as any, N_Hand._writeMessage);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: N_CurrentRound,
+    reader: BinaryReader
+  ): N_CurrentRound {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = N_Discard.initialize();
+          reader.readMessage(m, N_Discard._readMessage);
+          msg.discards.push(m);
+          break;
+        }
+        case 2: {
+          msg.tilesInWallCount = reader.readInt32();
+          break;
+        }
+        case 3: {
+          if (reader.isDelimited()) {
+            msg.doraIndicators.push(
+              ...reader.readPackedEnum().map(N_TileValue._fromInt)
+            );
+          } else {
+            msg.doraIndicators.push(N_TileValue._fromInt(reader.readEnum()));
+          }
+          break;
+        }
+        case 4: {
+          if (reader.isDelimited()) {
+            msg.currentRiichi.push(...reader.readPackedBool());
+          } else {
+            msg.currentRiichi.push(reader.readBool());
+          }
+          break;
+        }
+        case 5: {
+          reader.readMessage(msg.moveState, N_Move._readMessage);
+          break;
+        }
+        case 6: {
+          msg.diceValue = reader.readInt32();
+          break;
+        }
+        case 7: {
+          const m = N_Hand.initialize();
+          reader.readMessage(m, N_Hand._readMessage);
+          msg.hands.push(m);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const N_GameState = {
+  /**
+   * Serializes N_GameState to protobuf.
+   */
+  encode: function (msg: Partial<N_GameState>): Uint8Array {
+    return N_GameState._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  },
+
+  /**
+   * Deserializes N_GameState from protobuf.
+   */
+  decode: function (bytes: ByteSource): N_GameState {
+    return N_GameState._readMessage(
+      N_GameState.initialize(),
+      new BinaryReader(bytes)
+    );
+  },
+
+  /**
+   * Initializes N_GameState with all fields set to their default value.
+   */
+  initialize: function (): N_GameState {
+    return {
+      players: [],
+      currentScores: [],
+      currentRound: 0,
+      currentRenchan: 0,
+      roundStatus: N_RoundStatus._fromInt(0),
+      riichiOnTable: 0,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<N_GameState>,
+    writer: BinaryWriter
+  ): BinaryWriter {
+    if (msg.players?.length) {
+      writer.writeRepeatedMessage(
+        1,
+        msg.players as any,
+        N_Player._writeMessage
+      );
+    }
+    if (msg.currentScores?.length) {
+      writer.writePackedInt32(2, msg.currentScores);
+    }
+    if (msg.currentRound) {
+      writer.writeInt32(3, msg.currentRound);
+    }
+    if (msg.currentRenchan) {
+      writer.writeInt32(4, msg.currentRenchan);
+    }
+    if (msg.roundStatus && N_RoundStatus._toInt(msg.roundStatus)) {
+      writer.writeEnum(5, N_RoundStatus._toInt(msg.roundStatus));
+    }
+    if (msg.riichiOnTable) {
+      writer.writeInt32(6, msg.riichiOnTable);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: N_GameState, reader: BinaryReader): N_GameState {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          const m = N_Player.initialize();
+          reader.readMessage(m, N_Player._readMessage);
+          msg.players.push(m);
+          break;
+        }
+        case 2: {
+          if (reader.isDelimited()) {
+            msg.currentScores.push(...reader.readPackedInt32());
+          } else {
+            msg.currentScores.push(reader.readInt32());
+          }
+          break;
+        }
+        case 3: {
+          msg.currentRound = reader.readInt32();
+          break;
+        }
+        case 4: {
+          msg.currentRenchan = reader.readInt32();
+          break;
+        }
+        case 5: {
+          msg.roundStatus = N_RoundStatus._fromInt(reader.readEnum());
+          break;
+        }
+        case 6: {
+          msg.riichiOnTable = reader.readInt32();
           break;
         }
         default: {
@@ -982,21 +1411,8 @@ export const N_TableState = {
    */
   initialize: function (): N_TableState {
     return {
-      players: [],
-      currentScores: [],
-      currentRiichi: [],
-      discards: [],
-      currentRound: 0,
-      currentRenchan: 0,
-      roundStatus: N_RoundStatus._fromInt(0),
-      riichiOnTable: 0,
-      doraIndicators: [],
-      moveState: N_MoveState._fromInt(0),
-      lastDiscard: N_Tile.initialize(),
-      lastDiscardFrom: 0,
-      wall: [],
-      deadWall: [],
-      hands: [],
+      game: N_GameState.initialize(),
+      currentRound: N_CurrentRound.initialize(),
     };
   },
 
@@ -1007,66 +1423,11 @@ export const N_TableState = {
     msg: Partial<N_TableState>,
     writer: BinaryWriter
   ): BinaryWriter {
-    if (msg.players?.length) {
-      writer.writeRepeatedMessage(
-        1,
-        msg.players as any,
-        N_Player._writeMessage
-      );
-    }
-    if (msg.currentScores?.length) {
-      writer.writePackedInt32(2, msg.currentScores);
-    }
-    if (msg.currentRiichi?.length) {
-      writer.writePackedBool(3, msg.currentRiichi);
-    }
-    if (msg.discards?.length) {
-      writer.writeRepeatedMessage(
-        4,
-        msg.discards as any,
-        N_Discard._writeMessage
-      );
+    if (msg.game) {
+      writer.writeMessage(1, msg.game, N_GameState._writeMessage);
     }
     if (msg.currentRound) {
-      writer.writeInt32(5, msg.currentRound);
-    }
-    if (msg.currentRenchan) {
-      writer.writeInt32(6, msg.currentRenchan);
-    }
-    if (msg.roundStatus && N_RoundStatus._toInt(msg.roundStatus)) {
-      writer.writeEnum(7, N_RoundStatus._toInt(msg.roundStatus));
-    }
-    if (msg.riichiOnTable) {
-      writer.writeInt32(8, msg.riichiOnTable);
-    }
-    if (msg.doraIndicators?.length) {
-      writer.writeRepeatedMessage(
-        9,
-        msg.doraIndicators as any,
-        N_Tile._writeMessage
-      );
-    }
-    if (msg.moveState && N_MoveState._toInt(msg.moveState)) {
-      writer.writeEnum(10, N_MoveState._toInt(msg.moveState));
-    }
-    if (msg.lastDiscard) {
-      writer.writeMessage(11, msg.lastDiscard, N_Tile._writeMessage);
-    }
-    if (msg.lastDiscardFrom) {
-      writer.writeInt32(12, msg.lastDiscardFrom);
-    }
-    if (msg.wall?.length) {
-      writer.writeRepeatedMessage(20, msg.wall as any, N_Tile._writeMessage);
-    }
-    if (msg.deadWall?.length) {
-      writer.writeRepeatedMessage(
-        21,
-        msg.deadWall as any,
-        N_Tile._writeMessage
-      );
-    }
-    if (msg.hands?.length) {
-      writer.writeRepeatedMessage(22, msg.hands as any, N_Hand._writeMessage);
+      writer.writeMessage(2, msg.currentRound, N_CurrentRound._writeMessage);
     }
     return writer;
   },
@@ -1082,83 +1443,11 @@ export const N_TableState = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          const m = N_Player.initialize();
-          reader.readMessage(m, N_Player._readMessage);
-          msg.players.push(m);
+          reader.readMessage(msg.game, N_GameState._readMessage);
           break;
         }
         case 2: {
-          if (reader.isDelimited()) {
-            msg.currentScores.push(...reader.readPackedInt32());
-          } else {
-            msg.currentScores.push(reader.readInt32());
-          }
-          break;
-        }
-        case 3: {
-          if (reader.isDelimited()) {
-            msg.currentRiichi.push(...reader.readPackedBool());
-          } else {
-            msg.currentRiichi.push(reader.readBool());
-          }
-          break;
-        }
-        case 4: {
-          const m = N_Discard.initialize();
-          reader.readMessage(m, N_Discard._readMessage);
-          msg.discards.push(m);
-          break;
-        }
-        case 5: {
-          msg.currentRound = reader.readInt32();
-          break;
-        }
-        case 6: {
-          msg.currentRenchan = reader.readInt32();
-          break;
-        }
-        case 7: {
-          msg.roundStatus = N_RoundStatus._fromInt(reader.readEnum());
-          break;
-        }
-        case 8: {
-          msg.riichiOnTable = reader.readInt32();
-          break;
-        }
-        case 9: {
-          const m = N_Tile.initialize();
-          reader.readMessage(m, N_Tile._readMessage);
-          msg.doraIndicators.push(m);
-          break;
-        }
-        case 10: {
-          msg.moveState = N_MoveState._fromInt(reader.readEnum());
-          break;
-        }
-        case 11: {
-          reader.readMessage(msg.lastDiscard, N_Tile._readMessage);
-          break;
-        }
-        case 12: {
-          msg.lastDiscardFrom = reader.readInt32();
-          break;
-        }
-        case 20: {
-          const m = N_Tile.initialize();
-          reader.readMessage(m, N_Tile._readMessage);
-          msg.wall.push(m);
-          break;
-        }
-        case 21: {
-          const m = N_Tile.initialize();
-          reader.readMessage(m, N_Tile._readMessage);
-          msg.deadWall.push(m);
-          break;
-        }
-        case 22: {
-          const m = N_Hand.initialize();
-          reader.readMessage(m, N_Hand._readMessage);
-          msg.hands.push(m);
+          reader.readMessage(msg.currentRound, N_CurrentRound._readMessage);
           break;
         }
         default: {
@@ -1176,6 +1465,7 @@ export const N_TableState = {
 //========================================//
 
 export const N_RoundStatusJSON = {
+  NOT_STARTED: "NOT_STARTED",
   SEEDING: "SEEDING",
   PLAYING: "PLAYING",
   ENDED: "ENDED",
@@ -1185,12 +1475,15 @@ export const N_RoundStatusJSON = {
   _fromInt: function (i: number): N_RoundStatus {
     switch (i) {
       case 0: {
-        return "SEEDING";
+        return "NOT_STARTED";
       }
       case 1: {
-        return "PLAYING";
+        return "SEEDING";
       }
       case 2: {
+        return "PLAYING";
+      }
+      case 3: {
         return "ENDED";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
@@ -1204,14 +1497,17 @@ export const N_RoundStatusJSON = {
    */
   _toInt: function (i: N_RoundStatus): number {
     switch (i) {
-      case "SEEDING": {
+      case "NOT_STARTED": {
         return 0;
       }
-      case "PLAYING": {
+      case "SEEDING": {
         return 1;
       }
-      case "ENDED": {
+      case "PLAYING": {
         return 2;
+      }
+      case "ENDED": {
+        return 3;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -1598,6 +1894,7 @@ export const N_ClaimedFromJSON = {
 } as const;
 
 export const N_MoveStateJSON = {
+  WAITING: "WAITING",
   WAITING_FOR_DISCARD: "WAITING_FOR_DISCARD",
   WAITING_FOR_CLAIM: "WAITING_FOR_CLAIM",
   /**
@@ -1606,9 +1903,12 @@ export const N_MoveStateJSON = {
   _fromInt: function (i: number): N_MoveState {
     switch (i) {
       case 0: {
-        return "WAITING_FOR_DISCARD";
+        return "WAITING";
       }
       case 1: {
+        return "WAITING_FOR_DISCARD";
+      }
+      case 2: {
         return "WAITING_FOR_CLAIM";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
@@ -1622,11 +1922,14 @@ export const N_MoveStateJSON = {
    */
   _toInt: function (i: N_MoveState): number {
     switch (i) {
-      case "WAITING_FOR_DISCARD": {
+      case "WAITING": {
         return 0;
       }
-      case "WAITING_FOR_CLAIM": {
+      case "WAITING_FOR_DISCARD": {
         return 1;
+      }
+      case "WAITING_FOR_CLAIM": {
+        return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -1905,6 +2208,62 @@ export const N_OpenSetJSON = {
   },
 };
 
+export const N_ClosedPartJSON = {
+  /**
+   * Serializes N_ClosedPart to JSON.
+   */
+  encode: function (msg: Partial<N_ClosedPart>): string {
+    return JSON.stringify(N_ClosedPartJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes N_ClosedPart from JSON.
+   */
+  decode: function (json: string): N_ClosedPart {
+    return N_ClosedPartJSON._readMessage(
+      N_ClosedPartJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+
+  /**
+   * Initializes N_ClosedPart with all fields set to their default value.
+   */
+  initialize: function (): N_ClosedPart {
+    return {
+      closedPart: [],
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<N_ClosedPart>
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.closedPart?.length) {
+      json["closedPart"] = msg.closedPart.map(N_TileJSON._writeMessage);
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: N_ClosedPart, json: any): N_ClosedPart {
+    const _closedPart_ = json["closedPart"];
+    if (_closedPart_) {
+      for (const item of _closedPart_) {
+        const m = N_Tile.initialize();
+        N_TileJSON._readMessage(m, item);
+        msg.closedPart.push(m);
+      }
+    }
+    return msg;
+  },
+};
+
 export const N_HandJSON = {
   /**
    * Serializes N_Hand to JSON.
@@ -1925,8 +2284,9 @@ export const N_HandJSON = {
    */
   initialize: function (): N_Hand {
     return {
-      closedPart: [],
+      closedPart: undefined,
       openedPart: [],
+      closedPartLength: 0,
     };
   },
 
@@ -1935,11 +2295,15 @@ export const N_HandJSON = {
    */
   _writeMessage: function (msg: Partial<N_Hand>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
-    if (msg.closedPart?.length) {
-      json["closedPart"] = msg.closedPart.map(N_TileJSON._writeMessage);
+    if (msg.closedPart != undefined) {
+      const _closedPart_ = N_ClosedPartJSON._writeMessage(msg.closedPart);
+      json["closedPart"] = _closedPart_;
     }
     if (msg.openedPart?.length) {
       json["openedPart"] = msg.openedPart.map(N_OpenSetJSON._writeMessage);
+    }
+    if (msg.closedPartLength) {
+      json["closedPartLength"] = msg.closedPartLength;
     }
     return json;
   },
@@ -1950,11 +2314,9 @@ export const N_HandJSON = {
   _readMessage: function (msg: N_Hand, json: any): N_Hand {
     const _closedPart_ = json["closedPart"];
     if (_closedPart_) {
-      for (const item of _closedPart_) {
-        const m = N_Tile.initialize();
-        N_TileJSON._readMessage(m, item);
-        msg.closedPart.push(m);
-      }
+      const m = N_ClosedPart.initialize();
+      N_ClosedPartJSON._readMessage(m, _closedPart_);
+      msg.closedPart = m;
     }
     const _openedPart_ = json["openedPart"];
     if (_openedPart_) {
@@ -1963,6 +2325,285 @@ export const N_HandJSON = {
         N_OpenSetJSON._readMessage(m, item);
         msg.openedPart.push(m);
       }
+    }
+    const _closedPartLength_ = json["closedPartLength"];
+    if (_closedPartLength_) {
+      msg.closedPartLength = _closedPartLength_;
+    }
+    return msg;
+  },
+};
+
+export const N_MoveJSON = {
+  /**
+   * Serializes N_Move to JSON.
+   */
+  encode: function (msg: Partial<N_Move>): string {
+    return JSON.stringify(N_MoveJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes N_Move from JSON.
+   */
+  decode: function (json: string): N_Move {
+    return N_MoveJSON._readMessage(N_MoveJSON.initialize(), JSON.parse(json));
+  },
+
+  /**
+   * Initializes N_Move with all fields set to their default value.
+   */
+  initialize: function (): N_Move {
+    return {
+      moveState: N_MoveState._fromInt(0),
+      lastDiscard: N_TileJSON.initialize(),
+      lastDiscardFrom: 0,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (msg: Partial<N_Move>): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.moveState && N_MoveStateJSON._toInt(msg.moveState)) {
+      json["moveState"] = msg.moveState;
+    }
+    if (msg.lastDiscard) {
+      const _lastDiscard_ = N_TileJSON._writeMessage(msg.lastDiscard);
+      if (Object.keys(_lastDiscard_).length > 0) {
+        json["lastDiscard"] = _lastDiscard_;
+      }
+    }
+    if (msg.lastDiscardFrom) {
+      json["lastDiscardFrom"] = msg.lastDiscardFrom;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: N_Move, json: any): N_Move {
+    const _moveState_ = json["moveState"];
+    if (_moveState_) {
+      msg.moveState = _moveState_;
+    }
+    const _lastDiscard_ = json["lastDiscard"];
+    if (_lastDiscard_) {
+      const m = N_Tile.initialize();
+      N_TileJSON._readMessage(m, _lastDiscard_);
+      msg.lastDiscard = m;
+    }
+    const _lastDiscardFrom_ = json["lastDiscardFrom"];
+    if (_lastDiscardFrom_) {
+      msg.lastDiscardFrom = _lastDiscardFrom_;
+    }
+    return msg;
+  },
+};
+
+export const N_CurrentRoundJSON = {
+  /**
+   * Serializes N_CurrentRound to JSON.
+   */
+  encode: function (msg: Partial<N_CurrentRound>): string {
+    return JSON.stringify(N_CurrentRoundJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes N_CurrentRound from JSON.
+   */
+  decode: function (json: string): N_CurrentRound {
+    return N_CurrentRoundJSON._readMessage(
+      N_CurrentRoundJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+
+  /**
+   * Initializes N_CurrentRound with all fields set to their default value.
+   */
+  initialize: function (): N_CurrentRound {
+    return {
+      discards: [],
+      tilesInWallCount: 0,
+      doraIndicators: [],
+      currentRiichi: [],
+      moveState: N_MoveJSON.initialize(),
+      diceValue: 0,
+      hands: [],
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<N_CurrentRound>
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.discards?.length) {
+      json["discards"] = msg.discards.map(N_DiscardJSON._writeMessage);
+    }
+    if (msg.tilesInWallCount) {
+      json["tilesInWallCount"] = msg.tilesInWallCount;
+    }
+    if (msg.doraIndicators?.length) {
+      json["doraIndicators"] = msg.doraIndicators;
+    }
+    if (msg.currentRiichi?.length) {
+      json["currentRiichi"] = msg.currentRiichi;
+    }
+    if (msg.moveState) {
+      const _moveState_ = N_MoveJSON._writeMessage(msg.moveState);
+      if (Object.keys(_moveState_).length > 0) {
+        json["moveState"] = _moveState_;
+      }
+    }
+    if (msg.diceValue) {
+      json["diceValue"] = msg.diceValue;
+    }
+    if (msg.hands?.length) {
+      json["hands"] = msg.hands.map(N_HandJSON._writeMessage);
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: N_CurrentRound, json: any): N_CurrentRound {
+    const _discards_ = json["discards"];
+    if (_discards_) {
+      for (const item of _discards_) {
+        const m = N_Discard.initialize();
+        N_DiscardJSON._readMessage(m, item);
+        msg.discards.push(m);
+      }
+    }
+    const _tilesInWallCount_ = json["tilesInWallCount"];
+    if (_tilesInWallCount_) {
+      msg.tilesInWallCount = _tilesInWallCount_;
+    }
+    const _doraIndicators_ = json["doraIndicators"];
+    if (_doraIndicators_) {
+      msg.doraIndicators = _doraIndicators_;
+    }
+    const _currentRiichi_ = json["currentRiichi"];
+    if (_currentRiichi_) {
+      msg.currentRiichi = _currentRiichi_;
+    }
+    const _moveState_ = json["moveState"];
+    if (_moveState_) {
+      const m = N_Move.initialize();
+      N_MoveJSON._readMessage(m, _moveState_);
+      msg.moveState = m;
+    }
+    const _diceValue_ = json["diceValue"];
+    if (_diceValue_) {
+      msg.diceValue = _diceValue_;
+    }
+    const _hands_ = json["hands"];
+    if (_hands_) {
+      for (const item of _hands_) {
+        const m = N_Hand.initialize();
+        N_HandJSON._readMessage(m, item);
+        msg.hands.push(m);
+      }
+    }
+    return msg;
+  },
+};
+
+export const N_GameStateJSON = {
+  /**
+   * Serializes N_GameState to JSON.
+   */
+  encode: function (msg: Partial<N_GameState>): string {
+    return JSON.stringify(N_GameStateJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes N_GameState from JSON.
+   */
+  decode: function (json: string): N_GameState {
+    return N_GameStateJSON._readMessage(
+      N_GameStateJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+
+  /**
+   * Initializes N_GameState with all fields set to their default value.
+   */
+  initialize: function (): N_GameState {
+    return {
+      players: [],
+      currentScores: [],
+      currentRound: 0,
+      currentRenchan: 0,
+      roundStatus: N_RoundStatus._fromInt(0),
+      riichiOnTable: 0,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (msg: Partial<N_GameState>): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.players?.length) {
+      json["players"] = msg.players.map(N_PlayerJSON._writeMessage);
+    }
+    if (msg.currentScores?.length) {
+      json["currentScores"] = msg.currentScores;
+    }
+    if (msg.currentRound) {
+      json["currentRound"] = msg.currentRound;
+    }
+    if (msg.currentRenchan) {
+      json["currentRenchan"] = msg.currentRenchan;
+    }
+    if (msg.roundStatus && N_RoundStatusJSON._toInt(msg.roundStatus)) {
+      json["roundStatus"] = msg.roundStatus;
+    }
+    if (msg.riichiOnTable) {
+      json["riichiOnTable"] = msg.riichiOnTable;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: N_GameState, json: any): N_GameState {
+    const _players_ = json["players"];
+    if (_players_) {
+      for (const item of _players_) {
+        const m = N_Player.initialize();
+        N_PlayerJSON._readMessage(m, item);
+        msg.players.push(m);
+      }
+    }
+    const _currentScores_ = json["currentScores"];
+    if (_currentScores_) {
+      msg.currentScores = _currentScores_;
+    }
+    const _currentRound_ = json["currentRound"];
+    if (_currentRound_) {
+      msg.currentRound = _currentRound_;
+    }
+    const _currentRenchan_ = json["currentRenchan"];
+    if (_currentRenchan_) {
+      msg.currentRenchan = _currentRenchan_;
+    }
+    const _roundStatus_ = json["roundStatus"];
+    if (_roundStatus_) {
+      msg.roundStatus = _roundStatus_;
+    }
+    const _riichiOnTable_ = json["riichiOnTable"];
+    if (_riichiOnTable_) {
+      msg.riichiOnTable = _riichiOnTable_;
     }
     return msg;
   },
@@ -1991,21 +2632,8 @@ export const N_TableStateJSON = {
    */
   initialize: function (): N_TableState {
     return {
-      players: [],
-      currentScores: [],
-      currentRiichi: [],
-      discards: [],
-      currentRound: 0,
-      currentRenchan: 0,
-      roundStatus: N_RoundStatus._fromInt(0),
-      riichiOnTable: 0,
-      doraIndicators: [],
-      moveState: N_MoveState._fromInt(0),
-      lastDiscard: N_TileJSON.initialize(),
-      lastDiscardFrom: 0,
-      wall: [],
-      deadWall: [],
-      hands: [],
+      game: N_GameStateJSON.initialize(),
+      currentRound: N_CurrentRoundJSON.initialize(),
     };
   },
 
@@ -2016,53 +2644,17 @@ export const N_TableStateJSON = {
     msg: Partial<N_TableState>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
-    if (msg.players?.length) {
-      json["players"] = msg.players.map(N_PlayerJSON._writeMessage);
-    }
-    if (msg.currentScores?.length) {
-      json["currentScores"] = msg.currentScores;
-    }
-    if (msg.currentRiichi?.length) {
-      json["currentRiichi"] = msg.currentRiichi;
-    }
-    if (msg.discards?.length) {
-      json["discards"] = msg.discards.map(N_DiscardJSON._writeMessage);
-    }
-    if (msg.currentRound) {
-      json["currentRound"] = msg.currentRound;
-    }
-    if (msg.currentRenchan) {
-      json["currentRenchan"] = msg.currentRenchan;
-    }
-    if (msg.roundStatus && N_RoundStatusJSON._toInt(msg.roundStatus)) {
-      json["roundStatus"] = msg.roundStatus;
-    }
-    if (msg.riichiOnTable) {
-      json["riichiOnTable"] = msg.riichiOnTable;
-    }
-    if (msg.doraIndicators?.length) {
-      json["doraIndicators"] = msg.doraIndicators.map(N_TileJSON._writeMessage);
-    }
-    if (msg.moveState && N_MoveStateJSON._toInt(msg.moveState)) {
-      json["moveState"] = msg.moveState;
-    }
-    if (msg.lastDiscard) {
-      const _lastDiscard_ = N_TileJSON._writeMessage(msg.lastDiscard);
-      if (Object.keys(_lastDiscard_).length > 0) {
-        json["lastDiscard"] = _lastDiscard_;
+    if (msg.game) {
+      const _game_ = N_GameStateJSON._writeMessage(msg.game);
+      if (Object.keys(_game_).length > 0) {
+        json["game"] = _game_;
       }
     }
-    if (msg.lastDiscardFrom) {
-      json["lastDiscardFrom"] = msg.lastDiscardFrom;
-    }
-    if (msg.wall?.length) {
-      json["wall"] = msg.wall.map(N_TileJSON._writeMessage);
-    }
-    if (msg.deadWall?.length) {
-      json["deadWall"] = msg.deadWall.map(N_TileJSON._writeMessage);
-    }
-    if (msg.hands?.length) {
-      json["hands"] = msg.hands.map(N_HandJSON._writeMessage);
+    if (msg.currentRound) {
+      const _currentRound_ = N_CurrentRoundJSON._writeMessage(msg.currentRound);
+      if (Object.keys(_currentRound_).length > 0) {
+        json["currentRound"] = _currentRound_;
+      }
     }
     return json;
   },
@@ -2071,91 +2663,17 @@ export const N_TableStateJSON = {
    * @private
    */
   _readMessage: function (msg: N_TableState, json: any): N_TableState {
-    const _players_ = json["players"];
-    if (_players_) {
-      for (const item of _players_) {
-        const m = N_Player.initialize();
-        N_PlayerJSON._readMessage(m, item);
-        msg.players.push(m);
-      }
-    }
-    const _currentScores_ = json["currentScores"];
-    if (_currentScores_) {
-      msg.currentScores = _currentScores_;
-    }
-    const _currentRiichi_ = json["currentRiichi"];
-    if (_currentRiichi_) {
-      msg.currentRiichi = _currentRiichi_;
-    }
-    const _discards_ = json["discards"];
-    if (_discards_) {
-      for (const item of _discards_) {
-        const m = N_Discard.initialize();
-        N_DiscardJSON._readMessage(m, item);
-        msg.discards.push(m);
-      }
+    const _game_ = json["game"];
+    if (_game_) {
+      const m = N_GameState.initialize();
+      N_GameStateJSON._readMessage(m, _game_);
+      msg.game = m;
     }
     const _currentRound_ = json["currentRound"];
     if (_currentRound_) {
-      msg.currentRound = _currentRound_;
-    }
-    const _currentRenchan_ = json["currentRenchan"];
-    if (_currentRenchan_) {
-      msg.currentRenchan = _currentRenchan_;
-    }
-    const _roundStatus_ = json["roundStatus"];
-    if (_roundStatus_) {
-      msg.roundStatus = _roundStatus_;
-    }
-    const _riichiOnTable_ = json["riichiOnTable"];
-    if (_riichiOnTable_) {
-      msg.riichiOnTable = _riichiOnTable_;
-    }
-    const _doraIndicators_ = json["doraIndicators"];
-    if (_doraIndicators_) {
-      for (const item of _doraIndicators_) {
-        const m = N_Tile.initialize();
-        N_TileJSON._readMessage(m, item);
-        msg.doraIndicators.push(m);
-      }
-    }
-    const _moveState_ = json["moveState"];
-    if (_moveState_) {
-      msg.moveState = _moveState_;
-    }
-    const _lastDiscard_ = json["lastDiscard"];
-    if (_lastDiscard_) {
-      const m = N_Tile.initialize();
-      N_TileJSON._readMessage(m, _lastDiscard_);
-      msg.lastDiscard = m;
-    }
-    const _lastDiscardFrom_ = json["lastDiscardFrom"];
-    if (_lastDiscardFrom_) {
-      msg.lastDiscardFrom = _lastDiscardFrom_;
-    }
-    const _wall_ = json["wall"];
-    if (_wall_) {
-      for (const item of _wall_) {
-        const m = N_Tile.initialize();
-        N_TileJSON._readMessage(m, item);
-        msg.wall.push(m);
-      }
-    }
-    const _deadWall_ = json["deadWall"];
-    if (_deadWall_) {
-      for (const item of _deadWall_) {
-        const m = N_Tile.initialize();
-        N_TileJSON._readMessage(m, item);
-        msg.deadWall.push(m);
-      }
-    }
-    const _hands_ = json["hands"];
-    if (_hands_) {
-      for (const item of _hands_) {
-        const m = N_Hand.initialize();
-        N_HandJSON._readMessage(m, item);
-        msg.hands.push(m);
-      }
+      const m = N_CurrentRound.initialize();
+      N_CurrentRoundJSON._readMessage(m, _currentRound_);
+      msg.currentRound = m;
     }
     return msg;
   },

@@ -15,7 +15,7 @@ import {
 } from '../actions/interfaces';
 import { IAppState } from '../interfaces';
 import { RemoteError } from '#/services/remoteError';
-import { IStorage } from '#/services/storage';
+import { IStorage } from '../../../../Common/storage';
 
 export const persistentMw =
   (storage: IStorage) =>

@@ -1,7 +1,8 @@
 import { Tile } from '#/scene/objects/tile';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
 import { Scene } from '@babylonjs/core/scene';
-import { N_TileValue } from '#/generated/njord.pb';
+import { N_CurrentRound, N_TileValue } from '#/generated/njord.pb';
+import { RecursivePartial } from '#/helpers/partial';
 
 export class Wall {
   private _rootNode: TransformNode;
@@ -32,6 +33,22 @@ export class Wall {
     this._buildWall();
   }
 
+  setState(state?: RecursivePartial<N_CurrentRound>) {
+    if (!state) {
+      return;
+    }
+
+    this.setBreak(state.diceValue!, state.doraIndicators!);
+
+    this._tiles.forEach((tile, idx) => {
+      tile.visibility =
+        idx > this._getTileIdxFromBreak(136 - (state.tilesInWallCount ?? 0)) &&
+        idx < this._getTileIdxFromBreak(0)
+          ? 1
+          : 0;
+    });
+  }
+
   // get tile in the ring by module 136
   protected _getTileIdx(position: number) {
     while (position < 0) {
@@ -41,7 +58,11 @@ export class Wall {
     return position % 136;
   }
 
-  public setBreak(dicesValue: number, doraValue: N_TileValue) {
+  protected _getTileIdxFromBreak(position: number) {
+    return this._getTileIdx(this._breakAt! + position);
+  }
+
+  public setBreak(dicesValue: number, doraValues: N_TileValue[]) {
     this._breakAt = -(
       // Negative to count counterclockwise
       (
@@ -49,13 +70,15 @@ export class Wall {
         2 * (dicesValue - 1)
       ) // Count N stacks of 2 tiles
     );
-    const tile = this._tiles[this._getTileIdx(this._breakAt - 4)];
-    tile.setType(doraValue);
-    tile.getRoot().rotation.z = 0; // flip indicator
+    doraValues.forEach((val, idx) => {
+      const tile = this._tiles[this._getTileIdx(this._breakAt! - 4 - 2 * idx)];
+      tile.setType(doraValues[idx]);
+      tile.getRoot().rotation.z = 0; // flip indicator
+    });
   }
 
   public takeTile(index: number) {
-    this._tiles[this._getTileIdx(index)].dispose();
+    this._tiles[this._getTileIdxFromBreak(index)].visibility = 0;
   }
 
   public addToScene(scene: Scene) {

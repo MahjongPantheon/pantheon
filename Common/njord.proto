@@ -9,9 +9,10 @@ message N_Player {
 }
 
 enum N_RoundStatus {
-  SEEDING = 0;
-  PLAYING = 1;
-  ENDED = 2;
+  NOT_STARTED = 0;
+  SEEDING = 1;
+  PLAYING = 2;
+  ENDED = 3;
 }
 
 enum N_TileValue {
@@ -101,28 +102,39 @@ message N_Hand {
 }
 
 enum N_MoveState {
-  WAITING_FOR_DISCARD = 0;
-  WAITING_FOR_CLAIM = 1;
+  WAITING = 0;
+  WAITING_FOR_DISCARD = 1;
+  WAITING_FOR_CLAIM = 2;
 }
 
-message N_TableState {
-  repeated N_Player players = 1; // e-s-w-n
-  repeated int32 currentScores = 2; // e-s-w-n
-  repeated bool currentRiichi = 3; // e-s-w-n
-  repeated N_Discard discards = 4;
-  int32 currentRound = 5;
-  int32 currentRenchan = 6;
-  N_RoundStatus roundStatus = 7;
-  int32 riichiOnTable = 8; // riichi from previous rounds
-  repeated N_Tile doraIndicators = 9;
-  int32 tilesInWallCount = 10;
-
-  // Move related
+message N_Move {
   N_MoveState moveState = 11;
   N_Tile lastDiscard = 12;
   int32 lastDiscardFrom = 13; // player index at the table
+}
 
+message N_CurrentRound {
+  repeated N_Discard discards = 1;
+  int32 tilesInWallCount = 2;
+  repeated N_TileValue doraIndicators = 3;
+  repeated bool currentRiichi = 4; // e-s-w-n
+  N_Move moveState = 5;
+  int32 diceValue = 6;
   // Filtered fields, existing only on server
   // Some of the data _can_ get to clients, but this should be filtered carefully
-  repeated N_Hand hands = 20;
+  repeated N_Hand hands = 7;
+}
+
+message N_GameState {
+  repeated N_Player players = 1; // e-s-w-n
+  repeated int32 currentScores = 2; // e-s-w-n
+  int32 currentRound = 3;
+  int32 currentRenchan = 4;
+  N_RoundStatus roundStatus = 5;
+  int32 riichiOnTable = 6; // riichi from previous rounds
+}
+
+message N_TableState {
+  N_GameState game = 1;
+  N_CurrentRound currentRound = 2;
 }

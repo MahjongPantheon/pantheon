@@ -2,6 +2,9 @@ import { Tile } from '#/scene/objects/tile';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
 import { Scene } from '@babylonjs/core/scene';
 import { rnd } from '#/helpers/rnd';
+import { State } from '#/helpers/state';
+import { RecursivePartial } from '#/helpers/partial';
+import { N_Discard } from '#/generated/njord.pb';
 
 export class Discard {
   private _tiles: Tile[] = [];
@@ -11,6 +14,10 @@ export class Discard {
 
   constructor() {
     this._rootNode = new TransformNode('discard');
+  }
+
+  setState(state?: RecursivePartial<N_Discard>) {
+    // TODO: update discard state according to input
   }
 
   getRoot() {

@@ -19,7 +19,7 @@ import { yaku } from './middlewares/yaku';
 import { reduceReducers } from '#/store/util';
 import { AppActionTypes } from '#/store/actions/interfaces';
 import { screenManageMw } from '#/store/middlewares/screenManage';
-import { IStorage } from '#/services/storage';
+import { IStorage } from '../../../Common/storage';
 import { RiichiApiTwirpService } from '#/services/riichiApiTwirp';
 
 export class Store {
