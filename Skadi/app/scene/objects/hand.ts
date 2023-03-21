@@ -7,15 +7,19 @@ import { CombineAction, ExecuteCodeAction } from '@babylonjs/core/Actions/direct
 import { InterpolateValueAction } from '@babylonjs/core/Actions/interpolateValueAction';
 import { N_ClaimedFrom, N_Hand } from '#/generated/njord.pb';
 import { RecursivePartial } from '#/helpers/partial';
+import { Camera } from '@babylonjs/core/Cameras/camera';
+import { Vector3 } from '@babylonjs/core/Maths/math.vector';
 
 const rightOffset = 9.1;
 const bottomOffset = 2;
 
 export class Hand {
   private _closedPart: Tile[] = [];
+  private _closedPartRoot: TransformNode;
   private _tsumopai?: Tile;
   private _openPart: CalledSet[] = [];
   private _rootNode: TransformNode;
+  private _handToCamera?: Camera;
 
   private readonly _closedPartMaxWidth = Tile.W * 21 + 0.5; // Bigger size due to biggest hand of 4 daiminkans
   private get _closedPartWidth() {
@@ -24,6 +28,13 @@ export class Hand {
 
   constructor() {
     this._rootNode = new TransformNode('hand');
+    this._closedPartRoot = new TransformNode('closed_part');
+    this._closedPartRoot.parent = this._rootNode;
+  }
+
+  handToCamera(camera: Camera | undefined) {
+    this._handToCamera = camera;
+    this._rebuildTilePositions();
   }
 
   setState(state?: RecursivePartial<N_Hand>) {
@@ -91,18 +102,22 @@ export class Hand {
 
   take1(tile: Tile): Hand {
     this._closedPart.push(tile);
-    tile.getRoot().parent = this._rootNode;
+    tile.getRoot().parent = this._closedPartRoot;
     tile.getRoot().position.z =
       -this._closedPartMaxWidth / 2 + this._closedPart.length * Tile.W - Tile.W / 2;
-    this._initEventHandlers(tile);
+    if (this._handToCamera) {
+      this._initEventHandlers(tile);
+    }
     return this;
   }
 
   takeTsumopai(tile: Tile): Hand {
     this._tsumopai = tile;
-    tile.getRoot().parent = this._rootNode;
+    tile.getRoot().parent = this._closedPartRoot;
     tile.getRoot().position.z = -this._closedPartMaxWidth / 2 + this._closedPartWidth - Tile.W / 2;
-    this._initEventHandlers(tile);
+    if (this._handToCamera) {
+      this._initEventHandlers(tile);
+    }
     return this;
   }
 
@@ -114,6 +129,11 @@ export class Hand {
     if (this._tsumopai) {
       this._tsumopai.getRoot().position.z =
         -this._closedPartMaxWidth / 2 + this._closedPartWidth - Tile.W / 2 + rightOffset;
+    }
+    if (this._handToCamera) {
+      this._closedPartRoot.parent = this._handToCamera;
+      this._closedPartRoot.position = new Vector3(9 - this._closedPartWidth / 2, -11, 48);
+      this._closedPartRoot.rotation = new Vector3(0, Math.PI / 2, -Math.PI / 2);
     }
   }
 

@@ -52,7 +52,7 @@ export class SkadiScene {
   protected _setCamera() {
     this._scene.clearColor = Color4.FromColor3(Color3.Black());
     this._camera = new ArcRotateCamera(
-      'Camera',
+      'primary_camera',
       CAMERA_DIR_ALPHA,
       CAMERA_DIR_BETA,
       CAMERA_DIR_RADIUS,
@@ -67,8 +67,8 @@ export class SkadiScene {
     this._maybeDebug();
     this._lightbox = new Lightbox(this._scene);
     this._lightbox.getRoot().position.y = 40;
-    this._lightbox.setIntensity(0.5);
-    this._table = new Table(this._lightbox, this._scene);
+    this._lightbox.setIntensity(0.3);
+    this._table = new Table(this._lightbox, this._camera!, this._scene);
   }
 
   public setState(state: State) {

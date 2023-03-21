@@ -12,6 +12,7 @@ import { Lightbox } from '#/scene/objects/lightbox';
 import { res } from '#/scene/resources';
 import { N_TileValue } from '#/generated/njord.pb';
 import { State } from '#/helpers/state';
+import { Camera } from '@babylonjs/core/Cameras/camera';
 
 export const TABLE_SIZE = 75;
 
@@ -44,7 +45,7 @@ export class Table {
   private _hands: Hand[] = [];
   private _wall: Wall;
   private _surface: GroundMesh;
-  constructor(private _lights: Lightbox, scene: Scene) {
+  constructor(private _lights: Lightbox, private _camera: Camera, scene: Scene) {
     this._border = new TableBorder(TABLE_SIZE);
     scene.addTransformNode(this._border.getRoot());
 
@@ -95,7 +96,33 @@ export class Table {
       hand.getRoot().position = handPositions[idx];
       hand.getRoot().rotation = handRotation[idx];
       hand.addToScene(scene);
+      if (idx === 0) {
+        hand.handToCamera(this._camera);
+      }
       hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.take1(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.takeTsumopai(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      hand.claimDaiminkan(
+        Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue),
+        [2, 3, 4],
+        'SHIMOCHA'
+      );
+      hand.claimDaiminkan(
+        Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue),
+        [2, 3, 4],
+        'KAMICHA'
+      );
       this._hands.push(hand);
     });
 

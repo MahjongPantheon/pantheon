@@ -9,28 +9,28 @@ import { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh';
 
 export class Lightbox {
   private _rootNode: TransformNode;
-  private _lights: PointLight[];
+  private _topLight: PointLight;
+  private _cameraLight: PointLight;
   private _shades: ShadowGenerator[] = [];
-  private readonly _spreadDistance = 50;
 
   constructor(scene: Scene) {
     this._rootNode = new TransformNode('lightbox');
-    this._lights = [[0, 0]].map((c) => {
-      const light = new PointLight(
-        `light_${c[0]}_${c[1]}`,
-        new Vector3(c[0] * this._spreadDistance, 0, c[1] * this._spreadDistance),
-        scene
-      );
-      light.intensity = 1;
-      const shade = new ShadowGenerator(256, light);
-      shade.usePoissonSampling = true;
-      shade.useKernelBlur = true;
-      this._shades.push(shade);
-      light.parent = this._rootNode;
-      return light;
-    });
+    this._topLight = new PointLight(`light_center`, new Vector3(0, 0, 0), scene);
+    this._topLight.intensity = 1;
+    const shade = new ShadowGenerator(256, this._topLight);
+    shade.usePoissonSampling = true;
+    shade.useKernelBlur = true;
+    this._shades.push(shade);
+    this._topLight.parent = this._rootNode;
 
-    const light0 = new HemisphericLight('Hemi0', new Vector3(0, 1, 0), scene);
+    // light for camera-bound hand
+    this._cameraLight = new PointLight(`light_camera`, new Vector3(0, 0, 0), scene);
+    this._cameraLight.intensity = 1;
+    this._cameraLight.position = new Vector3(-1, -11, 10);
+    this._cameraLight.diffuse = new Color3(80 / 255, 80 / 255, 80 / 255);
+    this._cameraLight.parent = scene.getCameraByName('primary_camera');
+
+    const light0 = new HemisphericLight('ambient', new Vector3(0, 1, 0), scene);
     light0.diffuse = new Color3(1, 1, 1);
     light0.specular = new Color3(1, 1, 1);
     light0.groundColor = new Color3(0, 0, 0);
@@ -40,9 +40,7 @@ export class Lightbox {
   }
 
   setIntensity(val = 1) {
-    this._lights.forEach((l) => {
-      l.intensity = val;
-    });
+    this._topLight.intensity = val;
     return this;
   }
 
