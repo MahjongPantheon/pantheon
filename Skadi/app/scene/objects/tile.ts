@@ -14,6 +14,8 @@ export class Tile {
   private _meshes: Mesh[] = [];
   private _actionManager?: ActionManager;
   private _type: N_TileValue = 'NIL';
+  private _isAka: boolean = false;
+  private _isTsumogiri: boolean = false;
   public static readonly H = 3.2;
   public static readonly W = 2.4;
   public static readonly D = 1.6;
@@ -59,26 +61,35 @@ export class Tile {
     });
     tileValue.rotation.x = Math.PI / 2;
     tileValue.position.y = Tile.D * 0.505;
-    this._meshes.push(tileValue);
+    this._meshes.push(tileValue); // value is expected to be #0 always
     this._meshes.push(Tile.getBase());
 
     this._rootNode = new TransformNode('tile');
     this._meshes.forEach((n) => (n.parent = this._rootNode));
   }
 
-  public static new(type: N_TileValue, aka?: boolean): Tile {
-    return new Tile().setType(type, aka);
+  public static new(type: N_TileValue, aka?: boolean, tsumogiri?: boolean): Tile {
+    return new Tile().setType(type, aka, tsumogiri);
   }
 
   public getType(): N_TileValue {
     return this._type;
   }
 
-  public setType(type: N_TileValue, aka?: boolean): Tile {
+  public getIsAka(): boolean {
+    return this._isAka;
+  }
+
+  public setType(type: N_TileValue, aka?: boolean, tsumogiri?: boolean): Tile {
+    this._isAka = aka ?? false;
+    this._isTsumogiri = tsumogiri ?? false;
     const mat = aka ? res.mat.tileValuesAka[type] : res.mat.tileValues[type];
     if (mat) {
       this._type = type;
       this._meshes[0].material = mat;
+    }
+    if (tsumogiri) {
+      this._meshes[1].material = res.mat.tileTsumogiri;
     }
     return this;
   }

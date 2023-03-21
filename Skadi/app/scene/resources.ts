@@ -8,7 +8,6 @@ import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader';
 import { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh';
 import { Vector3 } from '@babylonjs/core/Maths/math.vector';
 import '@babylonjs/loaders/glTF/glTFFileLoader';
-import { Material } from '@babylonjs/core/Materials/material';
 
 type Resources = {
   mdl: {
@@ -17,17 +16,24 @@ type Resources = {
   tex: {
     tileValues: Texture[];
     table: Texture;
-    tableCenter: Texture;
-    winds: HTMLImageElement[];
+    indicators: Record<'e' | 's' | 'w' | 'n', HTMLImageElement>;
+    kyoku: HTMLImageElement;
+    riichi: HTMLImageElement;
+    honba: HTMLImageElement;
+    winds: Record<'e' | 's' | 'w' | 'n', Texture>;
   };
   mat: {
     tile: MultiMaterial;
+    tileTsumogiri: MultiMaterial;
     tileValues: Record<N_TileValue, StandardMaterial>;
     tileValuesAka: Record<N_TileValue, StandardMaterial>;
+    winds: Record<'e' | 's' | 'w' | 'n', StandardMaterial>;
+    windColors: Record<'e' | 's' | 'w' | 'n', StandardMaterial>;
     table: StandardMaterial;
     tableCenter: StandardMaterial;
     tableBorder: StandardMaterial;
     riichiStick: MultiMaterial;
+    displaySub: StandardMaterial;
   };
 };
 
@@ -35,8 +41,12 @@ export const res: Resources = {
   mdl: {},
   tex: {
     tileValues: [] as Texture[],
+    winds: {},
+    indicators: {},
   },
   mat: {
+    winds: {},
+    windColors: {},
     tileValues: {},
     tileValuesAka: {},
   },
@@ -68,28 +78,92 @@ export function preloadResources(scene: Scene): Promise<any> {
 
   // Models
   promises.push(
-    SceneLoader.ImportMeshAsync('Cube', '/assets/', 'center.gltf', scene).then((result) => {
-      res.mdl.tableCenter = result.meshes[0];
+    SceneLoader.ImportMeshAsync('center', '/assets/', 'center.gltf', scene).then((result) => {
+      res.mdl.tableCenter = result.meshes[1];
+      res.mdl.tableCenter.rotation = new Vector3(0, 0, Math.PI);
       res.mdl.tableCenter.scaling = new Vector3(15, 15, 15);
-      res.mdl.tableCenter.getChildMeshes()[0].material = res.mat.tableCenter;
+      res.mdl.tableCenter.material = res.mat.tableCenter;
     })
   );
 
-  // Winds
-  res.tex.winds = [new Image(), new Image(), new Image(), new Image()];
-  res.tex.winds[0].src = '/assets/wind_ton.png';
-  res.tex.winds[1].src = '/assets/wind_nan.png';
-  res.tex.winds[2].src = '/assets/wind_sha.png';
-  res.tex.winds[3].src = '/assets/wind_pei.png';
-  for (let i = 0; i < 4; i++) {
+  // Round icon
+  promises.push(
+    new Promise((resolve) => {
+      res.tex.kyoku = new Image();
+      res.tex.kyoku.src = '/assets/indicator_kyoku.png';
+      res.tex.kyoku.onload = () => {
+        resolve(null);
+      };
+    })
+  );
+
+  promises.push(
+    new Promise((resolve) => {
+      res.tex.riichi = new Image();
+      res.tex.riichi.src = '/assets/indicator_riichi.png';
+      res.tex.riichi.onload = () => {
+        resolve(null);
+      };
+    })
+  );
+
+  promises.push(
+    new Promise((resolve) => {
+      res.tex.honba = new Image();
+      res.tex.honba.src = '/assets/indicator_honba.png';
+      res.tex.honba.onload = () => {
+        resolve(null);
+      };
+    })
+  );
+
+  // Seat winds & round winds indicators
+  ['e', 's', 'w', 'n'].forEach((i) => {
+    const wind = i as 'e' | 's' | 'w' | 'n';
+
     promises.push(
       new Promise((resolve) => {
-        res.tex.winds[i].onload = () => {
+        res.tex.indicators[wind] = new Image();
+        res.tex.indicators[wind].src = '/assets/indicator_' + wind + '.png';
+        res.tex.indicators[wind].onload = () => {
           resolve(null);
         };
       })
     );
-  }
+
+    promises.push(
+      new Promise((resolve) => {
+        res.tex.winds[wind] = new Texture(
+          '/assets/wind_' + wind + '.png',
+          scene,
+          undefined,
+          undefined,
+          undefined,
+          () => {
+            resolve(null);
+          }
+        );
+        res.tex.winds[wind].hasAlpha = true;
+
+        res.mat.winds[wind] = new StandardMaterial('wind_' + i, scene);
+        res.mat.winds[wind].diffuseTexture = res.tex.winds[wind];
+        res.mat.winds[wind].alphaMode = 2; // ALPHA_COMBINE
+        res.mat.winds[wind].useAlphaFromDiffuseTexture = true;
+        noSpec(res.mat.winds[wind]);
+
+        res.mat.windColors[wind] = new StandardMaterial('windcolor_' + i, scene);
+        noSpec(res.mat.windColors[wind]);
+        res.mat.windColors[wind].alpha = 0.5;
+        res.mat.windColors[wind].diffuseColor = {
+          e: new Color3(255 / 255, 90 / 255, 90 / 255),
+          s: new Color3(255 / 255, 255 / 255, 90 / 255),
+          w: new Color3(90 / 255, 255 / 255, 90 / 255),
+          n: new Color3(30 / 255, 130 / 255, 255 / 255),
+        }[wind];
+      })
+    );
+  });
+
   // Tiles
   const tileBack = new StandardMaterial('tile_back', scene);
   tileBack.diffuseColor = new Color3(195 / 255, 149 / 255, 89 / 255);
@@ -100,6 +174,15 @@ export function preloadResources(scene: Scene): Promise<any> {
   res.mat.tile = new MultiMaterial('tile', scene);
   res.mat.tile.subMaterials.push(tileBase, tileBack);
 
+  const tileBackTsumogiri = new StandardMaterial('tile_back_tg', scene);
+  tileBackTsumogiri.diffuseColor = new Color3(135 / 255, 89 / 255, 29 / 255);
+  noSpec(tileBackTsumogiri);
+  const tileBaseTsumogiri = new StandardMaterial('tile_base_tg', scene);
+  tileBaseTsumogiri.ambientColor = new Color3(195 / 255, 195 / 255, 195 / 255);
+  noSpec(tileBaseTsumogiri);
+  res.mat.tileTsumogiri = new MultiMaterial('tile', scene);
+  res.mat.tileTsumogiri.subMaterials.push(tileBaseTsumogiri, tileBackTsumogiri);
+
   const riichiStickBase = new StandardMaterial('stick_base', scene);
   riichiStickBase.diffuseColor = Color3.White();
   noSpec(riichiStickBase);
@@ -108,6 +191,10 @@ export function preloadResources(scene: Scene): Promise<any> {
   noSpec(riichiStickDot);
   res.mat.riichiStick = new MultiMaterial('stick', scene);
   res.mat.riichiStick.subMaterials.push(riichiStickBase, riichiStickDot);
+
+  res.mat.displaySub = new StandardMaterial('display_sub', scene);
+  res.mat.displaySub.diffuseColor = new Color3(185 / 255, 185 / 255, 185 / 255);
+  noSpec(res.mat.displaySub);
 
   Object.values(N_TileValue)
     .filter(function (i): i is N_TileValue {
@@ -150,29 +237,12 @@ export function preloadResources(scene: Scene): Promise<any> {
     })
   );
 
-  // Table center
-  promises.push(
-    new Promise((resolve) => {
-      res.tex.tableCenter = new Texture(
-        '/assets/center.png',
-        scene,
-        undefined,
-        undefined,
-        undefined,
-        () => {
-          resolve(null);
-        }
-      );
-      res.tex.tableCenter.wAng = Math.PI;
-    })
-  );
-
   res.mat.table = new StandardMaterial('groundMat', scene);
   noSpec(res.mat.table);
   res.mat.table.opacityTexture = res.mat.table.diffuseTexture = res.tex.table;
 
   res.mat.tableCenter = new StandardMaterial('centerMat', scene);
-  res.mat.tableCenter.opacityTexture = res.mat.tableCenter.diffuseTexture = res.tex.tableCenter;
+  res.mat.tableCenter.diffuseColor = new Color3(204 / 255, 187 / 255, 157 / 255);
   noSpec(res.mat.tableCenter);
 
   res.mat.tableBorder = new StandardMaterial('borderMat', scene);

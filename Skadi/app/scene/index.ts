@@ -12,6 +12,7 @@ import { Lightbox } from '#/scene/objects/lightbox';
 import { Table } from '#/scene/objects/table';
 import { Camera } from '@babylonjs/core/Cameras/camera';
 import { State } from '#/helpers/state';
+import { TableCenter } from '#/scene/objects/tableCenter';
 
 const CAMERA_POS = new Vector3(7.5, -1.5, 0);
 const CAMERA_DIR_ALPHA = 0;

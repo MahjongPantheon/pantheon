@@ -118,6 +118,7 @@ export interface N_GameState {
   currentRenchan: number;
   roundStatus: N_RoundStatus;
   riichiOnTable: number;
+  currentWinds: string[];
 }
 
 export interface N_TableState {
@@ -1303,6 +1304,7 @@ export const N_GameState = {
       currentRenchan: 0,
       roundStatus: N_RoundStatus._fromInt(0),
       riichiOnTable: 0,
+      currentWinds: [],
     };
   },
 
@@ -1334,6 +1336,9 @@ export const N_GameState = {
     }
     if (msg.riichiOnTable) {
       writer.writeInt32(6, msg.riichiOnTable);
+    }
+    if (msg.currentWinds?.length) {
+      writer.writeRepeatedString(7, msg.currentWinds);
     }
     return writer;
   },
@@ -1373,6 +1378,10 @@ export const N_GameState = {
         }
         case 6: {
           msg.riichiOnTable = reader.readInt32();
+          break;
+        }
+        case 7: {
+          msg.currentWinds.push(reader.readString());
           break;
         }
         default: {
@@ -2544,6 +2553,7 @@ export const N_GameStateJSON = {
       currentRenchan: 0,
       roundStatus: N_RoundStatus._fromInt(0),
       riichiOnTable: 0,
+      currentWinds: [],
     };
   },
 
@@ -2569,6 +2579,9 @@ export const N_GameStateJSON = {
     }
     if (msg.riichiOnTable) {
       json["riichiOnTable"] = msg.riichiOnTable;
+    }
+    if (msg.currentWinds?.length) {
+      json["currentWinds"] = msg.currentWinds;
     }
     return json;
   },
@@ -2604,6 +2617,10 @@ export const N_GameStateJSON = {
     const _riichiOnTable_ = json["riichiOnTable"];
     if (_riichiOnTable_) {
       msg.riichiOnTable = _riichiOnTable_;
+    }
+    const _currentWinds_ = json["currentWinds"];
+    if (_currentWinds_) {
+      msg.currentWinds = _currentWinds_;
     }
     return msg;
   },

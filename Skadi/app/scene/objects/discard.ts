@@ -2,7 +2,6 @@ import { Tile } from '#/scene/objects/tile';
 import { TransformNode } from '@babylonjs/core/Meshes/transformNode';
 import { Scene } from '@babylonjs/core/scene';
 import { rnd } from '#/helpers/rnd';
-import { State } from '#/helpers/state';
 import { RecursivePartial } from '#/helpers/partial';
 import { N_Discard } from '#/generated/njord.pb';
 
@@ -17,7 +16,28 @@ export class Discard {
   }
 
   setState(state?: RecursivePartial<N_Discard>) {
-    // TODO: update discard state according to input
+    for (let i = 0; i < (state?.tiles?.length ?? 0); i++) {
+      if (
+        this._tiles[i].getType() === state?.tiles?.[i].value &&
+        this._tiles[i].getIsAka() === state?.tiles?.[i].isAka
+      ) {
+        continue;
+      }
+      if (this._tiles[i]) {
+        this._tiles[i].dispose();
+      }
+      this._tiles[i] = Tile.new(
+        state?.tiles?.[i].value!,
+        state?.tiles?.[i].isAka,
+        state?.tiles?.[i].isTsumogiri
+      );
+      this._tiles[i].getRoot().parent = this._rootNode;
+    }
+
+    if (state?.riichi !== undefined && state?.riichi !== null) {
+      this._riichiOnTile = state?.riichi;
+    }
+    this._rebuildDiscard();
   }
 
   getRoot() {

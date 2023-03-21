@@ -55,14 +55,21 @@ export class Table {
     this._surface.material = res.mat.table;
 
     this._center = new TableCenter();
+    this._center.getRoot().position.y = -0.3;
     this._center.addToScene(scene);
-    this._center.setDisplayValues([
-      { score: 10000, wind: 0 },
-      { score: 20000, wind: 1 },
-      { score: 30000, wind: 2 },
-      { score: 40000, wind: 3 },
-    ]); // TODO remove
-    // center.setStick(2, true).setStick(0, true).setStick(1, true).setStick(3, true);
+    // TODO remove
+    this._center.setState({
+      game: {
+        currentRound: 1,
+        currentRenchan: 1,
+        riichiOnTable: 2,
+        currentScores: [12300, 1200, 54300, 100],
+        currentWinds: ['s', 'w', 'n', 'e'],
+      },
+      currentRound: {
+        currentRiichi: [false, true, true, false],
+      },
+    });
 
     [1, 2, 3, 4].forEach((_, idx) => {
       // discards

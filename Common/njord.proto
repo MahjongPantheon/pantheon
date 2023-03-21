@@ -132,6 +132,7 @@ message N_GameState {
   int32 currentRenchan = 4;
   N_RoundStatus roundStatus = 5;
   int32 riichiOnTable = 6; // riichi from previous rounds
+  repeated string currentWinds = 7; // just for easier logic on frontend
 }
 
 message N_TableState {
