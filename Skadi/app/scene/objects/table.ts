@@ -14,11 +14,14 @@ import { N_TileValue } from '#/generated/njord.pb';
 import { State } from '#/helpers/state';
 
 export const TABLE_SIZE = 75;
+
+const vOffsetDis = 9.5;
+const hOffsetDis = 5.2;
 const discardPositions = [
-  new Vector3(9, Tile.D / 2, -7.15),
-  new Vector3(7.15, Tile.D / 2, 9),
-  new Vector3(-9, Tile.D / 2, 7.15),
-  new Vector3(-7.15, Tile.D / 2, -9),
+  new Vector3(vOffsetDis, Tile.D / 2, -hOffsetDis),
+  new Vector3(hOffsetDis, Tile.D / 2, vOffsetDis),
+  new Vector3(-vOffsetDis, Tile.D / 2, hOffsetDis),
+  new Vector3(-hOffsetDis, Tile.D / 2, -vOffsetDis),
 ];
 const discardRotationY = [0, -Math.PI / 2, Math.PI, Math.PI / 2];
 const handPositions = [
@@ -56,6 +59,7 @@ export class Table {
 
     this._center = new TableCenter();
     this._center.getRoot().position.y = -0.3;
+    this._center.getRoot().scaling = new Vector3(1.2, 1.2, 1.2);
     this._center.addToScene(scene);
     // TODO remove
     this._center.setState({
@@ -78,6 +82,11 @@ export class Table {
       dis.getRoot().position = discardPositions[idx];
       dis.getRoot().rotation.y = discardRotationY[idx];
       dis.addToScene(scene);
+      dis.addTile(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      dis.addTile(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      dis.addTile(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      dis.addTile(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
+      dis.addTile(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
       dis.addTile(Tile.new(['SOU_1', 'SOU_2', 'SOU_3', 'SOU_4'][idx] as N_TileValue)); // TODO remove
       this._discards.push(dis);
 

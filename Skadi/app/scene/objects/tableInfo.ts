@@ -16,7 +16,6 @@ export class TableInfo {
   private readonly _tex: DynamicTexture;
   private readonly _mat: StandardMaterial;
   private readonly _mesh: Mesh;
-  private readonly _sub: Mesh;
   private _fontSettingsRound;
   private _fontSettings;
 
@@ -41,13 +40,7 @@ export class TableInfo {
       height: planeSize,
     });
     this._mesh.material = this._mat;
-
-    this._sub = MeshBuilder.CreatePlane('display_sub', { width: planeSize, height: planeSize });
-    this._sub.material = res.mat.displaySub;
-    this._sub.position.z = 0.002;
-
     this._mesh.parent = this._rootNode;
-    this._sub.parent = this._rootNode;
   }
 
   setState(round: number, riichi: number, honba: number) {

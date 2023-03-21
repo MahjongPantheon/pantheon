@@ -81,23 +81,23 @@ export class TableCenter {
       new TableDisplay(),
     ];
     this._scoreDisplays[0].mesh.position.x = 4.5;
-    this._scoreDisplays[0].mesh.position.z = 0.75;
+    this._scoreDisplays[0].mesh.position.z = 0.4;
     this._scoreDisplays[0].mesh.rotation.y = -Math.PI / 2;
 
     this._scoreDisplays[1].mesh.position.z = 4.5;
-    this._scoreDisplays[1].mesh.position.x = -0.75;
+    this._scoreDisplays[1].mesh.position.x = -0.4;
     this._scoreDisplays[1].mesh.rotation.y = Math.PI;
 
     this._scoreDisplays[2].mesh.position.x = -4.5;
-    this._scoreDisplays[2].mesh.position.z = -0.75;
+    this._scoreDisplays[2].mesh.position.z = -0.4;
     this._scoreDisplays[2].mesh.rotation.y = Math.PI / 2;
 
     this._scoreDisplays[3].mesh.position.z = -4.5;
-    this._scoreDisplays[3].mesh.position.x = 0.75;
+    this._scoreDisplays[3].mesh.position.x = 0.4;
 
     this._scoreDisplays.forEach((d) => {
-      d.mesh.position.y = 0.71;
-      d.mesh.scaling = new Vector3(0.79, 0.88, 1);
+      d.mesh.position.y = 0.76;
+      d.mesh.scaling = new Vector3(0.9, 1, 1);
       d.mesh.rotation.x = Math.PI / 2;
       d.mesh.parent = this._rootNode;
     });
