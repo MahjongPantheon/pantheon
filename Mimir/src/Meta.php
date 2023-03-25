@@ -194,7 +194,7 @@ class Meta
                 }
                 if (!empty($this->_currentEventId) && !empty($this->_currentPersonId)) {
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);
-                    if ($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN]) {
+                    if (!empty($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN])) {
                         $this->_superadmin = true;
                     }
                 } else if (!empty($this->_currentPersonId)) {

@@ -129,11 +129,6 @@ abstract class Controller
     protected $_frey;
 
     /**
-     * @var bool
-     */
-    protected $_useTranslit = false;
-
-    /**
      * @var Logger
      */
     protected $_syslog;
@@ -161,9 +156,13 @@ abstract class Controller
             $this->_mimir = new \Rheda\MimirClient(Sysconf::API_URL()); // @phpstan-ignore-line
         }
 
+        $locale = '';
+
         // i18n support
         // first step is getting browser language
-        $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $locale = \locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        }
 
         // second step is checking cookie
         if ($this->_storage->getLang()) {
@@ -192,11 +191,9 @@ abstract class Controller
             case 'de_CH':
             case 'de_LU':
                 $locale = 'de_DE.UTF-8';
-                $this->_useTranslit = true;
                 break;
             default:
                 $locale = 'en_US.UTF-8';
-                $this->_useTranslit = true;
         }
 
         if (setlocale(LC_ALL, $locale) === false) {
@@ -252,10 +249,10 @@ abstract class Controller
                 if (!empty($this->_mainEventId)) {
                     // TODO: access rules for aggregated events?
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_mainEventId);
-                    if ($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN]) {
+                    if (!empty($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN])) {
                         $this->_superadmin = true;
                     }
-                    if ($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT]) {
+                    if (!empty($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT])) {
                         $this->_eventadmin = true;
                     }
                 } else if (!empty($this->_currentPersonId)) {
@@ -338,8 +335,6 @@ abstract class Controller
         if ($this->_beforeRun()) {
             $context = $this->_run();
 
-            $context = $this->_transliterate($context);
-
             $pageTitle = $this->_pageTitle(); // должно быть после run! чтобы могло использовать полученные данные
 
             $templateEngine = Templater::getInstance($this->_eventIdList);
@@ -391,27 +386,6 @@ abstract class Controller
     }
 
     /**
-     * @param string[] $data
-     * @return string[]
-     */
-    protected function _transliterate(array $data)
-    {
-        if (empty($data)) {
-            return $data;
-        }
-
-        if ($this->_useTranslit) {
-            $tr = \Transliterator::create('Cyrillic-Latin; Latin-ASCII');
-            if (!empty($tr)) {
-                array_walk_recursive($data, function (&$val, $index) use ($tr) {
-                    $val = $tr->transliterate($val);
-                });
-            }
-        }
-        return $data;
-    }
-
-    /**
      * @return array Mustache context for render
      */
     abstract protected function _run();
@@ -445,6 +419,8 @@ abstract class Controller
     {
         $routes = require_once __DIR__ . '/../config/routes.php';
         self::_healthSpecialPath($url);
+        self::_robotsTxtSpecialPath($url);
+        self::_appleIcoSpecialPath($url);
 
         $matches = [];
         /** @var ?Controller $controllerInstance */
@@ -512,6 +488,43 @@ abstract class Controller
 {$changed}
 DATA;
             echo $ret;
+            exit();
+        }
+    }
+
+    /**
+     * @param string $url
+     * @return void
+     */
+    protected static function _robotsTxtSpecialPath($url)
+    {
+        if ($url === '/robots.txt') {
+            $ret = <<<DATA
+User-agent: *
+Disallow: /signup
+Disallow: /profile/login
+Disallow: /profile/toggleProto
+
+DATA;
+            echo $ret;
+            exit();
+        }
+    }
+
+    /**
+     * @param string $url
+     * @return void
+     */
+    protected static function _appleIcoSpecialPath($url)
+    {
+        if ($url === '/apple-touch-icon.png' ||
+            $url === '/apple-touch-icon-precomposed.png' ||
+            $url === '/apple-touch-icon-120x120.png' ||
+            $url === '/apple-touch-icon-120x120-precomposed.png') {
+            $filename = __DIR__ . '/../www/assets/ico/rhedahires.png';
+            header('Content-Type: image/png');
+            header('Content-Length: ' . filesize($filename));
+            readfile($filename);
             exit();
         }
     }

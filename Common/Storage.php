@@ -210,7 +210,8 @@ class Storage {
      */
     public function getTwirpEnabled(): ?bool
     {
-        return $this->_twirpEnabled || (isset($_SERVER['HTTP_X_TWIRP']) && $_SERVER['HTTP_X_TWIRP'] === 'true');
+        // Forcefully enable twirp; TODO: remove old proto and this storage key
+        return true; // $this->_twirpEnabled || (isset($_SERVER['HTTP_X_TWIRP']) && $_SERVER['HTTP_X_TWIRP'] === 'true');
     }
 
     /**

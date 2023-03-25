@@ -272,6 +272,7 @@ class PlayerStatModel extends Model
                 $totalRiichiInRoundForMultiron,
             );
         }
+        // TODO: rarely produces warning on prod. Not sure why.
         return $newScores[$playerId] - $currentScores[$playerId];
     }
 

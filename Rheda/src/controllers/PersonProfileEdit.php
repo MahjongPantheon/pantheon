@@ -64,7 +64,7 @@ class PersonProfileEdit extends Controller
         if (!empty($_POST['save'])) {
             $checkedData = $this->_checkData($_POST, $data[0]['email']);
             $checkedData['available_countries'] = $this->_getCountries($checkedData['country'] ?? '');
-            if ($checkedData['haveErrors']) {
+            if (!empty($checkedData['haveErrors'])) {
                 return array_merge($checkedData, [
                     'success' => false,
                     'emailEditable' => $this->_superadmin,

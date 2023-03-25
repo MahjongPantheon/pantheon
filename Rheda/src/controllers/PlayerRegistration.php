@@ -70,7 +70,7 @@ class PlayerRegistration extends Controller
                     $el['index'] = $index + 1;
                     $el['showAdminRightsControls'] = ($el['id'] !== $this->_currentPersonId);
                     $el['adminAssigned'] = !empty($admins[$el['id']]);
-                    $el['adminRule'] = $admins[$el['id']];
+                    $el['adminRule'] = empty($admins[$el['id']]) ? null : $admins[$el['id']];
                     return $el;
                 }, $registeredPlayers, array_keys($registeredPlayers));
 

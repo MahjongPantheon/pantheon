@@ -82,6 +82,9 @@ abstract class Controller
     protected function _depersonalizeEmail(string $email): string
     {
         $parts = explode('@', $email);
+        if (count($parts) !== 2) {
+            return '(empty or invalid email)';
+        }
         return implode('@', [
             substr($parts[0], 0, 5)
                 . str_repeat('*', max(0, strlen($parts[0]) - 5)),
