@@ -7,7 +7,7 @@ import { IAppState } from '#/store/interfaces';
 import { observe } from '#/scripts/dimensionsObserver';
 import { registerFrontErrorHandler } from '#/scripts/logFrontError';
 import { environment } from '#config';
-import { Storage } from '#/services/storage';
+import { Storage } from '../../Common/storage';
 
 const storage = new Storage(environment.cookieDomain);
 

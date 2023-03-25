@@ -33,6 +33,7 @@ deps: get_docker_id
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make deps'; \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make deps'; \
 		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps'; \
+		docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make deps'; \
 	fi
 
 .PHONY: kill
@@ -97,6 +98,7 @@ pantheon_run: get_docker_id get_docker_idle_id
 		echo "- ${YELLOW}Rheda${NC} is accessible on port 4002 (http://localhost:4002) and is set up to use local Mimir"; \
 		echo "- ${YELLOW}Tyr${NC} is accessible on port 4003 (http://localhost:4003) as webpack dev server."; \
 		echo "- ${YELLOW}Frey${NC} is exposed on port 4004"; \
+		echo "- ${YELLOW}Forseti${NC} is exposed on port 4007"; \
   		echo "----------------------------------------------------------------------------------"; \
   		echo "- ${YELLOW}PostgreSQL${NC} is exposed on port 5532 of local host"; \
   		echo "- ${YELLOW}PgAdmin4${NC} is exposed on port 5632 (http://localhost:5632)"; \
@@ -128,11 +130,12 @@ pantheon_run: get_docker_id get_docker_idle_id
 				-p 127.0.0.1:4003:4003 \
 				-p 127.0.0.1:4004:4004 \
 				-p 127.0.0.1:5532:5532 \
-				-p 127.0.0.1:4006:4006 \
+				-p 127.0.0.1:4007:4007 \
 				-v `pwd`/Tyr:/var/www/html/Tyr:z \
 				-v `pwd`/Mimir:/var/www/html/Mimir:z \
 				-v `pwd`/Rheda:/var/www/html/Rheda:z \
 				-v `pwd`/Frey:/var/www/html/Frey:z \
+				-v `pwd`/Forseti:/var/www/html/Forseti:z \
 				-v `pwd`/Common:/var/www/html/Common:z \
 				-v `pwd`/:/var/www/html/pantheon:z \
 				--name=pantheondev \
@@ -320,6 +323,7 @@ lint: get_docker_id
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make lint';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make lint';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make lint';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make lint';
 
 .PHONY: check_covered
 check_covered: get_docker_id lint
@@ -344,11 +348,13 @@ autofix: get_docker_id
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make autofix';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make autofix';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make autofix';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make autofix';
 
 .PHONY: proto_gen
 proto_gen: get_docker_id
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Common && HOME=/home/user su-exec user make proto_gen';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make proto_gen';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make proto_gen';
 
 # Prod related tasks & shortcuts
 
@@ -357,22 +363,30 @@ prod_deps:
 	cd Mimir && make deps
 	cd Rheda && make deps
 	cd Frey && make deps
+	cd Forseti && make deps
 
 .PHONY: prod_build_tyr
 prod_build_tyr: get_docker_id # this is for automated builds, don't run it manually
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make deps && make build';
 	cd Tyr && make cleanup_prebuilts && make prebuild
 
+.PHONY: prod_build_forseti
+prod_build_forseti: get_docker_id # this is for automated builds, don't run it manually
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make deps && make build';
+	cd Forseti && make cleanup_prebuilts && make prebuild
+
 # i18n related
 .PHONY: i18n_extract
 i18n_extract: get_docker_id
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make i18n_extract';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make i18n_extract';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make i18n_extract';
 
 .PHONY: i18n_compile
 i18n_compile: get_docker_id
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make i18n_compile';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make i18n_update';
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Forseti && HOME=/home/user su-exec user make i18n_update';
 
 .PHONY: bump_release
 bump_release:

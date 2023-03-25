@@ -28,7 +28,7 @@ import { DonateScreen } from '#/components/screens/donate/DonateScreen';
 import { EventSelectScreen } from '#/components/screens/event-select/EventSelectScreen';
 import { OtherTablesList } from '#/components/screens/other-tables-list/OtherTablesListScreen';
 import { i18n } from './i18n';
-import { IStorage } from '#/services/storage';
+import { IStorage } from '../../../Common/storage';
 
 interface IProps {
   state: IAppState;
