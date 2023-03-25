@@ -307,7 +307,7 @@ class GameFormatter
                 function ($el) use (&$playersData) {
                     return $playersData[$el]['title'];
                 },
-                explode(',', $round[$key])
+                array_unique(explode(',', $round[$key]))
             );
             $list = implode(', ', $list);
         }
