@@ -81,8 +81,7 @@ class TeamTable extends Controller
                 return $el;
             }, $data);
         } catch (\Exception $e) {
-            $this->_handleTwirpEx($e);
-            $errMsg = $e->getMessage();
+            $errMsg = $this->_handleTwirpEx($e) ?: $e->getMessage();
         }
 
         // group players by team

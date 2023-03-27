@@ -124,9 +124,8 @@ class PersonSignup extends Controller
                 'debug_url' => $debugUrl
             ];
         } catch (\Exception $ex) {
-            $this->_handleTwirpEx($ex);
             return [
-                'error' => $ex->getMessage(),
+                'error' => $this->_handleTwirpEx($ex) ?: $ex->getMessage(),
                 'success' => false
             ];
         }

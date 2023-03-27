@@ -63,9 +63,8 @@ class Achievements extends Controller
                 $ach = $this->_mimir->getAchievements($this->_eventIdList, [$this->_path['achievement']]);
                 return $this->_ach($ach, $this->_path['achievement']);
             } catch (\Exception $e) {
-                $this->_handleTwirpEx($e);
                 return [
-                    'error' => $e->getMessage()
+                    'error' => $this->_handleTwirpEx($e) ?: $e->getMessage()
                 ];
             }
         } else {

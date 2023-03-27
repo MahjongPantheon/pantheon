@@ -90,9 +90,8 @@ class UserActionEventEdit extends Controller
                     return $this->_saveExistingEvent($checkData);
                 }
             } catch (\Exception $e) {
-                $this->_handleTwirpEx($e);
                 $this->_error = [
-                    'error' => $e->getMessage(),
+                    'error' => $this->_handleTwirpEx($e) ?: $e->getMessage(),
                     'critical' => true
                 ];
                 return true;

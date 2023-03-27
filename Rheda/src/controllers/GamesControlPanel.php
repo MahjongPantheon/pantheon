@@ -25,7 +25,7 @@ class GamesControlPanel extends Controller
 {
     protected $_mainTemplate = 'GamesControlPanel';
     /**
-     * @var ?\Exception
+     * @var ?string
      */
     protected $_lastEx = null;
 
@@ -63,8 +63,7 @@ class GamesControlPanel extends Controller
                         ;
                 }
             } catch (\Exception $e) {
-                $this->_handleTwirpEx($e);
-                $this->_lastEx = $e;
+                $this->_lastEx = $this->_handleTwirpEx($e) ?: $e;
                 return true;
             }
 
@@ -104,7 +103,7 @@ class GamesControlPanel extends Controller
 
         if (!empty($this->_lastEx)) {
             return [
-                'reason' => $this->_lastEx->getMessage()
+                'reason' => $this->_lastEx
             ];
         }
 
@@ -112,9 +111,8 @@ class GamesControlPanel extends Controller
         try {
             $tables = $this->_mimir->getTablesState($this->_mainEventId);
         } catch (\Exception $e) {
-            $this->_handleTwirpEx($e);
             return [
-                'reason' => $e->getMessage()
+                'reason' => $this->_handleTwirpEx($e) ?: $e->getMessage()
             ];
         }
         $tablesFormatted = $formatter->formatTables(

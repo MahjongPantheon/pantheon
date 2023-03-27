@@ -83,9 +83,8 @@ class PersonProfileEdit extends Controller
                     'emailEditable' => $this->_superadmin,
                 ]);
             } catch (\Exception $ex) {
-                $this->_handleTwirpEx($ex);
                 return array_merge($checkedData, [
-                    'error' => $ex->getMessage(),
+                    'error' => $this->_handleTwirpEx($ex) ?: $ex->getMessage(),
                     'success' => false,
                     'emailEditable' => $this->_superadmin,
                 ]);

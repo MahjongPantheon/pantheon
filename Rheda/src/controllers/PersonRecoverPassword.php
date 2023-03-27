@@ -90,7 +90,6 @@ class PersonRecoverPassword extends Controller
                 'success' => true
             ];
         } catch (\Exception $e) {
-            $this->_handleTwirpEx($e);
             $captcha = new Captcha();
             $captcha->code();
             $captcha->image();
@@ -102,7 +101,7 @@ class PersonRecoverPassword extends Controller
                 'email' => $emailSanitized,
                 'captcha' => $captcha->getImage(),
                 'uniqid' => $uniqid,
-                'error' => $e->getMessage()
+                'error' => $this->_handleTwirpEx($e) ?: $e->getMessage()
             ];
         }
     }
@@ -125,10 +124,9 @@ class PersonRecoverPassword extends Controller
                     'error' => false
                 ];
             } catch (\Exception $e) {
-                $this->_handleTwirpEx($e);
                 return [
                     'recoverRequest' => false,
-                    'error' => $e->getMessage()
+                    'error' => $this->_handleTwirpEx($e) ?: $e->getMessage()
                 ];
             }
         } else {
@@ -147,12 +145,11 @@ class PersonRecoverPassword extends Controller
                     'success' => true,
                 ];
             } catch (\Exception $e) {
-                $this->_handleTwirpEx($e);
                 return [
                     'recoverRequest' => false,
                     'newTmpPassword' => $_POST['old_password'],
                     'email' => $emailSanitized,
-                    'error' => $e->getMessage()
+                    'error' => $this->_handleTwirpEx($e) ?: $e->getMessage()
                 ];
             }
         }

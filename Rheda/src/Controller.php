@@ -639,14 +639,17 @@ DATA;
 
     /**
      * @param \Throwable $e
-     * @return void
+     * @return string
      */
     protected function _handleTwirpEx(\Throwable $e)
     {
         if ($e instanceof \Common\TwirpError) {
+            $mmap = $e->getMetaMap();
             trigger_error('Exception for path: ' . $_SERVER['REQUEST_URI'] . PHP_EOL
                 . $e->getTraceAsString()
-                . json_encode($e->getMetaMap(), JSON_PRETTY_PRINT), E_USER_WARNING);
+                . json_encode($mmap, JSON_PRETTY_PRINT), E_USER_WARNING);
+            return empty($mmap['cause']) ? '' : $mmap['cause'];
         }
+        return '';
     }
 }

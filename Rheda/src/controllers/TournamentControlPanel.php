@@ -25,7 +25,7 @@ class TournamentControlPanel extends Controller
 {
     protected $_mainTemplate = 'TournamentControlPanel';
     /**
-     * @var ?\Exception
+     * @var ?string
      */
     protected $_lastEx = null;
 
@@ -95,8 +95,7 @@ class TournamentControlPanel extends Controller
                         ;
                 }
             } catch (\Exception $e) {
-                $this->_handleTwirpEx($e);
-                $this->_lastEx = $e;
+                $this->_lastEx = $this->_handleTwirpEx($e) ?: $e->getMessage();
                 return true;
             }
 
@@ -135,7 +134,7 @@ class TournamentControlPanel extends Controller
 
         if (!empty($this->_lastEx)) {
             return [
-                'error' => $this->_lastEx->getMessage()
+                'error' => $this->_lastEx
             ];
         }
 
@@ -173,13 +172,13 @@ class TournamentControlPanel extends Controller
                     array_unshift($nextPrescriptedSeating, []); // small hack to start from 1
                 }
             } catch (\Exception $e) {
-                $this->_handleTwirpEx($e);
+                $message = $this->_handleTwirpEx($e) ?: $e->getMessage();
                 return [
                     'error' => null,
                     // TODO: better error handlers for twirp interface: code is not passed through exceptions.
-                    'prescriptedEventErrorDescription' => ($e->getCode() == 1404 || str_contains($e->getMessage(), 'Event prescript for'))
+                    'prescriptedEventErrorDescription' => ($e->getCode() == 1404 || str_contains($message, 'Event prescript for'))
                         ? _t('No seating defined. Check "Admin actions / Predefined seating" page to define seating for tournament')
-                        : $e->getMessage()
+                        : $message
                 ];
             }
         }

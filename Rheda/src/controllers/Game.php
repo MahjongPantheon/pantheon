@@ -43,10 +43,9 @@ class Game extends Controller
                 'isOnlineTournament' => $this->_mainEventRules->isOnline()
             ];
         } catch (\Exception $e) {
-            $this->_handleTwirpEx($e);
             return [
                 'data' => null,
-                'error' => $e->getMessage()
+                'error' => $this->_handleTwirpEx($e) ?: $e->getMessage()
             ];
         }
     }

@@ -54,9 +54,8 @@ class PersonSignupAdministrative extends Controller
                     'error' => false,
                 ]);
             } catch (\Exception $ex) {
-                $this->_handleTwirpEx($ex);
                 return array_merge($checkedData, [
-                    'error' => $ex->getMessage(),
+                    'error' => $this->_handleTwirpEx($ex) ?: $ex->getMessage(),
                     'success' => false,
                 ]);
             }

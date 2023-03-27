@@ -180,8 +180,7 @@ class RatingTable extends Controller
                 return $el;
             }, $data);
         } catch (\Exception $e) {
-            $this->_handleTwirpEx($e);
-            $errMsg = $e->getMessage();
+            $errMsg = $this->_handleTwirpEx($e) ?: $e->getMessage();
         }
 
         if (!empty($data) && $playedGames == 0 && $this->_mainEventRules->isTeam()) {
