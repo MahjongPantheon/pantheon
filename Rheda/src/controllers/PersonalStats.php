@@ -162,7 +162,7 @@ class PersonalStats extends Controller
                     'riichiWon'            => $data['riichi_summary']['riichi_won'],
                     'riichiLost'           => $data['riichi_summary']['riichi_lost'],
                     'riichiTotal'          => $riichiTotal,
-                    'averageDoraCount'     => $data['dora_stat']['average'],
+                    'averageDoraCount'     => round($data['dora_stat']['average'], 2),
                     'doraCount'            => $data['dora_stat']['count'],
 
                     'pointsWon'            => $data['win_summary']['points_won'],
