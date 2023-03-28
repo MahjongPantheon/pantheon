@@ -4,6 +4,8 @@ import { Root } from '#/pages/Root';
 import { ProfileLogin } from '#/pages/ProfileLogin';
 import { ProfileSignup } from '#/pages/ProfileSignup';
 import { ProfileConfirm } from '#/pages/ProfileConfirm';
+import { ProfileResetPassword } from '#/pages/ProfileResetPassword';
+import { ProfileResetPasswordConfirm } from '#/pages/ProfileResetPasswordConfirm';
 // import { environment } from '#config';
 
 // const storage = new Storage(environment.cookieDomain);
@@ -22,6 +24,8 @@ export const App = () => {
       <Route path='/profile/login' component={ProfileLogin} />
       <Route path='/profile/signup' component={ProfileSignup} />
       <Route path='/profile/confirm/:code' component={ProfileConfirm} />
+      <Route path='/profile/resetPassword' component={ProfileResetPassword} />
+      <Route path='/profile/resetPasswordConfirm/:code' component={ProfileResetPasswordConfirm} />
 
       {/*<Route path='/profile/logout' component={ProfileLogout} />*/}
     </Switch>

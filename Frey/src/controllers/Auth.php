@@ -141,14 +141,15 @@ class AuthController extends Controller
      * Returns reset approval token, which should be sent over email to user.
      *
      * @param string $email
+     * @param boolean $sendEmail
      * @return string
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function requestResetPassword($email)
+    public function requestResetPassword($email, $sendEmail = false)
     {
         $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email)]);
-        $resetToken = $this->_getModel()->requestResetPassword($email);
+        $resetToken = $this->_getModel()->requestResetPassword($email, $sendEmail);
         $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email)]);
         return $resetToken;
     }

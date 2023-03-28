@@ -2,9 +2,12 @@ import { environment } from '#config';
 import { GetAllRegisteredPlayers, GetTablesState } from '#/clients/mimir.pb';
 import {
   ApproveRegistration,
+  ApproveResetPassword,
   Authorize,
+  ChangePassword,
   QuickAuthorize,
   RequestRegistration,
+  RequestResetPassword,
 } from '#/clients/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
 import { IntermediateResultOfSession, SessionStatus } from '#/clients/atoms.pb';
@@ -115,5 +118,17 @@ export class ApiService {
 
   confirmRegistration(code: string) {
     return ApproveRegistration({ approvalCode: code }, this._clientConfFrey);
+  }
+
+  requestPasswordRecovery(email: string) {
+    return RequestResetPassword({ email, sendEmail: true }, this._clientConfFrey);
+  }
+
+  approvePasswordRecovery(email: string, resetToken: string) {
+    return ApproveResetPassword({ email, resetToken }, this._clientConfFrey);
+  }
+
+  changePassword(email: string, password: string, newPassword: string) {
+    return ChangePassword({ email, password, newPassword }, this._clientConfFrey);
   }
 }

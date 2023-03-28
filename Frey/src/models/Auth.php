@@ -231,11 +231,12 @@ class AuthModel extends Model
      * Returns reset approval token, which should be sent over email to user.
      *
      * @param string $email
+     * @param bool $sendEmail
      * @return string
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function requestResetPassword(string $email)
+    public function requestResetPassword(string $email, bool $sendEmail)
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
@@ -243,6 +244,13 @@ class AuthModel extends Model
         }
 
         $person[0]->setAuthResetToken(sha1($email . microtime(true)))->save();
+
+        if ($sendEmail) {
+            $conf = $this->_config->getValue('mailer');
+            $mailer = new Mailer($conf['gui_url'], $conf['mode'], $conf['mailer_addr'], $conf['remote_url'], $conf['remote_action_key']);
+            return $mailer->sendPasswordRecovery($person[0]->getAuthResetToken(), $email);
+        }
+
         return $person[0]->getAuthResetToken();
     }
 

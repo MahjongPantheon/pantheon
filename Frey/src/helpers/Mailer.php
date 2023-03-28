@@ -120,6 +120,7 @@ Pantheon support team
     public function sendPasswordRecovery($approvalToken, $emailSanitized)
     {
         $debugMessage = '';
+        $link = $this->_guiUrl . '/profile/resetPasswordConfirm/' . base64_encode($approvalToken . '@@@' . $emailSanitized);
         $message = _p("Hello!
 
 You have just requested password recovery for your account
@@ -131,10 +132,10 @@ If you didn't attempt to recover password, you can safely ignore this message.
 
 Sincerely yours,
 Pantheon support team
-", $this->_guiUrl . '/passwordRecovery/' . $approvalToken . '/' . $emailSanitized);
+", $link);
         /* @phpstan-ignore-next-line */
         if ($this->_mailMode === 'debug') {
-            $debugMessage = $message;
+            $debugMessage = $link;
         /* @phpstan-ignore-next-line */
         } else {
             self::_send(

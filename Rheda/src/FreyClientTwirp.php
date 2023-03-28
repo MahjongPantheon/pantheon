@@ -195,6 +195,7 @@ class FreyClientTwirp implements IFreyClient
             $this->_ctx,
             (new \Common\Auth_RequestResetPassword_Payload())
                 ->setEmail($email)
+                ->setSendEmail(false)
         )->getResetToken();
     }
 

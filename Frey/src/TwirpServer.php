@@ -220,7 +220,7 @@ final class TwirpServer implements Frey
     {
         try {
             return (new \Common\Auth_RequestResetPassword_Response())
-                ->setResetToken($this->_authController->requestResetPassword($req->getEmail()));
+                ->setResetToken($this->_authController->requestResetPassword($req->getEmail(), $req->getSendEmail()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
             throw $e;

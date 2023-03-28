@@ -118,6 +118,7 @@ message Auth_ChangePassword_Response {
 
 message Auth_RequestResetPassword_Payload {
   string email = 1;
+  bool sendEmail = 2;
 }
 
 message Auth_RequestResetPassword_Response {

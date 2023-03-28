@@ -82,6 +82,7 @@ export interface Auth_ChangePassword_Response {
 
 export interface Auth_RequestResetPassword_Payload {
   email: string;
+  sendEmail: boolean;
 }
 
 export interface Auth_RequestResetPassword_Response {
@@ -3118,6 +3119,7 @@ export const Auth_RequestResetPassword_Payload = {
   initialize: function (): Auth_RequestResetPassword_Payload {
     return {
       email: "",
+      sendEmail: false,
     };
   },
 
@@ -3130,6 +3132,9 @@ export const Auth_RequestResetPassword_Payload = {
   ): BinaryWriter {
     if (msg.email) {
       writer.writeString(1, msg.email);
+    }
+    if (msg.sendEmail) {
+      writer.writeBool(2, msg.sendEmail);
     }
     return writer;
   },
@@ -3146,6 +3151,10 @@ export const Auth_RequestResetPassword_Payload = {
       switch (field) {
         case 1: {
           msg.email = reader.readString();
+          break;
+        }
+        case 2: {
+          msg.sendEmail = reader.readBool();
           break;
         }
         default: {
@@ -8521,6 +8530,7 @@ export const Auth_RequestResetPassword_PayloadJSON = {
   initialize: function (): Auth_RequestResetPassword_Payload {
     return {
       email: "",
+      sendEmail: false,
     };
   },
 
@@ -8533,6 +8543,9 @@ export const Auth_RequestResetPassword_PayloadJSON = {
     const json: Record<string, unknown> = {};
     if (msg.email) {
       json["email"] = msg.email;
+    }
+    if (msg.sendEmail) {
+      json["sendEmail"] = msg.sendEmail;
     }
     return json;
   },
@@ -8547,6 +8560,10 @@ export const Auth_RequestResetPassword_PayloadJSON = {
     const _email_ = json["email"];
     if (_email_) {
       msg.email = _email_;
+    }
+    const _sendEmail_ = json["sendEmail"];
+    if (_sendEmail_) {
+      msg.sendEmail = _sendEmail_;
     }
     return msg;
   },

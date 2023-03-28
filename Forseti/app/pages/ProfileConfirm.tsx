@@ -16,6 +16,7 @@ export const ProfileConfirm: React.FC<{ params: { code: string } }> = ({ params:
   usePageTitle(i18n._t('Confirm your email'));
 
   useEffect(() => {
+    setIsLoading(true);
     api
       .confirmRegistration(code)
       .then((resp) => {
@@ -54,7 +55,7 @@ function ErrorAlert({ i18n }: { i18n: I18nService }) {
         color='red'
       >
         {i18n._t(
-          'Failed to confirm your email. Probably the link you used has been expired or already used. Please try registering again.'
+          'Failed to confirm your email. Probably the link you followed has been expired or already used. Please try registering again.'
         )}
       </Alert>
       <Space h='xl' />

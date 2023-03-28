@@ -56,7 +56,7 @@ export const ProfileSignup: React.FC = () => {
         .then((resp) => {
           if (resp.approvalCode && !environment.production) {
             // debug mode; code will not be sent in production mode
-            alert('Approval code: ' + window.location.host + resp.approvalCode);
+            alert('Confirmation link: ' + window.location.host + resp.approvalCode);
           }
         })
         .catch(() => {
