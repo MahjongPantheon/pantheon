@@ -622,7 +622,7 @@ class PlayerStatModel extends Model
                 }
 
                 if ($mr->getLoserId() == $playerId && in_array($playerId, $roundRiichi)) {
-                    $acc['feed_under_riichi']++;
+                    $acc['feed_under_riichi'] += count($mr->rounds());
                 }
             }
         }
