@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { ctxValue } from '#/hooks/pageTitle';
-import { AppShell, Header, MantineProvider, Text, useMantineTheme } from '@mantine/core';
+import { AppShell, Center, Header, MantineProvider, Text, useMantineTheme } from '@mantine/core';
 import { MainMenu } from '#/MainMenu';
 
 export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
@@ -31,10 +31,12 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                 display: 'flex',
                 alignItems: 'center',
                 height: '100%',
-                justifyContent: 'space-between',
+                justifyContent: 'space-around',
               }}
             >
-              <Text>Forseti :: {pageTitle}</Text>
+              <Center style={{ flex: 1 }}>
+                <Text>Forseti :: {pageTitle}</Text>
+              </Center>
               <MainMenu />
             </div>
           </Header>

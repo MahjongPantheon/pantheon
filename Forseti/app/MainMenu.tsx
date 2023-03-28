@@ -1,24 +1,27 @@
-import { Button, Menu } from '@mantine/core';
+import { Button, Drawer, NavLink } from '@mantine/core';
 import * as React from 'react';
-import { IconLogin, IconUserPlus } from '@tabler/icons-react';
+import { IconLogin, IconMenu2, IconUserPlus } from '@tabler/icons-react';
 import { Link } from 'wouter';
 import { useI18n } from '#/hooks/i18n';
+import { useDisclosure } from '@mantine/hooks';
 
 export const MainMenu: React.FC = () => {
   const i18n = useI18n();
+  const [opened, { open, close }] = useDisclosure(false);
   return (
-    <Menu shadow='md' width={200}>
-      <Menu.Target>
-        <Button>Menu {/*Translate*/}</Button>
-      </Menu.Target>
-
-      <Menu.Dropdown>
-        {/*<Menu.Label>Application</Menu.Label>*/}
+    <>
+      <Drawer
+        position='right'
+        opened={opened}
+        onClose={close}
+        title={i18n._t('Main menu')}
+        size='15rem'
+      >
         <Link to='profile/login'>
-          <Menu.Item icon={<IconLogin size={18} />}>{i18n._t('Sign in')}</Menu.Item>
+          <NavLink icon={<IconLogin size={18} />} label={i18n._t('Sign in')} />
         </Link>
         <Link to='profile/signup'>
-          <Menu.Item icon={<IconUserPlus size={18} />}>{i18n._t('Sign up')}</Menu.Item>
+          <NavLink icon={<IconUserPlus size={18} />} label={i18n._t('Sign up')} />
         </Link>
         {/*<Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>*/}
         {/*<Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>*/}
@@ -35,7 +38,10 @@ export const MainMenu: React.FC = () => {
         {/*<Menu.Label>Danger zone</Menu.Label>*/}
         {/*<Menu.Item icon={<IconArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>*/}
         {/*<Menu.Item color="red" icon={<IconTrash size={14} />}>Delete my account</Menu.Item>*/}
-      </Menu.Dropdown>
-    </Menu>
+      </Drawer>
+      <Button onClick={open} color='violet' radius='md' size='sm' style={{ padding: '0 10px' }}>
+        <IconMenu2 size={24} />
+      </Button>
+    </>
   );
 };
