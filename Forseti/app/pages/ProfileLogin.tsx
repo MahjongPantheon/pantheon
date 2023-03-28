@@ -7,6 +7,7 @@ import { Link, useLocation } from 'wouter';
 import { useStorage } from '#/hooks/storage';
 import { useApi } from '#/hooks/api';
 import { useI18n } from '#/hooks/i18n';
+import { useCallback } from 'react';
 
 export const ProfileLogin: React.FC = () => {
   usePageTitle('Login to your account' /*Translate*/);
@@ -21,27 +22,31 @@ export const ProfileLogin: React.FC = () => {
     },
 
     validate: {
-      email: (value: string) => (/^\S+@\S+$/.test(value) ? null : i18n._t('Invalid email')),
-      password: (value: string) => (value !== '' ? null : i18n._t('Please enter password')),
+      email: (value: string) =>
+        /^\S+@\S+$/.test(value.trim().toLowerCase()) ? null : i18n._t('Invalid email'),
+      password: (value: string) => (value.trim() !== '' ? null : i18n._t('Please enter password')),
     },
   });
 
-  const submitForm = (values: { email: string; password: string }) => {
-    api
-      .authorize(values.email.trim().toLowerCase(), values.password.trim())
-      .then((resp) => {
-        storage.setPersonId(resp.personId);
-        storage.setAuthToken(resp.authToken);
-        api.setCredentials(resp.personId, resp.authToken);
-        navigate('/');
-      })
-      .catch(() => {
-        form.setFieldError(
-          'password',
-          i18n._t('Failed to authorize. Please check your email and password.')
-        );
-      });
-  };
+  const submitForm = useCallback(
+    (values: { email: string; password: string }) => {
+      api
+        .authorize(values.email.trim().toLowerCase(), values.password.trim())
+        .then((resp) => {
+          storage.setPersonId(resp.personId);
+          storage.setAuthToken(resp.authToken);
+          api.setCredentials(resp.personId, resp.authToken);
+          navigate('/');
+        })
+        .catch(() => {
+          form.setFieldError(
+            'password',
+            i18n._t('Failed to authorize. Please check your email and password.')
+          );
+        });
+    },
+    [api]
+  );
 
   return (
     <>

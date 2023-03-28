@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Route } from 'wouter';
 import { Root } from '#/pages/Root';
 import { ProfileLogin } from '#/pages/ProfileLogin';
+import { ProfileSignup } from '#/pages/ProfileSignup';
 // import { environment } from '#config';
 
 // const storage = new Storage(environment.cookieDomain);
@@ -17,6 +18,7 @@ export const App = () => {
       <Route path='/' component={Root} />
       {/*<Route path='/profile' component={Profile} />*/}
       <Route path='/profile/login' component={ProfileLogin} />
+      <Route path='/profile/signup' component={ProfileSignup} />
       {/*<Route path='/profile/logout' component={ProfileLogout} />*/}
     </>
   );

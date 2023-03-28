@@ -34,6 +34,7 @@
     "@tabler/icons-react": "^2.11.0",
     "@types/jest": "^29.5.0",
     "@types/lodash.debounce": "^4.0.7",
+    "@types/zxcvbn": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
     "classnames": "^2.3.2",
@@ -51,7 +52,8 @@
     "react-dom": "^18.2.0",
     "resolve-url-loader": "^5.0.0",
     "ts-jest": "^29.0.5",
-    "wouter": "^2.10.0"
+    "wouter": "^2.10.0",
+    "zxcvbn": "^4.4.2"
   },
   "scripts": {
     "build": "webpack --config webpack.prod.js",
