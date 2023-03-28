@@ -10,16 +10,14 @@ import { ApiProvider } from '#/hooks/api';
 const root = createRoot(document.getElementById('forseti-root')!);
 window.addEventListener('DOMContentLoaded', () => {
   root.render(
-    <React.StrictMode>
-      <PageTitleProvider>
-        <StorageProvider>
-          <ApiProvider>
-            <Layout>
-              <App />
-            </Layout>
-          </ApiProvider>
-        </StorageProvider>
-      </PageTitleProvider>
-    </React.StrictMode>
+    <PageTitleProvider>
+      <StorageProvider>
+        <ApiProvider>
+          <Layout>
+            <App />
+          </Layout>
+        </ApiProvider>
+      </StorageProvider>
+    </PageTitleProvider>
   );
 });

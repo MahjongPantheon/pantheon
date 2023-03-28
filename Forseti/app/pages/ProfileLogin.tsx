@@ -10,10 +10,10 @@ import { useI18n } from '#/hooks/i18n';
 import { useCallback } from 'react';
 
 export const ProfileLogin: React.FC = () => {
-  usePageTitle('Login to your account' /*Translate*/);
   const storage = useStorage();
   const api = useApi();
   const i18n = useI18n();
+  usePageTitle(i18n._t('Login to your account'));
   const [, navigate] = useLocation();
   const form = useForm({
     initialValues: {

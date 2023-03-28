@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Route } from 'wouter';
+import { Route, Switch } from 'wouter';
 import { Root } from '#/pages/Root';
 import { ProfileLogin } from '#/pages/ProfileLogin';
 import { ProfileSignup } from '#/pages/ProfileSignup';
+import { ProfileConfirm } from '#/pages/ProfileConfirm';
 // import { environment } from '#config';
 
 // const storage = new Storage(environment.cookieDomain);
@@ -14,16 +15,16 @@ import { ProfileSignup } from '#/pages/ProfileSignup';
 
 export const App = () => {
   return (
-    <>
+    <Switch>
       <Route path='/' component={Root} />
       {/*<Route path='/profile' component={Profile} />*/}
 
       <Route path='/profile/login' component={ProfileLogin} />
       <Route path='/profile/signup' component={ProfileSignup} />
-      {/*<Route path='/profile/confirm' component={ProfileConfirm} />*/}
+      <Route path='/profile/confirm/:code' component={ProfileConfirm} />
 
       {/*<Route path='/profile/logout' component={ProfileLogout} />*/}
-    </>
+    </Switch>
   );
 };
 

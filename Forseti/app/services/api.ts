@@ -1,6 +1,11 @@
 import { environment } from '#config';
 import { GetAllRegisteredPlayers, GetTablesState } from '#/clients/mimir.pb';
-import { Authorize, QuickAuthorize, RequestRegistration } from '#/clients/frey.pb';
+import {
+  ApproveRegistration,
+  Authorize,
+  QuickAuthorize,
+  RequestRegistration,
+} from '#/clients/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
 import { IntermediateResultOfSession, SessionStatus } from '#/clients/atoms.pb';
 import { handleReleaseTag } from '#/services/releaseTags';
@@ -106,5 +111,9 @@ export class ApiService {
 
   requestRegistration(email: string, title: string, password: string) {
     return RequestRegistration({ email, title, password, sendEmail: true }, this._clientConfFrey);
+  }
+
+  confirmRegistration(code: string) {
+    return ApproveRegistration({ approvalCode: code }, this._clientConfFrey);
   }
 }
