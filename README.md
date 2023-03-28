@@ -5,7 +5,10 @@
 Pantheon project consists of some submodules, each of those might be installed standalone (see instructions in folder 
 of each submodule). To quickly run Pantheon locally using Docker, read further.
 
-You may use our [Bug tracker (RU)](https://pantheon.myjetbrains.com/youtrack/agiles) for error reports and feature requests. Also you may add issues to this github repo. Pull requests are especially welcome :)
+You may use github issues for error reports and feature requests. Pull requests are especially welcome :)
+
+- Support chat (EN): https://discord.gg/U5qBkexfEQ
+- Support chat (RU): https://t.me/pantheon_support
 
 ### Preparations
 
