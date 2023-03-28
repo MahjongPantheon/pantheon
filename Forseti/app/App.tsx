@@ -7,6 +7,7 @@ import { ProfileConfirm } from '#/pages/ProfileConfirm';
 import { ProfileResetPassword } from '#/pages/ProfileResetPassword';
 import { ProfileResetPasswordConfirm } from '#/pages/ProfileResetPasswordConfirm';
 import { ProfileManage } from '#/pages/ProfileManage';
+import { ProfileLogout } from '#/pages/ProfileLogout';
 // import { environment } from '#config';
 
 // const storage = new Storage(environment.cookieDomain);
@@ -26,8 +27,7 @@ export const App = () => {
       <Route path='/profile/resetPassword' component={ProfileResetPassword} />
       <Route path='/profile/resetPasswordConfirm/:code' component={ProfileResetPasswordConfirm} />
       <Route path='/profile/manage' component={ProfileManage} />
-
-      {/*<Route path='/profile/logout' component={ProfileLogout} />*/}
+      <Route path='/profile/logout' component={ProfileLogout} />
     </Switch>
   );
 };

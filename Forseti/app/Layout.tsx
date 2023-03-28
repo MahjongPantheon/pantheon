@@ -1,8 +1,18 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { ctxValue } from '#/hooks/pageTitle';
-import { AppShell, Center, Header, MantineProvider, Text, useMantineTheme } from '@mantine/core';
-import { MainMenu } from '#/MainMenu';
+import {
+  AppShell,
+  Burger,
+  Center,
+  Header,
+  MantineProvider,
+  MediaQuery,
+  Navbar,
+  Text,
+  useMantineTheme,
+} from '@mantine/core';
+import { Navigation } from '#/Navigation';
 import { auth, useAuth } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
 
@@ -19,14 +29,21 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
 
   const api = useApi();
   const authHook = useAuth();
+  const [authLoading, setAuthLoading] = useState(true);
   useEffect(() => {
-    api.quickAuthorize().then((resp) => {
-      authHook.setIsLoggedIn(resp);
-    });
+    setAuthLoading(true);
+    api
+      .quickAuthorize()
+      .then((resp) => {
+        authHook.setIsLoggedIn(resp);
+      })
+      .finally(() => {
+        setAuthLoading(false);
+      });
   }, []);
 
   const theme = useMantineTheme();
-
+  const [opened, setOpened] = useState(false);
   return (
     <MantineProvider
       theme={{
@@ -40,7 +57,11 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
           },
         }}
         navbarOffsetBreakpoint='sm'
-        asideOffsetBreakpoint='sm'
+        navbar={
+          <Navbar p='md' hiddenBreakpoint='sm' hidden={!opened} width={{ sm: 200, lg: 300 }}>
+            <Navigation loading={authLoading} onClick={() => setOpened(false)} />
+          </Navbar>
+        }
         header={
           <Header height={{ base: 50, md: 70 }} p='md'>
             <div
@@ -51,10 +72,18 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                 justifyContent: 'space-around',
               }}
             >
+              <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
+                <Burger
+                  opened={opened}
+                  onClick={() => setOpened((o) => !o)}
+                  size='sm'
+                  color={theme.colors.gray[6]}
+                  mr='xl'
+                />
+              </MediaQuery>
               <Center style={{ flex: 1 }}>
                 <Text>Forseti :: {pageTitle}</Text>
               </Center>
-              <MainMenu />
             </div>
           </Header>
         }
