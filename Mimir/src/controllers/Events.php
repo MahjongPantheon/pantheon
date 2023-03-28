@@ -1057,6 +1057,10 @@ class EventsController extends Controller
         $timezoneIdentifiers = \DateTimeZone::listIdentifiers();
 
         $preferredTimezone = '';
+        // Some workarounds for Forseti SPA querying: we don't have server there and can't get current IP.
+        if (empty($addr) && !empty($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] !== $_SERVER['SERVER_ADDR']) {
+            $addr = $_SERVER['REMOTE_ADDR'];
+        }
         if ($addr) {
             require_once __DIR__ . '/../../bin/geoip2.phar';
             try {
@@ -1093,6 +1097,10 @@ class EventsController extends Controller
         $countries = getCountriesWithCodes();
 
         $preferredCountry = '';
+        // Some workarounds for Forseti SPA querying: we don't have server there and can't get current IP.
+        if (empty($addr) && !empty($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] !== $_SERVER['SERVER_ADDR']) {
+            $addr = $_SERVER['REMOTE_ADDR'];
+        }
         if ($addr) {
             require_once __DIR__ . '/../../bin/geoip2.phar';
             try {

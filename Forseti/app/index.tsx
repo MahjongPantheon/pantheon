@@ -6,18 +6,21 @@ import { Layout } from '#/Layout';
 import './index.css';
 import { StorageProvider } from '#/hooks/storage';
 import { ApiProvider } from '#/hooks/api';
+import { AuthProvider } from '#/hooks/auth';
 
 const root = createRoot(document.getElementById('forseti-root')!);
 window.addEventListener('DOMContentLoaded', () => {
   root.render(
     <PageTitleProvider>
-      <StorageProvider>
-        <ApiProvider>
-          <Layout>
-            <App />
-          </Layout>
-        </ApiProvider>
-      </StorageProvider>
+      <AuthProvider>
+        <StorageProvider>
+          <ApiProvider>
+            <Layout>
+              <App />
+            </Layout>
+          </ApiProvider>
+        </StorageProvider>
+      </AuthProvider>
     </PageTitleProvider>
   );
 });

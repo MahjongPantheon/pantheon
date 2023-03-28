@@ -142,18 +142,20 @@ class AccountModel extends Model
             throw new InvalidParametersException('Person id #' . $id . ' not found in DB', 406);
         }
 
-        if (empty($title) || empty($email)) {
-            throw new InvalidParametersException('Title and email cannot be empty', 407);
+        if (empty($title)) {
+            throw new InvalidParametersException('Title cannot be empty', 407);
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidParametersException('Invalid email provided', 408);
+        if (!empty($this->_authorizedPerson) && $this->_authorizedPerson->getIsSuperadmin()) {
+            if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                throw new InvalidParametersException('Invalid email provided', 408);
+            }
+            $persons[0]->setEmail($email);
         }
 
         return $persons[0]->setTitle($title)
             ->setCountry($country)
             ->setCity($city)
-            ->setEmail($email)
             ->setPhone($phone)
             ->setTenhouId($tenhouId)
             ->save();

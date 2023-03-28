@@ -8,11 +8,13 @@ import { useStorage } from '#/hooks/storage';
 import { useApi } from '#/hooks/api';
 import { useI18n } from '#/hooks/i18n';
 import { useCallback } from 'react';
+import { useAuth } from '#/hooks/auth';
 
 export const ProfileLogin: React.FC = () => {
   const storage = useStorage();
   const api = useApi();
   const i18n = useI18n();
+  const auth = useAuth();
   usePageTitle(i18n._t('Login to your account'));
   const [, navigate] = useLocation();
   const form = useForm({
@@ -36,6 +38,7 @@ export const ProfileLogin: React.FC = () => {
           storage.setPersonId(resp.personId);
           storage.setAuthToken(resp.authToken);
           api.setCredentials(resp.personId, resp.authToken);
+          auth.setIsLoggedIn(true);
           navigate('/');
         })
         .catch(() => {

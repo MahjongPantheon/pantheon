@@ -1,13 +1,15 @@
 import { environment } from '#config';
-import { GetAllRegisteredPlayers, GetTablesState } from '#/clients/mimir.pb';
+import { GetAllRegisteredPlayers, GetCountries, GetTablesState } from '#/clients/mimir.pb';
 import {
   ApproveRegistration,
   ApproveResetPassword,
   Authorize,
   ChangePassword,
+  GetPersonalInfo,
   QuickAuthorize,
   RequestRegistration,
   RequestResetPassword,
+  UpdatePersonalInfo,
 } from '#/clients/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
 import { IntermediateResultOfSession, SessionStatus } from '#/clients/atoms.pb';
@@ -130,5 +132,38 @@ export class ApiService {
 
   changePassword(email: string, password: string, newPassword: string) {
     return ChangePassword({ email, password, newPassword }, this._clientConfFrey);
+  }
+
+  getCountries() {
+    return GetCountries({ addr: '' }, this._clientConfMimir);
+  }
+
+  getPersonalInfo(personId: number) {
+    return GetPersonalInfo({ ids: [personId] }, this._clientConfFrey).then(
+      (resp) => resp.persons[0]
+    );
+  }
+
+  updatePersonalInfo(
+    id: number,
+    title: string,
+    country: string,
+    city: string,
+    email: string,
+    phone: string,
+    tenhouId: string
+  ) {
+    return UpdatePersonalInfo(
+      {
+        id,
+        title,
+        country,
+        city,
+        email,
+        phone,
+        tenhouId,
+      },
+      this._clientConfFrey
+    ).then((resp) => resp.success);
   }
 }

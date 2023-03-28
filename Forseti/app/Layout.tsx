@@ -1,13 +1,30 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ctxValue } from '#/hooks/pageTitle';
 import { AppShell, Center, Header, MantineProvider, Text, useMantineTheme } from '@mantine/core';
 import { MainMenu } from '#/MainMenu';
+import { auth, useAuth } from '#/hooks/auth';
+import { useApi } from '#/hooks/api';
 
 export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
+  // kludges. Dunno how to do better :[
   const [pageTitle, setPageTitle] = useState('');
-  ctxValue.pageTitle = pageTitle; // kludge. Dunno how to do better :[
+  ctxValue.pageTitle = pageTitle;
   ctxValue.setPageTitle = setPageTitle;
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  auth.isLoggedIn = isLoggedIn;
+  auth.setIsLoggedIn = setIsLoggedIn;
+  // /kludges
+
+  const api = useApi();
+  const authHook = useAuth();
+  useEffect(() => {
+    api.quickAuthorize().then((resp) => {
+      authHook.setIsLoggedIn(resp);
+    });
+  }, []);
+
   const theme = useMantineTheme();
 
   return (
