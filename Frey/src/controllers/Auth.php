@@ -32,14 +32,15 @@ class AuthController extends Controller
      * @param string $email
      * @param string $title
      * @param string $password
+     * @param boolean $sendEmail
      * @return string
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function requestRegistration($email, $title, $password)
+    public function requestRegistration($email, $title, $password, $sendEmail = false)
     {
         $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
-        $approvalCode = $this->_getModel()->requestRegistration($email, $title, $password);
+        $approvalCode = $this->_getModel()->requestRegistration($email, $title, $password, $sendEmail);
         $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
         return $approvalCode;
     }

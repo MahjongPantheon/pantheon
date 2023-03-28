@@ -17,13 +17,14 @@ class Frey
         \GPBMetadata\Atoms::initOnce();
         $pool->internalAddGeneratedFile(
             '
-¹J
+ÌJ
 
-frey.protoCommon"R
+frey.protoCommon"e
  Auth_RequestRegistration_Payload
 email (	
 title (	
-password (	"9
+password (	
+	sendEmail ("9
 !Auth_RequestRegistration_Response
 approvalCode (	"8
  Auth_ApproveRegistration_Payload

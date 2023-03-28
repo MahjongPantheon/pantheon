@@ -105,6 +105,6 @@ export class ApiService {
   }
 
   requestRegistration(email: string, title: string, password: string) {
-    return RequestRegistration({ email, title, password }, this._clientConfFrey);
+    return RequestRegistration({ email, title, password, sendEmail: true }, this._clientConfFrey);
   }
 }

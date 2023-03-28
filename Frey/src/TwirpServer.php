@@ -112,7 +112,8 @@ final class TwirpServer implements Frey
                 ->setApprovalCode($this->_authController->requestRegistration(
                     $req->getEmail(),
                     $req->getTitle(),
-                    $req->getPassword()
+                    $req->getPassword(),
+                    $req->getSendEmail()
                 ));
         } catch (\Exception $e) {
             $this->_syslog->error($e);

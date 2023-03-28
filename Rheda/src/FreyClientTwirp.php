@@ -106,6 +106,7 @@ class FreyClientTwirp implements IFreyClient
                 ->setEmail($email)
                 ->setTitle($title)
                 ->setPassword($password)
+                ->setSendEmail(false)
         )->getApprovalCode();
     }
 

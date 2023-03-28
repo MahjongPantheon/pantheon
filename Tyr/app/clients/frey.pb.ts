@@ -20,6 +20,7 @@ export interface Auth_RequestRegistration_Payload {
   email: string;
   title: string;
   password: string;
+  sendEmail: boolean;
 }
 
 export interface Auth_RequestRegistration_Response {
@@ -2175,6 +2176,7 @@ export const Auth_RequestRegistration_Payload = {
       email: "",
       title: "",
       password: "",
+      sendEmail: false,
     };
   },
 
@@ -2193,6 +2195,9 @@ export const Auth_RequestRegistration_Payload = {
     }
     if (msg.password) {
       writer.writeString(3, msg.password);
+    }
+    if (msg.sendEmail) {
+      writer.writeBool(4, msg.sendEmail);
     }
     return writer;
   },
@@ -2217,6 +2222,10 @@ export const Auth_RequestRegistration_Payload = {
         }
         case 3: {
           msg.password = reader.readString();
+          break;
+        }
+        case 4: {
+          msg.sendEmail = reader.readBool();
           break;
         }
         default: {
@@ -7724,6 +7733,7 @@ export const Auth_RequestRegistration_PayloadJSON = {
       email: "",
       title: "",
       password: "",
+      sendEmail: false,
     };
   },
 
@@ -7742,6 +7752,9 @@ export const Auth_RequestRegistration_PayloadJSON = {
     }
     if (msg.password) {
       json["password"] = msg.password;
+    }
+    if (msg.sendEmail) {
+      json["sendEmail"] = msg.sendEmail;
     }
     return json;
   },
@@ -7764,6 +7777,10 @@ export const Auth_RequestRegistration_PayloadJSON = {
     const _password_ = json["password"];
     if (_password_) {
       msg.password = _password_;
+    }
+    const _sendEmail_ = json["sendEmail"];
+    if (_sendEmail_) {
+      msg.sendEmail = _sendEmail_;
     }
     return msg;
   },

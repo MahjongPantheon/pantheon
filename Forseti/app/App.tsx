@@ -17,8 +17,11 @@ export const App = () => {
     <>
       <Route path='/' component={Root} />
       {/*<Route path='/profile' component={Profile} />*/}
+
       <Route path='/profile/login' component={ProfileLogin} />
       <Route path='/profile/signup' component={ProfileSignup} />
+      {/*<Route path='/profile/confirm' component={ProfileConfirm} />*/}
+
       {/*<Route path='/profile/logout' component={ProfileLogout} />*/}
     </>
   );

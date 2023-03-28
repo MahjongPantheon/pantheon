@@ -18,6 +18,7 @@
 namespace Frey;
 
 require_once __DIR__ . '/../Model.php';
+require_once __DIR__ . '/../helpers/Mailer.php';
 require_once __DIR__ . '/../primitives/Registrant.php';
 require_once __DIR__ . '/../primitives/Person.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
@@ -33,11 +34,12 @@ class AuthModel extends Model
      * @param string $email
      * @param string $title
      * @param string $password
+     * @param boolean $sendEmail
      * @return string
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function requestRegistration(string $email, string $title, string $password): string
+    public function requestRegistration(string $email, string $title, string $password, bool $sendEmail): string
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidParametersException('Invalid email provided', 401);
@@ -57,6 +59,12 @@ class AuthModel extends Model
             ->setAuthHash($pw['auth_hash']);
         $reg->save();
 
+        if ($sendEmail) {
+            $conf = $this->_config->getValue('mailer');
+            $mailer = new Mailer($conf['gui_url'], $conf['mode'], $conf['mailer_addr'], $conf['remote_url'], $conf['remote_action_key']);
+            $mailer->sendSignupMail($email, '/profile/confirm/' . $reg->getApprovalCode());
+            return ''; // Don't return approval code if we're sending mail ourselves
+        }
         return $reg->getApprovalCode();
     }
 
