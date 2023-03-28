@@ -2,8 +2,10 @@ import { Button, Menu } from '@mantine/core';
 import * as React from 'react';
 import { IconLogin } from '@tabler/icons-react';
 import { Link } from 'wouter';
+import { useI18n } from '#/hooks/i18n';
 
 export const MainMenu: React.FC = () => {
+  const i18n = useI18n();
   return (
     <Menu shadow='md' width={200}>
       <Menu.Target>
@@ -13,7 +15,7 @@ export const MainMenu: React.FC = () => {
       <Menu.Dropdown>
         {/*<Menu.Label>Application</Menu.Label>*/}
         <Link to='profile/login'>
-          <Menu.Item icon={<IconLogin size={14} />}>Sign in</Menu.Item>
+          <Menu.Item icon={<IconLogin size={14} />}>{i18n._t('Sign in')}</Menu.Item>
         </Link>
         {/*<Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>*/}
         {/*<Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>*/}

@@ -6,11 +6,13 @@ import { useForm } from '@mantine/form';
 import { Link, useLocation } from 'wouter';
 import { useStorage } from '#/hooks/storage';
 import { useApi } from '#/hooks/api';
+import { useI18n } from '#/hooks/i18n';
 
 export const ProfileLogin: React.FC = () => {
   usePageTitle('Login to your account' /*Translate*/);
   const storage = useStorage();
   const api = useApi();
+  const i18n = useI18n();
   const [, navigate] = useLocation();
   const form = useForm({
     initialValues: {
@@ -19,8 +21,8 @@ export const ProfileLogin: React.FC = () => {
     },
 
     validate: {
-      email: (value: string) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-      password: (value: string) => (value !== '' ? null : 'Please enter password'),
+      email: (value: string) => (/^\S+@\S+$/.test(value) ? null : i18n._t('Invalid email')),
+      password: (value: string) => (value !== '' ? null : i18n._t('Please enter password')),
     },
   });
 
@@ -36,7 +38,7 @@ export const ProfileLogin: React.FC = () => {
       .catch(() => {
         form.setFieldError(
           'password',
-          'Failed to authorize. Please check your email and password.'
+          i18n._t('Failed to authorize. Please check your email and password.')
         );
       });
   };
@@ -47,23 +49,20 @@ export const ProfileLogin: React.FC = () => {
         <Container size='xs' px='xs'>
           <TextInput
             icon={<IconLogin size='1rem' />}
-            placeholder='Your e-mail address'
+            placeholder={i18n._t('Your e-mail address')}
             {...form.getInputProps('email')}
           />
           <Space h='md' />
-          {/*Translate*/}
           <PasswordInput
-            placeholder='Your password'
+            placeholder={i18n._t('Your password')}
             icon={<IconLock size='1rem' />}
             {...form.getInputProps('password')}
           />
-          {/*Translate*/}
           <Group position='right' mt='md'>
             <Link to='/profile/resetPassword'>
-              <Button variant='outline'>Forgot your password?{/*Translate*/}</Button>
+              <Button variant='outline'>{i18n._t('Forgot your password?')}</Button>
             </Link>
-            <Button type='submit'>Proceed with sign in</Button>
-            {/*Translate*/}
+            <Button type='submit'>{i18n._t('Proceed with sign in')}</Button>
           </Group>
         </Container>
       </form>
