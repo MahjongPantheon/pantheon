@@ -158,16 +158,20 @@ run: pantheon_run# pgadmin_start
 .PHONY: stop
 stop: pantheon_stop pgadmin_stop
 
-.PHONY: frontdev
-frontdev: get_docker_id
+.PHONY: dev_tyr
+dev_tyr: get_docker_id
 	@docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Tyr && HOME=/home/user su-exec user make docker'
+
+.PHONY: dev_forseti
+dev_forseti: get_docker_id
+	@docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Forseti && HOME=/home/user su-exec user make docker'
 
 .PHONY: dev
 dev: run
 	@echo "${GREEN}Use 'make php_logs' to see errors in realtime${NC}"; \
 	${MAKE} deps
 	${MAKE} migrate
-	${MAKE} frontdev
+	${MAKE} -j2 dev_tyr dev_forseti
 
 .PHONY: tdev
 tdev: run
