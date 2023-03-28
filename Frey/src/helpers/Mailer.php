@@ -109,7 +109,7 @@ Pantheon support team
             '-F "Pantheon mail service" -f ' . $this->_mailerAddress
         );
 
-        return '';
+        return ''; // Don't return approval code if we're sending mail ourselves
     }
 
     /**

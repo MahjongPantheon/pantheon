@@ -62,8 +62,7 @@ class AuthModel extends Model
         if ($sendEmail) {
             $conf = $this->_config->getValue('mailer');
             $mailer = new Mailer($conf['gui_url'], $conf['mode'], $conf['mailer_addr'], $conf['remote_url'], $conf['remote_action_key']);
-            $mailer->sendSignupMail($email, '/profile/confirm/' . $reg->getApprovalCode());
-            return ''; // Don't return approval code if we're sending mail ourselves
+            return $mailer->sendSignupMail($email, '/profile/confirm/' . $reg->getApprovalCode());
         }
         return $reg->getApprovalCode();
     }

@@ -42,7 +42,7 @@ return array_merge([
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC',
     'mailer' => [
-        'mode' => 'local_mta', // or 'remote_api'
+        'mode' => 'debug', // 'local_mta' or 'remote_api'
         'remote_url' => '', // if mode set to 'remote_api', this should point to API address
         'remote_action_key' => '', // if mode set to 'remote_api', this should point to API auth token
         'mailer_addr' => 'mailer@localhost.tld', // address of mailer
