@@ -414,9 +414,9 @@ class GameFormatter
             if (is_string($list)) {
                 $list = explode(',', $list);
             }
-            return implode(', ', array_map(function ($e) use (&$players) {
+            return implode(', ', array_unique(array_map(function ($e) use (&$players) {
                 return $players[intval(trim($e))]['title'];
-            }, $list));
+            }, $list)));
         };
 
         $handDesc = function ($roundData) {
@@ -464,7 +464,7 @@ class GameFormatter
                         $handDesc($roundData['wins'][0]),
                         $players[$roundData['wins'][1]['winner']]['title'],
                         $handDesc($roundData['wins'][1]),
-                        $namesOf($roundData['riichi'])
+                        $namesOf(implode(',', [$roundData['wins'][0]['riichi'], $roundData['wins'][1]['riichi']]))
                     );
                 }
 
@@ -478,7 +478,7 @@ class GameFormatter
                         $handDesc($roundData['wins'][1]),
                         $players[$roundData['wins'][2]['winner']]['title'],
                         $handDesc($roundData['wins'][2]),
-                        $namesOf($roundData['riichi'])
+                        $namesOf(implode(',', [$roundData['wins'][0]['riichi'], $roundData['wins'][1]['riichi'], $roundData['wins'][2]['riichi']]))
                     );
                 }
 
