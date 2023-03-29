@@ -3,12 +3,17 @@ import {
   FinishEvent,
   GetAllRegisteredPlayers,
   GetCountries,
+  GetEventForEdit,
   GetEvents,
   GetEventsById,
+  GetGameConfig,
+  GetRulesets,
   GetTablesState,
+  GetTimezones,
   RebuildScoring,
   ToggleHideResults,
   ToggleListed,
+  UpdateEvent,
 } from '#/clients/mimir.pb';
 import {
   ApproveRegistration,
@@ -24,7 +29,7 @@ import {
   UpdatePersonalInfo,
 } from '#/clients/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
-import { IntermediateResultOfSession, SessionStatus } from '#/clients/atoms.pb';
+import { EventData, IntermediateResultOfSession, SessionStatus } from '#/clients/atoms.pb';
 import { handleReleaseTag } from '#/services/releaseTags';
 
 export class ApiService {
@@ -209,5 +214,28 @@ export class ApiService {
 
   finishEvent(eventId: number) {
     return FinishEvent({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  getEventForEdit(id: number) {
+    return GetEventForEdit({ id }, this._clientConfMimir);
+  }
+
+  updateEvent(id: number, event: EventData) {
+    return UpdateEvent({ id, event }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  getRulesets() {
+    return GetRulesets({}, this._clientConfMimir).then((r) => r.rulesets);
+  }
+
+  getTimezones() {
+    return GetTimezones(
+      { addr: '' /* mimir will substitute with current IP if empty*/ },
+      this._clientConfMimir
+    );
+  }
+
+  getGameConfig() {
+    return GetGameConfig;
   }
 }

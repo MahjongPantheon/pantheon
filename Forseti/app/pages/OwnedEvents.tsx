@@ -234,7 +234,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                 </Group>
                 <Group>
                   {!event.finished && (
-                    <Link to={'/ownedEvents/' + event.id}>
+                    <Link to={'/ownedEvents/edit/' + event.id}>
                       <ActionIcon
                         variant='filled'
                         size='lg'
