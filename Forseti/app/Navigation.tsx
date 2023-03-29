@@ -3,13 +3,14 @@ import * as React from 'react';
 import {
   IconLogin,
   IconLogout,
-  IconMenu2,
+  IconTimelineEventText,
   IconUserCircle,
   IconUserPlus,
 } from '@tabler/icons-react';
 import { Link, useRoute } from 'wouter';
 import { useI18n } from '#/hooks/i18n';
-import { useAuth } from '#/hooks/auth';
+import { authCtx } from '#/hooks/auth';
+import { useContext } from 'react';
 
 function NavigationLink(props: {
   to: string;
@@ -37,7 +38,7 @@ export const Navigation: React.FC<{ onClick: () => void; loading: boolean }> = (
   loading,
 }) => {
   const i18n = useI18n();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn } = useContext(authCtx);
   return (
     <Box pos='relative' sx={{ height: '100%' }}>
       <LoadingOverlay visible={loading} overlayOpacity={1} />
@@ -61,6 +62,13 @@ export const Navigation: React.FC<{ onClick: () => void; loading: boolean }> = (
         onClick={onClick}
         icon={<IconUserCircle size={18} />}
         label={i18n._t('My profile')}
+      />
+      <NavigationLink
+        disabled={!isLoggedIn}
+        to='ownedEvents'
+        onClick={onClick}
+        icon={<IconTimelineEventText size={18} />}
+        label={i18n._t('Manage events')}
       />
       <NavigationLink
         disabled={!isLoggedIn}

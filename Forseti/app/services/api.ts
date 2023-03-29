@@ -1,11 +1,23 @@
 import { environment } from '#config';
-import { GetAllRegisteredPlayers, GetCountries, GetTablesState } from '#/clients/mimir.pb';
+import {
+  FinishEvent,
+  GetAllRegisteredPlayers,
+  GetCountries,
+  GetEvents,
+  GetEventsById,
+  GetTablesState,
+  RebuildScoring,
+  ToggleHideResults,
+  ToggleListed,
+} from '#/clients/mimir.pb';
 import {
   ApproveRegistration,
   ApproveResetPassword,
   Authorize,
   ChangePassword,
+  GetOwnedEventIds,
   GetPersonalInfo,
+  GetSuperadminFlag,
   QuickAuthorize,
   RequestRegistration,
   RequestResetPassword,
@@ -165,5 +177,37 @@ export class ApiService {
       },
       this._clientConfFrey
     ).then((resp) => resp.success);
+  }
+
+  getOwnedEventIds(personId: number) {
+    return GetOwnedEventIds({ personId }, this._clientConfFrey).then((r) => r.eventIds);
+  }
+
+  getSuperadminFlag(personId: number) {
+    return GetSuperadminFlag({ personId }, this._clientConfFrey).then((r) => r.isAdmin);
+  }
+
+  getEvents(limit: number, offset: number, filterUnlisted: boolean) {
+    return GetEvents({ limit, offset, filterUnlisted }, this._clientConfMimir);
+  }
+
+  getEventsById(ids: number[]) {
+    return GetEventsById({ ids }, this._clientConfMimir).then((r) => r.events);
+  }
+
+  rebuildScoring(eventId: number) {
+    return RebuildScoring({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  toggleHideResults(eventId: number) {
+    return ToggleHideResults({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  toggleListed(eventId: number) {
+    return ToggleListed({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  finishEvent(eventId: number) {
+    return FinishEvent({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 }

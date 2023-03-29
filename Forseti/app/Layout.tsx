@@ -16,7 +16,7 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { Navigation } from '#/Navigation';
-import { auth, useAuth } from '#/hooks/auth';
+import { authCtx } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
 import { IconMoonStars, IconSun } from '@tabler/icons-react';
 import { useLocalStorage } from '@mantine/hooks';
@@ -26,14 +26,10 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [pageTitle, setPageTitle] = useState('');
   ctxValue.pageTitle = pageTitle;
   ctxValue.setPageTitle = setPageTitle;
-
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  auth.isLoggedIn = isLoggedIn;
-  auth.setIsLoggedIn = setIsLoggedIn;
   // /kludges
 
   const api = useApi();
-  const authHook = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authLoading, setAuthLoading] = useState(true);
   const [opened, setOpened] = useState(false);
 
@@ -42,7 +38,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     api
       .quickAuthorize()
       .then((resp) => {
-        authHook.setIsLoggedIn(resp);
+        setIsLoggedIn(resp);
       })
       .finally(() => {
         setAuthLoading(false);
@@ -61,64 +57,66 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const dark = colorScheme === 'dark';
 
   return (
-    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          colorScheme,
-          fontFamily: 'IBM Plex Sans, Noto Sans Wind, Sans, serif',
-        }}
-      >
-        <AppShell
-          styles={{
-            main: {
-              background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
-            },
+    <authCtx.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            colorScheme,
+            fontFamily: 'IBM Plex Sans, Noto Sans Wind, Sans, serif',
           }}
-          navbarOffsetBreakpoint='sm'
-          navbar={
-            <Navbar p='md' hiddenBreakpoint='sm' hidden={!opened} width={{ sm: 200, lg: 300 }}>
-              <Navigation loading={authLoading} onClick={() => setOpened(false)} />
-            </Navbar>
-          }
-          header={
-            <Header height={{ base: 50, md: 70 }} p='md'>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  height: '100%',
-                  justifyContent: 'space-around',
-                }}
-              >
-                <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
-                  <Burger
-                    opened={opened}
-                    onClick={() => setOpened((o) => !o)}
-                    size='sm'
-                    color={theme.colors.gray[6]}
-                    mr='xl'
-                  />
-                </MediaQuery>
-                <Center style={{ flex: 1 }}>
-                  <Text>Forseti :: {pageTitle}</Text>
-                </Center>
-                <ActionIcon
-                  variant='outline'
-                  color={dark ? 'yellow' : 'blue'}
-                  onClick={() => toggleColorScheme()}
-                  title='Toggle color scheme'
-                >
-                  {dark ? <IconSun size='1.1rem' /> : <IconMoonStars size='1.1rem' />}
-                </ActionIcon>
-              </div>
-            </Header>
-          }
         >
-          {children}
-        </AppShell>
-      </MantineProvider>
-    </ColorSchemeProvider>
+          <AppShell
+            styles={{
+              main: {
+                background: dark ? theme.colors.dark[8] : theme.colors.gray[0],
+              },
+            }}
+            navbarOffsetBreakpoint='sm'
+            navbar={
+              <Navbar p='md' hiddenBreakpoint='sm' hidden={!opened} width={{ sm: 200, lg: 300 }}>
+                <Navigation loading={authLoading} onClick={() => setOpened(false)} />
+              </Navbar>
+            }
+            header={
+              <Header height={{ base: 50, md: 70 }} p='md'>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    height: '100%',
+                    justifyContent: 'space-around',
+                  }}
+                >
+                  <MediaQuery largerThan='sm' styles={{ display: 'none' }}>
+                    <Burger
+                      opened={opened}
+                      onClick={() => setOpened((o) => !o)}
+                      size='sm'
+                      color={theme.colors.gray[6]}
+                      mr='xl'
+                    />
+                  </MediaQuery>
+                  <Center style={{ flex: 1 }}>
+                    <Text>Forseti :: {pageTitle}</Text>
+                  </Center>
+                  <ActionIcon
+                    variant='outline'
+                    color={dark ? 'yellow' : 'blue'}
+                    onClick={() => toggleColorScheme()}
+                    title='Toggle color scheme'
+                  >
+                    {dark ? <IconSun size='1.1rem' /> : <IconMoonStars size='1.1rem' />}
+                  </ActionIcon>
+                </div>
+              </Header>
+            }
+          >
+            {children}
+          </AppShell>
+        </MantineProvider>
+      </ColorSchemeProvider>
+    </authCtx.Provider>
   );
 };

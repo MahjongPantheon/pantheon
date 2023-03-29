@@ -8,6 +8,7 @@ import { ProfileResetPassword } from '#/pages/ProfileResetPassword';
 import { ProfileResetPasswordConfirm } from '#/pages/ProfileResetPasswordConfirm';
 import { ProfileManage } from '#/pages/ProfileManage';
 import { ProfileLogout } from '#/pages/ProfileLogout';
+import { OwnedEvents } from '#/pages/OwnedEvents';
 // import { environment } from '#config';
 
 // const storage = new Storage(environment.cookieDomain);
@@ -28,6 +29,10 @@ export const App = () => {
       <Route path='/profile/resetPasswordConfirm/:code' component={ProfileResetPasswordConfirm} />
       <Route path='/profile/manage' component={ProfileManage} />
       <Route path='/profile/logout' component={ProfileLogout} />
+      <Route path='/ownedEvents' component={OwnedEvents} />
+      <Route path='/ownedEvents/:page' component={OwnedEvents} />
+      {/*<Route path='/ownedEvents/edit/:id' component={OwnedEventsEdit} />*/}
+      {/*<Route path='/ownedEvents/new' component={OwnedEventsNew} />*/}
     </Switch>
   );
 };
