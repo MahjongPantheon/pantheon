@@ -174,7 +174,7 @@ export interface Games_AddRound_Response {
   prematurelyFinished: boolean;
   roundJustChanged: boolean;
   isFinished: boolean;
-  yellowZoneAlreadyPlayed: boolean;
+  lastHandStarted: boolean;
   lastOutcome?: atoms.RoundOutcome | null | undefined;
 }
 
@@ -5360,7 +5360,7 @@ export const Games_AddRound_Response = {
       prematurelyFinished: false,
       roundJustChanged: false,
       isFinished: false,
-      yellowZoneAlreadyPlayed: false,
+      lastHandStarted: false,
       lastOutcome: undefined,
     };
   },
@@ -5404,8 +5404,8 @@ export const Games_AddRound_Response = {
     if (msg.isFinished) {
       writer.writeBool(8, msg.isFinished);
     }
-    if (msg.yellowZoneAlreadyPlayed) {
-      writer.writeBool(9, msg.yellowZoneAlreadyPlayed);
+    if (msg.lastHandStarted) {
+      writer.writeBool(9, msg.lastHandStarted);
     }
     if (msg.lastOutcome != undefined) {
       writer.writeEnum(10, atoms.RoundOutcome._toInt(msg.lastOutcome));
@@ -5460,7 +5460,7 @@ export const Games_AddRound_Response = {
           break;
         }
         case 9: {
-          msg.yellowZoneAlreadyPlayed = reader.readBool();
+          msg.lastHandStarted = reader.readBool();
           break;
         }
         case 10: {
@@ -11032,7 +11032,7 @@ export const Games_AddRound_ResponseJSON = {
       prematurelyFinished: false,
       roundJustChanged: false,
       isFinished: false,
-      yellowZoneAlreadyPlayed: false,
+      lastHandStarted: false,
       lastOutcome: undefined,
     };
   },
@@ -11072,8 +11072,8 @@ export const Games_AddRound_ResponseJSON = {
     if (msg.isFinished) {
       json["isFinished"] = msg.isFinished;
     }
-    if (msg.yellowZoneAlreadyPlayed) {
-      json["yellowZoneAlreadyPlayed"] = msg.yellowZoneAlreadyPlayed;
+    if (msg.lastHandStarted) {
+      json["lastHandStarted"] = msg.lastHandStarted;
     }
     if (msg.lastOutcome != undefined) {
       json["lastOutcome"] = msg.lastOutcome;
@@ -11128,9 +11128,9 @@ export const Games_AddRound_ResponseJSON = {
     if (_isFinished_) {
       msg.isFinished = _isFinished_;
     }
-    const _yellowZoneAlreadyPlayed_ = json["yellowZoneAlreadyPlayed"];
-    if (_yellowZoneAlreadyPlayed_) {
-      msg.yellowZoneAlreadyPlayed = _yellowZoneAlreadyPlayed_;
+    const _lastHandStarted_ = json["lastHandStarted"];
+    if (_lastHandStarted_) {
+      msg.lastHandStarted = _lastHandStarted_;
     }
     const _lastOutcome_ = json["lastOutcome"];
     if (_lastOutcome_) {

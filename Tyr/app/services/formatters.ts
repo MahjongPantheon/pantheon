@@ -86,7 +86,7 @@ export function gameOverviewFormatter(overview: RSessionOverview): LSessionOverv
     currentRound: overview.state.round,
     riichiOnTable: overview.state.riichi,
     honba: overview.state.honba,
-    yellowZoneAlreadyPlayed: overview.state.yellowZoneAlreadyPlayed,
+    lastHandStarted: overview.state.lastHandStarted,
   };
 }
 
@@ -166,11 +166,9 @@ export function gameConfigFormatter(config: RGameConfig): LGameConfig {
     withMultiYakumans: !!config.withMultiYakumans,
     gameExpirationTime: parseInt(config.gameExpirationTime.toString(), 10),
     withLeadingDealerGameOver: !!config.withLeadingDealerGameOver,
-    redZone: config.redZone ? parseInt(config.redZone.toString(), 10) : null,
-    yellowZone: config.yellowZone ? parseInt(config.yellowZone.toString(), 10) : null,
-    timerPolicy:
-      config.timerPolicy === 'yellowZone' || config.timerPolicy === 'redZone'
-        ? config.timerPolicy
+    endingPolicy:
+      config.endingPolicy === 'oneMoreHand' || config.endingPolicy === 'endAfterHand'
+        ? config.endingPolicy
         : 'none',
     useTimer: !!config.useTimer,
     isOnline: !!config.isOnline,

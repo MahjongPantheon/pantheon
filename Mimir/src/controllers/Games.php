@@ -223,7 +223,7 @@ class GamesController extends Controller
                 'scores'    => $session[0]->getCurrentState()->getScores(),
                 'finished'  => $session[0]->getCurrentState()->isFinished(),
                 'penalties' => $session[0]->getCurrentState()->getPenalties(),
-                'yellowZoneAlreadyPlayed' => $session[0]->getCurrentState()->yellowZoneAlreadyPlayed(),
+                'lastHandStarted' => $session[0]->getCurrentState()->lastHandStarted(),
             ]
         ];
 

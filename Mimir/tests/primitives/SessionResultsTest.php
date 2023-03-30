@@ -62,10 +62,9 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
         $this->_ruleset->setRule('startRating', 0);
         $this->_ruleset->setRule('riichiGoesToWinner', false);
         $this->_ruleset->setRule('tonpuusen', false);
-        $this->_ruleset->setRule('timerPolicy', 'none');
+        $this->_ruleset->setRule('endingPolicy', 'none');
         $this->_ruleset->setRule('withLeadingDealerGameOver', true);
         $this->_ruleset->setRule('startPoints', 30000);
-        $this->_ruleset->setRule('subtractStartPoints', true);
         $this->_ruleset->setRule('uma', [1 => 15000, 5000, -5000, -15000]);
         $this->_ruleset->setRule('oka', 0);
         $this->_ruleset->setRule('chomboPenalty', 20000);

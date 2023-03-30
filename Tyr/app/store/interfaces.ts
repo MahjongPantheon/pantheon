@@ -78,7 +78,7 @@ export interface IAppState {
   isLoggedIn: boolean;
   gameConfig?: LGameConfig;
   tableIndex?: number;
-  yellowZoneAlreadyPlayed: boolean;
+  lastHandStarted: boolean;
   currentOtherTableIndex: number;
   currentOtherTableHash?: string;
   currentOtherTablePlayers: Player[];

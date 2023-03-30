@@ -603,7 +603,7 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
       if (timeRemaining !== undefined) {
         showTimer = true;
         if (timeRemaining.minutes === 0 && timeRemaining.seconds === 0) {
-          gamesLeft = state.yellowZoneAlreadyPlayed ? 1 : 2;
+          gamesLeft = state.lastHandStarted ? 1 : 2;
         } else {
           currentTime = formatTime(timeRemaining.minutes, timeRemaining.seconds);
         }

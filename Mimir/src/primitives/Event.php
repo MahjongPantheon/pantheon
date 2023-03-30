@@ -150,11 +150,6 @@ class EventPrimitive extends Primitive
      */
     protected $_lastTimer;
     /**
-     * Timer red zone amount in seconds, or null to disable
-     * @var int|null
-     */
-    protected $_redZone;
-    /**
      * Game duration for current event, in minutes
      * @var int
      */
@@ -370,26 +365,6 @@ class EventPrimitive extends Primitive
     public function getEndTime()
     {
         return $this->_endTime;
-    }
-
-    /**
-     * @param int|null $redZone
-     * @return EventPrimitive
-     */
-    public function setRedZone($redZone)
-    {
-        $this->_redZone = $redZone;
-        return $this;
-    }
-
-    /**
-     * Timer red zone in seconds
-     *
-     * @return int|null
-     */
-    public function getRedZone(): ?int
-    {
-        return $this->_redZone;
     }
 
     /**

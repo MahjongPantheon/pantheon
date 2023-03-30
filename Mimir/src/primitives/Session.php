@@ -749,19 +749,18 @@ class SessionPrimitive extends Primitive
     {
         $lastTimer = $this->getEvent()->getLastTimer(); // may be null if timer is not set!
 
-        switch ($this->getEvent()->getRuleset()->timerPolicy()) {
-            case 'yellowZone':
-                $isInYellowZone = $this->getEvent()->getUseTimer() && $lastTimer && (
+        switch ($this->getEvent()->getRuleset()->endingPolicy()) {
+            case 'oneMoreHand':
+                $noTimeLeft = $this->getEvent()->getUseTimer() && $lastTimer && (
                     $lastTimer + (
                         $this->getEvent()->getGameDuration() * 60
-                        - $this->getEvent()->getRuleset()->yellowZone()
                     ) < time()
                 );
 
-                if ($isInYellowZone && $round->getOutcome() !== 'chombo') {
-                    if (!$this->getCurrentState()->yellowZoneAlreadyPlayed()) {
+                if ($noTimeLeft && $round->getOutcome() !== 'chombo') {
+                    if (!$this->getCurrentState()->lastHandStarted()) {
                         $this->getCurrentState()->update($round);
-                        $this->getCurrentState()->setYellowZonePlayed(); // call before '->save' to save in one shot
+                        $this->getCurrentState()->setLastHandStarted(); // call before '->save' to save in one shot
                         $success = $this->save();
                     } else {
                         // this is red zone, in fact
@@ -779,19 +778,18 @@ class SessionPrimitive extends Primitive
                 }
 
                 break;
-            case 'redZone':
+            case 'endAfterHand':
                 $this->getCurrentState()->update($round);
                 $success = $this->save();
 
-                $isInRedZone = $this->getEvent()->getUseTimer() && $lastTimer && (
+                $noTimeLeft = $this->getEvent()->getUseTimer() && $lastTimer && (
                     $lastTimer + (
                         $this->getEvent()->getGameDuration() * 60
-                        - $this->getEvent()->getRuleset()->redZone()
                     ) < time()
                 );
 
                 // should finish game if it's in red zone, except case when chombo was made
-                if ($isInRedZone && $round->getOutcome() !== 'chombo') {
+                if ($noTimeLeft && $round->getOutcome() !== 'chombo') {
                     $this->getCurrentState()->forceFinish();
                 }
 
@@ -800,7 +798,7 @@ class SessionPrimitive extends Primitive
                 }
 
                 break;
-            default: // no zones, just update
+            default: // no policies, just update
                 $this->getCurrentState()->update($round);
                 $success = $this->save();
 

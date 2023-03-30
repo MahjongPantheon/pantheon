@@ -228,33 +228,3 @@ function _getRiichiUsers(state: IAppState): Player[] {
 }
 
 export const getRiichiUsers: typeof _getRiichiUsers = memoize(_getRiichiUsers);
-
-function _getCurrentTimerZone(state: IAppState) {
-  let zoneLength;
-  switch (state.gameConfig?.timerPolicy) {
-    case 'redZone':
-      zoneLength = state.gameConfig.redZone;
-      if (
-        zoneLength &&
-        (state.timer?.secondsRemaining || 0) < zoneLength &&
-        !state.timer?.waiting
-      ) {
-        return 'redZone';
-      }
-      break;
-    case 'yellowZone':
-      zoneLength = state.gameConfig.yellowZone;
-      if (
-        zoneLength &&
-        (state.timer?.secondsRemaining || 0) < zoneLength &&
-        !state.timer?.waiting
-      ) {
-        return state.yellowZoneAlreadyPlayed ? 'redZone' : 'yellowZone';
-      }
-      break;
-    default:
-  }
-  return 'none';
-}
-
-export const getCurrentTimerZone: typeof _getCurrentTimerZone = memoize(_getCurrentTimerZone);

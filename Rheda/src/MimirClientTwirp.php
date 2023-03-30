@@ -857,9 +857,7 @@ class MimirClientTwirp implements IMimirClient
             'eventStatHost' => $ret->getEventStatHost(),
             'useTimer' => $ret->getUseTimer(),
             'usePenalty' => $ret->getUsePenalty(),
-            'timerPolicy' => $ret->getTimerPolicy(),
-            'redZone' => $ret->getRedZone(),
-            'yellowZone' => $ret->getYellowZone(),
+            'endingPolicy' => $ret->getEndingPolicy(),
             'gameDuration' => $ret->getGameDuration(),
             'timezone' => $ret->getTimezone(),
             'isOnline' => $ret->getIsOnline(),
@@ -870,7 +868,6 @@ class MimirClientTwirp implements IMimirClient
             'sortByGames' => $ret->getSortByGames(),
             'allowPlayerAppend' => $ret->getAllowPlayerAppend(),
             'withLeadingDealerGameOver' => $ret->getWithLeadingDealerGameOver(),
-            'subtractStartPoints' => $ret->getSubtractStartPoints(),
             'seriesLength' => $ret->getSeriesLength(),
             'minGamesCount' => $ret->getMinGamesCount(),
             'gamesStatus' => self::_fromGamesStatus($ret->getGamesStatus()),
@@ -1208,7 +1205,7 @@ class MimirClientTwirp implements IMimirClient
                 '_riichiBets' => $ret->getRiichiBets(),
                 '_prematurelyFinished' => $ret->getPrematurelyFinished(),
                 '_roundJustChanged' => $ret->getRoundJustChanged(),
-                '_yellowZoneAlreadyPlayed' => $ret->getYellowZoneAlreadyPlayed(),
+                '_lastHandStarted' => $ret->lastHandStarted(),
                 '_isFinished' => $ret->getIsFinished(),
             ];
         }

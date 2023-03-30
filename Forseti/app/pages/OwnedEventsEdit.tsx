@@ -13,6 +13,7 @@ import {
   SimpleGrid,
   Stack,
   Tabs,
+  Text,
   Textarea,
   TextInput,
   Title,
@@ -35,6 +36,44 @@ import {
 import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
 import { yakuList, yakuWithPao } from '#/helpers/yaku';
+import { RulesetGenerated } from '#/clients/atoms.pb';
+
+type RulesetCustom = {
+  tonpuusen: boolean;
+  riichiGoesToWinner: boolean;
+  extraChomboPayments: boolean;
+  doubleronHonbaAtamahane: boolean;
+  doubleronRiichiAtamahane: boolean;
+  withAtamahane: boolean;
+  withAbortives: boolean;
+  withButtobi: boolean;
+  withKazoe: boolean;
+  withKiriageMangan: boolean;
+  withKuitan: boolean;
+  withLeadingDealerGameOver: boolean;
+  withMultiYakumans: boolean;
+  withNagashiMangan: boolean;
+  playAdditionalRounds: boolean;
+  equalizeUma: boolean;
+  chomboPenalty: number;
+  goalPoints: number;
+  maxPenalty: number;
+  minPenalty: number;
+  penaltyStep: number;
+  replacementPlayerOverrideUma: number;
+  oka: number;
+  uma: number[];
+  allowedYaku: number[];
+  yakuWithPao: number[];
+  gameExpirationTime: boolean;
+  replacementPlayerFixedPoints: number;
+  startPoints: number;
+  startRating: number;
+  endingPolicy: 'oneMoreHand' | 'endAfterHand' | 'none';
+  complexUma: boolean;
+  withWinningDealerHonbaSkipped: boolean;
+  chipsValue: number;
+};
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const auth = useContext(authCtx);
@@ -44,6 +83,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   const [eventType, setEventType] = useState('local');
   const [timezones, setTimezones] = useState<Array<{ value: string; label: string }>>([]);
   const [rulesets, setRulesets] = useState<Array<{ value: string; label: string }>>([]);
+  const [rules, setRules] = useState<Record<string, RulesetGenerated>>({});
   const [eventName, setEventName] = useState('');
   usePageTitle('Edit event :: ' + eventName);
 
@@ -78,12 +118,62 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       duration: 75, // min // tourn
       isTeam: false, // tourn
       isPrescripted: false, // tourn
-      replacementUma: -15000, // tourn
       gameSeriesCount: 0, // local/online
       minGamesCount: 0, // local/online
       baseRuleset: 'ema',
       tenhouLobbyId: '', // online
+      gameExpirationTime: 0, // online
+      chipsValue: 0, // online
       isTonpuusen: false,
+
+      // next is ruleset based
+
+      riichiGoesToWinner: false,
+      chomboInPlace: false,
+      withHonbaAtamahane: false,
+      withRiichiAtamahane: false,
+      withAtamahane: false,
+      withAbortiveDraws: false,
+      withTobi: false,
+      withKazoeSanbaiman: false,
+      withKiriageMangan: false,
+      withKuitan: false,
+      withDealingLeaderGameover: false,
+      withMultiYakumans: false,
+      withNagashiMangan: false,
+      withWestRounds: false,
+      withEqualizedUma: false,
+      chomboPenaltyAmount: 20000,
+      minEndPoints: 30000,
+      maxPenalty: 20000,
+      minPenalty: 100,
+      stepPenalty: 100,
+      replacementUma: -15000, // tourn
+      oka: 0,
+      uma: [15000, 5000, -5000, -15000],
+      allowedYaku: {}, // TODO: reformat to array, as required by protocol
+      yakuWithPao: {}, // TODO: reformat to array, as required by protocol
+
+      withWinningDealerHonbaSkipped: false, // TODO no-renchan on dealer win
+      endingPolicy: 'none', // TODO
+      startRating: 0,
+      startPoints: 30000,
+      replacementPlayerFixedPoints: -15000, // tourn
+    },
+
+    validate: {
+      title: (value) => (value.length > 4 ? null : 'Please use title more than 4 symbols long'),
+      timezone: (value) => (value ? null : 'Timezone must be selected'),
+    },
+  });
+
+  const submitForm = (vals: any) => {
+    console.log(vals);
+  };
+
+  const setRulesetValues = (rulesetId: string) => {
+    const ruleset = rulesets;
+    form.setValues({
       riichiGoesToWinner: false,
       chomboInPlace: false,
       withHonbaAtamahane: false,
@@ -104,21 +194,14 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       chomboPenaltyAmount: 20000,
       minEndPoints: 30000,
       maxPenalty: 20000,
+      replacementUma: -15000, // tourn
       minPenalty: 100,
       stepPenalty: 100,
       oka: 0,
       uma: [15000, 5000, -5000, -15000],
       allowedYaku: {}, // TODO: reformat to array, as required by protocol
       yakuWithPao: {}, // TODO: reformat to array, as required by protocol
-    },
-    //
-    // validate: {
-    //   email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-    // },
-  });
-
-  const submitForm = (vals: any) => {
-    console.log(vals);
+    });
   };
 
   return (
@@ -156,7 +239,13 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
             </Tabs.List>
             <Tabs.Panel value='basic' pt='xs'>
               <Stack>
-                <Radio.Group label={i18n._t('Select event type')} onChange={(v) => setEventType(v)}>
+                <Radio.Group
+                  label={i18n._t('Select event type')}
+                  onChange={(v) => {
+                    setEventType(v);
+                    form.setFieldValue('type', v);
+                  }}
+                >
                   <Group mt='xs'>
                     <Radio value='local' label={i18n._t('Local rating')} />
                     <Radio value='tournament' label={i18n._t('Tournament')} />
@@ -177,6 +266,12 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
                   )}
                   data={rulesets}
                   {...form.getInputProps('baseRuleset')}
+                  onChange={(v) => {
+                    if (v) {
+                      setRulesetValues(v);
+                      form.setFieldValue('baseRuleset', v);
+                    }
+                  }}
                 />
                 <Select
                   icon={<IconMap2 size='1rem' />}
@@ -201,12 +296,40 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
             <Tabs.Panel value={eventType} pt='xs'>
               <Stack>
                 {eventType === 'online' && (
-                  <TextInput
-                    withAsterisk
-                    icon={<IconUsers size='1rem' />}
-                    label={i18n._t('Tenhou Lobby ID')}
-                    {...form.getInputProps('tenhouLobbyId')}
-                  />
+                  <>
+                    <Text>
+                      {i18n._t(
+                        'Please note: you should set up the rating accordingly to tournament settings in Tenhou.net, otherwise expect errors on replay submit!'
+                      )}
+                    </Text>
+                    <TextInput
+                      withAsterisk
+                      icon={<IconUsers size='1rem' />}
+                      label={i18n._t('Tenhou Lobby ID')}
+                      {...form.getInputProps('tenhouLobbyId')}
+                    />
+                    <NumberInput
+                      {...form.getInputProps('gameExpirationTime')}
+                      icon={<IconChartHistogram size='1rem' />}
+                      label={i18n._t('Game expiration time (in hours)')}
+                      description={i18n._t(
+                        'Interval of time when played online game is still considered valid and can be added to the rating. Set to 0 to disable expiration.'
+                      )}
+                      defaultValue={24}
+                      min={0}
+                    />
+                    <NumberInput
+                      {...form.getInputProps('chipsValue')}
+                      icon={<IconChartHistogram size='1rem' />}
+                      label={i18n._t('Chips value')}
+                      description={i18n._t(
+                        'Amount of points given for each chip. Chips should be set up in tournament settings in Tenhou.net. Set to 0 to disable chips.'
+                      )}
+                      defaultValue={2000}
+                      step={100}
+                      min={0}
+                    />
+                  </>
                 )}
                 {eventType !== 'tournament' && (
                   <>
@@ -258,12 +381,21 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
                       {...form.getInputProps('isPrescripted', { type: 'checkbox' })}
                     />
                     <NumberInput
+                      {...form.getInputProps('replacementPlayerFixedPoints')}
+                      label={i18n._t('Fixed score applied to replacement player')}
+                      description={i18n._t(
+                        'Fixed amount of result score applied for each replacement player regardless of session results.'
+                      )}
+                      defaultValue={-15000}
+                      max={0}
+                    />
+                    <NumberInput
                       {...form.getInputProps('replacementUma')}
                       label={i18n._t('Fixed uma for replacement player')}
                       description={i18n._t(
                         'Fixed amount of rank penalty applied for each replacement player regardless of session results.'
                       )}
-                      defaultValue={-15}
+                      defaultValue={-15000}
                       max={0}
                     />
                   </>
@@ -272,6 +404,24 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
             </Tabs.Panel>
             <Tabs.Panel value='ruleset_tuning' pt='xs'>
               <Stack>
+                <NumberInput
+                  {...form.getInputProps('startRating')}
+                  icon={<IconChartHistogram size='1rem' />}
+                  label={i18n._t('Initial rating')}
+                  description={i18n._t('Score given to all players in the beginning of the rating')}
+                  defaultValue={0}
+                  min={0}
+                />
+                <NumberInput
+                  {...form.getInputProps('startPoints')}
+                  icon={<IconChartHistogram size='1rem' />}
+                  label={i18n._t('Initial points')}
+                  description={i18n._t(
+                    'Amount of points given to every player in the beginning of every session'
+                  )}
+                  defaultValue={30000}
+                  min={0}
+                />
                 <Title order={4}>{i18n._t('Game duration')}</Title>
                 <Checkbox
                   label={i18n._t('Tonpuusen')}

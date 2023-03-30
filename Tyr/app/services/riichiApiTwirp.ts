@@ -110,7 +110,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
     return GetGameConfig({ eventId }, this._clientConfMimir).then((val) => ({
       ...val,
       isTextlog: false,
-      timerPolicy: val.timerPolicy as 'redZone' | 'yellowZone' | 'none', // TODO remove
+      endingPolicy: val.endingPolicy as 'oneMoreHand' | 'endAfterHand' | 'none', // TODO remove
     }));
   }
 
@@ -152,7 +152,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
         currentRound: val.state.roundIndex,
         riichiOnTable: val.state.riichiCount,
         honba: val.state.honbaCount,
-        yellowZoneAlreadyPlayed: val.state.yellowZoneAlreadyPlayed,
+        lastHandStarted: val.state.lastHandStarted,
         tableIndex: val.tableIndex ?? 0,
         players: val.players.map((user) => ({
           ...user,
@@ -404,7 +404,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
       _riichiBets: val.riichiBets,
       _prematurelyFinished: val.prematurelyFinished,
       _roundJustChanged: val.roundJustChanged,
-      _yellowZoneAlreadyPlayed: val.yellowZoneAlreadyPlayed,
+      _lastHandStarted: val.lastHandStarted,
       _isFinished: val.isFinished,
     }));
   }

@@ -42,9 +42,9 @@ class SessionState extends \Google\Protobuf\Internal\Message
      */
     private $penalties;
     /**
-     * Generated from protobuf field <code>bool yellowZoneAlreadyPlayed = 8;</code>
+     * Generated from protobuf field <code>bool lastHandStarted = 8;</code>
      */
-    protected $yellowZoneAlreadyPlayed = false;
+    protected $lastHandStarted = false;
 
     /**
      * Constructor.
@@ -59,7 +59,7 @@ class SessionState extends \Google\Protobuf\Internal\Message
      *     @type array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $scores
      *     @type bool $finished
      *     @type array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $penalties
-     *     @type bool $yellowZoneAlreadyPlayed
+     *     @type bool $lastHandStarted
      * }
      */
     public function __construct($data = NULL) {
@@ -222,23 +222,23 @@ class SessionState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool yellowZoneAlreadyPlayed = 8;</code>
+     * Generated from protobuf field <code>bool lastHandStarted = 8;</code>
      * @return bool
      */
-    public function getYellowZoneAlreadyPlayed()
+    public function getLastHandStarted()
     {
-        return $this->yellowZoneAlreadyPlayed;
+        return $this->lastHandStarted;
     }
 
     /**
-     * Generated from protobuf field <code>bool yellowZoneAlreadyPlayed = 8;</code>
+     * Generated from protobuf field <code>bool lastHandStarted = 8;</code>
      * @param bool $var
      * @return $this
      */
-    public function setYellowZoneAlreadyPlayed($var)
+    public function setLastHandStarted($var)
     {
         GPBUtil::checkBool($var);
-        $this->yellowZoneAlreadyPlayed = $var;
+        $this->lastHandStarted = $var;
 
         return $this;
     }

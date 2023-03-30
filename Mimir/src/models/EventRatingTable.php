@@ -154,11 +154,7 @@ class EventRatingTableModel extends Model
                 'tenhou_id'     => $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'        => (float)$el->getRating(),
                 'chips'         => (int)$el->getChips(),
-                'winner_zone'   => (
-                    $mainEvent->getRuleset()->subtractStartPoints()
-                        ? $el->getRating() >= $mainEvent->getRuleset()->startRating()
-                        : $el->getRating() >= ($mainEvent->getRuleset()->startPoints() * $el->getGamesPlayed())
-                ),
+                'winner_zone'   => $el->getRating() >= $mainEvent->getRuleset()->startRating(),
                 'avg_place'     => round($el->getAvgPlace(), 4),
                 'avg_score'     => $el->getGamesPlayed() == 0
                     ? 0

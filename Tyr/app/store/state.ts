@@ -56,7 +56,7 @@ export const initialState: IAppState = {
   isLoggedIn: false,
   gameConfig: undefined,
   tableIndex: undefined,
-  yellowZoneAlreadyPlayed: false,
+  lastHandStarted: false,
   otherTablesList: [],
   currentOtherTable: undefined,
   currentOtherTableHash: undefined,

@@ -30,7 +30,6 @@ class GameFormatter
      */
     public function formatGamesData(&$gamesData, Config $config)
     {
-        $labelColorThreshold = $config->subtractStartPoints() ? 0 : $config->startPoints();
         $result = [];
         foreach ($gamesData['games'] as $gameId => $game) {
             $players = [];
@@ -40,9 +39,9 @@ class GameFormatter
                     'tenhou_id' => $gamesData['players'][$playerId]['tenhou_id'],
                     'title' => $gamesData['players'][$playerId]['title'],
                     'score' => number_format($finalScore['score'], 0, '.', ','),
-                    'label' => ($finalScore['rating_delta'] > $labelColorThreshold
+                    'label' => ($finalScore['rating_delta'] > 0
                         ? 'success'
-                        : ($finalScore['rating_delta'] < $labelColorThreshold
+                        : ($finalScore['rating_delta'] < 0
                             ? 'danger'
                             : 'info'
                         )

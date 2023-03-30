@@ -907,9 +907,7 @@ final class TwirpServer implements Mimir
             ->setEventStatHost($ret['eventStatHost'])
             ->setUseTimer($ret['useTimer'])
             ->setUsePenalty($ret['usePenalty'])
-            ->setTimerPolicy($ret['timerPolicy'])
-            ->setRedZone($ret['redZone'])
-            ->setYellowZone($ret['yellowZone'])
+            ->setEndingPolicy($ret['endingPolicy'])
             ->setTimezone($ret['timezone'])
             ->setIsOnline($ret['isOnline'])
             ->setIsTeam($ret['isTeam'])
@@ -919,7 +917,6 @@ final class TwirpServer implements Mimir
             ->setSortByGames($ret['sortByGames'])
             ->setAllowPlayerAppend($ret['allowPlayerAppend'])
             ->setWithLeadingDealerGameOver($ret['withLeadingDealerGameOver'])
-            ->setSubtractStartPoints($ret['subtractStartPoints'])
             ->setSeriesLength($ret['seriesLength'])
             ->setMinGamesCount($ret['minGamesCount'])
             ->setHideResults($ret['hideResults'])
@@ -1109,7 +1106,7 @@ final class TwirpServer implements Mimir
                 ->setScores(self::_makeScores($ret['state']['scores']))
                 ->setFinished($ret['state']['finished'])
                 ->setPenalties(self::_makePenalties($ret['state']['penalties']))
-                ->setYellowZoneAlreadyPlayed($ret['state']['yellowZoneAlreadyPlayed']));
+                ->setLastHandStarted($ret['state']['lastHandStarted']));
         if (!empty($ret['table_index'])) {
             $overview->setTableIndex($ret['table_index']);
         }
@@ -1184,7 +1181,7 @@ final class TwirpServer implements Mimir
             ->setRiichiBets($ret['_riichiBets'])
             ->setPrematurelyFinished($ret['_prematurelyFinished'])
             ->setRoundJustChanged($ret['_roundJustChanged'])
-            ->setYellowZoneAlreadyPlayed($ret['_yellowZoneAlreadyPlayed'])
+            ->setLastHandStarted($ret['_lastHandStarted'])
             ->setLastOutcome(self::_toOutcome($ret['_lastOutcome']))
             ->setIsFinished($ret['_isFinished']);
     }

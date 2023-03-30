@@ -591,9 +591,7 @@ class EventsController extends Controller
             'eventStatHost'       => str_replace(EventPrimitive::ID_PLACEHOLDER, (string)$event[0]->getId(), $event[0]->getStatHost()),
             'useTimer'            => (bool)$event[0]->getUseTimer(),
             'usePenalty'          => (bool)$event[0]->getUsePenalty(),
-            'timerPolicy'         => $rules->timerPolicy(),
-            'redZone'             => $rules->redZone(), // in seconds!
-            'yellowZone'          => $rules->yellowZone(), // in seconds!
+            'endingPolicy'         => $rules->endingPolicy(),
             'gameDuration'        => $event[0]->getGameDuration(), // in minutes!
             'timezone'            => $event[0]->getTimezone(),
             'isOnline'            => (bool)$event[0]->getIsOnline(),
@@ -604,7 +602,6 @@ class EventsController extends Controller
             'sortByGames'         => (bool)$event[0]->getSortByGames(),
             'allowPlayerAppend'   => (bool)$event[0]->getAllowPlayerAppend(),
             'withLeadingDealerGameOver' => $rules->withLeadingDealerGameOver(),
-            'subtractStartPoints' => $rules->subtractStartPoints(),
             'seriesLength'        => $event[0]->getSeriesLength(),
             'minGamesCount'        => $event[0]->getMinGamesCount(),
             'gamesStatus'         => $event[0]->getGamesStatus(),

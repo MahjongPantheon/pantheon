@@ -510,7 +510,7 @@ class SessionResultsPrimitive extends Primitive
 
         $score = ($reg[0]->getReplacementPlayerId() && $rules->replacementPlayerFixedPoints() !== false)
             ? $rules->replacementPlayerFixedPoints()
-            : $this->_score - ($rules->subtractStartPoints() ? $rules->startPoints() : 0);
+            : $this->_score - $rules->startPoints();
 
         $uma = ($reg[0]->getReplacementPlayerId() && $rules->replacementOverrideUma() !== false)
             ? $rules->replacementOverrideUma()

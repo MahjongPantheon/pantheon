@@ -22,10 +22,6 @@ class Config
     /**
      * @var bool
      */
-    protected $_subtractStartPoints = false;
-    /**
-     * @var bool
-     */
     protected $_withKazoe = false;
     /**
      * @var bool
@@ -108,17 +104,9 @@ class Config
      */
     protected $_eventStatHost = '';
     /**
-     * @var int
-     */
-    protected $_redZone = 0;
-    /**
-     * @var int
-     */
-    protected $_yellowZone = 0;
-    /**
      * @var string
      */
-    protected $_timerPolicy = 'none';
+    protected $_endingPolicy = 'none';
     /**
      * @var bool
      */
@@ -229,7 +217,6 @@ class Config
         'minGamesCount' => 0,
         'minPenalty' => 0,
         'penaltyStep' => 1,
-        'redZone' => 0,
         'riichiGoesToWinner' => false,
         'rulesetTitle' => 'blank',
         'seriesLength' => 0,
@@ -237,10 +224,9 @@ class Config
         'startPoints' => 0,
         'startRating' => 0,
         'startingTimer' => 0,
-        'subtractStartPoints' => false,
         'syncEnd' => false,
         'syncStart' => false,
-        'timerPolicy' => 'none',
+        'endingPolicy' => 'none',
         'tonpuusen' => false,
         'usePenalty' => false,
         'useTimer' => false,
@@ -253,7 +239,6 @@ class Config
         'withLeadingDealerGameOver' => false,
         'withMultiYakumans' => false,
         'withNagashiMangan' => false,
-        'yellowZone' => 0,
     ];
 
     /**
@@ -332,13 +317,6 @@ class Config
     public function playAdditionalRounds()
     {
         return $this->_playAdditionalRounds;
-    }
-    /**
-     * @return bool
-     */
-    public function subtractStartPoints()
-    {
-        return $this->_subtractStartPoints;
     }
     /**
      * @return bool
@@ -488,25 +466,11 @@ class Config
         return $this->_eventStatHost;
     }
     /**
-     * @return int
-     */
-    public function redZone()
-    {
-        return $this->_redZone;
-    }
-    /**
-     * @return int
-     */
-    public function yellowZone()
-    {
-        return $this->_yellowZone;
-    }
-    /**
      * @return string
      */
-    public function timerPolicy()
+    public function endingPolicy()
     {
-        return $this->_timerPolicy;
+        return $this->_endingPolicy;
     }
     /**
      * @return int

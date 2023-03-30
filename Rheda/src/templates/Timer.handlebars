@@ -49,8 +49,6 @@
         var autostartTimer = {{startingTimer}};
         var minutes = parseInt(initialTime[0]);
         var seconds = parseInt(initialTime[1]) / 10;
-        var redZone = '{{redZone}}' === '1';
-        var yellowZone = '{{yellowZone}}' === '1';
         var waiting = '{{waiting}}';
         var timer;
         var autostart;
@@ -104,9 +102,7 @@
                 soundBeforeEnd = false; // play the sound only once
             }
 
-            if (yellowZone || redZone) {
-                $('#time').html('<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZGF0YS1uYW1lPSJMYXllciAxIiBpZD0iTGF5ZXJfMSIgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PHBhdGggZD0iTTEyLDRhOSw5LDAsMSwwLDksOUE5LDksMCwwLDAsMTIsNFptMCwxNmE3LDcsMCwxLDEsNy03QTcsNywwLDAsMSwxMiwyMFpNMjEuMTksMy44MUExMi44OCwxMi44OCwwLDAsMCwxNy4wNiwxbC0uNzgsMS44NGExMS4wOCwxMS4wOCwwLDAsMSwzLjUsMi4zNiwxMS40MywxMS40MywwLDAsMSwxLjg3LDIuNDlsMS43NS0xQTEzLjE5LDEzLjE5LDAsMCwwLDIxLjE5LDMuODFabS0xMy40Ny0xTDYuOTQsMUExMi44OCwxMi44OCwwLDAsMCwyLjgxLDMuODEsMTMuMTksMTMuMTksMCwwLDAsLjYsNi43NGwxLjc1LDFBMTEuNDMsMTEuNDMsMCwwLDEsNC4yMiw1LjIyLDExLjA4LDExLjA4LDAsMCwxLDcuNzIsMi44NlpNMTMsOEgxMXY2aDVWMTJIMTNaIi8+PC9zdmc+" />');
-            }
+            $('#time').html('<img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgZGF0YS1uYW1lPSJMYXllciAxIiBpZD0iTGF5ZXJfMSIgdmlld0JveD0iMCAwIDI0IDI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjx0aXRsZS8+PHBhdGggZD0iTTEyLDRhOSw5LDAsMSwwLDksOUE5LDksMCwwLDAsMTIsNFptMCwxNmE3LDcsMCwxLDEsNy03QTcsNywwLDAsMSwxMiwyMFpNMjEuMTksMy44MUExMi44OCwxMi44OCwwLDAsMCwxNy4wNiwxbC0uNzgsMS44NGExMS4wOCwxMS4wOCwwLDAsMSwzLjUsMi4zNiwxMS40MywxMS40MywwLDAsMSwxLjg3LDIuNDlsMS43NS0xQTEzLjE5LDEzLjE5LDAsMCwwLDIxLjE5LDMuODFabS0xMy40Ny0xTDYuOTQsMUExMi44OCwxMi44OCwwLDAsMCwyLjgxLDMuODEsMTMuMTksMTMuMTksMCwwLDAsLjYsNi43NGwxLjc1LDFBMTEuNDMsMTEuNDMsMCwwLDEsNC4yMiw1LjIyLDExLjA4LDExLjA4LDAsMCwxLDcuNzIsMi44NlpNMTMsOEgxMXY2aDVWMTJIMTNaIi8+PC9zdmc+" />');
             $('.timer').addClass('mini');
             $('.seating').show();
         }

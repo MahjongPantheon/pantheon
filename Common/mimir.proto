@@ -227,7 +227,7 @@ message Games_AddRound_Response {
   bool prematurelyFinished = 6; // if game has been finished prematurely (e.g. by timeout)
   bool roundJustChanged = 7; // True if round has just changed useful to determine if current 4e or 4s is first one, no matter what honba count is. (Possible situation: draw in 3s or 3e, so first 4e or 4s has honba).
   bool isFinished = 8;
-  bool yellowZoneAlreadyPlayed = 9; // True if timer policy refers to "yellow zone" rule AND first game in yellow zone was already recorded. In fact, this is a "red zone" flag, which means that hanchan will be finished when next round is recorded.
+  bool lastHandStarted = 9; // True if ending policy is "oneMoreHand" AND this hand was started.
   optional RoundOutcome lastOutcome = 10; // Outcome of previously recorded round. Useful to determine if certain rules should be applied in current case, e.g., agariyame should not be applied on chombo or abortive draw.
 }
 

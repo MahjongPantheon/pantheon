@@ -67,14 +67,12 @@ class Ruleset
             'oka' => _t('Oka (first place) bonus size'),
             'penaltyStep' => _t('Step of penalty amounts'),
             'playAdditionalRounds' => _t('Play additional rounds'),
-            'redZone' => _t('Red zone duration'),
             'replacementPlayerFixesPoints' => _t('Amount of points to be given to replacement player'),
             'replacementPlayerOverrideUma' => _t('Amount of uma bonus to be given to replacement player'),
             'riichiGoesToWinner' => _t('If riichi bets left on the table go to winner of the hanchan'),
             'startPoints' => _t('Points to start with'),
             'startRating' => _t('Rating initial points amount'),
-            'subtractStartPoints' => _t('If start points should be subtracted from result'),
-            'timerPolicy' => _t('Timer policy'),
+            'endingPolicy' => _t('Session ending policy'),
             'tonpuusen' => _t('If games have east rounds only'),
             'uma' => _t('Uma (rank) bonus size'),
             'withAbortives' => _t('If abortive draws are allowed'),
@@ -88,10 +86,6 @@ class Ruleset
             'withNagashiMangan' => _t('If nagashi mangan is allowed'),
             'withWinningDealerHonbaSkipped' => _t('If game should proceed to next round if dealer wins (i.e. no honba/renchan)'),
             'yakuWithPao' => _t('List of yakumans that use pao rule'),
-            'yellowZone' => _t('Yellow zone duration'),
-
-            // Don't allow to customize this for now
-//            'complexUma' => _t('Use JPML-like complex uma bonus (overrides uma amount setting)'),
         ];
     }
 
@@ -116,14 +110,12 @@ class Ruleset
             'oka'                   => 'int',
             'penaltyStep'           => 'int',
             'playAdditionalRounds'  => 'bool',
-            'redZone'               => 'int',
             'replacementPlayerFixedPoints' => 'int',
             'replacementPlayerOverrideUma' => 'int',
             'riichiGoesToWinner'    => 'bool',
             'startPoints'           => 'int',
             'startRating'           => 'int',
-            'subtractStartPoints'   => 'bool',
-            'timerPolicy'           => 'select',
+            'endingPolicy'           => 'select',
             'tonpuusen'             => 'bool',
             'uma'                   => 'int[]',
             'withAbortives'         => 'bool',
@@ -137,7 +129,6 @@ class Ruleset
             'withNagashiMangan'     => 'bool',
             'withWinningDealerHonbaSkipped' => 'bool',
             'yakuWithPao'           => 'select',
-            'yellowZone'            => 'int',
         ];
     }
 
@@ -329,14 +320,6 @@ class Ruleset
     /**
      * @return bool
      */
-    public function subtractStartPoints()
-    {
-        return boolval($this->_ruleset['subtractStartPoints']);
-    }
-
-    /**
-     * @return bool
-     */
     public function riichiGoesToWinner()
     {
         return boolval($this->_ruleset['riichiGoesToWinner']);
@@ -487,27 +470,11 @@ class Ruleset
     }
 
     /**
-     * @return int
-     */
-    public function redZone()
-    {
-        return intval($this->_ruleset['redZone']);
-    }
-
-    /**
-     * @return int
-     */
-    public function yellowZone()
-    {
-        return intval($this->_ruleset['yellowZone']);
-    }
-
-    /**
      * @return string
      */
-    public function timerPolicy()
+    public function endingPolicy()
     {
-        return $this->_ruleset['timerPolicy'];
+        return $this->_ruleset['endingPolicy'];
     }
 
     /**

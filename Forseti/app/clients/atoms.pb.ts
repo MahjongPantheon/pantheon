@@ -180,9 +180,7 @@ export interface GameConfig {
   eventStatHost: string;
   useTimer: boolean;
   usePenalty: boolean;
-  timerPolicy: string;
-  redZone: number;
-  yellowZone: number;
+  endingPolicy: string;
   gameDuration: number;
   timezone: string;
   isOnline: boolean;
@@ -193,7 +191,6 @@ export interface GameConfig {
   sortByGames: boolean;
   allowPlayerAppend: boolean;
   withLeadingDealerGameOver: boolean;
-  subtractStartPoints: boolean;
   seriesLength: number;
   minGamesCount: number;
   gamesStatus: TournamentGamesStatus;
@@ -548,7 +545,7 @@ export interface SessionState {
   scores: IntermediateResultOfSession[];
   finished: boolean;
   penalties: Penalty[];
-  yellowZoneAlreadyPlayed: boolean;
+  lastHandStarted: boolean;
 }
 
 export interface Generic_Success_Response {
@@ -2153,9 +2150,7 @@ export const GameConfig = {
       eventStatHost: "",
       useTimer: false,
       usePenalty: false,
-      timerPolicy: "",
-      redZone: 0,
-      yellowZone: 0,
+      endingPolicy: "",
       gameDuration: 0,
       timezone: "",
       isOnline: false,
@@ -2166,7 +2161,6 @@ export const GameConfig = {
       sortByGames: false,
       allowPlayerAppend: false,
       withLeadingDealerGameOver: false,
-      subtractStartPoints: false,
       seriesLength: 0,
       minGamesCount: 0,
       gamesStatus: TournamentGamesStatus._fromInt(0),
@@ -2275,14 +2269,8 @@ export const GameConfig = {
     if (msg.usePenalty) {
       writer.writeBool(30, msg.usePenalty);
     }
-    if (msg.timerPolicy) {
-      writer.writeString(31, msg.timerPolicy);
-    }
-    if (msg.redZone) {
-      writer.writeInt32(32, msg.redZone);
-    }
-    if (msg.yellowZone) {
-      writer.writeInt32(33, msg.yellowZone);
+    if (msg.endingPolicy) {
+      writer.writeString(31, msg.endingPolicy);
     }
     if (msg.gameDuration) {
       writer.writeInt32(34, msg.gameDuration);
@@ -2313,9 +2301,6 @@ export const GameConfig = {
     }
     if (msg.withLeadingDealerGameOver) {
       writer.writeBool(43, msg.withLeadingDealerGameOver);
-    }
-    if (msg.subtractStartPoints) {
-      writer.writeBool(44, msg.subtractStartPoints);
     }
     if (msg.seriesLength) {
       writer.writeInt32(45, msg.seriesLength);
@@ -2480,15 +2465,7 @@ export const GameConfig = {
           break;
         }
         case 31: {
-          msg.timerPolicy = reader.readString();
-          break;
-        }
-        case 32: {
-          msg.redZone = reader.readInt32();
-          break;
-        }
-        case 33: {
-          msg.yellowZone = reader.readInt32();
+          msg.endingPolicy = reader.readString();
           break;
         }
         case 34: {
@@ -2529,10 +2506,6 @@ export const GameConfig = {
         }
         case 43: {
           msg.withLeadingDealerGameOver = reader.readBool();
-          break;
-        }
-        case 44: {
-          msg.subtractStartPoints = reader.readBool();
           break;
         }
         case 45: {
@@ -6792,7 +6765,7 @@ export const SessionState = {
       scores: [],
       finished: false,
       penalties: [],
-      yellowZoneAlreadyPlayed: false,
+      lastHandStarted: false,
     };
   },
 
@@ -6832,8 +6805,8 @@ export const SessionState = {
         Penalty._writeMessage
       );
     }
-    if (msg.yellowZoneAlreadyPlayed) {
-      writer.writeBool(8, msg.yellowZoneAlreadyPlayed);
+    if (msg.lastHandStarted) {
+      writer.writeBool(8, msg.lastHandStarted);
     }
     return writer;
   },
@@ -6881,7 +6854,7 @@ export const SessionState = {
           break;
         }
         case 8: {
-          msg.yellowZoneAlreadyPlayed = reader.readBool();
+          msg.lastHandStarted = reader.readBool();
           break;
         }
         default: {
@@ -8458,9 +8431,7 @@ export const GameConfigJSON = {
       eventStatHost: "",
       useTimer: false,
       usePenalty: false,
-      timerPolicy: "",
-      redZone: 0,
-      yellowZone: 0,
+      endingPolicy: "",
       gameDuration: 0,
       timezone: "",
       isOnline: false,
@@ -8471,7 +8442,6 @@ export const GameConfigJSON = {
       sortByGames: false,
       allowPlayerAppend: false,
       withLeadingDealerGameOver: false,
-      subtractStartPoints: false,
       seriesLength: 0,
       minGamesCount: 0,
       gamesStatus: TournamentGamesStatus._fromInt(0),
@@ -8578,14 +8548,8 @@ export const GameConfigJSON = {
     if (msg.usePenalty) {
       json["usePenalty"] = msg.usePenalty;
     }
-    if (msg.timerPolicy) {
-      json["timerPolicy"] = msg.timerPolicy;
-    }
-    if (msg.redZone) {
-      json["redZone"] = msg.redZone;
-    }
-    if (msg.yellowZone) {
-      json["yellowZone"] = msg.yellowZone;
+    if (msg.endingPolicy) {
+      json["endingPolicy"] = msg.endingPolicy;
     }
     if (msg.gameDuration) {
       json["gameDuration"] = msg.gameDuration;
@@ -8616,9 +8580,6 @@ export const GameConfigJSON = {
     }
     if (msg.withLeadingDealerGameOver) {
       json["withLeadingDealerGameOver"] = msg.withLeadingDealerGameOver;
-    }
-    if (msg.subtractStartPoints) {
-      json["subtractStartPoints"] = msg.subtractStartPoints;
     }
     if (msg.seriesLength) {
       json["seriesLength"] = msg.seriesLength;
@@ -8771,17 +8732,9 @@ export const GameConfigJSON = {
     if (_usePenalty_) {
       msg.usePenalty = _usePenalty_;
     }
-    const _timerPolicy_ = json["timerPolicy"];
-    if (_timerPolicy_) {
-      msg.timerPolicy = _timerPolicy_;
-    }
-    const _redZone_ = json["redZone"];
-    if (_redZone_) {
-      msg.redZone = _redZone_;
-    }
-    const _yellowZone_ = json["yellowZone"];
-    if (_yellowZone_) {
-      msg.yellowZone = _yellowZone_;
+    const _endingPolicy_ = json["endingPolicy"];
+    if (_endingPolicy_) {
+      msg.endingPolicy = _endingPolicy_;
     }
     const _gameDuration_ = json["gameDuration"];
     if (_gameDuration_) {
@@ -8822,10 +8775,6 @@ export const GameConfigJSON = {
     const _withLeadingDealerGameOver_ = json["withLeadingDealerGameOver"];
     if (_withLeadingDealerGameOver_) {
       msg.withLeadingDealerGameOver = _withLeadingDealerGameOver_;
-    }
-    const _subtractStartPoints_ = json["subtractStartPoints"];
-    if (_subtractStartPoints_) {
-      msg.subtractStartPoints = _subtractStartPoints_;
     }
     const _seriesLength_ = json["seriesLength"];
     if (_seriesLength_) {
@@ -12511,7 +12460,7 @@ export const SessionStateJSON = {
       scores: [],
       finished: false,
       penalties: [],
-      yellowZoneAlreadyPlayed: false,
+      lastHandStarted: false,
     };
   },
 
@@ -12545,8 +12494,8 @@ export const SessionStateJSON = {
     if (msg.penalties?.length) {
       json["penalties"] = msg.penalties.map(PenaltyJSON._writeMessage);
     }
-    if (msg.yellowZoneAlreadyPlayed) {
-      json["yellowZoneAlreadyPlayed"] = msg.yellowZoneAlreadyPlayed;
+    if (msg.lastHandStarted) {
+      json["lastHandStarted"] = msg.lastHandStarted;
     }
     return json;
   },
@@ -12591,9 +12540,9 @@ export const SessionStateJSON = {
         msg.penalties.push(m);
       }
     }
-    const _yellowZoneAlreadyPlayed_ = json["yellowZoneAlreadyPlayed"];
-    if (_yellowZoneAlreadyPlayed_) {
-      msg.yellowZoneAlreadyPlayed = _yellowZoneAlreadyPlayed_;
+    const _lastHandStarted_ = json["lastHandStarted"];
+    if (_lastHandStarted_) {
+      msg.lastHandStarted = _lastHandStarted_;
     }
     return msg;
   },

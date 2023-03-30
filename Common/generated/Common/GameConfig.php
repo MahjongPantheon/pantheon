@@ -138,21 +138,9 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      */
     protected $usePenalty = false;
     /**
-     * Generated from protobuf field <code>string timerPolicy = 31;</code>
+     * Generated from protobuf field <code>string endingPolicy = 31;</code>
      */
-    protected $timerPolicy = '';
-    /**
-     * seconds
-     *
-     * Generated from protobuf field <code>int32 redZone = 32;</code>
-     */
-    protected $redZone = 0;
-    /**
-     * seconds
-     *
-     * Generated from protobuf field <code>int32 yellowZone = 33;</code>
-     */
-    protected $yellowZone = 0;
+    protected $endingPolicy = '';
     /**
      * minutes
      *
@@ -195,10 +183,6 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool withLeadingDealerGameOver = 43;</code>
      */
     protected $withLeadingDealerGameOver = false;
-    /**
-     * Generated from protobuf field <code>bool subtractStartPoints = 44;</code>
-     */
-    protected $subtractStartPoints = false;
     /**
      * Generated from protobuf field <code>int32 seriesLength = 45;</code>
      */
@@ -270,11 +254,7 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      *     @type string $eventStatHost
      *     @type bool $useTimer
      *     @type bool $usePenalty
-     *     @type string $timerPolicy
-     *     @type int $redZone
-     *           seconds
-     *     @type int $yellowZone
-     *           seconds
+     *     @type string $endingPolicy
      *     @type int $gameDuration
      *           minutes
      *     @type string $timezone
@@ -286,7 +266,6 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      *     @type bool $sortByGames
      *     @type bool $allowPlayerAppend
      *     @type bool $withLeadingDealerGameOver
-     *     @type bool $subtractStartPoints
      *     @type int $seriesLength
      *     @type int $minGamesCount
      *     @type int $gamesStatus
@@ -971,75 +950,23 @@ class GameConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string timerPolicy = 31;</code>
+     * Generated from protobuf field <code>string endingPolicy = 31;</code>
      * @return string
      */
-    public function getTimerPolicy()
+    public function getEndingPolicy()
     {
-        return $this->timerPolicy;
+        return $this->endingPolicy;
     }
 
     /**
-     * Generated from protobuf field <code>string timerPolicy = 31;</code>
+     * Generated from protobuf field <code>string endingPolicy = 31;</code>
      * @param string $var
      * @return $this
      */
-    public function setTimerPolicy($var)
+    public function setEndingPolicy($var)
     {
         GPBUtil::checkString($var, True);
-        $this->timerPolicy = $var;
-
-        return $this;
-    }
-
-    /**
-     * seconds
-     *
-     * Generated from protobuf field <code>int32 redZone = 32;</code>
-     * @return int
-     */
-    public function getRedZone()
-    {
-        return $this->redZone;
-    }
-
-    /**
-     * seconds
-     *
-     * Generated from protobuf field <code>int32 redZone = 32;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setRedZone($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->redZone = $var;
-
-        return $this;
-    }
-
-    /**
-     * seconds
-     *
-     * Generated from protobuf field <code>int32 yellowZone = 33;</code>
-     * @return int
-     */
-    public function getYellowZone()
-    {
-        return $this->yellowZone;
-    }
-
-    /**
-     * seconds
-     *
-     * Generated from protobuf field <code>int32 yellowZone = 33;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setYellowZone($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->yellowZone = $var;
+        $this->endingPolicy = $var;
 
         return $this;
     }
@@ -1264,28 +1191,6 @@ class GameConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->withLeadingDealerGameOver = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool subtractStartPoints = 44;</code>
-     * @return bool
-     */
-    public function getSubtractStartPoints()
-    {
-        return $this->subtractStartPoints;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool subtractStartPoints = 44;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setSubtractStartPoints($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->subtractStartPoints = $var;
 
         return $this;
     }

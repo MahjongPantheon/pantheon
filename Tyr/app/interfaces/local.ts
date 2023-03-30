@@ -79,7 +79,7 @@ export interface LSessionOverview {
   currentRound: number;
   riichiOnTable: number;
   honba: number;
-  yellowZoneAlreadyPlayed: boolean;
+  lastHandStarted: boolean;
   tableIndex: number;
   players: LUserWithScore[];
 }
@@ -108,9 +108,7 @@ export interface LGameConfig {
   withMultiYakumans: boolean;
   gameExpirationTime: number;
   withLeadingDealerGameOver: boolean;
-  redZone: number | null;
-  yellowZone: number | null;
-  timerPolicy: 'redZone' | 'yellowZone' | 'none';
+  endingPolicy: 'oneMoreHand' | 'endAfterHand' | 'none';
   useTimer: boolean;
   isOnline: boolean;
   isTextlog: boolean;

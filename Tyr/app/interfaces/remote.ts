@@ -122,9 +122,7 @@ export interface RGameConfig {
   withMultiYakumans: boolean;
   gameExpirationTime: number;
   withLeadingDealerGameOver: boolean;
-  redZone: number | null;
-  yellowZone: number | null;
-  timerPolicy: string | null;
+  endingPolicy: string | null;
   useTimer: boolean;
   isOnline: boolean;
   isTextlog: boolean;
@@ -155,7 +153,7 @@ export interface RSessionOverview {
     round: number;
     riichi: number; // on table
     honba: number;
-    yellowZoneAlreadyPlayed: boolean;
+    lastHandStarted: boolean;
     scores: { [key: number]: number };
     finished: boolean;
     penalties: { [key: number]: number };
@@ -390,12 +388,10 @@ export interface SessionState {
    */
   _roundJustChanged: boolean;
   /**
-   * True if timer policy refers to "yellow zone" rule AND first game in
-   * yellow zone was already recorded. In fact, this is a "red zone" flag,
-   * which means that hanchan will be finished when next round is recorded.
+   * True if ending policy is "oneMoreHand" AND this hand was started.
    * @param boolean
    */
-  _yellowZoneAlreadyPlayed: boolean;
+  _lastHandStarted: boolean;
   /**
    * Outcome of previously recorded round. Useful to determine if certain rules
    * should be applied in current case, e.g., agariyame should not be applied on

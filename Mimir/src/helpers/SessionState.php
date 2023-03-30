@@ -73,12 +73,10 @@ class SessionState
      */
     protected $_roundJustChanged = true;
     /**
-     * True if timer policy refers to "yellow zone" rule AND first game in
-     * yellow zone was already recorded. In fact, this is a "red zone" flag,
-     * which means that hanchan will be finished when next round is recorded.
+     * True if ending policy is "oneMoreHand" AND this last hand was started.
      * @var boolean
      */
-    protected $_yellowZoneAlreadyPlayed = false;
+    protected $_lastHandStarted = false;
     /**
      * Outcome of previously recorded round. Useful to determine if certain rules
      * should be applied in current case, e.g., agariyame should not be applied on
@@ -665,18 +663,18 @@ class SessionState
     /**
      * @return boolean
      */
-    public function yellowZoneAlreadyPlayed()
+    public function lastHandStarted()
     {
-        return $this->_yellowZoneAlreadyPlayed;
+        return $this->_lastHandStarted;
     }
 
     /**
      * @param bool $state
      * @return $this
      */
-    public function setYellowZonePlayed($state = true)
+    public function setLastHandStarted($state = true)
     {
-        $this->_yellowZoneAlreadyPlayed = $state;
+        $this->_lastHandStarted = $state;
         return $this;
     }
 

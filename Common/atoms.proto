@@ -169,9 +169,7 @@ message GameConfig {
   string eventStatHost = 28;
   bool useTimer = 29;
   bool usePenalty = 30;
-  string timerPolicy = 31;
-  int32 redZone = 32; // seconds
-  int32 yellowZone = 33; // seconds
+  string endingPolicy = 31;
   int32 gameDuration = 34; // minutes
   string timezone = 35;
   bool isOnline = 36;
@@ -182,7 +180,6 @@ message GameConfig {
   bool sortByGames = 41;
   bool allowPlayerAppend = 42;
   bool withLeadingDealerGameOver = 43;
-  bool subtractStartPoints = 44;
   int32 seriesLength = 45;
   int32 minGamesCount = 46;
   TournamentGamesStatus gamesStatus = 47;
@@ -539,7 +536,7 @@ message SessionState {
   repeated IntermediateResultOfSession scores = 5;
   bool finished = 6;
   repeated Penalty penalties = 7;
-  bool yellowZoneAlreadyPlayed = 8;
+  bool lastHandStarted = 8;
 }
 
 // Generics

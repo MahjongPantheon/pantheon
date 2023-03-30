@@ -54,11 +54,11 @@ class Games_AddRound_Response extends \Google\Protobuf\Internal\Message
      */
     protected $isFinished = false;
     /**
-     * True if timer policy refers to "yellow zone" rule AND first game in yellow zone was already recorded. In fact, this is a "red zone" flag, which means that hanchan will be finished when next round is recorded.
+     * True if ending policy is "oneMoreHand" AND this hand was started.
      *
-     * Generated from protobuf field <code>bool yellowZoneAlreadyPlayed = 9;</code>
+     * Generated from protobuf field <code>bool lastHandStarted = 9;</code>
      */
-    protected $yellowZoneAlreadyPlayed = false;
+    protected $lastHandStarted = false;
     /**
      * Outcome of previously recorded round. Useful to determine if certain rules should be applied in current case, e.g., agariyame should not be applied on chombo or abortive draw.
      *
@@ -84,8 +84,8 @@ class Games_AddRound_Response extends \Google\Protobuf\Internal\Message
      *     @type bool $roundJustChanged
      *           True if round has just changed useful to determine if current 4e or 4s is first one, no matter what honba count is. (Possible situation: draw in 3s or 3e, so first 4e or 4s has honba).
      *     @type bool $isFinished
-     *     @type bool $yellowZoneAlreadyPlayed
-     *           True if timer policy refers to "yellow zone" rule AND first game in yellow zone was already recorded. In fact, this is a "red zone" flag, which means that hanchan will be finished when next round is recorded.
+     *     @type bool $lastHandStarted
+     *           True if ending policy is "oneMoreHand" AND this hand was started.
      *     @type int $lastOutcome
      *           Outcome of previously recorded round. Useful to determine if certain rules should be applied in current case, e.g., agariyame should not be applied on chombo or abortive draw.
      * }
@@ -288,27 +288,27 @@ class Games_AddRound_Response extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * True if timer policy refers to "yellow zone" rule AND first game in yellow zone was already recorded. In fact, this is a "red zone" flag, which means that hanchan will be finished when next round is recorded.
+     * True if ending policy is "oneMoreHand" AND this hand was started.
      *
-     * Generated from protobuf field <code>bool yellowZoneAlreadyPlayed = 9;</code>
+     * Generated from protobuf field <code>bool lastHandStarted = 9;</code>
      * @return bool
      */
-    public function getYellowZoneAlreadyPlayed()
+    public function getLastHandStarted()
     {
-        return $this->yellowZoneAlreadyPlayed;
+        return $this->lastHandStarted;
     }
 
     /**
-     * True if timer policy refers to "yellow zone" rule AND first game in yellow zone was already recorded. In fact, this is a "red zone" flag, which means that hanchan will be finished when next round is recorded.
+     * True if ending policy is "oneMoreHand" AND this hand was started.
      *
-     * Generated from protobuf field <code>bool yellowZoneAlreadyPlayed = 9;</code>
+     * Generated from protobuf field <code>bool lastHandStarted = 9;</code>
      * @param bool $var
      * @return $this
      */
-    public function setYellowZoneAlreadyPlayed($var)
+    public function setLastHandStarted($var)
     {
         GPBUtil::checkBool($var);
-        $this->yellowZoneAlreadyPlayed = $var;
+        $this->lastHandStarted = $var;
 
         return $this;
     }

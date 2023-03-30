@@ -35,14 +35,12 @@ return [
     'oka'                   => 0,
     'penaltyStep'           => 100,
     'playAdditionalRounds'  => false,
-    'redZone'               => 300, // 5min
     'replacementPlayerFixedPoints' => -15000,
     'replacementPlayerOverrideUma' => -15000,
     'riichiGoesToWinner'    => false,
     'startPoints'           => 30000,
     'startRating'           => 0,
-    'subtractStartPoints'   => true,
-    'timerPolicy'           => 'redZone',
+    'endingPolicy'           => 'endAfterHand',
     'tonpuusen'             => false,
     'uma'                   => [1 => 15000, 5000, -5000, -15000],
     'withAbortives'         => false,
@@ -55,11 +53,8 @@ return [
     'withMultiYakumans'     => false,
     'withNagashiMangan'     => false,
     'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII],
-    'yellowZone'            => 0,
+    'withWinningDealerHonbaSkipped' => false,
+    'chipsValue'            => 0,
 
-    '_invalidCustomFields' => [
-        'chipsValue',
-        'withWinningDealerHonbaSkipped', 'timerPolicy', 'redZone',
-        'startRating', 'subtractStartPoints', 'complexUma',
-    ],
+    '_invalidCustomFields' => [],
 ];
