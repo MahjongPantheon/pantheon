@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { authCtx } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
 import { Center, Container, LoadingOverlay, Stack, Tabs } from '@mantine/core';
-import { useForm, UseFormReturnType } from '@mantine/form';
+import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
 import { TabsList } from '#/pages/OwnedEventsEdit/TabsList';
@@ -14,63 +14,36 @@ import { OnlineSettings } from '#/pages/OwnedEventsEdit/OnlineSettings';
 import { RulesetSettings } from '#/pages/OwnedEventsEdit/RulesetSettings';
 import { YakuSettings } from '#/pages/OwnedEventsEdit/YakuSettings';
 import { IconSettingsCheck } from '@tabler/icons-react';
-import { FormFields, RulesetCustom, RulesetRemote } from '#/pages/OwnedEventsEdit/types';
+import { FormFields, RulesetRemote } from '#/pages/OwnedEventsEdit/types';
+import { EventData, EventType } from '#/clients/atoms.pb';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
   const [isLoading, setIsLoading] = useState(false);
-  const [eventType, setEventType] = useState('local');
+  const [eventType, setEventType] = useState<EventType>('LOCAL');
   const [timezones, setTimezones] = useState<Array<{ value: string; label: string }>>([]);
   const [rulesets, setRulesets] = useState<Array<{ value: string; label: string }>>([]);
-  const [rules, setRules] = useState<Record<string, RulesetRemote>>({});
   const [eventName, setEventName] = useState('');
   usePageTitle('Edit event :: ' + eventName);
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      return;
-    }
-    Promise.all([api.getRulesets(), api.getTimezones()]).then(([rulesets, timezoneData]) => {
-      setTimezones(timezoneData.timezones.map((z) => ({ value: z, label: z })));
-      setRulesets(rulesets.map((r) => ({ value: r.title, label: r.description })));
-      setRules(
-        rulesets.reduce((acc, r) => {
-          acc[r.title] = JSON.parse(r.defaultRules); // TODO: in general, this is unsafe
-          return acc;
-        }, {} as Record<string, RulesetRemote>)
-      );
-    });
-    if (id) {
-      setIsLoading(true);
-      api
-        .getEventForEdit(parseInt(id, 10))
-        .then((resp) => {
-          setEventName(resp.event.title);
-          setIsLoading(false);
-        })
-        .catch(() => {
-          setIsLoading(false);
-        });
-    }
-  }, [isLoggedIn]);
 
   const form = useForm<FormFields>({
     initialValues: {
       event: {
-        type: 'local',
+        type: 'LOCAL',
         title: '',
         description: '',
         timezone: '',
         duration: 75, // min // tourn
         isTeam: false, // tourn
         isPrescripted: false, // tourn
-        gameSeriesCount: 0, // local/online
-        minGamesCount: 0, // local/online
-        baseRuleset: 'ema',
-        tenhouLobbyId: '', // online
+        seriesLength: 0, // local/online
+        minGames: 0, // local/online
+        ruleset: 'ema',
+        lobbyId: 0, // online
       },
+      customized: {},
       ruleset: {
         gameExpirationTime: 0, // online
         chipsValue: 0, // online
@@ -122,24 +95,19 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
     },
   });
 
-  const submitForm = (vals: any) => {
-    console.log(vals);
-  };
-
-  /*
-    TODO:
-    1) обеспечить подгрузку текущих переопределенных значений
-    2) если меняется рулсет, менять все значения кроме тех которые явно были изменены
-    3) В БД могут быть полные наборы рулсетов, нельзя ориентироваться на состав оверрайдов в БД. Вычислять отличия.
-    4) Прочекать места, в которых может быть накладка: переформатирование яку, комплексная ума
-    5) Задизайблить выбор типа события в случае редактирования
-    6) Сделать роуты для нового события
-    7) Запилить комплексную уму в протоколе и на бэкенде
-   */
-
-  const setRulesetValues = (rulesetId: string) => {
+  const setFormValues = (
+    eventData: EventData,
+    rulesetId: string,
+    overrides: RulesetRemote,
+    rules: Record<string, RulesetRemote>
+  ) => {
+    // TODO: apply overrides
     const ruleset = rules[rulesetId];
+    if (!ruleset) {
+      return;
+    }
     form.setValues({
+      event: eventData,
       ruleset: {
         ...ruleset,
         uma: ruleset.uma ? [ruleset.uma[1], ruleset.uma[2], ruleset.uma[3], ruleset.uma[4]] : [],
@@ -161,6 +129,60 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
     });
   };
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      return;
+    }
+    setIsLoading(true);
+    Promise.all([
+      api.getRulesets(),
+      api.getTimezones(),
+      id ? api.getEventForEdit(parseInt(id, 10)) : Promise.resolve(null),
+    ])
+      .then(([rulesets, timezoneData, eventData]) => {
+        setTimezones(timezoneData.timezones.map((z) => ({ value: z, label: z })));
+        setRulesets(rulesets.map((r) => ({ value: r.title, label: r.description })));
+        const rules = rulesets.reduce((acc, r) => {
+          acc[r.title] = JSON.parse(r.defaultRules); // TODO: in general, this is unsafe
+          return acc;
+        }, {} as Record<string, RulesetRemote>);
+        if (eventData) {
+          // edit mode
+          setEventName(eventData.event.title);
+          setEventType(eventData.event.type ?? 'LOCAL');
+          setFormValues(
+            eventData.event,
+            eventData.event.ruleset,
+            // TODO: in general, this is unsafe
+            JSON.parse(eventData.event.rulesetChanges),
+            rules
+          );
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [isLoggedIn]);
+
+  const submitForm = (vals: any) => {
+    console.log(vals);
+  };
+
+  /*
+    TODO:
+
+    Меняем логику
+    - Для нового события:
+    - Шаг 1: Выбираем при создании: тип события local/tournament/online и рулсет. Ограничить online тенхо рулсетом.
+    - Шаг 2: Выдаем форму для задания параметров.
+
+    - Для существующего события: не дает менять тип и рулсет.
+
+    1) обеспечить подгрузку текущих переопределенных значений
+    2) Сделать роуты для нового события
+    3) Запилить комплексную уму в протоколе и на бэкенде
+   */
+
   return (
     <>
       <Container pos='relative'>
@@ -168,23 +190,16 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         <form onSubmit={form.onSubmit(submitForm)}>
           <Tabs defaultValue='basic'>
             <Tabs.List>
-              <TabsList i18n={i18n} eventType={eventType as 'local' | 'tournament' | 'online'} />
+              <TabsList i18n={i18n} eventType={eventType as EventType} />
             </Tabs.List>
             <Tabs.Panel value='basic' pt='xs'>
-              <BasicSettings
-                form={form}
-                i18n={i18n}
-                rulesets={rulesets}
-                timezones={timezones}
-                setEventType={setEventType}
-                setRulesetValues={setRulesetValues}
-              />
+              <BasicSettings form={form} i18n={i18n} rulesets={rulesets} timezones={timezones} />
             </Tabs.Panel>
             <Tabs.Panel value={eventType} pt='xs'>
               <Stack>
-                {eventType === 'online' && <OnlineSettings form={form} i18n={i18n} />}
-                {eventType === 'local' && <LocalSettings form={form} i18n={i18n} />}
-                {eventType === 'tournament' && <TournamentSettings i18n={i18n} form={form} />}
+                {eventType === 'ONLINE' && <OnlineSettings form={form} i18n={i18n} />}
+                {eventType === 'LOCAL' && <LocalSettings form={form} i18n={i18n} />}
+                {eventType === 'TOURNAMENT' && <TournamentSettings i18n={i18n} form={form} />}
               </Stack>
             </Tabs.Panel>
             <Tabs.Panel value='ruleset_tuning' pt='xs'>

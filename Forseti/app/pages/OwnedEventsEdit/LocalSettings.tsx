@@ -13,7 +13,7 @@ export const LocalSettings: React.FC<LocalSettingsProps> = ({ form, i18n }) => {
   return (
     <>
       <NumberInput
-        {...form.getInputProps('event.gameSeriesCount')}
+        {...form.getInputProps('event.seriesLength')}
         icon={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
         description={i18n._t(
@@ -24,7 +24,7 @@ export const LocalSettings: React.FC<LocalSettingsProps> = ({ form, i18n }) => {
         min={0}
       />
       <NumberInput
-        {...form.getInputProps('event.minGamesCount')}
+        {...form.getInputProps('event.minGames')}
         icon={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}
         description={i18n._t(

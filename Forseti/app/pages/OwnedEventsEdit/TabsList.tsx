@@ -9,10 +9,11 @@ import {
   IconTournament,
 } from '@tabler/icons-react';
 import { Tabs } from '@mantine/core';
+import { EventType } from '#/clients/atoms.pb';
 
 type TabsProps = {
   i18n: I18nService;
-  eventType: 'local' | 'tournament' | 'online';
+  eventType: EventType;
 };
 
 export const TabsList: React.FC<TabsProps> = ({ eventType, i18n }) => {
@@ -21,18 +22,18 @@ export const TabsList: React.FC<TabsProps> = ({ eventType, i18n }) => {
       <Tabs.Tab value='basic' icon={<IconTool size='0.8rem' />}>
         {i18n._t('Basic settings')}
       </Tabs.Tab>
-      {eventType === 'local' && (
-        <Tabs.Tab value='local' icon={<IconFriends size='0.8rem' />}>
+      {eventType === 'LOCAL' && (
+        <Tabs.Tab value='LOCAL' icon={<IconFriends size='0.8rem' />}>
           {i18n._t('Local event settings')}
         </Tabs.Tab>
       )}
-      {eventType === 'tournament' && (
-        <Tabs.Tab value='tournament' icon={<IconTournament size='0.8rem' />}>
+      {eventType === 'TOURNAMENT' && (
+        <Tabs.Tab value='TOURNAMENT' icon={<IconTournament size='0.8rem' />}>
           {i18n._t('Tournament settings')}
         </Tabs.Tab>
       )}
-      {eventType === 'online' && (
-        <Tabs.Tab value='online' icon={<IconNetwork size='0.8rem' />}>
+      {eventType === 'ONLINE' && (
+        <Tabs.Tab value='ONLINE' icon={<IconNetwork size='0.8rem' />}>
           {i18n._t('Online event settings')}
         </Tabs.Tab>
       )}

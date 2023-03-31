@@ -27,7 +27,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         withAsterisk
         icon={<IconUsers size='1rem' />}
         label={i18n._t('Tenhou Lobby ID')}
-        {...form.getInputProps('event.tenhouLobbyId')}
+        {...form.getInputProps('event.lobbyId')}
       />
       <NumberInput
         {...form.getInputProps('ruleset.gameExpirationTime')}
@@ -51,7 +51,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         min={0}
       />
       <NumberInput
-        {...form.getInputProps('event.gameSeriesCount')}
+        {...form.getInputProps('event.seriesLength')}
         icon={<IconChartHistogram size='1rem' />}
         label={i18n._t('Series length')}
         description={i18n._t(
@@ -62,7 +62,7 @@ export const OnlineSettings: React.FC<OnlineSettingsProps> = ({ form, i18n }) =>
         min={0}
       />
       <NumberInput
-        {...form.getInputProps('event.minGamesCount')}
+        {...form.getInputProps('event.minGames')}
         icon={<IconNumbers size='1rem' />}
         label={i18n._t('Minimal games count')}
         description={i18n._t(

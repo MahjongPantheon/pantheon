@@ -1,17 +1,18 @@
 import { UseFormReturnType } from '@mantine/form';
+import { EventType } from '#/clients/atoms.pb';
 
 export type EventCustom = {
-  type: 'local' | 'tournament' | 'online';
+  type?: EventType | null;
   title: string;
   description: string;
   timezone: string;
   duration: number;
   isTeam: boolean;
   isPrescripted: boolean;
-  gameSeriesCount: number;
-  minGamesCount: number;
-  baseRuleset: string;
-  tenhouLobbyId: string;
+  seriesLength: number;
+  minGames: number;
+  ruleset: string;
+  lobbyId: number;
 };
 
 export type RulesetCustom = {
@@ -52,8 +53,12 @@ export type RulesetCustom = {
   chipsValue: number;
 };
 
-export type FormFields = { event: EventCustom; ruleset: RulesetCustom };
-export type FormHandle = UseFormReturnType<{ event: EventCustom; ruleset: RulesetCustom }>;
+export type FormFields = {
+  event: EventCustom;
+  ruleset: RulesetCustom;
+  customized: RulesetCustomized;
+};
+export type FormHandle = UseFormReturnType<FormFields>;
 
 export type RulesetRemote = {
   tonpuusen: boolean;
@@ -92,3 +97,7 @@ export type RulesetRemote = {
   gameExpirationTime: number;
   chipsValue: number;
 };
+
+export type RulesetCustomized = Partial<{
+  [k in keyof RulesetRemote]: boolean;
+}>;

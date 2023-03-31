@@ -132,6 +132,9 @@ export const ProfileManage: React.FC = () => {
             <TextInput
               icon={<IconId size='1rem' />}
               label={i18n._t('Player title')}
+              description={i18n._t(
+                "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
+              )}
               {...form.getInputProps('title')}
             />
             <Space h='md' />
