@@ -225,7 +225,17 @@ export class ApiService {
   }
 
   getRulesets() {
-    return GetRulesets({}, this._clientConfMimir).then((r) => r.rulesets);
+    return GetRulesets({}, this._clientConfMimir).then((r) => {
+      const rulesets = [];
+      for (let i = 0; i < r.rulesets.length; i++) {
+        rulesets.push({
+          id: r.rulesetIds[i],
+          title: r.rulesetTitles[i],
+          rules: r.rulesets[i],
+        });
+      }
+      return rulesets;
+    });
   }
 
   getTimezones() {

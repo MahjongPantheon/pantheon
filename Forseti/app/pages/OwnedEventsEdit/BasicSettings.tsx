@@ -7,24 +7,14 @@ import { FormHandle } from '#/pages/OwnedEventsEdit/types';
 type BasicSettingsProps = {
   form: FormHandle;
   i18n: I18nService;
-  rulesets: Array<{ value: string; label: string }>;
   timezones: Array<{ value: string; label: string }>;
 };
 
-export const BasicSettings: React.FC<BasicSettingsProps> = ({
-  rulesets,
-  timezones,
-  form,
-  i18n,
-}) => {
+export const BasicSettings: React.FC<BasicSettingsProps> = ({ timezones, form, i18n }) => {
   return (
     <>
       <Stack>
         <Text>Type: {form.getTransformedValues().event.type}</Text>
-        <Text>
-          Base ruleset:{' '}
-          {rulesets.find((v) => v.value === form.getTransformedValues().event.ruleset)?.label}
-        </Text>
         {/*<Radio.Group*/}
         {/*  label={i18n._t('Select event type')}*/}
         {/*  {...form.getInputProps('event.type')}*/}

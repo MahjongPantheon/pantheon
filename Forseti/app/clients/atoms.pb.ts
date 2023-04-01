@@ -448,7 +448,6 @@ export interface EventData {
   title: string;
   description: string;
   duration: number;
-  ruleset: string;
   timezone: string;
   lobbyId: number;
   seriesLength: number;
@@ -456,7 +455,7 @@ export interface EventData {
   isTeam: boolean;
   isPrescripted: boolean;
   autostart: number;
-  rulesetChanges: string;
+  rulesetConfig: RulesetConfig;
 }
 
 export interface TableState {
@@ -5717,7 +5716,6 @@ export const EventData = {
       title: "",
       description: "",
       duration: 0,
-      ruleset: "",
       timezone: "",
       lobbyId: 0,
       seriesLength: 0,
@@ -5725,7 +5723,7 @@ export const EventData = {
       isTeam: false,
       isPrescripted: false,
       autostart: 0,
-      rulesetChanges: "",
+      rulesetConfig: RulesetConfig.initialize(),
     };
   },
 
@@ -5748,9 +5746,6 @@ export const EventData = {
     if (msg.duration) {
       writer.writeInt32(4, msg.duration);
     }
-    if (msg.ruleset) {
-      writer.writeString(5, msg.ruleset);
-    }
     if (msg.timezone) {
       writer.writeString(6, msg.timezone);
     }
@@ -5772,8 +5767,8 @@ export const EventData = {
     if (msg.autostart) {
       writer.writeInt32(12, msg.autostart);
     }
-    if (msg.rulesetChanges) {
-      writer.writeString(13, msg.rulesetChanges);
+    if (msg.rulesetConfig) {
+      writer.writeMessage(14, msg.rulesetConfig, RulesetConfig._writeMessage);
     }
     return writer;
   },
@@ -5799,10 +5794,6 @@ export const EventData = {
         }
         case 4: {
           msg.duration = reader.readInt32();
-          break;
-        }
-        case 5: {
-          msg.ruleset = reader.readString();
           break;
         }
         case 6: {
@@ -5833,8 +5824,8 @@ export const EventData = {
           msg.autostart = reader.readInt32();
           break;
         }
-        case 13: {
-          msg.rulesetChanges = reader.readString();
+        case 14: {
+          reader.readMessage(msg.rulesetConfig, RulesetConfig._readMessage);
           break;
         }
         default: {
@@ -11851,7 +11842,6 @@ export const EventDataJSON = {
       title: "",
       description: "",
       duration: 0,
-      ruleset: "",
       timezone: "",
       lobbyId: 0,
       seriesLength: 0,
@@ -11859,7 +11849,7 @@ export const EventDataJSON = {
       isTeam: false,
       isPrescripted: false,
       autostart: 0,
-      rulesetChanges: "",
+      rulesetConfig: RulesetConfigJSON.initialize(),
     };
   },
 
@@ -11879,9 +11869,6 @@ export const EventDataJSON = {
     }
     if (msg.duration) {
       json["duration"] = msg.duration;
-    }
-    if (msg.ruleset) {
-      json["ruleset"] = msg.ruleset;
     }
     if (msg.timezone) {
       json["timezone"] = msg.timezone;
@@ -11904,8 +11891,13 @@ export const EventDataJSON = {
     if (msg.autostart) {
       json["autostart"] = msg.autostart;
     }
-    if (msg.rulesetChanges) {
-      json["rulesetChanges"] = msg.rulesetChanges;
+    if (msg.rulesetConfig) {
+      const _rulesetConfig_ = RulesetConfigJSON._writeMessage(
+        msg.rulesetConfig
+      );
+      if (Object.keys(_rulesetConfig_).length > 0) {
+        json["rulesetConfig"] = _rulesetConfig_;
+      }
     }
     return json;
   },
@@ -11929,10 +11921,6 @@ export const EventDataJSON = {
     const _duration_ = json["duration"];
     if (_duration_) {
       msg.duration = _duration_;
-    }
-    const _ruleset_ = json["ruleset"];
-    if (_ruleset_) {
-      msg.ruleset = _ruleset_;
     }
     const _timezone_ = json["timezone"];
     if (_timezone_) {
@@ -11962,9 +11950,11 @@ export const EventDataJSON = {
     if (_autostart_) {
       msg.autostart = _autostart_;
     }
-    const _rulesetChanges_ = json["rulesetChanges"];
-    if (_rulesetChanges_) {
-      msg.rulesetChanges = _rulesetChanges_;
+    const _rulesetConfig_ = json["rulesetConfig"];
+    if (_rulesetConfig_) {
+      const m = RulesetConfig.initialize();
+      RulesetConfigJSON._readMessage(m, _rulesetConfig_);
+      msg.rulesetConfig = m;
     }
     return msg;
   },
