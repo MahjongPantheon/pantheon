@@ -29,6 +29,10 @@ export type SessionStatus =
   | "FINISHED"
   | "CANCELLED";
 
+export type UmaType = "UMA_SIMPLE" | "UMA_COMPLEX";
+
+export type EndingPolicy = "EP_NONE" | "EP_ONE_MORE_HAND" | "EP_END_AFTER_HAND";
+
 export interface AccessRules {
   rules: Record<string, AccessRules.Rules["value"] | undefined>;
 }
@@ -150,37 +154,12 @@ export interface MyEvent {
 }
 
 export interface GameConfig {
-  allowedYaku: number[];
-  startPoints: number;
-  goalPoints: number;
-  playAdditionalRounds: boolean;
-  withKazoe: boolean;
-  withKiriageMangan: boolean;
-  withAbortives: boolean;
-  withNagashiMangan: boolean;
-  withAtamahane: boolean;
   rulesetTitle: string;
-  tonpuusen: boolean;
-  startRating: number;
-  riichiGoesToWinner: boolean;
-  doubleronRiichiAtamahane: boolean;
-  doubleronHonbaAtamahane: boolean;
-  extraChomboPayments: boolean;
-  chomboPenalty: number;
-  withKuitan: boolean;
-  withButtobi: boolean;
-  withMultiYakumans: boolean;
-  gameExpirationTime: number;
-  minPenalty: number;
-  maxPenalty: number;
-  penaltyStep: number;
-  yakuWithPao: number[];
   eventTitle: string;
   eventDescription: string;
   eventStatHost: string;
   useTimer: boolean;
   usePenalty: boolean;
-  endingPolicy: string;
   gameDuration: number;
   timezone: string;
   isOnline: boolean;
@@ -190,15 +169,14 @@ export interface GameConfig {
   syncEnd: boolean;
   sortByGames: boolean;
   allowPlayerAppend: boolean;
-  withLeadingDealerGameOver: boolean;
   seriesLength: number;
   minGamesCount: number;
   gamesStatus: TournamentGamesStatus;
   hideResults: boolean;
   hideAddReplayButton: boolean;
   isPrescripted: boolean;
-  chipsValue: number;
   isFinished: boolean;
+  rulesetConfig: RulesetConfig;
 }
 
 export interface PlayerInRating {
@@ -548,6 +526,57 @@ export interface SessionState {
   lastHandStarted: boolean;
 }
 
+export interface Uma {
+  place1: number;
+  place2: number;
+  place3: number;
+  place4: number;
+}
+
+export interface ComplexUma {
+  neg1: Uma;
+  neg3: Uma;
+  otherwise: Uma;
+}
+
+export interface RulesetConfig {
+  complexUma: ComplexUma;
+  endingPolicy: EndingPolicy;
+  uma: Uma;
+  umaType: UmaType;
+  doubleronHonbaAtamahane: boolean;
+  doubleronRiichiAtamahane: boolean;
+  equalizeUma: boolean;
+  extraChomboPayments: boolean;
+  playAdditionalRounds: boolean;
+  riichiGoesToWinner: boolean;
+  tonpuusen: boolean;
+  withAbortives: boolean;
+  withAtamahane: boolean;
+  withButtobi: boolean;
+  withKazoe: boolean;
+  withKiriageMangan: boolean;
+  withKuitan: boolean;
+  withLeadingDealerGameOver: boolean;
+  withMultiYakumans: boolean;
+  withNagashiMangan: boolean;
+  withWinningDealerHonbaSkipped: boolean;
+  chipsValue: number;
+  chomboPenalty: number;
+  gameExpirationTime: number;
+  goalPoints: number;
+  maxPenalty: number;
+  minPenalty: number;
+  oka: number;
+  penaltyStep: number;
+  replacementPlayerFixedPoints: number;
+  replacementPlayerOverrideUma: number;
+  startPoints: number;
+  startRating: number;
+  allowedYaku: number[];
+  yakuWithPao: number[];
+}
+
 export interface Generic_Success_Response {
   success: boolean;
 }
@@ -777,6 +806,91 @@ export const SessionStatus = {
       }
       case "CANCELLED": {
         return 4;
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as number;
+      }
+    }
+  },
+} as const;
+
+export const UmaType = {
+  UMA_SIMPLE: "UMA_SIMPLE",
+  UMA_COMPLEX: "UMA_COMPLEX",
+  /**
+   * @private
+   */
+  _fromInt: function (i: number): UmaType {
+    switch (i) {
+      case 0: {
+        return "UMA_SIMPLE";
+      }
+      case 1: {
+        return "UMA_COMPLEX";
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as UmaType;
+      }
+    }
+  },
+  /**
+   * @private
+   */
+  _toInt: function (i: UmaType): number {
+    switch (i) {
+      case "UMA_SIMPLE": {
+        return 0;
+      }
+      case "UMA_COMPLEX": {
+        return 1;
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as number;
+      }
+    }
+  },
+} as const;
+
+export const EndingPolicy = {
+  EP_NONE: "EP_NONE",
+  EP_ONE_MORE_HAND: "EP_ONE_MORE_HAND",
+  EP_END_AFTER_HAND: "EP_END_AFTER_HAND",
+  /**
+   * @private
+   */
+  _fromInt: function (i: number): EndingPolicy {
+    switch (i) {
+      case 0: {
+        return "EP_NONE";
+      }
+      case 1: {
+        return "EP_ONE_MORE_HAND";
+      }
+      case 2: {
+        return "EP_END_AFTER_HAND";
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as EndingPolicy;
+      }
+    }
+  },
+  /**
+   * @private
+   */
+  _toInt: function (i: EndingPolicy): number {
+    switch (i) {
+      case "EP_NONE": {
+        return 0;
+      }
+      case "EP_ONE_MORE_HAND": {
+        return 1;
+      }
+      case "EP_END_AFTER_HAND": {
+        return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -2120,37 +2234,12 @@ export const GameConfig = {
    */
   initialize: function (): GameConfig {
     return {
-      allowedYaku: [],
-      startPoints: 0,
-      goalPoints: 0,
-      playAdditionalRounds: false,
-      withKazoe: false,
-      withKiriageMangan: false,
-      withAbortives: false,
-      withNagashiMangan: false,
-      withAtamahane: false,
       rulesetTitle: "",
-      tonpuusen: false,
-      startRating: 0,
-      riichiGoesToWinner: false,
-      doubleronRiichiAtamahane: false,
-      doubleronHonbaAtamahane: false,
-      extraChomboPayments: false,
-      chomboPenalty: 0,
-      withKuitan: false,
-      withButtobi: false,
-      withMultiYakumans: false,
-      gameExpirationTime: 0,
-      minPenalty: 0,
-      maxPenalty: 0,
-      penaltyStep: 0,
-      yakuWithPao: [],
       eventTitle: "",
       eventDescription: "",
       eventStatHost: "",
       useTimer: false,
       usePenalty: false,
-      endingPolicy: "",
       gameDuration: 0,
       timezone: "",
       isOnline: false,
@@ -2160,15 +2249,14 @@ export const GameConfig = {
       syncEnd: false,
       sortByGames: false,
       allowPlayerAppend: false,
-      withLeadingDealerGameOver: false,
       seriesLength: 0,
       minGamesCount: 0,
       gamesStatus: TournamentGamesStatus._fromInt(0),
       hideResults: false,
       hideAddReplayButton: false,
       isPrescripted: false,
-      chipsValue: 0,
       isFinished: false,
+      rulesetConfig: RulesetConfig.initialize(),
     };
   },
 
@@ -2179,80 +2267,8 @@ export const GameConfig = {
     msg: Partial<GameConfig>,
     writer: BinaryWriter
   ): BinaryWriter {
-    if (msg.allowedYaku?.length) {
-      writer.writePackedInt32(1, msg.allowedYaku);
-    }
-    if (msg.startPoints) {
-      writer.writeInt32(2, msg.startPoints);
-    }
-    if (msg.goalPoints) {
-      writer.writeInt32(3, msg.goalPoints);
-    }
-    if (msg.playAdditionalRounds) {
-      writer.writeBool(4, msg.playAdditionalRounds);
-    }
-    if (msg.withKazoe) {
-      writer.writeBool(5, msg.withKazoe);
-    }
-    if (msg.withKiriageMangan) {
-      writer.writeBool(6, msg.withKiriageMangan);
-    }
-    if (msg.withAbortives) {
-      writer.writeBool(7, msg.withAbortives);
-    }
-    if (msg.withNagashiMangan) {
-      writer.writeBool(8, msg.withNagashiMangan);
-    }
-    if (msg.withAtamahane) {
-      writer.writeBool(9, msg.withAtamahane);
-    }
     if (msg.rulesetTitle) {
       writer.writeString(10, msg.rulesetTitle);
-    }
-    if (msg.tonpuusen) {
-      writer.writeBool(11, msg.tonpuusen);
-    }
-    if (msg.startRating) {
-      writer.writeInt32(12, msg.startRating);
-    }
-    if (msg.riichiGoesToWinner) {
-      writer.writeBool(13, msg.riichiGoesToWinner);
-    }
-    if (msg.doubleronRiichiAtamahane) {
-      writer.writeBool(14, msg.doubleronRiichiAtamahane);
-    }
-    if (msg.doubleronHonbaAtamahane) {
-      writer.writeBool(15, msg.doubleronHonbaAtamahane);
-    }
-    if (msg.extraChomboPayments) {
-      writer.writeBool(16, msg.extraChomboPayments);
-    }
-    if (msg.chomboPenalty) {
-      writer.writeFloat(17, msg.chomboPenalty);
-    }
-    if (msg.withKuitan) {
-      writer.writeBool(18, msg.withKuitan);
-    }
-    if (msg.withButtobi) {
-      writer.writeBool(19, msg.withButtobi);
-    }
-    if (msg.withMultiYakumans) {
-      writer.writeBool(20, msg.withMultiYakumans);
-    }
-    if (msg.gameExpirationTime) {
-      writer.writeInt32(21, msg.gameExpirationTime);
-    }
-    if (msg.minPenalty) {
-      writer.writeInt32(22, msg.minPenalty);
-    }
-    if (msg.maxPenalty) {
-      writer.writeInt32(23, msg.maxPenalty);
-    }
-    if (msg.penaltyStep) {
-      writer.writeInt32(24, msg.penaltyStep);
-    }
-    if (msg.yakuWithPao?.length) {
-      writer.writePackedInt32(25, msg.yakuWithPao);
     }
     if (msg.eventTitle) {
       writer.writeString(26, msg.eventTitle);
@@ -2268,9 +2284,6 @@ export const GameConfig = {
     }
     if (msg.usePenalty) {
       writer.writeBool(30, msg.usePenalty);
-    }
-    if (msg.endingPolicy) {
-      writer.writeString(31, msg.endingPolicy);
     }
     if (msg.gameDuration) {
       writer.writeInt32(34, msg.gameDuration);
@@ -2299,9 +2312,6 @@ export const GameConfig = {
     if (msg.allowPlayerAppend) {
       writer.writeBool(42, msg.allowPlayerAppend);
     }
-    if (msg.withLeadingDealerGameOver) {
-      writer.writeBool(43, msg.withLeadingDealerGameOver);
-    }
     if (msg.seriesLength) {
       writer.writeInt32(45, msg.seriesLength);
     }
@@ -2320,11 +2330,11 @@ export const GameConfig = {
     if (msg.isPrescripted) {
       writer.writeBool(50, msg.isPrescripted);
     }
-    if (msg.chipsValue) {
-      writer.writeInt32(51, msg.chipsValue);
-    }
     if (msg.isFinished) {
       writer.writeBool(52, msg.isFinished);
+    }
+    if (msg.rulesetConfig) {
+      writer.writeMessage(53, msg.rulesetConfig, RulesetConfig._writeMessage);
     }
     return writer;
   },
@@ -2336,112 +2346,8 @@ export const GameConfig = {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
-        case 1: {
-          if (reader.isDelimited()) {
-            msg.allowedYaku.push(...reader.readPackedInt32());
-          } else {
-            msg.allowedYaku.push(reader.readInt32());
-          }
-          break;
-        }
-        case 2: {
-          msg.startPoints = reader.readInt32();
-          break;
-        }
-        case 3: {
-          msg.goalPoints = reader.readInt32();
-          break;
-        }
-        case 4: {
-          msg.playAdditionalRounds = reader.readBool();
-          break;
-        }
-        case 5: {
-          msg.withKazoe = reader.readBool();
-          break;
-        }
-        case 6: {
-          msg.withKiriageMangan = reader.readBool();
-          break;
-        }
-        case 7: {
-          msg.withAbortives = reader.readBool();
-          break;
-        }
-        case 8: {
-          msg.withNagashiMangan = reader.readBool();
-          break;
-        }
-        case 9: {
-          msg.withAtamahane = reader.readBool();
-          break;
-        }
         case 10: {
           msg.rulesetTitle = reader.readString();
-          break;
-        }
-        case 11: {
-          msg.tonpuusen = reader.readBool();
-          break;
-        }
-        case 12: {
-          msg.startRating = reader.readInt32();
-          break;
-        }
-        case 13: {
-          msg.riichiGoesToWinner = reader.readBool();
-          break;
-        }
-        case 14: {
-          msg.doubleronRiichiAtamahane = reader.readBool();
-          break;
-        }
-        case 15: {
-          msg.doubleronHonbaAtamahane = reader.readBool();
-          break;
-        }
-        case 16: {
-          msg.extraChomboPayments = reader.readBool();
-          break;
-        }
-        case 17: {
-          msg.chomboPenalty = reader.readFloat();
-          break;
-        }
-        case 18: {
-          msg.withKuitan = reader.readBool();
-          break;
-        }
-        case 19: {
-          msg.withButtobi = reader.readBool();
-          break;
-        }
-        case 20: {
-          msg.withMultiYakumans = reader.readBool();
-          break;
-        }
-        case 21: {
-          msg.gameExpirationTime = reader.readInt32();
-          break;
-        }
-        case 22: {
-          msg.minPenalty = reader.readInt32();
-          break;
-        }
-        case 23: {
-          msg.maxPenalty = reader.readInt32();
-          break;
-        }
-        case 24: {
-          msg.penaltyStep = reader.readInt32();
-          break;
-        }
-        case 25: {
-          if (reader.isDelimited()) {
-            msg.yakuWithPao.push(...reader.readPackedInt32());
-          } else {
-            msg.yakuWithPao.push(reader.readInt32());
-          }
           break;
         }
         case 26: {
@@ -2462,10 +2368,6 @@ export const GameConfig = {
         }
         case 30: {
           msg.usePenalty = reader.readBool();
-          break;
-        }
-        case 31: {
-          msg.endingPolicy = reader.readString();
           break;
         }
         case 34: {
@@ -2504,10 +2406,6 @@ export const GameConfig = {
           msg.allowPlayerAppend = reader.readBool();
           break;
         }
-        case 43: {
-          msg.withLeadingDealerGameOver = reader.readBool();
-          break;
-        }
         case 45: {
           msg.seriesLength = reader.readInt32();
           break;
@@ -2532,12 +2430,12 @@ export const GameConfig = {
           msg.isPrescripted = reader.readBool();
           break;
         }
-        case 51: {
-          msg.chipsValue = reader.readInt32();
-          break;
-        }
         case 52: {
           msg.isFinished = reader.readBool();
+          break;
+        }
+        case 53: {
+          reader.readMessage(msg.rulesetConfig, RulesetConfig._readMessage);
           break;
         }
         default: {
@@ -6867,6 +6765,512 @@ export const SessionState = {
   },
 };
 
+export const Uma = {
+  /**
+   * Serializes Uma to protobuf.
+   */
+  encode: function (msg: Partial<Uma>): Uint8Array {
+    return Uma._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  },
+
+  /**
+   * Deserializes Uma from protobuf.
+   */
+  decode: function (bytes: ByteSource): Uma {
+    return Uma._readMessage(Uma.initialize(), new BinaryReader(bytes));
+  },
+
+  /**
+   * Initializes Uma with all fields set to their default value.
+   */
+  initialize: function (): Uma {
+    return {
+      place1: 0,
+      place2: 0,
+      place3: 0,
+      place4: 0,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<Uma>,
+    writer: BinaryWriter
+  ): BinaryWriter {
+    if (msg.place1) {
+      writer.writeInt32(1, msg.place1);
+    }
+    if (msg.place2) {
+      writer.writeInt32(2, msg.place2);
+    }
+    if (msg.place3) {
+      writer.writeInt32(3, msg.place3);
+    }
+    if (msg.place4) {
+      writer.writeInt32(4, msg.place4);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: Uma, reader: BinaryReader): Uma {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          msg.place1 = reader.readInt32();
+          break;
+        }
+        case 2: {
+          msg.place2 = reader.readInt32();
+          break;
+        }
+        case 3: {
+          msg.place3 = reader.readInt32();
+          break;
+        }
+        case 4: {
+          msg.place4 = reader.readInt32();
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const ComplexUma = {
+  /**
+   * Serializes ComplexUma to protobuf.
+   */
+  encode: function (msg: Partial<ComplexUma>): Uint8Array {
+    return ComplexUma._writeMessage(msg, new BinaryWriter()).getResultBuffer();
+  },
+
+  /**
+   * Deserializes ComplexUma from protobuf.
+   */
+  decode: function (bytes: ByteSource): ComplexUma {
+    return ComplexUma._readMessage(
+      ComplexUma.initialize(),
+      new BinaryReader(bytes)
+    );
+  },
+
+  /**
+   * Initializes ComplexUma with all fields set to their default value.
+   */
+  initialize: function (): ComplexUma {
+    return {
+      neg1: Uma.initialize(),
+      neg3: Uma.initialize(),
+      otherwise: Uma.initialize(),
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<ComplexUma>,
+    writer: BinaryWriter
+  ): BinaryWriter {
+    if (msg.neg1) {
+      writer.writeMessage(1, msg.neg1, Uma._writeMessage);
+    }
+    if (msg.neg3) {
+      writer.writeMessage(2, msg.neg3, Uma._writeMessage);
+    }
+    if (msg.otherwise) {
+      writer.writeMessage(3, msg.otherwise, Uma._writeMessage);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: ComplexUma, reader: BinaryReader): ComplexUma {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          reader.readMessage(msg.neg1, Uma._readMessage);
+          break;
+        }
+        case 2: {
+          reader.readMessage(msg.neg3, Uma._readMessage);
+          break;
+        }
+        case 3: {
+          reader.readMessage(msg.otherwise, Uma._readMessage);
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
+export const RulesetConfig = {
+  /**
+   * Serializes RulesetConfig to protobuf.
+   */
+  encode: function (msg: Partial<RulesetConfig>): Uint8Array {
+    return RulesetConfig._writeMessage(
+      msg,
+      new BinaryWriter()
+    ).getResultBuffer();
+  },
+
+  /**
+   * Deserializes RulesetConfig from protobuf.
+   */
+  decode: function (bytes: ByteSource): RulesetConfig {
+    return RulesetConfig._readMessage(
+      RulesetConfig.initialize(),
+      new BinaryReader(bytes)
+    );
+  },
+
+  /**
+   * Initializes RulesetConfig with all fields set to their default value.
+   */
+  initialize: function (): RulesetConfig {
+    return {
+      complexUma: ComplexUma.initialize(),
+      endingPolicy: EndingPolicy._fromInt(0),
+      uma: Uma.initialize(),
+      umaType: UmaType._fromInt(0),
+      doubleronHonbaAtamahane: false,
+      doubleronRiichiAtamahane: false,
+      equalizeUma: false,
+      extraChomboPayments: false,
+      playAdditionalRounds: false,
+      riichiGoesToWinner: false,
+      tonpuusen: false,
+      withAbortives: false,
+      withAtamahane: false,
+      withButtobi: false,
+      withKazoe: false,
+      withKiriageMangan: false,
+      withKuitan: false,
+      withLeadingDealerGameOver: false,
+      withMultiYakumans: false,
+      withNagashiMangan: false,
+      withWinningDealerHonbaSkipped: false,
+      chipsValue: 0,
+      chomboPenalty: 0,
+      gameExpirationTime: 0,
+      goalPoints: 0,
+      maxPenalty: 0,
+      minPenalty: 0,
+      oka: 0,
+      penaltyStep: 0,
+      replacementPlayerFixedPoints: 0,
+      replacementPlayerOverrideUma: 0,
+      startPoints: 0,
+      startRating: 0,
+      allowedYaku: [],
+      yakuWithPao: [],
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<RulesetConfig>,
+    writer: BinaryWriter
+  ): BinaryWriter {
+    if (msg.complexUma) {
+      writer.writeMessage(1, msg.complexUma, ComplexUma._writeMessage);
+    }
+    if (msg.endingPolicy && EndingPolicy._toInt(msg.endingPolicy)) {
+      writer.writeEnum(2, EndingPolicy._toInt(msg.endingPolicy));
+    }
+    if (msg.uma) {
+      writer.writeMessage(3, msg.uma, Uma._writeMessage);
+    }
+    if (msg.umaType && UmaType._toInt(msg.umaType)) {
+      writer.writeEnum(4, UmaType._toInt(msg.umaType));
+    }
+    if (msg.doubleronHonbaAtamahane) {
+      writer.writeBool(5, msg.doubleronHonbaAtamahane);
+    }
+    if (msg.doubleronRiichiAtamahane) {
+      writer.writeBool(6, msg.doubleronRiichiAtamahane);
+    }
+    if (msg.equalizeUma) {
+      writer.writeBool(7, msg.equalizeUma);
+    }
+    if (msg.extraChomboPayments) {
+      writer.writeBool(8, msg.extraChomboPayments);
+    }
+    if (msg.playAdditionalRounds) {
+      writer.writeBool(9, msg.playAdditionalRounds);
+    }
+    if (msg.riichiGoesToWinner) {
+      writer.writeBool(10, msg.riichiGoesToWinner);
+    }
+    if (msg.tonpuusen) {
+      writer.writeBool(11, msg.tonpuusen);
+    }
+    if (msg.withAbortives) {
+      writer.writeBool(12, msg.withAbortives);
+    }
+    if (msg.withAtamahane) {
+      writer.writeBool(13, msg.withAtamahane);
+    }
+    if (msg.withButtobi) {
+      writer.writeBool(14, msg.withButtobi);
+    }
+    if (msg.withKazoe) {
+      writer.writeBool(15, msg.withKazoe);
+    }
+    if (msg.withKiriageMangan) {
+      writer.writeBool(16, msg.withKiriageMangan);
+    }
+    if (msg.withKuitan) {
+      writer.writeBool(17, msg.withKuitan);
+    }
+    if (msg.withLeadingDealerGameOver) {
+      writer.writeBool(18, msg.withLeadingDealerGameOver);
+    }
+    if (msg.withMultiYakumans) {
+      writer.writeBool(19, msg.withMultiYakumans);
+    }
+    if (msg.withNagashiMangan) {
+      writer.writeBool(20, msg.withNagashiMangan);
+    }
+    if (msg.withWinningDealerHonbaSkipped) {
+      writer.writeBool(21, msg.withWinningDealerHonbaSkipped);
+    }
+    if (msg.chipsValue) {
+      writer.writeInt32(22, msg.chipsValue);
+    }
+    if (msg.chomboPenalty) {
+      writer.writeInt32(23, msg.chomboPenalty);
+    }
+    if (msg.gameExpirationTime) {
+      writer.writeInt32(24, msg.gameExpirationTime);
+    }
+    if (msg.goalPoints) {
+      writer.writeInt32(25, msg.goalPoints);
+    }
+    if (msg.maxPenalty) {
+      writer.writeInt32(26, msg.maxPenalty);
+    }
+    if (msg.minPenalty) {
+      writer.writeInt32(27, msg.minPenalty);
+    }
+    if (msg.oka) {
+      writer.writeInt32(28, msg.oka);
+    }
+    if (msg.penaltyStep) {
+      writer.writeInt32(29, msg.penaltyStep);
+    }
+    if (msg.replacementPlayerFixedPoints) {
+      writer.writeInt32(30, msg.replacementPlayerFixedPoints);
+    }
+    if (msg.replacementPlayerOverrideUma) {
+      writer.writeInt32(31, msg.replacementPlayerOverrideUma);
+    }
+    if (msg.startPoints) {
+      writer.writeInt32(32, msg.startPoints);
+    }
+    if (msg.startRating) {
+      writer.writeInt32(33, msg.startRating);
+    }
+    if (msg.allowedYaku?.length) {
+      writer.writePackedInt32(34, msg.allowedYaku);
+    }
+    if (msg.yakuWithPao?.length) {
+      writer.writePackedInt32(35, msg.yakuWithPao);
+    }
+    return writer;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (
+    msg: RulesetConfig,
+    reader: BinaryReader
+  ): RulesetConfig {
+    while (reader.nextField()) {
+      const field = reader.getFieldNumber();
+      switch (field) {
+        case 1: {
+          reader.readMessage(msg.complexUma, ComplexUma._readMessage);
+          break;
+        }
+        case 2: {
+          msg.endingPolicy = EndingPolicy._fromInt(reader.readEnum());
+          break;
+        }
+        case 3: {
+          reader.readMessage(msg.uma, Uma._readMessage);
+          break;
+        }
+        case 4: {
+          msg.umaType = UmaType._fromInt(reader.readEnum());
+          break;
+        }
+        case 5: {
+          msg.doubleronHonbaAtamahane = reader.readBool();
+          break;
+        }
+        case 6: {
+          msg.doubleronRiichiAtamahane = reader.readBool();
+          break;
+        }
+        case 7: {
+          msg.equalizeUma = reader.readBool();
+          break;
+        }
+        case 8: {
+          msg.extraChomboPayments = reader.readBool();
+          break;
+        }
+        case 9: {
+          msg.playAdditionalRounds = reader.readBool();
+          break;
+        }
+        case 10: {
+          msg.riichiGoesToWinner = reader.readBool();
+          break;
+        }
+        case 11: {
+          msg.tonpuusen = reader.readBool();
+          break;
+        }
+        case 12: {
+          msg.withAbortives = reader.readBool();
+          break;
+        }
+        case 13: {
+          msg.withAtamahane = reader.readBool();
+          break;
+        }
+        case 14: {
+          msg.withButtobi = reader.readBool();
+          break;
+        }
+        case 15: {
+          msg.withKazoe = reader.readBool();
+          break;
+        }
+        case 16: {
+          msg.withKiriageMangan = reader.readBool();
+          break;
+        }
+        case 17: {
+          msg.withKuitan = reader.readBool();
+          break;
+        }
+        case 18: {
+          msg.withLeadingDealerGameOver = reader.readBool();
+          break;
+        }
+        case 19: {
+          msg.withMultiYakumans = reader.readBool();
+          break;
+        }
+        case 20: {
+          msg.withNagashiMangan = reader.readBool();
+          break;
+        }
+        case 21: {
+          msg.withWinningDealerHonbaSkipped = reader.readBool();
+          break;
+        }
+        case 22: {
+          msg.chipsValue = reader.readInt32();
+          break;
+        }
+        case 23: {
+          msg.chomboPenalty = reader.readInt32();
+          break;
+        }
+        case 24: {
+          msg.gameExpirationTime = reader.readInt32();
+          break;
+        }
+        case 25: {
+          msg.goalPoints = reader.readInt32();
+          break;
+        }
+        case 26: {
+          msg.maxPenalty = reader.readInt32();
+          break;
+        }
+        case 27: {
+          msg.minPenalty = reader.readInt32();
+          break;
+        }
+        case 28: {
+          msg.oka = reader.readInt32();
+          break;
+        }
+        case 29: {
+          msg.penaltyStep = reader.readInt32();
+          break;
+        }
+        case 30: {
+          msg.replacementPlayerFixedPoints = reader.readInt32();
+          break;
+        }
+        case 31: {
+          msg.replacementPlayerOverrideUma = reader.readInt32();
+          break;
+        }
+        case 32: {
+          msg.startPoints = reader.readInt32();
+          break;
+        }
+        case 33: {
+          msg.startRating = reader.readInt32();
+          break;
+        }
+        case 34: {
+          if (reader.isDelimited()) {
+            msg.allowedYaku.push(...reader.readPackedInt32());
+          } else {
+            msg.allowedYaku.push(reader.readInt32());
+          }
+          break;
+        }
+        case 35: {
+          if (reader.isDelimited()) {
+            msg.yakuWithPao.push(...reader.readPackedInt32());
+          } else {
+            msg.yakuWithPao.push(reader.readInt32());
+          }
+          break;
+        }
+        default: {
+          reader.skipField();
+          break;
+        }
+      }
+    }
+    return msg;
+  },
+};
+
 export const Generic_Success_Response = {
   /**
    * Serializes Generic_Success_Response to protobuf.
@@ -7222,6 +7626,91 @@ export const SessionStatusJSON = {
       }
       case "CANCELLED": {
         return 4;
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as number;
+      }
+    }
+  },
+} as const;
+
+export const UmaTypeJSON = {
+  UMA_SIMPLE: "UMA_SIMPLE",
+  UMA_COMPLEX: "UMA_COMPLEX",
+  /**
+   * @private
+   */
+  _fromInt: function (i: number): UmaType {
+    switch (i) {
+      case 0: {
+        return "UMA_SIMPLE";
+      }
+      case 1: {
+        return "UMA_COMPLEX";
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as UmaType;
+      }
+    }
+  },
+  /**
+   * @private
+   */
+  _toInt: function (i: UmaType): number {
+    switch (i) {
+      case "UMA_SIMPLE": {
+        return 0;
+      }
+      case "UMA_COMPLEX": {
+        return 1;
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as number;
+      }
+    }
+  },
+} as const;
+
+export const EndingPolicyJSON = {
+  EP_NONE: "EP_NONE",
+  EP_ONE_MORE_HAND: "EP_ONE_MORE_HAND",
+  EP_END_AFTER_HAND: "EP_END_AFTER_HAND",
+  /**
+   * @private
+   */
+  _fromInt: function (i: number): EndingPolicy {
+    switch (i) {
+      case 0: {
+        return "EP_NONE";
+      }
+      case 1: {
+        return "EP_ONE_MORE_HAND";
+      }
+      case 2: {
+        return "EP_END_AFTER_HAND";
+      }
+      // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
+      default: {
+        return i as unknown as EndingPolicy;
+      }
+    }
+  },
+  /**
+   * @private
+   */
+  _toInt: function (i: EndingPolicy): number {
+    switch (i) {
+      case "EP_NONE": {
+        return 0;
+      }
+      case "EP_ONE_MORE_HAND": {
+        return 1;
+      }
+      case "EP_END_AFTER_HAND": {
+        return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -8401,37 +8890,12 @@ export const GameConfigJSON = {
    */
   initialize: function (): GameConfig {
     return {
-      allowedYaku: [],
-      startPoints: 0,
-      goalPoints: 0,
-      playAdditionalRounds: false,
-      withKazoe: false,
-      withKiriageMangan: false,
-      withAbortives: false,
-      withNagashiMangan: false,
-      withAtamahane: false,
       rulesetTitle: "",
-      tonpuusen: false,
-      startRating: 0,
-      riichiGoesToWinner: false,
-      doubleronRiichiAtamahane: false,
-      doubleronHonbaAtamahane: false,
-      extraChomboPayments: false,
-      chomboPenalty: 0,
-      withKuitan: false,
-      withButtobi: false,
-      withMultiYakumans: false,
-      gameExpirationTime: 0,
-      minPenalty: 0,
-      maxPenalty: 0,
-      penaltyStep: 0,
-      yakuWithPao: [],
       eventTitle: "",
       eventDescription: "",
       eventStatHost: "",
       useTimer: false,
       usePenalty: false,
-      endingPolicy: "",
       gameDuration: 0,
       timezone: "",
       isOnline: false,
@@ -8441,15 +8905,14 @@ export const GameConfigJSON = {
       syncEnd: false,
       sortByGames: false,
       allowPlayerAppend: false,
-      withLeadingDealerGameOver: false,
       seriesLength: 0,
       minGamesCount: 0,
       gamesStatus: TournamentGamesStatus._fromInt(0),
       hideResults: false,
       hideAddReplayButton: false,
       isPrescripted: false,
-      chipsValue: 0,
       isFinished: false,
+      rulesetConfig: RulesetConfigJSON.initialize(),
     };
   },
 
@@ -8458,80 +8921,8 @@ export const GameConfigJSON = {
    */
   _writeMessage: function (msg: Partial<GameConfig>): Record<string, unknown> {
     const json: Record<string, unknown> = {};
-    if (msg.allowedYaku?.length) {
-      json["allowedYaku"] = msg.allowedYaku;
-    }
-    if (msg.startPoints) {
-      json["startPoints"] = msg.startPoints;
-    }
-    if (msg.goalPoints) {
-      json["goalPoints"] = msg.goalPoints;
-    }
-    if (msg.playAdditionalRounds) {
-      json["playAdditionalRounds"] = msg.playAdditionalRounds;
-    }
-    if (msg.withKazoe) {
-      json["withKazoe"] = msg.withKazoe;
-    }
-    if (msg.withKiriageMangan) {
-      json["withKiriageMangan"] = msg.withKiriageMangan;
-    }
-    if (msg.withAbortives) {
-      json["withAbortives"] = msg.withAbortives;
-    }
-    if (msg.withNagashiMangan) {
-      json["withNagashiMangan"] = msg.withNagashiMangan;
-    }
-    if (msg.withAtamahane) {
-      json["withAtamahane"] = msg.withAtamahane;
-    }
     if (msg.rulesetTitle) {
       json["rulesetTitle"] = msg.rulesetTitle;
-    }
-    if (msg.tonpuusen) {
-      json["tonpuusen"] = msg.tonpuusen;
-    }
-    if (msg.startRating) {
-      json["startRating"] = msg.startRating;
-    }
-    if (msg.riichiGoesToWinner) {
-      json["riichiGoesToWinner"] = msg.riichiGoesToWinner;
-    }
-    if (msg.doubleronRiichiAtamahane) {
-      json["doubleronRiichiAtamahane"] = msg.doubleronRiichiAtamahane;
-    }
-    if (msg.doubleronHonbaAtamahane) {
-      json["doubleronHonbaAtamahane"] = msg.doubleronHonbaAtamahane;
-    }
-    if (msg.extraChomboPayments) {
-      json["extraChomboPayments"] = msg.extraChomboPayments;
-    }
-    if (msg.chomboPenalty) {
-      json["chomboPenalty"] = msg.chomboPenalty;
-    }
-    if (msg.withKuitan) {
-      json["withKuitan"] = msg.withKuitan;
-    }
-    if (msg.withButtobi) {
-      json["withButtobi"] = msg.withButtobi;
-    }
-    if (msg.withMultiYakumans) {
-      json["withMultiYakumans"] = msg.withMultiYakumans;
-    }
-    if (msg.gameExpirationTime) {
-      json["gameExpirationTime"] = msg.gameExpirationTime;
-    }
-    if (msg.minPenalty) {
-      json["minPenalty"] = msg.minPenalty;
-    }
-    if (msg.maxPenalty) {
-      json["maxPenalty"] = msg.maxPenalty;
-    }
-    if (msg.penaltyStep) {
-      json["penaltyStep"] = msg.penaltyStep;
-    }
-    if (msg.yakuWithPao?.length) {
-      json["yakuWithPao"] = msg.yakuWithPao;
     }
     if (msg.eventTitle) {
       json["eventTitle"] = msg.eventTitle;
@@ -8547,9 +8938,6 @@ export const GameConfigJSON = {
     }
     if (msg.usePenalty) {
       json["usePenalty"] = msg.usePenalty;
-    }
-    if (msg.endingPolicy) {
-      json["endingPolicy"] = msg.endingPolicy;
     }
     if (msg.gameDuration) {
       json["gameDuration"] = msg.gameDuration;
@@ -8578,9 +8966,6 @@ export const GameConfigJSON = {
     if (msg.allowPlayerAppend) {
       json["allowPlayerAppend"] = msg.allowPlayerAppend;
     }
-    if (msg.withLeadingDealerGameOver) {
-      json["withLeadingDealerGameOver"] = msg.withLeadingDealerGameOver;
-    }
     if (msg.seriesLength) {
       json["seriesLength"] = msg.seriesLength;
     }
@@ -8599,11 +8984,16 @@ export const GameConfigJSON = {
     if (msg.isPrescripted) {
       json["isPrescripted"] = msg.isPrescripted;
     }
-    if (msg.chipsValue) {
-      json["chipsValue"] = msg.chipsValue;
-    }
     if (msg.isFinished) {
       json["isFinished"] = msg.isFinished;
+    }
+    if (msg.rulesetConfig) {
+      const _rulesetConfig_ = RulesetConfigJSON._writeMessage(
+        msg.rulesetConfig
+      );
+      if (Object.keys(_rulesetConfig_).length > 0) {
+        json["rulesetConfig"] = _rulesetConfig_;
+      }
     }
     return json;
   },
@@ -8612,105 +9002,9 @@ export const GameConfigJSON = {
    * @private
    */
   _readMessage: function (msg: GameConfig, json: any): GameConfig {
-    const _allowedYaku_ = json["allowedYaku"];
-    if (_allowedYaku_) {
-      msg.allowedYaku = _allowedYaku_;
-    }
-    const _startPoints_ = json["startPoints"];
-    if (_startPoints_) {
-      msg.startPoints = _startPoints_;
-    }
-    const _goalPoints_ = json["goalPoints"];
-    if (_goalPoints_) {
-      msg.goalPoints = _goalPoints_;
-    }
-    const _playAdditionalRounds_ = json["playAdditionalRounds"];
-    if (_playAdditionalRounds_) {
-      msg.playAdditionalRounds = _playAdditionalRounds_;
-    }
-    const _withKazoe_ = json["withKazoe"];
-    if (_withKazoe_) {
-      msg.withKazoe = _withKazoe_;
-    }
-    const _withKiriageMangan_ = json["withKiriageMangan"];
-    if (_withKiriageMangan_) {
-      msg.withKiriageMangan = _withKiriageMangan_;
-    }
-    const _withAbortives_ = json["withAbortives"];
-    if (_withAbortives_) {
-      msg.withAbortives = _withAbortives_;
-    }
-    const _withNagashiMangan_ = json["withNagashiMangan"];
-    if (_withNagashiMangan_) {
-      msg.withNagashiMangan = _withNagashiMangan_;
-    }
-    const _withAtamahane_ = json["withAtamahane"];
-    if (_withAtamahane_) {
-      msg.withAtamahane = _withAtamahane_;
-    }
     const _rulesetTitle_ = json["rulesetTitle"];
     if (_rulesetTitle_) {
       msg.rulesetTitle = _rulesetTitle_;
-    }
-    const _tonpuusen_ = json["tonpuusen"];
-    if (_tonpuusen_) {
-      msg.tonpuusen = _tonpuusen_;
-    }
-    const _startRating_ = json["startRating"];
-    if (_startRating_) {
-      msg.startRating = _startRating_;
-    }
-    const _riichiGoesToWinner_ = json["riichiGoesToWinner"];
-    if (_riichiGoesToWinner_) {
-      msg.riichiGoesToWinner = _riichiGoesToWinner_;
-    }
-    const _doubleronRiichiAtamahane_ = json["doubleronRiichiAtamahane"];
-    if (_doubleronRiichiAtamahane_) {
-      msg.doubleronRiichiAtamahane = _doubleronRiichiAtamahane_;
-    }
-    const _doubleronHonbaAtamahane_ = json["doubleronHonbaAtamahane"];
-    if (_doubleronHonbaAtamahane_) {
-      msg.doubleronHonbaAtamahane = _doubleronHonbaAtamahane_;
-    }
-    const _extraChomboPayments_ = json["extraChomboPayments"];
-    if (_extraChomboPayments_) {
-      msg.extraChomboPayments = _extraChomboPayments_;
-    }
-    const _chomboPenalty_ = json["chomboPenalty"];
-    if (_chomboPenalty_) {
-      msg.chomboPenalty = _chomboPenalty_;
-    }
-    const _withKuitan_ = json["withKuitan"];
-    if (_withKuitan_) {
-      msg.withKuitan = _withKuitan_;
-    }
-    const _withButtobi_ = json["withButtobi"];
-    if (_withButtobi_) {
-      msg.withButtobi = _withButtobi_;
-    }
-    const _withMultiYakumans_ = json["withMultiYakumans"];
-    if (_withMultiYakumans_) {
-      msg.withMultiYakumans = _withMultiYakumans_;
-    }
-    const _gameExpirationTime_ = json["gameExpirationTime"];
-    if (_gameExpirationTime_) {
-      msg.gameExpirationTime = _gameExpirationTime_;
-    }
-    const _minPenalty_ = json["minPenalty"];
-    if (_minPenalty_) {
-      msg.minPenalty = _minPenalty_;
-    }
-    const _maxPenalty_ = json["maxPenalty"];
-    if (_maxPenalty_) {
-      msg.maxPenalty = _maxPenalty_;
-    }
-    const _penaltyStep_ = json["penaltyStep"];
-    if (_penaltyStep_) {
-      msg.penaltyStep = _penaltyStep_;
-    }
-    const _yakuWithPao_ = json["yakuWithPao"];
-    if (_yakuWithPao_) {
-      msg.yakuWithPao = _yakuWithPao_;
     }
     const _eventTitle_ = json["eventTitle"];
     if (_eventTitle_) {
@@ -8731,10 +9025,6 @@ export const GameConfigJSON = {
     const _usePenalty_ = json["usePenalty"];
     if (_usePenalty_) {
       msg.usePenalty = _usePenalty_;
-    }
-    const _endingPolicy_ = json["endingPolicy"];
-    if (_endingPolicy_) {
-      msg.endingPolicy = _endingPolicy_;
     }
     const _gameDuration_ = json["gameDuration"];
     if (_gameDuration_) {
@@ -8772,10 +9062,6 @@ export const GameConfigJSON = {
     if (_allowPlayerAppend_) {
       msg.allowPlayerAppend = _allowPlayerAppend_;
     }
-    const _withLeadingDealerGameOver_ = json["withLeadingDealerGameOver"];
-    if (_withLeadingDealerGameOver_) {
-      msg.withLeadingDealerGameOver = _withLeadingDealerGameOver_;
-    }
     const _seriesLength_ = json["seriesLength"];
     if (_seriesLength_) {
       msg.seriesLength = _seriesLength_;
@@ -8800,13 +9086,15 @@ export const GameConfigJSON = {
     if (_isPrescripted_) {
       msg.isPrescripted = _isPrescripted_;
     }
-    const _chipsValue_ = json["chipsValue"];
-    if (_chipsValue_) {
-      msg.chipsValue = _chipsValue_;
-    }
     const _isFinished_ = json["isFinished"];
     if (_isFinished_) {
       msg.isFinished = _isFinished_;
+    }
+    const _rulesetConfig_ = json["rulesetConfig"];
+    if (_rulesetConfig_) {
+      const m = RulesetConfig.initialize();
+      RulesetConfigJSON._readMessage(m, _rulesetConfig_);
+      msg.rulesetConfig = m;
     }
     return msg;
   },
@@ -12543,6 +12831,493 @@ export const SessionStateJSON = {
     const _lastHandStarted_ = json["lastHandStarted"];
     if (_lastHandStarted_) {
       msg.lastHandStarted = _lastHandStarted_;
+    }
+    return msg;
+  },
+};
+
+export const UmaJSON = {
+  /**
+   * Serializes Uma to JSON.
+   */
+  encode: function (msg: Partial<Uma>): string {
+    return JSON.stringify(UmaJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes Uma from JSON.
+   */
+  decode: function (json: string): Uma {
+    return UmaJSON._readMessage(UmaJSON.initialize(), JSON.parse(json));
+  },
+
+  /**
+   * Initializes Uma with all fields set to their default value.
+   */
+  initialize: function (): Uma {
+    return {
+      place1: 0,
+      place2: 0,
+      place3: 0,
+      place4: 0,
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (msg: Partial<Uma>): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.place1) {
+      json["place1"] = msg.place1;
+    }
+    if (msg.place2) {
+      json["place2"] = msg.place2;
+    }
+    if (msg.place3) {
+      json["place3"] = msg.place3;
+    }
+    if (msg.place4) {
+      json["place4"] = msg.place4;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: Uma, json: any): Uma {
+    const _place1_ = json["place1"];
+    if (_place1_) {
+      msg.place1 = _place1_;
+    }
+    const _place2_ = json["place2"];
+    if (_place2_) {
+      msg.place2 = _place2_;
+    }
+    const _place3_ = json["place3"];
+    if (_place3_) {
+      msg.place3 = _place3_;
+    }
+    const _place4_ = json["place4"];
+    if (_place4_) {
+      msg.place4 = _place4_;
+    }
+    return msg;
+  },
+};
+
+export const ComplexUmaJSON = {
+  /**
+   * Serializes ComplexUma to JSON.
+   */
+  encode: function (msg: Partial<ComplexUma>): string {
+    return JSON.stringify(ComplexUmaJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes ComplexUma from JSON.
+   */
+  decode: function (json: string): ComplexUma {
+    return ComplexUmaJSON._readMessage(
+      ComplexUmaJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+
+  /**
+   * Initializes ComplexUma with all fields set to their default value.
+   */
+  initialize: function (): ComplexUma {
+    return {
+      neg1: UmaJSON.initialize(),
+      neg3: UmaJSON.initialize(),
+      otherwise: UmaJSON.initialize(),
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (msg: Partial<ComplexUma>): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.neg1) {
+      const _neg1_ = UmaJSON._writeMessage(msg.neg1);
+      if (Object.keys(_neg1_).length > 0) {
+        json["neg1"] = _neg1_;
+      }
+    }
+    if (msg.neg3) {
+      const _neg3_ = UmaJSON._writeMessage(msg.neg3);
+      if (Object.keys(_neg3_).length > 0) {
+        json["neg3"] = _neg3_;
+      }
+    }
+    if (msg.otherwise) {
+      const _otherwise_ = UmaJSON._writeMessage(msg.otherwise);
+      if (Object.keys(_otherwise_).length > 0) {
+        json["otherwise"] = _otherwise_;
+      }
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: ComplexUma, json: any): ComplexUma {
+    const _neg1_ = json["neg1"];
+    if (_neg1_) {
+      const m = Uma.initialize();
+      UmaJSON._readMessage(m, _neg1_);
+      msg.neg1 = m;
+    }
+    const _neg3_ = json["neg3"];
+    if (_neg3_) {
+      const m = Uma.initialize();
+      UmaJSON._readMessage(m, _neg3_);
+      msg.neg3 = m;
+    }
+    const _otherwise_ = json["otherwise"];
+    if (_otherwise_) {
+      const m = Uma.initialize();
+      UmaJSON._readMessage(m, _otherwise_);
+      msg.otherwise = m;
+    }
+    return msg;
+  },
+};
+
+export const RulesetConfigJSON = {
+  /**
+   * Serializes RulesetConfig to JSON.
+   */
+  encode: function (msg: Partial<RulesetConfig>): string {
+    return JSON.stringify(RulesetConfigJSON._writeMessage(msg));
+  },
+
+  /**
+   * Deserializes RulesetConfig from JSON.
+   */
+  decode: function (json: string): RulesetConfig {
+    return RulesetConfigJSON._readMessage(
+      RulesetConfigJSON.initialize(),
+      JSON.parse(json)
+    );
+  },
+
+  /**
+   * Initializes RulesetConfig with all fields set to their default value.
+   */
+  initialize: function (): RulesetConfig {
+    return {
+      complexUma: ComplexUmaJSON.initialize(),
+      endingPolicy: EndingPolicy._fromInt(0),
+      uma: UmaJSON.initialize(),
+      umaType: UmaType._fromInt(0),
+      doubleronHonbaAtamahane: false,
+      doubleronRiichiAtamahane: false,
+      equalizeUma: false,
+      extraChomboPayments: false,
+      playAdditionalRounds: false,
+      riichiGoesToWinner: false,
+      tonpuusen: false,
+      withAbortives: false,
+      withAtamahane: false,
+      withButtobi: false,
+      withKazoe: false,
+      withKiriageMangan: false,
+      withKuitan: false,
+      withLeadingDealerGameOver: false,
+      withMultiYakumans: false,
+      withNagashiMangan: false,
+      withWinningDealerHonbaSkipped: false,
+      chipsValue: 0,
+      chomboPenalty: 0,
+      gameExpirationTime: 0,
+      goalPoints: 0,
+      maxPenalty: 0,
+      minPenalty: 0,
+      oka: 0,
+      penaltyStep: 0,
+      replacementPlayerFixedPoints: 0,
+      replacementPlayerOverrideUma: 0,
+      startPoints: 0,
+      startRating: 0,
+      allowedYaku: [],
+      yakuWithPao: [],
+    };
+  },
+
+  /**
+   * @private
+   */
+  _writeMessage: function (
+    msg: Partial<RulesetConfig>
+  ): Record<string, unknown> {
+    const json: Record<string, unknown> = {};
+    if (msg.complexUma) {
+      const _complexUma_ = ComplexUmaJSON._writeMessage(msg.complexUma);
+      if (Object.keys(_complexUma_).length > 0) {
+        json["complexUma"] = _complexUma_;
+      }
+    }
+    if (msg.endingPolicy && EndingPolicyJSON._toInt(msg.endingPolicy)) {
+      json["endingPolicy"] = msg.endingPolicy;
+    }
+    if (msg.uma) {
+      const _uma_ = UmaJSON._writeMessage(msg.uma);
+      if (Object.keys(_uma_).length > 0) {
+        json["uma"] = _uma_;
+      }
+    }
+    if (msg.umaType && UmaTypeJSON._toInt(msg.umaType)) {
+      json["umaType"] = msg.umaType;
+    }
+    if (msg.doubleronHonbaAtamahane) {
+      json["doubleronHonbaAtamahane"] = msg.doubleronHonbaAtamahane;
+    }
+    if (msg.doubleronRiichiAtamahane) {
+      json["doubleronRiichiAtamahane"] = msg.doubleronRiichiAtamahane;
+    }
+    if (msg.equalizeUma) {
+      json["equalizeUma"] = msg.equalizeUma;
+    }
+    if (msg.extraChomboPayments) {
+      json["extraChomboPayments"] = msg.extraChomboPayments;
+    }
+    if (msg.playAdditionalRounds) {
+      json["playAdditionalRounds"] = msg.playAdditionalRounds;
+    }
+    if (msg.riichiGoesToWinner) {
+      json["riichiGoesToWinner"] = msg.riichiGoesToWinner;
+    }
+    if (msg.tonpuusen) {
+      json["tonpuusen"] = msg.tonpuusen;
+    }
+    if (msg.withAbortives) {
+      json["withAbortives"] = msg.withAbortives;
+    }
+    if (msg.withAtamahane) {
+      json["withAtamahane"] = msg.withAtamahane;
+    }
+    if (msg.withButtobi) {
+      json["withButtobi"] = msg.withButtobi;
+    }
+    if (msg.withKazoe) {
+      json["withKazoe"] = msg.withKazoe;
+    }
+    if (msg.withKiriageMangan) {
+      json["withKiriageMangan"] = msg.withKiriageMangan;
+    }
+    if (msg.withKuitan) {
+      json["withKuitan"] = msg.withKuitan;
+    }
+    if (msg.withLeadingDealerGameOver) {
+      json["withLeadingDealerGameOver"] = msg.withLeadingDealerGameOver;
+    }
+    if (msg.withMultiYakumans) {
+      json["withMultiYakumans"] = msg.withMultiYakumans;
+    }
+    if (msg.withNagashiMangan) {
+      json["withNagashiMangan"] = msg.withNagashiMangan;
+    }
+    if (msg.withWinningDealerHonbaSkipped) {
+      json["withWinningDealerHonbaSkipped"] = msg.withWinningDealerHonbaSkipped;
+    }
+    if (msg.chipsValue) {
+      json["chipsValue"] = msg.chipsValue;
+    }
+    if (msg.chomboPenalty) {
+      json["chomboPenalty"] = msg.chomboPenalty;
+    }
+    if (msg.gameExpirationTime) {
+      json["gameExpirationTime"] = msg.gameExpirationTime;
+    }
+    if (msg.goalPoints) {
+      json["goalPoints"] = msg.goalPoints;
+    }
+    if (msg.maxPenalty) {
+      json["maxPenalty"] = msg.maxPenalty;
+    }
+    if (msg.minPenalty) {
+      json["minPenalty"] = msg.minPenalty;
+    }
+    if (msg.oka) {
+      json["oka"] = msg.oka;
+    }
+    if (msg.penaltyStep) {
+      json["penaltyStep"] = msg.penaltyStep;
+    }
+    if (msg.replacementPlayerFixedPoints) {
+      json["replacementPlayerFixedPoints"] = msg.replacementPlayerFixedPoints;
+    }
+    if (msg.replacementPlayerOverrideUma) {
+      json["replacementPlayerOverrideUma"] = msg.replacementPlayerOverrideUma;
+    }
+    if (msg.startPoints) {
+      json["startPoints"] = msg.startPoints;
+    }
+    if (msg.startRating) {
+      json["startRating"] = msg.startRating;
+    }
+    if (msg.allowedYaku?.length) {
+      json["allowedYaku"] = msg.allowedYaku;
+    }
+    if (msg.yakuWithPao?.length) {
+      json["yakuWithPao"] = msg.yakuWithPao;
+    }
+    return json;
+  },
+
+  /**
+   * @private
+   */
+  _readMessage: function (msg: RulesetConfig, json: any): RulesetConfig {
+    const _complexUma_ = json["complexUma"];
+    if (_complexUma_) {
+      const m = ComplexUma.initialize();
+      ComplexUmaJSON._readMessage(m, _complexUma_);
+      msg.complexUma = m;
+    }
+    const _endingPolicy_ = json["endingPolicy"];
+    if (_endingPolicy_) {
+      msg.endingPolicy = _endingPolicy_;
+    }
+    const _uma_ = json["uma"];
+    if (_uma_) {
+      const m = Uma.initialize();
+      UmaJSON._readMessage(m, _uma_);
+      msg.uma = m;
+    }
+    const _umaType_ = json["umaType"];
+    if (_umaType_) {
+      msg.umaType = _umaType_;
+    }
+    const _doubleronHonbaAtamahane_ = json["doubleronHonbaAtamahane"];
+    if (_doubleronHonbaAtamahane_) {
+      msg.doubleronHonbaAtamahane = _doubleronHonbaAtamahane_;
+    }
+    const _doubleronRiichiAtamahane_ = json["doubleronRiichiAtamahane"];
+    if (_doubleronRiichiAtamahane_) {
+      msg.doubleronRiichiAtamahane = _doubleronRiichiAtamahane_;
+    }
+    const _equalizeUma_ = json["equalizeUma"];
+    if (_equalizeUma_) {
+      msg.equalizeUma = _equalizeUma_;
+    }
+    const _extraChomboPayments_ = json["extraChomboPayments"];
+    if (_extraChomboPayments_) {
+      msg.extraChomboPayments = _extraChomboPayments_;
+    }
+    const _playAdditionalRounds_ = json["playAdditionalRounds"];
+    if (_playAdditionalRounds_) {
+      msg.playAdditionalRounds = _playAdditionalRounds_;
+    }
+    const _riichiGoesToWinner_ = json["riichiGoesToWinner"];
+    if (_riichiGoesToWinner_) {
+      msg.riichiGoesToWinner = _riichiGoesToWinner_;
+    }
+    const _tonpuusen_ = json["tonpuusen"];
+    if (_tonpuusen_) {
+      msg.tonpuusen = _tonpuusen_;
+    }
+    const _withAbortives_ = json["withAbortives"];
+    if (_withAbortives_) {
+      msg.withAbortives = _withAbortives_;
+    }
+    const _withAtamahane_ = json["withAtamahane"];
+    if (_withAtamahane_) {
+      msg.withAtamahane = _withAtamahane_;
+    }
+    const _withButtobi_ = json["withButtobi"];
+    if (_withButtobi_) {
+      msg.withButtobi = _withButtobi_;
+    }
+    const _withKazoe_ = json["withKazoe"];
+    if (_withKazoe_) {
+      msg.withKazoe = _withKazoe_;
+    }
+    const _withKiriageMangan_ = json["withKiriageMangan"];
+    if (_withKiriageMangan_) {
+      msg.withKiriageMangan = _withKiriageMangan_;
+    }
+    const _withKuitan_ = json["withKuitan"];
+    if (_withKuitan_) {
+      msg.withKuitan = _withKuitan_;
+    }
+    const _withLeadingDealerGameOver_ = json["withLeadingDealerGameOver"];
+    if (_withLeadingDealerGameOver_) {
+      msg.withLeadingDealerGameOver = _withLeadingDealerGameOver_;
+    }
+    const _withMultiYakumans_ = json["withMultiYakumans"];
+    if (_withMultiYakumans_) {
+      msg.withMultiYakumans = _withMultiYakumans_;
+    }
+    const _withNagashiMangan_ = json["withNagashiMangan"];
+    if (_withNagashiMangan_) {
+      msg.withNagashiMangan = _withNagashiMangan_;
+    }
+    const _withWinningDealerHonbaSkipped_ =
+      json["withWinningDealerHonbaSkipped"];
+    if (_withWinningDealerHonbaSkipped_) {
+      msg.withWinningDealerHonbaSkipped = _withWinningDealerHonbaSkipped_;
+    }
+    const _chipsValue_ = json["chipsValue"];
+    if (_chipsValue_) {
+      msg.chipsValue = _chipsValue_;
+    }
+    const _chomboPenalty_ = json["chomboPenalty"];
+    if (_chomboPenalty_) {
+      msg.chomboPenalty = _chomboPenalty_;
+    }
+    const _gameExpirationTime_ = json["gameExpirationTime"];
+    if (_gameExpirationTime_) {
+      msg.gameExpirationTime = _gameExpirationTime_;
+    }
+    const _goalPoints_ = json["goalPoints"];
+    if (_goalPoints_) {
+      msg.goalPoints = _goalPoints_;
+    }
+    const _maxPenalty_ = json["maxPenalty"];
+    if (_maxPenalty_) {
+      msg.maxPenalty = _maxPenalty_;
+    }
+    const _minPenalty_ = json["minPenalty"];
+    if (_minPenalty_) {
+      msg.minPenalty = _minPenalty_;
+    }
+    const _oka_ = json["oka"];
+    if (_oka_) {
+      msg.oka = _oka_;
+    }
+    const _penaltyStep_ = json["penaltyStep"];
+    if (_penaltyStep_) {
+      msg.penaltyStep = _penaltyStep_;
+    }
+    const _replacementPlayerFixedPoints_ = json["replacementPlayerFixedPoints"];
+    if (_replacementPlayerFixedPoints_) {
+      msg.replacementPlayerFixedPoints = _replacementPlayerFixedPoints_;
+    }
+    const _replacementPlayerOverrideUma_ = json["replacementPlayerOverrideUma"];
+    if (_replacementPlayerOverrideUma_) {
+      msg.replacementPlayerOverrideUma = _replacementPlayerOverrideUma_;
+    }
+    const _startPoints_ = json["startPoints"];
+    if (_startPoints_) {
+      msg.startPoints = _startPoints_;
+    }
+    const _startRating_ = json["startRating"];
+    if (_startRating_) {
+      msg.startRating = _startRating_;
+    }
+    const _allowedYaku_ = json["allowedYaku"];
+    if (_allowedYaku_) {
+      msg.allowedYaku = _allowedYaku_;
+    }
+    const _yakuWithPao_ = json["yakuWithPao"];
+    if (_yakuWithPao_) {
+      msg.yakuWithPao = _yakuWithPao_;
     }
     return msg;
   },

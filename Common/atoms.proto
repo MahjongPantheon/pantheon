@@ -139,37 +139,12 @@ message MyEvent {
 }
 
 message GameConfig {
-  repeated int32 allowedYaku = 1; // ids array
-  int32 startPoints = 2;
-  int32 goalPoints = 3;
-  bool playAdditionalRounds = 4;
-  bool withKazoe = 5;
-  bool withKiriageMangan = 6;
-  bool withAbortives = 7;
-  bool withNagashiMangan = 8;
-  bool withAtamahane = 9;
   string rulesetTitle = 10;
-  bool tonpuusen = 11;
-  int32 startRating = 12;
-  bool riichiGoesToWinner = 13;
-  bool doubleronRiichiAtamahane = 14;
-  bool doubleronHonbaAtamahane = 15;
-  bool extraChomboPayments = 16;
-  float chomboPenalty = 17;
-  bool withKuitan = 18;
-  bool withButtobi = 19;
-  bool withMultiYakumans = 20;
-  int32 gameExpirationTime = 21;
-  int32 minPenalty = 22;
-  int32 maxPenalty = 23;
-  int32 penaltyStep = 24;
-  repeated int32 yakuWithPao = 25; // ids array
   string eventTitle = 26;
   string eventDescription = 27;
   string eventStatHost = 28;
   bool useTimer = 29;
   bool usePenalty = 30;
-  string endingPolicy = 31;
   int32 gameDuration = 34; // minutes
   string timezone = 35;
   bool isOnline = 36;
@@ -179,15 +154,14 @@ message GameConfig {
   bool syncEnd = 40;
   bool sortByGames = 41;
   bool allowPlayerAppend = 42;
-  bool withLeadingDealerGameOver = 43;
   int32 seriesLength = 45;
   int32 minGamesCount = 46;
   TournamentGamesStatus gamesStatus = 47;
   bool hideResults = 48;
   bool hideAddReplayButton = 49;
   bool isPrescripted = 50;
-  int32 chipsValue = 51;
   bool isFinished = 52;
+  RulesetConfig rulesetConfig = 53;
 }
 
 message PlayerInRating {
@@ -537,6 +511,68 @@ message SessionState {
   bool finished = 6;
   repeated Penalty penalties = 7;
   bool lastHandStarted = 8;
+}
+
+message Uma {
+  int32 place1 = 1;
+  int32 place2 = 2;
+  int32 place3 = 3;
+  int32 place4 = 4;
+}
+
+message ComplexUma {
+  Uma neg1 = 1;
+  Uma neg3 = 2;
+  Uma otherwise = 3;
+}
+
+enum UmaType {
+  UMA_SIMPLE = 0;
+  UMA_COMPLEX = 1;
+}
+
+enum EndingPolicy {
+  EP_NONE = 0;
+  EP_ONE_MORE_HAND = 1;
+  EP_END_AFTER_HAND = 2;
+}
+
+message RulesetConfig {
+  ComplexUma complexUma = 1;
+  EndingPolicy endingPolicy = 2;
+  Uma uma = 3;
+  UmaType umaType = 4;
+  bool doubleronHonbaAtamahane = 5;
+  bool doubleronRiichiAtamahane = 6;
+  bool equalizeUma = 7;
+  bool extraChomboPayments = 8;
+  bool playAdditionalRounds = 9;
+  bool riichiGoesToWinner = 10;
+  bool tonpuusen = 11;
+  bool withAbortives = 12;
+  bool withAtamahane = 13;
+  bool withButtobi = 14;
+  bool withKazoe = 15;
+  bool withKiriageMangan = 16;
+  bool withKuitan = 17;
+  bool withLeadingDealerGameOver = 18;
+  bool withMultiYakumans = 19;
+  bool withNagashiMangan = 20;
+  bool withWinningDealerHonbaSkipped = 21;
+  int32 chipsValue = 22;
+  int32 chomboPenalty = 23;
+  int32 gameExpirationTime = 24;
+  int32 goalPoints = 25;
+  int32 maxPenalty = 26;
+  int32 minPenalty = 27;
+  int32 oka = 28;
+  int32 penaltyStep = 29;
+  int32 replacementPlayerFixedPoints = 30;
+  int32 replacementPlayerOverrideUma = 31;
+  int32 startPoints = 32;
+  int32 startRating = 33;
+  repeated int32 allowedYaku = 34;
+  repeated int32 yakuWithPao = 35;
 }
 
 // Generics

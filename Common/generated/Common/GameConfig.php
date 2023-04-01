@@ -14,109 +14,9 @@ use Google\Protobuf\Internal\GPBUtil;
 class GameConfig extends \Google\Protobuf\Internal\Message
 {
     /**
-     * ids array
-     *
-     * Generated from protobuf field <code>repeated int32 allowedYaku = 1;</code>
-     */
-    private $allowedYaku;
-    /**
-     * Generated from protobuf field <code>int32 startPoints = 2;</code>
-     */
-    protected $startPoints = 0;
-    /**
-     * Generated from protobuf field <code>int32 goalPoints = 3;</code>
-     */
-    protected $goalPoints = 0;
-    /**
-     * Generated from protobuf field <code>bool playAdditionalRounds = 4;</code>
-     */
-    protected $playAdditionalRounds = false;
-    /**
-     * Generated from protobuf field <code>bool withKazoe = 5;</code>
-     */
-    protected $withKazoe = false;
-    /**
-     * Generated from protobuf field <code>bool withKiriageMangan = 6;</code>
-     */
-    protected $withKiriageMangan = false;
-    /**
-     * Generated from protobuf field <code>bool withAbortives = 7;</code>
-     */
-    protected $withAbortives = false;
-    /**
-     * Generated from protobuf field <code>bool withNagashiMangan = 8;</code>
-     */
-    protected $withNagashiMangan = false;
-    /**
-     * Generated from protobuf field <code>bool withAtamahane = 9;</code>
-     */
-    protected $withAtamahane = false;
-    /**
      * Generated from protobuf field <code>string rulesetTitle = 10;</code>
      */
     protected $rulesetTitle = '';
-    /**
-     * Generated from protobuf field <code>bool tonpuusen = 11;</code>
-     */
-    protected $tonpuusen = false;
-    /**
-     * Generated from protobuf field <code>int32 startRating = 12;</code>
-     */
-    protected $startRating = 0;
-    /**
-     * Generated from protobuf field <code>bool riichiGoesToWinner = 13;</code>
-     */
-    protected $riichiGoesToWinner = false;
-    /**
-     * Generated from protobuf field <code>bool doubleronRiichiAtamahane = 14;</code>
-     */
-    protected $doubleronRiichiAtamahane = false;
-    /**
-     * Generated from protobuf field <code>bool doubleronHonbaAtamahane = 15;</code>
-     */
-    protected $doubleronHonbaAtamahane = false;
-    /**
-     * Generated from protobuf field <code>bool extraChomboPayments = 16;</code>
-     */
-    protected $extraChomboPayments = false;
-    /**
-     * Generated from protobuf field <code>float chomboPenalty = 17;</code>
-     */
-    protected $chomboPenalty = 0.0;
-    /**
-     * Generated from protobuf field <code>bool withKuitan = 18;</code>
-     */
-    protected $withKuitan = false;
-    /**
-     * Generated from protobuf field <code>bool withButtobi = 19;</code>
-     */
-    protected $withButtobi = false;
-    /**
-     * Generated from protobuf field <code>bool withMultiYakumans = 20;</code>
-     */
-    protected $withMultiYakumans = false;
-    /**
-     * Generated from protobuf field <code>int32 gameExpirationTime = 21;</code>
-     */
-    protected $gameExpirationTime = 0;
-    /**
-     * Generated from protobuf field <code>int32 minPenalty = 22;</code>
-     */
-    protected $minPenalty = 0;
-    /**
-     * Generated from protobuf field <code>int32 maxPenalty = 23;</code>
-     */
-    protected $maxPenalty = 0;
-    /**
-     * Generated from protobuf field <code>int32 penaltyStep = 24;</code>
-     */
-    protected $penaltyStep = 0;
-    /**
-     * ids array
-     *
-     * Generated from protobuf field <code>repeated int32 yakuWithPao = 25;</code>
-     */
-    private $yakuWithPao;
     /**
      * Generated from protobuf field <code>string eventTitle = 26;</code>
      */
@@ -137,10 +37,6 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>bool usePenalty = 30;</code>
      */
     protected $usePenalty = false;
-    /**
-     * Generated from protobuf field <code>string endingPolicy = 31;</code>
-     */
-    protected $endingPolicy = '';
     /**
      * minutes
      *
@@ -180,10 +76,6 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      */
     protected $allowPlayerAppend = false;
     /**
-     * Generated from protobuf field <code>bool withLeadingDealerGameOver = 43;</code>
-     */
-    protected $withLeadingDealerGameOver = false;
-    /**
      * Generated from protobuf field <code>int32 seriesLength = 45;</code>
      */
     protected $seriesLength = 0;
@@ -208,13 +100,13 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      */
     protected $isPrescripted = false;
     /**
-     * Generated from protobuf field <code>int32 chipsValue = 51;</code>
-     */
-    protected $chipsValue = 0;
-    /**
      * Generated from protobuf field <code>bool isFinished = 52;</code>
      */
     protected $isFinished = false;
+    /**
+     * Generated from protobuf field <code>.Common.RulesetConfig rulesetConfig = 53;</code>
+     */
+    protected $rulesetConfig = null;
 
     /**
      * Constructor.
@@ -222,39 +114,12 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $allowedYaku
-     *           ids array
-     *     @type int $startPoints
-     *     @type int $goalPoints
-     *     @type bool $playAdditionalRounds
-     *     @type bool $withKazoe
-     *     @type bool $withKiriageMangan
-     *     @type bool $withAbortives
-     *     @type bool $withNagashiMangan
-     *     @type bool $withAtamahane
      *     @type string $rulesetTitle
-     *     @type bool $tonpuusen
-     *     @type int $startRating
-     *     @type bool $riichiGoesToWinner
-     *     @type bool $doubleronRiichiAtamahane
-     *     @type bool $doubleronHonbaAtamahane
-     *     @type bool $extraChomboPayments
-     *     @type float $chomboPenalty
-     *     @type bool $withKuitan
-     *     @type bool $withButtobi
-     *     @type bool $withMultiYakumans
-     *     @type int $gameExpirationTime
-     *     @type int $minPenalty
-     *     @type int $maxPenalty
-     *     @type int $penaltyStep
-     *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $yakuWithPao
-     *           ids array
      *     @type string $eventTitle
      *     @type string $eventDescription
      *     @type string $eventStatHost
      *     @type bool $useTimer
      *     @type bool $usePenalty
-     *     @type string $endingPolicy
      *     @type int $gameDuration
      *           minutes
      *     @type string $timezone
@@ -265,222 +130,19 @@ class GameConfig extends \Google\Protobuf\Internal\Message
      *     @type bool $syncEnd
      *     @type bool $sortByGames
      *     @type bool $allowPlayerAppend
-     *     @type bool $withLeadingDealerGameOver
      *     @type int $seriesLength
      *     @type int $minGamesCount
      *     @type int $gamesStatus
      *     @type bool $hideResults
      *     @type bool $hideAddReplayButton
      *     @type bool $isPrescripted
-     *     @type int $chipsValue
      *     @type bool $isFinished
+     *     @type \Common\RulesetConfig $rulesetConfig
      * }
      */
     public function __construct($data = NULL) {
         \GPBMetadata\Atoms::initOnce();
         parent::__construct($data);
-    }
-
-    /**
-     * ids array
-     *
-     * Generated from protobuf field <code>repeated int32 allowedYaku = 1;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
-     */
-    public function getAllowedYaku()
-    {
-        return $this->allowedYaku;
-    }
-
-    /**
-     * ids array
-     *
-     * Generated from protobuf field <code>repeated int32 allowedYaku = 1;</code>
-     * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
-     * @return $this
-     */
-    public function setAllowedYaku($var)
-    {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
-        $this->allowedYaku = $arr;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 startPoints = 2;</code>
-     * @return int
-     */
-    public function getStartPoints()
-    {
-        return $this->startPoints;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 startPoints = 2;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setStartPoints($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->startPoints = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 goalPoints = 3;</code>
-     * @return int
-     */
-    public function getGoalPoints()
-    {
-        return $this->goalPoints;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 goalPoints = 3;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setGoalPoints($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->goalPoints = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool playAdditionalRounds = 4;</code>
-     * @return bool
-     */
-    public function getPlayAdditionalRounds()
-    {
-        return $this->playAdditionalRounds;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool playAdditionalRounds = 4;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setPlayAdditionalRounds($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->playAdditionalRounds = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withKazoe = 5;</code>
-     * @return bool
-     */
-    public function getWithKazoe()
-    {
-        return $this->withKazoe;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withKazoe = 5;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setWithKazoe($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->withKazoe = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withKiriageMangan = 6;</code>
-     * @return bool
-     */
-    public function getWithKiriageMangan()
-    {
-        return $this->withKiriageMangan;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withKiriageMangan = 6;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setWithKiriageMangan($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->withKiriageMangan = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withAbortives = 7;</code>
-     * @return bool
-     */
-    public function getWithAbortives()
-    {
-        return $this->withAbortives;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withAbortives = 7;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setWithAbortives($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->withAbortives = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withNagashiMangan = 8;</code>
-     * @return bool
-     */
-    public function getWithNagashiMangan()
-    {
-        return $this->withNagashiMangan;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withNagashiMangan = 8;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setWithNagashiMangan($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->withNagashiMangan = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withAtamahane = 9;</code>
-     * @return bool
-     */
-    public function getWithAtamahane()
-    {
-        return $this->withAtamahane;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withAtamahane = 9;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setWithAtamahane($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->withAtamahane = $var;
-
-        return $this;
     }
 
     /**
@@ -501,340 +163,6 @@ class GameConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->rulesetTitle = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool tonpuusen = 11;</code>
-     * @return bool
-     */
-    public function getTonpuusen()
-    {
-        return $this->tonpuusen;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool tonpuusen = 11;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setTonpuusen($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->tonpuusen = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 startRating = 12;</code>
-     * @return int
-     */
-    public function getStartRating()
-    {
-        return $this->startRating;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 startRating = 12;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setStartRating($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->startRating = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool riichiGoesToWinner = 13;</code>
-     * @return bool
-     */
-    public function getRiichiGoesToWinner()
-    {
-        return $this->riichiGoesToWinner;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool riichiGoesToWinner = 13;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setRiichiGoesToWinner($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->riichiGoesToWinner = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool doubleronRiichiAtamahane = 14;</code>
-     * @return bool
-     */
-    public function getDoubleronRiichiAtamahane()
-    {
-        return $this->doubleronRiichiAtamahane;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool doubleronRiichiAtamahane = 14;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setDoubleronRiichiAtamahane($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->doubleronRiichiAtamahane = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool doubleronHonbaAtamahane = 15;</code>
-     * @return bool
-     */
-    public function getDoubleronHonbaAtamahane()
-    {
-        return $this->doubleronHonbaAtamahane;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool doubleronHonbaAtamahane = 15;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setDoubleronHonbaAtamahane($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->doubleronHonbaAtamahane = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool extraChomboPayments = 16;</code>
-     * @return bool
-     */
-    public function getExtraChomboPayments()
-    {
-        return $this->extraChomboPayments;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool extraChomboPayments = 16;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setExtraChomboPayments($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->extraChomboPayments = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>float chomboPenalty = 17;</code>
-     * @return float
-     */
-    public function getChomboPenalty()
-    {
-        return $this->chomboPenalty;
-    }
-
-    /**
-     * Generated from protobuf field <code>float chomboPenalty = 17;</code>
-     * @param float $var
-     * @return $this
-     */
-    public function setChomboPenalty($var)
-    {
-        GPBUtil::checkFloat($var);
-        $this->chomboPenalty = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withKuitan = 18;</code>
-     * @return bool
-     */
-    public function getWithKuitan()
-    {
-        return $this->withKuitan;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withKuitan = 18;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setWithKuitan($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->withKuitan = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withButtobi = 19;</code>
-     * @return bool
-     */
-    public function getWithButtobi()
-    {
-        return $this->withButtobi;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withButtobi = 19;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setWithButtobi($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->withButtobi = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withMultiYakumans = 20;</code>
-     * @return bool
-     */
-    public function getWithMultiYakumans()
-    {
-        return $this->withMultiYakumans;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withMultiYakumans = 20;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setWithMultiYakumans($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->withMultiYakumans = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 gameExpirationTime = 21;</code>
-     * @return int
-     */
-    public function getGameExpirationTime()
-    {
-        return $this->gameExpirationTime;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 gameExpirationTime = 21;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setGameExpirationTime($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->gameExpirationTime = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 minPenalty = 22;</code>
-     * @return int
-     */
-    public function getMinPenalty()
-    {
-        return $this->minPenalty;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 minPenalty = 22;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setMinPenalty($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->minPenalty = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 maxPenalty = 23;</code>
-     * @return int
-     */
-    public function getMaxPenalty()
-    {
-        return $this->maxPenalty;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 maxPenalty = 23;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setMaxPenalty($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->maxPenalty = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 penaltyStep = 24;</code>
-     * @return int
-     */
-    public function getPenaltyStep()
-    {
-        return $this->penaltyStep;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 penaltyStep = 24;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setPenaltyStep($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->penaltyStep = $var;
-
-        return $this;
-    }
-
-    /**
-     * ids array
-     *
-     * Generated from protobuf field <code>repeated int32 yakuWithPao = 25;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
-     */
-    public function getYakuWithPao()
-    {
-        return $this->yakuWithPao;
-    }
-
-    /**
-     * ids array
-     *
-     * Generated from protobuf field <code>repeated int32 yakuWithPao = 25;</code>
-     * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
-     * @return $this
-     */
-    public function setYakuWithPao($var)
-    {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
-        $this->yakuWithPao = $arr;
 
         return $this;
     }
@@ -945,28 +273,6 @@ class GameConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->usePenalty = $var;
-
-        return $this;
-    }
-
-    /**
-     * Generated from protobuf field <code>string endingPolicy = 31;</code>
-     * @return string
-     */
-    public function getEndingPolicy()
-    {
-        return $this->endingPolicy;
-    }
-
-    /**
-     * Generated from protobuf field <code>string endingPolicy = 31;</code>
-     * @param string $var
-     * @return $this
-     */
-    public function setEndingPolicy($var)
-    {
-        GPBUtil::checkString($var, True);
-        $this->endingPolicy = $var;
 
         return $this;
     }
@@ -1174,28 +480,6 @@ class GameConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool withLeadingDealerGameOver = 43;</code>
-     * @return bool
-     */
-    public function getWithLeadingDealerGameOver()
-    {
-        return $this->withLeadingDealerGameOver;
-    }
-
-    /**
-     * Generated from protobuf field <code>bool withLeadingDealerGameOver = 43;</code>
-     * @param bool $var
-     * @return $this
-     */
-    public function setWithLeadingDealerGameOver($var)
-    {
-        GPBUtil::checkBool($var);
-        $this->withLeadingDealerGameOver = $var;
-
-        return $this;
-    }
-
-    /**
      * Generated from protobuf field <code>int32 seriesLength = 45;</code>
      * @return int
      */
@@ -1328,28 +612,6 @@ class GameConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 chipsValue = 51;</code>
-     * @return int
-     */
-    public function getChipsValue()
-    {
-        return $this->chipsValue;
-    }
-
-    /**
-     * Generated from protobuf field <code>int32 chipsValue = 51;</code>
-     * @param int $var
-     * @return $this
-     */
-    public function setChipsValue($var)
-    {
-        GPBUtil::checkInt32($var);
-        $this->chipsValue = $var;
-
-        return $this;
-    }
-
-    /**
      * Generated from protobuf field <code>bool isFinished = 52;</code>
      * @return bool
      */
@@ -1367,6 +629,38 @@ class GameConfig extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkBool($var);
         $this->isFinished = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>.Common.RulesetConfig rulesetConfig = 53;</code>
+     * @return \Common\RulesetConfig|null
+     */
+    public function getRulesetConfig()
+    {
+        return $this->rulesetConfig;
+    }
+
+    public function hasRulesetConfig()
+    {
+        return isset($this->rulesetConfig);
+    }
+
+    public function clearRulesetConfig()
+    {
+        unset($this->rulesetConfig);
+    }
+
+    /**
+     * Generated from protobuf field <code>.Common.RulesetConfig rulesetConfig = 53;</code>
+     * @param \Common\RulesetConfig $var
+     * @return $this
+     */
+    public function setRulesetConfig($var)
+    {
+        GPBUtil::checkMessage($var, \Common\RulesetConfig::class);
+        $this->rulesetConfig = $var;
 
         return $this;
     }
