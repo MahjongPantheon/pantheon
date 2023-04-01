@@ -149,8 +149,33 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       });
   }, [isLoggedIn]);
 
-  const submitForm = (vals: any) => {
-    console.log(vals);
+  const submitForm = (vals: FormFields) => {
+    if (id) {
+      setIsSaving(true);
+      setIsSaved(false);
+      api
+        .updateEvent(parseInt(id, 10), {
+          ...vals.event,
+          autostart: 0, // TODO: https://github.com/MahjongPantheon/pantheon/issues/282
+          rulesetConfig: {
+            ...vals.ruleset,
+            allowedYaku: Object.keys(vals.ruleset.allowedYaku)
+              .filter((k) => vals.ruleset.allowedYaku[k])
+              .map((v) => parseInt(v, 10)),
+            yakuWithPao: Object.keys(vals.ruleset.yakuWithPao)
+              .filter((k) => vals.ruleset.yakuWithPao[k])
+              .map((v) => parseInt(v, 10)),
+          },
+        })
+        .then((r) => {
+          if (r) {
+            setIsSaved(true);
+          }
+        })
+        .finally(() => {
+          setIsSaving(false);
+        });
+    }
   };
 
   /*
