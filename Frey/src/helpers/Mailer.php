@@ -19,13 +19,14 @@ namespace Frey;
 
 class Mailer
 {
-    protected $_mailMode = 'local_mta';
-    protected $_mailRemoteUrl = '';
-    protected $_mailRemoteActionKey = '';
-    protected $_mailerAddress = '';
-    protected $_guiUrl = '';
+    protected string $_mailMode = 'local_mta';
+    protected string $_mailRemoteUrl = '';
+    protected string $_mailRemoteActionKey = '';
+    protected string $_mailerAddress = '';
+    protected string $_guiUrl = '';
 
-    public function __construct($guiUrl, $mailMode, $mailAddress, $mailRemoteUrl = '', $mailRemoteActionKey = '') {
+    public function __construct(string $guiUrl, string $mailMode, string $mailAddress, string $mailRemoteUrl = '', string $mailRemoteActionKey = '')
+    {
         $this->_mailMode = $mailMode;
         $this->_mailRemoteUrl = $mailRemoteUrl;
         $this->_mailRemoteActionKey = $mailRemoteActionKey;

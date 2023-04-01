@@ -17,12 +17,14 @@
  */
 namespace Rheda;
 
+use Common\RulesetConfig;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 
 require_once __DIR__ . '/helpers/Url.php';
 require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/../../Common/Storage.php';
+require_once __DIR__ . '/../../Common/generated/Common/RulesetConfig.php';
 require_once __DIR__ . '/HttpClient.php';
 require_once __DIR__ . '/FreyClient.php';
 require_once __DIR__ . '/FreyClientTwirp.php';
@@ -52,13 +54,13 @@ abstract class Controller
     /**
      * Main event rules. For aggregated events, these are the rules of the main event.
      * For simple events, these are the rules of the only used event.
-     * @var Config
+     * @var RulesetConfig
      */
     protected $_mainEventRules;
 
     /**
      * Rules of each event from eventIdList.
-     * @var Config[]
+     * @var RulesetConfig[]
      */
     protected $_rulesList;
 
