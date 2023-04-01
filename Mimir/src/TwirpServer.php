@@ -1614,7 +1614,7 @@ final class TwirpServer implements Mimir
                 return (new PlayerSeating())
                     ->setPlayerId($seat['player_id'])
                     ->setTableIndex($seat['table_index'])
-                    ->setRating($seat['rating'])
+                    ->setRating((float)$seat['rating'])
                     ->setOrder($seat['order'])
                     ->setPlayerTitle($seat['title'])
                     ->setSessionId($seat['session_id']);
