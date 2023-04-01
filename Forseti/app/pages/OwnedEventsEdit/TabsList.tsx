@@ -8,7 +8,7 @@ import {
   IconTool,
   IconTournament,
 } from '@tabler/icons-react';
-import { Tabs } from '@mantine/core';
+import { Button, Tabs } from '@mantine/core';
 import { EventType } from '#/clients/atoms.pb';
 
 type TabsProps = {

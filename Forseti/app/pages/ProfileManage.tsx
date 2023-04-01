@@ -1,16 +1,7 @@
 import * as React from 'react';
 import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
-import {
-  Box,
-  Button,
-  Container,
-  Group,
-  LoadingOverlay,
-  Select,
-  Space,
-  TextInput,
-} from '@mantine/core';
+import { Box, Container, LoadingOverlay, Select, Space, TextInput } from '@mantine/core';
 import {
   IconCircleCheck,
   IconDeviceFloppy,
@@ -21,10 +12,11 @@ import {
   IconMapPin,
   IconPhoneCall,
 } from '@tabler/icons-react';
-import { useCallback, useEffect, useState } from 'react';
+import { createRef, useCallback, useEffect, useState } from 'react';
 import { useApi } from '#/hooks/api';
 import { usePageTitle } from '#/hooks/pageTitle';
 import { useStorage } from '#/hooks/storage';
+import { TopActionButton } from '#/helpers/TopActionButton';
 
 export const ProfileManage: React.FC = () => {
   const i18n = useI18n();
@@ -32,6 +24,7 @@ export const ProfileManage: React.FC = () => {
   const api = useApi();
   const storage = useStorage();
   const personId = storage.getPersonId()!;
+  const formRef: React.RefObject<HTMLFormElement> = createRef();
   const [countries, setCountries] = useState<Array<{ value: string; label: string }>>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -117,7 +110,7 @@ export const ProfileManage: React.FC = () => {
     <>
       <Container size='xs' px='xs'>
         <Box pos='relative'>
-          <form onSubmit={form.onSubmit(submitForm)}>
+          <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
             <LoadingOverlay visible={isLoading} overlayBlur={2} />
             <TextInput
               disabled={true}
@@ -165,17 +158,15 @@ export const ProfileManage: React.FC = () => {
               label={i18n._t('Tenhou ID')}
               {...form.getInputProps('tenhouId')}
             />
-            <Group position='right' mt='md'>
-              <Button
-                loading={isSaving}
-                style={{ width: '200px' }}
-                disabled={isLoading || isSaved}
-                leftIcon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
-                type='submit'
-              >
-                {isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
-              </Button>
-            </Group>
+            <TopActionButton
+              title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
+              loading={isSaving}
+              disabled={isLoading || isSaved}
+              icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
+              onClick={() => {
+                formRef.current?.requestSubmit();
+              }}
+            />
           </form>
         </Box>
       </Container>

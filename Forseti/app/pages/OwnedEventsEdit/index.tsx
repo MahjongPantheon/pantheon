@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { createRef, useContext, useEffect, useState } from 'react';
 import { authCtx } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
 import { Center, Container, LoadingOverlay, Stack, Tabs } from '@mantine/core';
@@ -13,19 +13,23 @@ import { TournamentSettings } from '#/pages/OwnedEventsEdit/TournamentSettings';
 import { OnlineSettings } from '#/pages/OwnedEventsEdit/OnlineSettings';
 import { RulesetSettings } from '#/pages/OwnedEventsEdit/RulesetSettings';
 import { YakuSettings } from '#/pages/OwnedEventsEdit/YakuSettings';
-import { IconSettingsCheck } from '@tabler/icons-react';
+import { IconCircleCheck, IconDeviceFloppy, IconSettingsCheck } from '@tabler/icons-react';
 import { FormFields } from '#/pages/OwnedEventsEdit/types';
 import { EventData, EventType, RulesetConfig } from '#/clients/atoms.pb';
+import { TopActionButton } from '#/helpers/TopActionButton';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
+  const formRef: React.RefObject<HTMLFormElement> = createRef();
   const [isLoading, setIsLoading] = useState(false);
   const [eventType, setEventType] = useState<EventType>('LOCAL');
   const [timezones, setTimezones] = useState<Array<{ value: string; label: string }>>([]);
   const [rulesets, setRulesets] = useState<Array<{ value: string; label: string }>>([]);
   const [eventName, setEventName] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   usePageTitle('Edit event :: ' + eventName);
 
   const form = useForm<FormFields>({
@@ -164,7 +168,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
     <>
       <Container pos='relative'>
         <LoadingOverlay visible={isLoading} overlayBlur={2} />
-        <form onSubmit={form.onSubmit(submitForm)}>
+        <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
           <Tabs defaultValue='basic'>
             <Tabs.List>
               <TabsList i18n={i18n} eventType={eventType as EventType} />
@@ -186,6 +190,15 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
               <YakuSettings form={form} i18n={i18n} />
             </Tabs.Panel>
           </Tabs>
+          <TopActionButton
+            title={isSaved ? i18n._t('Changes saved!') : i18n._t('Save changes')}
+            loading={isSaving}
+            disabled={isLoading || isSaved}
+            icon={isSaved ? <IconCircleCheck /> : <IconDeviceFloppy />}
+            onClick={() => {
+              formRef.current?.requestSubmit();
+            }}
+          />
         </form>
       </Container>
       <Center h='150px'>
