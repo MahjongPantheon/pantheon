@@ -435,7 +435,6 @@ message EventData {
   string title = 2;
   string description = 3;
   int32 duration = 4;
-  string ruleset = 5; // ruleset title
   string timezone = 6;
   int32 lobbyId = 7; // xxxx for common lobby, 1xxxx for tournament lobby
   int32 seriesLength = 8;
@@ -443,7 +442,7 @@ message EventData {
   bool isTeam = 10;
   bool isPrescripted = 11;
   int32 autostart = 12; // time until game autostart
-  string rulesetChanges = 13; // json-stringified ruleset changes
+  RulesetConfig rulesetConfig = 14;
 }
 
 message TableState {

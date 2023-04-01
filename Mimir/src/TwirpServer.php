@@ -317,14 +317,13 @@ final class TwirpServer implements Mimir
                     : EventType::LOCAL))
             ->setTitle($ret['title'])
             ->setDescription($ret['description'])
-            ->setRuleset($ret['ruleset'])
             ->setTimezone($ret['timezone'])
             ->setSeriesLength($ret['seriesLength'])
             ->setMinGames($ret['minGames'])
             ->setIsTeam($ret['isTeam'])
             ->setIsPrescripted($ret['isPrescripted'])
             ->setAutostart($ret['autostart'])
-            ->setRulesetChanges($ret['rulesetChanges']);
+            ->setRulesetConfig($ret['ruleset']);
         if (!empty($ret['duration'])) {
             $data->setDuration($ret['duration']);
         }
