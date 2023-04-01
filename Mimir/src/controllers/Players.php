@@ -77,10 +77,6 @@ class PlayersController extends Controller
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
-        if (!EventPrimitive::areEventsCompatible($eventList)) {
-            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
-        }
-
         $stats = (new PlayerStatModel($this->_ds, $this->_config, $this->_meta))
             ->getStats($eventIdList, $playerId);
 
@@ -570,7 +566,7 @@ class PlayersController extends Controller
             $payments = PointsCalc::lastPaymentsInfo();
             foreach ($round->rounds() as $roundItem) {
                 PointsCalc::ron(
-                    $session->getEvent()->getRuleset(),
+                    $session->getEvent()->getRulesetConfig(),
                     $sessionState->getCurrentDealer() == $roundItem->getWinnerId(),
                     $sessionState->getScores(),
                     $roundItem->getWinnerId(),
@@ -592,7 +588,7 @@ class PlayersController extends Controller
         switch ($round->getOutcome()) {
             case 'ron':
                 PointsCalc::ron(
-                    $session->getEvent()->getRuleset(),
+                    $session->getEvent()->getRulesetConfig(),
                     $sessionState->getCurrentDealer() == $round->getWinnerId(),
                     $sessionState->getScores(),
                     $round->getWinnerId(),
@@ -607,7 +603,7 @@ class PlayersController extends Controller
                 break;
             case 'tsumo':
                 PointsCalc::tsumo(
-                    $session->getEvent()->getRuleset(),
+                    $session->getEvent()->getRulesetConfig(),
                     $sessionState->getCurrentDealer(),
                     $sessionState->getScores(),
                     $round->getWinnerId(),
@@ -634,7 +630,7 @@ class PlayersController extends Controller
                 break;
             case 'chombo':
                 PointsCalc::chombo(
-                    $session->getEvent()->getRuleset(),
+                    $session->getEvent()->getRulesetConfig(),
                     $sessionState->getCurrentDealer(),
                     $round->getLoserId(),
                     $sessionState->getScores()

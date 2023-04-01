@@ -18,44 +18,50 @@
 namespace Common;
 
 require_once __DIR__ . '/../YakuMap.php';
+require_once __DIR__ . '/../generated/Common/EndingPolicy.php';
+require_once __DIR__ . '/../generated/Common/Uma.php';
+require_once __DIR__ . '/../generated/Common/UmaType.php';
+require_once __DIR__ . '/../generated/Common/RulesetConfig.php';
 
-return [
-    'allowedYaku' => YakuMap::listExcept([
+return (new RulesetConfig())
+    ->setUma((new Uma())
+        ->setPlace1(15000)
+        ->setPlace2(5000)
+        ->setPlace3(-5000)
+        ->setPlace4(-15000)
+    )
+    ->setUmaType(UmaType::UMA_SIMPLE)
+    ->setEqualizeUma(true)
+    ->setWithWinningDealerHonbaSkipped(false)
+    ->setOka(0)
+    ->setReplacementPlayerFixedPoints(-15000)
+    ->setReplacementPlayerOverrideUma(-15000)
+    ->setAllowedYaku(YakuMap::listExcept([
         Y_OPENRIICHI
-    ]),
-    'chomboPenalty'         => 20000,
-    'complexUma' => false,
-    'doubleronHonbaAtamahane' => false,
-    'doubleronRiichiAtamahane' => false,
-    'equalizeUma'           => true,
-    'extraChomboPayments'   => false,
-    'gameExpirationTime'    => false,
-    'goalPoints'            => 0,
-    'maxPenalty'            => 20000,
-    'minPenalty'            => 100,
-    'oka'                   => 0,
-    'penaltyStep'           => 100,
-    'playAdditionalRounds'  => false,
-    'replacementPlayerFixedPoints' => -15000,
-    'replacementPlayerOverrideUma' => -15000,
-    'riichiGoesToWinner'    => true,
-    'startPoints'           => 30000,
-    'startRating'           => 0,
-    'endingPolicy'          => 'oneMoreHand',
-    'tonpuusen'             => false,
-    'uma'                   => [1 => 15000, 5000, -5000, -15000],
-    'withAbortives'         => false,
-    'withAtamahane'         => false,
-    'withButtobi'           => false,
-    'withKazoe'             => false,
-    'withKiriageMangan'     => false,
-    'withKuitan'            => true,
-    'withLeadingDealerGameOver' => false,
-    'withMultiYakumans'     => false,
-    'withNagashiMangan'     => false,
-    'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII],
-    'withWinningDealerHonbaSkipped' => false,
-    'chipsValue'            => 0,
-
-    '_invalidCustomFields' => [],
-];
+    ]))
+    ->setChipsValue(0)
+    ->setChomboPenalty(20000)
+    ->setDoubleronHonbaAtamahane(false)
+    ->setDoubleronRiichiAtamahane(false)
+    ->setEndingPolicy(EndingPolicy::EP_ONE_MORE_HAND)
+    ->setExtraChomboPayments(false)
+    ->setGameExpirationTime(0)
+    ->setGoalPoints(0)
+    ->setMaxPenalty(20000)
+    ->setMinPenalty(100)
+    ->setPenaltyStep(100)
+    ->setPlayAdditionalRounds(false)
+    ->setRiichiGoesToWinner(true)
+    ->setStartPoints(30000)
+    ->setStartRating(0)
+    ->setTonpuusen(false)
+    ->setWithAbortives(false)
+    ->setWithAtamahane(false)
+    ->setWithButtobi(false)
+    ->setWithKazoe(false)
+    ->setWithKiriageMangan(false)
+    ->setWithKuitan(true)
+    ->setWithLeadingDealerGameOver(false)
+    ->setWithMultiYakumans(false)
+    ->setWithNagashiMangan(false)
+    ->setYakuWithPao([Y_DAISANGEN, Y_DAISUUSHII]);

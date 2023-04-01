@@ -108,13 +108,6 @@ enum SessionStatus {
   CANCELLED = 4;
 }
 
-message RulesetGenerated { // added suffix to avoid confusion with /Common/rulesets
-  string title = 1;
-  string description = 2;
-  string defaultRules = 3; // stringified JSON
-  string fieldTypes = 4; // stringified JSON
-}
-
 message Country {
   string code = 1;
   string name = 2;
@@ -538,41 +531,41 @@ enum EndingPolicy {
 }
 
 message RulesetConfig {
-  ComplexUma complexUma = 1;
-  EndingPolicy endingPolicy = 2;
-  Uma uma = 3;
-  UmaType umaType = 4;
-  bool doubleronHonbaAtamahane = 5;
-  bool doubleronRiichiAtamahane = 6;
-  bool equalizeUma = 7;
-  bool extraChomboPayments = 8;
-  bool playAdditionalRounds = 9;
-  bool riichiGoesToWinner = 10;
-  bool tonpuusen = 11;
-  bool withAbortives = 12;
-  bool withAtamahane = 13;
-  bool withButtobi = 14;
-  bool withKazoe = 15;
-  bool withKiriageMangan = 16;
-  bool withKuitan = 17;
-  bool withLeadingDealerGameOver = 18;
-  bool withMultiYakumans = 19;
-  bool withNagashiMangan = 20;
-  bool withWinningDealerHonbaSkipped = 21;
-  int32 chipsValue = 22;
-  int32 chomboPenalty = 23;
-  int32 gameExpirationTime = 24;
-  int32 goalPoints = 25;
-  int32 maxPenalty = 26;
-  int32 minPenalty = 27;
-  int32 oka = 28;
-  int32 penaltyStep = 29;
+  ComplexUma complexUma = 1; //
+  EndingPolicy endingPolicy = 2; //
+  Uma uma = 3; //
+  UmaType umaType = 4; //
+  bool doubleronHonbaAtamahane = 5; //
+  bool doubleronRiichiAtamahane = 6; //
+  bool equalizeUma = 7; //
+  bool extraChomboPayments = 8; //
+  bool playAdditionalRounds = 9; //
+  bool riichiGoesToWinner = 10; //
+  bool tonpuusen = 11; //
+  bool withAbortives = 12; //
+  bool withAtamahane = 13; //
+  bool withButtobi = 14; //
+  bool withKazoe = 15; //
+  bool withKiriageMangan = 16; //
+  bool withKuitan = 17; //
+  bool withLeadingDealerGameOver = 18; //
+  bool withMultiYakumans = 19; //
+  bool withNagashiMangan = 20; //
+  bool withWinningDealerHonbaSkipped = 21; //
+  int32 chipsValue = 22; //
+  int32 chomboPenalty = 23; //
+  int32 gameExpirationTime = 24; //
+  int32 goalPoints = 25; //
+  int32 maxPenalty = 26; //
+  int32 minPenalty = 27; //
+  int32 oka = 28; //
+  int32 penaltyStep = 29; //
   int32 replacementPlayerFixedPoints = 30;
   int32 replacementPlayerOverrideUma = 31;
-  int32 startPoints = 32;
-  int32 startRating = 33;
-  repeated int32 allowedYaku = 34;
-  repeated int32 yakuWithPao = 35;
+  int32 startPoints = 32; //
+  int32 startRating = 33; //
+  repeated int32 allowedYaku = 34; //
+  repeated int32 yakuWithPao = 35; //
 }
 
 // Generics

@@ -19,7 +19,9 @@ import * as atoms from "./atoms.pb";
 export interface Events_GetRulesets_Payload {}
 
 export interface Events_GetRulesets_Response {
-  rulesets: atoms.RulesetGenerated[];
+  rulesets: atoms.RulesetConfig[];
+  rulesetIds: string[];
+  rulesetTitles: string[];
 }
 
 export interface Events_GetTimezones_Payload {
@@ -3045,6 +3047,8 @@ export const Events_GetRulesets_Response = {
   initialize: function (): Events_GetRulesets_Response {
     return {
       rulesets: [],
+      rulesetIds: [],
+      rulesetTitles: [],
     };
   },
 
@@ -3059,8 +3063,14 @@ export const Events_GetRulesets_Response = {
       writer.writeRepeatedMessage(
         1,
         msg.rulesets as any,
-        atoms.RulesetGenerated._writeMessage
+        atoms.RulesetConfig._writeMessage
       );
+    }
+    if (msg.rulesetIds?.length) {
+      writer.writeRepeatedString(2, msg.rulesetIds);
+    }
+    if (msg.rulesetTitles?.length) {
+      writer.writeRepeatedString(3, msg.rulesetTitles);
     }
     return writer;
   },
@@ -3076,9 +3086,17 @@ export const Events_GetRulesets_Response = {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          const m = atoms.RulesetGenerated.initialize();
-          reader.readMessage(m, atoms.RulesetGenerated._readMessage);
+          const m = atoms.RulesetConfig.initialize();
+          reader.readMessage(m, atoms.RulesetConfig._readMessage);
           msg.rulesets.push(m);
+          break;
+        }
+        case 2: {
+          msg.rulesetIds.push(reader.readString());
+          break;
+        }
+        case 3: {
+          msg.rulesetTitles.push(reader.readString());
           break;
         }
         default: {
@@ -9056,6 +9074,8 @@ export const Events_GetRulesets_ResponseJSON = {
   initialize: function (): Events_GetRulesets_Response {
     return {
       rulesets: [],
+      rulesetIds: [],
+      rulesetTitles: [],
     };
   },
 
@@ -9068,8 +9088,14 @@ export const Events_GetRulesets_ResponseJSON = {
     const json: Record<string, unknown> = {};
     if (msg.rulesets?.length) {
       json["rulesets"] = msg.rulesets.map(
-        atoms.RulesetGeneratedJSON._writeMessage
+        atoms.RulesetConfigJSON._writeMessage
       );
+    }
+    if (msg.rulesetIds?.length) {
+      json["rulesetIds"] = msg.rulesetIds;
+    }
+    if (msg.rulesetTitles?.length) {
+      json["rulesetTitles"] = msg.rulesetTitles;
     }
     return json;
   },
@@ -9084,10 +9110,18 @@ export const Events_GetRulesets_ResponseJSON = {
     const _rulesets_ = json["rulesets"];
     if (_rulesets_) {
       for (const item of _rulesets_) {
-        const m = atoms.RulesetGenerated.initialize();
-        atoms.RulesetGeneratedJSON._readMessage(m, item);
+        const m = atoms.RulesetConfig.initialize();
+        atoms.RulesetConfigJSON._readMessage(m, item);
         msg.rulesets.push(m);
       }
+    }
+    const _rulesetIds_ = json["rulesetIds"];
+    if (_rulesetIds_) {
+      msg.rulesetIds = _rulesetIds_;
+    }
+    const _rulesetTitles_ = json["rulesetTitles"];
+    if (_rulesetTitles_) {
+      msg.rulesetTitles = _rulesetTitles_;
     }
     return msg;
   },

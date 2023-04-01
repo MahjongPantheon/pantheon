@@ -14,9 +14,17 @@ use Google\Protobuf\Internal\GPBUtil;
 class Events_GetRulesets_Response extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>repeated .Common.RulesetGenerated rulesets = 1;</code>
+     * Generated from protobuf field <code>repeated .Common.RulesetConfig rulesets = 1;</code>
      */
     private $rulesets;
+    /**
+     * Generated from protobuf field <code>repeated string rulesetIds = 2;</code>
+     */
+    private $rulesetIds;
+    /**
+     * Generated from protobuf field <code>repeated string rulesetTitles = 3;</code>
+     */
+    private $rulesetTitles;
 
     /**
      * Constructor.
@@ -24,7 +32,9 @@ class Events_GetRulesets_Response extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type array<\Common\RulesetGenerated>|\Google\Protobuf\Internal\RepeatedField $rulesets
+     *     @type array<\Common\RulesetConfig>|\Google\Protobuf\Internal\RepeatedField $rulesets
+     *     @type array<string>|\Google\Protobuf\Internal\RepeatedField $rulesetIds
+     *     @type array<string>|\Google\Protobuf\Internal\RepeatedField $rulesetTitles
      * }
      */
     public function __construct($data = NULL) {
@@ -33,7 +43,7 @@ class Events_GetRulesets_Response extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.RulesetGenerated rulesets = 1;</code>
+     * Generated from protobuf field <code>repeated .Common.RulesetConfig rulesets = 1;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRulesets()
@@ -42,14 +52,58 @@ class Events_GetRulesets_Response extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.RulesetGenerated rulesets = 1;</code>
-     * @param array<\Common\RulesetGenerated>|\Google\Protobuf\Internal\RepeatedField $var
+     * Generated from protobuf field <code>repeated .Common.RulesetConfig rulesets = 1;</code>
+     * @param array<\Common\RulesetConfig>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setRulesets($var)
     {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\RulesetGenerated::class);
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\RulesetConfig::class);
         $this->rulesets = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated string rulesetIds = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
+     */
+    public function getRulesetIds()
+    {
+        return $this->rulesetIds;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated string rulesetIds = 2;</code>
+     * @param array<string>|\Google\Protobuf\Internal\RepeatedField $var
+     * @return $this
+     */
+    public function setRulesetIds($var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
+        $this->rulesetIds = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated string rulesetTitles = 3;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
+     */
+    public function getRulesetTitles()
+    {
+        return $this->rulesetTitles;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated string rulesetTitles = 3;</code>
+     * @param array<string>|\Google\Protobuf\Internal\RepeatedField $var
+     * @return $this
+     */
+    public function setRulesetTitles($var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
+        $this->rulesetTitles = $arr;
 
         return $this;
     }

@@ -65,7 +65,7 @@ class GamesSeriesTest extends \PHPUnit\Framework\TestCase
             ->setTimezone('UTC')
             ->setDescription('desc')
             ->setSeriesLength(5)
-            ->setRuleset(\Common\Ruleset::instance('ema'));
+            ->setRulesetConfig(\Common\Ruleset::instance('ema'));
         $this->_event->save();
 
         $this->_players = PlayerPrimitive::findById($this->_ds, [

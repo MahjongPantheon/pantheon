@@ -866,7 +866,7 @@ class RoundPrimitive extends Primitive
     public function getLastSessionState()
     {
         return SessionState::fromJson(
-            $this->getEvent()->getRuleset(),
+            $this->getEvent()->getRulesetConfig(),
             $this->getSession()->getPlayersIds(),
             $this->_lastSessionState
         );

@@ -72,7 +72,9 @@ service Mimir {
 message Events_GetRulesets_Payload {}
 
 message Events_GetRulesets_Response {
-  repeated RulesetGenerated rulesets = 1;
+  repeated RulesetConfig rulesets = 1;
+  repeated string rulesetIds = 2;
+  repeated string rulesetTitles = 3;
 }
 
 message Events_GetTimezones_Payload {

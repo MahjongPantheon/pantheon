@@ -17,13 +17,16 @@
  */
 namespace Mimir;
 
+use Common\EndingPolicy;
+use Common\Uma;
+use Common\UmaType;
+
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/primitives/SessionResults.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
 require_once __DIR__ . '/../../src/primitives/Round.php';
 require_once __DIR__ . '/../../src/primitives/Session.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
-require_once __DIR__ . '/../util/MockRuleset.php';
 require_once __DIR__ . '/../../src/Db.php';
 
 class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
@@ -49,7 +52,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
      */
     protected $_session;
     /**
-     * @var MockRuleset
+     * @var \Common\Ruleset
      */
     protected $_ruleset;
 
@@ -57,26 +60,32 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
     {
         $this->_ds = DataSource::__getCleanTestingInstance();
 
-        $this->_ruleset = new MockRuleset();
-        $this->_ruleset->setRule('withButtobi', false);
-        $this->_ruleset->setRule('startRating', 0);
-        $this->_ruleset->setRule('riichiGoesToWinner', false);
-        $this->_ruleset->setRule('tonpuusen', false);
-        $this->_ruleset->setRule('endingPolicy', 'none');
-        $this->_ruleset->setRule('withLeadingDealerGameOver', true);
-        $this->_ruleset->setRule('startPoints', 30000);
-        $this->_ruleset->setRule('uma', [1 => 15000, 5000, -5000, -15000]);
-        $this->_ruleset->setRule('oka', 0);
-        $this->_ruleset->setRule('chomboPenalty', 20000);
-        $this->_ruleset->setRule('equalizeUma', false);
-        $this->_ruleset->setRule('replacementPlayerFixedPoints', -30000);
-        $this->_ruleset->setRule('replacementPlayerOverrideUma', 0);
+        $this->_ruleset = \Common\Ruleset::instance('ema');
+        $this->_ruleset->rules()
+            ->setWithButtobi(false)
+            ->setStartRating(0)
+            ->setRiichiGoesToWinner(false)
+            ->setTonpuusen(false)
+            ->setEndingPolicy(EndingPolicy::EP_NONE)
+            ->setWithLeadingDealerGameOver(true)
+            ->setStartPoints(30000)
+            ->setUmaType(UmaType::UMA_SIMPLE)
+            ->setUma((new Uma())
+                ->setPlace1(15000)
+                ->setPlace2(5000)
+                ->setPlace3(-5000)
+                ->setPlace4(-15000))
+            ->setOka(0)
+            ->setChomboPenalty(20000)
+            ->setEqualizeUma(false)
+            ->setReplacementPlayerOverrideUma(0)
+            ->setReplacementPlayerFixedPoints(-30000);
 
         $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setDescription('desc')
             ->setTimezone('UTC')
-            ->setRuleset($this->_ruleset);
+            ->setRulesetConfig($this->_ruleset);
         $this->_event->save();
 
         $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
@@ -99,7 +108,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );
@@ -118,7 +127,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayer($player)
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );
@@ -133,7 +142,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );
@@ -144,14 +153,14 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testOkaRule()
     {
-        $this->_ruleset->setRule('startPoints', 25000);
-        $this->_ruleset->setRule('oka', 20000);
+        $this->_ruleset->rules()->setStartPoints(25000);
+        $this->_ruleset->rules()->setOka(20000);
 
         $result = (new SessionResultsPrimitive($this->_ds))
             ->setPlayer($this->_players[0])
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );
@@ -163,7 +172,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );
@@ -189,7 +198,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayer($this->_players[0])
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );
@@ -199,7 +208,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );
@@ -209,7 +218,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayer($this->_players[2])
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );
@@ -219,7 +228,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayer($this->_players[3])
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );
@@ -241,7 +250,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
     public function testTwoEqualScoreWithEqualityRule()
     {
         $this->_ruleset = \Common\Ruleset::instance('ema');
-        $this->_event->setRuleset($this->_ruleset)->save();
+        $this->_event->setRulesetConfig($this->_ruleset)->save();
 
         $round = (new RoundPrimitive($this->_ds))
             ->setOutcome('draw')
@@ -256,7 +265,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );
@@ -266,7 +275,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayer($this->_players[2])
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );
@@ -280,7 +289,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
 
     public function testChombo()
     {
-        $this->_ruleset->setRule('extraChomboPayments', false);
+        $this->_ruleset->rules()->setExtraChomboPayments(false);
         $round = (new RoundPrimitive($this->_ds))
             ->setOutcome('chombo')
             ->setSession($this->_session)
@@ -293,7 +302,7 @@ class SessionResultsPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setPlayer($this->_players[1])
             ->setSession($this->_session)
             ->calc(
-                $this->_session->getEvent()->getRuleset(),
+                $this->_session->getEvent()->getRulesetConfig(),
                 $this->_session->getCurrentState(),
                 $this->_session->getPlayersIds()
             );

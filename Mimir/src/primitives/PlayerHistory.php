@@ -369,9 +369,9 @@ class PlayerHistoryPrimitive extends Primitive
                 ->setSession($session)
                 ->_setGamesPlayed(0)
                 ->_setAvgPlace(0)
-                ->_setRating($session->getEvent()->getRuleset()->startRating()); // TODO: omg :(
+                ->_setRating($session->getEvent()->getRulesetConfig()->rules()->getStartRating()); // TODO: omg :(
 
-            if ($session->getEvent()->getRuleset()->chipsValue()) {
+            if ($session->getEvent()->getRulesetConfig()->rules()->getChipsValue()) {
                 $previousItem->setChips(0);
             }
 
@@ -388,7 +388,7 @@ class PlayerHistoryPrimitive extends Primitive
             ->_setRating($previousItem->getRating() + $ratingDelta)
             ->_updateAvgPlaceAndGamesCount($place);
 
-        if ($session->getEvent()->getRuleset()->chipsValue()) {
+        if ($session->getEvent()->getRulesetConfig()->rules()->getChipsValue()) {
             $item->setChips($previousItem->getChips() + $chips);
         }
 

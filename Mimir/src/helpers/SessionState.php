@@ -99,7 +99,7 @@ class SessionState
         }
         $sc = array_combine(
             $playersIds,
-            array_fill(0, 4, $rules->startPoints())
+            array_fill(0, 4, $rules->rules()->getStartPoints())
         );
         $this->_scores = $sc;
     }
@@ -120,7 +120,7 @@ class SessionState
     public function toArray()
     {
         $arr = [];
-        $withChips = $this->_rules->chipsValue() > 0;
+        $withChips = $this->_rules->rules()->getChipsValue() > 0;
         foreach ($this as $key => $value) { // @phpstan-ignore-line
             if ($key === '_rules') {
                 continue;
@@ -187,13 +187,13 @@ class SessionState
             return false; // should play last round at least once!
         }
 
-        if ($this->getRound() !== ($this->_rules->tonpuusen() ? 4 : 8)) {
+        if ($this->getRound() !== ($this->_rules->rules()->getTonpuusen() ? 4 : 8)) {
             return false; // not oorasu
         }
 
         $scores = array_values($this->getScores());
         $dealerScores = end($scores);
-        return ($dealerScores === max($scores) && $dealerScores > $this->_rules->goalPoints());
+        return ($dealerScores === max($scores) && $dealerScores > $this->_rules->rules()->getGoalPoints());
     }
 
     /**
@@ -201,7 +201,7 @@ class SessionState
      */
     protected function _lastPossibleRoundWasPlayed()
     {
-        $roundsCount = $this->_rules->tonpuusen() ? 4 : 8;
+        $roundsCount = $this->_rules->rules()->getTonpuusen() ? 4 : 8;
 
         if ($this->getRound() <= $roundsCount) {
             return false;
@@ -211,14 +211,14 @@ class SessionState
             return false; // chombo should not finish game
         }
 
-        $additionalRounds = $this->_rules->playAdditionalRounds() ? 4 : 0;
+        $additionalRounds = $this->_rules->rules()->getPlayAdditionalRounds() ? 4 : 0;
         $maxPossibleRound = $roundsCount + $additionalRounds;
         if ($this->getRound() > $maxPossibleRound) {
             return true;
         }
 
         $scores = array_values($this->getScores());
-        return max($scores) >= $this->_rules->goalPoints();
+        return max($scores) >= $this->_rules->rules()->getGoalPoints();
     }
 
     /**
@@ -239,8 +239,8 @@ class SessionState
     {
         return $this->_lastPossibleRoundWasPlayed()
             || $this->_prematurelyFinished
-            || ($this->_rules->withButtobi() && $this->_buttobi())
-            || ($this->_rules->withLeadingDealerGameOver() && $this->_dealerIsLeaderOnOorasu())
+            || ($this->_rules->rules()->getWithButtobi() && $this->_buttobi())
+            || ($this->_rules->rules()->getWithLeadingDealerGameOver() && $this->_dealerIsLeaderOnOorasu())
             ;
     }
 
@@ -445,7 +445,7 @@ class SessionState
             $round->getPaoPlayerId()
         );
 
-        if ($isDealer && !$this->_rules->withWinningDealerHonbaSkipped()) {
+        if ($isDealer && !$this->_rules->rules()->getWithWinningDealerHonbaSkipped()) {
             $this->_addHonba();
         } else {
             $this->_resetHonba()
@@ -499,7 +499,7 @@ class SessionState
             $payments = array_merge_recursive($payments, PointsCalc::lastPaymentsInfo());
         }
 
-        if ($dealerWon && !$this->_rules->withWinningDealerHonbaSkipped()) {
+        if ($dealerWon && !$this->_rules->rules()->getWithWinningDealerHonbaSkipped()) {
             $this->_addHonba();
         } else {
             $this->_resetHonba()
@@ -530,7 +530,7 @@ class SessionState
             $round->getPaoPlayerId()
         );
 
-        if ($this->getCurrentDealer() == $round->getWinnerId() && !$this->_rules->withWinningDealerHonbaSkipped()) {
+        if ($this->getCurrentDealer() == $round->getWinnerId() && !$this->_rules->rules()->getWithWinningDealerHonbaSkipped()) {
             $this->_addHonba();
         } else {
             $this->_resetHonba()
@@ -557,7 +557,7 @@ class SessionState
         $this->_addHonba()
             ->_addRiichiBets(count($round->getRiichiIds()));
 
-        if (!in_array($this->getCurrentDealer(), $round->getTempaiIds()) || $this->_rules->withWinningDealerHonbaSkipped()) {
+        if (!in_array($this->getCurrentDealer(), $round->getTempaiIds()) || $this->_rules->rules()->getWithWinningDealerHonbaSkipped()) {
             $this->_nextRound();
         }
 
@@ -571,7 +571,7 @@ class SessionState
      */
     protected function _updateAfterAbort(RoundPrimitive $round)
     {
-        if (!$this->_rules->withAbortives()) {
+        if (!$this->_rules->rules()->getWithAbortives()) {
             throw new InvalidParametersException('Current game rules do not allow abortive draws');
         }
 
@@ -602,7 +602,7 @@ class SessionState
         if (empty($this->_penalties[$round->getLoserId()])) {
             $this->_penalties[$round->getLoserId()] = 0;
         }
-        $this->_penalties[$round->getLoserId()] -= $this->_rules->chomboPenalty();
+        $this->_penalties[$round->getLoserId()] -= $this->_rules->rules()->getChomboPenalty();
         return PointsCalc::lastPaymentsInfo();
     }
 

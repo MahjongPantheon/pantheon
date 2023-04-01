@@ -48,7 +48,7 @@ class ClubEventSeeder extends AbstractSeed
             ->setSyncStart(0)
             ->setUsePenalty(1)
             ->setIsListed(1)
-            ->setRuleset(\Common\Ruleset::instance('ema'));
+            ->setRulesetConfig(\Common\Ruleset::instance('ema'));
         $event->save();
         return $event;
     }

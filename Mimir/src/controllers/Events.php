@@ -84,8 +84,7 @@ class EventsController extends Controller
             ->setTimeZone($timezone)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
-            ->setRuleset(\Common\Ruleset::instance($ruleset))
-            ->setRulesetChanges($rulesetChanges)
+            ->setRulesetConfig(\Common\Ruleset::instance($ruleset))
             ->setStatHost($statHost)
         ;
 
@@ -202,8 +201,7 @@ class EventsController extends Controller
             ->setTimeZone($timezone)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
-            ->setRuleset(\Common\Ruleset::instance($ruleset))
-            ->setRulesetChanges($rulesetChanges)
+            ->setRulesetConfig(\Common\Ruleset::instance($ruleset))
         ;
 
         if ($event->getSyncStart()) { // Should be a tournament
@@ -262,7 +260,6 @@ class EventsController extends Controller
             'title' => $event->getTitle(),
             'description' => $event->getDescription(),
             'duration' => $event->getGameDuration(),
-            'ruleset' => $event->getRuleset()->title(),
             'timezone' => $event->getTimezone(),
             'lobbyId' => $event->getLobbyId(),
             'seriesLength' => $event->getSeriesLength(),
@@ -270,7 +267,7 @@ class EventsController extends Controller
             'isTeam' => $event->getIsTeam(),
             'isPrescripted' => $event->getIsPrescripted(),
             'autostart' => $event->getTimeToStart(),
-            'rulesetChanges' => json_encode($event->getRulesetChanges() ?: [])
+            'ruleset' => $event->getRulesetConfig()->rules()
         ];
 
         $this->_log->info('Successfully got event settings for event #' . $id);
@@ -333,10 +330,6 @@ class EventsController extends Controller
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
-        }
-
-        if (!EventPrimitive::areEventsCompatible($eventList)) {
-            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
         $needLocalIds = false;
@@ -557,41 +550,14 @@ class EventsController extends Controller
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
-        $rules = $event[0]->getRuleset();
-        # we don't need to display add replay button to the online tournaments
-        $hideAddReplayButton = $rules->title() == 'online' || $rules->title() == 'onlineJpmlA' || $rules->title() == 'onlineChips';
+        $rules = $event[0]->getRulesetConfig();
         $data = [
-            'allowedYaku'         => array_values($rules->allowedYaku()),
-            'startPoints'         => $rules->startPoints(),
-            'goalPoints'          => $rules->goalPoints(),
-            'playAdditionalRounds' => $rules->playAdditionalRounds(),
-            'withKazoe'           => $rules->withKazoe(),
-            'withKiriageMangan'   => $rules->withKiriageMangan(),
-            'withAbortives'       => $rules->withAbortives(),
-            'withNagashiMangan'   => $rules->withNagashiMangan(),
-            'withAtamahane'       => $rules->withAtamahane(),
-            'rulesetTitle'        => $rules->title(),
-            'tonpuusen'           => $rules->tonpuusen(),
-            'startRating'         => $rules->startRating(),
-            'riichiGoesToWinner'  => $rules->riichiGoesToWinner(),
-            'doubleronRiichiAtamahane' => $rules->doubleronRiichiAtamahane(),
-            'doubleronHonbaAtamahane'  => $rules->doubleronHonbaAtamahane(),
-            'extraChomboPayments' => $rules->extraChomboPayments(),
-            'chomboPenalty'       => $rules->chomboPenalty(),
-            'withKuitan'          => $rules->withKuitan(),
-            'withButtobi'         => $rules->withButtobi(),
-            'withMultiYakumans'   => $rules->withMultiYakumans(),
-            'gameExpirationTime'  => $rules->gameExpirationTime(),
-            'minPenalty'          => $rules->minPenalty(),
-            'maxPenalty'          => $rules->maxPenalty(),
-            'penaltyStep'         => $rules->penaltyStep(),
-            'yakuWithPao'         => $rules->yakuWithPao(),
+            'ruleset'             => $rules->rules(),
             'eventTitle'          => $event[0]->getTitle(),
             'eventDescription'    => $this->_mdTransform($event[0]->getDescription()),
             'eventStatHost'       => str_replace(EventPrimitive::ID_PLACEHOLDER, (string)$event[0]->getId(), $event[0]->getStatHost()),
             'useTimer'            => (bool)$event[0]->getUseTimer(),
             'usePenalty'          => (bool)$event[0]->getUsePenalty(),
-            'endingPolicy'         => $rules->endingPolicy(),
             'gameDuration'        => $event[0]->getGameDuration(), // in minutes!
             'timezone'            => $event[0]->getTimezone(),
             'isOnline'            => (bool)$event[0]->getIsOnline(),
@@ -601,14 +567,12 @@ class EventsController extends Controller
             'syncEnd'             => (bool)$event[0]->getSyncEnd(),
             'sortByGames'         => (bool)$event[0]->getSortByGames(),
             'allowPlayerAppend'   => (bool)$event[0]->getAllowPlayerAppend(),
-            'withLeadingDealerGameOver' => $rules->withLeadingDealerGameOver(),
             'seriesLength'        => $event[0]->getSeriesLength(),
             'minGamesCount'        => $event[0]->getMinGamesCount(),
             'gamesStatus'         => $event[0]->getGamesStatus(),
             'hideResults'         => (bool)$event[0]->getHideResults(),
-            'hideAddReplayButton' => $hideAddReplayButton,
+            'hideAddReplayButton' => false, // TODO: fix when tournaments are resurrected
             'isPrescripted'       => (bool)$event[0]->getIsPrescripted(),
-            'chipsValue'          => (int) $rules->chipsValue(),
             'isFinished'          => (bool)$event[0]->getIsFinished(),
         ];
 
@@ -638,10 +602,6 @@ class EventsController extends Controller
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids: ' . implode(", ", $eventIdList) . ' were not found in DB');
-        }
-
-        if (!EventPrimitive::areEventsCompatible($eventList)) {
-            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
         $table = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
@@ -690,10 +650,6 @@ class EventsController extends Controller
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
-        if (!EventPrimitive::areEventsCompatible($eventList)) {
-            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
-        }
-
         $table = (new AchievementsModel($this->_ds, $this->_config, $this->_meta))
             ->getAchievements($eventIdList, $achievementsList);
 
@@ -725,10 +681,6 @@ class EventsController extends Controller
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
-        }
-
-        if (!EventPrimitive::areEventsCompatible($eventList)) {
-            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
         if (!in_array($orderBy, ['id', 'end_date']) || !in_array($order, ['asc', 'desc'])) {
@@ -1018,26 +970,30 @@ class EventsController extends Controller
     {
         $this->_log->info('Receiving rulesets list');
         $list = [
-            'ema' => [
+            [
+                'id' => 'ema',
                 'description' => 'European Mahjong Association rules',
-                'originalRules' => \Common\Ruleset::instance('ema')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('ema')->rules()
             ],
-            'jpmlA' => [
+            [
+                'id' => 'jpmlA',
                 'description' => 'Japanese Professional Mahjong League A rules',
-                'originalRules' => \Common\Ruleset::instance('jpmlA')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('jpmlA')->rules()
             ],
-            'wrc' => [
+            [
+                'id' => 'wrc',
                 'description' => 'World Riichi Championship rules',
-                'originalRules' => \Common\Ruleset::instance('wrc')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('wrc')->rules()
             ],
-            'tenhounet' => [
+            [
+                'id' => 'tenhounet',
                 'description' => 'Tenhou.net compatible rules',
-                'originalRules' => \Common\Ruleset::instance('tenhounet')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('tenhounet')->rules()
             ]
         ];
 
         $this->_log->info('Successfully received rulesets');
-        return ['rules' => $list, 'fields' => \Common\Ruleset::fieldTypes()];
+        return $list;
     }
 
     /**

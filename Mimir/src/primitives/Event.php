@@ -52,8 +52,7 @@ class EventPrimitive extends Primitive
         'allow_player_append' => '_allowPlayerAppend',
         'stat_host'         => '_statHost',
         'lobby_id'          => '_lobbyId',
-        'ruleset'           => '_ruleset',
-        'ruleset_changes'   => '_rulesetChanges',
+        'ruleset_config'    => '_rulesetConfig',
         'timezone'          => '_timezone',
         'series_length'     => '_seriesLength',
         'games_status'      => '_gamesStatus',
@@ -95,22 +94,14 @@ class EventPrimitive extends Primitive
             '_nextGameStartTime'  => $this->_integerTransform(),
             '_timeToStart'        => $this->_integerTransform(),
             '_isListed'           => $this->_integerTransform(),
-            '_ruleset'            => [
+            '_rulesetConfig'      => [
                 'serialize' => function (\Common\Ruleset $rules) {
-                    return $rules->title();
+                    return $rules->rules()->serializeToJsonString();
                 },
                 'deserialize' => function ($rulesId) {
-                    return \Common\Ruleset::instance($rulesId);
+                    return new \Common\Ruleset($rulesId);
                 }
             ],
-            '_rulesetChanges'     => [
-                'serialize' => function ($changes) {
-                    return empty($changes) ? '{}' : json_encode($changes);
-                },
-                'deserialize' => function ($changesJson) {
-                    return json_decode($changesJson, true) ?? [];
-                }
-            ]
         ];
     }
 
@@ -220,12 +211,7 @@ class EventPrimitive extends Primitive
      * Rules to apply to the event
      * @var \Common\Ruleset
      */
-    protected $_ruleset;
-    /**
-     * Changes to base ruleset for current event
-     * @var array
-     */
-    protected $_rulesetChanges;
+    protected $_rulesetConfig;
     /**
      * How many games should be in the series
      * @var integer
@@ -433,37 +419,19 @@ class EventPrimitive extends Primitive
     /**
      * @return \Common\Ruleset
      */
-    public function getRuleset()
+    public function getRulesetConfig()
     {
-        return $this->_ruleset->applyChanges($this->_rulesetChanges ?: []);
+        return $this->_rulesetConfig;
     }
 
     /**
      * @param \Common\Ruleset $rules
      * @return EventPrimitive
      */
-    public function setRuleset(\Common\Ruleset $rules)
+    public function setRulesetConfig(\Common\Ruleset $rules)
     {
-        $this->_ruleset = $rules;
+        $this->_rulesetConfig = $rules;
         return $this;
-    }
-
-    /**
-     * @param array $changes
-     * @return EventPrimitive
-     */
-    public function setRulesetChanges($changes)
-    {
-        $this->_rulesetChanges = $changes;
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getRulesetChanges()
-    {
-        return $this->_rulesetChanges;
     }
 
     /**
@@ -888,24 +856,5 @@ class EventPrimitive extends Primitive
     {
         $this->_isListed = $isListed;
         return $this;
-    }
-
-    /**
-     * Check if events are compatible (can be used in aggregated event).
-     *
-     * @param EventPrimitive[] $eventList
-     * @return boolean
-     */
-    public static function areEventsCompatible($eventList)
-    {
-        $mainEvent = $eventList[0];
-
-        foreach ($eventList as $event) {
-            if ($event->getRuleset()->title() !== $mainEvent->getRuleset()->title()) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

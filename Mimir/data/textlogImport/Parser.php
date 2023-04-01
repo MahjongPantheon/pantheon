@@ -83,7 +83,7 @@ class TextlogParser
         $tokenizer = new Tokenizer();
 
         $debug = [];
-        $lastScoresDebug = array_fill(0, 4, $session->getEvent()->getRuleset()->startPoints()); // todo: omg :(
+        $lastScoresDebug = array_fill(0, 4, $session->getEvent()->getRulesetConfig()->rules()->getStartPoints()); // todo: omg :(
 
         /** @var Token[] $statement */
         foreach ($tokenizer->tokenize($gameLog) as $statement) {
@@ -429,7 +429,7 @@ class TextlogParser
         // check if double/triple ron occured
         $multiRon = !!$this->_findByType($tokens, Tokenizer::ALSO)->token();
         if ($multiRon) {
-            if ($session->getEvent()->getRuleset()->withAtamahane()) { // todo: omg :(
+            if ($session->getEvent()->getRulesetConfig()->rules()->getWithAtamahane()) { // todo: omg :(
                 throw new ParseException("Detected multi-ron, but current rules use atamahane.");
             }
             return $this->_parseOutcomeMultiRon($tokens, $session);

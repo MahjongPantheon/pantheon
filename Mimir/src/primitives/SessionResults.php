@@ -404,7 +404,7 @@ class SessionResultsPrimitive extends Primitive
      */
     public function calc(\Common\Ruleset $rules, SessionState $results, array $playerIds)
     {
-        $withChips = $rules->chipsValue() > 0;
+        $withChips = $rules->rules()->getChipsValue() > 0;
         if ($withChips) {
             $this->_chips = $results->getChips()[$this->_playerId];
         }
@@ -422,7 +422,7 @@ class SessionResultsPrimitive extends Primitive
         $this->_ratingDelta = $this->_calcRatingDelta($rules, $results->getScores());
 
         if ($withChips) {
-            $this->_ratingDelta += $this->_chips * $rules->chipsValue();
+            $this->_ratingDelta += $this->_chips * $rules->rules()->getChipsValue();
         }
 
         if (!empty($results->getPenalties()[$this->_playerId])) { // final chombing
@@ -508,13 +508,13 @@ class SessionResultsPrimitive extends Primitive
                 $this->_playerId . '/' . $this->_eventId . '), can\'t calculate delta');
         }
 
-        $score = ($reg[0]->getReplacementPlayerId() && $rules->replacementPlayerFixedPoints() !== false)
-            ? $rules->replacementPlayerFixedPoints()
-            : $this->_score - $rules->startPoints();
+        $score = ($reg[0]->getReplacementPlayerId() && $rules->rules()->getReplacementPlayerFixedPoints() !== false)
+            ? $rules->rules()->getReplacementPlayerFixedPoints()
+            : $this->_score - $rules->rules()->getStartPoints();
 
-        $uma = ($reg[0]->getReplacementPlayerId() && $rules->replacementOverrideUma() !== false)
-            ? $rules->replacementOverrideUma()
-            : $rules->uma($allScores)[$this->_place];
+        $uma = ($reg[0]->getReplacementPlayerId() && $rules->rules()->getReplacementPlayerOverrideUma() !== false)
+            ? $rules->rules()->getReplacementPlayerOverrideUma()
+            : $rules->uma($allScores)[$this->_place - 1];
 
         return (
             $score

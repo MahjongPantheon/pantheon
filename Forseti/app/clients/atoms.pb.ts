@@ -123,13 +123,6 @@ export interface Group {
   description: string;
 }
 
-export interface RulesetGenerated {
-  title: string;
-  description: string;
-  defaultRules: string;
-  fieldTypes: string;
-}
-
 export interface Country {
   code: string;
   name: string;
@@ -1846,97 +1839,6 @@ export const Group = {
         }
         case 4: {
           msg.description = reader.readString();
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
-export const RulesetGenerated = {
-  /**
-   * Serializes RulesetGenerated to protobuf.
-   */
-  encode: function (msg: Partial<RulesetGenerated>): Uint8Array {
-    return RulesetGenerated._writeMessage(
-      msg,
-      new BinaryWriter()
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes RulesetGenerated from protobuf.
-   */
-  decode: function (bytes: ByteSource): RulesetGenerated {
-    return RulesetGenerated._readMessage(
-      RulesetGenerated.initialize(),
-      new BinaryReader(bytes)
-    );
-  },
-
-  /**
-   * Initializes RulesetGenerated with all fields set to their default value.
-   */
-  initialize: function (): RulesetGenerated {
-    return {
-      title: "",
-      description: "",
-      defaultRules: "",
-      fieldTypes: "",
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: Partial<RulesetGenerated>,
-    writer: BinaryWriter
-  ): BinaryWriter {
-    if (msg.title) {
-      writer.writeString(1, msg.title);
-    }
-    if (msg.description) {
-      writer.writeString(2, msg.description);
-    }
-    if (msg.defaultRules) {
-      writer.writeString(3, msg.defaultRules);
-    }
-    if (msg.fieldTypes) {
-      writer.writeString(4, msg.fieldTypes);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: RulesetGenerated,
-    reader: BinaryReader
-  ): RulesetGenerated {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.title = reader.readString();
-          break;
-        }
-        case 2: {
-          msg.description = reader.readString();
-          break;
-        }
-        case 3: {
-          msg.defaultRules = reader.readString();
-          break;
-        }
-        case 4: {
-          msg.fieldTypes = reader.readString();
           break;
         }
         default: {
@@ -8557,82 +8459,6 @@ export const GroupJSON = {
     const _description_ = json["description"];
     if (_description_) {
       msg.description = _description_;
-    }
-    return msg;
-  },
-};
-
-export const RulesetGeneratedJSON = {
-  /**
-   * Serializes RulesetGenerated to JSON.
-   */
-  encode: function (msg: Partial<RulesetGenerated>): string {
-    return JSON.stringify(RulesetGeneratedJSON._writeMessage(msg));
-  },
-
-  /**
-   * Deserializes RulesetGenerated from JSON.
-   */
-  decode: function (json: string): RulesetGenerated {
-    return RulesetGeneratedJSON._readMessage(
-      RulesetGeneratedJSON.initialize(),
-      JSON.parse(json)
-    );
-  },
-
-  /**
-   * Initializes RulesetGenerated with all fields set to their default value.
-   */
-  initialize: function (): RulesetGenerated {
-    return {
-      title: "",
-      description: "",
-      defaultRules: "",
-      fieldTypes: "",
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: Partial<RulesetGenerated>
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.title) {
-      json["title"] = msg.title;
-    }
-    if (msg.description) {
-      json["description"] = msg.description;
-    }
-    if (msg.defaultRules) {
-      json["defaultRules"] = msg.defaultRules;
-    }
-    if (msg.fieldTypes) {
-      json["fieldTypes"] = msg.fieldTypes;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (msg: RulesetGenerated, json: any): RulesetGenerated {
-    const _title_ = json["title"];
-    if (_title_) {
-      msg.title = _title_;
-    }
-    const _description_ = json["description"];
-    if (_description_) {
-      msg.description = _description_;
-    }
-    const _defaultRules_ = json["defaultRules"];
-    if (_defaultRules_) {
-      msg.defaultRules = _defaultRules_;
-    }
-    const _fieldTypes_ = json["fieldTypes"];
-    if (_fieldTypes_) {
-      msg.fieldTypes = _fieldTypes_;
     }
     return msg;
   },

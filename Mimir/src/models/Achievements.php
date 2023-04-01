@@ -334,8 +334,8 @@ class AchievementsModel extends Model
         }
 
         foreach ($games as $session) {
-            $rules = $session->getEvent()->getRuleset();
-            if ($rules->riichiGoesToWinner()) {
+            $rules = $session->getEvent()->getRulesetConfig();
+            if ($rules->rules()->getRiichiGoesToWinner()) {
                 $firstPlace = array_filter($session->getSessionResults(), function (SessionResultsPrimitive $result) {
                     return $result->getPlace() === 1;
                 });
@@ -391,7 +391,7 @@ class AchievementsModel extends Model
                     foreach ($riichiWinners as $winnerId => $item) {
                         $closestWinner = $item['closest_winner'];
 
-                        if ($rules->doubleronRiichiAtamahane() && $closestWinner) {
+                        if ($rules->rules()->getDoubleronRiichiAtamahane() && $closestWinner) {
                             if ($closestWinner == $winnerId) {
                                 if (in_array($winnerId, $riichiIds)) {
                                     $riichiStat[$winnerId]['won'] ++;

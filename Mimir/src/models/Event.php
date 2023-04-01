@@ -47,7 +47,7 @@ class EventModel extends Model
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
-        $startRating = $event[0]->getRuleset()->startRating();
+        $startRating = $event[0]->getRulesetConfig()->rules()->getStartRating();
 
         // get data from primitives, and some raw data
         $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);

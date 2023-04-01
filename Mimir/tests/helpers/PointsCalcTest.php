@@ -17,13 +17,14 @@
  */
 namespace Mimir;
 
+use Common\Ruleset;
+
 require_once __DIR__ . '/../../src/helpers/PointsCalc.php';
-require_once __DIR__ . '/../util/MockRuleset.php';
 
 class PointsTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var MockRuleset
+     * @var Ruleset
      */
     protected $_ruleset;
 
@@ -37,9 +38,11 @@ class PointsTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->_ruleset = new MockRuleset();
-        $this->_ruleset->setRule('withKazoe', true);
-        $this->_ruleset->setRule('withKiriageMangan', false);
+        $this->_ruleset = \Common\Ruleset::instance('ema');
+        $this->_ruleset
+            ->rules()
+            ->setWithKazoe(true)
+            ->setWithKiriageMangan(false);
     }
 
     protected function tearDown(): void
@@ -153,7 +156,7 @@ class PointsTest extends \PHPUnit\Framework\TestCase
 
     public function testRonKiriage()
     {
-        $this->_ruleset->setRule('withKiriageMangan', true);
+        $this->_ruleset->rules()->setWithKiriageMangan(true);
 
         $actualPoints = PointsCalc::ron(
             $this->_ruleset,
@@ -305,7 +308,7 @@ class PointsTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals([1 => 32000, 0, -32000, 0], $actualPoints);
 
-        $this->_ruleset->setRule('withKazoe', false);
+        $this->_ruleset->rules()->setWithKazoe(false);
 
         $actualPoints = PointsCalc::ron(
             $this->_ruleset,
@@ -425,7 +428,7 @@ class PointsTest extends \PHPUnit\Framework\TestCase
 
     public function testTsumoKiriage()
     {
-        $this->_ruleset->setRule('withKiriageMangan', true);
+        $this->_ruleset->rules()->setWithKiriageMangan(true);
 
         $actualPoints = PointsCalc::tsumo(
             $this->_ruleset,
@@ -522,7 +525,7 @@ class PointsTest extends \PHPUnit\Framework\TestCase
 
     public function testChombo()
     {
-        $this->_ruleset->setRule('extraChomboPayments', false);
+        $this->_ruleset->rules()->setExtraChomboPayments(false);
         $this->assertEquals(
             [1 => 0, 0, 0, 0],
             PointsCalc::chombo($this->_ruleset, 1, 2, $this->_currentScores)
@@ -532,7 +535,7 @@ class PointsTest extends \PHPUnit\Framework\TestCase
             PointsCalc::chombo($this->_ruleset, 1, 1, $this->_currentScores)
         );
 
-        $this->_ruleset->setRule('extraChomboPayments', true);
+        $this->_ruleset->rules()->setExtraChomboPayments(true);
         $this->assertEquals(
             [1 => 4000, -8000, 2000, 2000],
             PointsCalc::chombo($this->_ruleset, 1, 2, $this->_currentScores)

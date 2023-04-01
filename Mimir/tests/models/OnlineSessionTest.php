@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\Uma;
+
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';
@@ -85,7 +87,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             ->setDescription('desc')
             ->setLobbyId('1111')
             ->setAllowPlayerAppend(1)
-            ->setRuleset(\Common\Ruleset::instance('tenhounet'));
+            ->setRulesetConfig(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $this->_gameContent = file_get_contents(__DIR__ . '/testdata/full_hanchan.xml');
@@ -166,6 +168,18 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
 
     public function testAddOnlineGameWithChips()
     {
+        $ruleset = \Common\Ruleset::instance('tenhounet');
+        $ruleset->rules()
+            ->setOka(0)
+            ->setStartRating(0)
+            ->setStartPoints(30000)
+            ->setUma((new Uma())
+                ->setPlace1(15000)
+                ->setPlace2(5000)
+                ->setPlace3(-5000)
+                ->setPlace4(-15000))
+            ->setChipsValue(2000)
+            ->setWithWinningDealerHonbaSkipped(true);
         $this->_event = (new EventPrimitive($this->_ds))
             ->setTitle('title')
             ->setTimezone('UTC')
@@ -173,15 +187,7 @@ class OnlineSessionModelTest extends \PHPUnit\Framework\TestCase
             ->setIsOnline(1)
             ->setLobbyId('1111')
             ->setAllowPlayerAppend(1)
-            ->setRuleset(\Common\Ruleset::instance('tenhounet'))
-            ->setRulesetChanges([
-                'oka' => 0,
-                'startRating' => 0,
-                'startPoints' => 30000,
-                'uma' => [1 => 15000, 5000, -5000, -15000],
-                'chipsValue' => 2000,
-                'withWinningDealerHonbaSkipped' => true,
-            ]);
+            ->setRulesetConfig($ruleset);
         $this->_event->save();
 
         $this->playersRegistration(['player1', 'player2', 'player3', 'player4']);

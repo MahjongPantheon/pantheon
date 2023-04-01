@@ -19,6 +19,7 @@ require_once __DIR__ . '/controllers/Seating.php';
 use Common\AbortResult;
 use Common\Achievement;
 use Common\ChomboResult;
+use Common\ComplexUma;
 use Common\Country;
 use Common\CurrentSession;
 use Common\DoraSummary;
@@ -28,6 +29,7 @@ use Common\EventData;
 use Common\PlayerSeating;
 use Common\PlayerSeatingSwiss;
 use Common\PrescriptedTable;
+use Common\RulesetConfig;
 use Common\SessionHistoryResultTable;
 use Common\Storage;
 use Common\TableItemSwiss;
@@ -147,6 +149,7 @@ use Common\TableState;
 use Common\TournamentGamesStatus;
 use Common\TsumoResult;
 use Common\TwirpError;
+use Common\Uma;
 use Common\YakuStat;
 use Exception;
 use Monolog\Handler\ErrorLogHandler;
@@ -780,13 +783,9 @@ final class TwirpServer implements Mimir
     {
         $ret = $this->_eventsController->getRulesets();
         return (new Events_GetRulesets_Response())
-            ->setRulesets(array_map(function ($ruleset, $name) use ($ret) {
-                return (new RulesetGenerated())
-                    ->setTitle((string)$name)
-                    ->setDescription($ruleset['description'])
-                    ->setDefaultRules(json_encode($ruleset['originalRules']) ?: '')
-                    ->setFieldTypes(json_encode($ret['fields']) ?: '');
-            }, array_values($ret['rules']), array_keys($ret['rules'])));
+            ->setRulesetIds(array_map(function ($r) { return $r['id']; },  $ret))
+            ->setRulesetTitles(array_map(function ($r) { return $r['description']; },  $ret))
+            ->setRulesets(array_map(function ($r) { return $r['originalRules']; },  $ret));
     }
 
     /**
@@ -876,38 +875,14 @@ final class TwirpServer implements Mimir
     public function GetGameConfig(array $ctx, Generic_Event_Payload $req): GameConfig
     {
         $ret = $this->_eventsController->getGameConfig($req->getEventId());
+
         $gc = (new GameConfig())
-            ->setAllowedYaku($ret['allowedYaku'])
-            ->setStartPoints($ret['startPoints'])
-            ->setGoalPoints($ret['goalPoints'])
-            ->setPlayAdditionalRounds($ret['playAdditionalRounds'])
-            ->setWithKazoe($ret['withKazoe'])
-            ->setWithKiriageMangan($ret['withKiriageMangan'])
-            ->setWithAbortives($ret['withAbortives'])
-            ->setWithNagashiMangan($ret['withNagashiMangan'])
-            ->setWithAtamahane($ret['withAtamahane'])
-            ->setRulesetTitle($ret['rulesetTitle'])
-            ->setTonpuusen($ret['tonpuusen'])
-            ->setStartRating($ret['startRating'])
-            ->setRiichiGoesToWinner($ret['riichiGoesToWinner'])
-            ->setDoubleronRiichiAtamahane($ret['doubleronRiichiAtamahane'])
-            ->setDoubleronHonbaAtamahane($ret['doubleronHonbaAtamahane'])
-            ->setExtraChomboPayments($ret['extraChomboPayments'])
-            ->setChomboPenalty($ret['chomboPenalty'])
-            ->setWithKuitan($ret['withKuitan'])
-            ->setWithButtobi($ret['withButtobi'])
-            ->setWithMultiYakumans($ret['withMultiYakumans'])
-            ->setGameExpirationTime($ret['gameExpirationTime'])
-            ->setMinPenalty($ret['minPenalty'])
-            ->setMaxPenalty($ret['maxPenalty'])
-            ->setPenaltyStep($ret['penaltyStep'])
-            ->setYakuWithPao($ret['yakuWithPao'])
+            ->setRulesetConfig($ret['ruleset'])
             ->setEventTitle($ret['eventTitle'])
             ->setEventDescription($ret['eventDescription'])
             ->setEventStatHost($ret['eventStatHost'])
             ->setUseTimer($ret['useTimer'])
             ->setUsePenalty($ret['usePenalty'])
-            ->setEndingPolicy($ret['endingPolicy'])
             ->setTimezone($ret['timezone'])
             ->setIsOnline($ret['isOnline'])
             ->setIsTeam($ret['isTeam'])
@@ -916,13 +891,11 @@ final class TwirpServer implements Mimir
             ->setSyncEnd($ret['syncEnd'])
             ->setSortByGames($ret['sortByGames'])
             ->setAllowPlayerAppend($ret['allowPlayerAppend'])
-            ->setWithLeadingDealerGameOver($ret['withLeadingDealerGameOver'])
             ->setSeriesLength($ret['seriesLength'])
             ->setMinGamesCount($ret['minGamesCount'])
             ->setHideResults($ret['hideResults'])
             ->setHideAddReplayButton($ret['hideAddReplayButton'])
             ->setIsPrescripted($ret['isPrescripted'])
-            ->setChipsValue($ret['chipsValue'])
             ->setIsFinished($ret['isFinished']);
         if (!empty($ret['gameDuration'])) {
             $gc->setGameDuration($ret['gameDuration']);

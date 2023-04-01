@@ -69,7 +69,7 @@ class PlayerStatModel extends Model
         $rounds = $this->_fetchRounds($games);
         $playerNames = $this->_fetchPlayerNames($games);
 
-        $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($mainEvent->getRuleset(), $games, $playerNames);
+        $scoresAndPlayers = $this->_getScoreHistoryAndPlayers($mainEvent->getRulesetConfig(), $games, $playerNames);
         return [
             'rating_history'        => $this->_getRatingHistorySequence($mainEvent, $playerId, $games),
             'score_history'         => $scoresAndPlayers['scores'],
@@ -80,7 +80,7 @@ class PlayerStatModel extends Model
             'win_summary'           => $this->_getOutcomeSummary($playerId, $rounds),
             'hands_value_summary'   => $this->_getHanSummary($playerId, $rounds),
             'yaku_summary'          => $this->_getYakuSummary($playerId, $rounds),
-            'riichi_summary'        => $this->_getRiichiSummary($mainEvent->getRuleset(), $playerId, $rounds),
+            'riichi_summary'        => $this->_getRiichiSummary($mainEvent->getRulesetConfig(), $playerId, $rounds),
             'dora_stat'             => $this->_getDoraStat($playerId, $rounds),
         ];
     }
@@ -93,7 +93,7 @@ class PlayerStatModel extends Model
      */
     protected function _getRatingHistorySequence(EventPrimitive $event, int $playerId, array $games)
     {
-        $rating = $event->getRuleset()->startRating();
+        $rating = $event->getRulesetConfig()->rules()->getStartRating();
         $ratingHistory = array_filter(
             array_map(
                 function ($game) use (&$rating, $playerId) {
@@ -106,7 +106,7 @@ class PlayerStatModel extends Model
             ),
             'is_numeric'
         );
-        array_unshift($ratingHistory, $event->getRuleset()->startRating());
+        array_unshift($ratingHistory, $event->getRulesetConfig()->rules()->getStartRating());
         return $ratingHistory;
     }
 
@@ -121,7 +121,7 @@ class PlayerStatModel extends Model
      */
     protected function _getScoreHistoryAndPlayers($rules, array $games, array $playerNames)
     {
-        $withChips = $rules->chipsValue() > 0;
+        $withChips = $rules->rules()->getChipsValue() > 0;
         $scoreHistory = array_map(function ($game) use ($withChips, &$playerNames) {
             /** @var SessionResultsPrimitive[] $results */
             $results = $game['results'];
@@ -312,7 +312,7 @@ class PlayerStatModel extends Model
         }
 
         return $this->_getPointsDelta(
-            $r->getEvent()->getRuleset(),
+            $r->getEvent()->getRulesetConfig(),
             $sessionState->getScores(),
             $r->getHan(),
             $r->getFu(),
@@ -606,7 +606,7 @@ class PlayerStatModel extends Model
                     );
 
                     $closestWinner = $riichiWinners[$playerId]['closest_winner'];
-                    if ($rules->doubleronRiichiAtamahane() && $closestWinner) {
+                    if ($rules->rules()->getDoubleronRiichiAtamahane() && $closestWinner) {
                         if ($closestWinner == $playerId) {
                             $acc['riichi_won']++;
                         } else {

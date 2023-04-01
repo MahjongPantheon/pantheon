@@ -14,118 +14,147 @@ use Google\Protobuf\Internal\GPBUtil;
 class RulesetConfig extends \Google\Protobuf\Internal\Message
 {
     /**
+     *
      * Generated from protobuf field <code>.Common.ComplexUma complexUma = 1;</code>
      */
     protected $complexUma = null;
     /**
+     *
      * Generated from protobuf field <code>.Common.EndingPolicy endingPolicy = 2;</code>
      */
     protected $endingPolicy = 0;
     /**
+     *
      * Generated from protobuf field <code>.Common.Uma uma = 3;</code>
      */
     protected $uma = null;
     /**
+     *
      * Generated from protobuf field <code>.Common.UmaType umaType = 4;</code>
      */
     protected $umaType = 0;
     /**
+     *
      * Generated from protobuf field <code>bool doubleronHonbaAtamahane = 5;</code>
      */
     protected $doubleronHonbaAtamahane = false;
     /**
+     *
      * Generated from protobuf field <code>bool doubleronRiichiAtamahane = 6;</code>
      */
     protected $doubleronRiichiAtamahane = false;
     /**
+     *
      * Generated from protobuf field <code>bool equalizeUma = 7;</code>
      */
     protected $equalizeUma = false;
     /**
+     *
      * Generated from protobuf field <code>bool extraChomboPayments = 8;</code>
      */
     protected $extraChomboPayments = false;
     /**
+     *
      * Generated from protobuf field <code>bool playAdditionalRounds = 9;</code>
      */
     protected $playAdditionalRounds = false;
     /**
+     *
      * Generated from protobuf field <code>bool riichiGoesToWinner = 10;</code>
      */
     protected $riichiGoesToWinner = false;
     /**
+     *
      * Generated from protobuf field <code>bool tonpuusen = 11;</code>
      */
     protected $tonpuusen = false;
     /**
+     *
      * Generated from protobuf field <code>bool withAbortives = 12;</code>
      */
     protected $withAbortives = false;
     /**
+     *
      * Generated from protobuf field <code>bool withAtamahane = 13;</code>
      */
     protected $withAtamahane = false;
     /**
+     *
      * Generated from protobuf field <code>bool withButtobi = 14;</code>
      */
     protected $withButtobi = false;
     /**
+     *
      * Generated from protobuf field <code>bool withKazoe = 15;</code>
      */
     protected $withKazoe = false;
     /**
+     *
      * Generated from protobuf field <code>bool withKiriageMangan = 16;</code>
      */
     protected $withKiriageMangan = false;
     /**
+     *
      * Generated from protobuf field <code>bool withKuitan = 17;</code>
      */
     protected $withKuitan = false;
     /**
+     *
      * Generated from protobuf field <code>bool withLeadingDealerGameOver = 18;</code>
      */
     protected $withLeadingDealerGameOver = false;
     /**
+     *
      * Generated from protobuf field <code>bool withMultiYakumans = 19;</code>
      */
     protected $withMultiYakumans = false;
     /**
+     *
      * Generated from protobuf field <code>bool withNagashiMangan = 20;</code>
      */
     protected $withNagashiMangan = false;
     /**
+     *
      * Generated from protobuf field <code>bool withWinningDealerHonbaSkipped = 21;</code>
      */
     protected $withWinningDealerHonbaSkipped = false;
     /**
+     *
      * Generated from protobuf field <code>int32 chipsValue = 22;</code>
      */
     protected $chipsValue = 0;
     /**
+     *
      * Generated from protobuf field <code>int32 chomboPenalty = 23;</code>
      */
     protected $chomboPenalty = 0;
     /**
+     *
      * Generated from protobuf field <code>int32 gameExpirationTime = 24;</code>
      */
     protected $gameExpirationTime = 0;
     /**
+     *
      * Generated from protobuf field <code>int32 goalPoints = 25;</code>
      */
     protected $goalPoints = 0;
     /**
+     *
      * Generated from protobuf field <code>int32 maxPenalty = 26;</code>
      */
     protected $maxPenalty = 0;
     /**
+     *
      * Generated from protobuf field <code>int32 minPenalty = 27;</code>
      */
     protected $minPenalty = 0;
     /**
+     *
      * Generated from protobuf field <code>int32 oka = 28;</code>
      */
     protected $oka = 0;
     /**
+     *
      * Generated from protobuf field <code>int32 penaltyStep = 29;</code>
      */
     protected $penaltyStep = 0;
@@ -138,18 +167,22 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
      */
     protected $replacementPlayerOverrideUma = 0;
     /**
+     *
      * Generated from protobuf field <code>int32 startPoints = 32;</code>
      */
     protected $startPoints = 0;
     /**
+     *
      * Generated from protobuf field <code>int32 startRating = 33;</code>
      */
     protected $startRating = 0;
     /**
+     *
      * Generated from protobuf field <code>repeated int32 allowedYaku = 34;</code>
      */
     private $allowedYaku;
     /**
+     *
      * Generated from protobuf field <code>repeated int32 yakuWithPao = 35;</code>
      */
     private $yakuWithPao;
@@ -203,6 +236,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>.Common.ComplexUma complexUma = 1;</code>
      * @return \Common\ComplexUma|null
      */
@@ -222,6 +256,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>.Common.ComplexUma complexUma = 1;</code>
      * @param \Common\ComplexUma $var
      * @return $this
@@ -235,6 +270,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>.Common.EndingPolicy endingPolicy = 2;</code>
      * @return int
      */
@@ -244,6 +280,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>.Common.EndingPolicy endingPolicy = 2;</code>
      * @param int $var
      * @return $this
@@ -257,6 +294,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>.Common.Uma uma = 3;</code>
      * @return \Common\Uma|null
      */
@@ -276,6 +314,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>.Common.Uma uma = 3;</code>
      * @param \Common\Uma $var
      * @return $this
@@ -289,6 +328,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>.Common.UmaType umaType = 4;</code>
      * @return int
      */
@@ -298,6 +338,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>.Common.UmaType umaType = 4;</code>
      * @param int $var
      * @return $this
@@ -311,6 +352,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool doubleronHonbaAtamahane = 5;</code>
      * @return bool
      */
@@ -320,6 +362,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool doubleronHonbaAtamahane = 5;</code>
      * @param bool $var
      * @return $this
@@ -333,6 +376,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool doubleronRiichiAtamahane = 6;</code>
      * @return bool
      */
@@ -342,6 +386,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool doubleronRiichiAtamahane = 6;</code>
      * @param bool $var
      * @return $this
@@ -355,6 +400,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool equalizeUma = 7;</code>
      * @return bool
      */
@@ -364,6 +410,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool equalizeUma = 7;</code>
      * @param bool $var
      * @return $this
@@ -377,6 +424,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool extraChomboPayments = 8;</code>
      * @return bool
      */
@@ -386,6 +434,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool extraChomboPayments = 8;</code>
      * @param bool $var
      * @return $this
@@ -399,6 +448,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool playAdditionalRounds = 9;</code>
      * @return bool
      */
@@ -408,6 +458,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool playAdditionalRounds = 9;</code>
      * @param bool $var
      * @return $this
@@ -421,6 +472,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool riichiGoesToWinner = 10;</code>
      * @return bool
      */
@@ -430,6 +482,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool riichiGoesToWinner = 10;</code>
      * @param bool $var
      * @return $this
@@ -443,6 +496,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool tonpuusen = 11;</code>
      * @return bool
      */
@@ -452,6 +506,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool tonpuusen = 11;</code>
      * @param bool $var
      * @return $this
@@ -465,6 +520,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withAbortives = 12;</code>
      * @return bool
      */
@@ -474,6 +530,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withAbortives = 12;</code>
      * @param bool $var
      * @return $this
@@ -487,6 +544,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withAtamahane = 13;</code>
      * @return bool
      */
@@ -496,6 +554,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withAtamahane = 13;</code>
      * @param bool $var
      * @return $this
@@ -509,6 +568,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withButtobi = 14;</code>
      * @return bool
      */
@@ -518,6 +578,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withButtobi = 14;</code>
      * @param bool $var
      * @return $this
@@ -531,6 +592,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withKazoe = 15;</code>
      * @return bool
      */
@@ -540,6 +602,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withKazoe = 15;</code>
      * @param bool $var
      * @return $this
@@ -553,6 +616,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withKiriageMangan = 16;</code>
      * @return bool
      */
@@ -562,6 +626,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withKiriageMangan = 16;</code>
      * @param bool $var
      * @return $this
@@ -575,6 +640,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withKuitan = 17;</code>
      * @return bool
      */
@@ -584,6 +650,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withKuitan = 17;</code>
      * @param bool $var
      * @return $this
@@ -597,6 +664,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withLeadingDealerGameOver = 18;</code>
      * @return bool
      */
@@ -606,6 +674,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withLeadingDealerGameOver = 18;</code>
      * @param bool $var
      * @return $this
@@ -619,6 +688,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withMultiYakumans = 19;</code>
      * @return bool
      */
@@ -628,6 +698,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withMultiYakumans = 19;</code>
      * @param bool $var
      * @return $this
@@ -641,6 +712,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withNagashiMangan = 20;</code>
      * @return bool
      */
@@ -650,6 +722,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withNagashiMangan = 20;</code>
      * @param bool $var
      * @return $this
@@ -663,6 +736,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withWinningDealerHonbaSkipped = 21;</code>
      * @return bool
      */
@@ -672,6 +746,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>bool withWinningDealerHonbaSkipped = 21;</code>
      * @param bool $var
      * @return $this
@@ -685,6 +760,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 chipsValue = 22;</code>
      * @return int
      */
@@ -694,6 +770,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 chipsValue = 22;</code>
      * @param int $var
      * @return $this
@@ -707,6 +784,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 chomboPenalty = 23;</code>
      * @return int
      */
@@ -716,6 +794,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 chomboPenalty = 23;</code>
      * @param int $var
      * @return $this
@@ -729,6 +808,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 gameExpirationTime = 24;</code>
      * @return int
      */
@@ -738,6 +818,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 gameExpirationTime = 24;</code>
      * @param int $var
      * @return $this
@@ -751,6 +832,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 goalPoints = 25;</code>
      * @return int
      */
@@ -760,6 +842,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 goalPoints = 25;</code>
      * @param int $var
      * @return $this
@@ -773,6 +856,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 maxPenalty = 26;</code>
      * @return int
      */
@@ -782,6 +866,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 maxPenalty = 26;</code>
      * @param int $var
      * @return $this
@@ -795,6 +880,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 minPenalty = 27;</code>
      * @return int
      */
@@ -804,6 +890,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 minPenalty = 27;</code>
      * @param int $var
      * @return $this
@@ -817,6 +904,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 oka = 28;</code>
      * @return int
      */
@@ -826,6 +914,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 oka = 28;</code>
      * @param int $var
      * @return $this
@@ -839,6 +928,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 penaltyStep = 29;</code>
      * @return int
      */
@@ -848,6 +938,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 penaltyStep = 29;</code>
      * @param int $var
      * @return $this
@@ -905,6 +996,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 startPoints = 32;</code>
      * @return int
      */
@@ -914,6 +1006,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 startPoints = 32;</code>
      * @param int $var
      * @return $this
@@ -927,6 +1020,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 startRating = 33;</code>
      * @return int
      */
@@ -936,6 +1030,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>int32 startRating = 33;</code>
      * @param int $var
      * @return $this
@@ -949,6 +1044,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>repeated int32 allowedYaku = 34;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
@@ -958,6 +1054,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>repeated int32 allowedYaku = 34;</code>
      * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
@@ -971,6 +1068,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>repeated int32 yakuWithPao = 35;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
@@ -980,6 +1078,7 @@ class RulesetConfig extends \Google\Protobuf\Internal\Message
     }
 
     /**
+     *
      * Generated from protobuf field <code>repeated int32 yakuWithPao = 35;</code>
      * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this

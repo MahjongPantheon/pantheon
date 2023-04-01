@@ -33,55 +33,55 @@ class EmaRulesetTest extends \PHPUnit\Framework\TestCase
 
     public function testUma()
     {
-        $this->assertEquals(30000, $this->_ruleset->startPoints()); // If this changes, all below should be changed too
+        $this->assertEquals(30000, $this->_ruleset->rules()->getStartPoints()); // If this changes, all below should be changed too
 
         $this->assertEquals(
-            [1 => 0, 0, 0, 0],
+            [0, 0, 0, 0],
             $this->_ruleset->uma([30000, 30000, 30000, 30000])
         ); // all initial/equal score
 
         $this->assertEquals(
-            [1 => 15000, 0, 0, -15000],
+            [15000, 0, 0, -15000],
             $this->_ruleset->uma([28000, 28000, 37000, 27000])
         ); // 1 leader, 2 === 3
 
         $this->assertEquals(
-            [1 => 15000, 5000, -10000, -10000],
+            [15000, 5000, -10000, -10000],
             $this->_ruleset->uma([27000, 28000, 37000, 27000])
         ); // 1 leader, 3 === 4
 
         $this->assertEquals(
-            [1 => 15000, -5000, -5000, -5000],
+            [15000, -5000, -5000, -5000],
             $this->_ruleset->uma([27000, 27000, 37000, 27000])
         ); // 1 leader, 2 === 3 === 4
 
         $this->assertEquals(
-            [1 => 10000, 10000, -5000, -15000],
+            [10000, 10000, -5000, -15000],
             $this->_ruleset->uma([33000, 33000, 24000, 32000])
         ); // 1 loser, 1 === 2
 
         $this->assertEquals(
-            [1 => 15000, 0, 0, -15000],
+            [15000, 0, 0, -15000],
             $this->_ruleset->uma([33000, 32000, 24000, 32000])
         ); // 1 loser, 2 === 3
 
         $this->assertEquals(
-            [1 => 5000, 5000, 5000, -15000],
+            [5000, 5000, 5000, -15000],
             $this->_ruleset->uma([32000, 32000, 24000, 32000])
         ); // 1 loser, 1 === 2 === 3
 
         $this->assertEquals(
-            [1 => 10000, 10000, -5000, -15000],
+            [10000, 10000, -5000, -15000],
             $this->_ruleset->uma([32000, 29000, 24000, 32000])
         ); // 2x2, 1 === 2
 
         $this->assertEquals(
-            [1 => 15000, 5000, -10000, -10000],
+            [15000, 5000, -10000, -10000],
             $this->_ruleset->uma([36000, 24000, 24000, 32000])
         ); // 2x2, 3 === 4
 
         $this->assertEquals(
-            [1 => 10000, 10000, -10000, -10000],
+            [10000, 10000, -10000, -10000],
             $this->_ruleset->uma([36000, 24000, 24000, 36000])
         ); // 2x2, 1 === 2 && 3 === 4
     }

@@ -127,7 +127,7 @@ class EventRatingTableModel extends Model
             array_push($playerHistoryItemsSummed, $newItem);
         }
 
-        $startRating = $mainEvent->getRuleset()->startRating();
+        $startRating = $mainEvent->getRulesetConfig()->rules()->getStartRating();
         $this->_sortItems($startRating, $orderBy, $playerItems, $playerHistoryItemsSummed);
 
         if ($order === 'desc') {
@@ -154,7 +154,7 @@ class EventRatingTableModel extends Model
                 'tenhou_id'     => $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'        => (float)$el->getRating(),
                 'chips'         => (int)$el->getChips(),
-                'winner_zone'   => $el->getRating() >= $mainEvent->getRuleset()->startRating(),
+                'winner_zone'   => $el->getRating() >= $mainEvent->getRulesetConfig()->rules()->getStartRating(),
                 'avg_place'     => round($el->getAvgPlace(), 4),
                 'avg_score'     => $el->getGamesPlayed() == 0
                     ? 0

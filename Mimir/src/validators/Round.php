@@ -38,7 +38,7 @@ class RoundsHelper
         self::_checkOneOf($roundData, 'outcome', ['ron', 'multiron', 'tsumo', 'draw', 'abort', 'chombo', 'nagashi']);
         self::_checkPlayers($game->getPlayersIds(), $game->getEvent()->getRegisteredPlayersIds());
         $playerIds = implode(',', $game->getPlayersIds());
-        $yakuList = $game->getEvent()->getRuleset()->allowedYaku(); // omg :(
+        $yakuList = iterator_to_array($game->getEvent()->getRulesetConfig()->rules()->getAllowedYaku()); // omg :(
         switch ($roundData['outcome']) {
             case 'ron':
                 self::_checkRon($playerIds, $yakuList, $roundData);

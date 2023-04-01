@@ -438,7 +438,7 @@ class SeatingController extends Controller
         // Second step is adding players that didn't play yet
         // this situation is possible only in online tournament
         // when we added replacement player
-        $initialRating = $event[0]->getRuleset()->startRating();
+        $initialRating = $event[0]->getRulesetConfig()->rules()->getStartRating();
         $playersReg = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);
         foreach ($playersReg as $player) {
             if (!in_array($player['id'], $ignoredPlayerIds) && !isset($playersMap[$player['id']])) {

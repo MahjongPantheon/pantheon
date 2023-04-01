@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\EndingPolicy;
+
 require_once __DIR__ . '/../exceptions/EntityNotFound.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../Primitive.php';
@@ -75,7 +77,7 @@ class SessionPrimitive extends Primitive
                 },
                 'deserialize' => function ($str) {
                     return SessionState::fromJson(
-                        $this->getEvent()->getRuleset(),
+                        $this->getEvent()->getRulesetConfig(),
                         $this->getPlayersIds(),
                         $str
                     );
@@ -729,7 +731,7 @@ class SessionPrimitive extends Primitive
     {
         if (empty($this->_current)) {
             $this->_current = new SessionState(
-                $this->getEvent()->getRuleset(),
+                $this->getEvent()->getRulesetConfig(),
                 $this->getPlayersIds()
             );
         }
@@ -749,8 +751,8 @@ class SessionPrimitive extends Primitive
     {
         $lastTimer = $this->getEvent()->getLastTimer(); // may be null if timer is not set!
 
-        switch ($this->getEvent()->getRuleset()->endingPolicy()) {
-            case 'oneMoreHand':
+        switch ($this->getEvent()->getRulesetConfig()->rules()->getEndingPolicy()) {
+            case EndingPolicy::EP_ONE_MORE_HAND:
                 $noTimeLeft = $this->getEvent()->getUseTimer() && $lastTimer && (
                     $lastTimer + (
                         $this->getEvent()->getGameDuration() * 60
@@ -778,7 +780,7 @@ class SessionPrimitive extends Primitive
                 }
 
                 break;
-            case 'endAfterHand':
+            case EndingPolicy::EP_END_AFTER_HAND:
                 $this->getCurrentState()->update($round);
                 $success = $this->save();
 
@@ -876,7 +878,7 @@ class SessionPrimitive extends Primitive
         $chips = $this->getChips();
         $state = $this->getCurrentState();
         $scores = $state->getScores();
-        $chipsBonus = $this->getEvent()->getRuleset()->chipsValue();
+        $chipsBonus = $this->getEvent()->getRulesetConfig()->rules()->getChipsValue();
         foreach ($chips as $playerId => $chipsCount) {
             $scores[$playerId] += $chipsCount * $chipsBonus;
         }
@@ -923,7 +925,7 @@ class SessionPrimitive extends Primitive
      */
     public function getSessionResults()
     {
-        if ($this->getEvent()->getRuleset()->riichiGoesToWinner()) {
+        if ($this->getEvent()->getRulesetConfig()->rules()->getRiichiGoesToWinner()) {
             $placesMap = SessionResultsPrimitive::calcPlacesMap($this->getCurrentState()->getScores(), $this->getPlayersIds());
             // Split riichi bets in case of bump
             $scores = array_map(function ($el) {
@@ -954,7 +956,7 @@ class SessionPrimitive extends Primitive
             return (new SessionResultsPrimitive($this->_ds))
                 ->setPlayer($player)
                 ->setSession($this)
-                ->calc($this->getEvent()->getRuleset(), $this->getCurrentState(), $this->getPlayersIds());
+                ->calc($this->getEvent()->getRulesetConfig(), $this->getCurrentState(), $this->getPlayersIds());
         }, $this->getPlayers());
     }
 
