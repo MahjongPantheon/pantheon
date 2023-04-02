@@ -199,6 +199,8 @@ class Meta
                     }
                 } else if (!empty($this->_currentPersonId)) {
                     $this->_superadmin = $this->_frey->getSuperadminFlag($this->_currentPersonId);
+                    // -1 for global privileges
+                    $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, -1);
                 }
             } catch (\Exception $e) {
                 $this->_currentPersonId = null;

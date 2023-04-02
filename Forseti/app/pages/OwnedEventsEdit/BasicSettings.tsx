@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Text, Select, Stack, Textarea, TextInput, Radio, Group } from '@mantine/core';
 import { IconAbc, IconChecklist, IconMap2 } from '@tabler/icons-react';
 import { EventCustom, FormHandle } from '#/pages/OwnedEventsEdit/types';
-import { RulesetConfig } from '#/clients/atoms.pb';
+import { EventType, RulesetConfig } from '#/clients/atoms.pb';
 
 type BasicSettingsProps = {
   form: FormHandle;
@@ -22,17 +22,24 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
   i18n,
   setFormValues,
 }) => {
+  const typeMap: Record<EventType, string> = {
+    [EventType.LOCAL]: i18n._t('Local rating'),
+    [EventType.ONLINE]: i18n._t('Online event'),
+    [EventType.TOURNAMENT]: i18n._t('Tournament'),
+  };
   return (
     <>
       <Stack>
-        {!newEvent && <Text>Type: {form.getTransformedValues().event.type}</Text>}
+        {!newEvent && (
+          <Text>Type: {typeMap[form.getTransformedValues().event.type ?? 'LOCAL']}</Text>
+        )}
         {!!newEvent && (
           <>
             <Radio.Group label={i18n._t('Select event type')} {...form.getInputProps('event.type')}>
               <Group mt='xs'>
-                <Radio value='LOCAL' label={i18n._t('Local rating')} />
-                <Radio value='TOURNAMENT' label={i18n._t('Tournament')} />
-                <Radio value='ONLINE' label={i18n._t('Online event')} />
+                {(Object.keys(typeMap) as EventType[]).map((k) => (
+                  <Radio value={k} label={typeMap[k]} />
+                ))}
               </Group>
             </Radio.Group>
           </>
