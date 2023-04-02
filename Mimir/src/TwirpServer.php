@@ -1268,7 +1268,6 @@ final class TwirpServer implements Mimir
                 self::_fromEventTypeEnum($req->getType()),
                 $req->getTitle(),
                 $req->getDescription(),
-                $req->getRuleset(),
                 $req->getDuration(),
                 $req->getTimezone(),
                 $req->getSeriesLength(),
@@ -1277,7 +1276,7 @@ final class TwirpServer implements Mimir
                 $req->getIsTeam(),
                 $req->getIsPrescripted(),
                 $req->getAutostart(),
-                $req->getRulesetChanges(),
+                $req->getRulesetConfig(),
             ));
     }
 
@@ -1296,7 +1295,6 @@ final class TwirpServer implements Mimir
                 $req->getId(),
                 $ev->getTitle(),
                 $ev->getDescription(),
-                $ev->getRuleset(),
                 $ev->getDuration(),
                 $ev->getTimezone(),
                 $ev->getSeriesLength(),
@@ -1305,7 +1303,7 @@ final class TwirpServer implements Mimir
                 $ev->getIsTeam(),
                 $ev->getIsPrescripted(),
                 $ev->getAutostart(),
-                $ev->getRulesetChanges(),
+                $ev->getRulesetConfig(),
             ));
     }
 

@@ -9,7 +9,6 @@ import {
   IconTargetArrow,
 } from '@tabler/icons-react';
 import { UmaSelect } from '#/pages/OwnedEventsEdit/UmaSelect';
-import { useState } from 'react';
 import { FormHandle } from '#/pages/OwnedEventsEdit/types';
 
 type RulesetSettingsProps = {
@@ -18,12 +17,6 @@ type RulesetSettingsProps = {
 };
 
 export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) => {
-  const [additionalRounds, setAdditionalRounds] = useState(
-    form.getTransformedValues().ruleset.playAdditionalRounds
-  );
-  const [extraChomboPayments, setExtraChomboPayments] = useState(
-    form.getTransformedValues().ruleset.extraChomboPayments
-  );
   return (
     <Stack>
       <NumberInput
@@ -76,13 +69,9 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
         description={i18n._t(
           'If nobody reaches the goal score at the last hand, the game continues to west rounds (in hanchan) or to south rounds (in tonpuusen), until someone reaches the goal'
         )}
-        {...form.getInputProps('ruleset.withAdditionalRounds', { type: 'checkbox' })}
-        onChange={(v) => {
-          form.setFieldValue('ruleset.withAdditionalRounds', v.currentTarget.checked);
-          setAdditionalRounds(v.currentTarget.checked);
-        }}
+        {...form.getInputProps('ruleset.playAdditionalRounds', { type: 'checkbox' })}
       />
-      {!!additionalRounds && (
+      {!!form.getTransformedValues().ruleset.playAdditionalRounds && (
         <NumberInput
           icon={<IconTargetArrow size='1rem' />}
           label={i18n._t('Goal score')}
@@ -186,12 +175,8 @@ export const RulesetSettings: React.FC<RulesetSettingsProps> = ({ form, i18n }) 
           'Pay chombo right on occasion. If not checked, chombo is subtracted from player score after uma is applied.'
         )}
         {...form.getInputProps('ruleset.extraChomboPayments', { type: 'checkbox' })}
-        onChange={(v) => {
-          form.setFieldValue('ruleset.extraChomboPayments', v.currentTarget.checked);
-          setExtraChomboPayments(v.currentTarget.checked);
-        }}
       />
-      {!extraChomboPayments && (
+      {!form.getTransformedValues().ruleset.extraChomboPayments && (
         <NumberInput
           icon={<IconHandStop size='1rem' />}
           label={i18n._t('Amount of chombo penalty')}

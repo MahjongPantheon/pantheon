@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRef, useContext, useEffect, useState } from 'react';
 import { authCtx } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
-import { Center, Container, LoadingOverlay, Stack, Tabs } from '@mantine/core';
+import { Center, Container, LoadingOverlay, Stack, Tabs, Notification } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
@@ -30,6 +30,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   const [eventName, setEventName] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [errorNotification, setErrorNotification] = useState('');
   usePageTitle('Edit event :: ' + eventName);
 
   const form = useForm<FormFields>({
@@ -142,7 +143,12 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
           setEventName(eventData.event.title);
           setEventType(eventData.event.type ?? 'LOCAL');
           setFormValues(eventData.event, eventData.event.rulesetConfig);
+        } else {
+          throw new Error(i18n._t('Failed to fetch event data'));
         }
+      })
+      .catch((err: Error) => {
+        setErrorNotification(err.message);
       })
       .finally(() => {
         setIsLoading(false);
@@ -170,7 +176,13 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         .then((r) => {
           if (r) {
             setIsSaved(true);
+            setTimeout(() => setIsSaved(false), 5000);
+          } else {
+            throw new Error(i18n._t('Failed to save event: server error or network unreachable'));
           }
+        })
+        .catch((err: Error) => {
+          setErrorNotification(err.message);
         })
         .finally(() => {
           setIsSaving(false);
@@ -229,6 +241,11 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       <Center h='150px'>
         <IconSettingsCheck />
       </Center>
+      {!!errorNotification && (
+        <Notification color='red' title={i18n._t('Error has occurred')}>
+          {errorNotification}
+        </Notification>
+      )}
     </>
   );
 };

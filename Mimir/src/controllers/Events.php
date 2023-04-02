@@ -17,6 +17,9 @@
  */
 namespace Mimir;
 
+use Common\Ruleset;
+use Common\RulesetConfig;
+
 require_once __DIR__ . '/../models/Event.php';
 require_once __DIR__ . '/../models/EventSeries.php';
 require_once __DIR__ . '/../models/EventUserManagement.php';
@@ -32,7 +35,6 @@ class EventsController extends Controller
      * @param string $type Either 'club', 'tournament' or 'online'
      * @param string $title
      * @param string $description
-     * @param string $ruleset one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
      * @param int $gameDuration duration of game in this event in minutes
      * @param string $timezone name of timezone, 'Asia/Irkutsk' for example
      * @param int $series Length of game series, 0 to disable
@@ -41,7 +43,7 @@ class EventsController extends Controller
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
      * @param int $autostartTimer Interval before games autostart
-     * @param string $rulesetChangesJson Json-encoded changes for base ruleset
+     * @param RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -51,7 +53,6 @@ class EventsController extends Controller
         $type,
         $title,
         $description,
-        $ruleset,
         $gameDuration,
         $timezone,
         $series,
@@ -60,9 +61,9 @@ class EventsController extends Controller
         $isTeam,
         $isPrescripted,
         $autostartTimer,
-        $rulesetChangesJson
+        $rulesetConfig
     ) {
-        $this->_log->info('Creating new event with [' . $ruleset . '] rules');
+        $this->_log->info('Creating new event...');
 
         // Check we have rights to create new event
         if (!$this->_meta->getCurrentPersonId() || !$this->_meta->isInternalRequest()) {
@@ -73,8 +74,6 @@ class EventsController extends Controller
             throw new BadActionException(' Unsupported type of event requested');
         }
 
-        $rulesetChanges = json_decode($rulesetChangesJson, true) ?? [];
-
         /** @phpstan-ignore-next-line */
         $statHost = $this->_config->getStringValue('rhedaUrl') . '/eid' . EventPrimitive::ID_PLACEHOLDER;
         $event = (new EventPrimitive($this->_ds))
@@ -84,7 +83,7 @@ class EventsController extends Controller
             ->setTimeZone($timezone)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
-            ->setRulesetConfig(\Common\Ruleset::instance($ruleset))
+            ->setRulesetConfig(new \Common\Ruleset($rulesetConfig))
             ->setStatHost($statHost)
         ;
 
@@ -150,7 +149,6 @@ class EventsController extends Controller
      * @param int $id event id
      * @param string $title
      * @param string $description
-     * @param string $ruleset one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
      * @param int $gameDuration duration of game in this event in minutes
      * @param string $timezone name of timezone, 'Asia/Irkutsk' for example
      * @param int $series Length of game series, 0 to disable
@@ -159,7 +157,7 @@ class EventsController extends Controller
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
      * @param int $autostartTimer Interval before games are started automatically
-     * @param string $rulesetChangesJson Json-encoded changes for base ruleset
+     * @param RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -169,7 +167,6 @@ class EventsController extends Controller
         $id,
         $title,
         $description,
-        $ruleset,
         $gameDuration,
         $timezone,
         $series,
@@ -178,9 +175,9 @@ class EventsController extends Controller
         $isTeam,
         $isPrescripted,
         $autostartTimer,
-        $rulesetChangesJson
+        $rulesetConfig
     ) {
-        $this->_log->info('Updating event with [' . $ruleset . '] rules');
+        $this->_log->info('Updating event with id #' . $id);
 
         $event = EventPrimitive::findById($this->_ds, [$id]);
         if (empty($event)) {
@@ -193,15 +190,13 @@ class EventsController extends Controller
             throw new BadActionException("You don't have enough privileges to modify this event");
         }
 
-        $rulesetChanges = json_decode($rulesetChangesJson, true) ?? [];
-
         $event->setTitle($title)
             ->setDescription($description)
             ->setGameDuration($gameDuration)
             ->setTimeZone($timezone)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
-            ->setRulesetConfig(\Common\Ruleset::instance($ruleset))
+            ->setRulesetConfig(new Ruleset($rulesetConfig))
         ;
 
         if ($event->getSyncStart()) { // Should be a tournament
