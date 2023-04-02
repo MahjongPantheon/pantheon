@@ -15,7 +15,7 @@ class MigrateRulesets extends AbstractMigration
             ->save();
         $this->adapter->commitTransaction();
 
-        $rulesets = $this->adapter->query('SELECT id, ruleset, ruleset_changes FROM event');
+        $rulesets = $this->adapter->fetchAll('SELECT id, ruleset, ruleset_changes FROM event');
         $updatedRulesets = array_map(function ($item) {
             $changes = json_decode($item['ruleset_changes'], true);
             $base = \Common\Ruleset::instance($item['ruleset']);

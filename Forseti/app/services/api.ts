@@ -1,5 +1,6 @@
 import { environment } from '#config';
 import {
+  CreateEvent,
   FinishEvent,
   GetAllRegisteredPlayers,
   GetCountries,
@@ -235,6 +236,10 @@ export class ApiService {
 
   updateEvent(id: number, event: EventData) {
     return UpdateEvent({ id, event }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  createEvent(event: EventData) {
+    return CreateEvent(event, this._clientConfMimir).then((r) => r.eventId);
   }
 
   getRulesets() {

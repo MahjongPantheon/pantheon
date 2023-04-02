@@ -30,10 +30,10 @@ export const App = () => {
       <Route path='/profile/resetPasswordConfirm/:code' component={ProfileResetPasswordConfirm} />
       <Route path='/profile/manage' component={ProfileManage} />
       <Route path='/profile/logout' component={ProfileLogout} />
-      <Route path='/ownedEvents' component={OwnedEvents} />
-      <Route path='/ownedEvents/:page' component={OwnedEvents} />
-      <Route path='/ownedEvents/edit' component={OwnedEventsEdit} />
+      <Route path='/ownedEvents/new' component={OwnedEventsEdit} />
       <Route path='/ownedEvents/edit/:id' component={OwnedEventsEdit} />
+      <Route path='/ownedEvents/:page' component={OwnedEvents} />
+      <Route path='/ownedEvents' component={OwnedEvents} />
     </Switch>
   );
 };

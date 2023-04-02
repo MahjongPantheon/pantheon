@@ -1,55 +1,68 @@
 import { I18nService } from '#/services/i18n';
 import * as React from 'react';
-import { Text, Select, Stack, Textarea, TextInput } from '@mantine/core';
-import { IconAbc, IconMap2 } from '@tabler/icons-react';
-import { FormHandle } from '#/pages/OwnedEventsEdit/types';
+import { Text, Select, Stack, Textarea, TextInput, Radio, Group } from '@mantine/core';
+import { IconAbc, IconChecklist, IconMap2 } from '@tabler/icons-react';
+import { EventCustom, FormHandle } from '#/pages/OwnedEventsEdit/types';
+import { RulesetConfig } from '#/clients/atoms.pb';
 
 type BasicSettingsProps = {
   form: FormHandle;
   i18n: I18nService;
   timezones: Array<{ value: string; label: string }>;
+  rulesets: Array<{ value: string; label: string; rules: RulesetConfig }>;
+  newEvent: boolean;
+  setFormValues: (eventData: EventCustom, currentRuleset: RulesetConfig) => void;
 };
 
-export const BasicSettings: React.FC<BasicSettingsProps> = ({ timezones, form, i18n }) => {
+export const BasicSettings: React.FC<BasicSettingsProps> = ({
+  newEvent,
+  rulesets,
+  timezones,
+  form,
+  i18n,
+  setFormValues,
+}) => {
   return (
     <>
       <Stack>
-        <Text>Type: {form.getTransformedValues().event.type}</Text>
-        {/*<Radio.Group*/}
-        {/*  label={i18n._t('Select event type')}*/}
-        {/*  {...form.getInputProps('event.type')}*/}
-        {/*  onChange={(v) => {*/}
-        {/*    setEventType(v as EventType);*/}
-        {/*    form.setFieldValue('event.type', v as EventType);*/}
-        {/*  }}*/}
-        {/*>*/}
-        {/*  <Group mt='xs'>*/}
-        {/*    <Radio value='local' label={i18n._t('Local rating')} />*/}
-        {/*    <Radio value='tournament' label={i18n._t('Tournament')} />*/}
-        {/*    <Radio value='online' label={i18n._t('Online event')} />*/}
-        {/*  </Group>*/}
-        {/*</Radio.Group>*/}
+        {!newEvent && <Text>Type: {form.getTransformedValues().event.type}</Text>}
+        {!!newEvent && (
+          <>
+            <Radio.Group label={i18n._t('Select event type')} {...form.getInputProps('event.type')}>
+              <Group mt='xs'>
+                <Radio value='LOCAL' label={i18n._t('Local rating')} />
+                <Radio value='TOURNAMENT' label={i18n._t('Tournament')} />
+                <Radio value='ONLINE' label={i18n._t('Online event')} />
+              </Group>
+            </Radio.Group>
+          </>
+        )}
         <TextInput
           withAsterisk
           icon={<IconAbc size='1rem' />}
           label={i18n._t('Event title')}
           {...form.getInputProps('event.title')}
         />
-        {/*<Select*/}
-        {/*  icon={<IconChecklist size='1rem' />}*/}
-        {/*  label={i18n._t('Basic ruleset')}*/}
-        {/*  description={i18n._t(*/}
-        {/*    'Basic ruleset for the event. Fine tuning is available in adjacent tabs.'*/}
-        {/*  )}*/}
-        {/*  data={rulesets}*/}
-        {/*  {...form.getInputProps('event.ruleset')}*/}
-        {/*  onChange={(v) => {*/}
-        {/*    if (v) {*/}
-        {/*      setRulesetValues(v);*/}
-        {/*      form.setFieldValue('event.ruleset', v);*/}
-        {/*    }*/}
-        {/*  }}*/}
-        {/*/>*/}
+        {!!newEvent && (
+          <Select
+            icon={<IconChecklist size='1rem' />}
+            label={i18n._t('Basic ruleset')}
+            description={i18n._t(
+              'Ruleset to be used as a template for the event. Fine tuning is available in adjacent tabs. Please note that all ruleset settings will be reset when you select another ruleset here.'
+            )}
+            data={rulesets}
+            {...form.getInputProps('event.ruleset')}
+            onChange={(v) => {
+              if (v) {
+                form.setFieldValue('event.ruleset', v);
+                const rules = rulesets.find((r) => r.value === v)?.rules;
+                if (rules) {
+                  setFormValues(form.getTransformedValues().event, rules);
+                }
+              }
+            }}
+          />
+        )}
         <Select
           icon={<IconMap2 size='1rem' />}
           label={i18n._t('Primary timezone for event')}

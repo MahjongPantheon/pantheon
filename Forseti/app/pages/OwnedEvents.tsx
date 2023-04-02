@@ -166,6 +166,12 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
       </Modal>
       <Container pos='relative' sx={{ minHeight: '400px' }}>
         <LoadingOverlay visible={isLoading} overlayBlur={2} />
+        <Group position='right'>
+          <Link to='/ownedEvents/new'>
+            <Button>{i18n._t('Create new event')}</Button>
+          </Link>
+        </Group>
+        <Space h='xl' />
         <Stack justify='flex-start' spacing='0'>
           {events.map((event, idx) => {
             return (

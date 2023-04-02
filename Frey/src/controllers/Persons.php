@@ -42,6 +42,7 @@ class PersonsController extends Controller
         $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $city, /*$phone*/'******', $tenhouId]);
         $personId = $this->_getAccountModel()
             ->createAccount($email, $password, $title, $city, $phone, $tenhouId);
+        $this->_getAccessModel()->addRuleForPerson(InternalRules::CREATE_EVENT, true, 'bool', $personId, null);
         $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $city, /*$phone*/'******', $tenhouId]);
         return $personId;
     }
@@ -278,5 +279,13 @@ class PersonsController extends Controller
     protected function _getGroupsModel()
     {
         return new GroupsModel($this->_db, $this->_config, $this->_meta);
+    }
+
+    /**
+     * @return AccessManagementModel
+     */
+    protected function _getAccessModel()
+    {
+        return new AccessManagementModel($this->_db, $this->_config, $this->_meta);
     }
 }

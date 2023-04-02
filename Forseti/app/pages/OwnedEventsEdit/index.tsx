@@ -14,8 +14,8 @@ import { OnlineSettings } from '#/pages/OwnedEventsEdit/OnlineSettings';
 import { RulesetSettings } from '#/pages/OwnedEventsEdit/RulesetSettings';
 import { YakuSettings } from '#/pages/OwnedEventsEdit/YakuSettings';
 import { IconCircleCheck, IconDeviceFloppy, IconSettingsCheck } from '@tabler/icons-react';
-import { FormFields } from '#/pages/OwnedEventsEdit/types';
-import { EventData, EventType, RulesetConfig } from '#/clients/atoms.pb';
+import { EventCustom, FormFields } from '#/pages/OwnedEventsEdit/types';
+import { EventData, RulesetConfig } from '#/clients/atoms.pb';
 import { TopActionButton } from '#/helpers/TopActionButton';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
@@ -24,14 +24,20 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   const i18n = useI18n();
   const formRef: React.RefObject<HTMLFormElement> = createRef();
   const [isLoading, setIsLoading] = useState(false);
-  const [eventType, setEventType] = useState<EventType>('LOCAL');
   const [timezones, setTimezones] = useState<Array<{ value: string; label: string }>>([]);
-  const [rulesets, setRulesets] = useState<Array<{ value: string; label: string }>>([]);
+  const [rules, setRules] = useState<Array<{ value: string; label: string; rules: RulesetConfig }>>(
+    []
+  );
   const [eventName, setEventName] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [errorNotification, setErrorNotification] = useState('');
-  usePageTitle('Edit event :: ' + eventName);
+
+  if (id) {
+    usePageTitle(i18n._t('Edit event :: %1', [eventName]));
+  } else {
+    usePageTitle(i18n._t('New event'));
+  }
 
   const form = useForm<FormFields>({
     initialValues: {
@@ -98,7 +104,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
     },
   });
 
-  const setFormValues = (eventData: EventData, currentRuleset: RulesetConfig) => {
+  const setFormValues = (eventData: EventCustom, currentRuleset: RulesetConfig) => {
     form.setValues({
       event: eventData,
       ruleset: {
@@ -133,18 +139,15 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
     ])
       .then(([rulesets, timezoneData, eventData]) => {
         setTimezones(timezoneData.timezones.map((z) => ({ value: z, label: z })));
-        setRulesets(rulesets.map((r) => ({ value: r.id, label: r.title })));
-        // const rules = rulesets.reduce((acc, r) => {
-        //   acc[r.id] = r.rules;
-        //   return acc;
-        // }, {} as Record<string, RulesetConfig>);
-        if (eventData) {
-          // edit mode
-          setEventName(eventData.event.title);
-          setEventType(eventData.event.type ?? 'LOCAL');
-          setFormValues(eventData.event, eventData.event.rulesetConfig);
-        } else {
-          throw new Error(i18n._t('Failed to fetch event data'));
+        setRules(rulesets.map((r) => ({ value: r.id, label: r.title, rules: r.rules })));
+        if (id) {
+          if (eventData) {
+            // edit mode
+            setEventName(eventData.event.title);
+            setFormValues(eventData.event, eventData.event.rulesetConfig);
+          } else {
+            throw new Error(i18n._t('Failed to fetch event data'));
+          }
         }
       })
       .catch((err: Error) => {
@@ -156,50 +159,27 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   }, [isLoggedIn]);
 
   const submitForm = (vals: FormFields) => {
-    if (id) {
-      setIsSaving(true);
-      setIsSaved(false);
-      api
-        .updateEvent(parseInt(id, 10), {
-          ...vals.event,
-          autostart: 0, // TODO: https://github.com/MahjongPantheon/pantheon/issues/282
-          rulesetConfig: {
-            ...vals.ruleset,
-            allowedYaku: Object.keys(vals.ruleset.allowedYaku)
-              .filter((k) => vals.ruleset.allowedYaku[k])
-              .map((v) => parseInt(v, 10)),
-            yakuWithPao: Object.keys(vals.ruleset.yakuWithPao)
-              .filter((k) => vals.ruleset.yakuWithPao[k])
-              .map((v) => parseInt(v, 10)),
-          },
-        })
-        .then((r) => {
-          if (r) {
-            setIsSaved(true);
-            setTimeout(() => setIsSaved(false), 5000);
-          } else {
-            throw new Error(i18n._t('Failed to save event: server error or network unreachable'));
-          }
-        })
-        .catch((err: Error) => {
-          setErrorNotification(err.message);
-        })
-        .finally(() => {
-          setIsSaving(false);
-        });
-    }
+    setIsSaving(true);
+    setIsSaved(false);
+    (id
+      ? api.updateEvent(parseInt(id, 10), makeEventData(vals))
+      : api.createEvent(makeEventData(vals))
+    )
+      .then((r) => {
+        if (r) {
+          setIsSaved(true);
+          setTimeout(() => setIsSaved(false), 5000);
+        } else {
+          throw new Error(i18n._t('Failed to save event: server error or network unreachable'));
+        }
+      })
+      .catch((err: Error) => {
+        setErrorNotification(err.message);
+      })
+      .finally(() => {
+        setIsSaving(false);
+      });
   };
-
-  /*
-    TODO:
-
-    Меняем логику
-    - Для нового события:
-    - Шаг 1: Выбираем при создании: тип события local/tournament/online и рулсет. Ограничить online тенхо рулсетом.
-    - Шаг 2: Выдаем форму для задания параметров.
-
-    2) Сделать роуты для нового события
-   */
 
   return (
     <>
@@ -208,16 +188,29 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
           <Tabs defaultValue='basic'>
             <Tabs.List>
-              <TabsList i18n={i18n} eventType={eventType as EventType} />
+              <TabsList i18n={i18n} form={form} />
             </Tabs.List>
             <Tabs.Panel value='basic' pt='xs'>
-              <BasicSettings form={form} i18n={i18n} timezones={timezones} />
+              <BasicSettings
+                newEvent={!id}
+                rulesets={rules}
+                form={form}
+                i18n={i18n}
+                timezones={timezones}
+                setFormValues={setFormValues}
+              />
             </Tabs.Panel>
-            <Tabs.Panel value={eventType} pt='xs'>
+            <Tabs.Panel value={form.getTransformedValues().event.type ?? 'LOCAL'} pt='xs'>
               <Stack>
-                {eventType === 'ONLINE' && <OnlineSettings form={form} i18n={i18n} />}
-                {eventType === 'LOCAL' && <LocalSettings form={form} i18n={i18n} />}
-                {eventType === 'TOURNAMENT' && <TournamentSettings i18n={i18n} form={form} />}
+                {form.getTransformedValues().event.type === 'ONLINE' && (
+                  <OnlineSettings form={form} i18n={i18n} />
+                )}
+                {form.getTransformedValues().event.type === 'LOCAL' && (
+                  <LocalSettings form={form} i18n={i18n} />
+                )}
+                {form.getTransformedValues().event.type === 'TOURNAMENT' && (
+                  <TournamentSettings i18n={i18n} form={form} />
+                )}
               </Stack>
             </Tabs.Panel>
             <Tabs.Panel value='ruleset_tuning' pt='xs'>
@@ -249,3 +242,19 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
     </>
   );
 };
+
+function makeEventData(vals: FormFields) {
+  return {
+    ...vals.event,
+    autostart: 0, // TODO: https://github.com/MahjongPantheon/pantheon/issues/282
+    rulesetConfig: {
+      ...vals.ruleset,
+      allowedYaku: Object.keys(vals.ruleset.allowedYaku)
+        .filter((k) => vals.ruleset.allowedYaku[k])
+        .map((v) => parseInt(v, 10)),
+      yakuWithPao: Object.keys(vals.ruleset.yakuWithPao)
+        .filter((k) => vals.ruleset.yakuWithPao[k])
+        .map((v) => parseInt(v, 10)),
+    },
+  };
+}

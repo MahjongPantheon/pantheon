@@ -66,7 +66,7 @@ class EventsController extends Controller
         $this->_log->info('Creating new event...');
 
         // Check we have rights to create new event
-        if (!$this->_meta->getCurrentPersonId() || !$this->_meta->isInternalRequest()) {
+        if (!$this->_meta->getCurrentPersonId() || !$this->_meta->getAccessRuleValue(FreyClient::PRIV_CREATE_EVENT)) {
             throw new BadActionException("You don't have enough privileges to create new event");
         }
 

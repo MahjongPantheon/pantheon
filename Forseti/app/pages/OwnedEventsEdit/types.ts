@@ -1,18 +1,7 @@
 import { UseFormReturnType } from '@mantine/form';
-import { EventType, RulesetConfig } from '#/clients/atoms.pb';
+import { EventData, EventType, RulesetConfig } from '#/clients/atoms.pb';
 
-export type EventCustom = {
-  type?: EventType | null;
-  title: string;
-  description: string;
-  timezone: string;
-  duration: number;
-  isTeam: boolean;
-  isPrescripted: boolean;
-  seriesLength: number;
-  minGames: number;
-  lobbyId: number;
-};
+export type EventCustom = Omit<Omit<EventData, 'rulesetConfig'>, 'autostart'>;
 
 export type RulesetConfigLocal = Omit<Omit<RulesetConfig, 'allowedYaku'>, 'yakuWithPao'> & {
   allowedYaku: Record<string, boolean>; // TODO: reformat to number[] before send

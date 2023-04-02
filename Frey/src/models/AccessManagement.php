@@ -288,7 +288,7 @@ class AccessManagementModel extends Model
      * @param bool|int|string $ruleValue
      * @param string $ruleType 'bool', 'int' or 'enum'
      * @param int $personId
-     * @param int|null $eventId
+     * @param ?int $eventId
      *
      * @return int|null
      * @throws DuplicateEntityException
