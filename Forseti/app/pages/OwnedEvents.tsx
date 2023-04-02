@@ -27,6 +27,7 @@ import {
   IconFriends,
   IconTournament,
   IconNetwork,
+  IconAlertOctagon,
 } from '@tabler/icons-react';
 import { Link, Redirect } from 'wouter';
 import { useApi } from '#/hooks/api';
@@ -248,6 +249,18 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                         title={i18n._t('Edit event settings')}
                       >
                         <IconTool />
+                      </ActionIcon>
+                    </Link>
+                  )}
+                  {!event.finished && (
+                    <Link to={'/event/' + event.id + '/penalties'}>
+                      <ActionIcon
+                        variant='filled'
+                        size='lg'
+                        color='blue'
+                        title={i18n._t('Manage penalties')}
+                      >
+                        <IconAlertOctagon />
                       </ActionIcon>
                     </Link>
                   )}

@@ -52,28 +52,26 @@ export const ProfileLogin: React.FC = () => {
   );
 
   return (
-    <>
-      <form onSubmit={form.onSubmit(submitForm)}>
-        <Container size='xs' px='xs'>
-          <TextInput
-            icon={<IconLogin size='1rem' />}
-            placeholder={i18n._t('Your e-mail address')}
-            {...form.getInputProps('email')}
-          />
-          <Space h='md' />
-          <PasswordInput
-            placeholder={i18n._t('Your password')}
-            icon={<IconLock size='1rem' />}
-            {...form.getInputProps('password')}
-          />
-          <Group position='right' mt='md'>
-            <Link to='/profile/resetPassword'>
-              <Button variant='outline'>{i18n._t('Forgot your password?')}</Button>
-            </Link>
-            <Button type='submit'>{i18n._t('Proceed with sign in')}</Button>
-          </Group>
-        </Container>
-      </form>
-    </>
+    <form onSubmit={form.onSubmit(submitForm)}>
+      <Container size='xs' px='xs'>
+        <TextInput
+          icon={<IconLogin size='1rem' />}
+          placeholder={i18n._t('Your e-mail address')}
+          {...form.getInputProps('email')}
+        />
+        <Space h='md' />
+        <PasswordInput
+          placeholder={i18n._t('Your password')}
+          icon={<IconLock size='1rem' />}
+          {...form.getInputProps('password')}
+        />
+        <Group position='right' mt='md'>
+          <Link to='/profile/resetPassword'>
+            <Button variant='outline'>{i18n._t('Forgot your password?')}</Button>
+          </Link>
+          <Button type='submit'>{i18n._t('Proceed with sign in')}</Button>
+        </Group>
+      </Container>
+    </form>
   );
 };

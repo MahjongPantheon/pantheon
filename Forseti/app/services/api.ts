@@ -1,5 +1,6 @@
 import { environment } from '#config';
 import {
+  AddPenalty,
   CreateEvent,
   FinishEvent,
   GetAllRegisteredPlayers,
@@ -78,8 +79,8 @@ export class ApiService {
   }
 
   getAllPlayers(eventId: number) {
-    return GetAllRegisteredPlayers({ eventIds: [eventId] }, this._clientConfMimir).then((val) =>
-      val.players.map((user) => ({ ...user, displayName: user.title }))
+    return GetAllRegisteredPlayers({ eventIds: [eventId] }, this._clientConfMimir).then(
+      (val) => val.players
     );
   }
 
@@ -263,7 +264,13 @@ export class ApiService {
     );
   }
 
-  getGameConfig() {
-    return GetGameConfig;
+  getGameConfig(eventId: number) {
+    return GetGameConfig({ eventId }, this._clientConfMimir);
+  }
+
+  addPenaly(eventId: number, playerId: number, amount: number, reason: string) {
+    return AddPenalty({ eventId, playerId, amount, reason }, this._clientConfMimir).then(
+      (r) => r.success
+    );
   }
 }

@@ -10,6 +10,7 @@ import { ProfileManage } from '#/pages/ProfileManage';
 import { ProfileLogout } from '#/pages/ProfileLogout';
 import { OwnedEvents } from '#/pages/OwnedEvents';
 import { OwnedEventsEdit } from '#/pages/OwnedEventsEdit';
+import { Penalties } from '#/pages/Penalties';
 // import { environment } from '#config';
 
 // const storage = new Storage(environment.cookieDomain);
@@ -23,6 +24,7 @@ export const App = () => {
   return (
     <Switch>
       <Route path='/' component={Root} />
+
       <Route path='/profile/login' component={ProfileLogin} />
       <Route path='/profile/signup' component={ProfileSignup} />
       <Route path='/profile/confirm/:code' component={ProfileConfirm} />
@@ -30,10 +32,13 @@ export const App = () => {
       <Route path='/profile/resetPasswordConfirm/:code' component={ProfileResetPasswordConfirm} />
       <Route path='/profile/manage' component={ProfileManage} />
       <Route path='/profile/logout' component={ProfileLogout} />
+
       <Route path='/ownedEvents/new' component={OwnedEventsEdit} />
       <Route path='/ownedEvents/edit/:id' component={OwnedEventsEdit} />
       <Route path='/ownedEvents/:page' component={OwnedEvents} />
       <Route path='/ownedEvents' component={OwnedEvents} />
+
+      <Route path='/event/:id/penalties' component={Penalties} />
     </Switch>
   );
 };
@@ -49,7 +54,6 @@ export const App = () => {
     '/tourn/(?<action>startTimer)'                         => 'TournamentControlPanel',
     '/tourn/(?<action>toggleHideResults)'                  => 'TournamentControlPanel',
     '/tourn/(?<action>finalizeSessions)'                   => 'TournamentControlPanel',
-    '/tourn/(?<action>sendNotification)'                   => 'TournamentControlPanel',
     '/tourn/(?<action>resetStartingTimer)'                 => 'TournamentControlPanel',
 
     '/prescript' => 'PrescriptControls',
@@ -58,24 +62,18 @@ export const App = () => {
     '/games/(?<action>dropLastRound)/(?<hash>[0-9a-f]+)'   => 'GamesControlPanel',
     '/games/(?<action>definalize)/(?<hash>[0-9a-f]+)'      => 'GamesControlPanel',
     '/games/(?<action>cancelGame)/(?<hash>[0-9a-f]+)'      => 'GamesControlPanel',
-    '/games/(?<action>sendNotification)'                   => 'GamesControlPanel',
 
     '/penalties'       => 'Penalties',
     '/penalties/(?<action>apply)' => 'Penalties',
-    '/achievements'    => 'Achievements',
-    '/achievements/(?<achievement>[0-9a-zA-Z]+)' => 'Achievements',
-
-    '!/signup'                              => 'PersonSignup',
-    '!/confirm/(?<code>[0-9a-f]+)'          => 'PersonSignupConfirm',
 
     '!/signupAdmin'                         => 'PersonSignupAdministrative',
-    '!/profile/(?<action>login)'            => 'PersonLogin',
-    '!/profile/(?<action>logout)'           => 'PersonLogin',
     '!/profile/(?<action>impersonate)/(?<id>\d+)/(?<token>[a-f0-9]+)' => 'PersonLogin',
-    '!/profile'                             => 'PersonProfileEdit',
-    '!/profile/(?<action>edit)/(?<id>\d+)'  => 'PersonProfileEdit',
     '!/passwordRecovery'                    => 'PersonRecoverPassword',
     '!/passwordRecovery/(?<code>[0-9a-f]+)/(?<email>[a-z0-9_.@-]+)' => 'PersonRecoverPassword',
+
+    '!/cp/(?<action>editEventAdmins)/(?<id>\d+)'  => 'UserActionEventEditPrivileges',
+
+    // 2nd stage
 
     '!/privileges'                  => 'Privileges',
     '!/privileges/uid(?<id>\d+)'    => 'PrivilegesOfUser',
@@ -86,15 +84,4 @@ export const App = () => {
 
     '!/privileges/ajax'             => 'PrivilegesAjax',
 
-    '!/cp/(?<action>manageEvents)'                => 'UserActionManageEvents',
-    '!/cp/(?<action>rebuildScoring)/(?<id>\d+)'   => 'UserActionManageEvents',
-    '!/cp/(?<action>toggleListed)/(?<id>\d+)'     => 'UserActionManageEvents',
-    '!/cp/(?<action>toggleRatingShown)/(?<id>\d+)'     => 'UserActionManageEvents',
-    '!/cp/(?<action>manageEvents)/page/(?<page>\d+)'   => 'UserActionManageEvents',
-    '!/cp/(?<action>newClubEvent)'                => 'UserActionEventEdit',
-    '!/cp/(?<action>newTournamentEvent)'          => 'UserActionEventEdit',
-    '!/cp/(?<action>newOnlineEvent)'              => 'UserActionEventEdit',
-    '!/cp/(?<action>editEvent)/(?<id>\d+)'        => 'UserActionEventEdit',
-    '!/cp/(?<action>finishEvent)/(?<id>\d+)'      => 'UserActionManageEvents',
-    '!/cp/(?<action>editEventAdmins)/(?<id>\d+)'  => 'UserActionEventEditPrivileges',
  */

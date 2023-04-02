@@ -15,7 +15,7 @@ import { RulesetSettings } from '#/pages/OwnedEventsEdit/RulesetSettings';
 import { YakuSettings } from '#/pages/OwnedEventsEdit/YakuSettings';
 import { IconCircleCheck, IconDeviceFloppy, IconSettingsCheck } from '@tabler/icons-react';
 import { EventCustom, FormFields } from '#/pages/OwnedEventsEdit/types';
-import { EventData, RulesetConfig } from '#/clients/atoms.pb';
+import { RulesetConfig } from '#/clients/atoms.pb';
 import { TopActionButton } from '#/helpers/TopActionButton';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
