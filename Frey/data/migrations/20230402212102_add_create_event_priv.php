@@ -14,10 +14,12 @@ class AddCreateEventPriv extends AbstractMigration
             array_map(function ($id) { return $id['id']; }, $userIds),
             array_map(function ($id) { return $id['id']; }, $existingAccess)
         );
-        $this->adapter->query('INSERT INTO person_access ("person_id", "acl_type", "acl_name", "acl_value", "allowed_values") VALUES ' .
-            implode(', ', array_map(function ($id) {
-                return "({$id}, 'bool', 'CREATE_EVENT', 'true', '')";
-            }, $ids))
-        );
+        if (!empty($ids)) {
+            $this->adapter->query('INSERT INTO person_access ("person_id", "acl_type", "acl_name", "acl_value", "allowed_values") VALUES ' .
+                implode(', ', array_map(function ($id) {
+                    return "({$id}, 'bool', 'CREATE_EVENT', 'true', '')";
+                }, $ids))
+            );
+        }
     }
 }

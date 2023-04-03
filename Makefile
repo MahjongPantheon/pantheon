@@ -160,11 +160,11 @@ stop: pantheon_stop pgadmin_stop
 
 .PHONY: dev_tyr
 dev_tyr: get_docker_id
-	@docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Tyr && HOME=/home/user su-exec user make docker'
+	@docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Tyr && HOME=/home/user su-exec user make docker'
 
 .PHONY: dev_forseti
 dev_forseti: get_docker_id
-	@docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Forseti && HOME=/home/user su-exec user make docker'
+	@docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Forseti && HOME=/home/user su-exec user make docker'
 
 .PHONY: dev
 dev: run
