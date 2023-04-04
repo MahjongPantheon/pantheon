@@ -29,12 +29,12 @@ export const LogScreen: React.FC<IComponentProps> = (props) => {
 
   if (!state.allRoundsOverviewErrorCode && state.allRoundsOverview && playersList) {
     playersList.forEach((player) => {
-      players[player.id.toString()] = player.displayName;
+      players[player.id.toString()] = player.title;
     });
 
     state.allRoundsOverview.forEach((roundOverview) => {
       results.push({
-        round: roundToString(roundOverview.round),
+        round: roundToString(roundOverview.roundIndex),
         scores: roundOverview.scores,
         scoresDelta: roundOverview.scoresDelta,
       });

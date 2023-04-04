@@ -1,16 +1,16 @@
-import { Player } from '#/interfaces/common';
 import { memoize } from '#/primitives/memoize';
+import { PlayerInSession } from '#/clients/atoms.pb';
 
 function _getSeating(
   round: number,
   overviewShift: number,
   currentPlayerId: number,
-  playersList: Player[],
+  playersList: PlayerInSession[],
   riichiBets?: string[],
   penaltyFor?: number,
   paoPlayer?: number
 ) {
-  let players: Player[] = ([] as Player[]).concat(playersList);
+  let players: PlayerInSession[] = ([] as PlayerInSession[]).concat(playersList);
 
   let seating = ['東', '南', '西', '北'];
   for (let i = 1; i < round; i++) {

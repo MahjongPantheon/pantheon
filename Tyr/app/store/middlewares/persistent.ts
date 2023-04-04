@@ -25,12 +25,12 @@ export const persistentMw =
     switch (action.type) {
       case LOGIN_SUCCESS:
         storage
-          .setAuthToken(action.payload.token)
+          .setAuthToken(action.payload.authToken)
           .setPersonId(action.payload.personId)
           .deleteEventId();
         mw.dispatch({
           type: SET_CREDENTIALS,
-          payload: { authToken: action.payload.token, personId: action.payload.personId },
+          payload: { authToken: action.payload.authToken, personId: action.payload.personId },
         });
         break;
       case LOGIN_INIT:

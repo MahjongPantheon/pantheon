@@ -1,105 +1,22 @@
 import { IAppState } from '../interfaces';
-import { LGameConfig, LWinItem } from '#/interfaces/local';
-import { Player } from '#/interfaces/common';
 import { YakuId } from '#/primitives/yaku';
-import { AppOutcome } from '#/interfaces/app';
-import { intersect } from '#/primitives/intersect';
 import { unpack } from '#/primitives/yaku-compat';
 import { memoize } from '#/primitives/memoize';
-import { I18nService } from '#/services/i18n';
-
-function _getWins(state: IAppState): LWinItem[] {
-  switch (state.currentOutcome?.selectedOutcome) {
-    case 'ron':
-      const wins: LWinItem[] = [];
-      for (const i in state.currentOutcome.wins) {
-        if (!state.currentOutcome.wins.hasOwnProperty(i)) {
-          continue;
-        }
-        const v = state.currentOutcome.wins[i];
-        wins.push({
-          winner: v.winner,
-          han: v.han,
-          fu: v.fu,
-          dora: v.dora,
-          paoPlayerId: v.paoPlayerId,
-          uradora: 0,
-          kandora: 0,
-          kanuradora: 0,
-          yaku: unpack(v.yaku),
-          openHand: v.openHand,
-        });
-      }
-      return wins;
-    default:
-      return [];
-  }
-}
-
-export const getWins: typeof _getWins = memoize(_getWins);
-
-export function getMultiRonCount(state: IAppState): number {
-  console.log('getMultiRonCount');
-  switch (state.currentOutcome?.selectedOutcome) {
-    case 'ron':
-      return state.currentOutcome.multiRon;
-    default:
-      return 0;
-  }
-}
-
-export function getEventTitle(i18n: I18nService, state: IAppState): string {
-  if (state.isUniversalWatcher) {
-    return i18n._t('Games overview');
-  } else {
-    return (state.gameConfig && state.gameConfig.eventTitle) || i18n._t('Loading...');
-  }
-}
-
-export function getGameConfig(state: IAppState, key: keyof LGameConfig) {
-  return state.gameConfig && state.gameConfig[key];
-}
-
-function _winnerHasYakuWithPao(state: IAppState): boolean {
-  if (!state.gameConfig) {
-    return false;
-  }
-
-  const outcome: AppOutcome | undefined = state.currentOutcome;
-  const gameConfig: LGameConfig = state.gameConfig;
-  if (!outcome) {
-    return false;
-  }
-
-  switch (outcome.selectedOutcome) {
-    case 'tsumo':
-      return intersect(unpack(outcome.yaku), gameConfig.yakuWithPao).length > 0;
-    case 'ron':
-      return Object.keys(outcome.wins).reduce<boolean>((acc, playerId) => {
-        return (
-          acc || intersect(unpack(outcome.wins[playerId].yaku), gameConfig.yakuWithPao).length > 0
-        );
-      }, false);
-    default:
-      throw new Error('No pao exist on this outcome');
-  }
-}
-
-export const winnerHasYakuWithPao: typeof _winnerHasYakuWithPao = memoize(_winnerHasYakuWithPao);
+import { PlayerInSession } from '#/clients/atoms.pb';
 
 export function getOutcome(state: IAppState) {
   return state.currentOutcome && state.currentOutcome.selectedOutcome;
 }
 
-function _getWinningUsers(state: IAppState): Player[] {
+function _getWinningUsers(state: IAppState): PlayerInSession[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'tsumo': {
+    case 'TSUMO': {
       const foundWinner = outcome.winner && state.players?.find((val) => val.id === outcome.winner);
       return foundWinner ? [foundWinner] : [];
     }
-    case 'ron': {
-      const users: Player[] = [];
+    case 'RON': {
+      const users: PlayerInSession[] = [];
       for (const w in outcome.wins) {
         if (!outcome.wins.hasOwnProperty(w)) {
           continue;
@@ -111,11 +28,11 @@ function _getWinningUsers(state: IAppState): Player[] {
       }
       return users;
     }
-    case 'draw':
-    case 'nagashi':
+    case 'DRAW':
+    case 'NAGASHI':
       return outcome.tempai
         .map((t) => state.players?.find((val) => val.id === t))
-        .filter((p: Player | undefined): p is Player => !!p);
+        .filter((p: PlayerInSession | undefined): p is PlayerInSession => !!p);
     default:
       return [];
   }
@@ -123,11 +40,11 @@ function _getWinningUsers(state: IAppState): Player[] {
 
 export const getWinningUsers: typeof _getWinningUsers = memoize(_getWinningUsers);
 
-function _getLosingUsers(state: IAppState): Player[] {
+function _getLosingUsers(state: IAppState): PlayerInSession[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'ron':
-    case 'chombo':
+    case 'RON':
+    case 'CHOMBO':
       const foundLoser = state.players?.find((val) => val.id === outcome.loser);
       return foundLoser ? [foundLoser] : [];
     default:
@@ -137,16 +54,16 @@ function _getLosingUsers(state: IAppState): Player[] {
 
 export const getLosingUsers: typeof _getLosingUsers = memoize(_getLosingUsers);
 
-function _getPaoUsers(state: IAppState): Player[] {
+function _getPaoUsers(state: IAppState): PlayerInSession[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'tsumo': {
+    case 'TSUMO': {
       const foundPao =
         outcome.paoPlayerId && state.players?.find((val) => val.id === outcome.paoPlayerId);
       return foundPao ? [foundPao] : [];
     }
-    case 'ron': {
-      return Object.keys(outcome.wins).reduce<Player[]>((acc, playerId) => {
+    case 'RON': {
+      return Object.keys(outcome.wins).reduce<PlayerInSession[]>((acc, playerId) => {
         if (outcome.wins[playerId].paoPlayerId) {
           const foundPao = state.players?.find(
             (val) => val.id === outcome.wins[playerId].paoPlayerId
@@ -165,14 +82,14 @@ function _getPaoUsers(state: IAppState): Player[] {
 
 export const getPaoUsers: typeof _getPaoUsers = memoize(_getPaoUsers);
 
-function _getDeadhandUsers(state: IAppState): Player[] {
+function _getDeadhandUsers(state: IAppState): PlayerInSession[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'draw':
-    case 'nagashi':
+    case 'DRAW':
+    case 'NAGASHI':
       return outcome.deadhands
         .map((t) => state.players?.find((val) => val.id === t))
-        .filter((p: Player | undefined): p is Player => !!p);
+        .filter((p: PlayerInSession | undefined): p is PlayerInSession => !!p);
     default:
       return [];
   }
@@ -180,13 +97,13 @@ function _getDeadhandUsers(state: IAppState): Player[] {
 
 export const getDeadhandUsers: typeof _getDeadhandUsers = memoize(_getDeadhandUsers);
 
-function _getNagashiUsers(state: IAppState): Player[] {
+function _getNagashiUsers(state: IAppState): PlayerInSession[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'nagashi':
+    case 'NAGASHI':
       return outcome.nagashi
         .map((t) => state.players?.find((val) => val.id === t))
-        .filter((p: Player | undefined): p is Player => !!p);
+        .filter((p: PlayerInSession | undefined): p is PlayerInSession => !!p);
     default:
       return [];
   }
@@ -197,9 +114,9 @@ export const getNagashiUsers: typeof _getNagashiUsers = memoize(_getNagashiUsers
 function _hasYaku(state: IAppState, id: YakuId) {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'tsumo':
+    case 'TSUMO':
       return -1 !== unpack(outcome.yaku).indexOf(id);
-    case 'ron':
+    case 'RON':
       if (!state.multironCurrentWinner) {
         throw new Error('No winner selected');
       }
@@ -211,17 +128,17 @@ function _hasYaku(state: IAppState, id: YakuId) {
 
 export const hasYaku: typeof _hasYaku = memoize(_hasYaku);
 
-function _getRiichiUsers(state: IAppState): Player[] {
+function _getRiichiUsers(state: IAppState): PlayerInSession[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'ron':
-    case 'tsumo':
-    case 'draw':
-    case 'nagashi':
-    case 'abort':
+    case 'RON':
+    case 'TSUMO':
+    case 'DRAW':
+    case 'NAGASHI':
+    case 'ABORT':
       return outcome.riichiBets
         .map((r) => state.players?.find((val) => val.id === r))
-        .filter((p: Player | undefined): p is Player => !!p);
+        .filter((p: PlayerInSession | undefined): p is PlayerInSession => !!p);
     default:
       return [];
   }

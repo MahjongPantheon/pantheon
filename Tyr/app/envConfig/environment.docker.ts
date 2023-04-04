@@ -27,7 +27,7 @@ export const environment: EnvConfig = {
   guiUrl: 'http://localhost:4002',
   guiFix: (src: string) => src,
   cookieDomain: null, // when working on localhost this must be omitted!
-  statDomain: 'analytics.local', // for testing
+  statDomain: '',
   siteId: '123456', // for testing
 
   // Do not change this unless you really know what are you doing

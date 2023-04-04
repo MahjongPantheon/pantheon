@@ -116,8 +116,8 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     const { state } = this.props;
     if (
       !state.currentOutcome ||
-      (state.currentOutcome.selectedOutcome !== 'ron' &&
-        state.currentOutcome.selectedOutcome !== 'tsumo')
+      (state.currentOutcome.selectedOutcome !== 'RON' &&
+        state.currentOutcome.selectedOutcome !== 'TSUMO')
     ) {
       //todo
       return null;
@@ -130,7 +130,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
 
     const allWinners = getWinningUsers(state);
     const player = allWinners.find((val) => val.id === currentWinnerId);
-    const playerName = player !== undefined ? player.displayName : '';
+    const playerName = player !== undefined ? player.title : '';
     const bottomPanelText = getOutcomeName(loc, state.currentOutcome.selectedOutcome);
     const canGoNext = !!mayGoNextFromYakuSelect(state);
 

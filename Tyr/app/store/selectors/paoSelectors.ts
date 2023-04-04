@@ -13,7 +13,7 @@ export function getNextWinnerWithPao(
   if (
     !gameConfig ||
     state.currentScreen !== 'paoSelect' ||
-    state.currentOutcome?.selectedOutcome !== 'ron'
+    state.currentOutcome?.selectedOutcome !== 'RON'
   ) {
     return undefined;
   }

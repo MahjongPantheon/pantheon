@@ -10,11 +10,11 @@ import {
   GOTO_PREV_SCREEN,
   GET_ALL_PLAYERS_INIT,
 } from '#/store/actions/interfaces';
-import { LUser } from '#/interfaces/local';
 import { getPlayers } from '#/store/selectors/screenNewGameSelectors';
+import { RegisteredPlayer } from '#/clients/atoms.pb';
 
 export class SearchPlayerScreen extends React.Component<IComponentProps> {
-  private onUserClick(user: LUser) {
+  private onUserClick(user: RegisteredPlayer) {
     const { dispatch, state } = this.props;
     if (state.newGameSelectedPlayerSide) {
       let actionType = '';

@@ -59,8 +59,7 @@ import { modifyArray } from './util';
 import { defaultPlayer } from '../selectors/screenNewGameSelectors';
 import { rand } from '#/primitives/rand';
 import { initialState } from '../state';
-import { Player } from '#/interfaces/common';
-import { LUser } from '#/interfaces/local';
+import { PlayerInSession, RegisteredPlayer } from '#/clients/atoms.pb';
 
 export function mimirReducer(state: IAppState, action: AppActionTypes): IAppState {
   let player;
@@ -115,7 +114,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
       return {
         ...state,
         currentPlayerId: action.payload.id,
-        currentPlayerDisplayName: action.payload.displayName,
+        currentPlayerDisplayName: action.payload.title,
         loading: {
           ...state.loading,
           players: false,
@@ -158,7 +157,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         };
       }
 
-      const mapIdToPlayer: { [key: string]: Player } = {};
+      const mapIdToPlayer: { [key: string]: PlayerInSession } = {};
       let players = undefined;
       if (action.payload.games[0]) {
         players = action.payload.games[0].players;
@@ -170,18 +169,19 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
       return {
         ...state,
         gameConfig: action.payload.gameConfig,
-        currentSessionHash: action.payload.games[0] && action.payload.games[0].hashcode,
+        currentSessionHash: action.payload.games[0] && action.payload.games[0].sessionHash,
         players,
         mapIdToPlayer,
-        yakuList: makeYakuGraph(action.payload.gameConfig.withMultiYakumans),
+        yakuList: makeYakuGraph(action.payload.gameConfig.rulesetConfig.withMultiYakumans),
         timer: {
           ...state.timer,
           secondsRemaining: action.payload.timerState.timeRemaining || 0,
           lastUpdateSecondsRemaining: action.payload.timerState.timeRemaining || 0,
           lastUpdateTimestamp: Math.round(new Date().getTime() / 1000),
           waiting: action.payload.timerState.waitingForTimer,
-          autostartSecondsRemaining: action.payload.timerState.autostartTimer || 0,
-          autostartLastUpdateSecondsRemaining: action.payload.timerState.autostartTimer || 0,
+          // TODO: fix in https://github.com/MahjongPantheon/pantheon/issues/282
+          autostartSecondsRemaining: 0, // action.payload.timerState.autostartTimer || 0,
+          autostartLastUpdateSecondsRemaining: 0, // action.payload.timerState.autostartTimer || 0,
           autostartLastUpdateTimestamp: Math.round(new Date().getTime() / 1000),
         },
         loading: {
@@ -379,7 +379,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         },
       };
     case RANDOMIZE_NEWGAME_PLAYERS: {
-      const newArr = rand(([] as LUser[]).concat(state.newGameSelectedUsers ?? []));
+      const newArr = rand(([] as RegisteredPlayer[]).concat(state.newGameSelectedUsers ?? []));
       return {
         ...state,
         newGameSelectedUsers: newArr,
@@ -452,7 +452,10 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
       return {
         ...state,
         gameOverviewReady: true,
-        ...action.payload,
+        currentEventId: action.payload.eventId,
+        tableIndex: action.payload.tableIndex,
+        players: action.payload.players,
+        sessionState: action.payload.state,
       };
     case GET_GAME_OVERVIEW_FAIL:
       return {
@@ -546,7 +549,7 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
         },
       };
     case ADD_ROUND_SUCCESS:
-      if (action.payload._isFinished) {
+      if (action.payload.isFinished) {
         const cleanState = deepclone(initialState);
         return {
           ...cleanState,
@@ -559,7 +562,6 @@ export function mimirReducer(state: IAppState, action: AppActionTypes): IAppStat
           isLoggedIn: state.isLoggedIn,
           isIos: state.isIos,
           yakuList: state.yakuList,
-          isUniversalWatcher: state.isUniversalWatcher,
           settings: state.settings,
         };
       }

@@ -1,11 +1,14 @@
+import { RoundOutcome } from '#/clients/atoms.pb';
+
 export interface IRoundOverviewBase {
+  outcome: RoundOutcome;
   riichiOnTable: number; // riichis on table
   honbaOnTable: number;
   riichiPlayers: string[];
 }
 
 export interface IRoundOverviewRon extends IRoundOverviewBase {
-  outcome: 'ron';
+  outcome: 'RON';
   loser: string;
   winner: string;
   paoPlayer?: string;
@@ -16,7 +19,7 @@ export interface IRoundOverviewRon extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewMultiRon extends IRoundOverviewBase {
-  outcome: 'multiron';
+  outcome: 'MULTIRON';
   loser: string;
   winnerList: string[];
   paoPlayerList: (string | undefined)[];
@@ -27,7 +30,7 @@ export interface IRoundOverviewMultiRon extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewTsumo extends IRoundOverviewBase {
-  outcome: 'tsumo';
+  outcome: 'TSUMO';
   winner: string;
   paoPlayer?: string;
   yakuList: string[];
@@ -37,21 +40,21 @@ export interface IRoundOverviewTsumo extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewDraw extends IRoundOverviewBase {
-  outcome: 'draw';
+  outcome: 'DRAW';
   tempai: string[];
 }
 
 export interface IRoundOverviewAbort extends IRoundOverviewBase {
-  outcome: 'abort';
+  outcome: 'ABORT';
 }
 
 export interface IRoundOverviewChombo extends IRoundOverviewBase {
-  outcome: 'chombo';
+  outcome: 'CHOMBO';
   penaltyFor: string;
 }
 
 export interface IRoundOverviewNagashi extends IRoundOverviewBase {
-  outcome: 'nagashi';
+  outcome: 'NAGASHI';
   tempai: string[];
   nagashi: string[];
 }

@@ -1,22 +1,23 @@
 import { YakuId } from '#/primitives/yaku';
 import { RemoteError } from '#/services/remoteError';
-import {
-  LCurrentGame,
-  LEventsList,
-  LGameConfig,
-  LSessionOverview,
-  LTimerState,
-  LUser,
-  LUserWithScore,
-} from '#/interfaces/local';
-import {
-  RRoundOverviewInfo,
-  RRoundPaymentsInfo,
-  RRoundPaymentsInfoSingle,
-  SessionState,
-} from '#/interfaces/remote';
-import { Table, Outcome } from '#/interfaces/common';
 import { IAppState } from '../interfaces';
+import { Auth_Authorize_Response } from '#/clients/frey.pb';
+import {
+  CurrentSession,
+  GameConfig,
+  MyEvent,
+  PersonEx,
+  RegisteredPlayer,
+  RoundOutcome,
+  RoundState,
+  SessionHistoryResult,
+  TableState,
+} from '#/clients/atoms.pb';
+import {
+  Events_GetTimerState_Response,
+  Games_AddRound_Response,
+  Games_GetSessionOverview_Response,
+} from '#/clients/mimir.pb';
 
 export const INIT_STATE = 'INIT_STATE';
 export const RESET_STATE = 'RESET_STATE';
@@ -67,9 +68,6 @@ export const GET_OTHER_TABLE_INIT = 'GET_OTHER_TABLE_INIT';
 export const GET_OTHER_TABLE_RELOAD = 'GET_OTHER_TABLE_RELOAD';
 export const GET_OTHER_TABLE_SUCCESS = 'GET_OTHER_TABLE_SUCCESS';
 export const GET_OTHER_TABLE_FAIL = 'GET_OTHER_TABLE_FAIL';
-export const GET_OTHER_TABLE_LAST_ROUND_INIT = 'GET_OTHER_TABLE_LAST_ROUND_INIT';
-export const GET_OTHER_TABLE_LAST_ROUND_SUCCESS = 'GET_OTHER_TABLE_LAST_ROUND_SUCCESS';
-export const GET_OTHER_TABLE_LAST_ROUND_FAIL = 'GET_OTHER_TABLE_LAST_ROUND_FAIL';
 export const GET_ALL_ROUNDS_INIT = 'GET_ALL_ROUNDS_INIT';
 export const GET_ALL_ROUNDS_SUCCESS = 'GET_ALL_ROUNDS_SUCCESS';
 export const GET_ALL_ROUNDS_FAIL = 'GET_ALL_ROUNDS_FAIL';
@@ -261,10 +259,7 @@ interface LoginActionInit {
 }
 interface LoginActionSuccess {
   type: typeof LOGIN_SUCCESS;
-  payload: {
-    personId: number;
-    token: string;
-  };
+  payload: Auth_Authorize_Response;
 }
 interface LoginActionFail {
   type: typeof LOGIN_FAIL;
@@ -286,9 +281,9 @@ interface UpdateCurrentGamesActionInit {
 interface UpdateCurrentGamesActionSuccess {
   type: typeof UPDATE_CURRENT_GAMES_SUCCESS;
   payload: {
-    games: LCurrentGame[];
-    gameConfig: LGameConfig;
-    timerState: LTimerState;
+    games: CurrentSession[];
+    gameConfig: GameConfig;
+    timerState: Events_GetTimerState_Response;
   };
 }
 interface UpdateCurrentGamesActionFail {
@@ -301,7 +296,7 @@ interface GetGameOverviewActionInit {
 }
 interface GetGameOverviewActionSuccess {
   type: typeof GET_GAME_OVERVIEW_SUCCESS;
-  payload: LSessionOverview;
+  payload: Games_GetSessionOverview_Response;
 }
 interface GetGameOverviewActionFail {
   type: typeof GET_GAME_OVERVIEW_FAIL;
@@ -313,13 +308,13 @@ interface GetUserinfoActionInit {
 }
 interface GetUserinfoActionSuccess {
   type: typeof GET_USERINFO_SUCCESS;
-  payload: LUser;
+  payload: PersonEx;
 }
 interface GetUserinfoActionFail {
   type: typeof GET_USERINFO_FAIL;
   payload: RemoteError;
 }
-interface ForceLogoutAction {
+export interface ForceLogoutAction {
   type: typeof FORCE_LOGOUT;
   payload: RemoteError | undefined;
 }
@@ -331,7 +326,7 @@ interface GetOtherTablesListActionReload {
 }
 interface GetOtherTablesListActionSuccess {
   type: typeof GET_OTHER_TABLES_LIST_SUCCESS;
-  payload: Table[];
+  payload: TableState[];
 }
 interface GetOtherTablesListActionFail {
   type: typeof GET_OTHER_TABLES_LIST_FAIL;
@@ -346,22 +341,10 @@ interface GetOtherTableActionReload {
 }
 interface GetOtherTableActionSuccess {
   type: typeof GET_OTHER_TABLE_SUCCESS;
-  payload: LSessionOverview;
+  payload: Games_GetSessionOverview_Response;
 }
 interface GetOtherTableActionFail {
   type: typeof GET_OTHER_TABLE_FAIL;
-  payload: RemoteError;
-}
-interface GetOtherTableLastRoundActionInit {
-  type: typeof GET_OTHER_TABLE_LAST_ROUND_INIT;
-  payload: string;
-}
-interface GetOtherTableLastRoundActionSuccess {
-  type: typeof GET_OTHER_TABLE_LAST_ROUND_SUCCESS;
-  payload: RRoundPaymentsInfoSingle;
-}
-interface GetOtherTableLastRoundActionFail {
-  type: typeof GET_OTHER_TABLE_LAST_ROUND_FAIL;
   payload: RemoteError;
 }
 interface GetAllRoundsActionInit {
@@ -370,7 +353,7 @@ interface GetAllRoundsActionInit {
 }
 interface GetAllRoundsActionSuccess {
   type: typeof GET_ALL_ROUNDS_SUCCESS;
-  payload: RRoundOverviewInfo[];
+  payload: RoundState[];
 }
 interface GetAllRoundsActionFail {
   type: typeof GET_ALL_ROUNDS_FAIL;
@@ -403,7 +386,7 @@ interface GetChangesOverviewActionInit {
 
 interface GetChangesOverviewActionSuccess {
   type: typeof GET_CHANGES_OVERVIEW_SUCCESS;
-  payload: RRoundPaymentsInfo;
+  payload: RoundState;
 }
 
 interface GetChangesOverviewActionFail {
@@ -417,7 +400,7 @@ interface GetLastResultsActionInit {
 
 interface GetLastResultsActionSuccess {
   type: typeof GET_LAST_RESULTS_SUCCESS;
-  payload: LUserWithScore[];
+  payload: SessionHistoryResult[];
 }
 
 interface GetLastResultsActionFail {
@@ -431,7 +414,7 @@ interface GetAllPlayersActionInit {
 
 interface GetAllPlayersActionSuccess {
   type: typeof GET_ALL_PLAYERS_SUCCESS;
-  payload: LUser[];
+  payload: RegisteredPlayer[];
 }
 
 interface GetAllPlayersActionFail {
@@ -461,7 +444,7 @@ interface AddRoundActionInit {
 
 interface AddRoundActionSuccess {
   type: typeof ADD_ROUND_SUCCESS;
-  payload: SessionState;
+  payload: Games_AddRound_Response;
 }
 
 interface AddRoundActionFail {
@@ -473,9 +456,9 @@ interface EventsGetListActionInit {
   type: typeof EVENTS_GET_LIST_INIT;
 }
 
-interface EventsGetListActionSuccess {
+export interface EventsGetListActionSuccess {
   type: typeof EVENTS_GET_LIST_SUCCESS;
-  payload: LEventsList;
+  payload: MyEvent[];
 }
 
 interface EventsGetListActionFail {
@@ -490,7 +473,7 @@ interface SelectEventAction {
 
 interface InitBlankOutcomeAction {
   type: typeof INIT_BLANK_OUTCOME;
-  payload: Outcome;
+  payload: RoundOutcome;
 }
 
 interface SelectMultironWinnerAction {
@@ -655,9 +638,6 @@ export type AppActionTypes =
   | GetOtherTableActionReload
   | GetOtherTablesListActionInit
   | GetOtherTablesListActionReload
-  | GetOtherTableLastRoundActionInit
-  | GetOtherTableLastRoundActionSuccess
-  | GetOtherTableLastRoundActionFail
   | GetChangesOverviewActionInit
   | GetLastResultsActionInit
   | GetAllPlayersActionInit

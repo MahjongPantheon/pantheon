@@ -20,7 +20,7 @@ export const GameResultScreen: React.FC<IComponentProps> = (props) => {
   if (state.lastResults) {
     players = state.lastResults.map((player) => {
       return {
-        name: player.displayName,
+        name: player.title,
         score: player.score,
         delta: player.ratingDelta,
       };
@@ -28,10 +28,7 @@ export const GameResultScreen: React.FC<IComponentProps> = (props) => {
   }
 
   const canStartGame =
-    !state.gameConfig.autoSeating &&
-    !state.isUniversalWatcher &&
-    !state.currentSessionHash &&
-    !state.gameConfig.isPrescripted;
+    !state.gameConfig.autoSeating && !state.currentSessionHash && !state.gameConfig.isPrescripted;
 
   const onCheckClick = useCallback(() => {
     dispatch({ type: GOTO_NEXT_SCREEN });
@@ -40,7 +37,7 @@ export const GameResultScreen: React.FC<IComponentProps> = (props) => {
   const onRepeatClick = useCallback(() => {
     let playerIds: number[] | undefined;
     if (state.lastResults) {
-      playerIds = state.lastResults.map((x) => x.id);
+      playerIds = state.lastResults.map((x) => x.playerId);
     }
 
     dispatch({ type: START_NEW_GAME, payload: playerIds });

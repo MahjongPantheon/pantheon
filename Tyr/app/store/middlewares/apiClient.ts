@@ -25,7 +25,6 @@ import {
   GET_LAST_RESULTS_SUCCESS,
   GET_OTHER_TABLE_FAIL,
   GET_OTHER_TABLE_INIT,
-  GET_OTHER_TABLE_LAST_ROUND_INIT,
   GET_OTHER_TABLE_RELOAD,
   GET_OTHER_TABLE_SUCCESS,
   GET_OTHER_TABLES_LIST_FAIL,
@@ -52,11 +51,11 @@ import {
   UPDATE_CURRENT_GAMES_INIT,
   UPDATE_CURRENT_GAMES_SUCCESS,
 } from '../actions/interfaces';
-import { LCurrentGame, LGameConfig, LTimerState } from '#/interfaces/local';
 import { RemoteError } from '#/services/remoteError';
 import { IAppState } from '../interfaces';
-import { SessionState } from '#/interfaces/remote';
 import { IRiichiApi } from '#/services/IRiichiApi';
+import { CurrentSession, GameConfig } from '#/clients/atoms.pb';
+import { Events_GetTimerState_Response } from '#/clients/mimir.pb';
 
 export const apiClient =
   (api: IRiichiApi) =>
@@ -88,7 +87,12 @@ export const apiClient =
       case EVENTS_GET_LIST_INIT:
         api
           .getMyEvents()
-          .then((events) => mw.dispatch({ type: EVENTS_GET_LIST_SUCCESS, payload: events }))
+          .then((events) =>
+            mw.dispatch({
+              type: EVENTS_GET_LIST_SUCCESS,
+              payload: events,
+            })
+          )
           .catch((err) => mw.dispatch({ type: EVENTS_GET_LIST_FAIL, payload: err }));
         break;
       case LOGIN_INIT:
@@ -134,10 +138,6 @@ export const apiClient =
         }
         getOtherTableReload(mw.getState().currentOtherTableHash ?? '', api, next);
         break;
-      case GET_OTHER_TABLE_LAST_ROUND_INIT:
-        next(action);
-        //todo
-        break;
       case GET_ALL_ROUNDS_INIT:
         getAllRounds(action.payload, api, next);
         break;
@@ -173,10 +173,10 @@ export const apiClient =
 function loginWithRetry(
   data: { email: string; password: string },
   api: IRiichiApi,
-  dispatch: Dispatch,
-  next: Dispatch
+  dispatch: Dispatch<AppActionTypes>,
+  next: Dispatch<AppActionTypes>
 ) {
-  next({ type: LOGIN_INIT });
+  next({ type: LOGIN_INIT, payload: data });
 
   let retriesCount = 0;
   const runWithRetry = () => {
@@ -201,30 +201,29 @@ function loginWithRetry(
   runWithRetry();
 }
 
-function getUserinfo(personId: number, api: IRiichiApi, next: Dispatch) {
-  next({ type: GET_USERINFO_INIT });
+function getUserinfo(personId: number, api: IRiichiApi, next: Dispatch<AppActionTypes>) {
+  next({ type: GET_USERINFO_INIT, payload: personId });
   api
     .getUserInfo([personId])
     .then((overview) => next({ type: GET_USERINFO_SUCCESS, payload: overview[0] }))
     .catch((error: RemoteError) => next({ type: GET_USERINFO_FAIL, payload: error }));
 }
 
-/*
-Promise<LUser[]>,
-    api.getUserInfo([currentPersonId]),
- */
-
 function updateCurrentGames(
   api: IRiichiApi,
-  dispatchNext: Dispatch,
-  dispatchToStore: Dispatch,
+  dispatchNext: Dispatch<AppActionTypes>,
+  dispatchToStore: Dispatch<AppActionTypes>,
   currentPersonId: number,
   eventId: number
 ) {
   dispatchNext({ type: UPDATE_CURRENT_GAMES_INIT });
 
   // TODO: make single method? should become faster!
-  const promises: [Promise<LCurrentGame[]>, Promise<LGameConfig>, Promise<LTimerState>] = [
+  const promises: [
+    Promise<CurrentSession[]>,
+    Promise<GameConfig>,
+    Promise<Events_GetTimerState_Response>
+  ] = [
     api.getCurrentGames(currentPersonId, eventId),
     api.getGameConfig(eventId),
     api.getTimerState(eventId),
@@ -237,14 +236,14 @@ function updateCurrentGames(
         payload: { games, gameConfig, timerState },
       });
       if (games.length > 0) {
-        dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: games[0].hashcode });
+        dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: games[0].sessionHash });
       }
       dispatchToStore({
         type: SET_TIMER,
         payload: {
           waiting: timerState.waitingForTimer,
           secondsRemaining: timerState.timeRemaining,
-          autostartSecondsRemaining: timerState.autostartTimer,
+          autostartSecondsRemaining: 0, // timerState.autostartTimer, // TODO: fix in https://github.com/MahjongPantheon/pantheon/issues/282
           haveAutostart: timerState.haveAutostart,
         },
       });
@@ -260,15 +259,19 @@ function updateCurrentGames(
     });
 }
 
-function getGameOverview(currentSessionHash: string, api: IRiichiApi, next: Dispatch) {
-  next({ type: GET_GAME_OVERVIEW_INIT });
+function getGameOverview(
+  currentSessionHash: string,
+  api: IRiichiApi,
+  next: Dispatch<AppActionTypes>
+) {
+  next({ type: GET_GAME_OVERVIEW_INIT, payload: currentSessionHash });
   api
     .getGameOverview(currentSessionHash)
     .then((overview) => next({ type: GET_GAME_OVERVIEW_SUCCESS, payload: overview }))
     .catch((error: RemoteError) => next({ type: GET_GAME_OVERVIEW_FAIL, payload: error }));
 }
 
-function getOtherTable(sessionHash: string, api: IRiichiApi, dispatch: Dispatch) {
+function getOtherTable(sessionHash: string, api: IRiichiApi, dispatch: Dispatch<AppActionTypes>) {
   dispatch({ type: GET_OTHER_TABLE_INIT, payload: sessionHash });
   api
     .getGameOverview(sessionHash)
@@ -276,7 +279,11 @@ function getOtherTable(sessionHash: string, api: IRiichiApi, dispatch: Dispatch)
     .catch((e) => dispatch({ type: GET_OTHER_TABLE_FAIL, payload: e }));
 }
 
-function getOtherTableReload(sessionHash: string, api: IRiichiApi, dispatch: Dispatch) {
+function getOtherTableReload(
+  sessionHash: string,
+  api: IRiichiApi,
+  dispatch: Dispatch<AppActionTypes>
+) {
   dispatch({ type: GET_OTHER_TABLE_RELOAD });
   api
     .getGameOverview(sessionHash)
@@ -284,7 +291,7 @@ function getOtherTableReload(sessionHash: string, api: IRiichiApi, dispatch: Dis
     .catch((e) => dispatch({ type: GET_OTHER_TABLE_FAIL, payload: e }));
 }
 
-function getOtherTablesList(api: IRiichiApi, dispatch: Dispatch, eventId: number) {
+function getOtherTablesList(api: IRiichiApi, dispatch: Dispatch<AppActionTypes>, eventId: number) {
   dispatch({ type: GET_OTHER_TABLES_LIST_INIT });
   api
     .getTablesState(eventId)
@@ -292,7 +299,11 @@ function getOtherTablesList(api: IRiichiApi, dispatch: Dispatch, eventId: number
     .catch((e) => dispatch({ type: GET_OTHER_TABLES_LIST_FAIL, payload: e }));
 }
 
-function getOtherTablesListReload(api: IRiichiApi, dispatch: Dispatch, eventId: number) {
+function getOtherTablesListReload(
+  api: IRiichiApi,
+  dispatch: Dispatch<AppActionTypes>,
+  eventId: number
+) {
   dispatch({ type: GET_OTHER_TABLES_LIST_RELOAD });
   api
     .getTablesState(eventId)
@@ -300,16 +311,16 @@ function getOtherTablesListReload(api: IRiichiApi, dispatch: Dispatch, eventId: 
     .catch((e) => dispatch({ type: GET_OTHER_TABLES_LIST_FAIL, payload: e }));
 }
 
-function getAllRounds(sessionHash: string, api: IRiichiApi, dispatch: Dispatch) {
-  dispatch({ type: GET_ALL_ROUNDS_INIT });
+function getAllRounds(sessionHash: string, api: IRiichiApi, dispatch: Dispatch<AppActionTypes>) {
+  dispatch({ type: GET_ALL_ROUNDS_INIT, payload: sessionHash });
   api
     .getAllRounds(sessionHash)
     .then((paymentsInfo) => dispatch({ type: GET_ALL_ROUNDS_SUCCESS, payload: paymentsInfo }))
     .catch((e) => dispatch({ type: GET_ALL_ROUNDS_FAIL, payload: e }));
 }
 
-function getChangesOverview(state: IAppState, api: IRiichiApi, dispatch: Dispatch) {
-  dispatch({ type: GET_CHANGES_OVERVIEW_INIT });
+function getChangesOverview(state: IAppState, api: IRiichiApi, dispatch: Dispatch<AppActionTypes>) {
+  dispatch({ type: GET_CHANGES_OVERVIEW_INIT, payload: state });
   api
     .getChangesOverview(state)
     .then((overview) => dispatch({ type: GET_CHANGES_OVERVIEW_SUCCESS, payload: overview }))
@@ -319,21 +330,21 @@ function getChangesOverview(state: IAppState, api: IRiichiApi, dispatch: Dispatc
 function addRound(
   state: IAppState,
   api: IRiichiApi,
-  dispatch: Dispatch,
-  dispatchToStore: Dispatch
+  dispatch: Dispatch<AppActionTypes>,
+  dispatchToStore: Dispatch<AppActionTypes>
 ) {
-  dispatch({ type: ADD_ROUND_INIT });
+  dispatch({ type: ADD_ROUND_INIT, payload: state });
   api
     .addRound(state)
     .then((data) => {
       if (!data) {
         dispatch({
           type: ADD_ROUND_FAIL,
-          payload: { code: 500, message: 'Server error occurred while saving the game' },
+          payload: new RemoteError('Server error occurred while saving the game', '500'),
         });
       }
       dispatch({ type: ADD_ROUND_SUCCESS, payload: data });
-      if (!(data as SessionState)._isFinished) {
+      if (!data.isFinished && state.currentSessionHash) {
         dispatchToStore({ type: GET_GAME_OVERVIEW_INIT, payload: state.currentSessionHash });
       }
     })
@@ -342,7 +353,7 @@ function addRound(
 
 function getLastResults(
   api: IRiichiApi,
-  dispatch: Dispatch,
+  dispatch: Dispatch<AppActionTypes>,
   currentPersonId: number,
   eventId: number
 ) {
@@ -353,7 +364,7 @@ function getLastResults(
     .catch((e) => dispatch({ type: GET_LAST_RESULTS_FAIL, payload: e }));
 }
 
-function getAllPlayers(api: IRiichiApi, dispatch: Dispatch, eventId: number) {
+function getAllPlayers(api: IRiichiApi, dispatch: Dispatch<AppActionTypes>, eventId: number) {
   dispatch({ type: GET_ALL_PLAYERS_INIT });
   api
     .getAllPlayers(eventId)
@@ -364,11 +375,11 @@ function getAllPlayers(api: IRiichiApi, dispatch: Dispatch, eventId: number) {
 function startGame(
   playerIds: number[],
   api: IRiichiApi,
-  dispatch: Dispatch,
-  dispatchToStore: Dispatch,
+  dispatch: Dispatch<AppActionTypes>,
+  dispatchToStore: Dispatch<AppActionTypes>,
   eventId: number
 ) {
-  dispatch({ type: START_GAME_INIT });
+  dispatch({ type: START_GAME_INIT, payload: playerIds });
   api
     .startGame(eventId, playerIds)
     .then((results) => {

@@ -1,15 +1,18 @@
 import { AppOutcome } from '#/interfaces/app';
-import { Player, Table, Yaku } from '#/interfaces/common';
-import {
-  LEventsList,
-  LGameConfig,
-  LSessionOverview,
-  LUser,
-  LUserWithScore,
-} from '#/interfaces/local';
-import { RRoundOverviewInfo, RRoundPaymentsInfo } from '#/interfaces/remote';
+import { Yaku } from '#/interfaces/common';
 import { Graph } from '#/primitives/graph';
 import { RemoteError } from '#/services/remoteError';
+import {
+  GameConfig,
+  MyEvent,
+  PlayerInSession,
+  RegisteredPlayer,
+  RoundState,
+  SessionHistoryResult,
+  SessionState,
+  TableState,
+} from '#/clients/atoms.pb';
+import { Games_GetSessionOverview_Response } from '#/clients/mimir.pb';
 
 export type AppScreen =
   | 'eventSelector'
@@ -57,60 +60,52 @@ export type ErrorState = {
   message: string;
 };
 
-export type Features = {
-  wsClient: boolean;
-};
-
 export interface IAppState {
-  features: Features;
   currentScreen: AppScreen;
   currentSessionHash?: string;
   currentOutcome?: AppOutcome;
-  currentRound: number;
   currentPlayerDisplayName?: string;
   currentPlayerId?: number;
   currentEventId?: number;
-  players?: Player[]; // e-s-w-n
-  mapIdToPlayer: { [key: number]: Player };
-  riichiOnTable: number;
-  honba: number;
+  players?: PlayerInSession[]; // e-s-w-n
+  mapIdToPlayer: { [key: number]: PlayerInSession };
   multironCurrentWinner?: number;
   isLoggedIn: boolean;
-  gameConfig?: LGameConfig;
-  tableIndex?: number;
-  lastHandStarted: boolean;
-  currentOtherTableIndex: number;
+  gameConfig?: GameConfig;
+  sessionState?: SessionState;
+  tableIndex?: number | null;
+  currentOtherTableIndex?: number | null;
   currentOtherTableHash?: string;
-  currentOtherTablePlayers: Player[];
+  currentOtherTablePlayers: PlayerInSession[];
   isIos: boolean;
   loading: LoadingSet;
   timer?: TimerData;
   yakuList?: Graph<Yaku>;
 
-  allPlayers?: LUser[];
+  allPlayers?: RegisteredPlayer[];
   allPlayersError?: ErrorState;
 
   // Confirmation / changes overview after dry run
-  changesOverview?: RRoundPaymentsInfo;
+  changesOverview?: RoundState;
   changesOverviewError?: ErrorState;
 
   // View log of current table
-  allRoundsOverview?: RRoundOverviewInfo[];
+  allRoundsOverview?: RoundState[];
   allRoundsOverviewErrorCode?: number;
 
   // Previous game results
-  lastResults?: LUserWithScore[];
+  lastResults?: SessionHistoryResult[];
   lastResultsError?: ErrorState;
 
   newGameIdsToSet?: number[];
-  newGameSelectedUsers?: LUser[];
+  newGameSelectedUsers?: RegisteredPlayer[];
   newGameSelectedPlayerSide?: '東' | '南' | '西' | '北';
   newGameStartError?: ErrorState;
 
-  otherTablesList: Table[];
+  otherTablesList: TableState[];
   otherTablesListError?: ErrorState;
 
-  currentOtherTable?: LSessionOverview;
+  currentOtherTable?: Games_GetSessionOverview_Response;
   otherTableError?: ErrorState;
 
   overviewDiffBy?: number;
@@ -123,7 +118,6 @@ export interface IAppState {
   updateCurrentGamesError?: ErrorState;
   getUserinfoError?: ErrorState;
 
-  isUniversalWatcher: boolean;
   settings: {
     currentLang: string;
     currentTheme: string;
@@ -134,7 +128,7 @@ export interface IAppState {
 
   gameOverviewReady: boolean;
 
-  eventsList: LEventsList;
+  eventsList: MyEvent[];
   eventsListError?: RemoteError;
 
   historyInitialized: boolean;

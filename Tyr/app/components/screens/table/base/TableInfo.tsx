@@ -18,7 +18,7 @@ export type TableInfoProps = {
   honbaCount?: number;
   riichiCount?: number;
   currentTime?: string;
-  tableNumber?: number;
+  tableNumber?: number | null;
   showRotators?: boolean;
   onRotateCwClick?: () => void;
   onRotateCcwClick?: () => void;

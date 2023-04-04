@@ -24,9 +24,9 @@ import { memoize } from '#/primitives/memoize';
 function _getHan(state: IAppState, user?: number) {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'tsumo':
+    case 'TSUMO':
       return outcome.han;
-    case 'ron':
+    case 'RON':
       const selected = user ?? state.multironCurrentWinner;
       if (!selected) {
         return 0; // data not loaded yet
@@ -44,7 +44,7 @@ function _getFu(state: IAppState, user?: number) {
   let han: number;
   let fu: number;
   switch (outcome?.selectedOutcome) {
-    case 'tsumo':
+    case 'TSUMO':
       // Don't send fu to the server for limit hands
       fu = outcome.fu;
       han = outcome.han + outcome.dora;
@@ -52,7 +52,7 @@ function _getFu(state: IAppState, user?: number) {
         fu = 0;
       }
       return fu;
-    case 'ron':
+    case 'RON':
       const selected = user ?? state.multironCurrentWinner;
       if (!selected) {
         return 0; // data not loaded yet
@@ -73,9 +73,9 @@ export const getFu = memoize(_getFu);
 function _getPossibleFu(state: IAppState) {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'tsumo':
+    case 'TSUMO':
       return outcome.possibleFu;
-    case 'ron':
+    case 'RON':
       if (!state.multironCurrentWinner) {
         return []; // data not loaded yet
       }
@@ -90,9 +90,9 @@ export const getPossibleFu = memoize(_getPossibleFu);
 function _getDora(state: IAppState, user?: number): number {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'tsumo':
+    case 'TSUMO':
       return outcome.dora;
-    case 'ron':
+    case 'RON':
       const selected = user ?? state.multironCurrentWinner;
       if (!selected) {
         return 0; // data not loaded yet

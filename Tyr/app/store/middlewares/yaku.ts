@@ -23,7 +23,7 @@ export const yaku =
 
         if (action.payload.id === YakuId.DOUBLERIICHI) {
           const outcome = mw.getState().currentOutcome;
-          if (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo') {
+          if (outcome?.selectedOutcome === 'RON' || outcome?.selectedOutcome === 'TSUMO') {
             if (action.payload.winner && !outcome.riichiBets.includes(action.payload.winner)) {
               alert(
                 i18n._t(

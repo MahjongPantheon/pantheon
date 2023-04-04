@@ -1,22 +1,22 @@
 import { AppOutcome } from '#/interfaces/app';
-import { LGameConfig } from '#/interfaces/local';
 import { intersect } from '#/primitives/intersect';
 import { unpack } from '#/primitives/yaku-compat';
 import { Action, AnyAction } from 'redux';
+import { GameConfig } from '#/clients/atoms.pb';
 
-export function playerHasYakuWithPao(yakuPack: string, gameConfig: LGameConfig): boolean {
-  return intersect(unpack(yakuPack), gameConfig.yakuWithPao).length > 0;
+export function playerHasYakuWithPao(yakuPack: string, gameConfig: GameConfig): boolean {
+  return intersect(unpack(yakuPack), gameConfig.rulesetConfig.yakuWithPao).length > 0;
 }
 
-export function winnerHasYakuWithPao(outcome: AppOutcome, gameConfig: LGameConfig): boolean {
+export function winnerHasYakuWithPao(outcome: AppOutcome, gameConfig: GameConfig): boolean {
   if (!outcome) {
     return false;
   }
 
   switch (outcome.selectedOutcome) {
-    case 'tsumo':
+    case 'TSUMO':
       return playerHasYakuWithPao(outcome.yaku, gameConfig);
-    case 'ron':
+    case 'RON':
       return Object.keys(outcome.wins).reduce<boolean>((acc, playerId) => {
         return acc || playerHasYakuWithPao(outcome.wins[playerId].yaku, gameConfig);
       }, false);

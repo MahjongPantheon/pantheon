@@ -195,19 +195,19 @@ function getRoundDescriptionNagashi(info: IRoundOverviewNagashi, loc: I18nServic
 
 export function getRoundDescription(info: IRoundOverviewInfo, loc: I18nService): string[] {
   switch (info.outcome) {
-    case 'ron':
+    case 'RON':
       return getRoundDescriptionRon(info, loc);
-    case 'multiron':
+    case 'MULTIRON':
       return getRoundDescriptionMultiron(info, loc);
-    case 'tsumo':
+    case 'TSUMO':
       return getRoundDescriptionTsumo(info, loc);
-    case 'draw':
+    case 'DRAW':
       return getRoundDescriptionDraw(info, loc);
-    case 'abort':
+    case 'ABORT':
       return getRoundDescriptionAbort(info, loc);
-    case 'chombo':
+    case 'CHOMBO':
       return getRoundDescriptionChombo(info, loc);
-    case 'nagashi':
+    case 'NAGASHI':
       return getRoundDescriptionNagashi(info, loc);
   }
 }

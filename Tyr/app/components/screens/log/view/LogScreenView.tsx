@@ -6,10 +6,11 @@ import { RoundResult } from '#/components/screens/log/view/RoundResult';
 import { IRoundOverviewInfo } from '#/components/screens/log/view/RoundTypes';
 import { RoundInfo } from '#/components/screens/log/view/RoundInfo';
 import { i18n } from '#/components/i18n';
+import { IntermediateResultOfSession } from '#/clients/atoms.pb';
 
 export interface IRoundResult {
-  scoresDelta: { [id: string]: number };
-  scores: { [index: string]: number };
+  scoresDelta: IntermediateResultOfSession[];
+  scores: IntermediateResultOfSession[];
   round: string;
 }
 

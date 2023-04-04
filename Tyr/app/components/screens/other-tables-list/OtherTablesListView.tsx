@@ -1,12 +1,12 @@
 import * as React from 'react';
 import './other-tables-list.css';
 import { TopPanel } from '#/components/general/top-panel/TopPanel';
-import { Table } from '#/interfaces/common';
 import { useContext } from 'react';
 import { i18n } from '#/components/i18n';
+import { TableState } from '#/clients/atoms.pb';
 
 type IProps = {
-  tables: Table[];
+  tables: TableState[];
   onTableClick: (hash: string) => void;
   onBackClick: () => void;
 };
@@ -39,14 +39,14 @@ export const OtherTablesListView: React.FC<IProps> = ({ onTableClick, onBackClic
         )}
         {tables.map((table) => (
           <div
-            key={table.hash}
+            key={table.sessionHash}
             className='page-other-tables-list__table'
-            onClick={() => onTableClick(table.hash)}
+            onClick={() => onTableClick(table.sessionHash)}
           >
-            {roundsMap[table.currentRound]}
-            {table.players.map((player) => (
+            {roundsMap[table.currentRoundIndex]}
+            {table.players.map((player, idx) => (
               <div key={player.id}>
-                {player.displayName}: {player.score}
+                {player.title}: {table.scores[idx].score}
               </div>
             ))}
           </div>

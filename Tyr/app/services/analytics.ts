@@ -23,17 +23,13 @@ import debounce from 'lodash.debounce';
 
 export class Analytics {
   public static readonly NOT_INITIALIZED = 'not_initialized';
-  public static readonly APP_INIT = 'app_init';
   public static readonly LOGOUT = 'logout';
-  public static readonly I18N_INIT = 'i18n_init';
   public static readonly LANG_CHANGED = 'lang_changed';
   public static readonly THEME_CHANGED = 'theme_changed';
   public static readonly SINGLE_DEVICE_MODE_CHANGED = 'single_device_mode_changed';
   public static readonly REMOTE_ERROR = 'remote_error';
-  public static readonly LOCAL_ERROR = 'local_error';
   public static readonly SCREEN_ENTER = 'screen_enter';
   public static readonly CONFIG_RECEIVED = 'config_received';
-  public static readonly UNIVERSAL_WATCHER_INITIALIZED = 'universal_watcher_initialized';
   public static readonly LOAD_STARTED = 'load_started';
   public static readonly LOAD_SUCCESS = 'load_success';
   public static readonly LOAD_ERROR = 'load_error';

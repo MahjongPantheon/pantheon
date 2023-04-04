@@ -1,14 +1,4 @@
 import {
-  RRoundOverviewAbort,
-  RRoundOverviewChombo,
-  RRoundOverviewDraw,
-  RRoundOverviewInfo,
-  RRoundOverviewMultiRon,
-  RRoundOverviewNagashi,
-  RRoundOverviewRon,
-  RRoundOverviewTsumo,
-} from '#/interfaces/remote';
-import {
   IRoundOverviewInfo,
   IRoundOverviewBase,
   IRoundOverviewMultiRon,
@@ -21,16 +11,16 @@ import {
 } from '#/components/screens/log/view/RoundTypes';
 import { I18nService } from '#/services/i18n';
 import { yakuMap } from '#/primitives/yaku';
+import { RoundState } from '#/clients/atoms.pb';
 
-function getYakuList(yaku: string, i18nService: I18nService) {
-  const yakuIds = yaku.split(',').map((x) => parseInt(x, 10));
-  return yakuIds.map((id) => yakuMap[id].name(i18nService));
+function getYakuList(yaku: number[], i18nService: I18nService): string[] {
+  return yaku.map((id) => yakuMap[id].name(i18nService));
 }
 
 export function getRoundOverviewBase(
-  roundOverview: RRoundOverviewInfo,
+  roundOverview: RoundState,
   players: { [index: string]: string }
-): IRoundOverviewBase {
+): Omit<IRoundOverviewBase, 'outcome'> {
   return {
     riichiOnTable: roundOverview.riichi,
     honbaOnTable: roundOverview.honba,
@@ -39,130 +29,138 @@ export function getRoundOverviewBase(
 }
 
 export function getRoundOverviewRon(
-  roundOverview: RRoundOverviewRon,
+  roundOverview: RoundState,
   players: { [index: string]: string },
   i18nService: I18nService
 ): IRoundOverviewRon {
   const roundBase = getRoundOverviewBase(roundOverview, players);
   return {
     ...roundBase,
-    outcome: roundOverview.outcome,
+    outcome: 'RON',
     riichiPlayers: roundOverview.riichiIds.map((id) => players[id]),
-    loser: players[roundOverview.loser],
-    winner: players[roundOverview.winner],
-    paoPlayer: roundOverview.paoPlayer !== null ? players[roundOverview.paoPlayer] : undefined,
-    yakuList: getYakuList(roundOverview.yaku, i18nService),
-    han: roundOverview.han,
-    fu: roundOverview.fu ?? undefined,
-    dora: roundOverview.dora ?? undefined,
+    loser: players[roundOverview.round.ron?.loserId!],
+    winner: players[roundOverview.round.ron?.winnerId!],
+    paoPlayer: roundOverview.round.ron?.paoPlayerId
+      ? players[roundOverview.round.ron?.paoPlayerId]
+      : undefined,
+    yakuList: getYakuList(roundOverview.round.ron?.yaku ?? [], i18nService),
+    han: roundOverview.round.ron?.han ?? 0,
+    fu: roundOverview.round.ron?.fu ?? undefined,
+    dora: roundOverview.round.ron?.dora ?? undefined,
   };
 }
 
 export function getRoundOverviewMultiRon(
-  roundOverview: RRoundOverviewMultiRon,
+  roundOverview: RoundState,
   players: { [index: string]: string },
   i18nService: I18nService
 ): IRoundOverviewMultiRon {
   const roundBase = getRoundOverviewBase(roundOverview, players);
   return {
     ...roundBase,
-    outcome: roundOverview.outcome,
-    loser: players[roundOverview.loser],
-    winnerList: roundOverview.winner.map((id) => players[id]),
-    paoPlayerList: roundOverview.paoPlayer.map((id) => (id !== null ? players[id] : undefined)),
-    yakuList: roundOverview.yaku.map((playerYaku) => getYakuList(playerYaku, i18nService)),
-    hanList: roundOverview.han,
-    fuList: roundOverview.fu.map((playerFu) => playerFu ?? undefined),
-    doraList: roundOverview.dora.map((playerDora) => playerDora ?? undefined),
+    outcome: 'MULTIRON',
+    loser: players[roundOverview.round.multiron?.loserId!],
+    winnerList: roundOverview.round.multiron?.wins.map((win) => players[win.winnerId]) ?? [],
+    paoPlayerList:
+      roundOverview.round.multiron?.wins.map((win) =>
+        win.paoPlayerId ? players[win.paoPlayerId] : undefined
+      ) ?? [],
+    yakuList:
+      roundOverview.round.multiron?.wins.map((win) => getYakuList(win.yaku, i18nService)) ?? [],
+    hanList: roundOverview.round.multiron?.wins.map((win) => win.han) ?? [],
+    fuList: roundOverview.round.multiron?.wins.map((win) => win.fu ?? undefined) ?? [],
+    doraList: roundOverview.round.multiron?.wins.map((win) => win.dora ?? undefined) ?? [],
   };
 }
 
 export function getRoundOverviewTsumo(
-  roundOverview: RRoundOverviewTsumo,
+  roundOverview: RoundState,
   players: { [index: string]: string },
   i18nService: I18nService
 ): IRoundOverviewTsumo {
   const roundBase = getRoundOverviewBase(roundOverview, players);
   return {
     ...roundBase,
-    outcome: roundOverview.outcome,
+    outcome: 'TSUMO',
     riichiPlayers: roundOverview.riichiIds.map((id) => players[id]),
-    winner: players[roundOverview.winner],
-    paoPlayer: roundOverview.paoPlayer !== null ? players[roundOverview.paoPlayer] : undefined,
-    yakuList: getYakuList(roundOverview.yaku, i18nService),
-    han: roundOverview.han,
-    fu: roundOverview.fu ?? undefined,
-    dora: roundOverview.dora ?? undefined,
+    winner: players[roundOverview.round.tsumo?.winnerId!],
+    paoPlayer: roundOverview.round.tsumo?.paoPlayerId
+      ? players[roundOverview.round.tsumo?.paoPlayerId]
+      : undefined,
+    yakuList: getYakuList(roundOverview.round.tsumo?.yaku ?? [], i18nService),
+    han: roundOverview.round.tsumo?.han ?? 0,
+    fu: roundOverview.round.tsumo?.fu ?? undefined,
+    dora: roundOverview.round.tsumo?.dora ?? undefined,
   };
 }
 
 export function getRoundOverviewDraw(
-  roundOverview: RRoundOverviewDraw,
+  roundOverview: RoundState,
   players: { [index: string]: string }
 ): IRoundOverviewDraw {
   const roundBase = getRoundOverviewBase(roundOverview, players);
   return {
     ...roundBase,
-    outcome: roundOverview.outcome,
-    tempai: roundOverview.tempai.map((id) => players[id]),
+    outcome: 'DRAW',
+    tempai: roundOverview.round.draw?.tempai.map((id) => players[id]) ?? [],
   };
 }
 
 export function getRoundOverviewAbort(
-  roundOverview: RRoundOverviewAbort,
+  roundOverview: RoundState,
   players: { [index: string]: string }
 ): IRoundOverviewAbort {
   const roundBase = getRoundOverviewBase(roundOverview, players);
   return {
     ...roundBase,
-    outcome: roundOverview.outcome,
+    outcome: 'ABORT',
   };
 }
 
 export function getRoundOverviewChombo(
-  roundOverview: RRoundOverviewChombo,
+  roundOverview: RoundState,
   players: { [index: string]: string }
 ): IRoundOverviewChombo {
   const roundBase = getRoundOverviewBase(roundOverview, players);
   return {
     ...roundBase,
-    outcome: roundOverview.outcome,
-    penaltyFor: players[roundOverview.penaltyFor],
+    outcome: 'CHOMBO',
+    penaltyFor: players[roundOverview.round.chombo?.loserId!],
   };
 }
 
 export function getRoundOverviewNagashi(
-  roundOverview: RRoundOverviewNagashi,
+  roundOverview: RoundState,
   players: { [index: string]: string }
 ): IRoundOverviewNagashi {
   const roundBase = getRoundOverviewBase(roundOverview, players);
   return {
     ...roundBase,
-    outcome: roundOverview.outcome,
-    tempai: roundOverview.tempai.map((id) => players[id]),
-    nagashi: roundOverview.nagashi.map((id) => players[id]),
+    outcome: 'NAGASHI',
+    tempai: roundOverview.round.nagashi?.tempai.map((id) => players[id]) ?? [],
+    nagashi: roundOverview.round.nagashi?.nagashi.map((id) => players[id]) ?? [],
   };
 }
 
 export function getRoundOverviewInfo(
-  roundOverview: RRoundOverviewInfo,
+  roundOverview: RoundState,
   players: { [index: string]: string },
   i18nService: I18nService
 ): IRoundOverviewInfo {
   switch (roundOverview.outcome) {
-    case 'ron':
+    case 'RON':
       return getRoundOverviewRon(roundOverview, players, i18nService);
-    case 'multiron':
+    case 'MULTIRON':
       return getRoundOverviewMultiRon(roundOverview, players, i18nService);
-    case 'tsumo':
+    case 'TSUMO':
       return getRoundOverviewTsumo(roundOverview, players, i18nService);
-    case 'draw':
+    case 'DRAW':
       return getRoundOverviewDraw(roundOverview, players);
-    case 'abort':
+    case 'ABORT':
       return getRoundOverviewAbort(roundOverview, players);
-    case 'chombo':
+    case 'CHOMBO':
       return getRoundOverviewChombo(roundOverview, players);
-    case 'nagashi':
+    case 'NAGASHI':
       return getRoundOverviewNagashi(roundOverview, players);
   }
 }

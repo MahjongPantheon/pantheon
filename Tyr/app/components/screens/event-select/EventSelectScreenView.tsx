@@ -1,15 +1,15 @@
 import * as React from 'react';
 import './event-select.css';
 import classNames from 'classnames';
-import { LEventsList } from '#/interfaces/local';
 import { useContext } from 'react';
 import { i18n } from '#/components/i18n';
 import BackIcon from '../../../img/icons/arrow-left.svg?svgr';
 import SettingsIcon from '../../../img/icons/settings.svg?svgr';
+import { MyEvent } from '#/clients/atoms.pb';
 
 interface IProps {
   playerName: string;
-  events: LEventsList;
+  events: MyEvent[];
   currentEvent: number | undefined;
   onBackClick: () => void;
   onSettingClick: () => void;

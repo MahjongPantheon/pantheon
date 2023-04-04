@@ -5,8 +5,6 @@ import { filterAllowed, yakuGroups, yakumanGroups, yakuRareGroups } from '#/prim
 import { memoize } from '#/primitives/memoize';
 import { getAllowedYaku } from './yaku';
 
-export const shouldShowTabs = (state: IAppState) => getWinningUsers(state).length > 1;
-
 function _getYakuList(state: IAppState): { [id: number]: Yaku[][] } {
   if (!state.gameConfig) {
     return {};
@@ -14,9 +12,9 @@ function _getYakuList(state: IAppState): { [id: number]: Yaku[][] } {
 
   const yakuList: { [key: number]: Yaku[][] } = {};
   for (const user of getWinningUsers(state)) {
-    const simple = filterAllowed(yakuGroups, state.gameConfig.allowedYaku);
-    const rare = filterAllowed(yakuRareGroups, state.gameConfig.allowedYaku);
-    const yakuman = filterAllowed(yakumanGroups, state.gameConfig.allowedYaku);
+    const simple = filterAllowed(yakuGroups, state.gameConfig.rulesetConfig.allowedYaku);
+    const rare = filterAllowed(yakuRareGroups, state.gameConfig.rulesetConfig.allowedYaku);
+    const yakuman = filterAllowed(yakumanGroups, state.gameConfig.rulesetConfig.allowedYaku);
     yakuList[user.id] = simple.concat(rare).concat(yakuman);
   }
 

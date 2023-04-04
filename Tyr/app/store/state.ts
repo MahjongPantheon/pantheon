@@ -27,17 +27,13 @@ import {
   AppOutcomeChombo,
   AppOutcomeNagashi,
 } from '#/interfaces/app';
-import { Outcome as OutcomeType } from '#/interfaces/common';
 import { getFixedFu } from '#/primitives/yaku-values';
 import { IAppState } from './interfaces';
 import { defaultPlayer } from './selectors/screenNewGameSelectors';
+import { RoundOutcome } from '#/clients/atoms.pb';
 
 export const initialState: IAppState = {
-  features: {
-    wsClient: false,
-  },
   currentOtherTableIndex: 0,
-  isUniversalWatcher: false,
   settings: { currentLang: 'en', currentTheme: 'day', singleDeviceMode: false },
   timer: undefined,
   yakuList: undefined,
@@ -45,18 +41,25 @@ export const initialState: IAppState = {
   currentScreen: 'overview',
   currentSessionHash: undefined,
   currentOutcome: undefined,
-  currentRound: 1,
+  sessionState: {
+    dealer: 0,
+    scores: [],
+    finished: false,
+    penalties: [],
+    roundIndex: 1,
+    riichiCount: 0,
+    honbaCount: 0,
+    lastHandStarted: false,
+  },
+
   currentPlayerDisplayName: undefined,
   currentPlayerId: undefined,
   players: undefined, // e-s-w-n,
   mapIdToPlayer: {},
-  riichiOnTable: 0,
-  honba: 0,
   multironCurrentWinner: undefined,
   isLoggedIn: false,
   gameConfig: undefined,
   tableIndex: undefined,
-  lastHandStarted: false,
   otherTablesList: [],
   currentOtherTable: undefined,
   currentOtherTableHash: undefined,
@@ -85,12 +88,13 @@ export const initialState: IAppState = {
   historyInitialized: false,
 };
 
-export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcome {
+export function initBlankOutcome(round: number, outcome: RoundOutcome): AppOutcome {
   let out: AppOutcome;
   switch (outcome) {
-    case 'ron':
+    case 'RON':
+    case 'MULTIRON':
       const outcomeMultiRon: AppOutcomeRon = {
-        selectedOutcome: 'ron',
+        selectedOutcome: 'RON',
         roundIndex: round,
         loser: undefined,
         loserIsDealer: false,
@@ -100,15 +104,15 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       };
       out = outcomeMultiRon;
       break;
-    case 'tsumo':
+    case 'TSUMO':
       const outcomeTsumo: AppOutcomeTsumo = {
-        selectedOutcome: 'tsumo',
+        selectedOutcome: 'TSUMO',
         roundIndex: round,
         winner: undefined,
         winnerIsDealer: false,
         han: 0,
         fu: 30,
-        possibleFu: getFixedFu([], 'tsumo'),
+        possibleFu: getFixedFu([], 'TSUMO'),
         yaku: '', // empty string is ok for empty yaku list
         riichiBets: [],
         dora: 0,
@@ -116,9 +120,9 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       };
       out = outcomeTsumo;
       break;
-    case 'draw':
+    case 'DRAW':
       const outcomeDraw: AppOutcomeDraw = {
-        selectedOutcome: 'draw',
+        selectedOutcome: 'DRAW',
         roundIndex: round,
         riichiBets: [],
         tempai: [],
@@ -126,9 +130,9 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       };
       out = outcomeDraw;
       break;
-    case 'nagashi':
+    case 'NAGASHI':
       const outcomeNagashi: AppOutcomeNagashi = {
-        selectedOutcome: 'nagashi',
+        selectedOutcome: 'NAGASHI',
         roundIndex: round,
         riichiBets: [],
         tempai: [],
@@ -137,18 +141,18 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       };
       out = outcomeNagashi;
       break;
-    case 'abort':
+    case 'ABORT':
       const outcomeAbort: AppOutcomeAbort = {
-        selectedOutcome: 'abort',
+        selectedOutcome: 'ABORT',
         roundIndex: round,
         riichiBets: [],
         deadhands: [],
       };
       out = outcomeAbort;
       break;
-    case 'chombo':
+    case 'CHOMBO':
       const outcomeChombo: AppOutcomeChombo = {
-        selectedOutcome: 'chombo',
+        selectedOutcome: 'CHOMBO',
         roundIndex: round,
         loser: undefined,
         loserIsDealer: false,

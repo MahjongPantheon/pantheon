@@ -57,14 +57,14 @@ export const screenManageMw =
           case 'handSelect':
             if (
               state.currentOutcome &&
-              ['ron', 'tsumo'].includes(state.currentOutcome.selectedOutcome)
+              ['RON', 'TSUMO'].includes(state.currentOutcome.selectedOutcome)
             ) {
               const currentWinnerId = getWinningUsers(state)[0].id;
               mw.dispatch({ type: SET_SELECT_HAND_TAB, payload: 'yaku' });
               mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId } });
               mw.dispatch({ type: INIT_REQUIRED_YAKU });
 
-              if (state.currentOutcome?.selectedOutcome === 'tsumo') {
+              if (state.currentOutcome?.selectedOutcome === 'TSUMO') {
                 mw.dispatch({
                   type: ADD_YAKU,
                   payload: { id: YakuId.MENZENTSUMO, winner: currentWinnerId },

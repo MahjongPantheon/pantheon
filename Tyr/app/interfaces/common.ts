@@ -21,28 +21,10 @@
 import { YakuId } from '#/primitives/yaku';
 import { I18nService } from '#/services/i18n';
 
-export type Outcome = 'ron' | 'tsumo' | 'draw' | 'abort' | 'chombo' | 'nagashi';
-
 export interface Yaku {
   id: YakuId;
   name: (i18n: I18nService) => string;
   shortName: (i18n: I18nService) => string;
   yakuman: boolean;
-  // valueMelded: number; // TODO
-  // valueConcealed: number;
   disabled?: boolean;
-}
-
-export interface Player {
-  id: number;
-  displayName: string;
-  score: number;
-  penalties: number;
-}
-
-export interface Table {
-  index?: number;
-  hash: string;
-  currentRound: number;
-  players: Player[];
 }

@@ -35,7 +35,6 @@ import {
   TOGGLE_WINNER,
   UPDATE_CURRENT_GAMES_INIT,
 } from '#/store/actions/interfaces';
-import { Outcome as OutcomeType, Outcome, Player } from '#/interfaces/common';
 import {
   deadPressed,
   loseDisabled,
@@ -65,6 +64,7 @@ import {
   getTimeRemaining,
 } from '#/store/selectors/overviewSelectors';
 import { I18nService } from '#/services/i18n';
+import { PlayerInSession, RoundOutcome } from '#/clients/atoms.pb';
 
 // todo move to selectors most of code from here
 
@@ -114,7 +114,7 @@ export function getOutcomeModalInfo(
     return undefined;
   }
 
-  const onItemSelect = (outcome: Outcome) => {
+  const onItemSelect = (outcome: RoundOutcome) => {
     dispatch({ type: INIT_BLANK_OUTCOME, payload: outcome });
     dispatch({ type: GOTO_NEXT_SCREEN });
   };
@@ -123,46 +123,46 @@ export function getOutcomeModalInfo(
     {
       text: loc._t('Ron'),
       onSelect: () => {
-        onItemSelect('ron');
+        onItemSelect('RON');
       },
     },
     {
       text: loc._t('Tsumo'),
       onSelect: () => {
-        onItemSelect('tsumo');
+        onItemSelect('TSUMO');
       },
     },
     {
       text: loc._t('Exhaustive draw'),
       onSelect: () => {
-        onItemSelect('draw');
+        onItemSelect('DRAW');
       },
     },
     {
       text: loc._t('Chombo'),
       onSelect: () => {
-        onItemSelect('chombo');
+        onItemSelect('CHOMBO');
       },
     },
   ];
 
   const gameConfig = state.gameConfig;
   if (gameConfig) {
-    if (gameConfig.withAbortives) {
+    if (gameConfig.rulesetConfig.withAbortives) {
       items.push({
         text: loc._t('Abortive draw'),
         onSelect: () => {
-          onItemSelect('abort');
+          onItemSelect('ABORT');
         },
         unavailable: false,
       });
     }
 
-    if (gameConfig.withNagashiMangan) {
+    if (gameConfig.rulesetConfig.withNagashiMangan) {
       items.push({
         text: loc._t('Nagashi mangan'),
         onSelect: () => {
-          onItemSelect('nagashi');
+          onItemSelect('NAGASHI');
         },
         unavailable: false,
       });
@@ -193,20 +193,17 @@ function getPurposeForType(state: IAppState): RoundPreviewSchemePurpose {
 
 function getPlayerPaymentResult(
   loc: I18nService,
-  player: Player,
+  player: PlayerInSession,
   state: IAppState
 ): number | string {
   const paymentsInfo = getPaymentsInfo(state);
 
   //todo add reverse mangan tsumo (mimir)
   if (paymentsInfo.length === 0) {
-    if (
-      state.changesOverview &&
-      state.changesOverview.outcome === 'chombo' &&
-      !!state.changesOverview.penaltyFor
-    ) {
-      const penaltyFor = state.changesOverview.penaltyFor;
-      if (player.id === penaltyFor) {
+    if (state.changesOverview && state.changesOverview.outcome === 'CHOMBO') {
+      if (
+        state.changesOverview.scoresDelta.find((d) => d.penaltyScore && d.playerId === player.id)
+      ) {
         return loc._t('Penalty');
       }
     }
@@ -226,14 +223,16 @@ function getPlayerPaymentResult(
 
 function getPlayer(
   loc: I18nService,
-  player: Player,
+  player: PlayerInSession,
   wind: string,
   state: IAppState,
   dispatch: Dispatch
 ): PlayerProps {
   let pointsMode = PlayerPointsMode.IDLE; //todo check
   let points: number | string | undefined = player.score;
-  let penaltyPoints: number | undefined = player.penalties; //todo check
+  let penaltyPoints: number | undefined = state.sessionState?.penalties.find(
+    (p) => p.who === player.id
+  )?.amount;
   let inlineWind = true;
   let winButton: PlayerButtonProps | undefined = undefined;
   let loseButton: PlayerButtonProps | undefined = undefined;
@@ -258,10 +257,8 @@ function getPlayer(
         if (diffByPlayer) {
           points = player.score - diffByPlayer.score;
           if (points > 0) {
-            points = `+${points}`;
-          }
-          if (points > 0) {
             pointsMode = PlayerPointsMode.POSITIVE;
+            points = `+${points}`;
           } else if (points < 0) {
             pointsMode = PlayerPointsMode.NEGATIVE;
           } else {
@@ -300,13 +297,13 @@ function getPlayer(
       if (!selectedOutcome) {
         throw new Error('empty outcome');
       }
-      const hasWinButton = ['ron', 'tsumo', 'draw', 'nagashi'].includes(selectedOutcome);
-      const hasLoseButton = ['ron', 'chombo'].includes(selectedOutcome);
-      const hasRiichiButton = ['ron', 'tsumo', 'draw', 'abort', 'nagashi'].includes(
+      const hasWinButton = ['RON', 'TSUMO', 'DRAW', 'NAGASHI'].includes(selectedOutcome);
+      const hasLoseButton = ['RON', 'CHOMBO'].includes(selectedOutcome);
+      const hasRiichiButton = ['RON', 'TSUMO', 'DRAW', 'ABORT', 'NAGASHI'].includes(
         selectedOutcome
       );
 
-      showDeadButton = ['draw', 'nagashi'].includes(selectedOutcome) && deadPressed(state, player);
+      showDeadButton = ['DRAW', 'NAGASHI'].includes(selectedOutcome) && deadPressed(state, player);
 
       if (hasWinButton && !showDeadButton) {
         let winButtonMode: PlayerButtonMode;
@@ -382,7 +379,7 @@ function getPlayer(
       let hasPaoButton = false;
 
       switch (currentOutcome.selectedOutcome) {
-        case 'ron':
+        case 'RON':
           if (state.multironCurrentWinner === player.id) {
             points = loc._t('Winner');
             pointsMode = PlayerPointsMode.POSITIVE;
@@ -393,7 +390,7 @@ function getPlayer(
             hasPaoButton = true;
           }
           break;
-        case 'tsumo':
+        case 'TSUMO':
           if (currentOutcome.winner !== player.id) {
             hasPaoButton = true;
           } else {
@@ -423,7 +420,7 @@ function getPlayer(
   }
 
   return {
-    name: player.displayName,
+    name: player.title,
     wind: wind,
     points: points,
     penaltyPoints: penaltyPoints,
@@ -441,7 +438,7 @@ function getPlayer(
 
 function getTitleForOutcome(
   loc: I18nService,
-  selectedOutcome: OutcomeType | undefined,
+  selectedOutcome: RoundOutcome | undefined,
   currentScreen: AppScreen
 ): string | undefined {
   // todo add i18n
@@ -450,13 +447,14 @@ function getTitleForOutcome(
   }
 
   switch (selectedOutcome) {
-    case 'ron':
-    case 'tsumo':
+    case 'RON':
+    case 'MULTIRON':
+    case 'TSUMO':
       if (currentScreen === 'paoSelect') {
         return loc._t('Select pao');
       }
       break;
-    case 'nagashi':
+    case 'NAGASHI':
       if (currentScreen === 'playersSelect') {
         return loc._t('Select tempai');
       }
@@ -468,19 +466,20 @@ function getTitleForOutcome(
 }
 
 // todo replace with common selector
-export function getOutcomeName(loc: I18nService, selectedOutcome: OutcomeType): string {
+export function getOutcomeName(loc: I18nService, selectedOutcome: RoundOutcome): string {
   switch (selectedOutcome) {
-    case 'ron':
+    case 'RON':
+    case 'MULTIRON':
       return loc._t('Ron');
-    case 'tsumo':
+    case 'TSUMO':
       return loc._t('Tsumo');
-    case 'draw':
+    case 'DRAW':
       return loc._t('Draw');
-    case 'abort':
+    case 'ABORT':
       return loc._t('Abort');
-    case 'chombo':
+    case 'CHOMBO':
       return loc._t('Chombo');
-    case 'nagashi':
+    case 'NAGASHI':
       return loc._t('Nagashi');
   }
 }
@@ -512,7 +511,7 @@ export function getBottomPanel(loc: I18nService, state: IAppState, dispatch: Dis
 
   // todo simplify
   const nextClickHandler = () => {
-    if (state.currentScreen === 'paoSelect' && state.currentOutcome?.selectedOutcome === 'ron') {
+    if (state.currentScreen === 'paoSelect' && state.currentOutcome?.selectedOutcome === 'RON') {
       const nextPaoWinnerId = getNextWinnerWithPao(state, state.multironCurrentWinner);
       if (nextPaoWinnerId !== undefined) {
         return () =>
@@ -603,7 +602,7 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
       if (timeRemaining !== undefined) {
         showTimer = true;
         if (timeRemaining.minutes === 0 && timeRemaining.seconds === 0) {
-          gamesLeft = state.lastHandStarted ? 1 : 2;
+          gamesLeft = state.sessionState?.lastHandStarted ? 1 : 2;
         } else {
           currentTime = formatTime(timeRemaining.minutes, timeRemaining.seconds);
         }
@@ -618,9 +617,11 @@ export function getTableInfo(state: IAppState, dispatch: Dispatch): TableInfoPro
     showTimer,
     isAutostartTimer,
     gamesLeft,
-    round: roundToString(state.currentOtherTable?.currentRound ?? state.currentRound),
-    honbaCount: state.currentOtherTable?.honba ?? state.honba,
-    riichiCount: state.currentOtherTable?.riichiOnTable ?? state.riichiOnTable,
+    round: roundToString(
+      state.currentOtherTable?.state.roundIndex ?? state.sessionState?.roundIndex ?? 0
+    ),
+    honbaCount: state.currentOtherTable?.state.honbaCount ?? state.sessionState?.honbaCount ?? 0,
+    riichiCount: state.currentOtherTable?.state.riichiCount ?? state.sessionState?.riichiCount ?? 0,
     currentTime,
     tableNumber,
     onTableInfoToggle: onTableInfoToggle(state, dispatch),
@@ -650,48 +651,32 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
   const payments = changesOverview.payments;
 
   const result: paymentInfo[] = [];
-  const separator = '<-';
-  Object.keys(payments.direct || []).forEach((paymentItem) => {
-    const players = paymentItem.split(separator);
-
-    if (players.length === 2) {
-      const from = parseInt(players[1], 10);
-      const to = parseInt(players[0], 10);
-
-      const directAmount = payments.direct[paymentItem];
-
-      const invertedPayment = `${from}${separator}${to}`;
-      const invertedDirectAmount = payments.direct[invertedPayment];
-      if (directAmount !== invertedDirectAmount) {
-        const item = {
-          from: from,
-          to: to,
-          directAmount: directAmount,
-          riichiAmount: 0,
-          honbaAmount: 0,
-        };
-        result.push(item);
-      }
+  payments.direct.forEach((paymentItem) => {
+    if (paymentItem.from && paymentItem.to) {
+      const item = {
+        from: paymentItem.from,
+        to: paymentItem.to,
+        directAmount: paymentItem.amount,
+        riichiAmount: 0,
+        honbaAmount: 0,
+      };
+      result.push(item);
     }
   });
 
-  Object.keys(payments.riichi || []).forEach((paymentItem) => {
-    const players = paymentItem.split('<-');
-    const riichiAmount = payments.riichi[paymentItem];
-
-    if (players.length === 2 && riichiAmount !== 0) {
-      const from = players[1] ? parseInt(players[1], 10) : undefined;
-      const to = players[0] ? parseInt(players[0], 10) : undefined;
-
-      const currentArrow = result.find((arrow) => arrow.to === to && arrow.from === from);
+  payments.riichi.forEach((paymentItem) => {
+    if (paymentItem.to && paymentItem.from && paymentItem.amount !== 0) {
+      const currentArrow = result.find(
+        (arrow) => arrow.to === paymentItem.to && arrow.from === paymentItem.from
+      );
       if (currentArrow) {
-        currentArrow.riichiAmount = riichiAmount;
+        currentArrow.riichiAmount = paymentItem.amount;
       } else {
         const item = {
-          from: from,
-          to: to,
+          from: paymentItem.from,
+          to: paymentItem.to,
           directAmount: 0,
-          riichiAmount: riichiAmount,
+          riichiAmount: paymentItem.amount,
           honbaAmount: 0,
         };
         result.push(item);
@@ -699,17 +684,13 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
     }
   });
 
-  Object.keys(payments.honba || []).forEach((paymentItem) => {
-    const players = paymentItem.split('<-');
-    const honbaAmount = payments.honba[paymentItem];
-
-    if (players.length === 2 && honbaAmount !== 0) {
-      const from = parseInt(players[1], 10);
-      const to = parseInt(players[0], 10);
-
-      const currentArrow = result.find((arrow) => arrow.to === to && arrow.from === from);
+  payments.honba.forEach((paymentItem) => {
+    if (paymentItem.to && paymentItem.from && paymentItem.amount !== 0) {
+      const currentArrow = result.find(
+        (arrow) => arrow.to === paymentItem.to && arrow.from === paymentItem.from
+      );
       if (currentArrow) {
-        currentArrow.honbaAmount = honbaAmount;
+        currentArrow.honbaAmount = paymentItem.amount;
       }
     }
   });
@@ -718,10 +699,9 @@ function getPaymentsInfo(state: IAppState): paymentInfo[] {
 }
 
 export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
-  const changesOverview = state.changesOverview;
   if (
     state.currentScreen !== 'confirmation' ||
-    changesOverview === undefined ||
+    state.changesOverview === undefined ||
     state.loading.overview
   ) {
     return undefined;
@@ -733,20 +713,21 @@ export function getArrowsInfo(state: IAppState): ResultArrowsProps | undefined {
   // const paoPlayer = changesOverview.paoPlayer
 
   const paoPlayersByWinners: number[] = [];
-  if (changesOverview.paoPlayer) {
-    if (state.currentOutcome?.selectedOutcome === 'tsumo') {
-      if (state.currentOutcome.winner) {
-        paoPlayersByWinners[state.currentOutcome.winner] = changesOverview.paoPlayer;
-      }
-    } else if (state.currentOutcome?.selectedOutcome === 'ron') {
-      const wins = state.currentOutcome.wins;
-      Object.keys(wins).forEach((winnerKey) => {
-        const winner = wins[winnerKey];
-        if (winner.paoPlayerId && winner.winner) {
-          paoPlayersByWinners[winner.winner] = winner.paoPlayerId;
-        }
-      });
+  if (state.currentOutcome?.selectedOutcome === 'TSUMO') {
+    if (state.currentOutcome.winner && state.changesOverview.round.tsumo?.paoPlayerId) {
+      paoPlayersByWinners[state.currentOutcome.winner] =
+        state.changesOverview.round.tsumo?.paoPlayerId;
     }
+  }
+
+  if (state.currentOutcome?.selectedOutcome === 'RON') {
+    const wins = state.currentOutcome.wins;
+    Object.keys(wins).forEach((winnerKey) => {
+      const winner = wins[winnerKey];
+      if (winner.paoPlayerId && winner.winner) {
+        paoPlayersByWinners[winner.winner] = winner.paoPlayerId;
+      }
+    });
   }
 
   const payments = getPaymentsInfo(state);

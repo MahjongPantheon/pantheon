@@ -1,16 +1,16 @@
 import * as React from 'react';
 import './page-search-player.css';
 import { TopPanel } from '#/components/general/top-panel/TopPanel';
-import { LUser } from '#/interfaces/local';
+import { RegisteredPlayer } from '#/clients/atoms.pb';
 
 type IProps = {
-  users: LUser[];
-  onUserClick: (user: LUser) => void;
+  users: RegisteredPlayer[];
+  onUserClick: (user: RegisteredPlayer) => void;
   onBackClick: () => void;
 };
 
 type IState = {
-  foundUsers: LUser[];
+  foundUsers: RegisteredPlayer[];
 };
 
 export class SearchPlayerView extends React.PureComponent<IProps, IState> {
@@ -21,7 +21,7 @@ export class SearchPlayerView extends React.PureComponent<IProps, IState> {
 
   private onSearchChange(value: string) {
     const newUsers = this.props.users.filter((user) => {
-      return user.displayName.toLocaleLowerCase().includes(value.toLocaleLowerCase());
+      return user.title.toLocaleLowerCase().includes(value.toLocaleLowerCase());
     });
     this.setState({ foundUsers: newUsers });
   }
@@ -44,7 +44,7 @@ export class SearchPlayerView extends React.PureComponent<IProps, IState> {
               className='page-search-player__name'
               onClick={() => onUserClick(user)}
             >
-              {user.displayName}
+              {user.title}
             </div>
           ))}
         </div>

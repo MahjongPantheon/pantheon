@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, Store as ReduxStore, compose, Reducer } from 'redux';
 import { screenManageReducer } from './reducers/screenManageReducer';
 import { apiClient } from './middlewares/apiClient';
-import { RiichiApiService } from '#/services/riichiApi';
 import { mimirReducer } from './reducers/mimirReducer';
 import { outcomeReducer } from './reducers/outcomeReducer';
 import { analytics } from './middlewares/analytics';
@@ -43,9 +42,7 @@ export class Store {
       timerReducer,
     ]);
     const analyticsService = new Analytics();
-    const riichiService = storage.getTwirpEnabled()
-      ? new RiichiApiTwirpService()
-      : new RiichiApiService();
+    const riichiService = new RiichiApiTwirpService();
     const middleware = applyMiddleware(
       logging(`⇨ [middlewares]`),
       apiClient(riichiService),

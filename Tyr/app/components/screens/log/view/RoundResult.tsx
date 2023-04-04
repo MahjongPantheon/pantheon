@@ -46,7 +46,11 @@ export const RoundResult: React.FC<RoundResultProps> = (props) => {
       <div className='page-log__row'>
         <div className='page-log__cell page-log__cell--first'>{round}</div>
         {Object.keys(players).map((key) => (
-          <RoundResultCell key={key} delta={scoresDelta[key]} score={scores[key]} />
+          <RoundResultCell
+            key={key}
+            delta={scoresDelta.find((r) => r.playerId === parseInt(key, 10))?.score ?? 0}
+            score={scores.find((r) => r.playerId === parseInt(key, 10))?.score ?? 0}
+          />
         ))}
       </div>
       {children}

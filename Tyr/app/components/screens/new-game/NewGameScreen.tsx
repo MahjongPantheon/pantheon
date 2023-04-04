@@ -55,10 +55,10 @@ export class NewGameScreen extends React.PureComponent<IComponentProps> {
 
     return (
       <NewGameScreenView
-        east={state.newGameSelectedUsers[0].displayName}
-        south={state.newGameSelectedUsers[1].displayName}
-        west={state.newGameSelectedUsers[2].displayName}
-        north={state.newGameSelectedUsers[3].displayName}
+        east={state.newGameSelectedUsers[0].title}
+        south={state.newGameSelectedUsers[1].title}
+        west={state.newGameSelectedUsers[2].title}
+        north={state.newGameSelectedUsers[3].title}
         canSave={this.canSave}
         onBackClick={this.onBackClick.bind(this)}
         onShuffleClick={this.onShuffleClick.bind(this)}

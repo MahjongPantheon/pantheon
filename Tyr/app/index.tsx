@@ -20,10 +20,6 @@ if (window.location.search.startsWith('?clear')) {
 observe();
 registerFrontErrorHandler();
 
-if (storage.getTwirpEnabled()) {
-  document.body.className = 'betaLabel';
-}
-
 const i18nService = new I18nService(storage);
 const store = new Store(i18nService, storage);
 const root = createRoot(document.getElementById('tyr-root')!);

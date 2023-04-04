@@ -19,6 +19,7 @@
  */
 
 import { YakuId as Y } from './yaku';
+import { RoundOutcome } from '#/clients/atoms.pb';
 
 const handValues: [Y, number, number][] = [
   [Y.TOITOI, 2, 2],
@@ -78,10 +79,7 @@ handValues.forEach((item) => {
   }
 });
 
-export function getFixedFu(
-  yakuList: Y[],
-  outcome: 'ron' | 'tsumo' | 'chombo' | 'draw' | 'abort' | 'nagashi'
-): number[] {
+export function getFixedFu(yakuList: Y[], outcome: RoundOutcome): number[] {
   if (yakuList.includes(Y.CHIITOITSU)) {
     return [25];
   }
@@ -94,7 +92,7 @@ export function getFixedFu(
     return [20];
   }
 
-  if (outcome === 'ron' && !yakuList.includes(Y.__OPENHAND)) {
+  if (outcome === 'RON' && !yakuList.includes(Y.__OPENHAND)) {
     if (yakuList.includes(Y.PINFU)) {
       return [30];
     }
