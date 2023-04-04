@@ -6,7 +6,7 @@ import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
 import { GameConfig } from '#/clients/atoms.pb';
 import { useForm } from '@mantine/form';
-import { Container, Notification, NumberInput, Select, TextInput } from '@mantine/core';
+import { Container, NumberInput, Select, TextInput } from '@mantine/core';
 import {
   IconAlertOctagon,
   IconCircleCheck,
@@ -15,6 +15,7 @@ import {
   IconUserExclamation,
 } from '@tabler/icons-react';
 import { TopActionButton } from '#/helpers/TopActionButton';
+import { notifications } from '@mantine/notifications';
 
 export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
@@ -26,7 +27,6 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
   const [isLoading, setIsLoading] = useState(false);
   const [eventConfig, setEventConfig] = useState<null | GameConfig>(null);
   const [playersList, setPlayersList] = useState<Array<{ label: string; value: string }>>([]);
-  const [errorNotification, setErrorNotification] = useState('');
   usePageTitle(i18n._t('Edit event :: %1', [eventConfig?.eventTitle]));
 
   useEffect(() => {
@@ -45,37 +45,16 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
         );
       })
       .catch((err: Error) => {
-        setErrorNotification(err.message);
+        notifications.show({
+          title: i18n._t('Error has occurred'),
+          message: err.message,
+          color: 'red',
+        });
       })
       .finally(() => {
         setIsLoading(false);
       });
   }, [isLoggedIn]);
-
-  const submitForm = (vals: { player: number; amount: number; reason: string }) => {
-    if (!id) {
-      return;
-    }
-    setIsSaving(true);
-    setIsSaved(false);
-
-    api
-      .addPenaly(parseInt(id, 10), vals.player, vals.amount, vals.reason)
-      .then((r) => {
-        if (r) {
-          setIsSaved(true);
-          setTimeout(() => setIsSaved(false), 5000);
-        } else {
-          throw new Error(i18n._t('Failed to apply penalty: server error or network unreachable'));
-        }
-      })
-      .catch((err: Error) => {
-        setErrorNotification(err.message);
-      })
-      .finally(() => {
-        setIsSaving(false);
-      });
-  };
 
   const form = useForm({
     initialValues: {
@@ -91,6 +70,36 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
         value.trim() !== '' ? null : i18n._t('A reason for penalty is mandatory'),
     },
   });
+
+  const submitForm = (vals: { player: number; amount: number; reason: string }) => {
+    if (!id) {
+      return;
+    }
+    setIsSaving(true);
+    setIsSaved(false);
+
+    api
+      .addPenaly(parseInt(id, 10), vals.player, vals.amount, vals.reason)
+      .then((r) => {
+        if (r) {
+          setIsSaved(true);
+          setTimeout(() => setIsSaved(false), 5000);
+          form.reset();
+        } else {
+          throw new Error(i18n._t('Failed to apply penalty: server error or network unreachable'));
+        }
+      })
+      .catch((err: Error) => {
+        notifications.show({
+          title: i18n._t('Error has occurred'),
+          message: err.message,
+          color: 'red',
+        });
+      })
+      .finally(() => {
+        setIsSaving(false);
+      });
+  };
 
   return (
     <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
@@ -132,11 +141,6 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
             formRef.current?.requestSubmit();
           }}
         />
-        {!!errorNotification && (
-          <Notification color='red' title={i18n._t('Error has occurred')}>
-            {errorNotification}
-          </Notification>
-        )}
       </Container>
     </form>
   );

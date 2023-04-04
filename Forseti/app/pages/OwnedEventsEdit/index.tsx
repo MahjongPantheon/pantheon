@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRef, useContext, useEffect, useState } from 'react';
 import { authCtx } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
-import { Center, Container, LoadingOverlay, Stack, Tabs, Notification } from '@mantine/core';
+import { Center, Container, LoadingOverlay, Stack, Tabs } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
@@ -17,6 +17,7 @@ import { IconCircleCheck, IconDeviceFloppy, IconSettingsCheck } from '@tabler/ic
 import { EventCustom, FormFields } from '#/pages/OwnedEventsEdit/types';
 import { RulesetConfig } from '#/clients/atoms.pb';
 import { TopActionButton } from '#/helpers/TopActionButton';
+import { notifications } from '@mantine/notifications';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
@@ -31,7 +32,6 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   const [eventName, setEventName] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [errorNotification, setErrorNotification] = useState('');
 
   if (id) {
     usePageTitle(i18n._t('Edit event :: %1', [eventName]));
@@ -151,7 +151,11 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         }
       })
       .catch((err: Error) => {
-        setErrorNotification(err.message);
+        notifications.show({
+          title: i18n._t('Error has occurred'),
+          message: err.message,
+          color: 'red',
+        });
       })
       .finally(() => {
         setIsLoading(false);
@@ -174,7 +178,11 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         }
       })
       .catch((err: Error) => {
-        setErrorNotification(err.message);
+        notifications.show({
+          title: i18n._t('Error has occurred'),
+          message: err.message,
+          color: 'red',
+        });
       })
       .finally(() => {
         setIsSaving(false);
@@ -234,11 +242,6 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       <Center h='150px'>
         <IconSettingsCheck />
       </Center>
-      {!!errorNotification && (
-        <Notification color='red' title={i18n._t('Error has occurred')}>
-          {errorNotification}
-        </Notification>
-      )}
     </>
   );
 };

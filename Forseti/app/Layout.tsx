@@ -5,7 +5,6 @@ import {
   ActionIcon,
   AppShell,
   Burger,
-  Center,
   ColorScheme,
   ColorSchemeProvider,
   Header,
@@ -21,6 +20,7 @@ import { actionButtonCtx, actionButtonRef } from '#/hooks/actionButton';
 import { useApi } from '#/hooks/api';
 import { IconMoonStars, IconSun } from '@tabler/icons-react';
 import { useLocalStorage } from '@mantine/hooks';
+import { Notifications } from '@mantine/notifications';
 
 export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   // kludges. Dunno how to do better :[
@@ -54,7 +54,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     getInitialValueInEffect: true,
   });
   const toggleColorScheme = (value?: ColorScheme) =>
-    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+    setColorScheme(value ?? (colorScheme === 'dark' ? 'light' : 'dark'));
   const dark = colorScheme === 'dark';
 
   return (
@@ -121,6 +121,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
               }
             >
               {children}
+              <Notifications autoClose={4000} />
             </AppShell>
           </MantineProvider>
         </ColorSchemeProvider>
