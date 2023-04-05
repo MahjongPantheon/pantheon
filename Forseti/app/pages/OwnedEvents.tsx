@@ -8,7 +8,6 @@ import {
   ActionIcon,
   Tooltip,
   Avatar,
-  LoadingOverlay,
   Pagination,
   Space,
   Badge,
@@ -38,6 +37,7 @@ import type { Event } from '#/clients/atoms.pb';
 import { environment } from '#config';
 import { authCtx } from '#/hooks/auth';
 import { useDisclosure } from '@mantine/hooks';
+import { nprogress } from '@mantine/nprogress';
 
 export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: { page } }) => {
   const EVENTS_PERPAGE = 30;
@@ -64,37 +64,42 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
       setIsLoading(false);
       return;
     }
+    nprogress.reset();
+    nprogress.start();
     setIsLoading(true);
     Promise.all([
       api.getOwnedEventIds(storage.getPersonId()!),
       api.getSuperadminFlag(storage.getPersonId()!),
     ])
-      .then(([events, superadmin]) => {
+      .then(([eventsList, superadmin]) => {
         setIsSuperadmin(superadmin);
         const pageOffset = (currentPage - 1) * EVENTS_PERPAGE;
-        if (events.includes(-1)) {
+        if (eventsList.includes(-1)) {
           // -1 === global privileges
           api.getEvents(EVENTS_PERPAGE, pageOffset, false).then((resp) => {
             setEvents(resp.events);
             setTotalPages(Math.ceil(resp.total / EVENTS_PERPAGE));
             setIsLoading(false);
+            nprogress.complete();
           });
         } else {
-          const eventIds = events.slice(pageOffset, pageOffset + EVENTS_PERPAGE);
+          const eventIds = eventsList.slice(pageOffset, pageOffset + EVENTS_PERPAGE);
           api.getEventsById(eventIds).then((resp) => {
             setEvents(resp);
-            setTotalPages(Math.ceil(events.length / EVENTS_PERPAGE));
+            setTotalPages(Math.ceil(eventsList.length / EVENTS_PERPAGE));
             setIsLoading(false);
+            nprogress.complete();
           });
         }
       })
       .catch(() => {
         setIsLoading(false);
+        nprogress.complete();
       });
   }, [currentPage, auth]);
 
-  const setPage = useCallback((page: number) => {
-    setCurrentPage(page);
+  const setPage = useCallback((newpage: number) => {
+    setCurrentPage(newpage);
     loadPageData();
   }, []);
 
@@ -140,7 +145,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
     return <Redirect to='/profile/login' />;
   }
 
-  return (
+  return isLoading ? null : (
     <>
       <Modal opened={stopEventModalOpened} onClose={stopEventModalClose} size='auto' centered>
         <Text>
@@ -166,7 +171,6 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
         </Group>
       </Modal>
       <Container pos='relative' sx={{ minHeight: '400px' }}>
-        <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <Group position='right'>
           <Link to='/ownedEvents/new'>
             <Button>{i18n._t('Create new event')}</Button>
@@ -177,7 +181,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
           {events.map((event, idx) => {
             return (
               <Group
-                key={'ev_' + idx}
+                key={`ev_${idx}`}
                 style={{
                   padding: '10px',
                   backgroundColor:
@@ -235,13 +239,13 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </Avatar>
                     </Tooltip>
                   )}
-                  <a href={environment.guiUrl + '/eid' + event.id} target='_blank'>
+                  <a href={`${environment.guiUrl}/eid${event.id}`} target='_blank'>
                     {event.title}
                   </a>
                 </Group>
                 <Group>
                   {!event.finished && (
-                    <Link to={'/ownedEvents/edit/' + event.id}>
+                    <Link to={`/ownedEvents/edit/${event.id}`}>
                       <ActionIcon
                         variant='filled'
                         size='lg'
@@ -253,7 +257,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     </Link>
                   )}
                   {!event.finished && (
-                    <Link to={'/event/' + event.id + '/penalties'}>
+                    <Link to={`/event/${event.id}/penalties`}>
                       <ActionIcon
                         variant='filled'
                         size='lg'

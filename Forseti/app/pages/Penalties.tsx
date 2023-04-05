@@ -16,6 +16,7 @@ import {
 } from '@tabler/icons-react';
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
+import { nprogress } from '@mantine/nprogress';
 
 export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
@@ -33,6 +34,8 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
     if (!isLoggedIn || !id) {
       return;
     }
+    nprogress.reset();
+    nprogress.start();
     setIsLoading(true);
     Promise.all([api.getGameConfig(parseInt(id, 10)), api.getAllPlayers(parseInt(id, 10))])
       .then(([config, players]) => {
@@ -52,6 +55,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
         });
       })
       .finally(() => {
+        nprogress.complete();
         setIsLoading(false);
       });
   }, [isLoggedIn]);
@@ -101,7 +105,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
       });
   };
 
-  return (
+  return isLoading ? null : (
     <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
       <Container size='xs' px='xs'>
         <Select

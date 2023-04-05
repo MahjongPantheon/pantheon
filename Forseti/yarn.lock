@@ -1480,6 +1480,13 @@
     "@mantine/utils" "6.0.4"
     react-transition-group "4.4.2"
 
+"@mantine/nprogress@^6.0.6":
+  version "6.0.6"
+  resolved "https://registry.yarnpkg.com/@mantine/nprogress/-/nprogress-6.0.6.tgz#53563714a11838c43ab61636fc2485620f1c19e1"
+  integrity sha512-O+xfugRjznsfH9lb9809lAKNmKue1OzE8UTQd8xrTY1vwTkagYm2jcETl4YyZdMYnvKjbSfrCTcVLLddT/M9Hg==
+  dependencies:
+    "@mantine/utils" "6.0.6"
+
 "@mantine/styles@6.0.4":
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-6.0.4.tgz#c76db96cda89de271f1a1bfcdb328aa093d2cc5b"
@@ -1492,6 +1499,11 @@
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-6.0.4.tgz#e4a265bf135124915f4b218954c9a4533e392681"
   integrity sha512-oggRX3fC/tsoxEaxJ+3DhFpb4D4YeCg5XvueGsX3AuoHY87bypaI3JyvFbSIV8oLMW6B/heHNu6VPHVSnrim9A==
+
+"@mantine/utils@6.0.6":
+  version "6.0.6"
+  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-6.0.6.tgz#19bff743cf69c0c0b39664a633cb7827bc996833"
+  integrity sha512-Pd+ZTJ3maXb1zihZzHpo00XLwcKEg+ZGLPFG5vg/YafLDDWIhgV6snTFVKsPb2cunVjOwzbKcvlmCHXBe97mTQ==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"

@@ -21,6 +21,7 @@ import { useApi } from '#/hooks/api';
 import { IconMoonStars, IconSun } from '@tabler/icons-react';
 import { useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
+import { NavigationProgress } from '@mantine/nprogress';
 
 export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   // kludges. Dunno how to do better :[
@@ -69,6 +70,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
               fontFamily: 'IBM Plex Sans, Noto Sans Wind, Sans, serif',
             }}
           >
+            <NavigationProgress />
             <AppShell
               styles={{
                 main: {

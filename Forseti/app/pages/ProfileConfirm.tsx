@@ -23,15 +23,16 @@ export const ProfileConfirm: React.FC<{ params: { code: string } }> = ({ params:
         if (resp.personId) {
           setIsSuccess(true);
         }
-        setIsLoading(false);
       })
       .catch(() => {
         setIsSuccess(false);
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   }, []);
 
-  return (
+  return isLoading ? null : (
     <Container>
       {isLoading ? (
         <Center maw={400} h={100} mx='auto'>

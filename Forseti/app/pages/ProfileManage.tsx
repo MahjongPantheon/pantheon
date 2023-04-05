@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
-import { Box, Container, LoadingOverlay, Select, Space, TextInput } from '@mantine/core';
+import { Box, Container, Select, Space, TextInput } from '@mantine/core';
 import {
   IconCircleCheck,
   IconDeviceFloppy,
@@ -17,6 +17,7 @@ import { useApi } from '#/hooks/api';
 import { usePageTitle } from '#/hooks/pageTitle';
 import { useStorage } from '#/hooks/storage';
 import { TopActionButton } from '#/helpers/TopActionButton';
+import { nprogress } from '@mantine/nprogress';
 
 export const ProfileManage: React.FC = () => {
   const i18n = useI18n();
@@ -26,7 +27,7 @@ export const ProfileManage: React.FC = () => {
   const personId = storage.getPersonId()!;
   const formRef: React.RefObject<HTMLFormElement> = createRef();
   const [countries, setCountries] = useState<Array<{ value: string; label: string }>>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -91,6 +92,8 @@ export const ProfileManage: React.FC = () => {
   );
 
   useEffect(() => {
+    nprogress.reset();
+    nprogress.start();
     setIsLoading(true);
     api.getCountries().then((respCountries) => {
       setCountries(respCountries.countries.map((v) => ({ value: v.code, label: v.name })));
@@ -102,16 +105,16 @@ export const ProfileManage: React.FC = () => {
         form.setFieldValue('tenhouId', resp.tenhouId);
         form.setFieldValue('country', resp.country || respCountries.preferredByIp);
         setIsLoading(false);
+        nprogress.complete();
       });
     });
   }, [personId]);
 
-  return (
+  return isLoading ? null : (
     <>
       <Container size='xs' px='xs'>
         <Box pos='relative'>
           <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
-            <LoadingOverlay visible={isLoading} overlayBlur={2} />
             <TextInput
               disabled={true}
               icon={<IconMail size='1rem' />}

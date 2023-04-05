@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRef, useContext, useEffect, useState } from 'react';
 import { authCtx } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
-import { Center, Container, LoadingOverlay, Stack, Tabs } from '@mantine/core';
+import { Center, Container, Stack, Tabs } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
@@ -18,13 +18,14 @@ import { EventCustom, FormFields } from '#/pages/OwnedEventsEdit/types';
 import { RulesetConfig } from '#/clients/atoms.pb';
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
+import { nprogress } from '@mantine/nprogress';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
   const formRef: React.RefObject<HTMLFormElement> = createRef();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [timezones, setTimezones] = useState<Array<{ value: string; label: string }>>([]);
   const [rules, setRules] = useState<Array<{ value: string; label: string; rules: RulesetConfig }>>(
     []
@@ -131,6 +132,8 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
     if (!isLoggedIn) {
       return;
     }
+    nprogress.reset();
+    nprogress.start();
     setIsLoading(true);
     Promise.all([
       api.getRulesets(),
@@ -159,6 +162,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       })
       .finally(() => {
         setIsLoading(false);
+        nprogress.complete();
       });
   }, [isLoggedIn]);
 
@@ -189,10 +193,9 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       });
   };
 
-  return (
+  return isLoading ? null : (
     <>
       <Container pos='relative'>
-        <LoadingOverlay visible={isLoading} overlayBlur={2} />
         <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
           <Tabs defaultValue='basic'>
             <Tabs.List>
