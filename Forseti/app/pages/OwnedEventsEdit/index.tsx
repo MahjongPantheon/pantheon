@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRef, useContext, useEffect, useState } from 'react';
 import { authCtx } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
-import { Center, Container, Stack, Tabs } from '@mantine/core';
+import { Container, Stack, Tabs } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
@@ -13,12 +13,13 @@ import { TournamentSettings } from '#/pages/OwnedEventsEdit/TournamentSettings';
 import { OnlineSettings } from '#/pages/OwnedEventsEdit/OnlineSettings';
 import { RulesetSettings } from '#/pages/OwnedEventsEdit/RulesetSettings';
 import { YakuSettings } from '#/pages/OwnedEventsEdit/YakuSettings';
-import { IconCircleCheck, IconDeviceFloppy, IconSettingsCheck } from '@tabler/icons-react';
+import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
 import { EventCustom, FormFields } from '#/pages/OwnedEventsEdit/types';
 import { RulesetConfig } from '#/clients/atoms.pb';
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
+import { Filler } from '#/helpers/filler';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
@@ -198,7 +199,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       <Container pos='relative'>
         <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
           <Tabs defaultValue='basic'>
-            <Tabs.List>
+            <Tabs.List position='center'>
               <TabsList i18n={i18n} form={form} />
             </Tabs.List>
             <Tabs.Panel value='basic' pt='xs'>
@@ -242,9 +243,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
           />
         </form>
       </Container>
-      <Center h='150px'>
-        <IconSettingsCheck />
-      </Center>
+      <Filler h='150px' />
     </>
   );
 };

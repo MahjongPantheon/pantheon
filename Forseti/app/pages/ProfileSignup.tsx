@@ -77,7 +77,7 @@ export const ProfileSignup: React.FC = () => {
         <form onSubmit={form.onSubmit(submitForm)}>
           <TextInput
             icon={<IconMailQuestion size='1rem' />}
-            placeholder={i18n._t('Enter your e-mail address')}
+            description={i18n._t('Enter your e-mail address')}
             {...form.getInputProps('email')}
           />
           <Space h='md' />
@@ -90,7 +90,7 @@ export const ProfileSignup: React.FC = () => {
           />
           <Space h='md' />
           <PasswordInput
-            placeholder={i18n._t('Enter strong password')}
+            description={i18n._t('Enter strong password')}
             icon={<IconLock size='1rem' />}
             {...form.getInputProps('password')}
           />

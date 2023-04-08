@@ -13,15 +13,25 @@ import {
   GetTablesState,
   GetTimezones,
   RebuildScoring,
+  RegisterPlayer,
   ToggleHideResults,
   ToggleListed,
+  UnregisterPlayer,
   UpdateEvent,
+  UpdatePlayerReplacement,
+  UpdatePlayerSeatingFlag,
+  UpdatePlayersLocalIds,
+  UpdatePlayersTeams,
 } from '#/clients/mimir.pb';
 import {
+  AddRuleForPerson,
   ApproveRegistration,
   ApproveResetPassword,
   Authorize,
   ChangePassword,
+  DeleteRuleForPerson,
+  FindByTitle,
+  GetEventAdmins,
   GetOwnedEventIds,
   GetPersonalInfo,
   GetSuperadminFlag,
@@ -215,6 +225,10 @@ export class ApiService {
     return GetEventsById({ ids }, this._clientConfMimir).then((r) => r.events);
   }
 
+  getEventAdmins(eventId: number) {
+    return GetEventAdmins({ eventId }, this._clientConfFrey).then((r) => r.admins);
+  }
+
   rebuildScoring(eventId: number) {
     return RebuildScoring({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
@@ -268,9 +282,78 @@ export class ApiService {
     return GetGameConfig({ eventId }, this._clientConfMimir);
   }
 
-  addPenaly(eventId: number, playerId: number, amount: number, reason: string) {
+  addPenalty(eventId: number, playerId: number, amount: number, reason: string) {
     return AddPenalty({ eventId, playerId, amount, reason }, this._clientConfMimir).then(
       (r) => r.success
     );
+  }
+
+  updateSeatingFlag(playerId: number, eventId: number, ignoreSeating: boolean) {
+    return UpdatePlayerSeatingFlag(
+      { playerId, eventId, ignoreSeating },
+      this._clientConfMimir
+    ).then((r) => r.success);
+  }
+
+  registerPlayer(playerId: number, eventId: number) {
+    return RegisterPlayer({ eventId, playerId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  unregisterPlayer(playerId: number, eventId: number) {
+    return UnregisterPlayer({ eventId, playerId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  findByTitle(query: string) {
+    return FindByTitle({ query }, this._clientConfFrey).then((r) => r.persons);
+  }
+
+  addEventAdmin(playerId: number, eventId: number) {
+    return AddRuleForPerson(
+      {
+        personId: playerId,
+        eventId,
+        ruleName: 'ADMIN_EVENT',
+        ruleType: 'bool',
+        ruleValue: { boolValue: true },
+      },
+      this._clientConfFrey
+    ).then((r) => r.ruleId);
+  }
+
+  removeEventAdmin(ruleId: number) {
+    return DeleteRuleForPerson({ ruleId }, this._clientConfFrey).then((r) => r.success);
+  }
+
+  updatePlayerReplacement(playerId: number, eventId: number, replacementId: number) {
+    return UpdatePlayerReplacement(
+      { playerId, replacementId, eventId },
+      this._clientConfMimir
+    ).then((r) => r.success);
+  }
+
+  updateLocalIds(eventId: number, idMap: Record<number, number>) {
+    return UpdatePlayersLocalIds(
+      {
+        eventId,
+        idMap: Object.keys(idMap).map((k) => {
+          const playerId = typeof k === 'number' ? k : parseInt(k, 10);
+          return { playerId, localId: idMap[playerId] };
+        }),
+      },
+      this._clientConfMimir
+    ).then((r) => r.success);
+  }
+
+  updateTeamNames(eventId: number, teamMap: Record<number, string>) {
+    return UpdatePlayersTeams(
+      {
+        eventId,
+        teamNameMap: Object.keys(teamMap).map((k) => {
+          const playerId = typeof k === 'number' ? k : parseInt(k, 10);
+          return { playerId, teamName: teamMap[playerId] };
+        }),
+      },
+      this._clientConfMimir
+    ).then((r) => r.success);
   }
 }

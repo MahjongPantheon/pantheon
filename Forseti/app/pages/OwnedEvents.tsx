@@ -261,10 +261,22 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       <ActionIcon
                         variant='filled'
                         size='lg'
-                        color='blue'
+                        color='cyan'
                         title={i18n._t('Manage penalties')}
                       >
                         <IconAlertOctagon />
+                      </ActionIcon>
+                    </Link>
+                  )}
+                  {!event.finished && (
+                    <Link to={`/event/${event.id}/players`}>
+                      <ActionIcon
+                        variant='filled'
+                        size='lg'
+                        color='green'
+                        title={i18n._t('Manage players')}
+                      >
+                        <IconFriends />
                       </ActionIcon>
                     </Link>
                   )}

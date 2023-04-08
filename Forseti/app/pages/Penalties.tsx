@@ -83,7 +83,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
     setIsSaved(false);
 
     api
-      .addPenaly(parseInt(id, 10), vals.player, vals.amount, vals.reason)
+      .addPenalty(parseInt(id, 10), vals.player, vals.amount, vals.reason)
       .then((r) => {
         if (r) {
           setIsSaved(true);

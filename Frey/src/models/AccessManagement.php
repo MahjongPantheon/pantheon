@@ -290,7 +290,7 @@ class AccessManagementModel extends Model
      * @param int $personId
      * @param ?int $eventId
      *
-     * @return int|null
+     * @return int
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
@@ -301,6 +301,21 @@ class AccessManagementModel extends Model
 //        if (InternalRules::isInternal($ruleName)) {
 //            throw new InvalidParametersException('Rule name ' . $ruleName . ' is reserved for internal use');
 //        }
+
+        // Separate checks for add admin in the event
+        if ($ruleName === InternalRules::ADMIN_EVENT && $this->_authorizedPerson !== null) {
+            if ($personId === $this->_authorizedPerson->getId()) {
+                throw new AccessDeniedException('You are not allowed to add yourself to administrators in this event');
+            }
+            $hasAccess = $this->_authorizedPerson->getIsSuperadmin() || (
+                    !empty($this->_currentAccess[InternalRules::ADMIN_EVENT]) && $this->_currentAccess[InternalRules::ADMIN_EVENT] == true
+                );
+            if (!$hasAccess) {
+                throw new AccessDeniedException('You are not allowed to add anyone to administrators in this event');
+            }
+        } else {
+            $this->_checkAccessRightsWithInternal(InternalRules::ADD_RULE_FOR_PERSON, $eventId);
+        }
 
         $existingRules = $this->getPersonAccess($personId, $eventId);
         if (!empty($existingRules[$ruleName])) {
@@ -324,7 +339,7 @@ class AccessManagementModel extends Model
         $success = $rule->save();
 
         if (!$success) {
-            return null;
+            return 0;
         }
 
         return $rule->getId();
@@ -346,11 +361,6 @@ class AccessManagementModel extends Model
      */
     public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, ?int $eventId)
     {
-        // TODO: check again; looks like this should not be here.
-//        if (InternalRules::isInternal($ruleName)) {
-//            throw new InvalidParametersException('Rule name ' . $ruleName . ' is reserved for internal use');
-//        }
-
         $existingRules = $this->getGroupAccess($groupId, $eventId);
         if (!empty($existingRules[$ruleName])) {
             throw new DuplicateEntityException(
@@ -561,17 +571,24 @@ class AccessManagementModel extends Model
             throw new EntityNotFoundException('PersonRule with id #' . $ruleId . ' not found in DB', 408);
         }
 
-        if (empty($rules[0]->getEventId())) { // systemwide
-            $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_PERSON);
+        // Special checks for remove admin from event
+        if ($rules[0]->getAclName() === InternalRules::ADMIN_EVENT && $this->_authorizedPerson !== null) {
+            if ($rules[0]->getPersonId() === $this->_authorizedPerson->getId()) {
+                throw new AccessDeniedException('You are not allowed to remove yourself from administrators in this event');
+            }
+            $hasAccess = $this->_authorizedPerson->getIsSuperadmin() || (
+                !empty($this->_currentAccess[InternalRules::ADMIN_EVENT]) && $this->_currentAccess[InternalRules::ADMIN_EVENT] == true
+            );
+            if (!$hasAccess) {
+                throw new AccessDeniedException('You are not allowed to add anyone to administrators in this event');
+            }
         } else {
-            $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_PERSON, $rules[0]->getEventId());
+            if (empty($rules[0]->getEventId())) { // systemwide
+                $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_PERSON);
+            } else {
+                $this->_checkAccessRights(InternalRules::DELETE_RULE_FOR_PERSON, $rules[0]->getEventId());
+            }
         }
-
-        // TODO: check again; looks like this should not be here.
-//        if (InternalRules::isInternal($rules[0]->getAclName())) {
-//            throw new InvalidParametersException('Rule name ' . $rules[0]->getAclName()
-//                . ' is reserved for internal use, so it can not be deleted');
-//        }
 
         $rules[0]->drop();
     }

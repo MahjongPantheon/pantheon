@@ -1,0 +1,26 @@
+import * as React from 'react';
+import { useApi } from '#/hooks/api';
+import { useContext, useEffect, useState } from 'react';
+import { authCtx } from '#/hooks/auth';
+import { useI18n } from '#/hooks/i18n';
+import { usePageTitle } from '#/hooks/pageTitle';
+import { nprogress } from '@mantine/nprogress';
+
+export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
+  const api = useApi();
+  const { isLoggedIn } = useContext(authCtx);
+  const i18n = useI18n();
+  const [isLoading, setIsLoading] = useState(true);
+  usePageTitle(i18n._t('Manage players in event'));
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      return;
+    }
+    nprogress.reset();
+    nprogress.start();
+    setIsLoading(true);
+  });
+
+  return <></>;
+};

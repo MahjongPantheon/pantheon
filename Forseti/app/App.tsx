@@ -11,6 +11,7 @@ import { ProfileLogout } from '#/pages/ProfileLogout';
 import { OwnedEvents } from '#/pages/OwnedEvents';
 import { OwnedEventsEdit } from '#/pages/OwnedEventsEdit';
 import { Penalties } from '#/pages/Penalties';
+import { PlayersManage } from '#/pages/PlayersManage';
 // import { environment } from '#config';
 
 // const storage = new Storage(environment.cookieDomain);
@@ -39,6 +40,7 @@ export const App = () => {
       <Route path='/ownedEvents' component={OwnedEvents} />
 
       <Route path='/event/:id/penalties' component={Penalties} />
+      <Route path='/event/:id/players' component={PlayersManage} />
     </Switch>
   );
 };
