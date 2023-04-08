@@ -1,0 +1,24 @@
+Prerequisties:
+- Database name: frey / mimir
+- Database user: same as database name
+- Database password: pgpass
+
+Databases are expected to be clean before import. You may use `make pgadmin_start` to delete tables in DBs through pgAdmin GUI.
+
+Export:
+
+$ PGPASSWORD=pgpass pg_dump -U frey -h 127.0.0.1 -p 5532 frey > frey2.sql
+$ PGPASSWORD=pgpass pg_dump -U mimir -h 127.0.0.1 -p 5532 mimir > mimir2.sql
+
+Import: 
+
+$ PGPASSWORD=pgpass psql -U frey -h 127.0.0.1 -p 5532 frey < frey2.sql
+$ PGPASSWORD=pgpass psql -U mimir -h 127.0.0.1 -p 5532 mimir < mimir2.sql
+
+SQL statements to depersonalize dump:
+
+UPDATE person SET email = concat(round(10000000 / random()), '@test.com')
+UPDATE person SET auth_hash = '', auth_salt = '', auth_reset_token = '', tenhou_id = '', phone = '', city= ''
+UPDATE person SET title = concat('Player', round(10000000 / random()))
+DELETE from registrant
+
