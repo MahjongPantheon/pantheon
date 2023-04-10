@@ -86,7 +86,7 @@ class FreyClientMock implements IFreyClient
     {
         if ($personId === 1) {
             return [
-                FreyClient::PRIV_ADMIN_EVENT => true
+                'ADMIN_EVENT' => true
             ];
         }
         return [];

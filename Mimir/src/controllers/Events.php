@@ -43,7 +43,7 @@ class EventsController extends Controller
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
      * @param int $autostartTimer Interval before games autostart
-     * @param RulesetConfig $rulesetConfig
+     * @param ?RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -65,13 +65,17 @@ class EventsController extends Controller
     ) {
         $this->_log->info('Creating new event...');
 
+        if (empty($rulesetConfig)) {
+            throw new BadActionException('Ruleset configuration must be supplied');
+        }
+
         // Check we have rights to create new event
-        if (!$this->_meta->getCurrentPersonId() || !$this->_meta->getAccessRuleValue(FreyClient::PRIV_CREATE_EVENT)) {
+        if (!$this->_meta->getCurrentPersonId() || !$this->_meta->getAccessRuleValue('CREATE_EVENT')) {
             throw new BadActionException("You don't have enough privileges to create new event");
         }
 
         if (!in_array($type, ['club', 'tournament', 'online'])) {
-            throw new BadActionException(' Unsupported type of event requested');
+            throw new BadActionException('Unsupported type of event requested');
         }
 
         /** @phpstan-ignore-next-line */
@@ -157,7 +161,7 @@ class EventsController extends Controller
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
      * @param int $autostartTimer Interval before games are started automatically
-     * @param RulesetConfig $rulesetConfig
+     * @param ?RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -178,6 +182,10 @@ class EventsController extends Controller
         $rulesetConfig
     ) {
         $this->_log->info('Updating event with id #' . $id);
+
+        if (empty($rulesetConfig)) {
+            throw new BadActionException('Ruleset configuration must be supplied');
+        }
 
         $event = EventPrimitive::findById($this->_ds, [$id]);
         if (empty($event)) {

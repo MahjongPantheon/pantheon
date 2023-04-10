@@ -17,7 +17,6 @@ require_once __DIR__ . '/controllers/Auth.php';
 
 /**
  * Thin mediator between new twirp API and existing controllers
- * This should replace controllers and json-rpc api if everything goes well.
  */
 final class TwirpServer implements Frey
 {

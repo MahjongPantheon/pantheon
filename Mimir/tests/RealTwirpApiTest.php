@@ -330,9 +330,8 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             ->setDuration(75)
             ->setIsPrescripted(false)
             ->setIsTeam(false)
-            ->setRuleset('ema')
-            ->setRulesetChanges('')
             ->setSeriesLength(3)
+            ->setRulesetConfig(\Common\Ruleset::instance('ema')->rules())
             ->setTimezone('Asia/Novisibirsk'))->getEventId();
 
         $event = EventPrimitive::findById($this->_ds, [$id])[0];
@@ -370,8 +369,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
                 ->setDuration(75)
                 ->setIsPrescripted(false)
                 ->setIsTeam(false)
-                ->setRuleset('ema')
-                ->setRulesetChanges('')
+                ->setRulesetConfig(\Common\Ruleset::instance('ema')->rules())
                 ->setSeriesLength(3)
                 ->setTimezone('Asia/Novisibirsk')))->getSuccess();
 

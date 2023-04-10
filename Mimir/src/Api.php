@@ -23,7 +23,6 @@ require_once __DIR__ . '/DataSource.php';
 require_once __DIR__ . '/Db.php';
 require_once __DIR__ . '/Meta.php';
 require_once __DIR__ . '/ErrorHandler.php';
-require_once __DIR__ . '/FreyClient.php';
 require_once __DIR__ . '/FreyClientTwirp.php';
 
 use Monolog\Logger;
@@ -76,29 +75,18 @@ class Api
         if ($freyUrl === '__mock__') { // testing purposes
             $this->_frey = new FreyClientMock('');
         } else {
-            if ($this->_storage->getTwirpEnabled()) {
-                $this->_frey = new FreyClientTwirp($freyUrl);
-            } else {
-                $this->_frey = new FreyClient($freyUrl);
-            }
+            $this->_frey = new FreyClientTwirp($freyUrl);
         }
         $this->_ds = new DataSource($this->_db, $this->_frey);
         $this->_meta = new Meta($this->_frey, $this->_storage, $this->_config, $_SERVER);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 
-        if ($this->_storage->getTwirpEnabled()) {
-            // @phpstan-ignore-next-line
-            $this->_frey->withHeaders([
-                'X-Twirp' => 'true',
-                'X-Locale' => $this->_meta->getSelectedLocale()
-            ]);
-        } else {
-            // @phpstan-ignore-next-line
-            $this->_frey->getClient()->getHttpClient()->withHeaders([
-                'X-Locale: ' . $this->_meta->getSelectedLocale(),
-            ]);
-        }
+        // @phpstan-ignore-next-line
+        $this->_frey->withHeaders([
+            'X-Twirp' => 'true',
+            'X-Locale' => $this->_meta->getSelectedLocale()
+        ]);
 
         // + some custom handler for testing errors
         if ($this->_config->getBooleanValue('verbose')) {

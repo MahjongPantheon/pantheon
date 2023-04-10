@@ -290,7 +290,7 @@ class AccessManagementModel extends Model
      * @param int $personId
      * @param ?int $eventId
      *
-     * @return int
+     * @return ?int
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception

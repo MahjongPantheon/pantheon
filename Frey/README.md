@@ -20,7 +20,7 @@ Frey is a simple authentication service with abilities of personal data storage.
 
 ### Technologies of Frey
 
-- Frey uses JSON-RPC to communicate with clients.
+- Frey uses Twirp protocol to communicate with clients.
 - PostgreSQL v12+ and PHP v8.0+ are required to run Frey in standalone mode.
 - Nginx is the recommended web server to run Frey. See *nginx.example.conf* file for typical installation nginx config.
 - [Api doc here](APIDOC.md)
