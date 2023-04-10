@@ -37,6 +37,7 @@ final class TwirpServer implements Frey
     {
         $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
         $this->_config = new Config($cfgPath);
+        date_default_timezone_set((string)$this->_config->getValue('serverDefaultTimezone'));
         $this->_db = new Db($this->_config);
         $storage = new \Common\Storage($this->_config->getValue('cookieDomain'));
         $this->_meta = new Meta($storage, $_SERVER);

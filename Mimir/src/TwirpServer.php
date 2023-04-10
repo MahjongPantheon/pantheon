@@ -175,6 +175,7 @@ final class TwirpServer implements Mimir
     {
         $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
         $this->_config = new Config($cfgPath);
+        date_default_timezone_set($this->_config->getStringValue('serverDefaultTimezone'));
         $this->_storage = new \Common\Storage($this->_config->getStringValue('cookieDomain'));
         $this->_db = new Db($this->_config);
         $freyUrl = $this->_config->getStringValue('freyUrl');
