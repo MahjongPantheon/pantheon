@@ -5,7 +5,6 @@ namespace Mimir;
 use Twirp\Context;
 use Common\RuleListItemEx;
 
-require_once __DIR__ . '/HttpClient.php';
 require_once __DIR__ . '/interfaces/IFreyClient.php';
 
 /**

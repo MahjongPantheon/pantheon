@@ -83,6 +83,7 @@ class BasicSeeder extends AbstractSeed
      */
     protected function _seedPersons(\Frey\Db $db, \Frey\Config $config, \Frey\Meta $meta, $groupIds, $superAdminId)
     {
+        $_SERVER['HTTP_X_DEBUG_TOKEN'] = 'CHANGE_ME';
         $model = new \Frey\AccountModel($db, $config, $meta);
         $groupModel = new \Frey\GroupsModel($db, $config, $meta);
         $adminIds = [$superAdminId];
@@ -197,6 +198,7 @@ class BasicSeeder extends AbstractSeed
      */
     protected function _seedPersonAccess(\Frey\Db $db, \Frey\Config $config, $personIds)
     {
+        $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] = 'CHANGE_ME_INTERNAL';
         $meta = new \Frey\Meta(new \Common\Storage('localhost'), $_SERVER);
         $model = new \Frey\AccessManagementModel($db, $config, $meta);
 
@@ -229,7 +231,8 @@ class BasicSeeder extends AbstractSeed
                 ]
             ],
             'admin'     => [
-                'debug_token' => '2-839489203hf2893'
+                'debug_token' => 'CHANGE_ME',
+                'internalQuerySecret' => 'CHANGE_ME_INTERNAL'
             ],
             'testing_token' => '',
             'routes'    => require __DIR__ . '/../../config/routes.php',

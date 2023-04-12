@@ -72,6 +72,7 @@ class AccountModel extends Model
         if ($token === $this->_config->getValue('admin.debug_token') && $token === 'CHANGE_ME') {
             $content = file_get_contents('/tmp/frey_tokens_debug') ?: '';
             $url = getenv('RHEDA_URL');
+            @chmod('/tmp/frey_tokens_debug', 0777);
             file_put_contents('/tmp/frey_tokens_debug', $content .
                 "New user: $title (impersonate: {$url}/profile/impersonate/{$person->getId()}/{$tokens['client_hash']} )" . PHP_EOL);
         }

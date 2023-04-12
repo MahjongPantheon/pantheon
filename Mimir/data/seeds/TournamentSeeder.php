@@ -8,6 +8,7 @@ require_once __DIR__ . '/../../src/primitives/PlayerHistory.php';
 require_once __DIR__ . '/../textlogImport/Model.php';
 require_once __DIR__ . '/../../src/Db.php';
 require_once __DIR__ . '/../../src/Meta.php';
+require_once __DIR__ . '/../../src/FreyClientTwirp.php';
 require_once __DIR__ . '/../../src/Ruleset.php';
 
 class TournamentSeeder extends AbstractSeed
@@ -124,7 +125,7 @@ class TournamentSeeder extends AbstractSeed
                 ]
             ],
             'admin'     => [
-                'debug_token' => '2-839489203hf2893'
+                'debug_token' => 'CHANGE_ME'
             ],
             'routes'    => require __DIR__ . '/../../config/routes.php',
             'freyUrl'   => getenv('FREY_URL'),
@@ -137,9 +138,10 @@ class TournamentSeeder extends AbstractSeed
         ]);
 
         $db = new \Mimir\Db($cfg);
-        $frey = new \Mimir\FreyClient($cfg->getStringValue('freyUrl'));
-        $frey->getClient()->getHttpClient()->withHeaders([
-            'X-Debug-Token: CHANGE_ME',
+        $frey = new \Mimir\FreyClientTwirp($cfg->getStringValue('freyUrl'));
+        $frey->withHeaders([
+            'X-Internal-Query-Secret' => 'CHANGE_ME_INTERNAL',
+            'X-Debug-Token' => 'CHANGE_ME'
         ]);
         return [new \Mimir\DataSource($db, $frey), $cfg];
     }
