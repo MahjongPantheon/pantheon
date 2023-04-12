@@ -27,6 +27,7 @@ import {
   IconTournament,
   IconNetwork,
   IconAlertOctagon,
+  IconOlympics,
 } from '@tabler/icons-react';
 import { Link, Redirect } from 'wouter';
 import { useApi } from '#/hooks/api';
@@ -245,6 +246,18 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                 </Group>
                 <Group>
                   {!event.finished && (
+                    <Link to={`/event/${event.id}/games`}>
+                      <ActionIcon
+                        variant='filled'
+                        size='lg'
+                        color='yellow'
+                        title={i18n._t('Manage current games')}
+                      >
+                        <IconOlympics />
+                      </ActionIcon>
+                    </Link>
+                  )}
+                  {!event.finished && (
                     <Link to={`/ownedEvents/edit/${event.id}`}>
                       <ActionIcon
                         variant='filled'
@@ -280,7 +293,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </ActionIcon>
                     </Link>
                   )}
-                  {!event.finished && !!isSuperadmin && (
+                  {!event.finished && isSuperadmin && (
                     <ActionIcon
                       title={i18n._t('Rebuild scoring')}
                       loading={scoringLoading[event.id]}

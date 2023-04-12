@@ -241,9 +241,9 @@ final class TwirpServer implements Mimir
     protected static function _toIntArray($csepStringOrArray): array
     {
         if (is_string($csepStringOrArray)) {
-            return array_map('intval', explode(',', $csepStringOrArray));
+            return array_unique(array_filter(array_map('intval', explode(',', $csepStringOrArray))));
         } else {
-            return array_map('intval', $csepStringOrArray);
+            return array_unique(array_filter(array_map('intval', $csepStringOrArray)));
         }
     }
 

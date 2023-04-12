@@ -1,7 +1,10 @@
 import { environment } from '#config';
 import {
   AddPenalty,
+  CancelGame,
   CreateEvent,
+  DefinalizeGame,
+  DropLastRound,
   FinishEvent,
   GetAllRegisteredPlayers,
   GetCountries,
@@ -41,7 +44,7 @@ import {
   UpdatePersonalInfo,
 } from '#/clients/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
-import { EventData, IntermediateResultOfSession, SessionStatus } from '#/clients/atoms.pb';
+import { EventData } from '#/clients/atoms.pb';
 import { handleReleaseTag } from '#/services/releaseTags';
 
 export class ApiService {
@@ -94,49 +97,8 @@ export class ApiService {
     );
   }
 
-  private static fromScores(scores: IntermediateResultOfSession[]): Record<number, number> {
-    return scores.reduce((acc, val) => {
-      acc[val.playerId] = val.score;
-      return acc;
-    }, {} as Record<number, number>);
-  }
-
-  _fromTableStatus(status: string): string {
-    return (
-      {
-        [SessionStatus.PLANNED]: 'planned',
-        [SessionStatus.INPROGRESS]: 'inprogress',
-        [SessionStatus.PREFINISHED]: 'prefinished',
-        [SessionStatus.FINISHED]: 'finished',
-        [SessionStatus.CANCELLED]: 'cancelled',
-      }[status] ?? ''
-    );
-  }
-
   getTablesState(eventId: number) {
-    return GetTablesState({ eventId }, this._clientConfMimir).then((v) =>
-      v.tables
-        .filter((t) => t.status === SessionStatus.INPROGRESS)
-        .map((table) => ({
-          ...table,
-          status: this._fromTableStatus(table.status),
-          penalties: table.penaltyLog,
-          // last_round_detailed: table.lastRound ? this._fromRound(table.lastRound) : null,
-          scores: ApiService.fromScores(table.scores),
-          hash: table.sessionHash,
-          currentRound: table.currentRoundIndex,
-          players: table.players.map((user) => ({
-            ...user,
-            tenhouId: '', // TODO?
-            displayName: user.title,
-            score: table.scores.find((s) => s.playerId === user.id)?.score ?? 0,
-            penalties: table.penaltyLog.reduce(
-              (acc, pen) => (pen.who === user.id ? acc + pen.amount : acc),
-              0
-            ),
-          })),
-        }))
-    );
+    return GetTablesState({ eventId }, this._clientConfMimir).then((v) => v.tables);
   }
 
   quickAuthorize() {
@@ -355,5 +317,17 @@ export class ApiService {
       },
       this._clientConfMimir
     ).then((r) => r.success);
+  }
+
+  cancelLastRound(sessionHash: string) {
+    return DropLastRound({ sessionHash }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  cancelGame(sessionHash: string) {
+    return CancelGame({ sessionHash }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  definalizeGame(sessionHash: string) {
+    return DefinalizeGame({ sessionHash }, this._clientConfMimir).then((r) => r.success);
   }
 }

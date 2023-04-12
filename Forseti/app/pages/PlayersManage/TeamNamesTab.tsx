@@ -14,7 +14,7 @@ import {
   TextInput,
 } from '@mantine/core';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
-import { makeColor, makeInitials } from '#/pages/PlayersManage/util';
+import { makeColor, makeInitials } from '#/helpers/playersList';
 import { useCallback, useState } from 'react';
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';

@@ -12,6 +12,7 @@ import { OwnedEvents } from '#/pages/OwnedEvents';
 import { OwnedEventsEdit } from '#/pages/OwnedEventsEdit';
 import { Penalties } from '#/pages/Penalties';
 import { PlayersManage } from '#/pages/PlayersManage';
+import { GamesControl } from '#/pages/GamesControl';
 // import { environment } from '#config';
 
 // const storage = new Storage(environment.cookieDomain);
@@ -41,6 +42,8 @@ export const App = () => {
 
       <Route path='/event/:id/penalties' component={Penalties} />
       <Route path='/event/:id/players' component={PlayersManage} />
+
+      <Route path='/event/:id/games' component={GamesControl} />
     </Switch>
   );
 };
@@ -65,25 +68,10 @@ export const App = () => {
     '/games/(?<action>definalize)/(?<hash>[0-9a-f]+)'      => 'GamesControlPanel',
     '/games/(?<action>cancelGame)/(?<hash>[0-9a-f]+)'      => 'GamesControlPanel',
 
-    '/penalties'       => 'Penalties',
-    '/penalties/(?<action>apply)' => 'Penalties',
 
     '!/signupAdmin'                         => 'PersonSignupAdministrative',
     '!/profile/(?<action>impersonate)/(?<id>\d+)/(?<token>[a-f0-9]+)' => 'PersonLogin',
     '!/passwordRecovery'                    => 'PersonRecoverPassword',
     '!/passwordRecovery/(?<code>[0-9a-f]+)/(?<email>[a-z0-9_.@-]+)' => 'PersonRecoverPassword',
-
-    '!/cp/(?<action>editEventAdmins)/(?<id>\d+)'  => 'UserActionEventEditPrivileges',
-
-    // 2nd stage
-
-    '!/privileges'                  => 'Privileges',
-    '!/privileges/uid(?<id>\d+)'    => 'PrivilegesOfUser',
-    '!/privileges/eid(?<id>\d+)'    => 'PrivilegesOfEvent',
-    '!/privileges/gid(?<id>\d+)'    => 'PrivilegesOfGroup',
-    '!/groups/uid(?<id>\d+)'        => 'GroupsOfUser',
-    '!/groups/gid(?<id>\d+)'        => 'GroupList',
-
-    '!/privileges/ajax'             => 'PrivilegesAjax',
 
  */

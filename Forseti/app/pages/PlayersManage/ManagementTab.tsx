@@ -28,7 +28,7 @@ import {
 } from '@tabler/icons-react';
 import { PlayerSelector } from '#/pages/PlayersManage/PlayerSelector';
 import { useDisclosure } from '@mantine/hooks';
-import { makeColor, makeInitials } from '#/pages/PlayersManage/util';
+import { makeColor, makeInitials } from '#/helpers/playersList';
 import { Filler } from '#/helpers/filler';
 import { useStorage } from '#/hooks/storage';
 
