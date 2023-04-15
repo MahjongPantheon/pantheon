@@ -44,7 +44,7 @@ import {
   UpdatePersonalInfo,
 } from '#/clients/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
-import { EventData } from '#/clients/atoms.pb';
+import { EventData, IntermediateResultOfSession } from '#/clients/atoms.pb';
 import { handleReleaseTag } from '#/services/releaseTags';
 
 export class ApiService {
@@ -319,8 +319,10 @@ export class ApiService {
     ).then((r) => r.success);
   }
 
-  cancelLastRound(sessionHash: string) {
-    return DropLastRound({ sessionHash }, this._clientConfMimir).then((r) => r.success);
+  cancelLastRound(sessionHash: string, intermediateResults: IntermediateResultOfSession[]) {
+    return DropLastRound({ sessionHash, intermediateResults }, this._clientConfMimir).then(
+      (r) => r.success
+    );
   }
 
   cancelGame(sessionHash: string) {

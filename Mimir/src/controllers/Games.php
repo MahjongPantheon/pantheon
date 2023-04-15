@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\IntermediateResultOfSession;
+
 require_once __DIR__ . '/../models/InteractiveSession.php';
 require_once __DIR__ . '/../models/PenaltySession.php';
 require_once __DIR__ . '/../models/OnlineSession.php';
@@ -50,13 +52,15 @@ class GamesController extends Controller
      * For interactive mode (tournaments), and only for administrative purposes
      *
      * @param string $gameHashcode
+     * @param IntermediateResultOfSession[] $intermediateResults
      * @throws \Exception
      * @return bool Success?
      */
-    public function dropLastRound($gameHashcode)
+    public function dropLastRound($gameHashcode, $intermediateResults)
     {
         $this->_log->info('Dropping last round from session #' . $gameHashcode);
-        $success = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))->dropLastRound($gameHashcode);
+        $success = (new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta))
+            ->dropLastRound($gameHashcode, $intermediateResults);
         $this->_log->info('Successfully dropped last round from session #' . $gameHashcode);
         return $success;
     }

@@ -317,6 +317,7 @@ export interface Games_CancelGame_Payload {
 
 export interface Games_DropLastRound_Payload {
   sessionHash: string;
+  intermediateResults: atoms.IntermediateResultOfSession[];
 }
 
 export interface Games_DefinalizeGame_Payload {
@@ -7710,6 +7711,7 @@ export const Games_DropLastRound_Payload = {
   initialize: function (): Games_DropLastRound_Payload {
     return {
       sessionHash: "",
+      intermediateResults: [],
     };
   },
 
@@ -7722,6 +7724,13 @@ export const Games_DropLastRound_Payload = {
   ): BinaryWriter {
     if (msg.sessionHash) {
       writer.writeString(1, msg.sessionHash);
+    }
+    if (msg.intermediateResults?.length) {
+      writer.writeRepeatedMessage(
+        2,
+        msg.intermediateResults as any,
+        atoms.IntermediateResultOfSession._writeMessage
+      );
     }
     return writer;
   },
@@ -7738,6 +7747,12 @@ export const Games_DropLastRound_Payload = {
       switch (field) {
         case 1: {
           msg.sessionHash = reader.readString();
+          break;
+        }
+        case 2: {
+          const m = atoms.IntermediateResultOfSession.initialize();
+          reader.readMessage(m, atoms.IntermediateResultOfSession._readMessage);
+          msg.intermediateResults.push(m);
           break;
         }
         default: {
@@ -13080,6 +13095,7 @@ export const Games_DropLastRound_PayloadJSON = {
   initialize: function (): Games_DropLastRound_Payload {
     return {
       sessionHash: "",
+      intermediateResults: [],
     };
   },
 
@@ -13092,6 +13108,11 @@ export const Games_DropLastRound_PayloadJSON = {
     const json: Record<string, unknown> = {};
     if (msg.sessionHash) {
       json["sessionHash"] = msg.sessionHash;
+    }
+    if (msg.intermediateResults?.length) {
+      json["intermediateResults"] = msg.intermediateResults.map(
+        atoms.IntermediateResultOfSessionJSON._writeMessage
+      );
     }
     return json;
   },
@@ -13106,6 +13127,14 @@ export const Games_DropLastRound_PayloadJSON = {
     const _sessionHash_ = json["sessionHash"];
     if (_sessionHash_) {
       msg.sessionHash = _sessionHash_;
+    }
+    const _intermediateResults_ = json["intermediateResults"];
+    if (_intermediateResults_) {
+      for (const item of _intermediateResults_) {
+        const m = atoms.IntermediateResultOfSession.initialize();
+        atoms.IntermediateResultOfSessionJSON._readMessage(m, item);
+        msg.intermediateResults.push(m);
+      }
     }
     return msg;
   },

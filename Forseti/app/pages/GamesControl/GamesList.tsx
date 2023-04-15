@@ -1,4 +1,11 @@
-import { GameConfig, RegisteredPlayer, Round, SessionStatus, TableState } from '#/clients/atoms.pb';
+import {
+  GameConfig,
+  IntermediateResultOfSession,
+  RegisteredPlayer,
+  Round,
+  SessionStatus,
+  TableState,
+} from '#/clients/atoms.pb';
 import {
   ActionIcon,
   Avatar,
@@ -19,8 +26,7 @@ import {
   IconAlarm,
   IconArrowBackUp,
   IconArrowRight,
-  IconSquareRoundedCheck,
-  IconSquareRoundedCheckFilled,
+  IconFileCheck,
   IconTrashX,
   IconX,
 } from '@tabler/icons-react';
@@ -34,7 +40,7 @@ import { useI18n } from '#/hooks/i18n';
 type GamesListProps = {
   tablesState: TableState[];
   eventConfig: GameConfig | null;
-  onCancelLastRound: (hash: string) => void;
+  onCancelLastRound: (hash: string, intermediateResults: IntermediateResultOfSession[]) => void;
   onRemoveGame: (hash: string) => void;
   onDefinalizeGame: (hash: string) => void;
 };
@@ -156,7 +162,7 @@ export function GamesList({
                     warning={i18n._t("This action can't be undone. Continue?")}
                     color='orange'
                     onConfirm={() => {
-                      onCancelLastRound(t.sessionHash);
+                      onCancelLastRound(t.sessionHash, t.scores);
                     }}
                     i18n={i18n}
                   />
@@ -277,7 +283,7 @@ function getBadge(status: SessionStatus, i18n: I18nService) {
           size='lg'
           title={i18n._t('Session finished, but not confirmed')}
         >
-          <IconSquareRoundedCheck />
+          <IconFileCheck />
         </ActionIcon>
       );
     case 'FINISHED':
@@ -289,7 +295,7 @@ function getBadge(status: SessionStatus, i18n: I18nService) {
           size='lg'
           title={i18n._t('Session finished')}
         >
-          <IconSquareRoundedCheckFilled />
+          <IconFileCheck />
         </ActionIcon>
       );
     case 'CANCELLED':

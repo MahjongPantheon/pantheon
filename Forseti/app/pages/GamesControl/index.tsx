@@ -4,7 +4,7 @@ import { authCtx } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
 import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
-import { GameConfig, TableState } from '#/clients/atoms.pb';
+import { GameConfig, IntermediateResultOfSession, TableState } from '#/clients/atoms.pb';
 import { Container } from '@mantine/core';
 
 import { notifications } from '@mantine/notifications';
@@ -47,10 +47,10 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   }, [isLoggedIn]);
 
   const onCancelRound = useCallback(
-    (sessionHash: string) => {
+    (sessionHash: string, intermediateResults: IntermediateResultOfSession[]) => {
       if (!id) return;
       api
-        .cancelLastRound(sessionHash)
+        .cancelLastRound(sessionHash, intermediateResults)
         .then((r) => {
           if (!r) throw new Error(i18n._t('Failed to cancel round'));
         })

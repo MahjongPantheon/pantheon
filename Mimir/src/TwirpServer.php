@@ -1509,7 +1509,10 @@ final class TwirpServer implements Mimir
     public function DropLastRound(array $ctx, Games_DropLastRound_Payload $req): Generic_Success_Response
     {
         return (new Generic_Success_Response())
-            ->setSuccess($this->_gamesController->dropLastRound($req->getSessionHash()));
+            ->setSuccess($this->_gamesController->dropLastRound(
+                $req->getSessionHash(),
+                iterator_to_array($req->getIntermediateResults())
+            ));
     }
 
     /**

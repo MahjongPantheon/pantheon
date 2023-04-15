@@ -17,6 +17,10 @@ class Games_DropLastRound_Payload extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string sessionHash = 1;</code>
      */
     protected $sessionHash = '';
+    /**
+     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession intermediateResults = 2;</code>
+     */
+    private $intermediateResults;
 
     /**
      * Constructor.
@@ -25,6 +29,7 @@ class Games_DropLastRound_Payload extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type string $sessionHash
+     *     @type array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $intermediateResults
      * }
      */
     public function __construct($data = NULL) {
@@ -50,6 +55,28 @@ class Games_DropLastRound_Payload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->sessionHash = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession intermediateResults = 2;</code>
+     * @return \Google\Protobuf\Internal\RepeatedField
+     */
+    public function getIntermediateResults()
+    {
+        return $this->intermediateResults;
+    }
+
+    /**
+     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession intermediateResults = 2;</code>
+     * @param array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $var
+     * @return $this
+     */
+    public function setIntermediateResults($var)
+    {
+        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\IntermediateResultOfSession::class);
+        $this->intermediateResults = $arr;
 
         return $this;
     }

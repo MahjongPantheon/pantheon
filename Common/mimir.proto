@@ -370,6 +370,7 @@ message Games_CancelGame_Payload {
 
 message Games_DropLastRound_Payload {
   string sessionHash = 1;
+  repeated IntermediateResultOfSession intermediateResults = 2;
 }
 
 message Games_DefinalizeGame_Payload {
