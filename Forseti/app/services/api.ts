@@ -5,6 +5,7 @@ import {
   CreateEvent,
   DefinalizeGame,
   DropLastRound,
+  FinalizeSession,
   FinishEvent,
   GetAllRegisteredPlayers,
   GetCountries,
@@ -15,8 +16,13 @@ import {
   GetRulesets,
   GetTablesState,
   GetTimezones,
+  MakeIntervalSeating,
+  MakeShuffledSeating,
+  MakeSwissSeating,
   RebuildScoring,
   RegisterPlayer,
+  ResetSeating,
+  StartTimer,
   ToggleHideResults,
   ToggleListed,
   UnregisterPlayer,
@@ -331,5 +337,61 @@ export class ApiService {
 
   definalizeGame(sessionHash: string) {
     return DefinalizeGame({ sessionHash }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  startTimer(eventId: number) {
+    return StartTimer({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  toggleResults(eventId: number) {
+    return ToggleHideResults({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  approveResults(eventId: number) {
+    return FinalizeSession({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  makeShuffledSeating(eventId: number) {
+    return MakeShuffledSeating(
+      {
+        eventId,
+        groupsCount: 1,
+        seed: (Math.random() * 1_000_000) % 1_000_000,
+      },
+      this._clientConfMimir
+    )
+      .then((r) => r.success)
+      .catch(() => {
+        // Seating took too long, nginx dropped connection, let's wait a bit
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(true), 3000);
+        });
+      });
+  }
+
+  makeIntervalSeating(eventId: number, interval: number) {
+    return MakeIntervalSeating({ eventId, step: interval }, this._clientConfMimir)
+      .then((r) => r.success)
+      .catch(() => {
+        // Seating took too long, nginx dropped connection, let's wait a bit
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(true), 3000);
+        });
+      });
+  }
+
+  makeSwissSeating(eventId: number) {
+    return MakeSwissSeating({ eventId }, this._clientConfMimir)
+      .then((r) => r.success)
+      .catch(() => {
+        // Seating took too long, nginx dropped connection, let's wait a bit
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(true), 3000);
+        });
+      });
+  }
+
+  resetSeating(eventId: number) {
+    return ResetSeating({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 }

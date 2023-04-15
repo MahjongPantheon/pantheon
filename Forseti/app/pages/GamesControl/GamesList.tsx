@@ -5,17 +5,15 @@ import {
   Round,
   SessionStatus,
   TableState,
+  TournamentGamesStatus,
 } from '#/clients/atoms.pb';
 import {
   ActionIcon,
   Avatar,
   Badge,
   Box,
-  Button,
   Group,
   Loader,
-  MantineColor,
-  Popover,
   Stack,
   Text,
   useMantineColorScheme,
@@ -25,24 +23,24 @@ import { makeColor, makeInitials } from '#/helpers/playersList';
 import {
   IconAlarm,
   IconArrowBackUp,
-  IconArrowRight,
   IconFileCheck,
   IconTrashX,
   IconX,
+  IconZoomCheck,
 } from '@tabler/icons-react';
 import * as React from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { I18nService } from '#/services/i18n';
-import { useState } from 'react';
 import { yakuList } from '#/helpers/yaku';
 import { useI18n } from '#/hooks/i18n';
+import { Confirmation } from '#/pages/GamesControl/Confirmation';
 
 type GamesListProps = {
   tablesState: TableState[];
   eventConfig: GameConfig | null;
   onCancelLastRound: (hash: string, intermediateResults: IntermediateResultOfSession[]) => void;
-  onRemoveGame: (hash: string) => void;
-  onDefinalizeGame: (hash: string) => void;
+  onRemoveGame?: (hash: string) => void;
+  onDefinalizeGame?: (hash: string) => void;
 };
 
 export function GamesList({
@@ -89,7 +87,7 @@ export function GamesList({
                       #{t.tableIndex}
                     </ActionIcon>
                   )}
-                  {getBadge(t.status, i18n)}
+                  {getBadge(eventConfig?.gamesStatus, t.status, i18n)}
                   {t.status === 'INPROGRESS' && (
                     <ActionIcon
                       style={{ cursor: 'default' }}
@@ -167,7 +165,7 @@ export function GamesList({
                     i18n={i18n}
                   />
                 )}
-                {t.status === 'INPROGRESS' && !t.lastRound && (
+                {t.status === 'INPROGRESS' && !t.lastRound && !!onRemoveGame && (
                   <Confirmation
                     icon={<IconTrashX />}
                     title={i18n._t('Remove the game as it never existed')}
@@ -180,7 +178,7 @@ export function GamesList({
                     i18n={i18n}
                   />
                 )}
-                {t.status === 'FINISHED' && t.mayDefinalize && (
+                {t.status === 'FINISHED' && t.mayDefinalize && !!onDefinalizeGame && (
                   <Confirmation
                     icon={<IconArrowBackUp />}
                     title={i18n._t('Remove game results')}
@@ -204,76 +202,38 @@ export function GamesList({
   );
 }
 
-function Confirmation({
-  icon,
-  text,
-  title,
-  warning,
-  color,
-  onConfirm,
-  i18n,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  text: string;
-  warning: string;
-  color: MantineColor;
-  onConfirm: () => void;
-  i18n: I18nService;
-}) {
-  const [opened, setOpened] = useState(false);
-
-  return (
-    <Popover
-      width={300}
-      position='bottom'
-      withArrow
-      shadow='md'
-      opened={opened}
-      onChange={setOpened}
-    >
-      <Popover.Target>
-        <Button leftIcon={icon} title={title} color={color} onClick={() => setOpened((o) => !o)}>
-          {text}
-        </Button>
-      </Popover.Target>
-      <Popover.Dropdown>
-        <Group grow>
-          <Text size='sm' style={{ flex: 1, minWidth: '215px' }}>
-            {warning}
-          </Text>
-          <ActionIcon
-            style={{ flex: 0 }}
-            variant='filled'
-            color='red'
-            onClick={() => {
-              setOpened(false);
-              onConfirm();
-            }}
-            title={i18n._t('Confirm')}
-          >
-            <IconArrowRight />
-          </ActionIcon>
-        </Group>
-      </Popover.Dropdown>
-    </Popover>
-  );
-}
-
-function getBadge(status: SessionStatus, i18n: I18nService) {
+function getBadge(
+  gamesStatus: TournamentGamesStatus | undefined,
+  status: SessionStatus,
+  i18n: I18nService
+) {
   switch (status) {
     case 'INPROGRESS':
-      return (
-        <ActionIcon
-          style={{ cursor: 'default' }}
-          color='lime'
-          variant='light'
-          size='lg'
-          title={i18n._t('Session in progress')}
-        >
-          <Loader size='xs' variant='bars' color='lime' />
-        </ActionIcon>
-      );
+      if (gamesStatus === 'SEATING_READY') {
+        return (
+          <ActionIcon
+            style={{ cursor: 'default' }}
+            color='green'
+            variant='light'
+            size='lg'
+            title={i18n._t('Session is ready to start')}
+          >
+            <IconZoomCheck />
+          </ActionIcon>
+        );
+      } else {
+        return (
+          <ActionIcon
+            style={{ cursor: 'default' }}
+            color='lime'
+            variant='light'
+            size='lg'
+            title={i18n._t('Session in progress')}
+          >
+            <Loader size='xs' variant='bars' color='lime' />
+          </ActionIcon>
+        );
+      }
     case 'PREFINISHED':
       return (
         <ActionIcon
