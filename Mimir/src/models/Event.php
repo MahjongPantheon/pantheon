@@ -150,7 +150,7 @@ class EventModel extends Model
             return [
                 'event_id' => $eventId,
                 'next_session_index' => 1,
-                'prescript' => null,
+                'prescript' => '',
                 'check_errors' => [
                     'No predefined seating yet'
                 ]
@@ -383,6 +383,7 @@ class EventModel extends Model
             ->select('event.is_online', 'is_online')
             ->select('event.sync_start', 'sync_start')
             ->select('event.finished', 'finished')
+            ->select('event.is_prescripted', 'prescripted')
             ->select('event.is_listed', 'is_listed')
             ->select('event.hide_results', 'hide_results')
             ->selectExpr('count(session.id)', 'sessioncnt')
@@ -412,6 +413,7 @@ class EventModel extends Model
                     'title' => $event['title'],
                     'description' => $event['description'],
                     'finished' => !!$event['finished'],
+                    'prescripted' => !!$event['prescripted'],
                     'isListed' => !!$event['is_listed'],
                     'isRatingShown' => !!$event['hide_results'],
                     'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
@@ -437,6 +439,7 @@ class EventModel extends Model
             ->select('event.is_online', 'is_online')
             ->select('event.sync_start', 'sync_start')
             ->select('event.finished', 'finished')
+            ->select('event.is_prescripted', 'prescripted')
             ->select('event.is_listed', 'is_listed')
             ->select('event.hide_results', 'hide_results')
             ->selectExpr('count(session.id)', 'sessioncnt')
@@ -454,6 +457,7 @@ class EventModel extends Model
                 'title' => $event['title'],
                 'description' => $event['description'],
                 'finished' => !!$event['finished'],
+                'prescripted' => !!$event['prescripted'],
                 'isListed' => !!$event['is_listed'],
                 'isRatingShown' => !!$event['hide_results'],
                 'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,

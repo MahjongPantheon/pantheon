@@ -137,6 +137,7 @@ export interface Event {
   isRatingShown: boolean;
   tournamentStarted: boolean;
   type: EventType;
+  isPrescripted: boolean;
 }
 
 export interface MyEvent {
@@ -1944,6 +1945,7 @@ export const Event = {
       isRatingShown: false,
       tournamentStarted: false,
       type: EventType._fromInt(0),
+      isPrescripted: false,
     };
   },
 
@@ -1977,6 +1979,9 @@ export const Event = {
     }
     if (msg.type && EventType._toInt(msg.type)) {
       writer.writeEnum(8, EventType._toInt(msg.type));
+    }
+    if (msg.isPrescripted) {
+      writer.writeBool(9, msg.isPrescripted);
     }
     return writer;
   },
@@ -2018,6 +2023,10 @@ export const Event = {
         }
         case 8: {
           msg.type = EventType._fromInt(reader.readEnum());
+          break;
+        }
+        case 9: {
+          msg.isPrescripted = reader.readBool();
           break;
         }
         default: {
@@ -8538,6 +8547,7 @@ export const EventJSON = {
       isRatingShown: false,
       tournamentStarted: false,
       type: EventType._fromInt(0),
+      isPrescripted: false,
     };
   },
 
@@ -8569,6 +8579,9 @@ export const EventJSON = {
     }
     if (msg.type && EventTypeJSON._toInt(msg.type)) {
       json["type"] = msg.type;
+    }
+    if (msg.isPrescripted) {
+      json["isPrescripted"] = msg.isPrescripted;
     }
     return json;
   },
@@ -8608,6 +8621,10 @@ export const EventJSON = {
     const _type_ = json["type"];
     if (_type_) {
       msg.type = _type_;
+    }
+    const _isPrescripted_ = json["isPrescripted"];
+    if (_isPrescripted_) {
+      msg.isPrescripted = _isPrescripted_;
     }
     return msg;
   },

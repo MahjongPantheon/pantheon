@@ -221,6 +221,25 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       });
   }, [isLoggedIn]);
 
+  const onMakePrescriptedSeating = useCallback(
+    (rndSeats: boolean) => {
+      setSeatingLoading(true);
+      api
+        .makePrescriptedSeating(eventId, rndSeats)
+        .then((r) => {
+          if (!r) {
+            throw new Error(i18n._t('Failed to generate prescripted seating'));
+          }
+        })
+        .then(doReloadConfigAndTables)
+        .catch(errHandler)
+        .finally(() => {
+          setSeatingLoading(false);
+        });
+    },
+    [isLoggedIn]
+  );
+
   const onResetSeating = useCallback(() => {
     api
       .resetSeating(eventId)
@@ -247,6 +266,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         makeIntervalSeating={onMakeIntervalSeating}
         makeRandomSeating={onMakeRandomSeating}
         makeSwissSeating={onMakeSwissSeating}
+        makeNextPredefinedSeating={onMakePrescriptedSeating}
         resetSeating={onResetSeating}
       />
       <GamesList

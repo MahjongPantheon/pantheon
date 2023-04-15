@@ -1,7 +1,17 @@
 import * as React from 'react';
 import { useI18n } from '#/hooks/i18n';
 import { GameConfig, RegisteredPlayer, TableState } from '#/clients/atoms.pb';
-import { Box, Button, Group, SegmentedControl, Select, Space, Stack, Text } from '@mantine/core';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Group,
+  SegmentedControl,
+  Select,
+  Space,
+  Stack,
+  Text,
+} from '@mantine/core';
 import { useState } from 'react';
 import { Confirmation } from '#/pages/GamesControl/Confirmation';
 import {
@@ -9,6 +19,7 @@ import {
   IconEyeCheck,
   IconLineHeight,
   IconPlayerPlay,
+  IconScript,
   IconSortAscending2,
   IconSquareX,
 } from '@tabler/icons-react';
@@ -29,6 +40,7 @@ type TournamentControlsProps = {
   makeRandomSeating: () => void;
   makeIntervalSeating: (interval: number) => void;
   makeSwissSeating: () => void;
+  makeNextPredefinedSeating: (rndSeats: boolean) => void;
   startTimer: () => void;
   resetTimer: () => void;
   approveResults: () => void;
@@ -43,6 +55,7 @@ export function TournamentControls({
   makeIntervalSeating,
   makeRandomSeating,
   makeSwissSeating,
+  makeNextPredefinedSeating,
   approveResults,
   startTimer,
   resetTimer,
@@ -51,6 +64,7 @@ export function TournamentControls({
 }: TournamentControlsProps) {
   const i18n = useI18n();
   const [interval, setInterval] = useState<string | null>('1');
+  const [rndSeats, setRndSeats] = useState(false);
   const currentStage = determineStage(tablesState, players, eventConfig, seatingLoading);
 
   return (
@@ -75,7 +89,7 @@ export function TournamentControls({
             {i18n._t("Can't generate seating: count of registered players is not divisible by 4")}
           </Box>
         )}
-        {currentStage === Stage.READY_BUT_NOT_STARTED && (
+        {currentStage === Stage.READY_BUT_NOT_STARTED && !eventConfig?.isPrescripted && (
           <Stack>
             <Button color={eventConfig?.hideResults ? 'red' : 'gray'} onClick={toggleResults}>
               {eventConfig?.hideResults
@@ -138,6 +152,36 @@ export function TournamentControls({
               icon={<IconSortAscending2 />}
               color='grape'
               onConfirm={makeSwissSeating}
+            />
+          </Stack>
+        )}
+        {currentStage === Stage.READY_BUT_NOT_STARTED && !!eventConfig?.isPrescripted && (
+          <Stack>
+            <Button color={eventConfig?.hideResults ? 'red' : 'gray'} onClick={toggleResults}>
+              {eventConfig?.hideResults
+                ? i18n._t('Show results table')
+                : i18n._t('Hide results table')}
+            </Button>
+            <Confirmation
+              i18n={i18n}
+              title={i18n._t('Generate seating for next session')}
+              text={i18n._t('Next seating')}
+              warning={
+                <>
+                  <Checkbox
+                    label={i18n._t('Randomize seating by wind')}
+                    checked={rndSeats}
+                    onChange={(event) => setRndSeats(event.currentTarget.checked)}
+                  />
+                  <Space h='md' />
+                  <Text>{i18n._t('Apply seating for next session?')}</Text>
+                </>
+              }
+              icon={<IconScript />}
+              color='green'
+              onConfirm={() => {
+                makeNextPredefinedSeating(rndSeats);
+              }}
             />
           </Stack>
         )}

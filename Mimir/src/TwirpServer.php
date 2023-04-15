@@ -816,6 +816,7 @@ final class TwirpServer implements Mimir
                     ->setDescription($ev['description'])
                     ->setType(self::_toEventTypeEnum($ev['type']))
                     ->setFinished($ev['finished'])
+                    ->setIsPrescripted($ev['prescripted'])
                     ->setIsListed($ev['isListed'])
                     ->setIsRatingShown($ev['isRatingShown'])
                     ->setTournamentStarted($ev['tournamentStarted']);
@@ -835,6 +836,7 @@ final class TwirpServer implements Mimir
                     ->setDescription($ev['description'])
                     ->setType(self::_toEventTypeEnum($ev['type']))
                     ->setFinished($ev['finished'])
+                    ->setIsPrescripted($ev['prescripted'])
                     ->setIsListed($ev['isListed'])
                     ->setIsRatingShown($ev['isRatingShown'])
                     ->setTournamentStarted($ev['tournamentStarted']);

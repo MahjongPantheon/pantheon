@@ -13,14 +13,7 @@ import { OwnedEventsEdit } from '#/pages/OwnedEventsEdit';
 import { Penalties } from '#/pages/Penalties';
 import { PlayersManage } from '#/pages/PlayersManage';
 import { GamesControl } from '#/pages/GamesControl';
-// import { environment } from '#config';
-
-// const storage = new Storage(environment.cookieDomain);
-
-// observe();
-// registerFrontErrorHandler();
-
-// const i18nService = new I18nService(storage);
+import { EventPrescript } from '#/pages/EventPrescript';
 
 export const App = () => {
   return (
@@ -42,36 +35,16 @@ export const App = () => {
 
       <Route path='/event/:id/penalties' component={Penalties} />
       <Route path='/event/:id/players' component={PlayersManage} />
-
       <Route path='/event/:id/games' component={GamesControl} />
+      <Route path='/event/:id/prescript' component={EventPrescript} />
     </Switch>
   );
 };
 
 /*
-    '/tourn'                                               => 'TournamentControlPanel',
-    '/tourn/(?<action>dropLastRound)/(?<hash>[0-9a-f]+)'   => 'TournamentControlPanel',
-    '/tourn/(?<action>shuffledSeating)'                    => 'TournamentControlPanel',
-    '/tourn/(?<action>predefinedSeating)'                  => 'TournamentControlPanel',
-    '/tourn/(?<action>intervalSeating)'                    => 'TournamentControlPanel',
-    '/tourn/(?<action>swissSeating)'                       => 'TournamentControlPanel',
-    '/tourn/(?<action>resetSeating)'                       => 'TournamentControlPanel',
-    '/tourn/(?<action>startTimer)'                         => 'TournamentControlPanel',
-    '/tourn/(?<action>toggleHideResults)'                  => 'TournamentControlPanel',
-    '/tourn/(?<action>finalizeSessions)'                   => 'TournamentControlPanel',
-    '/tourn/(?<action>resetStartingTimer)'                 => 'TournamentControlPanel',
-
-    '/prescript' => 'PrescriptControls',
-
-    '/games'                                               => 'GamesControlPanel',
-    '/games/(?<action>dropLastRound)/(?<hash>[0-9a-f]+)'   => 'GamesControlPanel',
-    '/games/(?<action>definalize)/(?<hash>[0-9a-f]+)'      => 'GamesControlPanel',
-    '/games/(?<action>cancelGame)/(?<hash>[0-9a-f]+)'      => 'GamesControlPanel',
-
 
     '!/signupAdmin'                         => 'PersonSignupAdministrative',
     '!/profile/(?<action>impersonate)/(?<id>\d+)/(?<token>[a-f0-9]+)' => 'PersonLogin',
-    '!/passwordRecovery'                    => 'PersonRecoverPassword',
-    '!/passwordRecovery/(?<code>[0-9a-f]+)/(?<email>[a-z0-9_.@-]+)' => 'PersonRecoverPassword',
+
 
  */

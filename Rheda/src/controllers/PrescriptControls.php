@@ -45,8 +45,7 @@ class PrescriptControls extends Controller
 
         $eventConfig = [
             'prescript' => '',
-            'next_session_index' => 1,
-            'has_errors' => false
+            'next_session_index' => 1
         ];
 
         if (count($this->_eventIdList) > 1) {
@@ -55,13 +54,11 @@ class PrescriptControls extends Controller
 
         if (!empty($this->_lastError)) {
             $eventConfig['check_errors'] = [$this->_lastError];
-            $eventConfig['has_errors'] = true;
         } else {
             try {
                 $eventConfig = $this->_mimir->getPrescriptedEventConfig($this->_mainEventId);
             } catch (\Exception $e) {
                 $eventConfig['check_errors'] = [$this->_handleTwirpEx($e) ?: $e->getMessage()];
-                $eventConfig['has_errors'] = true;
             }
         }
 

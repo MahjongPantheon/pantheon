@@ -13,10 +13,12 @@ import {
   GetEvents,
   GetEventsById,
   GetGameConfig,
+  GetPrescriptedEventConfig,
   GetRulesets,
   GetTablesState,
   GetTimezones,
   MakeIntervalSeating,
+  MakePrescriptedSeating,
   MakeShuffledSeating,
   MakeSwissSeating,
   RebuildScoring,
@@ -31,6 +33,7 @@ import {
   UpdatePlayerSeatingFlag,
   UpdatePlayersLocalIds,
   UpdatePlayersTeams,
+  UpdatePrescriptedEventConfig,
 } from '#/clients/mimir.pb';
 import {
   AddRuleForPerson,
@@ -391,7 +394,33 @@ export class ApiService {
       });
   }
 
+  makePrescriptedSeating(eventId: number, randomizeAtTables: boolean) {
+    return MakePrescriptedSeating({ eventId, randomizeAtTables }, this._clientConfMimir)
+      .then((r) => r.success)
+      .catch(() => {
+        // Seating took too long, nginx dropped connection, let's wait a bit
+        return new Promise((resolve) => {
+          setTimeout(() => resolve(true), 3000);
+        });
+      });
+  }
+
   resetSeating(eventId: number) {
     return ResetSeating({ eventId }, this._clientConfMimir).then((r) => r.success);
+  }
+
+  getPrescriptedEventConfig(eventId: number) {
+    return GetPrescriptedEventConfig({ eventId }, this._clientConfMimir);
+  }
+
+  updatePrescriptedEventConfig(eventId: number, nextSessionIndex: number, prescript: string) {
+    return UpdatePrescriptedEventConfig(
+      {
+        eventId,
+        nextSessionIndex,
+        prescript,
+      },
+      this._clientConfMimir
+    ).then((r) => r.success);
   }
 }

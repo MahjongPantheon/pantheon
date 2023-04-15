@@ -28,6 +28,7 @@ import {
   IconNetwork,
   IconAlertOctagon,
   IconOlympics,
+  IconScript,
 } from '@tabler/icons-react';
 import { Link, Redirect } from 'wouter';
 import { useApi } from '#/hooks/api';
@@ -245,6 +246,18 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                   </a>
                 </Group>
                 <Group>
+                  {event.isPrescripted && (
+                    <Link to={`/event/${event.id}/prescript`}>
+                      <ActionIcon
+                        variant='filled'
+                        size='lg'
+                        color='grape'
+                        title={i18n._t('Manage predefined seating')}
+                      >
+                        <IconScript />
+                      </ActionIcon>
+                    </Link>
+                  )}
                   {!event.finished && (
                     <Link to={`/event/${event.id}/games`}>
                       <ActionIcon

@@ -324,6 +324,10 @@ class EventPrescriptPrimitive extends Primitive
             }
         }
 
+        if (count($this->_script) === 0) {
+            $errors[] = "Event script is empty";
+        }
+
         return $errors;
     }
 }

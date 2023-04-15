@@ -122,6 +122,7 @@ message Event {
   bool isRatingShown = 6;
   bool tournamentStarted = 7;
   EventType type = 8;
+  bool isPrescripted = 9;
 }
 
 message MyEvent {
