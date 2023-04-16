@@ -38,8 +38,8 @@ export const ManagementTab: React.FC<{
   setPlayers: (players: RegisteredPlayer[]) => void;
   eventAdmins: Record<number, number>;
   setEventAdmins: (eventAdmins: Record<number, number>) => void;
-  config: GameConfig;
-  event: Event;
+  config?: GameConfig;
+  event?: Event;
 }> = ({ eventId, players, setPlayers, eventAdmins, setEventAdmins, config, event }) => {
   const storage = useStorage();
   const personId = storage.getPersonId()!;
@@ -143,9 +143,9 @@ export const ManagementTab: React.FC<{
     });
   };
 
-  const showAddRemove = !event.tournamentStarted;
-  const showReplace = event.type !== 'LOCAL';
-  const mayUseSeatingIgnore = config.syncStart && !config.isPrescripted;
+  const showAddRemove = !event?.tournamentStarted;
+  const showReplace = event?.type !== 'LOCAL';
+  const mayUseSeatingIgnore = config?.syncStart && !config?.isPrescripted;
 
   return (
     <>
@@ -201,7 +201,7 @@ export const ManagementTab: React.FC<{
                 </Avatar>
                 <Stack spacing='0'>
                   <Text>{p.title}</Text>
-                  {config.isOnline && <Text c='dimmed'>{p.tenhouId}</Text>}
+                  {config?.isOnline && <Text c='dimmed'>{p.tenhouId}</Text>}
                 </Stack>
                 {showReplace && !p.replacedBy && (
                   <ActionIcon

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { usePageTitle } from '#/hooks/pageTitle';
-import { Button, Group, Space, Loader, Alert, Center, Container } from '@mantine/core';
+import { Button, Group, Space, Alert, Container, LoadingOverlay } from '@mantine/core';
 import { IconCheck, IconAlertCircle } from '@tabler/icons-react';
 import { Link } from 'wouter';
 import { useApi } from '#/hooks/api';
@@ -32,17 +32,10 @@ export const ProfileConfirm: React.FC<{ params: { code: string } }> = ({ params:
       });
   }, []);
 
-  return isLoading ? null : (
+  return (
     <Container>
-      {isLoading ? (
-        <Center maw={400} h={100} mx='auto'>
-          <Loader />
-        </Center>
-      ) : isSuccess ? (
-        <SuccessAlert i18n={i18n} />
-      ) : (
-        <ErrorAlert i18n={i18n} />
-      )}
+      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
+      {isSuccess ? <SuccessAlert i18n={i18n} /> : <ErrorAlert i18n={i18n} />}
     </Container>
   );
 };

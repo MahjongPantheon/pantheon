@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
-import { Box, Container, Select, Space, TextInput } from '@mantine/core';
+import { Box, Container, LoadingOverlay, Select, Space, TextInput } from '@mantine/core';
 import {
   IconCircleCheck,
   IconDeviceFloppy,
@@ -110,9 +110,10 @@ export const ProfileManage: React.FC = () => {
     });
   }, [personId]);
 
-  return isLoading ? null : (
+  return (
     <>
       <Container>
+        <LoadingOverlay visible={isLoading} overlayOpacity={1} />
         <Box pos='relative'>
           <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
             <TextInput

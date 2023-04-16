@@ -10,6 +10,7 @@ import {
   Button,
   Modal,
   Code,
+  LoadingOverlay,
 } from '@mantine/core';
 import { useI18n } from '#/hooks/i18n';
 import { useCallback, useEffect, useState } from 'react';
@@ -96,8 +97,9 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
       });
   }, [eventId, nextSessionIndex, script]);
 
-  return isLoading ? null : (
+  return (
     <Container>
+      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
       <Modal
         opened={opened}
         onClose={close}

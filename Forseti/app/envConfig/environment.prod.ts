@@ -9,6 +9,6 @@ export const environment: EnvConfig = {
   adminEmail: 'me@ctizen.dev',
   cookieDomain: '.riichimahjong.org',
   statDomain: 'pl.riichimahjong.org',
-  siteId: 'f5c85252-2f96-470a-8d24-c42a85f8a6aa',
+  siteId: '767986b1-bac1-4ece-9beb-c61e094ab0ef',
   guiFix: (src: string) => src,
 };

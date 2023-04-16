@@ -2,7 +2,7 @@ import * as React from 'react';
 import { createRef, useContext, useEffect, useState } from 'react';
 import { authCtx } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
-import { Container, Stack, Tabs } from '@mantine/core';
+import { Container, LoadingOverlay, Stack, Tabs } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
@@ -194,9 +194,10 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       });
   };
 
-  return isLoading ? null : (
+  return (
     <>
       <Container pos='relative'>
+        <LoadingOverlay visible={isLoading} overlayOpacity={1} />
         <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
           <Tabs defaultValue='basic'>
             <Tabs.List position='left'>

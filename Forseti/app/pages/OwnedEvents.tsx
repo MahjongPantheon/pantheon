@@ -192,7 +192,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       : 'transparent',
                 }}
               >
-                <Group sx={{ flex: 1, minWidth: '300px' }}>
+                <Group sx={{ flex: 1 }}>
                   {event.type === 'LOCAL' && (
                     <Tooltip
                       openDelay={500}

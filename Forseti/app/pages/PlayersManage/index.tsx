@@ -8,7 +8,7 @@ import { authCtx } from '#/hooks/auth';
 import { useApi } from '#/hooks/api';
 import { useI18n } from '#/hooks/i18n';
 import { ManagementTab } from '#/pages/PlayersManage/ManagementTab';
-import { Badge, Container, Tabs } from '@mantine/core';
+import { Badge, Container, LoadingOverlay, Tabs } from '@mantine/core';
 import {
   IconAlertTriangleFilled,
   IconScript,
@@ -71,8 +71,9 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
       });
   }, [isLoggedIn]);
 
-  return isLoading ? null : (
+  return (
     <Container>
+      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
       <Tabs defaultValue='management' keepMounted={false}>
         <Tabs.List position='left'>
           <Tabs.Tab

@@ -6,7 +6,7 @@ import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
 import { GameConfig } from '#/clients/atoms.pb';
 import { useForm } from '@mantine/form';
-import { Container, NumberInput, Select, TextInput } from '@mantine/core';
+import { Container, LoadingOverlay, NumberInput, Select, TextInput } from '@mantine/core';
 import {
   IconAlertOctagon,
   IconCircleCheck,
@@ -105,9 +105,10 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
       });
   };
 
-  return isLoading ? null : (
+  return (
     <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
       <Container>
+        <LoadingOverlay visible={isLoading} overlayOpacity={1} />
         <Select
           withAsterisk
           icon={<IconUserExclamation size='1rem' />}

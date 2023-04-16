@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { Theme } from '#/services/themes';
 import { useContext } from 'react';
 import { i18n } from '#/components/i18n';
+import { environment } from '#config';
 
 interface IProps {
   playerName: string;
@@ -44,6 +45,16 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
       <div className='flex-container__content'>
         <TopPanel onBackClick={onBackClick} />
         <div className='page-setting__name'>{playerName}</div>
+        <div className='page-setting__section'>
+          <a
+            className='flat-btn flat-btn--large'
+            style={{ width: '100%' }}
+            target='_blank'
+            href={`${environment.paUrl}/profile/manage`}
+          >
+            {loc._t('Go to personal area')}
+          </a>
+        </div>
         <div className='page-setting__section'>
           <div className='page-setting__section-title'>{loc._t('Language')}</div>
           <div className='page-setting__section-content'>

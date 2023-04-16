@@ -10,7 +10,7 @@ import {
   RegisteredPlayer,
   TableState,
 } from '#/clients/atoms.pb';
-import { Container } from '@mantine/core';
+import { Container, LoadingOverlay } from '@mantine/core';
 
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
@@ -252,8 +252,9 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       .catch(errHandler);
   }, [isLoggedIn]);
 
-  return isLoading ? null : (
+  return (
     <Container>
+      <LoadingOverlay visible={isLoading} overlayOpacity={1} />
       {eventConfig?.syncStart && (
         <TournamentControls
           seatingLoading={seatingLoading}
