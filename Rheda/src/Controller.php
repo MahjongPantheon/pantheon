@@ -232,10 +232,10 @@ abstract class Controller
                 if (!empty($this->_mainEventId)) {
                     // TODO: access rules for aggregated events?
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_mainEventId);
-                    if (!empty($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN])) {
+                    if (!empty($this->_accessRules['IS_SUPER_ADMIN'])) {
                         $this->_superadmin = true;
                     }
-                    if (!empty($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT])) {
+                    if (!empty($this->_accessRules['ADMIN_EVENT'])) {
                         $this->_eventadmin = true;
                     }
                 } else if (!empty($this->_currentPersonId)) {
@@ -262,8 +262,7 @@ abstract class Controller
         $this->_rulesList = [];
 
         foreach ($this->_eventIdList as $eventId) {
-            $gameConfig = Config::fromRaw($this->_mimir->getGameConfig($eventId));
-            $this->_rulesList[$eventId] = $gameConfig;
+            $this->_rulesList[$eventId] = $this->_mimir->getGameConfig($eventId)->getRulesetConfig();
         }
 
         if (!empty($this->_mainEventId)) {
