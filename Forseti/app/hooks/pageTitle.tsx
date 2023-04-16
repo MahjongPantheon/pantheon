@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createContext, SetStateAction, useContext, useEffect, useState } from 'react';
+import { createContext, SetStateAction, useContext, useEffect } from 'react';
 
 export const ctxValue = { pageTitle: '', setPageTitle: (_v: SetStateAction<string>) => {} };
 export const pageTitleCtx = createContext(ctxValue);

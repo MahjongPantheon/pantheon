@@ -42,7 +42,7 @@ class PersonalStats extends Controller
     protected function _pageTitle()
     {
         // This is called after _run, so proper player name is substituted.
-        return _p('Stats & diagrams: %s', $this->_playerName) . ' - ' . $this->_mainEventRules->eventTitle();
+        return _p('Stats & diagrams: %s', $this->_playerName) . ' - ' . $this->_mainEventGameConfig->getEventTitle();
     }
 
     /**

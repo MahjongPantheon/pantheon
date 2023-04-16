@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { createContext } from 'react';
 
 export const auth = { isLoggedIn: false, setIsLoggedIn: (_val: boolean) => {} };

@@ -17,6 +17,8 @@
  */
 namespace Rheda;
 
+use Common\GameConfig;
+
 include_once __DIR__ . "/../helpers/Array.php";
 include_once __DIR__ . "/../../../Common/YakuMap.php";
 
@@ -24,11 +26,10 @@ class GameFormatter
 {
     /**
      * @param array $gamesData
-     * @param Config $config
      *
      * @return array
      */
-    public function formatGamesData(&$gamesData, Config $config)
+    public function formatGamesData(&$gamesData)
     {
         $result = [];
         foreach ($gamesData['games'] as $gameId => $game) {

@@ -47,7 +47,7 @@ class Achievements extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Achievements') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Achievements') . ' - ' . $this->_mainEventGameConfig->getEventTitle();
     }
 
     protected function _run()

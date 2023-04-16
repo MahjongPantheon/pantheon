@@ -193,55 +193,6 @@ class Config
     protected $_isFinished = false;
 
     /**
-     * @var array
-     */
-    public static $_blankRules = [
-        'allowPlayerAppend' => false,
-        'allowedYaku' => [],
-        'autoSeating' => false,
-        'chomboPenalty' => 0,
-        'eventDescription' => '',
-        'eventStatHost' => '',
-        'eventTitle' => 'Rheda',
-        'extraChomboPayments' => false,
-        'gameDuration' => 0,
-        'gameExpirationTime' => 0,
-        'gamesStatus' => false,
-        'hideAddReplayButton' => false,
-        'hideResults' => false,
-        'isFinished' => false,
-        'isOnline' => false,
-        'isPrescripted' => false,
-        'isTextlog' => false,
-        'maxPenalty' => 0,
-        'minGamesCount' => 0,
-        'minPenalty' => 0,
-        'penaltyStep' => 1,
-        'riichiGoesToWinner' => false,
-        'rulesetTitle' => 'blank',
-        'seriesLength' => 0,
-        'sortByGames' => false,
-        'startPoints' => 0,
-        'startRating' => 0,
-        'startingTimer' => 0,
-        'syncEnd' => false,
-        'syncStart' => false,
-        'endingPolicy' => 'none',
-        'tonpuusen' => false,
-        'usePenalty' => false,
-        'useTimer' => false,
-        'withAbortives' => false,
-        'withAtamahane' => false,
-        'withButtobi' => false,
-        'withKazoe' => false,
-        'withKiriageMangan' => false,
-        'withKuitan' => false,
-        'withLeadingDealerGameOver' => false,
-        'withMultiYakumans' => false,
-        'withNagashiMangan' => false,
-    ];
-
-    /**
      * @return array
      */
     public static function getRuleDescriptions(): array

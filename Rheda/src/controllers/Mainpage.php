@@ -25,7 +25,7 @@ class Mainpage extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Statistics') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Statistics') . ' - ' . $this->_mainEventGameConfig->getEventTitle();
     }
 
     /**
@@ -38,8 +38,8 @@ class Mainpage extends Controller
             return [
                 'isAggregated' => true,
                 'eventsInfo' => array_values(array_map(function ($rules) {
-                    return ['title' => $rules->eventTitle(), 'description' => $rules->eventDescription()];
-                }, $this->_rulesList))
+                    return ['title' => $rules->getEventTitle(), 'description' => $rules->getEventDescription()];
+                }, $this->_gameConfig))
             ];
         }
 
@@ -50,25 +50,13 @@ class Mainpage extends Controller
         }
 
         /* All code below is for simple non-aggregated events.  */
-        if ($this->_mainEventRules->seriesLength() == 0) {
-            $rules = $this->_mainEventRules->toArray();
-            $ruleDescriptions = Config::getRuleDescriptions();
-            $rulesInfo = array_values(array_filter(array_map(function ($key, $value) use (&$ruleDescriptions) {
-                return !isset($ruleDescriptions[$key]) ? null : [
-                    'name' => $key,
-                    'value' => $value === true || $value === false
-                        ? ($value === true ? _t('yes') : _t('no'))
-                        : $value,
-                    'description' => $ruleDescriptions[$key]
-                ];
-            }, array_keys($rules), array_values($rules))));
+        if ($this->_mainEventGameConfig->getSeriesLength() == 0) {
             return [
                 'admins' => $admins,
-                'finished' => $this->_mainEventRules->isFinished(),
-                'title' => $this->_mainEventRules->eventTitle(),
-                'description' => $this->_mainEventRules->eventDescription(),
-                'isLoggedIn' => $this->_userHasAdminRights(),
-                'rules' => $rulesInfo
+                'finished' => $this->_mainEventGameConfig->getIsFinished(),
+                'title' => $this->_mainEventGameConfig->getEventTitle(),
+                'description' => $this->_mainEventGameConfig->getEventDescription(),
+                'isLoggedIn' => $this->_userHasAdminRights()
             ];
         }
 
@@ -93,7 +81,7 @@ class Mainpage extends Controller
             'admins' => $admins,
             'data' => $formattedData,
             'hasData' => true,
-            'title' => $this->_mainEventRules->eventTitle()
+            'title' => $this->_mainEventGameConfig->getEventTitle()
         ];
     }
 }

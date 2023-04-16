@@ -35,9 +35,9 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
       >
         {yakuList.map((y, idx) => (
           <Checkbox
-            key={'yaku_' + idx}
+            key={`yaku_${idx}`}
             label={y.name(i18n)}
-            {...form.getInputProps('ruleset.allowedYaku.' + y.id, { type: 'checkbox' })}
+            {...form.getInputProps(`ruleset.allowedYaku.${y.id}`, { type: 'checkbox' })}
           />
         ))}
       </SimpleGrid>
@@ -52,9 +52,9 @@ export const YakuSettings: React.FC<YakuSettingsProps> = ({ form, i18n }) => {
       >
         {yakuWithPao.map((y, idx) => (
           <Checkbox
-            key={'yaku_' + idx}
+            key={`yaku_${idx}`}
             label={y.name(i18n)}
-            {...form.getInputProps('ruleset.yakuWithPao.' + y.id, { type: 'checkbox' })}
+            {...form.getInputProps(`ruleset.yakuWithPao.${y.id}`, { type: 'checkbox' })}
           />
         ))}
       </SimpleGrid>

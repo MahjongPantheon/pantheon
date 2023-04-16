@@ -37,8 +37,8 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           <>
             <Radio.Group label={i18n._t('Select event type')} {...form.getInputProps('event.type')}>
               <Group mt='xs'>
-                {(Object.keys(typeMap) as EventType[]).map((k) => (
-                  <Radio value={k} label={typeMap[k]} />
+                {(Object.keys(typeMap) as EventType[]).map((k, idx) => (
+                  <Radio key={`rad_${idx}`} value={k} label={typeMap[k]} />
                 ))}
               </Group>
             </Radio.Group>

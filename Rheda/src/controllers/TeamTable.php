@@ -51,7 +51,7 @@ class TeamTable extends Controller
             );
 
             $teamNames = [];
-            if ($this->_mainEventRules->isTeam()) {
+            if ($this->_mainEventGameConfig->getIsTeam()) {
                 array_map(function ($el) use (&$players, &$teamNames) {
                     $teamNames[$el['id']] = $players[$el['id']]['team_name'];
                 }, $players);
@@ -73,7 +73,7 @@ class TeamTable extends Controller
 
             $data = array_map(function ($el) use (&$teamNames) {
                 $teamName = null;
-                if ($this->_mainEventRules->isTeam()) {
+                if ($this->_mainEventGameConfig->getIsTeam()) {
                     $teamName = $teamNames[$el['id']];
                 }
                 $el['short_name'] = $this->_makeShortName($el['title']);
@@ -103,7 +103,7 @@ class TeamTable extends Controller
             }
         }
 
-        $hideResults = $this->_mainEventRules->hideResults();
+        $hideResults = $this->_mainEventGameConfig->getHideResults();
 
         $showAdminWarning = false;
 
@@ -127,7 +127,7 @@ class TeamTable extends Controller
             'error'             => $errMsg,
             'teams'             => $teams,
 
-            'isOnlineTournament'  => $this->_mainEventRules->isOnline(),
+            'isOnlineTournament'  => $this->_mainEventGameConfig->getIsOnline(),
 
             'hideResults'       => $hideResults,
             'showAdminWarning'  => $showAdminWarning,

@@ -23,7 +23,7 @@ class AddOnlineGame extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Add online game') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Add online game') . ' - ' . $this->_mainEventGameConfig->getEventTitle();
     }
 
     /**

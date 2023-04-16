@@ -2,3 +2,4 @@
 node_modules/
 webpack.*.js
 typings.d.ts
+dist/

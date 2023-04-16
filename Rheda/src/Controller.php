@@ -17,6 +17,7 @@
  */
 namespace Rheda;
 
+use Common\GameConfig;
 use Common\RulesetConfig;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
@@ -52,15 +53,15 @@ abstract class Controller
     /**
      * Main event rules. For aggregated events, these are the rules of the main event.
      * For simple events, these are the rules of the only used event.
-     * @var RulesetConfig
+     * @var GameConfig
      */
-    protected $_mainEventRules;
+    protected $_mainEventGameConfig;
 
     /**
      * Rules of each event from eventIdList.
-     * @var RulesetConfig[]
+     * @var GameConfig[]
      */
-    protected $_rulesList;
+    protected $_gameConfig;
 
     /**
      * Main event id. For aggregated events, this is the id of the first event in list.
@@ -259,16 +260,16 @@ abstract class Controller
             'X-Api-Version' => Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
         ]);
 
-        $this->_rulesList = [];
+        $this->_gameConfig = [];
 
         foreach ($this->_eventIdList as $eventId) {
-            $this->_rulesList[$eventId] = $this->_mimir->getGameConfig($eventId)->getRulesetConfig();
+            $this->_gameConfig[$eventId] = $this->_mimir->getGameConfig($eventId);
         }
 
         if (!empty($this->_mainEventId)) {
-            $this->_mainEventRules = $this->_rulesList[$this->_mainEventId];
+            $this->_mainEventGameConfig = $this->_gameConfig[$this->_mainEventId];
         } else {
-            $this->_mainEventRules = Config::fromRaw(Config::$_blankRules);
+            $this->_mainEventGameConfig = (new GameConfig())->setRulesetConfig(new RulesetConfig());
         }
     }
 
@@ -277,11 +278,6 @@ abstract class Controller
      */
     public function run()
     {
-        if (empty($this->_mainEventRules->rulesetTitle())) {
-            echo _t('<h2>Oops.</h2>Failed to get event configuration!');
-            return;
-        }
-
         if ($this->_beforeRun()) {
             $context = $this->_run();
 
@@ -310,22 +306,22 @@ abstract class Controller
                 echo $templateEngine->render('Layout', [
                     'betaLabel' => $this->_storage->getTwirpEnabled(),
                     'tyrUrl' => Sysconf::MOBILE_CLIENT_URL(),
-                    'isOnline' => $this->_mainEventRules->isOnline(),
-                    'isTeam' => $this->_mainEventRules->isTeam(),
-                    'useTimer' => $this->_mainEventRules->useTimer(),
-                    'isTournament' => !$this->_mainEventRules->allowPlayerAppend(),
-                    'usePenalty' => $this->_mainEventRules->usePenalty(),
-                    'syncStart' => $this->_mainEventRules->syncStart(),
-                    'eventTitle' => $this->_mainEventRules->eventTitle(),
+                    'isOnline' => $this->_mainEventGameConfig->getIsOnline(),
+                    'isTeam' => $this->_mainEventGameConfig->getIsTeam(),
+                    'useTimer' => $this->_mainEventGameConfig->getUseTimer(),
+                    'isTournament' => !$this->_mainEventGameConfig->getAllowPlayerAppend(),
+                    'usePenalty' => $this->_mainEventGameConfig->getUsePenalty(),
+                    'syncStart' => $this->_mainEventGameConfig->getSyncStart(),
+                    'eventTitle' => $this->_mainEventGameConfig->getEventTitle(),
                     'analyticsSiteId' => empty(Sysconf::ANALYTICS_SITE_ID()) ? null : Sysconf::ANALYTICS_SITE_ID(),
                     'statDomain' => empty(Sysconf::STAT_DOMAIN()) ? null : Sysconf::STAT_DOMAIN(),
-                    'isPrescripted' => $this->_mainEventRules->isPrescripted(),
+                    'isPrescripted' => $this->_mainEventGameConfig->getIsPrescripted(),
                     'userHasAdminRights' => $this->_userHasAdminRights(),
                     'pageTitle' => $pageTitle,
                     'content' => $templateEngine->render($this->_mainTemplate, $context),
                     'eventSelected' => $this->_mainEventId,
                     'currentPerson' => $this->_personalData,
-                    'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),
+                    'hideAddReplayButton' => $this->_mainEventGameConfig->getHideAddReplayButton(),
                     'isLoggedIn' => !empty($this->_personalData),
                     'isSuperadmin' => $this->_superadmin,
                 ]);

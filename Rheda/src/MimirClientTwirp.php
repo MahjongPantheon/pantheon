@@ -415,7 +415,7 @@ class MimirClientTwirp implements IMimirClient
      *  Get event rules configuration
      *
      * @param int $eventId
-     * @return array
+     * @return GameConfig
      */
     public function getGameConfig(int $eventId): GameConfig
     {

@@ -25,7 +25,7 @@ class LastGames extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Latest games') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Latest games') . ' - ' . $this->_mainEventGameConfig->getEventTitle();
     }
 
     /**
@@ -34,7 +34,7 @@ class LastGames extends Controller
      */
     protected function _run(): array
     {
-        $isTournament = !$this->_mainEventRules->allowPlayerAppend();
+        $isTournament = !$this->_mainEventGameConfig->getAllowPlayerAppend();
         if ($isTournament) {
             $players = $this->_mimir->getAllPlayers($this->_eventIdList);
             $numberOfPlayers = count($players);
@@ -64,13 +64,13 @@ class LastGames extends Controller
         $formatter = new GameFormatter();
         return [
             'noGames' => $gamesData['total_games'] == 0,
-            'games' => $formatter->formatGamesData($gamesData, $this->_mainEventRules),
+            'games' => $formatter->formatGamesData($gamesData),
             'nextPage' => $currentPage + 1,
             'prevPage' => $currentPage == 1 ? 1 : $currentPage - 1,
             'gamesCount' => $gamesData['total_games'],
             'start' => $start,
             'end' => $end,
-            'isOnlineTournament' => $this->_mainEventRules->isOnline(),
+            'isOnlineTournament' => $this->_mainEventGameConfig->getIsOnline(),
             ...$pagination
         ];
     }
