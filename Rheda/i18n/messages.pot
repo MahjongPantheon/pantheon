@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 21:57+0300\n"
+"POT-Creation-Date: 2023-04-16 21:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,91 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-msgid "Achievement"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "Value"
-msgstr ""
-
-msgid "Nominees"
-msgstr ""
-
-msgid "%s fu"
-msgstr ""
-
-msgid "%s: %d yakuhai"
-msgid_plural "%s: %d yakuhais"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%d win"
-msgid_plural "%d wins"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%d quickest hand"
-msgid_plural "%d quickest hands"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%s han, %s fu"
-msgstr ""
-
-msgid "%s han"
-msgstr ""
-
-msgid "%s bet"
-msgid_plural "%s bets"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%s ippatsu"
-msgid_plural "%s ippatsu"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%s points"
-msgstr ""
-
-msgid "%s dora"
-msgstr ""
-
-msgid "%s yaku"
-msgstr ""
-
-msgid "%d riichi bet"
-msgid_plural "%d riichi bets"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "Achievements"
-msgstr ""
-
-msgid "The game has been successfully added!"
-msgstr ""
-
-msgid "Add online game"
-msgstr ""
-
-msgid "Add game"
-msgstr ""
-
 msgid "Game details"
 msgstr ""
 
-msgid "Open game control app"
+msgid "Recent games"
 msgstr ""
 
-msgid "Navigation"
+msgid "No games has been played yet"
+msgstr ""
+
+msgid "%d - %d (%d total)"
 msgstr ""
 
 msgid "To event list"
 msgstr ""
 
-msgid "Recent games"
+msgid "Open game control app"
 msgstr ""
 
 msgid "Rating table"
@@ -111,55 +42,16 @@ msgstr ""
 msgid "Team table"
 msgstr ""
 
+msgid "Add online game"
+msgstr ""
+
 msgid "Timer & seating"
 msgstr ""
 
-msgid "Admin actions"
+msgid "Admin panel"
 msgstr ""
 
-msgid "Tournament control panel"
-msgstr ""
-
-msgid "Games control panel"
-msgstr ""
-
-msgid "Penalties"
-msgstr ""
-
-msgid "Manage players"
-msgstr ""
-
-msgid "Predefined seating"
-msgstr ""
-
-msgid "%s: actions"
-msgstr ""
-
-msgid "Manage ratings and tournaments"
-msgstr ""
-
-msgid "Rights and privileges"
-msgstr ""
-
-msgid "Register new user"
-msgstr ""
-
-msgid "Manage my profile"
-msgstr ""
-
-msgid "Log out"
-msgstr ""
-
-msgid "Sign in"
-msgstr ""
-
-msgid "Sign up"
-msgstr ""
-
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
+msgid "Personal area"
 msgstr ""
 
 msgid "Aggregated event"
@@ -169,9 +61,6 @@ msgid "Event owners: "
 msgstr ""
 
 msgid "Finished"
-msgstr ""
-
-msgid "Rules overview"
 msgstr ""
 
 msgid "Player"
@@ -192,176 +81,34 @@ msgstr ""
 msgid "Rheda: mahjong statistic system"
 msgstr ""
 
-msgid "Additional penalties"
+msgid "Achievements"
 msgstr ""
 
-msgid ""
-"A penalty may be applied only to player currently in game. Otherwise error "
-"will occur."
+msgid "Rating table has been hidden by tournament administrator"
 msgstr ""
 
-msgid "Penalty amount"
+msgid "These results are visible only for tournament administrator"
 msgstr ""
 
-msgid "Penalty reason"
+msgid "Order by player rating"
 msgstr ""
 
-msgid "Check twice penalty data. You won't be able to cancel the penalty"
+msgid "Order by player name"
 msgstr ""
 
-msgid "Apply penalty"
+msgid "Order by average place"
 msgstr ""
 
-msgid "Manage profile: %s"
+msgid "Order by average score"
 msgstr ""
 
-msgid "E-mail address"
-msgstr ""
-
-msgid ""
-"Your e-mail will not be shared with anyone else and will not be visible "
-"anywhere. If you want to change your e-mail, contact chief administrator."
-msgstr ""
-
-msgid "Player name"
-msgstr ""
-
-msgid "Please enter your real name and surname (if you have it)."
-msgstr ""
-
-msgid "Country"
-msgstr ""
-
-msgid "Select the country you are representing"
-msgstr ""
-
-msgid "City"
-msgstr ""
-
-msgid ""
-"Start typing and select your city from list, or just type it's whole name to "
-"add new city"
-msgstr ""
-
-msgid "Phone"
-msgstr ""
-
-msgid ""
-"Your phone may be shown to administrators of tournaments that are not "
-"finished yet. Also all chief administrators will be able to see your phone "
-"number."
-msgstr ""
-
-msgid "Tenhou ID (nickname)"
-msgstr ""
-
-msgid ""
-"Your tenhou ID will be shown publicly. WARNING: this is your tenhou "
-"nickname, you should not enter your access code here!"
-msgstr ""
-
-msgid "Save"
-msgstr ""
-
-msgid "Recover your password"
-msgstr ""
-
-msgid "Confirmation e-mail was sent. Please check you inbox."
-msgstr ""
-
-msgid ""
-"Please enter the e-mail address you've registered with. We will send you "
-"confirmation email to reset your password."
-msgstr ""
-
-msgid "Your e-mail address"
-msgstr ""
-
-msgid "Please enter symbols to make sure you're not a robot:"
-msgstr ""
-
-msgid "Send confirmation e-mail"
-msgstr ""
-
-msgid "Your password was successfully updated. Please log in now."
-msgstr ""
-
-msgid "Please enter new password for your account."
-msgstr ""
-
-msgid "Change password"
-msgstr ""
-
-msgid ""
-"Please enter your e-mail address and password. We will send authentication "
-"link to your email, so you will be able to sign in and fill your personal "
-"data"
-msgstr ""
-
-msgid ""
-"Your e-mail will not be shared with anyone else and will not be visible "
-"anywhere."
-msgstr ""
-
-msgid "How do we call you?"
-msgstr ""
-
-msgid ""
-"Title is not required, you can add it later, but please don't forget to add "
-"it now or later."
-msgstr ""
-
-msgid "Your password"
-msgstr ""
-
-msgid ""
-"We never store passwords as plain text. But keep in mind that weak passwords "
-"will not be accepted by checker."
-msgstr ""
-
-msgid "I've read the privacy policy listed below and accept its terms"
-msgstr ""
-
-msgid "Create account"
-msgstr ""
-
-msgid "Privacy policy overview"
-msgstr ""
-
-msgid ""
-"Confirmation email has been sent. Please check your inbox for further "
-"instructions."
-msgstr ""
-
-msgid "Create new user"
-msgstr ""
-
-msgid "Person name"
-msgstr ""
-
-msgid "Password"
-msgstr ""
-
-msgid "Successfully register new user!"
-msgstr ""
-
-msgid "Sign up confirmation"
-msgstr ""
-
-msgid "Thank you, your registration was successfully approved."
-msgstr ""
-
-msgid ""
-"You are required to log in with your email and password before proceeding"
+msgid "Team:"
 msgstr ""
 
 msgid "Personal stats"
 msgstr ""
 
 msgid "%s: personal stats"
-msgstr ""
-
-msgid "Edit player information"
 msgstr ""
 
 msgid "No stats are available yet"
@@ -481,115 +228,6 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
-msgid "Player added successfully. Reload page to see results"
-msgstr ""
-
-msgid "Error occured while adding player: "
-msgstr ""
-
-msgid "Nobody"
-msgstr ""
-
-msgid "Players management"
-msgstr ""
-
-msgid "Register players"
-msgstr ""
-
-msgid "Enter part of name"
-msgstr ""
-
-msgid "Registered players (%d)"
-msgstr ""
-
-msgid "Include into seating"
-msgstr ""
-
-msgid "Exclude from seating"
-msgstr ""
-
-msgid "Remove"
-msgstr ""
-
-msgid "Remove player %s?"
-msgstr ""
-
-msgid "Make event admin"
-msgstr ""
-
-msgid "Make %s event admin?"
-msgstr ""
-
-msgid "Revoke admin privileges"
-msgstr ""
-
-msgid "Revoke privileges for %s?"
-msgstr ""
-
-msgid "Replacement player"
-msgstr ""
-
-msgid "Local id"
-msgstr ""
-
-msgid "Team name"
-msgstr ""
-
-msgid ""
-"This will update current local id mapping. See \"Predefined seating\" page "
-"for details"
-msgstr ""
-
-msgid "Save local IDs"
-msgstr ""
-
-msgid ""
-"This will update current teams mapping. See \"Team table\" page for details"
-msgstr ""
-
-msgid "Save teams list"
-msgstr ""
-
-msgid "Predefined seating configuration"
-msgstr ""
-
-msgid "Next session index (starting from 1):"
-msgstr ""
-
-msgid "Update predefined seating config"
-msgstr ""
-
-msgid "Found errors:"
-msgstr ""
-
-msgid "No errors found."
-msgstr ""
-
-msgid ""
-"Predefined seating is entered as list of tables, one table per row. New game "
-"session should be indicated as an empty line."
-msgstr ""
-
-msgid "Example:"
-msgstr ""
-
-msgid ""
-"In this example, two tables play two games. Numbers in seating persist "
-"between games and are defined at Admin actions / Manage players page."
-msgstr ""
-
-msgid "Rights and privileges: %s"
-msgstr ""
-
-msgid "Customize"
-msgstr ""
-
-msgid "Title"
-msgstr ""
-
-msgid "Type"
-msgstr ""
-
 msgid "Starting now!"
 msgstr ""
 
@@ -597,198 +235,6 @@ msgid "STARTING IN:"
 msgstr ""
 
 msgid "Table #"
-msgstr ""
-
-msgid "Rating table has been hidden by tournament administrator"
-msgstr ""
-
-msgid "These results are visible only for tournament administrator"
-msgstr ""
-
-msgid "Order by player rating"
-msgstr ""
-
-msgid "Order by player name"
-msgstr ""
-
-msgid "Order by average place"
-msgstr ""
-
-msgid "Order by average score"
-msgstr ""
-
-msgid "Team:"
-msgstr ""
-
-msgid "Something went wrong: %s"
-msgstr ""
-
-msgid "Something went wrong:"
-msgstr ""
-
-msgid "Unable to generate seating"
-msgstr ""
-
-msgid ""
-"Total count of registered players is not divisible by 4. Use the \"Add "
-"player\" and \"Players management\" pages to add or remove players. Special "
-"replacement player accounts may be used to complete the table."
-msgstr ""
-
-msgid "Tables are being prepared..."
-msgstr ""
-
-msgid "Please wait a while and reload the page."
-msgstr ""
-
-msgid "Update event"
-msgstr ""
-
-msgid "Create new event"
-msgstr ""
-
-msgid "Reset to default"
-msgstr ""
-
-msgid "Please enter title for this event with at least 4 characters."
-msgstr ""
-
-msgid "Enter short description. Markdown syntax is supported."
-msgstr ""
-
-msgid "Session duration"
-msgstr ""
-
-msgid ""
-"Choose single session duration in minutes (timer initial value). Default is "
-"90."
-msgstr ""
-
-msgid "Ruleset"
-msgstr ""
-
-msgid "Select basic ruleset for event."
-msgstr ""
-
-msgid "Timezone"
-msgstr ""
-
-msgid "All dates and times will be displayed according to selected timezone."
-msgstr ""
-
-msgid "Tenhou lobby ID"
-msgstr ""
-
-msgid "Please enter lobby id for this event like this: C5560"
-msgstr ""
-
-msgid "Series"
-msgstr ""
-
-msgid ""
-"Set length of game series. Separate rating table for series will be "
-"available."
-msgstr ""
-
-msgid "Minimal games count"
-msgstr ""
-
-msgid ""
-"If this is non-zero N, only those who played more than N games will be shown "
-"in rating table."
-msgstr ""
-
-msgid "Team tournament"
-msgstr ""
-
-msgid "Choose this for separate team rating"
-msgstr ""
-
-msgid ""
-"Choose this if you want to define your own custom seating for tournament by "
-"hand"
-msgstr ""
-
-msgid "Games autostart interval"
-msgstr ""
-
-msgid ""
-"Duration in seconds before games are started automatically after seating is "
-"ready. Set to 0 to disable autostart."
-msgstr ""
-
-msgid "Ruleset tuning"
-msgstr ""
-
-msgid "Create event"
-msgstr ""
-
-msgid "Manage events privileges: %s"
-msgstr ""
-
-msgid "Revoke privilege #title?"
-msgstr ""
-
-msgid "Privilege"
-msgstr ""
-
-msgid "Controls"
-msgstr ""
-
-msgid "global"
-msgstr ""
-
-msgid "Revoke"
-msgstr ""
-
-msgid "Manage owned events"
-msgstr ""
-
-msgid ""
-"Really finish event #id (#title)? You won't be able to add games after event "
-"is finished."
-msgstr ""
-
-msgid "Finish the event"
-msgstr ""
-
-msgid "Close"
-msgstr ""
-
-msgid "Cancel"
-msgstr ""
-
-msgid "New club rating"
-msgstr ""
-
-msgid "New tournament"
-msgstr ""
-
-msgid "New online tournament"
-msgstr ""
-
-msgid "Event"
-msgstr ""
-
-msgid "Toggle visibility on main page"
-msgstr ""
-
-msgid "Toggle rating table visibility"
-msgstr ""
-
-msgid "Rating"
-msgstr ""
-
-msgid "Edit"
-msgstr ""
-
-msgid "Privileges"
-msgstr ""
-
-msgid "Rebuild scoring"
-msgstr ""
-
-msgid "Finish"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -881,6 +327,9 @@ msgstr ""
 msgid "Full game log:"
 msgstr ""
 
+msgid "Rating"
+msgstr ""
+
 msgid "Rating graph"
 msgstr ""
 
@@ -891,12 +340,6 @@ msgid "Han"
 msgstr ""
 
 msgid "Yaku collected over all time"
-msgstr ""
-
-msgid "Please enter your e-mail address and password."
-msgstr ""
-
-msgid "Forgot your password?"
 msgstr ""
 
 msgid "First page"
@@ -911,215 +354,71 @@ msgstr ""
 msgid "Last page"
 msgstr ""
 
-msgid "Finish all the games"
+msgid "The game has been successfully added!"
 msgstr ""
 
-msgid ""
-"After this button is pressed, you won't be able to cancel any rounds, and "
-"all the results will become visible to all players in rating table."
+msgid "Add game"
 msgstr ""
 
-msgid "Finish the games? You will not be able to cancel rounds anymore!"
+msgid "Achievement"
 msgstr ""
 
-msgid "Confirm the results and finish all games"
+msgid "Description"
 msgstr ""
 
-msgid "Ready to generate seating"
+msgid "Value"
 msgstr ""
 
-msgid "Select seating mode and press the appropriate button."
+msgid "Nominees"
 msgstr ""
 
-msgid "Random seating"
+msgid "%s fu"
 msgstr ""
 
-msgid ""
-"This will randomize players at all tables - useful when making a first game "
-"in tournament."
+msgid "%s: %d yakuhai"
+msgid_plural "%s: %d yakuhais"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d win"
+msgid_plural "%d wins"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d quickest hand"
+msgid_plural "%d quickest hands"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%s han, %s fu"
 msgstr ""
 
-msgid "Use random seating for new game?"
+msgid "%s han"
 msgstr ""
 
-msgid "Use random seating"
+msgid "%s bet"
+msgid_plural "%s bets"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%s ippatsu"
+msgid_plural "%s ippatsu"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%s points"
 msgstr ""
 
-msgid "Swiss seating"
+msgid "%s dora"
 msgstr ""
 
-msgid ""
-"This seating uses current player rating to place higher ranked players "
-"together, with exception of players who already played on the same table."
+msgid "%s yaku"
 msgstr ""
 
-msgid ""
-"In case of small number of players and large number of games, this seating "
-"will create tables with as few crossings as possible."
-msgstr ""
-
-msgid "Use swiss seating for new game?"
-msgstr ""
-
-msgid "Use swiss seating"
-msgstr ""
-
-msgid "Interval seating"
-msgstr ""
-
-msgid ""
-"Players will be assigned to tables according to current rating table with "
-"selected interval"
-msgstr ""
-
-msgid ""
-"Note that seating starts from the top of rating table, so the rest of "
-"players at bottom will be placed with step 1."
-msgstr ""
-
-msgid ""
-"Example: 3 tables (12 players) with step 2 will be formed as 1-3-5-7, "
-"2-4-6-8 and 9-10-11-12"
-msgstr ""
-
-msgid "Step 1 (1-2-3-4)"
-msgstr ""
-
-msgid "Step 2 (1-3-5-7)"
-msgstr ""
-
-msgid "Step 3 (1-4-7-10)"
-msgstr ""
-
-msgid "Step 4 (1-5-9-13)"
-msgstr ""
-
-msgid "Step 5 (1-6-11-17)"
-msgstr ""
-
-msgid "Step 6 (1-7-13-19)"
-msgstr ""
-
-msgid "Use interval seating for new game?"
-msgstr ""
-
-msgid "Use interval seating"
-msgstr ""
-
-msgid ""
-"This tournament has predefined seating. See Admin actions / Predefined "
-"seating page for seating configuration. Next seating is listed below."
-msgstr ""
-
-msgid "No seating defined for next game. Looks like the tournament is finished"
-msgstr ""
-
-msgid "Randomize winds seating at each table"
-msgstr ""
-
-msgid "Use this seating for new game?"
-msgstr ""
-
-msgid "Use this seating"
-msgstr ""
-
-msgid "Start timer and games"
-msgstr ""
-
-msgid "Press next button to start the timer and begin the games."
-msgstr ""
-
-msgid "Start games and timer?"
-msgstr ""
-
-msgid "Start games!"
-msgstr ""
-
-msgid "Made a mistake in seating?"
-msgstr ""
-
-msgid "Reset seating?"
-msgstr ""
-
-msgid "Reset seating"
-msgstr ""
-
-msgid "Games will be automatically started in: "
-msgstr ""
-
-msgid ""
-"You can press next button to reset the timer. Also you can start games "
-"manually in any moment."
-msgstr ""
-
-msgid "Reset autostart timer?"
-msgstr ""
-
-msgid "Reset autostart timer"
-msgstr ""
-
-msgid "Reset the timer"
-msgstr ""
-
-msgid ""
-"Pressing this button will reset the timer to its initial value. Be careful: "
-"you should not need this usually."
-msgstr ""
-
-msgid "Really reset the timer?"
-msgstr ""
-
-msgid "Hide/show rating table"
-msgstr ""
-
-msgid ""
-"Hiding rating table for all players may be useful to keep everybody "
-"intrigued at the end of tournament"
-msgstr ""
-
-msgid "Rating table is hidden. Show"
-msgstr ""
-
-msgid "Rating table is visible. Hide"
-msgstr ""
-
-msgid "Confirm round cancellation: "
-msgstr ""
-
-msgid ""
-"Confirm game definalization. Note that you will need to cancel last round by "
-"hand after that."
-msgstr ""
-
-msgid "Confirm game cancellation: "
-msgstr ""
-
-msgid "Tables state:"
-msgstr ""
-
-msgid "Last played round:"
-msgstr ""
-
-msgid "(no rounds are played yet)"
-msgstr ""
-
-msgid "Penalties:"
-msgstr ""
-
-msgid "%s - %s points of penalty. Reason: %s"
-msgstr ""
-
-msgid "Cancel last played round"
-msgstr ""
-
-msgid "Cancel game"
-msgstr ""
-
-msgid "Definalize game"
-msgstr ""
-
-msgid "<h2>Oops.</h2>Failed to get event configuration!"
-msgstr ""
+msgid "%d riichi bet"
+msgid_plural "%d riichi bets"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "Wrong admin password"
 msgstr ""
@@ -1256,94 +555,13 @@ msgstr ""
 msgid "Main event is empty: this is unexpected behavior"
 msgstr ""
 
-msgid "Page not available for aggregated events"
-msgstr ""
-
 msgid "Latest games"
 msgstr ""
 
 msgid "Statistics"
 msgstr ""
 
-msgid "yes"
-msgstr ""
-
-msgid "no"
-msgstr ""
-
 msgid "Event list"
-msgstr ""
-
-msgid "Log in"
-msgstr ""
-
-msgid "E-mail is invalid"
-msgstr ""
-
-msgid "Password is incorrect or account not registered"
-msgstr ""
-
-msgid "Profile management"
-msgstr ""
-
-msgid "Can't proceed to profile management: please log in"
-msgstr ""
-
-msgid "Can't proceed to profile management: failed to fetch personal data"
-msgstr ""
-
-msgid "Personal information successfully updated"
-msgstr ""
-
-msgid ""
-"Failed to update personal information: insufficient privileges or server "
-"error"
-msgstr ""
-
-msgid ""
-"Player name must be at least 4 characters length. Please enter your real "
-"name (and surname)."
-msgstr ""
-
-msgid "Invalid email provided"
-msgstr ""
-
-msgid ""
-"Provided number is invalid for selected country. Please provide valid phone "
-"number."
-msgstr ""
-
-msgid ""
-"WARNING: you should NEVER pass your tenhou login string to any service! "
-"Please provide your username instead!"
-msgstr ""
-
-msgid "Captcha is invalid"
-msgstr ""
-
-msgid ""
-"Password is too weak. Try adding some digits, uppercase letters or "
-"punctuation to it, or increase its length."
-msgstr ""
-
-msgid "Can't proceed to registration: please log out to create new user"
-msgstr ""
-
-msgid ""
-"E-mail is invalid or not supported. Note that non-latin e-mail domains are "
-"not supported."
-msgstr ""
-
-msgid "Some errors occured, see below"
-msgstr ""
-
-msgid "Only global administrators can register players"
-msgstr ""
-
-msgid "Successfully save new user"
-msgstr ""
-
-msgid "Confirmation code not found"
 msgstr ""
 
 #, php-format
@@ -1351,49 +569,6 @@ msgid "Stats & diagrams: %s"
 msgstr ""
 
 msgid "Yakuhai: total"
-msgstr ""
-
-msgid "Players registration"
-msgstr ""
-
-msgid "Failed to assign administrator to event"
-msgstr ""
-
-msgid "Failed to remove administrator from event"
-msgstr ""
-
-msgid "Failed to register the player. Check your network connection."
-msgstr ""
-
-msgid "Player already registered to this event"
-msgstr ""
-
-msgid "Failed to save local ids mapping. Check your network connection."
-msgstr ""
-
-msgid "Failed to save teams mapping. Check your network connection."
-msgstr ""
-
-msgid "Failed to save ignore seating flag. Check your network connection."
-msgstr ""
-
-msgid "Failed to save replacement player. Check your network connection."
-msgstr ""
-
-msgid "Predefined seating and event status"
-msgstr ""
-
-msgid "Failed to update predefined seating. Check your network connection."
-msgstr ""
-
-#, php-format
-msgid "%s : rights and privileges"
-msgstr ""
-
-msgid "Person not found in database"
-msgstr ""
-
-msgid "Global privileges"
 msgstr ""
 
 msgid "All players"
@@ -1429,63 +604,7 @@ msgstr ""
 msgid "Timer"
 msgstr ""
 
-msgid ""
-"No seating defined. Check \"Admin actions / Predefined seating\" page to "
-"define seating for tournament"
-msgstr ""
-
-msgid "Control panel: create event"
-msgstr ""
-
-msgid "Can't proceed to control panel: please log in"
-msgstr ""
-
-msgid "Title must be at least 4 characters length"
-msgstr ""
-
-msgid "There must be non-zero duration for tournaments"
-msgstr ""
-
-msgid "Autostart interval should be positive integer or zero"
-msgstr ""
-
-msgid "Lobby id must be in format: C####, where # is a digit"
-msgstr ""
-
-msgid "Series length must be positive numeric value"
-msgstr ""
-
-msgid "Minimal games count must be positive numeric value"
-msgstr ""
-
-#, php-format
-msgid ""
-"Failed to assign administrative rights. Consult support and give them id #%s"
-msgstr ""
-
-#, php-format
-msgid "Failed to save event #%s - this should not happen"
-msgstr ""
-
-msgid "Control panel: manage event privileges"
-msgstr ""
-
-msgid "Event is not selected"
-msgstr ""
-
-msgid "Event not found in database"
-msgstr ""
-
-msgid "Control panel: manage events"
-msgstr ""
-
-msgid "Failed to finish event"
-msgstr ""
-
-msgid "Failed to toggle listed flag of the event"
-msgstr ""
-
-msgid "Failed to toggle rating shown flag of the event"
+msgid "Page not available for aggregated events"
 msgstr ""
 
 msgid "Basic ruleset name"
@@ -1544,83 +663,6 @@ msgstr ""
 
 #, php-format
 msgid "%d han, %d fu"
-msgstr ""
-
-#, php-format
-msgid "Ron (%s from %s) %s; riichi bets - %s"
-msgstr ""
-
-#, php-format
-msgid "Tsumo (%s) %s; riichi bets - %s"
-msgstr ""
-
-#, php-format
-msgid "Exhaustive draw (tenpai: %s); riichi bets - %s"
-msgstr ""
-
-#, php-format
-msgid "Abortive draw; riichi bets - %s"
-msgstr ""
-
-#, php-format
-msgid "Chombo (%s)"
-msgstr ""
-
-#, php-format
-msgid ""
-"Double ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); riichi bets "
-"- %s"
-msgstr ""
-
-#, php-format
-msgid ""
-"Triple ron: %s pays; winner #1 is %s (%s); winner #2 is %s (%s); winner #3 "
-"is %s (%s); riichi bets - %s"
-msgstr ""
-
-#, php-format
-msgid "Nagashi mangan - %s; riichi bets - %s; tenpai - %s"
-msgstr ""
-
-#, php-format
-msgid "Nagashi mangan - %s, %s; riichi bets - %s; tenpai - %s"
-msgstr ""
-
-msgid "Pantheon: confirm your registration"
-msgstr ""
-
-#, php-format
-msgid ""
-"Hello!\n"
-"\n"
-"You have just registered your account in the Pantheon system,\n"
-"please follow next link to confirm your registration:\n"
-"\n"
-"%s\n"
-"\n"
-"If you didn't attempt to register, you can safely ignore this message.\n"
-"\n"
-"Sincerely yours,\n"
-"Pantheon support team\n"
-msgstr ""
-
-#, php-format
-msgid ""
-"Hello!\n"
-"\n"
-"You have just requested password recovery for your account\n"
-"in the Pantheon system. Please follow next link to reset your password:\n"
-"\n"
-"%s\n"
-"\n"
-"If you didn't attempt to recover password, you can safely ignore this "
-"message.\n"
-"\n"
-"Sincerely yours,\n"
-"Pantheon support team\n"
-msgstr ""
-
-msgid "Pantheon: password recovery request"
 msgstr ""
 
 msgid "Daburu riichi"
@@ -1753,113 +795,4 @@ msgid "Yakuhai x5"
 msgstr ""
 
 msgid "Open riichi"
-msgstr ""
-
-msgid "List of allowed yaku"
-msgstr ""
-
-msgid "Chips value"
-msgstr ""
-
-msgid "Chombo penalty in rating points"
-msgstr ""
-
-msgid ""
-"Should honda bonus be given by atamahane rule in case of double/triple ron "
-"(given to all if not)"
-msgstr ""
-
-msgid ""
-"Should riichi sticks be given by atamahane rule in case of double/triple ron"
-msgstr ""
-
-msgid "Should uma bonus be divided equally in case of score equality"
-msgstr ""
-
-msgid "If chombo should be payed in points"
-msgstr ""
-
-msgid "Points to end game"
-msgstr ""
-
-msgid "Maximal arbitrary penalty amount"
-msgstr ""
-
-msgid "Minimal arbitrary penalty amount"
-msgstr ""
-
-msgid "Oka (first place) bonus size"
-msgstr ""
-
-msgid "Step of penalty amounts"
-msgstr ""
-
-msgid "Play additional rounds"
-msgstr ""
-
-msgid "Red zone duration"
-msgstr ""
-
-msgid "Amount of points to be given to replacement player"
-msgstr ""
-
-msgid "Amount of uma bonus to be given to replacement player"
-msgstr ""
-
-msgid "If riichi bets left on the table go to winner of the hanchan"
-msgstr ""
-
-msgid "Points to start with"
-msgstr ""
-
-msgid "Rating initial points amount"
-msgstr ""
-
-msgid "If start points should be subtracted from result"
-msgstr ""
-
-msgid "Timer policy"
-msgstr ""
-
-msgid "If games have east rounds only"
-msgstr ""
-
-msgid "Uma (rank) bonus size"
-msgstr ""
-
-msgid "If abortive draws are allowed"
-msgstr ""
-
-msgid "If atamahane is enabled"
-msgstr ""
-
-msgid "If game ends when any player goes bankrupt"
-msgstr ""
-
-msgid "If kazoe should be yakuman, not sanbaiman"
-msgstr ""
-
-msgid "If 4/30 and 3/60 should be rounded to mangan"
-msgstr ""
-
-msgid "If tanyao in open hand is allowed"
-msgstr ""
-
-msgid "If game ends when leading dealer wins in last round"
-msgstr ""
-
-msgid "If multiple yakumans are enabled"
-msgstr ""
-
-msgid "If nagashi mangan is allowed"
-msgstr ""
-
-msgid ""
-"If game should proceed to next round if dealer wins (i.e. no honba/renchan)"
-msgstr ""
-
-msgid "List of yakumans that use pao rule"
-msgstr ""
-
-msgid "Yellow zone duration"
 msgstr ""

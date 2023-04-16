@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 17:08+0300\n"
+"POT-Creation-Date: 2023-04-16 21:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,25 +195,33 @@ msgstr ""
 msgid "Chihou"
 msgstr ""
 
+#: app/Layout.tsx:129:30
+msgid "Toggle color scheme"
+msgstr ""
+
+#: app/Layout.tsx:135:76
+msgid "Language"
+msgstr ""
+
 #: app/Navigation.tsx:82:20
-#: app/pages/OwnedEvents.tsx:274:45
-#: app/pages/OwnedEvents.tsx:275:30
+#: app/pages/OwnedEvents.tsx:271:45
+#: app/pages/OwnedEvents.tsx:272:30
 msgid "Manage players"
 msgstr ""
 
 #: app/Navigation.tsx:88:20
-#: app/pages/OwnedEvents.tsx:270:30
+#: app/pages/OwnedEvents.tsx:267:30
 #: app/pages/OwnedEventsEdit/RulesetSettings.tsx:153:25
 msgid "Penalties"
 msgstr ""
 
 #: app/Navigation.tsx:94:20
-#: app/pages/OwnedEvents.tsx:262:30
+#: app/pages/OwnedEvents.tsx:259:30
 msgid "Manage games"
 msgstr ""
 
 #: app/Navigation.tsx:101:20
-#: app/pages/OwnedEvents.tsx:253:32
+#: app/pages/OwnedEvents.tsx:250:32
 msgid "Predefined seating"
 msgstr ""
 
@@ -242,12 +250,12 @@ msgstr ""
 msgid "Sign out"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:42:16
+#: app/pages/EventPrescript.tsx:43:16
 msgid "Predefined seating configuration"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:54:18
-#: app/pages/EventPrescript.tsx:89:18
+#: app/pages/EventPrescript.tsx:55:18
+#: app/pages/EventPrescript.tsx:90:18
 #: app/pages/GamesControl/index.tsx:52:18
 #: app/pages/GamesControl/index.tsx:66:16
 #: app/pages/OwnedEventsEdit/index.tsx:159:18
@@ -260,57 +268,57 @@ msgstr ""
 msgid "Error has occurred"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:83:13
+#: app/pages/EventPrescript.tsx:84:13
 msgid "Failed to save event script: server error or network unreachable"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:104:37
+#: app/pages/EventPrescript.tsx:106:37
 msgid "Event script filling instruction"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:107:10
+#: app/pages/EventPrescript.tsx:109:10
 msgid "Predefined seating is entered as list of tables, one table per row. New game session should be indicated as an empty line. Example:"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:115:10
+#: app/pages/EventPrescript.tsx:117:10
 msgid "In this example, two tables play two games. Numbers in seating are called \"Local IDs\". They persist between games and are defined at Manage players page of the event."
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:121:16
+#: app/pages/EventPrescript.tsx:123:16
 msgid "Next session index"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:122:22
+#: app/pages/EventPrescript.tsx:124:22
 msgid "This is the index of next session script (starting from 1). Each time new session starts, this value is increased automatically."
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:131:24
+#: app/pages/EventPrescript.tsx:133:24
 msgid "Please enter event script here"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:134:36
+#: app/pages/EventPrescript.tsx:136:36
 msgid "Event script"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:136:18
+#: app/pages/EventPrescript.tsx:138:18
 msgid "Instructions"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:148:15
+#: app/pages/EventPrescript.tsx:150:15
 msgid "Found %1 error"
 msgid_plural "Found %1 errors"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/pages/EventPrescript.tsx:149:37
+#: app/pages/EventPrescript.tsx:151:37
 msgid "No errors found"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:161:26
+#: app/pages/EventPrescript.tsx:163:26
 msgid "Script updated!"
 msgstr ""
 
-#: app/pages/EventPrescript.tsx:161:55
+#: app/pages/EventPrescript.tsx:163:55
 msgid "Update script"
 msgstr ""
 
@@ -618,90 +626,90 @@ msgstr ""
 msgid "You won't be able to cancel last round after the results are approved. Approve session results?"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:63:16
+#: app/pages/OwnedEvents.tsx:66:16
 msgid "Manage my events"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:155:12
+#: app/pages/OwnedEvents.tsx:158:12
 msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:162:14
+#: app/pages/OwnedEvents.tsx:165:14
 msgid "Cancel"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:172:14
+#: app/pages/OwnedEvents.tsx:175:14
 msgid "Stop event"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:179:22
-msgid "Create new event"
-msgstr ""
-
-#: app/pages/OwnedEvents.tsx:204:30
+#: app/pages/OwnedEvents.tsx:201:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:26:24
 msgid "Local rating"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:216:30
+#: app/pages/OwnedEvents.tsx:213:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:28:29
 msgid "Tournament"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:228:30
+#: app/pages/OwnedEvents.tsx:225:30
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:27:25
 msgid "Online event"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:243:34
+#: app/pages/OwnedEvents.tsx:240:48
 msgid "Actions"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:246:38
+#: app/pages/OwnedEvents.tsx:243:38
 msgid "Event management"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:250:38
+#: app/pages/OwnedEvents.tsx:247:38
 msgid "Manage predefined seating"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:259:36
+#: app/pages/OwnedEvents.tsx:256:36
 msgid "Manage current games"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:267:36
+#: app/pages/OwnedEvents.tsx:264:36
 #: app/pages/Penalties.tsx:31:16
 msgid "Manage penalties"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:279:45
+#: app/pages/OwnedEvents.tsx:276:45
 msgid "Edit event settings"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:280:30
+#: app/pages/OwnedEvents.tsx:277:30
 msgid "Settings"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:285:38
+#: app/pages/OwnedEvents.tsx:282:38
 msgid "Danger zone"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:288:36
-#: app/pages/OwnedEvents.tsx:292:30
+#: app/pages/OwnedEvents.tsx:285:36
+#: app/pages/OwnedEvents.tsx:289:30
 msgid "Rebuild scoring"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:296:34
-#: app/pages/OwnedEvents.tsx:304:28
+#: app/pages/OwnedEvents.tsx:293:34
+#: app/pages/OwnedEvents.tsx:301:28
 msgid "Finish event"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:312:24
+#: app/pages/OwnedEvents.tsx:309:24
 msgid "Event finished"
 msgstr ""
 
-#: app/pages/OwnedEvents.tsx:317:28
+#: app/pages/OwnedEvents.tsx:314:28
 msgid "Toggle visibility in ratings global list"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:329:18
+msgid "Create new event"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:38:33
@@ -729,7 +737,7 @@ msgid "All dates and time will be displayed according to the selected timezone."
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:80:25
-#: app/pages/ProfileManage.tsx:141:29
+#: app/pages/ProfileManage.tsx:142:29
 msgid "Nothing found"
 msgstr ""
 
@@ -757,17 +765,17 @@ msgstr ""
 msgid "Failed to save event: server error or network unreachable"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:236:30
+#: app/pages/OwnedEventsEdit/index.tsx:237:30
 #: app/pages/PlayersManage/LocalIdsTab.tsx:93:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:94:28
-#: app/pages/ProfileManage.tsx:165:32
+#: app/pages/ProfileManage.tsx:166:32
 msgid "Changes saved!"
 msgstr ""
 
-#: app/pages/OwnedEventsEdit/index.tsx:236:58
+#: app/pages/OwnedEventsEdit/index.tsx:237:58
 #: app/pages/PlayersManage/LocalIdsTab.tsx:93:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:94:56
-#: app/pages/ProfileManage.tsx:165:60
+#: app/pages/ProfileManage.tsx:166:60
 msgid "Save changes"
 msgstr ""
 
@@ -1183,31 +1191,31 @@ msgstr ""
 msgid "Failed to apply penalty: server error or network unreachable"
 msgstr ""
 
-#: app/pages/Penalties.tsx:114:18
+#: app/pages/Penalties.tsx:115:18
 msgid "Select player"
 msgstr ""
 
-#: app/pages/Penalties.tsx:116:24
+#: app/pages/Penalties.tsx:117:24
 msgid "This is a player to be penalized"
 msgstr ""
 
-#: app/pages/Penalties.tsx:124:18
+#: app/pages/Penalties.tsx:125:18
 msgid "Penalty amount"
 msgstr ""
 
-#: app/pages/Penalties.tsx:125:24
+#: app/pages/Penalties.tsx:126:24
 msgid "The points you enter here will be subtracted from player score after uma is applied when session ends. Please note: the penalty can be only applied during the session. If session is already ended, apply penalty in the next session."
 msgstr ""
 
-#: app/pages/Penalties.tsx:136:18
+#: app/pages/Penalties.tsx:137:18
 msgid "Penalty reason"
 msgstr ""
 
-#: app/pages/Penalties.tsx:140:28
+#: app/pages/Penalties.tsx:141:28
 msgid "Penalty applied!"
 msgstr ""
 
-#: app/pages/Penalties.tsx:140:58
+#: app/pages/Penalties.tsx:141:58
 msgid "Apply penalty"
 msgstr ""
 
@@ -1215,23 +1223,23 @@ msgstr ""
 msgid "Manage players in event"
 msgstr ""
 
-#: app/pages/PlayersManage/index.tsx:86:12
+#: app/pages/PlayersManage/index.tsx:88:14
 msgid "Players"
 msgstr ""
 
-#: app/pages/PlayersManage/index.tsx:91:18
+#: app/pages/PlayersManage/index.tsx:93:20
 msgid "Setup local identifiers of players to be used in predefined event script"
 msgstr ""
 
-#: app/pages/PlayersManage/index.tsx:101:12
+#: app/pages/PlayersManage/index.tsx:103:14
 msgid "Local IDs"
 msgstr ""
 
-#: app/pages/PlayersManage/index.tsx:105:18
+#: app/pages/PlayersManage/index.tsx:107:20
 msgid "Setup team name for each player (for team events)"
 msgstr ""
 
-#: app/pages/PlayersManage/index.tsx:109:12
+#: app/pages/PlayersManage/index.tsx:111:14
 msgid "Team names"
 msgstr ""
 
@@ -1292,27 +1300,27 @@ msgstr ""
 msgid "Confirm your email"
 msgstr ""
 
-#: app/pages/ProfileConfirm.tsx:55:16
+#: app/pages/ProfileConfirm.tsx:48:16
 msgid "Email confirmation failed"
 msgstr ""
 
-#: app/pages/ProfileConfirm.tsx:58:10
+#: app/pages/ProfileConfirm.tsx:51:10
 msgid "Failed to confirm your email. Probably the link you followed has been expired or already used. Please try registering again."
 msgstr ""
 
-#: app/pages/ProfileConfirm.tsx:65:37
+#: app/pages/ProfileConfirm.tsx:58:37
 msgid "Go to Signup page"
 msgstr ""
 
-#: app/pages/ProfileConfirm.tsx:75:54
+#: app/pages/ProfileConfirm.tsx:68:54
 msgid "Email confirmed"
 msgstr ""
 
-#: app/pages/ProfileConfirm.tsx:76:10
+#: app/pages/ProfileConfirm.tsx:69:10
 msgid "Your email has been successfully confirmed. Now you can proceed to login page."
 msgstr ""
 
-#: app/pages/ProfileConfirm.tsx:81:37
+#: app/pages/ProfileConfirm.tsx:74:37
 #: app/pages/ProfileResetPasswordConfirm.tsx:196:37
 msgid "Go to Login page"
 msgstr ""
@@ -1337,7 +1345,7 @@ msgid "Failed to authorize. Please check your email and password."
 msgstr ""
 
 #: app/pages/ProfileLogin.tsx:59:24
-#: app/pages/ProfileManage.tsx:121:22
+#: app/pages/ProfileManage.tsx:122:22
 #: app/pages/ProfileResetPassword.tsx:62:26
 msgid "Your e-mail address"
 msgstr ""
@@ -1376,33 +1384,33 @@ msgstr ""
 msgid "Failed to update profile. Is your connection stable?"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:122:28
+#: app/pages/ProfileManage.tsx:123:28
 msgid "Your e-mail will not be shared with anyone else and will not be visible anywhere. If you want to change your address, contact chief administrator."
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:130:22
+#: app/pages/ProfileManage.tsx:131:22
 msgid "Player title"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:131:28
+#: app/pages/ProfileManage.tsx:132:28
 #: app/pages/ProfileSignup.tsx:86:26
 msgid "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:139:22
+#: app/pages/ProfileManage.tsx:140:22
 msgid "Country"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:149:22
+#: app/pages/ProfileManage.tsx:150:22
 msgid "City"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:155:22
+#: app/pages/ProfileManage.tsx:156:22
 msgid "Phone number"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:161:22
-#: app/pages/ProfileSignupAdmin.tsx:152:20
+#: app/pages/ProfileManage.tsx:162:22
+#: app/pages/ProfileSignupAdmin.tsx:152:26
 msgid "Tenhou ID"
 msgstr ""
 

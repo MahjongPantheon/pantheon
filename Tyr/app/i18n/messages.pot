@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-15 21:57+0300\n"
+"POT-Creation-Date: 2023-04-16 21:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: i18n-json2po\n"
 
-#: app/components/general/dropdown/PlayerDropdown.tsx:31:16
+#: app/components/general/dropdown/PlayerDropdown.tsx:24:60
 msgid "select player"
 msgstr ""
 
@@ -25,319 +25,321 @@ msgstr ""
 msgid "something goes wrong, please contact your administrator"
 msgstr ""
 
-#: app/components/general/search-input/SearchInput.tsx:67:29
+#: app/components/general/search-input/SearchInput.tsx:65:24
 msgid "type to find someone"
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreen.tsx:38:58
+#: app/components/screens/event-select/EventSelectScreen.tsx:39:58
 msgid "name"
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:48:68
+#: app/components/screens/event-select/EventSelectScreenView.tsx:40:66
 msgid "Select event"
 msgstr ""
 
-#: app/components/screens/event-select/EventSelectScreenView.tsx:59:53
+#: app/components/screens/event-select/EventSelectScreenView.tsx:57:16
 msgid "There is no events you participate in right now"
 msgstr ""
 
-#: app/components/screens/game-result/GameResultScreenView.tsx:75:56
+#: app/components/screens/game-result/GameResultScreenView.tsx:70:56
 msgid "No games found"
 msgstr ""
 
-#: app/components/screens/home/HomeScreen.tsx:73:55
+#: app/components/screens/home/HomeScreen.tsx:79:55
 msgid "Event title"
 msgstr ""
 
-#: app/components/screens/home/HomeScreenView.tsx:63:20
+#: app/components/screens/home/HomeScreenView.tsx:101:20
 msgid "New game"
 msgstr ""
 
-#: app/components/screens/home/HomeScreenView.tsx:70:20
+#: app/components/screens/home/HomeScreenView.tsx:108:20
 msgid "Current game"
 msgstr ""
 
-#: app/components/screens/home/HomeScreenView.tsx:76:20
+#: app/components/screens/home/HomeScreenView.tsx:114:20
 msgid "Previous game"
 msgstr ""
 
-#: app/components/screens/home/HomeScreenView.tsx:82:20
+#: app/components/screens/home/HomeScreenView.tsx:120:20
 msgid "Other playing tables"
 msgstr ""
 
-#: app/components/screens/home/HomeScreenView.tsx:88:20
+#: app/components/screens/home/HomeScreenView.tsx:126:20
 msgid "Statistics"
 msgstr ""
 
-#: app/components/screens/log/view/LogScreenView.tsx:39:72
+#: app/components/screens/log/view/LogScreenView.tsx:44:12
 msgid "No results found"
 msgstr ""
 
-#: app/components/screens/log/view/LogScreenView.tsx:71:17
+#: app/components/screens/log/view/LogScreenView.tsx:78:28
 msgid "Game log"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:13:12
+#: app/components/screens/log/view/RoundSelectors.ts:15:12
 msgid "yakuman"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:16:13
+#: app/components/screens/log/view/RoundSelectors.ts:18:15
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:61:9
 msgid "%1 han"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:19:12
+#: app/components/screens/log/view/RoundSelectors.ts:21:12
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:60:9
 msgid "%1 han %2 fu"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:25:10
+#: app/components/screens/log/view/RoundSelectors.ts:27:10
 msgid "Pao from: %1"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:29:10
+#: app/components/screens/log/view/RoundSelectors.ts:31:10
 msgid "Honba: %1"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:33:10
+#: app/components/screens/log/view/RoundSelectors.ts:35:10
 msgid "Tempai: %1"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:47:10
+#: app/components/screens/log/view/RoundSelectors.ts:49:10
 msgid "Riichi bets: %1"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:51:19
+#: app/components/screens/log/view/RoundSelectors.ts:53:19
 msgid "dora %1"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:61:14
+#: app/components/screens/log/view/RoundSelectors.ts:73:14
 msgid "Ron, %1"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:62:14
+#: app/components/screens/log/view/RoundSelectors.ts:74:14
 msgid "%1 ← %2"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:78:14
+#: app/components/screens/log/view/RoundSelectors.ts:101:14
 msgid "Multiron, from %1"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:108:14
+#: app/components/screens/log/view/RoundSelectors.ts:131:14
 msgid "Tsumo, %1"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:125:14
-#: app/components/screens/table/TableHelper.ts:118:13
-#: app/store/selectors/commonSelectors.ts:11:25
+#: app/components/screens/log/view/RoundSelectors.ts:148:14
+#: app/components/screens/table/TableHelper.ts:136:13
 msgid "Exhaustive draw"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:137:14
-#: app/components/screens/table/TableHelper.ts:132:17
-#: app/store/selectors/commonSelectors.ts:12:26
+#: app/components/screens/log/view/RoundSelectors.ts:160:14
+#: app/components/screens/table/TableHelper.ts:153:15
 msgid "Abortive draw"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:150:14
-#: app/components/screens/table/TableHelper.ts:122:13
-#: app/components/screens/table/TableHelper.ts:438:15
-#: app/store/selectors/commonSelectors.ts:13:27
+#: app/components/screens/log/view/RoundSelectors.ts:173:14
+#: app/components/screens/table/TableHelper.ts:142:13
+#: app/components/screens/table/TableHelper.ts:481:14
 msgid "Chombo"
 msgstr ""
 
-#: app/components/screens/log/view/RoundSelectors.ts:163:14
-#: app/components/screens/table/TableHelper.ts:142:17
-#: app/store/selectors/commonSelectors.ts:14:28
+#: app/components/screens/log/view/RoundSelectors.ts:186:14
+#: app/components/screens/table/TableHelper.ts:163:15
 msgid "Nagashi mangan"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:19:10
+#: app/components/screens/login/EnterCredentialsView.tsx:25:55
 msgid "Pantheon: log in"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:24:17
+#: app/components/screens/login/EnterCredentialsView.tsx:30:24
 msgid "Email"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:27:17
+#: app/components/screens/login/EnterCredentialsView.tsx:36:24
 msgid "Password"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:33:12
+#: app/components/screens/login/EnterCredentialsView.tsx:46:12
 msgid "Log in"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:38:12
+#: app/components/screens/login/EnterCredentialsView.tsx:56:12
 msgid "Sign up"
 msgstr ""
 
-#: app/components/screens/login/EnterCredentialsView.tsx:41:12
-#: app/components/screens/login/LoginErrorView.tsx:27:95
+#: app/components/screens/login/EnterCredentialsView.tsx:64:12
+#: app/components/screens/login/LoginErrorView.tsx:33:16
 msgid "Forgot password?"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:14:79
+#: app/components/screens/login/LoginErrorView.tsx:14:80
 msgctxt "Name of registration link"
 msgid "register"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:19:10
+#: app/components/screens/login/LoginErrorView.tsx:21:49
 msgid "Pantheon"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:23:12
+#: app/components/screens/login/LoginErrorView.tsx:23:15
 msgid "Login attempt has failed. Possible reasons are:"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:26:49
+#: app/components/screens/login/LoginErrorView.tsx:27:23
 msgid "E-mail is not registered in Pantheon database (%1)"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:27:16
+#: app/components/screens/login/LoginErrorView.tsx:31:14
 msgid "Password check has failed"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:28:16
+#: app/components/screens/login/LoginErrorView.tsx:36:16
 msgid "Unexpected server error"
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:30:15
+#: app/components/screens/login/LoginErrorView.tsx:39:12
 msgid "If in doubt, contact the tournament administrator for further instructions."
 msgstr ""
 
-#: app/components/screens/login/LoginErrorView.tsx:34:12
+#: app/components/screens/login/LoginErrorView.tsx:44:12
 msgid "OK"
 msgstr ""
 
-#: app/components/screens/new-game/NewGameScreenView.tsx:39:23
+#: app/components/screens/new-game/NewGameScreenView.tsx:51:23
 msgid "Clear players"
 msgstr ""
 
-#: app/components/screens/new-game/NewGameScreenView.tsx:43:23
+#: app/components/screens/new-game/NewGameScreenView.tsx:55:23
 msgid "Shuffle players"
 msgstr ""
 
-#: app/components/screens/new-game/NewGameScreenView.tsx:50:23
+#: app/components/screens/new-game/NewGameScreenView.tsx:62:23
 msgid "Start game"
+msgstr ""
+
+#: app/components/screens/other-tables-list/OtherTablesListView.tsx:37:14
+msgid "No tables are playing right now"
 msgstr ""
 
 #: app/components/screens/select-hand/view/SelectTotalPanel.tsx:68:16
 msgid "Han from yaku"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:73:16
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:72:76
 msgid "Dora"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:80:20
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:82:22
 msgid "Ura dora"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:88:20
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:94:22
 msgid "Red fives"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:95:16
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:104:76
 msgid "Fu"
 msgstr ""
 
-#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:107:14
+#: app/components/screens/select-hand/view/SelectTotalPanel.tsx:111:68
 msgid "Yakuman"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreen.tsx:56:58
+#: app/components/screens/settings/SettingsScreen.tsx:62:58
 msgid "Player name"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:48:57
+#: app/components/screens/settings/SettingsScreenView.tsx:55:14
+msgid "Go to personal area"
+msgstr ""
+
+#: app/components/screens/settings/SettingsScreenView.tsx:59:57
 msgid "Language"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:60:57
+#: app/components/screens/settings/SettingsScreenView.tsx:75:57
 msgid "Theme"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:81:54
+#: app/components/screens/settings/SettingsScreenView.tsx:113:16
 msgid "Select another event"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:88:57
+#: app/components/screens/settings/SettingsScreenView.tsx:121:57
 msgid "Single device mode"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:89:54
+#: app/components/screens/settings/SettingsScreenView.tsx:123:18
 msgid "Turn on if you use a single device for all players"
 msgstr ""
 
-#: app/components/screens/settings/SettingsScreenView.tsx:95:32
+#: app/components/screens/settings/SettingsScreenView.tsx:130:32
 msgid "Log out"
 msgstr ""
 
-#: app/components/screens/table/base/TableInfo.tsx:76:18
+#: app/components/screens/table/base/TableInfo.tsx:73:20
 msgid "%1 deal left"
 msgid_plural "%1 deals left"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/components/screens/table/base/TableInfo.tsx:85:14
+#: app/components/screens/table/base/TableInfo.tsx:81:57
 msgid "Table #%1"
 msgstr ""
 
-#: app/components/screens/table/base/TableInfo.tsx:87:143
+#: app/components/screens/table/base/TableInfo.tsx:86:20
 msgid "Time before game start:"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:110:13
-#: app/components/screens/table/TableHelper.ts:430:15
-#: app/store/selectors/commonSelectors.ts:9:24
+#: app/components/screens/table/TableHelper.ts:124:13
+#: app/components/screens/table/TableHelper.ts:473:14
 msgid "Ron"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:114:13
-#: app/components/screens/table/TableHelper.ts:432:15
-#: app/store/selectors/commonSelectors.ts:10:26
+#: app/components/screens/table/TableHelper.ts:130:13
+#: app/components/screens/table/TableHelper.ts:475:14
 msgid "Tsumo"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:178:16
+#: app/components/screens/table/TableHelper.ts:207:16
 msgid "Penalty"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:340:25
+#: app/components/screens/table/TableHelper.ts:375:25
 msgid "empty outcome"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:349:22
-#: app/components/screens/table/TableHelper.ts:362:22
+#: app/components/screens/table/TableHelper.ts:384:22
+#: app/components/screens/table/TableHelper.ts:397:22
 msgid "Winner"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:352:22
+#: app/components/screens/table/TableHelper.ts:387:22
 msgid "Loser"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:367:27
+#: app/components/screens/table/TableHelper.ts:402:27
 msgid "wrong outcome for paoSelect"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:413:17
+#: app/components/screens/table/TableHelper.ts:454:16
 msgid "Select pao"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:418:16
+#: app/components/screens/table/TableHelper.ts:459:16
 msgid "Select tempai"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:434:15
+#: app/components/screens/table/TableHelper.ts:477:14
 msgid "Draw"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:436:15
+#: app/components/screens/table/TableHelper.ts:479:14
 msgid "Abort"
 msgstr ""
 
-#: app/components/screens/table/TableHelper.ts:440:14
+#: app/components/screens/table/TableHelper.ts:483:14
 msgid "Nagashi"
 msgstr ""
 
@@ -582,15 +584,7 @@ msgstr ""
 msgid "Open riichi"
 msgstr ""
 
-#: app/store/middlewares/yaku.ts:12:15
-#: app/store/middlewares/yaku.ts:20:19
+#: app/store/middlewares/yaku.ts:17:13
+#: app/store/middlewares/yaku.ts:29:17
 msgid "If you want to select a riichi, return back and press riichi button for the winner"
-msgstr ""
-
-#: app/store/selectors/mimirSelectors.ts:53:12
-msgid "Games overview"
-msgstr ""
-
-#: app/store/selectors/mimirSelectors.ts:55:63
-msgid "Loading..."
 msgstr ""
