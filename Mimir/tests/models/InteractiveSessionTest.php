@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\IntermediateResultOfSession;
+
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/models/InteractiveSession.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
@@ -545,7 +547,13 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
             $session->getCurrentState()->toJson()
         );
 
-        $this->assertNotEmpty($sessionMdl->dropLastRound($hash));
+        $intermediateResults = array_combine($session->getPlayersIds(), $session->getCurrentState()->getScores());
+
+        $this->assertNotEmpty($sessionMdl->dropLastRound($hash, array_map(function ($id) use ($intermediateResults) {
+            return (new IntermediateResultOfSession())
+                ->setPlayerId($id)
+                ->setScore($intermediateResults[$id]);
+        }, $session->getPlayersIds())));
 
         /** @var SessionPrimitive $session */
         list($session) = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
