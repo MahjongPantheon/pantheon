@@ -73,7 +73,7 @@ export const ProfileSignup: React.FC = () => {
 
   return (
     <>
-      <Container size='xs' px='xs'>
+      <Container>
         <form onSubmit={form.onSubmit(submitForm)}>
           <TextInput
             icon={<IconMailQuestion size='1rem' />}

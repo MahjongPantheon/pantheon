@@ -7,6 +7,7 @@ import {
   Burger,
   ColorScheme,
   ColorSchemeProvider,
+  Container,
   Group,
   Header,
   MantineProvider,
@@ -177,8 +178,10 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                 </Header>
               }
             >
-              <Title order={4}>{pageTitle}</Title>
-              <Space h='xl' />
+              <Container>
+                <Title order={4}>{pageTitle}</Title>
+                <Space h='xl' />
+              </Container>
               {children}
               <Notifications autoClose={4000} />
             </AppShell>

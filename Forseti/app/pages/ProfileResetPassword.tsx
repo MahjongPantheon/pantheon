@@ -56,7 +56,7 @@ export const ProfileResetPassword: React.FC = () => {
   ) : (
     <>
       <form onSubmit={form.onSubmit(submitForm)}>
-        <Container size='xs' px='xs'>
+        <Container>
           <TextInput
             icon={<IconLogin size='1rem' />}
             placeholder={i18n._t('Your e-mail address')}

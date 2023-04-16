@@ -112,7 +112,7 @@ export const ProfileManage: React.FC = () => {
 
   return isLoading ? null : (
     <>
-      <Container size='xs' px='xs'>
+      <Container>
         <Box pos='relative'>
           <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
             <TextInput

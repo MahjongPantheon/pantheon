@@ -107,7 +107,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
 
   return isLoading ? null : (
     <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
-      <Container size='xs' px='xs'>
+      <Container>
         <Select
           withAsterisk
           icon={<IconUserExclamation size='1rem' />}

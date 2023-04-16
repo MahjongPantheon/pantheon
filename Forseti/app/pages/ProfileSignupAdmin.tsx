@@ -109,7 +109,7 @@ export const ProfileSignupAdmin: React.FC = () => {
 
   return (
     <>
-      <Container size='xs' px='xs'>
+      <Container>
         <LoadingOverlay visible={isLoading} overlayOpacity={1} />
         <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
           <TextInput

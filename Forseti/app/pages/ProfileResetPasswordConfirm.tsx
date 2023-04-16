@@ -47,7 +47,7 @@ export const ProfileResetPasswordConfirm: React.FC<{ params: { code: string } }>
 
   if (isLoading) {
     return (
-      <Container size='xs' px='xs'>
+      <Container>
         <Center maw={400} h={100} mx='auto'>
           <Loader />
         </Center>
@@ -57,7 +57,7 @@ export const ProfileResetPasswordConfirm: React.FC<{ params: { code: string } }>
 
   if (isSuccess) {
     return (
-      <Container size='xs' px='xs'>
+      <Container>
         <SuccessAlert i18n={i18n} />
       </Container>
     );
@@ -65,7 +65,7 @@ export const ProfileResetPasswordConfirm: React.FC<{ params: { code: string } }>
 
   if (tmpCode !== '') {
     return (
-      <Container size='xs' px='xs'>
+      <Container>
         <ResetForm
           i18n={i18n}
           tmpCode={tmpCode}
@@ -79,7 +79,7 @@ export const ProfileResetPasswordConfirm: React.FC<{ params: { code: string } }>
 
   if (!isSuccess) {
     return (
-      <Container size='xs' px='xs'>
+      <Container>
         <ErrorAlert i18n={i18n} />
       </Container>
     );
