@@ -1263,7 +1263,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->_client->AddRuleForGroup(
             [],
             (new \Common\Access_AddRuleForGroup_Payload())
-                ->setRuleName('testrule1')
+                ->setRuleName('testrule2')
                 ->setRuleValue((new \Common\RuleValue())->setStringValue('testval2_g'))
                 ->setRuleType(\Frey\AccessPrimitive::TYPE_ENUM)
                 ->setGroupId($grpId)
@@ -1295,7 +1295,9 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
 
         $this->assertNotEmpty($response);
         $access = $response->getRules();
-        $this->assertEquals(3, count($access));
+        // Note: this SHOULD be 3, not 4. But as we're setting a CREATE_EVENT rule forcefully for all users
+        // in tests, it should be increased by 1 here.
+        $this->assertEquals(4, count($access));
         $rule1 = $access['testrule1'];
         $rule2 = $access['testrule2'];
         $rule3 = $access['testrule3'];
