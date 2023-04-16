@@ -271,18 +271,6 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     </Link>
                   )}
                   {!event.finished && (
-                    <Link to={`/ownedEvents/edit/${event.id}`}>
-                      <ActionIcon
-                        variant='filled'
-                        size='lg'
-                        color='blue'
-                        title={i18n._t('Edit event settings')}
-                      >
-                        <IconTool />
-                      </ActionIcon>
-                    </Link>
-                  )}
-                  {!event.finished && (
                     <Link to={`/event/${event.id}/penalties`}>
                       <ActionIcon
                         variant='filled'
@@ -306,6 +294,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       </ActionIcon>
                     </Link>
                   )}
+                  <Space w='xl' />
                   {!event.finished && isSuperadmin && (
                     <ActionIcon
                       title={i18n._t('Rebuild scoring')}
@@ -317,6 +306,18 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     >
                       <IconRefreshAlert />
                     </ActionIcon>
+                  )}
+                  {!event.finished && (
+                    <Link to={`/ownedEvents/edit/${event.id}`}>
+                      <ActionIcon
+                        variant='filled'
+                        size='lg'
+                        color='blue'
+                        title={i18n._t('Edit event settings')}
+                      >
+                        <IconTool />
+                      </ActionIcon>
+                    </Link>
                   )}
                   {!event.finished && (
                     <ActionIcon

@@ -254,21 +254,23 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
 
   return isLoading ? null : (
     <Container>
-      <TournamentControls
-        seatingLoading={seatingLoading}
-        players={players}
-        tablesState={tablesState}
-        eventConfig={eventConfig}
-        startTimer={onStartTimer}
-        resetTimer={onStartTimer}
-        toggleResults={onToggleResults}
-        approveResults={onApproveResults}
-        makeIntervalSeating={onMakeIntervalSeating}
-        makeRandomSeating={onMakeRandomSeating}
-        makeSwissSeating={onMakeSwissSeating}
-        makeNextPredefinedSeating={onMakePrescriptedSeating}
-        resetSeating={onResetSeating}
-      />
+      {eventConfig?.syncStart && (
+        <TournamentControls
+          seatingLoading={seatingLoading}
+          players={players}
+          tablesState={tablesState}
+          eventConfig={eventConfig}
+          startTimer={onStartTimer}
+          resetTimer={onStartTimer}
+          toggleResults={onToggleResults}
+          approveResults={onApproveResults}
+          makeIntervalSeating={onMakeIntervalSeating}
+          makeRandomSeating={onMakeRandomSeating}
+          makeSwissSeating={onMakeSwissSeating}
+          makeNextPredefinedSeating={onMakePrescriptedSeating}
+          resetSeating={onResetSeating}
+        />
+      )}
       <GamesList
         tablesState={tablesState}
         eventConfig={eventConfig}
