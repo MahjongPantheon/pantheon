@@ -2,9 +2,12 @@ import * as React from 'react';
 import { createContext, useContext } from 'react';
 import { ApiService } from '#/services/api';
 import { storage } from '#/hooks/storage';
+import { analytics } from '#/hooks/analytics';
 
 const api = new ApiService();
-api.setCredentials(storage.getPersonId() ?? 0, storage.getAuthToken() ?? '');
+api
+  .setAnalytics(analytics)
+  .setCredentials(storage.getPersonId() ?? 0, storage.getAuthToken() ?? '');
 export const apiCtx = createContext(api);
 
 export const useApi = () => {

@@ -56,10 +56,12 @@ import {
 import { ClientConfiguration } from 'twirpscript';
 import { EventData, IntermediateResultOfSession } from '#/clients/atoms.pb';
 import { handleReleaseTag } from '#/services/releaseTags';
+import { Analytics } from '#/services/analytics';
 
 export class ApiService {
   private _authToken: string | null = null;
   private _personId: string | null = null;
+  private _analytics: Analytics | null = null;
   private readonly _clientConfMimir: ClientConfiguration = {
     prefix: '/v2',
   };
@@ -67,13 +69,17 @@ export class ApiService {
     prefix: '/v2',
   };
 
+  setAnalytics(analytics: Analytics) {
+    this._analytics = analytics;
+    return this;
+  }
+
   setCredentials(personId: number, token: string) {
     this._authToken = token;
     this._personId = (personId || 0).toString();
 
     const headers = new Headers();
     headers.append('X-Auth-Token', this._authToken ?? '');
-    headers.append('X-Twirp', 'true');
     headers.append('X-Current-Person-Id', this._personId ?? '');
 
     this._clientConfMimir.baseURL = environment.apiUrl;
@@ -91,6 +97,7 @@ export class ApiService {
             return resp.json().then((err) => {
               // Twirp server error handling
               if (err.code && err.code === 'internal' && err.meta && err.meta.cause) {
+                this._analytics?.track(Analytics.REMOTE_ERROR, { url, message: err.meta.cause });
                 throw new Error(err.meta.cause);
               }
               return resp;
@@ -102,12 +109,14 @@ export class ApiService {
   }
 
   getAllPlayers(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetAllRegisteredPlayers' });
     return GetAllRegisteredPlayers({ eventIds: [eventId] }, this._clientConfMimir).then(
       (val) => val.players
     );
   }
 
   getTablesState(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetTablesState' });
     return GetTablesState({ eventId }, this._clientConfMimir).then((v) => v.tables);
   }
 
@@ -115,6 +124,7 @@ export class ApiService {
     if (!this._personId || !this._authToken) {
       return Promise.reject();
     }
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'QuickAuthorize' });
     return QuickAuthorize(
       {
         personId: parseInt(this._personId, 10),
@@ -125,34 +135,42 @@ export class ApiService {
   }
 
   authorize(email: string, password: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'Authorize' });
     return Authorize({ email, password }, this._clientConfFrey);
   }
 
   requestRegistration(email: string, title: string, password: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'RequestRegistration' });
     return RequestRegistration({ email, title, password, sendEmail: true }, this._clientConfFrey);
   }
 
   confirmRegistration(code: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ApproveRegistration' });
     return ApproveRegistration({ approvalCode: code }, this._clientConfFrey);
   }
 
   requestPasswordRecovery(email: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'RequestResetPassword' });
     return RequestResetPassword({ email, sendEmail: true }, this._clientConfFrey);
   }
 
   approvePasswordRecovery(email: string, resetToken: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ApproveResetPassword' });
     return ApproveResetPassword({ email, resetToken }, this._clientConfFrey);
   }
 
   changePassword(email: string, password: string, newPassword: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ChangePassword' });
     return ChangePassword({ email, password, newPassword }, this._clientConfFrey);
   }
 
   getCountries() {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetCountries' });
     return GetCountries({ addr: '' }, this._clientConfMimir);
   }
 
   getPersonalInfo(personId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetPersonalInfo' });
     return GetPersonalInfo({ ids: [personId] }, this._clientConfFrey).then(
       (resp) => resp.persons[0]
     );
@@ -167,6 +185,7 @@ export class ApiService {
     phone: string,
     tenhouId: string
   ) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'UpdatePersonalInfo' });
     return UpdatePersonalInfo(
       {
         id,
@@ -182,54 +201,67 @@ export class ApiService {
   }
 
   getOwnedEventIds(personId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetOwnedEventIds' });
     return GetOwnedEventIds({ personId }, this._clientConfFrey).then((r) => r.eventIds);
   }
 
   getSuperadminFlag(personId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetSuperadminFlag' });
     return GetSuperadminFlag({ personId }, this._clientConfFrey).then((r) => r.isAdmin);
   }
 
   getEvents(limit: number, offset: number, filterUnlisted: boolean) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEvents' });
     return GetEvents({ limit, offset, filterUnlisted }, this._clientConfMimir);
   }
 
   getEventsById(ids: number[]) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEventsById' });
     return GetEventsById({ ids }, this._clientConfMimir).then((r) => r.events);
   }
 
   getEventAdmins(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEventAdmins' });
     return GetEventAdmins({ eventId }, this._clientConfFrey).then((r) => r.admins);
   }
 
   rebuildScoring(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'RebuildScoring' });
     return RebuildScoring({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
   toggleHideResults(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ToggleHideResults' });
     return ToggleHideResults({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
   toggleListed(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ToggleListed' });
     return ToggleListed({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
   finishEvent(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'FinishEvent' });
     return FinishEvent({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
   getEventForEdit(id: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetEventForEdit' });
     return GetEventForEdit({ id }, this._clientConfMimir);
   }
 
   updateEvent(id: number, event: EventData) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'UpdateEvent' });
     return UpdateEvent({ id, event }, this._clientConfMimir).then((r) => r.success);
   }
 
   createEvent(event: EventData) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'CreateEvent' });
     return CreateEvent(event, this._clientConfMimir).then((r) => r.eventId);
   }
 
   getRulesets() {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetRulesets' });
     return GetRulesets({}, this._clientConfMimir).then((r) => {
       const rulesets = [];
       for (let i = 0; i < r.rulesets.length; i++) {
@@ -244,6 +276,7 @@ export class ApiService {
   }
 
   getTimezones() {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetTimezones' });
     return GetTimezones(
       { addr: '' /* mimir will substitute with current IP if empty*/ },
       this._clientConfMimir
@@ -251,16 +284,19 @@ export class ApiService {
   }
 
   getGameConfig(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetGameConfig' });
     return GetGameConfig({ eventId }, this._clientConfMimir);
   }
 
   addPenalty(eventId: number, playerId: number, amount: number, reason: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'AddPenalty' });
     return AddPenalty({ eventId, playerId, amount, reason }, this._clientConfMimir).then(
       (r) => r.success
     );
   }
 
   updateSeatingFlag(playerId: number, eventId: number, ignoreSeating: boolean) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'UpdatePlayerSeatingFlag' });
     return UpdatePlayerSeatingFlag(
       { playerId, eventId, ignoreSeating },
       this._clientConfMimir
@@ -268,18 +304,22 @@ export class ApiService {
   }
 
   registerPlayer(playerId: number, eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'RegisterPlayer' });
     return RegisterPlayer({ eventId, playerId }, this._clientConfMimir).then((r) => r.success);
   }
 
   unregisterPlayer(playerId: number, eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'UnregisterPlayer' });
     return UnregisterPlayer({ eventId, playerId }, this._clientConfMimir).then((r) => r.success);
   }
 
   findByTitle(query: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'FindByTitle' });
     return FindByTitle({ query }, this._clientConfFrey).then((r) => r.persons);
   }
 
   addEventAdmin(playerId: number, eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'AddRuleForPerson' });
     return AddRuleForPerson(
       {
         personId: playerId,
@@ -293,10 +333,12 @@ export class ApiService {
   }
 
   removeEventAdmin(ruleId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'DeleteRuleForPerson' });
     return DeleteRuleForPerson({ ruleId }, this._clientConfFrey).then((r) => r.success);
   }
 
   updatePlayerReplacement(playerId: number, eventId: number, replacementId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'UpdatePlayerReplacement' });
     return UpdatePlayerReplacement(
       { playerId, replacementId, eventId },
       this._clientConfMimir
@@ -304,6 +346,7 @@ export class ApiService {
   }
 
   updateLocalIds(eventId: number, idMap: Record<number, number>) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'UpdatePlayersLocalIds' });
     return UpdatePlayersLocalIds(
       {
         eventId,
@@ -317,6 +360,7 @@ export class ApiService {
   }
 
   updateTeamNames(eventId: number, teamMap: Record<number, string>) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'UpdatePlayersTeams' });
     return UpdatePlayersTeams(
       {
         eventId,
@@ -330,32 +374,39 @@ export class ApiService {
   }
 
   cancelLastRound(sessionHash: string, intermediateResults: IntermediateResultOfSession[]) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'DropLastRound' });
     return DropLastRound({ sessionHash, intermediateResults }, this._clientConfMimir).then(
       (r) => r.success
     );
   }
 
   cancelGame(sessionHash: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'CancelGame' });
     return CancelGame({ sessionHash }, this._clientConfMimir).then((r) => r.success);
   }
 
   definalizeGame(sessionHash: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'DefinalizeGame' });
     return DefinalizeGame({ sessionHash }, this._clientConfMimir).then((r) => r.success);
   }
 
   startTimer(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'StartTimer' });
     return StartTimer({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
   toggleResults(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ToggleHideResults' });
     return ToggleHideResults({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
   approveResults(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'FinalizeSession' });
     return FinalizeSession({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
   makeShuffledSeating(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'MakeShuffledSeating' });
     return MakeShuffledSeating(
       {
         eventId,
@@ -374,6 +425,7 @@ export class ApiService {
   }
 
   makeIntervalSeating(eventId: number, interval: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'MakeIntervalSeating' });
     return MakeIntervalSeating({ eventId, step: interval }, this._clientConfMimir)
       .then((r) => r.success)
       .catch(() => {
@@ -385,6 +437,7 @@ export class ApiService {
   }
 
   makeSwissSeating(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'MakeSwissSeating' });
     return MakeSwissSeating({ eventId }, this._clientConfMimir)
       .then((r) => r.success)
       .catch(() => {
@@ -396,6 +449,7 @@ export class ApiService {
   }
 
   makePrescriptedSeating(eventId: number, randomizeAtTables: boolean) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'MakePrescriptedSeating' });
     return MakePrescriptedSeating({ eventId, randomizeAtTables }, this._clientConfMimir)
       .then((r) => r.success)
       .catch(() => {
@@ -407,14 +461,17 @@ export class ApiService {
   }
 
   resetSeating(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'ResetSeating' });
     return ResetSeating({ eventId }, this._clientConfMimir).then((r) => r.success);
   }
 
   getPrescriptedEventConfig(eventId: number) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetPrescriptedEventConfig' });
     return GetPrescriptedEventConfig({ eventId }, this._clientConfMimir);
   }
 
   updatePrescriptedEventConfig(eventId: number, nextSessionIndex: number, prescript: string) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'UpdatePrescriptedEventConfig' });
     return UpdatePrescriptedEventConfig(
       {
         eventId,
@@ -433,6 +490,7 @@ export class ApiService {
     phone: string,
     tenhouId: string
   ) {
+    this._analytics?.track(Analytics.LOAD_STARTED, { method: 'CreateAccount' });
     return CreateAccount(
       { email, title, password, city, phone, tenhouId },
       this._clientConfFrey

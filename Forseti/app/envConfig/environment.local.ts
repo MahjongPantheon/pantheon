@@ -14,6 +14,6 @@ export const environment: EnvConfig = {
   adminEmail: 'me@ctizen.dev',
   guiFix: (src: string) => src,
   cookieDomain: null, // when working on localhost this must be omitted!
-  statDomain: 'analytics.local', // for testing
+  statDomain: '',
   siteId: '123456', // for testing
 };

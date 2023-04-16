@@ -22,6 +22,11 @@ import { IconMoonStars, IconSun } from '@tabler/icons-react';
 import { useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { NavigationProgress } from '@mantine/nprogress';
+import { useAnalytics } from '#/hooks/analytics';
+import { useLocation } from 'wouter';
+import { environment } from '#config';
+
+let lastLocation = '';
 
 export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   // kludges. Dunno how to do better :[
@@ -29,6 +34,16 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   ctxValue.pageTitle = pageTitle;
   ctxValue.setPageTitle = setPageTitle;
   // /kludges
+
+  const analytics = useAnalytics();
+  const [location] = useLocation();
+  if (lastLocation !== location) {
+    analytics.trackView(location);
+    lastLocation = location;
+    if (!environment.production) {
+      console.log('Location change: ', lastLocation);
+    }
+  }
 
   const api = useApi();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
