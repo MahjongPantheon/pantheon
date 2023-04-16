@@ -28,7 +28,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   const [tablesState, setTablesState] = useState<TableState[]>([]);
   const [players, setPlayers] = useState<RegisteredPlayer[]>([]);
 
-  usePageTitle(i18n._t('Games management :: %1', [eventConfig?.eventTitle]));
+  usePageTitle(i18n._t('Games management'));
 
   useEffect(() => {
     if (!isLoggedIn || !id) {

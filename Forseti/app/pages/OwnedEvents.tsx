@@ -16,6 +16,7 @@ import {
   Modal,
   Text,
   Button,
+  Menu,
 } from '@mantine/core';
 import {
   IconEyeOff,
@@ -195,16 +196,6 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                 }}
               >
                 <Group sx={{ flex: 1, minWidth: '300px' }}>
-                  <ActionIcon
-                    title={i18n._t('Toggle visibility in ratings global list')}
-                    loading={visibilityLoading[event.id]}
-                    variant='filled'
-                    size='lg'
-                    color='grape'
-                    onClick={() => toggleVisibility(event.id)}
-                  >
-                    {event.isListed ? <IconEye /> : <IconEyeOff />}
-                  </ActionIcon>
                   {event.type === 'LOCAL' && (
                     <Tooltip
                       openDelay={500}
@@ -245,94 +236,75 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                     {event.title}
                   </a>
                 </Group>
-                <Group>
-                  {event.isPrescripted && (
-                    <Link to={`/event/${event.id}/prescript`}>
-                      <ActionIcon
-                        variant='filled'
-                        size='lg'
-                        color='grape'
-                        title={i18n._t('Manage predefined seating')}
-                      >
-                        <IconScript />
-                      </ActionIcon>
-                    </Link>
-                  )}
+                <Group position='right'>
                   {!event.finished && (
-                    <Link to={`/event/${event.id}/games`}>
-                      <ActionIcon
-                        variant='filled'
-                        size='lg'
-                        color='yellow'
-                        title={i18n._t('Manage current games')}
-                      >
-                        <IconOlympics />
-                      </ActionIcon>
-                    </Link>
-                  )}
-                  {!event.finished && (
-                    <Link to={`/event/${event.id}/penalties`}>
-                      <ActionIcon
-                        variant='filled'
-                        size='lg'
-                        color='cyan'
-                        title={i18n._t('Manage penalties')}
-                      >
-                        <IconAlertOctagon />
-                      </ActionIcon>
-                    </Link>
-                  )}
-                  {!event.finished && (
-                    <Link to={`/event/${event.id}/players`}>
-                      <ActionIcon
-                        variant='filled'
-                        size='lg'
-                        color='green'
-                        title={i18n._t('Manage players')}
-                      >
-                        <IconFriends />
-                      </ActionIcon>
-                    </Link>
-                  )}
-                  <Space w='xl' />
-                  {!event.finished && isSuperadmin && (
-                    <ActionIcon
-                      title={i18n._t('Rebuild scoring')}
-                      loading={scoringLoading[event.id]}
-                      variant='filled'
-                      size='lg'
-                      color='orange'
-                      onClick={() => rebuildScoring(event.id)}
-                    >
-                      <IconRefreshAlert />
-                    </ActionIcon>
-                  )}
-                  {!event.finished && (
-                    <Link to={`/ownedEvents/edit/${event.id}`}>
-                      <ActionIcon
-                        variant='filled'
-                        size='lg'
-                        color='blue'
-                        title={i18n._t('Edit event settings')}
-                      >
-                        <IconTool />
-                      </ActionIcon>
-                    </Link>
-                  )}
-                  {!event.finished && (
-                    <ActionIcon
-                      title={i18n._t('Stop event')}
-                      variant='filled'
-                      size='lg'
-                      radius='xl'
-                      color='red'
-                      onClick={() => {
-                        setStopEventData({ id: event.id, title: event.title });
-                        stopEventModalOpen();
-                      }}
-                    >
-                      <IconHandStop />
-                    </ActionIcon>
+                    <Menu shadow='md' width={200}>
+                      <Menu.Target>
+                        <Button>{i18n._t('Actions')}</Button>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        <Menu.Label>{i18n._t('Event management')}</Menu.Label>
+                        {event.isPrescripted && (
+                          <Link to={`/event/${event.id}/prescript`}>
+                            <Menu.Item
+                              title={i18n._t('Manage predefined seating')}
+                              icon={<IconScript />}
+                            >
+                              {i18n._t('Predefined seating')}
+                            </Menu.Item>
+                          </Link>
+                        )}
+                        <Link to={`/event/${event.id}/games`}>
+                          <Menu.Item
+                            title={i18n._t('Manage current games')}
+                            icon={<IconOlympics />}
+                          >
+                            {i18n._t('Manage games')}
+                          </Menu.Item>
+                        </Link>
+                        <Link to={`/event/${event.id}/penalties`}>
+                          <Menu.Item
+                            title={i18n._t('Manage penalties')}
+                            icon={<IconAlertOctagon />}
+                          >
+                            {i18n._t('Penalties')}
+                          </Menu.Item>
+                        </Link>
+                        <Link to={`/event/${event.id}/players`}>
+                          <Menu.Item title={i18n._t('Manage players')} icon={<IconFriends />}>
+                            {i18n._t('Manage players')}
+                          </Menu.Item>
+                        </Link>
+                        <Link to={`/ownedEvents/edit/${event.id}`}>
+                          <Menu.Item title={i18n._t('Edit event settings')} icon={<IconTool />}>
+                            {i18n._t('Settings')}
+                          </Menu.Item>
+                        </Link>
+
+                        <Menu.Divider />
+                        <Menu.Label>{i18n._t('Danger zone')}</Menu.Label>
+                        {isSuperadmin && (
+                          <Menu.Item
+                            title={i18n._t('Rebuild scoring')}
+                            onClick={() => rebuildScoring(event.id)}
+                            icon={<IconRefreshAlert />}
+                          >
+                            {i18n._t('Rebuild scoring')}
+                          </Menu.Item>
+                        )}
+                        <Menu.Item
+                          title={i18n._t('Finish event')}
+                          color='red'
+                          icon={<IconHandStop />}
+                          onClick={() => {
+                            setStopEventData({ id: event.id, title: event.title });
+                            stopEventModalOpen();
+                          }}
+                        >
+                          {i18n._t('Finish event')}
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
                   )}
 
                   {event.finished && (
@@ -340,6 +312,17 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                       {i18n._t('Event finished')}
                     </Badge>
                   )}
+
+                  <ActionIcon
+                    title={i18n._t('Toggle visibility in ratings global list')}
+                    loading={visibilityLoading[event.id]}
+                    variant='filled'
+                    size='lg'
+                    color='gray'
+                    onClick={() => toggleVisibility(event.id)}
+                  >
+                    {event.isListed ? <IconEye /> : <IconEyeOff />}
+                  </ActionIcon>
                 </Group>
               </Group>
             );

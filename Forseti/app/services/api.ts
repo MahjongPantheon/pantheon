@@ -41,6 +41,7 @@ import {
   ApproveResetPassword,
   Authorize,
   ChangePassword,
+  CreateAccount,
   DeleteRuleForPerson,
   FindByTitle,
   GetEventAdmins,
@@ -422,5 +423,19 @@ export class ApiService {
       },
       this._clientConfMimir
     ).then((r) => r.success);
+  }
+
+  createAccount(
+    email: string,
+    title: string,
+    password: string,
+    city: string,
+    phone: string,
+    tenhouId: string
+  ) {
+    return CreateAccount(
+      { email, title, password, city, phone, tenhouId },
+      this._clientConfFrey
+    ).then((r) => r.personId);
   }
 }

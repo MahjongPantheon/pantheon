@@ -112,6 +112,8 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                       />
                     </MediaQuery>
                     <Text style={{ flex: 1 }}>{/*Divider*/}</Text>
+                    <Text>{pageTitle}</Text>
+                    <Text style={{ flex: 1 }}>{/*Divider*/}</Text>
                     <div
                       style={{
                         marginTop: '5px',

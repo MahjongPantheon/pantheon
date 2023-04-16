@@ -28,7 +28,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
   const [isLoading, setIsLoading] = useState(false);
   const [eventConfig, setEventConfig] = useState<null | GameConfig>(null);
   const [playersList, setPlayersList] = useState<Array<{ label: string; value: string }>>([]);
-  usePageTitle(i18n._t('Edit event :: %1', [eventConfig?.eventTitle]));
+  usePageTitle(i18n._t('Manage penalties'));
 
   useEffect(() => {
     if (!isLoggedIn || !id) {

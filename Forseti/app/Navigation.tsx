@@ -17,6 +17,7 @@ import { authCtx } from '#/hooks/auth';
 import { useContext, useEffect, useState } from 'react';
 import { Event } from './clients/atoms.pb';
 import { useApi } from '#/hooks/api';
+import { useStorage } from '#/hooks/storage';
 
 function NavigationLink(props: {
   to: string;
@@ -45,8 +46,11 @@ export const Navigation: React.FC<{ onClick: () => void; loading: boolean }> = (
 }) => {
   const i18n = useI18n();
   const api = useApi();
+  const storage = useStorage();
   const [match, params] = useRoute('/event/:id/:subpath');
   const id = params?.id;
+  const personId = storage.getPersonId();
+  const [isSuperadmin, setIsSuperadmin] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [eventData, setEventData] = useState<Event | null>(null);
 
@@ -55,13 +59,13 @@ export const Navigation: React.FC<{ onClick: () => void; loading: boolean }> = (
       return;
     }
     setLoading(true);
-    api
-      .getEventsById([parseInt(id ?? '0', 10)])
-      .then((e) => {
+    Promise.all([api.getEventsById([parseInt(id ?? '0', 10)]), api.getSuperadminFlag(personId!)])
+      .then(([e, flag]) => {
         setEventData(e[0]);
+        setIsSuperadmin(flag);
       })
       .finally(() => setLoading(false));
-  }, [match, id]);
+  }, [match, id, personId]);
 
   const { isLoggedIn } = useContext(authCtx);
   return (
@@ -87,7 +91,7 @@ export const Navigation: React.FC<{ onClick: () => void; loading: boolean }> = (
             to={`event/${params.id}/games`}
             onClick={onClick}
             icon={<IconOlympics size={18} />}
-            label={i18n._t('Games control panel')}
+            label={i18n._t('Manage games')}
           />
           <NavigationLink
             disabled={isLoading || !eventData?.isPrescripted}
@@ -114,6 +118,13 @@ export const Navigation: React.FC<{ onClick: () => void; loading: boolean }> = (
         label={i18n._t('Sign up')}
       />
       <NavigationLink
+        disabled={!isSuperadmin}
+        to='profile/signupAdmin'
+        onClick={onClick}
+        icon={<IconUserPlus size={18} />}
+        label={i18n._t('Register player')}
+      />
+      <NavigationLink
         disabled={!isLoggedIn}
         to='profile/manage'
         onClick={onClick}
@@ -134,22 +145,6 @@ export const Navigation: React.FC<{ onClick: () => void; loading: boolean }> = (
         icon={<IconLogout size={18} />}
         label={i18n._t('Sign out')}
       />
-
-      {/*<Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>*/}
-      {/*<Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>*/}
-      {/*<Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item>*/}
-      {/*<Menu.Item*/}
-      {/*  icon={<IconSearch size={14} />}*/}
-      {/*  rightSection={<Text size="xs" color="dimmed">⌘K</Text>}*/}
-      {/*>*/}
-      {/*  Search*/}
-      {/*</Menu.Item>*/}
-
-      {/*<Menu.Divider />*/}
-
-      {/*<Menu.Label>Danger zone</Menu.Label>*/}
-      {/*<Menu.Item icon={<IconArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>*/}
-      {/*<Menu.Item color="red" icon={<IconTrash size={14} />}>Delete my account</Menu.Item>*/}
     </Box>
   );
 };

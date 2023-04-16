@@ -50,7 +50,7 @@ export const ProfileSignup: React.FC = () => {
       api
         .requestRegistration(
           values.email.trim().toLowerCase(),
-          values.title.trim().toLowerCase(),
+          values.title.trim(),
           values.password.trim()
         )
         .then((resp) => {

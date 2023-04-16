@@ -19,6 +19,7 @@ import { TopActionButton } from '#/helpers/TopActionButton';
 import { nprogress } from '@mantine/nprogress';
 import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
+import { usePageTitle } from '#/hooks/pageTitle';
 
 const scriptExample = `1-2-3-4
 5-6-7-8
@@ -38,6 +39,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
   const [script, setScript] = useState('');
   const [errors, setErrors] = useState<string[]>([]);
   const i18n = useI18n();
+  usePageTitle(i18n._t('Predefined seating configuration'));
 
   const loadConfig = useCallback(() => {
     return api
