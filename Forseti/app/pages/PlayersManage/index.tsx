@@ -119,8 +119,8 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
             eventAdmins={eventAdmins}
             setEventAdmins={setEventAdmins}
             eventId={eventId}
-            config={config!}
-            event={event!}
+            config={config}
+            event={event}
           />
         </Tabs.Panel>
 
