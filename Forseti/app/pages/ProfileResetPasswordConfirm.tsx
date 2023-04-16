@@ -17,8 +17,8 @@ import { useI18n } from '#/hooks/i18n';
 import { useCallback, useEffect, useState } from 'react';
 import { I18nService } from '#/services/i18n';
 import { useForm } from '@mantine/form';
-import zxcvbn from 'zxcvbn';
 import { ApiService } from '#/services/api';
+import { calcPasswordStrength } from '#/helpers/passwordStrength';
 
 export const ProfileResetPasswordConfirm: React.FC<{ params: { code: string } }> = ({
   params: { code },
@@ -109,7 +109,7 @@ function ResetForm({
 
     validate: {
       password: (value: string) =>
-        zxcvbn(value).score >= 3
+        calcPasswordStrength(value) >= 16
           ? null
           : i18n._t('Your password is too weak. Please enter stronger password.'),
     },

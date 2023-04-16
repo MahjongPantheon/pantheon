@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
-import zxcvbn from 'zxcvbn';
 import {
   Button,
   Checkbox,
@@ -19,6 +18,7 @@ import { useApi } from '#/hooks/api';
 import { environment } from '#config';
 import { useDisclosure } from '@mantine/hooks';
 import { usePageTitle } from '#/hooks/pageTitle';
+import { calcPasswordStrength } from '#/helpers/passwordStrength';
 
 export const ProfileSignup: React.FC = () => {
   const i18n = useI18n();
@@ -37,7 +37,7 @@ export const ProfileSignup: React.FC = () => {
         /^\S+@\S+$/.test(value.trim().toLowerCase()) ? null : i18n._t('Invalid email'),
       title: (value: string) => (value.trim().toLowerCase() ? null : i18n._t('Invalid title')),
       password: (value: string) =>
-        zxcvbn(value).score >= 3
+        calcPasswordStrength(value) >= 16
           ? null
           : i18n._t('Your password is too weak. Please enter stronger password.'),
       privacyPolicy: (value: boolean) =>
