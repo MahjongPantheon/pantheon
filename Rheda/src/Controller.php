@@ -290,7 +290,6 @@ abstract class Controller
             if (count($this->_eventIdList) > 1) {
                 /* Aggregated events. */
                 echo $templateEngine->render('Layout', [
-                    'betaLabel' => $this->_storage->getTwirpEnabled(),
                     'eventTitle' => _t("Aggregated event"),
                     'analyticsSiteId' => empty(Sysconf::ANALYTICS_SITE_ID()) ? null : Sysconf::ANALYTICS_SITE_ID(),
                     'statDomain' => empty(Sysconf::STAT_DOMAIN()) ? null : Sysconf::STAT_DOMAIN(),
@@ -299,13 +298,15 @@ abstract class Controller
                     'content' => $templateEngine->render($this->_mainTemplate, $context),
                     'userHasAdminRights' => $this->_userHasAdminRights(),
                     'isAggregated' => true,
-                    'isLoggedIn' => !empty($this->_personalData)
+                    'isLoggedIn' => !empty($this->_personalData),
+                    'forsetiUrl' => Sysconf::ADMIN_PANEL_URL(),
                 ]);
             } else {
                 /* Simple events. */
                 echo $templateEngine->render('Layout', [
-                    'betaLabel' => $this->_storage->getTwirpEnabled(),
                     'tyrUrl' => Sysconf::MOBILE_CLIENT_URL(),
+                    'forsetiUrl' => Sysconf::ADMIN_PANEL_URL(),
+                    'eventId' => $this->_mainEventId,
                     'isOnline' => $this->_mainEventGameConfig->getIsOnline(),
                     'isTeam' => $this->_mainEventGameConfig->getIsTeam(),
                     'useTimer' => $this->_mainEventGameConfig->getUseTimer(),

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Route, Switch } from 'wouter';
-import { Root } from '#/pages/Root';
 import { ProfileLogin } from '#/pages/ProfileLogin';
 import { ProfileSignup } from '#/pages/ProfileSignup';
 import { ProfileConfirm } from '#/pages/ProfileConfirm';
@@ -20,7 +19,7 @@ import { ProfileSignupAdmin } from '#/pages/ProfileSignupAdmin';
 export const App = () => {
   return (
     <Switch>
-      <Route path='/' component={Root} />
+      <Route path='/' component={OwnedEvents} />
 
       <Route path='/profile/login' component={ProfileLogin} />
       <Route path='/profile/signup' component={ProfileSignup} />

@@ -35,7 +35,7 @@
     <link rel="apple-touch-icon-precomposed" href="/assets/ico/rhedahires.png">
 </head>
 
-<body{{#betaLabel}} class="betaLabel"{{/betaLabel}}>
+<body>
 <nav class="navbar fixed-top navbar-expand-sm navbar-collapse navbar-dark bg-dark">
     {{#eventSelected}}
         {{#a class='navbar-brand' href='/'}}{{eventTitle}}{{/a}}
@@ -55,92 +55,70 @@
             the link automatically, but global links should use <a>.
         *}}
         <ul class="navbar-nav mr-auto">
+            {{#eventSelected}}
+                <li class="nav-item">
+                    <a class='nav-link' target='_blank' href='/'>{{_t 'To event list'}}</a>
+                </li>
+            {{/eventSelected}}
             {{^eventSelected}}
                 <li class="nav-item">
                     <a class='nav-link' target='_blank' href='{{tyrUrl}}'>{{_t 'Open game control app'}}</a>
                 </li>
             {{/eventSelected}}
             {{#eventSelected}}
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="navigationMenuButton"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{_t 'Navigation' }}
-                    </a>
-                    <div class="dropdown-menu dropdown-menu" aria-labelledby="navigationMenuButton">
-                        <a class='dropdown-item' href='/'>{{_t 'To event list'}}</a>
-                        <a class='dropdown-item' target="_blank" href='{{tyrUrl}}'>{{_t 'Open game control app'}}</a>
-                        {{#a class='dropdown-item' href='/last'}}{{_t 'Recent games'}}{{/a}}
-                        {{#a class='dropdown-item' href='/stat'}}{{_t 'Rating table'}}{{/a}}
-                        {{#isTeam}}
-                            {{#a class='dropdown-item' href='/stat/team'}}{{_t 'Team table'}}{{/a}}
-                        {{/isTeam}}
-                        {{^isAggregated}}
-                            {{#isOnline}}
-                                {{^hideAddReplayButton}}
-                                    {{#a class='dropdown-item' href='/add-online'}}{{_t 'Add online game' }}{{/a}}
-                                {{/hideAddReplayButton}}
-                            {{/isOnline}}
-                            {{#useTimer}}
-                                {{#a class='dropdown-item' href='/timer' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}
-                            {{/useTimer}}
-                        {{/isAggregated}}
-                    </div>
+                <li class="nav-item">
+                    {{#a class='nav-link' href='/last'}}{{_t 'Recent games'}}{{/a}}
                 </li>
+                <li class="nav-item">
+                    {{#a class='nav-link' href='/stat'}}{{_t 'Rating table'}}{{/a}}
+                </li>
+                {{#isTeam}}
+                    <li class="nav-item">
+                        {{#a class='nav-link' href='/stat/team'}}{{_t 'Team table'}}{{/a}}
+                    </li>
+                {{/isTeam}}
+                {{^isAggregated}}
+                    {{#isOnline}}
+                        {{^hideAddReplayButton}}
+                            <li class="nav-item">
+                                {{#a class='nav-link' href='/add-online'}}{{_t 'Add online game' }}{{/a}}
+                            </li>
+                        {{/hideAddReplayButton}}
+                    {{/isOnline}}
+                    {{#useTimer}}
+                        <li class="nav-item">
+                            {{#a class='nav-link' href='/timer' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}
+                        </li>
+                    {{/useTimer}}
+                {{/isAggregated}}
                 {{#userHasAdminRights}}
-                    <li class="nav-item dropdown">
-                        <a href="#"
-                           class="nav-link dropdown-toggle"
-                           id="navbarDropdownMenuLink"
-                           data-toggle="dropdown"
-                           aria-haspopup="true"
-                           aria-expanded="false"
-                        >{{_t 'Admin actions'}}</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            {{^isAggregated}}
-                                {{^isOnline}}
-                                    {{#isTournament}}
-                                        {{#a class='dropdown-item' href='/tourn'}}{{_t 'Tournament control panel'}}{{/a}}
-                                    {{/isTournament}}
-                                    {{^isTournament}}
-                                        {{#a class='dropdown-item' href='/games'}}{{_t 'Games control panel'}}{{/a}}
-                                    {{/isTournament}}
-                                    {{#usePenalty}}
-                                        {{#a class='dropdown-item' href='/penalties'}}{{_t 'Penalties'}}{{/a}}
-                                    {{/usePenalty}}
-                                {{/isOnline}}
-                                {{#a class='dropdown-item' href='/reg'}}{{_t 'Manage players'}}{{/a}}
-                                {{#isPrescripted}}
-                                    {{#a class='dropdown-item' href='/prescript'}}{{_t 'Predefined seating'}}{{/a}}
-                                {{/isPrescripted}}
-                            {{/isAggregated}}
-                            {{#a class='dropdown-item' href='/achievements'}}{{_t 'Achievements'}}{{/a}}
-                        </div>
+                    <li class="nav-item">
+                        <a target="_blank" href="{{forsetiUrl}}/event/{{eventId}}/games"
+                           class="nav-link"
+                        >{{_t 'Admin panel'}}</a>
                     </li>
                 {{/userHasAdminRights}}
             {{/eventSelected}}
         </ul>
         <ul class="navbar-nav justify-content-end">
             {{#isLoggedIn}}
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="userMenuButton"
-                       title="{{currentPerson.email}} :: {{currentPerson.id}}"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{_p '%s: actions' currentPerson.title}}
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="userMenuButton">
-                        <a class='dropdown-item' href='/cp/manageEvents'>{{_t 'Manage ratings and tournaments'}}</a>
-                        {{#isSuperadmin}}
-                            <a class='dropdown-item' href='/privileges'>{{_t 'Rights and privileges'}}</a>
-                            <a class="dropdown-item" href="/signupAdmin">{{_t 'Register new user'}}</a>
-                        {{/isSuperadmin}}
-                        <a class='dropdown-item' href='/profile'>{{_t 'Manage my profile'}}</a>
-                        <a class='dropdown-item' href='/profile/logout'>{{_t 'Log out'}}</a>
-                    </div>
+                <li class="nav-item">
+                    <span class="nav-link">
+                        {{currentPerson.title}}
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <a target="_blank" href="{{forsetiUrl}}/ownedEvents"
+                       class="nav-link"
+                    >{{_t 'Personal area'}}</a>
                 </li>
             {{/isLoggedIn}}
             {{^isLoggedIn}}
-                <li class="nav-item"><a class='nav-link' href='/profile/login'>{{_t 'Sign in'}}</a></li>
-                <li class="nav-item"><a class='nav-link' href='/signup'>{{_t 'Sign up'}}</a></li>
+                <li class="nav-item">
+                    <a target="_blank" href="{{forsetiUrl}}/profile/login"
+                       class="nav-link"
+                    >{{_t 'Personal area'}}</a>
+                </li>
             {{/isLoggedIn}}
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="dropdownMenuButton"
@@ -154,7 +132,6 @@
                     <a class="dropdown-item" href="?l=de">{{> partials/LangIcon de=1 width=24}}</a>
                 </div>
             </li>
-            <li class="nav-item"><a class="nav-link" href="/profile/toggleProto">β</a></li>
         </ul>
     </div>
 </nav>
