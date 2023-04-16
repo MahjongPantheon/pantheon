@@ -199,7 +199,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       <Container pos='relative'>
         <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>
           <Tabs defaultValue='basic'>
-            <Tabs.List position='center'>
+            <Tabs.List position='left'>
               <TabsList i18n={i18n} form={form} />
             </Tabs.List>
             <Tabs.Panel value='basic' pt='xs'>

@@ -28,7 +28,7 @@ export const TopActionButton: React.FC<TopActionButtonProps> = ({
           <Button
             size='xs'
             loading={loading}
-            style={{ width: '150px' }}
+            style={{ width: '230px' }}
             disabled={disabled}
             leftIcon={icon}
             onClick={onClick}

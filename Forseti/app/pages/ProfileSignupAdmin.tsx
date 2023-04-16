@@ -149,7 +149,7 @@ export const ProfileSignupAdmin: React.FC = () => {
           <Space h='md' />
           <TextInput
             icon={<IconIdBadge2 size='1rem' />}
-            label={i18n._t('Tenhou ID')}
+            description={i18n._t('Tenhou ID')}
             {...form.getInputProps('tenhouId')}
           />
 

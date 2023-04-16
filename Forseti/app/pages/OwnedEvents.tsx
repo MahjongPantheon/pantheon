@@ -30,8 +30,9 @@ import {
   IconAlertOctagon,
   IconOlympics,
   IconScript,
+  IconTimelineEventPlus,
 } from '@tabler/icons-react';
-import { Link, Redirect } from 'wouter';
+import { Link, Redirect, useLocation } from 'wouter';
 import { useApi } from '#/hooks/api';
 import { useI18n } from '#/hooks/i18n';
 import { useCallback, useContext, useEffect, useState } from 'react';
@@ -41,6 +42,7 @@ import { environment } from '#config';
 import { authCtx } from '#/hooks/auth';
 import { useDisclosure } from '@mantine/hooks';
 import { nprogress } from '@mantine/nprogress';
+import { TopActionButton } from '#/helpers/TopActionButton';
 
 export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: { page } }) => {
   const EVENTS_PERPAGE = 30;
@@ -49,6 +51,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   const i18n = useI18n();
   const storage = useStorage();
   const theme = useMantineTheme();
+  const [, navigate] = useLocation();
   const isDark = useMantineColorScheme().colorScheme === 'dark';
   const [stopEventModalOpened, { close: stopEventModalClose, open: stopEventModalOpen }] =
     useDisclosure(false);
@@ -174,12 +177,6 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
         </Group>
       </Modal>
       <Container pos='relative' sx={{ minHeight: '400px' }}>
-        <Group position='right'>
-          <Link to='/ownedEvents/new'>
-            <Button>{i18n._t('Create new event')}</Button>
-          </Link>
-        </Group>
-        <Space h='xl' />
         <Stack justify='flex-start' spacing='0'>
           {events.map((event, idx) => {
             return (
@@ -240,7 +237,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
                   {!event.finished && (
                     <Menu shadow='md' width={200}>
                       <Menu.Target>
-                        <Button>{i18n._t('Actions')}</Button>
+                        <Button color='grape'>{i18n._t('Actions')}</Button>
                       </Menu.Target>
                       <Menu.Dropdown>
                         <Menu.Label>{i18n._t('Event management')}</Menu.Label>
@@ -328,6 +325,15 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
             );
           })}
         </Stack>
+        <TopActionButton
+          title={i18n._t('Create new event')}
+          loading={false}
+          disabled={false}
+          icon={<IconTimelineEventPlus />}
+          onClick={() => {
+            navigate('/ownedEvents/new');
+          }}
+        />
       </Container>
       {totalPages > 1 && (
         <>

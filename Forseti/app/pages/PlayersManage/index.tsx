@@ -73,7 +73,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
 
   return isLoading ? null : (
     <Tabs defaultValue='management' keepMounted={false}>
-      <Tabs.List position='center'>
+      <Tabs.List position='left'>
         <Tabs.Tab
           value='management'
           icon={<IconUserCircle size='0.8rem' />}

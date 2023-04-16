@@ -4,6 +4,12 @@ import { I18nService } from '#/services/i18n';
 import { storage } from '#/hooks/storage';
 
 const i18n = new I18nService(storage);
+i18n.init(
+  (locale) => {
+    storage.setLang(locale);
+  },
+  (err) => console.error(err)
+);
 export const i18nCtx = createContext(i18n);
 
 export const useI18n = () => {

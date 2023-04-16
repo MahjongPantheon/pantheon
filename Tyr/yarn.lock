@@ -3422,14 +3422,14 @@ i18n-dialect@^1.1.1:
   resolved "https://registry.yarnpkg.com/i18n-dialect/-/i18n-dialect-1.1.1.tgz#e3d7eb98d44158a1b5a3de6c5050a7b8c34fe7d2"
   integrity sha512-/TfPINgFFCCDEsHiAyzlZ0XEEtr6Su3+MuqWGzdojnzUOEjfwQIAp5oU/2ykGn8Iv0By10uifG/wSKKXFsLL0A==
 
-i18n-json-po@^1.0.7:
+i18n-json-po@1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/i18n-json-po/-/i18n-json-po-1.0.7.tgz#1afeef4373138f8fa60faa66f01a41eac0e891d3"
-  integrity sha1-Gv7vQ3MTj4+mD6pm8BpB6sDokdM=
+  integrity sha512-hqzONut97duqqR86PlaXaAmLakJdtc8/zAWlhmk2zH5CR7/rmcC7Rgcz6czutJkTWSRk8t38+vpSCqP3gfh6EA==
   dependencies:
     cli "^1.0.1"
 
-i18n-po-json@^1.0.7:
+i18n-po-json@1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/i18n-po-json/-/i18n-po-json-1.0.7.tgz#778a74a8dcb7e1abb74ba10ad8c5e1a3a6d70372"
   integrity sha512-vihWDC3cLZxx2p8biekh7PF8CFFioRj64JcljHtPIG7+UuE86StDzXEfwgSN45yFljfCT36ifEQwpnMD+rYq1Q==

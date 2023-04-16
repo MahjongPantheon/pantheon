@@ -1,0 +1,1540 @@
+# Translations template for PROJECT.
+# Copyright (C) 2023 
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-16 17:08+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: i18n-json2po\n"
+
+#: app/helpers/yaku.ts:54:34
+msgid "Riichi"
+msgstr ""
+
+#: app/helpers/yaku.ts:58:34
+msgid "Daburu riichi"
+msgstr ""
+
+#: app/helpers/yaku.ts:62:34
+msgid "Open riichi"
+msgstr ""
+
+#: app/helpers/yaku.ts:66:34
+msgid "Ippatsu"
+msgstr ""
+
+#: app/helpers/yaku.ts:70:34
+msgid "Menzentsumo"
+msgstr ""
+
+#: app/helpers/yaku.ts:74:34
+msgid "Chiitoitsu"
+msgstr ""
+
+#: app/helpers/yaku.ts:78:34
+msgid "Pinfu"
+msgstr ""
+
+#: app/helpers/yaku.ts:82:34
+msgid "Tanyao"
+msgstr ""
+
+#: app/helpers/yaku.ts:86:34
+msgid "Chanta"
+msgstr ""
+
+#: app/helpers/yaku.ts:90:34
+msgid "Junchan"
+msgstr ""
+
+#: app/helpers/yaku.ts:94:34
+msgid "Iipeikou"
+msgstr ""
+
+#: app/helpers/yaku.ts:98:34
+msgid "Ryanpeikou"
+msgstr ""
+
+#: app/helpers/yaku.ts:102:34
+msgid "Sanshoku"
+msgstr ""
+
+#: app/helpers/yaku.ts:106:34
+msgid "Sanshoku doukou"
+msgstr ""
+
+#: app/helpers/yaku.ts:110:34
+msgid "Ittsu"
+msgstr ""
+
+#: app/helpers/yaku.ts:114:34
+msgid "Yakuhai x1"
+msgstr ""
+
+#: app/helpers/yaku.ts:118:34
+msgid "Yakuhai x2"
+msgstr ""
+
+#: app/helpers/yaku.ts:122:34
+msgid "Yakuhai x3"
+msgstr ""
+
+#: app/helpers/yaku.ts:126:34
+msgid "Yakuhai x4"
+msgstr ""
+
+#: app/helpers/yaku.ts:130:34
+msgid "Toitoi"
+msgstr ""
+
+#: app/helpers/yaku.ts:134:34
+msgid "Honitsu"
+msgstr ""
+
+#: app/helpers/yaku.ts:138:34
+msgid "Honroutou"
+msgstr ""
+
+#: app/helpers/yaku.ts:142:34
+msgid "Sanankou"
+msgstr ""
+
+#: app/helpers/yaku.ts:146:34
+msgid "Shousangen"
+msgstr ""
+
+#: app/helpers/yaku.ts:150:34
+msgid "Sankantsu"
+msgstr ""
+
+#: app/helpers/yaku.ts:154:34
+msgid "Houtei raoyui"
+msgstr ""
+
+#: app/helpers/yaku.ts:158:34
+msgid "Haitei"
+msgstr ""
+
+#: app/helpers/yaku.ts:162:34
+msgid "Rinshan kaihou"
+msgstr ""
+
+#: app/helpers/yaku.ts:166:34
+msgid "Chankan"
+msgstr ""
+
+#: app/helpers/yaku.ts:170:34
+msgid "Renhou"
+msgstr ""
+
+#: app/helpers/yaku.ts:174:34
+#: app/helpers/yaku.ts:249:34
+msgid "Suukantsu"
+msgstr ""
+
+#: app/helpers/yaku.ts:178:34
+msgid "Suuankou"
+msgstr ""
+
+#: app/helpers/yaku.ts:182:34
+#: app/helpers/yaku.ts:229:34
+msgid "Daisangen"
+msgstr ""
+
+#: app/helpers/yaku.ts:186:34
+msgid "Shousuushii"
+msgstr ""
+
+#: app/helpers/yaku.ts:190:34
+#: app/helpers/yaku.ts:233:34
+msgid "Daisuushii"
+msgstr ""
+
+#: app/helpers/yaku.ts:194:34
+#: app/helpers/yaku.ts:237:34
+msgid "Tsuuiisou"
+msgstr ""
+
+#: app/helpers/yaku.ts:198:34
+#: app/helpers/yaku.ts:245:34
+msgid "Chinroutou"
+msgstr ""
+
+#: app/helpers/yaku.ts:202:34
+msgid "Chinitsu"
+msgstr ""
+
+#: app/helpers/yaku.ts:206:34
+msgid "Chuuren poutou"
+msgstr ""
+
+#: app/helpers/yaku.ts:210:34
+#: app/helpers/yaku.ts:241:34
+msgid "Ryuuiisou"
+msgstr ""
+
+#: app/helpers/yaku.ts:214:34
+msgid "Kokushi musou"
+msgstr ""
+
+#: app/helpers/yaku.ts:218:34
+msgid "Tenhou"
+msgstr ""
+
+#: app/helpers/yaku.ts:222:34
+msgid "Chihou"
+msgstr ""
+
+#: app/Navigation.tsx:82:20
+#: app/pages/OwnedEvents.tsx:274:45
+#: app/pages/OwnedEvents.tsx:275:30
+msgid "Manage players"
+msgstr ""
+
+#: app/Navigation.tsx:88:20
+#: app/pages/OwnedEvents.tsx:270:30
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:153:25
+msgid "Penalties"
+msgstr ""
+
+#: app/Navigation.tsx:94:20
+#: app/pages/OwnedEvents.tsx:262:30
+msgid "Manage games"
+msgstr ""
+
+#: app/Navigation.tsx:101:20
+#: app/pages/OwnedEvents.tsx:253:32
+msgid "Predefined seating"
+msgstr ""
+
+#: app/Navigation.tsx:111:16
+msgid "Sign in"
+msgstr ""
+
+#: app/Navigation.tsx:118:16
+msgid "Sign up"
+msgstr ""
+
+#: app/Navigation.tsx:125:16
+#: app/pages/ProfileSignupAdmin.tsx:157:62
+msgid "Register player"
+msgstr ""
+
+#: app/Navigation.tsx:132:16
+msgid "My profile"
+msgstr ""
+
+#: app/Navigation.tsx:139:16
+msgid "Manage events"
+msgstr ""
+
+#: app/Navigation.tsx:146:16
+msgid "Sign out"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:42:16
+msgid "Predefined seating configuration"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:54:18
+#: app/pages/EventPrescript.tsx:89:18
+#: app/pages/GamesControl/index.tsx:52:18
+#: app/pages/GamesControl/index.tsx:66:16
+#: app/pages/OwnedEventsEdit/index.tsx:159:18
+#: app/pages/OwnedEventsEdit/index.tsx:187:18
+#: app/pages/Penalties.tsx:52:18
+#: app/pages/Penalties.tsx:98:18
+#: app/pages/PlayersManage/index.tsx:63:18
+#: app/pages/PlayersManage/LocalIdsTab.tsx:53:18
+#: app/pages/PlayersManage/TeamNamesTab.tsx:53:18
+msgid "Error has occurred"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:83:13
+msgid "Failed to save event script: server error or network unreachable"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:104:37
+msgid "Event script filling instruction"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:107:10
+msgid "Predefined seating is entered as list of tables, one table per row. New game session should be indicated as an empty line. Example:"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:115:10
+msgid "In this example, two tables play two games. Numbers in seating are called \"Local IDs\". They persist between games and are defined at Manage players page of the event."
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:121:16
+msgid "Next session index"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:122:22
+msgid "This is the index of next session script (starting from 1). Each time new session starts, this value is increased automatically."
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:131:24
+msgid "Please enter event script here"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:134:36
+msgid "Event script"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:136:18
+msgid "Instructions"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:148:15
+msgid "Found %1 error"
+msgid_plural "Found %1 errors"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/pages/EventPrescript.tsx:149:37
+msgid "No errors found"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:161:26
+msgid "Script updated!"
+msgstr ""
+
+#: app/pages/EventPrescript.tsx:161:55
+msgid "Update script"
+msgstr ""
+
+#: app/pages/GamesControl/Confirmation.tsx:61:20
+msgid "Confirm"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:85:30
+msgid "Table # %1"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:98:30
+msgid "Current round"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:158:28
+msgid "Cancel last played round"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:159:27
+msgid "Cancel round"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:160:30
+#: app/pages/GamesControl/GamesList.tsx:173:30
+msgid "This action can't be undone. Continue?"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:171:28
+msgid "Remove the game as it never existed"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:172:27
+msgid "Remove game"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:184:28
+msgid "Remove game results"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:185:27
+msgid "Cancel results"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:186:30
+msgid "This will only remove the game results, but you will need to cancel last round separately. This action can't be undone. Continue?"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:219:20
+msgid "Session is ready to start"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:231:20
+msgid "Session in progress"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:244:18
+msgid "Session finished, but not confirmed"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:256:18
+msgid "Session finished"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:268:18
+msgid "Session cancelled"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:280:18
+msgid "Session is scheduled"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:313:12
+#: app/pages/GamesControl/GamesList.tsx:324:9
+msgid "Ron, %1 from %2 (%3), riichi: %4"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:335:12
+msgid "Tsumo, %1 (%2), riichi: %3"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:343:12
+msgid "Chombo, %1"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:347:12
+msgid "Draw, tempai: %1, riichi: %2"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:354:12
+msgid "Abortive draw, riichi: %1"
+msgstr ""
+
+#: app/pages/GamesControl/GamesList.tsx:360:12
+msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:31:16
+msgid "Games management"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:101:35
+msgid "Failed to cancel round"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:115:35
+msgid "Failed to definalize game"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:129:35
+msgid "Failed to cancel game"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:142:27
+msgid "Failed to start timer"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:154:27
+msgid "Failed to toggle results visibility"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:166:27
+msgid "Failed to approve session results"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:180:29
+msgid "Failed to generate interval seating"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:198:27
+msgid "Failed to generate random seating"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:214:27
+msgid "Failed to generate swiss seating"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:231:29
+msgid "Failed to generate prescripted seating"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:248:27
+msgid "Failed to reset seating"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:72:28
+msgid "Current status"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:79:22
+msgid "Not ready"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:80:22
+msgid "Not started"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:81:22
+msgid "Seating..."
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:82:22
+msgid "Seating ready"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:83:22
+msgid "Session started"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:84:22
+msgid "Ready to approve"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:89:14
+msgid "Can't generate seating: count of registered players is not divisible by 4"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:96:19
+#: app/pages/GamesControl/TournamentControls.tsx:162:19
+#: app/pages/GamesControl/TournamentControls.tsx:229:19
+#: app/pages/GamesControl/TournamentControls.tsx:250:19
+msgid "Show results table"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:97:19
+#: app/pages/GamesControl/TournamentControls.tsx:163:19
+#: app/pages/GamesControl/TournamentControls.tsx:230:19
+#: app/pages/GamesControl/TournamentControls.tsx:251:19
+msgid "Hide results table"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:101:22
+msgid "Use random seating for next session"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:102:21
+msgid "Random seating"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:103:24
+msgid "Use random seating for next session?"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:113:21
+msgid "Interval seating can't be used for first session in tournament"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:114:21
+msgid "Use interval seating for next session"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:116:21
+msgid "Interval seating"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:120:28
+msgid "Select interval"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:133:26
+msgid "Use interval seating for next session?"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:147:21
+msgid "Swiss seating can't be used for first session in tournament"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:148:21
+msgid "Use swiss seating for next session"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:150:21
+msgid "Swiss seating"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:151:24
+msgid "Use swiss seating for next session?"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:167:22
+msgid "Generate seating for next session"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:168:21
+msgid "Next seating"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:172:28
+msgid "Randomize seating by wind"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:177:26
+msgid "Apply seating for next session?"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:189:17
+msgid "Please wait unit seating is ready"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:196:22
+msgid "Reset generated seating"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:197:21
+msgid "Reset seating"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:198:24
+msgid "This will remove generated seating. Continue?"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:206:22
+msgid "Start timer and sessions"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:207:21
+msgid "Start timer"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:208:24
+msgid "Start timer and game sessions?"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:220:22
+msgid "Reset the timer to initial value"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:221:21
+msgid "Reset timer"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:222:24
+msgid "Really reset timer?"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:239:22
+msgid "Approve session results and go on to next session"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:240:21
+msgid "Approve sessions"
+msgstr ""
+
+#: app/pages/GamesControl/TournamentControls.tsx:241:24
+msgid "You won't be able to cancel last round after the results are approved. Approve session results?"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:63:16
+msgid "Manage my events"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:155:12
+msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:162:14
+msgid "Cancel"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:172:14
+msgid "Stop event"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:179:22
+msgid "Create new event"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:204:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:26:24
+msgid "Local rating"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:216:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:28:29
+msgid "Tournament"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:228:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:27:25
+msgid "Online event"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:243:34
+msgid "Actions"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:246:38
+msgid "Event management"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:250:38
+msgid "Manage predefined seating"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:259:36
+msgid "Manage current games"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:267:36
+#: app/pages/Penalties.tsx:31:16
+msgid "Manage penalties"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:279:45
+msgid "Edit event settings"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:280:30
+msgid "Settings"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:285:38
+msgid "Danger zone"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:288:36
+#: app/pages/OwnedEvents.tsx:292:30
+msgid "Rebuild scoring"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:296:34
+#: app/pages/OwnedEvents.tsx:304:28
+msgid "Finish event"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:312:24
+msgid "Event finished"
+msgstr ""
+
+#: app/pages/OwnedEvents.tsx:317:28
+msgid "Toggle visibility in ratings global list"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:38:33
+msgid "Select event type"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:50:18
+msgid "Event title"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:56:20
+msgid "Basic ruleset"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:57:26
+msgid "Ruleset to be used as a template for the event. Fine tuning is available in adjacent tabs. Please note that all ruleset settings will be reset when you select another ruleset here."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:75:18
+msgid "Primary timezone for event"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:76:24
+msgid "All dates and time will be displayed according to the selected timezone."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:80:25
+#: app/pages/ProfileManage.tsx:141:29
+msgid "Nothing found"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:86:18
+msgid "Brief description"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:87:24
+msgid "Multiline. Markdown syntax supported."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/index.tsx:39:18
+msgid "Edit event :: %1"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/index.tsx:41:18
+msgid "New event"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/index.tsx:153:29
+msgid "Failed to fetch event data"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/index.tsx:182:27
+msgid "Failed to save event: server error or network unreachable"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/index.tsx:236:30
+#: app/pages/PlayersManage/LocalIdsTab.tsx:93:28
+#: app/pages/PlayersManage/TeamNamesTab.tsx:94:28
+#: app/pages/ProfileManage.tsx:165:32
+msgid "Changes saved!"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/index.tsx:236:58
+#: app/pages/PlayersManage/LocalIdsTab.tsx:93:56
+#: app/pages/PlayersManage/TeamNamesTab.tsx:94:56
+#: app/pages/ProfileManage.tsx:165:60
+msgid "Save changes"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:18:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:56:16
+msgid "Series length"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:19:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:57:22
+msgid "Count of session in game series. Set to 0 to disable series functionality."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:29:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:67:16
+msgid "Minimal games count"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:30:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:68:22
+msgid "Minimal count of games the player should play to get into the rating table."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:22:10
+msgid "Please note: you should set up the rating accordingly to tournament settings in Tenhou.net, otherwise expect errors on replay submit!"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:29:16
+msgid "Tenhou Lobby ID"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:35:16
+msgid "Game expiration time (in hours)"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:36:22
+msgid "Interval of time when played online game is still considered valid and can be added to the rating. Set to 0 to disable expiration."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:45:16
+msgid "Chips value"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:46:22
+msgid "Amount of points given for each chip. Chips should be set up in tournament settings in Tenhou.net. Set to 0 to disable chips."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:25:16
+msgid "Initial rating"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:26:22
+msgid "Score given to all players in the beginning of the rating"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:33:16
+msgid "Initial points"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:34:22
+msgid "Amount of points given to every player in the beginning of every session"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:40:25
+msgid "Game duration"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:42:16
+msgid "Tonpuusen"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:43:22
+msgid "Play only east rounds"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:47:16
+msgid "Agariyame"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:48:22
+msgid "If the dealer holds the 1st place after last hand in session, the game ends regardless of his winning hand or tempai."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:54:16
+msgid "Disable renchans"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:55:22
+msgid "When dealer wins, or stays tempai after draw, seat winds will be changed. Honba is added only after draw."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:63:16
+msgid "Allow bankruptcy"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:64:22
+msgid "When a player runs out of score points, the game immediately ends"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:68:16
+msgid "Play additional rounds"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:69:22
+msgid "If nobody reaches the goal score at the last hand, the game continues to west rounds (in hanchan) or to south rounds (in tonpuusen), until someone reaches the goal"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:77:18
+msgid "Goal score"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:78:24
+msgid "Amount of score player should get to end the game."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:84:25
+msgid "Round outcomes"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:86:16
+msgid "Atamahane"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:87:22
+msgid "Only first player by the order of the move from the loser would be considered a winner. If not checked, all players declaring Ron are considered winners."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:93:16
+msgid "Allow abortive draws"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:94:22
+msgid "There will be a separate \"Abortive draw\" outcome to record draws due to four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:100:16
+msgid "Nagashi mangan"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:101:22
+msgid "Enable \"Nagashi\" outcome to record this special draw"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:104:25
+msgid "Riichi and honba"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:106:16
+msgid "Riichi goes to winner"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:107:22
+msgid "Riichi left on table in case of draw in the end of the session will be given to session winner"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:113:16
+msgid "Pay for honba by atamahane"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:114:22
+msgid "Honba payments will be given only to the first winner. If not checked, payment will be given to all winners."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:120:16
+msgid "Collect riichi bets by atamahane"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:121:22
+msgid "All riichi bets on the table will be given to the first winner. If not checked, winning riichi bets will always be given back, lost bets would be given to the first winner."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:126:25
+msgid "Payments and scores"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:128:16
+msgid "Kazoe yakuman"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:129:22
+msgid "13+ han hands are considered yakuman, not sanbaiman."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:133:16
+msgid "Kiriage mangan"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:134:22
+msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:139:16
+msgid "Oka bonus"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:140:22
+msgid "Amount of points given to player at 1st place"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:147:16
+msgid "Equalize uma"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:148:22
+msgid "If checked, players with equivalent score receive equivalent uma bonus. Otherwise, uma is assigned according to move order."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:155:16
+msgid "Max arbitrary penalty score"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:161:16
+msgid "Min arbitrary penalty score"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:167:16
+msgid "Step of arbitrary penalty scores"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:173:16
+msgid "Pay chombo as reverse mangan"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:174:22
+msgid "Pay chombo right on occasion. If not checked, chombo is subtracted from player score after uma is applied."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:182:18
+msgid "Amount of chombo penalty"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:183:24
+msgid "Amount of penalty applied in the end of the session after uma bonus."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:23:10
+msgid "Basic settings"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:27:12
+msgid "Local event settings"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:32:12
+msgid "Tournament settings"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:37:12
+msgid "Online event settings"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:41:10
+msgid "Ruleset tuning"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:45:10
+msgid "Yaku settings"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:18:16
+msgid "Session duration in minutes"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:19:22
+msgid "Timer starting value. After time runs out, session ending policy is applied (see below)."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:27:16
+msgid "Session ending policy"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:28:22
+msgid "How game sessions should end during the tournament"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:33:38
+msgid "Do not interrupt session until it ends"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:36:20
+msgid "When time is out, finish current hand and interrupt the session"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:40:20
+msgid "When time is out, finish current hand, play one more, and then interrup the session"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:48:16
+msgid "Team tournament"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:52:16
+msgid "Seating is defined in advance"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:53:22
+msgid "You should prepare the tournament script yourself. No automated seating functionality is available when this flag is set."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:16
+msgid "Fixed score applied to replacement player"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:62:22
+msgid "Fixed amount of result score applied for each replacement player regardless of session results."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:71:16
+msgid "Fixed uma for replacement player"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:72:22
+msgid "Fixed amount of rank penalty applied for each replacement player regardless of session results."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:15:16
+msgid "Select uma bonus type"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:19:44
+msgid "Simple rank-based"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:20:45
+msgid "Complex position-based"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:27:20
+msgid "Uma bonus for 1st place"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:33:20
+msgid "Uma bonus for 2nd place"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:39:20
+msgid "Uma penalty for 3rd place"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:45:20
+msgid "Uma penalty for 4th place"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:54:22
+msgid "Place / Session result"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:56:16
+msgid "1st"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:59:16
+msgid "2nd"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:62:16
+msgid "3rd"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:65:16
+msgid "4th"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:70:22
+msgid "3 players with score less than starting"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:95:22
+msgid "1 player with score less than starting"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:119:20
+msgid "Otherwise"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:16:16
+msgid "Kuitan"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:17:22
+msgid "Tanyao costs 1 han on open hand. If not checked, tanyao does not work on open hand."
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:23:16
+msgid "Multiple yakumans"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:24:22
+msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:27:25
+msgid "Yaku allowed"
+msgstr ""
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:44:25
+msgid "Pao rule enabled for:"
+msgstr ""
+
+#: app/pages/Penalties.tsx:71:54
+msgid "Please select player"
+msgstr ""
+
+#: app/pages/Penalties.tsx:72:54
+msgid "Please select penalty amount"
+msgstr ""
+
+#: app/pages/Penalties.tsx:74:38
+msgid "A reason for penalty is mandatory"
+msgstr ""
+
+#: app/pages/Penalties.tsx:93:27
+msgid "Failed to apply penalty: server error or network unreachable"
+msgstr ""
+
+#: app/pages/Penalties.tsx:114:18
+msgid "Select player"
+msgstr ""
+
+#: app/pages/Penalties.tsx:116:24
+msgid "This is a player to be penalized"
+msgstr ""
+
+#: app/pages/Penalties.tsx:124:18
+msgid "Penalty amount"
+msgstr ""
+
+#: app/pages/Penalties.tsx:125:24
+msgid "The points you enter here will be subtracted from player score after uma is applied when session ends. Please note: the penalty can be only applied during the session. If session is already ended, apply penalty in the next session."
+msgstr ""
+
+#: app/pages/Penalties.tsx:136:18
+msgid "Penalty reason"
+msgstr ""
+
+#: app/pages/Penalties.tsx:140:28
+msgid "Penalty applied!"
+msgstr ""
+
+#: app/pages/Penalties.tsx:140:58
+msgid "Apply penalty"
+msgstr ""
+
+#: app/pages/PlayersManage/index.tsx:33:16
+msgid "Manage players in event"
+msgstr ""
+
+#: app/pages/PlayersManage/index.tsx:86:12
+msgid "Players"
+msgstr ""
+
+#: app/pages/PlayersManage/index.tsx:91:18
+msgid "Setup local identifiers of players to be used in predefined event script"
+msgstr ""
+
+#: app/pages/PlayersManage/index.tsx:101:12
+msgid "Local IDs"
+msgstr ""
+
+#: app/pages/PlayersManage/index.tsx:105:18
+msgid "Setup team name for each player (for team events)"
+msgstr ""
+
+#: app/pages/PlayersManage/index.tsx:109:12
+msgid "Team names"
+msgstr ""
+
+#: app/pages/PlayersManage/LocalIdsTab.tsx:82:24
+msgid "Local ID"
+msgstr ""
+
+#: app/pages/PlayersManage/ManagementTab.tsx:156:16
+msgid "Select replacement player for %1"
+msgstr ""
+
+#: app/pages/PlayersManage/ManagementTab.tsx:160:24
+msgid "Find replacement player by name..."
+msgstr ""
+
+#: app/pages/PlayersManage/ManagementTab.tsx:175:30
+msgid "Find and add player by name..."
+msgstr ""
+
+#: app/pages/PlayersManage/ManagementTab.tsx:208:28
+msgid "Replace player with someone else"
+msgstr ""
+
+#: app/pages/PlayersManage/ManagementTab.tsx:224:28
+msgid "Replaced by %1"
+msgstr ""
+
+#: app/pages/PlayersManage/ManagementTab.tsx:231:37
+#: app/pages/PlayersManage/ManagementTab.tsx:232:32
+msgid "Remove replacement"
+msgstr ""
+
+#: app/pages/PlayersManage/ManagementTab.tsx:250:27
+msgid "Player is event administrator. Click to revoke privileges."
+msgstr ""
+
+#: app/pages/PlayersManage/ManagementTab.tsx:251:27
+msgid "Player is a regular user. Click to promote to event admin."
+msgstr ""
+
+#: app/pages/PlayersManage/ManagementTab.tsx:266:27
+msgid "Player is excluded from next seating. Click to include"
+msgstr ""
+
+#: app/pages/PlayersManage/ManagementTab.tsx:267:27
+msgid "Player is included in next seating. Click to exclude"
+msgstr ""
+
+#: app/pages/PlayersManage/ManagementTab.tsx:280:28
+msgid "Remove player from event"
+msgstr ""
+
+#: app/pages/PlayersManage/TeamNamesTab.tsx:82:24
+msgid "Team:"
+msgstr ""
+
+#: app/pages/ProfileConfirm.tsx:16:16
+msgid "Confirm your email"
+msgstr ""
+
+#: app/pages/ProfileConfirm.tsx:55:16
+msgid "Email confirmation failed"
+msgstr ""
+
+#: app/pages/ProfileConfirm.tsx:58:10
+msgid "Failed to confirm your email. Probably the link you followed has been expired or already used. Please try registering again."
+msgstr ""
+
+#: app/pages/ProfileConfirm.tsx:65:37
+msgid "Go to Signup page"
+msgstr ""
+
+#: app/pages/ProfileConfirm.tsx:75:54
+msgid "Email confirmed"
+msgstr ""
+
+#: app/pages/ProfileConfirm.tsx:76:10
+msgid "Your email has been successfully confirmed. Now you can proceed to login page."
+msgstr ""
+
+#: app/pages/ProfileConfirm.tsx:81:37
+#: app/pages/ProfileResetPasswordConfirm.tsx:196:37
+msgid "Go to Login page"
+msgstr ""
+
+#: app/pages/ProfileLogin.tsx:18:16
+msgid "Login to your account"
+msgstr ""
+
+#: app/pages/ProfileLogin.tsx:28:63
+#: app/pages/ProfileResetPassword.tsx:25:63
+#: app/pages/ProfileSignup.tsx:37:63
+#: app/pages/ProfileSignupAdmin.tsx:46:63
+msgid "Invalid email"
+msgstr ""
+
+#: app/pages/ProfileLogin.tsx:29:66
+msgid "Please enter password"
+msgstr ""
+
+#: app/pages/ProfileLogin.tsx:47:13
+msgid "Failed to authorize. Please check your email and password."
+msgstr ""
+
+#: app/pages/ProfileLogin.tsx:59:24
+#: app/pages/ProfileManage.tsx:121:22
+#: app/pages/ProfileResetPassword.tsx:62:26
+msgid "Your e-mail address"
+msgstr ""
+
+#: app/pages/ProfileLogin.tsx:64:24
+msgid "Your password"
+msgstr ""
+
+#: app/pages/ProfileLogin.tsx:70:40
+msgid "Forgot your password?"
+msgstr ""
+
+#: app/pages/ProfileLogin.tsx:72:34
+msgid "Proceed with sign in"
+msgstr ""
+
+#: app/pages/ProfileLogout.tsx:15:16
+msgid "Logout"
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:24:16
+msgid "Manage your account"
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:45:70
+#: app/pages/ProfileSignup.tsx:38:70
+#: app/pages/ProfileSignupAdmin.tsx:47:70
+msgid "Invalid title"
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:48:13
+msgid "You have provided your tenhou login string instead of your username. You should NEVER give anyone your login string!"
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:87:13
+msgid "Failed to update profile. Is your connection stable?"
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:122:28
+msgid "Your e-mail will not be shared with anyone else and will not be visible anywhere. If you want to change your address, contact chief administrator."
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:130:22
+msgid "Player title"
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:131:28
+#: app/pages/ProfileSignup.tsx:86:26
+msgid "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:139:22
+msgid "Country"
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:149:22
+msgid "City"
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:155:22
+msgid "Phone number"
+msgstr ""
+
+#: app/pages/ProfileManage.tsx:161:22
+#: app/pages/ProfileSignupAdmin.tsx:152:20
+msgid "Tenhou ID"
+msgstr ""
+
+#: app/pages/ProfileResetPassword.tsx:15:16
+#: app/pages/ProfileResetPasswordConfirm.tsx:176:37
+msgid "Recover password"
+msgstr ""
+
+#: app/pages/ProfileResetPassword.tsx:45:13
+msgid "Failed to request password reset. Please check your email."
+msgstr ""
+
+#: app/pages/ProfileResetPassword.tsx:67:16
+msgid "Request password reset"
+msgstr ""
+
+#: app/pages/ProfileResetPassword.tsx:78:52
+msgid "Email has been sent"
+msgstr ""
+
+#: app/pages/ProfileResetPassword.tsx:79:8
+msgid "A confirmation link for password recovery has been sent to provided email. Please check your mailbox and follow the link in the message."
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:32:16
+msgid "Reset your password"
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:114:13
+#: app/pages/ProfileSignup.tsx:42:13
+msgid "Your password is too weak. Please enter stronger password."
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:132:13
+msgid "Failed to change password. Is your connection stable?"
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:141:60
+msgid "Please note"
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:142:10
+msgid "Your password has been set to temporary value. You won't be able to log in until you set you new password, even if you remembered your old password."
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:149:24
+msgid "Enter new strong password"
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:154:34
+msgid "Update password"
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:166:16
+msgid "Password recovery failed"
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:169:10
+msgid "Failed to recover your password. Probably the link you followed has been expired or already used. Please try again."
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:188:16
+msgid "Password successfully updated"
+msgstr ""
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:191:10
+msgid "Your password has been successfully reset. Now you can proceed to login page."
+msgstr ""
+
+#: app/pages/ProfileSignup.tsx:25:16
+#: app/pages/ProfileSignup.tsx:107:36
+#: app/pages/ProfileSignupAdmin.tsx:25:16
+msgid "Register new account"
+msgstr ""
+
+#: app/pages/ProfileSignup.tsx:44:24
+msgid "You should read and accept the Privacy Policy"
+msgstr ""
+
+#: app/pages/ProfileSignup.tsx:65:13
+msgid "Failed to request registration. Is your connection stable?"
+msgstr ""
+
+#: app/pages/ProfileSignup.tsx:80:26
+msgid "Enter your e-mail address"
+msgstr ""
+
+#: app/pages/ProfileSignup.tsx:93:26
+#: app/pages/ProfileSignupAdmin.tsx:133:26
+msgid "Enter strong password"
+msgstr ""
+
+#: app/pages/ProfileSignup.tsx:100:20
+msgid "I've read the privacy policy listed below and accept its terms"
+msgstr ""
+
+#: app/pages/ProfileSignup.tsx:105:42
+msgid "Already registered?"
+msgstr ""
+
+#: app/pages/ProfileSignup.tsx:117:14
+msgid "show / hide"
+msgstr ""
+
+#: app/pages/ProfileSignupAdmin.tsx:74:22
+msgid "Success"
+msgstr ""
+
+#: app/pages/ProfileSignupAdmin.tsx:75:24
+msgid "Player was successfully registered"
+msgstr ""
+
+#: app/pages/ProfileSignupAdmin.tsx:87:13
+msgid "Failed to register player. Is your connection stable?"
+msgstr ""
+
+#: app/pages/ProfileSignupAdmin.tsx:118:26
+msgid "Enter player's e-mail address"
+msgstr ""
+
+#: app/pages/ProfileSignupAdmin.tsx:125:26
+msgid "This is a title that will be shown in rating table and in mobile assistant. Please select some unique title, like nickname or name+surname."
+msgstr ""
+
+#: app/pages/ProfileSignupAdmin.tsx:139:26
+msgid "Enter city of the player"
+msgstr ""
+
+#: app/pages/ProfileSignupAdmin.tsx:145:26
+msgid "Enter player's phone"
+msgstr ""
+
+#: app/pages/ProfileSignupAdmin.tsx:157:30
+msgid "Registration done!"
+msgstr ""

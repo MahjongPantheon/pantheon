@@ -7,24 +7,31 @@ import {
   Burger,
   ColorScheme,
   ColorSchemeProvider,
+  Group,
   Header,
   MantineProvider,
   MediaQuery,
+  Menu,
   Navbar,
+  Space,
   Text,
+  Title,
   useMantineTheme,
 } from '@mantine/core';
 import { Navigation } from '#/Navigation';
 import { authCtx } from '#/hooks/auth';
 import { actionButtonCtx, actionButtonRef } from '#/hooks/actionButton';
 import { useApi } from '#/hooks/api';
-import { IconMoonStars, IconSun } from '@tabler/icons-react';
+import { IconLanguageHiragana, IconMoonStars, IconSun } from '@tabler/icons-react';
 import { useLocalStorage } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
 import { NavigationProgress } from '@mantine/nprogress';
 import { useAnalytics } from '#/hooks/analytics';
 import { useLocation } from 'wouter';
 import { environment } from '#config';
+import { useI18n } from '#/hooks/i18n';
+import { FlagEn, FlagRu } from '#/helpers/flags';
+import { useStorage } from '#/hooks/storage';
 
 let lastLocation = '';
 
@@ -72,6 +79,22 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   const toggleColorScheme = (value?: ColorScheme) =>
     setColorScheme(value ?? (colorScheme === 'dark' ? 'light' : 'dark'));
   const dark = colorScheme === 'dark';
+  const i18n = useI18n();
+  const storage = useStorage();
+
+  // Small kludge to forcefully rerender after language change
+  const [, updateState] = React.useState({});
+  const forceUpdate = React.useCallback(() => updateState({}), []);
+  const saveLang = (lang: string) => {
+    storage.setLang(lang);
+    i18n.init(
+      (locale) => {
+        storage.setLang(locale);
+        forceUpdate();
+      },
+      (err) => console.error(err)
+    );
+  };
 
   return (
     <actionButtonCtx.Provider value={actionButtonRef}>
@@ -94,17 +117,34 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
               }}
               navbarOffsetBreakpoint='sm'
               navbar={
-                <Navbar p='md' hiddenBreakpoint='sm' hidden={!opened} width={{ sm: 200, lg: 300 }}>
+                <Navbar p='md' hiddenBreakpoint='sm' hidden={!opened} width={{ sm: 300, lg: 300 }}>
                   <Navigation loading={authLoading} onClick={() => setOpened(false)} />
 
-                  <ActionIcon
-                    variant='outline'
-                    color={dark ? 'yellow' : 'blue'}
-                    onClick={() => toggleColorScheme()}
-                    title='Toggle color scheme'
-                  >
-                    {dark ? <IconSun size='1.1rem' /> : <IconMoonStars size='1.1rem' />}
-                  </ActionIcon>
+                  <Group>
+                    <ActionIcon
+                      variant='outline'
+                      color={dark ? 'yellow' : 'blue'}
+                      onClick={() => toggleColorScheme()}
+                      title={i18n._t('Toggle color scheme')}
+                    >
+                      {dark ? <IconSun size='1.1rem' /> : <IconMoonStars size='1.1rem' />}
+                    </ActionIcon>
+                    <Menu shadow='md' width={200}>
+                      <Menu.Target>
+                        <ActionIcon color='green' variant='outline' title={i18n._t('Language')}>
+                          <IconLanguageHiragana size='1.1rem' />
+                        </ActionIcon>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        <Menu.Item onClick={() => saveLang('en')} icon={<FlagEn width={24} />}>
+                          en
+                        </Menu.Item>
+                        <Menu.Item onClick={() => saveLang('ru')} icon={<FlagRu width={24} />}>
+                          ru
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
+                  </Group>
                 </Navbar>
               }
               header={
@@ -127,8 +167,6 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                       />
                     </MediaQuery>
                     <Text style={{ flex: 1 }}>{/*Divider*/}</Text>
-                    <Text>{pageTitle}</Text>
-                    <Text style={{ flex: 1 }}>{/*Divider*/}</Text>
                     <div
                       style={{
                         marginTop: '5px',
@@ -139,6 +177,8 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
                 </Header>
               }
             >
+              <Title order={4}>{pageTitle}</Title>
+              <Space h='xl' />
               {children}
               <Notifications autoClose={4000} />
             </AppShell>

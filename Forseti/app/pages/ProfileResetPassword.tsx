@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { usePageTitle } from '#/hooks/pageTitle';
-import { Button, Container, Group, TextInput, PasswordInput, Space, Alert } from '@mantine/core';
-import { IconLogin, IconLock, IconCheck } from '@tabler/icons-react';
+import { Button, Container, Group, TextInput, Alert } from '@mantine/core';
+import { IconLogin, IconCheck } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
 import { useApi } from '#/hooks/api';
 import { useI18n } from '#/hooks/i18n';
@@ -75,7 +75,7 @@ export const ProfileResetPassword: React.FC = () => {
 
 function SuccessAlert({ i18n }: { i18n: I18nService }) {
   return (
-    <Alert icon={<IconCheck size='1rem' />} title={i18n._t('Email send')} color='green'>
+    <Alert icon={<IconCheck size='1rem' />} title={i18n._t('Email has been sent')} color='green'>
       {i18n._t(
         'A confirmation link for password recovery has been sent to provided email. Please check your mailbox and follow the link in the message.'
       )}
