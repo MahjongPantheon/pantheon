@@ -52,12 +52,6 @@ class Achievements extends Controller
 
     protected function _run()
     {
-        if (!$this->_userHasAdminRights()) {
-            return [
-                'error' => _t("Wrong admin password"),
-            ];
-        }
-
         if (!empty($this->_path['achievement'])) {
             try {
                 $ach = $this->_mimir->getAchievements($this->_eventIdList, [$this->_path['achievement']]);

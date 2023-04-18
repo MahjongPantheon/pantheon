@@ -23,7 +23,6 @@ use Common\RulesetConfig;
 require_once __DIR__ . '/../models/Event.php';
 require_once __DIR__ . '/../models/EventSeries.php';
 require_once __DIR__ . '/../models/EventUserManagement.php';
-require_once __DIR__ . '/../models/Achievements.php';
 require_once __DIR__ . '/../models/EventFinishedGames.php';
 require_once __DIR__ . '/../models/EventRatingTable.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
