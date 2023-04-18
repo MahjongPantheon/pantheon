@@ -690,20 +690,20 @@ class MimirClientTwirp implements IMimirClient
     /**
      *  Get achievements list for event
      *
-     * @param array $eventIdList
+     * @param int $eventIdList
      * @param array $achievementsList
      * @return array
      */
-    public function getAchievements(array $eventIdList, array $achievementsList): array
+    public function getAchievements(int $eventId, array $achievementsList): array
     {
         $ret = iterator_to_array($this->_client->GetAchievements(
             $this->_ctx,
             (new Events_GetAchievements_Payload())
-                ->setEventIds(array_map('intval', $eventIdList))
+                ->setEventId($eventId)
                 ->setAchievementsList($achievementsList)
         )->getAchievements());
         return array_reduce($ret, function ($acc, Achievement $ach) {
-            $acc[$ach->getAchievementId()] = json_decode($ach->getAchieventData(), true);
+            $acc[$ach->getAchievementId()] = json_decode($ach->getAchievementData(), true);
             return $acc;
         }, []);
     }

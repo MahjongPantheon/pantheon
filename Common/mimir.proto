@@ -320,8 +320,8 @@ message Events_UpdatePlayerSeatingFlag_Payload {
 }
 
 message Events_GetAchievements_Payload {
-  repeated int32 eventIds = 1;
   repeated string achievementsList = 2;
+  int32 eventId = 3;
 }
 
 message Events_GetAchievements_Response {

@@ -460,7 +460,7 @@ message TableState {
 
 message Achievement {
   string achievementId = 1;
-  string achieventData = 2; // JSON stringified data
+  string achievementData = 2; // JSON stringified data
 }
 
 message LocalIdMapping {

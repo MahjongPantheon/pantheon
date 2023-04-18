@@ -90,10 +90,10 @@
                             {{#a class='nav-link' href='/timer' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}
                         </li>
                     {{/useTimer}}
+                    <li class="nav-item">
+                        {{#a class='nav-link' href='/achievements'}}{{_t 'Achievements'}}{{/a}}
+                    </li>
                 {{/isAggregated}}
-                <li class="nav-item">
-                    {{#a class='nav-link' href='/achievements'}}{{_t 'Achievements'}}{{/a}}
-                </li>
                 {{#userHasAdminRights}}
                     <li class="nav-item">
                         <a target="_blank" href="{{forsetiUrl}}/event/{{eventId}}/games"

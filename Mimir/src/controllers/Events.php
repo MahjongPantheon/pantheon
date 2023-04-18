@@ -26,6 +26,7 @@ require_once __DIR__ . '/../models/EventUserManagement.php';
 require_once __DIR__ . '/../models/EventFinishedGames.php';
 require_once __DIR__ . '/../models/EventRatingTable.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
+require_once __DIR__ . '/../primitives/Achievements.php';
 require_once __DIR__ . '/../Controller.php';
 
 class EventsController extends Controller

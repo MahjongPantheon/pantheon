@@ -268,8 +268,8 @@ export interface Events_UpdatePlayerSeatingFlag_Payload {
 }
 
 export interface Events_GetAchievements_Payload {
-  eventIds: number[];
   achievementsList: string[];
+  eventId: number;
 }
 
 export interface Events_GetAchievements_Response {
@@ -6861,8 +6861,8 @@ export const Events_GetAchievements_Payload = {
    */
   initialize: function (): Events_GetAchievements_Payload {
     return {
-      eventIds: [],
       achievementsList: [],
+      eventId: 0,
     };
   },
 
@@ -6873,11 +6873,11 @@ export const Events_GetAchievements_Payload = {
     msg: Partial<Events_GetAchievements_Payload>,
     writer: BinaryWriter
   ): BinaryWriter {
-    if (msg.eventIds?.length) {
-      writer.writePackedInt32(1, msg.eventIds);
-    }
     if (msg.achievementsList?.length) {
       writer.writeRepeatedString(2, msg.achievementsList);
+    }
+    if (msg.eventId) {
+      writer.writeInt32(3, msg.eventId);
     }
     return writer;
   },
@@ -6892,16 +6892,12 @@ export const Events_GetAchievements_Payload = {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
-        case 1: {
-          if (reader.isDelimited()) {
-            msg.eventIds.push(...reader.readPackedInt32());
-          } else {
-            msg.eventIds.push(reader.readInt32());
-          }
-          break;
-        }
         case 2: {
           msg.achievementsList.push(reader.readString());
+          break;
+        }
+        case 3: {
+          msg.eventId = reader.readInt32();
           break;
         }
         default: {
@@ -12256,8 +12252,8 @@ export const Events_GetAchievements_PayloadJSON = {
    */
   initialize: function (): Events_GetAchievements_Payload {
     return {
-      eventIds: [],
       achievementsList: [],
+      eventId: 0,
     };
   },
 
@@ -12268,11 +12264,11 @@ export const Events_GetAchievements_PayloadJSON = {
     msg: Partial<Events_GetAchievements_Payload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
-    if (msg.eventIds?.length) {
-      json["eventIds"] = msg.eventIds;
-    }
     if (msg.achievementsList?.length) {
       json["achievementsList"] = msg.achievementsList;
+    }
+    if (msg.eventId) {
+      json["eventId"] = msg.eventId;
     }
     return json;
   },
@@ -12284,13 +12280,13 @@ export const Events_GetAchievements_PayloadJSON = {
     msg: Events_GetAchievements_Payload,
     json: any
   ): Events_GetAchievements_Payload {
-    const _eventIds_ = json["eventIds"];
-    if (_eventIds_) {
-      msg.eventIds = _eventIds_;
-    }
     const _achievementsList_ = json["achievementsList"];
     if (_achievementsList_) {
       msg.achievementsList = _achievementsList_;
+    }
+    const _eventId_ = json["eventId"];
+    if (_eventId_) {
+      msg.eventId = _eventId_;
     }
     return msg;
   },

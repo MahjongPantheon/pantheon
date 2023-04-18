@@ -473,7 +473,7 @@ export interface TableState {
 
 export interface Achievement {
   achievementId: string;
-  achieventData: string;
+  achievementData: string;
 }
 
 export interface LocalIdMapping {
@@ -6015,7 +6015,7 @@ export const Achievement = {
   initialize: function (): Achievement {
     return {
       achievementId: "",
-      achieventData: "",
+      achievementData: "",
     };
   },
 
@@ -6029,8 +6029,8 @@ export const Achievement = {
     if (msg.achievementId) {
       writer.writeString(1, msg.achievementId);
     }
-    if (msg.achieventData) {
-      writer.writeString(2, msg.achieventData);
+    if (msg.achievementData) {
+      writer.writeString(2, msg.achievementData);
     }
     return writer;
   },
@@ -6047,7 +6047,7 @@ export const Achievement = {
           break;
         }
         case 2: {
-          msg.achieventData = reader.readString();
+          msg.achievementData = reader.readString();
           break;
         }
         default: {
@@ -12132,7 +12132,7 @@ export const AchievementJSON = {
   initialize: function (): Achievement {
     return {
       achievementId: "",
-      achieventData: "",
+      achievementData: "",
     };
   },
 
@@ -12144,8 +12144,8 @@ export const AchievementJSON = {
     if (msg.achievementId) {
       json["achievementId"] = msg.achievementId;
     }
-    if (msg.achieventData) {
-      json["achieventData"] = msg.achieventData;
+    if (msg.achievementData) {
+      json["achievementData"] = msg.achievementData;
     }
     return json;
   },
@@ -12158,9 +12158,9 @@ export const AchievementJSON = {
     if (_achievementId_) {
       msg.achievementId = _achievementId_;
     }
-    const _achieventData_ = json["achieventData"];
-    if (_achieventData_) {
-      msg.achieventData = _achieventData_;
+    const _achievementData_ = json["achievementData"];
+    if (_achievementData_) {
+      msg.achievementData = _achievementData_;
     }
     return msg;
   },

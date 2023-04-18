@@ -20,9 +20,9 @@ class Achievement extends \Google\Protobuf\Internal\Message
     /**
      * JSON stringified data
      *
-     * Generated from protobuf field <code>string achieventData = 2;</code>
+     * Generated from protobuf field <code>string achievementData = 2;</code>
      */
-    protected $achieventData = '';
+    protected $achievementData = '';
 
     /**
      * Constructor.
@@ -31,7 +31,7 @@ class Achievement extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type string $achievementId
-     *     @type string $achieventData
+     *     @type string $achievementData
      *           JSON stringified data
      * }
      */
@@ -65,25 +65,25 @@ class Achievement extends \Google\Protobuf\Internal\Message
     /**
      * JSON stringified data
      *
-     * Generated from protobuf field <code>string achieventData = 2;</code>
+     * Generated from protobuf field <code>string achievementData = 2;</code>
      * @return string
      */
-    public function getAchieventData()
+    public function getAchievementData()
     {
-        return $this->achieventData;
+        return $this->achievementData;
     }
 
     /**
      * JSON stringified data
      *
-     * Generated from protobuf field <code>string achieventData = 2;</code>
+     * Generated from protobuf field <code>string achievementData = 2;</code>
      * @param string $var
      * @return $this
      */
-    public function setAchieventData($var)
+    public function setAchievementData($var)
     {
         GPBUtil::checkString($var, True);
-        $this->achieventData = $var;
+        $this->achievementData = $var;
 
         return $this;
     }

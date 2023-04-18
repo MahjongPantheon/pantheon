@@ -106,11 +106,11 @@ interface IMimirClient
     /**
      *  Get achievements list for event
      *
-     * @param array $eventIdList
+     * @param int $eventId
      * @param array $achievementsList
      * @return array
     */
-    public function getAchievements(array $eventIdList, array $achievementsList): array;
+    public function getAchievements(int $eventId, array $achievementsList): array;
 
     /**
      *  Get player info by id
