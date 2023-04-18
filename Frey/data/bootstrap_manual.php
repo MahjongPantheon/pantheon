@@ -16,7 +16,6 @@ function _getConnection()
         'admin'     => [
             'debug_token' => '2-839489203hf2893'
         ],
-        'routes'    => require __DIR__ . '/../config/routes.php',
         'verbose'   => false,
         'verboseLog' => '',
         'api' => [

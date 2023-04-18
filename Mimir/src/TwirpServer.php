@@ -35,8 +35,6 @@ use Common\TableItemSwiss;
 use Common\TeamMapping;
 use Common\Events_GetAchievements_Payload;
 use Common\Events_GetAchievements_Response;
-use Common\Events_GetAchievementsList_Payload;
-use Common\Events_GetAchievementsList_Response;
 use Common\Events_GetAllRegisteredPlayers_Payload;
 use Common\Events_GetAllRegisteredPlayers_Response;
 use Common\Events_GetCountries_Payload;
@@ -1402,15 +1400,6 @@ final class TwirpServer implements Mimir
                     ->setAchievementId($id)
                     ->setAchieventData(json_encode($ach) ?: '');
             }, array_keys($ret), array_values($ret)));
-    }
-
-    /**
-     * @throws AuthFailedException
-     */
-    public function GetAchievementsList(array $ctx, Events_GetAchievementsList_Payload $req): Events_GetAchievementsList_Response
-    {
-        return (new Events_GetAchievementsList_Response())
-            ->setList($this->_eventsController->getAchievementsList());
     }
 
     /**

@@ -37,7 +37,6 @@ return array_merge([
         'internalQuerySecret' => 'CHANGE_ME_INTERNAL' // TODO: change this in your local config!
     ],
     'db'        => require __DIR__ . '/db.php',
-    'routes'    => require __DIR__ . '/routes.php',
     'verbose'   => true, // TODO: change this in your local config!
     'verboseLog' => null,
     'serverDefaultTimezone' => 'UTC',

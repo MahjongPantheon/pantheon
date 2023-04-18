@@ -616,49 +616,31 @@ class EventsController extends Controller
     }
 
     /**
-     * @return array
-     * @throws AuthFailedException
-     */
-    public function getAchievementsList()
-    {
-        $this->_log->info('Getting achievements code list');
-
-        $list = (new AchievementsModel($this->_ds, $this->_config, $this->_meta))
-            ->getAchievementsList();
-
-        $this->_log->info('Successfully received achievements code list');
-
-        return $list;
-    }
-
-    /**
      * Get achievements list for event
      *
-     * @param array $eventIdList
+     * @param int $eventId
      * @param array $achievementsList
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
      */
-    public function getAchievements($eventIdList, $achievementsList)
+    public function getAchievements($eventId, $achievementsList)
     {
-        if (!is_array($eventIdList) || empty($eventIdList)) {
-            throw new InvalidParametersException('Event id list is not array or array is empty');
+        $this->_log->info('Getting achievements list for event ids# ' . $eventId);
+
+        $eventList = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($eventList)) {
+            throw new InvalidParametersException('Event id # ' . $eventId . ' was not found in DB');
         }
 
-        $this->_log->info('Getting achievements list for event ids# ' . implode(", ", $eventIdList));
-
-        $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
-        if (count($eventList) != count($eventIdList)) {
-            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
+        $table = AchievementsPrimitive::findByEventId($this->_ds, [$eventId])[0]->getData();
+        $result = [];
+        foreach ($achievementsList as $ach) {
+            $result[$ach] = $table[$ach];
         }
 
-        $table = (new AchievementsModel($this->_ds, $this->_config, $this->_meta))
-            ->getAchievements($eventIdList, $achievementsList);
-
-        $this->_log->info('Successfully received achievements list for event ids# ' . implode(", ", $eventIdList));
-
-        return $table;
+        $this->_log->info('Successfully received achievements list for event ids# ' . $eventId);
+        return $result;
     }
 
     /**

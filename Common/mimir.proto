@@ -40,7 +40,6 @@ service Mimir {
   rpc UnregisterPlayer (Events_UnregisterPlayer_Payload) returns (Generic_Success_Response);
   rpc UpdatePlayerSeatingFlag (Events_UpdatePlayerSeatingFlag_Payload) returns (Generic_Success_Response);
   rpc GetAchievements (Events_GetAchievements_Payload) returns (Events_GetAchievements_Response);
-  rpc GetAchievementsList (Events_GetAchievementsList_Payload) returns (Events_GetAchievementsList_Response);
   rpc ToggleHideResults (Generic_Event_Payload) returns (Generic_Success_Response);
   rpc UpdatePlayersLocalIds (Events_UpdatePlayersLocalIds_Payload) returns (Generic_Success_Response);
   rpc UpdatePlayerReplacement (Events_UpdatePlayerReplacement_Payload) returns (Generic_Success_Response);
@@ -327,12 +326,6 @@ message Events_GetAchievements_Payload {
 
 message Events_GetAchievements_Response {
   repeated Achievement achievements = 1;
-}
-
-message Events_GetAchievementsList_Payload {}
-
-message Events_GetAchievementsList_Response {
-  repeated string list = 1;
 }
 
 message Events_UpdatePlayersLocalIds_Payload {

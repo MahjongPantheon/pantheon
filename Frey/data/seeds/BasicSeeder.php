@@ -235,7 +235,6 @@ class BasicSeeder extends AbstractSeed
                 'internalQuerySecret' => 'CHANGE_ME_INTERNAL'
             ],
             'testing_token' => '',
-            'routes'    => require __DIR__ . '/../../config/routes.php',
             'verbose'   => false,
             'verboseLog' => '',
             'api' => [

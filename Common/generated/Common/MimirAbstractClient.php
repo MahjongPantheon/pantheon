@@ -885,29 +885,6 @@ abstract class MimirAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetAchievementsList(array $ctx, \Common\Events_GetAchievementsList_Payload $in): \Common\Events_GetAchievementsList_Response
-    {
-        $ctx = Context::withPackageName($ctx, 'Common');
-        $ctx = Context::withServiceName($ctx, 'Mimir');
-        $ctx = Context::withMethodName($ctx, 'GetAchievementsList');
-
-        $out = new \Common\Events_GetAchievementsList_Response();
-
-        $url = $this->addr;
-        if (empty($this->prefix)) {
-            $url = $url.'/Common.Mimir/GetAchievementsList';
-        } else {
-            $url = $url.'/'.$this->prefix.'/Common.Mimir/GetAchievementsList';
-        }
-
-        $this->doRequest($ctx, $url, $in, $out);
-
-        return $out;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function ToggleHideResults(array $ctx, \Common\Generic_Event_Payload $in): \Common\Generic_Success_Response
     {
         $ctx = Context::withPackageName($ctx, 'Common');

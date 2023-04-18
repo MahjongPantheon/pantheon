@@ -625,10 +625,6 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     {
     }
 
-    public function testGetAchievementsList()
-    {
-    }
-
     public function testToggleHideResults()
     {
     }

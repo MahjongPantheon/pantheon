@@ -53,6 +53,10 @@ foreach ($allEvents as $ev) {
 
 echo 'Found ' . count($eventIdsToProcess) . ' events to process' . PHP_EOL;
 
+if (count($eventIdsToProcess) === 0) {
+    exit(0);
+}
+
 $games = SessionPrimitive::findByEventListAndStatus(
     $ds,
     $eventIdsToProcess,
@@ -69,50 +73,70 @@ $rounds = getRounds($ds, $sessionIds);
 
 foreach ($eventIdsToProcess as $id) {
     $processedData = [];
+    echo 'Running [bestHand] on event #' . $id . PHP_EOL;
     $processedData['bestHand'] = getBestHandOfEvent($db, [$id], $players);
     sleep(2);
+    echo 'Running [bestTsumoist] on event #' . $id . PHP_EOL;
     $processedData['bestTsumoist'] = getBestTsumoistInSingleSession($db, [$id], $players);
     sleep(2);
+    echo 'Running [braveSapper] on event #' . $id . PHP_EOL;
     $processedData['braveSapper'] = getBraveSappers($db, [$id], $players);
     sleep(2);
+    echo 'Running [dieHard] on event #' . $id . PHP_EOL;
     $processedData['dieHard'] = getDieHardData($db, [$id], $players);
     sleep(2);
+    echo 'Running [dovakins] on event #' . $id . PHP_EOL;
     $processedData['dovakins'] = getDovakins($db, [$id], $players);
     sleep(2);
+    echo 'Running [yakumans] on event #' . $id . PHP_EOL;
     $processedData['yakumans'] = getYakumans($db, [$id], $players);
     sleep(2);
+    echo 'Running [shithander] on event #' . $id . PHP_EOL;
     $processedData['shithander'] = getBestShithander($db, [$id], $players);
     sleep(2);
+    echo 'Running [bestDealer] on event #' . $id . PHP_EOL;
     $processedData['bestDealer'] = getBestDealer($db, [$id], $players);
     sleep(2);
+    echo 'Running [bestFu] on event #' . $id . PHP_EOL;
     $processedData['bestFu'] = getMaxFuHand($db, [$id], $players);
     sleep(2);
+    echo 'Running [impossibleWait] on event #' . $id . PHP_EOL;
     $processedData['impossibleWait'] = getImpossibleWait($db, [$id], $players);
     sleep(2);
+    echo 'Running [honoredDonor] on event #' . $id . PHP_EOL;
     $processedData['honoredDonor'] = getHonoredDonor($id, $games, $players, $rounds);
     sleep(2);
+    echo 'Running [justAsPlanned] on event #' . $id . PHP_EOL;
     $processedData['justAsPlanned'] = getJustAsPlanned($db, [$id], $players);
     sleep(2);
+    echo 'Running [carefulPlanning] on event #' . $id . PHP_EOL;
     $processedData['carefulPlanning'] = getMinFeedsScore($id, $games, $players, $rounds);
     sleep(2);
+    echo 'Running [doraLord] on event #' . $id . PHP_EOL;
     $processedData['doraLord'] = getMaxAverageDoraCount($db, [$id], $players);
     sleep(2);
+    echo 'Running [catchEmAll] on event #' . $id . PHP_EOL;
     $processedData['catchEmAll'] = getMaxDifferentYakuCount($db, [$id], $players);
     sleep(2);
+    echo 'Running [favoriteAsapinApprentice] on event #' . $id . PHP_EOL;
     $processedData['favoriteAsapinApprentice'] = getFavoriteAsapinApprentice($db, [$id], $players);
     sleep(2);
+    echo 'Running [andYourRiichiBet] on event #' . $id . PHP_EOL;
     $processedData['andYourRiichiBet'] = getMaxStolenRiichiBetsCount($id, $games, $players, $rounds);
     sleep(2);
+    echo 'Running [covetousKnight] on event #' . $id . PHP_EOL;
     $processedData['covetousKnight'] = getMinLostRiichiBetsCount($id, $games, $players, $rounds);
     sleep(2);
+    echo 'Running [ninja] on event #' . $id . PHP_EOL;
     $processedData['ninja'] = getNinja($db, [$id], $players);
     sleep(2);
+    echo 'Running [needMoreGold] on event #' . $id . PHP_EOL;
     $processedData['needMoreGold'] = getNeedMoreGold($db, [$id], $players);
     sleep(2);
-    // finally update the data in table
+    echo 'Saving achievements on event #' . $id . PHP_EOL;
     $db->upsertQuery(
         'achievements',
-        ['event_id' => $id, 'data' => json_encode($processedData), 'last_update' => date('H:i:s d-m-Y')],
+        [['event_id' => $id, 'data' => json_encode($processedData), 'last_update' => date('Y-m-d H:i:s')]],
         ['event_id']
     );
     sleep(2);

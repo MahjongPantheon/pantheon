@@ -11,7 +11,6 @@ use Common\DrawResult;
 use Common\Event;
 use Common\EventData;
 use Common\Events_GetAchievements_Payload;
-use Common\Events_GetAchievementsList_Payload;
 use Common\Events_GetAllRegisteredPlayers_Payload;
 use Common\Events_GetEventForEdit_Payload;
 use Common\Events_GetEventsById_Payload;

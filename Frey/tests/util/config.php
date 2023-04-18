@@ -36,7 +36,6 @@ return [
     'admin'     => [
         'debug_token' => '2-839489203hf2893'
     ],
-    'routes'    => require __DIR__ . '/../../config/routes.php',
     'verbose'   => true,
     'serverDefaultTimezone' => 'UTC',
     'verboseLog' => __DIR__ . '/../../data/verbose.log',

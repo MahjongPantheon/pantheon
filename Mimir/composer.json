@@ -26,6 +26,7 @@
     "ext-xmlreader": "*",
     "ext-curl": "*",
     "ext-json": "*",
+    "ext-bcmath": "*",
     "michelf/php-markdown": "^1.9",
     "textalk/websocket": "^1.6",
     "php-http/discovery": "^1.15",

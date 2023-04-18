@@ -276,12 +276,6 @@ export interface Events_GetAchievements_Response {
   achievements: atoms.Achievement[];
 }
 
-export interface Events_GetAchievementsList_Payload {}
-
-export interface Events_GetAchievementsList_Response {
-  list: string[];
-}
-
 export interface Events_UpdatePlayersLocalIds_Payload {
   eventId: number;
   idMap: atoms.LocalIdMapping[];
@@ -831,20 +825,6 @@ export async function GetAchievements(
     config
   );
   return Events_GetAchievements_Response.decode(response);
-}
-
-export async function GetAchievementsList(
-  events_GetAchievementsList_Payload: Events_GetAchievementsList_Payload,
-  config?: ClientConfiguration
-): Promise<Events_GetAchievementsList_Response> {
-  const response = await PBrequest(
-    "/Common.Mimir/GetAchievementsList",
-    Events_GetAchievementsList_Payload.encode(
-      events_GetAchievementsList_Payload
-    ),
-    config
-  );
-  return Events_GetAchievementsList_Response.decode(response);
 }
 
 export async function ToggleHideResults(
@@ -1605,20 +1585,6 @@ export async function GetAchievementsJSON(
   return Events_GetAchievements_ResponseJSON.decode(response);
 }
 
-export async function GetAchievementsListJSON(
-  events_GetAchievementsList_Payload: Events_GetAchievementsList_Payload,
-  config?: ClientConfiguration
-): Promise<Events_GetAchievementsList_Response> {
-  const response = await JSONrequest(
-    "/Common.Mimir/GetAchievementsList",
-    Events_GetAchievementsList_PayloadJSON.encode(
-      events_GetAchievementsList_Payload
-    ),
-    config
-  );
-  return Events_GetAchievementsList_ResponseJSON.decode(response);
-}
-
 export async function ToggleHideResultsJSON(
   generic_Event_Payload: atoms.Generic_Event_Payload,
   config?: ClientConfiguration
@@ -2106,12 +2072,6 @@ export interface Mimir<Context = unknown> {
   ) =>
     | Promise<Events_GetAchievements_Response>
     | Events_GetAchievements_Response;
-  GetAchievementsList: (
-    events_GetAchievementsList_Payload: Events_GetAchievementsList_Payload,
-    context: Context
-  ) =>
-    | Promise<Events_GetAchievementsList_Response>
-    | Events_GetAchievementsList_Response;
   ToggleHideResults: (
     generic_Event_Payload: atoms.Generic_Event_Payload,
     context: Context
@@ -2644,18 +2604,6 @@ export function createMimir<Context>(service: Mimir<Context>) {
         output: {
           protobuf: Events_GetAchievements_Response,
           json: Events_GetAchievements_ResponseJSON,
-        },
-      },
-      GetAchievementsList: {
-        name: "GetAchievementsList",
-        handler: service.GetAchievementsList,
-        input: {
-          protobuf: Events_GetAchievementsList_Payload,
-          json: Events_GetAchievementsList_PayloadJSON,
-        },
-        output: {
-          protobuf: Events_GetAchievementsList_Response,
-          json: Events_GetAchievementsList_ResponseJSON,
         },
       },
       ToggleHideResults: {
@@ -7027,120 +6975,6 @@ export const Events_GetAchievements_Response = {
           const m = atoms.Achievement.initialize();
           reader.readMessage(m, atoms.Achievement._readMessage);
           msg.achievements.push(m);
-          break;
-        }
-        default: {
-          reader.skipField();
-          break;
-        }
-      }
-    }
-    return msg;
-  },
-};
-
-export const Events_GetAchievementsList_Payload = {
-  /**
-   * Serializes Events_GetAchievementsList_Payload to protobuf.
-   */
-  encode: function (
-    _msg?: Partial<Events_GetAchievementsList_Payload>
-  ): Uint8Array {
-    return new Uint8Array();
-  },
-
-  /**
-   * Deserializes Events_GetAchievementsList_Payload from protobuf.
-   */
-  decode: function (_bytes?: ByteSource): Events_GetAchievementsList_Payload {
-    return {};
-  },
-
-  /**
-   * Initializes Events_GetAchievementsList_Payload with all fields set to their default value.
-   */
-  initialize: function (): Events_GetAchievementsList_Payload {
-    return {};
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    _msg: Partial<Events_GetAchievementsList_Payload>,
-    writer: BinaryWriter
-  ): BinaryWriter {
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    _msg: Events_GetAchievementsList_Payload,
-    _reader: BinaryReader
-  ): Events_GetAchievementsList_Payload {
-    return _msg;
-  },
-};
-
-export const Events_GetAchievementsList_Response = {
-  /**
-   * Serializes Events_GetAchievementsList_Response to protobuf.
-   */
-  encode: function (
-    msg: Partial<Events_GetAchievementsList_Response>
-  ): Uint8Array {
-    return Events_GetAchievementsList_Response._writeMessage(
-      msg,
-      new BinaryWriter()
-    ).getResultBuffer();
-  },
-
-  /**
-   * Deserializes Events_GetAchievementsList_Response from protobuf.
-   */
-  decode: function (bytes: ByteSource): Events_GetAchievementsList_Response {
-    return Events_GetAchievementsList_Response._readMessage(
-      Events_GetAchievementsList_Response.initialize(),
-      new BinaryReader(bytes)
-    );
-  },
-
-  /**
-   * Initializes Events_GetAchievementsList_Response with all fields set to their default value.
-   */
-  initialize: function (): Events_GetAchievementsList_Response {
-    return {
-      list: [],
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: Partial<Events_GetAchievementsList_Response>,
-    writer: BinaryWriter
-  ): BinaryWriter {
-    if (msg.list?.length) {
-      writer.writeRepeatedString(1, msg.list);
-    }
-    return writer;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: Events_GetAchievementsList_Response,
-    reader: BinaryReader
-  ): Events_GetAchievementsList_Response {
-    while (reader.nextField()) {
-      const field = reader.getFieldNumber();
-      switch (field) {
-        case 1: {
-          msg.list.push(reader.readString());
           break;
         }
         default: {
@@ -12520,107 +12354,6 @@ export const Events_GetAchievements_ResponseJSON = {
         atoms.AchievementJSON._readMessage(m, item);
         msg.achievements.push(m);
       }
-    }
-    return msg;
-  },
-};
-
-export const Events_GetAchievementsList_PayloadJSON = {
-  /**
-   * Serializes Events_GetAchievementsList_Payload to JSON.
-   */
-  encode: function (
-    _msg?: Partial<Events_GetAchievementsList_Payload>
-  ): string {
-    return "{}";
-  },
-
-  /**
-   * Deserializes Events_GetAchievementsList_Payload from JSON.
-   */
-  decode: function (_json?: string): Events_GetAchievementsList_Payload {
-    return {};
-  },
-
-  /**
-   * Initializes Events_GetAchievementsList_Payload with all fields set to their default value.
-   */
-  initialize: function (): Events_GetAchievementsList_Payload {
-    return {};
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    _msg: Partial<Events_GetAchievementsList_Payload>
-  ): Record<string, unknown> {
-    return {};
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: Events_GetAchievementsList_Payload,
-    _json: any
-  ): Events_GetAchievementsList_Payload {
-    return msg;
-  },
-};
-
-export const Events_GetAchievementsList_ResponseJSON = {
-  /**
-   * Serializes Events_GetAchievementsList_Response to JSON.
-   */
-  encode: function (msg: Partial<Events_GetAchievementsList_Response>): string {
-    return JSON.stringify(
-      Events_GetAchievementsList_ResponseJSON._writeMessage(msg)
-    );
-  },
-
-  /**
-   * Deserializes Events_GetAchievementsList_Response from JSON.
-   */
-  decode: function (json: string): Events_GetAchievementsList_Response {
-    return Events_GetAchievementsList_ResponseJSON._readMessage(
-      Events_GetAchievementsList_ResponseJSON.initialize(),
-      JSON.parse(json)
-    );
-  },
-
-  /**
-   * Initializes Events_GetAchievementsList_Response with all fields set to their default value.
-   */
-  initialize: function (): Events_GetAchievementsList_Response {
-    return {
-      list: [],
-    };
-  },
-
-  /**
-   * @private
-   */
-  _writeMessage: function (
-    msg: Partial<Events_GetAchievementsList_Response>
-  ): Record<string, unknown> {
-    const json: Record<string, unknown> = {};
-    if (msg.list?.length) {
-      json["list"] = msg.list;
-    }
-    return json;
-  },
-
-  /**
-   * @private
-   */
-  _readMessage: function (
-    msg: Events_GetAchievementsList_Response,
-    json: any
-  ): Events_GetAchievementsList_Response {
-    const _list_ = json["list"];
-    if (_list_) {
-      msg.list = _list_;
     }
     return msg;
   },

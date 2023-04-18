@@ -127,7 +127,6 @@ class TournamentSeeder extends AbstractSeed
             'admin'     => [
                 'debug_token' => 'CHANGE_ME'
             ],
-            'routes'    => require __DIR__ . '/../../config/routes.php',
             'freyUrl'   => getenv('FREY_URL'),
             'verbose'   => false,
             'verboseLog' => '',

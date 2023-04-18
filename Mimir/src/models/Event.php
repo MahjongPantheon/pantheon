@@ -26,7 +26,6 @@ require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../primitives/EventPrescript.php';
 require_once __DIR__ . '/../primitives/PlayerHistory.php';
-require_once __DIR__ . '/../primitives/AchievementsStatic.php';
 require_once __DIR__ . '/../primitives/Round.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 
