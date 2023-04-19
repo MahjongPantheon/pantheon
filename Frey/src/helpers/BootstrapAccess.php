@@ -45,11 +45,11 @@ class BootstrapAccess
         $groupModel = new GroupsModel($db, $config, $meta);
         $accessModel = new AccessManagementModel($db, $config, $meta);
 
-        $adminId = $accountModel->createAccount($adminEmail, $adminPassword, 'Administrator', '', '', null, true);
+        $adminId = $accountModel->createAccount($adminEmail, $adminPassword, 'Administrator', '', '', null, true, true);
         $adminGroupId = $groupModel->createGroup('Administrators', 'System administrators', '#990000');
         foreach (InternalRules::getNames() as $name) {
-            $accessModel->addSystemWideRuleForPerson($name, true, AccessPrimitive::TYPE_BOOL, $adminId);
-            $accessModel->addSystemWideRuleForGroup($name, true, AccessPrimitive::TYPE_BOOL, $adminGroupId);
+            $accessModel->addSystemWideRuleForPerson($name, true, AccessPrimitive::TYPE_BOOL, $adminId, true);
+            $accessModel->addSystemWideRuleForGroup($name, true, AccessPrimitive::TYPE_BOOL, $adminGroupId, true);
         }
 
         return [$adminId, $adminGroupId];

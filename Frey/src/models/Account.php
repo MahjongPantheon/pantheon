@@ -37,14 +37,17 @@ class AccountModel extends Model
      * @param string $phone
      * @param string|null $tenhouId
      * @param bool $superadmin
+     * @param bool $bootstrap if true, don't check any access rights
      *
      * @return int id
      *
      * @throws InvalidParametersException|AccessDeniedException
      */
-    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null, $superadmin = false): int
+    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null, $superadmin = false, $bootstrap = false): int
     {
-        $this->_checkAccessRightsWithInternal(InternalRules::IS_SUPER_ADMIN);
+        if (!$bootstrap) {
+            $this->_checkAccessRightsWithInternal(InternalRules::IS_SUPER_ADMIN);
+        }
         if (empty($email) || empty($password) || empty($title)) {
             throw new InvalidParametersException('Some of required fields are empty (email, password, title)', 401);
         }
