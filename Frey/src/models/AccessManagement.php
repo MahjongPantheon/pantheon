@@ -303,8 +303,8 @@ class AccessManagementModel extends Model
 //            throw new InvalidParametersException('Rule name ' . $ruleName . ' is reserved for internal use');
 //        }
 
+        trigger_error('kek', E_USER_WARNING);
         // Separate checks for add admin in the event
-        xdebug_break();
         if ($ruleName === InternalRules::ADMIN_EVENT && $this->_authorizedPerson !== null && !empty($eventId)) {
             if ($personId === $this->_authorizedPerson->getId()) {
                 // Throw if we already have admins in this event; otherwise it's a bootstrapping of first admin

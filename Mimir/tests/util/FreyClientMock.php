@@ -178,6 +178,7 @@ class FreyClientMock implements IFreyClient
 
     public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId)
     {
+        return 123;
         // TODO: Implement addRuleForPerson() method.
         /* @phpstan-ignore-line */
     }
