@@ -319,7 +319,7 @@ check: get_docker_id lint
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make unit';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make unit';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make unit';
-	# TODO: checks for Tyr
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make unit';
 
 .PHONY: lint
 lint: get_docker_id
@@ -334,7 +334,7 @@ check_covered: get_docker_id lint
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Frey && HOME=/home/user su-exec user make unit_covered';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Mimir && HOME=/home/user su-exec user make unit_covered';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Rheda && HOME=/home/user su-exec user make unit_covered';
-	# TODO: checks for Tyr
+	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon/Tyr && HOME=/home/user su-exec user make unit_covered';
 	docker exec $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/pantheon && HOME=/home/user su-exec user php bin/php-coveralls.phar \
 	            --json_path=/tmp/coverall.json --coverage_clover=/tmp/coverage-*.xml' || true; # suppress error ftw
 

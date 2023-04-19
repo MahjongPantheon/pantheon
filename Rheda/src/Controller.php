@@ -23,7 +23,6 @@ use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 
 require_once __DIR__ . '/helpers/Url.php';
-require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/../../Common/Storage.php';
 require_once __DIR__ . '/../../Common/generated/Common/RulesetConfig.php';
 require_once __DIR__ . '/HttpClient.php';

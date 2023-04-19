@@ -6,6 +6,14 @@ PHONY: lint
 lint:
 	make -k -j4 typecheck eslint prettier
 
+.PHONY: unit
+unit:
+	./node_modules/.bin/jest
+
+.PHONY: unit_covered
+unit_covered:
+	./node_modules/.bin/jest
+
 PHONY: eslint
 eslint:
 	./node_modules/.bin/eslint . --ext .js,.ts,.tsx

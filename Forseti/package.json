@@ -2,7 +2,7 @@
   "name": "forseti",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@svgr/webpack": "^6.5.1",
     "@types/node": "^18.11.10",

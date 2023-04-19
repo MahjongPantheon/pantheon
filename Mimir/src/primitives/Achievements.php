@@ -59,7 +59,7 @@ class AchievementsPrimitive extends Primitive
             },
             'deserialize' => function ($str) {
                 try {
-                    return json_decode($str, true);
+                    return json_decode($str, true, 512, JSON_THROW_ON_ERROR);
                 } catch (\Exception $e) {
                     return [];
                 }
@@ -203,7 +203,7 @@ class AchievementsPrimitive extends Primitive
     }
 
     /**
-     * @param $data
+     * @param array $data
      * @return AchievementsPrimitive
      */
     public function setData($data)
@@ -221,7 +221,7 @@ class AchievementsPrimitive extends Primitive
     }
 
     /**
-     * @param $lastUpdate
+     * @param string $lastUpdate
      * @return AchievementsPrimitive
      */
     public function setLastUpdate($lastUpdate)

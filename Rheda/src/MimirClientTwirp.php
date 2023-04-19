@@ -690,7 +690,7 @@ class MimirClientTwirp implements IMimirClient
     /**
      *  Get achievements list for event
      *
-     * @param int $eventIdList
+     * @param int $eventId
      * @param array $achievementsList
      * @return array
      */

@@ -1,53 +1,80 @@
-/*
- * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
- * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
  *
- * This file is part of Tyr.
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * Tyr is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * Tyr is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* tslint:disable:no-unused-variable */
+import { EdgeType, Graph } from './graph';
 
-import { Node, EdgeType, Graph } from './graph';
-import { toHaveSameItems } from '../../test';
+declare global {
+  namespace jest {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    interface Matchers<R> {
+      toHaveSameItems(expected: any[]): CustomMatcherResult;
+    }
+  }
+}
+
+expect.extend({
+  toHaveSameItems(actual: any[], expected: any[]) {
+    const typeOk = actual.length !== undefined && expected.length !== undefined;
+    if (!typeOk) {
+      return {
+        pass: false,
+        message: () =>
+          `Expected ${actual} and ${expected} to be valid array-like objects or arrays.`,
+      };
+    }
+
+    const ok =
+      actual.length === expected.length &&
+      expected.length ===
+        expected.reduce((acc: number, item) => {
+          if (actual.includes(item)) {
+            return acc + 1;
+          }
+          return acc;
+        }, 0);
+
+    return {
+      pass: ok,
+      message: () => `Expected ${actual} to have same items as ${expected}`,
+    };
+  },
+});
 
 describe('Graph module', () => {
-  beforeAll(() => {
-    jasmine.addMatchers({ toHaveSameItems });
-  });
-
   it('should create the graph', () => {
-    let graph = new Graph<number>();
+    const graph = new Graph<number>();
     expect(graph).toBeTruthy();
   });
 
   it('should add nodes to graph', () => {
-    let graph = new Graph<number>();
+    const graph = new Graph<number>();
     graph.addNode({ id: 'foo', data: 123 });
     graph.addNode({ id: 'bar', data: 321 });
 
-    let node = graph.getNodeById('foo');
+    const node = graph.getNodeById('foo');
     expect(node).toBeTruthy();
     expect(node).toEqual({ id: 'foo', data: 123 });
   });
 
   it('should add edges to graph', () => {
-    let graph = new Graph<number>();
+    const graph = new Graph<number>();
 
-    let node1 = { id: 'foo', data: 123 };
-    let node2 = { id: 'bar', data: 321 };
+    const node1 = { id: 'foo', data: 123 };
+    const node2 = { id: 'bar', data: 321 };
 
     graph.addNode(node1).addNode(node2);
     graph.addBiEdge(node1, node2, EdgeType.Combines);
@@ -55,9 +82,9 @@ describe('Graph module', () => {
   });
 
   it('should find allowed edges with combined edge type', () => {
-    let graph = new Graph<number>();
+    const graph = new Graph<number>();
 
-    let nodes = [
+    const nodes = [
       { id: 'node1', data: 1 },
       { id: 'node2', data: 2 },
       { id: 'node3', data: 3 },
@@ -81,9 +108,9 @@ describe('Graph module', () => {
   });
 
   it('should find allowed edges with suppressing edge type', () => {
-    let graph = new Graph<number>();
+    const graph = new Graph<number>();
 
-    let nodes = [
+    const nodes = [
       { id: 'node0', data: 0 },
       { id: 'node1', data: 1 },
       { id: 'node2', data: 2 },
@@ -119,9 +146,9 @@ describe('Graph module', () => {
   });
 
   it('should add allowed nodes with combined edge type', () => {
-    let graph = new Graph<number>();
+    const graph = new Graph<number>();
 
-    let nodes = [
+    const nodes = [
       { id: 'node1', data: 1 },
       { id: 'node2', data: 2 },
       { id: 'node3', data: 3 },
@@ -147,9 +174,9 @@ describe('Graph module', () => {
   });
 
   it('should add allowed nodes with suppressing edge type', () => {
-    let graph = new Graph<number>();
+    const graph = new Graph<number>();
 
-    let nodes = [
+    const nodes = [
       { id: 'node1', data: 1 },
       { id: 'node2', data: 2 },
       { id: 'node3', data: 3 },
@@ -170,9 +197,9 @@ describe('Graph module', () => {
   });
 
   it('should not add allowed nodes with suppressed edge type', () => {
-    let graph = new Graph<number>();
+    const graph = new Graph<number>();
 
-    let nodes = [
+    const nodes = [
       { id: 'node1', data: 1 },
       { id: 'node2', data: 2 },
       { id: 'node3', data: 3 },
