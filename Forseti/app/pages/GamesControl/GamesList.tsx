@@ -155,7 +155,7 @@ export function GamesList({
                           }
                         >
                           {p.title}
-                          {eventConfig?.isPrescripted ? ` id #${p.localId}` : null}
+                          {eventConfig?.isPrescripted ? ` id #${p.localId ?? '??'}` : null}
                           {eventConfig?.isOnline ? ` (${p.tenhouId})` : null}
                         </Text>
                       </Group>
