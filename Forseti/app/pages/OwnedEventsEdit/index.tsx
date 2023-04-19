@@ -32,7 +32,7 @@ import { RulesetSettings } from '#/pages/OwnedEventsEdit/RulesetSettings';
 import { YakuSettings } from '#/pages/OwnedEventsEdit/YakuSettings';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
 import { EventCustom, FormFields } from '#/pages/OwnedEventsEdit/types';
-import { RulesetConfig } from '#/clients/atoms.pb';
+import { EndingPolicy, RulesetConfig } from '#/clients/atoms.pb';
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
@@ -108,7 +108,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         allowedYaku: {}, // TODO: reformat to array, as required by protocol
         yakuWithPao: {}, // TODO: reformat to array, as required by protocol
         withWinningDealerHonbaSkipped: false,
-        endingPolicy: 'EP_NONE',
+        endingPolicy: EndingPolicy.EP_NONE,
         startRating: 0,
         startPoints: 30000,
         replacementPlayerFixedPoints: -15000, // tourn

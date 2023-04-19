@@ -19,6 +19,7 @@ namespace Frey;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../models/Auth.php';
+require_once __DIR__ . '/../models/AccessManagement.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../exceptions/EntityNotFound.php';
 require_once __DIR__ . '/../exceptions/AuthFailed.php';
@@ -58,6 +59,7 @@ class AuthController extends Controller
     {
         $this->_logStart(__METHOD__, [$approvalCode]);
         $personId = $this->_getModel()->approveRegistration($approvalCode);
+        $this->_getAccessModel()->addRuleForPerson(InternalRules::CREATE_EVENT, true, 'bool', $personId, null, true);
         $this->_logSuccess(__METHOD__, [$approvalCode]);
         return $personId;
     }
@@ -183,5 +185,13 @@ class AuthController extends Controller
     protected function _getModel()
     {
         return new AuthModel($this->_db, $this->_config, $this->_meta);
+    }
+
+    /**
+     * @return AccessManagementModel
+     */
+    protected function _getAccessModel()
+    {
+        return new AccessManagementModel($this->_db, $this->_config, $this->_meta);
     }
 }

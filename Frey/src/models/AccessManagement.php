@@ -289,13 +289,14 @@ class AccessManagementModel extends Model
      * @param string $ruleType 'bool', 'int' or 'enum'
      * @param int $personId
      * @param ?int $eventId
+     * @param ?bool $registration
      *
      * @return ?int
      * @throws DuplicateEntityException
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, ?int $eventId)
+    public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, ?int $eventId, ?bool $registration = false)
     {
         // TODO: check again; looks like this should not be here.
 //        if (InternalRules::isInternal($ruleName)) {
@@ -313,6 +314,8 @@ class AccessManagementModel extends Model
             if (!$hasAccess) {
                 throw new AccessDeniedException('You are not allowed to add anyone to administrators in this event');
             }
+        } else if ($ruleName === InternalRules::CREATE_EVENT && $registration) {
+            // do nothing - this is adding CREATE_EVENT rights for all newly registered users
         } else {
             $this->_checkAccessRightsWithInternal(InternalRules::ADD_RULE_FOR_PERSON, $eventId);
         }
@@ -361,6 +364,7 @@ class AccessManagementModel extends Model
      */
     public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, ?int $eventId)
     {
+        $this->_checkAccessRights(InternalRules::ADD_RULE_FOR_GROUP, $eventId);
         $existingRules = $this->getGroupAccess($groupId, $eventId);
         if (!empty($existingRules[$ruleName])) {
             throw new DuplicateEntityException(
@@ -404,6 +408,7 @@ class AccessManagementModel extends Model
      */
     public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId)
     {
+        $this->_checkAccessRights(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_PERSON);
         if (InternalRules::isInternal($ruleName)) {
             $ruleType = AccessPrimitive::TYPE_BOOL; // Internal rules are always boolean
         }
@@ -450,6 +455,7 @@ class AccessManagementModel extends Model
      */
     public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId)
     {
+        $this->_checkAccessRights(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_GROUP);
         if (InternalRules::isInternal($ruleName)) {
             $ruleType = AccessPrimitive::TYPE_BOOL; // Internal rules are always boolean
         }
