@@ -189,12 +189,6 @@ final class TwirpServer implements Mimir
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
 
-        // @phpstan-ignore-next-line
-        $this->_frey->withHeaders([
-            'X-Twirp' => 'true',
-            'X-Locale' => $this->_meta->getSelectedLocale()
-        ]);
-
         // + some custom handler for testing errors
         if ($this->_config->getBooleanValue('verbose')) {
             (new ErrorHandler($this->_config, $this->_syslog))->register();

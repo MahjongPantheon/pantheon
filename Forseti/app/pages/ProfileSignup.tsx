@@ -41,6 +41,7 @@ export const ProfileSignup: React.FC = () => {
   const i18n = useI18n();
   usePageTitle(i18n._t('Register new account'));
   const api = useApi();
+  api.setEventId(0);
   const form = useForm({
     initialValues: {
       email: '',

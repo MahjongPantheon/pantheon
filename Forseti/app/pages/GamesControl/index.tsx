@@ -44,6 +44,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   const [eventConfig, setEventConfig] = useState<null | GameConfig>(null);
   const [tablesState, setTablesState] = useState<TableState[]>([]);
   const [players, setPlayers] = useState<RegisteredPlayer[]>([]);
+  api.setEventId(eventId);
 
   usePageTitle(i18n._t('Games management'));
 

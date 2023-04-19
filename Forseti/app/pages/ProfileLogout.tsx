@@ -32,6 +32,7 @@ export const ProfileLogout: React.FC = () => {
   usePageTitle(i18n._t('Logout'));
   storage.deleteAuthToken().deletePersonId().deleteEventId();
   api.setCredentials(0, '');
+  api.setEventId(0);
   setIsLoggedIn(false);
   return <Redirect to='/' />;
 };

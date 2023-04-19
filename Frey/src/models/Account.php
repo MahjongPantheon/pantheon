@@ -44,7 +44,7 @@ class AccountModel extends Model
      */
     public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null, $superadmin = false): int
     {
-        $this->_checkAccessRights(InternalRules::IS_SUPER_ADMIN);
+        $this->_checkAccessRightsWithInternal(InternalRules::IS_SUPER_ADMIN);
         if (empty($email) || empty($password) || empty($title)) {
             throw new InvalidParametersException('Some of required fields are empty (email, password, title)', 401);
         }

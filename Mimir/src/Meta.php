@@ -85,8 +85,8 @@ class Meta
 
         $this->_frey = $frey;
         $this->_storage = $storage;
-        $this->_fillFrom($input);
         $this->_selectedLocale = $this->_initI18n();
+        $this->_fillFrom($input);
 
         // for unit/integration testing purposes
         $testingToken = $config->getStringValue('testing_token');
@@ -176,7 +176,8 @@ class Meta
                     'X-Internal-Query-Secret' => $this->_internalToken,
                     'X-Auth-Token' => $this->_authToken,
                     'X-Current-Event-Id' => ($this->_currentEventId ?: '0'),
-                    'X-Current-Person-Id' => $this->_currentPersonId
+                    'X-Current-Person-Id' => $this->_currentPersonId,
+                    'X-Locale' => $this->getSelectedLocale()
                 ]);
 
                 if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->getAuthToken() ?? '')) {

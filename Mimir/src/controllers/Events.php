@@ -143,7 +143,19 @@ class EventsController extends Controller
         if (empty($id)) {
             throw new InvalidParametersException('Attempted to return deidented primitive');
         }
-        $this->_log->info('Successfully create new event (id# ' . $id . ')');
+
+        $ruleId = $this->_ds->remote()->addRuleForPerson(
+            'ADMIN_EVENT',
+            true,
+            'bool',
+            $this->_meta->getCurrentPersonId(),
+            $id
+        );
+        if (empty($ruleId)) {
+            throw new InvalidParametersException('Failed to save event privileges to Frey');
+        }
+
+        $this->_log->info('Successfully created new event (id# ' . $id . ')');
         return $id;
     }
 
@@ -228,7 +240,7 @@ class EventsController extends Controller
             throw new BadActionException('Somehow we couldn\'t update event - this should not happen');
         }
 
-        $this->_log->info('Successfully create new event (id# ' . $id . ')');
+        $this->_log->info('Successfully updated new event (id# ' . $id . ')');
         return $success;
     }
 

@@ -41,6 +41,7 @@ export const ProfileResetPasswordConfirm: React.FC<{ params: { code: string } }>
   params: { code },
 }) => {
   const api = useApi();
+  api.setEventId(0);
   const i18n = useI18n();
   const [approvalCode, email] = window.atob(code).split('@@@');
   const [tmpCode, setTmpCode] = useState('');

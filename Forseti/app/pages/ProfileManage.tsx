@@ -40,6 +40,7 @@ export const ProfileManage: React.FC = () => {
   const i18n = useI18n();
   usePageTitle(i18n._t('Manage your account'));
   const api = useApi();
+  api.setEventId(0);
   const storage = useStorage();
   const personId = storage.getPersonId()!;
   const formRef: React.RefObject<HTMLFormElement> = createRef();

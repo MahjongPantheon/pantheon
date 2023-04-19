@@ -31,6 +31,7 @@ export const ProfileConfirm: React.FC<{ params: { code: string } }> = ({ params:
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   usePageTitle(i18n._t('Confirm your email'));
+  api.setEventId(0);
 
   useEffect(() => {
     setIsLoading(true);

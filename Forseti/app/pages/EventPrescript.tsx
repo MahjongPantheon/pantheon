@@ -57,6 +57,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
   const [script, setScript] = useState('');
   const [errors, setErrors] = useState<string[]>([]);
   const i18n = useI18n();
+  api.setEventId(eventId);
   usePageTitle(i18n._t('Predefined seating configuration'));
 
   const loadConfig = useCallback(() => {

@@ -30,6 +30,7 @@ import { authCtx } from '#/hooks/auth';
 export const ProfileLogin: React.FC = () => {
   const storage = useStorage();
   const api = useApi();
+  api.setEventId(0);
   const i18n = useI18n();
   const { setIsLoggedIn } = useContext(authCtx);
   usePageTitle(i18n._t('Login to your account'));

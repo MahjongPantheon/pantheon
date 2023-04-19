@@ -64,6 +64,7 @@ import { TopActionButton } from '#/helpers/TopActionButton';
 export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: { page } }) => {
   const EVENTS_PERPAGE = 30;
   const api = useApi();
+  api.setEventId(0);
   const auth = useContext(authCtx);
   const i18n = useI18n();
   const storage = useStorage();

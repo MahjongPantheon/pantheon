@@ -32,16 +32,19 @@ import { RulesetSettings } from '#/pages/OwnedEventsEdit/RulesetSettings';
 import { YakuSettings } from '#/pages/OwnedEventsEdit/YakuSettings';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
 import { EventCustom, FormFields } from '#/pages/OwnedEventsEdit/types';
-import { EndingPolicy, RulesetConfig } from '#/clients/atoms.pb';
+import { EndingPolicy, RulesetConfig, UmaType } from '#/clients/atoms.pb';
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
 import { Filler } from '#/helpers/filler';
+import { useLocation } from 'wouter';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
+  api.setEventId(0);
+  const [, navigate] = useLocation();
   const formRef: React.RefObject<HTMLFormElement> = createRef();
   const [isLoading, setIsLoading] = useState(true);
   const [timezones, setTimezones] = useState<Array<{ value: string; label: string }>>([]);
@@ -104,7 +107,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
           neg1: { place1: 8000, place2: 3000, place3: 1000, place4: -12000 },
           otherwise: { place1: 8000, place2: 4000, place3: -4000, place4: -8000 },
         },
-        umaType: 'UMA_SIMPLE',
+        umaType: UmaType.UMA_SIMPLE,
         allowedYaku: {}, // TODO: reformat to array, as required by protocol
         yakuWithPao: {}, // TODO: reformat to array, as required by protocol
         withWinningDealerHonbaSkipped: false,
@@ -195,6 +198,9 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         if (r) {
           setIsSaved(true);
           setTimeout(() => setIsSaved(false), 5000);
+          if (!id) {
+            navigate('/ownedEvents');
+          }
         } else {
           throw new Error(i18n._t('Failed to save event: server error or network unreachable'));
         }

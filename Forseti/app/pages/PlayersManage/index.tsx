@@ -47,6 +47,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
   const [eventAdmins, setEventAdmins] = useState<Record<number, number>>({});
   const [config, setConfig] = useState<GameConfig>();
   const [event, setEvent] = useState<Event>();
+  api.setEventId(eventId);
   usePageTitle(i18n._t('Manage players in event'));
 
   useEffect(() => {

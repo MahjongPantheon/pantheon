@@ -40,6 +40,8 @@ class BasicSeeder extends AbstractSeed
 
         list($db, $config) = $this->_getConnection();
         $meta = new \Frey\Meta(new \Common\Storage('localhost'), $_SERVER);
+        $_SERVER['HTTP_X_DEBUG_TOKEN'] = 'CHANGE_ME';
+        $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] = 'CHANGE_ME_INTERNAL';
 
         list($adminId, $adminGroupId) = \Frey\BootstrapAccess::create($db, $config, $meta, 'admin@localhost.localdomain', '123456');
 
@@ -83,7 +85,6 @@ class BasicSeeder extends AbstractSeed
      */
     protected function _seedPersons(\Frey\Db $db, \Frey\Config $config, \Frey\Meta $meta, $groupIds, $superAdminId)
     {
-        $_SERVER['HTTP_X_DEBUG_TOKEN'] = 'CHANGE_ME';
         $model = new \Frey\AccountModel($db, $config, $meta);
         $groupModel = new \Frey\GroupsModel($db, $config, $meta);
         $adminIds = [$superAdminId];

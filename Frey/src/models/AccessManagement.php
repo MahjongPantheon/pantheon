@@ -304,15 +304,15 @@ class AccessManagementModel extends Model
 //        }
 
         // Separate checks for add admin in the event
-        if ($ruleName === InternalRules::ADMIN_EVENT && $this->_authorizedPerson !== null) {
+        xdebug_break();
+        if ($ruleName === InternalRules::ADMIN_EVENT && $this->_authorizedPerson !== null && !empty($eventId)) {
             if ($personId === $this->_authorizedPerson->getId()) {
-                throw new AccessDeniedException('You are not allowed to add yourself to administrators in this event');
-            }
-            $hasAccess = $this->_authorizedPerson->getIsSuperadmin() || (
-                    !empty($this->_currentAccess[InternalRules::ADMIN_EVENT]) && $this->_currentAccess[InternalRules::ADMIN_EVENT] == true
-                );
-            if (!$hasAccess) {
-                throw new AccessDeniedException('You are not allowed to add anyone to administrators in this event');
+                // Throw if we already have admins in this event; otherwise it's a bootstrapping of first admin
+                if (!empty($this->getEventAdmins($eventId))) {
+                    throw new AccessDeniedException('You are not allowed to add yourself to administrators in this event');
+                }
+            } else {
+                $this->_checkAccessRightsWithInternal(InternalRules::ADMIN_EVENT, $eventId);
             }
         } else if ($ruleName === InternalRules::CREATE_EVENT && $registration) {
             // do nothing - this is adding CREATE_EVENT rights for all newly registered users
@@ -364,7 +364,7 @@ class AccessManagementModel extends Model
      */
     public function addRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId, ?int $eventId)
     {
-        $this->_checkAccessRights(InternalRules::ADD_RULE_FOR_GROUP, $eventId);
+        $this->_checkAccessRightsWithInternal(InternalRules::ADD_RULE_FOR_GROUP, $eventId);
         $existingRules = $this->getGroupAccess($groupId, $eventId);
         if (!empty($existingRules[$ruleName])) {
             throw new DuplicateEntityException(
@@ -408,7 +408,7 @@ class AccessManagementModel extends Model
      */
     public function addSystemWideRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId)
     {
-        $this->_checkAccessRights(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_PERSON);
+        $this->_checkAccessRightsWithInternal(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_PERSON);
         if (InternalRules::isInternal($ruleName)) {
             $ruleType = AccessPrimitive::TYPE_BOOL; // Internal rules are always boolean
         }
@@ -455,7 +455,7 @@ class AccessManagementModel extends Model
      */
     public function addSystemWideRuleForGroup(string $ruleName, $ruleValue, string $ruleType, int $groupId)
     {
-        $this->_checkAccessRights(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_GROUP);
+        $this->_checkAccessRightsWithInternal(InternalRules::ADD_SYSTEM_WIDE_RULE_FOR_GROUP);
         if (InternalRules::isInternal($ruleName)) {
             $ruleType = AccessPrimitive::TYPE_BOOL; // Internal rules are always boolean
         }

@@ -28,6 +28,7 @@ import { environment } from '#config';
 
 export const ProfileResetPassword: React.FC = () => {
   const api = useApi();
+  api.setEventId(0);
   const i18n = useI18n();
   usePageTitle(i18n._t('Recover password'));
   const [isLoading, setIsLoading] = useState(false);

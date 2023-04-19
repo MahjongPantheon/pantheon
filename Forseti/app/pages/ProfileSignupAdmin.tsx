@@ -41,6 +41,7 @@ export const ProfileSignupAdmin: React.FC = () => {
   const i18n = useI18n();
   usePageTitle(i18n._t('Register new account'));
   const api = useApi();
+  api.setEventId(0);
   const storage = useStorage();
   const [isSuperadmin, setIsSuperadmin] = useState(false);
   const [isSaving, setIsSaving] = useState(false);

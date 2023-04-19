@@ -23,7 +23,7 @@ import { useI18n } from '#/hooks/i18n';
 import { usePageTitle } from '#/hooks/pageTitle';
 import { GameConfig } from '#/clients/atoms.pb';
 import { useForm } from '@mantine/form';
-import { Container, LoadingOverlay, NumberInput, Select, TextInput } from '@mantine/core';
+import { Container, LoadingOverlay, NumberInput, Select, Space, TextInput } from '@mantine/core';
 import {
   IconAlertOctagon,
   IconCircleCheck,
@@ -39,6 +39,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
   const { isLoggedIn } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
+  api.setEventId(parseInt(id ?? '0', 10));
   const formRef: React.RefObject<HTMLFormElement> = createRef();
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -135,6 +136,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
           data={playersList}
           {...form.getInputProps('player')}
         />
+        <Space h='lg' />
         <NumberInput
           withAsterisk
           {...form.getInputProps('amount')}
@@ -148,6 +150,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
           min={eventConfig?.rulesetConfig.minPenalty}
           max={eventConfig?.rulesetConfig.maxPenalty}
         />
+        <Space h='lg' />
         <TextInput
           withAsterisk
           icon={<IconSignature size='1rem' />}

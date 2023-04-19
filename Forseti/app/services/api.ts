@@ -78,6 +78,7 @@ import { Analytics } from '#/services/analytics';
 export class ApiService {
   private _authToken: string | null = null;
   private _personId: string | null = null;
+  private _eventId: string | null = null;
   private _analytics: Analytics | null = null;
   private readonly _clientConfMimir: ClientConfiguration = {
     prefix: '/v2',
@@ -88,6 +89,11 @@ export class ApiService {
 
   setAnalytics(analytics: Analytics) {
     this._analytics = analytics;
+    return this;
+  }
+
+  setEventId(eventId: number) {
+    this._eventId = eventId ? eventId.toString() : '';
     return this;
   }
 
@@ -104,6 +110,7 @@ export class ApiService {
     // eslint-disable-next-line no-multi-assign
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
+      headers.set('X-Current-Event-Id', this._eventId ?? '');
       return fetch(url + (environment.production ? '' : '?XDEBUG_SESSION=start'), {
         ...opts,
         headers,
