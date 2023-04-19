@@ -37,12 +37,6 @@
 
 <body>
 <nav class="navbar fixed-top navbar-expand-sm navbar-collapse navbar-dark bg-dark">
-    {{#eventSelected}}
-        {{#a class='navbar-brand' href='/'}}{{eventTitle}}{{/a}}
-    {{/eventSelected}}
-    {{^eventSelected}}
-        <a class='navbar-brand' href='/'>{{eventTitle}}</a>
-    {{/eventSelected}}
     <button class="navbar-toggler" type="button"
             data-toggle="collapse" data-target="#navbarToggler"
             aria-controls="navbarToggler" aria-expanded="false"
@@ -55,16 +49,14 @@
             the link automatically, but global links should use <a>.
         *}}
         <ul class="navbar-nav mr-auto">
-            {{#eventSelected}}
-                <li class="nav-item">
-                    <a class='nav-link' target='_blank' href='/'>{{_t 'To event list'}}</a>
-                </li>
-            {{/eventSelected}}
-            {{^eventSelected}}
-                <li class="nav-item">
-                    <a class='nav-link' target='_blank' href='{{tyrUrl}}'>{{_t 'Open game control app'}}</a>
-                </li>
-            {{/eventSelected}}
+            <li class="nav-item">
+                <a class='nav-link' target='_blank' href='/' title='{{_t 'To event list'}}'>
+                    <img height='24px' src='/assets/ico/rhedaico.png' />
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class='nav-link' target='_blank' href='{{tyrUrl}}'>{{_t 'Open assistant'}}</a>
+            </li>
             {{#eventSelected}}
                 <li class="nav-item">
                     {{#a class='nav-link' href='/last'}}{{_t 'Recent games'}}{{/a}}
@@ -72,48 +64,39 @@
                 <li class="nav-item">
                     {{#a class='nav-link' href='/stat'}}{{_t 'Rating table'}}{{/a}}
                 </li>
-                {{#isTeam}}
-                    <li class="nav-item">
-                        {{#a class='nav-link' href='/stat/team'}}{{_t 'Team table'}}{{/a}}
-                    </li>
-                {{/isTeam}}
-                {{^isAggregated}}
-                    {{#isOnline}}
-                        {{^hideAddReplayButton}}
-                            <li class="nav-item">
-                                {{#a class='nav-link' href='/add-online'}}{{_t 'Add online game' }}{{/a}}
-                            </li>
-                        {{/hideAddReplayButton}}
-                    {{/isOnline}}
-                    {{#useTimer}}
-                        <li class="nav-item">
-                            {{#a class='nav-link' href='/timer' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}
-                        </li>
-                    {{/useTimer}}
-                    <li class="nav-item">
-                        {{#a class='nav-link' href='/achievements'}}{{_t 'Achievements'}}{{/a}}
-                    </li>
-                {{/isAggregated}}
-                {{#userHasAdminRights}}
-                    <li class="nav-item">
-                        <a target="_blank" href="{{forsetiUrl}}/event/{{eventId}}/games"
-                           class="nav-link"
-                        >{{_t 'Admin panel'}}</a>
-                    </li>
-                {{/userHasAdminRights}}
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navigationMenuButton"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{_t 'Links' }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu" aria-labelledby="navigationMenuButton">
+                        {{#isTeam}}
+                            {{#a class='dropdown-item' href='/stat/team'}}{{_t 'Team table'}}{{/a}}
+                        {{/isTeam}}
+                        {{^isAggregated}}
+                            {{#isOnline}}
+                                {{^hideAddReplayButton}}
+                                    {{#a class='dropdown-item' href='/add-online'}}{{_t 'Add online game' }}{{/a}}
+                                {{/hideAddReplayButton}}
+                            {{/isOnline}}
+                            {{#useTimer}}
+                                {{#a class='dropdown-item' href='/timer' target='_blank'}}{{_t 'Timer & seating'}}{{/a}}
+                            {{/useTimer}}
+                            {{#a class='dropdown-item' href='/achievements'}}{{_t 'Achievements'}}{{/a}}
+                            {{#userHasAdminRights}}
+                                <a class='dropdown-item' target="_blank" href="{{forsetiUrl}}/event/{{eventId}}/games">{{_t 'Admin panel'}}</a>
+                            {{/userHasAdminRights}}
+                        {{/isAggregated}}
+                    </div>
+                </li>
             {{/eventSelected}}
         </ul>
         <ul class="navbar-nav justify-content-end">
             {{#isLoggedIn}}
                 <li class="nav-item">
-                    <span class="nav-link">
-                        {{currentPerson.title}}
-                    </span>
-                </li>
-                <li class="nav-item">
                     <a target="_blank" href="{{forsetiUrl}}/ownedEvents"
-                       class="nav-link"
-                    >{{_t 'Personal area'}}</a>
+                       class="nav-link" title='{{_t 'Personal area'}}'
+                    >{{currentPerson.title}}</a>
                 </li>
             {{/isLoggedIn}}
             {{^isLoggedIn}}
