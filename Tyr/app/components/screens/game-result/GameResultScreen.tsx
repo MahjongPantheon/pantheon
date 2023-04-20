@@ -1,3 +1,20 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import React, { useCallback } from 'react';
 import { IComponentProps } from '#/components/IComponentProps';
 import {
@@ -20,7 +37,7 @@ export const GameResultScreen: React.FC<IComponentProps> = (props) => {
   if (state.lastResults) {
     players = state.lastResults.map((player) => {
       return {
-        name: player.displayName,
+        name: player.title,
         score: player.score,
         delta: player.ratingDelta,
       };
@@ -28,10 +45,7 @@ export const GameResultScreen: React.FC<IComponentProps> = (props) => {
   }
 
   const canStartGame =
-    !state.gameConfig.autoSeating &&
-    !state.isUniversalWatcher &&
-    !state.currentSessionHash &&
-    !state.gameConfig.isPrescripted;
+    !state.gameConfig.autoSeating && !state.currentSessionHash && !state.gameConfig.isPrescripted;
 
   const onCheckClick = useCallback(() => {
     dispatch({ type: GOTO_NEXT_SCREEN });
@@ -40,7 +54,7 @@ export const GameResultScreen: React.FC<IComponentProps> = (props) => {
   const onRepeatClick = useCallback(() => {
     let playerIds: number[] | undefined;
     if (state.lastResults) {
-      playerIds = state.lastResults.map((x) => x.id);
+      playerIds = state.lastResults.map((x) => x.playerId);
     }
 
     dispatch({ type: START_NEW_GAME, payload: playerIds });

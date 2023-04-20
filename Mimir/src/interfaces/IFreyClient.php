@@ -12,10 +12,16 @@ interface IFreyClient
     public function __construct(string $apiUrl);
 
     /**
-    * @return \JsonRPC\Client
+     * @param array $headers
+     * @return void
+     */
+    public function withHeaders(array $headers);
+
+    /**
+    * @return \Common\FreyClient
     */
     public function getClient();
-    
+
     /**
      *  Request new registration with given email and password.
      *  Approval code is returned. It is intended to be sent to provided email address.

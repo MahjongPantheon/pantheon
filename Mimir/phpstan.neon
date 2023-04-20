@@ -3,7 +3,6 @@ parameters:
   reportUnmatchedIgnoredErrors: false
   scanDirectories:
     - vendor/ctizen/idiorm
-    - vendor/fguillot/json-rpc
     - vendor/monolog/monolog
     - ../Common
   bootstrapFiles:

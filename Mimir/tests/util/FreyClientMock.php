@@ -86,7 +86,8 @@ class FreyClientMock implements IFreyClient
     {
         if ($personId === 1) {
             return [
-                FreyClient::PRIV_ADMIN_EVENT => true
+                'ADMIN_EVENT' => true,
+                'CREATE_EVENT' => true
             ];
         }
         return [];
@@ -177,6 +178,7 @@ class FreyClientMock implements IFreyClient
 
     public function addRuleForPerson(string $ruleName, $ruleValue, string $ruleType, int $personId, int $eventId)
     {
+        return 123;
         // TODO: Implement addRuleForPerson() method.
         /* @phpstan-ignore-line */
     }

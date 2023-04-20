@@ -108,13 +108,6 @@ enum SessionStatus {
   CANCELLED = 4;
 }
 
-message RulesetGenerated { // added suffix to avoid confusion with /Common/rulesets
-  string title = 1;
-  string description = 2;
-  string defaultRules = 3; // stringified JSON
-  string fieldTypes = 4; // stringified JSON
-}
-
 message Country {
   string code = 1;
   string name = 2;
@@ -129,6 +122,7 @@ message Event {
   bool isRatingShown = 6;
   bool tournamentStarted = 7;
   EventType type = 8;
+  bool isPrescripted = 9;
 }
 
 message MyEvent {
@@ -139,39 +133,12 @@ message MyEvent {
 }
 
 message GameConfig {
-  repeated int32 allowedYaku = 1; // ids array
-  int32 startPoints = 2;
-  int32 goalPoints = 3;
-  bool playAdditionalRounds = 4;
-  bool withKazoe = 5;
-  bool withKiriageMangan = 6;
-  bool withAbortives = 7;
-  bool withNagashiMangan = 8;
-  bool withAtamahane = 9;
   string rulesetTitle = 10;
-  bool tonpuusen = 11;
-  int32 startRating = 12;
-  bool riichiGoesToWinner = 13;
-  bool doubleronRiichiAtamahane = 14;
-  bool doubleronHonbaAtamahane = 15;
-  bool extraChomboPayments = 16;
-  float chomboPenalty = 17;
-  bool withKuitan = 18;
-  bool withButtobi = 19;
-  bool withMultiYakumans = 20;
-  int32 gameExpirationTime = 21;
-  int32 minPenalty = 22;
-  int32 maxPenalty = 23;
-  int32 penaltyStep = 24;
-  repeated int32 yakuWithPao = 25; // ids array
   string eventTitle = 26;
   string eventDescription = 27;
   string eventStatHost = 28;
   bool useTimer = 29;
   bool usePenalty = 30;
-  string timerPolicy = 31;
-  int32 redZone = 32; // seconds
-  int32 yellowZone = 33; // seconds
   int32 gameDuration = 34; // minutes
   string timezone = 35;
   bool isOnline = 36;
@@ -181,16 +148,14 @@ message GameConfig {
   bool syncEnd = 40;
   bool sortByGames = 41;
   bool allowPlayerAppend = 42;
-  bool withLeadingDealerGameOver = 43;
-  bool subtractStartPoints = 44;
   int32 seriesLength = 45;
   int32 minGamesCount = 46;
   TournamentGamesStatus gamesStatus = 47;
   bool hideResults = 48;
   bool hideAddReplayButton = 49;
   bool isPrescripted = 50;
-  int32 chipsValue = 51;
   bool isFinished = 52;
+  RulesetConfig rulesetConfig = 53;
 }
 
 message PlayerInRating {
@@ -471,7 +436,6 @@ message EventData {
   string title = 2;
   string description = 3;
   int32 duration = 4;
-  string ruleset = 5; // ruleset title
   string timezone = 6;
   int32 lobbyId = 7; // xxxx for common lobby, 1xxxx for tournament lobby
   int32 seriesLength = 8;
@@ -479,7 +443,7 @@ message EventData {
   bool isTeam = 10;
   bool isPrescripted = 11;
   int32 autostart = 12; // time until game autostart
-  string rulesetChanges = 13; // json-stringified ruleset changes
+  RulesetConfig rulesetConfig = 14;
 }
 
 message TableState {
@@ -496,7 +460,7 @@ message TableState {
 
 message Achievement {
   string achievementId = 1;
-  string achieventData = 2; // JSON stringified data
+  string achievementData = 2; // JSON stringified data
 }
 
 message LocalIdMapping {
@@ -539,7 +503,69 @@ message SessionState {
   repeated IntermediateResultOfSession scores = 5;
   bool finished = 6;
   repeated Penalty penalties = 7;
-  bool yellowZoneAlreadyPlayed = 8;
+  bool lastHandStarted = 8;
+}
+
+message Uma {
+  int32 place1 = 1;
+  int32 place2 = 2;
+  int32 place3 = 3;
+  int32 place4 = 4;
+}
+
+message ComplexUma {
+  Uma neg1 = 1;
+  Uma neg3 = 2;
+  Uma otherwise = 3;
+}
+
+enum UmaType {
+  UMA_SIMPLE = 0;
+  UMA_COMPLEX = 1;
+}
+
+enum EndingPolicy {
+  EP_NONE = 0;
+  EP_ONE_MORE_HAND = 1;
+  EP_END_AFTER_HAND = 2;
+}
+
+message RulesetConfig {
+  ComplexUma complexUma = 1; //
+  EndingPolicy endingPolicy = 2; //
+  Uma uma = 3; //
+  UmaType umaType = 4; //
+  bool doubleronHonbaAtamahane = 5; //
+  bool doubleronRiichiAtamahane = 6; //
+  bool equalizeUma = 7; //
+  bool extraChomboPayments = 8; //
+  bool playAdditionalRounds = 9; //
+  bool riichiGoesToWinner = 10; //
+  bool tonpuusen = 11; //
+  bool withAbortives = 12; //
+  bool withAtamahane = 13; //
+  bool withButtobi = 14; //
+  bool withKazoe = 15; //
+  bool withKiriageMangan = 16; //
+  bool withKuitan = 17; //
+  bool withLeadingDealerGameOver = 18; //
+  bool withMultiYakumans = 19; //
+  bool withNagashiMangan = 20; //
+  bool withWinningDealerHonbaSkipped = 21; //
+  int32 chipsValue = 22; //
+  int32 chomboPenalty = 23; //
+  int32 gameExpirationTime = 24; //
+  int32 goalPoints = 25; //
+  int32 maxPenalty = 26; //
+  int32 minPenalty = 27; //
+  int32 oka = 28; //
+  int32 penaltyStep = 29; //
+  int32 replacementPlayerFixedPoints = 30;
+  int32 replacementPlayerOverrideUma = 31;
+  int32 startPoints = 32; //
+  int32 startRating = 33; //
+  repeated int32 allowedYaku = 34; //
+  repeated int32 yakuWithPao = 35; //
 }
 
 // Generics

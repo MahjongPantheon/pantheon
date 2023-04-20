@@ -34,9 +34,9 @@ return [
         ]
     ],
     'admin'     => [
-        'debug_token' => '2-839489203hf2893'
+        'debug_token' => '2-839489203hf2893',
+        'internalQuerySecret' => '198vdsh904hfbnkjv98whb2iusvd98b29bsdv98svbr9wghj',
     ],
-    'routes'    => require __DIR__ . '/../../config/routes.php',
     'verbose'   => true,
     'serverDefaultTimezone' => 'UTC',
     'verboseLog' => __DIR__ . '/../../data/verbose.log',

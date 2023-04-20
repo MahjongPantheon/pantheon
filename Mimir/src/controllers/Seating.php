@@ -357,6 +357,12 @@ class SeatingController extends Controller
             throw new InvalidParametersException('Event not found in database or event is not in proper state');
         }
 
+        if ($events[0]->getIsPrescripted()) {
+            // decrement game index when seating is reset
+            $prescript = EventPrescriptPrimitive::findByEventId($this->_ds, [$eventId]);
+            $prescript[0]->setNextGameIndex($prescript[0]->getNextGameIndex() - 1)->save();
+        }
+
         $events[0]->setGamesStatus(EventPrimitive::GS_STARTED)->save();
         $sessions = SessionPrimitive::findByEventAndStatus($this->_ds, $eventId, SessionPrimitive::STATUS_INPROGRESS);
         foreach ($sessions as $session) {
@@ -438,7 +444,7 @@ class SeatingController extends Controller
         // Second step is adding players that didn't play yet
         // this situation is possible only in online tournament
         // when we added replacement player
-        $initialRating = $event[0]->getRuleset()->startRating();
+        $initialRating = $event[0]->getRulesetConfig()->rules()->getStartRating();
         $playersReg = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);
         foreach ($playersReg as $player) {
             if (!in_array($player['id'], $ignoredPlayerIds) && !isset($playersMap[$player['id']])) {

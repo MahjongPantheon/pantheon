@@ -1,11 +1,26 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import { getWinningUsers, hasYaku } from './mimirSelectors';
 import { IAppState } from '../interfaces';
 import { Yaku } from '#/interfaces/common';
 import { filterAllowed, yakuGroups, yakumanGroups, yakuRareGroups } from '#/primitives/yaku-lists';
 import { memoize } from '#/primitives/memoize';
 import { getAllowedYaku } from './yaku';
-
-export const shouldShowTabs = (state: IAppState) => getWinningUsers(state).length > 1;
 
 function _getYakuList(state: IAppState): { [id: number]: Yaku[][] } {
   if (!state.gameConfig) {
@@ -14,9 +29,9 @@ function _getYakuList(state: IAppState): { [id: number]: Yaku[][] } {
 
   const yakuList: { [key: number]: Yaku[][] } = {};
   for (const user of getWinningUsers(state)) {
-    const simple = filterAllowed(yakuGroups, state.gameConfig.allowedYaku);
-    const rare = filterAllowed(yakuRareGroups, state.gameConfig.allowedYaku);
-    const yakuman = filterAllowed(yakumanGroups, state.gameConfig.allowedYaku);
+    const simple = filterAllowed(yakuGroups, state.gameConfig.rulesetConfig.allowedYaku);
+    const rare = filterAllowed(yakuRareGroups, state.gameConfig.rulesetConfig.allowedYaku);
+    const yakuman = filterAllowed(yakumanGroups, state.gameConfig.rulesetConfig.allowedYaku);
     yakuList[user.id] = simple.concat(rare).concat(yakuman);
   }
 

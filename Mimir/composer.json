@@ -13,14 +13,9 @@
     {
       "url": "https://github.com/ctizen/phinx.git",
       "type": "git"
-    },
-    {
-      "url": "https://github.com/ctizen/JsonRPC.git",
-      "type": "git"
     }
   ],
   "require": {
-    "fguillot/json-rpc": "@stable",
     "ctizen/idiorm": "@stable",
     "google/protobuf": "3.21.9",
     "guzzlehttp/psr7": "2.4.3",
@@ -31,6 +26,7 @@
     "ext-xmlreader": "*",
     "ext-curl": "*",
     "ext-json": "*",
+    "ext-bcmath": "*",
     "michelf/php-markdown": "^1.9",
     "textalk/websocket": "^1.6",
     "php-http/discovery": "^1.15",

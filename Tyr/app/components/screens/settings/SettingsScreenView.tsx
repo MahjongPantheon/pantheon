@@ -1,3 +1,20 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import * as React from 'react';
 import './page-setting.css';
 import { Switch } from '#/components/general/switch/Switch';
@@ -6,6 +23,7 @@ import classNames from 'classnames';
 import { Theme } from '#/services/themes';
 import { useContext } from 'react';
 import { i18n } from '#/components/i18n';
+import { environment } from '#config';
 
 interface IProps {
   playerName: string;
@@ -44,6 +62,16 @@ export const SettingsScreenView = React.memo(function (props: IProps) {
       <div className='flex-container__content'>
         <TopPanel onBackClick={onBackClick} />
         <div className='page-setting__name'>{playerName}</div>
+        <div className='page-setting__section'>
+          <a
+            className='flat-btn flat-btn--large'
+            style={{ width: '100%' }}
+            target='_blank'
+            href={`${environment.paUrl}/profile/manage`}
+          >
+            {loc._t('Go to personal area')}
+          </a>
+        </div>
         <div className='page-setting__section'>
           <div className='page-setting__section-title'>{loc._t('Language')}</div>
           <div className='page-setting__section-content'>

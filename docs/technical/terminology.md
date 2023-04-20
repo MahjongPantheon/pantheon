@@ -1,39 +1,25 @@
-## Терминология Pantheon
+## Pantheon terminology
 
-- **Сессия, session** - одна конкретная игра с конкретным набором игроков.
-- **Событие, event** - в это понятие входят турниры (онлайн или оффлайн), 
-локальные клубные рейтинги, общие рейтинги. Можно считать, что отличительной
-особенностью события является _отдельная рейтинговая таблица_.
-- **Раунд, round** - одна раздача в игре. Заканчивается с тем или иным 
-**исходом (outcome)**, который записывается в одноименное поле таблицы round.
-- **Хеш игры, hash, game hash** - уникальный 24-буквенный идентификатор игры,
-по которому ее можно однозначно идентифицировать. Для игроков и внешних наблюдателей
-известен только этот хеш игры, цифровой идентификатор игры недоступен извне и
-оставлен для внутренних нужд Mimir-а.
-- **Токен игрока, Player token, auth token** - уникальный 24-буквенный идентификатор,
-однозначно идентифицирующий пару "игрок + событие". Хранится в localStorage/cookie на
-клиенте, используется Tyr-ом для авторизации на постоянной основе. Для игрока
-токен не виден ни в каком виде (если не использовать отладочный инструментарий).
-- **Пин-код, pin code** - уникальный цифровой код, однозначно идентифицирующий
-пару "игрок + событие". Пин-код является _одноразовым_, при его использовании
-клиенту выдается _токен игрока_ для использования на постоянной основе.
-- **Регистрация игрока, Player registration** - внесение игрока в рейтинговую таблицу
-текущего события. Происходит вручную из админ-части Rheda.
-- **Добавление игрока в систему** - изначальная регистрация игрока в системе,
-без которой невозможна его регистрация.
-- [Mimir] **Примитив, primitive** - класс, однозначно соответствующая одной таблице
-в базе данных. Как правило, один объект такого класса однозначно соответствует
-одной строке в соответствующей таблице (но как всегда, есть исключения, например
-в случае дабл-рона или трипл-рона одному объекту MultiRoundPrimitive могут 
-соответствовать две или три строки таблицы round).
-- [Tyr] **Примитивы, primitives** - в отличие от Mimir-а, на клиенте этот термин
-не означает ничего конкретного :) 
-- [Mimir] **Модель, model** - класс, содержащий в основном бизнес-логику конкретного
-аспекта системы, например онлайн-игр. Сейчас в коде назначение и разделение моделей
-и **контроллеров (controllers)** не очень очевидно и его следует пересмотреть.
-- [Tyr] **Сервис, service** - класс, отвечающий за общение с внешним api, форматирование
-и проверку приходящих данных на валидность и типобезопасность.
-- [Tyr] **Компонент, component** - определение совпадает с понятием компонента в
-Angular JS - некоторый кусок подсистемы, обладающий как функциональным наполнением,
-так и визуальным представлением, способный тем или ином образом комбинироваться с
-другими компонентами и составлять таким образом конечное приложение.
+- **Session** - 1) one particular game with partucilar players; 2) In admin panel
+also can be used as a term for a set of games played simultaneously during the tournament;
+- **Event** - either a tournament, a local club rating or an online event. 
+A _separate rating table_ is a distinctive attribute of an event.
+- **Round** - one hand during the session. Round is ended with one or another **outcome** 
+(which is recorded into the field with the same name)
+- **Session hash, game hash, representational hash** - a unique 24-symbol game identifier.
+External spectators and players may know only this hash, the digital identifier is not
+accessible outside the game data storage.
+- **Player registration** - adding player to the rating table of current event. 
+Can be done in Forseti administration service.
+- **Player sign up** - adding player to the system. Player may sign up by themselves, or
+be registered into the system by chief administrator.
+- [Mimir, Frey] **Primitive** - a class with corresponding DB table. One object of primitive class
+corresponds one row in that table. There are exceptions, though - for example, in case of
+double or triple ron one object oj MultiRoundPrimitive class corresponds to two or three 
+rows in `round` table.
+- [Tyr] **Primitives** - in Tyr, this term does not carry any meaning :) 
+- [Mimir, Frey] **Model** - a class containing a business logic of some aspect of the system. 
+At the moment, there is no clear distinction between models and **controllers** in Mimir, though,
+in Frey controllers just do some logging and call model methods.
+- [Tyr, Forseti] **Service** - an isolated class or a set of functions, responsible for external 
+effects, not bound to React.

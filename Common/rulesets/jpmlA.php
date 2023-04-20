@@ -18,49 +18,66 @@
 namespace Common;
 
 require_once __DIR__ . '/../YakuMap.php';
+require_once __DIR__ . '/../generated/Common/EndingPolicy.php';
+require_once __DIR__ . '/../generated/Common/Uma.php';
+require_once __DIR__ . '/../generated/Common/UmaType.php';
+require_once __DIR__ . '/../generated/Common/RulesetConfig.php';
 
-return [
-    'allowedYaku' => YakuMap::listExcept([
+return (new RulesetConfig())
+    ->setComplexUma(
+        (new ComplexUma())->setNeg3(
+            (new Uma())
+                ->setPlace1(12000)
+                ->setPlace2(-1000)
+                ->setPlace3(-3000)
+                ->setPlace4(-8000)
+        )->setNeg1(
+            (new Uma())
+                ->setPlace1(8000)
+                ->setPlace2(3000)
+                ->setPlace3(1000)
+                ->setPlace4(-12000)
+        )->setOtherwise(
+            (new Uma())
+                ->setPlace1(8000)
+                ->setPlace2(4000)
+                ->setPlace3(-4000)
+                ->setPlace4(-8000)
+        )
+    )
+    ->setUmaType(UmaType::UMA_COMPLEX)
+    ->setEqualizeUma(true)
+    ->setWithWinningDealerHonbaSkipped(false)
+    ->setOka(0)
+    ->setReplacementPlayerFixedPoints(-15000)
+    ->setReplacementPlayerOverrideUma(-15000)
+    ->setAllowedYaku(YakuMap::listExcept([
         Y_IPPATSU,
         Y_OPENRIICHI
-    ]),
-    'chomboPenalty'         => 20000,
-    'complexUma' => true,
-    'doubleronHonbaAtamahane' => false,
-    'doubleronRiichiAtamahane' => false,
-    'equalizeUma' => true,
-    'extraChomboPayments'   => false,
-    'gameExpirationTime'    => false,
-    'goalPoints'            => 0,
-    'maxPenalty'            => 20000,
-    'minPenalty'            => 100,
-    'oka'                   => 0,
-    'penaltyStep'           => 100,
-    'playAdditionalRounds'  => false,
-    'redZone'               => 300, // 5min
-    'replacementPlayerFixedPoints' => false,
-    'replacementPlayerOverrideUma' => false,
-    'riichiGoesToWinner'    => false,
-    'startPoints'           => 30000,
-    'startRating'           => 0,
-    'subtractStartPoints'   => true,
-    'timerPolicy'           => 'yellowZone',
-    'tonpuusen'             => false,
-    'withAbortives'         => true,
-    'withAtamahane'         => true,
-    'withButtobi'           => false,
-    'withKazoe'             => false,
-    'withKiriageMangan'     => false,
-    'withKuitan'            => true,
-    'withLeadingDealerGameOver' => false,
-    'withMultiYakumans'     => false,
-    'withNagashiMangan'     => false,
-    'yakuWithPao'           => [Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU],
-    'yellowZone'            => 0,
-
-    '_invalidCustomFields' => [
-        'uma', 'chipsValue',
-        'withWinningDealerHonbaSkipped', 'timerPolicy', 'redZone',
-        'startRating', 'subtractStartPoints', 'complexUma',
-    ],
-];
+    ]))
+    ->setChipsValue(0)
+    ->setChomboPenalty(20000)
+    ->setDoubleronHonbaAtamahane(false)
+    ->setDoubleronRiichiAtamahane(false)
+    ->setEndingPolicy(EndingPolicy::EP_END_AFTER_HAND)
+    ->setExtraChomboPayments(false)
+    ->setGameExpirationTime(0)
+    ->setGoalPoints(0)
+    ->setMaxPenalty(20000)
+    ->setMinPenalty(100)
+    ->setPenaltyStep(100)
+    ->setPlayAdditionalRounds(false)
+    ->setRiichiGoesToWinner(false)
+    ->setStartPoints(30000)
+    ->setStartRating(0)
+    ->setTonpuusen(false)
+    ->setWithAbortives(true)
+    ->setWithAtamahane(true)
+    ->setWithButtobi(false)
+    ->setWithKazoe(false)
+    ->setWithKiriageMangan(false)
+    ->setWithKuitan(true)
+    ->setWithLeadingDealerGameOver(false)
+    ->setWithMultiYakumans(false)
+    ->setWithNagashiMangan(false)
+    ->setYakuWithPao([Y_DAISANGEN, Y_DAISUUSHII, Y_SUUKANTSU]);

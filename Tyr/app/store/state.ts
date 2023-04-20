@@ -1,21 +1,18 @@
-/*
- * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
- * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
  *
- * This file is part of Tyr.
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * Tyr is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * Tyr is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import {
@@ -27,17 +24,13 @@ import {
   AppOutcomeChombo,
   AppOutcomeNagashi,
 } from '#/interfaces/app';
-import { Outcome as OutcomeType } from '#/interfaces/common';
 import { getFixedFu } from '#/primitives/yaku-values';
 import { IAppState } from './interfaces';
 import { defaultPlayer } from './selectors/screenNewGameSelectors';
+import { RoundOutcome } from '#/clients/atoms.pb';
 
 export const initialState: IAppState = {
-  features: {
-    wsClient: false,
-  },
   currentOtherTableIndex: 0,
-  isUniversalWatcher: false,
   settings: { currentLang: 'en', currentTheme: 'day', singleDeviceMode: false },
   timer: undefined,
   yakuList: undefined,
@@ -45,18 +38,25 @@ export const initialState: IAppState = {
   currentScreen: 'overview',
   currentSessionHash: undefined,
   currentOutcome: undefined,
-  currentRound: 1,
+  sessionState: {
+    dealer: 0,
+    scores: [],
+    finished: false,
+    penalties: [],
+    roundIndex: 1,
+    riichiCount: 0,
+    honbaCount: 0,
+    lastHandStarted: false,
+  },
+
   currentPlayerDisplayName: undefined,
   currentPlayerId: undefined,
   players: undefined, // e-s-w-n,
   mapIdToPlayer: {},
-  riichiOnTable: 0,
-  honba: 0,
   multironCurrentWinner: undefined,
   isLoggedIn: false,
   gameConfig: undefined,
   tableIndex: undefined,
-  yellowZoneAlreadyPlayed: false,
   otherTablesList: [],
   currentOtherTable: undefined,
   currentOtherTableHash: undefined,
@@ -85,12 +85,13 @@ export const initialState: IAppState = {
   historyInitialized: false,
 };
 
-export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcome {
+export function initBlankOutcome(round: number, outcome: RoundOutcome): AppOutcome {
   let out: AppOutcome;
   switch (outcome) {
-    case 'ron':
+    case 'RON':
+    case 'MULTIRON':
       const outcomeMultiRon: AppOutcomeRon = {
-        selectedOutcome: 'ron',
+        selectedOutcome: 'RON',
         roundIndex: round,
         loser: undefined,
         loserIsDealer: false,
@@ -100,15 +101,15 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       };
       out = outcomeMultiRon;
       break;
-    case 'tsumo':
+    case 'TSUMO':
       const outcomeTsumo: AppOutcomeTsumo = {
-        selectedOutcome: 'tsumo',
+        selectedOutcome: 'TSUMO',
         roundIndex: round,
         winner: undefined,
         winnerIsDealer: false,
         han: 0,
         fu: 30,
-        possibleFu: getFixedFu([], 'tsumo'),
+        possibleFu: getFixedFu([], 'TSUMO'),
         yaku: '', // empty string is ok for empty yaku list
         riichiBets: [],
         dora: 0,
@@ -116,9 +117,9 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       };
       out = outcomeTsumo;
       break;
-    case 'draw':
+    case 'DRAW':
       const outcomeDraw: AppOutcomeDraw = {
-        selectedOutcome: 'draw',
+        selectedOutcome: 'DRAW',
         roundIndex: round,
         riichiBets: [],
         tempai: [],
@@ -126,9 +127,9 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       };
       out = outcomeDraw;
       break;
-    case 'nagashi':
+    case 'NAGASHI':
       const outcomeNagashi: AppOutcomeNagashi = {
-        selectedOutcome: 'nagashi',
+        selectedOutcome: 'NAGASHI',
         roundIndex: round,
         riichiBets: [],
         tempai: [],
@@ -137,18 +138,18 @@ export function initBlankOutcome(round: number, outcome: OutcomeType): AppOutcom
       };
       out = outcomeNagashi;
       break;
-    case 'abort':
+    case 'ABORT':
       const outcomeAbort: AppOutcomeAbort = {
-        selectedOutcome: 'abort',
+        selectedOutcome: 'ABORT',
         roundIndex: round,
         riichiBets: [],
         deadhands: [],
       };
       out = outcomeAbort;
       break;
-    case 'chombo':
+    case 'CHOMBO':
       const outcomeChombo: AppOutcomeChombo = {
-        selectedOutcome: 'chombo',
+        selectedOutcome: 'CHOMBO',
         roundIndex: round,
         loser: undefined,
         loserIsDealer: false,

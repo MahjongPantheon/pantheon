@@ -1,27 +1,24 @@
-/*
- * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
- * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
  *
- * This file is part of Tyr.
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * Tyr is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * Tyr is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Outcome as OutcomeType } from './common';
+import { RoundOutcome } from '#/clients/atoms.pb';
 
 export interface Outcome {
-  selectedOutcome: OutcomeType;
+  selectedOutcome: RoundOutcome;
   roundIndex: number;
 }
 
@@ -38,7 +35,7 @@ export interface WinProps {
 }
 
 export interface AppOutcomeRon extends Outcome {
-  selectedOutcome: 'ron';
+  selectedOutcome: 'RON';
   loser?: number; // id of player
   loserIsDealer: boolean;
   multiRon: number;
@@ -47,25 +44,25 @@ export interface AppOutcomeRon extends Outcome {
 }
 
 export interface AppOutcomeTsumo extends Outcome, WinProps {
-  selectedOutcome: 'tsumo';
+  selectedOutcome: 'TSUMO';
   riichiBets: number[]; // ids of players
 }
 
 export interface AppOutcomeAbort extends Outcome {
-  selectedOutcome: 'abort';
+  selectedOutcome: 'ABORT';
   riichiBets: number[]; // ids of players
   deadhands: number[]; // ids of players
 }
 
 export interface AppOutcomeDraw extends Outcome {
-  selectedOutcome: 'draw';
+  selectedOutcome: 'DRAW';
   riichiBets: number[]; // ids of players
   tempai: number[]; // ids of players
   deadhands: number[]; // ids of players
 }
 
 export interface AppOutcomeNagashi extends Outcome {
-  selectedOutcome: 'nagashi';
+  selectedOutcome: 'NAGASHI';
   riichiBets: number[]; // ids of players
   tempai: number[]; // ids of players
   deadhands: number[]; // ids of players
@@ -73,7 +70,7 @@ export interface AppOutcomeNagashi extends Outcome {
 }
 
 export interface AppOutcomeChombo extends Outcome {
-  selectedOutcome: 'chombo';
+  selectedOutcome: 'CHOMBO';
   loser?: number; // id of player
   loserIsDealer: boolean;
 }

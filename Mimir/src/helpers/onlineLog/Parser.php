@@ -19,7 +19,6 @@ namespace Mimir;
 
 require_once __DIR__ . '/../../exceptions/Parser.php';
 require_once __DIR__ . '/../../helpers/YakuMap.php';
-require_once __DIR__ . '/../../FreyClient.php';
 require_once __DIR__ . '/../../primitives/Round.php';
 require_once __DIR__ . '/../../primitives/PlayerHistory.php';
 

@@ -215,8 +215,8 @@ class AccessController extends Controller
     public function addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId): ?int
     {
         $this->_logStart(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);
+
         $ruleId = $this->_getModel()
-            ->_checkAccessRightsWithInternal(InternalRules::ADD_RULE_FOR_PERSON, $eventId)
             ->addRuleForPerson($ruleName, $ruleValue, $ruleType, $personId, $eventId);
         if ($ruleId !== null) {
             $this->_logSuccess(__METHOD__, [$ruleName, $ruleValue, $ruleType, $personId, $eventId]);

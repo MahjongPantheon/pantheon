@@ -1,3 +1,20 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 /*@media(max-width: 800px) {
 }
 
@@ -28,25 +45,6 @@ body {
   font-family: IBM Plex Sans, Noto Sans Wind, Sans, serif;
   font-size: var(--font-size-primary);
   user-select: none;
-}
-
-body.betaLabel:after {
-  content: 'beta';
-  position: fixed;
-  width: 80px;
-  height: 25px;
-  background: #7edf8a;
-  top: 7px;
-  left: -20px;
-  text-align: center;
-  font-size: 13px;
-  font-family: sans-serif;
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #131111;
-  line-height: 27px;
-  transform: rotate(-45deg);
-  z-index: 1100;
 }
 
 img {

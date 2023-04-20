@@ -1,3 +1,20 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import * as React from 'react';
 import { BottomPanel } from '#/components/general/bottom-panel/BottomPanel';
 import './page-log.css';
@@ -6,10 +23,11 @@ import { RoundResult } from '#/components/screens/log/view/RoundResult';
 import { IRoundOverviewInfo } from '#/components/screens/log/view/RoundTypes';
 import { RoundInfo } from '#/components/screens/log/view/RoundInfo';
 import { i18n } from '#/components/i18n';
+import { IntermediateResultOfSession } from '#/clients/atoms.pb';
 
 export interface IRoundResult {
-  scoresDelta: { [id: string]: number };
-  scores: { [index: string]: number };
+  scoresDelta: IntermediateResultOfSession[];
+  scores: IntermediateResultOfSession[];
   round: string;
 }
 

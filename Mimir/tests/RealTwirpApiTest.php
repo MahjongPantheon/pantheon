@@ -35,6 +35,7 @@ use Common\Games_StartGame_Payload;
 use Common\Generic_Event_Payload;
 use Common\MyEvent;
 use Common\Players_GetMyEvents_Payload;
+use Common\RulesetConfig;
 use Common\RulesetGenerated;
 
 require_once __DIR__ . '/../src/Db.php';
@@ -84,7 +85,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     protected function _createEvent(): EventPrimitive
     {
         $evt = (new EventPrimitive($this->_ds))
-            ->setRuleset(\Common\Ruleset::instance('ema')) // TODO: why 'tenhounet' rules fail? o_0
+            ->setRulesetConfig(\Common\Ruleset::instance('ema')) // TODO: why 'tenhounet' rules fail? o_0
             ->setTimezone('UTC')
             ->setTitle('test')
             ->setDescription('test')
@@ -128,12 +129,11 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     public function testGetRulesets()
     {
         $response = $this->_client->GetRulesets([], (new Events_GetRulesets_Payload()))->getRulesets();
-        /** @var RulesetGenerated[] $rulesets */
+        /** @var RulesetConfig[] $rulesets */
         $rulesets = iterator_to_array($response);
 
         $this->assertNotEmpty($rulesets);
-        $this->assertInstanceOf(RulesetGenerated::class, $rulesets[0]);
-        $this->assertNotEmpty($rulesets[0]->getTitle());
+        $this->assertInstanceOf(RulesetConfig::class, $rulesets[0]);
     }
 
     public function testGetTimezones()
@@ -268,8 +268,8 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             [],
             (new Generic_Event_Payload())->setEventId($event->getId())
         );
-        $this->assertEquals(false, $response->getWithAbortives());
-        $this->assertEquals(30000, $response->getStartPoints());
+        $this->assertEquals(false, $response->getRulesetConfig()->getWithAbortives());
+        $this->assertEquals(30000, $response->getRulesetConfig()->getStartPoints());
         $event->drop();
     }
 
@@ -330,9 +330,8 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
             ->setDuration(75)
             ->setIsPrescripted(false)
             ->setIsTeam(false)
-            ->setRuleset('ema')
-            ->setRulesetChanges('')
             ->setSeriesLength(3)
+            ->setRulesetConfig(\Common\Ruleset::instance('ema')->rules())
             ->setTimezone('Asia/Novisibirsk'))->getEventId();
 
         $event = EventPrimitive::findById($this->_ds, [$id])[0];
@@ -349,8 +348,6 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(75, $event->getGameDuration());
         $this->assertEquals(false, $event->getIsPrescripted());
         $this->assertEquals(false, $event->getIsTeam());
-        $this->assertEquals('ema', $event->getRuleset()->title());
-        $this->assertEquals([], $event->getRulesetChanges());
         $this->assertEquals(3, $event->getSeriesLength());
         $this->assertEquals('Asia/Novisibirsk', $event->getTimezone());
 
@@ -372,8 +369,7 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
                 ->setDuration(75)
                 ->setIsPrescripted(false)
                 ->setIsTeam(false)
-                ->setRuleset('ema')
-                ->setRulesetChanges('')
+                ->setRulesetConfig(\Common\Ruleset::instance('ema')->rules())
                 ->setSeriesLength(3)
                 ->setTimezone('Asia/Novisibirsk')))->getSuccess();
 
@@ -394,8 +390,6 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(75, $event->getGameDuration());
         $this->assertEquals(false, $event->getIsPrescripted());
         $this->assertEquals(false, $event->getIsTeam());
-        $this->assertEquals('ema', $event->getRuleset()->title());
-        $this->assertEquals([], $event->getRulesetChanges());
         $this->assertEquals(3, $event->getSeriesLength());
         $this->assertEquals('Asia/Novisibirsk', $event->getTimezone());
 
@@ -628,10 +622,6 @@ class RealTwirpApiTest extends \PHPUnit\Framework\TestCase
     }
 
     public function testGetAchievements()
-    {
-    }
-
-    public function testGetAchievementsList()
     {
     }
 

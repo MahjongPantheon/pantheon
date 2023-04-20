@@ -331,15 +331,6 @@ interface Mimir
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetAchievementsList</code>
-     *
-     * @throws \Twirp\Error
-     */
-    public function GetAchievementsList(array $ctx, \Common\Events_GetAchievementsList_Payload $req): \Common\Events_GetAchievementsList_Response;
-
-    /**
-     *
-     *
      * Generated from protobuf method <code>Common.Mimir/ToggleHideResults</code>
      *
      * @throws \Twirp\Error

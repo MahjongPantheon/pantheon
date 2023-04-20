@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\IntermediateResultOfSession;
+
 require_once __DIR__ . '/../../src/Ruleset.php';
 require_once __DIR__ . '/../../src/models/InteractiveSession.php';
 require_once __DIR__ . '/../../src/primitives/Player.php';
@@ -63,7 +65,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
             ->setTimezone('UTC')
             ->setDescription('desc')
             ->setUsePenalty(1)
-            ->setRuleset(\Common\Ruleset::instance('jpmlA'));
+            ->setRulesetConfig(\Common\Ruleset::instance('jpmlA'));
         $this->_event->save();
 
         $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
@@ -541,11 +543,17 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         /** @var SessionPrimitive $session */
         list($session) = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
         $this->assertEquals(
-            '{"_scores":{"1":29400,"2":32800,"3":29900,"4":27900},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":"tsumo","_isFinished":false}',
+            '{"_scores":{"1":29400,"2":32800,"3":29900,"4":27900},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":"tsumo","_isFinished":false}',
             $session->getCurrentState()->toJson()
         );
 
-        $this->assertNotEmpty($sessionMdl->dropLastRound($hash));
+        $intermediateResults = array_combine($session->getPlayersIds(), $session->getCurrentState()->getScores());
+
+        $this->assertNotEmpty($sessionMdl->dropLastRound($hash, array_map(function ($id) use ($intermediateResults) {
+            return (new IntermediateResultOfSession())
+                ->setPlayerId($id)
+                ->setScore($intermediateResults[$id]);
+        }, $session->getPlayersIds())));
 
         /** @var SessionPrimitive $session */
         list($session) = SessionPrimitive::findByRepresentationalHash($this->_ds, [$hash]);
@@ -557,7 +565,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(\Common\Ruleset::instance('tenhounet'));
+            ->setRulesetConfig(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -598,7 +606,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(\Common\Ruleset::instance('tenhounet'));
+            ->setRulesetConfig(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -644,7 +652,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(\Common\Ruleset::instance('tenhounet'));
+            ->setRulesetConfig(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -676,7 +684,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);
 
         $this->_event
-            ->setRuleset(\Common\Ruleset::instance('tenhounet'));
+            ->setRulesetConfig(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $hash = $session->startGame(
@@ -767,7 +775,7 @@ class InteractiveSessionTest extends \PHPUnit\Framework\TestCase
     public function testRiichiSplitForThreePlayers()
     {
         $this->_event
-            ->setRuleset(\Common\Ruleset::instance('ema'));
+            ->setRulesetConfig(\Common\Ruleset::instance('ema'));
         $this->_event->save();
 
         $session = new InteractiveSessionModel($this->_ds, $this->_config, $this->_meta);

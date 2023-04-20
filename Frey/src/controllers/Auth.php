@@ -19,6 +19,7 @@ namespace Frey;
 
 require_once __DIR__ . '/../Controller.php';
 require_once __DIR__ . '/../models/Auth.php';
+require_once __DIR__ . '/../models/AccessManagement.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 require_once __DIR__ . '/../exceptions/EntityNotFound.php';
 require_once __DIR__ . '/../exceptions/AuthFailed.php';
@@ -32,14 +33,15 @@ class AuthController extends Controller
      * @param string $email
      * @param string $title
      * @param string $password
+     * @param boolean $sendEmail
      * @return string
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function requestRegistration($email, $title, $password)
+    public function requestRegistration($email, $title, $password, $sendEmail = false)
     {
         $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
-        $approvalCode = $this->_getModel()->requestRegistration($email, $title, $password);
+        $approvalCode = $this->_getModel()->requestRegistration($email, $title, $password, $sendEmail);
         $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******']);
         return $approvalCode;
     }
@@ -57,6 +59,7 @@ class AuthController extends Controller
     {
         $this->_logStart(__METHOD__, [$approvalCode]);
         $personId = $this->_getModel()->approveRegistration($approvalCode);
+        $this->_getAccessModel()->addRuleForPerson(InternalRules::CREATE_EVENT, true, 'bool', $personId, null, true);
         $this->_logSuccess(__METHOD__, [$approvalCode]);
         return $personId;
     }
@@ -140,14 +143,15 @@ class AuthController extends Controller
      * Returns reset approval token, which should be sent over email to user.
      *
      * @param string $email
+     * @param boolean $sendEmail
      * @return string
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function requestResetPassword($email)
+    public function requestResetPassword($email, $sendEmail = false)
     {
         $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email)]);
-        $resetToken = $this->_getModel()->requestResetPassword($email);
+        $resetToken = $this->_getModel()->requestResetPassword($email, $sendEmail);
         $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email)]);
         return $resetToken;
     }
@@ -181,5 +185,13 @@ class AuthController extends Controller
     protected function _getModel()
     {
         return new AuthModel($this->_db, $this->_config, $this->_meta);
+    }
+
+    /**
+     * @return AccessManagementModel
+     */
+    protected function _getAccessModel()
+    {
+        return new AccessManagementModel($this->_db, $this->_config, $this->_meta);
     }
 }

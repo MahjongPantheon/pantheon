@@ -1,3 +1,20 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import {
   IRoundOverviewAbort,
   IRoundOverviewChombo,
@@ -195,19 +212,19 @@ function getRoundDescriptionNagashi(info: IRoundOverviewNagashi, loc: I18nServic
 
 export function getRoundDescription(info: IRoundOverviewInfo, loc: I18nService): string[] {
   switch (info.outcome) {
-    case 'ron':
+    case 'RON':
       return getRoundDescriptionRon(info, loc);
-    case 'multiron':
+    case 'MULTIRON':
       return getRoundDescriptionMultiron(info, loc);
-    case 'tsumo':
+    case 'TSUMO':
       return getRoundDescriptionTsumo(info, loc);
-    case 'draw':
+    case 'DRAW':
       return getRoundDescriptionDraw(info, loc);
-    case 'abort':
+    case 'ABORT':
       return getRoundDescriptionAbort(info, loc);
-    case 'chombo':
+    case 'CHOMBO':
       return getRoundDescriptionChombo(info, loc);
-    case 'nagashi':
+    case 'NAGASHI':
       return getRoundDescriptionNagashi(info, loc);
   }
 }

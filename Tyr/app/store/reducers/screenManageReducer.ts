@@ -1,3 +1,20 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import { AppScreen, IAppState } from '../interfaces';
 import {
   AppActionTypes,
@@ -28,12 +45,19 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           state.currentScreen === 'otherTable' || state.currentScreen === 'otherTablesList'
             ? state.currentScreen
             : 'overview',
-        currentRound: 1,
+        sessionState: {
+          dealer: 0,
+          scores: [],
+          finished: false,
+          penalties: [],
+          roundIndex: 1,
+          riichiCount: 0,
+          honbaCount: 0,
+          lastHandStarted: false,
+        },
         currentOutcome: undefined,
         players: undefined,
         mapIdToPlayer: {},
-        riichiOnTable: 0,
-        honba: 0,
         currentSessionHash: '',
         multironCurrentWinner: undefined,
         gameOverviewReady: true,
@@ -103,7 +127,7 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           nextScreen = 'outcomeSelect';
           break;
         case 'outcomeSelect':
-          if (state.currentOutcome?.selectedOutcome === 'nagashi') {
+          if (state.currentOutcome?.selectedOutcome === 'NAGASHI') {
             nextScreen = 'nagashiSelect';
           } else {
             nextScreen = 'playersSelect';
@@ -111,14 +135,14 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           break;
         case 'playersSelect':
           switch (state.currentOutcome?.selectedOutcome) {
-            case 'ron':
-            case 'tsumo':
+            case 'RON':
+            case 'TSUMO':
               nextScreen = 'handSelect';
               break;
-            case 'draw':
-            case 'abort':
-            case 'chombo':
-            case 'nagashi':
+            case 'DRAW':
+            case 'ABORT':
+            case 'CHOMBO':
+            case 'NAGASHI':
               nextScreen = 'confirmation';
               break;
             default:
@@ -126,8 +150,8 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           break;
         case 'handSelect':
           switch (state.currentOutcome?.selectedOutcome) {
-            case 'ron':
-            case 'tsumo':
+            case 'RON':
+            case 'TSUMO':
               if (winnerHasYakuWithPao(state.currentOutcome, state.gameConfig)) {
                 nextScreen = 'paoSelect';
               } else {
@@ -199,7 +223,7 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           }
           break;
         case 'playersSelect':
-          if (state.currentOutcome?.selectedOutcome === 'nagashi') {
+          if (state.currentOutcome?.selectedOutcome === 'NAGASHI') {
             prevScreen = 'nagashiSelect';
           } else {
             prevScreen = 'outcomeSelect';
@@ -211,18 +235,18 @@ export function screenManageReducer(state: IAppState, action: AppActionTypes): I
           break;
         case 'confirmation':
           switch (state.currentOutcome?.selectedOutcome) {
-            case 'ron':
-            case 'tsumo':
+            case 'RON':
+            case 'TSUMO':
               if (winnerHasYakuWithPao(state.currentOutcome, state.gameConfig)) {
                 prevScreen = 'paoSelect';
               } else {
                 prevScreen = 'handSelect';
               }
               break;
-            case 'draw':
-            case 'abort':
-            case 'chombo':
-            case 'nagashi':
+            case 'DRAW':
+            case 'ABORT':
+            case 'CHOMBO':
+            case 'NAGASHI':
               prevScreen = 'playersSelect';
               break;
             default:

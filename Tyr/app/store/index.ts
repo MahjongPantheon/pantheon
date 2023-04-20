@@ -1,7 +1,23 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import { createStore, applyMiddleware, Store as ReduxStore, compose, Reducer } from 'redux';
 import { screenManageReducer } from './reducers/screenManageReducer';
 import { apiClient } from './middlewares/apiClient';
-import { RiichiApiService } from '#/services/riichiApi';
 import { mimirReducer } from './reducers/mimirReducer';
 import { outcomeReducer } from './reducers/outcomeReducer';
 import { analytics } from './middlewares/analytics';
@@ -19,7 +35,7 @@ import { yaku } from './middlewares/yaku';
 import { reduceReducers } from '#/store/util';
 import { AppActionTypes } from '#/store/actions/interfaces';
 import { screenManageMw } from '#/store/middlewares/screenManage';
-import { IStorage } from '#/services/storage';
+import { IStorage } from '../../../Common/storage';
 import { RiichiApiTwirpService } from '#/services/riichiApiTwirp';
 
 export class Store {
@@ -43,9 +59,7 @@ export class Store {
       timerReducer,
     ]);
     const analyticsService = new Analytics();
-    const riichiService = storage.getTwirpEnabled()
-      ? new RiichiApiTwirpService()
-      : new RiichiApiService();
+    const riichiService = new RiichiApiTwirpService();
     const middleware = applyMiddleware(
       logging(`⇨ [middlewares]`),
       apiClient(riichiService),

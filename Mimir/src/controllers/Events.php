@@ -17,13 +17,16 @@
  */
 namespace Mimir;
 
+use Common\Ruleset;
+use Common\RulesetConfig;
+
 require_once __DIR__ . '/../models/Event.php';
 require_once __DIR__ . '/../models/EventSeries.php';
 require_once __DIR__ . '/../models/EventUserManagement.php';
-require_once __DIR__ . '/../models/Achievements.php';
 require_once __DIR__ . '/../models/EventFinishedGames.php';
 require_once __DIR__ . '/../models/EventRatingTable.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
+require_once __DIR__ . '/../primitives/Achievements.php';
 require_once __DIR__ . '/../Controller.php';
 
 class EventsController extends Controller
@@ -32,7 +35,6 @@ class EventsController extends Controller
      * @param string $type Either 'club', 'tournament' or 'online'
      * @param string $title
      * @param string $description
-     * @param string $ruleset one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
      * @param int $gameDuration duration of game in this event in minutes
      * @param string $timezone name of timezone, 'Asia/Irkutsk' for example
      * @param int $series Length of game series, 0 to disable
@@ -41,7 +43,7 @@ class EventsController extends Controller
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
      * @param int $autostartTimer Interval before games autostart
-     * @param string $rulesetChangesJson Json-encoded changes for base ruleset
+     * @param ?RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -51,7 +53,6 @@ class EventsController extends Controller
         $type,
         $title,
         $description,
-        $ruleset,
         $gameDuration,
         $timezone,
         $series,
@@ -60,20 +61,22 @@ class EventsController extends Controller
         $isTeam,
         $isPrescripted,
         $autostartTimer,
-        $rulesetChangesJson
+        $rulesetConfig
     ) {
-        $this->_log->info('Creating new event with [' . $ruleset . '] rules');
+        $this->_log->info('Creating new event...');
+
+        if (empty($rulesetConfig)) {
+            throw new BadActionException('Ruleset configuration must be supplied');
+        }
 
         // Check we have rights to create new event
-        if (!$this->_meta->getCurrentPersonId() || !$this->_meta->isInternalRequest()) {
+        if (!$this->_meta->getCurrentPersonId() || !$this->_meta->getAccessRuleValue('CREATE_EVENT')) {
             throw new BadActionException("You don't have enough privileges to create new event");
         }
 
         if (!in_array($type, ['club', 'tournament', 'online'])) {
-            throw new BadActionException(' Unsupported type of event requested');
+            throw new BadActionException('Unsupported type of event requested');
         }
-
-        $rulesetChanges = json_decode($rulesetChangesJson, true) ?? [];
 
         /** @phpstan-ignore-next-line */
         $statHost = $this->_config->getStringValue('rhedaUrl') . '/eid' . EventPrimitive::ID_PLACEHOLDER;
@@ -84,8 +87,7 @@ class EventsController extends Controller
             ->setTimeZone($timezone)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
-            ->setRuleset(\Common\Ruleset::instance($ruleset))
-            ->setRulesetChanges($rulesetChanges)
+            ->setRulesetConfig(new \Common\Ruleset($rulesetConfig))
             ->setStatHost($statHost)
         ;
 
@@ -141,7 +143,19 @@ class EventsController extends Controller
         if (empty($id)) {
             throw new InvalidParametersException('Attempted to return deidented primitive');
         }
-        $this->_log->info('Successfully create new event (id# ' . $id . ')');
+
+        $ruleId = $this->_ds->remote()->addRuleForPerson(
+            'ADMIN_EVENT',
+            true,
+            'bool',
+            $this->_meta->getCurrentPersonId(),
+            $id
+        );
+        if (empty($ruleId)) {
+            throw new InvalidParametersException('Failed to save event privileges to Frey');
+        }
+
+        $this->_log->info('Successfully created new event (id# ' . $id . ')');
         return $id;
     }
 
@@ -151,7 +165,6 @@ class EventsController extends Controller
      * @param int $id event id
      * @param string $title
      * @param string $description
-     * @param string $ruleset one of possible ruleset names ('ema', 'jpmlA', 'tenhounet', or any other supported by system)
      * @param int $gameDuration duration of game in this event in minutes
      * @param string $timezone name of timezone, 'Asia/Irkutsk' for example
      * @param int $series Length of game series, 0 to disable
@@ -160,7 +173,7 @@ class EventsController extends Controller
      * @param bool $isTeam If event is team tournament
      * @param bool $isPrescripted If tournament should have predefined seating
      * @param int $autostartTimer Interval before games are started automatically
-     * @param string $rulesetChangesJson Json-encoded changes for base ruleset
+     * @param ?RulesetConfig $rulesetConfig
      * @throws BadActionException
      * @throws InvalidParametersException
      * @throws \Exception
@@ -170,7 +183,6 @@ class EventsController extends Controller
         $id,
         $title,
         $description,
-        $ruleset,
         $gameDuration,
         $timezone,
         $series,
@@ -179,9 +191,13 @@ class EventsController extends Controller
         $isTeam,
         $isPrescripted,
         $autostartTimer,
-        $rulesetChangesJson
+        $rulesetConfig
     ) {
-        $this->_log->info('Updating event with [' . $ruleset . '] rules');
+        $this->_log->info('Updating event with id #' . $id);
+
+        if (empty($rulesetConfig)) {
+            throw new BadActionException('Ruleset configuration must be supplied');
+        }
 
         $event = EventPrimitive::findById($this->_ds, [$id]);
         if (empty($event)) {
@@ -194,16 +210,13 @@ class EventsController extends Controller
             throw new BadActionException("You don't have enough privileges to modify this event");
         }
 
-        $rulesetChanges = json_decode($rulesetChangesJson, true) ?? [];
-
         $event->setTitle($title)
             ->setDescription($description)
             ->setGameDuration($gameDuration)
             ->setTimeZone($timezone)
             ->setSeriesLength($series)
             ->setMinGamesCount($minGamesCount)
-            ->setRuleset(\Common\Ruleset::instance($ruleset))
-            ->setRulesetChanges($rulesetChanges)
+            ->setRulesetConfig(new Ruleset($rulesetConfig))
         ;
 
         if ($event->getSyncStart()) { // Should be a tournament
@@ -227,7 +240,7 @@ class EventsController extends Controller
             throw new BadActionException('Somehow we couldn\'t update event - this should not happen');
         }
 
-        $this->_log->info('Successfully create new event (id# ' . $id . ')');
+        $this->_log->info('Successfully updated new event (id# ' . $id . ')');
         return $success;
     }
 
@@ -262,7 +275,6 @@ class EventsController extends Controller
             'title' => $event->getTitle(),
             'description' => $event->getDescription(),
             'duration' => $event->getGameDuration(),
-            'ruleset' => $event->getRuleset()->title(),
             'timezone' => $event->getTimezone(),
             'lobbyId' => $event->getLobbyId(),
             'seriesLength' => $event->getSeriesLength(),
@@ -270,7 +282,7 @@ class EventsController extends Controller
             'isTeam' => $event->getIsTeam(),
             'isPrescripted' => $event->getIsPrescripted(),
             'autostart' => $event->getTimeToStart(),
-            'rulesetChanges' => json_encode($event->getRulesetChanges() ?: [])
+            'ruleset' => $event->getRulesetConfig()->rules()
         ];
 
         $this->_log->info('Successfully got event settings for event #' . $id);
@@ -333,10 +345,6 @@ class EventsController extends Controller
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
-        }
-
-        if (!EventPrimitive::areEventsCompatible($eventList)) {
-            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
         $needLocalIds = false;
@@ -557,43 +565,14 @@ class EventsController extends Controller
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
 
-        $rules = $event[0]->getRuleset();
-        # we don't need to display add replay button to the online tournaments
-        $hideAddReplayButton = $rules->title() == 'online' || $rules->title() == 'onlineJpmlA' || $rules->title() == 'onlineChips';
+        $rules = $event[0]->getRulesetConfig();
         $data = [
-            'allowedYaku'         => array_values($rules->allowedYaku()),
-            'startPoints'         => $rules->startPoints(),
-            'goalPoints'          => $rules->goalPoints(),
-            'playAdditionalRounds' => $rules->playAdditionalRounds(),
-            'withKazoe'           => $rules->withKazoe(),
-            'withKiriageMangan'   => $rules->withKiriageMangan(),
-            'withAbortives'       => $rules->withAbortives(),
-            'withNagashiMangan'   => $rules->withNagashiMangan(),
-            'withAtamahane'       => $rules->withAtamahane(),
-            'rulesetTitle'        => $rules->title(),
-            'tonpuusen'           => $rules->tonpuusen(),
-            'startRating'         => $rules->startRating(),
-            'riichiGoesToWinner'  => $rules->riichiGoesToWinner(),
-            'doubleronRiichiAtamahane' => $rules->doubleronRiichiAtamahane(),
-            'doubleronHonbaAtamahane'  => $rules->doubleronHonbaAtamahane(),
-            'extraChomboPayments' => $rules->extraChomboPayments(),
-            'chomboPenalty'       => $rules->chomboPenalty(),
-            'withKuitan'          => $rules->withKuitan(),
-            'withButtobi'         => $rules->withButtobi(),
-            'withMultiYakumans'   => $rules->withMultiYakumans(),
-            'gameExpirationTime'  => $rules->gameExpirationTime(),
-            'minPenalty'          => $rules->minPenalty(),
-            'maxPenalty'          => $rules->maxPenalty(),
-            'penaltyStep'         => $rules->penaltyStep(),
-            'yakuWithPao'         => $rules->yakuWithPao(),
+            'ruleset'             => $rules->rules(),
             'eventTitle'          => $event[0]->getTitle(),
             'eventDescription'    => $this->_mdTransform($event[0]->getDescription()),
             'eventStatHost'       => str_replace(EventPrimitive::ID_PLACEHOLDER, (string)$event[0]->getId(), $event[0]->getStatHost()),
             'useTimer'            => (bool)$event[0]->getUseTimer(),
             'usePenalty'          => (bool)$event[0]->getUsePenalty(),
-            'timerPolicy'         => $rules->timerPolicy(),
-            'redZone'             => $rules->redZone(), // in seconds!
-            'yellowZone'          => $rules->yellowZone(), // in seconds!
             'gameDuration'        => $event[0]->getGameDuration(), // in minutes!
             'timezone'            => $event[0]->getTimezone(),
             'isOnline'            => (bool)$event[0]->getIsOnline(),
@@ -603,15 +582,12 @@ class EventsController extends Controller
             'syncEnd'             => (bool)$event[0]->getSyncEnd(),
             'sortByGames'         => (bool)$event[0]->getSortByGames(),
             'allowPlayerAppend'   => (bool)$event[0]->getAllowPlayerAppend(),
-            'withLeadingDealerGameOver' => $rules->withLeadingDealerGameOver(),
-            'subtractStartPoints' => $rules->subtractStartPoints(),
             'seriesLength'        => $event[0]->getSeriesLength(),
             'minGamesCount'        => $event[0]->getMinGamesCount(),
             'gamesStatus'         => $event[0]->getGamesStatus(),
             'hideResults'         => (bool)$event[0]->getHideResults(),
-            'hideAddReplayButton' => $hideAddReplayButton,
+            'hideAddReplayButton' => false, // TODO: fix when tournaments are resurrected
             'isPrescripted'       => (bool)$event[0]->getIsPrescripted(),
-            'chipsValue'          => (int) $rules->chipsValue(),
             'isFinished'          => (bool)$event[0]->getIsFinished(),
         ];
 
@@ -643,10 +619,6 @@ class EventsController extends Controller
             throw new InvalidParametersException('Some of events for ids: ' . implode(", ", $eventIdList) . ' were not found in DB');
         }
 
-        if (!EventPrimitive::areEventsCompatible($eventList)) {
-            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
-        }
-
         $table = (new EventRatingTableModel($this->_ds, $this->_config, $this->_meta))
             ->getRatingTable($eventList, $orderBy, $order, $withPrefinished);
 
@@ -656,53 +628,31 @@ class EventsController extends Controller
     }
 
     /**
-     * @return array
-     * @throws AuthFailedException
-     */
-    public function getAchievementsList()
-    {
-        $this->_log->info('Getting achievements code list');
-
-        $list = (new AchievementsModel($this->_ds, $this->_config, $this->_meta))
-            ->getAchievementsList();
-
-        $this->_log->info('Successfully received achievements code list');
-
-        return $list;
-    }
-
-    /**
      * Get achievements list for event
      *
-     * @param array $eventIdList
+     * @param int $eventId
      * @param array $achievementsList
      * @throws InvalidParametersException
      * @throws \Exception
      * @return array
      */
-    public function getAchievements($eventIdList, $achievementsList)
+    public function getAchievements($eventId, $achievementsList)
     {
-        if (!is_array($eventIdList) || empty($eventIdList)) {
-            throw new InvalidParametersException('Event id list is not array or array is empty');
+        $this->_log->info('Getting achievements list for event ids# ' . $eventId);
+
+        $eventList = EventPrimitive::findById($this->_ds, [$eventId]);
+        if (empty($eventList)) {
+            throw new InvalidParametersException('Event id # ' . $eventId . ' was not found in DB');
         }
 
-        $this->_log->info('Getting achievements list for event ids# ' . implode(", ", $eventIdList));
-
-        $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
-        if (count($eventList) != count($eventIdList)) {
-            throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
+        $table = AchievementsPrimitive::findByEventId($this->_ds, [$eventId])[0]->getData();
+        $result = [];
+        foreach ($achievementsList as $ach) {
+            $result[$ach] = $table[$ach];
         }
 
-        if (!EventPrimitive::areEventsCompatible($eventList)) {
-            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
-        }
-
-        $table = (new AchievementsModel($this->_ds, $this->_config, $this->_meta))
-            ->getAchievements($eventIdList, $achievementsList);
-
-        $this->_log->info('Successfully received achievements list for event ids# ' . implode(", ", $eventIdList));
-
-        return $table;
+        $this->_log->info('Successfully received achievements list for event ids# ' . $eventId);
+        return $result;
     }
 
     /**
@@ -728,10 +678,6 @@ class EventsController extends Controller
         $eventList = EventPrimitive::findById($this->_ds, $eventIdList);
         if (count($eventList) != count($eventIdList)) {
             throw new InvalidParametersException('Some of events for ids ' . implode(", ", $eventIdList) . ' were not found in DB');
-        }
-
-        if (!EventPrimitive::areEventsCompatible($eventList)) {
-            throw new InvalidParametersException('Incompatible events: ' . implode(", ", $eventIdList));
         }
 
         if (!in_array($orderBy, ['id', 'end_date']) || !in_array($order, ['asc', 'desc'])) {
@@ -1021,26 +967,30 @@ class EventsController extends Controller
     {
         $this->_log->info('Receiving rulesets list');
         $list = [
-            'ema' => [
+            [
+                'id' => 'ema',
                 'description' => 'European Mahjong Association rules',
-                'originalRules' => \Common\Ruleset::instance('ema')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('ema')->rules()
             ],
-            'jpmlA' => [
+            [
+                'id' => 'jpmlA',
                 'description' => 'Japanese Professional Mahjong League A rules',
-                'originalRules' => \Common\Ruleset::instance('jpmlA')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('jpmlA')->rules()
             ],
-            'wrc' => [
+            [
+                'id' => 'wrc',
                 'description' => 'World Riichi Championship rules',
-                'originalRules' => \Common\Ruleset::instance('wrc')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('wrc')->rules()
             ],
-            'tenhounet' => [
+            [
+                'id' => 'tenhounet',
                 'description' => 'Tenhou.net compatible rules',
-                'originalRules' => \Common\Ruleset::instance('tenhounet')->getRawRuleset()
+                'originalRules' => \Common\Ruleset::instance('tenhounet')->rules()
             ]
         ];
 
         $this->_log->info('Successfully received rulesets');
-        return ['rules' => $list, 'fields' => \Common\Ruleset::fieldTypes()];
+        return $list;
     }
 
     /**
@@ -1057,6 +1007,10 @@ class EventsController extends Controller
         $timezoneIdentifiers = \DateTimeZone::listIdentifiers();
 
         $preferredTimezone = '';
+        // Some workarounds for Forseti SPA querying: we don't have server there and can't get current IP.
+        if (empty($addr) && !empty($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] !== $_SERVER['SERVER_ADDR']) {
+            $addr = $_SERVER['REMOTE_ADDR'];
+        }
         if ($addr) {
             require_once __DIR__ . '/../../bin/geoip2.phar';
             try {
@@ -1093,6 +1047,10 @@ class EventsController extends Controller
         $countries = getCountriesWithCodes();
 
         $preferredCountry = '';
+        // Some workarounds for Forseti SPA querying: we don't have server there and can't get current IP.
+        if (empty($addr) && !empty($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] !== $_SERVER['SERVER_ADDR']) {
+            $addr = $_SERVER['REMOTE_ADDR'];
+        }
         if ($addr) {
             require_once __DIR__ . '/../../bin/geoip2.phar';
             try {

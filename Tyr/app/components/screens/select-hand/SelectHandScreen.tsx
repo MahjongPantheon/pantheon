@@ -1,3 +1,20 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import * as React from 'react';
 import { IComponentProps } from '#/components/IComponentProps';
 import { SelectHandScreenView } from '#/components/screens/select-hand/view/SelectHandScreenView';
@@ -116,8 +133,8 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     const { state } = this.props;
     if (
       !state.currentOutcome ||
-      (state.currentOutcome.selectedOutcome !== 'ron' &&
-        state.currentOutcome.selectedOutcome !== 'tsumo')
+      (state.currentOutcome.selectedOutcome !== 'RON' &&
+        state.currentOutcome.selectedOutcome !== 'TSUMO')
     ) {
       //todo
       return null;
@@ -130,7 +147,7 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
 
     const allWinners = getWinningUsers(state);
     const player = allWinners.find((val) => val.id === currentWinnerId);
-    const playerName = player !== undefined ? player.displayName : '';
+    const playerName = player !== undefined ? player.title : '';
     const bottomPanelText = getOutcomeName(loc, state.currentOutcome.selectedOutcome);
     const canGoNext = !!mayGoNextFromYakuSelect(state);
 

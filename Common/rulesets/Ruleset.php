@@ -20,125 +20,43 @@ require_once __DIR__ . '/../i18n.php';
 
 class Ruleset
 {
+    protected RulesetConfig $_rulesetCurrent;
+
     /**
-     * @param string $rulesetName
+     * @param string|RulesetConfig $customizedSettings
+     * @throws \Exception
+     */
+    public function __construct(string|RulesetConfig $customizedSettings) {
+        if ($customizedSettings instanceof RulesetConfig) {
+            $this->_rulesetCurrent = $customizedSettings;
+        } else {
+            $this->_rulesetCurrent = new RulesetConfig();
+            $this->_rulesetCurrent->mergeFromJsonString($customizedSettings, true);
+        }
+    }
+
+    public function rules(): RulesetConfig
+    {
+        return $this->_rulesetCurrent;
+    }
+
+    /**
+     * Make a ruleset based on default
+     * @param string $rulesetName ema|wrc|jpmlA|tenhounet
      * @return Ruleset
      * @throws \Exception
      */
     public static function instance($rulesetName)
     {
-        $ruleset = new Ruleset();
-        $ruleset->_title = $rulesetName;
         switch ($rulesetName) {
             case 'ema':
-                $ruleset->_ruleset = require __DIR__ . '/ema.php';
-                break;
             case 'wrc':
-                $ruleset->_ruleset = require __DIR__ . '/wrc.php';
-                break;
             case 'jpmlA':
-                $ruleset->_ruleset = require __DIR__ . '/jpmlA.php';
-                break;
             case 'tenhounet':
-                $ruleset->_ruleset = require __DIR__ . '/tenhounet.php';
-                break;
+                return new Ruleset(require __DIR__ . '/' . $rulesetName . '.php');
             default:
                 throw new \Exception('Ruleset not found');
         }
-        return $ruleset;
-    }
-
-    /**
-     * @return array
-     */
-    public static function fieldDescriptions()
-    {
-        return [
-            'allowedYaku' => _t('List of allowed yaku'),
-            'chipsValue' => _t('Chips value'),
-            'chomboPenalty' => _t('Chombo penalty in rating points'),
-            'doubleronHonbaAtamahane' => _t('Should honda bonus be given by atamahane rule in case of double/triple ron (given to all if not)'),
-            'doubleronRiichiAtamahane' => _t('Should riichi sticks be given by atamahane rule in case of double/triple ron'),
-            'equalizeUma' => _t('Should uma bonus be divided equally in case of score equality'),
-            'extraChomboPayments' => _t('If chombo should be payed in points'),
-            'goalPoints' => _t('Points to end game'),
-            'maxPenalty' => _t('Maximal arbitrary penalty amount'),
-            'minPenalty' => _t('Minimal arbitrary penalty amount'),
-            'oka' => _t('Oka (first place) bonus size'),
-            'penaltyStep' => _t('Step of penalty amounts'),
-            'playAdditionalRounds' => _t('Play additional rounds'),
-            'redZone' => _t('Red zone duration'),
-            'replacementPlayerFixesPoints' => _t('Amount of points to be given to replacement player'),
-            'replacementPlayerOverrideUma' => _t('Amount of uma bonus to be given to replacement player'),
-            'riichiGoesToWinner' => _t('If riichi bets left on the table go to winner of the hanchan'),
-            'startPoints' => _t('Points to start with'),
-            'startRating' => _t('Rating initial points amount'),
-            'subtractStartPoints' => _t('If start points should be subtracted from result'),
-            'timerPolicy' => _t('Timer policy'),
-            'tonpuusen' => _t('If games have east rounds only'),
-            'uma' => _t('Uma (rank) bonus size'),
-            'withAbortives' => _t('If abortive draws are allowed'),
-            'withAtamahane' => _t('If atamahane is enabled'),
-            'withButtobi' => _t('If game ends when any player goes bankrupt'),
-            'withKazoe' => _t('If kazoe should be yakuman, not sanbaiman'),
-            'withKiriageMangan' => _t('If 4/30 and 3/60 should be rounded to mangan'),
-            'withKuitan' => _t('If tanyao in open hand is allowed'),
-            'withLeadingDealerGameOver' => _t('If game ends when leading dealer wins in last round'),
-            'withMultiYakumans' => _t('If multiple yakumans are enabled'),
-            'withNagashiMangan' => _t('If nagashi mangan is allowed'),
-            'withWinningDealerHonbaSkipped' => _t('If game should proceed to next round if dealer wins (i.e. no honba/renchan)'),
-            'yakuWithPao' => _t('List of yakumans that use pao rule'),
-            'yellowZone' => _t('Yellow zone duration'),
-
-            // Don't allow to customize this for now
-//            'complexUma' => _t('Use JPML-like complex uma bonus (overrides uma amount setting)'),
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public static function fieldTypes()
-    {
-        return [
-            'allowedYaku'           => 'select',
-            'chipsValue'            => 'int',
-            'chomboPenalty'         => 'int',
-            'complexUma'            => 'bool',
-            'doubleronHonbaAtamahane' => 'bool',
-            'doubleronRiichiAtamahane' => 'bool',
-            'equalizeUma'           => 'bool',
-            'extraChomboPayments'   => 'bool',
-            'gameExpirationTime'    => 'int',
-            'goalPoints'            => 'int',
-            'maxPenalty'            => 'int',
-            'minPenalty'            => 'int',
-            'oka'                   => 'int',
-            'penaltyStep'           => 'int',
-            'playAdditionalRounds'  => 'bool',
-            'redZone'               => 'int',
-            'replacementPlayerFixedPoints' => 'int',
-            'replacementPlayerOverrideUma' => 'int',
-            'riichiGoesToWinner'    => 'bool',
-            'startPoints'           => 'int',
-            'startRating'           => 'int',
-            'subtractStartPoints'   => 'bool',
-            'timerPolicy'           => 'select',
-            'tonpuusen'             => 'bool',
-            'uma'                   => 'int[]',
-            'withAbortives'         => 'bool',
-            'withAtamahane'         => 'bool',
-            'withButtobi'           => 'bool',
-            'withKazoe'             => 'bool',
-            'withKiriageMangan'     => 'bool',
-            'withKuitan'            => 'bool',
-            'withLeadingDealerGameOver' => 'bool',
-            'withMultiYakumans'     => 'bool',
-            'withNagashiMangan'     => 'bool',
-            'withWinningDealerHonbaSkipped' => 'bool',
-            'yakuWithPao'           => 'select',
-            'yellowZone'            => 'int',
-        ];
     }
 
     /**
@@ -152,31 +70,31 @@ class Ruleset
     {
         rsort($score);
         if ($score[0] === $score[1] && $score[1] === $score[2] && $score[2] === $score[3]) {
-            return [1 => 0, 0, 0, 0]; // exceptional case: all equal score
+            return [0, 0, 0, 0]; // exceptional case: all equal score
         }
 
         if ($score[0] === $score[1] && $score[1] === $score[2]) {
             // 1 == 2 == 3 places
-            $eqUma = ($uma[1] + $uma[2] + $uma[3]) / 3;
-            return [1 => $eqUma, $eqUma, $eqUma, $uma[4]];
+            $eqUma = ($uma[0] + $uma[1] + $uma[2]) / 3;
+            return [$eqUma, $eqUma, $eqUma, $uma[3]];
         }
 
         if ($score[1] === $score[2] && $score[2] === $score[3]) {
             // 2 == 3 == 4 places
-            $eqUma = ($uma[2] + $uma[3] + $uma[4]) / 3;
-            return [1 => $uma[1], $eqUma, $eqUma, $eqUma];
+            $eqUma = ($uma[1] + $uma[2] + $uma[3]) / 3;
+            return [$uma[0], $eqUma, $eqUma, $eqUma];
         }
 
         if ($score[0] === $score[1]) {
-            $uma[1] = $uma[2] = ($uma[1] + $uma[2]) / 2;
+            $uma[0] = $uma[1] = ($uma[0] + $uma[1]) / 2;
         }
 
         if ($score[1] === $score[2]) {
-            $uma[2] = $uma[3] = ($uma[2] + $uma[3]) / 2;
+            $uma[1] = $uma[2] = ($uma[1] + $uma[2]) / 2;
         }
 
         if ($score[2] === $score[3]) {
-            $uma[3] = $uma[4] = ($uma[3] + $uma[4]) / 2;
+            $uma[2] = $uma[3] = ($uma[2] + $uma[3]) / 2;
         }
 
         return $uma;
@@ -190,83 +108,21 @@ class Ruleset
     {
         rsort($scores);
         $minusedPlayers = array_reduce($scores, function ($acc, $score) {
-            return $acc + ($score < $this->startPoints() ? 1 : 0);
+            return $acc + ($score < $this->_rulesetCurrent->getStartPoints() ? 1 : 0);
         }, 0);
 
         switch ($minusedPlayers) {
             case 3:
-                $uma = [1 => 12000, -1000, -3000, -8000];
+                $uma = $this->_rulesetCurrent->getComplexUma()->getNeg3();
                 break;
             case 1:
-                $uma = [1 => 8000, 3000, 1000, -12000];
+                $uma = $this->_rulesetCurrent->getComplexUma()->getNeg1();
                 break;
             default:
-                $uma = [1 => 8000, 4000, -4000, -8000];
+                $uma = $this->_rulesetCurrent->getComplexUma()->getOtherwise();
         }
 
-        return $uma;
-    }
-
-    /**
-     * @var string $_title
-     */
-    protected $_title;
-    /**
-     * @var array $_ruleset
-     */
-    protected $_ruleset;
-
-    /**
-     * @return array
-     */
-    public function getRawRuleset()
-    {
-        return $this->_ruleset;
-    }
-
-    /**
-     * @param array $changes
-     * @return Ruleset
-     */
-    public function applyChanges($changes)
-    {
-        $ruleset = clone $this;
-        foreach ($changes as $rule => $value) {
-            $ruleset->_ruleset[$rule] = $value;
-        }
-        return $ruleset;
-    }
-
-    /**
-     * @return string
-     */
-    public function title()
-    {
-        return $this->_title;
-    }
-
-    /**
-     * @return array
-     */
-    public function allowedYaku()
-    {
-        return $this->_ruleset['allowedYaku'];
-    }
-
-    /**
-     * @return bool
-     */
-    public function tonpuusen()
-    {
-        return boolval($this->_ruleset['tonpuusen']);
-    }
-
-    /**
-     * @return int
-     */
-    public function startRating()
-    {
-        return intval($this->_ruleset['startRating']);
+        return [$uma->getPlace1(), $uma->getPlace2(), $uma->getPlace3(), $uma->getPlace4()];
     }
 
     /**
@@ -275,11 +131,16 @@ class Ruleset
      */
     public function uma($scores = [])
     {
-        $uma = isset($this->_ruleset['complexUma']) && $this->_ruleset['complexUma']
+        $uma = $this->_rulesetCurrent->getUmaType() === UmaType::UMA_COMPLEX
             ? $this->complexUma($scores)
-            : $this->_ruleset['uma'];
+            : [
+                $this->_rulesetCurrent->getUma()->getPlace1(),
+                $this->_rulesetCurrent->getUma()->getPlace2(),
+                $this->_rulesetCurrent->getUma()->getPlace3(),
+                $this->_rulesetCurrent->getUma()->getPlace4()
+            ];
 
-        if ($this->_ruleset['equalizeUma']) {
+        if ($this->_rulesetCurrent->getEqualizeUma()) {
             return $this->_equalizeUma($scores, $uma);
         }
         return $uma;
@@ -296,249 +157,9 @@ class Ruleset
     public function oka(int $place)
     {
         if ($place === 1) {
-            return (intval($this->_ruleset['oka']) * 0.75) ;
+            return ($this->_rulesetCurrent->getOka() * 0.75) ;
         } else {
-            return -(intval($this->_ruleset['oka']) / 4);
+            return -($this->_rulesetCurrent->getOka() / 4);
         }
-    }
-
-    /**
-     * @return int
-     */
-    public function startPoints()
-    {
-        return intval($this->_ruleset['startPoints']);
-    }
-
-    /**
-     * @return int
-     */
-    public function goalPoints()
-    {
-        return intval($this->_ruleset['goalPoints']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function playAdditionalRounds()
-    {
-        return boolval($this->_ruleset['playAdditionalRounds']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function subtractStartPoints()
-    {
-        return boolval($this->_ruleset['subtractStartPoints']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function riichiGoesToWinner()
-    {
-        return boolval($this->_ruleset['riichiGoesToWinner']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function doubleronRiichiAtamahane()
-    {
-        return boolval($this->_ruleset['doubleronRiichiAtamahane'] ?? false);
-    }
-
-    /**
-     * @return bool
-     */
-    public function doubleronHonbaAtamahane()
-    {
-        return boolval($this->_ruleset['doubleronHonbaAtamahane'] ?? false);
-    }
-
-    /**
-     * @return bool
-     */
-    public function extraChomboPayments()
-    {
-        return boolval($this->_ruleset['extraChomboPayments']);
-    }
-
-    /**
-     * @return float
-     */
-    public function chomboPenalty()
-    {
-        return floatval($this->_ruleset['chomboPenalty']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function withAtamahane()
-    {
-        return boolval($this->_ruleset['withAtamahane']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function withAbortives()
-    {
-        return boolval($this->_ruleset['withAbortives']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function withKuitan()
-    {
-        return boolval($this->_ruleset['withKuitan']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function withKazoe()
-    {
-        return boolval($this->_ruleset['withKazoe']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function withButtobi()
-    {
-        return boolval($this->_ruleset['withButtobi']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function withLeadingDealerGameOver()
-    {
-        return boolval($this->_ruleset['withLeadingDealerGameOver']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function withMultiYakumans()
-    {
-        return boolval($this->_ruleset['withMultiYakumans']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function withNagashiMangan()
-    {
-        return boolval($this->_ruleset['withNagashiMangan']);
-    }
-
-    /**
-     * @return bool
-     */
-    public function withKiriageMangan()
-    {
-        return boolval($this->_ruleset['withKiriageMangan']);
-    }
-
-    /**
-     * @return int
-     */
-    public function gameExpirationTime()
-    {
-        return intval($this->_ruleset['gameExpirationTime']);
-    }
-
-    /**
-     * @return int
-     */
-    public function minPenalty()
-    {
-        return intval($this->_ruleset['minPenalty']);
-    }
-
-    /**
-     * @return int
-     */
-    public function maxPenalty()
-    {
-        return intval($this->_ruleset['maxPenalty']);
-    }
-
-    /**
-     * @return int
-     */
-    public function penaltyStep()
-    {
-        return intval($this->_ruleset['penaltyStep']);
-    }
-
-    /**
-     * @return array
-     */
-    public function yakuWithPao()
-    {
-        return $this->_ruleset['yakuWithPao'];
-    }
-
-    /**
-     * @return int
-     */
-    public function redZone()
-    {
-        return intval($this->_ruleset['redZone']);
-    }
-
-    /**
-     * @return int
-     */
-    public function yellowZone()
-    {
-        return intval($this->_ruleset['yellowZone']);
-    }
-
-    /**
-     * @return string
-     */
-    public function timerPolicy()
-    {
-        return $this->_ruleset['timerPolicy'];
-    }
-
-    /**
-     * @return int|false
-     */
-    public function replacementPlayerFixedPoints()
-    {
-        return $this->_ruleset['replacementPlayerFixedPoints'];
-    }
-
-    /**
-     * @return float|false
-     */
-    public function replacementOverrideUma()
-    {
-        return $this->_ruleset['replacementPlayerOverrideUma'];
-    }
-
-    /**
-     * @return bool
-     */
-    public function withWinningDealerHonbaSkipped()
-    {
-        return boolval($this->_ruleset['withWinningDealerHonbaSkipped'] ?? false);
-    }
-
-    /**
-     * @return int
-     */
-    public function chipsValue()
-    {
-        return intval($this->_ruleset['chipsValue'] ?? 0);
     }
 }

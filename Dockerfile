@@ -1,7 +1,7 @@
-FROM --platform=linux/amd64 alpine:3.17
+FROM alpine:3.17
 
 ENV TIMEZONE            Europe/Moscow
-ENV PHP_MEMORY_LIMIT    1024M
+ENV PHP_MEMORY_LIMIT    2048M
 ENV PHP_LOGFILE         /var/log/php-errors.log
 ENV MAX_UPLOAD          50M
 ENV PHP_MAX_FILE_UPLOAD 200
@@ -17,6 +17,7 @@ ENV MIMIR_URL http://localhost:4001
 ENV RHEDA_URL http://localhost:4002
 ENV TYR_URL   http://localhost:4003
 ENV FREY_URL  http://localhost:4004
+ENV FORSETI_URL  http://localhost:4007
 
 ENV IS_DOCKER 1
 
@@ -129,7 +130,7 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/php81/error.log
 
 # Expose ports
-EXPOSE 4001 4002 4003 4004 $DB_PORT
+EXPOSE 4001 4002 4003 4004 4007 $DB_PORT
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
@@ -156,6 +157,7 @@ RUN mkdir -p /var/www/html/Tyr
 RUN mkdir -p /var/www/html/Mimir
 RUN mkdir -p /var/www/html/Rheda
 RUN mkdir -p /var/www/html/Frey
+RUN mkdir -p /var/www/html/Forseti
 RUN mkdir -p /var/www/html/Common
 RUN mkdir -p /var/www/html/pantheon
 

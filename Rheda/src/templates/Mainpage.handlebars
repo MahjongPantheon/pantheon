@@ -16,12 +16,6 @@
 *}}
 
 <style>
-    .rule-row {
-        padding: 6px 0;
-    }
-    .rule-row:nth-of-type(even) {
-        background-color: rgb(243, 243, 243);
-    }
     .col-1 {
         padding-left: 14px;
         padding-right: 0;
@@ -56,27 +50,6 @@
     <hr>
     {{{description}}}
   {{/description}}
-  {{#isLoggedIn}}
-  <br/><br/>
-  <div id="Rules">
-    <div class="card">
-      <div id="RulesHeading">
-        <span class="mb-0">
-          <button class="btn btn-link collapsed"
-                  data-toggle="collapse" data-target="#RulesOverview"
-                  aria-expanded="false" aria-controls="RulesOverview">
-            {{_t 'Rules overview'}}
-          </button>
-        </span>
-      </div>
-
-      <div id="RulesOverview" class="container collapse" aria-labelledby="RulesHeading" data-parent="#Rules">
-      {{> partials/RulesOverview }}
-      </div>
-    </div>
-  </div>
-  {{/isLoggedIn}}
-  <br>
 {{/isAggregated}}
 
 {{#hasData}}

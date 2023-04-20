@@ -56,6 +56,7 @@ message Auth_RequestRegistration_Payload {
   string email = 1;
   string title = 2;
   string password = 3;
+  bool sendEmail = 4;
 }
 
 message Auth_RequestRegistration_Response {
@@ -117,6 +118,7 @@ message Auth_ChangePassword_Response {
 
 message Auth_RequestResetPassword_Payload {
   string email = 1;
+  bool sendEmail = 2;
 }
 
 message Auth_RequestResetPassword_Response {

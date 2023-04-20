@@ -55,7 +55,7 @@ class OnlinelogParserTest extends \PHPUnit\Framework\TestCase
             ->setTimezone('UTC')
             ->setDescription('desc')
             ->setLobbyId('0')
-            ->setRuleset(\Common\Ruleset::instance('tenhounet'));
+            ->setRulesetConfig(\Common\Ruleset::instance('tenhounet'));
         $this->_event->save();
 
         $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);

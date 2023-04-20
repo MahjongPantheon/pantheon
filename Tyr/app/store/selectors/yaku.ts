@@ -1,21 +1,18 @@
-/*
- * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
- * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
  *
- * This file is part of Tyr.
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * Tyr is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * Tyr is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import { getAllowedYaku as getAllowedYakuCompat, limits, unpack } from '#/primitives/yaku-compat';
@@ -31,12 +28,12 @@ export function getRequiredYaku(state: IAppState, currentWinner?: number): YakuI
 
   const existingYaku: YakuId[] = getSelectedYaku(state);
   switch (outcome.selectedOutcome) {
-    case 'tsumo':
+    case 'TSUMO':
       if (outcome.winner && outcome.riichiBets.includes(outcome.winner)) {
         return [YakuId.RIICHI, YakuId.MENZENTSUMO].filter((y) => !existingYaku.includes(y));
       }
       break;
-    case 'ron':
+    case 'RON':
       const winner = currentWinner ?? state.multironCurrentWinner;
       if (!winner) {
         throw new Error('No winner selected');
@@ -55,9 +52,9 @@ export function getRequiredYaku(state: IAppState, currentWinner?: number): YakuI
 export function getSelectedYaku(state: IAppState): YakuId[] {
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'tsumo':
+    case 'TSUMO':
       return unpack(outcome.yaku);
-    case 'ron':
+    case 'RON':
       if (!state.multironCurrentWinner) {
         throw new Error('No winner selected');
       }
@@ -71,7 +68,7 @@ export function getAllowedYaku(state: IAppState): YakuId[] {
   let yakuList;
   const outcome = state.currentOutcome;
   switch (outcome?.selectedOutcome) {
-    case 'tsumo':
+    case 'TSUMO':
       yakuList = unpack(outcome.yaku);
       return _excludeYaku(
         state,
@@ -80,7 +77,7 @@ export function getAllowedYaku(state: IAppState): YakuId[] {
         getAllowedYakuCompat(state.yakuList, yakuList),
         [YakuId.HOUTEI, YakuId.CHANKAN, YakuId.RENHOU]
       );
-    case 'ron':
+    case 'RON':
       if (!state.multironCurrentWinner) {
         throw new Error('No winner selected');
       }
@@ -113,7 +110,7 @@ function _excludeYaku(
     if (
       // disable ippatsu if riichi or double riichi is not selected
       yaku === YakuId.IPPATSU &&
-      (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo') &&
+      (outcome?.selectedOutcome === 'RON' || outcome?.selectedOutcome === 'TSUMO') &&
       !rawYakuList.includes(YakuId.RIICHI) &&
       !rawYakuList.includes(YakuId.DOUBLERIICHI)
     ) {
@@ -122,7 +119,7 @@ function _excludeYaku(
 
     if (
       yaku === YakuId.__OPENHAND &&
-      (outcome?.selectedOutcome === 'ron' || outcome?.selectedOutcome === 'tsumo') &&
+      (outcome?.selectedOutcome === 'RON' || outcome?.selectedOutcome === 'TSUMO') &&
       outcome.riichiBets.includes(winner)
     ) {
       return false; // disable open hand if one won with riichi
@@ -130,7 +127,7 @@ function _excludeYaku(
 
     if (
       yaku === YakuId.RENHOU &&
-      outcome?.selectedOutcome === 'ron' &&
+      outcome?.selectedOutcome === 'RON' &&
       outcome.wins[winner].winnerIsDealer
     ) {
       return false; // dealer can't win with renhou
@@ -138,14 +135,14 @@ function _excludeYaku(
 
     if (
       yaku === YakuId.TENHOU &&
-      (outcome?.selectedOutcome !== 'tsumo' || !outcome.winnerIsDealer)
+      (outcome?.selectedOutcome !== 'TSUMO' || !outcome.winnerIsDealer)
     ) {
       return false; // non-dealer can't win with tenhou
     }
 
     if (
       yaku === YakuId.CHIHOU &&
-      (outcome?.selectedOutcome !== 'tsumo' || outcome.winnerIsDealer)
+      (outcome?.selectedOutcome !== 'TSUMO' || outcome.winnerIsDealer)
     ) {
       return false; // dealer can't win with chihou
     }
@@ -161,9 +158,9 @@ export function yakumanInYaku(state: IAppState): boolean {
   }
 
   switch (outcome.selectedOutcome) {
-    case 'tsumo':
+    case 'TSUMO':
       return _hasYakumanInYakuList(outcome);
-    case 'ron':
+    case 'RON':
       if (!state.multironCurrentWinner) {
         return false; // data not loaded yet
       }

@@ -166,7 +166,7 @@ class MultiRoundPrimitive extends RoundPrimitive
     public function getLastSessionState()
     {
         return SessionState::fromJson(
-            $this->_rounds[0]->getEvent()->getRuleset(),
+            $this->_rounds[0]->getEvent()->getRulesetConfig(),
             $this->_rounds[0]->getSession()->getPlayersIds(),
             $this->_rounds[0]->_lastSessionState
         );

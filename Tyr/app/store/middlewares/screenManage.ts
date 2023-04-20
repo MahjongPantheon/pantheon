@@ -1,3 +1,20 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import { Dispatch, MiddlewareAPI } from 'redux';
 import {
   AppActionTypes,
@@ -57,14 +74,14 @@ export const screenManageMw =
           case 'handSelect':
             if (
               state.currentOutcome &&
-              ['ron', 'tsumo'].includes(state.currentOutcome.selectedOutcome)
+              ['RON', 'TSUMO'].includes(state.currentOutcome.selectedOutcome)
             ) {
               const currentWinnerId = getWinningUsers(state)[0].id;
               mw.dispatch({ type: SET_SELECT_HAND_TAB, payload: 'yaku' });
               mw.dispatch({ type: SELECT_MULTIRON_WINNER, payload: { winner: currentWinnerId } });
               mw.dispatch({ type: INIT_REQUIRED_YAKU });
 
-              if (state.currentOutcome?.selectedOutcome === 'tsumo') {
+              if (state.currentOutcome?.selectedOutcome === 'TSUMO') {
                 mw.dispatch({
                   type: ADD_YAKU,
                   payload: { id: YakuId.MENZENTSUMO, winner: currentWinnerId },

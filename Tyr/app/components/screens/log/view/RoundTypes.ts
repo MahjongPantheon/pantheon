@@ -1,11 +1,31 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+import { RoundOutcome } from '#/clients/atoms.pb';
+
 export interface IRoundOverviewBase {
+  outcome: RoundOutcome;
   riichiOnTable: number; // riichis on table
   honbaOnTable: number;
   riichiPlayers: string[];
 }
 
 export interface IRoundOverviewRon extends IRoundOverviewBase {
-  outcome: 'ron';
+  outcome: 'RON';
   loser: string;
   winner: string;
   paoPlayer?: string;
@@ -16,7 +36,7 @@ export interface IRoundOverviewRon extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewMultiRon extends IRoundOverviewBase {
-  outcome: 'multiron';
+  outcome: 'MULTIRON';
   loser: string;
   winnerList: string[];
   paoPlayerList: (string | undefined)[];
@@ -27,7 +47,7 @@ export interface IRoundOverviewMultiRon extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewTsumo extends IRoundOverviewBase {
-  outcome: 'tsumo';
+  outcome: 'TSUMO';
   winner: string;
   paoPlayer?: string;
   yakuList: string[];
@@ -37,21 +57,21 @@ export interface IRoundOverviewTsumo extends IRoundOverviewBase {
 }
 
 export interface IRoundOverviewDraw extends IRoundOverviewBase {
-  outcome: 'draw';
+  outcome: 'DRAW';
   tempai: string[];
 }
 
 export interface IRoundOverviewAbort extends IRoundOverviewBase {
-  outcome: 'abort';
+  outcome: 'ABORT';
 }
 
 export interface IRoundOverviewChombo extends IRoundOverviewBase {
-  outcome: 'chombo';
+  outcome: 'CHOMBO';
   penaltyFor: string;
 }
 
 export interface IRoundOverviewNagashi extends IRoundOverviewBase {
-  outcome: 'nagashi';
+  outcome: 'NAGASHI';
   tempai: string[];
   nagashi: string[];
 }

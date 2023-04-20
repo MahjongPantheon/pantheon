@@ -1,7 +1,22 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import { IAppState } from '../interfaces';
 import { memoize } from '#/primitives/memoize';
-// import { Player } from '#/interfaces/common';
-// import { getScores } from './commonSelectors';
 
 // TODO ##2: из-за постоянных обновлений таймера в стейте селекторы могут работать не столь эффективно.
 //  Нужно делать остальные селекторы более специальными.
@@ -52,13 +67,3 @@ export const getAutostartTimeRemaining = memoize(_getAutostartTimeRemaining);
 export function formatTime(minutes: number, seconds: number) {
   return minutes.toString() + ':' + (seconds < 10 ? '0' + seconds.toString() : seconds.toString());
 }
-
-/*export const getScoreSelf = (s: IAppState, o: Player[]) => getScores(s, o)?.scores[0];
-export const getScoreShimocha = (s: IAppState, o: Player[]) => getScores(s, o)?.scores[1];
-export const getScoreToimen = (s: IAppState, o: Player[]) => getScores(s, o)?.scores[2];
-export const getScoreKamicha = (s: IAppState, o: Player[]) => getScores(s, o)?.scores[3];
-
-export const getChomboSelf = (s: IAppState, o: Player[]) => getScores(s, o)?.chombos[0];
-export const getChomboShimocha = (s: IAppState, o: Player[]) => getScores(s, o)?.chombos[1];
-export const getChomboToimen = (s: IAppState, o: Player[]) => getScores(s, o)?.chombos[2];
-export const getChomboKamicha = (s: IAppState, o: Player[]) => getScores(s, o)?.chombos[3];*/

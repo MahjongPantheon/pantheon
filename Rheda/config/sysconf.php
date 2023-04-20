@@ -76,6 +76,14 @@ if (file_exists(__DIR__ . '/local/index.php')) {
         /**
          * @return string
          */
+        public static function ADMIN_PANEL_URL()
+        {
+            return (string)getenv('FORSETI_URL');
+        }
+
+        /**
+         * @return string
+         */
         public static function MAILER_ADDR()
         {
             return 'noreply@localhost';

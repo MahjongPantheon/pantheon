@@ -1,15 +1,35 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import { AppOutcome } from '#/interfaces/app';
-import { Player, Table, Yaku } from '#/interfaces/common';
-import {
-  LEventsList,
-  LGameConfig,
-  LSessionOverview,
-  LUser,
-  LUserWithScore,
-} from '#/interfaces/local';
-import { RRoundOverviewInfo, RRoundPaymentsInfo } from '#/interfaces/remote';
+import { Yaku } from '#/interfaces/common';
 import { Graph } from '#/primitives/graph';
 import { RemoteError } from '#/services/remoteError';
+import {
+  GameConfig,
+  MyEvent,
+  PlayerInSession,
+  RegisteredPlayer,
+  RoundState,
+  SessionHistoryResult,
+  SessionState,
+  TableState,
+} from '#/clients/atoms.pb';
+import { Games_GetSessionOverview_Response } from '#/clients/mimir.pb';
 
 export type AppScreen =
   | 'eventSelector'
@@ -57,60 +77,52 @@ export type ErrorState = {
   message: string;
 };
 
-export type Features = {
-  wsClient: boolean;
-};
-
 export interface IAppState {
-  features: Features;
   currentScreen: AppScreen;
   currentSessionHash?: string;
   currentOutcome?: AppOutcome;
-  currentRound: number;
   currentPlayerDisplayName?: string;
   currentPlayerId?: number;
   currentEventId?: number;
-  players?: Player[]; // e-s-w-n
-  mapIdToPlayer: { [key: number]: Player };
-  riichiOnTable: number;
-  honba: number;
+  players?: PlayerInSession[]; // e-s-w-n
+  mapIdToPlayer: { [key: number]: PlayerInSession };
   multironCurrentWinner?: number;
   isLoggedIn: boolean;
-  gameConfig?: LGameConfig;
-  tableIndex?: number;
-  yellowZoneAlreadyPlayed: boolean;
-  currentOtherTableIndex: number;
+  gameConfig?: GameConfig;
+  sessionState?: SessionState;
+  tableIndex?: number | null;
+  currentOtherTableIndex?: number | null;
   currentOtherTableHash?: string;
-  currentOtherTablePlayers: Player[];
+  currentOtherTablePlayers: PlayerInSession[];
   isIos: boolean;
   loading: LoadingSet;
   timer?: TimerData;
   yakuList?: Graph<Yaku>;
 
-  allPlayers?: LUser[];
+  allPlayers?: RegisteredPlayer[];
   allPlayersError?: ErrorState;
 
   // Confirmation / changes overview after dry run
-  changesOverview?: RRoundPaymentsInfo;
+  changesOverview?: RoundState;
   changesOverviewError?: ErrorState;
 
   // View log of current table
-  allRoundsOverview?: RRoundOverviewInfo[];
+  allRoundsOverview?: RoundState[];
   allRoundsOverviewErrorCode?: number;
 
   // Previous game results
-  lastResults?: LUserWithScore[];
+  lastResults?: SessionHistoryResult[];
   lastResultsError?: ErrorState;
 
   newGameIdsToSet?: number[];
-  newGameSelectedUsers?: LUser[];
+  newGameSelectedUsers?: RegisteredPlayer[];
   newGameSelectedPlayerSide?: '東' | '南' | '西' | '北';
   newGameStartError?: ErrorState;
 
-  otherTablesList: Table[];
+  otherTablesList: TableState[];
   otherTablesListError?: ErrorState;
 
-  currentOtherTable?: LSessionOverview;
+  currentOtherTable?: Games_GetSessionOverview_Response;
   otherTableError?: ErrorState;
 
   overviewDiffBy?: number;
@@ -123,7 +135,6 @@ export interface IAppState {
   updateCurrentGamesError?: ErrorState;
   getUserinfoError?: ErrorState;
 
-  isUniversalWatcher: boolean;
   settings: {
     currentLang: string;
     currentTheme: string;
@@ -134,7 +145,7 @@ export interface IAppState {
 
   gameOverviewReady: boolean;
 
-  eventsList: LEventsList;
+  eventsList: MyEvent[];
   eventsListError?: RemoteError;
 
   historyInitialized: boolean;

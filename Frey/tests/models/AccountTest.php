@@ -403,7 +403,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
      */
     public function testUpdatePersonalInfoEmptyEmail()
     {
-        $this->expectExceptionCode(407);
+        $this->expectExceptionCode(408);
         $this->expectException(\Frey\InvalidParametersException::class);
         $model = new AccountModel($this->_db, $this->_config, $this->_meta);
         $personId = $model->createAccount(

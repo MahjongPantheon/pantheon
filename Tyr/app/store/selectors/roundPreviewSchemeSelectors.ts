@@ -1,75 +1,36 @@
-import { Player } from '#/interfaces/common';
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import { IAppState } from '../interfaces';
-import { memoize } from '#/primitives/memoize';
 import { getSeating } from './commonSelectors';
 import { getPaoUsers, getRiichiUsers } from './mimirSelectors';
+import { PlayerInSession } from '#/clients/atoms.pb';
 
 export type RoundPreviewSchemePurpose = 'overview' | 'other_overview' | 'confirmation';
 type Csp = RoundPreviewSchemePurpose; // alias for shorter name
 
-export type PaymentInfo = {
-  backward: boolean;
-  title: string;
-  riichi: boolean;
-};
-
 type RoundPaymentInfoShort = {
   round: number;
   currentPlayerId: number;
-  players: Player[];
+  players: PlayerInSession[];
   riichiBets: string[];
   penaltyFor?: number;
   paoPlayer?: number;
 };
-
-function _getPayment(
-  state: IAppState,
-  purpose: Csp,
-  player1: Player,
-  player2: Player
-): PaymentInfo | undefined {
-  let overview;
-  switch (purpose) {
-    case 'other_overview': //todo check
-    case 'confirmation':
-    case 'overview':
-      overview = state.changesOverview;
-      break;
-  }
-  if (!overview) {
-    return undefined;
-  }
-
-  const p = overview.payments;
-  const directPayment12 = (p.direct && p.direct[`${player2.id}<-${player1.id}`]) || 0;
-  const directPayment21 = (p.direct && p.direct[`${player1.id}<-${player2.id}`]) || 0;
-  const riichiPayment12 = (p.riichi && p.riichi[`${player2.id}<-${player1.id}`]) || 0;
-  const riichiPayment21 = (p.riichi && p.riichi[`${player1.id}<-${player2.id}`]) || 0;
-  const honbaPayment12 = (p.honba && p.honba[`${player2.id}<-${player1.id}`]) || 0;
-  const honbaPayment21 = (p.honba && p.honba[`${player1.id}<-${player2.id}`]) || 0;
-
-  // multiple nagashi
-  if (directPayment12 === directPayment21 && directPayment12 !== 0) {
-    return undefined;
-  }
-
-  if (directPayment12 + riichiPayment12 > 0) {
-    return {
-      backward: false,
-      riichi: riichiPayment12 > 0,
-      title: [directPayment12, honbaPayment12].filter((e) => !!e).join(' + '),
-    };
-  } else if (directPayment21 + riichiPayment21 > 0) {
-    return {
-      backward: true,
-      riichi: riichiPayment21 > 0,
-      title: [directPayment21, honbaPayment21].filter((e) => !!e).join(' + '),
-    };
-  } else {
-    return undefined;
-  }
-}
-const getPayment = memoize(_getPayment);
 
 const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | undefined => {
   if (!s.currentPlayerId) {
@@ -82,7 +43,7 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | u
         return undefined;
       }
       return {
-        round: s.currentRound,
+        round: s.sessionState?.roundIndex ?? 0,
         currentPlayerId: s.currentPlayerId,
         players: s.players,
         riichiBets: [],
@@ -95,12 +56,12 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | u
       }
       const [pao] = getPaoUsers(s);
       return {
-        round: s.currentRound,
+        round: s.sessionState?.roundIndex ?? 0,
         currentPlayerId: s.currentPlayerId,
         players: s.players,
         riichiBets: getRiichiUsers(s).map((p) => p.id.toString()),
         penaltyFor:
-          s.currentOutcome.selectedOutcome === 'chombo' ? s.currentOutcome.loser : undefined,
+          s.currentOutcome.selectedOutcome === 'CHOMBO' ? s.currentOutcome.loser : undefined,
         paoPlayer: pao && pao.id,
       };
     case 'other_overview':
@@ -108,9 +69,9 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | u
         return undefined;
       }
       return {
-        round: s.currentOtherTable.currentRound,
+        round: s.currentOtherTable.state.roundIndex,
         currentPlayerId: s.currentOtherTablePlayers[(s.overviewViewShift ?? 0) % 4].id,
-        players: s.currentOtherTablePlayers as [Player, Player, Player, Player],
+        players: s.currentOtherTablePlayers,
         riichiBets: [],
         penaltyFor: undefined,
         paoPlayer: undefined,
@@ -142,35 +103,4 @@ export const getSeatSelf = (s: IAppState, p: Csp) => getSeatData(s, p).seating[0
 export const getSeatShimocha = (s: IAppState, p: Csp) => getSeatData(s, p).seating[1];
 export const getSeatToimen = (s: IAppState, p: Csp) => getSeatData(s, p).seating[2];
 export const getSeatKamicha = (s: IAppState, p: Csp) => getSeatData(s, p).seating[3];
-export const getRiichiSelf = (s: IAppState, p: Csp) => getSeatData(s, p).riichi[0];
-export const getRiichiShimocha = (s: IAppState, p: Csp) => getSeatData(s, p).riichi[1];
-export const getRiichiToimen = (s: IAppState, p: Csp) => getSeatData(s, p).riichi[2];
-export const getRiichiKamicha = (s: IAppState, p: Csp) => getSeatData(s, p).riichi[3];
-export const getChomboSelf = (s: IAppState, p: Csp) => getSeatData(s, p).chombo[0];
-export const getChomboShimocha = (s: IAppState, p: Csp) => getSeatData(s, p).chombo[1];
-export const getChomboToimen = (s: IAppState, p: Csp) => getSeatData(s, p).chombo[2];
-export const getChomboKamicha = (s: IAppState, p: Csp) => getSeatData(s, p).chombo[3];
-export const getPaoSelf = (s: IAppState, p: Csp) => getSeatData(s, p).pao[0];
-export const getPaoShimocha = (s: IAppState, p: Csp) => getSeatData(s, p).pao[1];
-export const getPaoToimen = (s: IAppState, p: Csp) => getSeatData(s, p).pao[2];
-export const getPaoKamicha = (s: IAppState, p: Csp) => getSeatData(s, p).pao[3];
 export const getRound = (state: IAppState, p: Csp) => getRoundOverview(state, p)?.round;
-export const getTopLeftPayment = (s: IAppState, p: Csp) =>
-  getPayment(s, p, getToimen(s, p), getKamicha(s, p));
-export const getTopRightPayment = (s: IAppState, p: Csp) =>
-  getPayment(s, p, getToimen(s, p), getShimocha(s, p));
-export const getTopBottomPayment = (s: IAppState, p: Csp) =>
-  getPayment(s, p, getToimen(s, p), getSelf(s, p));
-export const getBottomLeftPayment = (s: IAppState, p: Csp) =>
-  getPayment(s, p, getSelf(s, p), getKamicha(s, p));
-export const getBottomRightPayment = (s: IAppState, p: Csp) =>
-  getPayment(s, p, getSelf(s, p), getShimocha(s, p));
-export const getLeftRightPayment = (s: IAppState, p: Csp) =>
-  getPayment(s, p, getKamicha(s, p), getShimocha(s, p));
-export const getIfAnyPaymentsOccured = (s: IAppState, p: Csp) =>
-  getTopLeftPayment(s, p) !== undefined ||
-  getTopRightPayment(s, p) !== undefined ||
-  getTopBottomPayment(s, p) !== undefined ||
-  getBottomLeftPayment(s, p) !== undefined ||
-  getBottomRightPayment(s, p) !== undefined ||
-  getLeftRightPayment(s, p) !== undefined;

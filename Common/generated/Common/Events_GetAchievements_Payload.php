@@ -14,13 +14,13 @@ use Google\Protobuf\Internal\GPBUtil;
 class Events_GetAchievements_Payload extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>repeated int32 eventIds = 1;</code>
-     */
-    private $eventIds;
-    /**
      * Generated from protobuf field <code>repeated string achievementsList = 2;</code>
      */
     private $achievementsList;
+    /**
+     * Generated from protobuf field <code>int32 eventId = 3;</code>
+     */
+    protected $eventId = 0;
 
     /**
      * Constructor.
@@ -28,35 +28,13 @@ class Events_GetAchievements_Payload extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $eventIds
      *     @type array<string>|\Google\Protobuf\Internal\RepeatedField $achievementsList
+     *     @type int $eventId
      * }
      */
     public function __construct($data = NULL) {
         \GPBMetadata\Mimir::initOnce();
         parent::__construct($data);
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated int32 eventIds = 1;</code>
-     * @return \Google\Protobuf\Internal\RepeatedField
-     */
-    public function getEventIds()
-    {
-        return $this->eventIds;
-    }
-
-    /**
-     * Generated from protobuf field <code>repeated int32 eventIds = 1;</code>
-     * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
-     * @return $this
-     */
-    public function setEventIds($var)
-    {
-        $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
-        $this->eventIds = $arr;
-
-        return $this;
     }
 
     /**
@@ -77,6 +55,28 @@ class Events_GetAchievements_Payload extends \Google\Protobuf\Internal\Message
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
         $this->achievementsList = $arr;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 eventId = 3;</code>
+     * @return int
+     */
+    public function getEventId()
+    {
+        return $this->eventId;
+    }
+
+    /**
+     * Generated from protobuf field <code>int32 eventId = 3;</code>
+     * @param int $var
+     * @return $this
+     */
+    public function setEventId($var)
+    {
+        GPBUtil::checkInt32($var);
+        $this->eventId = $var;
 
         return $this;
     }

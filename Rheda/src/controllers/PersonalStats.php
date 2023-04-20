@@ -42,7 +42,7 @@ class PersonalStats extends Controller
     protected function _pageTitle()
     {
         // This is called after _run, so proper player name is substituted.
-        return _p('Stats & diagrams: %s', $this->_playerName) . ' - ' . $this->_mainEventRules->eventTitle();
+        return _p('Stats & diagrams: %s', $this->_playerName) . ' - ' . $this->_mainEventGameConfig->getEventTitle();
     }
 
     /**
@@ -123,13 +123,12 @@ class PersonalStats extends Controller
             $feedCount = intval($data['win_summary']['feed']);
             $drawCount = intval($data['win_summary']['draw']);
             $tsumoFeedCount = intval($data['win_summary']['tsumofeed']);
-            $labelColorThreshold = $this->_mainEventRules->subtractStartPoints() ? 0 : $this->_mainEventRules->startPoints();
 
             return [
                 'isSuperadmin' => $this->_superadmin,
                 'playerData' => $playerData,
                 'data' => empty($data['score_history']) ? null : [
-                    'labelThreshold'    => $labelColorThreshold,
+                    'labelThreshold'    => 0,
                     'currentPlayer'     => $currentUser,
                     'totalPlayedGames'  => $data['total_played_games'],
                     'totalPlayedRounds' => $totalPlayedRounds,

@@ -17,6 +17,8 @@
  */
 namespace Mimir;
 
+use Common\Ruleset;
+
 require_once __DIR__ . '/../../src/helpers/SessionState.php';
 require_once __DIR__ . '/../../src/primitives/Round.php';
 require_once __DIR__ . '/../../src/primitives/Event.php';
@@ -32,7 +34,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
      */
     protected $_ds;
     /**
-     * @var MockRuleset
+     * @var Ruleset
      */
     protected $_ruleset;
     /**
@@ -59,7 +61,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
             ->setTitle('title')
             ->setTimezone('UTC')
             ->setDescription('desc')
-            ->setRuleset(\Common\Ruleset::instance('jpmlA'));
+            ->setRulesetConfig(\Common\Ruleset::instance('jpmlA'));
         $this->_event->save();
 
         $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);
@@ -71,12 +73,13 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
             ->setReplayHash('');
         $this->_session->save();
 
-        $this->_ruleset = new MockRuleset();
-        $this->_ruleset->setRule('tonpuusen', false);
-        $this->_ruleset->setRule('withButtobi', false);
-        $this->_ruleset->setRule('withLeadingDealerGameOver', false);
-        $this->_ruleset->setRule('startPoints', 30000);
-        $this->_ruleset->setRule('withKiriageMangan', false);
+        $this->_ruleset = Ruleset::instance('ema');
+        $this->_ruleset->rules()
+            ->setTonpuusen(false)
+            ->setWithButtobi(false)
+            ->setWithLeadingDealerGameOver(false)
+            ->setStartPoints(30000)
+            ->setWithKiriageMangan(false);
         $this->_state = new SessionState($this->_ruleset, array_map(function (PlayerPrimitive $player) {
             return $player->getId();
         }, $this->_players));
@@ -473,7 +476,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testAbort()
     {
-        $this->_ruleset->setRule('withAbortives', true);
+        $this->_ruleset->rules()->setWithAbortives(true);
         $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('abort')
@@ -495,7 +498,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
     public function testAbortWhenNotAllowed()
     {
         $this->expectException(\Mimir\InvalidParametersException::class);
-        $this->_ruleset->setRule('withAbortives', false);
+        $this->_ruleset->rules()->setWithAbortives(false);
         $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('abort')
@@ -505,8 +508,8 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
     public function testChombo()
     {
-        $this->_ruleset->setRule('chomboPenalty', 20);
-        $this->_ruleset->setRule('extraChomboPayments', false);
+        $this->_ruleset->rules()->setChomboPenalty(20);
+        $this->_ruleset->rules()->setExtraChomboPayments(false);
         $round = new RoundPrimitive($this->_ds);
         $round
             ->setOutcome('chombo')
@@ -528,7 +531,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
 
         // now with payments
 
-        $this->_ruleset->setRule('extraChomboPayments', true);
+        $this->_ruleset->rules()->setExtraChomboPayments(true);
         $this->_state->update($round);
 
         $this->assertEquals($this->_players[0]->getId(), $this->_state->getCurrentDealer());
@@ -616,7 +619,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
     public function testSessionStateToJson()
     {
         $this->assertEquals(
-            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":null,"_isFinished":false}',
+            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":null,"_isFinished":false}',
             $this->_state->toJson()
         );
 
@@ -628,14 +631,14 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
         $this->_state->update($round);
 
         $this->assertEquals(
-            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":1,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":"draw","_isFinished":false}',
+            '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":1,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":"draw","_isFinished":false}',
             $this->_state->toJson()
         );
     }
 
     public function testSessionStateFromJson()
     {
-        $json1 = '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":null,"_isFinished":false}';
+        $json1 = '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":1,"_honba":0,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":null,"_isFinished":false}';
 
         $state = SessionState::fromJson(
             $this->_ruleset,
@@ -649,7 +652,7 @@ class SessionStateTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $state->getRound());
         $this->assertEquals(0, $state->getHonba());
 
-        $json2 = '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":1,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_yellowZoneAlreadyPlayed":false,"_lastOutcome":null}';
+        $json2 = '{"_scores":{"1":30000,"2":30000,"3":30000,"4":30000},"_penalties":[],"_extraPenaltyLog":[],"_round":2,"_honba":1,"_riichiBets":0,"_prematurelyFinished":false,"_roundJustChanged":true,"_lastHandStarted":false,"_lastOutcome":null}';
 
         $state = SessionState::fromJson(
             $this->_ruleset,

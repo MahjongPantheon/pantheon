@@ -17,7 +17,6 @@ require_once __DIR__ . '/controllers/Auth.php';
 
 /**
  * Thin mediator between new twirp API and existing controllers
- * This should replace controllers and json-rpc api if everything goes well.
  */
 final class TwirpServer implements Frey
 {
@@ -112,7 +111,8 @@ final class TwirpServer implements Frey
                 ->setApprovalCode($this->_authController->requestRegistration(
                     $req->getEmail(),
                     $req->getTitle(),
-                    $req->getPassword()
+                    $req->getPassword(),
+                    $req->getSendEmail()
                 ));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
@@ -219,7 +219,7 @@ final class TwirpServer implements Frey
     {
         try {
             return (new \Common\Auth_RequestResetPassword_Response())
-                ->setResetToken($this->_authController->requestResetPassword($req->getEmail()));
+                ->setResetToken($this->_authController->requestResetPassword($req->getEmail(), $req->getSendEmail()));
         } catch (\Exception $e) {
             $this->_syslog->error($e);
             throw $e;

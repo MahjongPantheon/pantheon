@@ -104,7 +104,7 @@ class PointsCalc
         }
 
         // this condition we are checking only for double ron
-        if ($rules->doubleronRiichiAtamahane() && $closestWinner) {
+        if ($rules->rules()->getDoubleronRiichiAtamahane() && $closestWinner) {
             // on tenhou we had to give all riichi bets to closest winner only
             if ($closestWinner == $winnerId) {
                 $currentScores[$winnerId] += 1000 * $totalRiichiInRound;
@@ -118,7 +118,7 @@ class PointsCalc
         }
 
         // this condition we are checking only for double ron
-        if ($rules->doubleronHonbaAtamahane() && $closestWinner) {
+        if ($rules->rules()->getDoubleronHonbaAtamahane() && $closestWinner) {
             // on tenhou we had to give all honba sticks to closest winner only
             if ($winnerId == $closestWinner) {
                 $currentScores[$winnerId] += 300 * $honba;
@@ -346,7 +346,7 @@ class PointsCalc
             throw new InvalidParametersException('Chombo must have loser');
         }
 
-        if ($rules->extraChomboPayments()) {
+        if ($rules->rules()->getExtraChomboPayments()) {
             if ($currentDealer == $loserId) {
                 foreach ($currentScores as $playerId => $value) {
                     if ($playerId == $loserId) {
@@ -442,7 +442,7 @@ class PointsCalc
             $timesFourRounded = ceil(4 * $basePoints / 100.) * 100;
             $timesSixRounded = ceil(6 * $basePoints / 100.) * 100;
 
-            $isKiriage = $rules->withKiriageMangan() && (
+            $isKiriage = $rules->rules()->getWithKiriageMangan() && (
                 ($han == 4 && $fu == 30) ||
                 ($han == 3 && $fu == 60)
             );
@@ -457,7 +457,7 @@ class PointsCalc
         } else { // limits
             if ($han < 0) { // natural yakuman
                 $rounded = abs($han * 8000);
-            } else if ($rules->withKazoe() && $han >= 13) { // kazoe yakuman
+            } else if ($rules->rules()->getWithKazoe() && $han >= 13) { // kazoe yakuman
                 $rounded = 8000;
             } else if ($han >= 11) { // sanbaiman
                 $rounded = 6000;

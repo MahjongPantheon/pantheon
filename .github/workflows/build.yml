@@ -1,4 +1,4 @@
-name: Prebuild Tyr
+name: Prebuild Tyr & Forseti
 
 on:
   push:
@@ -52,6 +52,9 @@ jobs:
       - name: Make prod Tyr build
         run: make prod_build_tyr
 
-      - name: Push prod build to repo
+      - name: Make prod Forseti build
+        run: make prod_build_forseti
+
+      - name: Push prod builds to repo
         if: github.repository=='MahjongPantheon/pantheon'
-        run: ./.tyr-dist-push.sh
+        run: ./.built-dist-push.sh

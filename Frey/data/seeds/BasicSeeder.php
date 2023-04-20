@@ -40,6 +40,8 @@ class BasicSeeder extends AbstractSeed
 
         list($db, $config) = $this->_getConnection();
         $meta = new \Frey\Meta(new \Common\Storage('localhost'), $_SERVER);
+        $_SERVER['HTTP_X_DEBUG_TOKEN'] = 'CHANGE_ME';
+        $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] = 'CHANGE_ME_INTERNAL';
 
         list($adminId, $adminGroupId) = \Frey\BootstrapAccess::create($db, $config, $meta, 'admin@localhost.localdomain', '123456');
 
@@ -197,6 +199,7 @@ class BasicSeeder extends AbstractSeed
      */
     protected function _seedPersonAccess(\Frey\Db $db, \Frey\Config $config, $personIds)
     {
+        $_SERVER['HTTP_X_INTERNAL_QUERY_SECRET'] = 'CHANGE_ME_INTERNAL';
         $meta = new \Frey\Meta(new \Common\Storage('localhost'), $_SERVER);
         $model = new \Frey\AccessManagementModel($db, $config, $meta);
 
@@ -229,10 +232,10 @@ class BasicSeeder extends AbstractSeed
                 ]
             ],
             'admin'     => [
-                'debug_token' => '2-839489203hf2893'
+                'debug_token' => 'CHANGE_ME',
+                'internalQuerySecret' => 'CHANGE_ME_INTERNAL'
             ],
             'testing_token' => '',
-            'routes'    => require __DIR__ . '/../../config/routes.php',
             'verbose'   => false,
             'verboseLog' => '',
             'api' => [

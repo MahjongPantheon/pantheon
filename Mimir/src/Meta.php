@@ -85,8 +85,8 @@ class Meta
 
         $this->_frey = $frey;
         $this->_storage = $storage;
-        $this->_fillFrom($input);
         $this->_selectedLocale = $this->_initI18n();
+        $this->_fillFrom($input);
 
         // for unit/integration testing purposes
         $testingToken = $config->getStringValue('testing_token');
@@ -171,22 +171,14 @@ class Meta
 
         if (!empty($this->_currentPersonId)) {
             try {
-                if ($this->_frey instanceof FreyClientTwirp) {
-                    $this->_frey->withHeaders([
-                        'X-Twirp' => 'true',
-                        'X-Internal-Query-Secret' => $this->_internalToken,
-                        'X-Auth-Token' => $this->_authToken,
-                        'X-Current-Event-Id' => ($this->_currentEventId ?: '0'),
-                        'X-Current-Person-Id' => $this->_currentPersonId
-                    ]);
-                } else {
-                    $this->_frey->getClient()->getHttpClient()->withHeaders([
-                        'X-Internal-Query-Secret: ' . $this->_internalToken,
-                        'X-Auth-Token: ' . $this->_authToken,
-                        'X-Current-Event-Id: ' . ($this->_currentEventId ?: '0'),
-                        'X-Current-Person-Id: ' . $this->_currentPersonId
-                    ]);
-                }
+                $this->_frey->withHeaders([
+                    'X-Twirp' => 'true',
+                    'X-Internal-Query-Secret' => $this->_internalToken,
+                    'X-Auth-Token' => $this->_authToken,
+                    'X-Current-Event-Id' => ($this->_currentEventId ?: '0'),
+                    'X-Current-Person-Id' => $this->_currentPersonId,
+                    'X-Locale' => $this->getSelectedLocale()
+                ]);
 
                 if (!$this->_frey->quickAuthorize($this->_currentPersonId, $this->getAuthToken() ?? '')) {
                     $this->_currentPersonId = null;
@@ -194,11 +186,13 @@ class Meta
                 }
                 if (!empty($this->_currentEventId) && !empty($this->_currentPersonId)) {
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_currentEventId);
-                    if (!empty($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN])) {
+                    if (!empty($this->_accessRules['IS_SUPER_ADMIN'])) {
                         $this->_superadmin = true;
                     }
                 } else if (!empty($this->_currentPersonId)) {
                     $this->_superadmin = $this->_frey->getSuperadminFlag($this->_currentPersonId);
+                    // -1 for global privileges
+                    $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, -1);
                 }
             } catch (\Exception $e) {
                 $this->_currentPersonId = null;
@@ -244,7 +238,7 @@ class Meta
         if ($this->_superadmin) {
             return true;
         }
-        if ($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT]) {
+        if ($this->_accessRules['ADMIN_EVENT']) {
             return true;
         }
         return false;
@@ -263,7 +257,7 @@ class Meta
             return false;
         }
         $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $eventId);
-        if ($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT]) {
+        if ($this->_accessRules['ADMIN_EVENT']) {
             return true;
         }
         return false;

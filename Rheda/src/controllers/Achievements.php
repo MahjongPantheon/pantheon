@@ -47,20 +47,14 @@ class Achievements extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Achievements') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Achievements') . ' - ' . $this->_mainEventGameConfig->getEventTitle();
     }
 
     protected function _run()
     {
-        if (!$this->_userHasAdminRights()) {
-            return [
-                'error' => _t("Wrong admin password"),
-            ];
-        }
-
         if (!empty($this->_path['achievement'])) {
             try {
-                $ach = $this->_mimir->getAchievements($this->_eventIdList, [$this->_path['achievement']]);
+                $ach = $this->_mimir->getAchievements(intval($this->_mainEventId), [$this->_path['achievement']]);
                 return $this->_ach($ach, $this->_path['achievement']);
             } catch (\Exception $e) {
                 return [

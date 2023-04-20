@@ -32,12 +32,6 @@ class EventData extends \Google\Protobuf\Internal\Message
      */
     protected $duration = 0;
     /**
-     * ruleset title
-     *
-     * Generated from protobuf field <code>string ruleset = 5;</code>
-     */
-    protected $ruleset = '';
-    /**
      * Generated from protobuf field <code>string timezone = 6;</code>
      */
     protected $timezone = '';
@@ -70,11 +64,9 @@ class EventData extends \Google\Protobuf\Internal\Message
      */
     protected $autostart = 0;
     /**
-     * json-stringified ruleset changes
-     *
-     * Generated from protobuf field <code>string rulesetChanges = 13;</code>
+     * Generated from protobuf field <code>.Common.RulesetConfig rulesetConfig = 14;</code>
      */
-    protected $rulesetChanges = '';
+    protected $rulesetConfig = null;
 
     /**
      * Constructor.
@@ -87,8 +79,6 @@ class EventData extends \Google\Protobuf\Internal\Message
      *     @type string $title
      *     @type string $description
      *     @type int $duration
-     *     @type string $ruleset
-     *           ruleset title
      *     @type string $timezone
      *     @type int $lobbyId
      *           xxxx for common lobby, 1xxxx for tournament lobby
@@ -98,8 +88,7 @@ class EventData extends \Google\Protobuf\Internal\Message
      *     @type bool $isPrescripted
      *     @type int $autostart
      *           time until game autostart
-     *     @type string $rulesetChanges
-     *           json-stringified ruleset changes
+     *     @type \Common\RulesetConfig $rulesetConfig
      * }
      */
     public function __construct($data = NULL) {
@@ -205,32 +194,6 @@ class EventData extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkInt32($var);
         $this->duration = $var;
-
-        return $this;
-    }
-
-    /**
-     * ruleset title
-     *
-     * Generated from protobuf field <code>string ruleset = 5;</code>
-     * @return string
-     */
-    public function getRuleset()
-    {
-        return $this->ruleset;
-    }
-
-    /**
-     * ruleset title
-     *
-     * Generated from protobuf field <code>string ruleset = 5;</code>
-     * @param string $var
-     * @return $this
-     */
-    public function setRuleset($var)
-    {
-        GPBUtil::checkString($var, True);
-        $this->ruleset = $var;
 
         return $this;
     }
@@ -398,27 +361,33 @@ class EventData extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * json-stringified ruleset changes
-     *
-     * Generated from protobuf field <code>string rulesetChanges = 13;</code>
-     * @return string
+     * Generated from protobuf field <code>.Common.RulesetConfig rulesetConfig = 14;</code>
+     * @return \Common\RulesetConfig|null
      */
-    public function getRulesetChanges()
+    public function getRulesetConfig()
     {
-        return $this->rulesetChanges;
+        return $this->rulesetConfig;
+    }
+
+    public function hasRulesetConfig()
+    {
+        return isset($this->rulesetConfig);
+    }
+
+    public function clearRulesetConfig()
+    {
+        unset($this->rulesetConfig);
     }
 
     /**
-     * json-stringified ruleset changes
-     *
-     * Generated from protobuf field <code>string rulesetChanges = 13;</code>
-     * @param string $var
+     * Generated from protobuf field <code>.Common.RulesetConfig rulesetConfig = 14;</code>
+     * @param \Common\RulesetConfig $var
      * @return $this
      */
-    public function setRulesetChanges($var)
+    public function setRulesetConfig($var)
     {
-        GPBUtil::checkString($var, True);
-        $this->rulesetChanges = $var;
+        GPBUtil::checkMessage($var, \Common\RulesetConfig::class);
+        $this->rulesetConfig = $var;
 
         return $this;
     }

@@ -25,7 +25,7 @@ class Timer extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Timer') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Timer') . ' - ' . $this->_mainEventGameConfig->getEventTitle();
     }
 
     /**
@@ -47,16 +47,11 @@ class Timer extends Controller
             ];
         }
 
-        $zonesDuration = (
-            $this->_mainEventRules->timerPolicy() === 'redZone' ? $this->_mainEventRules->redZone() : 0
-        ) + (
-            $this->_mainEventRules->timerPolicy() === 'yellowZone' ? $this->_mainEventRules->yellowZone() : 0
-        );
         $timerState = $this->_mimir->getTimerState($this->_mainEventId);
         $autostartTimer = $this->_mimir->getStartingTimer($this->_mainEventId);
-        $remaining = $timerState['time_remaining'] - $zonesDuration;
+        $remaining = $timerState['time_remaining'];
         $currentSeating = $this->_formatSeating($this->_mimir->getCurrentSeating($this->_mainEventId));
-        $durationWithoutSeating = $this->_mainEventRules->gameDuration() - 5 - ($zonesDuration / 60);
+        $durationWithoutSeating = $this->_mainEventGameConfig->getGameDuration() - 5;
 
         if ($timerState['started'] && $timerState['time_remaining']) {
             $formattedTime = (int)($remaining / 60) . ':'
@@ -64,11 +59,7 @@ class Timer extends Controller
             return [
                 'startingTimer' => $autostartTimer ?: '0',
                 'haveStartingTimer' => $autostartTimer > 0,
-                'waiting' => $this->_mainEventRules->gamesWaitingForTimer(),
-                'redZoneLength' => $this->_mainEventRules->redZone() / 60,
-                'yellowZoneLength' => $this->_mainEventRules->yellowZone() / 60,
-                'redZone' => $this->_mainEventRules->timerPolicy() === 'redZone',
-                'yellowZone' => $this->_mainEventRules->timerPolicy() === 'yellowZone',
+                'waiting' => $this->_mainEventGameConfig->getGamesStatus() === \Common\TournamentGamesStatus::SEATING_READY,
                 'gameDurationWithoutSeating' => $durationWithoutSeating,
                 'initialTime' => $formattedTime,
                 'seating' => $currentSeating
@@ -78,13 +69,9 @@ class Timer extends Controller
         return [
             'startingTimer' => $autostartTimer ?: '0',
             'haveStartingTimer' => $autostartTimer > 0,
-            'waiting' => $this->_mainEventRules->gamesWaitingForTimer(),
-            'redZoneLength' => $this->_mainEventRules->redZone() / 60,
-            'yellowZoneLength' => $this->_mainEventRules->yellowZone() / 60,
-            'redZone' => $this->_mainEventRules->timerPolicy() === 'redZone',
-            'yellowZone' => $this->_mainEventRules->timerPolicy() === 'yellowZone',
+            'waiting' => $this->_mainEventGameConfig->getGamesStatus() === \Common\TournamentGamesStatus::SEATING_READY,
             'gameDurationWithoutSeating' => $durationWithoutSeating,
-            'initialTime' => $this->_mainEventRules->gamesWaitingForTimer() ? '99:99' : '00:00',
+            'initialTime' => $this->_mainEventGameConfig->getGamesStatus() === \Common\TournamentGamesStatus::SEATING_READY ? '99:99' : '00:00',
             'seating' => $currentSeating
         ];
     }
@@ -100,7 +87,7 @@ class Timer extends Controller
 
         // assign colors first
         foreach ($seating as &$player) {
-            $player['zone'] = $player['rating'] >= $this->_mainEventRules->startRating() ? 'success' : 'danger';
+            $player['zone'] = $player['rating'] >= $this->_mainEventGameConfig->getRulesetConfig()?->getStartRating() ? 'success' : 'danger';
         }
 
         $seating = ArrayHelpers::elm2key($seating, 'session_id', true);

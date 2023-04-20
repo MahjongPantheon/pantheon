@@ -25,7 +25,7 @@ class RatingTable extends Controller
 
     protected function _pageTitle()
     {
-        return _t('Rating table') . ' - ' . $this->_mainEventRules->eventTitle();
+        return _t('Rating table') . ' - ' . $this->_mainEventGameConfig->getEventTitle();
     }
 
     /**
@@ -82,7 +82,7 @@ class RatingTable extends Controller
 
         $playedGames = 0;
 
-        $minGamesCount = $this->_mainEventRules->minGamesCount();
+        $minGamesCount = $this->_mainEventGameConfig->getMinGamesCount();
         $withMinGamesCount = $minGamesCount != 0;
         $showPlayers = !$withMinGamesCount || empty($_GET['players']) ? 'all' : $_GET['players'];
 
@@ -98,7 +98,7 @@ class RatingTable extends Controller
             );
 
             $teamNames = [];
-            if ($this->_mainEventRules->isTeam()) {
+            if ($this->_mainEventGameConfig->getIsTeam()) {
                 array_map(function ($el) use (&$players, &$teamNames) {
                     $teamNames[$el['id']] = $players[$el['id']]['team_name'];
                 }, $players);
@@ -164,7 +164,7 @@ class RatingTable extends Controller
             $ctr = 1;
             $data = array_map(function ($el) use (&$ctr, $minGamesCount, &$teamNames, &$playedGames) {
                 $teamName = null;
-                if ($this->_mainEventRules->isTeam()) {
+                if ($this->_mainEventGameConfig->getIsTeam()) {
                     $teamName = $teamNames[$el['id']];
                 }
 
@@ -183,7 +183,7 @@ class RatingTable extends Controller
             $errMsg = $this->_handleTwirpEx($e) ?: $e->getMessage();
         }
 
-        if (!empty($data) && $playedGames == 0 && $this->_mainEventRules->isTeam()) {
+        if (!empty($data) && $playedGames == 0 && $this->_mainEventGameConfig->getIsTeam()) {
             usort($data, function ($a, $b) {
                 return strcmp($b['team_name'], $a['team_name']);
             });
@@ -195,7 +195,7 @@ class RatingTable extends Controller
             }, $data);
         }
 
-        $hideResults = $this->_mainEventRules->hideResults();
+        $hideResults = $this->_mainEventGameConfig->getHideResults();
 
         $showAdminWarning = false;
 
@@ -236,8 +236,8 @@ class RatingTable extends Controller
 
             'orderDesc'         => $order == 'desc',
 
-            'isOnlineTournament'  => $this->_mainEventRules->isOnline(),
-            'isTeamTournament'    => $this->_mainEventRules->isTeam(),
+            'isOnlineTournament'  => $this->_mainEventGameConfig->getIsOnline(),
+            'isTeamTournament'    => $this->_mainEventGameConfig->getIsTeam(),
 
             'orderByRating'     => $orderBy == 'rating',
             'orderByAvgPlace'   => $orderBy == 'avg_place',
@@ -249,7 +249,7 @@ class RatingTable extends Controller
 
             'hideResults'       => $hideResults,
             'showAdminWarning'  => $showAdminWarning,
-            'withChips'         => $this->_mainEventRules->chipsValue() > 0,
+            'withChips'         => ($this->_mainEventGameConfig->getRulesetConfig()?->getChipsValue() ?? 0) > 0,
         ];
     }
 

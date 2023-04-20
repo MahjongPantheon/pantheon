@@ -17,16 +17,16 @@
  */
 namespace Rheda;
 
+use Common\GameConfig;
+use Common\RulesetConfig;
 use Monolog\Handler\ErrorLogHandler;
 use Monolog\Logger;
 
 require_once __DIR__ . '/helpers/Url.php';
-require_once __DIR__ . '/helpers/Config.php';
 require_once __DIR__ . '/../../Common/Storage.php';
+require_once __DIR__ . '/../../Common/generated/Common/RulesetConfig.php';
 require_once __DIR__ . '/HttpClient.php';
-require_once __DIR__ . '/FreyClient.php';
 require_once __DIR__ . '/FreyClientTwirp.php';
-require_once __DIR__ . '/MimirClient.php';
 require_once __DIR__ . '/MimirClientTwirp.php';
 require_once __DIR__ . '/helpers/i18n.php';
 require_once __DIR__ . '/Templater.php';
@@ -45,22 +45,22 @@ abstract class Controller
     protected $_path;
 
     /**
-     * @var MimirClient
+     * @var MimirClientTwirp
      */
     protected $_mimir;
 
     /**
      * Main event rules. For aggregated events, these are the rules of the main event.
      * For simple events, these are the rules of the only used event.
-     * @var Config
+     * @var GameConfig
      */
-    protected $_mainEventRules;
+    protected $_mainEventGameConfig;
 
     /**
      * Rules of each event from eventIdList.
-     * @var Config[]
+     * @var GameConfig[]
      */
-    protected $_rulesList;
+    protected $_gameConfig;
 
     /**
      * Main event id. For aggregated events, this is the id of the first event in list.
@@ -124,7 +124,7 @@ abstract class Controller
     protected $_personalData;
 
     /**
-     * @var FreyClient
+     * @var FreyClientTwirp
      */
     protected $_frey;
 
@@ -148,13 +148,8 @@ abstract class Controller
         $this->_syslog->pushHandler(new ErrorLogHandler());
 
         // @phpstan-ignore-next-line
-        if ($this->_storage->getTwirpEnabled()) {
-            $this->_frey = new \Rheda\FreyClientTwirp(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
-            $this->_mimir = new \Rheda\MimirClientTwirp(Sysconf::API_URL()); // @phpstan-ignore-line
-        } else {
-            $this->_frey = new \Rheda\FreyClient(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
-            $this->_mimir = new \Rheda\MimirClient(Sysconf::API_URL()); // @phpstan-ignore-line
-        }
+        $this->_frey = new \Rheda\FreyClientTwirp(Sysconf::AUTH_API_URL()); // @phpstan-ignore-line
+        $this->_mimir = new \Rheda\MimirClientTwirp(Sysconf::API_URL()); // @phpstan-ignore-line
 
         $locale = '';
 
@@ -225,34 +220,22 @@ abstract class Controller
                 $this->_authToken = null;
             } else {
                 // @phpstan-ignore-next-line
-                if ($this->_storage->getTwirpEnabled()) {
-                    // @phpstan-ignore-next-line
-                    $this->_frey->withHeaders([
-                        'X-Twirp' => 'true',
-                        'X-Auth-Token' => $this->_authToken,
-                        'X-Locale' => $locale,
-                        'X-Current-Event-Id' => $this->_mainEventId,
-                        'X-Current-Person-Id' => $this->_currentPersonId,
-                        'X-Internal-Query-Secret' => Sysconf::FREY_INTERNAL_QUERY_SECRET
-                    ]);
-                } else {
-                    // @phpstan-ignore-next-line
-                    $this->_frey->getClient()->getHttpClient()->withHeaders([
-                        'X-Auth-Token: ' . $this->_authToken,
-                        'X-Locale: ' . $locale,
-                        'X-Current-Event-Id: ' . $this->_mainEventId,
-                        'X-Current-Person-Id: ' . $this->_currentPersonId,
-                        'X-Internal-Query-Secret: ' . Sysconf::FREY_INTERNAL_QUERY_SECRET
-                    ]);
-                }
+                $this->_frey->withHeaders([
+                    'X-Twirp' => 'true',
+                    'X-Auth-Token' => $this->_authToken,
+                    'X-Locale' => $locale,
+                    'X-Current-Event-Id' => $this->_mainEventId,
+                    'X-Current-Person-Id' => $this->_currentPersonId,
+                    'X-Internal-Query-Secret' => Sysconf::FREY_INTERNAL_QUERY_SECRET
+                ]);
 
                 if (!empty($this->_mainEventId)) {
                     // TODO: access rules for aggregated events?
                     $this->_accessRules = $this->_frey->getAccessRules($this->_currentPersonId, $this->_mainEventId);
-                    if (!empty($this->_accessRules[FreyClient::PRIV_IS_SUPER_ADMIN])) {
+                    if (!empty($this->_accessRules['IS_SUPER_ADMIN'])) {
                         $this->_superadmin = true;
                     }
-                    if (!empty($this->_accessRules[FreyClient::PRIV_ADMIN_EVENT])) {
+                    if (!empty($this->_accessRules['ADMIN_EVENT'])) {
                         $this->_eventadmin = true;
                     }
                 } else if (!empty($this->_currentPersonId)) {
@@ -263,62 +246,29 @@ abstract class Controller
             }
         }
 
-        if ($this->_storage->getTwirpEnabled()) {
+        // @phpstan-ignore-next-line
+        $this->_mimir->withHeaders([
+            'X-Twirp' => 'true',
+            'X-Debug-Token' => Sysconf::DEBUG_TOKEN(),
+            'X-Auth-Token' => $this->_authToken,
+            'X-Current-Event-Id' => $this->_mainEventId,
+            'X-Current-Person-Id' => $this->_currentPersonId,
+            'X-Internal-Query-Secret' => Sysconf::MIMIR_INTERNAL_QUERY_SECRET,
+            'X-Locale' => $locale,
             // @phpstan-ignore-next-line
-            $client = $this->_mimir->withHeaders([
-                'X-Twirp' => 'true',
-                'X-Debug-Token' => Sysconf::DEBUG_TOKEN(),
-                'X-Auth-Token' => $this->_authToken,
-                'X-Current-Event-Id' => $this->_mainEventId,
-                'X-Current-Person-Id' => $this->_currentPersonId,
-                'X-Internal-Query-Secret' => Sysconf::MIMIR_INTERNAL_QUERY_SECRET,
-                'X-Locale' => $locale,
-                // @phpstan-ignore-next-line
-                'X-Api-Version' => Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
-            ]);
-        } else {
-            /** @var HttpClient $client */
-            // @phpstan-ignore-next-line
-            $client = $this->_mimir->getClient()->getHttpClient();
+            'X-Api-Version' => Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
+        ]);
 
-            $client->withHeaders([
-                'X-Debug-Token: ' . Sysconf::DEBUG_TOKEN(),
-                'X-Auth-Token: ' . $this->_authToken,
-                'X-Current-Event-Id: ' . $this->_mainEventId,
-                'X-Current-Person-Id: ' . $this->_currentPersonId,
-                'X-Internal-Query-Secret: ' . Sysconf::MIMIR_INTERNAL_QUERY_SECRET,
-                'X-Locale: ' . $locale,
-                // @phpstan-ignore-next-line
-                'X-Api-Version: ' . Sysconf::API_VERSION_MAJOR . '.' . Sysconf::API_VERSION_MINOR
-            ]);
-
-            // @phpstan-ignore-next-line
-            if (Sysconf::DEBUG_MODE) {
-                $client->withDebug();
-                $client->withCookies(['XDEBUG_SESSION=PHPSTORM']);
-                // @phpstan-ignore-next-line
-                $this->_frey->getClient()->getHttpClient()->withDebug();
-                // @phpstan-ignore-next-line
-                $this->_frey->getClient()->getHttpClient()->withCookies(['XDEBUG_SESSION=PHPSTORM']);
-            }
-        }
-
-        $this->_rulesList = [];
+        $this->_gameConfig = [];
 
         foreach ($this->_eventIdList as $eventId) {
-            $gameConfig = Config::fromRaw($this->_mimir->getGameConfig($eventId));
-            $this->_rulesList[$eventId] = $gameConfig;
+            $this->_gameConfig[$eventId] = $this->_mimir->getGameConfig($eventId);
         }
 
         if (!empty($this->_mainEventId)) {
-            $this->_mainEventRules = $this->_rulesList[$this->_mainEventId];
+            $this->_mainEventGameConfig = $this->_gameConfig[$this->_mainEventId];
         } else {
-            $this->_mainEventRules = Config::fromRaw(Config::$_blankRules);
-        }
-
-        if (!$this->_storage->getTwirpEnabled()) {
-            // @phpstan-ignore-next-line
-            $this->_checkCompatibility($this->_mimir->getClient()->getHttpClient()->getLastHeaders());
+            $this->_mainEventGameConfig = (new GameConfig())->setRulesetConfig(new RulesetConfig());
         }
     }
 
@@ -327,11 +277,6 @@ abstract class Controller
      */
     public function run()
     {
-        if (empty($this->_mainEventRules->rulesetTitle())) {
-            echo _t('<h2>Oops.</h2>Failed to get event configuration!');
-            return;
-        }
-
         if ($this->_beforeRun()) {
             $context = $this->_run();
 
@@ -344,7 +289,6 @@ abstract class Controller
             if (count($this->_eventIdList) > 1) {
                 /* Aggregated events. */
                 echo $templateEngine->render('Layout', [
-                    'betaLabel' => $this->_storage->getTwirpEnabled(),
                     'eventTitle' => _t("Aggregated event"),
                     'analyticsSiteId' => empty(Sysconf::ANALYTICS_SITE_ID()) ? null : Sysconf::ANALYTICS_SITE_ID(),
                     'statDomain' => empty(Sysconf::STAT_DOMAIN()) ? null : Sysconf::STAT_DOMAIN(),
@@ -353,29 +297,31 @@ abstract class Controller
                     'content' => $templateEngine->render($this->_mainTemplate, $context),
                     'userHasAdminRights' => $this->_userHasAdminRights(),
                     'isAggregated' => true,
-                    'isLoggedIn' => !empty($this->_personalData)
+                    'isLoggedIn' => !empty($this->_personalData),
+                    'forsetiUrl' => Sysconf::ADMIN_PANEL_URL(),
                 ]);
             } else {
                 /* Simple events. */
                 echo $templateEngine->render('Layout', [
-                    'betaLabel' => $this->_storage->getTwirpEnabled(),
                     'tyrUrl' => Sysconf::MOBILE_CLIENT_URL(),
-                    'isOnline' => $this->_mainEventRules->isOnline(),
-                    'isTeam' => $this->_mainEventRules->isTeam(),
-                    'useTimer' => $this->_mainEventRules->useTimer(),
-                    'isTournament' => !$this->_mainEventRules->allowPlayerAppend(),
-                    'usePenalty' => $this->_mainEventRules->usePenalty(),
-                    'syncStart' => $this->_mainEventRules->syncStart(),
-                    'eventTitle' => $this->_mainEventRules->eventTitle(),
+                    'forsetiUrl' => Sysconf::ADMIN_PANEL_URL(),
+                    'eventId' => $this->_mainEventId,
+                    'isOnline' => $this->_mainEventGameConfig->getIsOnline(),
+                    'isTeam' => $this->_mainEventGameConfig->getIsTeam(),
+                    'useTimer' => $this->_mainEventGameConfig->getUseTimer(),
+                    'isTournament' => !$this->_mainEventGameConfig->getAllowPlayerAppend(),
+                    'usePenalty' => $this->_mainEventGameConfig->getUsePenalty(),
+                    'syncStart' => $this->_mainEventGameConfig->getSyncStart(),
+                    'eventTitle' => $this->_mainEventGameConfig->getEventTitle(),
                     'analyticsSiteId' => empty(Sysconf::ANALYTICS_SITE_ID()) ? null : Sysconf::ANALYTICS_SITE_ID(),
                     'statDomain' => empty(Sysconf::STAT_DOMAIN()) ? null : Sysconf::STAT_DOMAIN(),
-                    'isPrescripted' => $this->_mainEventRules->isPrescripted(),
+                    'isPrescripted' => $this->_mainEventGameConfig->getIsPrescripted(),
                     'userHasAdminRights' => $this->_userHasAdminRights(),
                     'pageTitle' => $pageTitle,
                     'content' => $templateEngine->render($this->_mainTemplate, $context),
                     'eventSelected' => $this->_mainEventId,
                     'currentPerson' => $this->_personalData,
-                    'hideAddReplayButton' => $this->_mainEventRules->hideAddReplayButton(),
+                    'hideAddReplayButton' => $this->_mainEventGameConfig->getHideAddReplayButton(),
                     'isLoggedIn' => !empty($this->_personalData),
                     'isSuperadmin' => $this->_superadmin,
                 ]);

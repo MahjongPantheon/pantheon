@@ -1,12 +1,29 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import * as React from 'react';
 import './other-tables-list.css';
 import { TopPanel } from '#/components/general/top-panel/TopPanel';
-import { Table } from '#/interfaces/common';
 import { useContext } from 'react';
 import { i18n } from '#/components/i18n';
+import { TableState } from '#/clients/atoms.pb';
 
 type IProps = {
-  tables: Table[];
+  tables: TableState[];
   onTableClick: (hash: string) => void;
   onBackClick: () => void;
 };
@@ -39,14 +56,14 @@ export const OtherTablesListView: React.FC<IProps> = ({ onTableClick, onBackClic
         )}
         {tables.map((table) => (
           <div
-            key={table.hash}
+            key={table.sessionHash}
             className='page-other-tables-list__table'
-            onClick={() => onTableClick(table.hash)}
+            onClick={() => onTableClick(table.sessionHash)}
           >
-            {roundsMap[table.currentRound]}
-            {table.players.map((player) => (
+            {roundsMap[table.currentRoundIndex]}
+            {table.players.map((player, idx) => (
               <div key={player.id}>
-                {player.displayName}: {player.score}
+                {player.title}: {table.scores[idx].score}
               </div>
             ))}
           </div>

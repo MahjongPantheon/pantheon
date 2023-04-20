@@ -52,7 +52,7 @@ class OnlineSessionModel extends Model
         $downloader->validateUrl($logUrl);
         $replayHash = $downloader->getReplayHash($logUrl);
 
-        $this->_checkGameExpired($logUrl, $event->getRuleset());
+        $this->_checkGameExpired($logUrl, $event->getRulesetConfig());
 
         $addedSession = SessionPrimitive::findByReplayHashAndEvent($this->_ds, $eventId, $replayHash);
         if (!empty($addedSession)) {
@@ -71,7 +71,7 @@ class OnlineSessionModel extends Model
             ->setReplayHash($replayHash)
             ->setStatus(SessionPrimitive::STATUS_INPROGRESS);
 
-        $withChips = $event->getRuleset()->chipsValue() > 0;
+        $withChips = $event->getRulesetConfig()->rules()->getChipsValue() > 0;
 
         list($success, $originalScore, $rounds, $debug) = $parser->parseToSession($session, $gameContent, $withChips);
         $success = $success && $session->save();
@@ -111,7 +111,7 @@ class OnlineSessionModel extends Model
      */
     protected function _checkGameExpired(string $gameLink, \Common\Ruleset $rules): void
     {
-        if (!$rules->gameExpirationTime()) {
+        if (!$rules->rules()->getGameExpirationTime()) {
             return;
         }
 
@@ -119,11 +119,11 @@ class OnlineSessionModel extends Model
         $matches = [];
         if (preg_match($regex, $gameLink, $matches)) {
             $date = mktime((int)$matches['hour'], 0, 0, (int)$matches['month'], (int)$matches['day'], (int)$matches['year']);
-            if (time() - $date < $rules->gameExpirationTime() * 60 * 60) {
+            if (time() - $date < $rules->rules()->getGameExpirationTime() * 60 * 60) {
                 return;
             }
         }
 
-        throw new ParseException('Replay is older than ' . $rules->gameExpirationTime() . ' hours (within JST timezone), so it can\'t be accepted.');
+        throw new ParseException('Replay is older than ' . $rules->rules()->getGameExpirationTime() . ' hours (within JST timezone), so it can\'t be accepted.');
     }
 }

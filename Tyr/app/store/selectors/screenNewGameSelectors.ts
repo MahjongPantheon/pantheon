@@ -1,13 +1,30 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import { IAppState } from '../interfaces';
-import { LUser } from '#/interfaces/local';
-import { uniq } from '#/primitives/uniq';
 import { memoize } from '#/primitives/memoize';
+import { RegisteredPlayer } from '#/clients/atoms.pb';
 
 const DEFAULT_ID = -1;
-export const defaultPlayer: Readonly<LUser> = {
-  displayName: '',
+export const defaultPlayer: Readonly<RegisteredPlayer> = {
   id: DEFAULT_ID,
+  title: '',
   tenhouId: '',
+  ignoreSeating: false,
 };
 
 function _getPlayers(state: IAppState) {
@@ -23,7 +40,7 @@ function _getPlayers(state: IAppState) {
       if (a == b) {
         return 0;
       }
-      return a.displayName < b.displayName ? -1 : 1;
+      return a.title < b.title ? -1 : 1;
     });
 
   return [
@@ -38,26 +55,3 @@ function _getPlayers(state: IAppState) {
 }
 
 export const getPlayers = memoize(_getPlayers);
-
-function _playersValid(state: IAppState) {
-  if (!state.newGameSelectedUsers) {
-    return false;
-  }
-
-  const ids = state.newGameSelectedUsers.map((p) => p.id);
-
-  // all players should have initialized ids
-  if (ids.includes(DEFAULT_ID)) {
-    return false;
-  }
-
-  // There must be Current Player
-  if (!state.currentPlayerId || !ids.includes(state.currentPlayerId)) {
-    return false;
-  }
-
-  // all players should be unique
-  return uniq(ids, false, false).length == 4;
-}
-
-export const playersValid = memoize(_playersValid);

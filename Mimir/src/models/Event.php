@@ -26,7 +26,6 @@ require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../primitives/EventPrescript.php';
 require_once __DIR__ . '/../primitives/PlayerHistory.php';
-require_once __DIR__ . '/../primitives/Achievements.php';
 require_once __DIR__ . '/../primitives/Round.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 
@@ -47,7 +46,7 @@ class EventModel extends Model
         if (empty($event)) {
             throw new InvalidParametersException('Event id#' . $eventId . ' not found in DB');
         }
-        $startRating = $event[0]->getRuleset()->startRating();
+        $startRating = $event[0]->getRulesetConfig()->rules()->getStartRating();
 
         // get data from primitives, and some raw data
         $reggedPlayers = PlayerRegistrationPrimitive::findRegisteredPlayersIdsByEvent($this->_ds, $eventId);
@@ -150,7 +149,7 @@ class EventModel extends Model
             return [
                 'event_id' => $eventId,
                 'next_session_index' => 1,
-                'prescript' => null,
+                'prescript' => '',
                 'check_errors' => [
                     'No predefined seating yet'
                 ]
@@ -383,6 +382,7 @@ class EventModel extends Model
             ->select('event.is_online', 'is_online')
             ->select('event.sync_start', 'sync_start')
             ->select('event.finished', 'finished')
+            ->select('event.is_prescripted', 'prescripted')
             ->select('event.is_listed', 'is_listed')
             ->select('event.hide_results', 'hide_results')
             ->selectExpr('count(session.id)', 'sessioncnt')
@@ -412,6 +412,7 @@ class EventModel extends Model
                     'title' => $event['title'],
                     'description' => $event['description'],
                     'finished' => !!$event['finished'],
+                    'prescripted' => !!$event['prescripted'],
                     'isListed' => !!$event['is_listed'],
                     'isRatingShown' => !!$event['hide_results'],
                     'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,
@@ -437,6 +438,7 @@ class EventModel extends Model
             ->select('event.is_online', 'is_online')
             ->select('event.sync_start', 'sync_start')
             ->select('event.finished', 'finished')
+            ->select('event.is_prescripted', 'prescripted')
             ->select('event.is_listed', 'is_listed')
             ->select('event.hide_results', 'hide_results')
             ->selectExpr('count(session.id)', 'sessioncnt')
@@ -454,6 +456,7 @@ class EventModel extends Model
                 'title' => $event['title'],
                 'description' => $event['description'],
                 'finished' => !!$event['finished'],
+                'prescripted' => !!$event['prescripted'],
                 'isListed' => !!$event['is_listed'],
                 'isRatingShown' => !!$event['hide_results'],
                 'tournamentStarted' => $type === 'tournament' && $event['sessioncnt'] > 0,

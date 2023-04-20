@@ -17,6 +17,7 @@
  */
 namespace Mimir;
 
+use Common\IntermediateResultOfSession;
 use Common\MultironResult;
 
 require_once __DIR__ . '/../Model.php';
@@ -406,12 +407,13 @@ class InteractiveSessionModel extends Model
      * Drop last round from session (except if this last round has led to session finish)
      *
      * @param string $gameHash
+     * @param IntermediateResultOfSession[] $intermediateResults
      * @throws AuthFailedException
      * @throws \Exception
      * @throws InvalidParametersException
      * @return boolean
      */
-    public function dropLastRound(string $gameHash)
+    public function dropLastRound(string $gameHash, array $intermediateResults)
     {
         $session = SessionPrimitive::findByRepresentationalHash($this->_ds, [$gameHash]);
         if (empty($session)) {
@@ -425,6 +427,14 @@ class InteractiveSessionModel extends Model
         if ($session[0]->getStatus() === SessionPrimitive::STATUS_FINISHED) {
             throw new InvalidParametersException('Session id#' . $session[0]->getId() . ' is already finished. '
                 . 'Can\'t alter finished sessions');
+        }
+
+        // Check for duplicate cancellations of same round
+        $scores = array_combine($session[0]->getPlayersIds(), $session[0]->getCurrentState()->getScores());
+        foreach ($intermediateResults as $result) {
+            if ($scores[$result->getPlayerId()] !== $result->getScore()) {
+                throw new InvalidParametersException('Can\'t cancel round: was it already cancelled by someone else?');
+            }
         }
 
         $id = $session[0]->getId();

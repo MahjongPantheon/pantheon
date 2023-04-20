@@ -1,24 +1,22 @@
-/*
- * Tyr - Allows online game recording in japanese (riichi) mahjong sessions
- * Copyright (C) 2016 Oleg Klimenko aka ctizen <me@ctizen.net>
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
  *
- * This file is part of Tyr.
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * Tyr is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- * Tyr is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Tyr.  If not, see <http://www.gnu.org/licenses/>.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 import { YakuId as Y } from './yaku';
+import { RoundOutcome } from '#/clients/atoms.pb';
 
 const handValues: [Y, number, number][] = [
   [Y.TOITOI, 2, 2],
@@ -78,10 +76,7 @@ handValues.forEach((item) => {
   }
 });
 
-export function getFixedFu(
-  yakuList: Y[],
-  outcome: 'ron' | 'tsumo' | 'chombo' | 'draw' | 'abort' | 'nagashi'
-): number[] {
+export function getFixedFu(yakuList: Y[], outcome: RoundOutcome): number[] {
   if (yakuList.includes(Y.CHIITOITSU)) {
     return [25];
   }
@@ -94,7 +89,7 @@ export function getFixedFu(
     return [20];
   }
 
-  if (outcome === 'ron' && !yakuList.includes(Y.__OPENHAND)) {
+  if (outcome === 'RON' && !yakuList.includes(Y.__OPENHAND)) {
     if (yakuList.includes(Y.PINFU)) {
       return [30];
     }

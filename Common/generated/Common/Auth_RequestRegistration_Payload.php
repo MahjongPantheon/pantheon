@@ -25,6 +25,10 @@ class Auth_RequestRegistration_Payload extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string password = 3;</code>
      */
     protected $password = '';
+    /**
+     * Generated from protobuf field <code>bool sendEmail = 4;</code>
+     */
+    protected $sendEmail = false;
 
     /**
      * Constructor.
@@ -35,6 +39,7 @@ class Auth_RequestRegistration_Payload extends \Google\Protobuf\Internal\Message
      *     @type string $email
      *     @type string $title
      *     @type string $password
+     *     @type bool $sendEmail
      * }
      */
     public function __construct($data = NULL) {
@@ -104,6 +109,28 @@ class Auth_RequestRegistration_Payload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->password = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool sendEmail = 4;</code>
+     * @return bool
+     */
+    public function getSendEmail()
+    {
+        return $this->sendEmail;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool sendEmail = 4;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setSendEmail($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->sendEmail = $var;
 
         return $this;
     }

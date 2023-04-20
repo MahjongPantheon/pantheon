@@ -8,7 +8,6 @@ require_once __DIR__ . '/DataSource.php';
 require_once __DIR__ . '/Db.php';
 require_once __DIR__ . '/Meta.php';
 require_once __DIR__ . '/ErrorHandler.php';
-require_once __DIR__ . '/FreyClient.php';
 require_once __DIR__ . '/FreyClientTwirp.php';
 require_once __DIR__ . '/controllers/Events.php';
 require_once __DIR__ . '/controllers/Games.php';
@@ -19,6 +18,7 @@ require_once __DIR__ . '/controllers/Seating.php';
 use Common\AbortResult;
 use Common\Achievement;
 use Common\ChomboResult;
+use Common\ComplexUma;
 use Common\Country;
 use Common\CurrentSession;
 use Common\DoraSummary;
@@ -28,14 +28,13 @@ use Common\EventData;
 use Common\PlayerSeating;
 use Common\PlayerSeatingSwiss;
 use Common\PrescriptedTable;
+use Common\RulesetConfig;
 use Common\SessionHistoryResultTable;
 use Common\Storage;
 use Common\TableItemSwiss;
 use Common\TeamMapping;
 use Common\Events_GetAchievements_Payload;
 use Common\Events_GetAchievements_Response;
-use Common\Events_GetAchievementsList_Payload;
-use Common\Events_GetAchievementsList_Response;
 use Common\Events_GetAllRegisteredPlayers_Payload;
 use Common\Events_GetAllRegisteredPlayers_Response;
 use Common\Events_GetCountries_Payload;
@@ -147,6 +146,7 @@ use Common\TableState;
 use Common\TournamentGamesStatus;
 use Common\TsumoResult;
 use Common\TwirpError;
+use Common\Uma;
 use Common\YakuStat;
 use Exception;
 use Monolog\Handler\ErrorLogHandler;
@@ -175,36 +175,19 @@ final class TwirpServer implements Mimir
     {
         $cfgPath = empty($configPath) ? __DIR__ . '/../config/index.php' : $configPath;
         $this->_config = new Config($cfgPath);
-        date_default_timezone_set($this->_config->getStringValue('serverDefaultTimezone'));
+        date_default_timezone_set($this->_config->getStringValue('serverDefaultTimezone') ?: 'UTC');
         $this->_storage = new \Common\Storage($this->_config->getStringValue('cookieDomain'));
         $this->_db = new Db($this->_config);
         $freyUrl = $this->_config->getStringValue('freyUrl');
         if ($freyUrl === '__mock__') { // testing purposes
             $this->_frey = new FreyClientMock('');
         } else {
-            if ($this->_storage->getTwirpEnabled()) {
-                $this->_frey = new FreyClientTwirp($freyUrl);
-            } else {
-                $this->_frey = new FreyClient($freyUrl);
-            }
+            $this->_frey = new FreyClientTwirp($freyUrl);
         }
         $this->_ds = new DataSource($this->_db, $this->_frey);
         $this->_meta = new Meta($this->_frey, $this->_storage, $this->_config, $_SERVER);
         $this->_syslog = new Logger('RiichiApi');
         $this->_syslog->pushHandler(new ErrorLogHandler());
-
-        if ($this->_storage->getTwirpEnabled()) {
-            // @phpstan-ignore-next-line
-            $this->_frey->withHeaders([
-                'X-Twirp' => 'true',
-                'X-Locale' => $this->_meta->getSelectedLocale()
-            ]);
-        } else {
-            // @phpstan-ignore-next-line
-            $this->_frey->getClient()->getHttpClient()->withHeaders([
-                'X-Locale: ' . $this->_meta->getSelectedLocale(),
-            ]);
-        }
 
         // + some custom handler for testing errors
         if ($this->_config->getBooleanValue('verbose')) {
@@ -250,9 +233,9 @@ final class TwirpServer implements Mimir
     protected static function _toIntArray($csepStringOrArray): array
     {
         if (is_string($csepStringOrArray)) {
-            return array_map('intval', explode(',', $csepStringOrArray));
+            return array_unique(array_filter(array_map('intval', explode(',', $csepStringOrArray))));
         } else {
-            return array_map('intval', $csepStringOrArray);
+            return array_unique(array_filter(array_map('intval', $csepStringOrArray)));
         }
     }
 
@@ -314,14 +297,13 @@ final class TwirpServer implements Mimir
                     : EventType::LOCAL))
             ->setTitle($ret['title'])
             ->setDescription($ret['description'])
-            ->setRuleset($ret['ruleset'])
             ->setTimezone($ret['timezone'])
             ->setSeriesLength($ret['seriesLength'])
             ->setMinGames($ret['minGames'])
             ->setIsTeam($ret['isTeam'])
             ->setIsPrescripted($ret['isPrescripted'])
             ->setAutostart($ret['autostart'])
-            ->setRulesetChanges($ret['rulesetChanges']);
+            ->setRulesetConfig($ret['ruleset']);
         if (!empty($ret['duration'])) {
             $data->setDuration($ret['duration']);
         }
@@ -780,13 +762,9 @@ final class TwirpServer implements Mimir
     {
         $ret = $this->_eventsController->getRulesets();
         return (new Events_GetRulesets_Response())
-            ->setRulesets(array_map(function ($ruleset, $name) use ($ret) {
-                return (new RulesetGenerated())
-                    ->setTitle((string)$name)
-                    ->setDescription($ruleset['description'])
-                    ->setDefaultRules(json_encode($ruleset['originalRules']) ?: '')
-                    ->setFieldTypes(json_encode($ret['fields']) ?: '');
-            }, array_values($ret['rules']), array_keys($ret['rules'])));
+            ->setRulesetIds(array_map(function ($r) { return $r['id']; },  $ret))
+            ->setRulesetTitles(array_map(function ($r) { return $r['description']; },  $ret))
+            ->setRulesets(array_map(function ($r) { return $r['originalRules']; },  $ret));
     }
 
     /**
@@ -830,6 +808,7 @@ final class TwirpServer implements Mimir
                     ->setDescription($ev['description'])
                     ->setType(self::_toEventTypeEnum($ev['type']))
                     ->setFinished($ev['finished'])
+                    ->setIsPrescripted($ev['prescripted'])
                     ->setIsListed($ev['isListed'])
                     ->setIsRatingShown($ev['isRatingShown'])
                     ->setTournamentStarted($ev['tournamentStarted']);
@@ -849,6 +828,7 @@ final class TwirpServer implements Mimir
                     ->setDescription($ev['description'])
                     ->setType(self::_toEventTypeEnum($ev['type']))
                     ->setFinished($ev['finished'])
+                    ->setIsPrescripted($ev['prescripted'])
                     ->setIsListed($ev['isListed'])
                     ->setIsRatingShown($ev['isRatingShown'])
                     ->setTournamentStarted($ev['tournamentStarted']);
@@ -876,40 +856,14 @@ final class TwirpServer implements Mimir
     public function GetGameConfig(array $ctx, Generic_Event_Payload $req): GameConfig
     {
         $ret = $this->_eventsController->getGameConfig($req->getEventId());
+
         $gc = (new GameConfig())
-            ->setAllowedYaku($ret['allowedYaku'])
-            ->setStartPoints($ret['startPoints'])
-            ->setGoalPoints($ret['goalPoints'])
-            ->setPlayAdditionalRounds($ret['playAdditionalRounds'])
-            ->setWithKazoe($ret['withKazoe'])
-            ->setWithKiriageMangan($ret['withKiriageMangan'])
-            ->setWithAbortives($ret['withAbortives'])
-            ->setWithNagashiMangan($ret['withNagashiMangan'])
-            ->setWithAtamahane($ret['withAtamahane'])
-            ->setRulesetTitle($ret['rulesetTitle'])
-            ->setTonpuusen($ret['tonpuusen'])
-            ->setStartRating($ret['startRating'])
-            ->setRiichiGoesToWinner($ret['riichiGoesToWinner'])
-            ->setDoubleronRiichiAtamahane($ret['doubleronRiichiAtamahane'])
-            ->setDoubleronHonbaAtamahane($ret['doubleronHonbaAtamahane'])
-            ->setExtraChomboPayments($ret['extraChomboPayments'])
-            ->setChomboPenalty($ret['chomboPenalty'])
-            ->setWithKuitan($ret['withKuitan'])
-            ->setWithButtobi($ret['withButtobi'])
-            ->setWithMultiYakumans($ret['withMultiYakumans'])
-            ->setGameExpirationTime($ret['gameExpirationTime'])
-            ->setMinPenalty($ret['minPenalty'])
-            ->setMaxPenalty($ret['maxPenalty'])
-            ->setPenaltyStep($ret['penaltyStep'])
-            ->setYakuWithPao($ret['yakuWithPao'])
+            ->setRulesetConfig($ret['ruleset'])
             ->setEventTitle($ret['eventTitle'])
             ->setEventDescription($ret['eventDescription'])
             ->setEventStatHost($ret['eventStatHost'])
             ->setUseTimer($ret['useTimer'])
             ->setUsePenalty($ret['usePenalty'])
-            ->setTimerPolicy($ret['timerPolicy'])
-            ->setRedZone($ret['redZone'])
-            ->setYellowZone($ret['yellowZone'])
             ->setTimezone($ret['timezone'])
             ->setIsOnline($ret['isOnline'])
             ->setIsTeam($ret['isTeam'])
@@ -918,14 +872,11 @@ final class TwirpServer implements Mimir
             ->setSyncEnd($ret['syncEnd'])
             ->setSortByGames($ret['sortByGames'])
             ->setAllowPlayerAppend($ret['allowPlayerAppend'])
-            ->setWithLeadingDealerGameOver($ret['withLeadingDealerGameOver'])
-            ->setSubtractStartPoints($ret['subtractStartPoints'])
             ->setSeriesLength($ret['seriesLength'])
             ->setMinGamesCount($ret['minGamesCount'])
             ->setHideResults($ret['hideResults'])
             ->setHideAddReplayButton($ret['hideAddReplayButton'])
             ->setIsPrescripted($ret['isPrescripted'])
-            ->setChipsValue($ret['chipsValue'])
             ->setIsFinished($ret['isFinished']);
         if (!empty($ret['gameDuration'])) {
             $gc->setGameDuration($ret['gameDuration']);
@@ -1109,7 +1060,7 @@ final class TwirpServer implements Mimir
                 ->setScores(self::_makeScores($ret['state']['scores']))
                 ->setFinished($ret['state']['finished'])
                 ->setPenalties(self::_makePenalties($ret['state']['penalties']))
-                ->setYellowZoneAlreadyPlayed($ret['state']['yellowZoneAlreadyPlayed']));
+                ->setLastHandStarted($ret['state']['lastHandStarted']));
         if (!empty($ret['table_index'])) {
             $overview->setTableIndex($ret['table_index']);
         }
@@ -1184,7 +1135,7 @@ final class TwirpServer implements Mimir
             ->setRiichiBets($ret['_riichiBets'])
             ->setPrematurelyFinished($ret['_prematurelyFinished'])
             ->setRoundJustChanged($ret['_roundJustChanged'])
-            ->setYellowZoneAlreadyPlayed($ret['_yellowZoneAlreadyPlayed'])
+            ->setLastHandStarted($ret['_lastHandStarted'])
             ->setLastOutcome(self::_toOutcome($ret['_lastOutcome']))
             ->setIsFinished($ret['_isFinished']);
     }
@@ -1299,7 +1250,6 @@ final class TwirpServer implements Mimir
                 self::_fromEventTypeEnum($req->getType()),
                 $req->getTitle(),
                 $req->getDescription(),
-                $req->getRuleset(),
                 $req->getDuration(),
                 $req->getTimezone(),
                 $req->getSeriesLength(),
@@ -1308,7 +1258,7 @@ final class TwirpServer implements Mimir
                 $req->getIsTeam(),
                 $req->getIsPrescripted(),
                 $req->getAutostart(),
-                $req->getRulesetChanges(),
+                $req->getRulesetConfig(),
             ));
     }
 
@@ -1327,7 +1277,6 @@ final class TwirpServer implements Mimir
                 $req->getId(),
                 $ev->getTitle(),
                 $ev->getDescription(),
-                $ev->getRuleset(),
                 $ev->getDuration(),
                 $ev->getTimezone(),
                 $ev->getSeriesLength(),
@@ -1336,7 +1285,7 @@ final class TwirpServer implements Mimir
                 $ev->getIsTeam(),
                 $ev->getIsPrescripted(),
                 $ev->getAutostart(),
-                $ev->getRulesetChanges(),
+                $ev->getRulesetConfig(),
             ));
     }
 
@@ -1436,24 +1385,15 @@ final class TwirpServer implements Mimir
     public function GetAchievements(array $ctx, Events_GetAchievements_Payload $req): Events_GetAchievements_Response
     {
         $ret = $this->_eventsController->getAchievements(
-            iterator_to_array($req->getEventIds()),
+            $req->getEventId(),
             iterator_to_array($req->getAchievementsList())
         );
         return (new Events_GetAchievements_Response())
             ->setAchievements(array_map(function ($id, $ach) {
                 return (new Achievement())
                     ->setAchievementId($id)
-                    ->setAchieventData(json_encode($ach) ?: '');
+                    ->setAchievementData(json_encode($ach) ?: '');
             }, array_keys($ret), array_values($ret)));
-    }
-
-    /**
-     * @throws AuthFailedException
-     */
-    public function GetAchievementsList(array $ctx, Events_GetAchievementsList_Payload $req): Events_GetAchievementsList_Response
-    {
-        return (new Events_GetAchievementsList_Response())
-            ->setList($this->_eventsController->getAchievementsList());
     }
 
     /**
@@ -1554,7 +1494,10 @@ final class TwirpServer implements Mimir
     public function DropLastRound(array $ctx, Games_DropLastRound_Payload $req): Generic_Success_Response
     {
         return (new Generic_Success_Response())
-            ->setSuccess($this->_gamesController->dropLastRound($req->getSessionHash()));
+            ->setSuccess($this->_gamesController->dropLastRound(
+                $req->getSessionHash(),
+                iterator_to_array($req->getIntermediateResults())
+            ));
     }
 
     /**

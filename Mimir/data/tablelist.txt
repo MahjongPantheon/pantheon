@@ -6,5 +6,6 @@ session_results
 session
 event_registered_players
 event_prescript
+achievements
 yaku
 event

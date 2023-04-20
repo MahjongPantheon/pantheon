@@ -25,7 +25,6 @@ require_once __DIR__ . '/../primitives/SessionResults.php';
 require_once __DIR__ . '/../primitives/Player.php';
 require_once __DIR__ . '/../primitives/PlayerRegistration.php';
 require_once __DIR__ . '/../primitives/PlayerHistory.php';
-require_once __DIR__ . '/../primitives/Achievements.php';
 require_once __DIR__ . '/../primitives/Round.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
 
@@ -127,7 +126,7 @@ class EventRatingTableModel extends Model
             array_push($playerHistoryItemsSummed, $newItem);
         }
 
-        $startRating = $mainEvent->getRuleset()->startRating();
+        $startRating = $mainEvent->getRulesetConfig()->rules()->getStartRating();
         $this->_sortItems($startRating, $orderBy, $playerItems, $playerHistoryItemsSummed);
 
         if ($order === 'desc') {
@@ -154,11 +153,7 @@ class EventRatingTableModel extends Model
                 'tenhou_id'     => $playerItems[$el->getPlayerId()]->getTenhouId(),
                 'rating'        => (float)$el->getRating(),
                 'chips'         => (int)$el->getChips(),
-                'winner_zone'   => (
-                    $mainEvent->getRuleset()->subtractStartPoints()
-                        ? $el->getRating() >= $mainEvent->getRuleset()->startRating()
-                        : $el->getRating() >= ($mainEvent->getRuleset()->startPoints() * $el->getGamesPlayed())
-                ),
+                'winner_zone'   => $el->getRating() >= $mainEvent->getRulesetConfig()->rules()->getStartRating(),
                 'avg_place'     => round($el->getAvgPlace(), 4),
                 'avg_score'     => $el->getGamesPlayed() == 0
                     ? 0

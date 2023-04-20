@@ -45,6 +45,10 @@ class Event extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>.Common.EventType type = 8;</code>
      */
     protected $type = 0;
+    /**
+     * Generated from protobuf field <code>bool isPrescripted = 9;</code>
+     */
+    protected $isPrescripted = false;
 
     /**
      * Constructor.
@@ -60,6 +64,7 @@ class Event extends \Google\Protobuf\Internal\Message
      *     @type bool $isRatingShown
      *     @type bool $tournamentStarted
      *     @type int $type
+     *     @type bool $isPrescripted
      * }
      */
     public function __construct($data = NULL) {
@@ -239,6 +244,28 @@ class Event extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkEnum($var, \Common\EventType::class);
         $this->type = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isPrescripted = 9;</code>
+     * @return bool
+     */
+    public function getIsPrescripted()
+    {
+        return $this->isPrescripted;
+    }
+
+    /**
+     * Generated from protobuf field <code>bool isPrescripted = 9;</code>
+     * @param bool $var
+     * @return $this
+     */
+    public function setIsPrescripted($var)
+    {
+        GPBUtil::checkBool($var);
+        $this->isPrescripted = $var;
 
         return $this;
     }

@@ -1,5 +1,20 @@
-import { intersect } from '#/primitives/intersect';
-import { unpack } from '#/primitives/yaku-compat';
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import {
   getDeadhandUsers,
   getLosingUsers,
@@ -8,140 +23,56 @@ import {
   getWinningUsers,
 } from './mimirSelectors';
 import { IAppState } from '../interfaces';
-import { Player } from '#/interfaces/common';
+import { PlayerInSession } from '#/clients/atoms.pb';
 
-export function showWinButton(state: IAppState) {
-  if (!state.currentOutcome) {
-    return false;
-  }
-  return (
-    -1 !== ['ron', 'tsumo', 'draw', 'nagashi'].indexOf(state.currentOutcome.selectedOutcome) &&
-    state.currentScreen !== 'paoSelect' &&
-    state.currentScreen !== 'nagashiSelect'
-  );
-}
-
-export function showPaoButton(state: IAppState) {
-  if (!state.gameConfig || state.currentScreen !== 'paoSelect') {
-    return false;
-  }
-
-  switch (state.currentOutcome?.selectedOutcome) {
-    case 'tsumo':
-      return state.currentOutcome.winner !== state.currentPlayerId;
-    case 'ron': // todo check
-      // no pao for loser and winner with yakuman
-      if (state.currentOutcome.loser === state.currentPlayerId) {
-        return false;
-      }
-      for (const idx in state.currentOutcome.wins) {
-        if (!state.currentOutcome.wins.hasOwnProperty(idx)) {
-          continue;
-        }
-        const win = state.currentOutcome.wins[idx];
-        if (
-          win.winner === state.currentPlayerId &&
-          intersect(unpack(win.yaku), state.gameConfig.yakuWithPao).length !== 0
-        ) {
-          return false;
-        }
-      }
-      return true;
-    default:
-      return undefined;
-  }
-}
-
-export function showLoseButton(state: IAppState) {
-  if (!state.currentOutcome) {
-    return false;
-  }
-  return (
-    -1 !== ['ron', 'chombo'].indexOf(state.currentOutcome.selectedOutcome) &&
-    state.currentScreen !== 'paoSelect' &&
-    state.currentScreen !== 'nagashiSelect'
-  );
-}
-
-export function showRiichiButton(state: IAppState) {
-  if (!state.currentOutcome) {
-    return false;
-  }
-  return (
-    -1 !==
-      ['ron', 'tsumo', 'abort', 'draw', 'nagashi'].indexOf(state.currentOutcome.selectedOutcome) &&
-    state.currentScreen !== 'paoSelect' &&
-    state.currentScreen !== 'nagashiSelect'
-  );
-}
-
-export function showDeadButton(state: IAppState) {
-  if (!state.currentOutcome) {
-    return false;
-  }
-  return (
-    -1 !== ['draw', 'nagashi'].indexOf(state.currentOutcome.selectedOutcome) &&
-    state.currentScreen !== 'paoSelect' &&
-    state.currentScreen !== 'nagashiSelect'
-  );
-}
-
-export function showNagashiButton(state: IAppState) {
-  if (!state.currentOutcome) {
-    return false;
-  }
-  return (
-    -1 !== ['nagashi'].indexOf(state.currentOutcome.selectedOutcome) &&
-    state.currentScreen !== 'paoSelect' &&
-    state.currentScreen === 'nagashiSelect'
-  );
-}
-
-export function winPressed(state: IAppState, userData: Player) {
+export function winPressed(state: IAppState, userData: PlayerInSession) {
   return -1 !== getWinningUsers(state).indexOf(userData);
 }
 
-export function losePressed(state: IAppState, userData: Player) {
+export function losePressed(state: IAppState, userData: PlayerInSession) {
   return -1 !== getLosingUsers(state).indexOf(userData);
 }
 
-export function paoPressed(state: IAppState, userData: Player) {
+export function paoPressed(state: IAppState, userData: PlayerInSession) {
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'ron':
+    case 'RON':
       if (state.multironCurrentWinner) {
         return state.currentOutcome.wins[state.multironCurrentWinner].paoPlayerId === userData.id;
       }
       break;
-    case 'tsumo':
+    case 'TSUMO':
       return state.currentOutcome.paoPlayerId === userData.id;
     default:
   }
   return false;
 }
 
-export function riichiPressed(state: IAppState, userData: Player) {
+export function riichiPressed(state: IAppState, userData: PlayerInSession) {
   return -1 !== getRiichiUsers(state).indexOf(userData);
 }
 
-export function deadPressed(state: IAppState, userData: Player) {
+export function deadPressed(state: IAppState, userData: PlayerInSession) {
   return -1 !== getDeadhandUsers(state).indexOf(userData);
 }
 
-export function nagashiPressed(state: IAppState, userData: Player) {
+export function nagashiPressed(state: IAppState, userData: PlayerInSession) {
   return -1 !== getNagashiUsers(state).indexOf(userData);
 }
 
-export function winDisabled(state: IAppState, userData: Player) {
+export function winDisabled(state: IAppState, userData: PlayerInSession) {
   if (!state.currentOutcome) {
     return false;
   }
 
-  if (-1 !== ['draw', 'nagashi'].indexOf(state.currentOutcome.selectedOutcome)) {
+  if (-1 !== ['DRAW', 'NAGASHI'].indexOf(state.currentOutcome.selectedOutcome)) {
     return -1 !== getDeadhandUsers(state).indexOf(userData);
   }
 
   // for multiron
-  if (state.currentOutcome.selectedOutcome === 'ron' && !state.gameConfig?.withAtamahane) {
+  if (
+    state.currentOutcome.selectedOutcome === 'RON' &&
+    !state.gameConfig?.rulesetConfig.withAtamahane
+  ) {
     return -1 !== getLosingUsers(state).indexOf(userData);
   }
 
@@ -153,7 +84,7 @@ export function winDisabled(state: IAppState, userData: Player) {
 }
 
 // for ron/chombo - loser is only one
-export function loseDisabled(state: IAppState, userData: Player) {
+export function loseDisabled(state: IAppState, userData: PlayerInSession) {
   return (
     (getLosingUsers(state).length > 0 && -1 === getLosingUsers(state).indexOf(userData)) ||
     -1 !== getWinningUsers(state).indexOf(userData)
@@ -161,10 +92,6 @@ export function loseDisabled(state: IAppState, userData: Player) {
 }
 
 // no more than 3 players may have nagashi
-export function nagashiDisabled(state: IAppState, userData: Player) {
+export function nagashiDisabled(state: IAppState, userData: PlayerInSession) {
   return getNagashiUsers(state).length >= 3 && -1 === getNagashiUsers(state).indexOf(userData);
 }
-
-export function paoDisabled(_state: IAppState, _userData: Player) {}
-
-// riichi & dead hand can't be disabled

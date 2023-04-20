@@ -40,7 +40,6 @@ service Mimir {
   rpc UnregisterPlayer (Events_UnregisterPlayer_Payload) returns (Generic_Success_Response);
   rpc UpdatePlayerSeatingFlag (Events_UpdatePlayerSeatingFlag_Payload) returns (Generic_Success_Response);
   rpc GetAchievements (Events_GetAchievements_Payload) returns (Events_GetAchievements_Response);
-  rpc GetAchievementsList (Events_GetAchievementsList_Payload) returns (Events_GetAchievementsList_Response);
   rpc ToggleHideResults (Generic_Event_Payload) returns (Generic_Success_Response);
   rpc UpdatePlayersLocalIds (Events_UpdatePlayersLocalIds_Payload) returns (Generic_Success_Response);
   rpc UpdatePlayerReplacement (Events_UpdatePlayerReplacement_Payload) returns (Generic_Success_Response);
@@ -72,7 +71,9 @@ service Mimir {
 message Events_GetRulesets_Payload {}
 
 message Events_GetRulesets_Response {
-  repeated RulesetGenerated rulesets = 1;
+  repeated RulesetConfig rulesets = 1;
+  repeated string rulesetIds = 2;
+  repeated string rulesetTitles = 3;
 }
 
 message Events_GetTimezones_Payload {
@@ -227,7 +228,7 @@ message Games_AddRound_Response {
   bool prematurelyFinished = 6; // if game has been finished prematurely (e.g. by timeout)
   bool roundJustChanged = 7; // True if round has just changed useful to determine if current 4e or 4s is first one, no matter what honba count is. (Possible situation: draw in 3s or 3e, so first 4e or 4s has honba).
   bool isFinished = 8;
-  bool yellowZoneAlreadyPlayed = 9; // True if timer policy refers to "yellow zone" rule AND first game in yellow zone was already recorded. In fact, this is a "red zone" flag, which means that hanchan will be finished when next round is recorded.
+  bool lastHandStarted = 9; // True if ending policy is "oneMoreHand" AND this hand was started.
   optional RoundOutcome lastOutcome = 10; // Outcome of previously recorded round. Useful to determine if certain rules should be applied in current case, e.g., agariyame should not be applied on chombo or abortive draw.
 }
 
@@ -319,18 +320,12 @@ message Events_UpdatePlayerSeatingFlag_Payload {
 }
 
 message Events_GetAchievements_Payload {
-  repeated int32 eventIds = 1;
   repeated string achievementsList = 2;
+  int32 eventId = 3;
 }
 
 message Events_GetAchievements_Response {
   repeated Achievement achievements = 1;
-}
-
-message Events_GetAchievementsList_Payload {}
-
-message Events_GetAchievementsList_Response {
-  repeated string list = 1;
 }
 
 message Events_UpdatePlayersLocalIds_Payload {
@@ -368,6 +363,7 @@ message Games_CancelGame_Payload {
 
 message Games_DropLastRound_Payload {
   string sessionHash = 1;
+  repeated IntermediateResultOfSession intermediateResults = 2;
 }
 
 message Games_DefinalizeGame_Payload {

@@ -1,22 +1,39 @@
+/* Tyr - Japanese mahjong assistant application
+ * Copyright (C) 2016 Oleg Klimenko aka ctizen
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 import { AppOutcome } from '#/interfaces/app';
-import { LGameConfig } from '#/interfaces/local';
 import { intersect } from '#/primitives/intersect';
 import { unpack } from '#/primitives/yaku-compat';
 import { Action, AnyAction } from 'redux';
+import { GameConfig } from '#/clients/atoms.pb';
 
-export function playerHasYakuWithPao(yakuPack: string, gameConfig: LGameConfig): boolean {
-  return intersect(unpack(yakuPack), gameConfig.yakuWithPao).length > 0;
+export function playerHasYakuWithPao(yakuPack: string, gameConfig: GameConfig): boolean {
+  return intersect(unpack(yakuPack), gameConfig.rulesetConfig.yakuWithPao).length > 0;
 }
 
-export function winnerHasYakuWithPao(outcome: AppOutcome, gameConfig: LGameConfig): boolean {
+export function winnerHasYakuWithPao(outcome: AppOutcome, gameConfig: GameConfig): boolean {
   if (!outcome) {
     return false;
   }
 
   switch (outcome.selectedOutcome) {
-    case 'tsumo':
+    case 'TSUMO':
       return playerHasYakuWithPao(outcome.yaku, gameConfig);
-    case 'ron':
+    case 'RON':
       return Object.keys(outcome.wins).reduce<boolean>((acc, playerId) => {
         return acc || playerHasYakuWithPao(outcome.wins[playerId].yaku, gameConfig);
       }, false);

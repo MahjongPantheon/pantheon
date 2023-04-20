@@ -18,6 +18,7 @@
 namespace Frey;
 
 require_once __DIR__ . '/../Model.php';
+require_once __DIR__ . '/../helpers/Mailer.php';
 require_once __DIR__ . '/../primitives/Registrant.php';
 require_once __DIR__ . '/../primitives/Person.php';
 require_once __DIR__ . '/../exceptions/InvalidParameters.php';
@@ -33,11 +34,12 @@ class AuthModel extends Model
      * @param string $email
      * @param string $title
      * @param string $password
+     * @param boolean $sendEmail
      * @return string
      * @throws InvalidParametersException
      * @throws \Exception
      */
-    public function requestRegistration(string $email, string $title, string $password): string
+    public function requestRegistration(string $email, string $title, string $password, bool $sendEmail): string
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidParametersException('Invalid email provided', 401);
@@ -57,6 +59,11 @@ class AuthModel extends Model
             ->setAuthHash($pw['auth_hash']);
         $reg->save();
 
+        if ($sendEmail) {
+            $conf = $this->_config->getValue('mailer');
+            $mailer = new Mailer($conf['gui_url'], $conf['mode'], $conf['mailer_addr'], $conf['remote_url'], $conf['remote_action_key']);
+            return $mailer->sendSignupMail($email, '/profile/confirm/' . $reg->getApprovalCode());
+        }
         return $reg->getApprovalCode();
     }
 
@@ -224,11 +231,12 @@ class AuthModel extends Model
      * Returns reset approval token, which should be sent over email to user.
      *
      * @param string $email
+     * @param bool $sendEmail
      * @return string
      * @throws EntityNotFoundException
      * @throws \Exception
      */
-    public function requestResetPassword(string $email)
+    public function requestResetPassword(string $email, bool $sendEmail)
     {
         $person = PersonPrimitive::findByEmail($this->_db, [$email]);
         if (empty($person)) {
@@ -236,6 +244,13 @@ class AuthModel extends Model
         }
 
         $person[0]->setAuthResetToken(sha1($email . microtime(true)))->save();
+
+        if ($sendEmail) {
+            $conf = $this->_config->getValue('mailer');
+            $mailer = new Mailer($conf['gui_url'], $conf['mode'], $conf['mailer_addr'], $conf['remote_url'], $conf['remote_action_key']);
+            return $mailer->sendPasswordRecovery($person[0]->getAuthResetToken(), $email);
+        }
+
         return $person[0]->getAuthResetToken();
     }
 

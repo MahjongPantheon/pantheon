@@ -51,7 +51,7 @@ class RoundPrimitiveTest extends \PHPUnit\Framework\TestCase
             ->setTitle('title')
             ->setDescription('desc')
             ->setTimezone('UTC')
-            ->setRuleset(\Common\Ruleset::instance('jpmlA'));
+            ->setRulesetConfig(\Common\Ruleset::instance('jpmlA'));
         $this->_event->save();
 
         $this->_players = PlayerPrimitive::findById($this->_ds, [1, 2, 3, 4]);

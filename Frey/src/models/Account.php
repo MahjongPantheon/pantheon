@@ -37,13 +37,17 @@ class AccountModel extends Model
      * @param string $phone
      * @param string|null $tenhouId
      * @param bool $superadmin
+     * @param bool $bootstrap if true, don't check any access rights
      *
      * @return int id
      *
-     * @throws InvalidParametersException
+     * @throws InvalidParametersException|AccessDeniedException
      */
-    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null, $superadmin = false): int
+    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null, $superadmin = false, $bootstrap = false): int
     {
+        if (!$bootstrap) {
+            $this->_checkAccessRightsWithInternal(InternalRules::IS_SUPER_ADMIN);
+        }
         if (empty($email) || empty($password) || empty($title)) {
             throw new InvalidParametersException('Some of required fields are empty (email, password, title)', 401);
         }
@@ -71,7 +75,8 @@ class AccountModel extends Model
         $token = empty($_SERVER['HTTP_X_DEBUG_TOKEN']) ? '' : $_SERVER['HTTP_X_DEBUG_TOKEN'];
         if ($token === $this->_config->getValue('admin.debug_token') && $token === 'CHANGE_ME') {
             $content = file_get_contents('/tmp/frey_tokens_debug') ?: '';
-            $url = getenv('RHEDA_URL');
+            $url = getenv('FORSETI_URL');
+            @chmod('/tmp/frey_tokens_debug', 0777);
             file_put_contents('/tmp/frey_tokens_debug', $content .
                 "New user: $title (impersonate: {$url}/profile/impersonate/{$person->getId()}/{$tokens['client_hash']} )" . PHP_EOL);
         }
@@ -142,18 +147,20 @@ class AccountModel extends Model
             throw new InvalidParametersException('Person id #' . $id . ' not found in DB', 406);
         }
 
-        if (empty($title) || empty($email)) {
-            throw new InvalidParametersException('Title and email cannot be empty', 407);
+        if (empty($title)) {
+            throw new InvalidParametersException('Title cannot be empty', 407);
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidParametersException('Invalid email provided', 408);
+        if (!empty($this->_authorizedPerson) && $this->_authorizedPerson->getIsSuperadmin()) {
+            if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                throw new InvalidParametersException('Invalid email provided', 408);
+            }
+            $persons[0]->setEmail($email);
         }
 
         return $persons[0]->setTitle($title)
             ->setCountry($country)
             ->setCity($city)
-            ->setEmail($email)
             ->setPhone($phone)
             ->setTenhouId($tenhouId)
             ->save();
