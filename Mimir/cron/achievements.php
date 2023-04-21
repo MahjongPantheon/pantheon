@@ -52,6 +52,11 @@ foreach ($allEvents as $ev) {
 
 echo 'Found ' . count($eventIdsToProcess) . ' events to process' . PHP_EOL;
 
+file_put_contents(
+    '/tmp/ach_last_run', 'Last start: ' . date('H:i:s d-m-Y') . '; Found ' .
+    count($eventIdsToProcess) . ' events to process' . PHP_EOL
+);
+
 if (count($eventIdsToProcess) === 0) {
     exit(0);
 }
