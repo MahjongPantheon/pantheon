@@ -405,7 +405,7 @@ class SessionResultsPrimitive extends Primitive
     public function calc(\Common\Ruleset $rules, SessionState $results, array $playerIds)
     {
         $withChips = $rules->rules()->getChipsValue() > 0;
-        if ($withChips) {
+        if ($withChips && $results->getChips()) {
             $this->_chips = $results->getChips()[$this->_playerId];
         }
 
@@ -418,6 +418,9 @@ class SessionResultsPrimitive extends Primitive
 
         $placesMap = self::calcPlacesMap($results->getScores(), $playerIds);
         $this->_place = $placesMap[$this->_playerId]['place'];
+        if (empty($this->_place)) {
+            throw new InvalidParametersException('No player place found');
+        }
 
         $this->_ratingDelta = $this->_calcRatingDelta($rules, $results->getScores());
 
@@ -441,14 +444,14 @@ class SessionResultsPrimitive extends Primitive
      */
     protected static function _sort(array $playersSeq, array $scores)
     {
+        if (count(array_values($playersSeq)) !== count(array_values($scores))) {
+            throw new InvalidParametersException('Cant combine inequal arrays');
+        }
+
         $map = array_combine(
             array_values($playersSeq),
             array_values($scores)
         );
-
-        if (!$map) {
-            throw new InvalidParametersException('Cant combine inequal arrays');
-        }
 
         $result = [];
         while (count($result) < 4) {
