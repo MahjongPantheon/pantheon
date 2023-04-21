@@ -1,6 +1,9 @@
 <?php
 namespace Mimir;
+use PhpParser\Node\Expr\AssignOp\Mul;
+
 ini_set('display_errors', 'On');
+ini_set('memory_limit', '1024M');
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/Config.php';
 require_once __DIR__ . '/../src/Db.php';
@@ -13,11 +16,7 @@ require_once __DIR__ . '/../src/primitives/SessionResults.php';
 require_once __DIR__ . '/../src/primitives/Round.php';
 require_once __DIR__ . '/../src/models/Event.php';
 
-/*
- *  * TODO:
- * - Debug this cron-based script selecting all events with recently added sessions and calculating achievements
- *   - e.g. date of last achievement calculation is less than any session end date
- */
+define('ACH_SLEEP_INTERVAL', 2);
 
 if (!empty(getenv('OVERRIDE_CONFIG_PATH'))) {
     $configPath = getenv('OVERRIDE_CONFIG_PATH');
@@ -46,7 +45,7 @@ $eventIdsToProcess = [];
 foreach ($allEvents as $ev) {
     if (empty($allAchievements[$ev['id']])) {
         $eventIdsToProcess []= $ev['id'];
-    } else if (strtotime($lastSessions[$ev['id']]['end_date']) > strtotime($allAchievements[$ev['id']]['last_update'])) {
+    } else if (!empty($lastSessions[$ev['id']]) && strtotime($lastSessions[$ev['id']]['end_date']) > strtotime($allAchievements[$ev['id']]['last_update'])) {
         $eventIdsToProcess []= $ev['id'];
     }
 }
@@ -57,89 +56,87 @@ if (count($eventIdsToProcess) === 0) {
     exit(0);
 }
 
-$games = SessionPrimitive::findByEventListAndStatus(
-    $ds,
-    $eventIdsToProcess,
-    SessionPrimitive::STATUS_FINISHED
-);
-
-$players = EventModel::getPlayersOfGames($ds, $games);
-
-/** @var array $sessionIds */
-$sessionIds = array_map(function (SessionPrimitive $el) {
-    return $el->getId();
-}, $games);
-$rounds = getRounds($ds, $sessionIds);
-
 foreach ($eventIdsToProcess as $id) {
     $processedData = [];
+    $games = SessionPrimitive::findByEventListAndStatus(
+        $ds,
+        [$id],
+        SessionPrimitive::STATUS_FINISHED
+    );
+    $players = EventModel::getPlayersOfGames($ds, $games);
+    /** @var array $sessionIds */
+    $sessionIds = array_map(function (SessionPrimitive $el) {
+        return $el->getId();
+    }, $games);
+    $rounds = getRounds($ds, $sessionIds);
+
     echo 'Running [bestHand] on event #' . $id . PHP_EOL;
     $processedData['bestHand'] = getBestHandOfEvent($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [bestTsumoist] on event #' . $id . PHP_EOL;
     $processedData['bestTsumoist'] = getBestTsumoistInSingleSession($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [braveSapper] on event #' . $id . PHP_EOL;
     $processedData['braveSapper'] = getBraveSappers($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [dieHard] on event #' . $id . PHP_EOL;
     $processedData['dieHard'] = getDieHardData($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [dovakins] on event #' . $id . PHP_EOL;
     $processedData['dovakins'] = getDovakins($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [yakumans] on event #' . $id . PHP_EOL;
     $processedData['yakumans'] = getYakumans($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [shithander] on event #' . $id . PHP_EOL;
     $processedData['shithander'] = getBestShithander($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [bestDealer] on event #' . $id . PHP_EOL;
     $processedData['bestDealer'] = getBestDealer($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [bestFu] on event #' . $id . PHP_EOL;
     $processedData['bestFu'] = getMaxFuHand($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [impossibleWait] on event #' . $id . PHP_EOL;
     $processedData['impossibleWait'] = getImpossibleWait($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [honoredDonor] on event #' . $id . PHP_EOL;
     $processedData['honoredDonor'] = getHonoredDonor($id, $games, $players, $rounds);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [justAsPlanned] on event #' . $id . PHP_EOL;
     $processedData['justAsPlanned'] = getJustAsPlanned($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [carefulPlanning] on event #' . $id . PHP_EOL;
     $processedData['carefulPlanning'] = getMinFeedsScore($id, $games, $players, $rounds);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [doraLord] on event #' . $id . PHP_EOL;
     $processedData['doraLord'] = getMaxAverageDoraCount($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [catchEmAll] on event #' . $id . PHP_EOL;
     $processedData['catchEmAll'] = getMaxDifferentYakuCount($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [favoriteAsapinApprentice] on event #' . $id . PHP_EOL;
     $processedData['favoriteAsapinApprentice'] = getFavoriteAsapinApprentice($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [andYourRiichiBet] on event #' . $id . PHP_EOL;
     $processedData['andYourRiichiBet'] = getMaxStolenRiichiBetsCount($id, $games, $players, $rounds);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [covetousKnight] on event #' . $id . PHP_EOL;
     $processedData['covetousKnight'] = getMinLostRiichiBetsCount($id, $games, $players, $rounds);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [ninja] on event #' . $id . PHP_EOL;
     $processedData['ninja'] = getNinja($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Running [needMoreGold] on event #' . $id . PHP_EOL;
     $processedData['needMoreGold'] = getNeedMoreGold($db, [$id], $players);
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
     echo 'Saving achievements on event #' . $id . PHP_EOL;
     $db->upsertQuery(
         'achievements',
         [['event_id' => $id, 'data' => json_encode($processedData), 'last_update' => date('Y-m-d H:i:s')]],
         ['event_id']
     );
-    sleep(2);
+    sleep(ACH_SLEEP_INTERVAL);
 }
 
 function elm2Key(array $array, $elmKey)
@@ -306,21 +303,25 @@ function calcRiichiStat(int $eventId, array $games, array $players, array $round
  */
 function getHonoredDonor(int $eventId, array $games, array $players, array $rounds)
 {
-    $riichiStat = calcRiichiStat($eventId, $games, $players, $rounds);
+    try {
+        $riichiStat = calcRiichiStat($eventId, $games, $players, $rounds);
 
-    uasort($riichiStat, function ($a, $b) {
-        return $a['lost'] < $b['lost'] ? 1 : -1;
-    });
+        uasort($riichiStat, function ($a, $b) {
+            return $a['lost'] < $b['lost'] ? 1 : -1;
+        });
 
-    return array_map(
-        function ($item) {
-            return [
-                'name'  => $item['name'],
-                'count'  => $item['lost'],
-            ];
-        },
-        array_slice($riichiStat, 0, 5)
-    );
+        return array_map(
+            function ($item) {
+                return [
+                    'name' => $item['name'],
+                    'count' => $item['lost'],
+                ];
+            },
+            array_slice($riichiStat, 0, 5)
+        );
+    } catch (\Exception $e) {
+        return [];
+    }
 }
 
 /**
@@ -357,14 +358,12 @@ function addLoserPayment(RoundPrimitive $round, SessionState $sessionState, arra
 
     $payments[$loserId]['sum'] += $payment;
 
-    if ($sessionState->getLastOutcome() !== 'multiron') {
-        $payments[$loserId]['count']++;
-    } else {
-        /** @var MultiRoundPrimitive $mRound */
-        $mRound = $round;
-        $rounds = $mRound->rounds();
+    if ($round instanceof MultiRoundPrimitive) {
+        $rounds = $round->rounds();
         $multiRonCount = $rounds[0]->getMultiRon();
         $payments[$loserId]['count'] += $multiRonCount;
+    } else {
+        $payments[$loserId]['count']++;
     }
 
     return $payments;
@@ -432,25 +431,29 @@ function getMinFeedsScore(int $eventId, array $games, array $players, array $rou
  */
 function getMaxStolenRiichiBetsCount(int $eventId, array $games, array $players, array $rounds)
 {
-    $riichiStat = calcRiichiStat($eventId, $games, $players, $rounds);
+    try {
+        $riichiStat = calcRiichiStat($eventId, $games, $players, $rounds);
 
-    $filteredRiichiStat = array_filter($riichiStat, function ($item) {
-        return $item['stole'] > 0;
-    });
+        $filteredRiichiStat = array_filter($riichiStat, function ($item) {
+            return $item['stole'] > 0;
+        });
 
-    uasort($filteredRiichiStat, function ($a, $b) {
-        return $a['stole'] < $b['stole'] ? 1 : -1;
-    });
+        uasort($filteredRiichiStat, function ($a, $b) {
+            return $a['stole'] < $b['stole'] ? 1 : -1;
+        });
 
-    return array_map(
-        function ($item) {
-            return [
-                'name'  => $item['name'],
-                'count' => $item['stole'],
-            ];
-        },
-        array_slice($filteredRiichiStat, 0, 5)
-    );
+        return array_map(
+            function ($item) {
+                return [
+                    'name'  => $item['name'],
+                    'count' => $item['stole'],
+                ];
+            },
+            array_slice($filteredRiichiStat, 0, 5)
+        );
+    } catch (\Exception $e) {
+        return [];
+    }
 }
 
 /**
@@ -465,21 +468,25 @@ function getMaxStolenRiichiBetsCount(int $eventId, array $games, array $players,
  */
 function getMinLostRiichiBetsCount(int $eventId, array $games, array $players, array $rounds)
 {
-    $riichiStat = calcRiichiStat($eventId, $games, $players, $rounds);
+    try {
+        $riichiStat = calcRiichiStat($eventId, $games, $players, $rounds);
 
-    uasort($riichiStat, function ($a, $b) {
-        return $a['lost'] > $b['lost'] ? 1 : -1;
-    });
+        uasort($riichiStat, function ($a, $b) {
+            return $a['lost'] > $b['lost'] ? 1 : -1;
+        });
 
-    return array_map(
-        function ($item) {
-            return [
-                'name'  => $item['name'],
-                'count'  => (string)$item['lost'],
-            ];
-        },
-        array_slice($riichiStat, 0, 5)
-    );
+        return array_map(
+            function ($item) {
+                return [
+                    'name'  => $item['name'],
+                    'count'  => (string)$item['lost'],
+                ];
+            },
+            array_slice($riichiStat, 0, 5)
+        );
+    } catch (\Exception $e) {
+        return [];
+    }
 }
 
 
