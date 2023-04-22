@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 17:04+0300\n"
+"POT-Creation-Date: 2023-04-22 19:24+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,9 +78,6 @@ msgid_plural "%d riichi bets"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid "Achievements"
-msgstr ""
-
 msgid "To event list"
 msgstr ""
 
@@ -105,43 +102,34 @@ msgstr ""
 msgid "Timer & seating"
 msgstr ""
 
+msgid "Achievements"
+msgstr ""
+
 msgid "Admin panel"
 msgstr ""
 
 msgid "Personal area"
 msgstr ""
 
-msgid "Aggregated event"
+msgid "No games has been played yet"
 msgstr ""
 
-msgid "Event owners: "
+msgid "%d - %d (%d total)"
 msgstr ""
 
-msgid "Finished"
+msgid "The game has been successfully added!"
 msgstr ""
 
-msgid "Player"
-msgstr ""
-
-msgid "Points of best series"
-msgstr ""
-
-msgid "Points of last series"
-msgstr ""
-
-msgid "Best series"
-msgstr ""
-
-msgid "Last series"
-msgstr ""
-
-msgid "Rheda: mahjong statistic system"
+msgid "Add game"
 msgstr ""
 
 msgid "Personal stats"
 msgstr ""
 
 msgid "%s: personal stats"
+msgstr ""
+
+msgid "Edit player information"
 msgstr ""
 
 msgid "No stats are available yet"
@@ -264,10 +252,7 @@ msgstr ""
 msgid "Game details"
 msgstr ""
 
-msgid "No games has been played yet"
-msgstr ""
-
-msgid "%d - %d (%d total)"
+msgid "Rheda: mahjong statistic system"
 msgstr ""
 
 msgid "Rating table has been hidden by tournament administrator"
@@ -289,6 +274,66 @@ msgid "Order by average score"
 msgstr ""
 
 msgid "Team:"
+msgstr ""
+
+msgid "Aggregated event"
+msgstr ""
+
+msgid "Event owners: "
+msgstr ""
+
+msgid "Finished"
+msgstr ""
+
+msgid "Player"
+msgstr ""
+
+msgid "Points of best series"
+msgstr ""
+
+msgid "Points of last series"
+msgstr ""
+
+msgid "Best series"
+msgstr ""
+
+msgid "Last series"
+msgstr ""
+
+msgid "Rating"
+msgstr ""
+
+msgid "Rating graph"
+msgstr ""
+
+msgid "Hands value"
+msgstr ""
+
+msgid "Han"
+msgstr ""
+
+msgid "Yaku collected over all time"
+msgstr ""
+
+msgid "Starting now!"
+msgstr ""
+
+msgid "STARTING IN:"
+msgstr ""
+
+msgid "Table #"
+msgstr ""
+
+msgid "First page"
+msgstr ""
+
+msgid "Previous page"
+msgstr ""
+
+msgid "Next page"
+msgstr ""
+
+msgid "Last page"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -354,21 +399,6 @@ msgstr ""
 msgid "Tenpai: %s."
 msgstr ""
 
-msgid "Starting now!"
-msgstr ""
-
-msgid "STARTING IN:"
-msgstr ""
-
-msgid "Table #"
-msgstr ""
-
-msgid "The game has been successfully added!"
-msgstr ""
-
-msgid "Add game"
-msgstr ""
-
 msgid "View replay online"
 msgstr ""
 
@@ -394,33 +424,6 @@ msgid "%s - %d points (%s)"
 msgstr ""
 
 msgid "Full game log:"
-msgstr ""
-
-msgid "Rating"
-msgstr ""
-
-msgid "Rating graph"
-msgstr ""
-
-msgid "Hands value"
-msgstr ""
-
-msgid "Han"
-msgstr ""
-
-msgid "Yaku collected over all time"
-msgstr ""
-
-msgid "First page"
-msgstr ""
-
-msgid "Previous page"
-msgstr ""
-
-msgid "Next page"
-msgstr ""
-
-msgid "Last page"
 msgstr ""
 
 msgid "Best hand"
