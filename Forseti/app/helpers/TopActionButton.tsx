@@ -17,7 +17,7 @@
 
 import * as React from 'react';
 import { createPortal } from 'react-dom';
-import { Button } from '@mantine/core';
+import { Button, MantineColor } from '@mantine/core';
 import { useContext } from 'react';
 import { actionButtonCtx } from '#/hooks/actionButton';
 
@@ -27,6 +27,7 @@ export type TopActionButtonProps = {
   disabled: boolean;
   icon: React.ReactNode;
   onClick: () => void;
+  color?: MantineColor;
 };
 
 // Button rendered at the top of the page, used to submit forms
@@ -36,6 +37,7 @@ export const TopActionButton: React.FC<TopActionButtonProps> = ({
   disabled,
   icon,
   onClick,
+  color,
 }) => {
   const actionButtonRef = useContext(actionButtonCtx);
   return (
@@ -43,6 +45,7 @@ export const TopActionButton: React.FC<TopActionButtonProps> = ({
       {actionButtonRef.current &&
         createPortal(
           <Button
+            color={color ?? 'blue'}
             size='xs'
             loading={loading}
             style={{ width: '230px' }}

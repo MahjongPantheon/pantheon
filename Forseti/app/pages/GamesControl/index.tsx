@@ -33,7 +33,10 @@ import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
 import { GamesList } from '#/pages/GamesControl/GamesList';
 import { TournamentControls } from '#/pages/GamesControl/TournamentControls';
+import { TopActionButton } from '#/helpers/TopActionButton';
+import { IconRefresh } from '@tabler/icons-react';
 
+const DEFAULT_SECS_UNTIL_RELOAD = 60;
 export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
   const api = useApi();
@@ -44,6 +47,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
   const [eventConfig, setEventConfig] = useState<null | GameConfig>(null);
   const [tablesState, setTablesState] = useState<TableState[]>([]);
   const [players, setPlayers] = useState<RegisteredPlayer[]>([]);
+  const [secsUntilReload, setSecsUntilReload] = useState(DEFAULT_SECS_UNTIL_RELOAD);
   api.setEventId(eventId);
 
   usePageTitle(i18n._t('Games management'));
@@ -270,6 +274,32 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       .catch(errHandler);
   }, [isLoggedIn]);
 
+  let timer: ReturnType<typeof setInterval> | null = null;
+  const reloader = useCallback(() => {
+    setSecsUntilReload((secs) => {
+      if (secs <= 0) {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+        doReloadConfigAndTables().then(() => {
+          setSecsUntilReload(DEFAULT_SECS_UNTIL_RELOAD);
+          timer = setInterval(reloader, 1000);
+        });
+      }
+      return secs - 1;
+    });
+  }, [secsUntilReload]);
+
+  useEffect(() => {
+    if (!timer) {
+      timer = setInterval(reloader, 1000);
+    }
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [timer]);
+
   return (
     <Container>
       <LoadingOverlay visible={isLoading} overlayOpacity={1} />
@@ -296,6 +326,18 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
         onCancelLastRound={onCancelRound}
         onDefinalizeGame={eventConfig?.syncStart ? undefined : onDefinalize}
         onRemoveGame={eventConfig?.syncStart ? undefined : onRemoveGame}
+      />
+      <TopActionButton
+        color='green'
+        title={i18n._t('Refresh data [%1]', [secsUntilReload <= 0 ? '0' : secsUntilReload])}
+        loading={false}
+        disabled={false}
+        icon={<IconRefresh />}
+        onClick={() => {
+          doReloadConfigAndTables().then(() => {
+            setSecsUntilReload(DEFAULT_SECS_UNTIL_RELOAD);
+          });
+        }}
       />
     </Container>
   );
