@@ -169,19 +169,21 @@ export function GamesList({
                 </Box>
               </Group>
               <Group position='right'>
-                {t.status === 'INPROGRESS' && t.lastRound && (
-                  <Confirmation
-                    icon={<IconArrowBackUp />}
-                    title={i18n._t('Cancel last played round')}
-                    text={i18n._t('Cancel round')}
-                    warning={i18n._t("This action can't be undone. Continue?")}
-                    color='orange'
-                    onConfirm={() => {
-                      onCancelLastRound(t.sessionHash, t.scores);
-                    }}
-                    i18n={i18n}
-                  />
-                )}
+                {(t.status === 'INPROGRESS' ||
+                  (eventConfig?.syncStart && t.status === 'PREFINISHED')) &&
+                  t.lastRound && (
+                    <Confirmation
+                      icon={<IconArrowBackUp />}
+                      title={i18n._t('Cancel last played round')}
+                      text={i18n._t('Cancel round')}
+                      warning={i18n._t("This action can't be undone. Continue?")}
+                      color='orange'
+                      onConfirm={() => {
+                        onCancelLastRound(t.sessionHash, t.scores);
+                      }}
+                      i18n={i18n}
+                    />
+                  )}
                 {t.status === 'INPROGRESS' && !t.lastRound && !!onRemoveGame && (
                   <Confirmation
                     icon={<IconTrashX />}
@@ -303,26 +305,26 @@ function getBadge(
 }
 
 const winds = [
-  '',
-  '東',
-  '東',
-  '東',
-  '東',
-  '南',
-  '南',
-  '南',
-  '南',
-  '西',
-  '西',
-  '西',
-  '西',
-  '北',
-  '北',
-  '北',
-  '北',
+  '?',
+  '東1',
+  '東2',
+  '東3',
+  '東4',
+  '南1',
+  '南2',
+  '南3',
+  '南4',
+  '西1',
+  '西2',
+  '西3',
+  '西4',
+  '北1',
+  '北2',
+  '北3',
+  '北4',
 ];
 function makeRound(roundIndex: number) {
-  return `${winds[roundIndex]}${roundIndex % 4}`;
+  return winds[roundIndex] ?? '?';
 }
 
 function formatRound(round: Round, players: Record<number, RegisteredPlayer>, i18n: I18nService) {

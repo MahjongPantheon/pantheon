@@ -17,7 +17,7 @@
 
 import * as React from 'react';
 import { Autocomplete, Group, Loader, Text } from '@mantine/core';
-import { forwardRef, useCallback, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useMemo, useState } from 'react';
 import debounce from 'lodash.debounce';
 import { useApi } from '#/hooks/api';
 import { IconSearch } from '@tabler/icons-react';
@@ -33,7 +33,8 @@ export const PlayerSelector: React.FC<{
   eventId: number;
   onPlayerSelect: (player: RegisteredPlayer) => void;
   placeholder: string;
-}> = ({ eventId, onPlayerSelect, placeholder }) => {
+  excludePlayers: number[];
+}> = ({ eventId, onPlayerSelect, placeholder, excludePlayers }) => {
   const api = useApi();
   const [userAddLoading, setUserAddLoading] = useState(false);
   const [userAddValue, setUserAddValue] = useState('');
@@ -55,18 +56,26 @@ export const PlayerSelector: React.FC<{
   const fetchData = (query: string) => {
     api.findByTitle(query).then((persons) => {
       setUserAddData(
-        persons.map((person) => ({
-          title: person.title,
-          value: person.id.toString(),
-          city: person.city,
-          tenhouId: person.tenhouId,
-        }))
+        persons
+          .filter((p) => !excludePlayers.includes(p.id))
+          .map((person) => ({
+            title: person.title,
+            value: person.id.toString(),
+            city: person.city,
+            tenhouId: person.tenhouId,
+          }))
       );
       setUserAddLoading(false);
     });
   };
 
-  const fetchDataD = useCallback(debounce(fetchData, 300), [api]);
+  const fetchDataD = useMemo(() => debounce(fetchData, 300), [api, excludePlayers]);
+
+  useEffect(() => {
+    return () => {
+      fetchDataD.cancel();
+    };
+  }, []);
 
   const handleChange = useCallback(
     (query: string) => {
@@ -79,7 +88,7 @@ export const PlayerSelector: React.FC<{
         fetchDataD(query);
       }
     },
-    [api]
+    [api, excludePlayers]
   );
 
   const handlePlayerAdd = useCallback(
@@ -93,7 +102,7 @@ export const PlayerSelector: React.FC<{
         ignoreSeating: false,
       });
     },
-    [api, eventId]
+    [api, eventId, excludePlayers]
   );
 
   return (
