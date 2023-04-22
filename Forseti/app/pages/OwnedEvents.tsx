@@ -65,7 +65,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   const EVENTS_PERPAGE = 30;
   const api = useApi();
   api.setEventId(0);
-  const auth = useContext(authCtx);
+  const { isLoggedIn } = useContext(authCtx);
   const i18n = useI18n();
   const storage = useStorage();
   const theme = useMantineTheme();
@@ -83,49 +83,55 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   const [scoringLoading, setScoringLoading] = useState<Record<number, boolean>>({});
   usePageTitle(i18n._t('Manage my events'));
 
-  const loadPageData = useCallback(() => {
-    if (!auth.isLoggedIn || !storage.getPersonId()) {
-      setIsLoading(false);
-      return;
-    }
-    nprogress.reset();
-    nprogress.start();
-    setIsLoading(true);
-    Promise.all([
-      api.getOwnedEventIds(storage.getPersonId()!),
-      api.getSuperadminFlag(storage.getPersonId()!),
-    ])
-      .then(([eventsList, superadmin]) => {
-        setIsSuperadmin(superadmin);
-        const pageOffset = (currentPage - 1) * EVENTS_PERPAGE;
-        if (eventsList.includes(-1)) {
-          // -1 === global privileges
-          api.getEvents(EVENTS_PERPAGE, pageOffset, false).then((resp) => {
-            setEvents(resp.events);
-            setTotalPages(Math.ceil(resp.total / EVENTS_PERPAGE));
-            setIsLoading(false);
-            nprogress.complete();
-          });
-        } else {
-          const eventIds = eventsList.slice(pageOffset, pageOffset + EVENTS_PERPAGE);
-          api.getEventsById(eventIds).then((resp) => {
-            setEvents(resp);
-            setTotalPages(Math.ceil(eventsList.length / EVENTS_PERPAGE));
-            setIsLoading(false);
-            nprogress.complete();
-          });
-        }
-      })
-      .catch(() => {
+  const loadPageData = useCallback(
+    (pageToLoad: number) => {
+      if (!isLoggedIn || !storage.getPersonId()) {
         setIsLoading(false);
-        nprogress.complete();
-      });
-  }, [currentPage, auth]);
+        return;
+      }
+      nprogress.reset();
+      nprogress.start();
+      setIsLoading(true);
+      Promise.all([
+        api.getOwnedEventIds(storage.getPersonId()!),
+        api.getSuperadminFlag(storage.getPersonId()!),
+      ])
+        .then(([eventsList, superadmin]) => {
+          setIsSuperadmin(superadmin);
+          const pageOffset = (pageToLoad - 1) * EVENTS_PERPAGE;
+          if (eventsList.includes(-1)) {
+            // -1 === global privileges
+            api.getEvents(EVENTS_PERPAGE, pageOffset, false).then((resp) => {
+              setEvents(resp.events);
+              setTotalPages(Math.ceil(resp.total / EVENTS_PERPAGE));
+              setIsLoading(false);
+              nprogress.complete();
+            });
+          } else {
+            const eventIds = eventsList.slice(pageOffset, pageOffset + EVENTS_PERPAGE);
+            api.getEventsById(eventIds).then((resp) => {
+              setEvents(resp);
+              setTotalPages(Math.ceil(eventsList.length / EVENTS_PERPAGE));
+              setIsLoading(false);
+              nprogress.complete();
+            });
+          }
+        })
+        .catch(() => {
+          setIsLoading(false);
+          nprogress.complete();
+        });
+    },
+    [isLoggedIn]
+  );
 
-  const setPage = useCallback((newpage: number) => {
-    setCurrentPage(newpage);
-    loadPageData();
-  }, []);
+  const setPage = useCallback(
+    (newpage: number) => {
+      setCurrentPage(newpage);
+      loadPageData(newpage);
+    },
+    [isLoggedIn]
+  );
 
   const toggleVisibility = (id: number) => {
     setVisibilityLoading({ ...scoringLoading, [id]: true });
@@ -163,7 +169,7 @@ export const OwnedEvents: React.FC<{ params: { page?: string } }> = ({ params: {
   };
 
   // Initial load
-  useEffect(loadPageData, [auth]);
+  useEffect(() => loadPageData(1), [isLoggedIn]);
 
   if (!storage.getPersonId()) {
     return <Redirect to='/profile/login' />;
