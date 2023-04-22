@@ -174,6 +174,7 @@ export const ManagementTab: React.FC<{
       >
         <PlayerSelector
           eventId={eventId}
+          excludePlayers={players.map((p) => p.id)}
           placeholder={i18n._t('Find replacement player by name...')}
           onPlayerSelect={(newRepl) => {
             replacementDlgCtrl.close();
@@ -189,6 +190,7 @@ export const ManagementTab: React.FC<{
             <Group grow>
               <PlayerSelector
                 eventId={eventId}
+                excludePlayers={players.map((p) => p.id)}
                 placeholder={i18n._t('Find and add player by name...')}
                 onPlayerSelect={(newPlayer) => {
                   api.registerPlayer(newPlayer.id, eventId).then((success) => {
