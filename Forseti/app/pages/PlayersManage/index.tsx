@@ -36,11 +36,13 @@ import { LocalIdsTab } from '#/pages/PlayersManage/LocalIdsTab';
 import { notifications } from '@mantine/notifications';
 import { TeamNamesTab } from '#/pages/PlayersManage/TeamNamesTab';
 import { Redirect } from 'wouter';
+import { useStorage } from '#/hooks/storage';
 
 export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   const eventId = parseInt(id, 10);
   const api = useApi();
   const i18n = useI18n();
+  const storage = useStorage();
   const { isLoggedIn } = useContext(authCtx);
   const [isLoading, setIsLoading] = useState(true);
   const [localIdsWarn, setLocalIdsWarn] = useState(false);
@@ -90,7 +92,7 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
       });
   }, [isLoggedIn]);
 
-  if (!isLoggedIn) {
+  if (!storage.getPersonId()) {
     return <Redirect to='/profile/login' />;
   }
 

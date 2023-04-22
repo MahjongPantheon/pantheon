@@ -36,12 +36,14 @@ import { TournamentControls } from '#/pages/GamesControl/TournamentControls';
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { IconRefresh } from '@tabler/icons-react';
 import { Redirect } from 'wouter';
+import { useStorage } from '#/hooks/storage';
 
 const DEFAULT_SECS_UNTIL_RELOAD = 60;
 export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
+  const storage = useStorage();
   const eventId = parseInt(id ?? '0', 10);
   const [isLoading, setIsLoading] = useState(false);
   const [seatingLoading, setSeatingLoading] = useState(false);
@@ -301,7 +303,7 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
     };
   }, [timer]);
 
-  if (!isLoggedIn) {
+  if (!storage.getPersonId()) {
     return <Redirect to='/profile/login' />;
   }
 

@@ -30,7 +30,7 @@ import {
   LoadingOverlay,
 } from '@mantine/core';
 import { useI18n } from '#/hooks/i18n';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useApi } from '#/hooks/api';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
 import { TopActionButton } from '#/helpers/TopActionButton';
@@ -39,7 +39,7 @@ import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
 import { usePageTitle } from '#/hooks/pageTitle';
 import { Redirect } from 'wouter';
-import { authCtx } from '#/hooks/auth';
+import { useStorage } from '#/hooks/storage';
 
 const scriptExample = `1-2-3-4
 5-6-7-8
@@ -51,7 +51,7 @@ const scriptExample = `1-2-3-4
 export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const eventId = parseInt(id ?? '0', 10);
   const api = useApi();
-  const { isLoggedIn } = useContext(authCtx);
+  const storage = useStorage();
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -118,7 +118,7 @@ export const EventPrescript: React.FC<{ params: { id?: string } }> = ({ params: 
       });
   }, [eventId, nextSessionIndex, script]);
 
-  if (!isLoggedIn) {
+  if (!storage.getPersonId()) {
     return <Redirect to='/profile/login' />;
   }
 

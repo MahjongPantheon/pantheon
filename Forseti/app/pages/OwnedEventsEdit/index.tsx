@@ -38,12 +38,14 @@ import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
 import { Filler } from '#/helpers/filler';
 import { Redirect, useLocation } from 'wouter';
+import { useStorage } from '#/hooks/storage';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
   api.setEventId(0);
+  const storage = useStorage();
   const [, navigate] = useLocation();
   const formRef: React.RefObject<HTMLFormElement> = createRef();
   const [isLoading, setIsLoading] = useState(true);
@@ -217,7 +219,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
       });
   };
 
-  if (!isLoggedIn) {
+  if (!storage.getPersonId()) {
     return <Redirect to='/profile/login' />;
   }
 

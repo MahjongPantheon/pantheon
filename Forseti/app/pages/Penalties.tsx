@@ -35,11 +35,13 @@ import { TopActionButton } from '#/helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
 import { Redirect } from 'wouter';
+import { useStorage } from '#/hooks/storage';
 
 export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
   const api = useApi();
   const i18n = useI18n();
+  const storage = useStorage();
   api.setEventId(parseInt(id ?? '0', 10));
   const formRef: React.RefObject<HTMLFormElement> = createRef();
   const [isSaving, setIsSaving] = useState(false);
@@ -124,7 +126,7 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
       });
   };
 
-  if (!isLoggedIn) {
+  if (!storage.getPersonId()) {
     return <Redirect to='/profile/login' />;
   }
 
