@@ -29,12 +29,14 @@ import {
   IconMapPin,
   IconPhoneCall,
 } from '@tabler/icons-react';
-import { createRef, useCallback, useEffect, useState } from 'react';
+import { createRef, useCallback, useContext, useEffect, useState } from 'react';
 import { useApi } from '#/hooks/api';
 import { usePageTitle } from '#/hooks/pageTitle';
 import { useStorage } from '#/hooks/storage';
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { nprogress } from '@mantine/nprogress';
+import { Redirect } from 'wouter';
+import { authCtx } from '#/hooks/auth';
 
 export const ProfileManage: React.FC = () => {
   const i18n = useI18n();
@@ -43,6 +45,7 @@ export const ProfileManage: React.FC = () => {
   api.setEventId(0);
   const storage = useStorage();
   const personId = storage.getPersonId()!;
+  const { isLoggedIn } = useContext(authCtx);
   const formRef: React.RefObject<HTMLFormElement> = createRef();
   const [countries, setCountries] = useState<Array<{ value: string; label: string }>>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -127,6 +130,10 @@ export const ProfileManage: React.FC = () => {
       });
     });
   }, [personId]);
+
+  if (!isLoggedIn) {
+    return <Redirect to='/profile/login' />;
+  }
 
   return (
     <>
