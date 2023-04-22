@@ -169,19 +169,21 @@ export function GamesList({
                 </Box>
               </Group>
               <Group position='right'>
-                {t.status === 'INPROGRESS' && t.lastRound && (
-                  <Confirmation
-                    icon={<IconArrowBackUp />}
-                    title={i18n._t('Cancel last played round')}
-                    text={i18n._t('Cancel round')}
-                    warning={i18n._t("This action can't be undone. Continue?")}
-                    color='orange'
-                    onConfirm={() => {
-                      onCancelLastRound(t.sessionHash, t.scores);
-                    }}
-                    i18n={i18n}
-                  />
-                )}
+                {(t.status === 'INPROGRESS' ||
+                  (eventConfig?.syncStart && t.status === 'PREFINISHED')) &&
+                  t.lastRound && (
+                    <Confirmation
+                      icon={<IconArrowBackUp />}
+                      title={i18n._t('Cancel last played round')}
+                      text={i18n._t('Cancel round')}
+                      warning={i18n._t("This action can't be undone. Continue?")}
+                      color='orange'
+                      onConfirm={() => {
+                        onCancelLastRound(t.sessionHash, t.scores);
+                      }}
+                      i18n={i18n}
+                    />
+                  )}
                 {t.status === 'INPROGRESS' && !t.lastRound && !!onRemoveGame && (
                   <Confirmation
                     icon={<IconTrashX />}
