@@ -31,6 +31,9 @@ export const LoginErrorScreen: React.FC<IComponentProps> = (props) => {
   }, [dispatch]);
 
   return (
-    <LoginErrorView onOkClick={onOkClick} recoveryLink={environment.guiUrl + '/passwordRecovery'} />
+    <LoginErrorView
+      onOkClick={onOkClick}
+      recoveryLink={environment.paUrl + '/profile/resetPassword'}
+    />
   );
 };
