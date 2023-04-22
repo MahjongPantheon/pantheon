@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pantheon - Rheda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 21:54+0300\n"
+"POT-Creation-Date: 2023-04-22 14:08+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: Jesterboxboy\n"
@@ -179,9 +179,6 @@ msgstr ""
 msgid "Average win cost"
 msgstr ""
 
-msgid "Basic ruleset name"
-msgstr "Regelwerk"
-
 msgid "Best hand"
 msgstr "Beste Hand"
 
@@ -291,9 +288,6 @@ msgstr "Vollständiges Spielprotokoll:"
 msgid "Game details"
 msgstr "Spieldetails"
 
-msgid "Game duration in minutes"
-msgstr "Spieldauer in Minuten"
-
 msgid "Games played"
 msgstr "Spiele gespielt"
 
@@ -400,36 +394,6 @@ msgstr "Houtei"
 msgid "I saw them dancing"
 msgstr "Tanzt für mich!"
 
-msgid "If all the games should be finished simultaneously (tournament mode)"
-msgstr "Alle Spiele sollen gleichzeitig beendet werden(Turniermodus)"
-
-msgid "If all the games should be started simultaneously (tournament mode)"
-msgstr "Alle Spiele sollen gleichzeitig gestartet werden(Turniermodus)"
-
-msgid "If arbitrary penalties are enabled"
-msgstr "Beliebige Strafen erlaubt"
-
-msgid "If automatic seating is allowed"
-msgstr "Automatische Sitzplatzierung ist erlaubt"
-
-msgid "If event is online"
-msgstr "Event ist Online"
-
-msgid "If game series are enabled"
-msgstr "Spielserien sind aktiviert"
-
-msgid "If new players are allowed to join in the middle of event"
-msgstr "Neue Spieler dürfen während des Events hinzukommen"
-
-msgid "If rating table should first be sorted by number of games played"
-msgstr "Wertungstabelle soll nach gespielten Spielen sortiert werden"
-
-msgid "If seating for all games is entered in advance"
-msgstr "Sitzplatzzuordnung für alle Spiele wird im Vorhinein eingegeben"
-
-msgid "If timer should be used"
-msgstr "Zeitlimit soll benutzt werden"
-
 msgid "Iipeikou"
 msgstr "Iipeikou"
 
@@ -461,6 +425,9 @@ msgstr "Letzte Serie"
 msgid "Latest games"
 msgstr "Neuesten Spiele"
 
+msgid "Links"
+msgstr ""
+
 msgid "Loss stats:"
 msgstr ""
 
@@ -475,10 +442,6 @@ msgstr "Menzen tsumo"
 
 msgid "Minimal"
 msgstr "Minimal"
-
-msgid "Minimal amount of games to be played for passing to finals"
-msgstr ""
-"Minimum an Spielen die notwendig sind um ins Finale aufsteigen zu können"
 
 msgid "Nagashi mangan: %s."
 msgstr "Nagashi mangan: %s."
@@ -498,8 +461,8 @@ msgstr "Es sind noch keine Statistiken verfügbar"
 msgid "Nominees"
 msgstr "Nominierte"
 
-msgid "Open game control app"
-msgstr "Zur App"
+msgid "Open assistant"
+msgstr ""
 
 msgid "Open riichi"
 msgstr "Geöffnetes Riichi"
@@ -631,11 +594,6 @@ msgstr "Sanshoku"
 msgid "Sanshoku dokou"
 msgstr "Sanshoku dokou"
 
-msgid ""
-"Seconds before tournament games are started automatically (after seating is "
-"ready)"
-msgstr ""
-
 msgid "Shou sangen"
 msgstr "Shou sangen"
 
@@ -666,9 +624,6 @@ msgstr "Tanyao"
 
 msgid "Team"
 msgstr "Team"
-
-msgid "Team event"
-msgstr "Teamevent"
 
 msgid "Team table"
 msgstr "Teamtisch"
@@ -738,9 +693,6 @@ msgstr ""
 
 msgid "Win stats:"
 msgstr ""
-
-msgid "Wrong admin password"
-msgstr "Falsches Administratorpasswort"
 
 msgid "Yaku collected over all time"
 msgstr "Gesammelte Yaku"
@@ -898,6 +850,9 @@ msgstr "Yakuman"
 
 #~ msgid "AvPts"
 #~ msgstr "D.PNK"
+
+#~ msgid "Basic ruleset name"
+#~ msgstr "Regelwerk"
 
 #~ msgid "Best series:"
 #~ msgstr "Beste Serie:"
@@ -1232,6 +1187,9 @@ msgstr "Yakuman"
 #~ msgid "Found errors:"
 #~ msgstr "Fehler gefunden:"
 
+#~ msgid "Game duration in minutes"
+#~ msgstr "Spieldauer in Minuten"
+
 #~ msgid "Games control panel"
 #~ msgstr "Spieleinstellungen"
 
@@ -1321,11 +1279,26 @@ msgstr "Yakuman"
 #~ msgid "If abortive draws are allowed"
 #~ msgstr "Abortive Draws"
 
+#~ msgid "If all the games should be finished simultaneously (tournament mode)"
+#~ msgstr "Alle Spiele sollen gleichzeitig beendet werden(Turniermodus)"
+
+#~ msgid "If all the games should be started simultaneously (tournament mode)"
+#~ msgstr "Alle Spiele sollen gleichzeitig gestartet werden(Turniermodus)"
+
+#~ msgid "If arbitrary penalties are enabled"
+#~ msgstr "Beliebige Strafen erlaubt"
+
 #~ msgid "If atamahane is enabled"
 #~ msgstr "Atamahane, keine Mehrfachron"
 
+#~ msgid "If automatic seating is allowed"
+#~ msgstr "Automatische Sitzplatzierung ist erlaubt"
+
 #~ msgid "If chombo should be payed in points"
 #~ msgstr "Chombo soll in Punkten bezahlt werden(nicht in Rating Punkten)"
+
+#~ msgid "If event is online"
+#~ msgstr "Event ist Online"
 
 #~ msgid "If game ends when any player goes bankrupt"
 #~ msgstr "Buttobi (Spiel endet wenn ein Spieler alle Punkte verliert)"
@@ -1333,6 +1306,9 @@ msgstr "Yakuman"
 #~ msgid "If game ends when leading dealer wins in last round"
 #~ msgstr ""
 #~ "Agariyame (Spiel endet wenn Dealer führt und die letze Runde gewinnt)"
+
+#~ msgid "If game series are enabled"
+#~ msgstr "Spielserien sind aktiviert"
 
 #~ msgid ""
 #~ "If game should proceed to next round if dealer wins (i.e. no honba/"
@@ -1351,8 +1327,17 @@ msgstr "Yakuman"
 #~ msgid "If nagashi mangan is allowed"
 #~ msgstr "Nagashi mangan"
 
+#~ msgid "If new players are allowed to join in the middle of event"
+#~ msgstr "Neue Spieler dürfen während des Events hinzukommen"
+
+#~ msgid "If rating table should first be sorted by number of games played"
+#~ msgstr "Wertungstabelle soll nach gespielten Spielen sortiert werden"
+
 #~ msgid "If riichi bets left on the table go to winner of the hanchan"
 #~ msgstr "Verbliebene Riichieinsätze gehen an Gewinner"
+
+#~ msgid "If seating for all games is entered in advance"
+#~ msgstr "Sitzplatzzuordnung für alle Spiele wird im Vorhinein eingegeben"
 
 #~ msgid "If start points should be subtracted from result"
 #~ msgstr "Startpunkte werden vom Matchresultat abgezogen"
@@ -1365,6 +1350,9 @@ msgstr "Yakuman"
 #~ "shown in rating table."
 #~ msgstr ""
 #~ "Nur Spieler die diese erreichen werden in der Wertungstabelle angezeigt."
+
+#~ msgid "If timer should be used"
+#~ msgstr "Zeitlimit soll benutzt werden"
 
 #~ msgid ""
 #~ "In case of small number of players and large number of games, this "
@@ -1435,6 +1423,10 @@ msgstr "Yakuman"
 
 #~ msgid "Maximal arbitrary penalty amount"
 #~ msgstr "Maximalhöhe der Strafe"
+
+#~ msgid "Minimal amount of games to be played for passing to finals"
+#~ msgstr ""
+#~ "Minimum an Spielen die notwendig sind um ins Finale aufsteigen zu können"
 
 #~ msgid "Minimal arbitrary penalty amount"
 #~ msgstr "Minimale Strafsumme"
@@ -1514,6 +1506,9 @@ msgstr "Yakuman"
 
 #~ msgid "Only global administrators can register players"
 #~ msgstr "Nur globale Administratoren können Spieler registrieren"
+
+#~ msgid "Open game control app"
+#~ msgstr "Zur App"
 
 #~ msgid "PIN"
 #~ msgstr "PIN"
@@ -1937,6 +1932,9 @@ msgstr "Yakuman"
 #~ msgid "Tables state:"
 #~ msgstr "Laufende Matches:Letz"
 
+#~ msgid "Team event"
+#~ msgstr "Teamevent"
+
 #~ msgid "Team name"
 #~ msgstr "Teamname"
 
@@ -2090,6 +2088,9 @@ msgstr "Yakuman"
 
 #~ msgid "Welcome to game statistics system."
 #~ msgstr "Willkommen im Spielstatistiksystem."
+
+#~ msgid "Wrong admin password"
+#~ msgstr "Falsches Administratorpasswort"
 
 #~ msgid ""
 #~ "You are required to log in with your email and password before proceeding"

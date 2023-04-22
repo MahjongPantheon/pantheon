@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-16 21:54+0300\n"
+"POT-Creation-Date: 2023-04-22 14:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,34 +18,97 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-msgid "Game details"
+msgid "Achievement"
 msgstr ""
 
-msgid "Recent games"
+msgid "Description"
 msgstr ""
 
-msgid "No games has been played yet"
+msgid "Value"
 msgstr ""
 
-msgid "%d - %d (%d total)"
+msgid "Nominees"
 msgstr ""
 
-msgid "To event list"
+msgid "%s fu"
 msgstr ""
 
-msgid "Open game control app"
+msgid "%s: %d yakuhai"
+msgid_plural "%s: %d yakuhais"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d win"
+msgid_plural "%d wins"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d quickest hand"
+msgid_plural "%d quickest hands"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%s han, %s fu"
 msgstr ""
 
-msgid "Rating table"
+msgid "%s han"
 msgstr ""
 
-msgid "Team table"
+msgid "%s bet"
+msgid_plural "%s bets"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%s ippatsu"
+msgid_plural "%s ippatsu"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%s points"
+msgstr ""
+
+msgid "%s dora"
+msgstr ""
+
+msgid "%s yaku"
+msgstr ""
+
+msgid "%d riichi bet"
+msgid_plural "%d riichi bets"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "The game has been successfully added!"
 msgstr ""
 
 msgid "Add online game"
 msgstr ""
 
+msgid "Add game"
+msgstr ""
+
+msgid "To event list"
+msgstr ""
+
+msgid "Open assistant"
+msgstr ""
+
+msgid "Recent games"
+msgstr ""
+
+msgid "Rating table"
+msgstr ""
+
+msgid "Links"
+msgstr ""
+
+msgid "Team table"
+msgstr ""
+
 msgid "Timer & seating"
+msgstr ""
+
+msgid "Achievements"
 msgstr ""
 
 msgid "Admin panel"
@@ -76,33 +139,6 @@ msgid "Best series"
 msgstr ""
 
 msgid "Last series"
-msgstr ""
-
-msgid "Rheda: mahjong statistic system"
-msgstr ""
-
-msgid "Achievements"
-msgstr ""
-
-msgid "Rating table has been hidden by tournament administrator"
-msgstr ""
-
-msgid "These results are visible only for tournament administrator"
-msgstr ""
-
-msgid "Order by player rating"
-msgstr ""
-
-msgid "Order by player name"
-msgstr ""
-
-msgid "Order by average place"
-msgstr ""
-
-msgid "Order by average score"
-msgstr ""
-
-msgid "Team:"
 msgstr ""
 
 msgid "Personal stats"
@@ -228,6 +264,12 @@ msgstr ""
 msgid "Average"
 msgstr ""
 
+msgid "Game details"
+msgstr ""
+
+msgid "Rheda: mahjong statistic system"
+msgstr ""
+
 msgid "Starting now!"
 msgstr ""
 
@@ -235,6 +277,39 @@ msgid "STARTING IN:"
 msgstr ""
 
 msgid "Table #"
+msgstr ""
+
+msgid "Rating table has been hidden by tournament administrator"
+msgstr ""
+
+msgid "These results are visible only for tournament administrator"
+msgstr ""
+
+msgid "View replay online"
+msgstr ""
+
+msgid "Best hand: <b>%s</b> - %s"
+msgstr ""
+
+msgid "Ron hands: %d"
+msgstr ""
+
+msgid "Tsumo hands: %d"
+msgstr ""
+
+msgid "Drawn rounds: %d"
+msgstr ""
+
+msgid "Chombo penalties: %s"
+msgstr ""
+
+msgid "Additional penalties:"
+msgstr ""
+
+msgid "%s - %d points (%s)"
+msgstr ""
+
+msgid "Full game log:"
 msgstr ""
 
 msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
@@ -300,31 +375,37 @@ msgstr ""
 msgid "Tenpai: %s."
 msgstr ""
 
-msgid "View replay online"
+msgid "No games has been played yet"
 msgstr ""
 
-msgid "Best hand: <b>%s</b> - %s"
+msgid "%d - %d (%d total)"
 msgstr ""
 
-msgid "Ron hands: %d"
+msgid "Order by player rating"
 msgstr ""
 
-msgid "Tsumo hands: %d"
+msgid "Order by player name"
 msgstr ""
 
-msgid "Drawn rounds: %d"
+msgid "Order by average place"
 msgstr ""
 
-msgid "Chombo penalties: %s"
+msgid "Order by average score"
 msgstr ""
 
-msgid "Additional penalties:"
+msgid "Team:"
 msgstr ""
 
-msgid "%s - %d points (%s)"
+msgid "First page"
 msgstr ""
 
-msgid "Full game log:"
+msgid "Previous page"
+msgstr ""
+
+msgid "Next page"
+msgstr ""
+
+msgid "Last page"
 msgstr ""
 
 msgid "Rating"
@@ -340,87 +421,6 @@ msgid "Han"
 msgstr ""
 
 msgid "Yaku collected over all time"
-msgstr ""
-
-msgid "First page"
-msgstr ""
-
-msgid "Previous page"
-msgstr ""
-
-msgid "Next page"
-msgstr ""
-
-msgid "Last page"
-msgstr ""
-
-msgid "The game has been successfully added!"
-msgstr ""
-
-msgid "Add game"
-msgstr ""
-
-msgid "Achievement"
-msgstr ""
-
-msgid "Description"
-msgstr ""
-
-msgid "Value"
-msgstr ""
-
-msgid "Nominees"
-msgstr ""
-
-msgid "%s fu"
-msgstr ""
-
-msgid "%s: %d yakuhai"
-msgid_plural "%s: %d yakuhais"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%d win"
-msgid_plural "%d wins"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%d quickest hand"
-msgid_plural "%d quickest hands"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%s han, %s fu"
-msgstr ""
-
-msgid "%s han"
-msgstr ""
-
-msgid "%s bet"
-msgid_plural "%s bets"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%s ippatsu"
-msgid_plural "%s ippatsu"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "%s points"
-msgstr ""
-
-msgid "%s dora"
-msgstr ""
-
-msgid "%s yaku"
-msgstr ""
-
-msgid "%d riichi bet"
-msgid_plural "%d riichi bets"
-msgstr[0] ""
-msgstr[1] ""
-
-msgid "Wrong admin password"
 msgstr ""
 
 msgid "Best hand"
@@ -605,53 +605,6 @@ msgid "Timer"
 msgstr ""
 
 msgid "Page not available for aggregated events"
-msgstr ""
-
-msgid "Basic ruleset name"
-msgstr ""
-
-msgid "If automatic seating is allowed"
-msgstr ""
-
-msgid "If event is online"
-msgstr ""
-
-msgid "Team event"
-msgstr ""
-
-msgid "Game duration in minutes"
-msgstr ""
-
-msgid "If all the games should be started simultaneously (tournament mode)"
-msgstr ""
-
-msgid "If all the games should be finished simultaneously (tournament mode)"
-msgstr ""
-
-msgid "If rating table should first be sorted by number of games played"
-msgstr ""
-
-msgid "If new players are allowed to join in the middle of event"
-msgstr ""
-
-msgid "If timer should be used"
-msgstr ""
-
-msgid ""
-"Seconds before tournament games are started automatically (after seating is "
-"ready)"
-msgstr ""
-
-msgid "If arbitrary penalties are enabled"
-msgstr ""
-
-msgid "If game series are enabled"
-msgstr ""
-
-msgid "If seating for all games is entered in advance"
-msgstr ""
-
-msgid "Minimal amount of games to be played for passing to finals"
 msgstr ""
 
 msgid "yakuman"
