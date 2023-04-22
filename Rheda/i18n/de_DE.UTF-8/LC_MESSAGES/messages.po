@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pantheon - Rheda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 14:08+0300\n"
+"POT-Creation-Date: 2023-04-22 19:24+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Jesterboxboy <github@jesterbox.org>\n"
 "Language-Team: Jesterboxboy\n"
@@ -259,6 +259,9 @@ msgstr "Unentschiedene Runden: %d"
 
 msgid "Draws"
 msgstr ""
+
+msgid "Edit player information"
+msgstr "Spiele Information Bearbeiten"
 
 msgid "Event list"
 msgstr "Event Liste"
@@ -1038,9 +1041,6 @@ msgstr "Yakuman"
 
 #~ msgid "Edit"
 #~ msgstr "Bearbeiten"
-
-#~ msgid "Edit player information"
-#~ msgstr "Spiele Information Bearbeiten"
 
 #~ msgid "Enroll players"
 #~ msgstr "Einschreiben Spieler"

@@ -31,7 +31,7 @@ import { PlayersManage } from '#/pages/PlayersManage';
 import { GamesControl } from '#/pages/GamesControl';
 import { EventPrescript } from '#/pages/EventPrescript';
 import { ProfileImpersonate } from '#/pages/ProfileImpersonate';
-import { ProfileSignupAdmin } from '#/pages/ProfileSignupAdmin';
+import { ProfileManageAdmin } from '#/pages/ProfileManageAdmin';
 
 export const App = () => {
   return (
@@ -46,7 +46,8 @@ export const App = () => {
       <Route path='/profile/manage' component={ProfileManage} />
       <Route path='/profile/logout' component={ProfileLogout} />
       <Route path='/profile/impersonate/:id/:token' component={ProfileImpersonate} />
-      <Route path='/profile/signupAdmin' component={ProfileSignupAdmin} />
+      <Route path='/profile/signupAdmin' component={ProfileManageAdmin} />
+      <Route path='/profile/editPlayer/:id' component={ProfileManageAdmin} />
 
       <Route path='/ownedEvents/new' component={OwnedEventsEdit} />
       <Route path='/ownedEvents/edit/:id' component={OwnedEventsEdit} />

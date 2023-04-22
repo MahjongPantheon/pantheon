@@ -37,6 +37,10 @@ class Persons_CreateAccount_Payload extends \Google\Protobuf\Internal\Message
      * Generated from protobuf field <code>string tenhouId = 6;</code>
      */
     protected $tenhouId = '';
+    /**
+     * Generated from protobuf field <code>string country = 7;</code>
+     */
+    protected $country = '';
 
     /**
      * Constructor.
@@ -50,6 +54,7 @@ class Persons_CreateAccount_Payload extends \Google\Protobuf\Internal\Message
      *     @type string $city
      *     @type string $phone
      *     @type string $tenhouId
+     *     @type string $country
      * }
      */
     public function __construct($data = NULL) {
@@ -185,6 +190,28 @@ class Persons_CreateAccount_Payload extends \Google\Protobuf\Internal\Message
     {
         GPBUtil::checkString($var, True);
         $this->tenhouId = $var;
+
+        return $this;
+    }
+
+    /**
+     * Generated from protobuf field <code>string country = 7;</code>
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Generated from protobuf field <code>string country = 7;</code>
+     * @param string $var
+     * @return $this
+     */
+    public function setCountry($var)
+    {
+        GPBUtil::checkString($var, True);
+        $this->country = $var;
 
         return $this;
     }

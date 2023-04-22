@@ -288,6 +288,7 @@ export interface Persons_CreateAccount_Payload {
   city: string;
   phone: string;
   tenhouId: string;
+  country: string;
 }
 
 export interface Persons_CreateAccount_Response {
@@ -6129,6 +6130,7 @@ export const Persons_CreateAccount_Payload = {
       city: "",
       phone: "",
       tenhouId: "",
+      country: "",
     };
   },
 
@@ -6156,6 +6158,9 @@ export const Persons_CreateAccount_Payload = {
     }
     if (msg.tenhouId) {
       writer.writeString(6, msg.tenhouId);
+    }
+    if (msg.country) {
+      writer.writeString(7, msg.country);
     }
     return writer;
   },
@@ -6192,6 +6197,10 @@ export const Persons_CreateAccount_Payload = {
         }
         case 6: {
           msg.tenhouId = reader.readString();
+          break;
+        }
+        case 7: {
+          msg.country = reader.readString();
           break;
         }
         default: {
@@ -11133,6 +11142,7 @@ export const Persons_CreateAccount_PayloadJSON = {
       city: "",
       phone: "",
       tenhouId: "",
+      country: "",
     };
   },
 
@@ -11160,6 +11170,9 @@ export const Persons_CreateAccount_PayloadJSON = {
     }
     if (msg.tenhouId) {
       json["tenhouId"] = msg.tenhouId;
+    }
+    if (msg.country) {
+      json["country"] = msg.country;
     }
     return json;
   },
@@ -11194,6 +11207,10 @@ export const Persons_CreateAccount_PayloadJSON = {
     const _tenhouId_ = json["tenhouId"];
     if (_tenhouId_) {
       msg.tenhouId = _tenhouId_;
+    }
+    const _country_ = json["country"];
+    if (_country_) {
+      msg.country = _country_;
     }
     return msg;
   },

@@ -32,16 +32,17 @@ class PersonsController extends Controller
      * @param string $password
      * @param string $title
      * @param string $city
+     * @param string $country
      * @param string $phone
      * @param string $tenhouId
      * @return int  new account id
      * @throws \Exception
      */
-    public function createAccount($email, $password, $title, $city, $phone, $tenhouId)
+    public function createAccount($email, $password, $title, $city, $country, $phone, $tenhouId)
     {
         $this->_logStart(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $city, /*$phone*/'******', $tenhouId]);
         $personId = $this->_getAccountModel()
-            ->createAccount($email, $password, $title, $city, $phone, $tenhouId);
+            ->createAccount($email, $password, $title, $city, $country, $phone, $tenhouId);
         $this->_getAccessModel()->addRuleForPerson(InternalRules::CREATE_EVENT, true, 'bool', $personId, null);
         $this->_logSuccess(__METHOD__, [$this->_depersonalizeEmail($email), /*$password*/'******', $title, $city, /*$phone*/'******', $tenhouId]);
         return $personId;

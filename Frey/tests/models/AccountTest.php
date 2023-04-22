@@ -123,6 +123,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'passwd',
             'test',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );
@@ -144,6 +145,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'passwd',
             'test',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );
@@ -162,6 +164,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             '',
             'test',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );
@@ -180,6 +183,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'passwd',
             '',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );
@@ -198,6 +202,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'passwd',
             'test',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );
@@ -214,6 +219,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'passwd',
             'test',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );
@@ -283,6 +289,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'passwd',
             'test',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );
@@ -327,6 +334,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'passwd',
             'test',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );
@@ -383,6 +391,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'passwd',
             'test',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );
@@ -411,6 +420,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'passwd',
             'test',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );
@@ -439,6 +449,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'passwd',
             'test',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );
@@ -465,6 +476,7 @@ class AccountModelTest extends \PHPUnit\Framework\TestCase
             'passwd',
             'easyfindableperson',
             'testcity',
+            '',
             '111-111-111',
             'tid'
         );

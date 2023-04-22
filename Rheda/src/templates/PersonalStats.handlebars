@@ -24,6 +24,10 @@
 
     {{#playerData}}
         <h3>{{_p '%s: personal stats' title}}</h3>
+        {{#isSuperadmin}}
+            <small>id: {{id}}</small> |
+            <a href="{{forsetiUrl}}/profile/editPlayer/{{id}}">{{_t 'Edit player information'}}</a>
+        {{/isSuperadmin}}
         <hr/>
 
         {{^data}}

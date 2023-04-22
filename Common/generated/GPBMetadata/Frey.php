@@ -17,7 +17,7 @@ class Frey
         \GPBMetadata\Atoms::initOnce();
         $pool->internalAddGeneratedFile(
             '
-ﬂJ
+ÒJ
 
 frey.protoCommon"e
  Auth_RequestRegistration_Payload
@@ -172,14 +172,15 @@ groupRules (2.Common.EventRuleListItem"C
 ruleType (	
 groupId (";
 )Access_AddSystemWideRuleForGroup_Response
-ruleId ("~
+ruleId ("è
 Persons_CreateAccount_Payload
 email (	
 password (	
 title (	
 city (	
 phone (	
-tenhouId (	"2
+tenhouId (	
+country (	"2
 Persons_CreateAccount_Response
 personId ("P
 Persons_CreateGroup_Payload
