@@ -34,6 +34,7 @@ import {
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
+import { Redirect } from 'wouter';
 
 export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
@@ -122,6 +123,10 @@ export const Penalties: React.FC<{ params: { id?: string } }> = ({ params: { id 
         setIsSaving(false);
       });
   };
+
+  if (!isLoggedIn) {
+    return <Redirect to='/profile/login' />;
+  }
 
   return (
     <form ref={formRef} onSubmit={form.onSubmit(submitForm)}>

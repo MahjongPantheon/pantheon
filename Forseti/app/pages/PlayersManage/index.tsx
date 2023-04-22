@@ -35,6 +35,7 @@ import {
 import { LocalIdsTab } from '#/pages/PlayersManage/LocalIdsTab';
 import { notifications } from '@mantine/notifications';
 import { TeamNamesTab } from '#/pages/PlayersManage/TeamNamesTab';
+import { Redirect } from 'wouter';
 
 export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { id } }) => {
   const eventId = parseInt(id, 10);
@@ -88,6 +89,10 @@ export const PlayersManage: React.FC<{ params: { id: string } }> = ({ params: { 
         nprogress.complete();
       });
   }, [isLoggedIn]);
+
+  if (!isLoggedIn) {
+    return <Redirect to='/profile/login' />;
+  }
 
   return (
     <Container>

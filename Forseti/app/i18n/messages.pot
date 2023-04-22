@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 14:08+0300\n"
+"POT-Creation-Date: 2023-04-22 17:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -256,8 +256,8 @@ msgstr ""
 
 #: app/pages/EventPrescript.tsx:73:18
 #: app/pages/EventPrescript.tsx:108:18
-#: app/pages/GamesControl/index.tsx:70:18
-#: app/pages/GamesControl/index.tsx:84:16
+#: app/pages/GamesControl/index.tsx:74:18
+#: app/pages/GamesControl/index.tsx:88:16
 #: app/pages/OwnedEventsEdit/index.tsx:179:18
 #: app/pages/OwnedEventsEdit/index.tsx:210:18
 #: app/pages/Penalties.tsx:70:18
@@ -334,134 +334,138 @@ msgstr ""
 msgid "Current round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:175:28
+#: app/pages/GamesControl/GamesList.tsx:178:30
 msgid "Cancel last played round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:176:27
+#: app/pages/GamesControl/GamesList.tsx:179:29
 msgid "Cancel round"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:177:30
-#: app/pages/GamesControl/GamesList.tsx:190:30
+#: app/pages/GamesControl/GamesList.tsx:180:32
+#: app/pages/GamesControl/GamesList.tsx:193:30
 msgid "This action can't be undone. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:188:28
+#: app/pages/GamesControl/GamesList.tsx:191:28
 msgid "Remove the game as it never existed"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:189:27
+#: app/pages/GamesControl/GamesList.tsx:192:27
 msgid "Remove game"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:201:28
+#: app/pages/GamesControl/GamesList.tsx:204:28
 msgid "Remove game results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:202:27
+#: app/pages/GamesControl/GamesList.tsx:205:27
 msgid "Cancel results"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:203:30
+#: app/pages/GamesControl/GamesList.tsx:206:30
 msgid "This will only remove the game results, but you will need to cancel last round separately. This action can't be undone. Continue?"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:236:20
+#: app/pages/GamesControl/GamesList.tsx:239:20
 msgid "Session is ready to start"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:248:20
+#: app/pages/GamesControl/GamesList.tsx:251:20
 msgid "Session in progress"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:261:18
+#: app/pages/GamesControl/GamesList.tsx:264:18
 msgid "Session finished, but not confirmed"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:273:18
+#: app/pages/GamesControl/GamesList.tsx:276:18
 msgid "Session finished"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:285:18
+#: app/pages/GamesControl/GamesList.tsx:288:18
 msgid "Session cancelled"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:297:18
+#: app/pages/GamesControl/GamesList.tsx:300:18
 msgid "Session is scheduled"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:330:12
-#: app/pages/GamesControl/GamesList.tsx:341:9
+#: app/pages/GamesControl/GamesList.tsx:333:12
+#: app/pages/GamesControl/GamesList.tsx:344:9
 msgid "Ron, %1 from %2 (%3), riichi: %4"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:352:12
+#: app/pages/GamesControl/GamesList.tsx:355:12
 msgid "Tsumo, %1 (%2), riichi: %3"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:360:12
+#: app/pages/GamesControl/GamesList.tsx:363:12
 msgid "Chombo, %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:364:12
+#: app/pages/GamesControl/GamesList.tsx:367:12
 msgid "Draw, tempai: %1, riichi: %2"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:371:12
+#: app/pages/GamesControl/GamesList.tsx:374:12
 msgid "Abortive draw, riichi: %1"
 msgstr ""
 
-#: app/pages/GamesControl/GamesList.tsx:377:12
+#: app/pages/GamesControl/GamesList.tsx:380:12
 msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:49:16
+#: app/pages/GamesControl/index.tsx:53:16
 msgid "Games management"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:119:35
+#: app/pages/GamesControl/index.tsx:123:35
 msgid "Failed to cancel round"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:133:35
+#: app/pages/GamesControl/index.tsx:137:35
 msgid "Failed to definalize game"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:147:35
+#: app/pages/GamesControl/index.tsx:151:35
 msgid "Failed to cancel game"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:160:27
+#: app/pages/GamesControl/index.tsx:164:27
 msgid "Failed to start timer"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:172:27
+#: app/pages/GamesControl/index.tsx:176:27
 msgid "Failed to toggle results visibility"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:184:27
+#: app/pages/GamesControl/index.tsx:188:27
 msgid "Failed to approve session results"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:198:29
+#: app/pages/GamesControl/index.tsx:202:29
 msgid "Failed to generate interval seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:216:27
+#: app/pages/GamesControl/index.tsx:220:27
 msgid "Failed to generate random seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:232:27
+#: app/pages/GamesControl/index.tsx:236:27
 msgid "Failed to generate swiss seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:249:29
+#: app/pages/GamesControl/index.tsx:253:29
 msgid "Failed to generate prescripted seating"
 msgstr ""
 
-#: app/pages/GamesControl/index.tsx:266:27
+#: app/pages/GamesControl/index.tsx:270:27
 msgid "Failed to reset seating"
+msgstr ""
+
+#: app/pages/GamesControl/index.tsx:332:16
+msgid "Refresh data [%1]"
 msgstr ""
 
 #: app/pages/GamesControl/TournamentControls.tsx:89:28
@@ -737,7 +741,7 @@ msgid "All dates and time will be displayed according to the selected timezone."
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/BasicSettings.tsx:97:25
-#: app/pages/ProfileManage.tsx:160:29
+#: app/pages/ProfileManage.tsx:167:29
 msgid "Nothing found"
 msgstr ""
 
@@ -768,14 +772,14 @@ msgstr ""
 #: app/pages/OwnedEventsEdit/index.tsx:260:30
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
-#: app/pages/ProfileManage.tsx:184:32
+#: app/pages/ProfileManage.tsx:191:32
 msgid "Changes saved!"
 msgstr ""
 
 #: app/pages/OwnedEventsEdit/index.tsx:260:58
 #: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
 #: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
-#: app/pages/ProfileManage.tsx:184:60
+#: app/pages/ProfileManage.tsx:191:60
 msgid "Save changes"
 msgstr ""
 
@@ -1251,44 +1255,44 @@ msgstr ""
 msgid "Select replacement player for %1"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:177:24
+#: app/pages/PlayersManage/ManagementTab.tsx:178:24
 msgid "Find replacement player by name..."
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:192:30
+#: app/pages/PlayersManage/ManagementTab.tsx:194:30
 msgid "Find and add player by name..."
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:225:28
+#: app/pages/PlayersManage/ManagementTab.tsx:227:28
 msgid "Replace player with someone else"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:241:28
+#: app/pages/PlayersManage/ManagementTab.tsx:243:28
 msgid "Replaced by %1"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:248:37
-#: app/pages/PlayersManage/ManagementTab.tsx:249:32
+#: app/pages/PlayersManage/ManagementTab.tsx:250:37
+#: app/pages/PlayersManage/ManagementTab.tsx:251:32
 msgid "Remove replacement"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:267:27
+#: app/pages/PlayersManage/ManagementTab.tsx:269:27
 msgid "Player is event administrator. Click to revoke privileges."
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:268:27
+#: app/pages/PlayersManage/ManagementTab.tsx:270:27
 msgid "Player is a regular user. Click to promote to event admin."
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:283:27
+#: app/pages/PlayersManage/ManagementTab.tsx:285:27
 msgid "Player is excluded from next seating. Click to include"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:284:27
+#: app/pages/PlayersManage/ManagementTab.tsx:286:27
 msgid "Player is included in next seating. Click to exclude"
 msgstr ""
 
-#: app/pages/PlayersManage/ManagementTab.tsx:297:28
+#: app/pages/PlayersManage/ManagementTab.tsx:299:28
 msgid "Remove player from event"
 msgstr ""
 
@@ -1331,7 +1335,7 @@ msgstr ""
 
 #: app/pages/ProfileLogin.tsx:46:63
 #: app/pages/ProfileResetPassword.tsx:43:63
-#: app/pages/ProfileSignup.tsx:55:63
+#: app/pages/ProfileSignup.tsx:57:63
 #: app/pages/ProfileSignupAdmin.tsx:64:63
 msgid "Invalid email"
 msgstr ""
@@ -1345,7 +1349,7 @@ msgid "Failed to authorize. Please check your email and password."
 msgstr ""
 
 #: app/pages/ProfileLogin.tsx:81:24
-#: app/pages/ProfileManage.tsx:140:22
+#: app/pages/ProfileManage.tsx:147:22
 #: app/pages/ProfileResetPassword.tsx:80:26
 msgid "Your e-mail address"
 msgstr ""
@@ -1366,50 +1370,50 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:41:16
+#: app/pages/ProfileManage.tsx:43:16
 msgid "Manage your account"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:63:70
-#: app/pages/ProfileSignup.tsx:56:70
+#: app/pages/ProfileManage.tsx:66:70
+#: app/pages/ProfileSignup.tsx:58:70
 #: app/pages/ProfileSignupAdmin.tsx:65:70
 msgid "Invalid title"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:66:13
+#: app/pages/ProfileManage.tsx:69:13
 msgid "You have provided your tenhou login string instead of your username. You should NEVER give anyone your login string!"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:105:13
+#: app/pages/ProfileManage.tsx:108:13
 msgid "Failed to update profile. Is your connection stable?"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:141:28
+#: app/pages/ProfileManage.tsx:148:28
 msgid "Your e-mail will not be shared with anyone else and will not be visible anywhere. If you want to change your address, contact chief administrator."
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:149:22
+#: app/pages/ProfileManage.tsx:156:22
 msgid "Player title"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:150:28
-#: app/pages/ProfileSignup.tsx:104:26
+#: app/pages/ProfileManage.tsx:157:28
+#: app/pages/ProfileSignup.tsx:120:26
 msgid "This is a title that will be shown in rating table and in mobile assistant, also event administrators will use this title to find you and add to the event. Please don't use your single name here, as it's not unique enough. Name and surname is fine."
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:158:22
+#: app/pages/ProfileManage.tsx:165:22
 msgid "Country"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:168:22
+#: app/pages/ProfileManage.tsx:175:22
 msgid "City"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:174:22
+#: app/pages/ProfileManage.tsx:181:22
 msgid "Phone number"
 msgstr ""
 
-#: app/pages/ProfileManage.tsx:180:22
+#: app/pages/ProfileManage.tsx:187:22
 #: app/pages/ProfileSignupAdmin.tsx:170:26
 msgid "Tenhou ID"
 msgstr ""
@@ -1440,7 +1444,7 @@ msgid "Reset your password"
 msgstr ""
 
 #: app/pages/ProfileResetPasswordConfirm.tsx:132:13
-#: app/pages/ProfileSignup.tsx:60:13
+#: app/pages/ProfileSignup.tsx:62:13
 msgid "Your password is too weak. Please enter stronger password."
 msgstr ""
 
@@ -1480,43 +1484,48 @@ msgstr ""
 msgid "Your password has been successfully reset. Now you can proceed to login page."
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:42:16
-#: app/pages/ProfileSignup.tsx:125:36
+#: app/pages/ProfileSignup.tsx:43:16
+#: app/pages/ProfileSignup.tsx:141:36
 #: app/pages/ProfileSignupAdmin.tsx:42:16
 msgid "Register new account"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:62:24
+#: app/pages/ProfileSignup.tsx:64:24
 msgid "You should read and accept the Privacy Policy"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:83:13
+#: app/pages/ProfileSignup.tsx:87:13
 msgid "Failed to request registration. Is your connection stable?"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:98:26
+#: app/pages/ProfileSignup.tsx:100:64
+#: app/pages/ProfileSignupAdmin.tsx:92:22
+msgid "Success"
+msgstr ""
+
+#: app/pages/ProfileSignup.tsx:101:14
+msgid "Please check your mailbox for the verification email."
+msgstr ""
+
+#: app/pages/ProfileSignup.tsx:114:26
 msgid "Enter your e-mail address"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:111:26
+#: app/pages/ProfileSignup.tsx:127:26
 #: app/pages/ProfileSignupAdmin.tsx:151:26
 msgid "Enter strong password"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:118:20
+#: app/pages/ProfileSignup.tsx:134:20
 msgid "I've read the privacy policy listed below and accept its terms"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:123:42
+#: app/pages/ProfileSignup.tsx:139:42
 msgid "Already registered?"
 msgstr ""
 
-#: app/pages/ProfileSignup.tsx:135:14
+#: app/pages/ProfileSignup.tsx:151:14
 msgid "show / hide"
-msgstr ""
-
-#: app/pages/ProfileSignupAdmin.tsx:92:22
-msgid "Success"
 msgstr ""
 
 #: app/pages/ProfileSignupAdmin.tsx:93:24

@@ -124,6 +124,7 @@ export function GamesList({
                     return (
                       <Group key={`pl_${p.id}`}>
                         <Badge
+                          style={{ minWidth: '64px' }}
                           variant='outline'
                           color={
                             score === eventConfig?.rulesetConfig.startPoints
