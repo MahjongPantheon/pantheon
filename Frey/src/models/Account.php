@@ -34,6 +34,7 @@ class AccountModel extends Model
      * @param string $password
      * @param string $title
      * @param string $city
+     * @param string $country
      * @param string $phone
      * @param string|null $tenhouId
      * @param bool $superadmin
@@ -43,7 +44,7 @@ class AccountModel extends Model
      *
      * @throws InvalidParametersException|AccessDeniedException
      */
-    public function createAccount(string $email, string $password, string $title, string $city, string $phone, $tenhouId = null, $superadmin = false, $bootstrap = false): int
+    public function createAccount(string $email, string $password, string $title, string $city, string $country, string $phone, $tenhouId = null, $superadmin = false, $bootstrap = false): int
     {
         if (!$bootstrap) {
             $this->_checkAccessRightsWithInternal(InternalRules::IS_SUPER_ADMIN);
@@ -63,6 +64,7 @@ class AccountModel extends Model
             ->setAuthHash($tokens['auth_hash'])
             ->setAuthSalt($tokens['salt'])
             ->setCity($city)
+            ->setCountry($country)
             ->setEmail($email)
             ->setPhone($phone)
             ->setIsSuperadmin($superadmin)

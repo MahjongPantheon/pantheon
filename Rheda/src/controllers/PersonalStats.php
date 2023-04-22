@@ -125,6 +125,7 @@ class PersonalStats extends Controller
             $tsumoFeedCount = intval($data['win_summary']['tsumofeed']);
 
             return [
+                'forsetiUrl' => Sysconf::ADMIN_PANEL_URL(),
                 'isSuperadmin' => $this->_superadmin,
                 'playerData' => $playerData,
                 'data' => empty($data['score_history']) ? null : [

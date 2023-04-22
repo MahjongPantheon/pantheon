@@ -18,12 +18,13 @@
 import * as React from 'react';
 import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
-import { Container, PasswordInput, Space, TextInput, LoadingOverlay } from '@mantine/core';
+import { Container, PasswordInput, Space, TextInput, LoadingOverlay, Select } from '@mantine/core';
 import {
   IconCircleCheck,
   IconIdBadge2,
   IconLock,
   IconMailQuestion,
+  IconMap2,
   IconMapPin,
   IconPhoneCall,
   IconSignature,
@@ -37,9 +38,13 @@ import { notifications } from '@mantine/notifications';
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { useStorage } from '#/hooks/storage';
 
-export const ProfileSignupAdmin: React.FC = () => {
+export const ProfileManageAdmin: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const i18n = useI18n();
-  usePageTitle(i18n._t('Register new account'));
+  if (id) {
+    usePageTitle(i18n._t('Update player account'));
+  } else {
+    usePageTitle(i18n._t('Register new account'));
+  }
   const api = useApi();
   api.setEventId(0);
   const storage = useStorage();
@@ -47,6 +52,7 @@ export const ProfileSignupAdmin: React.FC = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaved, setIsSaved] = useState(false);
+  const [countries, setCountries] = useState<Array<{ value: string; label: string }>>([]);
   const formRef: React.RefObject<HTMLFormElement> = createRef();
   const personId = storage.getPersonId();
   const form = useForm({
@@ -55,6 +61,7 @@ export const ProfileSignupAdmin: React.FC = () => {
       title: '',
       password: '',
       city: '',
+      country: '',
       phone: '',
       tenhouId: '',
     },
@@ -72,39 +79,77 @@ export const ProfileSignupAdmin: React.FC = () => {
       title: string;
       password: string;
       city: string;
+      country: string;
       phone: string;
       tenhouId: string;
     }) => {
-      setIsSaving(true);
-      api
-        .createAccount(
-          values.email.trim().toLowerCase(),
-          values.title.trim(),
-          values.password.trim(),
-          values.city.trim(),
-          values.phone.trim(),
-          values.tenhouId.trim()
-        )
-        .then((resp) => {
-          setIsSaving(false);
-          if (resp) {
-            notifications.show({
-              title: i18n._t('Success'),
-              message: i18n._t('Player was successfully registered'),
-              color: 'green',
-            });
-            form.reset();
-          }
-          setIsSaved(true);
-          setTimeout(() => setIsSaved(false), 5000);
-        })
-        .catch(() => {
-          setIsSaving(false);
-          form.setFieldError(
-            'password',
-            i18n._t('Failed to register player. Is your connection stable?')
-          );
-        });
+      if (!id) {
+        setIsSaving(true);
+        api
+          .createAccount(
+            values.email.trim().toLowerCase(),
+            values.title.trim(),
+            values.password.trim(),
+            values.city.trim(),
+            values.country.trim(),
+            values.phone.trim(),
+            values.tenhouId.trim()
+          )
+          .then((resp) => {
+            setIsSaving(false);
+            if (resp) {
+              notifications.show({
+                title: i18n._t('Success'),
+                message: i18n._t('Player was successfully registered'),
+                color: 'green',
+              });
+              form.reset();
+            }
+            setIsSaved(true);
+            setTimeout(() => setIsSaved(false), 5000);
+          })
+          .catch(() => {
+            setIsSaving(false);
+            form.setFieldError(
+              'password',
+              i18n._t('Failed to register player. Is your connection stable?')
+            );
+          });
+      } else {
+        setIsSaving(true);
+        api
+          .updatePersonalInfo(
+            parseInt(id, 10),
+            values.title.trim(),
+            values.country.trim(),
+            values.city.trim(),
+            values.email.trim().toLowerCase(),
+            values.phone.trim(),
+            values.tenhouId.trim()
+          )
+          .then((resp) => {
+            setIsSaving(false);
+            if (resp) {
+              notifications.show({
+                title: i18n._t('Success'),
+                message: i18n._t('Player details were successfully saved'),
+                color: 'green',
+              });
+              if (!id) {
+                form.reset();
+              }
+            }
+            setIsSaved(true);
+            setTimeout(() => setIsSaved(false), 5000);
+          })
+          .catch(() => {
+            setIsSaving(false);
+            form.setFieldError(
+              'password',
+              i18n._t('Failed to update player details. Is your connection stable?')
+            );
+          });
+      }
     },
     [api]
   );
@@ -117,7 +162,20 @@ export const ProfileSignupAdmin: React.FC = () => {
     }
     api.getSuperadminFlag(personId).then((flag) => {
       setIsSuperadmin(flag);
-      setIsLoading(false);
+      if (!flag || !id) {
+        setIsLoading(false);
+        return;
+      }
+
+      if (id) {
+        api.getPersonalInfo(parseInt(id, 10)).then((player) => {
+          form.setValues(player);
+          setIsLoading(false);
+        });
+      }
+    });
+    api.getCountries().then((respCountries) => {
+      setCountries(respCountries.countries.map((v) => ({ value: v.code, label: v.name })));
     });
   }, [personId]);
 
@@ -145,12 +203,26 @@ export const ProfileSignupAdmin: React.FC = () => {
             )}
             {...form.getInputProps('title')}
           />
+          {!id && (
+            <>
+              <Space h='md' />
+              <PasswordInput
+                withAsterisk
+                description={i18n._t('Enter strong password')}
+                icon={<IconLock size='1rem' />}
+                {...form.getInputProps('password')}
+              />
+            </>
+          )}
           <Space h='md' />
-          <PasswordInput
-            withAsterisk
-            description={i18n._t('Enter strong password')}
-            icon={<IconLock size='1rem' />}
-            {...form.getInputProps('password')}
+          <Select
+            icon={<IconMap2 size='1rem' />}
+            label={i18n._t('Country')}
+            searchable
+            nothingFound={i18n._t('Nothing found')}
+            maxDropdownHeight={280}
+            data={countries}
+            {...form.getInputProps('country')}
           />
           <Space h='md' />
           <TextInput
@@ -172,7 +244,15 @@ export const ProfileSignupAdmin: React.FC = () => {
           />
 
           <TopActionButton
-            title={isSaved ? i18n._t('Registration done!') : i18n._t('Register player')}
+            title={
+              isSaved
+                ? id
+                  ? i18n._t('Changes saved!')
+                  : i18n._t('Registration done!')
+                : id
+                ? i18n._t('Update player')
+                : i18n._t('Register player')
+            }
             loading={isSaving}
             disabled={isSaved}
             icon={isSaved ? <IconCircleCheck /> : <IconUserPlus />}

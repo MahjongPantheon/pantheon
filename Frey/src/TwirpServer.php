@@ -697,6 +697,7 @@ final class TwirpServer implements Frey
                     $req->getPassword(),
                     $req->getTitle(),
                     $req->getCity(),
+                    $req->getCountry(),
                     $req->getPhone(),
                     $req->getTenhouId()
                 ));

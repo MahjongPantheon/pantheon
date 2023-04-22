@@ -72,14 +72,16 @@ export const Navigation: React.FC<{ onClick: () => void; loading: boolean }> = (
   const [eventData, setEventData] = useState<Event | null>(null);
 
   useEffect(() => {
+    api.getSuperadminFlag(personId!).then((flag) => setIsSuperadmin(flag));
+
     if (!match) {
       return;
     }
     setLoading(true);
-    Promise.all([api.getEventsById([parseInt(id ?? '0', 10)]), api.getSuperadminFlag(personId!)])
-      .then(([e, flag]) => {
+    api
+      .getEventsById([parseInt(id ?? '0', 10)])
+      .then((e) => {
         setEventData(e[0]);
-        setIsSuperadmin(flag);
       })
       .finally(() => setLoading(false));
   }, [match, id, personId]);

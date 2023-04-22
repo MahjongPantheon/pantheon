@@ -511,12 +511,13 @@ export class ApiService {
     title: string,
     password: string,
     city: string,
+    country: string,
     phone: string,
     tenhouId: string
   ) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'CreateAccount' });
     return CreateAccount(
-      { email, title, password, city, phone, tenhouId },
+      { email, title, password, city, country, phone, tenhouId },
       this._clientConfFrey
     ).then((r) => r.personId);
   }
