@@ -38,8 +38,8 @@ export const EnterCredentialsScreen: React.FC<IComponentProps> = (props) => {
   return (
     <EnterCredentialsView
       onSubmit={onSubmit}
-      signupLink={environment.guiUrl + '/signup'}
-      recoveryLink={environment.guiUrl + '/passwordRecovery'}
+      signupLink={environment.paUrl + '/profile/signup'}
+      recoveryLink={environment.paUrl + '/profile/resetPassword'}
     />
   );
 };

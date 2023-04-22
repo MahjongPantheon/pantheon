@@ -28,7 +28,7 @@ type IProps = {
 
 export const LoginErrorView: React.FC<IProps> = ({ onOkClick, recoveryLink }) => {
   const loc = useContext(i18n);
-  const regLink = `<a href=${environment.guiUrl + '/signup'} target='_blank'>${loc._pt(
+  const regLink = `<a href=${environment.paUrl + '/profile/signup'} target='_blank'>${loc._pt(
     'Name of registration link',
     'register'
   )}</a>`;

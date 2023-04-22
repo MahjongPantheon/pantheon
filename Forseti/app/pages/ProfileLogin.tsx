@@ -20,7 +20,7 @@ import { usePageTitle } from '#/hooks/pageTitle';
 import { Button, Container, Group, TextInput, PasswordInput, Space } from '@mantine/core';
 import { IconLogin, IconLock } from '@tabler/icons-react';
 import { useForm } from '@mantine/form';
-import { Link, useLocation } from 'wouter';
+import { Link, Redirect, useLocation } from 'wouter';
 import { useStorage } from '#/hooks/storage';
 import { useApi } from '#/hooks/api';
 import { useI18n } from '#/hooks/i18n';
@@ -32,7 +32,7 @@ export const ProfileLogin: React.FC = () => {
   const api = useApi();
   api.setEventId(0);
   const i18n = useI18n();
-  const { setIsLoggedIn } = useContext(authCtx);
+  const { isLoggedIn, setIsLoggedIn } = useContext(authCtx);
   usePageTitle(i18n._t('Login to your account'));
   const [, navigate] = useLocation();
   const form = useForm({
@@ -68,6 +68,10 @@ export const ProfileLogin: React.FC = () => {
     },
     [api]
   );
+
+  if (isLoggedIn) {
+    return <Redirect to='/profile/manage' />;
+  }
 
   return (
     <form onSubmit={form.onSubmit(submitForm)}>
