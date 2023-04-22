@@ -303,26 +303,26 @@ function getBadge(
 }
 
 const winds = [
-  '',
-  '東',
-  '東',
-  '東',
-  '東',
-  '南',
-  '南',
-  '南',
-  '南',
-  '西',
-  '西',
-  '西',
-  '西',
-  '北',
-  '北',
-  '北',
-  '北',
+  '?',
+  '東1',
+  '東2',
+  '東3',
+  '東4',
+  '南1',
+  '南2',
+  '南3',
+  '南4',
+  '西1',
+  '西2',
+  '西3',
+  '西4',
+  '北1',
+  '北2',
+  '北3',
+  '北4',
 ];
 function makeRound(roundIndex: number) {
-  return `${winds[roundIndex]}${roundIndex % 4}`;
+  return winds[roundIndex] ?? '?';
 }
 
 function formatRound(round: Round, players: Record<number, RegisteredPlayer>, i18n: I18nService) {
