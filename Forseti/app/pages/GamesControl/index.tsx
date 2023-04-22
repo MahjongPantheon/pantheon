@@ -35,6 +35,7 @@ import { GamesList } from '#/pages/GamesControl/GamesList';
 import { TournamentControls } from '#/pages/GamesControl/TournamentControls';
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { IconRefresh } from '@tabler/icons-react';
+import { Redirect } from 'wouter';
 
 const DEFAULT_SECS_UNTIL_RELOAD = 60;
 export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
@@ -299,6 +300,10 @@ export const GamesControl: React.FC<{ params: { id?: string } }> = ({ params: { 
       if (timer) clearInterval(timer);
     };
   }, [timer]);
+
+  if (!isLoggedIn) {
+    return <Redirect to='/profile/login' />;
+  }
 
   return (
     <Container>

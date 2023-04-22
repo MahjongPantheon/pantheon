@@ -37,7 +37,7 @@ import { TopActionButton } from '#/helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
 import { Filler } from '#/helpers/filler';
-import { useLocation } from 'wouter';
+import { Redirect, useLocation } from 'wouter';
 
 export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params: { id } }) => {
   const { isLoggedIn } = useContext(authCtx);
@@ -216,6 +216,10 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
         setIsSaving(false);
       });
   };
+
+  if (!isLoggedIn) {
+    return <Redirect to='/profile/login' />;
+  }
 
   return (
     <>
