@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 14:08+0300\n"
+"POT-Creation-Date: 2023-04-22 17:04+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,32 +19,16 @@ msgstr ""
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-msgid "Achievement"
-msgstr "Номинация"
+msgid "%d - %d (%d total)"
+msgstr "%d - %d (всего %d)"
 
-msgid "Description"
-msgstr "Описание"
+#, php-format
+msgid "%d han"
+msgstr "%d хан"
 
-msgid "Value"
-msgstr "Значение"
-
-msgid "Nominees"
-msgstr "Номинанты"
-
-msgid "%s fu"
-msgstr "%s фу"
-
-msgid "%s: %d yakuhai"
-msgid_plural "%s: %d yakuhais"
-msgstr[0] "%s: %d якухай"
-msgstr[1] "%s: %d якухая"
-msgstr[2] "%s: %d якухаев"
-
-msgid "%d win"
-msgid_plural "%d wins"
-msgstr[0] "%d победа"
-msgstr[1] "%d победы"
-msgstr[2] "%d побед"
+#, php-format
+msgid "%d han, %d fu"
+msgstr "%d хан, %d фу"
 
 msgid "%d quickest hand"
 msgid_plural "%d quickest hands"
@@ -52,17 +36,38 @@ msgstr[0] "%d самая быстрая рука"
 msgstr[1] "%d самых быстрых руки"
 msgstr[2] "%d самых быстрых рук"
 
-msgid "%s han, %s fu"
-msgstr "%s хан, %s фу"
+msgid "%d riichi bet"
+msgid_plural "%d riichi bets"
+msgstr[0] "%d риичи палочка"
+msgstr[1] "%d риичи палочки"
+msgstr[2] "%d риичи палочек"
 
-msgid "%s han"
-msgstr "%s хан"
+msgid "%d win"
+msgid_plural "%d wins"
+msgstr[0] "%d победа"
+msgstr[1] "%d победы"
+msgstr[2] "%d побед"
+
+msgid "%s - %d points (%s)"
+msgstr "%s - %d очков (%s)"
 
 msgid "%s bet"
 msgid_plural "%s bets"
 msgstr[0] "%s ставка"
 msgstr[1] "%s ставки"
 msgstr[2] "%s ставок"
+
+msgid "%s dora"
+msgstr "%s дор"
+
+msgid "%s fu"
+msgstr "%s фу"
+
+msgid "%s han"
+msgstr "%s хан"
+
+msgid "%s han, %s fu"
+msgstr "%s хан, %s фу"
 
 msgid "%s ippatsu"
 msgid_plural "%s ippatsu"
@@ -73,179 +78,17 @@ msgstr[2] "%s иппацу"
 msgid "%s points"
 msgstr "%s очков"
 
-msgid "%s dora"
-msgstr "%s дор"
-
 msgid "%s yaku"
 msgstr "%s яку"
 
-msgid "%d riichi bet"
-msgid_plural "%d riichi bets"
-msgstr[0] "%d риичи палочка"
-msgstr[1] "%d риичи палочки"
-msgstr[2] "%d риичи палочек"
-
-msgid "The game has been successfully added!"
-msgstr "Игра успешно добавлена!"
-
-msgid "Add online game"
-msgstr "Добавить онлайн-игру"
-
-msgid "Add game"
-msgstr "Добавить игру"
-
-msgid "To event list"
-msgstr "К списку рейтингов"
-
-msgid "Open assistant"
-msgstr "Мобильный ассистент"
-
-msgid "Recent games"
-msgstr "Последние игры"
-
-msgid "Rating table"
-msgstr "Рейтинг"
-
-msgid "Links"
-msgstr "Ссылки"
-
-msgid "Team table"
-msgstr "Командный рейтинг"
-
-msgid "Timer & seating"
-msgstr "Таймер и рассадка"
-
-msgid "Achievements"
-msgstr "Номинации"
-
-msgid "Admin panel"
-msgstr "Администрирование"
-
-msgid "Personal area"
-msgstr "Личный кабинет"
-
-msgid "Aggregated event"
-msgstr "Агрегированное событие"
-
-msgid "Event owners: "
-msgstr "Владельцы события: "
-
-msgid "Finished"
-msgstr "Завершен"
-
-msgid "Player"
-msgstr "Игрок"
-
-msgid "Points of best series"
-msgstr "Очки в лучшей серии"
-
-msgid "Points of last series"
-msgstr "Очки в текущей серии"
-
-msgid "Best series"
-msgstr "Лучшая серия"
-
-msgid "Last series"
-msgstr "Текущая серия"
-
-msgid "Personal stats"
-msgstr "Личная статистика"
+msgid "%s: %d yakuhai"
+msgid_plural "%s: %d yakuhais"
+msgstr[0] "%s: %d якухай"
+msgstr[1] "%s: %d якухая"
+msgstr[2] "%s: %d якухаев"
 
 msgid "%s: personal stats"
 msgstr "%s: личная статистика"
-
-msgid "No stats are available yet"
-msgstr "На данный момент статистика отсутствует"
-
-msgid "Common stats"
-msgstr "Общая статистика"
-
-msgid "Games played"
-msgstr "Сыграно игр"
-
-msgid "Rounds played"
-msgstr "Сыграно раздач"
-
-msgid "Win stats:"
-msgstr "Статистика выигрышей:"
-
-msgid "Rounds won"
-msgstr "Выиграно раздач"
-
-msgid "ron wins"
-msgstr "выигрышей по рон"
-
-msgid "tsumo wins"
-msgstr "выигрышей по цумо"
-
-msgid "open hands won"
-msgstr "выигрышей с открытой рукой"
-
-msgid "riichi hands won"
-msgstr "выигрышей с риичи"
-
-msgid "dama hands won"
-msgstr "выигрышей из даматена"
-
-msgid "Loss stats:"
-msgstr "Статистика набросов:"
-
-msgid "Ron feeds"
-msgstr "Набросов в рон"
-
-msgid "because of riichi"
-msgstr "из-за риичи"
-
-msgid "not because of riichi"
-msgstr "не из-за риичи"
-
-msgid "to open hands"
-msgstr "в открытые руки"
-
-msgid "to riichi hands"
-msgstr "в риичи"
-
-msgid "to dama hands"
-msgstr "в даматен"
-
-msgid "Other stats:"
-msgstr "Другая статистика:"
-
-msgid "Tsumo losses"
-msgstr "Выплат по цумо"
-
-msgid "Draws"
-msgstr "Ничьих"
-
-msgid "tempai at draw"
-msgstr "темпаев при ничьей"
-
-msgid "Average win cost"
-msgstr "Средняя стоимость выигрыша"
-
-msgid "Average deal-in cost"
-msgstr "Средняя стоимость наброса"
-
-msgid "Average tsumo loss cost"
-msgstr "Средняя стоимость проигрыша по цумо"
-
-msgid "Chombo penalties"
-msgstr "Штрафов чомбо"
-
-msgid "Riichi bets"
-msgstr "Ставок риичи"
-
-msgid "bets won"
-msgstr "из них выигранных"
-
-msgid "bets lost"
-msgstr "из них потерянных"
-
-msgid "Dora count (avg.)"
-msgstr "Количество дор (ср.)"
-
-msgid "Places stat:"
-msgstr "Статистика по местам:"
 
 msgid "1st place"
 msgstr "1 место"
@@ -259,104 +102,17 @@ msgstr "3 место"
 msgid "4th place"
 msgstr "4 место"
 
-msgid "Final game points:"
-msgstr "Очки по итогу игры:"
-
-msgid "Minimal"
-msgstr "Минимальные"
-
-msgid "Maximal"
-msgstr "Максимальные"
-
-msgid "Average"
-msgstr "В среднем"
-
-msgid "Game details"
-msgstr "Подробнее об игре"
-
-msgid "Rheda: mahjong statistic system"
-msgstr "Rheda: система игровой статистики"
-
-msgid "Starting now!"
-msgstr "Начинаем!"
-
-msgid "STARTING IN:"
-msgstr "НАЧАЛО ЧЕРЕЗ:"
-
-msgid "Table #"
-msgstr "Стол №"
-
-msgid "Rating table has been hidden by tournament administrator"
-msgstr "Рейтинговая таблица была скрыта администратором турнира"
-
-msgid "These results are visible only for tournament administrator"
-msgstr "Результаты видны только администратору турнира"
-
-msgid "View replay online"
-msgstr "Посмотреть реплей"
-
-msgid "Best hand: <b>%s</b> - %s"
-msgstr "Лучшая рука: <b>%s</b> - %s"
-
-msgid "Ron hands: %d"
-msgstr "Выигрышей по рон: %d"
-
-msgid "Tsumo hands: %d"
-msgstr "Выигрышей по цумо: %d"
-
-msgid "Drawn rounds: %d"
-msgstr "Ничьих: %d"
-
-msgid "Chombo penalties: %s"
-msgstr "Штрафов чомбо: %s"
-
-msgid "Additional penalties:"
-msgstr "Дополнительные штрафы:"
-
-msgid "%s - %d points (%s)"
-msgstr "%s - %d очков (%s)"
-
-msgid "Full game log:"
-msgstr "Полный лог игры:"
-
-msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
-msgstr "<b>%s</b> - %s (<b>%s</b>, пао: <b>%s</b>), якуман!"
-
-msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
-msgstr "<b>%s</b> - %s (<b>%s</b>), якуман!"
-
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
-msgstr "<b>%s</b> - %s, дора %d (<b>%s</b>), %d хан, %d фу."
-
-msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
-msgstr "<b>%s</b> - %s, дора %d (<b>%s</b>), %s хан."
-
 msgid "<b>%s</b> - %s (<b>%s</b>), %d han, %d fu."
 msgstr "<b>%s</b> - %s (<b>%s</b>), %d хан, %d фу."
 
 msgid "<b>%s</b> - %s (<b>%s</b>), %d han."
 msgstr "<b>%s</b> - %s (<b>%s</b>), %d хан."
 
-msgid "Riichi bets: %s"
-msgstr "Ставок риичи: %s"
+msgid "<b>%s</b> - %s (<b>%s</b>), yakuman!"
+msgstr "<b>%s</b> - %s (<b>%s</b>), якуман!"
 
-msgid "Double ron:"
-msgstr "Дабл-рон:"
-
-msgid "Triple ron:"
-msgstr "Трипл-рон:"
-
-msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
-msgstr "<b>%s</b> - %s (цумо, пао: <b>%s</b>), якуман!"
-
-msgid "<b>%s</b> - %s (tsumo), yakuman!"
-msgstr "<b>%s</b> - %s (цумо), якуман!"
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
-msgstr "<b>%s</b> - %s, дора %d (цумо), %d хан, %d фу."
-
-msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
-msgstr "<b>%s</b> - %s, дора %d (цумо), %d хан."
+msgid "<b>%s</b> - %s (<b>%s</b>, pao: <b>%s</b>), yakuman!"
+msgstr "<b>%s</b> - %s (<b>%s</b>, пао: <b>%s</b>), якуман!"
 
 msgid "<b>%s</b> - %s (tsumo), %d han, %d fu."
 msgstr "<b>%s</b> - %s (цумо), %d хан, %d фу."
@@ -364,131 +120,185 @@ msgstr "<b>%s</b> - %s (цумо), %d хан, %d фу."
 msgid "<b>%s</b> - %s (tsumo), %d han."
 msgstr "<b>%s</b> - %s (цумо), %d хан."
 
-msgid "Exhaustive draw (tenpai: %s)."
-msgstr "Ничья (темпай: %s)."
+msgid "<b>%s</b> - %s (tsumo), yakuman!"
+msgstr "<b>%s</b> - %s (цумо), якуман!"
 
-msgid "Exhaustive draw (everybody noten)."
-msgstr "Ничья (все нотен)."
+msgid "<b>%s</b> - %s (tsumo, pao: <b>%s</b>), yakuman!"
+msgstr "<b>%s</b> - %s (цумо, пао: <b>%s</b>), якуман!"
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %d han, %d fu."
+msgstr "<b>%s</b> - %s, дора %d (<b>%s</b>), %d хан, %d фу."
+
+msgid "<b>%s</b> - %s, dora %d (<b>%s</b>), %s han."
+msgstr "<b>%s</b> - %s, дора %d (<b>%s</b>), %s хан."
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han, %d fu."
+msgstr "<b>%s</b> - %s, дора %d (цумо), %d хан, %d фу."
+
+msgid "<b>%s</b> - %s, dora %d (tsumo), %d han."
+msgstr "<b>%s</b> - %s, дора %d (цумо), %d хан."
 
 msgid "Abortive draw."
 msgstr "Пересдача."
 
-msgid "Chombo: %s."
-msgstr "Чомбо: %s."
+msgid "Achievement"
+msgstr "Номинация"
 
-msgid "Nagashi mangan: %s."
-msgstr "Нагаши манган: %s."
+msgid "Achievements"
+msgstr "Номинации"
 
-msgid "Tenpai: %s."
-msgstr "Темпай: %s."
+msgid "Add game"
+msgstr "Добавить игру"
 
-msgid "No games has been played yet"
-msgstr "Ни одной игры еще не сыграно"
+msgid "Add online game"
+msgstr "Добавить онлайн-игру"
 
-msgid "%d - %d (%d total)"
-msgstr "%d - %d (всего %d)"
+msgid "Additional penalties:"
+msgstr "Дополнительные штрафы:"
 
-msgid "Order by player rating"
-msgstr "Сортировать по рейтингу"
+msgid "Admin panel"
+msgstr "Администрирование"
 
-msgid "Order by player name"
-msgstr "Сортировать по имени игрока"
+msgid "Aggregated event"
+msgstr "Агрегированное событие"
 
-msgid "Order by average place"
-msgstr "Сортировать по среднему месту"
-
-msgid "Order by average score"
-msgstr "Сортировать по средним очкам"
-
-msgid "Team:"
-msgstr "Команда:"
-
-msgid "First page"
-msgstr "Первая страница"
-
-msgid "Previous page"
-msgstr "Предыдущая страница"
-
-msgid "Next page"
-msgstr "Следующая страница"
-
-msgid "Last page"
-msgstr "Последняя страница"
-
-msgid "Rating"
-msgstr "Рейтинг"
-
-msgid "Rating graph"
-msgstr "График рейтинга"
-
-msgid "Hands value"
-msgstr "Стоимость рук"
-
-msgid "Han"
-msgstr "Хан"
-
-msgid "Yaku collected over all time"
-msgstr "Собранные яку (за все время)"
-
-msgid "Best hand"
-msgstr "Лучшая рука"
-
-msgid "Over 9000 fu"
-msgstr "Over 9000 fu"
-
-msgid "I saw them dancing"
-msgstr "Задолбал!"
-
-msgid "Die Hard"
-msgstr "Крепкий орешек"
-
-msgid "Brave minesweeper"
-msgstr "Бравый сапёр"
-
-msgid "Guest of honors"
-msgstr "Довакин aka The mother of dragons"
-
-msgid "The great dealer"
-msgstr "Восточный мастер"
-
-msgid "The 1k Flash"
-msgstr "Мистер Хэнки"
-
-msgid "Jewelry included"
-msgstr "Якуман-мастер"
-
-msgid "This can't be your wait"
-msgstr "Он не может на это ждать"
-
-msgid "Honored donor"
-msgstr "Почетный донор"
-
-msgid "Just as planned"
-msgstr "Как и планировалось"
-
-msgid "Careful planning"
-msgstr "Точный расчет"
-
-msgid "Dora lord"
-msgstr "Повелитель дор"
-
-msgid "Gotta Catch'Em All"
-msgstr "Собери их всех"
-
-msgid "The favorite apprentice of ASAPIN"
-msgstr "Любимый ученик Асапина"
+msgid "All players"
+msgstr "Все игроки"
 
 msgid "And your riichi bet, please"
 msgstr "И Ваша риичи палочка"
 
-msgid "The Covetous Knight"
-msgstr "Скупой рыцарь"
+msgid "Average"
+msgstr "В среднем"
 
-msgid "Ninja"
-msgstr "Ниндзя"
+msgid "Average deal-in cost"
+msgstr "Средняя стоимость наброса"
 
-msgid "We need more gold"
-msgstr "Нужно больше золота"
+msgid "Average place"
+msgstr "Среднее место"
+
+msgid "Average points"
+msgstr "Средние очки"
+
+msgid "Average tsumo loss cost"
+msgstr "Средняя стоимость проигрыша по цумо"
+
+msgid "Average win cost"
+msgstr "Средняя стоимость выигрыша"
+
+msgid "Best hand"
+msgstr "Лучшая рука"
+
+msgid "Best hand: <b>%s</b> - %s"
+msgstr "Лучшая рука: <b>%s</b> - %s"
+
+msgid "Best series"
+msgstr "Лучшая серия"
+
+msgid "Brave minesweeper"
+msgstr "Бравый сапёр"
+
+msgid "Careful planning"
+msgstr "Точный расчет"
+
+msgid "Chan kan"
+msgstr "Чанкан"
+
+msgid "Chanta"
+msgstr "Чанта"
+
+msgid "Chihou"
+msgstr "Чихо"
+
+msgid "Chiitoitsu"
+msgstr "Чиитойцу"
+
+msgid "Chinitsu"
+msgstr "Чиницу"
+
+msgid "Chinroutou"
+msgstr "Чинрото"
+
+msgid "Chips"
+msgstr "Чипы"
+
+msgid "Chombo penalties"
+msgstr "Штрафов чомбо"
+
+msgid "Chombo penalties: %s"
+msgstr "Штрафов чомбо: %s"
+
+msgid "Chombo: %s."
+msgstr "Чомбо: %s."
+
+msgid "Chuuren pooto"
+msgstr "Чууренпото"
+
+msgid "Common stats"
+msgstr "Общая статистика"
+
+msgid "Daburu riichi"
+msgstr "Дабл риичи"
+
+msgid "Dai sangen"
+msgstr "Дайсанген"
+
+msgid "Dai suushii"
+msgstr "Дайсуши"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Die Hard"
+msgstr "Крепкий орешек"
+
+msgid "Dora count (avg.)"
+msgstr "Количество дор (ср.)"
+
+msgid "Dora lord"
+msgstr "Повелитель дор"
+
+msgid "Double ron:"
+msgstr "Дабл-рон:"
+
+msgid "Drawn rounds: %d"
+msgstr "Ничьих: %d"
+
+msgid "Draws"
+msgstr "Ничьих"
+
+msgid "Event list"
+msgstr "Список рейтингов"
+
+msgid "Event owners: "
+msgstr "Владельцы события: "
+
+msgid "Exhaustive draw (everybody noten)."
+msgstr "Ничья (все нотен)."
+
+msgid "Exhaustive draw (tenpai: %s)."
+msgstr "Ничья (темпай: %s)."
+
+msgid "Final game points:"
+msgstr "Очки по итогу игры:"
+
+msgid "Finished"
+msgstr "Завершен"
+
+msgid "First page"
+msgstr "Первая страница"
+
+msgid "Full game log:"
+msgstr "Полный лог игры:"
+
+msgid "Game details"
+msgstr "Подробнее об игре"
+
+msgid "Games played"
+msgstr "Сыграно игр"
+
+msgid "Given for collecting a yakuman during tournament."
+msgstr "Дается за сбор якумана на турнире."
 
 msgid ""
 "Given for collecting the hand with biggest han count (independent of cost)."
@@ -497,26 +307,16 @@ msgstr "Дается за сбор руки с наибольшим число �
 msgid "Given for collecting the hand with biggest minipoints (fu) count."
 msgstr "Дается за сбор руки с наибольшим количеством минипойнтов (фу)."
 
+msgid ""
+"Given for collecting the largest amount of other players' riichi bets during "
+"the tournament."
+msgstr "Дается за сбор максимального числа чужих риичи палочек."
+
 msgid "Given for collecting the most of tsumo hands during single game."
 msgstr "Дается за сбор максимального числа цумо в рамках одного ханчана."
 
-msgid "Given for smallest count of feeding into ron during the tournament."
-msgstr "Дается за минимальное число набросов в рон за турнир."
-
-msgid "Given for largest count of feeding into ron during the tournament."
-msgstr "Дается за максимальное число набросов в рон за турнир."
-
 msgid "Given for collecting the most of yakuhais during the tournament."
 msgstr "Дается за сбор максимального числа якухаев за турнир."
-
-msgid "Given for largest count of dealer wins during the tournament."
-msgstr "Дается за максимальное число побед на дилере суммарно за турнир."
-
-msgid "Given for the most of 1/30 wins during tournament."
-msgstr "Дается за максимальное число собранных рук в 1/30 за весь турнир."
-
-msgid "Given for collecting a yakuman during tournament."
-msgstr "Дается за сбор якумана на турнире."
 
 msgid ""
 "Given for feeding into largest hand during tournament (but not while in "
@@ -525,36 +325,8 @@ msgstr ""
 "Дается за наброс в наибольшую по стоимости руку за весь турнир (но не из-под "
 "риичи)."
 
-msgid "Given for losing largest amount of points as riichi bets."
-msgstr "Дается за потерю максимального числа очков за счет риичи-ставок."
-
 msgid "Given for getting largest number of ippatsu during tournament."
 msgstr "Дается за максимальное число побед с иппацу за турнир."
-
-msgid ""
-"Given for the smallest average cost of opponents hand that player has dealt."
-msgstr "Дается за минимальную среднюю величину наброса."
-
-msgid "Given for the largest average count of dora in player's hand."
-msgstr "Дается за максимальное среднее число дор в руке."
-
-msgid ""
-"Given for the largest amount of unique yaku collected during the tournament."
-msgstr "Дается за самое большое число разнообразных яку за турнир."
-
-msgid "Given for the largest amount of points received as ryukoku payments."
-msgstr "Дается за максимальную сумму, полученную за счет темпаев."
-
-msgid ""
-"Given for collecting the largest amount of other players' riichi bets during "
-"the tournament."
-msgstr "Дается за сбор максимального числа чужих риичи палочек."
-
-msgid "Given for losing the smallest number of riichi bets."
-msgstr "Дается за потерю минимального числа очков за счет риичи-ставок."
-
-msgid "Given for winning the largest number of hands with damaten."
-msgstr "Дается за максимальное число побед из даматена."
 
 msgid ""
 "Given for having biggest score in the end of the session across the "
@@ -562,27 +334,175 @@ msgid ""
 msgstr ""
 "Дается за максимальное число набранных очков в конце игры в рамках турнира."
 
-msgid "Main event is empty: this is unexpected behavior"
-msgstr "Основное событие пусто: это неожиданное поведение"
+msgid "Given for largest count of dealer wins during the tournament."
+msgstr "Дается за максимальное число побед на дилере суммарно за турнир."
+
+msgid "Given for largest count of feeding into ron during the tournament."
+msgstr "Дается за максимальное число набросов в рон за турнир."
+
+msgid "Given for losing largest amount of points as riichi bets."
+msgstr "Дается за потерю максимального числа очков за счет риичи-ставок."
+
+msgid "Given for losing the smallest number of riichi bets."
+msgstr "Дается за потерю минимального числа очков за счет риичи-ставок."
+
+msgid "Given for smallest count of feeding into ron during the tournament."
+msgstr "Дается за минимальное число набросов в рон за турнир."
+
+msgid "Given for the largest amount of points received as ryukoku payments."
+msgstr "Дается за максимальную сумму, полученную за счет темпаев."
+
+msgid ""
+"Given for the largest amount of unique yaku collected during the tournament."
+msgstr "Дается за самое большое число разнообразных яку за турнир."
+
+msgid "Given for the largest average count of dora in player's hand."
+msgstr "Дается за максимальное среднее число дор в руке."
+
+msgid "Given for the most of 1/30 wins during tournament."
+msgstr "Дается за максимальное число собранных рук в 1/30 за весь турнир."
+
+msgid ""
+"Given for the smallest average cost of opponents hand that player has dealt."
+msgstr "Дается за минимальную среднюю величину наброса."
+
+msgid "Given for winning the largest number of hands with damaten."
+msgstr "Дается за максимальное число побед из даматена."
+
+msgid "Gotta Catch'Em All"
+msgstr "Собери их всех"
+
+msgid "Guest of honors"
+msgstr "Довакин aka The mother of dragons"
+
+msgid "Haitei"
+msgstr "Хайтей"
+
+msgid "Han"
+msgstr "Хан"
+
+msgid "Hands value"
+msgstr "Стоимость рук"
+
+msgid "Honitsu"
+msgstr "Хоницу"
+
+msgid "Honored donor"
+msgstr "Почетный донор"
+
+msgid "Honroutou"
+msgstr "Хонрото"
+
+msgid "Houtei"
+msgstr "Хотей"
+
+msgid "I saw them dancing"
+msgstr "Задолбал!"
+
+msgid "Iipeikou"
+msgstr "Иипейко"
+
+msgid "Ippatsu"
+msgstr "Иппацу"
+
+msgid "Itsu"
+msgstr "Иццу"
+
+msgid "Jewelry included"
+msgstr "Якуман-мастер"
+
+msgid "Junchan"
+msgstr "Джунчан"
+
+msgid "Just as planned"
+msgstr "Как и планировалось"
+
+msgid "Kokushi musou"
+msgstr "Кокуши мусо"
+
+msgid "Last page"
+msgstr "Последняя страница"
+
+msgid "Last series"
+msgstr "Текущая серия"
 
 msgid "Latest games"
 msgstr "Последние игры"
 
-msgid "Statistics"
-msgstr "Статистика"
+msgid "Links"
+msgstr "Ссылки"
 
-msgid "Event list"
-msgstr "Список рейтингов"
+msgid "Loss stats:"
+msgstr "Статистика набросов:"
 
-#, php-format
-msgid "Stats & diagrams: %s"
-msgstr "Статистика и графики: %s"
+msgid "Main event is empty: this is unexpected behavior"
+msgstr "Основное событие пусто: это неожиданное поведение"
 
-msgid "Yakuhai: total"
-msgstr "Якухай: всего"
+msgid "Maximal"
+msgstr "Максимальные"
 
-msgid "All players"
-msgstr "Все игроки"
+msgid "Menzen tsumo"
+msgstr "Мендзен цумо"
+
+msgid "Minimal"
+msgstr "Минимальные"
+
+msgid "Nagashi mangan: %s."
+msgstr "Нагаши манган: %s."
+
+msgid "Next page"
+msgstr "Следующая страница"
+
+msgid "Ninja"
+msgstr "Ниндзя"
+
+msgid "No games has been played yet"
+msgstr "Ни одной игры еще не сыграно"
+
+msgid "No stats are available yet"
+msgstr "На данный момент статистика отсутствует"
+
+msgid "Nominees"
+msgstr "Номинанты"
+
+msgid "Open assistant"
+msgstr "Мобильный ассистент"
+
+msgid "Open riichi"
+msgstr "Опен риичи"
+
+msgid "Order by average place"
+msgstr "Сортировать по среднему месту"
+
+msgid "Order by average score"
+msgstr "Сортировать по средним очкам"
+
+msgid "Order by player name"
+msgstr "Сортировать по имени игрока"
+
+msgid "Order by player rating"
+msgstr "Сортировать по рейтингу"
+
+msgid "Other stats:"
+msgstr "Другая статистика:"
+
+msgid "Over 9000 fu"
+msgstr "Over 9000 fu"
+
+msgid "Page not available for aggregated events"
+msgstr "Для агрегированных событий страница недоступна"
+
+msgid "Personal area"
+msgstr "Личный кабинет"
+
+msgid "Personal stats"
+msgstr "Личная статистика"
+
+msgid "Pinfu"
+msgstr "Пин-фу"
+
+msgid "Places stat:"
+msgstr "Статистика по местам:"
 
 #, php-format
 msgid "Played at least %d game"
@@ -598,82 +518,74 @@ msgstr[0] "Сыгравшие менее %d игры"
 msgstr[1] "Сыгравшие менее %d игр"
 msgstr[2] "Сыгравшие менее %d игр"
 
-msgid "Team"
-msgstr "Команда"
+msgid "Player"
+msgstr "Игрок"
 
-msgid "Chips"
-msgstr "Чипы"
+msgid "Points of best series"
+msgstr "Очки в лучшей серии"
+
+msgid "Points of last series"
+msgstr "Очки в текущей серии"
+
+msgid "Previous page"
+msgstr "Предыдущая страница"
+
+msgid "Rating"
+msgstr "Рейтинг"
+
+msgid "Rating graph"
+msgstr "График рейтинга"
 
 msgid "Rating points"
 msgstr "Рейтинговые очки"
 
-msgid "Average place"
-msgstr "Среднее место"
+msgid "Rating table"
+msgstr "Рейтинг"
 
-msgid "Average points"
-msgstr "Средние очки"
+msgid "Rating table has been hidden by tournament administrator"
+msgstr "Рейтинговая таблица была скрыта администратором турнира"
 
-msgid "Timer"
-msgstr "Таймер"
-
-msgid "Page not available for aggregated events"
-msgstr "Для агрегированных событий страница недоступна"
-
-msgid "yakuman"
-msgstr "якуман"
-
-#, php-format
-msgid "%d han"
-msgstr "%d хан"
-
-#, php-format
-msgid "%d han, %d fu"
-msgstr "%d хан, %d фу"
-
-msgid "Daburu riichi"
-msgstr "Дабл риичи"
-
-msgid "Dai sangen"
-msgstr "Дайсанген"
-
-msgid "Dai suushii"
-msgstr "Дайсуши"
-
-msgid "Junchan"
-msgstr "Джунчан"
-
-msgid "Iipeikou"
-msgstr "Иипейко"
-
-msgid "Ippatsu"
-msgstr "Иппацу"
-
-msgid "Itsu"
-msgstr "Иццу"
-
-msgid "Kokushi musou"
-msgstr "Кокуши мусо"
-
-msgid "Menzen tsumo"
-msgstr "Мендзен цумо"
-
-msgid "Pinfu"
-msgstr "Пин-фу"
+msgid "Recent games"
+msgstr "Последние игры"
 
 msgid "Renhou"
 msgstr "Ренхо"
 
+msgid "Rheda: mahjong statistic system"
+msgstr "Rheda: система игровой статистики"
+
 msgid "Riichi"
 msgstr "Риичи"
+
+msgid "Riichi bets"
+msgstr "Ставок риичи"
+
+msgid "Riichi bets: %s"
+msgstr "Ставок риичи: %s"
 
 msgid "Rinshan kaihou"
 msgstr "Риншан кайхо"
 
-msgid "Ryuu iisou"
-msgstr "Рюисо"
+msgid "Ron feeds"
+msgstr "Набросов в рон"
+
+msgid "Ron hands: %d"
+msgstr "Выигрышей по рон: %d"
+
+msgid "Rounds played"
+msgstr "Сыграно раздач"
+
+msgid "Rounds won"
+msgstr "Выиграно раздач"
 
 msgid "Ryan peikou"
 msgstr "Рянпейко"
+
+msgid "Ryuu iisou"
+msgstr "Рюисо"
+
+msgid "STARTING IN:"
+msgstr "НАЧАЛО ЧЕРЕЗ:"
 
 msgid "San ankou"
 msgstr "Сананко"
@@ -687,62 +599,108 @@ msgstr "Саншоку"
 msgid "Sanshoku dokou"
 msgstr "Саншоку доко"
 
+msgid "Shou sangen"
+msgstr "Шосанген"
+
+msgid "Shou suushii"
+msgstr "Шосуши"
+
+msgid "Starting now!"
+msgstr "Начинаем!"
+
+msgid "Statistics"
+msgstr "Статистика"
+
+#, php-format
+msgid "Stats & diagrams: %s"
+msgstr "Статистика и графики: %s"
+
 msgid "Suu ankou"
 msgstr "Сууанко"
 
 msgid "Suu kantsu"
 msgstr "Сууканцу"
 
+msgid "Table #"
+msgstr "Стол №"
+
 msgid "Tanyao"
 msgstr "Таняо"
+
+msgid "Team"
+msgstr "Команда"
+
+msgid "Team table"
+msgstr "Командный рейтинг"
+
+msgid "Team:"
+msgstr "Команда:"
 
 msgid "Tenhou"
 msgstr "Тенхо"
 
+msgid "Tenpai: %s."
+msgstr "Темпай: %s."
+
+msgid "The 1k Flash"
+msgstr "Мистер Хэнки"
+
+msgid "The Covetous Knight"
+msgstr "Скупой рыцарь"
+
+msgid "The favorite apprentice of ASAPIN"
+msgstr "Любимый ученик Асапина"
+
+msgid "The game has been successfully added!"
+msgstr "Игра успешно добавлена!"
+
+msgid "The great dealer"
+msgstr "Восточный мастер"
+
+msgid "These results are visible only for tournament administrator"
+msgstr "Результаты видны только администратору турнира"
+
+msgid "This can't be your wait"
+msgstr "Он не может на это ждать"
+
+msgid "Timer"
+msgstr "Таймер"
+
+msgid "Timer & seating"
+msgstr "Таймер и рассадка"
+
+msgid "To event list"
+msgstr "К списку рейтингов"
+
 msgid "Toi-toi"
 msgstr "Тойтой"
 
-msgid "Haitei"
-msgstr "Хайтей"
+msgid "Triple ron:"
+msgstr "Трипл-рон:"
 
-msgid "Honitsu"
-msgstr "Хоницу"
+msgid "Tsumo hands: %d"
+msgstr "Выигрышей по цумо: %d"
 
-msgid "Honroutou"
-msgstr "Хонрото"
-
-msgid "Houtei"
-msgstr "Хотей"
+msgid "Tsumo losses"
+msgstr "Выплат по цумо"
 
 msgid "Tsuu iisou"
 msgstr "Цуисо"
 
-msgid "Chan kan"
-msgstr "Чанкан"
+msgid "Value"
+msgstr "Значение"
 
-msgid "Chanta"
-msgstr "Чанта"
+msgid "View replay online"
+msgstr "Посмотреть реплей"
 
-msgid "Chiitoitsu"
-msgstr "Чиитойцу"
+msgid "We need more gold"
+msgstr "Нужно больше золота"
 
-msgid "Chinitsu"
-msgstr "Чиницу"
+msgid "Win stats:"
+msgstr "Статистика выигрышей:"
 
-msgid "Chinroutou"
-msgstr "Чинрото"
-
-msgid "Chihou"
-msgstr "Чихо"
-
-msgid "Chuuren pooto"
-msgstr "Чууренпото"
-
-msgid "Shou sangen"
-msgstr "Шосанген"
-
-msgid "Shou suushii"
-msgstr "Шосуши"
+msgid "Yaku collected over all time"
+msgstr "Собранные яку (за все время)"
 
 msgid "Yakuhai x1"
 msgstr "Якухай 1"
@@ -759,8 +717,50 @@ msgstr "Якухай 4"
 msgid "Yakuhai x5"
 msgstr "Якухай 5"
 
-msgid "Open riichi"
-msgstr "Опен риичи"
+msgid "Yakuhai: total"
+msgstr "Якухай: всего"
+
+msgid "because of riichi"
+msgstr "из-за риичи"
+
+msgid "bets lost"
+msgstr "из них потерянных"
+
+msgid "bets won"
+msgstr "из них выигранных"
+
+msgid "dama hands won"
+msgstr "выигрышей из даматена"
+
+msgid "not because of riichi"
+msgstr "не из-за риичи"
+
+msgid "open hands won"
+msgstr "выигрышей с открытой рукой"
+
+msgid "riichi hands won"
+msgstr "выигрышей с риичи"
+
+msgid "ron wins"
+msgstr "выигрышей по рон"
+
+msgid "tempai at draw"
+msgstr "темпаев при ничьей"
+
+msgid "to dama hands"
+msgstr "в даматен"
+
+msgid "to open hands"
+msgstr "в открытые руки"
+
+msgid "to riichi hands"
+msgstr "в риичи"
+
+msgid "tsumo wins"
+msgstr "выигрышей по цумо"
+
+msgid "yakuman"
+msgstr "якуман"
 
 #~ msgid " Given for losing the smallest percentage of riichi bets."
 #~ msgstr "Дается за потерю минимального процента ставок риичи."

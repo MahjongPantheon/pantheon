@@ -19,6 +19,7 @@ import * as React from 'react';
 import { useForm } from '@mantine/form';
 import { useI18n } from '#/hooks/i18n';
 import {
+  Alert,
   Button,
   Checkbox,
   Collapse,
@@ -28,9 +29,9 @@ import {
   Space,
   TextInput,
 } from '@mantine/core';
-import { IconLock, IconMailQuestion, IconSignature } from '@tabler/icons-react';
+import { IconCircleCheck, IconLock, IconMailQuestion, IconSignature } from '@tabler/icons-react';
 import { Link } from 'wouter';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useApi } from '#/hooks/api';
 import { environment } from '#config';
 import { useDisclosure } from '@mantine/hooks';
@@ -42,6 +43,7 @@ export const ProfileSignup: React.FC = () => {
   usePageTitle(i18n._t('Register new account'));
   const api = useApi();
   api.setEventId(0);
+  const [success, setSuccess] = useState(false);
   const form = useForm({
     initialValues: {
       email: '',
@@ -76,8 +78,10 @@ export const ProfileSignup: React.FC = () => {
             // debug mode; code will not be sent in production mode
             alert('Confirmation link: ' + window.location.host + resp.approvalCode);
           }
+          setSuccess(true);
         })
         .catch(() => {
+          setSuccess(false);
           form.setFieldError(
             'password',
             i18n._t('Failed to request registration. Is your connection stable?')
@@ -88,6 +92,18 @@ export const ProfileSignup: React.FC = () => {
   );
 
   const [opened, { toggle }] = useDisclosure(false);
+
+  if (success) {
+    return (
+      <>
+        <Container>
+          <Alert icon={<IconCircleCheck size='1rem' />} title={i18n._t('Success')} color='green'>
+            {i18n._t('Please check your mailbox for the verification email.')}
+          </Alert>
+        </Container>
+      </>
+    );
+  }
 
   return (
     <>

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-22 14:08+0300\n"
-"PO-Revision-Date: 2023-04-16 21:55+0300\n"
+"POT-Creation-Date: 2023-04-22 17:04+0300\n"
+"PO-Revision-Date: 2023-04-22 17:06+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -20,1186 +20,53 @@ msgstr ""
 "Generated-By: i18n-json2po\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:112:22
-msgid "1 player with score less than starting"
-msgstr "1 игрок в минусе"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:146:22
-msgid "13+ han hands are considered yakuman, not sanbaiman."
-msgstr "Руки стоимостью в 13+ хан считаются якуманом, а не санбайманом."
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:73:16
-msgid "1st"
-msgstr "1е"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:76:16
-msgid "2nd"
-msgstr "2е"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:87:22
-msgid "3 players with score less than starting"
-msgstr "3 игрока в минусе"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:79:16
-msgid "3rd"
-msgstr "3е"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:82:16
-msgid "4th"
-msgstr "4е"
-
-#: app/pages/ProfileResetPassword.tsx:97:8
-msgid ""
-"A confirmation link for password recovery has been sent to provided email. "
-"Please check your mailbox and follow the link in the message."
-msgstr ""
-"Ссылка для подтверждения сброса пароля была отправлена на ваш e-mail. "
-"Пожалуйста, проверьте ваш почтовый ящик и пройдите по ссылке в письме."
-
-#: app/pages/Penalties.tsx:92:38
-msgid "A reason for penalty is mandatory"
-msgstr "Указывать причину штрафа обязательно"
-
-#: app/pages/GamesControl/GamesList.tsx:371:12
-msgid "Abortive draw, riichi: %1"
-msgstr "Абортивная ничья, риичи: %1"
-
-#: app/pages/OwnedEvents.tsx:258:48
-msgid "Actions"
-msgstr "Действия"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:64:16
-msgid "Agariyame"
-msgstr "Агарияме"
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:93:24
-msgid ""
-"All dates and time will be displayed according to the selected timezone."
-msgstr ""
-"Все даты и время будут отображаться с учетом выбранного часового пояса."
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:138:22
-msgid ""
-"All riichi bets on the table will be given to the first winner. If not "
-"checked, winning riichi bets will always be given back, lost bets would be "
-"given to the first winner."
-msgstr ""
-"Все ставки на столе будут выданы первому победителю по порядку хода. Если не "
-"отмечено, выигравшие риичи-ставки всегда будут возвращены победителям, "
-"первому победителю достанутся только не выигравшие ставки."
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:110:16
-msgid "Allow abortive draws"
-msgstr "Разрешить абортивные ничьи"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:80:16
-msgid "Allow bankruptcy"
-msgstr "Банкротство"
-
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:22
-msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
-msgstr "Разрешить комбинации якуманов, напр. цуисо + дайсанген"
-
-#: app/pages/ProfileSignup.tsx:123:42
-msgid "Already registered?"
-msgstr "Уже зарегистрированы?"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:199:18
-msgid "Amount of chombo penalty"
-msgstr "Размер штрафа чомбо"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:200:24
-msgid "Amount of penalty applied in the end of the session after uma bonus."
-msgstr ""
-"Количество очков, вычитаемое из очков игрока за каждый штраф чомбо после "
-"окончания игры."
-
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:63:22
-msgid ""
-"Amount of points given for each chip. Chips should be set up in tournament "
-"settings in Tenhou.net. Set to 0 to disable chips."
-msgstr ""
-"Количество очков, которое выдается за каждый чип. Чипы должны быть настроены "
-"на Tenhou.net. Выставьте 0, чтобы выключить чипы."
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:51:22
-msgid ""
-"Amount of points given to every player in the beginning of every session"
-msgstr "Количество игровых очков у каждого игрока в начале игры"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:157:22
-msgid "Amount of points given to player at 1st place"
-msgstr "Количество бонусных очков за первое место в игре"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:95:24
-msgid "Amount of score player should get to end the game."
-msgstr "Количество очков, которое нужно набрать для завершения игры."
-
-#: app/pages/Penalties.tsx:161:58
-msgid "Apply penalty"
-msgstr "Применить штраф"
-
-#: app/pages/GamesControl/TournamentControls.tsx:194:26
-msgid "Apply seating for next session?"
-msgstr "Применить рассадку для следующей сессии?"
-
-#: app/pages/GamesControl/TournamentControls.tsx:256:22
-msgid "Approve session results and go on to next session"
-msgstr "Подтвердить результаты сессий и перейти к следующей сессии"
-
-#: app/pages/GamesControl/TournamentControls.tsx:257:21
-msgid "Approve sessions"
-msgstr "Подтвердить результаты"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:103:16
-msgid "Atamahane"
-msgstr "Атамахане"
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:73:20
-msgid "Basic ruleset"
-msgstr "Базовый набор правил"
-
-#: app/pages/OwnedEventsEdit/TabsList.tsx:40:10
-msgid "Basic settings"
-msgstr "Базовые настройки"
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:103:18
-msgid "Brief description"
-msgstr "Краткое описание"
-
-#: app/pages/GamesControl/TournamentControls.tsx:106:14
-msgid ""
-"Can't generate seating: count of registered players is not divisible by 4"
-msgstr ""
-"Невозможно сгенерировать рассадку: число зарегистрированных игроков не "
-"делится на 4"
-
-#: app/pages/OwnedEvents.tsx:183:14
-msgid "Cancel"
-msgstr "Отмена"
-
-#: app/pages/GamesControl/GamesList.tsx:175:28
-msgid "Cancel last played round"
-msgstr "Отменить последний сыгранный раунд"
-
-#: app/pages/GamesControl/GamesList.tsx:202:27
-msgid "Cancel results"
-msgstr "Удалить результаты"
-
-#: app/pages/GamesControl/GamesList.tsx:176:27
-msgid "Cancel round"
-msgstr "Отменить раздачу"
-
-#: app/pages/OwnedEventsEdit/index.tsx:260:30
-#: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
-#: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
-#: app/pages/ProfileManage.tsx:184:32
-msgid "Changes saved!"
-msgstr "Изменения сохранены!"
-
-#: app/helpers/yaku.ts:183:34
-msgid "Chankan"
-msgstr "Чанкан"
-
-#: app/helpers/yaku.ts:103:34
-msgid "Chanta"
-msgstr "Чанта"
-
-#: app/helpers/yaku.ts:239:34
-msgid "Chihou"
-msgstr "Чихо"
-
-#: app/helpers/yaku.ts:91:34
-msgid "Chiitoitsu"
-msgstr "Чиитойцу"
-
-#: app/helpers/yaku.ts:219:34
-msgid "Chinitsu"
-msgstr "Чиницу"
-
-#: app/helpers/yaku.ts:215:34 app/helpers/yaku.ts:262:34
-msgid "Chinroutou"
-msgstr "Чинрото"
-
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:62:16
-msgid "Chips value"
-msgstr "Стоимость чипа"
-
-#: app/pages/GamesControl/GamesList.tsx:360:12
-msgid "Chombo, %1"
-msgstr "Чомбо, %1"
-
-#: app/helpers/yaku.ts:223:34
-msgid "Chuuren poutou"
-msgstr "Чууренпото"
-
-#: app/pages/ProfileManage.tsx:168:22
-msgid "City"
-msgstr "Город"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:137:16
-msgid "Collect riichi bets by atamahane"
-msgstr "Риичи по атамахане"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:37:45
-msgid "Complex position-based"
-msgstr "Сложный, на основе позиций всех игроков"
-
-#: app/pages/GamesControl/Confirmation.tsx:78:20
-msgid "Confirm"
-msgstr "Подтвердить"
-
-#: app/pages/ProfileConfirm.tsx:33:16
-msgid "Confirm your email"
-msgstr "Подтвердить адрес email"
-
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:36:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:74:22
-msgid ""
-"Count of session in game series. Set to 0 to disable series functionality."
-msgstr ""
-"Количество сессий в одной серии. Поставьте 0, чтобы отключить игровые серии."
-
-#: app/pages/ProfileManage.tsx:158:22
-msgid "Country"
-msgstr "Страна"
-
-#: app/pages/OwnedEvents.tsx:347:18
-msgid "Create new event"
-msgstr "Создать новое событие"
-
-#: app/pages/GamesControl/GamesList.tsx:115:30
-msgid "Current round"
-msgstr "Текущий раунд"
-
-#: app/pages/GamesControl/TournamentControls.tsx:89:28
-msgid "Current status"
-msgstr "Текущий статус"
+#: app/helpers/yaku.ts:71:34
+msgid "Riichi"
+msgstr "Риичи"
 
 #: app/helpers/yaku.ts:75:34
 msgid "Daburu riichi"
 msgstr "Дабл-риичи"
 
-#: app/helpers/yaku.ts:199:34 app/helpers/yaku.ts:246:34
-msgid "Daisangen"
-msgstr "Дайсанген"
-
-#: app/helpers/yaku.ts:207:34 app/helpers/yaku.ts:250:34
-msgid "Daisuushii"
-msgstr "Дайсуши"
-
-#: app/pages/OwnedEvents.tsx:300:38
-msgid "Danger zone"
-msgstr "Зона особого внимания"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:71:16
-msgid "Disable renchans"
-msgstr "Выключить ренчаны"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:53:20
-msgid "Do not interrupt session until it ends"
-msgstr "Не прерывать игру до тех пор, пока она не закончена"
-
-#: app/pages/GamesControl/GamesList.tsx:364:12
-msgid "Draw, tempai: %1, riichi: %2"
-msgstr "Ничья, темпай: %1, риичи: %2"
-
-#: app/pages/OwnedEventsEdit/index.tsx:59:18
-msgid "Edit event :: %1"
-msgstr "Редактирование события :: %1"
-
-#: app/pages/OwnedEvents.tsx:294:45
-msgid "Edit event settings"
-msgstr "Настройки события"
-
-#: app/pages/ProfileConfirm.tsx:66:16
-msgid "Email confirmation failed"
-msgstr "Не удалось подтвердить email"
-
-#: app/pages/ProfileConfirm.tsx:86:54
-msgid "Email confirmed"
-msgstr "Email подтвержден"
-
-#: app/pages/ProfileResetPassword.tsx:96:52
-msgid "Email has been sent"
-msgstr "E-mail отправлен"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:118:22
-msgid "Enable \"Nagashi\" outcome to record this special draw"
-msgstr "Включить возможность записи исхода \"Нагаши манган\""
-
-#: app/pages/ProfileSignupAdmin.tsx:157:26
-msgid "Enter city of the player"
-msgstr "Введите город игрока"
-
-#: app/pages/ProfileResetPasswordConfirm.tsx:167:24
-msgid "Enter new strong password"
-msgstr "Введите новый сложный пароль"
-
-#: app/pages/ProfileSignupAdmin.tsx:136:26
-msgid "Enter player's e-mail address"
-msgstr "Введите адрес e-mail игрока"
-
-#: app/pages/ProfileSignupAdmin.tsx:163:26
-msgid "Enter player's phone"
-msgstr "Введите телефон игрока"
-
-#: app/pages/ProfileSignup.tsx:111:26 app/pages/ProfileSignupAdmin.tsx:151:26
-msgid "Enter strong password"
-msgstr "Введите сложный пароль"
-
-#: app/pages/ProfileSignup.tsx:98:26
-msgid "Enter your e-mail address"
-msgstr "Введите ваш адрес e-mail"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:164:16
-msgid "Equalize uma"
-msgstr "Выравнивание умы"
-
-#: app/pages/EventPrescript.tsx:73:18 app/pages/EventPrescript.tsx:108:18
-#: app/pages/GamesControl/index.tsx:70:18
-#: app/pages/GamesControl/index.tsx:84:16
-#: app/pages/OwnedEventsEdit/index.tsx:179:18
-#: app/pages/OwnedEventsEdit/index.tsx:210:18 app/pages/Penalties.tsx:70:18
-#: app/pages/Penalties.tsx:116:18 app/pages/PlayersManage/index.tsx:81:18
-#: app/pages/PlayersManage/LocalIdsTab.tsx:70:18
-#: app/pages/PlayersManage/TeamNamesTab.tsx:70:18
-msgid "Error has occurred"
-msgstr "Произошла ошибка"
-
-#: app/pages/OwnedEvents.tsx:327:24
-msgid "Event finished"
-msgstr "Событие завершено"
-
-#: app/pages/OwnedEvents.tsx:261:38
-msgid "Event management"
-msgstr "Управление событием"
-
-#: app/pages/EventPrescript.tsx:154:36
-msgid "Event script"
-msgstr "Скрипт рассадки"
-
-#: app/pages/EventPrescript.tsx:124:37
-msgid "Event script filling instruction"
-msgstr "Инструкция по заполнения скрипта рассадки"
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:67:18
-msgid "Event title"
-msgstr "Название события"
-
-#: app/pages/Penalties.tsx:111:27
-msgid "Failed to apply penalty: server error or network unreachable"
-msgstr "Не удалось применить штраф: ошибка сервера или сеть недоступна"
-
-#: app/pages/GamesControl/index.tsx:184:27
-msgid "Failed to approve session results"
-msgstr "Не удалось подтвердить результаты сессий"
-
-#: app/pages/ProfileLogin.tsx:65:13
-msgid "Failed to authorize. Please check your email and password."
-msgstr ""
-"Не удалось авторизоваться в системе. Проверьте ваш адрес email и пароль."
-
-#: app/pages/GamesControl/index.tsx:147:35
-msgid "Failed to cancel game"
-msgstr "Не удалось удалить игру"
-
-#: app/pages/GamesControl/index.tsx:119:35
-msgid "Failed to cancel round"
-msgstr "Не удалось отменить раздачу"
-
-#: app/pages/ProfileResetPasswordConfirm.tsx:150:13
-msgid "Failed to change password. Is your connection stable?"
-msgstr "Не удалось сменить пароль. Проблемы со связью?"
-
-#: app/pages/ProfileConfirm.tsx:69:10
-msgid ""
-"Failed to confirm your email. Probably the link you followed has been "
-"expired or already used. Please try registering again."
-msgstr ""
-"Не удалось подтвердить адрес email. Возможно, ссылка, по которой вы прошли, "
-"истекла или уже была использована. Попробуйте зарегистрироваться еще раз."
-
-#: app/pages/GamesControl/index.tsx:133:35
-msgid "Failed to definalize game"
-msgstr "Не удалось удалить результаты"
-
-#: app/pages/OwnedEventsEdit/index.tsx:173:29
-msgid "Failed to fetch event data"
-msgstr "Не удалось получить данные события"
-
-#: app/pages/GamesControl/index.tsx:198:29
-msgid "Failed to generate interval seating"
-msgstr "Не удалось сгенерировать интервальную рассадку"
-
-#: app/pages/GamesControl/index.tsx:249:29
-msgid "Failed to generate prescripted seating"
-msgstr "Не удалось сгенерировать предопределенную рассадку"
-
-#: app/pages/GamesControl/index.tsx:216:27
-msgid "Failed to generate random seating"
-msgstr "Не удалось сгенерировать случайную рассадку"
-
-#: app/pages/GamesControl/index.tsx:232:27
-msgid "Failed to generate swiss seating"
-msgstr "Не удалось сгенерировать швейцарскую рассадку"
-
-#: app/pages/ProfileResetPasswordConfirm.tsx:187:10
-msgid ""
-"Failed to recover your password. Probably the link you followed has been "
-"expired or already used. Please try again."
-msgstr ""
-"Не удалось восстановить ваш пароль. Возможно ссылка, по которой вы прошли, "
-"истекла или уже была использована. Попробуйте еще раз."
-
-#: app/pages/ProfileSignupAdmin.tsx:105:13
-msgid "Failed to register player. Is your connection stable?"
-msgstr "Не удалось зарегистрировать игрока. Проблемы со связью?"
-
-#: app/pages/ProfileResetPassword.tsx:63:13
-msgid "Failed to request password reset. Please check your email."
-msgstr ""
-"Не удалось запросить сброс пароля. Пожалуйста проверьте ваш адрес email."
-
-#: app/pages/ProfileSignup.tsx:83:13
-msgid "Failed to request registration. Is your connection stable?"
-msgstr "Не удалось запросить регистрацию. Проблемы со связью?"
-
-#: app/pages/GamesControl/index.tsx:266:27
-msgid "Failed to reset seating"
-msgstr "Не удалось отменить рассадку"
-
-#: app/pages/EventPrescript.tsx:102:13
-msgid "Failed to save event script: server error or network unreachable"
-msgstr ""
-"Не удалось сохранить скрипт рассадки: ошибка сервера или сеть недоступна"
-
-#: app/pages/OwnedEventsEdit/index.tsx:205:27
-msgid "Failed to save event: server error or network unreachable"
-msgstr "Не удалось сохранить событие: ошибка сервера или сеть недоступна"
-
-#: app/pages/GamesControl/index.tsx:160:27
-msgid "Failed to start timer"
-msgstr "Не удалось запустить таймер"
-
-#: app/pages/GamesControl/index.tsx:172:27
-msgid "Failed to toggle results visibility"
-msgstr "Не удалось переключить видимость результатов"
-
-#: app/pages/ProfileManage.tsx:105:13
-msgid "Failed to update profile. Is your connection stable?"
-msgstr "Не удалось обновить профиль. Проблемы со связью?"
-
-#: app/pages/PlayersManage/ManagementTab.tsx:192:30
-msgid "Find and add player by name..."
-msgstr "Найти и добавить игрока по имени..."
-
-#: app/pages/PlayersManage/ManagementTab.tsx:177:24
-msgid "Find replacement player by name..."
-msgstr "Найти замену по имени..."
-
-#: app/pages/OwnedEvents.tsx:311:34 app/pages/OwnedEvents.tsx:319:28
-msgid "Finish event"
-msgstr "Завершить событие"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:93:22
-msgid ""
-"Fixed amount of rank penalty applied for each replacement player regardless "
-"of session results."
-msgstr ""
-"Фиксированный ранговый бонус/штраф, выдаваемый независимо от результатов "
-"игры."
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:83:22
-msgid ""
-"Fixed amount of result score applied for each replacement player regardless "
-"of session results."
-msgstr "Фиксированное число очков, применямое независимо от результатов игры."
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:82:16
-msgid "Fixed score applied to replacement player"
-msgstr "Фиксированное число итоговых очков у игрока замены"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:92:16
-msgid "Fixed uma for replacement player"
-msgstr "Фиксированная ума для игрока замены"
-
-#: app/pages/ProfileLogin.tsx:92:40
-msgid "Forgot your password?"
-msgstr "Забыли пароль?"
-
-#: app/pages/EventPrescript.tsx:168:15
-msgid "Found %1 error"
-msgid_plural "Found %1 errors"
-msgstr[0] "Найдена %1 ошибка"
-msgstr[1] "Найдено %1 ошибки"
-msgstr[2] "Найдено %1 ошибок"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:57:25
-msgid "Game duration"
-msgstr "Длительность сессии"
-
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:52:16
-msgid "Game expiration time (in hours)"
-msgstr "Время истечения игры (в часах)"
-
-#: app/pages/GamesControl/index.tsx:49:16
-msgid "Games management"
-msgstr "Управление играми"
-
-#: app/pages/GamesControl/TournamentControls.tsx:184:22
-msgid "Generate seating for next session"
-msgstr "Сгенерировать рассадку для следующей сессии"
-
-#: app/pages/ProfileConfirm.tsx:92:37
-#: app/pages/ProfileResetPasswordConfirm.tsx:214:37
-msgid "Go to Login page"
-msgstr "К странице входа"
-
-#: app/pages/ProfileConfirm.tsx:76:37
-msgid "Go to Signup page"
-msgstr "К странице регистрации"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:94:18
-msgid "Goal score"
-msgstr "Целевое количество очков"
-
-#: app/helpers/yaku.ts:175:34
-msgid "Haitei"
-msgstr "Хайтей"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:151:22
-msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
-msgstr "Руки стоимостью в 4/30 и 3/60 округляются до мангана."
-
-#: app/pages/GamesControl/TournamentControls.tsx:114:19
-#: app/pages/GamesControl/TournamentControls.tsx:180:19
-#: app/pages/GamesControl/TournamentControls.tsx:247:19
-#: app/pages/GamesControl/TournamentControls.tsx:268:19
-msgid "Hide results table"
-msgstr "Скрыть таблицу результатов"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:131:22
-msgid ""
-"Honba payments will be given only to the first winner. If not checked, "
-"payment will be given to all winners."
-msgstr ""
-"Выплата по хонбе будет выдана только первому победителю по ходу игры. Если "
-"не отмечено, выплата производится всем победителям."
-
-#: app/helpers/yaku.ts:151:34
-msgid "Honitsu"
-msgstr "Хоницу"
-
-#: app/helpers/yaku.ts:155:34
-msgid "Honroutou"
-msgstr "Хонрото"
-
-#: app/helpers/yaku.ts:171:34
-msgid "Houtei raoyui"
-msgstr "Хотей"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:46:22
-msgid "How game sessions should end during the tournament"
-msgstr "Как игровые сессии завершаются во время турнира"
-
-#: app/pages/ProfileSignup.tsx:118:20
-msgid "I've read the privacy policy listed below and accept its terms"
-msgstr ""
-"Я прочитал(а) политику конфиденциальности, приведенную ниже, и принимаю ее "
-"условия"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:165:22
-msgid ""
-"If checked, players with equivalent score receive equivalent uma bonus. "
-"Otherwise, uma is assigned according to move order."
-msgstr ""
-"Если отмечено, игроки с одинаковыми очками получат одинаковый ранговый "
-"бонус, равный среднему их бонусу. В ином случае ума назначается по порядку "
-"хода."
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:86:22
-msgid ""
-"If nobody reaches the goal score at the last hand, the game continues to "
-"west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
-"reaches the goal"
-msgstr ""
-"Если никто не набирает заданное число очков после оорасу, игра продолжается "
-"в западных раундах (в ханчане) или в южных раундах (в тонпусене), до тех пор "
-"пока кто-либо не наберет заданное число очков"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:65:22
-msgid ""
-"If the dealer holds the 1st place after last hand in session, the game ends "
-"regardless of his winning hand or tempai."
-msgstr ""
-"Если дилер занимает первое место после последней раздачи в игре, игра "
-"завершается независимо от того, выиграл ли дилер (или был ли он темпай)."
-
-#: app/helpers/yaku.ts:111:34
-msgid "Iipeikou"
-msgstr "Иипейко"
-
-#: app/pages/EventPrescript.tsx:135:10
-msgid ""
-"In this example, two tables play two games. Numbers in seating are called "
-"\"Local IDs\". They persist between games and are defined at Manage players "
-"page of the event."
-msgstr ""
-"В этом примере два стола играют две игры. Числа в скрипте рассадки "
-"называются \"локальными идентификаторами\" (Local ID). Они сохраняются между "
-"играми, администратор может их задать на странице \"Управление игроками\"."
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:50:16
-msgid "Initial points"
-msgstr "Начальные очки"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:42:16
-msgid "Initial rating"
-msgstr "Начальный рейтинг"
-
-#: app/pages/EventPrescript.tsx:156:18
-msgid "Instructions"
-msgstr "Инструкции"
-
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:53:22
-msgid ""
-"Interval of time when played online game is still considered valid and can "
-"be added to the rating. Set to 0 to disable expiration."
-msgstr ""
-"Интервал времени, в течение которого сыгранная игра все еще считается "
-"действительной и может быть внесена в рейтинг. Выставьте 0, чтобы выключить "
-"истечение игр."
-
-#: app/pages/GamesControl/TournamentControls.tsx:133:21
-msgid "Interval seating"
-msgstr "Интервальная рассадка"
-
-#: app/pages/GamesControl/TournamentControls.tsx:130:21
-msgid "Interval seating can't be used for first session in tournament"
-msgstr ""
-"Интервальная рассадка не может быть использована для первой сессии в турнире"
-
-#: app/pages/ProfileLogin.tsx:46:63 app/pages/ProfileResetPassword.tsx:43:63
-#: app/pages/ProfileSignup.tsx:55:63 app/pages/ProfileSignupAdmin.tsx:64:63
-msgid "Invalid email"
-msgstr "Некорректный адрес email"
-
-#: app/pages/ProfileManage.tsx:63:70 app/pages/ProfileSignup.tsx:56:70
-#: app/pages/ProfileSignupAdmin.tsx:65:70
-msgid "Invalid title"
-msgstr "Некорректное имя"
+#: app/helpers/yaku.ts:79:34
+msgid "Open riichi"
+msgstr "Опен риичи"
 
 #: app/helpers/yaku.ts:83:34
 msgid "Ippatsu"
 msgstr "Иппацу"
 
-#: app/helpers/yaku.ts:127:34
-msgid "Ittsu"
-msgstr "Иццу"
-
-#: app/helpers/yaku.ts:107:34
-msgid "Junchan"
-msgstr "Джунчан"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:145:16
-msgid "Kazoe yakuman"
-msgstr "Казое якуман"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:150:16
-msgid "Kiriage mangan"
-msgstr "Кириаге манган"
-
-#: app/helpers/yaku.ts:231:34
-msgid "Kokushi musou"
-msgstr "Кокушимусо"
-
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:33:16
-msgid "Kuitan"
-msgstr "Куитан"
-
-#: app/Layout.tsx:152:76
-msgid "Language"
-msgstr "Язык"
-
-#: app/pages/PlayersManage/LocalIdsTab.tsx:99:24
-msgid "Local ID"
-msgstr "Локальный ID"
-
-#: app/pages/PlayersManage/index.tsx:121:14
-msgid "Local IDs"
-msgstr "Локальные идентификаторы"
-
-#: app/pages/OwnedEventsEdit/TabsList.tsx:44:12
-msgid "Local event settings"
-msgstr "Настройки локального рейтинга"
-
-#: app/pages/OwnedEvents.tsx:219:30
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:43:24
-msgid "Local rating"
-msgstr "Локальный рейтинг"
-
-#: app/pages/ProfileLogin.tsx:36:16
-msgid "Login to your account"
-msgstr "Войти в аккаунт"
-
-#: app/pages/ProfileLogout.tsx:32:16
-msgid "Logout"
-msgstr "Выйти"
-
-#: app/pages/OwnedEvents.tsx:274:36
-msgid "Manage current games"
-msgstr "Управление играми"
-
-#: app/Navigation.tsx:156:16
-msgid "Manage events"
-msgstr "Управление событиями"
-
-#: app/Navigation.tsx:111:20 app/pages/OwnedEvents.tsx:277:30
-msgid "Manage games"
-msgstr "Управление играми"
-
-#: app/pages/OwnedEvents.tsx:84:16
-msgid "Manage my events"
-msgstr "Мои события"
-
-#: app/pages/OwnedEvents.tsx:282:36 app/pages/Penalties.tsx:49:16
-msgid "Manage penalties"
-msgstr "Штрафы"
-
-#: app/Navigation.tsx:99:20 app/pages/OwnedEvents.tsx:289:45
-#: app/pages/OwnedEvents.tsx:290:30
-msgid "Manage players"
-msgstr "Управление игроками"
-
-#: app/pages/PlayersManage/index.tsx:51:16
-msgid "Manage players in event"
-msgstr "Управление игроками"
-
-#: app/pages/OwnedEvents.tsx:265:38
-msgid "Manage predefined seating"
-msgstr "Предопределенная рассадка"
-
-#: app/pages/ProfileManage.tsx:41:16
-msgid "Manage your account"
-msgstr "Управление профилем"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:172:16
-msgid "Max arbitrary penalty score"
-msgstr "Максимальный штраф"
-
 #: app/helpers/yaku.ts:87:34
 msgid "Menzentsumo"
 msgstr "Мензенцумо"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:178:16
-msgid "Min arbitrary penalty score"
-msgstr "Минимальный штраф"
-
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:47:22
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:85:22
-msgid ""
-"Minimal count of games the player should play to get into the rating table."
-msgstr ""
-"Минимальное число сыгранных игр для того, чтобы игрок попал в рейтинговую "
-"таблицу."
-
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:46:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:84:16
-msgid "Minimal games count"
-msgstr "Минимальное число игр"
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:104:24
-msgid "Multiline. Markdown syntax supported."
-msgstr "Многострочное. Поддерживается синтаксис Markdown."
-
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:40:16
-msgid "Multiple yakumans"
-msgstr "Суммирование якуманов"
-
-#: app/Navigation.tsx:149:16
-msgid "My profile"
-msgstr "Мой профиль"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:117:16
-msgid "Nagashi mangan"
-msgstr "Нагаши манган"
-
-#: app/pages/GamesControl/GamesList.tsx:377:12
-msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
-msgstr "Нагаши манган, нагаши: %1, темпай: %2, риичи: %3"
-
-#: app/pages/OwnedEventsEdit/index.tsx:61:18
-msgid "New event"
-msgstr "Новое событие"
-
-#: app/pages/GamesControl/TournamentControls.tsx:185:21
-msgid "Next seating"
-msgstr "Следующая рассадка"
-
-#: app/pages/EventPrescript.tsx:141:16
-msgid "Next session index"
-msgstr "Индекс следующей сессии"
-
-#: app/pages/EventPrescript.tsx:169:37
-msgid "No errors found"
-msgstr "Ошибок не найдено"
-
-#: app/pages/GamesControl/TournamentControls.tsx:96:22
-msgid "Not ready"
-msgstr "Не готово"
-
-#: app/pages/GamesControl/TournamentControls.tsx:97:22
-msgid "Not started"
-msgstr "Не начато"
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:97:25
-#: app/pages/ProfileManage.tsx:160:29
-msgid "Nothing found"
-msgstr "Ничего не найдено"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:156:16
-msgid "Oka bonus"
-msgstr "Ока"
-
-#: app/pages/OwnedEvents.tsx:243:30
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:25
-msgid "Online event"
-msgstr "Онлайн-событие"
-
-#: app/pages/OwnedEventsEdit/TabsList.tsx:54:12
-msgid "Online event settings"
-msgstr "Настройки онлайн-события"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:104:22
-msgid ""
-"Only first player by the order of the move from the loser would be "
-"considered a winner. If not checked, all players declaring Ron are "
-"considered winners."
-msgstr ""
-"Только первый игрок по ходу раздачи считается победителем по рон. Если "
-"галочка не отмечена, все игроки, объявившие рон, считаются победителями."
-
-#: app/helpers/yaku.ts:79:34
-msgid "Open riichi"
-msgstr "Опен риичи"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:136:20
-msgid "Otherwise"
-msgstr "Прочие ситуации"
-
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:61:25
-msgid "Pao rule enabled for:"
-msgstr "Пао разрешено для:"
-
-#: app/pages/ProfileResetPasswordConfirm.tsx:184:16
-msgid "Password recovery failed"
-msgstr "Не удалось восстановить пароль"
-
-#: app/pages/ProfileResetPasswordConfirm.tsx:206:16
-msgid "Password successfully updated"
-msgstr "Пароль успешно обновлен"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:190:16
-msgid "Pay chombo as reverse mangan"
-msgstr "Чомбо как обратный манган"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:191:22
-msgid ""
-"Pay chombo right on occasion. If not checked, chombo is subtracted from "
-"player score after uma is applied."
-msgstr ""
-"Выплата штрафа чомбо производится на месте в размере обратного мангана. Если "
-"не отмечено, штраф чомбо будет вычтен из очков игрока после умы в конце игры."
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:130:16
-msgid "Pay for honba by atamahane"
-msgstr "Хонба по атамахане"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:143:25
-msgid "Payments and scores"
-msgstr "Выплаты и очки"
-
-#: app/Navigation.tsx:105:20 app/pages/OwnedEvents.tsx:285:30
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:170:25
-msgid "Penalties"
-msgstr "Штрафы"
-
-#: app/pages/Penalties.tsx:144:18
-msgid "Penalty amount"
-msgstr "Размер штрафа"
-
-#: app/pages/Penalties.tsx:161:28
-msgid "Penalty applied!"
-msgstr "Штраф применен!"
-
-#: app/pages/Penalties.tsx:157:18
-msgid "Penalty reason"
-msgstr "Причина штрафа"
-
-#: app/pages/ProfileManage.tsx:174:22
-msgid "Phone number"
-msgstr "Номер телефона"
+#: app/helpers/yaku.ts:91:34
+msgid "Chiitoitsu"
+msgstr "Чиитойцу"
 
 #: app/helpers/yaku.ts:95:34
 msgid "Pinfu"
 msgstr "Пин-фу"
 
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:71:22
-msgid "Place / Session result"
-msgstr "Место / результат"
+#: app/helpers/yaku.ts:99:34
+msgid "Tanyao"
+msgstr "Тан-яо"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:85:16
-msgid "Play additional rounds"
-msgstr "Дополнительные раунды"
+#: app/helpers/yaku.ts:103:34
+msgid "Chanta"
+msgstr "Чанта"
 
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:60:22
-msgid "Play only east rounds"
-msgstr "Играть только восточные раунды"
+#: app/helpers/yaku.ts:107:34
+msgid "Junchan"
+msgstr "Джунчан"
 
-#: app/pages/PlayersManage/ManagementTab.tsx:268:27
-msgid "Player is a regular user. Click to promote to event admin."
-msgstr ""
-"Игрок является обычным пользователем. Нажмите для назначения прав "
-"администратора."
-
-#: app/pages/PlayersManage/ManagementTab.tsx:267:27
-msgid "Player is event administrator. Click to revoke privileges."
-msgstr "Игрок является администратором. Нажмите для отмены привилегий."
-
-#: app/pages/PlayersManage/ManagementTab.tsx:283:27
-msgid "Player is excluded from next seating. Click to include"
-msgstr "Игрок исключен из следующей рассадки. Нажмите чтобы включить"
-
-#: app/pages/PlayersManage/ManagementTab.tsx:284:27
-msgid "Player is included in next seating. Click to exclude"
-msgstr "Игрок включен в следующую рассадку. Нажмите чтобы исключить"
-
-#: app/pages/ProfileManage.tsx:149:22
-msgid "Player title"
-msgstr "Имя игрока"
-
-#: app/pages/ProfileSignupAdmin.tsx:93:24
-msgid "Player was successfully registered"
-msgstr "Игрок был успешно зарегистрирован"
-
-#: app/pages/PlayersManage/index.tsx:106:14
-msgid "Players"
-msgstr "Игроки"
-
-#: app/pages/EventPrescript.tsx:151:24
-msgid "Please enter event script here"
-msgstr "Пожалуйста, введите скрипт рассадки"
-
-#: app/pages/ProfileLogin.tsx:47:66
-msgid "Please enter password"
-msgstr "Пожалуйста, введите пароль"
-
-#: app/pages/ProfileResetPasswordConfirm.tsx:159:60
-msgid "Please note"
-msgstr "Обратите внимание"
-
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:39:10
-msgid ""
-"Please note: you should set up the rating accordingly to tournament settings "
-"in Tenhou.net, otherwise expect errors on replay submit!"
-msgstr ""
-"Внимание: рейтинг должен быть настроен аналогично настройкам турнира на "
-"Tenhou.net, в ином случае ожидайте ошибок при внесении игр!"
-
-#: app/pages/Penalties.tsx:90:54
-msgid "Please select penalty amount"
-msgstr "Выберите размер штрафа"
-
-#: app/pages/Penalties.tsx:89:54
-msgid "Please select player"
-msgstr "Выберите игрока"
-
-#: app/pages/GamesControl/TournamentControls.tsx:206:17
-msgid "Please wait unit seating is ready"
-msgstr "Пожалуйста, подождите, пока рассадка не будет готова"
-
-#: app/Navigation.tsx:118:20 app/pages/OwnedEvents.tsx:268:32
-msgid "Predefined seating"
-msgstr "Предопределенная рассадка"
-
-#: app/pages/EventPrescript.tsx:61:16
-msgid "Predefined seating configuration"
-msgstr "Конфигурация предопределенной рассадки"
-
-#: app/pages/EventPrescript.tsx:127:10
-msgid ""
-"Predefined seating is entered as list of tables, one table per row. New game "
-"session should be indicated as an empty line. Example:"
-msgstr ""
-"Предопределенная рассадка вводится как список столов, 1 стол на каждую "
-"строку. Новая игровая сессия отделяется пустой строкой. Пример:"
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:92:18
-msgid "Primary timezone for event"
-msgstr "Основной часовой пояс события"
-
-#: app/pages/ProfileLogin.tsx:94:34
-msgid "Proceed with sign in"
-msgstr "К странице входа"
-
-#: app/pages/GamesControl/TournamentControls.tsx:119:21
-msgid "Random seating"
-msgstr "Случайная рассадка"
-
-#: app/pages/GamesControl/TournamentControls.tsx:189:28
-msgid "Randomize seating by wind"
-msgstr "Перемешать игроков по ветрам за каждым столом"
-
-#: app/pages/GamesControl/TournamentControls.tsx:101:22
-msgid "Ready to approve"
-msgstr "Ждет подтверждения"
-
-#: app/pages/GamesControl/TournamentControls.tsx:239:24
-msgid "Really reset timer?"
-msgstr "Действительно сбросить таймер?"
-
-#: app/pages/OwnedEvents.tsx:303:36 app/pages/OwnedEvents.tsx:307:30
-msgid "Rebuild scoring"
-msgstr "Перестроить скоринг"
-
-#: app/pages/ProfileResetPassword.tsx:33:16
-#: app/pages/ProfileResetPasswordConfirm.tsx:194:37
-msgid "Recover password"
-msgstr "Восстановление пароля"
-
-#: app/pages/ProfileSignup.tsx:42:16 app/pages/ProfileSignup.tsx:125:36
-#: app/pages/ProfileSignupAdmin.tsx:42:16
-msgid "Register new account"
-msgstr "Зарегистрировать новый аккаунт"
-
-#: app/Navigation.tsx:142:16 app/pages/ProfileSignupAdmin.tsx:175:62
-msgid "Register player"
-msgstr "Зарегистрировать игрока"
-
-#: app/pages/ProfileSignupAdmin.tsx:175:30
-msgid "Registration done!"
-msgstr "Регистрация завершена!"
-
-#: app/pages/GamesControl/GamesList.tsx:189:27
-msgid "Remove game"
-msgstr "Удалить игру"
-
-#: app/pages/GamesControl/GamesList.tsx:201:28
-msgid "Remove game results"
-msgstr "Удалить результаты игры"
-
-#: app/pages/PlayersManage/ManagementTab.tsx:297:28
-msgid "Remove player from event"
-msgstr "Удалить игрока из события"
-
-#: app/pages/PlayersManage/ManagementTab.tsx:248:37
-#: app/pages/PlayersManage/ManagementTab.tsx:249:32
-msgid "Remove replacement"
-msgstr "Удалить замену"
-
-#: app/pages/GamesControl/GamesList.tsx:188:28
-msgid "Remove the game as it never existed"
-msgstr "Удалить игру, как будто ее никогда не было"
-
-#: app/helpers/yaku.ts:187:34
-msgid "Renhou"
-msgstr "Ренхо"
-
-#: app/pages/PlayersManage/ManagementTab.tsx:225:28
-msgid "Replace player with someone else"
-msgstr "Заменить игрока кем-либо еще"
-
-#: app/pages/PlayersManage/ManagementTab.tsx:241:28
-msgid "Replaced by %1"
-msgstr "Замена: %1"
-
-#: app/pages/ProfileResetPassword.tsx:85:16
-msgid "Request password reset"
-msgstr "Запросить сброс пароля"
-
-#: app/pages/GamesControl/TournamentControls.tsx:213:22
-msgid "Reset generated seating"
-msgstr "Сбросить сгенерированную рассадку"
-
-#: app/pages/GamesControl/TournamentControls.tsx:214:21
-msgid "Reset seating"
-msgstr "Сбросить рассадку"
-
-#: app/pages/GamesControl/TournamentControls.tsx:237:22
-msgid "Reset the timer to initial value"
-msgstr "Сбросить таймер к начальному значению"
-
-#: app/pages/GamesControl/TournamentControls.tsx:238:21
-msgid "Reset timer"
-msgstr "Сбросить таймер"
-
-#: app/pages/ProfileResetPasswordConfirm.tsx:50:16
-msgid "Reset your password"
-msgstr "Сбросить пароль"
-
-#: app/helpers/yaku.ts:71:34
-msgid "Riichi"
-msgstr "Риичи"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:121:25
-msgid "Riichi and honba"
-msgstr "Риичи и хонба"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:123:16
-msgid "Riichi goes to winner"
-msgstr "Риичи уходит победителю"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:124:22
-msgid ""
-"Riichi left on table in case of draw in the end of the session will be given "
-"to session winner"
-msgstr ""
-"После завершения игры все ставки риичи, оставшиеся на столе, отдаются "
-"победителю в игре"
-
-#: app/helpers/yaku.ts:179:34
-msgid "Rinshan kaihou"
-msgstr "Риншан кайхо"
-
-#: app/pages/GamesControl/GamesList.tsx:330:12
-#: app/pages/GamesControl/GamesList.tsx:341:9
-msgid "Ron, %1 from %2 (%3), riichi: %4"
-msgstr "Рон, %1 с %2 (%3), риичи: %4"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:101:25
-msgid "Round outcomes"
-msgstr "Исходы раздач"
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:74:26
-msgid ""
-"Ruleset to be used as a template for the event. Fine tuning is available in "
-"adjacent tabs. Please note that all ruleset settings will be reset when you "
-"select another ruleset here."
-msgstr ""
-"Набор правил, который будет использован в качестве шаблона для события. "
-"Точная настройка доступна на соседних вкладках. Пожалуйста, помните, что "
-"настройки будут сброшены к умолчаниям при выборе другого набора правил."
-
-#: app/pages/OwnedEventsEdit/TabsList.tsx:58:10
-msgid "Ruleset tuning"
-msgstr "Настройка набора правил"
+#: app/helpers/yaku.ts:111:34
+msgid "Iipeikou"
+msgstr "Иипейко"
 
 #: app/helpers/yaku.ts:115:34
 msgid "Ryanpeikou"
 msgstr "Рянпейко"
-
-#: app/helpers/yaku.ts:227:34 app/helpers/yaku.ts:258:34
-msgid "Ryuuiisou"
-msgstr "Рюисо"
-
-#: app/helpers/yaku.ts:159:34
-msgid "Sanankou"
-msgstr "Сананко"
-
-#: app/helpers/yaku.ts:167:34
-msgid "Sankantsu"
-msgstr "Санканцу"
 
 #: app/helpers/yaku.ts:119:34
 msgid "Sanshoku"
@@ -1209,418 +76,9 @@ msgstr "Саншоку"
 msgid "Sanshoku doukou"
 msgstr "Саншоку доко"
 
-#: app/pages/OwnedEventsEdit/index.tsx:260:58
-#: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
-#: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
-#: app/pages/ProfileManage.tsx:184:60
-msgid "Save changes"
-msgstr "Сохранить изменения"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:43:22
-msgid "Score given to all players in the beginning of the rating"
-msgstr ""
-"Количество рейтинговых очков, изначально даваемое каждому новому игроку"
-
-#: app/pages/EventPrescript.tsx:181:26
-msgid "Script updated!"
-msgstr "Скрипт обновлен!"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:73:16
-msgid "Seating is defined in advance"
-msgstr "Предопределенная рассадка"
-
-#: app/pages/GamesControl/TournamentControls.tsx:99:22
-msgid "Seating ready"
-msgstr "Рассадка готова"
-
-#: app/pages/GamesControl/TournamentControls.tsx:98:22
-msgid "Seating..."
-msgstr "Рассадка..."
-
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:55:33
-msgid "Select event type"
-msgstr "Выберите тип события"
-
-#: app/pages/GamesControl/TournamentControls.tsx:137:28
-msgid "Select interval"
-msgstr "Выберите интервал"
-
-#: app/pages/Penalties.tsx:133:18
-msgid "Select player"
-msgstr "Выберите игрока"
-
-#: app/pages/PlayersManage/ManagementTab.tsx:173:16
-msgid "Select replacement player for %1"
-msgstr "Выберите замену для игрока %1"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:32:16
-msgid "Select uma bonus type"
-msgstr "Тип рангового бонуса ума"
-
-#: app/pages/OwnedEventsEdit/LocalSettings.tsx:35:16
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:73:16
-msgid "Series length"
-msgstr "Длина серии"
-
-#: app/pages/GamesControl/GamesList.tsx:285:18
-msgid "Session cancelled"
-msgstr "Сессия отменена"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:36:16
-msgid "Session duration in minutes"
-msgstr "Длительность сессии в минутах"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:45:16
-msgid "Session ending policy"
-msgstr "Политика окончания игры"
-
-#: app/pages/GamesControl/GamesList.tsx:273:18
-msgid "Session finished"
-msgstr "Сессия завершена"
-
-#: app/pages/GamesControl/GamesList.tsx:261:18
-msgid "Session finished, but not confirmed"
-msgstr "Сессия завершена, но результаты не подтверждены"
-
-#: app/pages/GamesControl/GamesList.tsx:248:20
-msgid "Session in progress"
-msgstr "Игровая сессия в процессе"
-
-#: app/pages/GamesControl/GamesList.tsx:236:20
-msgid "Session is ready to start"
-msgstr "Игровая сессия готова"
-
-#: app/pages/GamesControl/GamesList.tsx:297:18
-msgid "Session is scheduled"
-msgstr "Сессия запланирована"
-
-#: app/pages/GamesControl/TournamentControls.tsx:100:22
-msgid "Session started"
-msgstr "Сессии начаты"
-
-#: app/pages/OwnedEvents.tsx:295:30
-msgid "Settings"
-msgstr "Настройки"
-
-#: app/pages/PlayersManage/index.tsx:111:20
-msgid ""
-"Setup local identifiers of players to be used in predefined event script"
-msgstr ""
-"Установка локальных идентификаторов для использования в скрипте рассадки"
-
-#: app/pages/PlayersManage/index.tsx:125:20
-msgid "Setup team name for each player (for team events)"
-msgstr "Установить имена команд для игроков (для командных турниров)"
-
-#: app/helpers/yaku.ts:163:34
-msgid "Shousangen"
-msgstr "Шосанген"
-
-#: app/helpers/yaku.ts:203:34
-msgid "Shousuushii"
-msgstr "Шосуши"
-
-#: app/pages/GamesControl/TournamentControls.tsx:113:19
-#: app/pages/GamesControl/TournamentControls.tsx:179:19
-#: app/pages/GamesControl/TournamentControls.tsx:246:19
-#: app/pages/GamesControl/TournamentControls.tsx:267:19
-msgid "Show results table"
-msgstr "Показать таблицу результатов"
-
-#: app/Navigation.tsx:128:16
-msgid "Sign in"
-msgstr "Войти"
-
-#: app/Navigation.tsx:163:16
-msgid "Sign out"
-msgstr "Выйти"
-
-#: app/Navigation.tsx:135:16
-msgid "Sign up"
-msgstr "Зарегистрироваться"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:36:44
-msgid "Simple rank-based"
-msgstr "Простой, на основе текущего места"
-
-#: app/pages/GamesControl/TournamentControls.tsx:224:21
-msgid "Start timer"
-msgstr "Запустить таймер"
-
-#: app/pages/GamesControl/TournamentControls.tsx:225:24
-msgid "Start timer and game sessions?"
-msgstr "Запустить таймер и игры?"
-
-#: app/pages/GamesControl/TournamentControls.tsx:223:22
-msgid "Start timer and sessions"
-msgstr "Запустить игры и таймер"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:184:16
-msgid "Step of arbitrary penalty scores"
-msgstr "Шаг штрафа"
-
-#: app/pages/OwnedEvents.tsx:193:14
-msgid "Stop event"
-msgstr "Завершить событие"
-
-#: app/pages/OwnedEvents.tsx:176:12
-msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
-msgstr "Завершить событие \"%1\" (id #%2)? Отменить это действие невозможно!"
-
-#: app/pages/ProfileSignupAdmin.tsx:92:22
-msgid "Success"
-msgstr "Успешно"
-
-#: app/helpers/yaku.ts:195:34
-msgid "Suuankou"
-msgstr "Сууанко"
-
-#: app/helpers/yaku.ts:191:34 app/helpers/yaku.ts:266:34
-msgid "Suukantsu"
-msgstr "Сууканцу"
-
-#: app/pages/GamesControl/TournamentControls.tsx:167:21
-msgid "Swiss seating"
-msgstr "Швейцарская рассадка"
-
-#: app/pages/GamesControl/TournamentControls.tsx:164:21
-msgid "Swiss seating can't be used for first session in tournament"
-msgstr ""
-"Швейцарская рассадка не может быть использована для первой сессии в турнире"
-
-#: app/pages/GamesControl/GamesList.tsx:102:30
-msgid "Table # %1"
-msgstr "Стол № %1"
-
-#: app/helpers/yaku.ts:99:34
-msgid "Tanyao"
-msgstr "Тан-яо"
-
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:34:22
-msgid ""
-"Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
-"open hand."
-msgstr ""
-"Тан-яо стоит 1 хан на открытой руке. Если не проставлено, тан-яо не работает "
-"на открытой руке."
-
-#: app/pages/PlayersManage/index.tsx:129:14
-msgid "Team names"
-msgstr "Имена команд"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:69:16
-msgid "Team tournament"
-msgstr "Командный турнир"
-
-#: app/pages/PlayersManage/TeamNamesTab.tsx:99:24
-msgid "Team:"
-msgstr "Команда:"
-
-#: app/helpers/yaku.ts:235:34
-msgid "Tenhou"
-msgstr "Тенхо"
-
-#: app/pages/ProfileManage.tsx:180:22 app/pages/ProfileSignupAdmin.tsx:170:26
-msgid "Tenhou ID"
-msgstr "Tenhou ID"
-
-#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:46:16
-msgid "Tenhou Lobby ID"
-msgstr "ID лобби на Tenhou.net"
-
-#: app/pages/Penalties.tsx:145:24
-msgid ""
-"The points you enter here will be subtracted from player score after uma is "
-"applied when session ends. Please note: the penalty can be only applied "
-"during the session. If session is already ended, apply penalty in the next "
-"session."
-msgstr ""
-"Количество очков, указанных здесь, будет вычтено из общего счета игрока "
-"после применения рангового бонуса (умы) после завершения сессии. Внимание: "
-"штраф может быть применен только во время игры. Если игра уже завершилась, "
-"штраф можно применить только в следующей игре."
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:111:22
-msgid ""
-"There will be a separate \"Abortive draw\" outcome to record draws due to "
-"four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
-msgstr ""
-"Включить отдельный исход \"Абортивная ничья\" для специальных ситуаций (4 "
-"риичи, 4 кана, одинаковый ветер в сбросе на первом круге, кюсюкюхай)."
-
-#: app/pages/GamesControl/GamesList.tsx:177:30
-#: app/pages/GamesControl/GamesList.tsx:190:30
-msgid "This action can't be undone. Continue?"
-msgstr "Это действие не может быть отменено. Продолжить?"
-
-#: app/pages/Penalties.tsx:135:24
-msgid "This is a player to be penalized"
-msgstr "Игрок, к которому будет применен штраф"
-
-#: app/pages/ProfileManage.tsx:150:28 app/pages/ProfileSignup.tsx:104:26
-msgid ""
-"This is a title that will be shown in rating table and in mobile assistant, "
-"also event administrators will use this title to find you and add to the "
-"event. Please don't use your single name here, as it's not unique enough. "
-"Name and surname is fine."
-msgstr ""
-"Это имя, которое будет показано в рейтинговой таблице, кроме того "
-"администраторы рейтингов будут искать вас в системе по этому имени. "
-"Пожалуйста, не вводите только свое имя, поскольку оно недостаточно "
-"уникально. Используйте имя+фамилию."
-
-#: app/pages/ProfileSignupAdmin.tsx:143:26
-msgid ""
-"This is a title that will be shown in rating table and in mobile assistant. "
-"Please select some unique title, like nickname or name+surname."
-msgstr ""
-"Это имя, которое будет показано в рейтинговой таблице и в мобильном "
-"ассистенте. Пожалуйста, выберите относительно уникальное имя, например "
-"никнейм или имя+фамилию."
-
-#: app/pages/EventPrescript.tsx:142:22
-msgid ""
-"This is the index of next session script (starting from 1). Each time new "
-"session starts, this value is increased automatically."
-msgstr ""
-"Это индекс сессии внутри скрипта (начиная с единицы), которая будет "
-"использована в следующей рассадке. Каждый раз, когда сессия стартует, этот "
-"индекс увеличивается автоматически."
-
-#: app/pages/GamesControl/GamesList.tsx:203:30
-msgid ""
-"This will only remove the game results, but you will need to cancel last "
-"round separately. This action can't be undone. Continue?"
-msgstr ""
-"Это действие только удалит результаты из БД, отменить последний раунд "
-"потребуется отдельным действием. Удаление результатов нельзя отменить. "
-"Продолжить?"
-
-#: app/pages/GamesControl/TournamentControls.tsx:215:24
-msgid "This will remove generated seating. Continue?"
-msgstr "Вы собираетесь сбросить сгенерированную рассадку. Продолжить?"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:37:22
-msgid ""
-"Timer starting value. After time runs out, session ending policy is applied "
-"(see below)."
-msgstr ""
-"Стартовое значение таймера. После истечения таймера, применяется политика "
-"окончания игры (см. ниже)"
-
-#: app/Layout.tsx:146:30
-msgid "Toggle color scheme"
-msgstr "Переключить цветовую схему"
-
-#: app/pages/OwnedEvents.tsx:332:28
-msgid "Toggle visibility in ratings global list"
-msgstr "Переключить видимость события в глобальном списке событий"
-
-#: app/helpers/yaku.ts:147:34
-msgid "Toitoi"
-msgstr "Тойтой"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:59:16
-msgid "Tonpuusen"
-msgstr "Тонпусены"
-
-#: app/pages/OwnedEvents.tsx:231:30
-#: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:29
-msgid "Tournament"
-msgstr "Турнир"
-
-#: app/pages/OwnedEventsEdit/TabsList.tsx:49:12
-msgid "Tournament settings"
-msgstr "Настройки турнира"
-
-#: app/pages/GamesControl/GamesList.tsx:352:12
-msgid "Tsumo, %1 (%2), riichi: %3"
-msgstr "Цумо, %1 (%2), риичи: %3"
-
-#: app/helpers/yaku.ts:211:34 app/helpers/yaku.ts:254:34
-msgid "Tsuuiisou"
-msgstr "Цуисо"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:44:20
-msgid "Uma bonus for 1st place"
-msgstr "Ума за 1 место"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:50:20
-msgid "Uma bonus for 2nd place"
-msgstr "Ума за 2 место"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:56:20
-msgid "Uma penalty for 3rd place"
-msgstr "Ума за 3 место"
-
-#: app/pages/OwnedEventsEdit/UmaSelect.tsx:62:20
-msgid "Uma penalty for 4th place"
-msgstr "Ума за 4 место"
-
-#: app/pages/ProfileResetPasswordConfirm.tsx:172:34
-msgid "Update password"
-msgstr "Обновить пароль"
-
-#: app/pages/EventPrescript.tsx:181:55
-msgid "Update script"
-msgstr "Обновить скрипт"
-
-#: app/pages/GamesControl/TournamentControls.tsx:131:21
-msgid "Use interval seating for next session"
-msgstr "Использовать интервальную рассадку для следующей сессии"
-
-#: app/pages/GamesControl/TournamentControls.tsx:150:26
-msgid "Use interval seating for next session?"
-msgstr "Использовать интервальную рассадку для следующей сессии?"
-
-#: app/pages/GamesControl/TournamentControls.tsx:118:22
-msgid "Use random seating for next session"
-msgstr "Использовать случайную рассадку для следующей сессии"
-
-#: app/pages/GamesControl/TournamentControls.tsx:120:24
-msgid "Use random seating for next session?"
-msgstr "Использовать случайную рассадку для следующей сессии?"
-
-#: app/pages/GamesControl/TournamentControls.tsx:165:21
-msgid "Use swiss seating for next session"
-msgstr "Использовать швейцарскую рассадку для следующей сессии"
-
-#: app/pages/GamesControl/TournamentControls.tsx:168:24
-msgid "Use swiss seating for next session?"
-msgstr "Использовать швейцарскую рассадку для следующей сессии?"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:81:22
-msgid "When a player runs out of score points, the game immediately ends"
-msgstr "Когда игрок уходит в минус по очкам, игра немедленно завершается"
-
-#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:72:22
-msgid ""
-"When dealer wins, or stays tempai after draw, seat winds will be changed. "
-"Honba is added only after draw."
-msgstr ""
-"Когда дилер выигрывает или остается темпай, ветра все равно меняются. Хонба "
-"добавляется только после ничьей."
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:57:20
-msgid "When time is out, finish current hand and interrupt the session"
-msgstr ""
-"Когда время вышло, завершить текущую раздачу и после этого прервать игру"
-
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
-msgid ""
-"When time is out, finish current hand, play one more, and then interrup the "
-"session"
-msgstr ""
-"Когда время вышло, завершить текущую раздачу, сыграть еще одну, после чего "
-"прервать игру"
-
-#: app/pages/OwnedEventsEdit/YakuSettings.tsx:44:25
-msgid "Yaku allowed"
-msgstr "Разрешенные яку"
-
-#: app/pages/OwnedEventsEdit/TabsList.tsx:62:10
-msgid "Yaku settings"
-msgstr "Настройки яку"
+#: app/helpers/yaku.ts:127:34
+msgid "Ittsu"
+msgstr "Иццу"
 
 #: app/helpers/yaku.ts:131:34
 msgid "Yakuhai x1"
@@ -1638,25 +96,551 @@ msgstr "Якухай 3"
 msgid "Yakuhai x4"
 msgstr "Якухай 4"
 
-#: app/pages/ProfileManage.tsx:66:13
-msgid ""
-"You have provided your tenhou login string instead of your username. You "
-"should NEVER give anyone your login string!"
-msgstr ""
-"Вы ввели ваш логин для Tenhou.net вместо имени пользователя. Вам не следует "
-"НИКОГДА и никому передавать ваш логин!"
+#: app/helpers/yaku.ts:147:34
+msgid "Toitoi"
+msgstr "Тойтой"
 
-#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:74:22
-msgid ""
-"You should prepare the tournament script yourself. No automated seating "
-"functionality is available when this flag is set."
-msgstr ""
-"Вы должны подготовить скрипт рассадки самостоятельно. Функциональность "
-"автоматических рассадок недоступна в этом режиме."
+#: app/helpers/yaku.ts:151:34
+msgid "Honitsu"
+msgstr "Хоницу"
 
-#: app/pages/ProfileSignup.tsx:62:24
-msgid "You should read and accept the Privacy Policy"
-msgstr "Вы должны прочитать и принять Политику конфиденциальности"
+#: app/helpers/yaku.ts:155:34
+msgid "Honroutou"
+msgstr "Хонрото"
+
+#: app/helpers/yaku.ts:159:34
+msgid "Sanankou"
+msgstr "Сананко"
+
+#: app/helpers/yaku.ts:163:34
+msgid "Shousangen"
+msgstr "Шосанген"
+
+#: app/helpers/yaku.ts:167:34
+msgid "Sankantsu"
+msgstr "Санканцу"
+
+#: app/helpers/yaku.ts:171:34
+msgid "Houtei raoyui"
+msgstr "Хотей"
+
+#: app/helpers/yaku.ts:175:34
+msgid "Haitei"
+msgstr "Хайтей"
+
+#: app/helpers/yaku.ts:179:34
+msgid "Rinshan kaihou"
+msgstr "Риншан кайхо"
+
+#: app/helpers/yaku.ts:183:34
+msgid "Chankan"
+msgstr "Чанкан"
+
+#: app/helpers/yaku.ts:187:34
+msgid "Renhou"
+msgstr "Ренхо"
+
+#: app/helpers/yaku.ts:191:34 app/helpers/yaku.ts:266:34
+msgid "Suukantsu"
+msgstr "Сууканцу"
+
+#: app/helpers/yaku.ts:195:34
+msgid "Suuankou"
+msgstr "Сууанко"
+
+#: app/helpers/yaku.ts:199:34 app/helpers/yaku.ts:246:34
+msgid "Daisangen"
+msgstr "Дайсанген"
+
+#: app/helpers/yaku.ts:203:34
+msgid "Shousuushii"
+msgstr "Шосуши"
+
+#: app/helpers/yaku.ts:207:34 app/helpers/yaku.ts:250:34
+msgid "Daisuushii"
+msgstr "Дайсуши"
+
+#: app/helpers/yaku.ts:211:34 app/helpers/yaku.ts:254:34
+msgid "Tsuuiisou"
+msgstr "Цуисо"
+
+#: app/helpers/yaku.ts:215:34 app/helpers/yaku.ts:262:34
+msgid "Chinroutou"
+msgstr "Чинрото"
+
+#: app/helpers/yaku.ts:219:34
+msgid "Chinitsu"
+msgstr "Чиницу"
+
+#: app/helpers/yaku.ts:223:34
+msgid "Chuuren poutou"
+msgstr "Чууренпото"
+
+#: app/helpers/yaku.ts:227:34 app/helpers/yaku.ts:258:34
+msgid "Ryuuiisou"
+msgstr "Рюисо"
+
+#: app/helpers/yaku.ts:231:34
+msgid "Kokushi musou"
+msgstr "Кокушимусо"
+
+#: app/helpers/yaku.ts:235:34
+msgid "Tenhou"
+msgstr "Тенхо"
+
+#: app/helpers/yaku.ts:239:34
+msgid "Chihou"
+msgstr "Чихо"
+
+#: app/Layout.tsx:146:30
+msgid "Toggle color scheme"
+msgstr "Переключить цветовую схему"
+
+#: app/Layout.tsx:152:76
+msgid "Language"
+msgstr "Язык"
+
+#: app/Navigation.tsx:99:20 app/pages/OwnedEvents.tsx:289:45
+#: app/pages/OwnedEvents.tsx:290:30
+msgid "Manage players"
+msgstr "Управление игроками"
+
+#: app/Navigation.tsx:105:20 app/pages/OwnedEvents.tsx:285:30
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:170:25
+msgid "Penalties"
+msgstr "Штрафы"
+
+#: app/Navigation.tsx:111:20 app/pages/OwnedEvents.tsx:277:30
+msgid "Manage games"
+msgstr "Управление играми"
+
+#: app/Navigation.tsx:118:20 app/pages/OwnedEvents.tsx:268:32
+msgid "Predefined seating"
+msgstr "Предопределенная рассадка"
+
+#: app/Navigation.tsx:128:16
+msgid "Sign in"
+msgstr "Войти"
+
+#: app/Navigation.tsx:135:16
+msgid "Sign up"
+msgstr "Зарегистрироваться"
+
+#: app/Navigation.tsx:142:16 app/pages/ProfileSignupAdmin.tsx:175:62
+msgid "Register player"
+msgstr "Зарегистрировать игрока"
+
+#: app/Navigation.tsx:149:16
+msgid "My profile"
+msgstr "Мой профиль"
+
+#: app/Navigation.tsx:156:16
+msgid "Manage events"
+msgstr "Управление событиями"
+
+#: app/Navigation.tsx:163:16
+msgid "Sign out"
+msgstr "Выйти"
+
+#: app/pages/EventPrescript.tsx:61:16
+msgid "Predefined seating configuration"
+msgstr "Конфигурация предопределенной рассадки"
+
+#: app/pages/EventPrescript.tsx:73:18 app/pages/EventPrescript.tsx:108:18
+#: app/pages/GamesControl/index.tsx:74:18
+#: app/pages/GamesControl/index.tsx:88:16
+#: app/pages/OwnedEventsEdit/index.tsx:179:18
+#: app/pages/OwnedEventsEdit/index.tsx:210:18 app/pages/Penalties.tsx:70:18
+#: app/pages/Penalties.tsx:116:18 app/pages/PlayersManage/index.tsx:81:18
+#: app/pages/PlayersManage/LocalIdsTab.tsx:70:18
+#: app/pages/PlayersManage/TeamNamesTab.tsx:70:18
+msgid "Error has occurred"
+msgstr "Произошла ошибка"
+
+#: app/pages/EventPrescript.tsx:102:13
+msgid "Failed to save event script: server error or network unreachable"
+msgstr ""
+"Не удалось сохранить скрипт рассадки: ошибка сервера или сеть недоступна"
+
+#: app/pages/EventPrescript.tsx:124:37
+msgid "Event script filling instruction"
+msgstr "Инструкция по заполнения скрипта рассадки"
+
+#: app/pages/EventPrescript.tsx:127:10
+msgid ""
+"Predefined seating is entered as list of tables, one table per row. New game "
+"session should be indicated as an empty line. Example:"
+msgstr ""
+"Предопределенная рассадка вводится как список столов, 1 стол на каждую "
+"строку. Новая игровая сессия отделяется пустой строкой. Пример:"
+
+#: app/pages/EventPrescript.tsx:135:10
+msgid ""
+"In this example, two tables play two games. Numbers in seating are called "
+"\"Local IDs\". They persist between games and are defined at Manage players "
+"page of the event."
+msgstr ""
+"В этом примере два стола играют две игры. Числа в скрипте рассадки "
+"называются \"локальными идентификаторами\" (Local ID). Они сохраняются между "
+"играми, администратор может их задать на странице \"Управление игроками\"."
+
+#: app/pages/EventPrescript.tsx:141:16
+msgid "Next session index"
+msgstr "Индекс следующей сессии"
+
+#: app/pages/EventPrescript.tsx:142:22
+msgid ""
+"This is the index of next session script (starting from 1). Each time new "
+"session starts, this value is increased automatically."
+msgstr ""
+"Это индекс сессии внутри скрипта (начиная с единицы), которая будет "
+"использована в следующей рассадке. Каждый раз, когда сессия стартует, этот "
+"индекс увеличивается автоматически."
+
+#: app/pages/EventPrescript.tsx:151:24
+msgid "Please enter event script here"
+msgstr "Пожалуйста, введите скрипт рассадки"
+
+#: app/pages/EventPrescript.tsx:154:36
+msgid "Event script"
+msgstr "Скрипт рассадки"
+
+#: app/pages/EventPrescript.tsx:156:18
+msgid "Instructions"
+msgstr "Инструкции"
+
+#: app/pages/EventPrescript.tsx:168:15
+msgid "Found %1 error"
+msgid_plural "Found %1 errors"
+msgstr[0] "Найдена %1 ошибка"
+msgstr[1] "Найдено %1 ошибки"
+msgstr[2] "Найдено %1 ошибок"
+
+#: app/pages/EventPrescript.tsx:169:37
+msgid "No errors found"
+msgstr "Ошибок не найдено"
+
+#: app/pages/EventPrescript.tsx:181:26
+msgid "Script updated!"
+msgstr "Скрипт обновлен!"
+
+#: app/pages/EventPrescript.tsx:181:55
+msgid "Update script"
+msgstr "Обновить скрипт"
+
+#: app/pages/GamesControl/Confirmation.tsx:78:20
+msgid "Confirm"
+msgstr "Подтвердить"
+
+#: app/pages/GamesControl/GamesList.tsx:102:30
+msgid "Table # %1"
+msgstr "Стол № %1"
+
+#: app/pages/GamesControl/GamesList.tsx:115:30
+msgid "Current round"
+msgstr "Текущий раунд"
+
+#: app/pages/GamesControl/GamesList.tsx:178:30
+msgid "Cancel last played round"
+msgstr "Отменить последний сыгранный раунд"
+
+#: app/pages/GamesControl/GamesList.tsx:179:29
+msgid "Cancel round"
+msgstr "Отменить раздачу"
+
+#: app/pages/GamesControl/GamesList.tsx:180:32
+#: app/pages/GamesControl/GamesList.tsx:193:30
+msgid "This action can't be undone. Continue?"
+msgstr "Это действие не может быть отменено. Продолжить?"
+
+#: app/pages/GamesControl/GamesList.tsx:191:28
+msgid "Remove the game as it never existed"
+msgstr "Удалить игру, как будто ее никогда не было"
+
+#: app/pages/GamesControl/GamesList.tsx:192:27
+msgid "Remove game"
+msgstr "Удалить игру"
+
+#: app/pages/GamesControl/GamesList.tsx:204:28
+msgid "Remove game results"
+msgstr "Удалить результаты игры"
+
+#: app/pages/GamesControl/GamesList.tsx:205:27
+msgid "Cancel results"
+msgstr "Удалить результаты"
+
+#: app/pages/GamesControl/GamesList.tsx:206:30
+msgid ""
+"This will only remove the game results, but you will need to cancel last "
+"round separately. This action can't be undone. Continue?"
+msgstr ""
+"Это действие только удалит результаты из БД, отменить последний раунд "
+"потребуется отдельным действием. Удаление результатов нельзя отменить. "
+"Продолжить?"
+
+#: app/pages/GamesControl/GamesList.tsx:239:20
+msgid "Session is ready to start"
+msgstr "Игровая сессия готова"
+
+#: app/pages/GamesControl/GamesList.tsx:251:20
+msgid "Session in progress"
+msgstr "Игровая сессия в процессе"
+
+#: app/pages/GamesControl/GamesList.tsx:264:18
+msgid "Session finished, but not confirmed"
+msgstr "Сессия завершена, но результаты не подтверждены"
+
+#: app/pages/GamesControl/GamesList.tsx:276:18
+msgid "Session finished"
+msgstr "Сессия завершена"
+
+#: app/pages/GamesControl/GamesList.tsx:288:18
+msgid "Session cancelled"
+msgstr "Сессия отменена"
+
+#: app/pages/GamesControl/GamesList.tsx:300:18
+msgid "Session is scheduled"
+msgstr "Сессия запланирована"
+
+#: app/pages/GamesControl/GamesList.tsx:333:12
+#: app/pages/GamesControl/GamesList.tsx:344:9
+msgid "Ron, %1 from %2 (%3), riichi: %4"
+msgstr "Рон, %1 с %2 (%3), риичи: %4"
+
+#: app/pages/GamesControl/GamesList.tsx:355:12
+msgid "Tsumo, %1 (%2), riichi: %3"
+msgstr "Цумо, %1 (%2), риичи: %3"
+
+#: app/pages/GamesControl/GamesList.tsx:363:12
+msgid "Chombo, %1"
+msgstr "Чомбо, %1"
+
+#: app/pages/GamesControl/GamesList.tsx:367:12
+msgid "Draw, tempai: %1, riichi: %2"
+msgstr "Ничья, темпай: %1, риичи: %2"
+
+#: app/pages/GamesControl/GamesList.tsx:374:12
+msgid "Abortive draw, riichi: %1"
+msgstr "Абортивная ничья, риичи: %1"
+
+#: app/pages/GamesControl/GamesList.tsx:380:12
+msgid "Nagashi mangan, nagashi: %1, tempai: %2, riichi: %3"
+msgstr "Нагаши манган, нагаши: %1, темпай: %2, риичи: %3"
+
+#: app/pages/GamesControl/index.tsx:53:16
+msgid "Games management"
+msgstr "Управление играми"
+
+#: app/pages/GamesControl/index.tsx:123:35
+msgid "Failed to cancel round"
+msgstr "Не удалось отменить раздачу"
+
+#: app/pages/GamesControl/index.tsx:137:35
+msgid "Failed to definalize game"
+msgstr "Не удалось удалить результаты"
+
+#: app/pages/GamesControl/index.tsx:151:35
+msgid "Failed to cancel game"
+msgstr "Не удалось удалить игру"
+
+#: app/pages/GamesControl/index.tsx:164:27
+msgid "Failed to start timer"
+msgstr "Не удалось запустить таймер"
+
+#: app/pages/GamesControl/index.tsx:176:27
+msgid "Failed to toggle results visibility"
+msgstr "Не удалось переключить видимость результатов"
+
+#: app/pages/GamesControl/index.tsx:188:27
+msgid "Failed to approve session results"
+msgstr "Не удалось подтвердить результаты сессий"
+
+#: app/pages/GamesControl/index.tsx:202:29
+msgid "Failed to generate interval seating"
+msgstr "Не удалось сгенерировать интервальную рассадку"
+
+#: app/pages/GamesControl/index.tsx:220:27
+msgid "Failed to generate random seating"
+msgstr "Не удалось сгенерировать случайную рассадку"
+
+#: app/pages/GamesControl/index.tsx:236:27
+msgid "Failed to generate swiss seating"
+msgstr "Не удалось сгенерировать швейцарскую рассадку"
+
+#: app/pages/GamesControl/index.tsx:253:29
+msgid "Failed to generate prescripted seating"
+msgstr "Не удалось сгенерировать предопределенную рассадку"
+
+#: app/pages/GamesControl/index.tsx:270:27
+msgid "Failed to reset seating"
+msgstr "Не удалось отменить рассадку"
+
+#: app/pages/GamesControl/index.tsx:332:16
+msgid "Refresh data [%1]"
+msgstr "Обновить данные [%1]"
+
+#: app/pages/GamesControl/TournamentControls.tsx:89:28
+msgid "Current status"
+msgstr "Текущий статус"
+
+#: app/pages/GamesControl/TournamentControls.tsx:96:22
+msgid "Not ready"
+msgstr "Не готово"
+
+#: app/pages/GamesControl/TournamentControls.tsx:97:22
+msgid "Not started"
+msgstr "Не начато"
+
+#: app/pages/GamesControl/TournamentControls.tsx:98:22
+msgid "Seating..."
+msgstr "Рассадка..."
+
+#: app/pages/GamesControl/TournamentControls.tsx:99:22
+msgid "Seating ready"
+msgstr "Рассадка готова"
+
+#: app/pages/GamesControl/TournamentControls.tsx:100:22
+msgid "Session started"
+msgstr "Сессии начаты"
+
+#: app/pages/GamesControl/TournamentControls.tsx:101:22
+msgid "Ready to approve"
+msgstr "Ждет подтверждения"
+
+#: app/pages/GamesControl/TournamentControls.tsx:106:14
+msgid ""
+"Can't generate seating: count of registered players is not divisible by 4"
+msgstr ""
+"Невозможно сгенерировать рассадку: число зарегистрированных игроков не "
+"делится на 4"
+
+#: app/pages/GamesControl/TournamentControls.tsx:113:19
+#: app/pages/GamesControl/TournamentControls.tsx:179:19
+#: app/pages/GamesControl/TournamentControls.tsx:246:19
+#: app/pages/GamesControl/TournamentControls.tsx:267:19
+msgid "Show results table"
+msgstr "Показать таблицу результатов"
+
+#: app/pages/GamesControl/TournamentControls.tsx:114:19
+#: app/pages/GamesControl/TournamentControls.tsx:180:19
+#: app/pages/GamesControl/TournamentControls.tsx:247:19
+#: app/pages/GamesControl/TournamentControls.tsx:268:19
+msgid "Hide results table"
+msgstr "Скрыть таблицу результатов"
+
+#: app/pages/GamesControl/TournamentControls.tsx:118:22
+msgid "Use random seating for next session"
+msgstr "Использовать случайную рассадку для следующей сессии"
+
+#: app/pages/GamesControl/TournamentControls.tsx:119:21
+msgid "Random seating"
+msgstr "Случайная рассадка"
+
+#: app/pages/GamesControl/TournamentControls.tsx:120:24
+msgid "Use random seating for next session?"
+msgstr "Использовать случайную рассадку для следующей сессии?"
+
+#: app/pages/GamesControl/TournamentControls.tsx:130:21
+msgid "Interval seating can't be used for first session in tournament"
+msgstr ""
+"Интервальная рассадка не может быть использована для первой сессии в турнире"
+
+#: app/pages/GamesControl/TournamentControls.tsx:131:21
+msgid "Use interval seating for next session"
+msgstr "Использовать интервальную рассадку для следующей сессии"
+
+#: app/pages/GamesControl/TournamentControls.tsx:133:21
+msgid "Interval seating"
+msgstr "Интервальная рассадка"
+
+#: app/pages/GamesControl/TournamentControls.tsx:137:28
+msgid "Select interval"
+msgstr "Выберите интервал"
+
+#: app/pages/GamesControl/TournamentControls.tsx:150:26
+msgid "Use interval seating for next session?"
+msgstr "Использовать интервальную рассадку для следующей сессии?"
+
+#: app/pages/GamesControl/TournamentControls.tsx:164:21
+msgid "Swiss seating can't be used for first session in tournament"
+msgstr ""
+"Швейцарская рассадка не может быть использована для первой сессии в турнире"
+
+#: app/pages/GamesControl/TournamentControls.tsx:165:21
+msgid "Use swiss seating for next session"
+msgstr "Использовать швейцарскую рассадку для следующей сессии"
+
+#: app/pages/GamesControl/TournamentControls.tsx:167:21
+msgid "Swiss seating"
+msgstr "Швейцарская рассадка"
+
+#: app/pages/GamesControl/TournamentControls.tsx:168:24
+msgid "Use swiss seating for next session?"
+msgstr "Использовать швейцарскую рассадку для следующей сессии?"
+
+#: app/pages/GamesControl/TournamentControls.tsx:184:22
+msgid "Generate seating for next session"
+msgstr "Сгенерировать рассадку для следующей сессии"
+
+#: app/pages/GamesControl/TournamentControls.tsx:185:21
+msgid "Next seating"
+msgstr "Следующая рассадка"
+
+#: app/pages/GamesControl/TournamentControls.tsx:189:28
+msgid "Randomize seating by wind"
+msgstr "Перемешать игроков по ветрам за каждым столом"
+
+#: app/pages/GamesControl/TournamentControls.tsx:194:26
+msgid "Apply seating for next session?"
+msgstr "Применить рассадку для следующей сессии?"
+
+#: app/pages/GamesControl/TournamentControls.tsx:206:17
+msgid "Please wait unit seating is ready"
+msgstr "Пожалуйста, подождите, пока рассадка не будет готова"
+
+#: app/pages/GamesControl/TournamentControls.tsx:213:22
+msgid "Reset generated seating"
+msgstr "Сбросить сгенерированную рассадку"
+
+#: app/pages/GamesControl/TournamentControls.tsx:214:21
+msgid "Reset seating"
+msgstr "Сбросить рассадку"
+
+#: app/pages/GamesControl/TournamentControls.tsx:215:24
+msgid "This will remove generated seating. Continue?"
+msgstr "Вы собираетесь сбросить сгенерированную рассадку. Продолжить?"
+
+#: app/pages/GamesControl/TournamentControls.tsx:223:22
+msgid "Start timer and sessions"
+msgstr "Запустить игры и таймер"
+
+#: app/pages/GamesControl/TournamentControls.tsx:224:21
+msgid "Start timer"
+msgstr "Запустить таймер"
+
+#: app/pages/GamesControl/TournamentControls.tsx:225:24
+msgid "Start timer and game sessions?"
+msgstr "Запустить таймер и игры?"
+
+#: app/pages/GamesControl/TournamentControls.tsx:237:22
+msgid "Reset the timer to initial value"
+msgstr "Сбросить таймер к начальному значению"
+
+#: app/pages/GamesControl/TournamentControls.tsx:238:21
+msgid "Reset timer"
+msgstr "Сбросить таймер"
+
+#: app/pages/GamesControl/TournamentControls.tsx:239:24
+msgid "Really reset timer?"
+msgstr "Действительно сбросить таймер?"
+
+#: app/pages/GamesControl/TournamentControls.tsx:256:22
+msgid "Approve session results and go on to next session"
+msgstr "Подтвердить результаты сессий и перейти к следующей сессии"
+
+#: app/pages/GamesControl/TournamentControls.tsx:257:21
+msgid "Approve sessions"
+msgstr "Подтвердить результаты"
 
 #: app/pages/GamesControl/TournamentControls.tsx:258:24
 msgid ""
@@ -1666,19 +650,807 @@ msgstr ""
 "Вы не сможете отменять последние раунды после того, как результаты "
 "подтверждены. Подтвердить результаты?"
 
-#: app/pages/ProfileLogin.tsx:81:24 app/pages/ProfileManage.tsx:140:22
-#: app/pages/ProfileResetPassword.tsx:80:26
-msgid "Your e-mail address"
-msgstr "Ваш адрес e-mail"
+#: app/pages/OwnedEvents.tsx:84:16
+msgid "Manage my events"
+msgstr "Мои события"
 
-#: app/pages/ProfileManage.tsx:141:28
+#: app/pages/OwnedEvents.tsx:176:12
+msgid "Stop event \"%1\" (id #%2)? This action can't be undone!"
+msgstr "Завершить событие \"%1\" (id #%2)? Отменить это действие невозможно!"
+
+#: app/pages/OwnedEvents.tsx:183:14
+msgid "Cancel"
+msgstr "Отмена"
+
+#: app/pages/OwnedEvents.tsx:193:14
+msgid "Stop event"
+msgstr "Завершить событие"
+
+#: app/pages/OwnedEvents.tsx:219:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:43:24
+msgid "Local rating"
+msgstr "Локальный рейтинг"
+
+#: app/pages/OwnedEvents.tsx:231:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:45:29
+msgid "Tournament"
+msgstr "Турнир"
+
+#: app/pages/OwnedEvents.tsx:243:30
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:44:25
+msgid "Online event"
+msgstr "Онлайн-событие"
+
+#: app/pages/OwnedEvents.tsx:258:48
+msgid "Actions"
+msgstr "Действия"
+
+#: app/pages/OwnedEvents.tsx:261:38
+msgid "Event management"
+msgstr "Управление событием"
+
+#: app/pages/OwnedEvents.tsx:265:38
+msgid "Manage predefined seating"
+msgstr "Предопределенная рассадка"
+
+#: app/pages/OwnedEvents.tsx:274:36
+msgid "Manage current games"
+msgstr "Управление играми"
+
+#: app/pages/OwnedEvents.tsx:282:36 app/pages/Penalties.tsx:49:16
+msgid "Manage penalties"
+msgstr "Штрафы"
+
+#: app/pages/OwnedEvents.tsx:294:45
+msgid "Edit event settings"
+msgstr "Настройки события"
+
+#: app/pages/OwnedEvents.tsx:295:30
+msgid "Settings"
+msgstr "Настройки"
+
+#: app/pages/OwnedEvents.tsx:300:38
+msgid "Danger zone"
+msgstr "Зона особого внимания"
+
+#: app/pages/OwnedEvents.tsx:303:36 app/pages/OwnedEvents.tsx:307:30
+msgid "Rebuild scoring"
+msgstr "Перестроить скоринг"
+
+#: app/pages/OwnedEvents.tsx:311:34 app/pages/OwnedEvents.tsx:319:28
+msgid "Finish event"
+msgstr "Завершить событие"
+
+#: app/pages/OwnedEvents.tsx:327:24
+msgid "Event finished"
+msgstr "Событие завершено"
+
+#: app/pages/OwnedEvents.tsx:332:28
+msgid "Toggle visibility in ratings global list"
+msgstr "Переключить видимость события в глобальном списке событий"
+
+#: app/pages/OwnedEvents.tsx:347:18
+msgid "Create new event"
+msgstr "Создать новое событие"
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:55:33
+msgid "Select event type"
+msgstr "Выберите тип события"
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:67:18
+msgid "Event title"
+msgstr "Название события"
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:73:20
+msgid "Basic ruleset"
+msgstr "Базовый набор правил"
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:74:26
 msgid ""
-"Your e-mail will not be shared with anyone else and will not be visible "
-"anywhere. If you want to change your address, contact chief administrator."
+"Ruleset to be used as a template for the event. Fine tuning is available in "
+"adjacent tabs. Please note that all ruleset settings will be reset when you "
+"select another ruleset here."
 msgstr ""
-"Ваш адрес e-mail не будет доступен публично и не будет виден кому бы то ни "
-"было. Если вы хотите поменять свой адрес e-mail, свяжитесь с администратором "
-"сервиса."
+"Набор правил, который будет использован в качестве шаблона для события. "
+"Точная настройка доступна на соседних вкладках. Пожалуйста, помните, что "
+"настройки будут сброшены к умолчаниям при выборе другого набора правил."
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:92:18
+msgid "Primary timezone for event"
+msgstr "Основной часовой пояс события"
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:93:24
+msgid ""
+"All dates and time will be displayed according to the selected timezone."
+msgstr ""
+"Все даты и время будут отображаться с учетом выбранного часового пояса."
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:97:25
+#: app/pages/ProfileManage.tsx:167:29
+msgid "Nothing found"
+msgstr "Ничего не найдено"
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:103:18
+msgid "Brief description"
+msgstr "Краткое описание"
+
+#: app/pages/OwnedEventsEdit/BasicSettings.tsx:104:24
+msgid "Multiline. Markdown syntax supported."
+msgstr "Многострочное. Поддерживается синтаксис Markdown."
+
+#: app/pages/OwnedEventsEdit/index.tsx:59:18
+msgid "Edit event :: %1"
+msgstr "Редактирование события :: %1"
+
+#: app/pages/OwnedEventsEdit/index.tsx:61:18
+msgid "New event"
+msgstr "Новое событие"
+
+#: app/pages/OwnedEventsEdit/index.tsx:173:29
+msgid "Failed to fetch event data"
+msgstr "Не удалось получить данные события"
+
+#: app/pages/OwnedEventsEdit/index.tsx:205:27
+msgid "Failed to save event: server error or network unreachable"
+msgstr "Не удалось сохранить событие: ошибка сервера или сеть недоступна"
+
+#: app/pages/OwnedEventsEdit/index.tsx:260:30
+#: app/pages/PlayersManage/LocalIdsTab.tsx:110:28
+#: app/pages/PlayersManage/TeamNamesTab.tsx:111:28
+#: app/pages/ProfileManage.tsx:191:32
+msgid "Changes saved!"
+msgstr "Изменения сохранены!"
+
+#: app/pages/OwnedEventsEdit/index.tsx:260:58
+#: app/pages/PlayersManage/LocalIdsTab.tsx:110:56
+#: app/pages/PlayersManage/TeamNamesTab.tsx:111:56
+#: app/pages/ProfileManage.tsx:191:60
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:35:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:73:16
+msgid "Series length"
+msgstr "Длина серии"
+
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:36:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:74:22
+msgid ""
+"Count of session in game series. Set to 0 to disable series functionality."
+msgstr ""
+"Количество сессий в одной серии. Поставьте 0, чтобы отключить игровые серии."
+
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:46:16
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:84:16
+msgid "Minimal games count"
+msgstr "Минимальное число игр"
+
+#: app/pages/OwnedEventsEdit/LocalSettings.tsx:47:22
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:85:22
+msgid ""
+"Minimal count of games the player should play to get into the rating table."
+msgstr ""
+"Минимальное число сыгранных игр для того, чтобы игрок попал в рейтинговую "
+"таблицу."
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:39:10
+msgid ""
+"Please note: you should set up the rating accordingly to tournament settings "
+"in Tenhou.net, otherwise expect errors on replay submit!"
+msgstr ""
+"Внимание: рейтинг должен быть настроен аналогично настройкам турнира на "
+"Tenhou.net, в ином случае ожидайте ошибок при внесении игр!"
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:46:16
+msgid "Tenhou Lobby ID"
+msgstr "ID лобби на Tenhou.net"
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:52:16
+msgid "Game expiration time (in hours)"
+msgstr "Время истечения игры (в часах)"
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:53:22
+msgid ""
+"Interval of time when played online game is still considered valid and can "
+"be added to the rating. Set to 0 to disable expiration."
+msgstr ""
+"Интервал времени, в течение которого сыгранная игра все еще считается "
+"действительной и может быть внесена в рейтинг. Выставьте 0, чтобы выключить "
+"истечение игр."
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:62:16
+msgid "Chips value"
+msgstr "Стоимость чипа"
+
+#: app/pages/OwnedEventsEdit/OnlineSettings.tsx:63:22
+msgid ""
+"Amount of points given for each chip. Chips should be set up in tournament "
+"settings in Tenhou.net. Set to 0 to disable chips."
+msgstr ""
+"Количество очков, которое выдается за каждый чип. Чипы должны быть настроены "
+"на Tenhou.net. Выставьте 0, чтобы выключить чипы."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:42:16
+msgid "Initial rating"
+msgstr "Начальный рейтинг"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:43:22
+msgid "Score given to all players in the beginning of the rating"
+msgstr ""
+"Количество рейтинговых очков, изначально даваемое каждому новому игроку"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:50:16
+msgid "Initial points"
+msgstr "Начальные очки"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:51:22
+msgid ""
+"Amount of points given to every player in the beginning of every session"
+msgstr "Количество игровых очков у каждого игрока в начале игры"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:57:25
+msgid "Game duration"
+msgstr "Длительность сессии"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:59:16
+msgid "Tonpuusen"
+msgstr "Тонпусены"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:60:22
+msgid "Play only east rounds"
+msgstr "Играть только восточные раунды"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:64:16
+msgid "Agariyame"
+msgstr "Агарияме"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:65:22
+msgid ""
+"If the dealer holds the 1st place after last hand in session, the game ends "
+"regardless of his winning hand or tempai."
+msgstr ""
+"Если дилер занимает первое место после последней раздачи в игре, игра "
+"завершается независимо от того, выиграл ли дилер (или был ли он темпай)."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:71:16
+msgid "Disable renchans"
+msgstr "Выключить ренчаны"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:72:22
+msgid ""
+"When dealer wins, or stays tempai after draw, seat winds will be changed. "
+"Honba is added only after draw."
+msgstr ""
+"Когда дилер выигрывает или остается темпай, ветра все равно меняются. Хонба "
+"добавляется только после ничьей."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:80:16
+msgid "Allow bankruptcy"
+msgstr "Банкротство"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:81:22
+msgid "When a player runs out of score points, the game immediately ends"
+msgstr "Когда игрок уходит в минус по очкам, игра немедленно завершается"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:85:16
+msgid "Play additional rounds"
+msgstr "Дополнительные раунды"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:86:22
+msgid ""
+"If nobody reaches the goal score at the last hand, the game continues to "
+"west rounds (in hanchan) or to south rounds (in tonpuusen), until someone "
+"reaches the goal"
+msgstr ""
+"Если никто не набирает заданное число очков после оорасу, игра продолжается "
+"в западных раундах (в ханчане) или в южных раундах (в тонпусене), до тех пор "
+"пока кто-либо не наберет заданное число очков"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:94:18
+msgid "Goal score"
+msgstr "Целевое количество очков"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:95:24
+msgid "Amount of score player should get to end the game."
+msgstr "Количество очков, которое нужно набрать для завершения игры."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:101:25
+msgid "Round outcomes"
+msgstr "Исходы раздач"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:103:16
+msgid "Atamahane"
+msgstr "Атамахане"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:104:22
+msgid ""
+"Only first player by the order of the move from the loser would be "
+"considered a winner. If not checked, all players declaring Ron are "
+"considered winners."
+msgstr ""
+"Только первый игрок по ходу раздачи считается победителем по рон. Если "
+"галочка не отмечена, все игроки, объявившие рон, считаются победителями."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:110:16
+msgid "Allow abortive draws"
+msgstr "Разрешить абортивные ничьи"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:111:22
+msgid ""
+"There will be a separate \"Abortive draw\" outcome to record draws due to "
+"four riichi, four kans, suufon renda, kyuushu kyuuhai, etc."
+msgstr ""
+"Включить отдельный исход \"Абортивная ничья\" для специальных ситуаций (4 "
+"риичи, 4 кана, одинаковый ветер в сбросе на первом круге, кюсюкюхай)."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:117:16
+msgid "Nagashi mangan"
+msgstr "Нагаши манган"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:118:22
+msgid "Enable \"Nagashi\" outcome to record this special draw"
+msgstr "Включить возможность записи исхода \"Нагаши манган\""
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:121:25
+msgid "Riichi and honba"
+msgstr "Риичи и хонба"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:123:16
+msgid "Riichi goes to winner"
+msgstr "Риичи уходит победителю"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:124:22
+msgid ""
+"Riichi left on table in case of draw in the end of the session will be given "
+"to session winner"
+msgstr ""
+"После завершения игры все ставки риичи, оставшиеся на столе, отдаются "
+"победителю в игре"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:130:16
+msgid "Pay for honba by atamahane"
+msgstr "Хонба по атамахане"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:131:22
+msgid ""
+"Honba payments will be given only to the first winner. If not checked, "
+"payment will be given to all winners."
+msgstr ""
+"Выплата по хонбе будет выдана только первому победителю по ходу игры. Если "
+"не отмечено, выплата производится всем победителям."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:137:16
+msgid "Collect riichi bets by atamahane"
+msgstr "Риичи по атамахане"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:138:22
+msgid ""
+"All riichi bets on the table will be given to the first winner. If not "
+"checked, winning riichi bets will always be given back, lost bets would be "
+"given to the first winner."
+msgstr ""
+"Все ставки на столе будут выданы первому победителю по порядку хода. Если не "
+"отмечено, выигравшие риичи-ставки всегда будут возвращены победителям, "
+"первому победителю достанутся только не выигравшие ставки."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:143:25
+msgid "Payments and scores"
+msgstr "Выплаты и очки"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:145:16
+msgid "Kazoe yakuman"
+msgstr "Казое якуман"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:146:22
+msgid "13+ han hands are considered yakuman, not sanbaiman."
+msgstr "Руки стоимостью в 13+ хан считаются якуманом, а не санбайманом."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:150:16
+msgid "Kiriage mangan"
+msgstr "Кириаге манган"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:151:22
+msgid "Hands valued as 4/30 and 3/60 are rounded to mangan."
+msgstr "Руки стоимостью в 4/30 и 3/60 округляются до мангана."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:156:16
+msgid "Oka bonus"
+msgstr "Ока"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:157:22
+msgid "Amount of points given to player at 1st place"
+msgstr "Количество бонусных очков за первое место в игре"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:164:16
+msgid "Equalize uma"
+msgstr "Выравнивание умы"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:165:22
+msgid ""
+"If checked, players with equivalent score receive equivalent uma bonus. "
+"Otherwise, uma is assigned according to move order."
+msgstr ""
+"Если отмечено, игроки с одинаковыми очками получат одинаковый ранговый "
+"бонус, равный среднему их бонусу. В ином случае ума назначается по порядку "
+"хода."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:172:16
+msgid "Max arbitrary penalty score"
+msgstr "Максимальный штраф"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:178:16
+msgid "Min arbitrary penalty score"
+msgstr "Минимальный штраф"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:184:16
+msgid "Step of arbitrary penalty scores"
+msgstr "Шаг штрафа"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:190:16
+msgid "Pay chombo as reverse mangan"
+msgstr "Чомбо как обратный манган"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:191:22
+msgid ""
+"Pay chombo right on occasion. If not checked, chombo is subtracted from "
+"player score after uma is applied."
+msgstr ""
+"Выплата штрафа чомбо производится на месте в размере обратного мангана. Если "
+"не отмечено, штраф чомбо будет вычтен из очков игрока после умы в конце игры."
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:199:18
+msgid "Amount of chombo penalty"
+msgstr "Размер штрафа чомбо"
+
+#: app/pages/OwnedEventsEdit/RulesetSettings.tsx:200:24
+msgid "Amount of penalty applied in the end of the session after uma bonus."
+msgstr ""
+"Количество очков, вычитаемое из очков игрока за каждый штраф чомбо после "
+"окончания игры."
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:40:10
+msgid "Basic settings"
+msgstr "Базовые настройки"
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:44:12
+msgid "Local event settings"
+msgstr "Настройки локального рейтинга"
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:49:12
+msgid "Tournament settings"
+msgstr "Настройки турнира"
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:54:12
+msgid "Online event settings"
+msgstr "Настройки онлайн-события"
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:58:10
+msgid "Ruleset tuning"
+msgstr "Настройка набора правил"
+
+#: app/pages/OwnedEventsEdit/TabsList.tsx:62:10
+msgid "Yaku settings"
+msgstr "Настройки яку"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:36:16
+msgid "Session duration in minutes"
+msgstr "Длительность сессии в минутах"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:37:22
+msgid ""
+"Timer starting value. After time runs out, session ending policy is applied "
+"(see below)."
+msgstr ""
+"Стартовое значение таймера. После истечения таймера, применяется политика "
+"окончания игры (см. ниже)"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:45:16
+msgid "Session ending policy"
+msgstr "Политика окончания игры"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:46:22
+msgid "How game sessions should end during the tournament"
+msgstr "Как игровые сессии завершаются во время турнира"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:53:20
+msgid "Do not interrupt session until it ends"
+msgstr "Не прерывать игру до тех пор, пока она не закончена"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:57:20
+msgid "When time is out, finish current hand and interrupt the session"
+msgstr ""
+"Когда время вышло, завершить текущую раздачу и после этого прервать игру"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:61:20
+msgid ""
+"When time is out, finish current hand, play one more, and then interrup the "
+"session"
+msgstr ""
+"Когда время вышло, завершить текущую раздачу, сыграть еще одну, после чего "
+"прервать игру"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:69:16
+msgid "Team tournament"
+msgstr "Командный турнир"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:73:16
+msgid "Seating is defined in advance"
+msgstr "Предопределенная рассадка"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:74:22
+msgid ""
+"You should prepare the tournament script yourself. No automated seating "
+"functionality is available when this flag is set."
+msgstr ""
+"Вы должны подготовить скрипт рассадки самостоятельно. Функциональность "
+"автоматических рассадок недоступна в этом режиме."
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:82:16
+msgid "Fixed score applied to replacement player"
+msgstr "Фиксированное число итоговых очков у игрока замены"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:83:22
+msgid ""
+"Fixed amount of result score applied for each replacement player regardless "
+"of session results."
+msgstr "Фиксированное число очков, применямое независимо от результатов игры."
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:92:16
+msgid "Fixed uma for replacement player"
+msgstr "Фиксированная ума для игрока замены"
+
+#: app/pages/OwnedEventsEdit/TournamentSettings.tsx:93:22
+msgid ""
+"Fixed amount of rank penalty applied for each replacement player regardless "
+"of session results."
+msgstr ""
+"Фиксированный ранговый бонус/штраф, выдаваемый независимо от результатов "
+"игры."
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:32:16
+msgid "Select uma bonus type"
+msgstr "Тип рангового бонуса ума"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:36:44
+msgid "Simple rank-based"
+msgstr "Простой, на основе текущего места"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:37:45
+msgid "Complex position-based"
+msgstr "Сложный, на основе позиций всех игроков"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:44:20
+msgid "Uma bonus for 1st place"
+msgstr "Ума за 1 место"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:50:20
+msgid "Uma bonus for 2nd place"
+msgstr "Ума за 2 место"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:56:20
+msgid "Uma penalty for 3rd place"
+msgstr "Ума за 3 место"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:62:20
+msgid "Uma penalty for 4th place"
+msgstr "Ума за 4 место"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:71:22
+msgid "Place / Session result"
+msgstr "Место / результат"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:73:16
+msgid "1st"
+msgstr "1е"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:76:16
+msgid "2nd"
+msgstr "2е"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:79:16
+msgid "3rd"
+msgstr "3е"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:82:16
+msgid "4th"
+msgstr "4е"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:87:22
+msgid "3 players with score less than starting"
+msgstr "3 игрока в минусе"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:112:22
+msgid "1 player with score less than starting"
+msgstr "1 игрок в минусе"
+
+#: app/pages/OwnedEventsEdit/UmaSelect.tsx:136:20
+msgid "Otherwise"
+msgstr "Прочие ситуации"
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:33:16
+msgid "Kuitan"
+msgstr "Куитан"
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:34:22
+msgid ""
+"Tanyao costs 1 han on open hand. If not checked, tanyao does not work on "
+"open hand."
+msgstr ""
+"Тан-яо стоит 1 хан на открытой руке. Если не проставлено, тан-яо не работает "
+"на открытой руке."
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:40:16
+msgid "Multiple yakumans"
+msgstr "Суммирование якуманов"
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:41:22
+msgid "Allow combination of yakumans, e.g. tsuuisou + daisangen"
+msgstr "Разрешить комбинации якуманов, напр. цуисо + дайсанген"
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:44:25
+msgid "Yaku allowed"
+msgstr "Разрешенные яку"
+
+#: app/pages/OwnedEventsEdit/YakuSettings.tsx:61:25
+msgid "Pao rule enabled for:"
+msgstr "Пао разрешено для:"
+
+#: app/pages/Penalties.tsx:89:54
+msgid "Please select player"
+msgstr "Выберите игрока"
+
+#: app/pages/Penalties.tsx:90:54
+msgid "Please select penalty amount"
+msgstr "Выберите размер штрафа"
+
+#: app/pages/Penalties.tsx:92:38
+msgid "A reason for penalty is mandatory"
+msgstr "Указывать причину штрафа обязательно"
+
+#: app/pages/Penalties.tsx:111:27
+msgid "Failed to apply penalty: server error or network unreachable"
+msgstr "Не удалось применить штраф: ошибка сервера или сеть недоступна"
+
+#: app/pages/Penalties.tsx:133:18
+msgid "Select player"
+msgstr "Выберите игрока"
+
+#: app/pages/Penalties.tsx:135:24
+msgid "This is a player to be penalized"
+msgstr "Игрок, к которому будет применен штраф"
+
+#: app/pages/Penalties.tsx:144:18
+msgid "Penalty amount"
+msgstr "Размер штрафа"
+
+#: app/pages/Penalties.tsx:145:24
+msgid ""
+"The points you enter here will be subtracted from player score after uma is "
+"applied when session ends. Please note: the penalty can be only applied "
+"during the session. If session is already ended, apply penalty in the next "
+"session."
+msgstr ""
+"Количество очков, указанных здесь, будет вычтено из общего счета игрока "
+"после применения рангового бонуса (умы) после завершения сессии. Внимание: "
+"штраф может быть применен только во время игры. Если игра уже завершилась, "
+"штраф можно применить только в следующей игре."
+
+#: app/pages/Penalties.tsx:157:18
+msgid "Penalty reason"
+msgstr "Причина штрафа"
+
+#: app/pages/Penalties.tsx:161:28
+msgid "Penalty applied!"
+msgstr "Штраф применен!"
+
+#: app/pages/Penalties.tsx:161:58
+msgid "Apply penalty"
+msgstr "Применить штраф"
+
+#: app/pages/PlayersManage/index.tsx:51:16
+msgid "Manage players in event"
+msgstr "Управление игроками"
+
+#: app/pages/PlayersManage/index.tsx:106:14
+msgid "Players"
+msgstr "Игроки"
+
+#: app/pages/PlayersManage/index.tsx:111:20
+msgid ""
+"Setup local identifiers of players to be used in predefined event script"
+msgstr ""
+"Установка локальных идентификаторов для использования в скрипте рассадки"
+
+#: app/pages/PlayersManage/index.tsx:121:14
+msgid "Local IDs"
+msgstr "Локальные идентификаторы"
+
+#: app/pages/PlayersManage/index.tsx:125:20
+msgid "Setup team name for each player (for team events)"
+msgstr "Установить имена команд для игроков (для командных турниров)"
+
+#: app/pages/PlayersManage/index.tsx:129:14
+msgid "Team names"
+msgstr "Имена команд"
+
+#: app/pages/PlayersManage/LocalIdsTab.tsx:99:24
+msgid "Local ID"
+msgstr "Локальный ID"
+
+#: app/pages/PlayersManage/ManagementTab.tsx:173:16
+msgid "Select replacement player for %1"
+msgstr "Выберите замену для игрока %1"
+
+#: app/pages/PlayersManage/ManagementTab.tsx:178:24
+msgid "Find replacement player by name..."
+msgstr "Найти замену по имени..."
+
+#: app/pages/PlayersManage/ManagementTab.tsx:194:30
+msgid "Find and add player by name..."
+msgstr "Найти и добавить игрока по имени..."
+
+#: app/pages/PlayersManage/ManagementTab.tsx:227:28
+msgid "Replace player with someone else"
+msgstr "Заменить игрока кем-либо еще"
+
+#: app/pages/PlayersManage/ManagementTab.tsx:243:28
+msgid "Replaced by %1"
+msgstr "Замена: %1"
+
+#: app/pages/PlayersManage/ManagementTab.tsx:250:37
+#: app/pages/PlayersManage/ManagementTab.tsx:251:32
+msgid "Remove replacement"
+msgstr "Удалить замену"
+
+#: app/pages/PlayersManage/ManagementTab.tsx:269:27
+msgid "Player is event administrator. Click to revoke privileges."
+msgstr "Игрок является администратором. Нажмите для отмены привилегий."
+
+#: app/pages/PlayersManage/ManagementTab.tsx:270:27
+msgid "Player is a regular user. Click to promote to event admin."
+msgstr ""
+"Игрок является обычным пользователем. Нажмите для назначения прав "
+"администратора."
+
+#: app/pages/PlayersManage/ManagementTab.tsx:285:27
+msgid "Player is excluded from next seating. Click to include"
+msgstr "Игрок исключен из следующей рассадки. Нажмите чтобы включить"
+
+#: app/pages/PlayersManage/ManagementTab.tsx:286:27
+msgid "Player is included in next seating. Click to exclude"
+msgstr "Игрок включен в следующую рассадку. Нажмите чтобы исключить"
+
+#: app/pages/PlayersManage/ManagementTab.tsx:299:28
+msgid "Remove player from event"
+msgstr "Удалить игрока из события"
+
+#: app/pages/PlayersManage/TeamNamesTab.tsx:99:24
+msgid "Team:"
+msgstr "Команда:"
+
+#: app/pages/ProfileConfirm.tsx:33:16
+msgid "Confirm your email"
+msgstr "Подтвердить адрес email"
+
+#: app/pages/ProfileConfirm.tsx:66:16
+msgid "Email confirmation failed"
+msgstr "Не удалось подтвердить email"
+
+#: app/pages/ProfileConfirm.tsx:69:10
+msgid ""
+"Failed to confirm your email. Probably the link you followed has been "
+"expired or already used. Please try registering again."
+msgstr ""
+"Не удалось подтвердить адрес email. Возможно, ссылка, по которой вы прошли, "
+"истекла или уже была использована. Попробуйте зарегистрироваться еще раз."
+
+#: app/pages/ProfileConfirm.tsx:76:37
+msgid "Go to Signup page"
+msgstr "К странице регистрации"
+
+#: app/pages/ProfileConfirm.tsx:86:54
+msgid "Email confirmed"
+msgstr "Email подтвержден"
 
 #: app/pages/ProfileConfirm.tsx:87:10
 msgid ""
@@ -1687,9 +1459,154 @@ msgid ""
 msgstr ""
 "Ваш адрес email был успешно подтвержден. Теперь вы можете войти в систему."
 
+#: app/pages/ProfileConfirm.tsx:92:37
+#: app/pages/ProfileResetPasswordConfirm.tsx:214:37
+msgid "Go to Login page"
+msgstr "К странице входа"
+
+#: app/pages/ProfileLogin.tsx:36:16
+msgid "Login to your account"
+msgstr "Войти в аккаунт"
+
+#: app/pages/ProfileLogin.tsx:46:63 app/pages/ProfileResetPassword.tsx:43:63
+#: app/pages/ProfileSignup.tsx:57:63 app/pages/ProfileSignupAdmin.tsx:64:63
+msgid "Invalid email"
+msgstr "Некорректный адрес email"
+
+#: app/pages/ProfileLogin.tsx:47:66
+msgid "Please enter password"
+msgstr "Пожалуйста, введите пароль"
+
+#: app/pages/ProfileLogin.tsx:65:13
+msgid "Failed to authorize. Please check your email and password."
+msgstr ""
+"Не удалось авторизоваться в системе. Проверьте ваш адрес email и пароль."
+
+#: app/pages/ProfileLogin.tsx:81:24 app/pages/ProfileManage.tsx:147:22
+#: app/pages/ProfileResetPassword.tsx:80:26
+msgid "Your e-mail address"
+msgstr "Ваш адрес e-mail"
+
 #: app/pages/ProfileLogin.tsx:86:24
 msgid "Your password"
 msgstr "Ваш пароль"
+
+#: app/pages/ProfileLogin.tsx:92:40
+msgid "Forgot your password?"
+msgstr "Забыли пароль?"
+
+#: app/pages/ProfileLogin.tsx:94:34
+msgid "Proceed with sign in"
+msgstr "К странице входа"
+
+#: app/pages/ProfileLogout.tsx:32:16
+msgid "Logout"
+msgstr "Выйти"
+
+#: app/pages/ProfileManage.tsx:43:16
+msgid "Manage your account"
+msgstr "Управление профилем"
+
+#: app/pages/ProfileManage.tsx:66:70 app/pages/ProfileSignup.tsx:58:70
+#: app/pages/ProfileSignupAdmin.tsx:65:70
+msgid "Invalid title"
+msgstr "Некорректное имя"
+
+#: app/pages/ProfileManage.tsx:69:13
+msgid ""
+"You have provided your tenhou login string instead of your username. You "
+"should NEVER give anyone your login string!"
+msgstr ""
+"Вы ввели ваш логин для Tenhou.net вместо имени пользователя. Вам не следует "
+"НИКОГДА и никому передавать ваш логин!"
+
+#: app/pages/ProfileManage.tsx:108:13
+msgid "Failed to update profile. Is your connection stable?"
+msgstr "Не удалось обновить профиль. Проблемы со связью?"
+
+#: app/pages/ProfileManage.tsx:148:28
+msgid ""
+"Your e-mail will not be shared with anyone else and will not be visible "
+"anywhere. If you want to change your address, contact chief administrator."
+msgstr ""
+"Ваш адрес e-mail не будет доступен публично и не будет виден кому бы то ни "
+"было. Если вы хотите поменять свой адрес e-mail, свяжитесь с администратором "
+"сервиса."
+
+#: app/pages/ProfileManage.tsx:156:22
+msgid "Player title"
+msgstr "Имя игрока"
+
+#: app/pages/ProfileManage.tsx:157:28 app/pages/ProfileSignup.tsx:120:26
+msgid ""
+"This is a title that will be shown in rating table and in mobile assistant, "
+"also event administrators will use this title to find you and add to the "
+"event. Please don't use your single name here, as it's not unique enough. "
+"Name and surname is fine."
+msgstr ""
+"Это имя, которое будет показано в рейтинговой таблице, кроме того "
+"администраторы рейтингов будут искать вас в системе по этому имени. "
+"Пожалуйста, не вводите только свое имя, поскольку оно недостаточно "
+"уникально. Используйте имя+фамилию."
+
+#: app/pages/ProfileManage.tsx:165:22
+msgid "Country"
+msgstr "Страна"
+
+#: app/pages/ProfileManage.tsx:175:22
+msgid "City"
+msgstr "Город"
+
+#: app/pages/ProfileManage.tsx:181:22
+msgid "Phone number"
+msgstr "Номер телефона"
+
+#: app/pages/ProfileManage.tsx:187:22 app/pages/ProfileSignupAdmin.tsx:170:26
+msgid "Tenhou ID"
+msgstr "Tenhou ID"
+
+#: app/pages/ProfileResetPassword.tsx:33:16
+#: app/pages/ProfileResetPasswordConfirm.tsx:194:37
+msgid "Recover password"
+msgstr "Восстановление пароля"
+
+#: app/pages/ProfileResetPassword.tsx:63:13
+msgid "Failed to request password reset. Please check your email."
+msgstr ""
+"Не удалось запросить сброс пароля. Пожалуйста проверьте ваш адрес email."
+
+#: app/pages/ProfileResetPassword.tsx:85:16
+msgid "Request password reset"
+msgstr "Запросить сброс пароля"
+
+#: app/pages/ProfileResetPassword.tsx:96:52
+msgid "Email has been sent"
+msgstr "E-mail отправлен"
+
+#: app/pages/ProfileResetPassword.tsx:97:8
+msgid ""
+"A confirmation link for password recovery has been sent to provided email. "
+"Please check your mailbox and follow the link in the message."
+msgstr ""
+"Ссылка для подтверждения сброса пароля была отправлена на ваш e-mail. "
+"Пожалуйста, проверьте ваш почтовый ящик и пройдите по ссылке в письме."
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:50:16
+msgid "Reset your password"
+msgstr "Сбросить пароль"
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:132:13
+#: app/pages/ProfileSignup.tsx:62:13
+msgid "Your password is too weak. Please enter stronger password."
+msgstr "Ваш пароль слишком прост. Введите более сложный пароль."
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:150:13
+msgid "Failed to change password. Is your connection stable?"
+msgstr "Не удалось сменить пароль. Проблемы со связью?"
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:159:60
+msgid "Please note"
+msgstr "Обратите внимание"
 
 #: app/pages/ProfileResetPasswordConfirm.tsx:160:10
 msgid ""
@@ -1699,17 +1616,110 @@ msgstr ""
 "Вам присвоен временный пароль. Вы не сможете войти в аккаунт до тех пор, "
 "пока вы не установите новый пароль."
 
+#: app/pages/ProfileResetPasswordConfirm.tsx:167:24
+msgid "Enter new strong password"
+msgstr "Введите новый сложный пароль"
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:172:34
+msgid "Update password"
+msgstr "Обновить пароль"
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:184:16
+msgid "Password recovery failed"
+msgstr "Не удалось восстановить пароль"
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:187:10
+msgid ""
+"Failed to recover your password. Probably the link you followed has been "
+"expired or already used. Please try again."
+msgstr ""
+"Не удалось восстановить ваш пароль. Возможно ссылка, по которой вы прошли, "
+"истекла или уже была использована. Попробуйте еще раз."
+
+#: app/pages/ProfileResetPasswordConfirm.tsx:206:16
+msgid "Password successfully updated"
+msgstr "Пароль успешно обновлен"
+
 #: app/pages/ProfileResetPasswordConfirm.tsx:209:10
 msgid ""
 "Your password has been successfully reset. Now you can proceed to login page."
 msgstr ""
 "Ваш пароль был успешно установлен. Теперь вы можете пройти на страницу входа."
 
-#: app/pages/ProfileResetPasswordConfirm.tsx:132:13
-#: app/pages/ProfileSignup.tsx:60:13
-msgid "Your password is too weak. Please enter stronger password."
-msgstr "Ваш пароль слишком прост. Введите более сложный пароль."
+#: app/pages/ProfileSignup.tsx:43:16 app/pages/ProfileSignup.tsx:141:36
+#: app/pages/ProfileSignupAdmin.tsx:42:16
+msgid "Register new account"
+msgstr "Зарегистрировать новый аккаунт"
 
-#: app/pages/ProfileSignup.tsx:135:14
+#: app/pages/ProfileSignup.tsx:64:24
+msgid "You should read and accept the Privacy Policy"
+msgstr "Вы должны прочитать и принять Политику конфиденциальности"
+
+#: app/pages/ProfileSignup.tsx:87:13
+msgid "Failed to request registration. Is your connection stable?"
+msgstr "Не удалось запросить регистрацию. Проблемы со связью?"
+
+#: app/pages/ProfileSignup.tsx:100:64 app/pages/ProfileSignupAdmin.tsx:92:22
+msgid "Success"
+msgstr "Успешно"
+
+#: app/pages/ProfileSignup.tsx:101:14
+msgid "Please check your mailbox for the verification email."
+msgstr ""
+"Письмо со ссылкой для подтверждения отправлено, пожалуйста проверьте вашу "
+"почту."
+
+#: app/pages/ProfileSignup.tsx:114:26
+msgid "Enter your e-mail address"
+msgstr "Введите ваш адрес e-mail"
+
+#: app/pages/ProfileSignup.tsx:127:26 app/pages/ProfileSignupAdmin.tsx:151:26
+msgid "Enter strong password"
+msgstr "Введите сложный пароль"
+
+#: app/pages/ProfileSignup.tsx:134:20
+msgid "I've read the privacy policy listed below and accept its terms"
+msgstr ""
+"Я прочитал(а) политику конфиденциальности, приведенную ниже, и принимаю ее "
+"условия"
+
+#: app/pages/ProfileSignup.tsx:139:42
+msgid "Already registered?"
+msgstr "Уже зарегистрированы?"
+
+#: app/pages/ProfileSignup.tsx:151:14
 msgid "show / hide"
 msgstr "показать / скрыть"
+
+#: app/pages/ProfileSignupAdmin.tsx:93:24
+msgid "Player was successfully registered"
+msgstr "Игрок был успешно зарегистрирован"
+
+#: app/pages/ProfileSignupAdmin.tsx:105:13
+msgid "Failed to register player. Is your connection stable?"
+msgstr "Не удалось зарегистрировать игрока. Проблемы со связью?"
+
+#: app/pages/ProfileSignupAdmin.tsx:136:26
+msgid "Enter player's e-mail address"
+msgstr "Введите адрес e-mail игрока"
+
+#: app/pages/ProfileSignupAdmin.tsx:143:26
+msgid ""
+"This is a title that will be shown in rating table and in mobile assistant. "
+"Please select some unique title, like nickname or name+surname."
+msgstr ""
+"Это имя, которое будет показано в рейтинговой таблице и в мобильном "
+"ассистенте. Пожалуйста, выберите относительно уникальное имя, например "
+"никнейм или имя+фамилию."
+
+#: app/pages/ProfileSignupAdmin.tsx:157:26
+msgid "Enter city of the player"
+msgstr "Введите город игрока"
+
+#: app/pages/ProfileSignupAdmin.tsx:163:26
+msgid "Enter player's phone"
+msgstr "Введите телефон игрока"
+
+#: app/pages/ProfileSignupAdmin.tsx:175:30
+msgid "Registration done!"
+msgstr "Регистрация завершена!"
