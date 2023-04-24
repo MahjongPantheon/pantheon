@@ -87,11 +87,19 @@ dev_tyr:
 dev_forseti:
 	cd Forseti && make docker_dev
 
+.PHONY: forseti_stop
+forseti_stop:
+	cd Forseti && make docker_stop
+
+.PHONY: tyr_stop
+tyr_stop:
+	cd Tyr && make docker_stop
+
 .PHONY: dev
 dev: run
 	${MAKE} deps
 	${MAKE} migrate
-	${MAKE} -j2 dev_tyr dev_forseti
+	bash ./parallel_dev.sh
 
 .PHONY: migrate
 migrate:
@@ -113,6 +121,10 @@ shell_mimir:
 .PHONY: shell_frey
 shell_frey:
 	cd Frey && make shell
+
+.PHONY: shell_forseti
+shell_forseti:
+	cd Forseti && make shell
 
 # Some shortcuts for common tasks
 

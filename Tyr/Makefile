@@ -92,6 +92,14 @@ docker_dev: get_docker_id
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make dev' ; \
 	fi
 
+.PHONY: docker_stop
+docker_stop: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Tyr container is not running.${NC}"; \
+	else \
+		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'killall webpack' ; \
+	fi
+
 PHONY: docker_deps
 docker_deps: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
