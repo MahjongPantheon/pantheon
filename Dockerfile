@@ -147,8 +147,8 @@ RUN chmod +x /usr/bin/protoc-gen-twirp_php
 
 # copy db init scripts
 RUN mkdir -p /docker-entrypoint-initdb.d
-COPY dbinit.sql /docker-entrypoint-initdb.d/dbinit.sql
-COPY dbinit_frey.sql /docker-entrypoint-initdb.d/dbinit_frey.sql
+COPY Database/dbinit.sql /docker-entrypoint-initdb.d/dbinit.sql
+COPY Database/dbinit_frey.sql /docker-entrypoint-initdb.d/dbinit_frey.sql
 
 # Folders init
 RUN mkdir -p /run/postgresql && chown postgres /run/postgresql

@@ -29,12 +29,12 @@ environments:
         name: mimir_unit
         user: mimir
         pass: pgpass
-        port: 5532
+        port: 5432
         charset: utf8
 
     docker:
         adapter: pgsql
-        host: localhost
+        host: %%PHINX_DB_HOST%%
         name: %%PHINX_DB_NAME%%
         user: %%PHINX_DB_USER%%
         pass: %%PHINX_DB_PASS%%

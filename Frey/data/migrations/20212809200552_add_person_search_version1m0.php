@@ -18,7 +18,7 @@ class AddPersonSearchVersion1m0 extends AbstractMigration
         $opts = $this->getAdapter()->getOptions();
         $cfg = new \Frey\Config([
             'db' => [
-                'connection_string' => 'pgsql:host=localhost;port=' . $opts['port']
+                'connection_string' => 'pgsql:host=' . $opts['host'] . ';port=' . $opts['port']
                     . ';dbname=' . $opts['name'],
                 'credentials' => [
                     'username' => $opts['user'],

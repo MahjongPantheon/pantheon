@@ -45,7 +45,7 @@ return array_merge([
         'remote_url' => '', // if mode set to 'remote_api', this should point to API address
         'remote_action_key' => '', // if mode set to 'remote_api', this should point to API auth token
         'mailer_addr' => 'mailer@localhost.tld', // address of mailer
-        'gui_url' => 'http://localhost:4007' // target host handling emailed links
+        'gui_url' => getenv('FORSETI_URL') // target host handling emailed links
     ],
     'cookieDomain' => '.riichimahjong.org', // TODO: change this in your local config!
     'trackerUrl' => null, // should be string or null, %s is placeholder for game hash token

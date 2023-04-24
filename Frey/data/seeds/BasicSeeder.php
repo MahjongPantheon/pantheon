@@ -224,7 +224,7 @@ class BasicSeeder extends AbstractSeed
     {
         $cfg = new \Frey\Config([
             'db' => [
-                'connection_string' => 'pgsql:host=localhost;port=' . $_SERVER['PHINX_DB_FREY_PORT']
+                'connection_string' => 'pgsql:host=' . $_SERVER['PHINX_DB_FREY_HOST'] . ';port=' . $_SERVER['PHINX_DB_FREY_PORT']
                     . ';dbname=' . $_SERVER['PHINX_DB_FREY_NAME'],
                 'credentials' => [
                     'username' => $_SERVER['PHINX_DB_FREY_USER'],

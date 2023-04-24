@@ -1,0 +1,75 @@
+version: "3.9"
+volumes:
+  datavolume01: {}
+  pgadmindata:
+services:
+  db:
+    build: ./Database
+    ports:
+      - "5532:5432"
+    volumes:
+      - datavolume01:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - "5632:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "dev@riichimahjong.org"
+      PGADMIN_DEFAULT_PASSWORD: "password"
+    volumes:
+      - pgadmindata:/var/lib/pgadmin
+  tyr:
+    build: ./Tyr
+    ports:
+      - "4003:80"
+    links:
+      - mimir:mimir
+      - frey:frey
+    volumes:
+      - ./Tyr:/var/www/html/Tyr
+      - ./Common:/var/www/html/Common
+  forseti:
+    build: ./Forseti
+    ports:
+      - "4007:80"
+    links:
+      - mimir:mimir
+      - frey:frey
+    volumes:
+      - ./Forseti:/var/www/html/Forseti
+      - ./Common:/var/www/html/Common
+  mimir:
+    build: ./Mimir
+    ports:
+      - "4001:80"
+    links:
+      - frey:frey
+      - db:db
+    volumes:
+      - ./Mimir:/var/www/html/Mimir
+      - ./Common:/var/www/html/Common
+    environment:
+      PHINX_DB_PORT: 5532
+      PHINX_DB_HOST: db
+  frey:
+    build: ./Frey
+    ports:
+      - "4004:80"
+    links:
+      - db:db
+    volumes:
+      - ./Frey:/var/www/html/Frey
+      - ./Common:/var/www/html/Common
+    environment:
+      PHINX_DB_FREY_PORT: 5532
+      PHINX_DB_FREY_HOST: db
+  rheda:
+    build: ./Rheda
+    ports:
+      - "4002:80"
+    links:
+      - mimir:mimir
+      - frey:frey
+    volumes:
+      - ./Rheda:/var/www/html/Rheda
+      - ./Common:/var/www/html/Common

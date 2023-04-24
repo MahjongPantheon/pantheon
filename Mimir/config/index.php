@@ -37,8 +37,8 @@ return array_merge([
         'debug_token' => 'CHANGE_ME', // TODO: change this in your local config!
     ],
     'db'        => require __DIR__ . '/db.php',
-    'freyUrl'   => 'http://localhost:4004', // TODO: change this in your local config!
-    'rhedaUrl'  => 'http://localhost:4002', // TODO: change this in your local config!
+    'freyUrl'   => getenv('FREY_URL'), // TODO: change this in your local config!
+    'rhedaUrl'  => getenv('RHEDA_URL'), // TODO: change this in your local config!
     'verbose'   => true, // TODO: change this in your local config!
     'verboseLog' => null,
     'cookieDomain' => '.riichimahjong.org', // TODO: change this in your local config!
