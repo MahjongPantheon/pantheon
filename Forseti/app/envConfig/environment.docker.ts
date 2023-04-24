@@ -24,7 +24,6 @@ export const environment: EnvConfig = {
   guiUrl: 'http://localhost:4002',
   rootUrl: 'riichimahjong.org',
   adminEmail: 'me@ctizen.dev',
-  guiFix: (src: string) => src,
   cookieDomain: null, // when working on localhost this must be omitted!
   statDomain: '',
   siteId: '123456', // for testing

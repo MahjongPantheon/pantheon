@@ -24,19 +24,7 @@ if (file_exists(__DIR__ . '/local/index.php')) {
 } else {
     class Sysconf
     {
-        const DEBUG_MODE_COOKIE_LIFE = 86400;
-
-        // Common settings
-        const API_VERSION_MAJOR = 1;
-        const API_VERSION_MINOR = 0;
-        const DEBUG_MODE = true; // TODO -> to false in prod!
-
         const COOKIE_DOMAIN = '';
-
-        // Mailer settings
-        const MAIL_MODE = 'debug'; // either debug, local_mta or remote_api
-        const MAIL_REMOTE_URL = ''; // Should be filled for remote_api mode
-        const MAIL_REMOTE_ACTIONKEY = 'change_me'; // Should be filled for remote_api mode and match remote key
 
         const FREY_INTERNAL_QUERY_SECRET = 'CHANGE_ME_INTERNAL'; // TODO: change this in your local config!
         const MIMIR_INTERNAL_QUERY_SECRET = 'CHANGE_ME_INTERNAL'; // TODO: change this in your local config!

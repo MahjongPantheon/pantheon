@@ -23,11 +23,7 @@ export const environment: EnvConfig = {
   uaUrl: 'http://localhost:4004',
   guiUrl: 'http://localhost:4002',
   paUrl: 'http://localhost:4007',
-  guiFix: (src: string) => src,
   cookieDomain: null, // when working on localhost this must be omitted!
   statDomain: '',
   siteId: '123456', // for testing
-
-  // Do not change this unless you really know what are you doing
-  apiVersion: [1, 0],
 };

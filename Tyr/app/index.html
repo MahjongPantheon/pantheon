@@ -25,6 +25,17 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="icon" type="image/png" href="tyrico.png" />
+    <script>
+      // TODO: fill with webpack env plugin; do same for Forseti
+      // Also use WebpackDefinePlugin for 'production' env var setting
+      window.RHEDA_URL = '';
+      window.FORSETI_URL = '';
+      window.MIMIR_URL = '';
+      window.FREY_URL = '';
+      window.COOKIE_DOMAIN = null;
+      window.STAT_URL = '';
+      window.STAT_SITE_ID = '';
+    </script>
   </head>
   <body>
     <div id="tyr-root"></div>

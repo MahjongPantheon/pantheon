@@ -26,8 +26,4 @@ export const environment: EnvConfig = {
   cookieDomain: '.riichimahjong.org',
   statDomain: 'pl.riichimahjong.org',
   siteId: 'f5c85252-2f96-470a-8d24-c42a85f8a6aa',
-  guiFix: (src: string) => src,
-
-  // Do not change this unless you really know what are you doing
-  apiVersion: [1, 0],
 };

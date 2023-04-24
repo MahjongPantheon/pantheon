@@ -56,7 +56,6 @@ export class RiichiApiTwirpService implements IRiichiApi {
     this._personId = (personId || 0).toString();
 
     const headers = new Headers();
-    headers.append('X-Api-Version', environment.apiVersion.map((v) => v.toString()).join('.'));
     headers.append('X-Auth-Token', this._authToken ?? '');
     headers.append('X-Twirp', 'true');
     headers.append('X-Current-Person-Id', this._personId ?? '');

@@ -24,14 +24,6 @@ class Meta
      */
     protected $_authToken;
     /**
-     * @var integer
-     */
-    protected $_requestedVersionMajor;
-    /**
-     * @var integer
-     */
-    protected $_requestedVersionMinor;
-    /**
      * @var integer|null
      */
     protected $_currentEventId;
@@ -138,13 +130,6 @@ class Meta
                 : $storage->getPersonId()
             )
             : intval($input['HTTP_X_CURRENT_PERSON_ID']));
-
-        list($this->_requestedVersionMajor, $this->_requestedVersionMinor) = array_map('intval', explode('.', (
-            empty($input['HTTP_X_API_VERSION']) ? '1.0' : $input['HTTP_X_API_VERSION']
-        )));
-
-        $this->_requestedVersionMinor = $this->_requestedVersionMinor ? intval($this->_requestedVersionMinor) : 0;
-        $this->_requestedVersionMajor = $this->_requestedVersionMajor ? intval($this->_requestedVersionMajor) : 1;
     }
 
     public function getAuthToken(): string
@@ -165,19 +150,6 @@ class Meta
     public function getSelectedLocale(): string
     {
         return $this->_selectedLocale;
-    }
-
-    /**
-     * @return int[]
-     *
-     * @psalm-return array{0: int, 1: int}
-     */
-    public function getRequestedVersion(): array
-    {
-        return [
-            $this->_requestedVersionMajor,
-            $this->_requestedVersionMinor
-        ];
     }
 
     /**

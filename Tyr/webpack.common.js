@@ -77,10 +77,7 @@ function getConfig() {
     case 'production':
       return path.resolve(__dirname, 'app/envConfig/environment.prod.ts');
     case 'development':
-      if (process.env.IS_DOCKER) {
-        return path.resolve(__dirname, 'app/envConfig/environment.docker.ts');
-      }
-    default: // explicit fallthrough
-      return path.resolve(__dirname, 'app/envConfig/environment.local.ts');
+    default:
+      return path.resolve(__dirname, 'app/envConfig/environment.docker.ts');
   }
 }
