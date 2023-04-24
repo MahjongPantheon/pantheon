@@ -17,8 +17,9 @@ Pantheon developer environment works on *nix hosts (mac, linux, *bsd). Windows-b
 are not supported (while it still MAY work, it is not tested at all, also you may want to try
 using it under WSL in Windows 10+). 
 
-Make sure you have Docker installed and daemon running on your system. Also Pantheon expects PHP7+ to be 
-installed on your host system for some minor needs.
+Make sure you have Docker installed and daemon running on your system. Also Pantheon expects PHP8+ to be 
+installed on your host system for some minor needs. For debugging, please make sure all the php extensions are
+installed as well, see Dockerfile for a complete list.
 
 ### Running containers
 
@@ -31,6 +32,7 @@ is displayed, try adding `sudo` before `make`._
 4. Now you can use `make logs` and `make php_logs` to view all logs in real-time. Also you may use `make shell` to get
 to container shell, if you want to. Notice that killing php-fpm, postgres or nginx will ruin the container entirely.
 Use Dockerfile to alter their configuration.
+5. You can use `make stop` to stop the container and `make kill` to stop the container AND clean images (e.g. this will remove all db data).
 
 To create new empty event, run `make empty_event` - and you will be able to access event with printed link. Admin
 password for every generated empty event is `password`.
@@ -40,11 +42,15 @@ Note: this command will perform a full cleanup of data!
 A separate [guide about debugging in PhpStorm IDE](./docs/technical/phpstorm.md) is available.
 
 Default ports for services are:
-- 4001 for **Mimir** JSON RPC API
+- 4001 for **Mimir** game management API (http://localhost:4001/)
 - 4002 for **Rheda** interface (http://localhost:4002/)
 - 4003 for **Tyr** mobile interface (http://localhost:4003/)
-- 4004 for **Frey** user management backend, also JSON RPC (http://localhost:4004/)
+- 4004 for **Frey** user management backend (http://localhost:4004/)
+- 4007 for **Forseti** management interface (http://localhost:4007/)
 - 5532 for PostgreSQL connections - use pgAdmin3/4 or any other client to access your databases.
+
+**Mimir** and **Frey** use [twirp](https://github.com/twitchtv/twirp) interface to communicate with other services.
+See protocol description files in `Common` folder.
 
 ### Pull requests
 
