@@ -15,8 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { environment } from '#config';
-
 function errHandler(
   errorMsg: Event | string,
   currentUrl: string | undefined,
@@ -25,7 +23,7 @@ function errHandler(
   err: Error | undefined
 ) {
   const http = new XMLHttpRequest();
-  const url = environment.apiUrl;
+  const url = window.__cfg.MIMIR_URL;
   const rpcBody = {
     jsonrpc: '2.0',
     method: 'addErrorLog',

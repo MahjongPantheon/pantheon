@@ -7,23 +7,27 @@ GREEN = $(shell echo -e '\033[1;32m')
 YELLOW = $(shell echo -e '\033[1;33m')
 NC = $(shell echo -e '\033[0m') # No Color
 
+.EXPORT_ALL_VARIABLES:
+
+ENV_FILENAME ?= default.env
+
 .PHONY: deps
 deps:
 	@echo "Hint: you may need to run this as root on some linux distros. Try it in case of any error."
-	cd Tyr && make docker_deps
-	cd Mimir && make docker_deps
-	cd Frey && make docker_deps
-	cd Rheda && make docker_deps
-	cd Forseti && make docker_deps
+	cd Tyr && ${MAKE} docker_deps
+	cd Mimir && ${MAKE} docker_deps
+	cd Frey && ${MAKE} docker_deps
+	cd Rheda && ${MAKE} docker_deps
+	cd Forseti && ${MAKE} docker_deps
 
 .PHONY: kill
 kill:
 	docker-compose down
-	cd Tyr && make kill
-	cd Mimir && make kill
-	cd Frey && make kill
-	cd Rheda && make kill
-	cd Forseti && make kill
+	cd Tyr && ${MAKE} kill
+	cd Mimir && ${MAKE} kill
+	cd Frey && ${MAKE} kill
+	cd Rheda && ${MAKE} kill
+	cd Forseti && ${MAKE} kill
 	docker rmi pantheon_db
 
 .PHONY: container
@@ -81,19 +85,19 @@ stop: pantheon_stop
 
 .PHONY: dev_tyr
 dev_tyr:
-	cd Tyr && make docker_dev
+	cd Tyr && ${MAKE} docker_dev
 
 .PHONY: dev_forseti
 dev_forseti:
-	cd Forseti && make docker_dev
+	cd Forseti && ${MAKE} docker_dev
 
 .PHONY: forseti_stop
 forseti_stop:
-	cd Forseti && make docker_stop
+	cd Forseti && ${MAKE} docker_stop
 
 .PHONY: tyr_stop
 tyr_stop:
-	cd Tyr && make docker_stop
+	cd Tyr && ${MAKE} docker_stop
 
 .PHONY: dev
 dev: run
@@ -103,117 +107,130 @@ dev: run
 
 .PHONY: migrate
 migrate:
-	cd Mimir && make docker_migrate
-	cd Frey && make docker_migrate
+	cd Mimir && ${MAKE} docker_migrate
+	cd Frey && ${MAKE} docker_migrate
 
 .PHONY: shell_tyr
 shell_tyr:
-	cd Tyr && make shell
+	cd Tyr && ${MAKE} shell
 
 .PHONY: shell_rheda
 shell_rheda:
-	cd Rheda && make shell
+	cd Rheda && ${MAKE} shell
 
 .PHONY: shell_mimir
 shell_mimir:
-	cd Mimir && make shell
+	cd Mimir && ${MAKE} shell
 
 .PHONY: shell_frey
 shell_frey:
-	cd Frey && make shell
+	cd Frey && ${MAKE} shell
 
 .PHONY: shell_forseti
 shell_forseti:
-	cd Forseti && make shell
+	cd Forseti && ${MAKE} shell
 
 # Some shortcuts for common tasks
 
 .PHONY: seed
 seed:
-	cd Frey && make docker_seed
-	cd Mimir && make docker_seed
+	cd Frey && ${MAKE} docker_seed
+	cd Mimir && ${MAKE} docker_seed
 
 .PHONY: seed_bigevent
 seed_bigevent:
-	cd Frey && make docker_seed
-	cd Mimir && make docker_seed_bigevent
+	cd Frey && ${MAKE} docker_seed
+	cd Mimir && ${MAKE} docker_seed_bigevent
 
 .PHONY: seed_tournament
 seed_tournament:
-	cd Frey && make docker_seed
-	cd Mimir && make docker_seed_tournament
+	cd Frey && ${MAKE} docker_seed
+	cd Mimir && ${MAKE} docker_seed_tournament
 
 .PHONY: dump_users
 dump_users:
-	cd Frey && make docker_dump_users
+	cd Frey && ${MAKE} docker_dump_users
 
 .PHONY: check
 check: lint
-	cd Mimir && make docker_unit
-	cd Frey && make docker_unit
-	cd Rheda && make docker_unit
-	cd Tyr && make docker_unit
+	cd Mimir && ${MAKE} docker_unit
+	cd Frey && ${MAKE} docker_unit
+	cd Rheda && ${MAKE} docker_unit
+	cd Tyr && ${MAKE} docker_unit
 
 .PHONY: lint
 lint:
-	cd Mimir && make docker_lint
-	cd Frey && make docker_lint
-	cd Rheda && make docker_lint
-	cd Tyr && make docker_lint
-	cd Forseti && make docker_lint
+	cd Mimir && ${MAKE} docker_lint
+	cd Frey && ${MAKE} docker_lint
+	cd Rheda && ${MAKE} docker_lint
+	cd Tyr && ${MAKE} docker_lint
+	cd Forseti && ${MAKE} docker_lint
 
 .PHONY: check_covered
 check_covered: lint
-	cd Mimir && make docker_unit_covered
-	cd Frey && make docker_unit_covered
-	cd Rheda && make docker_unit_covered
-	cd Tyr && make docker_unit_covered
+	cd Mimir && ${MAKE} docker_unit_covered
+	cd Frey && ${MAKE} docker_unit_covered
+	cd Rheda && ${MAKE} docker_unit_covered
+	cd Tyr && ${MAKE} docker_unit_covered
 	# TODO: fix sending coverall reports
 
 .PHONY: autofix
 autofix:
-	cd Mimir && make docker_autofix
-	cd Frey && make docker_autofix
-	cd Rheda && make docker_autofix
-	cd Tyr && make docker_autofix
-	cd Forseti && make docker_autofix
+	cd Mimir && ${MAKE} docker_autofix
+	cd Frey && ${MAKE} docker_autofix
+	cd Rheda && ${MAKE} docker_autofix
+	cd Tyr && ${MAKE} docker_autofix
+	cd Forseti && ${MAKE} docker_autofix
 
 .PHONY: proto_gen
 proto_gen:
-	cd Mimir && make docker_proto_gen
-	cd Frey && make docker_proto_gen
-	cd Forseti && make docker_proto_gen
-	cd Tyr && make docker_proto_gen
-	cd Rheda && make docker_proto_gen
+	cd Mimir && ${MAKE} docker_proto_gen
+	cd Frey && ${MAKE} docker_proto_gen
+	cd Forseti && ${MAKE} docker_proto_gen
+	cd Tyr && ${MAKE} docker_proto_gen
+	cd Rheda && ${MAKE} docker_proto_gen
 
 # Prod related tasks & shortcuts
 
 .PHONY: prod_deps
 prod_deps:
-	cd Mimir && make deps
-	cd Rheda && make deps
-	cd Frey && make deps
+	cd Mimir && ${MAKE} deps
+	cd Rheda && ${MAKE} deps
+	cd Frey && ${MAKE} deps
 
 .PHONY: prod_build_tyr
 prod_build_tyr: # this is for automated builds, don't run it manually
-	cd Tyr && make docker_build && make docker_cleanup_prebuilts && make docker_prebuild
+	cd Tyr && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
 
 .PHONY: prod_build_forseti
 prod_build_forseti: # this is for automated builds, don't run it manually
-	cd Forseti && make docker_build && make docker_cleanup_prebuilts && make docker_prebuild
+	cd Forseti && ${MAKE} docker_build && ${MAKE} docker_cleanup_prebuilts && ${MAKE} docker_prebuild
+
+.PHONY: prod_compile
+prod_compile:
+	@if [ "$(ENV_FILENAME)" = "" ]; then \
+		echo "${RED}Please set env file name using ENV_FILENAME environment variable. The file should be placed in Common/envs folder.${NC}"; \
+		exit 1; \
+	fi
+	docker-compose --env-file ./Common/envs/${ENV_FILENAME} up --build -d
+	${MAKE} prod_deps
+	${MAKE} migrate
+	cd Frey && ${MAKE} docker_seed # bootstrap admin
+	${MAKE} prod_build_tyr
+	${MAKE} prod_build_forseti
 
 # i18n related
 .PHONY: i18n_extract
 i18n_extract:
-	cd Rheda && make docker_i18n_extract
-	cd Tyr && make docker_i18n_extract
-	cd Forseti && make docker_i18n_extract
+	cd Rheda && ${MAKE} docker_i18n_extract
+	cd Tyr && ${MAKE} docker_i18n_extract
+	cd Forseti && ${MAKE} docker_i18n_extract
 
 .PHONY: i18n_compile
 i18n_compile: get_docker_id
-	cd Rheda && make docker_i18n_compile
-	cd Tyr && make docker_i18n_update
-	cd Forseti && make docker_i18n_update
+	cd Rheda && ${MAKE} docker_i18n_compile
+	cd Tyr && ${MAKE} docker_i18n_update
+	cd Forseti && ${MAKE} docker_i18n_update
 
 .PHONY: bump_release
 bump_release:

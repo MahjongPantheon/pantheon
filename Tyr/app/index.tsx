@@ -23,10 +23,9 @@ import { I18nService } from '#/services/i18n';
 import { IAppState } from '#/store/interfaces';
 import { observe } from '#/scripts/dimensionsObserver';
 import { registerFrontErrorHandler } from '#/scripts/logFrontError';
-import { environment } from '#config';
 import { Storage } from '../../Common/storage';
 
-const storage = new Storage(environment.cookieDomain);
+const storage = new Storage(window.__cfg.STAT_HOST || null);
 
 // Storage cleanup: use if some trouble happened during logging in
 if (window.location.search.startsWith('?clear')) {

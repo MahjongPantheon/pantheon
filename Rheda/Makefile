@@ -1,3 +1,9 @@
+# some coloring
+RED = $(shell echo -e '\033[1;31m')
+GREEN = $(shell echo -e '\033[1;32m')
+YELLOW = $(shell echo -e '\033[1;33m')
+NC = $(shell echo -e '\033[0m') # No Color
+
 .PHONY: get_docker_id
 get_docker_id:
 	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep 'pantheon_rheda' | awk '{print $$1}'))
@@ -77,7 +83,7 @@ docker_hooks: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Rheda container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make hooks' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make hooks' ; \
 	fi
 
 .PHONY: docker_deps
@@ -85,7 +91,7 @@ docker_deps: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Rheda container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make deps' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make deps' ; \
 	fi
 
 .PHONY: docker_lint
@@ -93,7 +99,7 @@ docker_lint: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Rheda container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make lint' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make lint' ; \
 	fi
 
 .PHONY: docker_autofix
@@ -101,7 +107,7 @@ docker_autofix: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Rheda container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make autofix' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make autofix' ; \
 	fi
 
 .PHONY: docker_i18n_extract
@@ -109,7 +115,7 @@ docker_i18n_extract: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Rheda container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make i18n_extract' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make i18n_extract' ; \
 	fi
 
 .PHONY: docker_i18n_compile
@@ -117,5 +123,5 @@ docker_i18n_compile: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Rheda container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make i18n_compile' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make i18n_compile' ; \
 	fi

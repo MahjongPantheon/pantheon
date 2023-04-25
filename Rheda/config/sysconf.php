@@ -34,7 +34,7 @@ if (file_exists(__DIR__ . '/local/index.php')) {
          */
         public static function API_URL()
         {
-            return (string)getenv('MIMIR_URL');
+            return 'http://mimir'; // TODO: change this in your local config!
         }
 
         /**
@@ -50,7 +50,7 @@ if (file_exists(__DIR__ . '/local/index.php')) {
          */
         public static function AUTH_API_URL()
         {
-            return (string)getenv('FREY_URL');
+            return 'http://frey'; // TODO: change this in your local config!
         }
 
         /**

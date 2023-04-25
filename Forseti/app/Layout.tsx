@@ -46,7 +46,6 @@ import { Notifications } from '@mantine/notifications';
 import { NavigationProgress } from '@mantine/nprogress';
 import { useAnalytics } from '#/hooks/analytics';
 import { useLocation } from 'wouter';
-import { environment } from '#config';
 import { useI18n } from '#/hooks/i18n';
 import { FlagEn, FlagRu } from '#/helpers/flags';
 import { useStorage } from '#/hooks/storage';
@@ -65,7 +64,7 @@ export const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
   if (lastLocation !== location) {
     analytics.trackView(location);
     lastLocation = location;
-    if (!environment.production) {
+    if (process.env.NODE_ENV !== 'production') {
       console.log('Location change: ', lastLocation);
     }
   }

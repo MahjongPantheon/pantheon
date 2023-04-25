@@ -1,3 +1,9 @@
+# some coloring
+RED = $(shell echo -e '\033[1;31m')
+GREEN = $(shell echo -e '\033[1;32m')
+YELLOW = $(shell echo -e '\033[1;33m')
+NC = $(shell echo -e '\033[0m') # No Color
+
 .PHONY: get_docker_id
 get_docker_id:
 	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep 'pantheon_frey' | awk '{print $$1}'))
@@ -87,7 +93,7 @@ docker_deps: get_docker_id
 		@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
   		echo "${RED}Frey container is not running.${NC}"; \
   	else \
-  		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps' ; \
+  		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps' ; \
   	fi
 
 .PHONY: docker_unit_covered
@@ -95,7 +101,7 @@ docker_unit_covered: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make unit_covered' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make unit_covered' ; \
 	fi
 
 .PHONY: docker_check
@@ -103,7 +109,7 @@ docker_check: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make check' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make check' ; \
 	fi
 
 .PHONY: docker_autofix
@@ -111,7 +117,7 @@ docker_autofix: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make autofix' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make autofix' ; \
 	fi
 
 .PHONY: docker_init_test_db
@@ -119,7 +125,7 @@ docker_init_test_db: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make init_test_db' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make init_test_db' ; \
 	fi
 
 .PHONY: docker_clean_test_db
@@ -127,7 +133,7 @@ docker_clean_test_db: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make clean_test_db' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make clean_test_db' ; \
 	fi
 
 .PHONY: docker_seed
@@ -135,7 +141,7 @@ docker_seed: get_docker_id docker_migrate
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running, can't run seeding.${NC}"; \
 	else \
-	  docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s BasicSeeder --verbose'; \
+	  docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user bin/phinx seed:run -e docker -s BasicSeeder --verbose'; \
 	fi
 
 .PHONY: docker_dump_users
@@ -143,5 +149,5 @@ docker_dump_users: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'cat /tmp/frey_tokens_debug' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cat /tmp/frey_tokens_debug' ; \
 	fi

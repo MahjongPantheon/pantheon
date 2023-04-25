@@ -26,15 +26,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <link rel="icon" type="image/png" href="tyrico.png" />
     <script>
-      // TODO: fill with webpack env plugin; do same for Forseti
-      // Also use WebpackDefinePlugin for 'production' env var setting
-      window.RHEDA_URL = '';
-      window.FORSETI_URL = '';
-      window.MIMIR_URL = '';
-      window.FREY_URL = '';
-      window.COOKIE_DOMAIN = null;
-      window.STAT_URL = '';
-      window.STAT_SITE_ID = '';
+      window.__cfg = {
+        RHEDA_URL: '<%= htmlWebpackPlugin.options.RHEDA_URL %>',
+        FORSETI_URL: '<%= htmlWebpackPlugin.options.FORSETI_URL %>',
+        MIMIR_URL: '<%= htmlWebpackPlugin.options.MIMIR_URL %>',
+        FREY_URL: '<%= htmlWebpackPlugin.options.FREY_URL %>',
+        TYR_URL: '<%= htmlWebpackPlugin.options.TYR_URL %>',
+        COOKIE_DOMAIN: '<%= htmlWebpackPlugin.options.COOKIE_DOMAIN %>',
+        STAT_HOST: '<%= htmlWebpackPlugin.options.STAT_HOST %>',
+        ROOT_HOST: '<%= htmlWebpackPlugin.options.ROOT_HOST %>',
+        STAT_SITE_ID: '<%= htmlWebpackPlugin.options.STAT_SITE_ID %>',
+        ADMIN_EMAIL: '<%= htmlWebpackPlugin.options.ADMIN_EMAIL %>',
+      }
     </script>
   </head>
   <body>

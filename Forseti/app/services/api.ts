@@ -15,7 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { environment } from '#config';
 import {
   AddPenalty,
   CancelGame,
@@ -105,13 +104,13 @@ export class ApiService {
     headers.append('X-Auth-Token', this._authToken ?? '');
     headers.append('X-Current-Person-Id', this._personId ?? '');
 
-    this._clientConfMimir.baseURL = environment.apiUrl;
-    this._clientConfFrey.baseURL = environment.uaUrl;
+    this._clientConfMimir.baseURL = window.__cfg.MIMIR_URL;
+    this._clientConfFrey.baseURL = window.__cfg.FREY_URL;
     // eslint-disable-next-line no-multi-assign
     this._clientConfFrey.rpcTransport = this._clientConfMimir.rpcTransport = (url, opts) => {
       Object.keys(opts.headers ?? {}).forEach((key) => headers.set(key, opts.headers[key]));
       headers.set('X-Current-Event-Id', this._eventId ?? '');
-      return fetch(url + (environment.production ? '' : '?XDEBUG_SESSION=start'), {
+      return fetch(url + (process.env.NODE_ENV === 'production' ? '' : '?XDEBUG_SESSION=start'), {
         ...opts,
         headers,
       })

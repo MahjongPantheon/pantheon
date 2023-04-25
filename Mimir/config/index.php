@@ -37,7 +37,7 @@ return array_merge([
         'debug_token' => 'CHANGE_ME', // TODO: change this in your local config!
     ],
     'db'        => require __DIR__ . '/db.php',
-    'freyUrl'   => getenv('FREY_URL'), // TODO: change this in your local config!
+    'freyUrl'   => 'http://frey', // TODO: change this in your local config!
     'rhedaUrl'  => getenv('RHEDA_URL'), // TODO: change this in your local config!
     'verbose'   => true, // TODO: change this in your local config!
     'verboseLog' => null,

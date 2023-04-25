@@ -1,11 +1,16 @@
 const path = require('path');
+const { DefinePlugin } = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+require('dotenv').config({
+  path: path.resolve('..', 'Common', 'envs', process.env.ENV_FILENAME || 'default.env')
+});
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 module.exports = {
   entry: './app/index.tsx',
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode,
   module: {
     rules: [
       {
@@ -53,16 +58,30 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      template: 'app/index.html'
+      template: 'app/index.html',
+      RHEDA_URL: process.env.RHEDA_URL,
+      FORSETI_URL: process.env.FORSETI_URL,
+      MIMIR_URL: process.env.MIMIR_URL,
+      FREY_URL: process.env.FREY_URL,
+      TYR_URL: process.env.TYR_URL,
+      COOKIE_DOMAIN: process.env.COOKIE_DOMAIN,
+      STAT_HOST: process.env.STAT_HOST,
+      ROOT_HOST: process.env.ROOT_HOST,
+      STAT_SITE_ID: process.env.STAT_SITE_ID_TYR,
+      ADMIN_EMAIL: process.env.ADMIN_EMAIL,
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
+      filename: mode === 'production'
+        ? '[name].[contenthash].css'
+        : '[name].css',
     }),
+    new DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(mode),
+    })
   ],
   resolve: {
     alias: {
-      '#': path.resolve(__dirname, 'app'),
-      '#config': getConfig()
+      '#': path.resolve(__dirname, 'app')
     },
     extensions: [ '.tsx', '.ts', '.js', '.jsx' ],
   },
@@ -71,13 +90,3 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
 };
-
-function getConfig() {
-  switch (process.env.NODE_ENV) {
-    case 'production':
-      return path.resolve(__dirname, 'app/envConfig/environment.prod.ts');
-    case 'development':
-    default:
-      return path.resolve(__dirname, 'app/envConfig/environment.docker.ts');
-  }
-}

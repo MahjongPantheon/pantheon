@@ -1,3 +1,9 @@
+# some coloring
+RED = $(shell echo -e '\033[1;31m')
+GREEN = $(shell echo -e '\033[1;32m')
+YELLOW = $(shell echo -e '\033[1;33m')
+NC = $(shell echo -e '\033[0m') # No Color
+
 .PHONY: get_docker_id
 get_docker_id:
 	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep 'pantheon_tyr' | awk '{print $$1}'))
@@ -56,7 +62,7 @@ build:
 PHONY: cleanup_prebuilts
 cleanup_prebuilts:
 	# clean all generated bundle files except last 30
-	cd ../Tyr-dist && find -name *.js -or -name *.css -or -name *.js.gz -or -name *.css.gz | tail -n +30 | xargs -I {} rm {}
+	cd ../Tyr-dist && find -name '*.js' -or -name '*.css' -or -name '*.js.gz' -or -name '*.css.gz' | tail -n +30 | xargs -I {} rm {}
 
 .PHONY: prebuild
 prebuild:
@@ -97,7 +103,7 @@ docker_stop: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
 		echo "${RED}Tyr container is not running.${NC}"; \
 	else \
-		docker exec -it $(RUNNING_DOCKER_ID) sh -c 'killall webpack' ; \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'killall webpack' ; \
 	fi
 
 PHONY: docker_deps

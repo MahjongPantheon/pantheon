@@ -21,7 +21,6 @@ import { IComponentProps } from '#/components/IComponentProps';
 import { EnterCredentialsView } from '#/components/screens/login/EnterCredentialsView';
 import { LOGIN_INIT } from '#/store/actions/interfaces';
 import { useCallback } from 'react';
-import { environment } from '#config';
 
 export const EnterCredentialsScreen: React.FC<IComponentProps> = (props) => {
   const { dispatch } = props;
@@ -38,8 +37,8 @@ export const EnterCredentialsScreen: React.FC<IComponentProps> = (props) => {
   return (
     <EnterCredentialsView
       onSubmit={onSubmit}
-      signupLink={environment.paUrl + '/profile/signup'}
-      recoveryLink={environment.paUrl + '/profile/resetPassword'}
+      signupLink={`${window.__cfg.FORSETI_URL}/profile/signup`}
+      recoveryLink={`${window.__cfg.FORSETI_URL}/profile/resetPassword`}
     />
   );
 };

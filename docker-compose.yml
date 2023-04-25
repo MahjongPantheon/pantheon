@@ -22,21 +22,29 @@ services:
     build: ./Tyr
     ports:
       - "4003:80"
+      - "4103:8080"
     links:
       - mimir:mimir
       - frey:frey
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
     volumes:
       - ./Tyr:/var/www/html/Tyr
+      - ./Tyr-dist:/var/www/html/Tyr-dist
       - ./Common:/var/www/html/Common
   forseti:
     build: ./Forseti
     ports:
       - "4007:80"
+      - "4107:8080"
     links:
       - mimir:mimir
       - frey:frey
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
     volumes:
       - ./Forseti:/var/www/html/Forseti
+      - ./Forseti-dist:/var/www/html/Forseti-dist
       - ./Common:/var/www/html/Common
   mimir:
     build: ./Mimir
@@ -45,6 +53,8 @@ services:
     links:
       - frey:frey
       - db:db
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
     volumes:
       - ./Mimir:/var/www/html/Mimir
       - ./Common:/var/www/html/Common
@@ -57,6 +67,8 @@ services:
       - "4004:80"
     links:
       - db:db
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
     volumes:
       - ./Frey:/var/www/html/Frey
       - ./Common:/var/www/html/Common
@@ -70,6 +82,8 @@ services:
     links:
       - mimir:mimir
       - frey:frey
+    env_file:
+      - ./Common/envs/${ENV_FILENAME}
     volumes:
       - ./Rheda:/var/www/html/Rheda
       - ./Common:/var/www/html/Common

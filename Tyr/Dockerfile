@@ -6,12 +6,6 @@ ENV LANG                en_US.utf8
 ENV YARN_CACHE_FOLDER   /home/user/.yarn-cache
 ENV COMPOSER_CACHE_DIR  /home/user/.composer-cache
 
-ENV MIMIR_URL http://localhost:4001
-ENV RHEDA_URL http://localhost:4002
-ENV TYR_URL   http://localhost:4003
-ENV FREY_URL  http://localhost:4004
-ENV FORSETI_URL  http://localhost:4007
-
 ENV IS_DOCKER 1
 
 RUN apk update && \
@@ -63,6 +57,7 @@ COPY tyr-docker.nginx.conf /etc/nginx/http.d/tyr.conf
 # Folders init
 RUN mkdir -p /run/nginx
 RUN mkdir -p /var/www/html/Tyr
+RUN mkdir -p /var/www/html/Tyr-dist
 RUN mkdir -p /var/www/html/Common
 
 # Entry point

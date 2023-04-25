@@ -49,11 +49,9 @@ ENV PHP_MAX_FILE_UPLOAD 200
 ENV PHP_MAX_POST        100M
 ENV LANG                en_US.utf8
 
+# Need to override this inside the container
 ENV MIMIR_URL http://mimir
-ENV RHEDA_URL http://localhost:4002
-ENV TYR_URL   http://localhost:4003
 ENV FREY_URL  http://frey
-ENV FORSETI_URL  http://localhost:4007
 
 ENV IS_DOCKER 1
 
