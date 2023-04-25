@@ -49,8 +49,6 @@ ENV PHP_MAX_FILE_UPLOAD 200
 ENV PHP_MAX_POST        100M
 ENV LANG                en_US.utf8
 
-ENV IS_DOCKER 1
-
 ENV PHP_IDE_CONFIG serverName=pantheon_rheda
 
 RUN cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \

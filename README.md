@@ -22,10 +22,17 @@ To deploy pantheon on your own VPS or personal environment on production mode:
    1. Game API (Mimir) to port 4001 
    2. User API (Frey) to port 4004 
    3. Ratings service (Rheda) to port 4002 
-   4. Mobile assistant (Tyr) to port 4003 
-   5. Admin panel (Forseti) to port 4007 
+   4. Mobile assistant (Tyr) to port 4103 
+   5. Admin panel (Forseti) to port 4107 
 5. Run the following command: `ENV_FILENAME=yourenv.env make prod_compile`. This will build and run all containers, and also bootstrap an administrator account (admin@localhost.localdomain with password 123456).
-6. Basically, you're done :)
+6. Review config files of Frey, Rheda and Mimir - probably you might want to create your local configs for better manageability. You can make `config/local/` folders in each subsystem and add there local configs.
+7. Basically, you're done :)
+
+Please note that there is no default mail server included, so you probably would want to use external mail api. Please take a look on `Frey/src/helpers/mailer_remote_api.php` 
+file - this file should be hosted as plain php file on some host, where local mail transfer agent is available. On Frey config, you should set `mode` to `remote_api` and
+set remote url of the `mailer_remote_api` file and api key according to `MAIL_ACTION_KEY` value in it.
+
+You might want to use some external mailing service - feel free to modify the `mailer_remote_api` file in this case.
 
 ### Development environment
 

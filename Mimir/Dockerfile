@@ -53,8 +53,6 @@ ENV LANG                en_US.utf8
 ENV MIMIR_URL http://mimir
 ENV FREY_URL  http://frey
 
-ENV IS_DOCKER 1
-
 RUN cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
     echo "${TIMEZONE}" > /etc/timezone
 

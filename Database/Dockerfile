@@ -6,8 +6,6 @@ ENV LANG                en_US.utf8
 ENV PGDATA              /var/lib/postgresql/data
 ENV POSTGRES_PASSWORD   pgpass
 
-ENV IS_DOCKER 1
-
 RUN apk update && \
     apk upgrade && \
     apk add --update tzdata && \
@@ -34,7 +32,7 @@ RUN mkdir /www && \
     rm -rf /var/cache/apk/*
 
 # Expose ports
-EXPOSE 5432
+EXPOSE 5532
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh

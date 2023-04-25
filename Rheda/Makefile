@@ -18,7 +18,7 @@ shell: get_docker_id
 
 .PHONY: kill
 kill:
-	docker rmi pantheon_tyr
+	docker rmi pantheon_rheda
 
 .PHONY: logs
 logs: get_docker_id

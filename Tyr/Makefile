@@ -32,10 +32,6 @@ lint:
 unit:
 	./node_modules/.bin/jest
 
-.PHONY: unit_covered
-unit_covered:
-	./node_modules/.bin/jest
-
 PHONY: eslint
 eslint:
 	./node_modules/.bin/eslint . --ext .js,.ts,.tsx
@@ -128,14 +124,6 @@ docker_unit: get_docker_id
 		echo "${RED}Tyr container is not running.${NC}"; \
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make unit' ; \
-	fi
-
-.PHONY: docker_unit_covered
-docker_unit_covered: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Tyr container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Tyr && HOME=/home/user su-exec user make unit_covered' ; \
 	fi
 
 PHONY: docker_autofix

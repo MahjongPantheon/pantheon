@@ -6,8 +6,6 @@ ENV LANG                en_US.utf8
 ENV YARN_CACHE_FOLDER   /home/user/.yarn-cache
 ENV COMPOSER_CACHE_DIR  /home/user/.composer-cache
 
-ENV IS_DOCKER 1
-
 RUN apk update && \
     apk upgrade && \
     apk add --update tzdata && \

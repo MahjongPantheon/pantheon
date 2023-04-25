@@ -18,7 +18,7 @@ shell: get_docker_id
 
 .PHONY: kill
 kill:
-	docker rmi pantheon_tyr
+	docker rmi pantheon_mimir
 
 .PHONY: docker_migrate
 docker_migrate: get_docker_id
@@ -67,10 +67,6 @@ lint:
 .PHONY: unit
 unit:
 	php bin/unit.php
-
-.PHONY: unit_covered
-unit_covered: lint
-	phpdbg -qrr bin/unit.php  --testdox --coverage-clover=/tmp/coverage-mimir.xml
 
 check: lint unit
 
@@ -122,14 +118,6 @@ docker_unit: get_docker_id
 		echo "${RED}Mimir container is not running.${NC}"; \
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make unit' ; \
-	fi
-
-.PHONY: docker_unit_covered
-docker_unit_covered: get_docker_id lint
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Mimir container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Mimir && HOME=/home/user su-exec user make unit_covered' ; \
 	fi
 
 .PHONY: docker_check

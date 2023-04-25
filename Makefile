@@ -29,6 +29,8 @@ kill:
 	cd Rheda && ${MAKE} kill
 	cd Forseti && ${MAKE} kill
 	docker rmi pantheon_db
+	docker volume rm pantheon_datavolume01
+	docker-compose rm -v
 
 .PHONY: container
 container:
@@ -152,27 +154,13 @@ dump_users:
 	cd Frey && ${MAKE} docker_dump_users
 
 .PHONY: check
-check: lint
-	cd Mimir && ${MAKE} docker_unit
-	cd Frey && ${MAKE} docker_unit
-	cd Rheda && ${MAKE} docker_unit
-	cd Tyr && ${MAKE} docker_unit
-
-.PHONY: lint
-lint:
-	cd Mimir && ${MAKE} docker_lint
-	cd Frey && ${MAKE} docker_lint
-	cd Rheda && ${MAKE} docker_lint
+check:
+	cd Mimir && ${MAKE} docker_check
+	cd Frey && ${MAKE} docker_check
+	cd Rheda && ${MAKE} docker_check
 	cd Tyr && ${MAKE} docker_lint
+	cd Tyr && ${MAKE} docker_unit
 	cd Forseti && ${MAKE} docker_lint
-
-.PHONY: check_covered
-check_covered: lint
-	cd Mimir && ${MAKE} docker_unit_covered
-	cd Frey && ${MAKE} docker_unit_covered
-	cd Rheda && ${MAKE} docker_unit_covered
-	cd Tyr && ${MAKE} docker_unit_covered
-	# TODO: fix sending coverall reports
 
 .PHONY: autofix
 autofix:

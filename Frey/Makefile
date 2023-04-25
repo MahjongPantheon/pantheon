@@ -66,10 +66,6 @@ lint:
 unit:
 	php bin/unit.php
 
-.PHONY: unit_covered
-unit_covered:
-	phpdbg -qrr bin/unit.php --testdox --coverage-clover=/tmp/coverage-frey.xml
-
 check: lint unit
 
 .PHONY: autofix
@@ -95,14 +91,6 @@ docker_deps: get_docker_id
   	else \
   		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make deps' ; \
   	fi
-
-.PHONY: docker_unit_covered
-docker_unit_covered: get_docker_id
-	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
-		echo "${RED}Frey container is not running.${NC}"; \
-	else \
-		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make unit_covered' ; \
-	fi
 
 .PHONY: docker_check
 docker_check: get_docker_id

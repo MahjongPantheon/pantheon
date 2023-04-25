@@ -53,8 +53,6 @@ ENV LANG                en_US.utf8
 ENV MIMIR_URL http://mimir
 ENV FREY_URL  http://frey
 
-ENV IS_DOCKER 1
-
 # these should match auth data in dbinit_frey.sql
 ENV PHINX_DB_FREY_NAME frey
 ENV PHINX_DB_FREY_NAME_UNIT frey_unit

@@ -6,7 +6,7 @@ services:
   db:
     build: ./Database
     ports:
-      - "5532:5432"
+      - "5532:5532"
     volumes:
       - datavolume01:/var/lib/postgresql/data
   pgadmin:
@@ -26,6 +26,9 @@ services:
     links:
       - mimir:mimir
       - frey:frey
+    depends_on:
+      - frey
+      - mimir
     env_file:
       - ./Common/envs/${ENV_FILENAME}
     volumes:
@@ -40,6 +43,9 @@ services:
     links:
       - mimir:mimir
       - frey:frey
+    depends_on:
+      - frey
+      - mimir
     env_file:
       - ./Common/envs/${ENV_FILENAME}
     volumes:
@@ -53,6 +59,9 @@ services:
     links:
       - frey:frey
       - db:db
+    depends_on:
+      - frey
+      - db
     env_file:
       - ./Common/envs/${ENV_FILENAME}
     volumes:
@@ -67,6 +76,8 @@ services:
       - "4004:80"
     links:
       - db:db
+    depends_on:
+      - db
     env_file:
       - ./Common/envs/${ENV_FILENAME}
     volumes:
@@ -79,6 +90,9 @@ services:
     build: ./Rheda
     ports:
       - "4002:80"
+    depends_on:
+      - frey
+      - mimir
     links:
       - mimir:mimir
       - frey:frey

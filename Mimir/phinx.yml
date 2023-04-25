@@ -29,7 +29,7 @@ environments:
         name: mimir_unit
         user: mimir
         pass: pgpass
-        port: 5432
+        port: 5532
         charset: utf8
 
     docker:
