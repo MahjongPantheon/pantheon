@@ -135,6 +135,7 @@ EXPOSE 4001 4002 4003 4004 4007 $DB_PORT
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
+RUN dos2unix /entrypoint.sh
 
 # copy nginx configs
 COPY Rheda/rheda-docker.nginx.conf /etc/nginx/http.d/rheda.conf
