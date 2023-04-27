@@ -56,6 +56,12 @@ lint:
 	php vendor/bin/phpcs src www --ignore=www/assets/*
 	php vendor/bin/phpstan clear-result-cache && php vendor/bin/phpstan analyse -c phpstan.neon
 
+.PHONY: unit
+unit:
+	# TODO: unit tests
+
+check: lint unit
+
 .PHONY: autofix
 autofix:
 	php vendor/bin/phpcbf --config-set default_standard PSR2 > /dev/null
@@ -100,6 +106,14 @@ docker_lint: get_docker_id
 		echo "${RED}Rheda container is not running.${NC}"; \
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make lint' ; \
+	fi
+
+.PHONY: docker_check
+docker_check: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Rheda container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Rheda && HOME=/home/user su-exec user make check' ; \
 	fi
 
 .PHONY: docker_autofix
