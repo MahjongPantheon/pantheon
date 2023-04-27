@@ -119,6 +119,7 @@ EXPOSE 4001
 
 # copy entry point
 COPY entrypoint.sh /entrypoint.sh
+RUN dos2unix /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 
 # copy nginx configs
