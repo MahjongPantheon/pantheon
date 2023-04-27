@@ -28,8 +28,7 @@ kill:
 	cd Frey && ${MAKE} kill
 	cd Rheda && ${MAKE} kill
 	cd Forseti && ${MAKE} kill
-	docker rmi `docker images | grep 'pantheon' | grep 'db' | awk '{print $$1}'`
-	docker volume rm pantheon_datavolume01
+	cd Database && ${MAKE} kill
 	docker-compose rm -v
 
 .PHONY: container
@@ -131,6 +130,10 @@ shell_frey:
 .PHONY: shell_forseti
 shell_forseti:
 	cd Forseti && ${MAKE} shell
+
+.PHONY: shell_db
+shell_db:
+	cd Database && ${MAKE} shell
 
 # Some shortcuts for common tasks
 

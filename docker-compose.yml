@@ -6,7 +6,7 @@ services:
   db:
     build: ./Database
     ports:
-      - "127.0.0.1:5532:5532"
+      - "5532:5532"
     volumes:
       - datavolume01:/var/lib/postgresql/data
   pgadmin:
