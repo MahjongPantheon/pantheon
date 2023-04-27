@@ -25,7 +25,7 @@ environments:
 
     testing:
         adapter: pgsql
-        host: localhost
+        host: db
         name: mimir_unit
         user: mimir
         pass: pgpass

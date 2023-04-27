@@ -25,7 +25,7 @@ environments:
 
     testing:
         adapter: pgsql
-        host: localhost
+        host: db
         name: frey_unit
         user: frey
         pass: pgpass
