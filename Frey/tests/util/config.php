@@ -24,10 +24,11 @@ $port = getenv('PHINX_DB_FREY_PORT') ?: 5532;
 $dbname = getenv('PHINX_DB_FREY_NAME_UNIT') ?: 'frey_unit';
 $user = getenv('PHINX_DB_FREY_USER') ?: 'frey';
 $pass = getenv('PHINX_DB_FREY_PASS') ?: 'pgpass';
+$host = getenv('PHINX_DB_FREY_HOST') ?: 'localhost';
 
 return [
     'db' => [
-        'connection_string' => 'pgsql:host=localhost;port=' . $port . ';dbname=' . $dbname,
+        'connection_string' => 'pgsql:host=' . $host . ';port=' . $port . ';dbname=' . $dbname,
         'credentials' => [
             'username' => $user,
             'password' => $pass

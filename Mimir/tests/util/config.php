@@ -24,10 +24,11 @@ $port = getenv('PHINX_DB_PORT') ?: 5532;
 $dbname = getenv('PHINX_DB_NAME_UNIT') ?: 'mimir_unit';
 $user = getenv('PHINX_DB_USER') ?: 'mimir';
 $pass = getenv('PHINX_DB_PASS') ?: 'pgpass';
+$host = getenv('PHINX_DB_HOST') ?: 'localhost';
 
 return [
     'db' => [
-        'connection_string' => 'pgsql:host=localhost;port=' . $port . ';dbname=' . $dbname,
+        'connection_string' => 'pgsql:host=' . $host . ';port=' . $port . ';dbname=' . $dbname,
         'credentials' => [
             'username' => $user,
             'password' => $pass
