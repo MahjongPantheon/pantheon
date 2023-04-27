@@ -6,13 +6,13 @@ services:
   db:
     build: ./Database
     ports:
-      - "5532:5532"
+      - "127.0.0.1:5532:5532"
     volumes:
       - datavolume01:/var/lib/postgresql/data
   pgadmin:
     image: dpage/pgadmin4
     ports:
-      - "5632:80"
+      - "127.0.0.1:5632:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: "dev@riichimahjong.org"
       PGADMIN_DEFAULT_PASSWORD: "password"
@@ -21,8 +21,8 @@ services:
   tyr:
     build: ./Tyr
     ports:
-      - "4003:80"
-      - "4103:8080"
+      - "127.0.0.1:4003:80"
+      - "127.0.0.1:4103:8080"
     links:
       - mimir:mimir
       - frey:frey
@@ -38,8 +38,8 @@ services:
   forseti:
     build: ./Forseti
     ports:
-      - "4007:80"
-      - "4107:8080"
+      - "127.0.0.1:4007:80"
+      - "127.0.0.1:4107:8080"
     links:
       - mimir:mimir
       - frey:frey
@@ -55,7 +55,7 @@ services:
   mimir:
     build: ./Mimir
     ports:
-      - "4001:80"
+      - "127.0.0.1:4001:80"
     links:
       - frey:frey
       - db:db
@@ -73,7 +73,7 @@ services:
   frey:
     build: ./Frey
     ports:
-      - "4004:80"
+      - "127.0.0.1:4004:80"
     links:
       - db:db
     depends_on:
@@ -89,7 +89,7 @@ services:
   rheda:
     build: ./Rheda
     ports:
-      - "4002:80"
+      - "127.0.0.1:4002:80"
     depends_on:
       - frey
       - mimir
