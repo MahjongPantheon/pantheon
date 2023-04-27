@@ -84,3 +84,8 @@ See protocol description files in `Common` folder.
 Any pull request should pass all current code style checks; also all unit tests should pass. Don't forget to run
 `make check` (with `sudo` if required) before sending your pull request. To fix all code style issues automatically
 (in php code only), run `make autofix` (also `sudo` may be required).
+
+### External services
+
+One may want to use Pantheon API in some own external service. Please make sure you have protoc v3.21.9 so generated
+binary code matches our protocol version. 
