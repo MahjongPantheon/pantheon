@@ -6,7 +6,7 @@ NC = $(shell echo -e '\033[0m') # No Color
 
 .PHONY: get_docker_id
 get_docker_id:
-	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep 'pantheon_mimir' | awk '{print $$1}'))
+	$(eval RUNNING_DOCKER_ID := $(shell docker ps | grep 'pantheon' | grep 'mimir' | awk '{print $$1}'))
 
 .PHONY: shell
 shell: get_docker_id
@@ -18,7 +18,7 @@ shell: get_docker_id
 
 .PHONY: kill
 kill:
-	docker rmi pantheon_mimir
+	docker rmi `docker images | grep 'pantheon' | grep 'mimir' | awk '{print $$1}'`
 
 .PHONY: docker_migrate
 docker_migrate: get_docker_id

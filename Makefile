@@ -28,7 +28,7 @@ kill:
 	cd Frey && ${MAKE} kill
 	cd Rheda && ${MAKE} kill
 	cd Forseti && ${MAKE} kill
-	docker rmi pantheon_db
+	docker rmi `docker images | grep 'pantheon' | grep 'db' | awk '{print $$1}'`
 	docker volume rm pantheon_datavolume01
 	docker-compose rm -v
 
