@@ -182,9 +182,9 @@ proto_gen:
 
 .PHONY: prod_deps
 prod_deps:
-	cd Mimir && ${MAKE} deps
-	cd Rheda && ${MAKE} deps
-	cd Frey && ${MAKE} deps
+	cd Mimir && ${MAKE} docker_deps
+	cd Rheda && ${MAKE} docker_deps
+	cd Frey && ${MAKE} docker_deps
 
 .PHONY: prod_build_tyr
 prod_build_tyr: # this is for automated builds, don't run it manually
