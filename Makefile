@@ -185,6 +185,8 @@ prod_deps:
 	cd Mimir && ${MAKE} docker_deps
 	cd Rheda && ${MAKE} docker_deps
 	cd Frey && ${MAKE} docker_deps
+	cd Tyr && ${MAKE} docker_deps
+	cd Forseti && ${MAKE} docker_deps
 
 .PHONY: prod_build_tyr
 prod_build_tyr: # this is for automated builds, don't run it manually
