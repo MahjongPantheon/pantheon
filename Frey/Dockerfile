@@ -13,6 +13,7 @@ RUN apk update && \
     icu-data-full \
     nginx \
     protoc \
+    postgresql13 \
     php81-apcu \
     php81-fpm \
     php81-ctype \

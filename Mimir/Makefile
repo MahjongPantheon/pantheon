@@ -85,7 +85,7 @@ init_test_db:
 clean_test_db:
 	echo "Cleaning test db..."
 	while read p; do \
-		PGPASSWORD=pgpass psql -h127.0.0.1 -p5532 -U mimir mimir_unit -c "DROP TABLE $$p"; \
+		PGPASSWORD=pgpass psql -hdb -p5532 -U mimir mimir_unit -c "DROP TABLE $$p"; \
 	done < ./data/tablelist.txt || true
 
 .PHONY: docker_hooks
