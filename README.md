@@ -17,7 +17,7 @@ To deploy pantheon on your own VPS or personal environment on production mode:
 
 1. Make sure you have Docker, Docker-compose, GNU Make and PHP8+ installed on your system.
 2. Create new environment config file in `Common/envs/` folder. There are examples inside. If you just want to build pantheon in production mode locally, use `prebuiltlocal.env` file.
-3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. Pantheon does not offer any pre-made configs for it.
+3. Fill new environment file with proper values, mostly it's about hosts, where you want the services to be accessible from the outer internet. Please note: setting up Nginx or any other reverse proxy is your responsibility. You may refer to `nginx-reverse-proxy.example.conf` file for basic nginx setup and use `prebuilt.reverse-proxy.env` environment config as a reference.
 4. Set up your reverse proxy, add SSL certificates (optionally). Point your reverse proxy entry points to following ports:
    1. Game API (Mimir) to port 4001 
    2. User API (Frey) to port 4004 
