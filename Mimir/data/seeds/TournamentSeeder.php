@@ -127,7 +127,7 @@ class TournamentSeeder extends AbstractSeed
             'admin'     => [
                 'debug_token' => 'CHANGE_ME'
             ],
-            'freyUrl'   => getenv('FREY_URL'),
+            'freyUrl'   => 'http://frey',
             'verbose'   => false,
             'verboseLog' => '',
             'api' => [
