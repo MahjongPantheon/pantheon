@@ -28,7 +28,7 @@ import {
   GET_ALL_PLAYERS_INIT,
 } from '#/store/actions/interfaces';
 import { getPlayers } from '#/store/selectors/screenNewGameSelectors';
-import { RegisteredPlayer } from '#/clients/atoms.pb';
+import { RegisteredPlayer } from '#/clients/proto/atoms.pb';
 
 export class SearchPlayerScreen extends React.Component<IComponentProps> {
   private onUserClick(user: RegisteredPlayer) {

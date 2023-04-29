@@ -23,7 +23,7 @@ import {
   SessionStatus,
   TableState,
   TournamentGamesStatus,
-} from '#/clients/atoms.pb';
+} from '#/clients/proto/atoms.pb';
 import {
   ActionIcon,
   Avatar,

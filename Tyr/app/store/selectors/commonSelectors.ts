@@ -16,7 +16,7 @@
  */
 
 import { memoize } from '#/primitives/memoize';
-import { PlayerInSession } from '#/clients/atoms.pb';
+import { PlayerInSession } from '#/clients/proto/atoms.pb';
 
 function _getSeating(
   round: number,

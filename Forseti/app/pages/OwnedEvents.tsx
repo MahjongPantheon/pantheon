@@ -54,7 +54,7 @@ import { useApi } from '#/hooks/api';
 import { useI18n } from '#/hooks/i18n';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useStorage } from '#/hooks/storage';
-import type { Event } from '#/clients/atoms.pb';
+import type { Event } from '#/clients/proto/atoms.pb';
 import { authCtx } from '#/hooks/auth';
 import { useDisclosure } from '@mantine/hooks';
 import { nprogress } from '@mantine/nprogress';

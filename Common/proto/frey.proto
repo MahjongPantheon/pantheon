@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package Common;
 
-import "atoms.proto";
+import "proto/atoms.proto";
 
 service Frey {
   rpc RequestRegistration(Auth_RequestRegistration_Payload) returns (Auth_RequestRegistration_Response);

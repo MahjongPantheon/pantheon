@@ -26,7 +26,7 @@ import {
   IntermediateResultOfSession,
   RegisteredPlayer,
   TableState,
-} from '#/clients/atoms.pb';
+} from '#/clients/proto/atoms.pb';
 import { Container, LoadingOverlay } from '@mantine/core';
 
 import { notifications } from '@mantine/notifications';

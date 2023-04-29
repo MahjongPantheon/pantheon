@@ -71,8 +71,8 @@ import {
 import { RemoteError } from '#/services/remoteError';
 import { IAppState } from '../interfaces';
 import { IRiichiApi } from '#/services/IRiichiApi';
-import { CurrentSession, GameConfig } from '#/clients/atoms.pb';
-import { Events_GetTimerState_Response } from '#/clients/mimir.pb';
+import { CurrentSession, GameConfig } from '#/clients/proto/atoms.pb';
+import { Events_GetTimerState_Response } from '#/clients/proto/mimir.pb';
 
 export const apiClient =
   (api: IRiichiApi) =>

@@ -23,7 +23,7 @@ import { RoundResult } from '#/components/screens/log/view/RoundResult';
 import { IRoundOverviewInfo } from '#/components/screens/log/view/RoundTypes';
 import { RoundInfo } from '#/components/screens/log/view/RoundInfo';
 import { i18n } from '#/components/i18n';
-import { IntermediateResultOfSession } from '#/clients/atoms.pb';
+import { IntermediateResultOfSession } from '#/clients/proto/atoms.pb';
 
 export interface IRoundResult {
   scoresDelta: IntermediateResultOfSession[];

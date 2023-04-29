@@ -4,3 +4,5 @@ webpack.*.js
 typings.d.ts
 *.spec.ts
 app/primitives/memoize.ts
+app/clients/proto/*
+dist/

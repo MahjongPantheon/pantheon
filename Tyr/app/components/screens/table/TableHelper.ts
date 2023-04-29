@@ -81,7 +81,7 @@ import {
   getTimeRemaining,
 } from '#/store/selectors/overviewSelectors';
 import { I18nService } from '#/services/i18n';
-import { PlayerInSession, RoundOutcome } from '#/clients/atoms.pb';
+import { PlayerInSession, RoundOutcome } from '#/clients/proto/atoms.pb';
 
 // todo move to selectors most of code from here
 

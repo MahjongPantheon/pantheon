@@ -50,7 +50,7 @@ import {
   UpdatePlayersLocalIds,
   UpdatePlayersTeams,
   UpdatePrescriptedEventConfig,
-} from '#/clients/mimir.pb';
+} from '#/clients/proto/mimir.pb';
 import {
   AddRuleForPerson,
   ApproveRegistration,
@@ -68,9 +68,9 @@ import {
   RequestRegistration,
   RequestResetPassword,
   UpdatePersonalInfo,
-} from '#/clients/frey.pb';
+} from '#/clients/proto/frey.pb';
 import { ClientConfiguration } from 'twirpscript';
-import { EventData, IntermediateResultOfSession } from '#/clients/atoms.pb';
+import { EventData, IntermediateResultOfSession } from '#/clients/proto/atoms.pb';
 import { handleReleaseTag } from '#/services/releaseTags';
 import { Analytics } from '#/services/analytics';
 

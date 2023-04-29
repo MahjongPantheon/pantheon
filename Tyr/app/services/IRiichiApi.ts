@@ -25,13 +25,13 @@ import {
   RoundState,
   SessionHistoryResult,
   TableState,
-} from '#/clients/atoms.pb';
+} from '#/clients/proto/atoms.pb';
 import {
   Events_GetTimerState_Response,
   Games_AddRound_Response,
   Games_GetSessionOverview_Response,
-} from '#/clients/mimir.pb';
-import { Auth_Authorize_Response } from '#/clients/frey.pb';
+} from '#/clients/proto/mimir.pb';
+import { Auth_Authorize_Response } from '#/clients/proto/frey.pb';
 
 export interface IRiichiApi {
   setCredentials(personId: number, token: string): void;

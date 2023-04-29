@@ -87,5 +87,5 @@ Any pull request should pass all current code style checks; also all unit tests 
 
 ### External services
 
-One may want to use Pantheon API in some own external service. Please make sure you have protoc v3.21.9 so generated
+One may want to use Pantheon API in some own external service. Please make sure you have protoc v3.21.9-r0 so generated
 binary code matches our protocol version. 

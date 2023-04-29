@@ -44,7 +44,7 @@ import {
 import { AppOutcome } from '#/interfaces/app';
 import { getRequiredYaku } from '../selectors/yaku';
 import { YakuId } from '#/primitives/yaku';
-import { PlayerInSession } from '#/clients/atoms.pb';
+import { PlayerInSession } from '#/clients/proto/atoms.pb';
 
 /**
  * Get id of player who is dealer in this round

@@ -19,7 +19,7 @@ import { IAppState } from '../interfaces';
 import { YakuId } from '#/primitives/yaku';
 import { unpack } from '#/primitives/yaku-compat';
 import { memoize } from '#/primitives/memoize';
-import { PlayerInSession } from '#/clients/atoms.pb';
+import { PlayerInSession } from '#/clients/proto/atoms.pb';
 
 export function getOutcome(state: IAppState) {
   return state.currentOutcome && state.currentOutcome.selectedOutcome;

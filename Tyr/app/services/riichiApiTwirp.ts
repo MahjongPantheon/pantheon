@@ -31,12 +31,12 @@ import {
   GetTimerState,
   PreviewRound,
   StartGame,
-} from '#/clients/mimir.pb';
+} from '#/clients/proto/mimir.pb';
 import { IRiichiApi } from '#/services/IRiichiApi';
-import { Authorize, GetPersonalInfo, QuickAuthorize } from '#/clients/frey.pb';
+import { Authorize, GetPersonalInfo, QuickAuthorize } from '#/clients/proto/frey.pb';
 import { formatRoundToTwirp } from '#/services/formatters';
 import { ClientConfiguration } from 'twirpscript';
-import { SessionStatus } from '#/clients/atoms.pb';
+import { SessionStatus } from '#/clients/proto/atoms.pb';
 
 import { handleReleaseTag } from '#/services/releaseTags';
 

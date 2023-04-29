@@ -36,7 +36,7 @@ import {
   RonResult,
   Round,
   TsumoResult,
-} from '#/clients/atoms.pb';
+} from '#/clients/proto/atoms.pb';
 import { AppOutcomeRon } from '#/interfaces/app';
 import { unpack } from '#/primitives/yaku-compat';
 

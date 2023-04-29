@@ -17,7 +17,7 @@
 
 import * as React from 'react';
 import { useI18n } from '#/hooks/i18n';
-import { GameConfig, RegisteredPlayer, TableState } from '#/clients/atoms.pb';
+import { GameConfig, RegisteredPlayer, TableState } from '#/clients/proto/atoms.pb';
 import {
   Box,
   Button,

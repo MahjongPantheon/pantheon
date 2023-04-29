@@ -20,7 +20,7 @@ import * as React from 'react';
 import { Checkbox, NumberInput, Radio, Space, Stack } from '@mantine/core';
 import { IconClockPlay, IconUserX } from '@tabler/icons-react';
 import { FormHandle } from '#/pages/OwnedEventsEdit/types';
-import { EndingPolicy } from '#/clients/atoms.pb';
+import { EndingPolicy } from '#/clients/proto/atoms.pb';
 
 type TournamentSettingsProps = {
   form: FormHandle;

@@ -19,7 +19,7 @@ import { AppOutcome } from '#/interfaces/app';
 import { intersect } from '#/primitives/intersect';
 import { unpack } from '#/primitives/yaku-compat';
 import { Action, AnyAction } from 'redux';
-import { GameConfig } from '#/clients/atoms.pb';
+import { GameConfig } from '#/clients/proto/atoms.pb';
 
 export function playerHasYakuWithPao(yakuPack: string, gameConfig: GameConfig): boolean {
   return intersect(unpack(yakuPack), gameConfig.rulesetConfig.yakuWithPao).length > 0;

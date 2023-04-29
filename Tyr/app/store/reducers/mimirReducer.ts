@@ -76,7 +76,7 @@ import { modifyArray } from './util';
 import { defaultPlayer } from '../selectors/screenNewGameSelectors';
 import { rand } from '#/primitives/rand';
 import { initialState } from '../state';
-import { PlayerInSession, RegisteredPlayer } from '#/clients/atoms.pb';
+import { PlayerInSession, RegisteredPlayer } from '#/clients/proto/atoms.pb';
 
 export function mimirReducer(state: IAppState, action: AppActionTypes): IAppState {
   let player;

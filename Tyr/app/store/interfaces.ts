@@ -28,8 +28,8 @@ import {
   SessionHistoryResult,
   SessionState,
   TableState,
-} from '#/clients/atoms.pb';
-import { Games_GetSessionOverview_Response } from '#/clients/mimir.pb';
+} from '#/clients/proto/atoms.pb';
+import { Games_GetSessionOverview_Response } from '#/clients/proto/mimir.pb';
 
 export type AppScreen =
   | 'eventSelector'
