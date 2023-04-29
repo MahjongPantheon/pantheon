@@ -160,6 +160,7 @@ dump_users:
 check:
 	cd Mimir && ${MAKE} docker_check
 	cd Frey && ${MAKE} docker_check
+	cd Frey && ${MAKE} docker_check_common
 	cd Rheda && ${MAKE} docker_check
 	cd Tyr && ${MAKE} docker_lint
 	cd Tyr && ${MAKE} docker_unit
@@ -169,6 +170,7 @@ check:
 autofix:
 	cd Mimir && ${MAKE} docker_autofix
 	cd Frey && ${MAKE} docker_autofix
+	cd Frey && ${MAKE} docker_autofix_common
 	cd Rheda && ${MAKE} docker_autofix
 	cd Tyr && ${MAKE} docker_autofix
 	cd Forseti && ${MAKE} docker_autofix

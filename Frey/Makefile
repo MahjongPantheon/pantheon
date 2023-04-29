@@ -100,6 +100,14 @@ docker_check: get_docker_id
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make check' ; \
 	fi
 
+.PHONY: docker_check_common
+docker_check_common: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Common && HOME=/home/user su-exec user make lint' ; \
+	fi
+
 .PHONY: docker_proto_gen
 docker_proto_gen: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
@@ -114,6 +122,14 @@ docker_autofix: get_docker_id
 		echo "${RED}Frey container is not running.${NC}"; \
 	else \
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make autofix' ; \
+	fi
+
+.PHONY: docker_autofix_common
+docker_autofix_common: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Frey container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Common && HOME=/home/user su-exec user make autofix' ; \
 	fi
 
 .PHONY: docker_init_test_db

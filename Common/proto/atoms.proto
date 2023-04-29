@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package Common;
+package common;
 
 // Frey specifics
 
@@ -20,9 +20,9 @@ message RuleValue {
 }
 
 message EventAdmin {
-  int32 ruleId = 1;
-  int32 personId = 2;
-  string personName = 3;
+  int32 rule_id = 1;
+  int32 person_id = 2;
+  string person_name = 3;
 }
 
 message RuleListItem {
@@ -32,19 +32,19 @@ message RuleListItem {
 }
 
 message EventRuleListItem {
-  bool isGlobal = 1;
+  bool is_global = 1;
   int32 id = 2;
   RuleValue value = 3;
   string name = 4;
-  string ownerTitle = 5;
-  repeated string allowedValues = 6;
+  string owner_title = 5;
+  repeated string allowed_values = 6;
 }
 
 message RuleListItemEx {
   int32 id = 1;
   string type = 2;
   RuleValue value = 3;
-  repeated string allowedValues = 4;
+  repeated string allowed_values = 4;
 }
 
 message RuleListItemExMap {
@@ -54,14 +54,14 @@ message RuleListItemExMap {
 message Person {
   int32 id = 1;
   string city = 2;
-  string tenhouId = 3;
+  string tenhou_id = 3;
   string title = 4;
 }
 
 message PersonEx {
   int32 id = 1;
   string city = 2;
-  string tenhouId = 3;
+  string tenhou_id = 3;
   string title = 4;
   string country = 5;
   string email = 6;
@@ -79,33 +79,36 @@ message Group {
 // Mimir specifics
 
 enum EventType {
-  ONLINE = 0;
-  TOURNAMENT = 1;
-  LOCAL = 2;
+  EVENT_TYPE_UNSPECIFIED = 0;
+  EVENT_TYPE_TOURNAMENT = 1;
+  EVENT_TYPE_LOCAL = 2;
+  EVENT_TYPE_ONLINE = 3;
 }
 
 enum TournamentGamesStatus {
-  NONE = 0; // for non-tournament events
-  SEATING_READY = 1;
-  STARTED = 2;
+  TOURNAMENT_GAMES_STATUS_UNSPECIFIED = 0; // for non-tournament events
+  TOURNAMENT_GAMES_STATUS_SEATING_READY = 1;
+  TOURNAMENT_GAMES_STATUS_STARTED = 2;
 }
 
 enum RoundOutcome {
-  RON = 0;
-  TSUMO = 1;
-  DRAW = 2;
-  ABORT = 3;
-  CHOMBO = 4;
-  NAGASHI = 5;
-  MULTIRON = 6;
+  ROUND_OUTCOME_UNSPECIFIED = 0;
+  ROUND_OUTCOME_RON = 1;
+  ROUND_OUTCOME_TSUMO = 2;
+  ROUND_OUTCOME_DRAW = 3;
+  ROUND_OUTCOME_ABORT = 4;
+  ROUND_OUTCOME_CHOMBO = 5;
+  ROUND_OUTCOME_NAGASHI = 6;
+  ROUND_OUTCOME_MULTIRON = 7;
 }
 
 enum SessionStatus {
-  PLANNED = 0;
-  INPROGRESS = 1;
-  PREFINISHED = 2;
-  FINISHED = 3;
-  CANCELLED = 4;
+  SESSION_STATUS_UNSPECIFIED = 0;
+  SESSION_STATUS_INPROGRESS = 1;
+  SESSION_STATUS_PREFINISHED = 2;
+  SESSION_STATUS_FINISHED = 3;
+  SESSION_STATUS_CANCELLED = 4;
+  SESSION_STATUS_PLANNED = 5;
 }
 
 message Country {
@@ -118,68 +121,68 @@ message Event {
   string title = 2;
   string description = 3;
   bool finished = 4;
-  bool isListed = 5;
-  bool isRatingShown = 6;
-  bool tournamentStarted = 7;
+  bool is_listed = 5;
+  bool is_rating_shown = 6;
+  bool tournament_started = 7;
   EventType type = 8;
-  bool isPrescripted = 9;
+  bool is_prescripted = 9;
 }
 
 message MyEvent {
   int32 id = 1;
   string title = 2;
   string description = 3;
-  bool isOnline = 4;
+  bool is_online = 4;
 }
 
 message GameConfig {
-  string rulesetTitle = 10;
-  string eventTitle = 26;
-  string eventDescription = 27;
-  string eventStatHost = 28;
-  bool useTimer = 29;
-  bool usePenalty = 30;
-  int32 gameDuration = 34; // minutes
+  string ruleset_title = 10;
+  string event_title = 26;
+  string event_description = 27;
+  string event_stat_host = 28;
+  bool use_timer = 29;
+  bool use_penalty = 30;
+  int32 game_duration = 34; // minutes
   string timezone = 35;
-  bool isOnline = 36;
-  bool isTeam = 37;
-  bool autoSeating = 38;
-  bool syncStart = 39;
-  bool syncEnd = 40;
-  bool sortByGames = 41;
-  bool allowPlayerAppend = 42;
-  int32 seriesLength = 45;
-  int32 minGamesCount = 46;
-  TournamentGamesStatus gamesStatus = 47;
-  bool hideResults = 48;
-  bool hideAddReplayButton = 49;
-  bool isPrescripted = 50;
-  bool isFinished = 52;
-  RulesetConfig rulesetConfig = 53;
+  bool is_online = 36;
+  bool is_team = 37;
+  bool auto_seating = 38;
+  bool sync_start = 39;
+  bool sync_end = 40;
+  bool sort_by_games = 41;
+  bool allow_player_append = 42;
+  int32 series_length = 45;
+  int32 min_games_count = 46;
+  TournamentGamesStatus games_status = 47;
+  bool hide_results = 48;
+  bool hide_add_replay_button = 49;
+  bool is_prescripted = 50;
+  bool is_finished = 52;
+  RulesetConfig ruleset_config = 53;
 }
 
 message PlayerInRating {
   int32 id = 1;
   string title = 2;
-  string tenhouId = 3;
+  string tenhou_id = 3;
   float rating = 4;
   int32 chips = 5;
-  bool winnerZone = 6;
-  float avgPlace = 7;
-  float avgScore = 8;
-  int32 gamesPlayed = 9;
+  bool winner_zone = 6;
+  float avg_place = 7;
+  float avg_score = 8;
+  int32 games_played = 9;
 }
 
 message Player {
   int32 id = 1;
   string title = 2;
-  string tenhouId = 3;
+  string tenhou_id = 3;
 }
 
 message FinalResultOfSession {
-  int32 playerId = 1;
+  int32 player_id = 1;
   int32 score = 2;
-  float ratingDelta = 3;
+  float rating_delta = 3;
   int32 place = 4;
 }
 
@@ -190,85 +193,85 @@ message Penalty {
 }
 
 message RonResult {
-  int32 roundIndex = 1;
+  int32 round_index = 1;
   int32 honba = 2;
-  int32 winnerId = 3;
-  int32 loserId = 4;
-  int32 paoPlayerId = 5;
+  int32 winner_id = 3;
+  int32 loser_id = 4;
+  int32 pao_player_id = 5;
   int32 han = 6;
   int32 fu = 7;
-  repeated int32 yaku = 8; // yaku ids
-  repeated int32 riichiBets = 9; // player ids
+  repeated int32 yakuses = 8; // yaku ids
+  repeated int32 riichi_bets = 9; // player ids
   int32 dora = 10;
   int32 uradora = 11;
   int32 kandora = 12;
   int32 kanuradora = 13;
-  bool openHand = 14;
+  bool open_hand = 14;
 }
 
 message MultironWin {
-  int32 winnerId = 1;
-  int32 paoPlayerId = 2;
+  int32 winner_id = 1;
+  int32 pao_player_id = 2;
   int32 han = 3;
   int32 fu = 4;
-  repeated int32 yaku = 5; // yaku ids
+  repeated int32 yakuses = 5; // yaku ids
   int32 dora = 6;
   int32 uradora = 7;
   int32 kandora = 8;
   int32 kanuradora = 9;
-  bool openHand = 10;
+  bool open_hand = 10;
 }
 
 message MultironResult {
-  int32 roundIndex = 1;
+  int32 round_index = 1;
   int32 honba = 2;
-  int32 loserId = 3;
-  int32 multiRon = 4; // count of players who won
+  int32 loser_id = 3;
+  int32 multi_ron = 4; // count of players who won
   repeated MultironWin wins = 5;
-  repeated int32 riichiBets = 6; // player ids
+  repeated int32 riichi_bets = 6; // player ids
 }
 
 message TsumoResult {
-  int32 roundIndex = 1;
+  int32 round_index = 1;
   int32 honba = 2;
-  int32 winnerId = 3;
-  int32 paoPlayerId = 4;
+  int32 winner_id = 3;
+  int32 pao_player_id = 4;
   int32 han = 5;
   int32 fu = 6;
-  repeated int32 yaku = 7; // yaku ids
-  repeated int32 riichiBets = 8; // player ids
+  repeated int32 yakuses = 7; // yaku ids
+  repeated int32 riichi_bets = 8; // player ids
   int32 dora = 9;
   int32 uradora = 10;
   int32 kandora = 11;
   int32 kanuradora = 12;
-  bool openHand = 13;
+  bool open_hand = 13;
 }
 
 message DrawResult {
-  int32 roundIndex = 1;
+  int32 round_index = 1;
   int32 honba = 2;
-  repeated int32 riichiBets = 3; // player ids
-  repeated int32 tempai = 4; // player ids
+  repeated int32 riichi_bets = 3; // player ids
+  repeated int32 tempais = 4; // player ids
 }
 
 message AbortResult {
-  int32 roundIndex = 1;
+  int32 round_index = 1;
   int32 honba = 2;
-  repeated int32 riichiBets = 3; // player ids
+  repeated int32 riichi_bets = 3; // player ids
 }
 
 message ChomboResult {
-  int32 roundIndex = 1;
+  int32 round_index = 1;
   int32 honba = 2;
-  int32 loserId = 3;
+  int32 loser_id = 3;
 }
 
 message NagashiResult {
-  int32 roundIndex = 1;
+  int32 round_index = 1;
   int32 honba = 2;
-  repeated int32 riichiBets = 3; // player ids
-  repeated int32 tempai = 4; // player ids
-  repeated int32 nagashi = 5; // player ids
+  repeated int32 riichi_bets = 3; // player ids
+  repeated int32 tempais = 4; // player ids
+  repeated int32 nagashis = 5; // player ids
 }
 
 message Round {
@@ -284,30 +287,30 @@ message Round {
 }
 
 message GameResult {
-  string sessionHash = 1;
+  string session_hash = 1;
   optional string date = 2;
-  string replayLink = 3;
+  string replay_link = 3;
   repeated int32 players = 4;
-  repeated FinalResultOfSession finalResults = 5;
-  repeated Penalty penaltyLog = 6;
+  repeated FinalResultOfSession final_results = 5;
+  repeated Penalty penalty_logs = 6;
   repeated Round rounds = 7;
 }
 
 message PlayerPlaceInSeries {
-  string sessionHash = 1;
+  string session_hash = 1;
   int32 place = 2;
 }
 
 message SeriesResult {
   Player player = 1;
-  repeated PlayerPlaceInSeries bestSeries = 2;
-  float bestSeriesScores = 3;
-  int32 bestSeriesPlaces = 4;
-  string bestSeriesAvgPlace = 5; // formatted numeric string
-  repeated PlayerPlaceInSeries currentSeries = 6;
-  float currentSeriesScores = 7;
-  int32 currentSeriesPlaces = 8;
-  string currentSeriesAvgPlace = 9; // formatted numeric string
+  repeated PlayerPlaceInSeries best_series = 2;
+  float best_series_scores = 3;
+  int32 best_series_places = 4;
+  string best_series_avg_place = 5; // formatted numeric string
+  repeated PlayerPlaceInSeries current_series = 6;
+  float current_series_scores = 7;
+  int32 current_series_places = 8;
+  string current_series_avg_place = 9; // formatted numeric string
 }
 
 message ReplacementPlayer {
@@ -319,39 +322,39 @@ message PlayerInSession {
   int32 id = 1;
   string title = 2;
   int32 score = 3;
-  optional ReplacementPlayer replacedBy = 4;
-  float ratingDelta = 5;
+  optional ReplacementPlayer replaced_by = 4;
+  float rating_delta = 5;
 }
 
 message CurrentSession {
-  string sessionHash = 1;
+  string session_hash = 1;
   string status = 2;
-  optional int32 tableIndex = 3;
+  optional int32 table_index = 3;
   repeated PlayerInSession players = 4;
 }
 
 message RegisteredPlayer {
   int32 id = 1;
   string title = 2;
-  optional int32 localId = 3;
-  optional string teamName = 4;
-  string tenhouId = 5;
-  bool ignoreSeating = 6;
-  optional ReplacementPlayer replacedBy = 7;
+  optional int32 local_id = 3;
+  optional string team_name = 4;
+  string tenhou_id = 5;
+  bool ignore_seating = 6;
+  optional ReplacementPlayer replaced_by = 7;
 }
 
 message SessionHistoryResult {
-  string sessionHash = 1;
-  int32 eventId = 2;
-  int32 playerId = 3;
+  string session_hash = 1;
+  int32 event_id = 2;
+  int32 player_id = 3;
   int32 score = 4;
-  float ratingDelta = 5;
+  float rating_delta = 5;
   int32 place = 6;
   string title = 7;
 }
 
 message SessionHistoryResultTable {
-  repeated SessionHistoryResult table = 1;
+  repeated SessionHistoryResult tables = 1;
 }
 
 message PlacesSummaryItem {
@@ -365,33 +368,33 @@ message PlayerWinSummary {
   int32 chombo = 3;
   int32 feed = 4;
   int32 tsumofeed = 5;
-  int32 winsWithOpen = 6;
-  int32 winsWithRiichi = 7;
-  int32 winsWithDama = 8;
-  int32 unforcedFeedToOpen = 9;
-  int32 unforcedFeedToRiichi = 10;
-  int32 unforcedFeedToDama = 11;
+  int32 wins_with_open = 6;
+  int32 wins_with_riichi = 7;
+  int32 wins_with_dama = 8;
+  int32 unforced_feed_to_open = 9;
+  int32 unforced_feed_to_riichi = 10;
+  int32 unforced_feed_to_dama = 11;
   int32 draw = 12;
-  int32 drawTempai = 13;
-  int32 pointsWon = 14;
-  int32 pointsLostRon = 15;
-  int32 pointsLostTsumo = 16;
+  int32 draw_tempai = 13;
+  int32 points_won = 14;
+  int32 points_lost_ron = 15;
+  int32 points_lost_tsumo = 16;
 }
 
 message HandValueStat {
-  int32 hanCount = 1;
+  int32 han_count = 1;
   int32 count = 2; // count of hands with this value
 }
 
 message YakuStat {
-  int32 yakuId = 1;
+  int32 yaku_id = 1;
   int32 count = 2; // count of hands contained this yaku
 }
 
 message RiichiSummary {
-  int32 riichiWon = 1;
-  int32 riichiLost = 2;
-  int32 feedUnderRiichi = 3;
+  int32 riichi_won = 1;
+  int32 riichi_lost = 2;
+  int32 feed_under_riichi = 3;
 }
 
 message DoraSummary {
@@ -400,9 +403,9 @@ message DoraSummary {
 }
 
 message IntermediateResultOfSession {
-  int32 playerId = 1;
+  int32 player_id = 1;
   int32 score = 2;
-  optional int32 penaltyScore = 3;
+  optional int32 penalty_score = 3;
 }
 
 message PaymentLogItem {
@@ -412,20 +415,20 @@ message PaymentLogItem {
 }
 
 message PaymentLog {
-  repeated PaymentLogItem direct = 1;
-  repeated PaymentLogItem riichi = 2;
-  repeated PaymentLogItem honba = 3;
+  repeated PaymentLogItem directs = 1;
+  repeated PaymentLogItem riichis = 2;
+  repeated PaymentLogItem honbas = 3;
 }
 
 message RoundState {
-  string sessionHash = 1;
+  string session_hash = 1;
   int32 dealer = 2; // player id
-  int32 roundIndex = 3;
+  int32 round_index = 3;
   int32 riichi = 4; // riichis on table
   int32 honba = 5; // honba on table
-  repeated int32 riichiIds = 6; // player ids
+  repeated int32 riichi_ids = 6; // player ids
   repeated IntermediateResultOfSession scores = 7; // scores AFTER payments
-  repeated IntermediateResultOfSession scoresDelta = 8;
+  repeated IntermediateResultOfSession scores_deltas = 8;
   PaymentLog payments = 9;
   Round round = 10;
   RoundOutcome outcome = 11;
@@ -437,53 +440,53 @@ message EventData {
   string description = 3;
   int32 duration = 4;
   string timezone = 6;
-  int32 lobbyId = 7; // xxxx for common lobby, 1xxxx for tournament lobby
-  int32 seriesLength = 8;
-  int32 minGames = 9;
-  bool isTeam = 10;
-  bool isPrescripted = 11;
+  int32 lobby_id = 7; // xxxx for common lobby, 1xxxx for tournament lobby
+  int32 series_length = 8;
+  int32 min_games = 9;
+  bool is_team = 10;
+  bool is_prescripted = 11;
   int32 autostart = 12; // time until game autostart
-  RulesetConfig rulesetConfig = 14;
+  RulesetConfig ruleset_config = 14;
 }
 
 message TableState {
   SessionStatus status = 1;
-  bool mayDefinalize = 2;
-  string sessionHash = 3;
-  repeated Penalty penaltyLog = 4;
-  optional int32 tableIndex = 5;
-  optional Round lastRound = 6;
-  int32 currentRoundIndex = 7;
+  bool may_definalize = 2;
+  string session_hash = 3;
+  repeated Penalty penalty_logs = 4;
+  optional int32 table_index = 5;
+  optional Round last_round = 6;
+  int32 current_round_index = 7;
   repeated IntermediateResultOfSession scores = 8;
   repeated RegisteredPlayer players = 9;
 }
 
 message Achievement {
-  string achievementId = 1;
-  string achievementData = 2; // JSON stringified data
+  string achievement_id = 1;
+  string achievement_data = 2; // JSON stringified data
 }
 
 message LocalIdMapping {
-  int32 playerId = 1;
-  int32 localId = 2;
+  int32 player_id = 1;
+  int32 local_id = 2;
 }
 
 message TeamMapping {
-  int32 playerId = 1;
-  string teamName = 2;
+  int32 player_id = 1;
+  string team_name = 2;
 }
 
 message PlayerSeating {
   int32 order = 1; // order at the table
-  int32 playerId = 2;
-  int32 sessionId = 3;
-  int32 tableIndex = 4;
+  int32 player_id = 2;
+  int32 session_id = 3;
+  int32 table_index = 4;
   float rating = 5;
-  string playerTitle = 6;
+  string player_title = 6;
 }
 
 message PlayerSeatingSwiss {
-  int32 playerId = 1;
+  int32 player_id = 1;
   float rating = 2;
 }
 
@@ -497,13 +500,13 @@ message PrescriptedTable {
 
 message SessionState {
   int32 dealer = 1;
-  int32 roundIndex = 2;
-  int32 riichiCount = 3;
-  int32 honbaCount = 4;
+  int32 round_index = 2;
+  int32 riichi_count = 3;
+  int32 honba_count = 4;
   repeated IntermediateResultOfSession scores = 5;
   bool finished = 6;
   repeated Penalty penalties = 7;
-  bool lastHandStarted = 8;
+  bool last_hand_started = 8;
 }
 
 message Uma {
@@ -520,60 +523,61 @@ message ComplexUma {
 }
 
 enum UmaType {
-  UMA_SIMPLE = 0;
-  UMA_COMPLEX = 1;
+  UMA_TYPE_UNSPECIFIED = 0;
+  UMA_TYPE_UMA_SIMPLE = 1;
+  UMA_TYPE_UMA_COMPLEX = 2;
 }
 
 enum EndingPolicy {
-  EP_NONE = 0;
-  EP_ONE_MORE_HAND = 1;
-  EP_END_AFTER_HAND = 2;
+  ENDING_POLICY_EP_UNSPECIFIED = 0;
+  ENDING_POLICY_EP_ONE_MORE_HAND = 1;
+  ENDING_POLICY_EP_END_AFTER_HAND = 2;
 }
 
 message RulesetConfig {
-  ComplexUma complexUma = 1; //
-  EndingPolicy endingPolicy = 2; //
-  Uma uma = 3; //
-  UmaType umaType = 4; //
-  bool doubleronHonbaAtamahane = 5; //
-  bool doubleronRiichiAtamahane = 6; //
-  bool equalizeUma = 7; //
-  bool extraChomboPayments = 8; //
-  bool playAdditionalRounds = 9; //
-  bool riichiGoesToWinner = 10; //
-  bool tonpuusen = 11; //
-  bool withAbortives = 12; //
-  bool withAtamahane = 13; //
-  bool withButtobi = 14; //
-  bool withKazoe = 15; //
-  bool withKiriageMangan = 16; //
-  bool withKuitan = 17; //
-  bool withLeadingDealerGameOver = 18; //
-  bool withMultiYakumans = 19; //
-  bool withNagashiMangan = 20; //
-  bool withWinningDealerHonbaSkipped = 21; //
-  int32 chipsValue = 22; //
-  int32 chomboPenalty = 23; //
-  int32 gameExpirationTime = 24; //
-  int32 goalPoints = 25; //
-  int32 maxPenalty = 26; //
-  int32 minPenalty = 27; //
-  int32 oka = 28; //
-  int32 penaltyStep = 29; //
-  int32 replacementPlayerFixedPoints = 30;
-  int32 replacementPlayerOverrideUma = 31;
-  int32 startPoints = 32; //
-  int32 startRating = 33; //
-  repeated int32 allowedYaku = 34; //
-  repeated int32 yakuWithPao = 35; //
+  ComplexUma complex_uma = 1;
+  EndingPolicy ending_policy = 2;
+  Uma uma = 3;
+  UmaType uma_type = 4;
+  bool doubleron_honba_atamahane = 5;
+  bool doubleron_riichi_atamahane = 6;
+  bool equalize_uma = 7;
+  bool extra_chombo_payments = 8;
+  bool play_additional_rounds = 9;
+  bool riichi_goes_to_winner = 10;
+  bool tonpuusen = 11;
+  bool with_abortives = 12;
+  bool with_atamahane = 13;
+  bool with_buttobi = 14;
+  bool with_kazoe = 15;
+  bool with_kiriage_mangan = 16;
+  bool with_kuitan = 17;
+  bool with_leading_dealer_game_over = 18;
+  bool with_multi_yakumans = 19;
+  bool with_nagashi_mangan = 20;
+  bool with_winning_dealer_honba_skipped = 21;
+  int32 chips_value = 22;
+  int32 chombo_penalty = 23;
+  int32 game_expiration_time = 24;
+  int32 goal_points = 25;
+  int32 max_penalty = 26;
+  int32 min_penalty = 27;
+  int32 oka = 28;
+  int32 penalty_step = 29;
+  int32 replacement_player_fixed_points = 30;
+  int32 replacement_player_override_uma = 31;
+  int32 start_points = 32;
+  int32 start_rating = 33;
+  repeated int32 allowed_yakuses = 34;
+  repeated int32 yaku_with_paos = 35;
 }
 
 // Generics
 
-message Generic_Success_Response {
+message GenericSuccessResponse {
   bool success = 1;
 }
 
-message Generic_Event_Payload {
-  int32 eventId = 1;
+message GenericEventPayload {
+  int32 event_id = 1;
 }
