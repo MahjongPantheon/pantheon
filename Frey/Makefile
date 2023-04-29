@@ -100,6 +100,14 @@ docker_check: get_docker_id
 		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Frey && HOME=/home/user su-exec user make check' ; \
 	fi
 
+.PHONY: docker_proto_gen
+docker_proto_gen: get_docker_id
+	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \
+		echo "${RED}Rheda container is not running.${NC}"; \
+	else \
+		docker exec -t $(RUNNING_DOCKER_ID) sh -c 'cd /var/www/html/Common && HOME=/home/user su-exec user make proto_gen' ; \
+	fi
+
 .PHONY: docker_autofix
 docker_autofix: get_docker_id
 	@if [ "$(RUNNING_DOCKER_ID)" = "" ]; then \

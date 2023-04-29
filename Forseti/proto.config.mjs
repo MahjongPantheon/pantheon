@@ -1,5 +1,5 @@
 export default {
-  root: "../Common/",
+  root: "../Common/proto/",
   dest: "./app/clients/",
   language: "typescript",
 };
