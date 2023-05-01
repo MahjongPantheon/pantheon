@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.MyEvent</code>
+ * Generated from protobuf message <code>common.MyEvent</code>
  */
 class MyEvent extends \Google\Protobuf\Internal\Message
 {
@@ -26,9 +26,9 @@ class MyEvent extends \Google\Protobuf\Internal\Message
      */
     protected $description = '';
     /**
-     * Generated from protobuf field <code>bool isOnline = 4;</code>
+     * Generated from protobuf field <code>bool is_online = 4;</code>
      */
-    protected $isOnline = false;
+    protected $is_online = false;
 
     /**
      * Constructor.
@@ -39,7 +39,7 @@ class MyEvent extends \Google\Protobuf\Internal\Message
      *     @type int $id
      *     @type string $title
      *     @type string $description
-     *     @type bool $isOnline
+     *     @type bool $is_online
      * }
      */
     public function __construct($data = NULL) {
@@ -114,23 +114,23 @@ class MyEvent extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool isOnline = 4;</code>
+     * Generated from protobuf field <code>bool is_online = 4;</code>
      * @return bool
      */
     public function getIsOnline()
     {
-        return $this->isOnline;
+        return $this->is_online;
     }
 
     /**
-     * Generated from protobuf field <code>bool isOnline = 4;</code>
+     * Generated from protobuf field <code>bool is_online = 4;</code>
      * @param bool $var
      * @return $this
      */
     public function setIsOnline($var)
     {
         GPBUtil::checkBool($var);
-        $this->isOnline = $var;
+        $this->is_online = $var;
 
         return $this;
     }

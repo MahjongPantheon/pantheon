@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.Event</code>
+ * Generated from protobuf message <code>common.Event</code>
  */
 class Event extends \Google\Protobuf\Internal\Message
 {
@@ -30,25 +30,25 @@ class Event extends \Google\Protobuf\Internal\Message
      */
     protected $finished = false;
     /**
-     * Generated from protobuf field <code>bool isListed = 5;</code>
+     * Generated from protobuf field <code>bool is_listed = 5;</code>
      */
-    protected $isListed = false;
+    protected $is_listed = false;
     /**
-     * Generated from protobuf field <code>bool isRatingShown = 6;</code>
+     * Generated from protobuf field <code>bool is_rating_shown = 6;</code>
      */
-    protected $isRatingShown = false;
+    protected $is_rating_shown = false;
     /**
-     * Generated from protobuf field <code>bool tournamentStarted = 7;</code>
+     * Generated from protobuf field <code>bool tournament_started = 7;</code>
      */
-    protected $tournamentStarted = false;
+    protected $tournament_started = false;
     /**
-     * Generated from protobuf field <code>.Common.EventType type = 8;</code>
+     * Generated from protobuf field <code>.common.EventType type = 8;</code>
      */
     protected $type = 0;
     /**
-     * Generated from protobuf field <code>bool isPrescripted = 9;</code>
+     * Generated from protobuf field <code>bool is_prescripted = 9;</code>
      */
-    protected $isPrescripted = false;
+    protected $is_prescripted = false;
 
     /**
      * Constructor.
@@ -60,11 +60,11 @@ class Event extends \Google\Protobuf\Internal\Message
      *     @type string $title
      *     @type string $description
      *     @type bool $finished
-     *     @type bool $isListed
-     *     @type bool $isRatingShown
-     *     @type bool $tournamentStarted
+     *     @type bool $is_listed
+     *     @type bool $is_rating_shown
+     *     @type bool $tournament_started
      *     @type int $type
-     *     @type bool $isPrescripted
+     *     @type bool $is_prescripted
      * }
      */
     public function __construct($data = NULL) {
@@ -161,73 +161,73 @@ class Event extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool isListed = 5;</code>
+     * Generated from protobuf field <code>bool is_listed = 5;</code>
      * @return bool
      */
     public function getIsListed()
     {
-        return $this->isListed;
+        return $this->is_listed;
     }
 
     /**
-     * Generated from protobuf field <code>bool isListed = 5;</code>
+     * Generated from protobuf field <code>bool is_listed = 5;</code>
      * @param bool $var
      * @return $this
      */
     public function setIsListed($var)
     {
         GPBUtil::checkBool($var);
-        $this->isListed = $var;
+        $this->is_listed = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>bool isRatingShown = 6;</code>
+     * Generated from protobuf field <code>bool is_rating_shown = 6;</code>
      * @return bool
      */
     public function getIsRatingShown()
     {
-        return $this->isRatingShown;
+        return $this->is_rating_shown;
     }
 
     /**
-     * Generated from protobuf field <code>bool isRatingShown = 6;</code>
+     * Generated from protobuf field <code>bool is_rating_shown = 6;</code>
      * @param bool $var
      * @return $this
      */
     public function setIsRatingShown($var)
     {
         GPBUtil::checkBool($var);
-        $this->isRatingShown = $var;
+        $this->is_rating_shown = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>bool tournamentStarted = 7;</code>
+     * Generated from protobuf field <code>bool tournament_started = 7;</code>
      * @return bool
      */
     public function getTournamentStarted()
     {
-        return $this->tournamentStarted;
+        return $this->tournament_started;
     }
 
     /**
-     * Generated from protobuf field <code>bool tournamentStarted = 7;</code>
+     * Generated from protobuf field <code>bool tournament_started = 7;</code>
      * @param bool $var
      * @return $this
      */
     public function setTournamentStarted($var)
     {
         GPBUtil::checkBool($var);
-        $this->tournamentStarted = $var;
+        $this->tournament_started = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>.Common.EventType type = 8;</code>
+     * Generated from protobuf field <code>.common.EventType type = 8;</code>
      * @return int
      */
     public function getType()
@@ -236,7 +236,7 @@ class Event extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.Common.EventType type = 8;</code>
+     * Generated from protobuf field <code>.common.EventType type = 8;</code>
      * @param int $var
      * @return $this
      */
@@ -249,23 +249,23 @@ class Event extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool isPrescripted = 9;</code>
+     * Generated from protobuf field <code>bool is_prescripted = 9;</code>
      * @return bool
      */
     public function getIsPrescripted()
     {
-        return $this->isPrescripted;
+        return $this->is_prescripted;
     }
 
     /**
-     * Generated from protobuf field <code>bool isPrescripted = 9;</code>
+     * Generated from protobuf field <code>bool is_prescripted = 9;</code>
      * @param bool $var
      * @return $this
      */
     public function setIsPrescripted($var)
     {
         GPBUtil::checkBool($var);
-        $this->isPrescripted = $var;
+        $this->is_prescripted = $var;
 
         return $this;
     }

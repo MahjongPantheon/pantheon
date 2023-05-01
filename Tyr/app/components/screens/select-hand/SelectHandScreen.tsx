@@ -42,6 +42,7 @@ import { getDora, getFu, getPossibleFu, getHan } from '#/store/selectors/hanFu';
 import { getOutcomeName } from '#/components/screens/table/TableHelper';
 import { i18n } from '#/components/i18n';
 import { I18nService } from '#/services/i18n';
+import { RoundOutcome } from '#/clients/proto/atoms.pb';
 
 export class SelectHandScreen extends React.Component<IComponentProps> {
   static contextType = i18n;
@@ -133,8 +134,8 @@ export class SelectHandScreen extends React.Component<IComponentProps> {
     const { state } = this.props;
     if (
       !state.currentOutcome ||
-      (state.currentOutcome.selectedOutcome !== 'RON' &&
-        state.currentOutcome.selectedOutcome !== 'TSUMO')
+      (state.currentOutcome.selectedOutcome !== RoundOutcome.ROUND_OUTCOME_RON &&
+        state.currentOutcome.selectedOutcome !== RoundOutcome.ROUND_OUTCOME_TSUMO)
     ) {
       //todo
       return null;

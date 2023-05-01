@@ -17,7 +17,13 @@
 
 import * as React from 'react';
 import { useI18n } from '#/hooks/i18n';
-import { GameConfig, RegisteredPlayer, TableState } from '#/clients/proto/atoms.pb';
+import {
+  GameConfig,
+  RegisteredPlayer,
+  SessionStatus,
+  TableState,
+  TournamentGamesStatus,
+} from '#/clients/proto/atoms.pb';
 import {
   Box,
   Button,
@@ -286,13 +292,18 @@ function determineStage(
   }
 
   const notFinishedTablesCount = tablesState.reduce(
-    (acc, t) => acc + (t.status === 'FINISHED' ? 0 : 1),
+    (acc, t) => acc + (t.status === SessionStatus.SESSION_STATUS_FINISHED ? 0 : 1),
     0
   );
   // This will include both prefinished and finished tables, to show the "Finalize" button in case of any errors.
   // If some of the tables are finished, and some are prefinished, this will allow recovering working state.
   const preinishedTablesCount = tablesState.reduce(
-    (acc, t) => acc + (t.status === 'PREFINISHED' || t.status === 'FINISHED' ? 1 : 0),
+    (acc, t) =>
+      acc +
+      (t.status === SessionStatus.SESSION_STATUS_PREFINISHED ||
+      t.status === SessionStatus.SESSION_STATUS_FINISHED
+        ? 1
+        : 0),
     0
   );
 
@@ -310,7 +321,7 @@ function determineStage(
     return Stage.PREFINISHED;
   }
 
-  if (eventConfig?.gamesStatus === 'SEATING_READY') {
+  if (eventConfig?.gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY) {
     if (!eventConfig?.isPrescripted) {
       if (notFinishedTablesCount === Math.round(playersFiltered.length / 4)) {
         return Stage.SEATING_READY;

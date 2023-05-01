@@ -72,7 +72,7 @@ import { RemoteError } from '#/services/remoteError';
 import { IAppState } from '../interfaces';
 import { IRiichiApi } from '#/services/IRiichiApi';
 import { CurrentSession, GameConfig } from '#/clients/proto/atoms.pb';
-import { Events_GetTimerState_Response } from '#/clients/proto/mimir.pb';
+import { EventsGetTimerStateResponse } from '#/clients/proto/mimir.pb';
 
 export const apiClient =
   (api: IRiichiApi) =>
@@ -239,7 +239,7 @@ function updateCurrentGames(
   const promises: [
     Promise<CurrentSession[]>,
     Promise<GameConfig>,
-    Promise<Events_GetTimerState_Response>
+    Promise<EventsGetTimerStateResponse>
   ] = [
     api.getCurrentGames(currentPersonId, eventId),
     api.getGameConfig(eventId),

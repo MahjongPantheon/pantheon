@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.DoraSummary</code>
+ * Generated from protobuf message <code>common.DoraSummary</code>
  */
 class DoraSummary extends \Google\Protobuf\Internal\Message
 {

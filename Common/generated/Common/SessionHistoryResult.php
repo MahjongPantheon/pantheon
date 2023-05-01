@@ -9,30 +9,30 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.SessionHistoryResult</code>
+ * Generated from protobuf message <code>common.SessionHistoryResult</code>
  */
 class SessionHistoryResult extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>string sessionHash = 1;</code>
+     * Generated from protobuf field <code>string session_hash = 1;</code>
      */
-    protected $sessionHash = '';
+    protected $session_hash = '';
     /**
-     * Generated from protobuf field <code>int32 eventId = 2;</code>
+     * Generated from protobuf field <code>int32 event_id = 2;</code>
      */
-    protected $eventId = 0;
+    protected $event_id = 0;
     /**
-     * Generated from protobuf field <code>int32 playerId = 3;</code>
+     * Generated from protobuf field <code>int32 player_id = 3;</code>
      */
-    protected $playerId = 0;
+    protected $player_id = 0;
     /**
      * Generated from protobuf field <code>int32 score = 4;</code>
      */
     protected $score = 0;
     /**
-     * Generated from protobuf field <code>float ratingDelta = 5;</code>
+     * Generated from protobuf field <code>float rating_delta = 5;</code>
      */
-    protected $ratingDelta = 0.0;
+    protected $rating_delta = 0.0;
     /**
      * Generated from protobuf field <code>int32 place = 6;</code>
      */
@@ -48,11 +48,11 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type string $sessionHash
-     *     @type int $eventId
-     *     @type int $playerId
+     *     @type string $session_hash
+     *     @type int $event_id
+     *     @type int $player_id
      *     @type int $score
-     *     @type float $ratingDelta
+     *     @type float $rating_delta
      *     @type int $place
      *     @type string $title
      * }
@@ -63,67 +63,67 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string sessionHash = 1;</code>
+     * Generated from protobuf field <code>string session_hash = 1;</code>
      * @return string
      */
     public function getSessionHash()
     {
-        return $this->sessionHash;
+        return $this->session_hash;
     }
 
     /**
-     * Generated from protobuf field <code>string sessionHash = 1;</code>
+     * Generated from protobuf field <code>string session_hash = 1;</code>
      * @param string $var
      * @return $this
      */
     public function setSessionHash($var)
     {
         GPBUtil::checkString($var, True);
-        $this->sessionHash = $var;
+        $this->session_hash = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>int32 eventId = 2;</code>
+     * Generated from protobuf field <code>int32 event_id = 2;</code>
      * @return int
      */
     public function getEventId()
     {
-        return $this->eventId;
+        return $this->event_id;
     }
 
     /**
-     * Generated from protobuf field <code>int32 eventId = 2;</code>
+     * Generated from protobuf field <code>int32 event_id = 2;</code>
      * @param int $var
      * @return $this
      */
     public function setEventId($var)
     {
         GPBUtil::checkInt32($var);
-        $this->eventId = $var;
+        $this->event_id = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>int32 playerId = 3;</code>
+     * Generated from protobuf field <code>int32 player_id = 3;</code>
      * @return int
      */
     public function getPlayerId()
     {
-        return $this->playerId;
+        return $this->player_id;
     }
 
     /**
-     * Generated from protobuf field <code>int32 playerId = 3;</code>
+     * Generated from protobuf field <code>int32 player_id = 3;</code>
      * @param int $var
      * @return $this
      */
     public function setPlayerId($var)
     {
         GPBUtil::checkInt32($var);
-        $this->playerId = $var;
+        $this->player_id = $var;
 
         return $this;
     }
@@ -151,23 +151,23 @@ class SessionHistoryResult extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>float ratingDelta = 5;</code>
+     * Generated from protobuf field <code>float rating_delta = 5;</code>
      * @return float
      */
     public function getRatingDelta()
     {
-        return $this->ratingDelta;
+        return $this->rating_delta;
     }
 
     /**
-     * Generated from protobuf field <code>float ratingDelta = 5;</code>
+     * Generated from protobuf field <code>float rating_delta = 5;</code>
      * @param float $var
      * @return $this
      */
     public function setRatingDelta($var)
     {
         GPBUtil::checkFloat($var);
-        $this->ratingDelta = $var;
+        $this->rating_delta = $var;
 
         return $this;
     }

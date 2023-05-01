@@ -40,17 +40,20 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
   setFormValues,
 }) => {
   const typeMap: Record<EventType, string> = {
-    [EventType.LOCAL]: i18n._t('Local rating'),
-    [EventType.ONLINE]: i18n._t('Online event'),
-    [EventType.TOURNAMENT]: i18n._t('Tournament'),
+    [EventType.EVENT_TYPE_UNSPECIFIED]: '',
+    [EventType.EVENT_TYPE_LOCAL]: i18n._t('Local rating'),
+    [EventType.EVENT_TYPE_ONLINE]: i18n._t('Online event'),
+    [EventType.EVENT_TYPE_TOURNAMENT]: i18n._t('Tournament'),
   };
   return (
     <>
       <Stack>
         {!newEvent && (
-          <Text>Type: {typeMap[form.getTransformedValues().event.type ?? 'LOCAL']}</Text>
+          <Text>
+            Type: {typeMap[form.getTransformedValues().event.type ?? EventType.EVENT_TYPE_LOCAL]}
+          </Text>
         )}
-        {!!newEvent && (
+        {newEvent && (
           <>
             <Radio.Group label={i18n._t('Select event type')} {...form.getInputProps('event.type')}>
               <Group mt='xs'>
@@ -67,7 +70,7 @@ export const BasicSettings: React.FC<BasicSettingsProps> = ({
           label={i18n._t('Event title')}
           {...form.getInputProps('event.title')}
         />
-        {!!newEvent && (
+        {newEvent && (
           <Select
             icon={<IconChecklist size='1rem' />}
             label={i18n._t('Basic ruleset')}

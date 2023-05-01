@@ -105,7 +105,7 @@ export function GamesList({
                     </ActionIcon>
                   )}
                   {getBadge(eventConfig?.gamesStatus, t.status, i18n)}
-                  {t.status === 'INPROGRESS' && (
+                  {t.status === SessionStatus.SESSION_STATUS_INPROGRESS && (
                     <ActionIcon
                       style={{ cursor: 'default' }}
                       component='span'
@@ -170,8 +170,9 @@ export function GamesList({
                 </Box>
               </Group>
               <Group position='right'>
-                {(t.status === 'INPROGRESS' ||
-                  (eventConfig?.syncStart && t.status === 'PREFINISHED')) &&
+                {(t.status === SessionStatus.SESSION_STATUS_INPROGRESS ||
+                  (eventConfig?.syncStart &&
+                    t.status === SessionStatus.SESSION_STATUS_PREFINISHED)) &&
                   t.lastRound && (
                     <Confirmation
                       icon={<IconArrowBackUp />}
@@ -185,34 +186,38 @@ export function GamesList({
                       i18n={i18n}
                     />
                   )}
-                {t.status === 'INPROGRESS' && !t.lastRound && !!onRemoveGame && (
-                  <Confirmation
-                    icon={<IconTrashX />}
-                    title={i18n._t('Remove the game as it never existed')}
-                    text={i18n._t('Remove game')}
-                    warning={i18n._t("This action can't be undone. Continue?")}
-                    color='yellow'
-                    onConfirm={() => {
-                      onRemoveGame(t.sessionHash);
-                    }}
-                    i18n={i18n}
-                  />
-                )}
-                {t.status === 'FINISHED' && t.mayDefinalize && !!onDefinalizeGame && (
-                  <Confirmation
-                    icon={<IconArrowBackUp />}
-                    title={i18n._t('Remove game results')}
-                    text={i18n._t('Cancel results')}
-                    warning={i18n._t(
-                      "This will only remove the game results, but you will need to cancel last round separately. This action can't be undone. Continue?"
-                    )}
-                    color='red'
-                    onConfirm={() => {
-                      onDefinalizeGame(t.sessionHash);
-                    }}
-                    i18n={i18n}
-                  />
-                )}
+                {t.status === SessionStatus.SESSION_STATUS_INPROGRESS &&
+                  !t.lastRound &&
+                  !!onRemoveGame && (
+                    <Confirmation
+                      icon={<IconTrashX />}
+                      title={i18n._t('Remove the game as it never existed')}
+                      text={i18n._t('Remove game')}
+                      warning={i18n._t("This action can't be undone. Continue?")}
+                      color='yellow'
+                      onConfirm={() => {
+                        onRemoveGame(t.sessionHash);
+                      }}
+                      i18n={i18n}
+                    />
+                  )}
+                {t.status === SessionStatus.SESSION_STATUS_FINISHED &&
+                  t.mayDefinalize &&
+                  !!onDefinalizeGame && (
+                    <Confirmation
+                      icon={<IconArrowBackUp />}
+                      title={i18n._t('Remove game results')}
+                      text={i18n._t('Cancel results')}
+                      warning={i18n._t(
+                        "This will only remove the game results, but you will need to cancel last round separately. This action can't be undone. Continue?"
+                      )}
+                      color='red'
+                      onConfirm={() => {
+                        onDefinalizeGame(t.sessionHash);
+                      }}
+                      i18n={i18n}
+                    />
+                  )}
               </Group>
             </Stack>
           </Group>
@@ -228,8 +233,8 @@ function getBadge(
   i18n: I18nService
 ) {
   switch (status) {
-    case 'INPROGRESS':
-      if (gamesStatus === 'SEATING_READY') {
+    case SessionStatus.SESSION_STATUS_INPROGRESS:
+      if (gamesStatus === TournamentGamesStatus.TOURNAMENT_GAMES_STATUS_SEATING_READY) {
         return (
           <ActionIcon
             style={{ cursor: 'default' }}
@@ -254,7 +259,7 @@ function getBadge(
           </ActionIcon>
         );
       }
-    case 'PREFINISHED':
+    case SessionStatus.SESSION_STATUS_PREFINISHED:
       return (
         <ActionIcon
           style={{ cursor: 'default' }}
@@ -266,7 +271,7 @@ function getBadge(
           <IconFileCheck />
         </ActionIcon>
       );
-    case 'FINISHED':
+    case SessionStatus.SESSION_STATUS_FINISHED:
       return (
         <ActionIcon
           style={{ cursor: 'default' }}
@@ -278,7 +283,7 @@ function getBadge(
           <IconFileCheck />
         </ActionIcon>
       );
-    case 'CANCELLED':
+    case SessionStatus.SESSION_STATUS_CANCELLED:
       return (
         <ActionIcon
           style={{ cursor: 'default' }}
@@ -290,7 +295,7 @@ function getBadge(
           <IconX />
         </ActionIcon>
       );
-    case 'PLANNED':
+    case SessionStatus.SESSION_STATUS_PLANNED:
       return (
         <ActionIcon
           style={{ cursor: 'default' }}
@@ -302,6 +307,8 @@ function getBadge(
           <IconAlarm />
         </ActionIcon>
       );
+    default:
+      return <></>;
   }
 }
 

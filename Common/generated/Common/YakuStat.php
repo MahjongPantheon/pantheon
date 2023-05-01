@@ -9,14 +9,14 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.YakuStat</code>
+ * Generated from protobuf message <code>common.YakuStat</code>
  */
 class YakuStat extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>int32 yakuId = 1;</code>
+     * Generated from protobuf field <code>int32 yaku_id = 1;</code>
      */
-    protected $yakuId = 0;
+    protected $yaku_id = 0;
     /**
      * count of hands contained this yaku
      *
@@ -30,7 +30,7 @@ class YakuStat extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int $yakuId
+     *     @type int $yaku_id
      *     @type int $count
      *           count of hands contained this yaku
      * }
@@ -41,23 +41,23 @@ class YakuStat extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 yakuId = 1;</code>
+     * Generated from protobuf field <code>int32 yaku_id = 1;</code>
      * @return int
      */
     public function getYakuId()
     {
-        return $this->yakuId;
+        return $this->yaku_id;
     }
 
     /**
-     * Generated from protobuf field <code>int32 yakuId = 1;</code>
+     * Generated from protobuf field <code>int32 yaku_id = 1;</code>
      * @param int $var
      * @return $this
      */
     public function setYakuId($var)
     {
         GPBUtil::checkInt32($var);
-        $this->yakuId = $var;
+        $this->yaku_id = $var;
 
         return $this;
     }

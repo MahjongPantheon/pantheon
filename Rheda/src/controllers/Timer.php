@@ -59,7 +59,7 @@ class Timer extends Controller
             return [
                 'startingTimer' => $autostartTimer ?: '0',
                 'haveStartingTimer' => $autostartTimer > 0,
-                'waiting' => $this->_mainEventGameConfig->getGamesStatus() === \Common\TournamentGamesStatus::SEATING_READY,
+                'waiting' => $this->_mainEventGameConfig->getGamesStatus() === \Common\TournamentGamesStatus::TOURNAMENT_GAMES_STATUS_SEATING_READY,
                 'gameDurationWithoutSeating' => $durationWithoutSeating,
                 'initialTime' => $formattedTime,
                 'seating' => $currentSeating
@@ -69,9 +69,9 @@ class Timer extends Controller
         return [
             'startingTimer' => $autostartTimer ?: '0',
             'haveStartingTimer' => $autostartTimer > 0,
-            'waiting' => $this->_mainEventGameConfig->getGamesStatus() === \Common\TournamentGamesStatus::SEATING_READY,
+            'waiting' => $this->_mainEventGameConfig->getGamesStatus() === \Common\TournamentGamesStatus::TOURNAMENT_GAMES_STATUS_SEATING_READY,
             'gameDurationWithoutSeating' => $durationWithoutSeating,
-            'initialTime' => $this->_mainEventGameConfig->getGamesStatus() === \Common\TournamentGamesStatus::SEATING_READY ? '99:99' : '00:00',
+            'initialTime' => $this->_mainEventGameConfig->getGamesStatus() === \Common\TournamentGamesStatus::TOURNAMENT_GAMES_STATUS_SEATING_READY ? '99:99' : '00:00',
             'seating' => $currentSeating
         ];
     }

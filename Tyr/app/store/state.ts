@@ -88,10 +88,10 @@ export const initialState: IAppState = {
 export function initBlankOutcome(round: number, outcome: RoundOutcome): AppOutcome {
   let out: AppOutcome;
   switch (outcome) {
-    case 'RON':
-    case 'MULTIRON':
+    case RoundOutcome.ROUND_OUTCOME_RON:
+    case RoundOutcome.ROUND_OUTCOME_MULTIRON:
       const outcomeMultiRon: AppOutcomeRon = {
-        selectedOutcome: 'RON',
+        selectedOutcome: RoundOutcome.ROUND_OUTCOME_RON,
         roundIndex: round,
         loser: undefined,
         loserIsDealer: false,
@@ -101,15 +101,15 @@ export function initBlankOutcome(round: number, outcome: RoundOutcome): AppOutco
       };
       out = outcomeMultiRon;
       break;
-    case 'TSUMO':
+    case RoundOutcome.ROUND_OUTCOME_TSUMO:
       const outcomeTsumo: AppOutcomeTsumo = {
-        selectedOutcome: 'TSUMO',
+        selectedOutcome: RoundOutcome.ROUND_OUTCOME_TSUMO,
         roundIndex: round,
         winner: undefined,
         winnerIsDealer: false,
         han: 0,
         fu: 30,
-        possibleFu: getFixedFu([], 'TSUMO'),
+        possibleFu: getFixedFu([], RoundOutcome.ROUND_OUTCOME_TSUMO),
         yaku: '', // empty string is ok for empty yaku list
         riichiBets: [],
         dora: 0,
@@ -117,9 +117,9 @@ export function initBlankOutcome(round: number, outcome: RoundOutcome): AppOutco
       };
       out = outcomeTsumo;
       break;
-    case 'DRAW':
+    case RoundOutcome.ROUND_OUTCOME_DRAW:
       const outcomeDraw: AppOutcomeDraw = {
-        selectedOutcome: 'DRAW',
+        selectedOutcome: RoundOutcome.ROUND_OUTCOME_DRAW,
         roundIndex: round,
         riichiBets: [],
         tempai: [],
@@ -127,9 +127,9 @@ export function initBlankOutcome(round: number, outcome: RoundOutcome): AppOutco
       };
       out = outcomeDraw;
       break;
-    case 'NAGASHI':
+    case RoundOutcome.ROUND_OUTCOME_NAGASHI:
       const outcomeNagashi: AppOutcomeNagashi = {
-        selectedOutcome: 'NAGASHI',
+        selectedOutcome: RoundOutcome.ROUND_OUTCOME_NAGASHI,
         roundIndex: round,
         riichiBets: [],
         tempai: [],
@@ -138,24 +138,26 @@ export function initBlankOutcome(round: number, outcome: RoundOutcome): AppOutco
       };
       out = outcomeNagashi;
       break;
-    case 'ABORT':
+    case RoundOutcome.ROUND_OUTCOME_ABORT:
       const outcomeAbort: AppOutcomeAbort = {
-        selectedOutcome: 'ABORT',
+        selectedOutcome: RoundOutcome.ROUND_OUTCOME_ABORT,
         roundIndex: round,
         riichiBets: [],
         deadhands: [],
       };
       out = outcomeAbort;
       break;
-    case 'CHOMBO':
+    case RoundOutcome.ROUND_OUTCOME_CHOMBO:
       const outcomeChombo: AppOutcomeChombo = {
-        selectedOutcome: 'CHOMBO',
+        selectedOutcome: RoundOutcome.ROUND_OUTCOME_CHOMBO,
         roundIndex: round,
         loser: undefined,
         loserIsDealer: false,
       };
       out = outcomeChombo;
       break;
+    default:
+      throw new Error('Unspecified outcome');
   }
 
   return out;

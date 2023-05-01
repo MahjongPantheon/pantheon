@@ -9,14 +9,14 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.TableItemSwiss</code>
+ * Generated from protobuf message <code>common.TableItemSwiss</code>
  */
 class TableItemSwiss extends \Google\Protobuf\Internal\Message
 {
     /**
      * should be 4 elements
      *
-     * Generated from protobuf field <code>repeated .Common.PlayerSeatingSwiss players = 1;</code>
+     * Generated from protobuf field <code>repeated .common.PlayerSeatingSwiss players = 1;</code>
      */
     private $players;
 
@@ -38,7 +38,7 @@ class TableItemSwiss extends \Google\Protobuf\Internal\Message
     /**
      * should be 4 elements
      *
-     * Generated from protobuf field <code>repeated .Common.PlayerSeatingSwiss players = 1;</code>
+     * Generated from protobuf field <code>repeated .common.PlayerSeatingSwiss players = 1;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getPlayers()
@@ -49,7 +49,7 @@ class TableItemSwiss extends \Google\Protobuf\Internal\Message
     /**
      * should be 4 elements
      *
-     * Generated from protobuf field <code>repeated .Common.PlayerSeatingSwiss players = 1;</code>
+     * Generated from protobuf field <code>repeated .common.PlayerSeatingSwiss players = 1;</code>
      * @param array<\Common\PlayerSeatingSwiss>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */

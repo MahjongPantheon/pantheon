@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.PersonEx</code>
+ * Generated from protobuf message <code>common.PersonEx</code>
  */
 class PersonEx extends \Google\Protobuf\Internal\Message
 {
@@ -22,9 +22,9 @@ class PersonEx extends \Google\Protobuf\Internal\Message
      */
     protected $city = '';
     /**
-     * Generated from protobuf field <code>string tenhouId = 3;</code>
+     * Generated from protobuf field <code>string tenhou_id = 3;</code>
      */
-    protected $tenhouId = '';
+    protected $tenhou_id = '';
     /**
      * Generated from protobuf field <code>string title = 4;</code>
      */
@@ -54,7 +54,7 @@ class PersonEx extends \Google\Protobuf\Internal\Message
      *
      *     @type int $id
      *     @type string $city
-     *     @type string $tenhouId
+     *     @type string $tenhou_id
      *     @type string $title
      *     @type string $country
      *     @type string $email
@@ -112,23 +112,23 @@ class PersonEx extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string tenhouId = 3;</code>
+     * Generated from protobuf field <code>string tenhou_id = 3;</code>
      * @return string
      */
     public function getTenhouId()
     {
-        return $this->tenhouId;
+        return $this->tenhou_id;
     }
 
     /**
-     * Generated from protobuf field <code>string tenhouId = 3;</code>
+     * Generated from protobuf field <code>string tenhou_id = 3;</code>
      * @param string $var
      * @return $this
      */
     public function setTenhouId($var)
     {
         GPBUtil::checkString($var, True);
-        $this->tenhouId = $var;
+        $this->tenhou_id = $var;
 
         return $this;
     }

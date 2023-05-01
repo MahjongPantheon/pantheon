@@ -13,7 +13,7 @@ use Google\Protobuf\Internal\Message;
  * A Protobuf client that implements the {@see Mimir} interface.
  * It communicates using Protobuf and can be configured with a custom HTTP Client.
  *
- * Generated from protobuf service <code>Common.Mimir</code>
+ * Generated from protobuf service <code>common.Mimir</code>
  */
 final class MimirClient extends MimirAbstractClient implements Mimir
 {

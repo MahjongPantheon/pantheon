@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.Uma</code>
+ * Generated from protobuf message <code>common.Uma</code>
  */
 class Uma extends \Google\Protobuf\Internal\Message
 {

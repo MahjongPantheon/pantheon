@@ -9,12 +9,12 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.AccessRules</code>
+ * Generated from protobuf message <code>common.AccessRules</code>
  */
 class AccessRules extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>map<string, .Common.RuleValue> rules = 1;</code>
+     * Generated from protobuf field <code>map<string, .common.RuleValue> rules = 1;</code>
      */
     private $rules;
 
@@ -33,7 +33,7 @@ class AccessRules extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>map<string, .Common.RuleValue> rules = 1;</code>
+     * Generated from protobuf field <code>map<string, .common.RuleValue> rules = 1;</code>
      * @return \Google\Protobuf\Internal\MapField
      */
     public function getRules()
@@ -42,7 +42,7 @@ class AccessRules extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>map<string, .Common.RuleValue> rules = 1;</code>
+     * Generated from protobuf field <code>map<string, .common.RuleValue> rules = 1;</code>
      * @param array|\Google\Protobuf\Internal\MapField $var
      * @return $this
      */

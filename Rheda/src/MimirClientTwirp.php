@@ -2,94 +2,35 @@
 
 namespace Rheda;
 
-use Common\AbortResult;
 use Common\Achievement;
-use Common\ChomboResult;
-use Common\Country;
-use Common\CurrentSession;
-use Common\DrawResult;
 use Common\Event;
-use Common\EventData;
-use Common\Events_GetAchievements_Payload;
-use Common\Events_GetAllRegisteredPlayers_Payload;
-use Common\Events_GetEventForEdit_Payload;
-use Common\Events_GetEventsById_Payload;
-use Common\Events_GetGame_Payload;
-use Common\Events_GetRatingTable_Payload;
-use Common\Events_RegisterPlayer_Payload;
-use Common\Events_UnregisterPlayer_Payload;
-use Common\Events_UpdateEvent_Payload;
-use Common\Events_UpdatePlayerReplacement_Payload;
-use Common\Events_UpdatePlayerSeatingFlag_Payload;
-use Common\Events_UpdatePlayersLocalIds_Payload;
-use Common\Events_UpdatePlayersTeams_Payload;
-use Common\Events_UpdatePrescriptedEventConfig_Payload;
+use Common\EventsGetAchievementsPayload;
+use Common\EventsGetAllRegisteredPlayersPayload;
+use Common\EventsGetGamePayload;
+use Common\EventsGetRatingTablePayload;
 use Common\EventType;
 use Common\FinalResultOfSession;
 use Common\GameConfig;
 use Common\GameResult;
-use Common\Games_AddOnlineReplay_Payload;
-use Common\Games_AddPenalty_Payload;
-use Common\Games_AddPenaltyGame_Payload;
-use Common\Games_AddRound_Payload;
-use Common\Games_CancelGame_Payload;
-use Common\Games_DefinalizeGame_Payload;
-use Common\Games_DropLastRound_Payload;
-use Common\Games_EndGame_Payload;
-use Common\Games_GetSessionOverview_Payload;
-use Common\Games_PreviewRound_Payload;
-use Common\Games_StartGame_Payload;
-use Common\Generic_Event_Payload;
+use Common\GamesAddOnlineReplayPayload;
+use Common\GenericEventPayload;
 use Common\HandValueStat;
-use Common\IntermediateResultOfSession;
-use Common\LocalIdMapping;
-use Common\Misc_AddErrorLog_Payload;
-use Common\MultironResult;
 use Common\MultironWin;
-use Common\MyEvent;
-use Common\NagashiResult;
-use Common\PaymentLog;
-use Common\PaymentLogItem;
 use Common\Penalty;
 use Common\PlacesSummaryItem;
 use Common\Player;
 use Common\PlayerInRating;
-use Common\PlayerInSession;
 use Common\PlayerPlaceInSeries;
-use Common\Players_GetAllRounds_Payload;
-use Common\Players_GetCurrentSessions_Payload;
-use Common\Players_GetLastResults_Payload;
-use Common\Players_GetLastRound_Payload;
-use Common\Players_GetLastRoundByHash_Payload;
-use Common\Players_GetMyEvents_Payload;
-use Common\Players_GetPlayer_Payload;
-use Common\Players_GetPlayerStats_Payload;
+use Common\PlayersGetPlayerPayload;
+use Common\PlayersGetPlayerStatsPayload;
 use Common\PlayerSeating;
-use Common\PlayerSeatingSwiss;
-use Common\PrescriptedTable;
 use Common\RegisteredPlayer;
-use Common\RonResult;
 use Common\Round;
-use Common\RoundOutcome;
-use Common\RoundState;
-use Common\Seating_MakeIntervalSeating_Payload;
-use Common\Seating_MakePrescriptedSeating_Payload;
-use Common\Seating_MakeShuffledSeating_Payload;
 use Common\SeriesResult;
 use Common\SessionHistoryResult;
 use Common\SessionHistoryResultTable;
-use Common\SessionStatus;
-use Common\TableItemSwiss;
-use Common\TableState;
-use Common\TeamMapping;
-use Common\Events_GetLastGames_Payload;
-use Common\Events_GetCountries_Payload;
-use Common\Events_GetEvents_Payload;
-use Common\Events_GetRulesets_Payload;
-use Common\Events_GetTimezones_Payload;
-use Common\RulesetGenerated;
-use Common\TournamentGamesStatus;
-use Common\TsumoResult;
+use Common\EventsGetLastGamesPayload;
+use Common\EventsGetEventsPayload;
 use Common\TwirpError;
 use Common\YakuStat;
 use Google\Protobuf\Internal\RepeatedField;
@@ -149,8 +90,8 @@ class MimirClientTwirp implements IMimirClient
     protected static function _fromEnumType(int $type): string
     {
         return match ($type) {
-            EventType::ONLINE => 'online',
-            EventType::TOURNAMENT => 'tournament',
+            EventType::EVENT_TYPE_ONLINE => 'online',
+            EventType::EVENT_TYPE_TOURNAMENT => 'tournament',
             default => 'local',
         };
     }
@@ -183,7 +124,7 @@ class MimirClientTwirp implements IMimirClient
                 'date' => $g->getDate(),
                 'replay_link' => $g->getReplayLink(),
                 'players' => iterator_to_array($g->getPlayers()),
-                'penalties' => self::_fromPenaltiesLog(iterator_to_array($g->getPenaltyLog())),
+                'penalties' => self::_fromPenaltiesLog(iterator_to_array($g->getPenaltyLogs())),
                 'final_results' => array_reduce(iterator_to_array($g->getFinalResults()), function ($acc, FinalResultOfSession $res) {
                     $acc[$res->getPlayerId()] = [
                         'player_id' => $res->getPlayerId(),
@@ -420,7 +361,7 @@ class MimirClientTwirp implements IMimirClient
     {
         return $this->_client->GetGameConfig(
             $this->_ctx,
-            (new Generic_Event_Payload())
+            (new GenericEventPayload())
                 ->setEventId($eventId)
         );
     }
@@ -437,7 +378,7 @@ class MimirClientTwirp implements IMimirClient
     {
         $ret = $this->_client->GetEvents(
             $this->_ctx,
-            (new Events_GetEvents_Payload())
+            (new EventsGetEventsPayload())
                 ->setLimit($limit)
                 ->setOffset($offset)
                 ->setFilterUnlisted($filterUnlisted)
@@ -484,7 +425,7 @@ class MimirClientTwirp implements IMimirClient
             ];
         }, iterator_to_array($this->_client->GetRatingTable(
             $this->_ctx,
-            (new Events_GetRatingTable_Payload())
+            (new EventsGetRatingTablePayload())
                 ->setEventIdList($eventIdList)
                 ->setOrderBy($orderBy)
                 ->setOrder($order)
@@ -506,7 +447,7 @@ class MimirClientTwirp implements IMimirClient
     {
         $ret = $this->_client->GetLastGames(
             $this->_ctx,
-            (new Events_GetLastGames_Payload)
+            (new EventsGetLastGamesPayload)
                 ->setEventIdList($eventIdList)
                 ->setLimit($limit)
                 ->setOffset($offset)
@@ -530,7 +471,7 @@ class MimirClientTwirp implements IMimirClient
     {
         $ret = $this->_client->GetGame(
             $this->_ctx,
-            (new Events_GetGame_Payload())
+            (new EventsGetGamePayload())
                 ->setSessionHash($representationalHash)
         );
         return [
@@ -549,7 +490,7 @@ class MimirClientTwirp implements IMimirClient
     {
         $ret = iterator_to_array($this->_client->GetGamesSeries(
             $this->_ctx,
-            (new Generic_Event_Payload())
+            (new GenericEventPayload())
                 ->setEventId($eventId)
         )->getResults());
         return array_map(function (SeriesResult $r) {
@@ -584,7 +525,7 @@ class MimirClientTwirp implements IMimirClient
         return self::_fromRegisteredPlayers(
             $this->_client->GetAllRegisteredPlayers(
                 $this->_ctx,
-                (new Events_GetAllRegisteredPlayers_Payload())
+                (new EventsGetAllRegisteredPlayersPayload())
                     ->setEventIds($eventIdList)
             )->getPlayers()
         );
@@ -598,7 +539,7 @@ class MimirClientTwirp implements IMimirClient
     {
         $ret = $this->_client->GetTimerState(
             $this->_ctx,
-            (new Generic_Event_Payload())
+            (new GenericEventPayload())
                 ->setEventId($eventId)
         );
         return [
@@ -620,14 +561,14 @@ class MimirClientTwirp implements IMimirClient
     {
         $ret = $this->_client->GetPlayerStats(
             $this->_ctx,
-            (new Players_GetPlayerStats_Payload())
+            (new PlayersGetPlayerStatsPayload())
                 ->setPlayerId($playerId)
                 ->setEventIdList($eventIdList)
         );
         return [
             'rating_history' => $ret->getRatingHistory(),
             'score_history' => array_map(function (SessionHistoryResultTable $table) {
-                return self::_fromResultsHistory(iterator_to_array($table->getTable()));
+                return self::_fromResultsHistory(iterator_to_array($table->getTables()));
             }, iterator_to_array($ret->getScoreHistory())),
             'players_info' => self::_fromPlayers(iterator_to_array($ret->getPlayersInfo())),
             'places_summary' => self::_fromPlacesSummary(iterator_to_array($ret->getPlacesSummary())),
@@ -676,7 +617,7 @@ class MimirClientTwirp implements IMimirClient
     {
         $ret = $this->_client->AddOnlineReplay(
             $this->_ctx,
-            (new Games_AddOnlineReplay_Payload())
+            (new GamesAddOnlineReplayPayload())
                 ->setEventId($eventId)
                 ->setLink($link)
         );
@@ -698,7 +639,7 @@ class MimirClientTwirp implements IMimirClient
     {
         $ret = iterator_to_array($this->_client->GetAchievements(
             $this->_ctx,
-            (new Events_GetAchievements_Payload())
+            (new EventsGetAchievementsPayload())
                 ->setEventId($eventId)
                 ->setAchievementsList($achievementsList)
         )->getAchievements());
@@ -717,7 +658,7 @@ class MimirClientTwirp implements IMimirClient
     {
         $pl = $this->_client->GetPlayer(
             $this->_ctx,
-            (new Players_GetPlayer_Payload())
+            (new PlayersGetPlayerPayload())
                 ->setId($id)
         )->getPlayers();
         return empty($pl) ? [] : self::_fromPlayers([$pl])[$pl->getId()];
@@ -742,7 +683,7 @@ class MimirClientTwirp implements IMimirClient
             ];
         }, iterator_to_array($this->_client->GetCurrentSeating(
             $this->_ctx,
-            (new Generic_Event_Payload())
+            (new GenericEventPayload())
                 ->setEventId($eventId)
         )->getSeating()));
     }
@@ -755,7 +696,7 @@ class MimirClientTwirp implements IMimirClient
     {
         return $this->_client->GetStartingTimer(
             $this->_ctx,
-            (new Generic_Event_Payload())
+            (new GenericEventPayload())
                 ->setEventId($eventId)
         )->getTimer();
     }

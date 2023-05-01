@@ -9,36 +9,36 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.GameResult</code>
+ * Generated from protobuf message <code>common.GameResult</code>
  */
 class GameResult extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>string sessionHash = 1;</code>
+     * Generated from protobuf field <code>string session_hash = 1;</code>
      */
-    protected $sessionHash = '';
+    protected $session_hash = '';
     /**
      * Generated from protobuf field <code>optional string date = 2;</code>
      */
     protected $date = null;
     /**
-     * Generated from protobuf field <code>string replayLink = 3;</code>
+     * Generated from protobuf field <code>string replay_link = 3;</code>
      */
-    protected $replayLink = '';
+    protected $replay_link = '';
     /**
      * Generated from protobuf field <code>repeated int32 players = 4;</code>
      */
     private $players;
     /**
-     * Generated from protobuf field <code>repeated .Common.FinalResultOfSession finalResults = 5;</code>
+     * Generated from protobuf field <code>repeated .common.FinalResultOfSession final_results = 5;</code>
      */
-    private $finalResults;
+    private $final_results;
     /**
-     * Generated from protobuf field <code>repeated .Common.Penalty penaltyLog = 6;</code>
+     * Generated from protobuf field <code>repeated .common.Penalty penalty_logs = 6;</code>
      */
-    private $penaltyLog;
+    private $penalty_logs;
     /**
-     * Generated from protobuf field <code>repeated .Common.Round rounds = 7;</code>
+     * Generated from protobuf field <code>repeated .common.Round rounds = 7;</code>
      */
     private $rounds;
 
@@ -48,12 +48,12 @@ class GameResult extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type string $sessionHash
+     *     @type string $session_hash
      *     @type string $date
-     *     @type string $replayLink
+     *     @type string $replay_link
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $players
-     *     @type array<\Common\FinalResultOfSession>|\Google\Protobuf\Internal\RepeatedField $finalResults
-     *     @type array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $penaltyLog
+     *     @type array<\Common\FinalResultOfSession>|\Google\Protobuf\Internal\RepeatedField $final_results
+     *     @type array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $penalty_logs
      *     @type array<\Common\Round>|\Google\Protobuf\Internal\RepeatedField $rounds
      * }
      */
@@ -63,23 +63,23 @@ class GameResult extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string sessionHash = 1;</code>
+     * Generated from protobuf field <code>string session_hash = 1;</code>
      * @return string
      */
     public function getSessionHash()
     {
-        return $this->sessionHash;
+        return $this->session_hash;
     }
 
     /**
-     * Generated from protobuf field <code>string sessionHash = 1;</code>
+     * Generated from protobuf field <code>string session_hash = 1;</code>
      * @param string $var
      * @return $this
      */
     public function setSessionHash($var)
     {
         GPBUtil::checkString($var, True);
-        $this->sessionHash = $var;
+        $this->session_hash = $var;
 
         return $this;
     }
@@ -117,23 +117,23 @@ class GameResult extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string replayLink = 3;</code>
+     * Generated from protobuf field <code>string replay_link = 3;</code>
      * @return string
      */
     public function getReplayLink()
     {
-        return $this->replayLink;
+        return $this->replay_link;
     }
 
     /**
-     * Generated from protobuf field <code>string replayLink = 3;</code>
+     * Generated from protobuf field <code>string replay_link = 3;</code>
      * @param string $var
      * @return $this
      */
     public function setReplayLink($var)
     {
         GPBUtil::checkString($var, True);
-        $this->replayLink = $var;
+        $this->replay_link = $var;
 
         return $this;
     }
@@ -161,51 +161,51 @@ class GameResult extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.FinalResultOfSession finalResults = 5;</code>
+     * Generated from protobuf field <code>repeated .common.FinalResultOfSession final_results = 5;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getFinalResults()
     {
-        return $this->finalResults;
+        return $this->final_results;
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.FinalResultOfSession finalResults = 5;</code>
+     * Generated from protobuf field <code>repeated .common.FinalResultOfSession final_results = 5;</code>
      * @param array<\Common\FinalResultOfSession>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setFinalResults($var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\FinalResultOfSession::class);
-        $this->finalResults = $arr;
+        $this->final_results = $arr;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.Penalty penaltyLog = 6;</code>
+     * Generated from protobuf field <code>repeated .common.Penalty penalty_logs = 6;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
-    public function getPenaltyLog()
+    public function getPenaltyLogs()
     {
-        return $this->penaltyLog;
+        return $this->penalty_logs;
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.Penalty penaltyLog = 6;</code>
+     * Generated from protobuf field <code>repeated .common.Penalty penalty_logs = 6;</code>
      * @param array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
-    public function setPenaltyLog($var)
+    public function setPenaltyLogs($var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\Penalty::class);
-        $this->penaltyLog = $arr;
+        $this->penalty_logs = $arr;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.Round rounds = 7;</code>
+     * Generated from protobuf field <code>repeated .common.Round rounds = 7;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRounds()
@@ -214,7 +214,7 @@ class GameResult extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.Round rounds = 7;</code>
+     * Generated from protobuf field <code>repeated .common.Round rounds = 7;</code>
      * @param array<\Common\Round>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */

@@ -1,3 +1,4 @@
+// protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
 syntax = "proto3";
 
 package common;
@@ -200,7 +201,7 @@ message RonResult {
   int32 pao_player_id = 5;
   int32 han = 6;
   int32 fu = 7;
-  repeated int32 yakuses = 8; // yaku ids
+  repeated int32 yaku = 8; // yaku ids
   repeated int32 riichi_bets = 9; // player ids
   int32 dora = 10;
   int32 uradora = 11;
@@ -214,7 +215,7 @@ message MultironWin {
   int32 pao_player_id = 2;
   int32 han = 3;
   int32 fu = 4;
-  repeated int32 yakuses = 5; // yaku ids
+  repeated int32 yaku = 5; // yaku ids
   int32 dora = 6;
   int32 uradora = 7;
   int32 kandora = 8;
@@ -238,7 +239,7 @@ message TsumoResult {
   int32 pao_player_id = 4;
   int32 han = 5;
   int32 fu = 6;
-  repeated int32 yakuses = 7; // yaku ids
+  repeated int32 yaku = 7; // yaku ids
   repeated int32 riichi_bets = 8; // player ids
   int32 dora = 9;
   int32 uradora = 10;
@@ -251,7 +252,7 @@ message DrawResult {
   int32 round_index = 1;
   int32 honba = 2;
   repeated int32 riichi_bets = 3; // player ids
-  repeated int32 tempais = 4; // player ids
+  repeated int32 tempai = 4; // player ids
 }
 
 message AbortResult {
@@ -270,8 +271,8 @@ message NagashiResult {
   int32 round_index = 1;
   int32 honba = 2;
   repeated int32 riichi_bets = 3; // player ids
-  repeated int32 tempais = 4; // player ids
-  repeated int32 nagashis = 5; // player ids
+  repeated int32 tempai = 4; // player ids
+  repeated int32 nagashi = 5; // player ids
 }
 
 message Round {
@@ -415,9 +416,9 @@ message PaymentLogItem {
 }
 
 message PaymentLog {
-  repeated PaymentLogItem directs = 1;
-  repeated PaymentLogItem riichis = 2;
-  repeated PaymentLogItem honbas = 3;
+  repeated PaymentLogItem direct = 1;
+  repeated PaymentLogItem riichi = 2;
+  repeated PaymentLogItem honba = 3;
 }
 
 message RoundState {
@@ -428,7 +429,7 @@ message RoundState {
   int32 honba = 5; // honba on table
   repeated int32 riichi_ids = 6; // player ids
   repeated IntermediateResultOfSession scores = 7; // scores AFTER payments
-  repeated IntermediateResultOfSession scores_deltas = 8;
+  repeated IntermediateResultOfSession scores_delta = 8;
   PaymentLog payments = 9;
   Round round = 10;
   RoundOutcome outcome = 11;
@@ -568,8 +569,8 @@ message RulesetConfig {
   int32 replacement_player_override_uma = 31;
   int32 start_points = 32;
   int32 start_rating = 33;
-  repeated int32 allowed_yakuses = 34;
-  repeated int32 yaku_with_paos = 35;
+  repeated int32 allowed_yaku = 34;
+  repeated int32 yaku_with_pao = 35;
 }
 
 // Generics

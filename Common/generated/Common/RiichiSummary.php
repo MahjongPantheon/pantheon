@@ -9,22 +9,22 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.RiichiSummary</code>
+ * Generated from protobuf message <code>common.RiichiSummary</code>
  */
 class RiichiSummary extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>int32 riichiWon = 1;</code>
+     * Generated from protobuf field <code>int32 riichi_won = 1;</code>
      */
-    protected $riichiWon = 0;
+    protected $riichi_won = 0;
     /**
-     * Generated from protobuf field <code>int32 riichiLost = 2;</code>
+     * Generated from protobuf field <code>int32 riichi_lost = 2;</code>
      */
-    protected $riichiLost = 0;
+    protected $riichi_lost = 0;
     /**
-     * Generated from protobuf field <code>int32 feedUnderRiichi = 3;</code>
+     * Generated from protobuf field <code>int32 feed_under_riichi = 3;</code>
      */
-    protected $feedUnderRiichi = 0;
+    protected $feed_under_riichi = 0;
 
     /**
      * Constructor.
@@ -32,9 +32,9 @@ class RiichiSummary extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int $riichiWon
-     *     @type int $riichiLost
-     *     @type int $feedUnderRiichi
+     *     @type int $riichi_won
+     *     @type int $riichi_lost
+     *     @type int $feed_under_riichi
      * }
      */
     public function __construct($data = NULL) {
@@ -43,67 +43,67 @@ class RiichiSummary extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 riichiWon = 1;</code>
+     * Generated from protobuf field <code>int32 riichi_won = 1;</code>
      * @return int
      */
     public function getRiichiWon()
     {
-        return $this->riichiWon;
+        return $this->riichi_won;
     }
 
     /**
-     * Generated from protobuf field <code>int32 riichiWon = 1;</code>
+     * Generated from protobuf field <code>int32 riichi_won = 1;</code>
      * @param int $var
      * @return $this
      */
     public function setRiichiWon($var)
     {
         GPBUtil::checkInt32($var);
-        $this->riichiWon = $var;
+        $this->riichi_won = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>int32 riichiLost = 2;</code>
+     * Generated from protobuf field <code>int32 riichi_lost = 2;</code>
      * @return int
      */
     public function getRiichiLost()
     {
-        return $this->riichiLost;
+        return $this->riichi_lost;
     }
 
     /**
-     * Generated from protobuf field <code>int32 riichiLost = 2;</code>
+     * Generated from protobuf field <code>int32 riichi_lost = 2;</code>
      * @param int $var
      * @return $this
      */
     public function setRiichiLost($var)
     {
         GPBUtil::checkInt32($var);
-        $this->riichiLost = $var;
+        $this->riichi_lost = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>int32 feedUnderRiichi = 3;</code>
+     * Generated from protobuf field <code>int32 feed_under_riichi = 3;</code>
      * @return int
      */
     public function getFeedUnderRiichi()
     {
-        return $this->feedUnderRiichi;
+        return $this->feed_under_riichi;
     }
 
     /**
-     * Generated from protobuf field <code>int32 feedUnderRiichi = 3;</code>
+     * Generated from protobuf field <code>int32 feed_under_riichi = 3;</code>
      * @param int $var
      * @return $this
      */
     public function setFeedUnderRiichi($var)
     {
         GPBUtil::checkInt32($var);
-        $this->feedUnderRiichi = $var;
+        $this->feed_under_riichi = $var;
 
         return $this;
     }

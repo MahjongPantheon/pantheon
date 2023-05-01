@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.Penalty</code>
+ * Generated from protobuf message <code>common.Penalty</code>
  */
 class Penalty extends \Google\Protobuf\Internal\Message
 {

@@ -131,7 +131,7 @@ class Ruleset
      */
     public function uma($scores = [])
     {
-        $uma = $this->_rulesetCurrent->getUmaType() === UmaType::UMA_COMPLEX
+        $uma = $this->_rulesetCurrent->getUmaType() === UmaType::UMA_TYPE_UMA_COMPLEX
             ? $this->complexUma($scores)
             : [
                 $this->_rulesetCurrent->getUma()->getPlace1(),

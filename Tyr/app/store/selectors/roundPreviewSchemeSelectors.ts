@@ -18,7 +18,7 @@
 import { IAppState } from '../interfaces';
 import { getSeating } from './commonSelectors';
 import { getPaoUsers, getRiichiUsers } from './mimirSelectors';
-import { PlayerInSession } from '#/clients/proto/atoms.pb';
+import { PlayerInSession, RoundOutcome } from '#/clients/proto/atoms.pb';
 
 export type RoundPreviewSchemePurpose = 'overview' | 'other_overview' | 'confirmation';
 type Csp = RoundPreviewSchemePurpose; // alias for shorter name
@@ -61,7 +61,9 @@ const getRoundOverview = (s: IAppState, purpose: Csp): RoundPaymentInfoShort | u
         players: s.players,
         riichiBets: getRiichiUsers(s).map((p) => p.id.toString()),
         penaltyFor:
-          s.currentOutcome.selectedOutcome === 'CHOMBO' ? s.currentOutcome.loser : undefined,
+          s.currentOutcome.selectedOutcome === RoundOutcome.ROUND_OUTCOME_CHOMBO
+            ? s.currentOutcome.loser
+            : undefined,
         paoPlayer: pao && pao.id,
       };
     case 'other_overview':

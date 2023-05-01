@@ -29,6 +29,7 @@ import { addYakuToList, limits, pack, unpack } from '#/primitives/yaku-compat';
 import { getFixedFu, getHan } from '#/primitives/yaku-values';
 import { Graph } from '#/primitives/graph';
 import { Yaku } from '#/interfaces/common';
+import { RoundOutcome } from '#/clients/proto/atoms.pb';
 
 /**
  * Should be used only for common win props, like riichiBets! For all other things modifyWinOutcome should be used.
@@ -37,8 +38,8 @@ import { Yaku } from '#/interfaces/common';
  */
 export function modifyWinOutcomeCommons(state: IAppState, fields: WinOutcomeProps): IAppState {
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'RON':
-    case 'TSUMO':
+    case RoundOutcome.ROUND_OUTCOME_RON:
+    case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return {
         ...state,
         currentOutcome: {
@@ -57,7 +58,7 @@ export function modifyWinOutcome(
   winnerIdGetter?: () => number | undefined
 ): IAppState {
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'TSUMO':
+    case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return {
         ...state,
         currentOutcome: {
@@ -65,7 +66,7 @@ export function modifyWinOutcome(
           ...fields,
         } as AppOutcome, // hacked, ts does not understand this :(
       };
-    case 'RON':
+    case RoundOutcome.ROUND_OUTCOME_RON:
       if (!winnerIdGetter) {
         throw new Error('No winner getter provided');
       }
@@ -94,8 +95,8 @@ export function modifyWinOutcome(
 
 export function modifyLoseOutcome(state: IAppState, fields: LoseOutcomeProps): IAppState {
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'RON':
-    case 'CHOMBO':
+    case RoundOutcome.ROUND_OUTCOME_RON:
+    case RoundOutcome.ROUND_OUTCOME_CHOMBO:
       return {
         ...state,
         currentOutcome: {
@@ -121,7 +122,7 @@ export function modifyMultiwin(
   winnerIsDealer: boolean,
   remove = false
 ): IAppState {
-  if (state.currentOutcome?.selectedOutcome !== 'RON') {
+  if (state.currentOutcome?.selectedOutcome !== RoundOutcome.ROUND_OUTCOME_RON) {
     throw new Error('Wrong outcome modifier used');
   }
 
@@ -167,9 +168,9 @@ export function modifyMultiwin(
 
 export function modifyDrawOutcome(state: IAppState, fields: DrawOutcomeProps): IAppState {
   switch (state.currentOutcome?.selectedOutcome) {
-    case 'ABORT':
-    case 'DRAW':
-    case 'NAGASHI':
+    case RoundOutcome.ROUND_OUTCOME_ABORT:
+    case RoundOutcome.ROUND_OUTCOME_DRAW:
+    case RoundOutcome.ROUND_OUTCOME_NAGASHI:
       return {
         ...state,
         currentOutcome: {
@@ -192,7 +193,7 @@ type YakuModException = (
 
 const yakuModAfterExceptions: YakuModException[] = [
   function ensureTsumoIfRiichi(outcome, winProps, yList) {
-    if (outcome === 'TSUMO') {
+    if (outcome === RoundOutcome.ROUND_OUTCOME_TSUMO) {
       if (
         (yList.includes(YakuId.RIICHI) || yList.includes(YakuId.DOUBLERIICHI)) &&
         !yList.includes(YakuId.MENZENTSUMO)
@@ -204,7 +205,7 @@ const yakuModAfterExceptions: YakuModException[] = [
   },
   function tsumoOpenHandMutex(outcome, winProps, yList, yakuId) {
     // Remove open hand if we checked tsumo, and vice versa
-    if (outcome === 'TSUMO') {
+    if (outcome === RoundOutcome.ROUND_OUTCOME_TSUMO) {
       if (yakuId === YakuId.MENZENTSUMO) {
         const pIdx = yList.indexOf(YakuId.__OPENHAND);
         if (pIdx !== -1) {

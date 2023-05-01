@@ -9,29 +9,44 @@ import { BinaryReader, BinaryWriter } from "protoscript";
 //                 Types                  //
 //========================================//
 
-export type EventType = "ONLINE" | "TOURNAMENT" | "LOCAL";
+export type EventType =
+  | "EVENT_TYPE_UNSPECIFIED"
+  | "EVENT_TYPE_TOURNAMENT"
+  | "EVENT_TYPE_LOCAL"
+  | "EVENT_TYPE_ONLINE";
 
-export type TournamentGamesStatus = "NONE" | "SEATING_READY" | "STARTED";
+export type TournamentGamesStatus =
+  | "TOURNAMENT_GAMES_STATUS_UNSPECIFIED"
+  | "TOURNAMENT_GAMES_STATUS_SEATING_READY"
+  | "TOURNAMENT_GAMES_STATUS_STARTED";
 
 export type RoundOutcome =
-  | "RON"
-  | "TSUMO"
-  | "DRAW"
-  | "ABORT"
-  | "CHOMBO"
-  | "NAGASHI"
-  | "MULTIRON";
+  | "ROUND_OUTCOME_UNSPECIFIED"
+  | "ROUND_OUTCOME_RON"
+  | "ROUND_OUTCOME_TSUMO"
+  | "ROUND_OUTCOME_DRAW"
+  | "ROUND_OUTCOME_ABORT"
+  | "ROUND_OUTCOME_CHOMBO"
+  | "ROUND_OUTCOME_NAGASHI"
+  | "ROUND_OUTCOME_MULTIRON";
 
 export type SessionStatus =
-  | "PLANNED"
-  | "INPROGRESS"
-  | "PREFINISHED"
-  | "FINISHED"
-  | "CANCELLED";
+  | "SESSION_STATUS_UNSPECIFIED"
+  | "SESSION_STATUS_INPROGRESS"
+  | "SESSION_STATUS_PREFINISHED"
+  | "SESSION_STATUS_FINISHED"
+  | "SESSION_STATUS_CANCELLED"
+  | "SESSION_STATUS_PLANNED";
 
-export type UmaType = "UMA_SIMPLE" | "UMA_COMPLEX";
+export type UmaType =
+  | "UMA_TYPE_UNSPECIFIED"
+  | "UMA_TYPE_UMA_SIMPLE"
+  | "UMA_TYPE_UMA_COMPLEX";
 
-export type EndingPolicy = "EP_NONE" | "EP_ONE_MORE_HAND" | "EP_END_AFTER_HAND";
+export type EndingPolicy =
+  | "ENDING_POLICY_EP_UNSPECIFIED"
+  | "ENDING_POLICY_EP_ONE_MORE_HAND"
+  | "ENDING_POLICY_EP_END_AFTER_HAND";
 
 export interface AccessRules {
   rules: Record<string, AccessRules.Rules["value"] | undefined>;
@@ -302,7 +317,7 @@ export interface GameResult {
   replayLink: string;
   players: number[];
   finalResults: FinalResultOfSession[];
-  penaltyLog: Penalty[];
+  penaltyLogs: Penalty[];
   rounds: Round[];
 }
 
@@ -364,7 +379,7 @@ export interface SessionHistoryResult {
 }
 
 export interface SessionHistoryResultTable {
-  table: SessionHistoryResult[];
+  tables: SessionHistoryResult[];
 }
 
 export interface PlacesSummaryItem {
@@ -463,7 +478,7 @@ export interface TableState {
   status: SessionStatus;
   mayDefinalize: boolean;
   sessionHash: string;
-  penaltyLog: Penalty[];
+  penaltyLogs: Penalty[];
   tableIndex?: number | null | undefined;
   lastRound?: Round | null | undefined;
   currentRoundIndex: number;
@@ -570,11 +585,11 @@ export interface RulesetConfig {
   yakuWithPao: number[];
 }
 
-export interface Generic_Success_Response {
+export interface GenericSuccessResponse {
   success: boolean;
 }
 
-export interface Generic_Event_Payload {
+export interface GenericEventPayload {
   eventId: number;
 }
 
@@ -583,22 +598,26 @@ export interface Generic_Event_Payload {
 //========================================//
 
 export const EventType = {
-  ONLINE: "ONLINE",
-  TOURNAMENT: "TOURNAMENT",
-  LOCAL: "LOCAL",
+  EVENT_TYPE_UNSPECIFIED: "EVENT_TYPE_UNSPECIFIED",
+  EVENT_TYPE_TOURNAMENT: "EVENT_TYPE_TOURNAMENT",
+  EVENT_TYPE_LOCAL: "EVENT_TYPE_LOCAL",
+  EVENT_TYPE_ONLINE: "EVENT_TYPE_ONLINE",
   /**
    * @private
    */
   _fromInt: function (i: number): EventType {
     switch (i) {
       case 0: {
-        return "ONLINE";
+        return "EVENT_TYPE_UNSPECIFIED";
       }
       case 1: {
-        return "TOURNAMENT";
+        return "EVENT_TYPE_TOURNAMENT";
       }
       case 2: {
-        return "LOCAL";
+        return "EVENT_TYPE_LOCAL";
+      }
+      case 3: {
+        return "EVENT_TYPE_ONLINE";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -611,14 +630,17 @@ export const EventType = {
    */
   _toInt: function (i: EventType): number {
     switch (i) {
-      case "ONLINE": {
+      case "EVENT_TYPE_UNSPECIFIED": {
         return 0;
       }
-      case "TOURNAMENT": {
+      case "EVENT_TYPE_TOURNAMENT": {
         return 1;
       }
-      case "LOCAL": {
+      case "EVENT_TYPE_LOCAL": {
         return 2;
+      }
+      case "EVENT_TYPE_ONLINE": {
+        return 3;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -629,22 +651,23 @@ export const EventType = {
 } as const;
 
 export const TournamentGamesStatus = {
-  NONE: "NONE",
-  SEATING_READY: "SEATING_READY",
-  STARTED: "STARTED",
+  TOURNAMENT_GAMES_STATUS_UNSPECIFIED: "TOURNAMENT_GAMES_STATUS_UNSPECIFIED",
+  TOURNAMENT_GAMES_STATUS_SEATING_READY:
+    "TOURNAMENT_GAMES_STATUS_SEATING_READY",
+  TOURNAMENT_GAMES_STATUS_STARTED: "TOURNAMENT_GAMES_STATUS_STARTED",
   /**
    * @private
    */
   _fromInt: function (i: number): TournamentGamesStatus {
     switch (i) {
       case 0: {
-        return "NONE";
+        return "TOURNAMENT_GAMES_STATUS_UNSPECIFIED";
       }
       case 1: {
-        return "SEATING_READY";
+        return "TOURNAMENT_GAMES_STATUS_SEATING_READY";
       }
       case 2: {
-        return "STARTED";
+        return "TOURNAMENT_GAMES_STATUS_STARTED";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -657,13 +680,13 @@ export const TournamentGamesStatus = {
    */
   _toInt: function (i: TournamentGamesStatus): number {
     switch (i) {
-      case "NONE": {
+      case "TOURNAMENT_GAMES_STATUS_UNSPECIFIED": {
         return 0;
       }
-      case "SEATING_READY": {
+      case "TOURNAMENT_GAMES_STATUS_SEATING_READY": {
         return 1;
       }
-      case "STARTED": {
+      case "TOURNAMENT_GAMES_STATUS_STARTED": {
         return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
@@ -675,38 +698,42 @@ export const TournamentGamesStatus = {
 } as const;
 
 export const RoundOutcome = {
-  RON: "RON",
-  TSUMO: "TSUMO",
-  DRAW: "DRAW",
-  ABORT: "ABORT",
-  CHOMBO: "CHOMBO",
-  NAGASHI: "NAGASHI",
-  MULTIRON: "MULTIRON",
+  ROUND_OUTCOME_UNSPECIFIED: "ROUND_OUTCOME_UNSPECIFIED",
+  ROUND_OUTCOME_RON: "ROUND_OUTCOME_RON",
+  ROUND_OUTCOME_TSUMO: "ROUND_OUTCOME_TSUMO",
+  ROUND_OUTCOME_DRAW: "ROUND_OUTCOME_DRAW",
+  ROUND_OUTCOME_ABORT: "ROUND_OUTCOME_ABORT",
+  ROUND_OUTCOME_CHOMBO: "ROUND_OUTCOME_CHOMBO",
+  ROUND_OUTCOME_NAGASHI: "ROUND_OUTCOME_NAGASHI",
+  ROUND_OUTCOME_MULTIRON: "ROUND_OUTCOME_MULTIRON",
   /**
    * @private
    */
   _fromInt: function (i: number): RoundOutcome {
     switch (i) {
       case 0: {
-        return "RON";
+        return "ROUND_OUTCOME_UNSPECIFIED";
       }
       case 1: {
-        return "TSUMO";
+        return "ROUND_OUTCOME_RON";
       }
       case 2: {
-        return "DRAW";
+        return "ROUND_OUTCOME_TSUMO";
       }
       case 3: {
-        return "ABORT";
+        return "ROUND_OUTCOME_DRAW";
       }
       case 4: {
-        return "CHOMBO";
+        return "ROUND_OUTCOME_ABORT";
       }
       case 5: {
-        return "NAGASHI";
+        return "ROUND_OUTCOME_CHOMBO";
       }
       case 6: {
-        return "MULTIRON";
+        return "ROUND_OUTCOME_NAGASHI";
+      }
+      case 7: {
+        return "ROUND_OUTCOME_MULTIRON";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -719,26 +746,29 @@ export const RoundOutcome = {
    */
   _toInt: function (i: RoundOutcome): number {
     switch (i) {
-      case "RON": {
+      case "ROUND_OUTCOME_UNSPECIFIED": {
         return 0;
       }
-      case "TSUMO": {
+      case "ROUND_OUTCOME_RON": {
         return 1;
       }
-      case "DRAW": {
+      case "ROUND_OUTCOME_TSUMO": {
         return 2;
       }
-      case "ABORT": {
+      case "ROUND_OUTCOME_DRAW": {
         return 3;
       }
-      case "CHOMBO": {
+      case "ROUND_OUTCOME_ABORT": {
         return 4;
       }
-      case "NAGASHI": {
+      case "ROUND_OUTCOME_CHOMBO": {
         return 5;
       }
-      case "MULTIRON": {
+      case "ROUND_OUTCOME_NAGASHI": {
         return 6;
+      }
+      case "ROUND_OUTCOME_MULTIRON": {
+        return 7;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -749,30 +779,34 @@ export const RoundOutcome = {
 } as const;
 
 export const SessionStatus = {
-  PLANNED: "PLANNED",
-  INPROGRESS: "INPROGRESS",
-  PREFINISHED: "PREFINISHED",
-  FINISHED: "FINISHED",
-  CANCELLED: "CANCELLED",
+  SESSION_STATUS_UNSPECIFIED: "SESSION_STATUS_UNSPECIFIED",
+  SESSION_STATUS_INPROGRESS: "SESSION_STATUS_INPROGRESS",
+  SESSION_STATUS_PREFINISHED: "SESSION_STATUS_PREFINISHED",
+  SESSION_STATUS_FINISHED: "SESSION_STATUS_FINISHED",
+  SESSION_STATUS_CANCELLED: "SESSION_STATUS_CANCELLED",
+  SESSION_STATUS_PLANNED: "SESSION_STATUS_PLANNED",
   /**
    * @private
    */
   _fromInt: function (i: number): SessionStatus {
     switch (i) {
       case 0: {
-        return "PLANNED";
+        return "SESSION_STATUS_UNSPECIFIED";
       }
       case 1: {
-        return "INPROGRESS";
+        return "SESSION_STATUS_INPROGRESS";
       }
       case 2: {
-        return "PREFINISHED";
+        return "SESSION_STATUS_PREFINISHED";
       }
       case 3: {
-        return "FINISHED";
+        return "SESSION_STATUS_FINISHED";
       }
       case 4: {
-        return "CANCELLED";
+        return "SESSION_STATUS_CANCELLED";
+      }
+      case 5: {
+        return "SESSION_STATUS_PLANNED";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -785,20 +819,23 @@ export const SessionStatus = {
    */
   _toInt: function (i: SessionStatus): number {
     switch (i) {
-      case "PLANNED": {
+      case "SESSION_STATUS_UNSPECIFIED": {
         return 0;
       }
-      case "INPROGRESS": {
+      case "SESSION_STATUS_INPROGRESS": {
         return 1;
       }
-      case "PREFINISHED": {
+      case "SESSION_STATUS_PREFINISHED": {
         return 2;
       }
-      case "FINISHED": {
+      case "SESSION_STATUS_FINISHED": {
         return 3;
       }
-      case "CANCELLED": {
+      case "SESSION_STATUS_CANCELLED": {
         return 4;
+      }
+      case "SESSION_STATUS_PLANNED": {
+        return 5;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -809,18 +846,22 @@ export const SessionStatus = {
 } as const;
 
 export const UmaType = {
-  UMA_SIMPLE: "UMA_SIMPLE",
-  UMA_COMPLEX: "UMA_COMPLEX",
+  UMA_TYPE_UNSPECIFIED: "UMA_TYPE_UNSPECIFIED",
+  UMA_TYPE_UMA_SIMPLE: "UMA_TYPE_UMA_SIMPLE",
+  UMA_TYPE_UMA_COMPLEX: "UMA_TYPE_UMA_COMPLEX",
   /**
    * @private
    */
   _fromInt: function (i: number): UmaType {
     switch (i) {
       case 0: {
-        return "UMA_SIMPLE";
+        return "UMA_TYPE_UNSPECIFIED";
       }
       case 1: {
-        return "UMA_COMPLEX";
+        return "UMA_TYPE_UMA_SIMPLE";
+      }
+      case 2: {
+        return "UMA_TYPE_UMA_COMPLEX";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -833,11 +874,14 @@ export const UmaType = {
    */
   _toInt: function (i: UmaType): number {
     switch (i) {
-      case "UMA_SIMPLE": {
+      case "UMA_TYPE_UNSPECIFIED": {
         return 0;
       }
-      case "UMA_COMPLEX": {
+      case "UMA_TYPE_UMA_SIMPLE": {
         return 1;
+      }
+      case "UMA_TYPE_UMA_COMPLEX": {
+        return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -848,22 +892,22 @@ export const UmaType = {
 } as const;
 
 export const EndingPolicy = {
-  EP_NONE: "EP_NONE",
-  EP_ONE_MORE_HAND: "EP_ONE_MORE_HAND",
-  EP_END_AFTER_HAND: "EP_END_AFTER_HAND",
+  ENDING_POLICY_EP_UNSPECIFIED: "ENDING_POLICY_EP_UNSPECIFIED",
+  ENDING_POLICY_EP_ONE_MORE_HAND: "ENDING_POLICY_EP_ONE_MORE_HAND",
+  ENDING_POLICY_EP_END_AFTER_HAND: "ENDING_POLICY_EP_END_AFTER_HAND",
   /**
    * @private
    */
   _fromInt: function (i: number): EndingPolicy {
     switch (i) {
       case 0: {
-        return "EP_NONE";
+        return "ENDING_POLICY_EP_UNSPECIFIED";
       }
       case 1: {
-        return "EP_ONE_MORE_HAND";
+        return "ENDING_POLICY_EP_ONE_MORE_HAND";
       }
       case 2: {
-        return "EP_END_AFTER_HAND";
+        return "ENDING_POLICY_EP_END_AFTER_HAND";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -876,13 +920,13 @@ export const EndingPolicy = {
    */
   _toInt: function (i: EndingPolicy): number {
     switch (i) {
-      case "EP_NONE": {
+      case "ENDING_POLICY_EP_UNSPECIFIED": {
         return 0;
       }
-      case "EP_ONE_MORE_HAND": {
+      case "ENDING_POLICY_EP_ONE_MORE_HAND": {
         return 1;
       }
-      case "EP_END_AFTER_HAND": {
+      case "ENDING_POLICY_EP_END_AFTER_HAND": {
         return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
@@ -3829,7 +3873,7 @@ export const GameResult = {
       replayLink: "",
       players: [],
       finalResults: [],
-      penaltyLog: [],
+      penaltyLogs: [],
       rounds: [],
     };
   },
@@ -3860,10 +3904,10 @@ export const GameResult = {
         FinalResultOfSession._writeMessage
       );
     }
-    if (msg.penaltyLog?.length) {
+    if (msg.penaltyLogs?.length) {
       writer.writeRepeatedMessage(
         6,
-        msg.penaltyLog as any,
+        msg.penaltyLogs as any,
         Penalty._writeMessage
       );
     }
@@ -3909,7 +3953,7 @@ export const GameResult = {
         case 6: {
           const m = Penalty.initialize();
           reader.readMessage(m, Penalty._readMessage);
-          msg.penaltyLog.push(m);
+          msg.penaltyLogs.push(m);
           break;
         }
         case 7: {
@@ -4675,7 +4719,7 @@ export const SessionHistoryResultTable = {
    */
   initialize: function (): SessionHistoryResultTable {
     return {
-      table: [],
+      tables: [],
     };
   },
 
@@ -4686,10 +4730,10 @@ export const SessionHistoryResultTable = {
     msg: Partial<SessionHistoryResultTable>,
     writer: BinaryWriter
   ): BinaryWriter {
-    if (msg.table?.length) {
+    if (msg.tables?.length) {
       writer.writeRepeatedMessage(
         1,
-        msg.table as any,
+        msg.tables as any,
         SessionHistoryResult._writeMessage
       );
     }
@@ -4709,7 +4753,7 @@ export const SessionHistoryResultTable = {
         case 1: {
           const m = SessionHistoryResult.initialize();
           reader.readMessage(m, SessionHistoryResult._readMessage);
-          msg.table.push(m);
+          msg.tables.push(m);
           break;
         }
         default: {
@@ -5873,7 +5917,7 @@ export const TableState = {
       status: SessionStatus._fromInt(0),
       mayDefinalize: false,
       sessionHash: "",
-      penaltyLog: [],
+      penaltyLogs: [],
       tableIndex: undefined,
       lastRound: undefined,
       currentRoundIndex: 0,
@@ -5898,10 +5942,10 @@ export const TableState = {
     if (msg.sessionHash) {
       writer.writeString(3, msg.sessionHash);
     }
-    if (msg.penaltyLog?.length) {
+    if (msg.penaltyLogs?.length) {
       writer.writeRepeatedMessage(
         4,
-        msg.penaltyLog as any,
+        msg.penaltyLogs as any,
         Penalty._writeMessage
       );
     }
@@ -5953,7 +5997,7 @@ export const TableState = {
         case 4: {
           const m = Penalty.initialize();
           reader.readMessage(m, Penalty._readMessage);
-          msg.penaltyLog.push(m);
+          msg.penaltyLogs.push(m);
           break;
         }
         case 5: {
@@ -7173,31 +7217,31 @@ export const RulesetConfig = {
   },
 };
 
-export const Generic_Success_Response = {
+export const GenericSuccessResponse = {
   /**
-   * Serializes Generic_Success_Response to protobuf.
+   * Serializes GenericSuccessResponse to protobuf.
    */
-  encode: function (msg: Partial<Generic_Success_Response>): Uint8Array {
-    return Generic_Success_Response._writeMessage(
+  encode: function (msg: Partial<GenericSuccessResponse>): Uint8Array {
+    return GenericSuccessResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Generic_Success_Response from protobuf.
+   * Deserializes GenericSuccessResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Generic_Success_Response {
-    return Generic_Success_Response._readMessage(
-      Generic_Success_Response.initialize(),
+  decode: function (bytes: ByteSource): GenericSuccessResponse {
+    return GenericSuccessResponse._readMessage(
+      GenericSuccessResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Generic_Success_Response with all fields set to their default value.
+   * Initializes GenericSuccessResponse with all fields set to their default value.
    */
-  initialize: function (): Generic_Success_Response {
+  initialize: function (): GenericSuccessResponse {
     return {
       success: false,
     };
@@ -7207,7 +7251,7 @@ export const Generic_Success_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Generic_Success_Response>,
+    msg: Partial<GenericSuccessResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.success) {
@@ -7220,9 +7264,9 @@ export const Generic_Success_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Generic_Success_Response,
+    msg: GenericSuccessResponse,
     reader: BinaryReader
-  ): Generic_Success_Response {
+  ): GenericSuccessResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -7240,31 +7284,31 @@ export const Generic_Success_Response = {
   },
 };
 
-export const Generic_Event_Payload = {
+export const GenericEventPayload = {
   /**
-   * Serializes Generic_Event_Payload to protobuf.
+   * Serializes GenericEventPayload to protobuf.
    */
-  encode: function (msg: Partial<Generic_Event_Payload>): Uint8Array {
-    return Generic_Event_Payload._writeMessage(
+  encode: function (msg: Partial<GenericEventPayload>): Uint8Array {
+    return GenericEventPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Generic_Event_Payload from protobuf.
+   * Deserializes GenericEventPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Generic_Event_Payload {
-    return Generic_Event_Payload._readMessage(
-      Generic_Event_Payload.initialize(),
+  decode: function (bytes: ByteSource): GenericEventPayload {
+    return GenericEventPayload._readMessage(
+      GenericEventPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Generic_Event_Payload with all fields set to their default value.
+   * Initializes GenericEventPayload with all fields set to their default value.
    */
-  initialize: function (): Generic_Event_Payload {
+  initialize: function (): GenericEventPayload {
     return {
       eventId: 0,
     };
@@ -7274,7 +7318,7 @@ export const Generic_Event_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Generic_Event_Payload>,
+    msg: Partial<GenericEventPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
@@ -7287,9 +7331,9 @@ export const Generic_Event_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Generic_Event_Payload,
+    msg: GenericEventPayload,
     reader: BinaryReader
-  ): Generic_Event_Payload {
+  ): GenericEventPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -7312,22 +7356,26 @@ export const Generic_Event_Payload = {
 //========================================//
 
 export const EventTypeJSON = {
-  ONLINE: "ONLINE",
-  TOURNAMENT: "TOURNAMENT",
-  LOCAL: "LOCAL",
+  EVENT_TYPE_UNSPECIFIED: "EVENT_TYPE_UNSPECIFIED",
+  EVENT_TYPE_TOURNAMENT: "EVENT_TYPE_TOURNAMENT",
+  EVENT_TYPE_LOCAL: "EVENT_TYPE_LOCAL",
+  EVENT_TYPE_ONLINE: "EVENT_TYPE_ONLINE",
   /**
    * @private
    */
   _fromInt: function (i: number): EventType {
     switch (i) {
       case 0: {
-        return "ONLINE";
+        return "EVENT_TYPE_UNSPECIFIED";
       }
       case 1: {
-        return "TOURNAMENT";
+        return "EVENT_TYPE_TOURNAMENT";
       }
       case 2: {
-        return "LOCAL";
+        return "EVENT_TYPE_LOCAL";
+      }
+      case 3: {
+        return "EVENT_TYPE_ONLINE";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7340,14 +7388,17 @@ export const EventTypeJSON = {
    */
   _toInt: function (i: EventType): number {
     switch (i) {
-      case "ONLINE": {
+      case "EVENT_TYPE_UNSPECIFIED": {
         return 0;
       }
-      case "TOURNAMENT": {
+      case "EVENT_TYPE_TOURNAMENT": {
         return 1;
       }
-      case "LOCAL": {
+      case "EVENT_TYPE_LOCAL": {
         return 2;
+      }
+      case "EVENT_TYPE_ONLINE": {
+        return 3;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7358,22 +7409,23 @@ export const EventTypeJSON = {
 } as const;
 
 export const TournamentGamesStatusJSON = {
-  NONE: "NONE",
-  SEATING_READY: "SEATING_READY",
-  STARTED: "STARTED",
+  TOURNAMENT_GAMES_STATUS_UNSPECIFIED: "TOURNAMENT_GAMES_STATUS_UNSPECIFIED",
+  TOURNAMENT_GAMES_STATUS_SEATING_READY:
+    "TOURNAMENT_GAMES_STATUS_SEATING_READY",
+  TOURNAMENT_GAMES_STATUS_STARTED: "TOURNAMENT_GAMES_STATUS_STARTED",
   /**
    * @private
    */
   _fromInt: function (i: number): TournamentGamesStatus {
     switch (i) {
       case 0: {
-        return "NONE";
+        return "TOURNAMENT_GAMES_STATUS_UNSPECIFIED";
       }
       case 1: {
-        return "SEATING_READY";
+        return "TOURNAMENT_GAMES_STATUS_SEATING_READY";
       }
       case 2: {
-        return "STARTED";
+        return "TOURNAMENT_GAMES_STATUS_STARTED";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7386,13 +7438,13 @@ export const TournamentGamesStatusJSON = {
    */
   _toInt: function (i: TournamentGamesStatus): number {
     switch (i) {
-      case "NONE": {
+      case "TOURNAMENT_GAMES_STATUS_UNSPECIFIED": {
         return 0;
       }
-      case "SEATING_READY": {
+      case "TOURNAMENT_GAMES_STATUS_SEATING_READY": {
         return 1;
       }
-      case "STARTED": {
+      case "TOURNAMENT_GAMES_STATUS_STARTED": {
         return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
@@ -7404,38 +7456,42 @@ export const TournamentGamesStatusJSON = {
 } as const;
 
 export const RoundOutcomeJSON = {
-  RON: "RON",
-  TSUMO: "TSUMO",
-  DRAW: "DRAW",
-  ABORT: "ABORT",
-  CHOMBO: "CHOMBO",
-  NAGASHI: "NAGASHI",
-  MULTIRON: "MULTIRON",
+  ROUND_OUTCOME_UNSPECIFIED: "ROUND_OUTCOME_UNSPECIFIED",
+  ROUND_OUTCOME_RON: "ROUND_OUTCOME_RON",
+  ROUND_OUTCOME_TSUMO: "ROUND_OUTCOME_TSUMO",
+  ROUND_OUTCOME_DRAW: "ROUND_OUTCOME_DRAW",
+  ROUND_OUTCOME_ABORT: "ROUND_OUTCOME_ABORT",
+  ROUND_OUTCOME_CHOMBO: "ROUND_OUTCOME_CHOMBO",
+  ROUND_OUTCOME_NAGASHI: "ROUND_OUTCOME_NAGASHI",
+  ROUND_OUTCOME_MULTIRON: "ROUND_OUTCOME_MULTIRON",
   /**
    * @private
    */
   _fromInt: function (i: number): RoundOutcome {
     switch (i) {
       case 0: {
-        return "RON";
+        return "ROUND_OUTCOME_UNSPECIFIED";
       }
       case 1: {
-        return "TSUMO";
+        return "ROUND_OUTCOME_RON";
       }
       case 2: {
-        return "DRAW";
+        return "ROUND_OUTCOME_TSUMO";
       }
       case 3: {
-        return "ABORT";
+        return "ROUND_OUTCOME_DRAW";
       }
       case 4: {
-        return "CHOMBO";
+        return "ROUND_OUTCOME_ABORT";
       }
       case 5: {
-        return "NAGASHI";
+        return "ROUND_OUTCOME_CHOMBO";
       }
       case 6: {
-        return "MULTIRON";
+        return "ROUND_OUTCOME_NAGASHI";
+      }
+      case 7: {
+        return "ROUND_OUTCOME_MULTIRON";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7448,26 +7504,29 @@ export const RoundOutcomeJSON = {
    */
   _toInt: function (i: RoundOutcome): number {
     switch (i) {
-      case "RON": {
+      case "ROUND_OUTCOME_UNSPECIFIED": {
         return 0;
       }
-      case "TSUMO": {
+      case "ROUND_OUTCOME_RON": {
         return 1;
       }
-      case "DRAW": {
+      case "ROUND_OUTCOME_TSUMO": {
         return 2;
       }
-      case "ABORT": {
+      case "ROUND_OUTCOME_DRAW": {
         return 3;
       }
-      case "CHOMBO": {
+      case "ROUND_OUTCOME_ABORT": {
         return 4;
       }
-      case "NAGASHI": {
+      case "ROUND_OUTCOME_CHOMBO": {
         return 5;
       }
-      case "MULTIRON": {
+      case "ROUND_OUTCOME_NAGASHI": {
         return 6;
+      }
+      case "ROUND_OUTCOME_MULTIRON": {
+        return 7;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7478,30 +7537,34 @@ export const RoundOutcomeJSON = {
 } as const;
 
 export const SessionStatusJSON = {
-  PLANNED: "PLANNED",
-  INPROGRESS: "INPROGRESS",
-  PREFINISHED: "PREFINISHED",
-  FINISHED: "FINISHED",
-  CANCELLED: "CANCELLED",
+  SESSION_STATUS_UNSPECIFIED: "SESSION_STATUS_UNSPECIFIED",
+  SESSION_STATUS_INPROGRESS: "SESSION_STATUS_INPROGRESS",
+  SESSION_STATUS_PREFINISHED: "SESSION_STATUS_PREFINISHED",
+  SESSION_STATUS_FINISHED: "SESSION_STATUS_FINISHED",
+  SESSION_STATUS_CANCELLED: "SESSION_STATUS_CANCELLED",
+  SESSION_STATUS_PLANNED: "SESSION_STATUS_PLANNED",
   /**
    * @private
    */
   _fromInt: function (i: number): SessionStatus {
     switch (i) {
       case 0: {
-        return "PLANNED";
+        return "SESSION_STATUS_UNSPECIFIED";
       }
       case 1: {
-        return "INPROGRESS";
+        return "SESSION_STATUS_INPROGRESS";
       }
       case 2: {
-        return "PREFINISHED";
+        return "SESSION_STATUS_PREFINISHED";
       }
       case 3: {
-        return "FINISHED";
+        return "SESSION_STATUS_FINISHED";
       }
       case 4: {
-        return "CANCELLED";
+        return "SESSION_STATUS_CANCELLED";
+      }
+      case 5: {
+        return "SESSION_STATUS_PLANNED";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7514,20 +7577,23 @@ export const SessionStatusJSON = {
    */
   _toInt: function (i: SessionStatus): number {
     switch (i) {
-      case "PLANNED": {
+      case "SESSION_STATUS_UNSPECIFIED": {
         return 0;
       }
-      case "INPROGRESS": {
+      case "SESSION_STATUS_INPROGRESS": {
         return 1;
       }
-      case "PREFINISHED": {
+      case "SESSION_STATUS_PREFINISHED": {
         return 2;
       }
-      case "FINISHED": {
+      case "SESSION_STATUS_FINISHED": {
         return 3;
       }
-      case "CANCELLED": {
+      case "SESSION_STATUS_CANCELLED": {
         return 4;
+      }
+      case "SESSION_STATUS_PLANNED": {
+        return 5;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7538,18 +7604,22 @@ export const SessionStatusJSON = {
 } as const;
 
 export const UmaTypeJSON = {
-  UMA_SIMPLE: "UMA_SIMPLE",
-  UMA_COMPLEX: "UMA_COMPLEX",
+  UMA_TYPE_UNSPECIFIED: "UMA_TYPE_UNSPECIFIED",
+  UMA_TYPE_UMA_SIMPLE: "UMA_TYPE_UMA_SIMPLE",
+  UMA_TYPE_UMA_COMPLEX: "UMA_TYPE_UMA_COMPLEX",
   /**
    * @private
    */
   _fromInt: function (i: number): UmaType {
     switch (i) {
       case 0: {
-        return "UMA_SIMPLE";
+        return "UMA_TYPE_UNSPECIFIED";
       }
       case 1: {
-        return "UMA_COMPLEX";
+        return "UMA_TYPE_UMA_SIMPLE";
+      }
+      case 2: {
+        return "UMA_TYPE_UMA_COMPLEX";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7562,11 +7632,14 @@ export const UmaTypeJSON = {
    */
   _toInt: function (i: UmaType): number {
     switch (i) {
-      case "UMA_SIMPLE": {
+      case "UMA_TYPE_UNSPECIFIED": {
         return 0;
       }
-      case "UMA_COMPLEX": {
+      case "UMA_TYPE_UMA_SIMPLE": {
         return 1;
+      }
+      case "UMA_TYPE_UMA_COMPLEX": {
+        return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7577,22 +7650,22 @@ export const UmaTypeJSON = {
 } as const;
 
 export const EndingPolicyJSON = {
-  EP_NONE: "EP_NONE",
-  EP_ONE_MORE_HAND: "EP_ONE_MORE_HAND",
-  EP_END_AFTER_HAND: "EP_END_AFTER_HAND",
+  ENDING_POLICY_EP_UNSPECIFIED: "ENDING_POLICY_EP_UNSPECIFIED",
+  ENDING_POLICY_EP_ONE_MORE_HAND: "ENDING_POLICY_EP_ONE_MORE_HAND",
+  ENDING_POLICY_EP_END_AFTER_HAND: "ENDING_POLICY_EP_END_AFTER_HAND",
   /**
    * @private
    */
   _fromInt: function (i: number): EndingPolicy {
     switch (i) {
       case 0: {
-        return "EP_NONE";
+        return "ENDING_POLICY_EP_UNSPECIFIED";
       }
       case 1: {
-        return "EP_ONE_MORE_HAND";
+        return "ENDING_POLICY_EP_ONE_MORE_HAND";
       }
       case 2: {
-        return "EP_END_AFTER_HAND";
+        return "ENDING_POLICY_EP_END_AFTER_HAND";
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
       default: {
@@ -7605,13 +7678,13 @@ export const EndingPolicyJSON = {
    */
   _toInt: function (i: EndingPolicy): number {
     switch (i) {
-      case "EP_NONE": {
+      case "ENDING_POLICY_EP_UNSPECIFIED": {
         return 0;
       }
-      case "EP_ONE_MORE_HAND": {
+      case "ENDING_POLICY_EP_ONE_MORE_HAND": {
         return 1;
       }
-      case "EP_END_AFTER_HAND": {
+      case "ENDING_POLICY_EP_END_AFTER_HAND": {
         return 2;
       }
       // unknown values are preserved as numbers. this occurs when new enum values are introduced and the generated code is out of date.
@@ -7842,15 +7915,15 @@ export const EventAdminJSON = {
    * @private
    */
   _readMessage: function (msg: EventAdmin, json: any): EventAdmin {
-    const _ruleId_ = json["ruleId"];
+    const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
       msg.ruleId = _ruleId_;
     }
-    const _personId_ = json["personId"];
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
-    const _personName_ = json["personName"];
+    const _personName_ = json["personName"] ?? json["person_name"];
     if (_personName_) {
       msg.personName = _personName_;
     }
@@ -7996,7 +8069,7 @@ export const EventRuleListItemJSON = {
     msg: EventRuleListItem,
     json: any
   ): EventRuleListItem {
-    const _isGlobal_ = json["isGlobal"];
+    const _isGlobal_ = json["isGlobal"] ?? json["is_global"];
     if (_isGlobal_) {
       msg.isGlobal = _isGlobal_;
     }
@@ -8014,11 +8087,11 @@ export const EventRuleListItemJSON = {
     if (_name_) {
       msg.name = _name_;
     }
-    const _ownerTitle_ = json["ownerTitle"];
+    const _ownerTitle_ = json["ownerTitle"] ?? json["owner_title"];
     if (_ownerTitle_) {
       msg.ownerTitle = _ownerTitle_;
     }
-    const _allowedValues_ = json["allowedValues"];
+    const _allowedValues_ = json["allowedValues"] ?? json["allowed_values"];
     if (_allowedValues_) {
       msg.allowedValues = _allowedValues_;
     }
@@ -8099,7 +8172,7 @@ export const RuleListItemExJSON = {
       RuleValueJSON._readMessage(m, _value_);
       msg.value = m;
     }
-    const _allowedValues_ = json["allowedValues"];
+    const _allowedValues_ = json["allowedValues"] ?? json["allowed_values"];
     if (_allowedValues_) {
       msg.allowedValues = _allowedValues_;
     }
@@ -8275,7 +8348,7 @@ export const PersonJSON = {
     if (_city_) {
       msg.city = _city_;
     }
-    const _tenhouId_ = json["tenhouId"];
+    const _tenhouId_ = json["tenhouId"] ?? json["tenhou_id"];
     if (_tenhouId_) {
       msg.tenhouId = _tenhouId_;
     }
@@ -8365,7 +8438,7 @@ export const PersonExJSON = {
     if (_city_) {
       msg.city = _city_;
     }
-    const _tenhouId_ = json["tenhouId"];
+    const _tenhouId_ = json["tenhouId"] ?? json["tenhou_id"];
     if (_tenhouId_) {
       msg.tenhouId = _tenhouId_;
     }
@@ -8606,15 +8679,16 @@ export const EventJSON = {
     if (_finished_) {
       msg.finished = _finished_;
     }
-    const _isListed_ = json["isListed"];
+    const _isListed_ = json["isListed"] ?? json["is_listed"];
     if (_isListed_) {
       msg.isListed = _isListed_;
     }
-    const _isRatingShown_ = json["isRatingShown"];
+    const _isRatingShown_ = json["isRatingShown"] ?? json["is_rating_shown"];
     if (_isRatingShown_) {
       msg.isRatingShown = _isRatingShown_;
     }
-    const _tournamentStarted_ = json["tournamentStarted"];
+    const _tournamentStarted_ =
+      json["tournamentStarted"] ?? json["tournament_started"];
     if (_tournamentStarted_) {
       msg.tournamentStarted = _tournamentStarted_;
     }
@@ -8622,7 +8696,7 @@ export const EventJSON = {
     if (_type_) {
       msg.type = _type_;
     }
-    const _isPrescripted_ = json["isPrescripted"];
+    const _isPrescripted_ = json["isPrescripted"] ?? json["is_prescripted"];
     if (_isPrescripted_) {
       msg.isPrescripted = _isPrescripted_;
     }
@@ -8693,7 +8767,7 @@ export const MyEventJSON = {
     if (_description_) {
       msg.description = _description_;
     }
-    const _isOnline_ = json["isOnline"];
+    const _isOnline_ = json["isOnline"] ?? json["is_online"];
     if (_isOnline_) {
       msg.isOnline = _isOnline_;
     }
@@ -8836,31 +8910,32 @@ export const GameConfigJSON = {
    * @private
    */
   _readMessage: function (msg: GameConfig, json: any): GameConfig {
-    const _rulesetTitle_ = json["rulesetTitle"];
+    const _rulesetTitle_ = json["rulesetTitle"] ?? json["ruleset_title"];
     if (_rulesetTitle_) {
       msg.rulesetTitle = _rulesetTitle_;
     }
-    const _eventTitle_ = json["eventTitle"];
+    const _eventTitle_ = json["eventTitle"] ?? json["event_title"];
     if (_eventTitle_) {
       msg.eventTitle = _eventTitle_;
     }
-    const _eventDescription_ = json["eventDescription"];
+    const _eventDescription_ =
+      json["eventDescription"] ?? json["event_description"];
     if (_eventDescription_) {
       msg.eventDescription = _eventDescription_;
     }
-    const _eventStatHost_ = json["eventStatHost"];
+    const _eventStatHost_ = json["eventStatHost"] ?? json["event_stat_host"];
     if (_eventStatHost_) {
       msg.eventStatHost = _eventStatHost_;
     }
-    const _useTimer_ = json["useTimer"];
+    const _useTimer_ = json["useTimer"] ?? json["use_timer"];
     if (_useTimer_) {
       msg.useTimer = _useTimer_;
     }
-    const _usePenalty_ = json["usePenalty"];
+    const _usePenalty_ = json["usePenalty"] ?? json["use_penalty"];
     if (_usePenalty_) {
       msg.usePenalty = _usePenalty_;
     }
-    const _gameDuration_ = json["gameDuration"];
+    const _gameDuration_ = json["gameDuration"] ?? json["game_duration"];
     if (_gameDuration_) {
       msg.gameDuration = _gameDuration_;
     }
@@ -8868,63 +8943,65 @@ export const GameConfigJSON = {
     if (_timezone_) {
       msg.timezone = _timezone_;
     }
-    const _isOnline_ = json["isOnline"];
+    const _isOnline_ = json["isOnline"] ?? json["is_online"];
     if (_isOnline_) {
       msg.isOnline = _isOnline_;
     }
-    const _isTeam_ = json["isTeam"];
+    const _isTeam_ = json["isTeam"] ?? json["is_team"];
     if (_isTeam_) {
       msg.isTeam = _isTeam_;
     }
-    const _autoSeating_ = json["autoSeating"];
+    const _autoSeating_ = json["autoSeating"] ?? json["auto_seating"];
     if (_autoSeating_) {
       msg.autoSeating = _autoSeating_;
     }
-    const _syncStart_ = json["syncStart"];
+    const _syncStart_ = json["syncStart"] ?? json["sync_start"];
     if (_syncStart_) {
       msg.syncStart = _syncStart_;
     }
-    const _syncEnd_ = json["syncEnd"];
+    const _syncEnd_ = json["syncEnd"] ?? json["sync_end"];
     if (_syncEnd_) {
       msg.syncEnd = _syncEnd_;
     }
-    const _sortByGames_ = json["sortByGames"];
+    const _sortByGames_ = json["sortByGames"] ?? json["sort_by_games"];
     if (_sortByGames_) {
       msg.sortByGames = _sortByGames_;
     }
-    const _allowPlayerAppend_ = json["allowPlayerAppend"];
+    const _allowPlayerAppend_ =
+      json["allowPlayerAppend"] ?? json["allow_player_append"];
     if (_allowPlayerAppend_) {
       msg.allowPlayerAppend = _allowPlayerAppend_;
     }
-    const _seriesLength_ = json["seriesLength"];
+    const _seriesLength_ = json["seriesLength"] ?? json["series_length"];
     if (_seriesLength_) {
       msg.seriesLength = _seriesLength_;
     }
-    const _minGamesCount_ = json["minGamesCount"];
+    const _minGamesCount_ = json["minGamesCount"] ?? json["min_games_count"];
     if (_minGamesCount_) {
       msg.minGamesCount = _minGamesCount_;
     }
-    const _gamesStatus_ = json["gamesStatus"];
+    const _gamesStatus_ = json["gamesStatus"] ?? json["games_status"];
     if (_gamesStatus_) {
       msg.gamesStatus = _gamesStatus_;
     }
-    const _hideResults_ = json["hideResults"];
+    const _hideResults_ = json["hideResults"] ?? json["hide_results"];
     if (_hideResults_) {
       msg.hideResults = _hideResults_;
     }
-    const _hideAddReplayButton_ = json["hideAddReplayButton"];
+    const _hideAddReplayButton_ =
+      json["hideAddReplayButton"] ?? json["hide_add_replay_button"];
     if (_hideAddReplayButton_) {
       msg.hideAddReplayButton = _hideAddReplayButton_;
     }
-    const _isPrescripted_ = json["isPrescripted"];
+    const _isPrescripted_ = json["isPrescripted"] ?? json["is_prescripted"];
     if (_isPrescripted_) {
       msg.isPrescripted = _isPrescripted_;
     }
-    const _isFinished_ = json["isFinished"];
+    const _isFinished_ = json["isFinished"] ?? json["is_finished"];
     if (_isFinished_) {
       msg.isFinished = _isFinished_;
     }
-    const _rulesetConfig_ = json["rulesetConfig"];
+    const _rulesetConfig_ = json["rulesetConfig"] ?? json["ruleset_config"];
     if (_rulesetConfig_) {
       const m = RulesetConfig.initialize();
       RulesetConfigJSON._readMessage(m, _rulesetConfig_);
@@ -9018,7 +9095,7 @@ export const PlayerInRatingJSON = {
     if (_title_) {
       msg.title = _title_;
     }
-    const _tenhouId_ = json["tenhouId"];
+    const _tenhouId_ = json["tenhouId"] ?? json["tenhou_id"];
     if (_tenhouId_) {
       msg.tenhouId = _tenhouId_;
     }
@@ -9030,19 +9107,19 @@ export const PlayerInRatingJSON = {
     if (_chips_) {
       msg.chips = _chips_;
     }
-    const _winnerZone_ = json["winnerZone"];
+    const _winnerZone_ = json["winnerZone"] ?? json["winner_zone"];
     if (_winnerZone_) {
       msg.winnerZone = _winnerZone_;
     }
-    const _avgPlace_ = json["avgPlace"];
+    const _avgPlace_ = json["avgPlace"] ?? json["avg_place"];
     if (_avgPlace_) {
       msg.avgPlace = _avgPlace_;
     }
-    const _avgScore_ = json["avgScore"];
+    const _avgScore_ = json["avgScore"] ?? json["avg_score"];
     if (_avgScore_) {
       msg.avgScore = _avgScore_;
     }
-    const _gamesPlayed_ = json["gamesPlayed"];
+    const _gamesPlayed_ = json["gamesPlayed"] ?? json["games_played"];
     if (_gamesPlayed_) {
       msg.gamesPlayed = _gamesPlayed_;
     }
@@ -9105,7 +9182,7 @@ export const PlayerJSON = {
     if (_title_) {
       msg.title = _title_;
     }
-    const _tenhouId_ = json["tenhouId"];
+    const _tenhouId_ = json["tenhouId"] ?? json["tenhou_id"];
     if (_tenhouId_) {
       msg.tenhouId = _tenhouId_;
     }
@@ -9172,7 +9249,7 @@ export const FinalResultOfSessionJSON = {
     msg: FinalResultOfSession,
     json: any
   ): FinalResultOfSession {
-    const _playerId_ = json["playerId"];
+    const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
       msg.playerId = _playerId_;
     }
@@ -9180,7 +9257,7 @@ export const FinalResultOfSessionJSON = {
     if (_score_) {
       msg.score = _score_;
     }
-    const _ratingDelta_ = json["ratingDelta"];
+    const _ratingDelta_ = json["ratingDelta"] ?? json["rating_delta"];
     if (_ratingDelta_) {
       msg.ratingDelta = _ratingDelta_;
     }
@@ -9349,7 +9426,7 @@ export const RonResultJSON = {
    * @private
    */
   _readMessage: function (msg: RonResult, json: any): RonResult {
-    const _roundIndex_ = json["roundIndex"];
+    const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
     }
@@ -9357,15 +9434,15 @@ export const RonResultJSON = {
     if (_honba_) {
       msg.honba = _honba_;
     }
-    const _winnerId_ = json["winnerId"];
+    const _winnerId_ = json["winnerId"] ?? json["winner_id"];
     if (_winnerId_) {
       msg.winnerId = _winnerId_;
     }
-    const _loserId_ = json["loserId"];
+    const _loserId_ = json["loserId"] ?? json["loser_id"];
     if (_loserId_) {
       msg.loserId = _loserId_;
     }
-    const _paoPlayerId_ = json["paoPlayerId"];
+    const _paoPlayerId_ = json["paoPlayerId"] ?? json["pao_player_id"];
     if (_paoPlayerId_) {
       msg.paoPlayerId = _paoPlayerId_;
     }
@@ -9381,7 +9458,7 @@ export const RonResultJSON = {
     if (_yaku_) {
       msg.yaku = _yaku_;
     }
-    const _riichiBets_ = json["riichiBets"];
+    const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
       msg.riichiBets = _riichiBets_;
     }
@@ -9401,7 +9478,7 @@ export const RonResultJSON = {
     if (_kanuradora_) {
       msg.kanuradora = _kanuradora_;
     }
-    const _openHand_ = json["openHand"];
+    const _openHand_ = json["openHand"] ?? json["open_hand"];
     if (_openHand_) {
       msg.openHand = _openHand_;
     }
@@ -9487,11 +9564,11 @@ export const MultironWinJSON = {
    * @private
    */
   _readMessage: function (msg: MultironWin, json: any): MultironWin {
-    const _winnerId_ = json["winnerId"];
+    const _winnerId_ = json["winnerId"] ?? json["winner_id"];
     if (_winnerId_) {
       msg.winnerId = _winnerId_;
     }
-    const _paoPlayerId_ = json["paoPlayerId"];
+    const _paoPlayerId_ = json["paoPlayerId"] ?? json["pao_player_id"];
     if (_paoPlayerId_) {
       msg.paoPlayerId = _paoPlayerId_;
     }
@@ -9523,7 +9600,7 @@ export const MultironWinJSON = {
     if (_kanuradora_) {
       msg.kanuradora = _kanuradora_;
     }
-    const _openHand_ = json["openHand"];
+    const _openHand_ = json["openHand"] ?? json["open_hand"];
     if (_openHand_) {
       msg.openHand = _openHand_;
     }
@@ -9595,7 +9672,7 @@ export const MultironResultJSON = {
    * @private
    */
   _readMessage: function (msg: MultironResult, json: any): MultironResult {
-    const _roundIndex_ = json["roundIndex"];
+    const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
     }
@@ -9603,11 +9680,11 @@ export const MultironResultJSON = {
     if (_honba_) {
       msg.honba = _honba_;
     }
-    const _loserId_ = json["loserId"];
+    const _loserId_ = json["loserId"] ?? json["loser_id"];
     if (_loserId_) {
       msg.loserId = _loserId_;
     }
-    const _multiRon_ = json["multiRon"];
+    const _multiRon_ = json["multiRon"] ?? json["multi_ron"];
     if (_multiRon_) {
       msg.multiRon = _multiRon_;
     }
@@ -9619,7 +9696,7 @@ export const MultironResultJSON = {
         msg.wins.push(m);
       }
     }
-    const _riichiBets_ = json["riichiBets"];
+    const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
       msg.riichiBets = _riichiBets_;
     }
@@ -9717,7 +9794,7 @@ export const TsumoResultJSON = {
    * @private
    */
   _readMessage: function (msg: TsumoResult, json: any): TsumoResult {
-    const _roundIndex_ = json["roundIndex"];
+    const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
     }
@@ -9725,11 +9802,11 @@ export const TsumoResultJSON = {
     if (_honba_) {
       msg.honba = _honba_;
     }
-    const _winnerId_ = json["winnerId"];
+    const _winnerId_ = json["winnerId"] ?? json["winner_id"];
     if (_winnerId_) {
       msg.winnerId = _winnerId_;
     }
-    const _paoPlayerId_ = json["paoPlayerId"];
+    const _paoPlayerId_ = json["paoPlayerId"] ?? json["pao_player_id"];
     if (_paoPlayerId_) {
       msg.paoPlayerId = _paoPlayerId_;
     }
@@ -9745,7 +9822,7 @@ export const TsumoResultJSON = {
     if (_yaku_) {
       msg.yaku = _yaku_;
     }
-    const _riichiBets_ = json["riichiBets"];
+    const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
       msg.riichiBets = _riichiBets_;
     }
@@ -9765,7 +9842,7 @@ export const TsumoResultJSON = {
     if (_kanuradora_) {
       msg.kanuradora = _kanuradora_;
     }
-    const _openHand_ = json["openHand"];
+    const _openHand_ = json["openHand"] ?? json["open_hand"];
     if (_openHand_) {
       msg.openHand = _openHand_;
     }
@@ -9827,7 +9904,7 @@ export const DrawResultJSON = {
    * @private
    */
   _readMessage: function (msg: DrawResult, json: any): DrawResult {
-    const _roundIndex_ = json["roundIndex"];
+    const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
     }
@@ -9835,7 +9912,7 @@ export const DrawResultJSON = {
     if (_honba_) {
       msg.honba = _honba_;
     }
-    const _riichiBets_ = json["riichiBets"];
+    const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
       msg.riichiBets = _riichiBets_;
     }
@@ -9897,7 +9974,7 @@ export const AbortResultJSON = {
    * @private
    */
   _readMessage: function (msg: AbortResult, json: any): AbortResult {
-    const _roundIndex_ = json["roundIndex"];
+    const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
     }
@@ -9905,7 +9982,7 @@ export const AbortResultJSON = {
     if (_honba_) {
       msg.honba = _honba_;
     }
-    const _riichiBets_ = json["riichiBets"];
+    const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
       msg.riichiBets = _riichiBets_;
     }
@@ -9965,7 +10042,7 @@ export const ChomboResultJSON = {
    * @private
    */
   _readMessage: function (msg: ChomboResult, json: any): ChomboResult {
-    const _roundIndex_ = json["roundIndex"];
+    const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
     }
@@ -9973,7 +10050,7 @@ export const ChomboResultJSON = {
     if (_honba_) {
       msg.honba = _honba_;
     }
-    const _loserId_ = json["loserId"];
+    const _loserId_ = json["loserId"] ?? json["loser_id"];
     if (_loserId_) {
       msg.loserId = _loserId_;
     }
@@ -10041,7 +10118,7 @@ export const NagashiResultJSON = {
    * @private
    */
   _readMessage: function (msg: NagashiResult, json: any): NagashiResult {
-    const _roundIndex_ = json["roundIndex"];
+    const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
     }
@@ -10049,7 +10126,7 @@ export const NagashiResultJSON = {
     if (_honba_) {
       msg.honba = _honba_;
     }
-    const _riichiBets_ = json["riichiBets"];
+    const _riichiBets_ = json["riichiBets"] ?? json["riichi_bets"];
     if (_riichiBets_) {
       msg.riichiBets = _riichiBets_;
     }
@@ -10209,7 +10286,7 @@ export const GameResultJSON = {
       replayLink: "",
       players: [],
       finalResults: [],
-      penaltyLog: [],
+      penaltyLogs: [],
       rounds: [],
     };
   },
@@ -10236,8 +10313,8 @@ export const GameResultJSON = {
         FinalResultOfSessionJSON._writeMessage
       );
     }
-    if (msg.penaltyLog?.length) {
-      json["penaltyLog"] = msg.penaltyLog.map(PenaltyJSON._writeMessage);
+    if (msg.penaltyLogs?.length) {
+      json["penaltyLogs"] = msg.penaltyLogs.map(PenaltyJSON._writeMessage);
     }
     if (msg.rounds?.length) {
       json["rounds"] = msg.rounds.map(RoundJSON._writeMessage);
@@ -10249,7 +10326,7 @@ export const GameResultJSON = {
    * @private
    */
   _readMessage: function (msg: GameResult, json: any): GameResult {
-    const _sessionHash_ = json["sessionHash"];
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
       msg.sessionHash = _sessionHash_;
     }
@@ -10257,7 +10334,7 @@ export const GameResultJSON = {
     if (_date_) {
       msg.date = _date_;
     }
-    const _replayLink_ = json["replayLink"];
+    const _replayLink_ = json["replayLink"] ?? json["replay_link"];
     if (_replayLink_) {
       msg.replayLink = _replayLink_;
     }
@@ -10265,7 +10342,7 @@ export const GameResultJSON = {
     if (_players_) {
       msg.players = _players_;
     }
-    const _finalResults_ = json["finalResults"];
+    const _finalResults_ = json["finalResults"] ?? json["final_results"];
     if (_finalResults_) {
       for (const item of _finalResults_) {
         const m = FinalResultOfSession.initialize();
@@ -10273,12 +10350,12 @@ export const GameResultJSON = {
         msg.finalResults.push(m);
       }
     }
-    const _penaltyLog_ = json["penaltyLog"];
-    if (_penaltyLog_) {
-      for (const item of _penaltyLog_) {
+    const _penaltyLogs_ = json["penaltyLogs"] ?? json["penalty_logs"];
+    if (_penaltyLogs_) {
+      for (const item of _penaltyLogs_) {
         const m = Penalty.initialize();
         PenaltyJSON._readMessage(m, item);
-        msg.penaltyLog.push(m);
+        msg.penaltyLogs.push(m);
       }
     }
     const _rounds_ = json["rounds"];
@@ -10344,7 +10421,7 @@ export const PlayerPlaceInSeriesJSON = {
     msg: PlayerPlaceInSeries,
     json: any
   ): PlayerPlaceInSeries {
-    const _sessionHash_ = json["sessionHash"];
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
       msg.sessionHash = _sessionHash_;
     }
@@ -10445,7 +10522,7 @@ export const SeriesResultJSON = {
       PlayerJSON._readMessage(m, _player_);
       msg.player = m;
     }
-    const _bestSeries_ = json["bestSeries"];
+    const _bestSeries_ = json["bestSeries"] ?? json["best_series"];
     if (_bestSeries_) {
       for (const item of _bestSeries_) {
         const m = PlayerPlaceInSeries.initialize();
@@ -10453,19 +10530,22 @@ export const SeriesResultJSON = {
         msg.bestSeries.push(m);
       }
     }
-    const _bestSeriesScores_ = json["bestSeriesScores"];
+    const _bestSeriesScores_ =
+      json["bestSeriesScores"] ?? json["best_series_scores"];
     if (_bestSeriesScores_) {
       msg.bestSeriesScores = _bestSeriesScores_;
     }
-    const _bestSeriesPlaces_ = json["bestSeriesPlaces"];
+    const _bestSeriesPlaces_ =
+      json["bestSeriesPlaces"] ?? json["best_series_places"];
     if (_bestSeriesPlaces_) {
       msg.bestSeriesPlaces = _bestSeriesPlaces_;
     }
-    const _bestSeriesAvgPlace_ = json["bestSeriesAvgPlace"];
+    const _bestSeriesAvgPlace_ =
+      json["bestSeriesAvgPlace"] ?? json["best_series_avg_place"];
     if (_bestSeriesAvgPlace_) {
       msg.bestSeriesAvgPlace = _bestSeriesAvgPlace_;
     }
-    const _currentSeries_ = json["currentSeries"];
+    const _currentSeries_ = json["currentSeries"] ?? json["current_series"];
     if (_currentSeries_) {
       for (const item of _currentSeries_) {
         const m = PlayerPlaceInSeries.initialize();
@@ -10473,15 +10553,18 @@ export const SeriesResultJSON = {
         msg.currentSeries.push(m);
       }
     }
-    const _currentSeriesScores_ = json["currentSeriesScores"];
+    const _currentSeriesScores_ =
+      json["currentSeriesScores"] ?? json["current_series_scores"];
     if (_currentSeriesScores_) {
       msg.currentSeriesScores = _currentSeriesScores_;
     }
-    const _currentSeriesPlaces_ = json["currentSeriesPlaces"];
+    const _currentSeriesPlaces_ =
+      json["currentSeriesPlaces"] ?? json["current_series_places"];
     if (_currentSeriesPlaces_) {
       msg.currentSeriesPlaces = _currentSeriesPlaces_;
     }
-    const _currentSeriesAvgPlace_ = json["currentSeriesAvgPlace"];
+    const _currentSeriesAvgPlace_ =
+      json["currentSeriesAvgPlace"] ?? json["current_series_avg_place"];
     if (_currentSeriesAvgPlace_) {
       msg.currentSeriesAvgPlace = _currentSeriesAvgPlace_;
     }
@@ -10625,13 +10708,13 @@ export const PlayerInSessionJSON = {
     if (_score_) {
       msg.score = _score_;
     }
-    const _replacedBy_ = json["replacedBy"];
+    const _replacedBy_ = json["replacedBy"] ?? json["replaced_by"];
     if (_replacedBy_) {
       const m = ReplacementPlayer.initialize();
       ReplacementPlayerJSON._readMessage(m, _replacedBy_);
       msg.replacedBy = m;
     }
-    const _ratingDelta_ = json["ratingDelta"];
+    const _ratingDelta_ = json["ratingDelta"] ?? json["rating_delta"];
     if (_ratingDelta_) {
       msg.ratingDelta = _ratingDelta_;
     }
@@ -10695,7 +10778,7 @@ export const CurrentSessionJSON = {
    * @private
    */
   _readMessage: function (msg: CurrentSession, json: any): CurrentSession {
-    const _sessionHash_ = json["sessionHash"];
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
       msg.sessionHash = _sessionHash_;
     }
@@ -10703,7 +10786,7 @@ export const CurrentSessionJSON = {
     if (_status_) {
       msg.status = _status_;
     }
-    const _tableIndex_ = json["tableIndex"];
+    const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
     if (_tableIndex_) {
       msg.tableIndex = _tableIndex_;
     }
@@ -10796,23 +10879,23 @@ export const RegisteredPlayerJSON = {
     if (_title_) {
       msg.title = _title_;
     }
-    const _localId_ = json["localId"];
+    const _localId_ = json["localId"] ?? json["local_id"];
     if (_localId_) {
       msg.localId = _localId_;
     }
-    const _teamName_ = json["teamName"];
+    const _teamName_ = json["teamName"] ?? json["team_name"];
     if (_teamName_) {
       msg.teamName = _teamName_;
     }
-    const _tenhouId_ = json["tenhouId"];
+    const _tenhouId_ = json["tenhouId"] ?? json["tenhou_id"];
     if (_tenhouId_) {
       msg.tenhouId = _tenhouId_;
     }
-    const _ignoreSeating_ = json["ignoreSeating"];
+    const _ignoreSeating_ = json["ignoreSeating"] ?? json["ignore_seating"];
     if (_ignoreSeating_) {
       msg.ignoreSeating = _ignoreSeating_;
     }
-    const _replacedBy_ = json["replacedBy"];
+    const _replacedBy_ = json["replacedBy"] ?? json["replaced_by"];
     if (_replacedBy_) {
       const m = ReplacementPlayer.initialize();
       ReplacementPlayerJSON._readMessage(m, _replacedBy_);
@@ -10893,15 +10976,15 @@ export const SessionHistoryResultJSON = {
     msg: SessionHistoryResult,
     json: any
   ): SessionHistoryResult {
-    const _sessionHash_ = json["sessionHash"];
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
       msg.sessionHash = _sessionHash_;
     }
-    const _eventId_ = json["eventId"];
+    const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = _eventId_;
     }
-    const _playerId_ = json["playerId"];
+    const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
       msg.playerId = _playerId_;
     }
@@ -10909,7 +10992,7 @@ export const SessionHistoryResultJSON = {
     if (_score_) {
       msg.score = _score_;
     }
-    const _ratingDelta_ = json["ratingDelta"];
+    const _ratingDelta_ = json["ratingDelta"] ?? json["rating_delta"];
     if (_ratingDelta_) {
       msg.ratingDelta = _ratingDelta_;
     }
@@ -10948,7 +11031,7 @@ export const SessionHistoryResultTableJSON = {
    */
   initialize: function (): SessionHistoryResultTable {
     return {
-      table: [],
+      tables: [],
     };
   },
 
@@ -10959,8 +11042,8 @@ export const SessionHistoryResultTableJSON = {
     msg: Partial<SessionHistoryResultTable>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
-    if (msg.table?.length) {
-      json["table"] = msg.table.map(SessionHistoryResultJSON._writeMessage);
+    if (msg.tables?.length) {
+      json["tables"] = msg.tables.map(SessionHistoryResultJSON._writeMessage);
     }
     return json;
   },
@@ -10972,12 +11055,12 @@ export const SessionHistoryResultTableJSON = {
     msg: SessionHistoryResultTable,
     json: any
   ): SessionHistoryResultTable {
-    const _table_ = json["table"];
-    if (_table_) {
-      for (const item of _table_) {
+    const _tables_ = json["tables"];
+    if (_tables_) {
+      for (const item of _tables_) {
         const m = SessionHistoryResult.initialize();
         SessionHistoryResultJSON._readMessage(m, item);
-        msg.table.push(m);
+        msg.tables.push(m);
       }
     }
     return msg;
@@ -11171,27 +11254,30 @@ export const PlayerWinSummaryJSON = {
     if (_tsumofeed_) {
       msg.tsumofeed = _tsumofeed_;
     }
-    const _winsWithOpen_ = json["winsWithOpen"];
+    const _winsWithOpen_ = json["winsWithOpen"] ?? json["wins_with_open"];
     if (_winsWithOpen_) {
       msg.winsWithOpen = _winsWithOpen_;
     }
-    const _winsWithRiichi_ = json["winsWithRiichi"];
+    const _winsWithRiichi_ = json["winsWithRiichi"] ?? json["wins_with_riichi"];
     if (_winsWithRiichi_) {
       msg.winsWithRiichi = _winsWithRiichi_;
     }
-    const _winsWithDama_ = json["winsWithDama"];
+    const _winsWithDama_ = json["winsWithDama"] ?? json["wins_with_dama"];
     if (_winsWithDama_) {
       msg.winsWithDama = _winsWithDama_;
     }
-    const _unforcedFeedToOpen_ = json["unforcedFeedToOpen"];
+    const _unforcedFeedToOpen_ =
+      json["unforcedFeedToOpen"] ?? json["unforced_feed_to_open"];
     if (_unforcedFeedToOpen_) {
       msg.unforcedFeedToOpen = _unforcedFeedToOpen_;
     }
-    const _unforcedFeedToRiichi_ = json["unforcedFeedToRiichi"];
+    const _unforcedFeedToRiichi_ =
+      json["unforcedFeedToRiichi"] ?? json["unforced_feed_to_riichi"];
     if (_unforcedFeedToRiichi_) {
       msg.unforcedFeedToRiichi = _unforcedFeedToRiichi_;
     }
-    const _unforcedFeedToDama_ = json["unforcedFeedToDama"];
+    const _unforcedFeedToDama_ =
+      json["unforcedFeedToDama"] ?? json["unforced_feed_to_dama"];
     if (_unforcedFeedToDama_) {
       msg.unforcedFeedToDama = _unforcedFeedToDama_;
     }
@@ -11199,19 +11285,20 @@ export const PlayerWinSummaryJSON = {
     if (_draw_) {
       msg.draw = _draw_;
     }
-    const _drawTempai_ = json["drawTempai"];
+    const _drawTempai_ = json["drawTempai"] ?? json["draw_tempai"];
     if (_drawTempai_) {
       msg.drawTempai = _drawTempai_;
     }
-    const _pointsWon_ = json["pointsWon"];
+    const _pointsWon_ = json["pointsWon"] ?? json["points_won"];
     if (_pointsWon_) {
       msg.pointsWon = _pointsWon_;
     }
-    const _pointsLostRon_ = json["pointsLostRon"];
+    const _pointsLostRon_ = json["pointsLostRon"] ?? json["points_lost_ron"];
     if (_pointsLostRon_) {
       msg.pointsLostRon = _pointsLostRon_;
     }
-    const _pointsLostTsumo_ = json["pointsLostTsumo"];
+    const _pointsLostTsumo_ =
+      json["pointsLostTsumo"] ?? json["points_lost_tsumo"];
     if (_pointsLostTsumo_) {
       msg.pointsLostTsumo = _pointsLostTsumo_;
     }
@@ -11267,7 +11354,7 @@ export const HandValueStatJSON = {
    * @private
    */
   _readMessage: function (msg: HandValueStat, json: any): HandValueStat {
-    const _hanCount_ = json["hanCount"];
+    const _hanCount_ = json["hanCount"] ?? json["han_count"];
     if (_hanCount_) {
       msg.hanCount = _hanCount_;
     }
@@ -11325,7 +11412,7 @@ export const YakuStatJSON = {
    * @private
    */
   _readMessage: function (msg: YakuStat, json: any): YakuStat {
-    const _yakuId_ = json["yakuId"];
+    const _yakuId_ = json["yakuId"] ?? json["yaku_id"];
     if (_yakuId_) {
       msg.yakuId = _yakuId_;
     }
@@ -11389,15 +11476,16 @@ export const RiichiSummaryJSON = {
    * @private
    */
   _readMessage: function (msg: RiichiSummary, json: any): RiichiSummary {
-    const _riichiWon_ = json["riichiWon"];
+    const _riichiWon_ = json["riichiWon"] ?? json["riichi_won"];
     if (_riichiWon_) {
       msg.riichiWon = _riichiWon_;
     }
-    const _riichiLost_ = json["riichiLost"];
+    const _riichiLost_ = json["riichiLost"] ?? json["riichi_lost"];
     if (_riichiLost_) {
       msg.riichiLost = _riichiLost_;
     }
-    const _feedUnderRiichi_ = json["feedUnderRiichi"];
+    const _feedUnderRiichi_ =
+      json["feedUnderRiichi"] ?? json["feed_under_riichi"];
     if (_feedUnderRiichi_) {
       msg.feedUnderRiichi = _feedUnderRiichi_;
     }
@@ -11518,7 +11606,7 @@ export const IntermediateResultOfSessionJSON = {
     msg: IntermediateResultOfSession,
     json: any
   ): IntermediateResultOfSession {
-    const _playerId_ = json["playerId"];
+    const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
       msg.playerId = _playerId_;
     }
@@ -11526,7 +11614,7 @@ export const IntermediateResultOfSessionJSON = {
     if (_score_) {
       msg.score = _score_;
     }
-    const _penaltyScore_ = json["penaltyScore"];
+    const _penaltyScore_ = json["penaltyScore"] ?? json["penalty_score"];
     if (_penaltyScore_) {
       msg.penaltyScore = _penaltyScore_;
     }
@@ -11772,7 +11860,7 @@ export const RoundStateJSON = {
    * @private
    */
   _readMessage: function (msg: RoundState, json: any): RoundState {
-    const _sessionHash_ = json["sessionHash"];
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
       msg.sessionHash = _sessionHash_;
     }
@@ -11780,7 +11868,7 @@ export const RoundStateJSON = {
     if (_dealer_) {
       msg.dealer = _dealer_;
     }
-    const _roundIndex_ = json["roundIndex"];
+    const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
     }
@@ -11792,7 +11880,7 @@ export const RoundStateJSON = {
     if (_honba_) {
       msg.honba = _honba_;
     }
-    const _riichiIds_ = json["riichiIds"];
+    const _riichiIds_ = json["riichiIds"] ?? json["riichi_ids"];
     if (_riichiIds_) {
       msg.riichiIds = _riichiIds_;
     }
@@ -11804,7 +11892,7 @@ export const RoundStateJSON = {
         msg.scores.push(m);
       }
     }
-    const _scoresDelta_ = json["scoresDelta"];
+    const _scoresDelta_ = json["scoresDelta"] ?? json["scores_delta"];
     if (_scoresDelta_) {
       for (const item of _scoresDelta_) {
         const m = IntermediateResultOfSession.initialize();
@@ -11943,23 +12031,23 @@ export const EventDataJSON = {
     if (_timezone_) {
       msg.timezone = _timezone_;
     }
-    const _lobbyId_ = json["lobbyId"];
+    const _lobbyId_ = json["lobbyId"] ?? json["lobby_id"];
     if (_lobbyId_) {
       msg.lobbyId = _lobbyId_;
     }
-    const _seriesLength_ = json["seriesLength"];
+    const _seriesLength_ = json["seriesLength"] ?? json["series_length"];
     if (_seriesLength_) {
       msg.seriesLength = _seriesLength_;
     }
-    const _minGames_ = json["minGames"];
+    const _minGames_ = json["minGames"] ?? json["min_games"];
     if (_minGames_) {
       msg.minGames = _minGames_;
     }
-    const _isTeam_ = json["isTeam"];
+    const _isTeam_ = json["isTeam"] ?? json["is_team"];
     if (_isTeam_) {
       msg.isTeam = _isTeam_;
     }
-    const _isPrescripted_ = json["isPrescripted"];
+    const _isPrescripted_ = json["isPrescripted"] ?? json["is_prescripted"];
     if (_isPrescripted_) {
       msg.isPrescripted = _isPrescripted_;
     }
@@ -11967,7 +12055,7 @@ export const EventDataJSON = {
     if (_autostart_) {
       msg.autostart = _autostart_;
     }
-    const _rulesetConfig_ = json["rulesetConfig"];
+    const _rulesetConfig_ = json["rulesetConfig"] ?? json["ruleset_config"];
     if (_rulesetConfig_) {
       const m = RulesetConfig.initialize();
       RulesetConfigJSON._readMessage(m, _rulesetConfig_);
@@ -12003,7 +12091,7 @@ export const TableStateJSON = {
       status: SessionStatus._fromInt(0),
       mayDefinalize: false,
       sessionHash: "",
-      penaltyLog: [],
+      penaltyLogs: [],
       tableIndex: undefined,
       lastRound: undefined,
       currentRoundIndex: 0,
@@ -12026,8 +12114,8 @@ export const TableStateJSON = {
     if (msg.sessionHash) {
       json["sessionHash"] = msg.sessionHash;
     }
-    if (msg.penaltyLog?.length) {
-      json["penaltyLog"] = msg.penaltyLog.map(PenaltyJSON._writeMessage);
+    if (msg.penaltyLogs?.length) {
+      json["penaltyLogs"] = msg.penaltyLogs.map(PenaltyJSON._writeMessage);
     }
     if (msg.tableIndex != undefined) {
       json["tableIndex"] = msg.tableIndex;
@@ -12058,33 +12146,34 @@ export const TableStateJSON = {
     if (_status_) {
       msg.status = _status_;
     }
-    const _mayDefinalize_ = json["mayDefinalize"];
+    const _mayDefinalize_ = json["mayDefinalize"] ?? json["may_definalize"];
     if (_mayDefinalize_) {
       msg.mayDefinalize = _mayDefinalize_;
     }
-    const _sessionHash_ = json["sessionHash"];
+    const _sessionHash_ = json["sessionHash"] ?? json["session_hash"];
     if (_sessionHash_) {
       msg.sessionHash = _sessionHash_;
     }
-    const _penaltyLog_ = json["penaltyLog"];
-    if (_penaltyLog_) {
-      for (const item of _penaltyLog_) {
+    const _penaltyLogs_ = json["penaltyLogs"] ?? json["penalty_logs"];
+    if (_penaltyLogs_) {
+      for (const item of _penaltyLogs_) {
         const m = Penalty.initialize();
         PenaltyJSON._readMessage(m, item);
-        msg.penaltyLog.push(m);
+        msg.penaltyLogs.push(m);
       }
     }
-    const _tableIndex_ = json["tableIndex"];
+    const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
     if (_tableIndex_) {
       msg.tableIndex = _tableIndex_;
     }
-    const _lastRound_ = json["lastRound"];
+    const _lastRound_ = json["lastRound"] ?? json["last_round"];
     if (_lastRound_) {
       const m = Round.initialize();
       RoundJSON._readMessage(m, _lastRound_);
       msg.lastRound = m;
     }
-    const _currentRoundIndex_ = json["currentRoundIndex"];
+    const _currentRoundIndex_ =
+      json["currentRoundIndex"] ?? json["current_round_index"];
     if (_currentRoundIndex_) {
       msg.currentRoundIndex = _currentRoundIndex_;
     }
@@ -12154,11 +12243,12 @@ export const AchievementJSON = {
    * @private
    */
   _readMessage: function (msg: Achievement, json: any): Achievement {
-    const _achievementId_ = json["achievementId"];
+    const _achievementId_ = json["achievementId"] ?? json["achievement_id"];
     if (_achievementId_) {
       msg.achievementId = _achievementId_;
     }
-    const _achievementData_ = json["achievementData"];
+    const _achievementData_ =
+      json["achievementData"] ?? json["achievement_data"];
     if (_achievementData_) {
       msg.achievementData = _achievementData_;
     }
@@ -12214,11 +12304,11 @@ export const LocalIdMappingJSON = {
    * @private
    */
   _readMessage: function (msg: LocalIdMapping, json: any): LocalIdMapping {
-    const _playerId_ = json["playerId"];
+    const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
       msg.playerId = _playerId_;
     }
-    const _localId_ = json["localId"];
+    const _localId_ = json["localId"] ?? json["local_id"];
     if (_localId_) {
       msg.localId = _localId_;
     }
@@ -12272,11 +12362,11 @@ export const TeamMappingJSON = {
    * @private
    */
   _readMessage: function (msg: TeamMapping, json: any): TeamMapping {
-    const _playerId_ = json["playerId"];
+    const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
       msg.playerId = _playerId_;
     }
-    const _teamName_ = json["teamName"];
+    const _teamName_ = json["teamName"] ?? json["team_name"];
     if (_teamName_) {
       msg.teamName = _teamName_;
     }
@@ -12352,15 +12442,15 @@ export const PlayerSeatingJSON = {
     if (_order_) {
       msg.order = _order_;
     }
-    const _playerId_ = json["playerId"];
+    const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
       msg.playerId = _playerId_;
     }
-    const _sessionId_ = json["sessionId"];
+    const _sessionId_ = json["sessionId"] ?? json["session_id"];
     if (_sessionId_) {
       msg.sessionId = _sessionId_;
     }
-    const _tableIndex_ = json["tableIndex"];
+    const _tableIndex_ = json["tableIndex"] ?? json["table_index"];
     if (_tableIndex_) {
       msg.tableIndex = _tableIndex_;
     }
@@ -12368,7 +12458,7 @@ export const PlayerSeatingJSON = {
     if (_rating_) {
       msg.rating = _rating_;
     }
-    const _playerTitle_ = json["playerTitle"];
+    const _playerTitle_ = json["playerTitle"] ?? json["player_title"];
     if (_playerTitle_) {
       msg.playerTitle = _playerTitle_;
     }
@@ -12427,7 +12517,7 @@ export const PlayerSeatingSwissJSON = {
     msg: PlayerSeatingSwiss,
     json: any
   ): PlayerSeatingSwiss {
-    const _playerId_ = json["playerId"];
+    const _playerId_ = json["playerId"] ?? json["player_id"];
     if (_playerId_) {
       msg.playerId = _playerId_;
     }
@@ -12629,15 +12719,15 @@ export const SessionStateJSON = {
     if (_dealer_) {
       msg.dealer = _dealer_;
     }
-    const _roundIndex_ = json["roundIndex"];
+    const _roundIndex_ = json["roundIndex"] ?? json["round_index"];
     if (_roundIndex_) {
       msg.roundIndex = _roundIndex_;
     }
-    const _riichiCount_ = json["riichiCount"];
+    const _riichiCount_ = json["riichiCount"] ?? json["riichi_count"];
     if (_riichiCount_) {
       msg.riichiCount = _riichiCount_;
     }
-    const _honbaCount_ = json["honbaCount"];
+    const _honbaCount_ = json["honbaCount"] ?? json["honba_count"];
     if (_honbaCount_) {
       msg.honbaCount = _honbaCount_;
     }
@@ -12661,7 +12751,8 @@ export const SessionStateJSON = {
         msg.penalties.push(m);
       }
     }
-    const _lastHandStarted_ = json["lastHandStarted"];
+    const _lastHandStarted_ =
+      json["lastHandStarted"] ?? json["last_hand_started"];
     if (_lastHandStarted_) {
       msg.lastHandStarted = _lastHandStarted_;
     }
@@ -13007,13 +13098,13 @@ export const RulesetConfigJSON = {
    * @private
    */
   _readMessage: function (msg: RulesetConfig, json: any): RulesetConfig {
-    const _complexUma_ = json["complexUma"];
+    const _complexUma_ = json["complexUma"] ?? json["complex_uma"];
     if (_complexUma_) {
       const m = ComplexUma.initialize();
       ComplexUmaJSON._readMessage(m, _complexUma_);
       msg.complexUma = m;
     }
-    const _endingPolicy_ = json["endingPolicy"];
+    const _endingPolicy_ = json["endingPolicy"] ?? json["ending_policy"];
     if (_endingPolicy_) {
       msg.endingPolicy = _endingPolicy_;
     }
@@ -13023,31 +13114,36 @@ export const RulesetConfigJSON = {
       UmaJSON._readMessage(m, _uma_);
       msg.uma = m;
     }
-    const _umaType_ = json["umaType"];
+    const _umaType_ = json["umaType"] ?? json["uma_type"];
     if (_umaType_) {
       msg.umaType = _umaType_;
     }
-    const _doubleronHonbaAtamahane_ = json["doubleronHonbaAtamahane"];
+    const _doubleronHonbaAtamahane_ =
+      json["doubleronHonbaAtamahane"] ?? json["doubleron_honba_atamahane"];
     if (_doubleronHonbaAtamahane_) {
       msg.doubleronHonbaAtamahane = _doubleronHonbaAtamahane_;
     }
-    const _doubleronRiichiAtamahane_ = json["doubleronRiichiAtamahane"];
+    const _doubleronRiichiAtamahane_ =
+      json["doubleronRiichiAtamahane"] ?? json["doubleron_riichi_atamahane"];
     if (_doubleronRiichiAtamahane_) {
       msg.doubleronRiichiAtamahane = _doubleronRiichiAtamahane_;
     }
-    const _equalizeUma_ = json["equalizeUma"];
+    const _equalizeUma_ = json["equalizeUma"] ?? json["equalize_uma"];
     if (_equalizeUma_) {
       msg.equalizeUma = _equalizeUma_;
     }
-    const _extraChomboPayments_ = json["extraChomboPayments"];
+    const _extraChomboPayments_ =
+      json["extraChomboPayments"] ?? json["extra_chombo_payments"];
     if (_extraChomboPayments_) {
       msg.extraChomboPayments = _extraChomboPayments_;
     }
-    const _playAdditionalRounds_ = json["playAdditionalRounds"];
+    const _playAdditionalRounds_ =
+      json["playAdditionalRounds"] ?? json["play_additional_rounds"];
     if (_playAdditionalRounds_) {
       msg.playAdditionalRounds = _playAdditionalRounds_;
     }
-    const _riichiGoesToWinner_ = json["riichiGoesToWinner"];
+    const _riichiGoesToWinner_ =
+      json["riichiGoesToWinner"] ?? json["riichi_goes_to_winner"];
     if (_riichiGoesToWinner_) {
       msg.riichiGoesToWinner = _riichiGoesToWinner_;
     }
@@ -13055,68 +13151,75 @@ export const RulesetConfigJSON = {
     if (_tonpuusen_) {
       msg.tonpuusen = _tonpuusen_;
     }
-    const _withAbortives_ = json["withAbortives"];
+    const _withAbortives_ = json["withAbortives"] ?? json["with_abortives"];
     if (_withAbortives_) {
       msg.withAbortives = _withAbortives_;
     }
-    const _withAtamahane_ = json["withAtamahane"];
+    const _withAtamahane_ = json["withAtamahane"] ?? json["with_atamahane"];
     if (_withAtamahane_) {
       msg.withAtamahane = _withAtamahane_;
     }
-    const _withButtobi_ = json["withButtobi"];
+    const _withButtobi_ = json["withButtobi"] ?? json["with_buttobi"];
     if (_withButtobi_) {
       msg.withButtobi = _withButtobi_;
     }
-    const _withKazoe_ = json["withKazoe"];
+    const _withKazoe_ = json["withKazoe"] ?? json["with_kazoe"];
     if (_withKazoe_) {
       msg.withKazoe = _withKazoe_;
     }
-    const _withKiriageMangan_ = json["withKiriageMangan"];
+    const _withKiriageMangan_ =
+      json["withKiriageMangan"] ?? json["with_kiriage_mangan"];
     if (_withKiriageMangan_) {
       msg.withKiriageMangan = _withKiriageMangan_;
     }
-    const _withKuitan_ = json["withKuitan"];
+    const _withKuitan_ = json["withKuitan"] ?? json["with_kuitan"];
     if (_withKuitan_) {
       msg.withKuitan = _withKuitan_;
     }
-    const _withLeadingDealerGameOver_ = json["withLeadingDealerGameOver"];
+    const _withLeadingDealerGameOver_ =
+      json["withLeadingDealerGameOver"] ??
+      json["with_leading_dealer_game_over"];
     if (_withLeadingDealerGameOver_) {
       msg.withLeadingDealerGameOver = _withLeadingDealerGameOver_;
     }
-    const _withMultiYakumans_ = json["withMultiYakumans"];
+    const _withMultiYakumans_ =
+      json["withMultiYakumans"] ?? json["with_multi_yakumans"];
     if (_withMultiYakumans_) {
       msg.withMultiYakumans = _withMultiYakumans_;
     }
-    const _withNagashiMangan_ = json["withNagashiMangan"];
+    const _withNagashiMangan_ =
+      json["withNagashiMangan"] ?? json["with_nagashi_mangan"];
     if (_withNagashiMangan_) {
       msg.withNagashiMangan = _withNagashiMangan_;
     }
     const _withWinningDealerHonbaSkipped_ =
-      json["withWinningDealerHonbaSkipped"];
+      json["withWinningDealerHonbaSkipped"] ??
+      json["with_winning_dealer_honba_skipped"];
     if (_withWinningDealerHonbaSkipped_) {
       msg.withWinningDealerHonbaSkipped = _withWinningDealerHonbaSkipped_;
     }
-    const _chipsValue_ = json["chipsValue"];
+    const _chipsValue_ = json["chipsValue"] ?? json["chips_value"];
     if (_chipsValue_) {
       msg.chipsValue = _chipsValue_;
     }
-    const _chomboPenalty_ = json["chomboPenalty"];
+    const _chomboPenalty_ = json["chomboPenalty"] ?? json["chombo_penalty"];
     if (_chomboPenalty_) {
       msg.chomboPenalty = _chomboPenalty_;
     }
-    const _gameExpirationTime_ = json["gameExpirationTime"];
+    const _gameExpirationTime_ =
+      json["gameExpirationTime"] ?? json["game_expiration_time"];
     if (_gameExpirationTime_) {
       msg.gameExpirationTime = _gameExpirationTime_;
     }
-    const _goalPoints_ = json["goalPoints"];
+    const _goalPoints_ = json["goalPoints"] ?? json["goal_points"];
     if (_goalPoints_) {
       msg.goalPoints = _goalPoints_;
     }
-    const _maxPenalty_ = json["maxPenalty"];
+    const _maxPenalty_ = json["maxPenalty"] ?? json["max_penalty"];
     if (_maxPenalty_) {
       msg.maxPenalty = _maxPenalty_;
     }
-    const _minPenalty_ = json["minPenalty"];
+    const _minPenalty_ = json["minPenalty"] ?? json["min_penalty"];
     if (_minPenalty_) {
       msg.minPenalty = _minPenalty_;
     }
@@ -13124,31 +13227,35 @@ export const RulesetConfigJSON = {
     if (_oka_) {
       msg.oka = _oka_;
     }
-    const _penaltyStep_ = json["penaltyStep"];
+    const _penaltyStep_ = json["penaltyStep"] ?? json["penalty_step"];
     if (_penaltyStep_) {
       msg.penaltyStep = _penaltyStep_;
     }
-    const _replacementPlayerFixedPoints_ = json["replacementPlayerFixedPoints"];
+    const _replacementPlayerFixedPoints_ =
+      json["replacementPlayerFixedPoints"] ??
+      json["replacement_player_fixed_points"];
     if (_replacementPlayerFixedPoints_) {
       msg.replacementPlayerFixedPoints = _replacementPlayerFixedPoints_;
     }
-    const _replacementPlayerOverrideUma_ = json["replacementPlayerOverrideUma"];
+    const _replacementPlayerOverrideUma_ =
+      json["replacementPlayerOverrideUma"] ??
+      json["replacement_player_override_uma"];
     if (_replacementPlayerOverrideUma_) {
       msg.replacementPlayerOverrideUma = _replacementPlayerOverrideUma_;
     }
-    const _startPoints_ = json["startPoints"];
+    const _startPoints_ = json["startPoints"] ?? json["start_points"];
     if (_startPoints_) {
       msg.startPoints = _startPoints_;
     }
-    const _startRating_ = json["startRating"];
+    const _startRating_ = json["startRating"] ?? json["start_rating"];
     if (_startRating_) {
       msg.startRating = _startRating_;
     }
-    const _allowedYaku_ = json["allowedYaku"];
+    const _allowedYaku_ = json["allowedYaku"] ?? json["allowed_yaku"];
     if (_allowedYaku_) {
       msg.allowedYaku = _allowedYaku_;
     }
-    const _yakuWithPao_ = json["yakuWithPao"];
+    const _yakuWithPao_ = json["yakuWithPao"] ?? json["yaku_with_pao"];
     if (_yakuWithPao_) {
       msg.yakuWithPao = _yakuWithPao_;
     }
@@ -13156,28 +13263,28 @@ export const RulesetConfigJSON = {
   },
 };
 
-export const Generic_Success_ResponseJSON = {
+export const GenericSuccessResponseJSON = {
   /**
-   * Serializes Generic_Success_Response to JSON.
+   * Serializes GenericSuccessResponse to JSON.
    */
-  encode: function (msg: Partial<Generic_Success_Response>): string {
-    return JSON.stringify(Generic_Success_ResponseJSON._writeMessage(msg));
+  encode: function (msg: Partial<GenericSuccessResponse>): string {
+    return JSON.stringify(GenericSuccessResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Generic_Success_Response from JSON.
+   * Deserializes GenericSuccessResponse from JSON.
    */
-  decode: function (json: string): Generic_Success_Response {
-    return Generic_Success_ResponseJSON._readMessage(
-      Generic_Success_ResponseJSON.initialize(),
+  decode: function (json: string): GenericSuccessResponse {
+    return GenericSuccessResponseJSON._readMessage(
+      GenericSuccessResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Generic_Success_Response with all fields set to their default value.
+   * Initializes GenericSuccessResponse with all fields set to their default value.
    */
-  initialize: function (): Generic_Success_Response {
+  initialize: function (): GenericSuccessResponse {
     return {
       success: false,
     };
@@ -13187,7 +13294,7 @@ export const Generic_Success_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Generic_Success_Response>
+    msg: Partial<GenericSuccessResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.success) {
@@ -13200,9 +13307,9 @@ export const Generic_Success_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Generic_Success_Response,
+    msg: GenericSuccessResponse,
     json: any
-  ): Generic_Success_Response {
+  ): GenericSuccessResponse {
     const _success_ = json["success"];
     if (_success_) {
       msg.success = _success_;
@@ -13211,28 +13318,28 @@ export const Generic_Success_ResponseJSON = {
   },
 };
 
-export const Generic_Event_PayloadJSON = {
+export const GenericEventPayloadJSON = {
   /**
-   * Serializes Generic_Event_Payload to JSON.
+   * Serializes GenericEventPayload to JSON.
    */
-  encode: function (msg: Partial<Generic_Event_Payload>): string {
-    return JSON.stringify(Generic_Event_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<GenericEventPayload>): string {
+    return JSON.stringify(GenericEventPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Generic_Event_Payload from JSON.
+   * Deserializes GenericEventPayload from JSON.
    */
-  decode: function (json: string): Generic_Event_Payload {
-    return Generic_Event_PayloadJSON._readMessage(
-      Generic_Event_PayloadJSON.initialize(),
+  decode: function (json: string): GenericEventPayload {
+    return GenericEventPayloadJSON._readMessage(
+      GenericEventPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Generic_Event_Payload with all fields set to their default value.
+   * Initializes GenericEventPayload with all fields set to their default value.
    */
-  initialize: function (): Generic_Event_Payload {
+  initialize: function (): GenericEventPayload {
     return {
       eventId: 0,
     };
@@ -13242,7 +13349,7 @@ export const Generic_Event_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Generic_Event_Payload>
+    msg: Partial<GenericEventPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -13255,10 +13362,10 @@ export const Generic_Event_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Generic_Event_Payload,
+    msg: GenericEventPayload,
     json: any
-  ): Generic_Event_Payload {
-    const _eventId_ = json["eventId"];
+  ): GenericEventPayload {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = _eventId_;
     }

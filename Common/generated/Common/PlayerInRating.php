@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.PlayerInRating</code>
+ * Generated from protobuf message <code>common.PlayerInRating</code>
  */
 class PlayerInRating extends \Google\Protobuf\Internal\Message
 {
@@ -22,9 +22,9 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
      */
     protected $title = '';
     /**
-     * Generated from protobuf field <code>string tenhouId = 3;</code>
+     * Generated from protobuf field <code>string tenhou_id = 3;</code>
      */
-    protected $tenhouId = '';
+    protected $tenhou_id = '';
     /**
      * Generated from protobuf field <code>float rating = 4;</code>
      */
@@ -34,21 +34,21 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
      */
     protected $chips = 0;
     /**
-     * Generated from protobuf field <code>bool winnerZone = 6;</code>
+     * Generated from protobuf field <code>bool winner_zone = 6;</code>
      */
-    protected $winnerZone = false;
+    protected $winner_zone = false;
     /**
-     * Generated from protobuf field <code>float avgPlace = 7;</code>
+     * Generated from protobuf field <code>float avg_place = 7;</code>
      */
-    protected $avgPlace = 0.0;
+    protected $avg_place = 0.0;
     /**
-     * Generated from protobuf field <code>float avgScore = 8;</code>
+     * Generated from protobuf field <code>float avg_score = 8;</code>
      */
-    protected $avgScore = 0.0;
+    protected $avg_score = 0.0;
     /**
-     * Generated from protobuf field <code>int32 gamesPlayed = 9;</code>
+     * Generated from protobuf field <code>int32 games_played = 9;</code>
      */
-    protected $gamesPlayed = 0;
+    protected $games_played = 0;
 
     /**
      * Constructor.
@@ -58,13 +58,13 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
      *
      *     @type int $id
      *     @type string $title
-     *     @type string $tenhouId
+     *     @type string $tenhou_id
      *     @type float $rating
      *     @type int $chips
-     *     @type bool $winnerZone
-     *     @type float $avgPlace
-     *     @type float $avgScore
-     *     @type int $gamesPlayed
+     *     @type bool $winner_zone
+     *     @type float $avg_place
+     *     @type float $avg_score
+     *     @type int $games_played
      * }
      */
     public function __construct($data = NULL) {
@@ -117,23 +117,23 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string tenhouId = 3;</code>
+     * Generated from protobuf field <code>string tenhou_id = 3;</code>
      * @return string
      */
     public function getTenhouId()
     {
-        return $this->tenhouId;
+        return $this->tenhou_id;
     }
 
     /**
-     * Generated from protobuf field <code>string tenhouId = 3;</code>
+     * Generated from protobuf field <code>string tenhou_id = 3;</code>
      * @param string $var
      * @return $this
      */
     public function setTenhouId($var)
     {
         GPBUtil::checkString($var, True);
-        $this->tenhouId = $var;
+        $this->tenhou_id = $var;
 
         return $this;
     }
@@ -183,89 +183,89 @@ class PlayerInRating extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool winnerZone = 6;</code>
+     * Generated from protobuf field <code>bool winner_zone = 6;</code>
      * @return bool
      */
     public function getWinnerZone()
     {
-        return $this->winnerZone;
+        return $this->winner_zone;
     }
 
     /**
-     * Generated from protobuf field <code>bool winnerZone = 6;</code>
+     * Generated from protobuf field <code>bool winner_zone = 6;</code>
      * @param bool $var
      * @return $this
      */
     public function setWinnerZone($var)
     {
         GPBUtil::checkBool($var);
-        $this->winnerZone = $var;
+        $this->winner_zone = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>float avgPlace = 7;</code>
+     * Generated from protobuf field <code>float avg_place = 7;</code>
      * @return float
      */
     public function getAvgPlace()
     {
-        return $this->avgPlace;
+        return $this->avg_place;
     }
 
     /**
-     * Generated from protobuf field <code>float avgPlace = 7;</code>
+     * Generated from protobuf field <code>float avg_place = 7;</code>
      * @param float $var
      * @return $this
      */
     public function setAvgPlace($var)
     {
         GPBUtil::checkFloat($var);
-        $this->avgPlace = $var;
+        $this->avg_place = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>float avgScore = 8;</code>
+     * Generated from protobuf field <code>float avg_score = 8;</code>
      * @return float
      */
     public function getAvgScore()
     {
-        return $this->avgScore;
+        return $this->avg_score;
     }
 
     /**
-     * Generated from protobuf field <code>float avgScore = 8;</code>
+     * Generated from protobuf field <code>float avg_score = 8;</code>
      * @param float $var
      * @return $this
      */
     public function setAvgScore($var)
     {
         GPBUtil::checkFloat($var);
-        $this->avgScore = $var;
+        $this->avg_score = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>int32 gamesPlayed = 9;</code>
+     * Generated from protobuf field <code>int32 games_played = 9;</code>
      * @return int
      */
     public function getGamesPlayed()
     {
-        return $this->gamesPlayed;
+        return $this->games_played;
     }
 
     /**
-     * Generated from protobuf field <code>int32 gamesPlayed = 9;</code>
+     * Generated from protobuf field <code>int32 games_played = 9;</code>
      * @param int $var
      * @return $this
      */
     public function setGamesPlayed($var)
     {
         GPBUtil::checkInt32($var);
-        $this->gamesPlayed = $var;
+        $this->games_played = $var;
 
         return $this;
     }

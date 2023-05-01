@@ -9,22 +9,22 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.IntermediateResultOfSession</code>
+ * Generated from protobuf message <code>common.IntermediateResultOfSession</code>
  */
 class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>int32 playerId = 1;</code>
+     * Generated from protobuf field <code>int32 player_id = 1;</code>
      */
-    protected $playerId = 0;
+    protected $player_id = 0;
     /**
      * Generated from protobuf field <code>int32 score = 2;</code>
      */
     protected $score = 0;
     /**
-     * Generated from protobuf field <code>optional int32 penaltyScore = 3;</code>
+     * Generated from protobuf field <code>optional int32 penalty_score = 3;</code>
      */
-    protected $penaltyScore = null;
+    protected $penalty_score = null;
 
     /**
      * Constructor.
@@ -32,9 +32,9 @@ class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int $playerId
+     *     @type int $player_id
      *     @type int $score
-     *     @type int $penaltyScore
+     *     @type int $penalty_score
      * }
      */
     public function __construct($data = NULL) {
@@ -43,23 +43,23 @@ class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 playerId = 1;</code>
+     * Generated from protobuf field <code>int32 player_id = 1;</code>
      * @return int
      */
     public function getPlayerId()
     {
-        return $this->playerId;
+        return $this->player_id;
     }
 
     /**
-     * Generated from protobuf field <code>int32 playerId = 1;</code>
+     * Generated from protobuf field <code>int32 player_id = 1;</code>
      * @param int $var
      * @return $this
      */
     public function setPlayerId($var)
     {
         GPBUtil::checkInt32($var);
-        $this->playerId = $var;
+        $this->player_id = $var;
 
         return $this;
     }
@@ -87,33 +87,33 @@ class IntermediateResultOfSession extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>optional int32 penaltyScore = 3;</code>
+     * Generated from protobuf field <code>optional int32 penalty_score = 3;</code>
      * @return int
      */
     public function getPenaltyScore()
     {
-        return isset($this->penaltyScore) ? $this->penaltyScore : 0;
+        return isset($this->penalty_score) ? $this->penalty_score : 0;
     }
 
     public function hasPenaltyScore()
     {
-        return isset($this->penaltyScore);
+        return isset($this->penalty_score);
     }
 
     public function clearPenaltyScore()
     {
-        unset($this->penaltyScore);
+        unset($this->penalty_score);
     }
 
     /**
-     * Generated from protobuf field <code>optional int32 penaltyScore = 3;</code>
+     * Generated from protobuf field <code>optional int32 penalty_score = 3;</code>
      * @param int $var
      * @return $this
      */
     public function setPenaltyScore($var)
     {
         GPBUtil::checkInt32($var);
-        $this->penaltyScore = $var;
+        $this->penalty_score = $var;
 
         return $this;
     }

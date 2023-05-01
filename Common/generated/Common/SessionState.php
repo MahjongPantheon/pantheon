@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.SessionState</code>
+ * Generated from protobuf message <code>common.SessionState</code>
  */
 class SessionState extends \Google\Protobuf\Internal\Message
 {
@@ -18,19 +18,19 @@ class SessionState extends \Google\Protobuf\Internal\Message
      */
     protected $dealer = 0;
     /**
-     * Generated from protobuf field <code>int32 roundIndex = 2;</code>
+     * Generated from protobuf field <code>int32 round_index = 2;</code>
      */
-    protected $roundIndex = 0;
+    protected $round_index = 0;
     /**
-     * Generated from protobuf field <code>int32 riichiCount = 3;</code>
+     * Generated from protobuf field <code>int32 riichi_count = 3;</code>
      */
-    protected $riichiCount = 0;
+    protected $riichi_count = 0;
     /**
-     * Generated from protobuf field <code>int32 honbaCount = 4;</code>
+     * Generated from protobuf field <code>int32 honba_count = 4;</code>
      */
-    protected $honbaCount = 0;
+    protected $honba_count = 0;
     /**
-     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession scores = 5;</code>
+     * Generated from protobuf field <code>repeated .common.IntermediateResultOfSession scores = 5;</code>
      */
     private $scores;
     /**
@@ -38,13 +38,13 @@ class SessionState extends \Google\Protobuf\Internal\Message
      */
     protected $finished = false;
     /**
-     * Generated from protobuf field <code>repeated .Common.Penalty penalties = 7;</code>
+     * Generated from protobuf field <code>repeated .common.Penalty penalties = 7;</code>
      */
     private $penalties;
     /**
-     * Generated from protobuf field <code>bool lastHandStarted = 8;</code>
+     * Generated from protobuf field <code>bool last_hand_started = 8;</code>
      */
-    protected $lastHandStarted = false;
+    protected $last_hand_started = false;
 
     /**
      * Constructor.
@@ -53,13 +53,13 @@ class SessionState extends \Google\Protobuf\Internal\Message
      *     Optional. Data for populating the Message object.
      *
      *     @type int $dealer
-     *     @type int $roundIndex
-     *     @type int $riichiCount
-     *     @type int $honbaCount
+     *     @type int $round_index
+     *     @type int $riichi_count
+     *     @type int $honba_count
      *     @type array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $scores
      *     @type bool $finished
      *     @type array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $penalties
-     *     @type bool $lastHandStarted
+     *     @type bool $last_hand_started
      * }
      */
     public function __construct($data = NULL) {
@@ -90,73 +90,73 @@ class SessionState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 roundIndex = 2;</code>
+     * Generated from protobuf field <code>int32 round_index = 2;</code>
      * @return int
      */
     public function getRoundIndex()
     {
-        return $this->roundIndex;
+        return $this->round_index;
     }
 
     /**
-     * Generated from protobuf field <code>int32 roundIndex = 2;</code>
+     * Generated from protobuf field <code>int32 round_index = 2;</code>
      * @param int $var
      * @return $this
      */
     public function setRoundIndex($var)
     {
         GPBUtil::checkInt32($var);
-        $this->roundIndex = $var;
+        $this->round_index = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>int32 riichiCount = 3;</code>
+     * Generated from protobuf field <code>int32 riichi_count = 3;</code>
      * @return int
      */
     public function getRiichiCount()
     {
-        return $this->riichiCount;
+        return $this->riichi_count;
     }
 
     /**
-     * Generated from protobuf field <code>int32 riichiCount = 3;</code>
+     * Generated from protobuf field <code>int32 riichi_count = 3;</code>
      * @param int $var
      * @return $this
      */
     public function setRiichiCount($var)
     {
         GPBUtil::checkInt32($var);
-        $this->riichiCount = $var;
+        $this->riichi_count = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>int32 honbaCount = 4;</code>
+     * Generated from protobuf field <code>int32 honba_count = 4;</code>
      * @return int
      */
     public function getHonbaCount()
     {
-        return $this->honbaCount;
+        return $this->honba_count;
     }
 
     /**
-     * Generated from protobuf field <code>int32 honbaCount = 4;</code>
+     * Generated from protobuf field <code>int32 honba_count = 4;</code>
      * @param int $var
      * @return $this
      */
     public function setHonbaCount($var)
     {
         GPBUtil::checkInt32($var);
-        $this->honbaCount = $var;
+        $this->honba_count = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession scores = 5;</code>
+     * Generated from protobuf field <code>repeated .common.IntermediateResultOfSession scores = 5;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getScores()
@@ -165,7 +165,7 @@ class SessionState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.IntermediateResultOfSession scores = 5;</code>
+     * Generated from protobuf field <code>repeated .common.IntermediateResultOfSession scores = 5;</code>
      * @param array<\Common\IntermediateResultOfSession>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
@@ -200,7 +200,7 @@ class SessionState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.Penalty penalties = 7;</code>
+     * Generated from protobuf field <code>repeated .common.Penalty penalties = 7;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getPenalties()
@@ -209,7 +209,7 @@ class SessionState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.Penalty penalties = 7;</code>
+     * Generated from protobuf field <code>repeated .common.Penalty penalties = 7;</code>
      * @param array<\Common\Penalty>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
@@ -222,23 +222,23 @@ class SessionState extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool lastHandStarted = 8;</code>
+     * Generated from protobuf field <code>bool last_hand_started = 8;</code>
      * @return bool
      */
     public function getLastHandStarted()
     {
-        return $this->lastHandStarted;
+        return $this->last_hand_started;
     }
 
     /**
-     * Generated from protobuf field <code>bool lastHandStarted = 8;</code>
+     * Generated from protobuf field <code>bool last_hand_started = 8;</code>
      * @param bool $var
      * @return $this
      */
     public function setLastHandStarted($var)
     {
         GPBUtil::checkBool($var);
-        $this->lastHandStarted = $var;
+        $this->last_hand_started = $var;
 
         return $this;
     }

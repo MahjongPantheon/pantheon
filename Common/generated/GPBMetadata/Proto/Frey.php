@@ -17,265 +17,274 @@ class Frey
         \GPBMetadata\Proto\Atoms::initOnce();
         $pool->internalAddGeneratedFile(
             '
-˜J
-proto/frey.protoCommon"e
- Auth_RequestRegistration_Payload
+êI
+proto/frey.protocommon"d
+AuthRequestRegistrationPayload
 email (	
 title (	
-password (	
-	sendEmail ("9
-!Auth_RequestRegistration_Response
-approvalCode (	"8
- Auth_ApproveRegistration_Payload
-approvalCode (	"5
-!Auth_ApproveRegistration_Response
-personId ("9
-Auth_Authorize_Payload
+password (	
+
+send_email ("8
+AuthRequestRegistrationResponse
+approval_code (	"7
+AuthApproveRegistrationPayload
+approval_code (	"4
+AuthApproveRegistrationResponse
+	person_id ("7
+AuthAuthorizePayload
 email (	
 password (	">
-Auth_Authorize_Response
-personId (
-	authToken (	"B
-Auth_QuickAuthorize_Payload
-personId (
-	authToken (	"3
-Auth_QuickAuthorize_Response
-authSuccess ("6
-Auth_Me_Payload
-personId (
-	authToken (	"í
-Auth_Me_Response
-personId (
+AuthAuthorizeResponse
+	person_id (
+
+auth_token (	"B
+AuthQuickAuthorizePayload
+	person_id (
+
+auth_token (	"2
+AuthQuickAuthorizeResponse
+auth_success ("6
+AuthMePayload
+	person_id (
+
+auth_token (	"í
+AuthMeResponse
+	person_id (
 country (	
 city (	
 email (	
-phone (	
-tenhouId (	
+phone (	
+	tenhou_id (	
 title (	
-groups ("S
-Auth_ChangePassword_Payload
+groups ("R
+AuthChangePasswordPayload
 email (	
-password (	
-newPassword (	"1
-Auth_ChangePassword_Response
-	authToken (	"E
-!Auth_RequestResetPassword_Payload
-email (	
-	sendEmail ("8
-"Auth_RequestResetPassword_Response
+password (	
+new_password (	"0
+AuthChangePasswordResponse
 
-resetToken (	"F
-!Auth_ApproveResetPassword_Payload
+auth_token (	"D
+AuthRequestResetPasswordPayload
 email (	
 
-resetToken (	"<
-"Auth_ApproveResetPassword_Response
-newTmpPassword (	"B
-Access_GetAccessRules_Payload
-personId (
-eventId ("D
-Access_GetAccessRules_Response"
-rules (2.Common.AccessRules"R
-Access_GetRuleValue_Payload
-personId (
-eventId (
-ruleName (	"@
-Access_GetRuleValue_Response 
-value (2.Common.RuleValue"0
-Access_GetEventAdmins_Payload
-eventId ("D
-Access_GetEventAdmins_Response"
-admins (2.Common.EventAdmin"4
- Access_GetSuperadminFlag_Payload
-personId ("4
-!Access_GetSuperadminFlag_Response
-isAdmin ("3
-Access_GetOwnedEventIds_Payload
-personId ("4
- Access_GetOwnedEventIds_Response
-eventIds ("
-Access_GetRulesList_Payload"C
-Access_GetRulesList_Response#
-items (2.Common.RuleListItem"2
-Access_GetAllEventRules_Payload
-eventId ("Å
- Access_GetAllEventRules_Response.
-personRules (2.Common.EventRuleListItem-
+send_email ("7
+ AuthRequestResetPasswordResponse
+reset_token (	"E
+AuthApproveResetPasswordPayload
+email (	
+reset_token (	"<
+ AuthApproveResetPasswordResponse
+new_tmp_password (	"B
+AccessGetAccessRulesPayload
+	person_id (
+event_id ("B
+AccessGetAccessRulesResponse"
+rules (2.common.AccessRules"S
+AccessGetRuleValuePayload
+	person_id (
+event_id (
+	rule_name (	">
+AccessGetRuleValueResponse 
+value (2.common.RuleValue"/
+AccessGetEventAdminsPayload
+event_id ("B
+AccessGetEventAdminsResponse"
+admins (2.common.EventAdmin"3
+AccessGetSuperadminFlagPayload
+	person_id ("3
+AccessGetSuperadminFlagResponse
+is_admin ("2
+AccessGetOwnedEventIdsPayload
+	person_id ("3
+AccessGetOwnedEventIdsResponse
+	event_ids ("
+AccessGetRulesListPayload"A
+AccessGetRulesListResponse#
+items (2.common.RuleListItem"1
+AccessGetAllEventRulesPayload
+event_id ("Å
+AccessGetAllEventRulesResponse/
+person_rules (2.common.EventRuleListItem.
+group_rules (2.common.EventRuleListItem"C
+AccessGetPersonAccessPayload
+	person_id (
+event_id ("C
+AccessGetPersonAccessResponse"
+rules (2.common.AccessRules"A
+AccessGetGroupAccessPayload
+group_id (
+event_id ("B
+AccessGetGroupAccessResponse"
+rules (2.common.AccessRules"4
+AccessGetAllPersonAccessPayload
+	person_id ("∆
+ AccessGetAllPersonAccessResponseR
+rules_by_event (2:.common.AccessGetAllPersonAccessResponse.RulesByEventEntryN
+RulesByEventEntry
+key ((
+value (2.common.RuleListItemExMap:8"2
+AccessGetAllGroupAccessPayload
+group_id ("ƒ
+AccessGetAllGroupAccessResponseQ
+rules_by_event (29.common.AccessGetAllGroupAccessResponse.RulesByEventEntryN
+RulesByEventEntry
+key ((
+value (2.common.RuleListItemExMap:8"ë
+AccessAddRuleForPersonPayload
+	rule_name (	%
 
-groupRules (2.Common.EventRuleListItem"C
-Access_GetPersonAccess_Payload
-personId (
-eventId ("E
-Access_GetPersonAccess_Response"
-rules (2.Common.AccessRules"A
-Access_GetGroupAccess_Payload
-groupId (
-eventId ("D
-Access_GetGroupAccess_Response"
-rules (2.Common.AccessRules"5
-!Access_GetAllPersonAccess_Payload
-personId ("»
-"Access_GetAllPersonAccess_ResponseR
-rulesByEvent (2<.Common.Access_GetAllPersonAccess_Response.RulesByEventEntryN
-RulesByEventEntry
-key ((
-value (2.Common.RuleListItemExMap:8"3
- Access_GetAllGroupAccess_Payload
-groupId ("∆
-!Access_GetAllGroupAccess_ResponseQ
-rulesByEvent (2;.Common.Access_GetAllGroupAccess_Response.RulesByEventEntryN
-RulesByEventEntry
-key ((
-value (2.Common.RuleListItemExMap:8"é
-Access_AddRuleForPerson_Payload
-ruleName (	$
-	ruleValue (2.Common.RuleValue
-ruleType (	
-personId (
-eventId ("2
- Access_AddRuleForPerson_Response
-ruleId ("å
-Access_AddRuleForGroup_Payload
-ruleName (	$
-	ruleValue (2.Common.RuleValue
-ruleType (	
-groupId (
-eventId ("1
-Access_AddRuleForGroup_Response
-ruleId ("l
-"Access_UpdateRuleForPerson_Payload
-ruleId ($
-	ruleValue (2.Common.RuleValue
-ruleType (	"k
-!Access_UpdateRuleForGroup_Payload
-ruleId ($
-	ruleValue (2.Common.RuleValue
-ruleType (	"4
-"Access_DeleteRuleForPerson_Payload
-ruleId ("3
-!Access_DeleteRuleForGroup_Payload
-ruleId ("D
-Access_ClearAccessCache_Payload
-personId (
-eventId ("á
-)Access_AddSystemWideRuleForPerson_Payload
-ruleName (	$
-	ruleValue (2.Common.RuleValue
-ruleType (	
-personId ("<
-*Access_AddSystemWideRuleForPerson_Response
-ruleId ("Ö
-(Access_AddSystemWideRuleForGroup_Payload
-ruleName (	$
-	ruleValue (2.Common.RuleValue
-ruleType (	
-groupId (";
-)Access_AddSystemWideRuleForGroup_Response
-ruleId ("è
-Persons_CreateAccount_Payload
+rule_value (2.common.RuleValue
+	rule_type (	
+	person_id (
+event_id ("1
+AccessAddRuleForPersonResponse
+rule_id ("è
+AccessAddRuleForGroupPayload
+	rule_name (	%
+
+rule_value (2.common.RuleValue
+	rule_type (	
+group_id (
+event_id ("0
+AccessAddRuleForGroupResponse
+rule_id ("m
+ AccessUpdateRuleForPersonPayload
+rule_id (%
+
+rule_value (2.common.RuleValue
+	rule_type (	"l
+AccessUpdateRuleForGroupPayload
+rule_id (%
+
+rule_value (2.common.RuleValue
+	rule_type (	"3
+ AccessDeleteRuleForPersonPayload
+rule_id ("2
+AccessDeleteRuleForGroupPayload
+rule_id ("D
+AccessClearAccessCachePayload
+	person_id (
+event_id ("â
+\'AccessAddSystemWideRuleForPersonPayload
+	rule_name (	%
+
+rule_value (2.common.RuleValue
+	rule_type (	
+	person_id (";
+(AccessAddSystemWideRuleForPersonResponse
+rule_id ("á
+&AccessAddSystemWideRuleForGroupPayload
+	rule_name (	%
+
+rule_value (2.common.RuleValue
+	rule_type (	
+group_id (":
+\'AccessAddSystemWideRuleForGroupResponse
+rule_id ("é
+PersonsCreateAccountPayload
 email (	
 password (	
 title (	
 city (	
-phone (	
-tenhouId (	
-country (	"2
-Persons_CreateAccount_Response
-personId ("P
-Persons_CreateGroup_Payload
+phone (	
+	tenhou_id (	
+country (	"1
+PersonsCreateAccountResponse
+	person_id ("N
+PersonsCreateGroupPayload
 title (	
 description (	
-color (	"/
-Persons_CreateGroup_Response
-groupId ("a
-Persons_UpdateGroup_Payload
-groupId (
+color (	".
+PersonsCreateGroupResponse
+group_id ("`
+PersonsUpdateGroupPayload
+group_id (
 title (	
 description (	
-color (	".
-Persons_DeleteGroup_Payload
-groupId ("E
- Persons_AddPersonToGroup_Payload
-personId (
-groupId ("J
-%Persons_RemovePersonFromGroup_Payload
-personId (
-groupId ("4
-!Persons_GetPersonsOfGroup_Payload
-groupId ("E
-"Persons_GetPersonsOfGroup_Response
-persons (2.Common.Person"5
-!Persons_GetGroupsOfPerson_Payload
-personId ("C
-"Persons_GetGroupsOfPerson_Response
-groups (2.Common.Group"é
-"Persons_UpdatePersonalInfo_Payload
+color (	"-
+PersonsDeleteGroupPayload
+group_id ("E
+PersonsAddPersonToGroupPayload
+	person_id (
+group_id ("J
+#PersonsRemovePersonFromGroupPayload
+	person_id (
+group_id ("3
+PersonsGetPersonsOfGroupPayload
+group_id ("B
+ PersonsGetPersonsOfGroupResponse
+people (2.common.Person"4
+PersonsGetGroupsOfPersonPayload
+	person_id ("A
+ PersonsGetGroupsOfPersonResponse
+groups (2.common.Group"ç
+ PersonsUpdatePersonalInfoPayload
 
 id (
 title (	
 country (	
 city (	
 email (	
-phone (	
-tenhouId (	".
-Persons_GetPersonalInfo_Payload
-ids ("E
- Persons_GetPersonalInfo_Response!
-persons (2.Common.PersonEx".
-Persons_FindByTenhouIds_Payload
-ids (	"E
- Persons_FindByTenhouIds_Response!
-persons (2.Common.PersonEx",
-Persons_FindByTitle_Payload
-query (	"?
-Persons_FindByTitle_Response
-persons (2.Common.Person"(
-Persons_GetGroups_Payload
-ids (";
-Persons_GetGroups_Response
-groups (2.Common.Group2Ú
-Freyj
-RequestRegistration(.Common.Auth_RequestRegistration_Payload).Common.Auth_RequestRegistration_Responsej
-ApproveRegistration(.Common.Auth_ApproveRegistration_Payload).Common.Auth_ApproveRegistration_ResponseL
-	Authorize.Common.Auth_Authorize_Payload.Common.Auth_Authorize_Response[
-QuickAuthorize#.Common.Auth_QuickAuthorize_Payload$.Common.Auth_QuickAuthorize_Response7
-Me.Common.Auth_Me_Payload.Common.Auth_Me_Response[
-ChangePassword#.Common.Auth_ChangePassword_Payload$.Common.Auth_ChangePassword_Responsem
-RequestResetPassword).Common.Auth_RequestResetPassword_Payload*.Common.Auth_RequestResetPassword_Responsem
-ApproveResetPassword).Common.Auth_ApproveResetPassword_Payload*.Common.Auth_ApproveResetPassword_Response_
-GetAccessRules%.Common.Access_GetAccessRules_Payload&.Common.Access_GetAccessRules_ResponseY
-GetRuleValue#.Common.Access_GetRuleValue_Payload$.Common.Access_GetRuleValue_Responseb
-UpdatePersonalInfo*.Common.Persons_UpdatePersonalInfo_Payload .Common.Generic_Success_Responsed
-GetPersonalInfo\'.Common.Persons_GetPersonalInfo_Payload(.Common.Persons_GetPersonalInfo_Responsed
-FindByTenhouIds\'.Common.Persons_FindByTenhouIds_Payload(.Common.Persons_FindByTenhouIds_ResponseX
-FindByTitle#.Common.Persons_FindByTitle_Payload$.Common.Persons_FindByTitle_ResponseR
-	GetGroups!.Common.Persons_GetGroups_Payload".Common.Persons_GetGroups_Response_
-GetEventAdmins%.Common.Access_GetEventAdmins_Payload&.Common.Access_GetEventAdmins_Responseh
-GetSuperadminFlag(.Common.Access_GetSuperadminFlag_Payload).Common.Access_GetSuperadminFlag_Responsee
-GetOwnedEventIds\'.Common.Access_GetOwnedEventIds_Payload(.Common.Access_GetOwnedEventIds_ResponseY
-GetRulesList#.Common.Access_GetRulesList_Payload$.Common.Access_GetRulesList_Responsee
-GetAllEventRules\'.Common.Access_GetAllEventRules_Payload(.Common.Access_GetAllEventRules_Responseb
-GetPersonAccess&.Common.Access_GetPersonAccess_Payload\'.Common.Access_GetPersonAccess_Response_
-GetGroupAccess%.Common.Access_GetGroupAccess_Payload&.Common.Access_GetGroupAccess_Responsek
-GetAllPersonAccess).Common.Access_GetAllPersonAccess_Payload*.Common.Access_GetAllPersonAccess_Responseh
-GetAllGroupAccess(.Common.Access_GetAllGroupAccess_Payload).Common.Access_GetAllGroupAccess_Responsee
-AddRuleForPerson\'.Common.Access_AddRuleForPerson_Payload(.Common.Access_AddRuleForPerson_Responseb
-AddRuleForGroup&.Common.Access_AddRuleForGroup_Payload\'.Common.Access_AddRuleForGroup_Responsec
-UpdateRuleForPerson*.Common.Access_UpdateRuleForPerson_Payload .Common.Generic_Success_Responsea
-UpdateRuleForGroup).Common.Access_UpdateRuleForGroup_Payload .Common.Generic_Success_Responsec
-DeleteRuleForPerson*.Common.Access_DeleteRuleForPerson_Payload .Common.Generic_Success_Responsea
-DeleteRuleForGroup).Common.Access_DeleteRuleForGroup_Payload .Common.Generic_Success_Response]
-ClearAccessCache\'.Common.Access_ClearAccessCache_Payload .Common.Generic_Success_Response^
-CreateAccount%.Common.Persons_CreateAccount_Payload&.Common.Persons_CreateAccount_ResponseX
-CreateGroup#.Common.Persons_CreateGroup_Payload$.Common.Persons_CreateGroup_ResponseT
-UpdateGroup#.Common.Persons_UpdateGroup_Payload .Common.Generic_Success_ResponseT
-DeleteGroup#.Common.Persons_DeleteGroup_Payload .Common.Generic_Success_Response^
-AddPersonToGroup(.Common.Persons_AddPersonToGroup_Payload .Common.Generic_Success_Responseh
-RemovePersonFromGroup-.Common.Persons_RemovePersonFromGroup_Payload .Common.Generic_Success_Responsej
-GetPersonsOfGroup).Common.Persons_GetPersonsOfGroup_Payload*.Common.Persons_GetPersonsOfGroup_Responsej
-GetGroupsOfPerson).Common.Persons_GetGroupsOfPerson_Payload*.Common.Persons_GetGroupsOfPerson_ResponseÉ
-AddSystemWideRuleForPerson1.Common.Access_AddSystemWideRuleForPerson_Payload2.Common.Access_AddSystemWideRuleForPerson_ResponseÄ
-AddSystemWideRuleForGroup0.Common.Access_AddSystemWideRuleForGroup_Payload1.Common.Access_AddSystemWideRuleForGroup_Responsebproto3'
+phone (	
+	tenhou_id (	",
+PersonsGetPersonalInfoPayload
+ids ("B
+PersonsGetPersonalInfoResponse 
+people (2.common.PersonEx",
+PersonsFindByTenhouIdsPayload
+ids (	"B
+PersonsFindByTenhouIdsResponse 
+people (2.common.PersonEx"*
+PersonsFindByTitlePayload
+query (	"<
+PersonsFindByTitleResponse
+people (2.common.Person"&
+PersonsGetGroupsPayload
+ids ("9
+PersonsGetGroupsResponse
+groups (2.common.Group2Ã
+Freyf
+RequestRegistration&.common.AuthRequestRegistrationPayload\'.common.AuthRequestRegistrationResponsef
+ApproveRegistration&.common.AuthApproveRegistrationPayload\'.common.AuthApproveRegistrationResponseH
+	Authorize.common.AuthAuthorizePayload.common.AuthAuthorizeResponseW
+QuickAuthorize!.common.AuthQuickAuthorizePayload".common.AuthQuickAuthorizeResponse3
+Me.common.AuthMePayload.common.AuthMeResponseW
+ChangePassword!.common.AuthChangePasswordPayload".common.AuthChangePasswordResponsei
+RequestResetPassword\'.common.AuthRequestResetPasswordPayload(.common.AuthRequestResetPasswordResponsei
+ApproveResetPassword\'.common.AuthApproveResetPasswordPayload(.common.AuthApproveResetPasswordResponse[
+GetAccessRules#.common.AccessGetAccessRulesPayload$.common.AccessGetAccessRulesResponseU
+GetRuleValue!.common.AccessGetRuleValuePayload".common.AccessGetRuleValueResponse^
+UpdatePersonalInfo(.common.PersonsUpdatePersonalInfoPayload.common.GenericSuccessResponse`
+GetPersonalInfo%.common.PersonsGetPersonalInfoPayload&.common.PersonsGetPersonalInfoResponse`
+FindByTenhouIds%.common.PersonsFindByTenhouIdsPayload&.common.PersonsFindByTenhouIdsResponseT
+FindByTitle!.common.PersonsFindByTitlePayload".common.PersonsFindByTitleResponseN
+	GetGroups.common.PersonsGetGroupsPayload .common.PersonsGetGroupsResponse[
+GetEventAdmins#.common.AccessGetEventAdminsPayload$.common.AccessGetEventAdminsResponsed
+GetSuperadminFlag&.common.AccessGetSuperadminFlagPayload\'.common.AccessGetSuperadminFlagResponsea
+GetOwnedEventIds%.common.AccessGetOwnedEventIdsPayload&.common.AccessGetOwnedEventIdsResponseU
+GetRulesList!.common.AccessGetRulesListPayload".common.AccessGetRulesListResponsea
+GetAllEventRules%.common.AccessGetAllEventRulesPayload&.common.AccessGetAllEventRulesResponse^
+GetPersonAccess$.common.AccessGetPersonAccessPayload%.common.AccessGetPersonAccessResponse[
+GetGroupAccess#.common.AccessGetGroupAccessPayload$.common.AccessGetGroupAccessResponseg
+GetAllPersonAccess\'.common.AccessGetAllPersonAccessPayload(.common.AccessGetAllPersonAccessResponsed
+GetAllGroupAccess&.common.AccessGetAllGroupAccessPayload\'.common.AccessGetAllGroupAccessResponsea
+AddRuleForPerson%.common.AccessAddRuleForPersonPayload&.common.AccessAddRuleForPersonResponse^
+AddRuleForGroup$.common.AccessAddRuleForGroupPayload%.common.AccessAddRuleForGroupResponse_
+UpdateRuleForPerson(.common.AccessUpdateRuleForPersonPayload.common.GenericSuccessResponse]
+UpdateRuleForGroup\'.common.AccessUpdateRuleForGroupPayload.common.GenericSuccessResponse_
+DeleteRuleForPerson(.common.AccessDeleteRuleForPersonPayload.common.GenericSuccessResponse]
+DeleteRuleForGroup\'.common.AccessDeleteRuleForGroupPayload.common.GenericSuccessResponseY
+ClearAccessCache%.common.AccessClearAccessCachePayload.common.GenericSuccessResponseZ
+CreateAccount#.common.PersonsCreateAccountPayload$.common.PersonsCreateAccountResponseT
+CreateGroup!.common.PersonsCreateGroupPayload".common.PersonsCreateGroupResponseP
+UpdateGroup!.common.PersonsUpdateGroupPayload.common.GenericSuccessResponseP
+DeleteGroup!.common.PersonsDeleteGroupPayload.common.GenericSuccessResponseZ
+AddPersonToGroup&.common.PersonsAddPersonToGroupPayload.common.GenericSuccessResponsed
+RemovePersonFromGroup+.common.PersonsRemovePersonFromGroupPayload.common.GenericSuccessResponsef
+GetPersonsOfGroup\'.common.PersonsGetPersonsOfGroupPayload(.common.PersonsGetPersonsOfGroupResponsef
+GetGroupsOfPerson\'.common.PersonsGetGroupsOfPersonPayload(.common.PersonsGetGroupsOfPersonResponse
+AddSystemWideRuleForPerson/.common.AccessAddSystemWideRuleForPersonPayload0.common.AccessAddSystemWideRuleForPersonResponse|
+AddSystemWideRuleForGroup..common.AccessAddSystemWideRuleForGroupPayload/.common.AccessAddSystemWideRuleForGroupResponsebproto3'
         , true);
 
         static::$is_initialized = true;

@@ -26,6 +26,7 @@ import {
   IRoundOverviewTsumo,
 } from '#/components/screens/log/view/RoundTypes';
 import { I18nService } from '#/services/i18n';
+import { RoundOutcome } from '#/clients/proto/atoms.pb';
 
 function getHandAmount(loc: I18nService, han: number, fu?: number): string {
   if (han < 0) {
@@ -212,19 +213,19 @@ function getRoundDescriptionNagashi(info: IRoundOverviewNagashi, loc: I18nServic
 
 export function getRoundDescription(info: IRoundOverviewInfo, loc: I18nService): string[] {
   switch (info.outcome) {
-    case 'RON':
+    case RoundOutcome.ROUND_OUTCOME_RON:
       return getRoundDescriptionRon(info, loc);
-    case 'MULTIRON':
+    case RoundOutcome.ROUND_OUTCOME_MULTIRON:
       return getRoundDescriptionMultiron(info, loc);
-    case 'TSUMO':
+    case RoundOutcome.ROUND_OUTCOME_TSUMO:
       return getRoundDescriptionTsumo(info, loc);
-    case 'DRAW':
+    case RoundOutcome.ROUND_OUTCOME_DRAW:
       return getRoundDescriptionDraw(info, loc);
-    case 'ABORT':
+    case RoundOutcome.ROUND_OUTCOME_ABORT:
       return getRoundDescriptionAbort(info, loc);
-    case 'CHOMBO':
+    case RoundOutcome.ROUND_OUTCOME_CHOMBO:
       return getRoundDescriptionChombo(info, loc);
-    case 'NAGASHI':
+    case RoundOutcome.ROUND_OUTCOME_NAGASHI:
       return getRoundDescriptionNagashi(info, loc);
   }
 }

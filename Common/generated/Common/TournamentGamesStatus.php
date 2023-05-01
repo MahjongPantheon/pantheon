@@ -7,29 +7,29 @@ namespace Common;
 use UnexpectedValueException;
 
 /**
- * Protobuf type <code>Common.TournamentGamesStatus</code>
+ * Protobuf type <code>common.TournamentGamesStatus</code>
  */
 class TournamentGamesStatus
 {
     /**
      * for non-tournament events
      *
-     * Generated from protobuf enum <code>NONE = 0;</code>
+     * Generated from protobuf enum <code>TOURNAMENT_GAMES_STATUS_UNSPECIFIED = 0;</code>
      */
-    const NONE = 0;
+    const TOURNAMENT_GAMES_STATUS_UNSPECIFIED = 0;
     /**
-     * Generated from protobuf enum <code>SEATING_READY = 1;</code>
+     * Generated from protobuf enum <code>TOURNAMENT_GAMES_STATUS_SEATING_READY = 1;</code>
      */
-    const SEATING_READY = 1;
+    const TOURNAMENT_GAMES_STATUS_SEATING_READY = 1;
     /**
-     * Generated from protobuf enum <code>STARTED = 2;</code>
+     * Generated from protobuf enum <code>TOURNAMENT_GAMES_STATUS_STARTED = 2;</code>
      */
-    const STARTED = 2;
+    const TOURNAMENT_GAMES_STATUS_STARTED = 2;
 
     private static $valueToName = [
-        self::NONE => 'NONE',
-        self::SEATING_READY => 'SEATING_READY',
-        self::STARTED => 'STARTED',
+        self::TOURNAMENT_GAMES_STATUS_UNSPECIFIED => 'TOURNAMENT_GAMES_STATUS_UNSPECIFIED',
+        self::TOURNAMENT_GAMES_STATUS_SEATING_READY => 'TOURNAMENT_GAMES_STATUS_SEATING_READY',
+        self::TOURNAMENT_GAMES_STATUS_STARTED => 'TOURNAMENT_GAMES_STATUS_STARTED',
     ];
 
     public static function name($value)

@@ -124,7 +124,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
   }
 
   getUserInfo(personIds: number[]) {
-    return GetPersonalInfo({ ids: personIds }, this._clientConfFrey).then((val) => val.persons);
+    return GetPersonalInfo({ ids: personIds }, this._clientConfFrey).then((val) => val.people);
   }
 
   /**
@@ -159,7 +159,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
 
   getAllRounds(sessionHashcode: string) {
     return GetAllRounds({ sessionHash: sessionHashcode }, this._clientConfMimir).then(
-      (val) => val.round
+      (val) => val.rounds
     );
   }
 
@@ -174,7 +174,7 @@ export class RiichiApiTwirpService implements IRiichiApi {
 
   getTablesState(eventId: number) {
     return GetTablesState({ eventId }, this._clientConfMimir).then((v) =>
-      v.tables.filter((t) => t.status === SessionStatus.INPROGRESS)
+      v.tables.filter((t) => t.status === SessionStatus.SESSION_STATUS_INPROGRESS)
     );
   }
 

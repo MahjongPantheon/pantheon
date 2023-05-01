@@ -29,7 +29,7 @@ import {
   SessionState,
   TableState,
 } from '#/clients/proto/atoms.pb';
-import { Games_GetSessionOverview_Response } from '#/clients/proto/mimir.pb';
+import { GamesGetSessionOverviewResponse } from '#/clients/proto/mimir.pb';
 
 export type AppScreen =
   | 'eventSelector'
@@ -122,7 +122,7 @@ export interface IAppState {
   otherTablesList: TableState[];
   otherTablesListError?: ErrorState;
 
-  currentOtherTable?: Games_GetSessionOverview_Response;
+  currentOtherTable?: GamesGetSessionOverviewResponse;
   otherTableError?: ErrorState;
 
   overviewDiffBy?: number;

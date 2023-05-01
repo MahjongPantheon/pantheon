@@ -51,8 +51,8 @@ class MigrateRulesets extends AbstractMigration
                 $base->rules()->setRiichiGoesToWinner((bool)$changes['riichiGoesToWinner']);
             }
             $base->rules()->setUmaType(isset($changes['complexUma']) && $changes['complexUma']
-                ? \Common\UmaType::UMA_COMPLEX
-                : \Common\UmaType::UMA_SIMPLE);
+                ? \Common\UmaType::UMA_TYPE_UMA_COMPLEX
+                : \Common\UmaType::UMA_TYPE_UMA_SIMPLE);
             if (isset($changes['uma'])) {
                 $base->rules()->setUma((new \Common\Uma())
                     ->setPlace1((int)$changes['uma'][1])

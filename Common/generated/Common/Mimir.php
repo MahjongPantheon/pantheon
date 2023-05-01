@@ -9,556 +9,556 @@ namespace Common;
 /**
  *
  *
- * Generated from protobuf service <code>Common.Mimir</code>
+ * Generated from protobuf service <code>common.Mimir</code>
  */
 interface Mimir
 {
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetRulesets</code>
+     * Generated from protobuf method <code>common.Mimir/GetRulesets</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetRulesets(array $ctx, \Common\Events_GetRulesets_Payload $req): \Common\Events_GetRulesets_Response;
+    public function GetRulesets(array $ctx, \Common\EventsGetRulesetsPayload $req): \Common\EventsGetRulesetsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetTimezones</code>
+     * Generated from protobuf method <code>common.Mimir/GetTimezones</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetTimezones(array $ctx, \Common\Events_GetTimezones_Payload $req): \Common\Events_GetTimezones_Response;
+    public function GetTimezones(array $ctx, \Common\EventsGetTimezonesPayload $req): \Common\EventsGetTimezonesResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetCountries</code>
+     * Generated from protobuf method <code>common.Mimir/GetCountries</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetCountries(array $ctx, \Common\Events_GetCountries_Payload $req): \Common\Events_GetCountries_Response;
+    public function GetCountries(array $ctx, \Common\EventsGetCountriesPayload $req): \Common\EventsGetCountriesResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetEvents</code>
+     * Generated from protobuf method <code>common.Mimir/GetEvents</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetEvents(array $ctx, \Common\Events_GetEvents_Payload $req): \Common\Events_GetEvents_Response;
+    public function GetEvents(array $ctx, \Common\EventsGetEventsPayload $req): \Common\EventsGetEventsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetEventsById</code>
+     * Generated from protobuf method <code>common.Mimir/GetEventsById</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetEventsById(array $ctx, \Common\Events_GetEventsById_Payload $req): \Common\Events_GetEventsById_Response;
+    public function GetEventsById(array $ctx, \Common\EventsGetEventsByIdPayload $req): \Common\EventsGetEventsByIdResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetMyEvents</code>
+     * Generated from protobuf method <code>common.Mimir/GetMyEvents</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetMyEvents(array $ctx, \Common\Players_GetMyEvents_Payload $req): \Common\Players_GetMyEvents_Response;
+    public function GetMyEvents(array $ctx, \Common\PlayersGetMyEventsPayload $req): \Common\PlayersGetMyEventsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetGameConfig</code>
+     * Generated from protobuf method <code>common.Mimir/GetGameConfig</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetGameConfig(array $ctx, \Common\Generic_Event_Payload $req): \Common\GameConfig;
+    public function GetGameConfig(array $ctx, \Common\GenericEventPayload $req): \Common\GameConfig;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetRatingTable</code>
+     * Generated from protobuf method <code>common.Mimir/GetRatingTable</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetRatingTable(array $ctx, \Common\Events_GetRatingTable_Payload $req): \Common\Events_GetRatingTable_Response;
+    public function GetRatingTable(array $ctx, \Common\EventsGetRatingTablePayload $req): \Common\EventsGetRatingTableResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetLastGames</code>
+     * Generated from protobuf method <code>common.Mimir/GetLastGames</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetLastGames(array $ctx, \Common\Events_GetLastGames_Payload $req): \Common\Events_GetLastGames_Response;
+    public function GetLastGames(array $ctx, \Common\EventsGetLastGamesPayload $req): \Common\EventsGetLastGamesResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetGame</code>
+     * Generated from protobuf method <code>common.Mimir/GetGame</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetGame(array $ctx, \Common\Events_GetGame_Payload $req): \Common\Events_GetGame_Response;
+    public function GetGame(array $ctx, \Common\EventsGetGamePayload $req): \Common\EventsGetGameResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetGamesSeries</code>
+     * Generated from protobuf method <code>common.Mimir/GetGamesSeries</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetGamesSeries(array $ctx, \Common\Generic_Event_Payload $req): \Common\Events_GetGamesSeries_Response;
+    public function GetGamesSeries(array $ctx, \Common\GenericEventPayload $req): \Common\EventsGetGamesSeriesResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetCurrentSessions</code>
+     * Generated from protobuf method <code>common.Mimir/GetCurrentSessions</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetCurrentSessions(array $ctx, \Common\Players_GetCurrentSessions_Payload $req): \Common\Players_GetCurrentSessions_Response;
+    public function GetCurrentSessions(array $ctx, \Common\PlayersGetCurrentSessionsPayload $req): \Common\PlayersGetCurrentSessionsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetAllRegisteredPlayers</code>
+     * Generated from protobuf method <code>common.Mimir/GetAllRegisteredPlayers</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetAllRegisteredPlayers(array $ctx, \Common\Events_GetAllRegisteredPlayers_Payload $req): \Common\Events_GetAllRegisteredPlayers_Response;
+    public function GetAllRegisteredPlayers(array $ctx, \Common\EventsGetAllRegisteredPlayersPayload $req): \Common\EventsGetAllRegisteredPlayersResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetTimerState</code>
+     * Generated from protobuf method <code>common.Mimir/GetTimerState</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetTimerState(array $ctx, \Common\Generic_Event_Payload $req): \Common\Events_GetTimerState_Response;
+    public function GetTimerState(array $ctx, \Common\GenericEventPayload $req): \Common\EventsGetTimerStateResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetSessionOverview</code>
+     * Generated from protobuf method <code>common.Mimir/GetSessionOverview</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetSessionOverview(array $ctx, \Common\Games_GetSessionOverview_Payload $req): \Common\Games_GetSessionOverview_Response;
+    public function GetSessionOverview(array $ctx, \Common\GamesGetSessionOverviewPayload $req): \Common\GamesGetSessionOverviewResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetPlayerStats</code>
+     * Generated from protobuf method <code>common.Mimir/GetPlayerStats</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetPlayerStats(array $ctx, \Common\Players_GetPlayerStats_Payload $req): \Common\Players_GetPlayerStats_Response;
+    public function GetPlayerStats(array $ctx, \Common\PlayersGetPlayerStatsPayload $req): \Common\PlayersGetPlayerStatsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/AddRound</code>
+     * Generated from protobuf method <code>common.Mimir/AddRound</code>
      *
      * @throws \Twirp\Error
      */
-    public function AddRound(array $ctx, \Common\Games_AddRound_Payload $req): \Common\Games_AddRound_Response;
+    public function AddRound(array $ctx, \Common\GamesAddRoundPayload $req): \Common\GamesAddRoundResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/PreviewRound</code>
+     * Generated from protobuf method <code>common.Mimir/PreviewRound</code>
      *
      * @throws \Twirp\Error
      */
-    public function PreviewRound(array $ctx, \Common\Games_PreviewRound_Payload $req): \Common\Games_PreviewRound_Response;
+    public function PreviewRound(array $ctx, \Common\GamesPreviewRoundPayload $req): \Common\GamesPreviewRoundResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/AddOnlineReplay</code>
+     * Generated from protobuf method <code>common.Mimir/AddOnlineReplay</code>
      *
      * @throws \Twirp\Error
      */
-    public function AddOnlineReplay(array $ctx, \Common\Games_AddOnlineReplay_Payload $req): \Common\Games_AddOnlineReplay_Response;
+    public function AddOnlineReplay(array $ctx, \Common\GamesAddOnlineReplayPayload $req): \Common\GamesAddOnlineReplayResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetLastResults</code>
+     * Generated from protobuf method <code>common.Mimir/GetLastResults</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetLastResults(array $ctx, \Common\Players_GetLastResults_Payload $req): \Common\Players_GetLastResults_Response;
+    public function GetLastResults(array $ctx, \Common\PlayersGetLastResultsPayload $req): \Common\PlayersGetLastResultsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetLastRound</code>
+     * Generated from protobuf method <code>common.Mimir/GetLastRound</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetLastRound(array $ctx, \Common\Players_GetLastRound_Payload $req): \Common\Players_GetLastRound_Response;
+    public function GetLastRound(array $ctx, \Common\PlayersGetLastRoundPayload $req): \Common\PlayersGetLastRoundResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetAllRounds</code>
+     * Generated from protobuf method <code>common.Mimir/GetAllRounds</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetAllRounds(array $ctx, \Common\Players_GetAllRounds_Payload $req): \Common\Players_GetAllRounds_Response;
+    public function GetAllRounds(array $ctx, \Common\PlayersGetAllRoundsPayload $req): \Common\PlayersGetAllRoundsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetLastRoundByHash</code>
+     * Generated from protobuf method <code>common.Mimir/GetLastRoundByHash</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetLastRoundByHash(array $ctx, \Common\Players_GetLastRoundByHash_Payload $req): \Common\Players_GetLastRoundByHash_Response;
+    public function GetLastRoundByHash(array $ctx, \Common\PlayersGetLastRoundByHashPayload $req): \Common\PlayersGetLastRoundByHashResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetEventForEdit</code>
+     * Generated from protobuf method <code>common.Mimir/GetEventForEdit</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetEventForEdit(array $ctx, \Common\Events_GetEventForEdit_Payload $req): \Common\Events_GetEventForEdit_Response;
+    public function GetEventForEdit(array $ctx, \Common\EventsGetEventForEditPayload $req): \Common\EventsGetEventForEditResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/RebuildScoring</code>
+     * Generated from protobuf method <code>common.Mimir/RebuildScoring</code>
      *
      * @throws \Twirp\Error
      */
-    public function RebuildScoring(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
+    public function RebuildScoring(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/CreateEvent</code>
+     * Generated from protobuf method <code>common.Mimir/CreateEvent</code>
      *
      * @throws \Twirp\Error
      */
-    public function CreateEvent(array $ctx, \Common\EventData $req): \Common\Generic_Event_Payload;
+    public function CreateEvent(array $ctx, \Common\EventData $req): \Common\GenericEventPayload;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/UpdateEvent</code>
+     * Generated from protobuf method <code>common.Mimir/UpdateEvent</code>
      *
      * @throws \Twirp\Error
      */
-    public function UpdateEvent(array $ctx, \Common\Events_UpdateEvent_Payload $req): \Common\Generic_Success_Response;
+    public function UpdateEvent(array $ctx, \Common\EventsUpdateEventPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/FinishEvent</code>
+     * Generated from protobuf method <code>common.Mimir/FinishEvent</code>
      *
      * @throws \Twirp\Error
      */
-    public function FinishEvent(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
+    public function FinishEvent(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/ToggleListed</code>
+     * Generated from protobuf method <code>common.Mimir/ToggleListed</code>
      *
      * @throws \Twirp\Error
      */
-    public function ToggleListed(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
+    public function ToggleListed(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetTablesState</code>
+     * Generated from protobuf method <code>common.Mimir/GetTablesState</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetTablesState(array $ctx, \Common\Generic_Event_Payload $req): \Common\Events_GetTablesState_Response;
+    public function GetTablesState(array $ctx, \Common\GenericEventPayload $req): \Common\EventsGetTablesStateResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/StartTimer</code>
+     * Generated from protobuf method <code>common.Mimir/StartTimer</code>
      *
      * @throws \Twirp\Error
      */
-    public function StartTimer(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
+    public function StartTimer(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/RegisterPlayer</code>
+     * Generated from protobuf method <code>common.Mimir/RegisterPlayer</code>
      *
      * @throws \Twirp\Error
      */
-    public function RegisterPlayer(array $ctx, \Common\Events_RegisterPlayer_Payload $req): \Common\Generic_Success_Response;
+    public function RegisterPlayer(array $ctx, \Common\EventsRegisterPlayerPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/UnregisterPlayer</code>
+     * Generated from protobuf method <code>common.Mimir/UnregisterPlayer</code>
      *
      * @throws \Twirp\Error
      */
-    public function UnregisterPlayer(array $ctx, \Common\Events_UnregisterPlayer_Payload $req): \Common\Generic_Success_Response;
+    public function UnregisterPlayer(array $ctx, \Common\EventsUnregisterPlayerPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/UpdatePlayerSeatingFlag</code>
+     * Generated from protobuf method <code>common.Mimir/UpdatePlayerSeatingFlag</code>
      *
      * @throws \Twirp\Error
      */
-    public function UpdatePlayerSeatingFlag(array $ctx, \Common\Events_UpdatePlayerSeatingFlag_Payload $req): \Common\Generic_Success_Response;
+    public function UpdatePlayerSeatingFlag(array $ctx, \Common\EventsUpdatePlayerSeatingFlagPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetAchievements</code>
+     * Generated from protobuf method <code>common.Mimir/GetAchievements</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetAchievements(array $ctx, \Common\Events_GetAchievements_Payload $req): \Common\Events_GetAchievements_Response;
+    public function GetAchievements(array $ctx, \Common\EventsGetAchievementsPayload $req): \Common\EventsGetAchievementsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/ToggleHideResults</code>
+     * Generated from protobuf method <code>common.Mimir/ToggleHideResults</code>
      *
      * @throws \Twirp\Error
      */
-    public function ToggleHideResults(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
+    public function ToggleHideResults(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/UpdatePlayersLocalIds</code>
+     * Generated from protobuf method <code>common.Mimir/UpdatePlayersLocalIds</code>
      *
      * @throws \Twirp\Error
      */
-    public function UpdatePlayersLocalIds(array $ctx, \Common\Events_UpdatePlayersLocalIds_Payload $req): \Common\Generic_Success_Response;
+    public function UpdatePlayersLocalIds(array $ctx, \Common\EventsUpdatePlayersLocalIdsPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/UpdatePlayerReplacement</code>
+     * Generated from protobuf method <code>common.Mimir/UpdatePlayerReplacement</code>
      *
      * @throws \Twirp\Error
      */
-    public function UpdatePlayerReplacement(array $ctx, \Common\Events_UpdatePlayerReplacement_Payload $req): \Common\Generic_Success_Response;
+    public function UpdatePlayerReplacement(array $ctx, \Common\EventsUpdatePlayerReplacementPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/UpdatePlayersTeams</code>
+     * Generated from protobuf method <code>common.Mimir/UpdatePlayersTeams</code>
      *
      * @throws \Twirp\Error
      */
-    public function UpdatePlayersTeams(array $ctx, \Common\Events_UpdatePlayersTeams_Payload $req): \Common\Generic_Success_Response;
+    public function UpdatePlayersTeams(array $ctx, \Common\EventsUpdatePlayersTeamsPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/StartGame</code>
+     * Generated from protobuf method <code>common.Mimir/StartGame</code>
      *
      * @throws \Twirp\Error
      */
-    public function StartGame(array $ctx, \Common\Games_StartGame_Payload $req): \Common\Games_StartGame_Response;
+    public function StartGame(array $ctx, \Common\GamesStartGamePayload $req): \Common\GamesStartGameResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/EndGame</code>
+     * Generated from protobuf method <code>common.Mimir/EndGame</code>
      *
      * @throws \Twirp\Error
      */
-    public function EndGame(array $ctx, \Common\Games_EndGame_Payload $req): \Common\Generic_Success_Response;
+    public function EndGame(array $ctx, \Common\GamesEndGamePayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/CancelGame</code>
+     * Generated from protobuf method <code>common.Mimir/CancelGame</code>
      *
      * @throws \Twirp\Error
      */
-    public function CancelGame(array $ctx, \Common\Games_CancelGame_Payload $req): \Common\Generic_Success_Response;
+    public function CancelGame(array $ctx, \Common\GamesCancelGamePayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/FinalizeSession</code>
+     * Generated from protobuf method <code>common.Mimir/FinalizeSession</code>
      *
      * @throws \Twirp\Error
      */
-    public function FinalizeSession(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
+    public function FinalizeSession(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/DropLastRound</code>
+     * Generated from protobuf method <code>common.Mimir/DropLastRound</code>
      *
      * @throws \Twirp\Error
      */
-    public function DropLastRound(array $ctx, \Common\Games_DropLastRound_Payload $req): \Common\Generic_Success_Response;
+    public function DropLastRound(array $ctx, \Common\GamesDropLastRoundPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/DefinalizeGame</code>
+     * Generated from protobuf method <code>common.Mimir/DefinalizeGame</code>
      *
      * @throws \Twirp\Error
      */
-    public function DefinalizeGame(array $ctx, \Common\Games_DefinalizeGame_Payload $req): \Common\Generic_Success_Response;
+    public function DefinalizeGame(array $ctx, \Common\GamesDefinalizeGamePayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/AddPenalty</code>
+     * Generated from protobuf method <code>common.Mimir/AddPenalty</code>
      *
      * @throws \Twirp\Error
      */
-    public function AddPenalty(array $ctx, \Common\Games_AddPenalty_Payload $req): \Common\Generic_Success_Response;
+    public function AddPenalty(array $ctx, \Common\GamesAddPenaltyPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/AddPenaltyGame</code>
+     * Generated from protobuf method <code>common.Mimir/AddPenaltyGame</code>
      *
      * @throws \Twirp\Error
      */
-    public function AddPenaltyGame(array $ctx, \Common\Games_AddPenaltyGame_Payload $req): \Common\Games_AddPenaltyGame_Response;
+    public function AddPenaltyGame(array $ctx, \Common\GamesAddPenaltyGamePayload $req): \Common\GamesAddPenaltyGameResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetPlayer</code>
+     * Generated from protobuf method <code>common.Mimir/GetPlayer</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetPlayer(array $ctx, \Common\Players_GetPlayer_Payload $req): \Common\Players_GetPlayer_Response;
+    public function GetPlayer(array $ctx, \Common\PlayersGetPlayerPayload $req): \Common\PlayersGetPlayerResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetCurrentSeating</code>
+     * Generated from protobuf method <code>common.Mimir/GetCurrentSeating</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetCurrentSeating(array $ctx, \Common\Generic_Event_Payload $req): \Common\Events_GetCurrentSeating_Response;
+    public function GetCurrentSeating(array $ctx, \Common\GenericEventPayload $req): \Common\EventsGetCurrentSeatingResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/MakeShuffledSeating</code>
+     * Generated from protobuf method <code>common.Mimir/MakeShuffledSeating</code>
      *
      * @throws \Twirp\Error
      */
-    public function MakeShuffledSeating(array $ctx, \Common\Seating_MakeShuffledSeating_Payload $req): \Common\Generic_Success_Response;
+    public function MakeShuffledSeating(array $ctx, \Common\SeatingMakeShuffledSeatingPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/MakeSwissSeating</code>
+     * Generated from protobuf method <code>common.Mimir/MakeSwissSeating</code>
      *
      * @throws \Twirp\Error
      */
-    public function MakeSwissSeating(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
+    public function MakeSwissSeating(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/ResetSeating</code>
+     * Generated from protobuf method <code>common.Mimir/ResetSeating</code>
      *
      * @throws \Twirp\Error
      */
-    public function ResetSeating(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
+    public function ResetSeating(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GenerateSwissSeating</code>
+     * Generated from protobuf method <code>common.Mimir/GenerateSwissSeating</code>
      *
      * @throws \Twirp\Error
      */
-    public function GenerateSwissSeating(array $ctx, \Common\Generic_Event_Payload $req): \Common\Seating_GenerateSwissSeating_Response;
+    public function GenerateSwissSeating(array $ctx, \Common\GenericEventPayload $req): \Common\SeatingGenerateSwissSeatingResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/MakeIntervalSeating</code>
+     * Generated from protobuf method <code>common.Mimir/MakeIntervalSeating</code>
      *
      * @throws \Twirp\Error
      */
-    public function MakeIntervalSeating(array $ctx, \Common\Seating_MakeIntervalSeating_Payload $req): \Common\Generic_Success_Response;
+    public function MakeIntervalSeating(array $ctx, \Common\SeatingMakeIntervalSeatingPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/MakePrescriptedSeating</code>
+     * Generated from protobuf method <code>common.Mimir/MakePrescriptedSeating</code>
      *
      * @throws \Twirp\Error
      */
-    public function MakePrescriptedSeating(array $ctx, \Common\Seating_MakePrescriptedSeating_Payload $req): \Common\Generic_Success_Response;
+    public function MakePrescriptedSeating(array $ctx, \Common\SeatingMakePrescriptedSeatingPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetNextPrescriptedSeating</code>
+     * Generated from protobuf method <code>common.Mimir/GetNextPrescriptedSeating</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetNextPrescriptedSeating(array $ctx, \Common\Generic_Event_Payload $req): \Common\Seating_GetNextPrescriptedSeating_Response;
+    public function GetNextPrescriptedSeating(array $ctx, \Common\GenericEventPayload $req): \Common\SeatingGetNextPrescriptedSeatingResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetPrescriptedEventConfig</code>
+     * Generated from protobuf method <code>common.Mimir/GetPrescriptedEventConfig</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetPrescriptedEventConfig(array $ctx, \Common\Generic_Event_Payload $req): \Common\Events_GetPrescriptedEventConfig_Response;
+    public function GetPrescriptedEventConfig(array $ctx, \Common\GenericEventPayload $req): \Common\EventsGetPrescriptedEventConfigResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/UpdatePrescriptedEventConfig</code>
+     * Generated from protobuf method <code>common.Mimir/UpdatePrescriptedEventConfig</code>
      *
      * @throws \Twirp\Error
      */
-    public function UpdatePrescriptedEventConfig(array $ctx, \Common\Events_UpdatePrescriptedEventConfig_Payload $req): \Common\Generic_Success_Response;
+    public function UpdatePrescriptedEventConfig(array $ctx, \Common\EventsUpdatePrescriptedEventConfigPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/InitStartingTimer</code>
+     * Generated from protobuf method <code>common.Mimir/InitStartingTimer</code>
      *
      * @throws \Twirp\Error
      */
-    public function InitStartingTimer(array $ctx, \Common\Generic_Event_Payload $req): \Common\Generic_Success_Response;
+    public function InitStartingTimer(array $ctx, \Common\GenericEventPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/GetStartingTimer</code>
+     * Generated from protobuf method <code>common.Mimir/GetStartingTimer</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetStartingTimer(array $ctx, \Common\Generic_Event_Payload $req): \Common\Events_GetStartingTimer_Response;
+    public function GetStartingTimer(array $ctx, \Common\GenericEventPayload $req): \Common\EventsGetStartingTimerResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Mimir/AddErrorLog</code>
+     * Generated from protobuf method <code>common.Mimir/AddErrorLog</code>
      *
      * @throws \Twirp\Error
      */
-    public function AddErrorLog(array $ctx, \Common\Misc_AddErrorLog_Payload $req): \Common\Generic_Success_Response;
+    public function AddErrorLog(array $ctx, \Common\MiscAddErrorLogPayload $req): \Common\GenericSuccessResponse;
 }

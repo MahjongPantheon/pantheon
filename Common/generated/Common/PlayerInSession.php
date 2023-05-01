@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.PlayerInSession</code>
+ * Generated from protobuf message <code>common.PlayerInSession</code>
  */
 class PlayerInSession extends \Google\Protobuf\Internal\Message
 {
@@ -26,13 +26,13 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
      */
     protected $score = 0;
     /**
-     * Generated from protobuf field <code>optional .Common.ReplacementPlayer replacedBy = 4;</code>
+     * Generated from protobuf field <code>optional .common.ReplacementPlayer replaced_by = 4;</code>
      */
-    protected $replacedBy = null;
+    protected $replaced_by = null;
     /**
-     * Generated from protobuf field <code>float ratingDelta = 5;</code>
+     * Generated from protobuf field <code>float rating_delta = 5;</code>
      */
-    protected $ratingDelta = 0.0;
+    protected $rating_delta = 0.0;
 
     /**
      * Constructor.
@@ -43,8 +43,8 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
      *     @type int $id
      *     @type string $title
      *     @type int $score
-     *     @type \Common\ReplacementPlayer $replacedBy
-     *     @type float $ratingDelta
+     *     @type \Common\ReplacementPlayer $replaced_by
+     *     @type float $rating_delta
      * }
      */
     public function __construct($data = NULL) {
@@ -119,55 +119,55 @@ class PlayerInSession extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>optional .Common.ReplacementPlayer replacedBy = 4;</code>
+     * Generated from protobuf field <code>optional .common.ReplacementPlayer replaced_by = 4;</code>
      * @return \Common\ReplacementPlayer|null
      */
     public function getReplacedBy()
     {
-        return $this->replacedBy;
+        return $this->replaced_by;
     }
 
     public function hasReplacedBy()
     {
-        return isset($this->replacedBy);
+        return isset($this->replaced_by);
     }
 
     public function clearReplacedBy()
     {
-        unset($this->replacedBy);
+        unset($this->replaced_by);
     }
 
     /**
-     * Generated from protobuf field <code>optional .Common.ReplacementPlayer replacedBy = 4;</code>
+     * Generated from protobuf field <code>optional .common.ReplacementPlayer replaced_by = 4;</code>
      * @param \Common\ReplacementPlayer $var
      * @return $this
      */
     public function setReplacedBy($var)
     {
         GPBUtil::checkMessage($var, \Common\ReplacementPlayer::class);
-        $this->replacedBy = $var;
+        $this->replaced_by = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>float ratingDelta = 5;</code>
+     * Generated from protobuf field <code>float rating_delta = 5;</code>
      * @return float
      */
     public function getRatingDelta()
     {
-        return $this->ratingDelta;
+        return $this->rating_delta;
     }
 
     /**
-     * Generated from protobuf field <code>float ratingDelta = 5;</code>
+     * Generated from protobuf field <code>float rating_delta = 5;</code>
      * @param float $var
      * @return $this
      */
     public function setRatingDelta($var)
     {
         GPBUtil::checkFloat($var);
-        $this->ratingDelta = $var;
+        $this->rating_delta = $var;
 
         return $this;
     }

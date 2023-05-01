@@ -1,3 +1,4 @@
+// protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
 syntax = "proto3";
 
 package common;

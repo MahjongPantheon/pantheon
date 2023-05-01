@@ -13,7 +13,7 @@ use Google\Protobuf\Internal\Message;
  * A JSON client that implements the {@see Mimir} interface.
  * It communicates using JSON and can be configured with a custom HTTP Client.
  *
- * Generated from protobuf service <code>Common.Mimir</code>
+ * Generated from protobuf service <code>common.Mimir</code>
  */
 final class MimirJsonClient extends MimirAbstractClient implements Mimir
 {

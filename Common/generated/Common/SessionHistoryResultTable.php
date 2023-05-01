@@ -9,14 +9,14 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.SessionHistoryResultTable</code>
+ * Generated from protobuf message <code>common.SessionHistoryResultTable</code>
  */
 class SessionHistoryResultTable extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>repeated .Common.SessionHistoryResult table = 1;</code>
+     * Generated from protobuf field <code>repeated .common.SessionHistoryResult tables = 1;</code>
      */
-    private $table;
+    private $tables;
 
     /**
      * Constructor.
@@ -24,7 +24,7 @@ class SessionHistoryResultTable extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type array<\Common\SessionHistoryResult>|\Google\Protobuf\Internal\RepeatedField $table
+     *     @type array<\Common\SessionHistoryResult>|\Google\Protobuf\Internal\RepeatedField $tables
      * }
      */
     public function __construct($data = NULL) {
@@ -33,23 +33,23 @@ class SessionHistoryResultTable extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.SessionHistoryResult table = 1;</code>
+     * Generated from protobuf field <code>repeated .common.SessionHistoryResult tables = 1;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
-    public function getTable()
+    public function getTables()
     {
-        return $this->table;
+        return $this->tables;
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.SessionHistoryResult table = 1;</code>
+     * Generated from protobuf field <code>repeated .common.SessionHistoryResult tables = 1;</code>
      * @param array<\Common\SessionHistoryResult>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
-    public function setTable($var)
+    public function setTables($var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::MESSAGE, \Common\SessionHistoryResult::class);
-        $this->table = $arr;
+        $this->tables = $arr;
 
         return $this;
     }

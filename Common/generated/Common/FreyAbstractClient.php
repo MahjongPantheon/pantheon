@@ -80,19 +80,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function RequestRegistration(array $ctx, \Common\Auth_RequestRegistration_Payload $in): \Common\Auth_RequestRegistration_Response
+    public function RequestRegistration(array $ctx, \Common\AuthRequestRegistrationPayload $in): \Common\AuthRequestRegistrationResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'RequestRegistration');
 
-        $out = new \Common\Auth_RequestRegistration_Response();
+        $out = new \Common\AuthRequestRegistrationResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/RequestRegistration';
+            $url = $url.'/common.Frey/RequestRegistration';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/RequestRegistration';
+            $url = $url.'/'.$this->prefix.'/common.Frey/RequestRegistration';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -103,19 +103,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function ApproveRegistration(array $ctx, \Common\Auth_ApproveRegistration_Payload $in): \Common\Auth_ApproveRegistration_Response
+    public function ApproveRegistration(array $ctx, \Common\AuthApproveRegistrationPayload $in): \Common\AuthApproveRegistrationResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'ApproveRegistration');
 
-        $out = new \Common\Auth_ApproveRegistration_Response();
+        $out = new \Common\AuthApproveRegistrationResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/ApproveRegistration';
+            $url = $url.'/common.Frey/ApproveRegistration';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/ApproveRegistration';
+            $url = $url.'/'.$this->prefix.'/common.Frey/ApproveRegistration';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -126,19 +126,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function Authorize(array $ctx, \Common\Auth_Authorize_Payload $in): \Common\Auth_Authorize_Response
+    public function Authorize(array $ctx, \Common\AuthAuthorizePayload $in): \Common\AuthAuthorizeResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'Authorize');
 
-        $out = new \Common\Auth_Authorize_Response();
+        $out = new \Common\AuthAuthorizeResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/Authorize';
+            $url = $url.'/common.Frey/Authorize';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/Authorize';
+            $url = $url.'/'.$this->prefix.'/common.Frey/Authorize';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -149,19 +149,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function QuickAuthorize(array $ctx, \Common\Auth_QuickAuthorize_Payload $in): \Common\Auth_QuickAuthorize_Response
+    public function QuickAuthorize(array $ctx, \Common\AuthQuickAuthorizePayload $in): \Common\AuthQuickAuthorizeResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'QuickAuthorize');
 
-        $out = new \Common\Auth_QuickAuthorize_Response();
+        $out = new \Common\AuthQuickAuthorizeResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/QuickAuthorize';
+            $url = $url.'/common.Frey/QuickAuthorize';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/QuickAuthorize';
+            $url = $url.'/'.$this->prefix.'/common.Frey/QuickAuthorize';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -172,19 +172,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function Me(array $ctx, \Common\Auth_Me_Payload $in): \Common\Auth_Me_Response
+    public function Me(array $ctx, \Common\AuthMePayload $in): \Common\AuthMeResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'Me');
 
-        $out = new \Common\Auth_Me_Response();
+        $out = new \Common\AuthMeResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/Me';
+            $url = $url.'/common.Frey/Me';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/Me';
+            $url = $url.'/'.$this->prefix.'/common.Frey/Me';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -195,19 +195,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function ChangePassword(array $ctx, \Common\Auth_ChangePassword_Payload $in): \Common\Auth_ChangePassword_Response
+    public function ChangePassword(array $ctx, \Common\AuthChangePasswordPayload $in): \Common\AuthChangePasswordResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'ChangePassword');
 
-        $out = new \Common\Auth_ChangePassword_Response();
+        $out = new \Common\AuthChangePasswordResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/ChangePassword';
+            $url = $url.'/common.Frey/ChangePassword';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/ChangePassword';
+            $url = $url.'/'.$this->prefix.'/common.Frey/ChangePassword';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -218,19 +218,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function RequestResetPassword(array $ctx, \Common\Auth_RequestResetPassword_Payload $in): \Common\Auth_RequestResetPassword_Response
+    public function RequestResetPassword(array $ctx, \Common\AuthRequestResetPasswordPayload $in): \Common\AuthRequestResetPasswordResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'RequestResetPassword');
 
-        $out = new \Common\Auth_RequestResetPassword_Response();
+        $out = new \Common\AuthRequestResetPasswordResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/RequestResetPassword';
+            $url = $url.'/common.Frey/RequestResetPassword';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/RequestResetPassword';
+            $url = $url.'/'.$this->prefix.'/common.Frey/RequestResetPassword';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -241,19 +241,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function ApproveResetPassword(array $ctx, \Common\Auth_ApproveResetPassword_Payload $in): \Common\Auth_ApproveResetPassword_Response
+    public function ApproveResetPassword(array $ctx, \Common\AuthApproveResetPasswordPayload $in): \Common\AuthApproveResetPasswordResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'ApproveResetPassword');
 
-        $out = new \Common\Auth_ApproveResetPassword_Response();
+        $out = new \Common\AuthApproveResetPasswordResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/ApproveResetPassword';
+            $url = $url.'/common.Frey/ApproveResetPassword';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/ApproveResetPassword';
+            $url = $url.'/'.$this->prefix.'/common.Frey/ApproveResetPassword';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -264,19 +264,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetAccessRules(array $ctx, \Common\Access_GetAccessRules_Payload $in): \Common\Access_GetAccessRules_Response
+    public function GetAccessRules(array $ctx, \Common\AccessGetAccessRulesPayload $in): \Common\AccessGetAccessRulesResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetAccessRules');
 
-        $out = new \Common\Access_GetAccessRules_Response();
+        $out = new \Common\AccessGetAccessRulesResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetAccessRules';
+            $url = $url.'/common.Frey/GetAccessRules';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetAccessRules';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetAccessRules';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -287,19 +287,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetRuleValue(array $ctx, \Common\Access_GetRuleValue_Payload $in): \Common\Access_GetRuleValue_Response
+    public function GetRuleValue(array $ctx, \Common\AccessGetRuleValuePayload $in): \Common\AccessGetRuleValueResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetRuleValue');
 
-        $out = new \Common\Access_GetRuleValue_Response();
+        $out = new \Common\AccessGetRuleValueResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetRuleValue';
+            $url = $url.'/common.Frey/GetRuleValue';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetRuleValue';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetRuleValue';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -310,19 +310,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function UpdatePersonalInfo(array $ctx, \Common\Persons_UpdatePersonalInfo_Payload $in): \Common\Generic_Success_Response
+    public function UpdatePersonalInfo(array $ctx, \Common\PersonsUpdatePersonalInfoPayload $in): \Common\GenericSuccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'UpdatePersonalInfo');
 
-        $out = new \Common\Generic_Success_Response();
+        $out = new \Common\GenericSuccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/UpdatePersonalInfo';
+            $url = $url.'/common.Frey/UpdatePersonalInfo';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/UpdatePersonalInfo';
+            $url = $url.'/'.$this->prefix.'/common.Frey/UpdatePersonalInfo';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -333,19 +333,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetPersonalInfo(array $ctx, \Common\Persons_GetPersonalInfo_Payload $in): \Common\Persons_GetPersonalInfo_Response
+    public function GetPersonalInfo(array $ctx, \Common\PersonsGetPersonalInfoPayload $in): \Common\PersonsGetPersonalInfoResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetPersonalInfo');
 
-        $out = new \Common\Persons_GetPersonalInfo_Response();
+        $out = new \Common\PersonsGetPersonalInfoResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetPersonalInfo';
+            $url = $url.'/common.Frey/GetPersonalInfo';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetPersonalInfo';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetPersonalInfo';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -356,19 +356,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function FindByTenhouIds(array $ctx, \Common\Persons_FindByTenhouIds_Payload $in): \Common\Persons_FindByTenhouIds_Response
+    public function FindByTenhouIds(array $ctx, \Common\PersonsFindByTenhouIdsPayload $in): \Common\PersonsFindByTenhouIdsResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'FindByTenhouIds');
 
-        $out = new \Common\Persons_FindByTenhouIds_Response();
+        $out = new \Common\PersonsFindByTenhouIdsResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/FindByTenhouIds';
+            $url = $url.'/common.Frey/FindByTenhouIds';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/FindByTenhouIds';
+            $url = $url.'/'.$this->prefix.'/common.Frey/FindByTenhouIds';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -379,19 +379,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function FindByTitle(array $ctx, \Common\Persons_FindByTitle_Payload $in): \Common\Persons_FindByTitle_Response
+    public function FindByTitle(array $ctx, \Common\PersonsFindByTitlePayload $in): \Common\PersonsFindByTitleResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'FindByTitle');
 
-        $out = new \Common\Persons_FindByTitle_Response();
+        $out = new \Common\PersonsFindByTitleResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/FindByTitle';
+            $url = $url.'/common.Frey/FindByTitle';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/FindByTitle';
+            $url = $url.'/'.$this->prefix.'/common.Frey/FindByTitle';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -402,19 +402,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetGroups(array $ctx, \Common\Persons_GetGroups_Payload $in): \Common\Persons_GetGroups_Response
+    public function GetGroups(array $ctx, \Common\PersonsGetGroupsPayload $in): \Common\PersonsGetGroupsResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetGroups');
 
-        $out = new \Common\Persons_GetGroups_Response();
+        $out = new \Common\PersonsGetGroupsResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetGroups';
+            $url = $url.'/common.Frey/GetGroups';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetGroups';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetGroups';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -425,19 +425,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetEventAdmins(array $ctx, \Common\Access_GetEventAdmins_Payload $in): \Common\Access_GetEventAdmins_Response
+    public function GetEventAdmins(array $ctx, \Common\AccessGetEventAdminsPayload $in): \Common\AccessGetEventAdminsResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetEventAdmins');
 
-        $out = new \Common\Access_GetEventAdmins_Response();
+        $out = new \Common\AccessGetEventAdminsResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetEventAdmins';
+            $url = $url.'/common.Frey/GetEventAdmins';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetEventAdmins';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetEventAdmins';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -448,19 +448,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetSuperadminFlag(array $ctx, \Common\Access_GetSuperadminFlag_Payload $in): \Common\Access_GetSuperadminFlag_Response
+    public function GetSuperadminFlag(array $ctx, \Common\AccessGetSuperadminFlagPayload $in): \Common\AccessGetSuperadminFlagResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetSuperadminFlag');
 
-        $out = new \Common\Access_GetSuperadminFlag_Response();
+        $out = new \Common\AccessGetSuperadminFlagResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetSuperadminFlag';
+            $url = $url.'/common.Frey/GetSuperadminFlag';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetSuperadminFlag';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetSuperadminFlag';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -471,19 +471,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetOwnedEventIds(array $ctx, \Common\Access_GetOwnedEventIds_Payload $in): \Common\Access_GetOwnedEventIds_Response
+    public function GetOwnedEventIds(array $ctx, \Common\AccessGetOwnedEventIdsPayload $in): \Common\AccessGetOwnedEventIdsResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetOwnedEventIds');
 
-        $out = new \Common\Access_GetOwnedEventIds_Response();
+        $out = new \Common\AccessGetOwnedEventIdsResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetOwnedEventIds';
+            $url = $url.'/common.Frey/GetOwnedEventIds';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetOwnedEventIds';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetOwnedEventIds';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -494,19 +494,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetRulesList(array $ctx, \Common\Access_GetRulesList_Payload $in): \Common\Access_GetRulesList_Response
+    public function GetRulesList(array $ctx, \Common\AccessGetRulesListPayload $in): \Common\AccessGetRulesListResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetRulesList');
 
-        $out = new \Common\Access_GetRulesList_Response();
+        $out = new \Common\AccessGetRulesListResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetRulesList';
+            $url = $url.'/common.Frey/GetRulesList';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetRulesList';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetRulesList';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -517,19 +517,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetAllEventRules(array $ctx, \Common\Access_GetAllEventRules_Payload $in): \Common\Access_GetAllEventRules_Response
+    public function GetAllEventRules(array $ctx, \Common\AccessGetAllEventRulesPayload $in): \Common\AccessGetAllEventRulesResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetAllEventRules');
 
-        $out = new \Common\Access_GetAllEventRules_Response();
+        $out = new \Common\AccessGetAllEventRulesResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetAllEventRules';
+            $url = $url.'/common.Frey/GetAllEventRules';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetAllEventRules';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetAllEventRules';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -540,19 +540,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetPersonAccess(array $ctx, \Common\Access_GetPersonAccess_Payload $in): \Common\Access_GetPersonAccess_Response
+    public function GetPersonAccess(array $ctx, \Common\AccessGetPersonAccessPayload $in): \Common\AccessGetPersonAccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetPersonAccess');
 
-        $out = new \Common\Access_GetPersonAccess_Response();
+        $out = new \Common\AccessGetPersonAccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetPersonAccess';
+            $url = $url.'/common.Frey/GetPersonAccess';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetPersonAccess';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetPersonAccess';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -563,19 +563,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetGroupAccess(array $ctx, \Common\Access_GetGroupAccess_Payload $in): \Common\Access_GetGroupAccess_Response
+    public function GetGroupAccess(array $ctx, \Common\AccessGetGroupAccessPayload $in): \Common\AccessGetGroupAccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetGroupAccess');
 
-        $out = new \Common\Access_GetGroupAccess_Response();
+        $out = new \Common\AccessGetGroupAccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetGroupAccess';
+            $url = $url.'/common.Frey/GetGroupAccess';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetGroupAccess';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetGroupAccess';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -586,19 +586,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetAllPersonAccess(array $ctx, \Common\Access_GetAllPersonAccess_Payload $in): \Common\Access_GetAllPersonAccess_Response
+    public function GetAllPersonAccess(array $ctx, \Common\AccessGetAllPersonAccessPayload $in): \Common\AccessGetAllPersonAccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetAllPersonAccess');
 
-        $out = new \Common\Access_GetAllPersonAccess_Response();
+        $out = new \Common\AccessGetAllPersonAccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetAllPersonAccess';
+            $url = $url.'/common.Frey/GetAllPersonAccess';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetAllPersonAccess';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetAllPersonAccess';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -609,19 +609,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetAllGroupAccess(array $ctx, \Common\Access_GetAllGroupAccess_Payload $in): \Common\Access_GetAllGroupAccess_Response
+    public function GetAllGroupAccess(array $ctx, \Common\AccessGetAllGroupAccessPayload $in): \Common\AccessGetAllGroupAccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetAllGroupAccess');
 
-        $out = new \Common\Access_GetAllGroupAccess_Response();
+        $out = new \Common\AccessGetAllGroupAccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetAllGroupAccess';
+            $url = $url.'/common.Frey/GetAllGroupAccess';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetAllGroupAccess';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetAllGroupAccess';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -632,19 +632,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function AddRuleForPerson(array $ctx, \Common\Access_AddRuleForPerson_Payload $in): \Common\Access_AddRuleForPerson_Response
+    public function AddRuleForPerson(array $ctx, \Common\AccessAddRuleForPersonPayload $in): \Common\AccessAddRuleForPersonResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'AddRuleForPerson');
 
-        $out = new \Common\Access_AddRuleForPerson_Response();
+        $out = new \Common\AccessAddRuleForPersonResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/AddRuleForPerson';
+            $url = $url.'/common.Frey/AddRuleForPerson';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/AddRuleForPerson';
+            $url = $url.'/'.$this->prefix.'/common.Frey/AddRuleForPerson';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -655,19 +655,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function AddRuleForGroup(array $ctx, \Common\Access_AddRuleForGroup_Payload $in): \Common\Access_AddRuleForGroup_Response
+    public function AddRuleForGroup(array $ctx, \Common\AccessAddRuleForGroupPayload $in): \Common\AccessAddRuleForGroupResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'AddRuleForGroup');
 
-        $out = new \Common\Access_AddRuleForGroup_Response();
+        $out = new \Common\AccessAddRuleForGroupResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/AddRuleForGroup';
+            $url = $url.'/common.Frey/AddRuleForGroup';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/AddRuleForGroup';
+            $url = $url.'/'.$this->prefix.'/common.Frey/AddRuleForGroup';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -678,19 +678,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function UpdateRuleForPerson(array $ctx, \Common\Access_UpdateRuleForPerson_Payload $in): \Common\Generic_Success_Response
+    public function UpdateRuleForPerson(array $ctx, \Common\AccessUpdateRuleForPersonPayload $in): \Common\GenericSuccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'UpdateRuleForPerson');
 
-        $out = new \Common\Generic_Success_Response();
+        $out = new \Common\GenericSuccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/UpdateRuleForPerson';
+            $url = $url.'/common.Frey/UpdateRuleForPerson';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/UpdateRuleForPerson';
+            $url = $url.'/'.$this->prefix.'/common.Frey/UpdateRuleForPerson';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -701,19 +701,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function UpdateRuleForGroup(array $ctx, \Common\Access_UpdateRuleForGroup_Payload $in): \Common\Generic_Success_Response
+    public function UpdateRuleForGroup(array $ctx, \Common\AccessUpdateRuleForGroupPayload $in): \Common\GenericSuccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'UpdateRuleForGroup');
 
-        $out = new \Common\Generic_Success_Response();
+        $out = new \Common\GenericSuccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/UpdateRuleForGroup';
+            $url = $url.'/common.Frey/UpdateRuleForGroup';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/UpdateRuleForGroup';
+            $url = $url.'/'.$this->prefix.'/common.Frey/UpdateRuleForGroup';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -724,19 +724,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function DeleteRuleForPerson(array $ctx, \Common\Access_DeleteRuleForPerson_Payload $in): \Common\Generic_Success_Response
+    public function DeleteRuleForPerson(array $ctx, \Common\AccessDeleteRuleForPersonPayload $in): \Common\GenericSuccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'DeleteRuleForPerson');
 
-        $out = new \Common\Generic_Success_Response();
+        $out = new \Common\GenericSuccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/DeleteRuleForPerson';
+            $url = $url.'/common.Frey/DeleteRuleForPerson';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/DeleteRuleForPerson';
+            $url = $url.'/'.$this->prefix.'/common.Frey/DeleteRuleForPerson';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -747,19 +747,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function DeleteRuleForGroup(array $ctx, \Common\Access_DeleteRuleForGroup_Payload $in): \Common\Generic_Success_Response
+    public function DeleteRuleForGroup(array $ctx, \Common\AccessDeleteRuleForGroupPayload $in): \Common\GenericSuccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'DeleteRuleForGroup');
 
-        $out = new \Common\Generic_Success_Response();
+        $out = new \Common\GenericSuccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/DeleteRuleForGroup';
+            $url = $url.'/common.Frey/DeleteRuleForGroup';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/DeleteRuleForGroup';
+            $url = $url.'/'.$this->prefix.'/common.Frey/DeleteRuleForGroup';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -770,19 +770,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function ClearAccessCache(array $ctx, \Common\Access_ClearAccessCache_Payload $in): \Common\Generic_Success_Response
+    public function ClearAccessCache(array $ctx, \Common\AccessClearAccessCachePayload $in): \Common\GenericSuccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'ClearAccessCache');
 
-        $out = new \Common\Generic_Success_Response();
+        $out = new \Common\GenericSuccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/ClearAccessCache';
+            $url = $url.'/common.Frey/ClearAccessCache';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/ClearAccessCache';
+            $url = $url.'/'.$this->prefix.'/common.Frey/ClearAccessCache';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -793,19 +793,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function CreateAccount(array $ctx, \Common\Persons_CreateAccount_Payload $in): \Common\Persons_CreateAccount_Response
+    public function CreateAccount(array $ctx, \Common\PersonsCreateAccountPayload $in): \Common\PersonsCreateAccountResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'CreateAccount');
 
-        $out = new \Common\Persons_CreateAccount_Response();
+        $out = new \Common\PersonsCreateAccountResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/CreateAccount';
+            $url = $url.'/common.Frey/CreateAccount';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/CreateAccount';
+            $url = $url.'/'.$this->prefix.'/common.Frey/CreateAccount';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -816,19 +816,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function CreateGroup(array $ctx, \Common\Persons_CreateGroup_Payload $in): \Common\Persons_CreateGroup_Response
+    public function CreateGroup(array $ctx, \Common\PersonsCreateGroupPayload $in): \Common\PersonsCreateGroupResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'CreateGroup');
 
-        $out = new \Common\Persons_CreateGroup_Response();
+        $out = new \Common\PersonsCreateGroupResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/CreateGroup';
+            $url = $url.'/common.Frey/CreateGroup';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/CreateGroup';
+            $url = $url.'/'.$this->prefix.'/common.Frey/CreateGroup';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -839,19 +839,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function UpdateGroup(array $ctx, \Common\Persons_UpdateGroup_Payload $in): \Common\Generic_Success_Response
+    public function UpdateGroup(array $ctx, \Common\PersonsUpdateGroupPayload $in): \Common\GenericSuccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'UpdateGroup');
 
-        $out = new \Common\Generic_Success_Response();
+        $out = new \Common\GenericSuccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/UpdateGroup';
+            $url = $url.'/common.Frey/UpdateGroup';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/UpdateGroup';
+            $url = $url.'/'.$this->prefix.'/common.Frey/UpdateGroup';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -862,19 +862,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function DeleteGroup(array $ctx, \Common\Persons_DeleteGroup_Payload $in): \Common\Generic_Success_Response
+    public function DeleteGroup(array $ctx, \Common\PersonsDeleteGroupPayload $in): \Common\GenericSuccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'DeleteGroup');
 
-        $out = new \Common\Generic_Success_Response();
+        $out = new \Common\GenericSuccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/DeleteGroup';
+            $url = $url.'/common.Frey/DeleteGroup';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/DeleteGroup';
+            $url = $url.'/'.$this->prefix.'/common.Frey/DeleteGroup';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -885,19 +885,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function AddPersonToGroup(array $ctx, \Common\Persons_AddPersonToGroup_Payload $in): \Common\Generic_Success_Response
+    public function AddPersonToGroup(array $ctx, \Common\PersonsAddPersonToGroupPayload $in): \Common\GenericSuccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'AddPersonToGroup');
 
-        $out = new \Common\Generic_Success_Response();
+        $out = new \Common\GenericSuccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/AddPersonToGroup';
+            $url = $url.'/common.Frey/AddPersonToGroup';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/AddPersonToGroup';
+            $url = $url.'/'.$this->prefix.'/common.Frey/AddPersonToGroup';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -908,19 +908,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function RemovePersonFromGroup(array $ctx, \Common\Persons_RemovePersonFromGroup_Payload $in): \Common\Generic_Success_Response
+    public function RemovePersonFromGroup(array $ctx, \Common\PersonsRemovePersonFromGroupPayload $in): \Common\GenericSuccessResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'RemovePersonFromGroup');
 
-        $out = new \Common\Generic_Success_Response();
+        $out = new \Common\GenericSuccessResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/RemovePersonFromGroup';
+            $url = $url.'/common.Frey/RemovePersonFromGroup';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/RemovePersonFromGroup';
+            $url = $url.'/'.$this->prefix.'/common.Frey/RemovePersonFromGroup';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -931,19 +931,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetPersonsOfGroup(array $ctx, \Common\Persons_GetPersonsOfGroup_Payload $in): \Common\Persons_GetPersonsOfGroup_Response
+    public function GetPersonsOfGroup(array $ctx, \Common\PersonsGetPersonsOfGroupPayload $in): \Common\PersonsGetPersonsOfGroupResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetPersonsOfGroup');
 
-        $out = new \Common\Persons_GetPersonsOfGroup_Response();
+        $out = new \Common\PersonsGetPersonsOfGroupResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetPersonsOfGroup';
+            $url = $url.'/common.Frey/GetPersonsOfGroup';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetPersonsOfGroup';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetPersonsOfGroup';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -954,19 +954,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function GetGroupsOfPerson(array $ctx, \Common\Persons_GetGroupsOfPerson_Payload $in): \Common\Persons_GetGroupsOfPerson_Response
+    public function GetGroupsOfPerson(array $ctx, \Common\PersonsGetGroupsOfPersonPayload $in): \Common\PersonsGetGroupsOfPersonResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'GetGroupsOfPerson');
 
-        $out = new \Common\Persons_GetGroupsOfPerson_Response();
+        $out = new \Common\PersonsGetGroupsOfPersonResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/GetGroupsOfPerson';
+            $url = $url.'/common.Frey/GetGroupsOfPerson';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/GetGroupsOfPerson';
+            $url = $url.'/'.$this->prefix.'/common.Frey/GetGroupsOfPerson';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -977,19 +977,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function AddSystemWideRuleForPerson(array $ctx, \Common\Access_AddSystemWideRuleForPerson_Payload $in): \Common\Access_AddSystemWideRuleForPerson_Response
+    public function AddSystemWideRuleForPerson(array $ctx, \Common\AccessAddSystemWideRuleForPersonPayload $in): \Common\AccessAddSystemWideRuleForPersonResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'AddSystemWideRuleForPerson');
 
-        $out = new \Common\Access_AddSystemWideRuleForPerson_Response();
+        $out = new \Common\AccessAddSystemWideRuleForPersonResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/AddSystemWideRuleForPerson';
+            $url = $url.'/common.Frey/AddSystemWideRuleForPerson';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/AddSystemWideRuleForPerson';
+            $url = $url.'/'.$this->prefix.'/common.Frey/AddSystemWideRuleForPerson';
         }
 
         $this->doRequest($ctx, $url, $in, $out);
@@ -1000,19 +1000,19 @@ abstract class FreyAbstractClient
     /**
      * {@inheritdoc}
      */
-    public function AddSystemWideRuleForGroup(array $ctx, \Common\Access_AddSystemWideRuleForGroup_Payload $in): \Common\Access_AddSystemWideRuleForGroup_Response
+    public function AddSystemWideRuleForGroup(array $ctx, \Common\AccessAddSystemWideRuleForGroupPayload $in): \Common\AccessAddSystemWideRuleForGroupResponse
     {
-        $ctx = Context::withPackageName($ctx, 'Common');
+        $ctx = Context::withPackageName($ctx, 'common');
         $ctx = Context::withServiceName($ctx, 'Frey');
         $ctx = Context::withMethodName($ctx, 'AddSystemWideRuleForGroup');
 
-        $out = new \Common\Access_AddSystemWideRuleForGroup_Response();
+        $out = new \Common\AccessAddSystemWideRuleForGroupResponse();
 
         $url = $this->addr;
         if (empty($this->prefix)) {
-            $url = $url.'/Common.Frey/AddSystemWideRuleForGroup';
+            $url = $url.'/common.Frey/AddSystemWideRuleForGroup';
         } else {
-            $url = $url.'/'.$this->prefix.'/Common.Frey/AddSystemWideRuleForGroup';
+            $url = $url.'/'.$this->prefix.'/common.Frey/AddSystemWideRuleForGroup';
         }
 
         $this->doRequest($ctx, $url, $in, $out);

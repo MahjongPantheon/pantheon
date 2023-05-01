@@ -9,20 +9,20 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.EventRuleListItem</code>
+ * Generated from protobuf message <code>common.EventRuleListItem</code>
  */
 class EventRuleListItem extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>bool isGlobal = 1;</code>
+     * Generated from protobuf field <code>bool is_global = 1;</code>
      */
-    protected $isGlobal = false;
+    protected $is_global = false;
     /**
      * Generated from protobuf field <code>int32 id = 2;</code>
      */
     protected $id = 0;
     /**
-     * Generated from protobuf field <code>.Common.RuleValue value = 3;</code>
+     * Generated from protobuf field <code>.common.RuleValue value = 3;</code>
      */
     protected $value = null;
     /**
@@ -30,13 +30,13 @@ class EventRuleListItem extends \Google\Protobuf\Internal\Message
      */
     protected $name = '';
     /**
-     * Generated from protobuf field <code>string ownerTitle = 5;</code>
+     * Generated from protobuf field <code>string owner_title = 5;</code>
      */
-    protected $ownerTitle = '';
+    protected $owner_title = '';
     /**
-     * Generated from protobuf field <code>repeated string allowedValues = 6;</code>
+     * Generated from protobuf field <code>repeated string allowed_values = 6;</code>
      */
-    private $allowedValues;
+    private $allowed_values;
 
     /**
      * Constructor.
@@ -44,12 +44,12 @@ class EventRuleListItem extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type bool $isGlobal
+     *     @type bool $is_global
      *     @type int $id
      *     @type \Common\RuleValue $value
      *     @type string $name
-     *     @type string $ownerTitle
-     *     @type array<string>|\Google\Protobuf\Internal\RepeatedField $allowedValues
+     *     @type string $owner_title
+     *     @type array<string>|\Google\Protobuf\Internal\RepeatedField $allowed_values
      * }
      */
     public function __construct($data = NULL) {
@@ -58,23 +58,23 @@ class EventRuleListItem extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool isGlobal = 1;</code>
+     * Generated from protobuf field <code>bool is_global = 1;</code>
      * @return bool
      */
     public function getIsGlobal()
     {
-        return $this->isGlobal;
+        return $this->is_global;
     }
 
     /**
-     * Generated from protobuf field <code>bool isGlobal = 1;</code>
+     * Generated from protobuf field <code>bool is_global = 1;</code>
      * @param bool $var
      * @return $this
      */
     public function setIsGlobal($var)
     {
         GPBUtil::checkBool($var);
-        $this->isGlobal = $var;
+        $this->is_global = $var;
 
         return $this;
     }
@@ -102,7 +102,7 @@ class EventRuleListItem extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.Common.RuleValue value = 3;</code>
+     * Generated from protobuf field <code>.common.RuleValue value = 3;</code>
      * @return \Common\RuleValue|null
      */
     public function getValue()
@@ -121,7 +121,7 @@ class EventRuleListItem extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.Common.RuleValue value = 3;</code>
+     * Generated from protobuf field <code>.common.RuleValue value = 3;</code>
      * @param \Common\RuleValue $var
      * @return $this
      */
@@ -156,45 +156,45 @@ class EventRuleListItem extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>string ownerTitle = 5;</code>
+     * Generated from protobuf field <code>string owner_title = 5;</code>
      * @return string
      */
     public function getOwnerTitle()
     {
-        return $this->ownerTitle;
+        return $this->owner_title;
     }
 
     /**
-     * Generated from protobuf field <code>string ownerTitle = 5;</code>
+     * Generated from protobuf field <code>string owner_title = 5;</code>
      * @param string $var
      * @return $this
      */
     public function setOwnerTitle($var)
     {
         GPBUtil::checkString($var, True);
-        $this->ownerTitle = $var;
+        $this->owner_title = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>repeated string allowedValues = 6;</code>
+     * Generated from protobuf field <code>repeated string allowed_values = 6;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getAllowedValues()
     {
-        return $this->allowedValues;
+        return $this->allowed_values;
     }
 
     /**
-     * Generated from protobuf field <code>repeated string allowedValues = 6;</code>
+     * Generated from protobuf field <code>repeated string allowed_values = 6;</code>
      * @param array<string>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setAllowedValues($var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::STRING);
-        $this->allowedValues = $arr;
+        $this->allowed_values = $arr;
 
         return $this;
     }

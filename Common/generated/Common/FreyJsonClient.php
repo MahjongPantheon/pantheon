@@ -13,7 +13,7 @@ use Google\Protobuf\Internal\Message;
  * A JSON client that implements the {@see Frey} interface.
  * It communicates using JSON and can be configured with a custom HTTP Client.
  *
- * Generated from protobuf service <code>Common.Frey</code>
+ * Generated from protobuf service <code>common.Frey</code>
  */
 final class FreyJsonClient extends FreyAbstractClient implements Frey
 {

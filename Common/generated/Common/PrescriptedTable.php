@@ -9,14 +9,14 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.PrescriptedTable</code>
+ * Generated from protobuf message <code>common.PrescriptedTable</code>
  */
 class PrescriptedTable extends \Google\Protobuf\Internal\Message
 {
     /**
      * should be 4 elements
      *
-     * Generated from protobuf field <code>repeated .Common.RegisteredPlayer players = 1;</code>
+     * Generated from protobuf field <code>repeated .common.RegisteredPlayer players = 1;</code>
      */
     private $players;
 
@@ -38,7 +38,7 @@ class PrescriptedTable extends \Google\Protobuf\Internal\Message
     /**
      * should be 4 elements
      *
-     * Generated from protobuf field <code>repeated .Common.RegisteredPlayer players = 1;</code>
+     * Generated from protobuf field <code>repeated .common.RegisteredPlayer players = 1;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getPlayers()
@@ -49,7 +49,7 @@ class PrescriptedTable extends \Google\Protobuf\Internal\Message
     /**
      * should be 4 elements
      *
-     * Generated from protobuf field <code>repeated .Common.RegisteredPlayer players = 1;</code>
+     * Generated from protobuf field <code>repeated .common.RegisteredPlayer players = 1;</code>
      * @param array<\Common\RegisteredPlayer>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */

@@ -9,20 +9,20 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.PaymentLog</code>
+ * Generated from protobuf message <code>common.PaymentLog</code>
  */
 class PaymentLog extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>repeated .Common.PaymentLogItem direct = 1;</code>
+     * Generated from protobuf field <code>repeated .common.PaymentLogItem direct = 1;</code>
      */
     private $direct;
     /**
-     * Generated from protobuf field <code>repeated .Common.PaymentLogItem riichi = 2;</code>
+     * Generated from protobuf field <code>repeated .common.PaymentLogItem riichi = 2;</code>
      */
     private $riichi;
     /**
-     * Generated from protobuf field <code>repeated .Common.PaymentLogItem honba = 3;</code>
+     * Generated from protobuf field <code>repeated .common.PaymentLogItem honba = 3;</code>
      */
     private $honba;
 
@@ -43,7 +43,7 @@ class PaymentLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.PaymentLogItem direct = 1;</code>
+     * Generated from protobuf field <code>repeated .common.PaymentLogItem direct = 1;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getDirect()
@@ -52,7 +52,7 @@ class PaymentLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.PaymentLogItem direct = 1;</code>
+     * Generated from protobuf field <code>repeated .common.PaymentLogItem direct = 1;</code>
      * @param array<\Common\PaymentLogItem>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
@@ -65,7 +65,7 @@ class PaymentLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.PaymentLogItem riichi = 2;</code>
+     * Generated from protobuf field <code>repeated .common.PaymentLogItem riichi = 2;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRiichi()
@@ -74,7 +74,7 @@ class PaymentLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.PaymentLogItem riichi = 2;</code>
+     * Generated from protobuf field <code>repeated .common.PaymentLogItem riichi = 2;</code>
      * @param array<\Common\PaymentLogItem>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
@@ -87,7 +87,7 @@ class PaymentLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.PaymentLogItem honba = 3;</code>
+     * Generated from protobuf field <code>repeated .common.PaymentLogItem honba = 3;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getHonba()
@@ -96,7 +96,7 @@ class PaymentLog extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>repeated .Common.PaymentLogItem honba = 3;</code>
+     * Generated from protobuf field <code>repeated .common.PaymentLogItem honba = 3;</code>
      * @param array<\Common\PaymentLogItem>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */

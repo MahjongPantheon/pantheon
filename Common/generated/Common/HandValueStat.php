@@ -9,14 +9,14 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.HandValueStat</code>
+ * Generated from protobuf message <code>common.HandValueStat</code>
  */
 class HandValueStat extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>int32 hanCount = 1;</code>
+     * Generated from protobuf field <code>int32 han_count = 1;</code>
      */
-    protected $hanCount = 0;
+    protected $han_count = 0;
     /**
      * count of hands with this value
      *
@@ -30,7 +30,7 @@ class HandValueStat extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int $hanCount
+     *     @type int $han_count
      *     @type int $count
      *           count of hands with this value
      * }
@@ -41,23 +41,23 @@ class HandValueStat extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 hanCount = 1;</code>
+     * Generated from protobuf field <code>int32 han_count = 1;</code>
      * @return int
      */
     public function getHanCount()
     {
-        return $this->hanCount;
+        return $this->han_count;
     }
 
     /**
-     * Generated from protobuf field <code>int32 hanCount = 1;</code>
+     * Generated from protobuf field <code>int32 han_count = 1;</code>
      * @param int $var
      * @return $this
      */
     public function setHanCount($var)
     {
         GPBUtil::checkInt32($var);
-        $this->hanCount = $var;
+        $this->han_count = $var;
 
         return $this;
     }

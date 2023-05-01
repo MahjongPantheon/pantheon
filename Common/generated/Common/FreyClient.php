@@ -13,7 +13,7 @@ use Google\Protobuf\Internal\Message;
  * A Protobuf client that implements the {@see Frey} interface.
  * It communicates using Protobuf and can be configured with a custom HTTP Client.
  *
- * Generated from protobuf service <code>Common.Frey</code>
+ * Generated from protobuf service <code>common.Frey</code>
  */
 final class FreyClient extends FreyAbstractClient implements Frey
 {

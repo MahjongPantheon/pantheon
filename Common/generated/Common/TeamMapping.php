@@ -9,18 +9,18 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.TeamMapping</code>
+ * Generated from protobuf message <code>common.TeamMapping</code>
  */
 class TeamMapping extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>int32 playerId = 1;</code>
+     * Generated from protobuf field <code>int32 player_id = 1;</code>
      */
-    protected $playerId = 0;
+    protected $player_id = 0;
     /**
-     * Generated from protobuf field <code>string teamName = 2;</code>
+     * Generated from protobuf field <code>string team_name = 2;</code>
      */
-    protected $teamName = '';
+    protected $team_name = '';
 
     /**
      * Constructor.
@@ -28,8 +28,8 @@ class TeamMapping extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int $playerId
-     *     @type string $teamName
+     *     @type int $player_id
+     *     @type string $team_name
      * }
      */
     public function __construct($data = NULL) {
@@ -38,45 +38,45 @@ class TeamMapping extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 playerId = 1;</code>
+     * Generated from protobuf field <code>int32 player_id = 1;</code>
      * @return int
      */
     public function getPlayerId()
     {
-        return $this->playerId;
+        return $this->player_id;
     }
 
     /**
-     * Generated from protobuf field <code>int32 playerId = 1;</code>
+     * Generated from protobuf field <code>int32 player_id = 1;</code>
      * @param int $var
      * @return $this
      */
     public function setPlayerId($var)
     {
         GPBUtil::checkInt32($var);
-        $this->playerId = $var;
+        $this->player_id = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>string teamName = 2;</code>
+     * Generated from protobuf field <code>string team_name = 2;</code>
      * @return string
      */
     public function getTeamName()
     {
-        return $this->teamName;
+        return $this->team_name;
     }
 
     /**
-     * Generated from protobuf field <code>string teamName = 2;</code>
+     * Generated from protobuf field <code>string team_name = 2;</code>
      * @param string $var
      * @return $this
      */
     public function setTeamName($var)
     {
         GPBUtil::checkString($var, True);
-        $this->teamName = $var;
+        $this->team_name = $var;
 
         return $this;
     }

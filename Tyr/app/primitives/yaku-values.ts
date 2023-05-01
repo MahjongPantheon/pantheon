@@ -89,7 +89,7 @@ export function getFixedFu(yakuList: Y[], outcome: RoundOutcome): number[] {
     return [20];
   }
 
-  if (outcome === 'RON' && !yakuList.includes(Y.__OPENHAND)) {
+  if (outcome === RoundOutcome.ROUND_OUTCOME_RON && !yakuList.includes(Y.__OPENHAND)) {
     if (yakuList.includes(Y.PINFU)) {
       return [30];
     }

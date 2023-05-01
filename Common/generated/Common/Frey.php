@@ -9,376 +9,377 @@ namespace Common;
 /**
  *
  *
- * Generated from protobuf service <code>Common.Frey</code>
+ * Generated from protobuf service <code>common.Frey</code>
  */
 interface Frey
 {
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/RequestRegistration</code>
+     * Generated from protobuf method <code>common.Frey/RequestRegistration</code>
      *
      * @throws \Twirp\Error
      */
-    public function RequestRegistration(array $ctx, \Common\Auth_RequestRegistration_Payload $req): \Common\Auth_RequestRegistration_Response;
+    public function RequestRegistration(array $ctx, \Common\AuthRequestRegistrationPayload $req): \Common\AuthRequestRegistrationResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/ApproveRegistration</code>
+     * Generated from protobuf method <code>common.Frey/ApproveRegistration</code>
      *
      * @throws \Twirp\Error
      */
-    public function ApproveRegistration(array $ctx, \Common\Auth_ApproveRegistration_Payload $req): \Common\Auth_ApproveRegistration_Response;
+    public function ApproveRegistration(array $ctx, \Common\AuthApproveRegistrationPayload $req): \Common\AuthApproveRegistrationResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/Authorize</code>
+     * Generated from protobuf method <code>common.Frey/Authorize</code>
      *
      * @throws \Twirp\Error
      */
-    public function Authorize(array $ctx, \Common\Auth_Authorize_Payload $req): \Common\Auth_Authorize_Response;
+    public function Authorize(array $ctx, \Common\AuthAuthorizePayload $req): \Common\AuthAuthorizeResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/QuickAuthorize</code>
+     * Generated from protobuf method <code>common.Frey/QuickAuthorize</code>
      *
      * @throws \Twirp\Error
      */
-    public function QuickAuthorize(array $ctx, \Common\Auth_QuickAuthorize_Payload $req): \Common\Auth_QuickAuthorize_Response;
+    public function QuickAuthorize(array $ctx, \Common\AuthQuickAuthorizePayload $req): \Common\AuthQuickAuthorizeResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/Me</code>
+     * Generated from protobuf method <code>common.Frey/Me</code>
      *
      * @throws \Twirp\Error
      */
-    public function Me(array $ctx, \Common\Auth_Me_Payload $req): \Common\Auth_Me_Response;
+    public function Me(array $ctx, \Common\AuthMePayload $req): \Common\AuthMeResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/ChangePassword</code>
+     * Generated from protobuf method <code>common.Frey/ChangePassword</code>
      *
      * @throws \Twirp\Error
      */
-    public function ChangePassword(array $ctx, \Common\Auth_ChangePassword_Payload $req): \Common\Auth_ChangePassword_Response;
+    public function ChangePassword(array $ctx, \Common\AuthChangePasswordPayload $req): \Common\AuthChangePasswordResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/RequestResetPassword</code>
+     * Generated from protobuf method <code>common.Frey/RequestResetPassword</code>
      *
      * @throws \Twirp\Error
      */
-    public function RequestResetPassword(array $ctx, \Common\Auth_RequestResetPassword_Payload $req): \Common\Auth_RequestResetPassword_Response;
+    public function RequestResetPassword(array $ctx, \Common\AuthRequestResetPasswordPayload $req): \Common\AuthRequestResetPasswordResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/ApproveResetPassword</code>
+     * Generated from protobuf method <code>common.Frey/ApproveResetPassword</code>
      *
      * @throws \Twirp\Error
      */
-    public function ApproveResetPassword(array $ctx, \Common\Auth_ApproveResetPassword_Payload $req): \Common\Auth_ApproveResetPassword_Response;
+    public function ApproveResetPassword(array $ctx, \Common\AuthApproveResetPasswordPayload $req): \Common\AuthApproveResetPasswordResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetAccessRules</code>
+     * Generated from protobuf method <code>common.Frey/GetAccessRules</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetAccessRules(array $ctx, \Common\Access_GetAccessRules_Payload $req): \Common\Access_GetAccessRules_Response;
+    public function GetAccessRules(array $ctx, \Common\AccessGetAccessRulesPayload $req): \Common\AccessGetAccessRulesResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetRuleValue</code>
+     * Generated from protobuf method <code>common.Frey/GetRuleValue</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetRuleValue(array $ctx, \Common\Access_GetRuleValue_Payload $req): \Common\Access_GetRuleValue_Response;
+    public function GetRuleValue(array $ctx, \Common\AccessGetRuleValuePayload $req): \Common\AccessGetRuleValueResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/UpdatePersonalInfo</code>
+     * Generated from protobuf method <code>common.Frey/UpdatePersonalInfo</code>
      *
      * @throws \Twirp\Error
      */
-    public function UpdatePersonalInfo(array $ctx, \Common\Persons_UpdatePersonalInfo_Payload $req): \Common\Generic_Success_Response;
+    public function UpdatePersonalInfo(array $ctx, \Common\PersonsUpdatePersonalInfoPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetPersonalInfo</code>
+     * Generated from protobuf method <code>common.Frey/GetPersonalInfo</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetPersonalInfo(array $ctx, \Common\Persons_GetPersonalInfo_Payload $req): \Common\Persons_GetPersonalInfo_Response;
+    public function GetPersonalInfo(array $ctx, \Common\PersonsGetPersonalInfoPayload $req): \Common\PersonsGetPersonalInfoResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/FindByTenhouIds</code>
+     * Generated from protobuf method <code>common.Frey/FindByTenhouIds</code>
      *
      * @throws \Twirp\Error
      */
-    public function FindByTenhouIds(array $ctx, \Common\Persons_FindByTenhouIds_Payload $req): \Common\Persons_FindByTenhouIds_Response;
+    public function FindByTenhouIds(array $ctx, \Common\PersonsFindByTenhouIdsPayload $req): \Common\PersonsFindByTenhouIdsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/FindByTitle</code>
+     * Generated from protobuf method <code>common.Frey/FindByTitle</code>
      *
      * @throws \Twirp\Error
      */
-    public function FindByTitle(array $ctx, \Common\Persons_FindByTitle_Payload $req): \Common\Persons_FindByTitle_Response;
+    public function FindByTitle(array $ctx, \Common\PersonsFindByTitlePayload $req): \Common\PersonsFindByTitleResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetGroups</code>
+     * Generated from protobuf method <code>common.Frey/GetGroups</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetGroups(array $ctx, \Common\Persons_GetGroups_Payload $req): \Common\Persons_GetGroups_Response;
+    public function GetGroups(array $ctx, \Common\PersonsGetGroupsPayload $req): \Common\PersonsGetGroupsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetEventAdmins</code>
+     * Generated from protobuf method <code>common.Frey/GetEventAdmins</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetEventAdmins(array $ctx, \Common\Access_GetEventAdmins_Payload $req): \Common\Access_GetEventAdmins_Response;
+    public function GetEventAdmins(array $ctx, \Common\AccessGetEventAdminsPayload $req): \Common\AccessGetEventAdminsResponse;
 
     /**
      * admin
      *
-     * Generated from protobuf method <code>Common.Frey/GetSuperadminFlag</code>
+     * Generated from protobuf method <code>common.Frey/GetSuperadminFlag</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetSuperadminFlag(array $ctx, \Common\Access_GetSuperadminFlag_Payload $req): \Common\Access_GetSuperadminFlag_Response;
+    public function GetSuperadminFlag(array $ctx, \Common\AccessGetSuperadminFlagPayload $req): \Common\AccessGetSuperadminFlagResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetOwnedEventIds</code>
+     * Generated from protobuf method <code>common.Frey/GetOwnedEventIds</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetOwnedEventIds(array $ctx, \Common\Access_GetOwnedEventIds_Payload $req): \Common\Access_GetOwnedEventIds_Response;
+    public function GetOwnedEventIds(array $ctx, \Common\AccessGetOwnedEventIdsPayload $req): \Common\AccessGetOwnedEventIdsResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetRulesList</code>
+     * Generated from protobuf method <code>common.Frey/GetRulesList</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetRulesList(array $ctx, \Common\Access_GetRulesList_Payload $req): \Common\Access_GetRulesList_Response;
+    public function GetRulesList(array $ctx, \Common\AccessGetRulesListPayload $req): \Common\AccessGetRulesListResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetAllEventRules</code>
+     * Generated from protobuf method <code>common.Frey/GetAllEventRules</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetAllEventRules(array $ctx, \Common\Access_GetAllEventRules_Payload $req): \Common\Access_GetAllEventRules_Response;
+    public function GetAllEventRules(array $ctx, \Common\AccessGetAllEventRulesPayload $req): \Common\AccessGetAllEventRulesResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetPersonAccess</code>
+     * Generated from protobuf method <code>common.Frey/GetPersonAccess</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetPersonAccess(array $ctx, \Common\Access_GetPersonAccess_Payload $req): \Common\Access_GetPersonAccess_Response;
+    public function GetPersonAccess(array $ctx, \Common\AccessGetPersonAccessPayload $req): \Common\AccessGetPersonAccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetGroupAccess</code>
+     * Generated from protobuf method <code>common.Frey/GetGroupAccess</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetGroupAccess(array $ctx, \Common\Access_GetGroupAccess_Payload $req): \Common\Access_GetGroupAccess_Response;
+    public function GetGroupAccess(array $ctx, \Common\AccessGetGroupAccessPayload $req): \Common\AccessGetGroupAccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetAllPersonAccess</code>
+     * Generated from protobuf method <code>common.Frey/GetAllPersonAccess</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetAllPersonAccess(array $ctx, \Common\Access_GetAllPersonAccess_Payload $req): \Common\Access_GetAllPersonAccess_Response;
+    public function GetAllPersonAccess(array $ctx, \Common\AccessGetAllPersonAccessPayload $req): \Common\AccessGetAllPersonAccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetAllGroupAccess</code>
+     * Generated from protobuf method <code>common.Frey/GetAllGroupAccess</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetAllGroupAccess(array $ctx, \Common\Access_GetAllGroupAccess_Payload $req): \Common\Access_GetAllGroupAccess_Response;
+    public function GetAllGroupAccess(array $ctx, \Common\AccessGetAllGroupAccessPayload $req): \Common\AccessGetAllGroupAccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/AddRuleForPerson</code>
+     * Generated from protobuf method <code>common.Frey/AddRuleForPerson</code>
      *
      * @throws \Twirp\Error
      */
-    public function AddRuleForPerson(array $ctx, \Common\Access_AddRuleForPerson_Payload $req): \Common\Access_AddRuleForPerson_Response;
+    public function AddRuleForPerson(array $ctx, \Common\AccessAddRuleForPersonPayload $req): \Common\AccessAddRuleForPersonResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/AddRuleForGroup</code>
+     * Generated from protobuf method <code>common.Frey/AddRuleForGroup</code>
      *
      * @throws \Twirp\Error
      */
-    public function AddRuleForGroup(array $ctx, \Common\Access_AddRuleForGroup_Payload $req): \Common\Access_AddRuleForGroup_Response;
+    public function AddRuleForGroup(array $ctx, \Common\AccessAddRuleForGroupPayload $req): \Common\AccessAddRuleForGroupResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/UpdateRuleForPerson</code>
+     * Generated from protobuf method <code>common.Frey/UpdateRuleForPerson</code>
      *
      * @throws \Twirp\Error
      */
-    public function UpdateRuleForPerson(array $ctx, \Common\Access_UpdateRuleForPerson_Payload $req): \Common\Generic_Success_Response;
+    public function UpdateRuleForPerson(array $ctx, \Common\AccessUpdateRuleForPersonPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/UpdateRuleForGroup</code>
+     * Generated from protobuf method <code>common.Frey/UpdateRuleForGroup</code>
      *
      * @throws \Twirp\Error
      */
-    public function UpdateRuleForGroup(array $ctx, \Common\Access_UpdateRuleForGroup_Payload $req): \Common\Generic_Success_Response;
+    public function UpdateRuleForGroup(array $ctx, \Common\AccessUpdateRuleForGroupPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/DeleteRuleForPerson</code>
+     * Generated from protobuf method <code>common.Frey/DeleteRuleForPerson</code>
      *
      * @throws \Twirp\Error
      */
-    public function DeleteRuleForPerson(array $ctx, \Common\Access_DeleteRuleForPerson_Payload $req): \Common\Generic_Success_Response;
+    public function DeleteRuleForPerson(array $ctx, \Common\AccessDeleteRuleForPersonPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/DeleteRuleForGroup</code>
+     * Generated from protobuf method <code>common.Frey/DeleteRuleForGroup</code>
      *
      * @throws \Twirp\Error
      */
-    public function DeleteRuleForGroup(array $ctx, \Common\Access_DeleteRuleForGroup_Payload $req): \Common\Generic_Success_Response;
+    public function DeleteRuleForGroup(array $ctx, \Common\AccessDeleteRuleForGroupPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/ClearAccessCache</code>
+     * Generated from protobuf method <code>common.Frey/ClearAccessCache</code>
      *
      * @throws \Twirp\Error
      */
-    public function ClearAccessCache(array $ctx, \Common\Access_ClearAccessCache_Payload $req): \Common\Generic_Success_Response;
+    public function ClearAccessCache(array $ctx, \Common\AccessClearAccessCachePayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/CreateAccount</code>
+     * Generated from protobuf method <code>common.Frey/CreateAccount</code>
      *
      * @throws \Twirp\Error
      */
-    public function CreateAccount(array $ctx, \Common\Persons_CreateAccount_Payload $req): \Common\Persons_CreateAccount_Response;
+    public function CreateAccount(array $ctx, \Common\PersonsCreateAccountPayload $req): \Common\PersonsCreateAccountResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/CreateGroup</code>
+     * Generated from protobuf method <code>common.Frey/CreateGroup</code>
      *
      * @throws \Twirp\Error
      */
-    public function CreateGroup(array $ctx, \Common\Persons_CreateGroup_Payload $req): \Common\Persons_CreateGroup_Response;
+    public function CreateGroup(array $ctx, \Common\PersonsCreateGroupPayload $req): \Common\PersonsCreateGroupResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/UpdateGroup</code>
+     * Generated from protobuf method <code>common.Frey/UpdateGroup</code>
      *
      * @throws \Twirp\Error
      */
-    public function UpdateGroup(array $ctx, \Common\Persons_UpdateGroup_Payload $req): \Common\Generic_Success_Response;
+    public function UpdateGroup(array $ctx, \Common\PersonsUpdateGroupPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/DeleteGroup</code>
+     * Generated from protobuf method <code>common.Frey/DeleteGroup</code>
      *
      * @throws \Twirp\Error
      */
-    public function DeleteGroup(array $ctx, \Common\Persons_DeleteGroup_Payload $req): \Common\Generic_Success_Response;
+    public function DeleteGroup(array $ctx, \Common\PersonsDeleteGroupPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/AddPersonToGroup</code>
+     * Generated from protobuf method <code>common.Frey/AddPersonToGroup</code>
      *
      * @throws \Twirp\Error
      */
-    public function AddPersonToGroup(array $ctx, \Common\Persons_AddPersonToGroup_Payload $req): \Common\Generic_Success_Response;
+    public function AddPersonToGroup(array $ctx, \Common\PersonsAddPersonToGroupPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/RemovePersonFromGroup</code>
+     * Generated from protobuf method <code>common.Frey/RemovePersonFromGroup</code>
      *
      * @throws \Twirp\Error
      */
-    public function RemovePersonFromGroup(array $ctx, \Common\Persons_RemovePersonFromGroup_Payload $req): \Common\Generic_Success_Response;
+    public function RemovePersonFromGroup(array $ctx, \Common\PersonsRemovePersonFromGroupPayload $req): \Common\GenericSuccessResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetPersonsOfGroup</code>
+     * Generated from protobuf method <code>common.Frey/GetPersonsOfGroup</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetPersonsOfGroup(array $ctx, \Common\Persons_GetPersonsOfGroup_Payload $req): \Common\Persons_GetPersonsOfGroup_Response;
+    public function GetPersonsOfGroup(array $ctx, \Common\PersonsGetPersonsOfGroupPayload $req): \Common\PersonsGetPersonsOfGroupResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/GetGroupsOfPerson</code>
+     * Generated from protobuf method <code>common.Frey/GetGroupsOfPerson</code>
      *
      * @throws \Twirp\Error
      */
-    public function GetGroupsOfPerson(array $ctx, \Common\Persons_GetGroupsOfPerson_Payload $req): \Common\Persons_GetGroupsOfPerson_Response;
+    public function GetGroupsOfPerson(array $ctx, \Common\PersonsGetGroupsOfPersonPayload $req): \Common\PersonsGetGroupsOfPersonResponse;
 
     /**
-     * superadmin: this should be covered with some bootstrap authenthication, TODO
+     * superadmin: this should be covered with some
+     * bootstrap authenthication, TODO
      *
-     * Generated from protobuf method <code>Common.Frey/AddSystemWideRuleForPerson</code>
+     * Generated from protobuf method <code>common.Frey/AddSystemWideRuleForPerson</code>
      *
      * @throws \Twirp\Error
      */
-    public function AddSystemWideRuleForPerson(array $ctx, \Common\Access_AddSystemWideRuleForPerson_Payload $req): \Common\Access_AddSystemWideRuleForPerson_Response;
+    public function AddSystemWideRuleForPerson(array $ctx, \Common\AccessAddSystemWideRuleForPersonPayload $req): \Common\AccessAddSystemWideRuleForPersonResponse;
 
     /**
      *
      *
-     * Generated from protobuf method <code>Common.Frey/AddSystemWideRuleForGroup</code>
+     * Generated from protobuf method <code>common.Frey/AddSystemWideRuleForGroup</code>
      *
      * @throws \Twirp\Error
      */
-    public function AddSystemWideRuleForGroup(array $ctx, \Common\Access_AddSystemWideRuleForGroup_Payload $req): \Common\Access_AddSystemWideRuleForGroup_Response;
+    public function AddSystemWideRuleForGroup(array $ctx, \Common\AccessAddSystemWideRuleForGroupPayload $req): \Common\AccessAddSystemWideRuleForGroupResponse;
 }

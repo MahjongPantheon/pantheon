@@ -9,30 +9,30 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.RonResult</code>
+ * Generated from protobuf message <code>common.RonResult</code>
  */
 class RonResult extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>int32 roundIndex = 1;</code>
+     * Generated from protobuf field <code>int32 round_index = 1;</code>
      */
-    protected $roundIndex = 0;
+    protected $round_index = 0;
     /**
      * Generated from protobuf field <code>int32 honba = 2;</code>
      */
     protected $honba = 0;
     /**
-     * Generated from protobuf field <code>int32 winnerId = 3;</code>
+     * Generated from protobuf field <code>int32 winner_id = 3;</code>
      */
-    protected $winnerId = 0;
+    protected $winner_id = 0;
     /**
-     * Generated from protobuf field <code>int32 loserId = 4;</code>
+     * Generated from protobuf field <code>int32 loser_id = 4;</code>
      */
-    protected $loserId = 0;
+    protected $loser_id = 0;
     /**
-     * Generated from protobuf field <code>int32 paoPlayerId = 5;</code>
+     * Generated from protobuf field <code>int32 pao_player_id = 5;</code>
      */
-    protected $paoPlayerId = 0;
+    protected $pao_player_id = 0;
     /**
      * Generated from protobuf field <code>int32 han = 6;</code>
      */
@@ -50,9 +50,9 @@ class RonResult extends \Google\Protobuf\Internal\Message
     /**
      * player ids
      *
-     * Generated from protobuf field <code>repeated int32 riichiBets = 9;</code>
+     * Generated from protobuf field <code>repeated int32 riichi_bets = 9;</code>
      */
-    private $riichiBets;
+    private $riichi_bets;
     /**
      * Generated from protobuf field <code>int32 dora = 10;</code>
      */
@@ -70,9 +70,9 @@ class RonResult extends \Google\Protobuf\Internal\Message
      */
     protected $kanuradora = 0;
     /**
-     * Generated from protobuf field <code>bool openHand = 14;</code>
+     * Generated from protobuf field <code>bool open_hand = 14;</code>
      */
-    protected $openHand = false;
+    protected $open_hand = false;
 
     /**
      * Constructor.
@@ -80,22 +80,22 @@ class RonResult extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int $roundIndex
+     *     @type int $round_index
      *     @type int $honba
-     *     @type int $winnerId
-     *     @type int $loserId
-     *     @type int $paoPlayerId
+     *     @type int $winner_id
+     *     @type int $loser_id
+     *     @type int $pao_player_id
      *     @type int $han
      *     @type int $fu
      *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $yaku
      *           yaku ids
-     *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $riichiBets
+     *     @type array<int>|\Google\Protobuf\Internal\RepeatedField $riichi_bets
      *           player ids
      *     @type int $dora
      *     @type int $uradora
      *     @type int $kandora
      *     @type int $kanuradora
-     *     @type bool $openHand
+     *     @type bool $open_hand
      * }
      */
     public function __construct($data = NULL) {
@@ -104,23 +104,23 @@ class RonResult extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 roundIndex = 1;</code>
+     * Generated from protobuf field <code>int32 round_index = 1;</code>
      * @return int
      */
     public function getRoundIndex()
     {
-        return $this->roundIndex;
+        return $this->round_index;
     }
 
     /**
-     * Generated from protobuf field <code>int32 roundIndex = 1;</code>
+     * Generated from protobuf field <code>int32 round_index = 1;</code>
      * @param int $var
      * @return $this
      */
     public function setRoundIndex($var)
     {
         GPBUtil::checkInt32($var);
-        $this->roundIndex = $var;
+        $this->round_index = $var;
 
         return $this;
     }
@@ -148,67 +148,67 @@ class RonResult extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 winnerId = 3;</code>
+     * Generated from protobuf field <code>int32 winner_id = 3;</code>
      * @return int
      */
     public function getWinnerId()
     {
-        return $this->winnerId;
+        return $this->winner_id;
     }
 
     /**
-     * Generated from protobuf field <code>int32 winnerId = 3;</code>
+     * Generated from protobuf field <code>int32 winner_id = 3;</code>
      * @param int $var
      * @return $this
      */
     public function setWinnerId($var)
     {
         GPBUtil::checkInt32($var);
-        $this->winnerId = $var;
+        $this->winner_id = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>int32 loserId = 4;</code>
+     * Generated from protobuf field <code>int32 loser_id = 4;</code>
      * @return int
      */
     public function getLoserId()
     {
-        return $this->loserId;
+        return $this->loser_id;
     }
 
     /**
-     * Generated from protobuf field <code>int32 loserId = 4;</code>
+     * Generated from protobuf field <code>int32 loser_id = 4;</code>
      * @param int $var
      * @return $this
      */
     public function setLoserId($var)
     {
         GPBUtil::checkInt32($var);
-        $this->loserId = $var;
+        $this->loser_id = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>int32 paoPlayerId = 5;</code>
+     * Generated from protobuf field <code>int32 pao_player_id = 5;</code>
      * @return int
      */
     public function getPaoPlayerId()
     {
-        return $this->paoPlayerId;
+        return $this->pao_player_id;
     }
 
     /**
-     * Generated from protobuf field <code>int32 paoPlayerId = 5;</code>
+     * Generated from protobuf field <code>int32 pao_player_id = 5;</code>
      * @param int $var
      * @return $this
      */
     public function setPaoPlayerId($var)
     {
         GPBUtil::checkInt32($var);
-        $this->paoPlayerId = $var;
+        $this->pao_player_id = $var;
 
         return $this;
     }
@@ -286,25 +286,25 @@ class RonResult extends \Google\Protobuf\Internal\Message
     /**
      * player ids
      *
-     * Generated from protobuf field <code>repeated int32 riichiBets = 9;</code>
+     * Generated from protobuf field <code>repeated int32 riichi_bets = 9;</code>
      * @return \Google\Protobuf\Internal\RepeatedField
      */
     public function getRiichiBets()
     {
-        return $this->riichiBets;
+        return $this->riichi_bets;
     }
 
     /**
      * player ids
      *
-     * Generated from protobuf field <code>repeated int32 riichiBets = 9;</code>
+     * Generated from protobuf field <code>repeated int32 riichi_bets = 9;</code>
      * @param array<int>|\Google\Protobuf\Internal\RepeatedField $var
      * @return $this
      */
     public function setRiichiBets($var)
     {
         $arr = GPBUtil::checkRepeatedField($var, \Google\Protobuf\Internal\GPBType::INT32);
-        $this->riichiBets = $arr;
+        $this->riichi_bets = $arr;
 
         return $this;
     }
@@ -398,23 +398,23 @@ class RonResult extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>bool openHand = 14;</code>
+     * Generated from protobuf field <code>bool open_hand = 14;</code>
      * @return bool
      */
     public function getOpenHand()
     {
-        return $this->openHand;
+        return $this->open_hand;
     }
 
     /**
-     * Generated from protobuf field <code>bool openHand = 14;</code>
+     * Generated from protobuf field <code>bool open_hand = 14;</code>
      * @param bool $var
      * @return $this
      */
     public function setOpenHand($var)
     {
         GPBUtil::checkBool($var);
-        $this->openHand = $var;
+        $this->open_hand = $var;
 
         return $this;
     }

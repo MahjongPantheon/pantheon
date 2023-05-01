@@ -195,7 +195,7 @@ export class ApiService {
   getPersonalInfo(personId: number) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'GetPersonalInfo' });
     return GetPersonalInfo({ ids: [personId] }, this._clientConfFrey).then(
-      (resp) => resp.persons[0]
+      (resp) => resp.people[0]
     );
   }
 
@@ -338,7 +338,7 @@ export class ApiService {
 
   findByTitle(query: string) {
     this._analytics?.track(Analytics.LOAD_STARTED, { method: 'FindByTitle' });
-    return FindByTitle({ query }, this._clientConfFrey).then((r) => r.persons);
+    return FindByTitle({ query }, this._clientConfFrey).then((r) => r.people);
   }
 
   addEventAdmin(playerId: number, eventId: number) {
@@ -373,7 +373,7 @@ export class ApiService {
     return UpdatePlayersLocalIds(
       {
         eventId,
-        idMap: Object.keys(idMap).map((k) => {
+        idsToLocalIds: Object.keys(idMap).map((k) => {
           const playerId = typeof k === 'number' ? k : parseInt(k, 10);
           return { playerId, localId: idMap[playerId] };
         }),
@@ -387,7 +387,7 @@ export class ApiService {
     return UpdatePlayersTeams(
       {
         eventId,
-        teamNameMap: Object.keys(teamMap).map((k) => {
+        idsToTeamNames: Object.keys(teamMap).map((k) => {
           const playerId = typeof k === 'number' ? k : parseInt(k, 10);
           return { playerId, teamName: teamMap[playerId] };
         }),

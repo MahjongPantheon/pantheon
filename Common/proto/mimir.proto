@@ -1,3 +1,4 @@
+// protolint:disable REPEATED_FIELD_NAMES_PLURALIZED
 syntax = "proto3";
 
 package common;
@@ -183,18 +184,18 @@ message PlayersGetMyEventsResponse {
 }
 
 message EventsGetRatingTablePayload {
-  repeated int32 event_id_lists = 1;
+  repeated int32 event_id_list = 1;
   string order_by = 2;
   string order = 3;
   bool with_prefinished = 4;
 }
 
 message EventsGetRatingTableResponse {
-  repeated PlayerInRating lists = 1;
+  repeated PlayerInRating list = 1;
 }
 
 message EventsGetLastGamesPayload {
-  repeated int32 event_id_lists = 1;
+  repeated int32 event_id_list = 1;
   int32 limit = 2;
   int32 offset = 3;
   optional string order_by = 4;
@@ -260,19 +261,19 @@ message GamesGetSessionOverviewResponse {
 
 message PlayersGetPlayerStatsPayload {
   int32 player_id = 1;
-  repeated int32 event_id_lists = 2;
+  repeated int32 event_id_list = 2;
 }
 
 message PlayersGetPlayerStatsResponse {
-  repeated int32 rating_histories = 1;
-  repeated SessionHistoryResultTable score_histories = 2;
-  repeated Player players_infos = 3;
-  repeated PlacesSummaryItem places_summaries = 4;
+  repeated int32 rating_history = 1;
+  repeated SessionHistoryResultTable score_history = 2;
+  repeated Player players_info = 3;
+  repeated PlacesSummaryItem places_summary = 4;
   int32 total_played_games = 5;
   int32 total_played_rounds = 6;
   PlayerWinSummary win_summary = 7;
-  repeated HandValueStat hands_value_summaries = 8;
-  repeated YakuStat yaku_summaries = 9;
+  repeated HandValueStat hands_value_summary = 8;
+  repeated YakuStat yaku_summary = 9;
   RiichiSummary riichi_summary = 10;
   DoraSummary dora_stat = 11;
 }
@@ -393,7 +394,7 @@ message EventsUpdatePlayerSeatingFlagPayload {
 }
 
 message EventsGetAchievementsPayload {
-  repeated string achievements_lists = 2;
+  repeated string achievements_list = 2;
   int32 event_id = 3;
 }
 
@@ -403,7 +404,7 @@ message EventsGetAchievementsResponse {
 
 message EventsUpdatePlayersLocalIdsPayload {
   int32 event_id = 1;
-  repeated LocalIdMapping id_maps = 2;
+  repeated LocalIdMapping ids_to_local_ids = 2;
 }
 
 message EventsUpdatePlayerReplacementPayload {
@@ -414,7 +415,7 @@ message EventsUpdatePlayerReplacementPayload {
 
 message EventsUpdatePlayersTeamsPayload {
   int32 event_id = 1;
-  repeated TeamMapping team_name_maps = 2;
+  repeated TeamMapping ids_to_team_names = 2;
 }
 
 message GamesStartGamePayload {
@@ -468,7 +469,7 @@ message PlayersGetPlayerResponse {
 }
 
 message EventsGetCurrentSeatingResponse {
-  repeated PlayerSeating seatings = 1;
+  repeated PlayerSeating seating = 1;
 }
 
 message SeatingMakeShuffledSeatingPayload {

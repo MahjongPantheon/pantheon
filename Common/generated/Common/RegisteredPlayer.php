@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.RegisteredPlayer</code>
+ * Generated from protobuf message <code>common.RegisteredPlayer</code>
  */
 class RegisteredPlayer extends \Google\Protobuf\Internal\Message
 {
@@ -22,25 +22,25 @@ class RegisteredPlayer extends \Google\Protobuf\Internal\Message
      */
     protected $title = '';
     /**
-     * Generated from protobuf field <code>optional int32 localId = 3;</code>
+     * Generated from protobuf field <code>optional int32 local_id = 3;</code>
      */
-    protected $localId = null;
+    protected $local_id = null;
     /**
-     * Generated from protobuf field <code>optional string teamName = 4;</code>
+     * Generated from protobuf field <code>optional string team_name = 4;</code>
      */
-    protected $teamName = null;
+    protected $team_name = null;
     /**
-     * Generated from protobuf field <code>string tenhouId = 5;</code>
+     * Generated from protobuf field <code>string tenhou_id = 5;</code>
      */
-    protected $tenhouId = '';
+    protected $tenhou_id = '';
     /**
-     * Generated from protobuf field <code>bool ignoreSeating = 6;</code>
+     * Generated from protobuf field <code>bool ignore_seating = 6;</code>
      */
-    protected $ignoreSeating = false;
+    protected $ignore_seating = false;
     /**
-     * Generated from protobuf field <code>optional .Common.ReplacementPlayer replacedBy = 7;</code>
+     * Generated from protobuf field <code>optional .common.ReplacementPlayer replaced_by = 7;</code>
      */
-    protected $replacedBy = null;
+    protected $replaced_by = null;
 
     /**
      * Constructor.
@@ -50,11 +50,11 @@ class RegisteredPlayer extends \Google\Protobuf\Internal\Message
      *
      *     @type int $id
      *     @type string $title
-     *     @type int $localId
-     *     @type string $teamName
-     *     @type string $tenhouId
-     *     @type bool $ignoreSeating
-     *     @type \Common\ReplacementPlayer $replacedBy
+     *     @type int $local_id
+     *     @type string $team_name
+     *     @type string $tenhou_id
+     *     @type bool $ignore_seating
+     *     @type \Common\ReplacementPlayer $replaced_by
      * }
      */
     public function __construct($data = NULL) {
@@ -107,141 +107,141 @@ class RegisteredPlayer extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>optional int32 localId = 3;</code>
+     * Generated from protobuf field <code>optional int32 local_id = 3;</code>
      * @return int
      */
     public function getLocalId()
     {
-        return isset($this->localId) ? $this->localId : 0;
+        return isset($this->local_id) ? $this->local_id : 0;
     }
 
     public function hasLocalId()
     {
-        return isset($this->localId);
+        return isset($this->local_id);
     }
 
     public function clearLocalId()
     {
-        unset($this->localId);
+        unset($this->local_id);
     }
 
     /**
-     * Generated from protobuf field <code>optional int32 localId = 3;</code>
+     * Generated from protobuf field <code>optional int32 local_id = 3;</code>
      * @param int $var
      * @return $this
      */
     public function setLocalId($var)
     {
         GPBUtil::checkInt32($var);
-        $this->localId = $var;
+        $this->local_id = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>optional string teamName = 4;</code>
+     * Generated from protobuf field <code>optional string team_name = 4;</code>
      * @return string
      */
     public function getTeamName()
     {
-        return isset($this->teamName) ? $this->teamName : '';
+        return isset($this->team_name) ? $this->team_name : '';
     }
 
     public function hasTeamName()
     {
-        return isset($this->teamName);
+        return isset($this->team_name);
     }
 
     public function clearTeamName()
     {
-        unset($this->teamName);
+        unset($this->team_name);
     }
 
     /**
-     * Generated from protobuf field <code>optional string teamName = 4;</code>
+     * Generated from protobuf field <code>optional string team_name = 4;</code>
      * @param string $var
      * @return $this
      */
     public function setTeamName($var)
     {
         GPBUtil::checkString($var, True);
-        $this->teamName = $var;
+        $this->team_name = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>string tenhouId = 5;</code>
+     * Generated from protobuf field <code>string tenhou_id = 5;</code>
      * @return string
      */
     public function getTenhouId()
     {
-        return $this->tenhouId;
+        return $this->tenhou_id;
     }
 
     /**
-     * Generated from protobuf field <code>string tenhouId = 5;</code>
+     * Generated from protobuf field <code>string tenhou_id = 5;</code>
      * @param string $var
      * @return $this
      */
     public function setTenhouId($var)
     {
         GPBUtil::checkString($var, True);
-        $this->tenhouId = $var;
+        $this->tenhou_id = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>bool ignoreSeating = 6;</code>
+     * Generated from protobuf field <code>bool ignore_seating = 6;</code>
      * @return bool
      */
     public function getIgnoreSeating()
     {
-        return $this->ignoreSeating;
+        return $this->ignore_seating;
     }
 
     /**
-     * Generated from protobuf field <code>bool ignoreSeating = 6;</code>
+     * Generated from protobuf field <code>bool ignore_seating = 6;</code>
      * @param bool $var
      * @return $this
      */
     public function setIgnoreSeating($var)
     {
         GPBUtil::checkBool($var);
-        $this->ignoreSeating = $var;
+        $this->ignore_seating = $var;
 
         return $this;
     }
 
     /**
-     * Generated from protobuf field <code>optional .Common.ReplacementPlayer replacedBy = 7;</code>
+     * Generated from protobuf field <code>optional .common.ReplacementPlayer replaced_by = 7;</code>
      * @return \Common\ReplacementPlayer|null
      */
     public function getReplacedBy()
     {
-        return $this->replacedBy;
+        return $this->replaced_by;
     }
 
     public function hasReplacedBy()
     {
-        return isset($this->replacedBy);
+        return isset($this->replaced_by);
     }
 
     public function clearReplacedBy()
     {
-        unset($this->replacedBy);
+        unset($this->replaced_by);
     }
 
     /**
-     * Generated from protobuf field <code>optional .Common.ReplacementPlayer replacedBy = 7;</code>
+     * Generated from protobuf field <code>optional .common.ReplacementPlayer replaced_by = 7;</code>
      * @param \Common\ReplacementPlayer $var
      * @return $this
      */
     public function setReplacedBy($var)
     {
         GPBUtil::checkMessage($var, \Common\ReplacementPlayer::class);
-        $this->replacedBy = $var;
+        $this->replaced_by = $var;
 
         return $this;
     }

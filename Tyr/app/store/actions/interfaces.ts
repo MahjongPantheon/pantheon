@@ -18,7 +18,7 @@
 import { YakuId } from '#/primitives/yaku';
 import { RemoteError } from '#/services/remoteError';
 import { IAppState } from '../interfaces';
-import { Auth_Authorize_Response } from '#/clients/proto/frey.pb';
+import { AuthAuthorizeResponse } from '#/clients/proto/frey.pb';
 import {
   CurrentSession,
   GameConfig,
@@ -31,9 +31,9 @@ import {
   TableState,
 } from '#/clients/proto/atoms.pb';
 import {
-  Events_GetTimerState_Response,
-  Games_AddRound_Response,
-  Games_GetSessionOverview_Response,
+  EventsGetTimerStateResponse,
+  GamesAddRoundResponse,
+  GamesGetSessionOverviewResponse,
 } from '#/clients/proto/mimir.pb';
 
 export const INIT_STATE = 'INIT_STATE';
@@ -276,7 +276,7 @@ interface LoginActionInit {
 }
 interface LoginActionSuccess {
   type: typeof LOGIN_SUCCESS;
-  payload: Auth_Authorize_Response;
+  payload: AuthAuthorizeResponse;
 }
 interface LoginActionFail {
   type: typeof LOGIN_FAIL;
@@ -300,7 +300,7 @@ interface UpdateCurrentGamesActionSuccess {
   payload: {
     games: CurrentSession[];
     gameConfig: GameConfig;
-    timerState: Events_GetTimerState_Response;
+    timerState: EventsGetTimerStateResponse;
   };
 }
 interface UpdateCurrentGamesActionFail {
@@ -313,7 +313,7 @@ interface GetGameOverviewActionInit {
 }
 interface GetGameOverviewActionSuccess {
   type: typeof GET_GAME_OVERVIEW_SUCCESS;
-  payload: Games_GetSessionOverview_Response;
+  payload: GamesGetSessionOverviewResponse;
 }
 interface GetGameOverviewActionFail {
   type: typeof GET_GAME_OVERVIEW_FAIL;
@@ -358,7 +358,7 @@ interface GetOtherTableActionReload {
 }
 interface GetOtherTableActionSuccess {
   type: typeof GET_OTHER_TABLE_SUCCESS;
-  payload: Games_GetSessionOverview_Response;
+  payload: GamesGetSessionOverviewResponse;
 }
 interface GetOtherTableActionFail {
   type: typeof GET_OTHER_TABLE_FAIL;
@@ -461,7 +461,7 @@ interface AddRoundActionInit {
 
 interface AddRoundActionSuccess {
   type: typeof ADD_ROUND_SUCCESS;
-  payload: Games_AddRound_Response;
+  payload: GamesAddRoundResponse;
 }
 
 interface AddRoundActionFail {

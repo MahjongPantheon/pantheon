@@ -7,22 +7,27 @@ namespace Common;
 use UnexpectedValueException;
 
 /**
- * Protobuf type <code>Common.UmaType</code>
+ * Protobuf type <code>common.UmaType</code>
  */
 class UmaType
 {
     /**
-     * Generated from protobuf enum <code>UMA_SIMPLE = 0;</code>
+     * Generated from protobuf enum <code>UMA_TYPE_UNSPECIFIED = 0;</code>
      */
-    const UMA_SIMPLE = 0;
+    const UMA_TYPE_UNSPECIFIED = 0;
     /**
-     * Generated from protobuf enum <code>UMA_COMPLEX = 1;</code>
+     * Generated from protobuf enum <code>UMA_TYPE_UMA_SIMPLE = 1;</code>
      */
-    const UMA_COMPLEX = 1;
+    const UMA_TYPE_UMA_SIMPLE = 1;
+    /**
+     * Generated from protobuf enum <code>UMA_TYPE_UMA_COMPLEX = 2;</code>
+     */
+    const UMA_TYPE_UMA_COMPLEX = 2;
 
     private static $valueToName = [
-        self::UMA_SIMPLE => 'UMA_SIMPLE',
-        self::UMA_COMPLEX => 'UMA_COMPLEX',
+        self::UMA_TYPE_UNSPECIFIED => 'UMA_TYPE_UNSPECIFIED',
+        self::UMA_TYPE_UMA_SIMPLE => 'UMA_TYPE_UMA_SIMPLE',
+        self::UMA_TYPE_UMA_COMPLEX => 'UMA_TYPE_UMA_COMPLEX',
     ];
 
     public static function name($value)

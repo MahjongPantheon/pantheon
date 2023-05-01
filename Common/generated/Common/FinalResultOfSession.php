@@ -9,22 +9,22 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.FinalResultOfSession</code>
+ * Generated from protobuf message <code>common.FinalResultOfSession</code>
  */
 class FinalResultOfSession extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>int32 playerId = 1;</code>
+     * Generated from protobuf field <code>int32 player_id = 1;</code>
      */
-    protected $playerId = 0;
+    protected $player_id = 0;
     /**
      * Generated from protobuf field <code>int32 score = 2;</code>
      */
     protected $score = 0;
     /**
-     * Generated from protobuf field <code>float ratingDelta = 3;</code>
+     * Generated from protobuf field <code>float rating_delta = 3;</code>
      */
-    protected $ratingDelta = 0.0;
+    protected $rating_delta = 0.0;
     /**
      * Generated from protobuf field <code>int32 place = 4;</code>
      */
@@ -36,9 +36,9 @@ class FinalResultOfSession extends \Google\Protobuf\Internal\Message
      * @param array $data {
      *     Optional. Data for populating the Message object.
      *
-     *     @type int $playerId
+     *     @type int $player_id
      *     @type int $score
-     *     @type float $ratingDelta
+     *     @type float $rating_delta
      *     @type int $place
      * }
      */
@@ -48,23 +48,23 @@ class FinalResultOfSession extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>int32 playerId = 1;</code>
+     * Generated from protobuf field <code>int32 player_id = 1;</code>
      * @return int
      */
     public function getPlayerId()
     {
-        return $this->playerId;
+        return $this->player_id;
     }
 
     /**
-     * Generated from protobuf field <code>int32 playerId = 1;</code>
+     * Generated from protobuf field <code>int32 player_id = 1;</code>
      * @param int $var
      * @return $this
      */
     public function setPlayerId($var)
     {
         GPBUtil::checkInt32($var);
-        $this->playerId = $var;
+        $this->player_id = $var;
 
         return $this;
     }
@@ -92,23 +92,23 @@ class FinalResultOfSession extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>float ratingDelta = 3;</code>
+     * Generated from protobuf field <code>float rating_delta = 3;</code>
      * @return float
      */
     public function getRatingDelta()
     {
-        return $this->ratingDelta;
+        return $this->rating_delta;
     }
 
     /**
-     * Generated from protobuf field <code>float ratingDelta = 3;</code>
+     * Generated from protobuf field <code>float rating_delta = 3;</code>
      * @param float $var
      * @return $this
      */
     public function setRatingDelta($var)
     {
         GPBUtil::checkFloat($var);
-        $this->ratingDelta = $var;
+        $this->rating_delta = $var;
 
         return $this;
     }

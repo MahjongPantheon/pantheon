@@ -19,7 +19,7 @@ import * as React from 'react';
 import { useApi } from '#/hooks/api';
 import { useState } from 'react';
 import { useI18n } from '#/hooks/i18n';
-import { GameConfig, RegisteredPlayer, Event } from '#/clients/proto/atoms.pb';
+import { GameConfig, RegisteredPlayer, Event, EventType } from '#/clients/proto/atoms.pb';
 import {
   ActionIcon,
   Avatar,
@@ -161,7 +161,7 @@ export const ManagementTab: React.FC<{
   };
 
   const showAddRemove = !event?.tournamentStarted;
-  const showReplace = event?.type !== 'LOCAL';
+  const showReplace = event?.type !== EventType.EVENT_TYPE_LOCAL;
   const mayUseSeatingIgnore = config?.syncStart && !config?.isPrescripted;
 
   return (

@@ -32,7 +32,7 @@ import { RulesetSettings } from '#/pages/OwnedEventsEdit/RulesetSettings';
 import { YakuSettings } from '#/pages/OwnedEventsEdit/YakuSettings';
 import { IconCircleCheck, IconDeviceFloppy } from '@tabler/icons-react';
 import { EventCustom, FormFields } from '#/pages/OwnedEventsEdit/types';
-import { EndingPolicy, RulesetConfig, UmaType } from '#/clients/proto/atoms.pb';
+import { EndingPolicy, EventType, RulesetConfig, UmaType } from '#/clients/proto/atoms.pb';
 import { TopActionButton } from '#/helpers/TopActionButton';
 import { notifications } from '@mantine/notifications';
 import { nprogress } from '@mantine/nprogress';
@@ -66,7 +66,7 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
   const form = useForm<FormFields>({
     initialValues: {
       event: {
-        type: 'LOCAL',
+        type: EventType.EVENT_TYPE_LOCAL,
         title: '',
         description: '',
         timezone: '',
@@ -109,11 +109,11 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
           neg1: { place1: 8000, place2: 3000, place3: 1000, place4: -12000 },
           otherwise: { place1: 8000, place2: 4000, place3: -4000, place4: -8000 },
         },
-        umaType: UmaType.UMA_SIMPLE,
+        umaType: UmaType.UMA_TYPE_UMA_SIMPLE,
         allowedYaku: {}, // TODO: reformat to array, as required by protocol
         yakuWithPao: {}, // TODO: reformat to array, as required by protocol
         withWinningDealerHonbaSkipped: false,
-        endingPolicy: EndingPolicy.EP_NONE,
+        endingPolicy: EndingPolicy.ENDING_POLICY_EP_UNSPECIFIED,
         startRating: 0,
         startPoints: 30000,
         replacementPlayerFixedPoints: -15000, // tourn
@@ -244,13 +244,13 @@ export const OwnedEventsEdit: React.FC<{ params: { id?: string } }> = ({ params:
             </Tabs.Panel>
             <Tabs.Panel value={form.getTransformedValues().event.type ?? 'LOCAL'} pt='xs'>
               <Stack>
-                {form.getTransformedValues().event.type === 'ONLINE' && (
+                {form.getTransformedValues().event.type === EventType.EVENT_TYPE_ONLINE && (
                   <OnlineSettings form={form} i18n={i18n} />
                 )}
-                {form.getTransformedValues().event.type === 'LOCAL' && (
+                {form.getTransformedValues().event.type === EventType.EVENT_TYPE_LOCAL && (
                   <LocalSettings form={form} i18n={i18n} />
                 )}
-                {form.getTransformedValues().event.type === 'TOURNAMENT' && (
+                {form.getTransformedValues().event.type === EventType.EVENT_TYPE_TOURNAMENT && (
                   <TournamentSettings i18n={i18n} form={form} />
                 )}
               </Stack>

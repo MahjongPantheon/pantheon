@@ -9,7 +9,7 @@ use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
 
 /**
- * Generated from protobuf message <code>Common.RuleListItem</code>
+ * Generated from protobuf message <code>common.RuleListItem</code>
  */
 class RuleListItem extends \Google\Protobuf\Internal\Message
 {

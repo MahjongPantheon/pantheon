@@ -16,50 +16,50 @@ import * as protoAtoms from "./atoms.pb";
 //                 Types                  //
 //========================================//
 
-export interface Auth_RequestRegistration_Payload {
+export interface AuthRequestRegistrationPayload {
   email: string;
   title: string;
   password: string;
   sendEmail: boolean;
 }
 
-export interface Auth_RequestRegistration_Response {
+export interface AuthRequestRegistrationResponse {
   approvalCode: string;
 }
 
-export interface Auth_ApproveRegistration_Payload {
+export interface AuthApproveRegistrationPayload {
   approvalCode: string;
 }
 
-export interface Auth_ApproveRegistration_Response {
+export interface AuthApproveRegistrationResponse {
   personId: number;
 }
 
-export interface Auth_Authorize_Payload {
+export interface AuthAuthorizePayload {
   email: string;
   password: string;
 }
 
-export interface Auth_Authorize_Response {
+export interface AuthAuthorizeResponse {
   personId: number;
   authToken: string;
 }
 
-export interface Auth_QuickAuthorize_Payload {
+export interface AuthQuickAuthorizePayload {
   personId: number;
   authToken: string;
 }
 
-export interface Auth_QuickAuthorize_Response {
+export interface AuthQuickAuthorizeResponse {
   authSuccess: boolean;
 }
 
-export interface Auth_Me_Payload {
+export interface AuthMePayload {
   personId: number;
   authToken: string;
 }
 
-export interface Auth_Me_Response {
+export interface AuthMeResponse {
   personId: number;
   country: string;
   city: string;
@@ -70,147 +70,147 @@ export interface Auth_Me_Response {
   groups: number[];
 }
 
-export interface Auth_ChangePassword_Payload {
+export interface AuthChangePasswordPayload {
   email: string;
   password: string;
   newPassword: string;
 }
 
-export interface Auth_ChangePassword_Response {
+export interface AuthChangePasswordResponse {
   authToken: string;
 }
 
-export interface Auth_RequestResetPassword_Payload {
+export interface AuthRequestResetPasswordPayload {
   email: string;
   sendEmail: boolean;
 }
 
-export interface Auth_RequestResetPassword_Response {
+export interface AuthRequestResetPasswordResponse {
   resetToken: string;
 }
 
-export interface Auth_ApproveResetPassword_Payload {
+export interface AuthApproveResetPasswordPayload {
   email: string;
   resetToken: string;
 }
 
-export interface Auth_ApproveResetPassword_Response {
+export interface AuthApproveResetPasswordResponse {
   newTmpPassword: string;
 }
 
-export interface Access_GetAccessRules_Payload {
+export interface AccessGetAccessRulesPayload {
   personId: number;
   eventId: number;
 }
 
-export interface Access_GetAccessRules_Response {
+export interface AccessGetAccessRulesResponse {
   rules: protoAtoms.AccessRules;
 }
 
-export interface Access_GetRuleValue_Payload {
+export interface AccessGetRuleValuePayload {
   personId: number;
   eventId: number;
   ruleName: string;
 }
 
-export interface Access_GetRuleValue_Response {
+export interface AccessGetRuleValueResponse {
   value: protoAtoms.RuleValue;
 }
 
-export interface Access_GetEventAdmins_Payload {
+export interface AccessGetEventAdminsPayload {
   eventId: number;
 }
 
-export interface Access_GetEventAdmins_Response {
+export interface AccessGetEventAdminsResponse {
   admins: protoAtoms.EventAdmin[];
 }
 
-export interface Access_GetSuperadminFlag_Payload {
+export interface AccessGetSuperadminFlagPayload {
   personId: number;
 }
 
-export interface Access_GetSuperadminFlag_Response {
+export interface AccessGetSuperadminFlagResponse {
   isAdmin: boolean;
 }
 
-export interface Access_GetOwnedEventIds_Payload {
+export interface AccessGetOwnedEventIdsPayload {
   personId: number;
 }
 
-export interface Access_GetOwnedEventIds_Response {
+export interface AccessGetOwnedEventIdsResponse {
   eventIds: number[];
 }
 
-export interface Access_GetRulesList_Payload {}
+export interface AccessGetRulesListPayload {}
 
-export interface Access_GetRulesList_Response {
+export interface AccessGetRulesListResponse {
   items: protoAtoms.RuleListItem[];
 }
 
-export interface Access_GetAllEventRules_Payload {
+export interface AccessGetAllEventRulesPayload {
   eventId: number;
 }
 
-export interface Access_GetAllEventRules_Response {
+export interface AccessGetAllEventRulesResponse {
   personRules: protoAtoms.EventRuleListItem[];
   groupRules: protoAtoms.EventRuleListItem[];
 }
 
-export interface Access_GetPersonAccess_Payload {
+export interface AccessGetPersonAccessPayload {
   personId: number;
   eventId: number;
 }
 
-export interface Access_GetPersonAccess_Response {
+export interface AccessGetPersonAccessResponse {
   rules: protoAtoms.AccessRules;
 }
 
-export interface Access_GetGroupAccess_Payload {
+export interface AccessGetGroupAccessPayload {
   groupId: number;
   eventId: number;
 }
 
-export interface Access_GetGroupAccess_Response {
+export interface AccessGetGroupAccessResponse {
   rules: protoAtoms.AccessRules;
 }
 
-export interface Access_GetAllPersonAccess_Payload {
+export interface AccessGetAllPersonAccessPayload {
   personId: number;
 }
 
-export interface Access_GetAllPersonAccess_Response {
+export interface AccessGetAllPersonAccessResponse {
   rulesByEvent: Record<
     string,
-    Access_GetAllPersonAccess_Response.RulesByEvent["value"] | undefined
+    AccessGetAllPersonAccessResponse.RulesByEvent["value"] | undefined
   >;
 }
 
-export declare namespace Access_GetAllPersonAccess_Response {
+export declare namespace AccessGetAllPersonAccessResponse {
   interface RulesByEvent {
     key: number;
     value: protoAtoms.RuleListItemExMap;
   }
 }
 
-export interface Access_GetAllGroupAccess_Payload {
+export interface AccessGetAllGroupAccessPayload {
   groupId: number;
 }
 
-export interface Access_GetAllGroupAccess_Response {
+export interface AccessGetAllGroupAccessResponse {
   rulesByEvent: Record<
     string,
-    Access_GetAllGroupAccess_Response.RulesByEvent["value"] | undefined
+    AccessGetAllGroupAccessResponse.RulesByEvent["value"] | undefined
   >;
 }
 
-export declare namespace Access_GetAllGroupAccess_Response {
+export declare namespace AccessGetAllGroupAccessResponse {
   interface RulesByEvent {
     key: number;
     value: protoAtoms.RuleListItemExMap;
   }
 }
 
-export interface Access_AddRuleForPerson_Payload {
+export interface AccessAddRuleForPersonPayload {
   ruleName: string;
   ruleValue: protoAtoms.RuleValue;
   ruleType: string;
@@ -218,11 +218,11 @@ export interface Access_AddRuleForPerson_Payload {
   eventId: number;
 }
 
-export interface Access_AddRuleForPerson_Response {
+export interface AccessAddRuleForPersonResponse {
   ruleId: number;
 }
 
-export interface Access_AddRuleForGroup_Payload {
+export interface AccessAddRuleForGroupPayload {
   ruleName: string;
   ruleValue: protoAtoms.RuleValue;
   ruleType: string;
@@ -230,58 +230,58 @@ export interface Access_AddRuleForGroup_Payload {
   eventId: number;
 }
 
-export interface Access_AddRuleForGroup_Response {
+export interface AccessAddRuleForGroupResponse {
   ruleId: number;
 }
 
-export interface Access_UpdateRuleForPerson_Payload {
-  ruleId: number;
-  ruleValue: protoAtoms.RuleValue;
-  ruleType: string;
-}
-
-export interface Access_UpdateRuleForGroup_Payload {
+export interface AccessUpdateRuleForPersonPayload {
   ruleId: number;
   ruleValue: protoAtoms.RuleValue;
   ruleType: string;
 }
 
-export interface Access_DeleteRuleForPerson_Payload {
+export interface AccessUpdateRuleForGroupPayload {
+  ruleId: number;
+  ruleValue: protoAtoms.RuleValue;
+  ruleType: string;
+}
+
+export interface AccessDeleteRuleForPersonPayload {
   ruleId: number;
 }
 
-export interface Access_DeleteRuleForGroup_Payload {
+export interface AccessDeleteRuleForGroupPayload {
   ruleId: number;
 }
 
-export interface Access_ClearAccessCache_Payload {
+export interface AccessClearAccessCachePayload {
   personId: number;
   eventId: number;
 }
 
-export interface Access_AddSystemWideRuleForPerson_Payload {
+export interface AccessAddSystemWideRuleForPersonPayload {
   ruleName: string;
   ruleValue: protoAtoms.RuleValue;
   ruleType: string;
   personId: number;
 }
 
-export interface Access_AddSystemWideRuleForPerson_Response {
+export interface AccessAddSystemWideRuleForPersonResponse {
   ruleId: number;
 }
 
-export interface Access_AddSystemWideRuleForGroup_Payload {
+export interface AccessAddSystemWideRuleForGroupPayload {
   ruleName: string;
   ruleValue: protoAtoms.RuleValue;
   ruleType: string;
   groupId: number;
 }
 
-export interface Access_AddSystemWideRuleForGroup_Response {
+export interface AccessAddSystemWideRuleForGroupResponse {
   ruleId: number;
 }
 
-export interface Persons_CreateAccount_Payload {
+export interface PersonsCreateAccountPayload {
   email: string;
   password: string;
   title: string;
@@ -291,58 +291,58 @@ export interface Persons_CreateAccount_Payload {
   country: string;
 }
 
-export interface Persons_CreateAccount_Response {
+export interface PersonsCreateAccountResponse {
   personId: number;
 }
 
-export interface Persons_CreateGroup_Payload {
+export interface PersonsCreateGroupPayload {
   title: string;
   description: string;
   color: string;
 }
 
-export interface Persons_CreateGroup_Response {
+export interface PersonsCreateGroupResponse {
   groupId: number;
 }
 
-export interface Persons_UpdateGroup_Payload {
+export interface PersonsUpdateGroupPayload {
   groupId: number;
   title: string;
   description: string;
   color: string;
 }
 
-export interface Persons_DeleteGroup_Payload {
+export interface PersonsDeleteGroupPayload {
   groupId: number;
 }
 
-export interface Persons_AddPersonToGroup_Payload {
+export interface PersonsAddPersonToGroupPayload {
   personId: number;
   groupId: number;
 }
 
-export interface Persons_RemovePersonFromGroup_Payload {
+export interface PersonsRemovePersonFromGroupPayload {
   personId: number;
   groupId: number;
 }
 
-export interface Persons_GetPersonsOfGroup_Payload {
+export interface PersonsGetPersonsOfGroupPayload {
   groupId: number;
 }
 
-export interface Persons_GetPersonsOfGroup_Response {
-  persons: protoAtoms.Person[];
+export interface PersonsGetPersonsOfGroupResponse {
+  people: protoAtoms.Person[];
 }
 
-export interface Persons_GetGroupsOfPerson_Payload {
+export interface PersonsGetGroupsOfPersonPayload {
   personId: number;
 }
 
-export interface Persons_GetGroupsOfPerson_Response {
+export interface PersonsGetGroupsOfPersonResponse {
   groups: protoAtoms.Group[];
 }
 
-export interface Persons_UpdatePersonalInfo_Payload {
+export interface PersonsUpdatePersonalInfoPayload {
   id: number;
   title: string;
   country: string;
@@ -352,35 +352,35 @@ export interface Persons_UpdatePersonalInfo_Payload {
   tenhouId: string;
 }
 
-export interface Persons_GetPersonalInfo_Payload {
+export interface PersonsGetPersonalInfoPayload {
   ids: number[];
 }
 
-export interface Persons_GetPersonalInfo_Response {
-  persons: protoAtoms.PersonEx[];
+export interface PersonsGetPersonalInfoResponse {
+  people: protoAtoms.PersonEx[];
 }
 
-export interface Persons_FindByTenhouIds_Payload {
+export interface PersonsFindByTenhouIdsPayload {
   ids: string[];
 }
 
-export interface Persons_FindByTenhouIds_Response {
-  persons: protoAtoms.PersonEx[];
+export interface PersonsFindByTenhouIdsResponse {
+  people: protoAtoms.PersonEx[];
 }
 
-export interface Persons_FindByTitle_Payload {
+export interface PersonsFindByTitlePayload {
   query: string;
 }
 
-export interface Persons_FindByTitle_Response {
-  persons: protoAtoms.Person[];
+export interface PersonsFindByTitleResponse {
+  people: protoAtoms.Person[];
 }
 
-export interface Persons_GetGroups_Payload {
+export interface PersonsGetGroupsPayload {
   ids: number[];
 }
 
-export interface Persons_GetGroups_Response {
+export interface PersonsGetGroupsResponse {
   groups: protoAtoms.Group[];
 }
 
@@ -389,513 +389,508 @@ export interface Persons_GetGroups_Response {
 //========================================//
 
 export async function RequestRegistration(
-  auth_RequestRegistration_Payload: Auth_RequestRegistration_Payload,
+  authRequestRegistrationPayload: AuthRequestRegistrationPayload,
   config?: ClientConfiguration
-): Promise<Auth_RequestRegistration_Response> {
+): Promise<AuthRequestRegistrationResponse> {
   const response = await PBrequest(
-    "/Common.Frey/RequestRegistration",
-    Auth_RequestRegistration_Payload.encode(auth_RequestRegistration_Payload),
+    "/common.Frey/RequestRegistration",
+    AuthRequestRegistrationPayload.encode(authRequestRegistrationPayload),
     config
   );
-  return Auth_RequestRegistration_Response.decode(response);
+  return AuthRequestRegistrationResponse.decode(response);
 }
 
 export async function ApproveRegistration(
-  auth_ApproveRegistration_Payload: Auth_ApproveRegistration_Payload,
+  authApproveRegistrationPayload: AuthApproveRegistrationPayload,
   config?: ClientConfiguration
-): Promise<Auth_ApproveRegistration_Response> {
+): Promise<AuthApproveRegistrationResponse> {
   const response = await PBrequest(
-    "/Common.Frey/ApproveRegistration",
-    Auth_ApproveRegistration_Payload.encode(auth_ApproveRegistration_Payload),
+    "/common.Frey/ApproveRegistration",
+    AuthApproveRegistrationPayload.encode(authApproveRegistrationPayload),
     config
   );
-  return Auth_ApproveRegistration_Response.decode(response);
+  return AuthApproveRegistrationResponse.decode(response);
 }
 
 export async function Authorize(
-  auth_Authorize_Payload: Auth_Authorize_Payload,
+  authAuthorizePayload: AuthAuthorizePayload,
   config?: ClientConfiguration
-): Promise<Auth_Authorize_Response> {
+): Promise<AuthAuthorizeResponse> {
   const response = await PBrequest(
-    "/Common.Frey/Authorize",
-    Auth_Authorize_Payload.encode(auth_Authorize_Payload),
+    "/common.Frey/Authorize",
+    AuthAuthorizePayload.encode(authAuthorizePayload),
     config
   );
-  return Auth_Authorize_Response.decode(response);
+  return AuthAuthorizeResponse.decode(response);
 }
 
 export async function QuickAuthorize(
-  auth_QuickAuthorize_Payload: Auth_QuickAuthorize_Payload,
+  authQuickAuthorizePayload: AuthQuickAuthorizePayload,
   config?: ClientConfiguration
-): Promise<Auth_QuickAuthorize_Response> {
+): Promise<AuthQuickAuthorizeResponse> {
   const response = await PBrequest(
-    "/Common.Frey/QuickAuthorize",
-    Auth_QuickAuthorize_Payload.encode(auth_QuickAuthorize_Payload),
+    "/common.Frey/QuickAuthorize",
+    AuthQuickAuthorizePayload.encode(authQuickAuthorizePayload),
     config
   );
-  return Auth_QuickAuthorize_Response.decode(response);
+  return AuthQuickAuthorizeResponse.decode(response);
 }
 
 export async function Me(
-  auth_Me_Payload: Auth_Me_Payload,
+  authMePayload: AuthMePayload,
   config?: ClientConfiguration
-): Promise<Auth_Me_Response> {
+): Promise<AuthMeResponse> {
   const response = await PBrequest(
-    "/Common.Frey/Me",
-    Auth_Me_Payload.encode(auth_Me_Payload),
+    "/common.Frey/Me",
+    AuthMePayload.encode(authMePayload),
     config
   );
-  return Auth_Me_Response.decode(response);
+  return AuthMeResponse.decode(response);
 }
 
 export async function ChangePassword(
-  auth_ChangePassword_Payload: Auth_ChangePassword_Payload,
+  authChangePasswordPayload: AuthChangePasswordPayload,
   config?: ClientConfiguration
-): Promise<Auth_ChangePassword_Response> {
+): Promise<AuthChangePasswordResponse> {
   const response = await PBrequest(
-    "/Common.Frey/ChangePassword",
-    Auth_ChangePassword_Payload.encode(auth_ChangePassword_Payload),
+    "/common.Frey/ChangePassword",
+    AuthChangePasswordPayload.encode(authChangePasswordPayload),
     config
   );
-  return Auth_ChangePassword_Response.decode(response);
+  return AuthChangePasswordResponse.decode(response);
 }
 
 export async function RequestResetPassword(
-  auth_RequestResetPassword_Payload: Auth_RequestResetPassword_Payload,
+  authRequestResetPasswordPayload: AuthRequestResetPasswordPayload,
   config?: ClientConfiguration
-): Promise<Auth_RequestResetPassword_Response> {
+): Promise<AuthRequestResetPasswordResponse> {
   const response = await PBrequest(
-    "/Common.Frey/RequestResetPassword",
-    Auth_RequestResetPassword_Payload.encode(auth_RequestResetPassword_Payload),
+    "/common.Frey/RequestResetPassword",
+    AuthRequestResetPasswordPayload.encode(authRequestResetPasswordPayload),
     config
   );
-  return Auth_RequestResetPassword_Response.decode(response);
+  return AuthRequestResetPasswordResponse.decode(response);
 }
 
 export async function ApproveResetPassword(
-  auth_ApproveResetPassword_Payload: Auth_ApproveResetPassword_Payload,
+  authApproveResetPasswordPayload: AuthApproveResetPasswordPayload,
   config?: ClientConfiguration
-): Promise<Auth_ApproveResetPassword_Response> {
+): Promise<AuthApproveResetPasswordResponse> {
   const response = await PBrequest(
-    "/Common.Frey/ApproveResetPassword",
-    Auth_ApproveResetPassword_Payload.encode(auth_ApproveResetPassword_Payload),
+    "/common.Frey/ApproveResetPassword",
+    AuthApproveResetPasswordPayload.encode(authApproveResetPasswordPayload),
     config
   );
-  return Auth_ApproveResetPassword_Response.decode(response);
+  return AuthApproveResetPasswordResponse.decode(response);
 }
 
 export async function GetAccessRules(
-  access_GetAccessRules_Payload: Access_GetAccessRules_Payload,
+  accessGetAccessRulesPayload: AccessGetAccessRulesPayload,
   config?: ClientConfiguration
-): Promise<Access_GetAccessRules_Response> {
+): Promise<AccessGetAccessRulesResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetAccessRules",
-    Access_GetAccessRules_Payload.encode(access_GetAccessRules_Payload),
+    "/common.Frey/GetAccessRules",
+    AccessGetAccessRulesPayload.encode(accessGetAccessRulesPayload),
     config
   );
-  return Access_GetAccessRules_Response.decode(response);
+  return AccessGetAccessRulesResponse.decode(response);
 }
 
 export async function GetRuleValue(
-  access_GetRuleValue_Payload: Access_GetRuleValue_Payload,
+  accessGetRuleValuePayload: AccessGetRuleValuePayload,
   config?: ClientConfiguration
-): Promise<Access_GetRuleValue_Response> {
+): Promise<AccessGetRuleValueResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetRuleValue",
-    Access_GetRuleValue_Payload.encode(access_GetRuleValue_Payload),
+    "/common.Frey/GetRuleValue",
+    AccessGetRuleValuePayload.encode(accessGetRuleValuePayload),
     config
   );
-  return Access_GetRuleValue_Response.decode(response);
+  return AccessGetRuleValueResponse.decode(response);
 }
 
 export async function UpdatePersonalInfo(
-  persons_UpdatePersonalInfo_Payload: Persons_UpdatePersonalInfo_Payload,
+  personsUpdatePersonalInfoPayload: PersonsUpdatePersonalInfoPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/UpdatePersonalInfo",
-    Persons_UpdatePersonalInfo_Payload.encode(
-      persons_UpdatePersonalInfo_Payload
-    ),
+    "/common.Frey/UpdatePersonalInfo",
+    PersonsUpdatePersonalInfoPayload.encode(personsUpdatePersonalInfoPayload),
     config
   );
-  return protoAtoms.Generic_Success_Response.decode(response);
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function GetPersonalInfo(
-  persons_GetPersonalInfo_Payload: Persons_GetPersonalInfo_Payload,
+  personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload,
   config?: ClientConfiguration
-): Promise<Persons_GetPersonalInfo_Response> {
+): Promise<PersonsGetPersonalInfoResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetPersonalInfo",
-    Persons_GetPersonalInfo_Payload.encode(persons_GetPersonalInfo_Payload),
+    "/common.Frey/GetPersonalInfo",
+    PersonsGetPersonalInfoPayload.encode(personsGetPersonalInfoPayload),
     config
   );
-  return Persons_GetPersonalInfo_Response.decode(response);
+  return PersonsGetPersonalInfoResponse.decode(response);
 }
 
 export async function FindByTenhouIds(
-  persons_FindByTenhouIds_Payload: Persons_FindByTenhouIds_Payload,
+  personsFindByTenhouIdsPayload: PersonsFindByTenhouIdsPayload,
   config?: ClientConfiguration
-): Promise<Persons_FindByTenhouIds_Response> {
+): Promise<PersonsFindByTenhouIdsResponse> {
   const response = await PBrequest(
-    "/Common.Frey/FindByTenhouIds",
-    Persons_FindByTenhouIds_Payload.encode(persons_FindByTenhouIds_Payload),
+    "/common.Frey/FindByTenhouIds",
+    PersonsFindByTenhouIdsPayload.encode(personsFindByTenhouIdsPayload),
     config
   );
-  return Persons_FindByTenhouIds_Response.decode(response);
+  return PersonsFindByTenhouIdsResponse.decode(response);
 }
 
 export async function FindByTitle(
-  persons_FindByTitle_Payload: Persons_FindByTitle_Payload,
+  personsFindByTitlePayload: PersonsFindByTitlePayload,
   config?: ClientConfiguration
-): Promise<Persons_FindByTitle_Response> {
+): Promise<PersonsFindByTitleResponse> {
   const response = await PBrequest(
-    "/Common.Frey/FindByTitle",
-    Persons_FindByTitle_Payload.encode(persons_FindByTitle_Payload),
+    "/common.Frey/FindByTitle",
+    PersonsFindByTitlePayload.encode(personsFindByTitlePayload),
     config
   );
-  return Persons_FindByTitle_Response.decode(response);
+  return PersonsFindByTitleResponse.decode(response);
 }
 
 export async function GetGroups(
-  persons_GetGroups_Payload: Persons_GetGroups_Payload,
+  personsGetGroupsPayload: PersonsGetGroupsPayload,
   config?: ClientConfiguration
-): Promise<Persons_GetGroups_Response> {
+): Promise<PersonsGetGroupsResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetGroups",
-    Persons_GetGroups_Payload.encode(persons_GetGroups_Payload),
+    "/common.Frey/GetGroups",
+    PersonsGetGroupsPayload.encode(personsGetGroupsPayload),
     config
   );
-  return Persons_GetGroups_Response.decode(response);
+  return PersonsGetGroupsResponse.decode(response);
 }
 
 export async function GetEventAdmins(
-  access_GetEventAdmins_Payload: Access_GetEventAdmins_Payload,
+  accessGetEventAdminsPayload: AccessGetEventAdminsPayload,
   config?: ClientConfiguration
-): Promise<Access_GetEventAdmins_Response> {
+): Promise<AccessGetEventAdminsResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetEventAdmins",
-    Access_GetEventAdmins_Payload.encode(access_GetEventAdmins_Payload),
+    "/common.Frey/GetEventAdmins",
+    AccessGetEventAdminsPayload.encode(accessGetEventAdminsPayload),
     config
   );
-  return Access_GetEventAdmins_Response.decode(response);
+  return AccessGetEventAdminsResponse.decode(response);
 }
 
 /**
  * admin
  */
 export async function GetSuperadminFlag(
-  access_GetSuperadminFlag_Payload: Access_GetSuperadminFlag_Payload,
+  accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload,
   config?: ClientConfiguration
-): Promise<Access_GetSuperadminFlag_Response> {
+): Promise<AccessGetSuperadminFlagResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetSuperadminFlag",
-    Access_GetSuperadminFlag_Payload.encode(access_GetSuperadminFlag_Payload),
+    "/common.Frey/GetSuperadminFlag",
+    AccessGetSuperadminFlagPayload.encode(accessGetSuperadminFlagPayload),
     config
   );
-  return Access_GetSuperadminFlag_Response.decode(response);
+  return AccessGetSuperadminFlagResponse.decode(response);
 }
 
 export async function GetOwnedEventIds(
-  access_GetOwnedEventIds_Payload: Access_GetOwnedEventIds_Payload,
+  accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload,
   config?: ClientConfiguration
-): Promise<Access_GetOwnedEventIds_Response> {
+): Promise<AccessGetOwnedEventIdsResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetOwnedEventIds",
-    Access_GetOwnedEventIds_Payload.encode(access_GetOwnedEventIds_Payload),
+    "/common.Frey/GetOwnedEventIds",
+    AccessGetOwnedEventIdsPayload.encode(accessGetOwnedEventIdsPayload),
     config
   );
-  return Access_GetOwnedEventIds_Response.decode(response);
+  return AccessGetOwnedEventIdsResponse.decode(response);
 }
 
 export async function GetRulesList(
-  access_GetRulesList_Payload: Access_GetRulesList_Payload,
+  accessGetRulesListPayload: AccessGetRulesListPayload,
   config?: ClientConfiguration
-): Promise<Access_GetRulesList_Response> {
+): Promise<AccessGetRulesListResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetRulesList",
-    Access_GetRulesList_Payload.encode(access_GetRulesList_Payload),
+    "/common.Frey/GetRulesList",
+    AccessGetRulesListPayload.encode(accessGetRulesListPayload),
     config
   );
-  return Access_GetRulesList_Response.decode(response);
+  return AccessGetRulesListResponse.decode(response);
 }
 
 export async function GetAllEventRules(
-  access_GetAllEventRules_Payload: Access_GetAllEventRules_Payload,
+  accessGetAllEventRulesPayload: AccessGetAllEventRulesPayload,
   config?: ClientConfiguration
-): Promise<Access_GetAllEventRules_Response> {
+): Promise<AccessGetAllEventRulesResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetAllEventRules",
-    Access_GetAllEventRules_Payload.encode(access_GetAllEventRules_Payload),
+    "/common.Frey/GetAllEventRules",
+    AccessGetAllEventRulesPayload.encode(accessGetAllEventRulesPayload),
     config
   );
-  return Access_GetAllEventRules_Response.decode(response);
+  return AccessGetAllEventRulesResponse.decode(response);
 }
 
 export async function GetPersonAccess(
-  access_GetPersonAccess_Payload: Access_GetPersonAccess_Payload,
+  accessGetPersonAccessPayload: AccessGetPersonAccessPayload,
   config?: ClientConfiguration
-): Promise<Access_GetPersonAccess_Response> {
+): Promise<AccessGetPersonAccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetPersonAccess",
-    Access_GetPersonAccess_Payload.encode(access_GetPersonAccess_Payload),
+    "/common.Frey/GetPersonAccess",
+    AccessGetPersonAccessPayload.encode(accessGetPersonAccessPayload),
     config
   );
-  return Access_GetPersonAccess_Response.decode(response);
+  return AccessGetPersonAccessResponse.decode(response);
 }
 
 export async function GetGroupAccess(
-  access_GetGroupAccess_Payload: Access_GetGroupAccess_Payload,
+  accessGetGroupAccessPayload: AccessGetGroupAccessPayload,
   config?: ClientConfiguration
-): Promise<Access_GetGroupAccess_Response> {
+): Promise<AccessGetGroupAccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetGroupAccess",
-    Access_GetGroupAccess_Payload.encode(access_GetGroupAccess_Payload),
+    "/common.Frey/GetGroupAccess",
+    AccessGetGroupAccessPayload.encode(accessGetGroupAccessPayload),
     config
   );
-  return Access_GetGroupAccess_Response.decode(response);
+  return AccessGetGroupAccessResponse.decode(response);
 }
 
 export async function GetAllPersonAccess(
-  access_GetAllPersonAccess_Payload: Access_GetAllPersonAccess_Payload,
+  accessGetAllPersonAccessPayload: AccessGetAllPersonAccessPayload,
   config?: ClientConfiguration
-): Promise<Access_GetAllPersonAccess_Response> {
+): Promise<AccessGetAllPersonAccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetAllPersonAccess",
-    Access_GetAllPersonAccess_Payload.encode(access_GetAllPersonAccess_Payload),
+    "/common.Frey/GetAllPersonAccess",
+    AccessGetAllPersonAccessPayload.encode(accessGetAllPersonAccessPayload),
     config
   );
-  return Access_GetAllPersonAccess_Response.decode(response);
+  return AccessGetAllPersonAccessResponse.decode(response);
 }
 
 export async function GetAllGroupAccess(
-  access_GetAllGroupAccess_Payload: Access_GetAllGroupAccess_Payload,
+  accessGetAllGroupAccessPayload: AccessGetAllGroupAccessPayload,
   config?: ClientConfiguration
-): Promise<Access_GetAllGroupAccess_Response> {
+): Promise<AccessGetAllGroupAccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetAllGroupAccess",
-    Access_GetAllGroupAccess_Payload.encode(access_GetAllGroupAccess_Payload),
+    "/common.Frey/GetAllGroupAccess",
+    AccessGetAllGroupAccessPayload.encode(accessGetAllGroupAccessPayload),
     config
   );
-  return Access_GetAllGroupAccess_Response.decode(response);
+  return AccessGetAllGroupAccessResponse.decode(response);
 }
 
 export async function AddRuleForPerson(
-  access_AddRuleForPerson_Payload: Access_AddRuleForPerson_Payload,
+  accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
   config?: ClientConfiguration
-): Promise<Access_AddRuleForPerson_Response> {
+): Promise<AccessAddRuleForPersonResponse> {
   const response = await PBrequest(
-    "/Common.Frey/AddRuleForPerson",
-    Access_AddRuleForPerson_Payload.encode(access_AddRuleForPerson_Payload),
+    "/common.Frey/AddRuleForPerson",
+    AccessAddRuleForPersonPayload.encode(accessAddRuleForPersonPayload),
     config
   );
-  return Access_AddRuleForPerson_Response.decode(response);
+  return AccessAddRuleForPersonResponse.decode(response);
 }
 
 export async function AddRuleForGroup(
-  access_AddRuleForGroup_Payload: Access_AddRuleForGroup_Payload,
+  accessAddRuleForGroupPayload: AccessAddRuleForGroupPayload,
   config?: ClientConfiguration
-): Promise<Access_AddRuleForGroup_Response> {
+): Promise<AccessAddRuleForGroupResponse> {
   const response = await PBrequest(
-    "/Common.Frey/AddRuleForGroup",
-    Access_AddRuleForGroup_Payload.encode(access_AddRuleForGroup_Payload),
+    "/common.Frey/AddRuleForGroup",
+    AccessAddRuleForGroupPayload.encode(accessAddRuleForGroupPayload),
     config
   );
-  return Access_AddRuleForGroup_Response.decode(response);
+  return AccessAddRuleForGroupResponse.decode(response);
 }
 
 export async function UpdateRuleForPerson(
-  access_UpdateRuleForPerson_Payload: Access_UpdateRuleForPerson_Payload,
+  accessUpdateRuleForPersonPayload: AccessUpdateRuleForPersonPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/UpdateRuleForPerson",
-    Access_UpdateRuleForPerson_Payload.encode(
-      access_UpdateRuleForPerson_Payload
-    ),
+    "/common.Frey/UpdateRuleForPerson",
+    AccessUpdateRuleForPersonPayload.encode(accessUpdateRuleForPersonPayload),
     config
   );
-  return protoAtoms.Generic_Success_Response.decode(response);
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function UpdateRuleForGroup(
-  access_UpdateRuleForGroup_Payload: Access_UpdateRuleForGroup_Payload,
+  accessUpdateRuleForGroupPayload: AccessUpdateRuleForGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/UpdateRuleForGroup",
-    Access_UpdateRuleForGroup_Payload.encode(access_UpdateRuleForGroup_Payload),
+    "/common.Frey/UpdateRuleForGroup",
+    AccessUpdateRuleForGroupPayload.encode(accessUpdateRuleForGroupPayload),
     config
   );
-  return protoAtoms.Generic_Success_Response.decode(response);
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function DeleteRuleForPerson(
-  access_DeleteRuleForPerson_Payload: Access_DeleteRuleForPerson_Payload,
+  accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/DeleteRuleForPerson",
-    Access_DeleteRuleForPerson_Payload.encode(
-      access_DeleteRuleForPerson_Payload
-    ),
+    "/common.Frey/DeleteRuleForPerson",
+    AccessDeleteRuleForPersonPayload.encode(accessDeleteRuleForPersonPayload),
     config
   );
-  return protoAtoms.Generic_Success_Response.decode(response);
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function DeleteRuleForGroup(
-  access_DeleteRuleForGroup_Payload: Access_DeleteRuleForGroup_Payload,
+  accessDeleteRuleForGroupPayload: AccessDeleteRuleForGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/DeleteRuleForGroup",
-    Access_DeleteRuleForGroup_Payload.encode(access_DeleteRuleForGroup_Payload),
+    "/common.Frey/DeleteRuleForGroup",
+    AccessDeleteRuleForGroupPayload.encode(accessDeleteRuleForGroupPayload),
     config
   );
-  return protoAtoms.Generic_Success_Response.decode(response);
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function ClearAccessCache(
-  access_ClearAccessCache_Payload: Access_ClearAccessCache_Payload,
+  accessClearAccessCachePayload: AccessClearAccessCachePayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/ClearAccessCache",
-    Access_ClearAccessCache_Payload.encode(access_ClearAccessCache_Payload),
+    "/common.Frey/ClearAccessCache",
+    AccessClearAccessCachePayload.encode(accessClearAccessCachePayload),
     config
   );
-  return protoAtoms.Generic_Success_Response.decode(response);
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function CreateAccount(
-  persons_CreateAccount_Payload: Persons_CreateAccount_Payload,
+  personsCreateAccountPayload: PersonsCreateAccountPayload,
   config?: ClientConfiguration
-): Promise<Persons_CreateAccount_Response> {
+): Promise<PersonsCreateAccountResponse> {
   const response = await PBrequest(
-    "/Common.Frey/CreateAccount",
-    Persons_CreateAccount_Payload.encode(persons_CreateAccount_Payload),
+    "/common.Frey/CreateAccount",
+    PersonsCreateAccountPayload.encode(personsCreateAccountPayload),
     config
   );
-  return Persons_CreateAccount_Response.decode(response);
+  return PersonsCreateAccountResponse.decode(response);
 }
 
 export async function CreateGroup(
-  persons_CreateGroup_Payload: Persons_CreateGroup_Payload,
+  personsCreateGroupPayload: PersonsCreateGroupPayload,
   config?: ClientConfiguration
-): Promise<Persons_CreateGroup_Response> {
+): Promise<PersonsCreateGroupResponse> {
   const response = await PBrequest(
-    "/Common.Frey/CreateGroup",
-    Persons_CreateGroup_Payload.encode(persons_CreateGroup_Payload),
+    "/common.Frey/CreateGroup",
+    PersonsCreateGroupPayload.encode(personsCreateGroupPayload),
     config
   );
-  return Persons_CreateGroup_Response.decode(response);
+  return PersonsCreateGroupResponse.decode(response);
 }
 
 export async function UpdateGroup(
-  persons_UpdateGroup_Payload: Persons_UpdateGroup_Payload,
+  personsUpdateGroupPayload: PersonsUpdateGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/UpdateGroup",
-    Persons_UpdateGroup_Payload.encode(persons_UpdateGroup_Payload),
+    "/common.Frey/UpdateGroup",
+    PersonsUpdateGroupPayload.encode(personsUpdateGroupPayload),
     config
   );
-  return protoAtoms.Generic_Success_Response.decode(response);
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function DeleteGroup(
-  persons_DeleteGroup_Payload: Persons_DeleteGroup_Payload,
+  personsDeleteGroupPayload: PersonsDeleteGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/DeleteGroup",
-    Persons_DeleteGroup_Payload.encode(persons_DeleteGroup_Payload),
+    "/common.Frey/DeleteGroup",
+    PersonsDeleteGroupPayload.encode(personsDeleteGroupPayload),
     config
   );
-  return protoAtoms.Generic_Success_Response.decode(response);
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function AddPersonToGroup(
-  persons_AddPersonToGroup_Payload: Persons_AddPersonToGroup_Payload,
+  personsAddPersonToGroupPayload: PersonsAddPersonToGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/AddPersonToGroup",
-    Persons_AddPersonToGroup_Payload.encode(persons_AddPersonToGroup_Payload),
+    "/common.Frey/AddPersonToGroup",
+    PersonsAddPersonToGroupPayload.encode(personsAddPersonToGroupPayload),
     config
   );
-  return protoAtoms.Generic_Success_Response.decode(response);
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function RemovePersonFromGroup(
-  persons_RemovePersonFromGroup_Payload: Persons_RemovePersonFromGroup_Payload,
+  personsRemovePersonFromGroupPayload: PersonsRemovePersonFromGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await PBrequest(
-    "/Common.Frey/RemovePersonFromGroup",
-    Persons_RemovePersonFromGroup_Payload.encode(
-      persons_RemovePersonFromGroup_Payload
+    "/common.Frey/RemovePersonFromGroup",
+    PersonsRemovePersonFromGroupPayload.encode(
+      personsRemovePersonFromGroupPayload
     ),
     config
   );
-  return protoAtoms.Generic_Success_Response.decode(response);
+  return protoAtoms.GenericSuccessResponse.decode(response);
 }
 
 export async function GetPersonsOfGroup(
-  persons_GetPersonsOfGroup_Payload: Persons_GetPersonsOfGroup_Payload,
+  personsGetPersonsOfGroupPayload: PersonsGetPersonsOfGroupPayload,
   config?: ClientConfiguration
-): Promise<Persons_GetPersonsOfGroup_Response> {
+): Promise<PersonsGetPersonsOfGroupResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetPersonsOfGroup",
-    Persons_GetPersonsOfGroup_Payload.encode(persons_GetPersonsOfGroup_Payload),
+    "/common.Frey/GetPersonsOfGroup",
+    PersonsGetPersonsOfGroupPayload.encode(personsGetPersonsOfGroupPayload),
     config
   );
-  return Persons_GetPersonsOfGroup_Response.decode(response);
+  return PersonsGetPersonsOfGroupResponse.decode(response);
 }
 
 export async function GetGroupsOfPerson(
-  persons_GetGroupsOfPerson_Payload: Persons_GetGroupsOfPerson_Payload,
+  personsGetGroupsOfPersonPayload: PersonsGetGroupsOfPersonPayload,
   config?: ClientConfiguration
-): Promise<Persons_GetGroupsOfPerson_Response> {
+): Promise<PersonsGetGroupsOfPersonResponse> {
   const response = await PBrequest(
-    "/Common.Frey/GetGroupsOfPerson",
-    Persons_GetGroupsOfPerson_Payload.encode(persons_GetGroupsOfPerson_Payload),
+    "/common.Frey/GetGroupsOfPerson",
+    PersonsGetGroupsOfPersonPayload.encode(personsGetGroupsOfPersonPayload),
     config
   );
-  return Persons_GetGroupsOfPerson_Response.decode(response);
+  return PersonsGetGroupsOfPersonResponse.decode(response);
 }
 
 /**
- * superadmin: this should be covered with some bootstrap authenthication, TODO
+ * superadmin: this should be covered with some
+ * bootstrap authenthication, TODO
  */
 export async function AddSystemWideRuleForPerson(
-  access_AddSystemWideRuleForPerson_Payload: Access_AddSystemWideRuleForPerson_Payload,
+  accessAddSystemWideRuleForPersonPayload: AccessAddSystemWideRuleForPersonPayload,
   config?: ClientConfiguration
-): Promise<Access_AddSystemWideRuleForPerson_Response> {
+): Promise<AccessAddSystemWideRuleForPersonResponse> {
   const response = await PBrequest(
-    "/Common.Frey/AddSystemWideRuleForPerson",
-    Access_AddSystemWideRuleForPerson_Payload.encode(
-      access_AddSystemWideRuleForPerson_Payload
+    "/common.Frey/AddSystemWideRuleForPerson",
+    AccessAddSystemWideRuleForPersonPayload.encode(
+      accessAddSystemWideRuleForPersonPayload
     ),
     config
   );
-  return Access_AddSystemWideRuleForPerson_Response.decode(response);
+  return AccessAddSystemWideRuleForPersonResponse.decode(response);
 }
 
 export async function AddSystemWideRuleForGroup(
-  access_AddSystemWideRuleForGroup_Payload: Access_AddSystemWideRuleForGroup_Payload,
+  accessAddSystemWideRuleForGroupPayload: AccessAddSystemWideRuleForGroupPayload,
   config?: ClientConfiguration
-): Promise<Access_AddSystemWideRuleForGroup_Response> {
+): Promise<AccessAddSystemWideRuleForGroupResponse> {
   const response = await PBrequest(
-    "/Common.Frey/AddSystemWideRuleForGroup",
-    Access_AddSystemWideRuleForGroup_Payload.encode(
-      access_AddSystemWideRuleForGroup_Payload
+    "/common.Frey/AddSystemWideRuleForGroup",
+    AccessAddSystemWideRuleForGroupPayload.encode(
+      accessAddSystemWideRuleForGroupPayload
     ),
     config
   );
-  return Access_AddSystemWideRuleForGroup_Response.decode(response);
+  return AccessAddSystemWideRuleForGroupResponse.decode(response);
 }
 
 //========================================//
@@ -903,537 +898,514 @@ export async function AddSystemWideRuleForGroup(
 //========================================//
 
 export async function RequestRegistrationJSON(
-  auth_RequestRegistration_Payload: Auth_RequestRegistration_Payload,
+  authRequestRegistrationPayload: AuthRequestRegistrationPayload,
   config?: ClientConfiguration
-): Promise<Auth_RequestRegistration_Response> {
+): Promise<AuthRequestRegistrationResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/RequestRegistration",
-    Auth_RequestRegistration_PayloadJSON.encode(
-      auth_RequestRegistration_Payload
-    ),
+    "/common.Frey/RequestRegistration",
+    AuthRequestRegistrationPayloadJSON.encode(authRequestRegistrationPayload),
     config
   );
-  return Auth_RequestRegistration_ResponseJSON.decode(response);
+  return AuthRequestRegistrationResponseJSON.decode(response);
 }
 
 export async function ApproveRegistrationJSON(
-  auth_ApproveRegistration_Payload: Auth_ApproveRegistration_Payload,
+  authApproveRegistrationPayload: AuthApproveRegistrationPayload,
   config?: ClientConfiguration
-): Promise<Auth_ApproveRegistration_Response> {
+): Promise<AuthApproveRegistrationResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/ApproveRegistration",
-    Auth_ApproveRegistration_PayloadJSON.encode(
-      auth_ApproveRegistration_Payload
-    ),
+    "/common.Frey/ApproveRegistration",
+    AuthApproveRegistrationPayloadJSON.encode(authApproveRegistrationPayload),
     config
   );
-  return Auth_ApproveRegistration_ResponseJSON.decode(response);
+  return AuthApproveRegistrationResponseJSON.decode(response);
 }
 
 export async function AuthorizeJSON(
-  auth_Authorize_Payload: Auth_Authorize_Payload,
+  authAuthorizePayload: AuthAuthorizePayload,
   config?: ClientConfiguration
-): Promise<Auth_Authorize_Response> {
+): Promise<AuthAuthorizeResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/Authorize",
-    Auth_Authorize_PayloadJSON.encode(auth_Authorize_Payload),
+    "/common.Frey/Authorize",
+    AuthAuthorizePayloadJSON.encode(authAuthorizePayload),
     config
   );
-  return Auth_Authorize_ResponseJSON.decode(response);
+  return AuthAuthorizeResponseJSON.decode(response);
 }
 
 export async function QuickAuthorizeJSON(
-  auth_QuickAuthorize_Payload: Auth_QuickAuthorize_Payload,
+  authQuickAuthorizePayload: AuthQuickAuthorizePayload,
   config?: ClientConfiguration
-): Promise<Auth_QuickAuthorize_Response> {
+): Promise<AuthQuickAuthorizeResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/QuickAuthorize",
-    Auth_QuickAuthorize_PayloadJSON.encode(auth_QuickAuthorize_Payload),
+    "/common.Frey/QuickAuthorize",
+    AuthQuickAuthorizePayloadJSON.encode(authQuickAuthorizePayload),
     config
   );
-  return Auth_QuickAuthorize_ResponseJSON.decode(response);
+  return AuthQuickAuthorizeResponseJSON.decode(response);
 }
 
 export async function MeJSON(
-  auth_Me_Payload: Auth_Me_Payload,
+  authMePayload: AuthMePayload,
   config?: ClientConfiguration
-): Promise<Auth_Me_Response> {
+): Promise<AuthMeResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/Me",
-    Auth_Me_PayloadJSON.encode(auth_Me_Payload),
+    "/common.Frey/Me",
+    AuthMePayloadJSON.encode(authMePayload),
     config
   );
-  return Auth_Me_ResponseJSON.decode(response);
+  return AuthMeResponseJSON.decode(response);
 }
 
 export async function ChangePasswordJSON(
-  auth_ChangePassword_Payload: Auth_ChangePassword_Payload,
+  authChangePasswordPayload: AuthChangePasswordPayload,
   config?: ClientConfiguration
-): Promise<Auth_ChangePassword_Response> {
+): Promise<AuthChangePasswordResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/ChangePassword",
-    Auth_ChangePassword_PayloadJSON.encode(auth_ChangePassword_Payload),
+    "/common.Frey/ChangePassword",
+    AuthChangePasswordPayloadJSON.encode(authChangePasswordPayload),
     config
   );
-  return Auth_ChangePassword_ResponseJSON.decode(response);
+  return AuthChangePasswordResponseJSON.decode(response);
 }
 
 export async function RequestResetPasswordJSON(
-  auth_RequestResetPassword_Payload: Auth_RequestResetPassword_Payload,
+  authRequestResetPasswordPayload: AuthRequestResetPasswordPayload,
   config?: ClientConfiguration
-): Promise<Auth_RequestResetPassword_Response> {
+): Promise<AuthRequestResetPasswordResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/RequestResetPassword",
-    Auth_RequestResetPassword_PayloadJSON.encode(
-      auth_RequestResetPassword_Payload
-    ),
+    "/common.Frey/RequestResetPassword",
+    AuthRequestResetPasswordPayloadJSON.encode(authRequestResetPasswordPayload),
     config
   );
-  return Auth_RequestResetPassword_ResponseJSON.decode(response);
+  return AuthRequestResetPasswordResponseJSON.decode(response);
 }
 
 export async function ApproveResetPasswordJSON(
-  auth_ApproveResetPassword_Payload: Auth_ApproveResetPassword_Payload,
+  authApproveResetPasswordPayload: AuthApproveResetPasswordPayload,
   config?: ClientConfiguration
-): Promise<Auth_ApproveResetPassword_Response> {
+): Promise<AuthApproveResetPasswordResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/ApproveResetPassword",
-    Auth_ApproveResetPassword_PayloadJSON.encode(
-      auth_ApproveResetPassword_Payload
-    ),
+    "/common.Frey/ApproveResetPassword",
+    AuthApproveResetPasswordPayloadJSON.encode(authApproveResetPasswordPayload),
     config
   );
-  return Auth_ApproveResetPassword_ResponseJSON.decode(response);
+  return AuthApproveResetPasswordResponseJSON.decode(response);
 }
 
 export async function GetAccessRulesJSON(
-  access_GetAccessRules_Payload: Access_GetAccessRules_Payload,
+  accessGetAccessRulesPayload: AccessGetAccessRulesPayload,
   config?: ClientConfiguration
-): Promise<Access_GetAccessRules_Response> {
+): Promise<AccessGetAccessRulesResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetAccessRules",
-    Access_GetAccessRules_PayloadJSON.encode(access_GetAccessRules_Payload),
+    "/common.Frey/GetAccessRules",
+    AccessGetAccessRulesPayloadJSON.encode(accessGetAccessRulesPayload),
     config
   );
-  return Access_GetAccessRules_ResponseJSON.decode(response);
+  return AccessGetAccessRulesResponseJSON.decode(response);
 }
 
 export async function GetRuleValueJSON(
-  access_GetRuleValue_Payload: Access_GetRuleValue_Payload,
+  accessGetRuleValuePayload: AccessGetRuleValuePayload,
   config?: ClientConfiguration
-): Promise<Access_GetRuleValue_Response> {
+): Promise<AccessGetRuleValueResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetRuleValue",
-    Access_GetRuleValue_PayloadJSON.encode(access_GetRuleValue_Payload),
+    "/common.Frey/GetRuleValue",
+    AccessGetRuleValuePayloadJSON.encode(accessGetRuleValuePayload),
     config
   );
-  return Access_GetRuleValue_ResponseJSON.decode(response);
+  return AccessGetRuleValueResponseJSON.decode(response);
 }
 
 export async function UpdatePersonalInfoJSON(
-  persons_UpdatePersonalInfo_Payload: Persons_UpdatePersonalInfo_Payload,
+  personsUpdatePersonalInfoPayload: PersonsUpdatePersonalInfoPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/UpdatePersonalInfo",
-    Persons_UpdatePersonalInfo_PayloadJSON.encode(
-      persons_UpdatePersonalInfo_Payload
+    "/common.Frey/UpdatePersonalInfo",
+    PersonsUpdatePersonalInfoPayloadJSON.encode(
+      personsUpdatePersonalInfoPayload
     ),
     config
   );
-  return protoAtoms.Generic_Success_ResponseJSON.decode(response);
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function GetPersonalInfoJSON(
-  persons_GetPersonalInfo_Payload: Persons_GetPersonalInfo_Payload,
+  personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload,
   config?: ClientConfiguration
-): Promise<Persons_GetPersonalInfo_Response> {
+): Promise<PersonsGetPersonalInfoResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetPersonalInfo",
-    Persons_GetPersonalInfo_PayloadJSON.encode(persons_GetPersonalInfo_Payload),
+    "/common.Frey/GetPersonalInfo",
+    PersonsGetPersonalInfoPayloadJSON.encode(personsGetPersonalInfoPayload),
     config
   );
-  return Persons_GetPersonalInfo_ResponseJSON.decode(response);
+  return PersonsGetPersonalInfoResponseJSON.decode(response);
 }
 
 export async function FindByTenhouIdsJSON(
-  persons_FindByTenhouIds_Payload: Persons_FindByTenhouIds_Payload,
+  personsFindByTenhouIdsPayload: PersonsFindByTenhouIdsPayload,
   config?: ClientConfiguration
-): Promise<Persons_FindByTenhouIds_Response> {
+): Promise<PersonsFindByTenhouIdsResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/FindByTenhouIds",
-    Persons_FindByTenhouIds_PayloadJSON.encode(persons_FindByTenhouIds_Payload),
+    "/common.Frey/FindByTenhouIds",
+    PersonsFindByTenhouIdsPayloadJSON.encode(personsFindByTenhouIdsPayload),
     config
   );
-  return Persons_FindByTenhouIds_ResponseJSON.decode(response);
+  return PersonsFindByTenhouIdsResponseJSON.decode(response);
 }
 
 export async function FindByTitleJSON(
-  persons_FindByTitle_Payload: Persons_FindByTitle_Payload,
+  personsFindByTitlePayload: PersonsFindByTitlePayload,
   config?: ClientConfiguration
-): Promise<Persons_FindByTitle_Response> {
+): Promise<PersonsFindByTitleResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/FindByTitle",
-    Persons_FindByTitle_PayloadJSON.encode(persons_FindByTitle_Payload),
+    "/common.Frey/FindByTitle",
+    PersonsFindByTitlePayloadJSON.encode(personsFindByTitlePayload),
     config
   );
-  return Persons_FindByTitle_ResponseJSON.decode(response);
+  return PersonsFindByTitleResponseJSON.decode(response);
 }
 
 export async function GetGroupsJSON(
-  persons_GetGroups_Payload: Persons_GetGroups_Payload,
+  personsGetGroupsPayload: PersonsGetGroupsPayload,
   config?: ClientConfiguration
-): Promise<Persons_GetGroups_Response> {
+): Promise<PersonsGetGroupsResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetGroups",
-    Persons_GetGroups_PayloadJSON.encode(persons_GetGroups_Payload),
+    "/common.Frey/GetGroups",
+    PersonsGetGroupsPayloadJSON.encode(personsGetGroupsPayload),
     config
   );
-  return Persons_GetGroups_ResponseJSON.decode(response);
+  return PersonsGetGroupsResponseJSON.decode(response);
 }
 
 export async function GetEventAdminsJSON(
-  access_GetEventAdmins_Payload: Access_GetEventAdmins_Payload,
+  accessGetEventAdminsPayload: AccessGetEventAdminsPayload,
   config?: ClientConfiguration
-): Promise<Access_GetEventAdmins_Response> {
+): Promise<AccessGetEventAdminsResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetEventAdmins",
-    Access_GetEventAdmins_PayloadJSON.encode(access_GetEventAdmins_Payload),
+    "/common.Frey/GetEventAdmins",
+    AccessGetEventAdminsPayloadJSON.encode(accessGetEventAdminsPayload),
     config
   );
-  return Access_GetEventAdmins_ResponseJSON.decode(response);
+  return AccessGetEventAdminsResponseJSON.decode(response);
 }
 
 /**
  * admin
  */
 export async function GetSuperadminFlagJSON(
-  access_GetSuperadminFlag_Payload: Access_GetSuperadminFlag_Payload,
+  accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload,
   config?: ClientConfiguration
-): Promise<Access_GetSuperadminFlag_Response> {
+): Promise<AccessGetSuperadminFlagResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetSuperadminFlag",
-    Access_GetSuperadminFlag_PayloadJSON.encode(
-      access_GetSuperadminFlag_Payload
-    ),
+    "/common.Frey/GetSuperadminFlag",
+    AccessGetSuperadminFlagPayloadJSON.encode(accessGetSuperadminFlagPayload),
     config
   );
-  return Access_GetSuperadminFlag_ResponseJSON.decode(response);
+  return AccessGetSuperadminFlagResponseJSON.decode(response);
 }
 
 export async function GetOwnedEventIdsJSON(
-  access_GetOwnedEventIds_Payload: Access_GetOwnedEventIds_Payload,
+  accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload,
   config?: ClientConfiguration
-): Promise<Access_GetOwnedEventIds_Response> {
+): Promise<AccessGetOwnedEventIdsResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetOwnedEventIds",
-    Access_GetOwnedEventIds_PayloadJSON.encode(access_GetOwnedEventIds_Payload),
+    "/common.Frey/GetOwnedEventIds",
+    AccessGetOwnedEventIdsPayloadJSON.encode(accessGetOwnedEventIdsPayload),
     config
   );
-  return Access_GetOwnedEventIds_ResponseJSON.decode(response);
+  return AccessGetOwnedEventIdsResponseJSON.decode(response);
 }
 
 export async function GetRulesListJSON(
-  access_GetRulesList_Payload: Access_GetRulesList_Payload,
+  accessGetRulesListPayload: AccessGetRulesListPayload,
   config?: ClientConfiguration
-): Promise<Access_GetRulesList_Response> {
+): Promise<AccessGetRulesListResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetRulesList",
-    Access_GetRulesList_PayloadJSON.encode(access_GetRulesList_Payload),
+    "/common.Frey/GetRulesList",
+    AccessGetRulesListPayloadJSON.encode(accessGetRulesListPayload),
     config
   );
-  return Access_GetRulesList_ResponseJSON.decode(response);
+  return AccessGetRulesListResponseJSON.decode(response);
 }
 
 export async function GetAllEventRulesJSON(
-  access_GetAllEventRules_Payload: Access_GetAllEventRules_Payload,
+  accessGetAllEventRulesPayload: AccessGetAllEventRulesPayload,
   config?: ClientConfiguration
-): Promise<Access_GetAllEventRules_Response> {
+): Promise<AccessGetAllEventRulesResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetAllEventRules",
-    Access_GetAllEventRules_PayloadJSON.encode(access_GetAllEventRules_Payload),
+    "/common.Frey/GetAllEventRules",
+    AccessGetAllEventRulesPayloadJSON.encode(accessGetAllEventRulesPayload),
     config
   );
-  return Access_GetAllEventRules_ResponseJSON.decode(response);
+  return AccessGetAllEventRulesResponseJSON.decode(response);
 }
 
 export async function GetPersonAccessJSON(
-  access_GetPersonAccess_Payload: Access_GetPersonAccess_Payload,
+  accessGetPersonAccessPayload: AccessGetPersonAccessPayload,
   config?: ClientConfiguration
-): Promise<Access_GetPersonAccess_Response> {
+): Promise<AccessGetPersonAccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetPersonAccess",
-    Access_GetPersonAccess_PayloadJSON.encode(access_GetPersonAccess_Payload),
+    "/common.Frey/GetPersonAccess",
+    AccessGetPersonAccessPayloadJSON.encode(accessGetPersonAccessPayload),
     config
   );
-  return Access_GetPersonAccess_ResponseJSON.decode(response);
+  return AccessGetPersonAccessResponseJSON.decode(response);
 }
 
 export async function GetGroupAccessJSON(
-  access_GetGroupAccess_Payload: Access_GetGroupAccess_Payload,
+  accessGetGroupAccessPayload: AccessGetGroupAccessPayload,
   config?: ClientConfiguration
-): Promise<Access_GetGroupAccess_Response> {
+): Promise<AccessGetGroupAccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetGroupAccess",
-    Access_GetGroupAccess_PayloadJSON.encode(access_GetGroupAccess_Payload),
+    "/common.Frey/GetGroupAccess",
+    AccessGetGroupAccessPayloadJSON.encode(accessGetGroupAccessPayload),
     config
   );
-  return Access_GetGroupAccess_ResponseJSON.decode(response);
+  return AccessGetGroupAccessResponseJSON.decode(response);
 }
 
 export async function GetAllPersonAccessJSON(
-  access_GetAllPersonAccess_Payload: Access_GetAllPersonAccess_Payload,
+  accessGetAllPersonAccessPayload: AccessGetAllPersonAccessPayload,
   config?: ClientConfiguration
-): Promise<Access_GetAllPersonAccess_Response> {
+): Promise<AccessGetAllPersonAccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetAllPersonAccess",
-    Access_GetAllPersonAccess_PayloadJSON.encode(
-      access_GetAllPersonAccess_Payload
-    ),
+    "/common.Frey/GetAllPersonAccess",
+    AccessGetAllPersonAccessPayloadJSON.encode(accessGetAllPersonAccessPayload),
     config
   );
-  return Access_GetAllPersonAccess_ResponseJSON.decode(response);
+  return AccessGetAllPersonAccessResponseJSON.decode(response);
 }
 
 export async function GetAllGroupAccessJSON(
-  access_GetAllGroupAccess_Payload: Access_GetAllGroupAccess_Payload,
+  accessGetAllGroupAccessPayload: AccessGetAllGroupAccessPayload,
   config?: ClientConfiguration
-): Promise<Access_GetAllGroupAccess_Response> {
+): Promise<AccessGetAllGroupAccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetAllGroupAccess",
-    Access_GetAllGroupAccess_PayloadJSON.encode(
-      access_GetAllGroupAccess_Payload
-    ),
+    "/common.Frey/GetAllGroupAccess",
+    AccessGetAllGroupAccessPayloadJSON.encode(accessGetAllGroupAccessPayload),
     config
   );
-  return Access_GetAllGroupAccess_ResponseJSON.decode(response);
+  return AccessGetAllGroupAccessResponseJSON.decode(response);
 }
 
 export async function AddRuleForPersonJSON(
-  access_AddRuleForPerson_Payload: Access_AddRuleForPerson_Payload,
+  accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
   config?: ClientConfiguration
-): Promise<Access_AddRuleForPerson_Response> {
+): Promise<AccessAddRuleForPersonResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/AddRuleForPerson",
-    Access_AddRuleForPerson_PayloadJSON.encode(access_AddRuleForPerson_Payload),
+    "/common.Frey/AddRuleForPerson",
+    AccessAddRuleForPersonPayloadJSON.encode(accessAddRuleForPersonPayload),
     config
   );
-  return Access_AddRuleForPerson_ResponseJSON.decode(response);
+  return AccessAddRuleForPersonResponseJSON.decode(response);
 }
 
 export async function AddRuleForGroupJSON(
-  access_AddRuleForGroup_Payload: Access_AddRuleForGroup_Payload,
+  accessAddRuleForGroupPayload: AccessAddRuleForGroupPayload,
   config?: ClientConfiguration
-): Promise<Access_AddRuleForGroup_Response> {
+): Promise<AccessAddRuleForGroupResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/AddRuleForGroup",
-    Access_AddRuleForGroup_PayloadJSON.encode(access_AddRuleForGroup_Payload),
+    "/common.Frey/AddRuleForGroup",
+    AccessAddRuleForGroupPayloadJSON.encode(accessAddRuleForGroupPayload),
     config
   );
-  return Access_AddRuleForGroup_ResponseJSON.decode(response);
+  return AccessAddRuleForGroupResponseJSON.decode(response);
 }
 
 export async function UpdateRuleForPersonJSON(
-  access_UpdateRuleForPerson_Payload: Access_UpdateRuleForPerson_Payload,
+  accessUpdateRuleForPersonPayload: AccessUpdateRuleForPersonPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/UpdateRuleForPerson",
-    Access_UpdateRuleForPerson_PayloadJSON.encode(
-      access_UpdateRuleForPerson_Payload
+    "/common.Frey/UpdateRuleForPerson",
+    AccessUpdateRuleForPersonPayloadJSON.encode(
+      accessUpdateRuleForPersonPayload
     ),
     config
   );
-  return protoAtoms.Generic_Success_ResponseJSON.decode(response);
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function UpdateRuleForGroupJSON(
-  access_UpdateRuleForGroup_Payload: Access_UpdateRuleForGroup_Payload,
+  accessUpdateRuleForGroupPayload: AccessUpdateRuleForGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/UpdateRuleForGroup",
-    Access_UpdateRuleForGroup_PayloadJSON.encode(
-      access_UpdateRuleForGroup_Payload
-    ),
+    "/common.Frey/UpdateRuleForGroup",
+    AccessUpdateRuleForGroupPayloadJSON.encode(accessUpdateRuleForGroupPayload),
     config
   );
-  return protoAtoms.Generic_Success_ResponseJSON.decode(response);
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function DeleteRuleForPersonJSON(
-  access_DeleteRuleForPerson_Payload: Access_DeleteRuleForPerson_Payload,
+  accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/DeleteRuleForPerson",
-    Access_DeleteRuleForPerson_PayloadJSON.encode(
-      access_DeleteRuleForPerson_Payload
+    "/common.Frey/DeleteRuleForPerson",
+    AccessDeleteRuleForPersonPayloadJSON.encode(
+      accessDeleteRuleForPersonPayload
     ),
     config
   );
-  return protoAtoms.Generic_Success_ResponseJSON.decode(response);
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function DeleteRuleForGroupJSON(
-  access_DeleteRuleForGroup_Payload: Access_DeleteRuleForGroup_Payload,
+  accessDeleteRuleForGroupPayload: AccessDeleteRuleForGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/DeleteRuleForGroup",
-    Access_DeleteRuleForGroup_PayloadJSON.encode(
-      access_DeleteRuleForGroup_Payload
-    ),
+    "/common.Frey/DeleteRuleForGroup",
+    AccessDeleteRuleForGroupPayloadJSON.encode(accessDeleteRuleForGroupPayload),
     config
   );
-  return protoAtoms.Generic_Success_ResponseJSON.decode(response);
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function ClearAccessCacheJSON(
-  access_ClearAccessCache_Payload: Access_ClearAccessCache_Payload,
+  accessClearAccessCachePayload: AccessClearAccessCachePayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/ClearAccessCache",
-    Access_ClearAccessCache_PayloadJSON.encode(access_ClearAccessCache_Payload),
+    "/common.Frey/ClearAccessCache",
+    AccessClearAccessCachePayloadJSON.encode(accessClearAccessCachePayload),
     config
   );
-  return protoAtoms.Generic_Success_ResponseJSON.decode(response);
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function CreateAccountJSON(
-  persons_CreateAccount_Payload: Persons_CreateAccount_Payload,
+  personsCreateAccountPayload: PersonsCreateAccountPayload,
   config?: ClientConfiguration
-): Promise<Persons_CreateAccount_Response> {
+): Promise<PersonsCreateAccountResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/CreateAccount",
-    Persons_CreateAccount_PayloadJSON.encode(persons_CreateAccount_Payload),
+    "/common.Frey/CreateAccount",
+    PersonsCreateAccountPayloadJSON.encode(personsCreateAccountPayload),
     config
   );
-  return Persons_CreateAccount_ResponseJSON.decode(response);
+  return PersonsCreateAccountResponseJSON.decode(response);
 }
 
 export async function CreateGroupJSON(
-  persons_CreateGroup_Payload: Persons_CreateGroup_Payload,
+  personsCreateGroupPayload: PersonsCreateGroupPayload,
   config?: ClientConfiguration
-): Promise<Persons_CreateGroup_Response> {
+): Promise<PersonsCreateGroupResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/CreateGroup",
-    Persons_CreateGroup_PayloadJSON.encode(persons_CreateGroup_Payload),
+    "/common.Frey/CreateGroup",
+    PersonsCreateGroupPayloadJSON.encode(personsCreateGroupPayload),
     config
   );
-  return Persons_CreateGroup_ResponseJSON.decode(response);
+  return PersonsCreateGroupResponseJSON.decode(response);
 }
 
 export async function UpdateGroupJSON(
-  persons_UpdateGroup_Payload: Persons_UpdateGroup_Payload,
+  personsUpdateGroupPayload: PersonsUpdateGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/UpdateGroup",
-    Persons_UpdateGroup_PayloadJSON.encode(persons_UpdateGroup_Payload),
+    "/common.Frey/UpdateGroup",
+    PersonsUpdateGroupPayloadJSON.encode(personsUpdateGroupPayload),
     config
   );
-  return protoAtoms.Generic_Success_ResponseJSON.decode(response);
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function DeleteGroupJSON(
-  persons_DeleteGroup_Payload: Persons_DeleteGroup_Payload,
+  personsDeleteGroupPayload: PersonsDeleteGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/DeleteGroup",
-    Persons_DeleteGroup_PayloadJSON.encode(persons_DeleteGroup_Payload),
+    "/common.Frey/DeleteGroup",
+    PersonsDeleteGroupPayloadJSON.encode(personsDeleteGroupPayload),
     config
   );
-  return protoAtoms.Generic_Success_ResponseJSON.decode(response);
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function AddPersonToGroupJSON(
-  persons_AddPersonToGroup_Payload: Persons_AddPersonToGroup_Payload,
+  personsAddPersonToGroupPayload: PersonsAddPersonToGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/AddPersonToGroup",
-    Persons_AddPersonToGroup_PayloadJSON.encode(
-      persons_AddPersonToGroup_Payload
-    ),
+    "/common.Frey/AddPersonToGroup",
+    PersonsAddPersonToGroupPayloadJSON.encode(personsAddPersonToGroupPayload),
     config
   );
-  return protoAtoms.Generic_Success_ResponseJSON.decode(response);
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function RemovePersonFromGroupJSON(
-  persons_RemovePersonFromGroup_Payload: Persons_RemovePersonFromGroup_Payload,
+  personsRemovePersonFromGroupPayload: PersonsRemovePersonFromGroupPayload,
   config?: ClientConfiguration
-): Promise<protoAtoms.Generic_Success_Response> {
+): Promise<protoAtoms.GenericSuccessResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/RemovePersonFromGroup",
-    Persons_RemovePersonFromGroup_PayloadJSON.encode(
-      persons_RemovePersonFromGroup_Payload
+    "/common.Frey/RemovePersonFromGroup",
+    PersonsRemovePersonFromGroupPayloadJSON.encode(
+      personsRemovePersonFromGroupPayload
     ),
     config
   );
-  return protoAtoms.Generic_Success_ResponseJSON.decode(response);
+  return protoAtoms.GenericSuccessResponseJSON.decode(response);
 }
 
 export async function GetPersonsOfGroupJSON(
-  persons_GetPersonsOfGroup_Payload: Persons_GetPersonsOfGroup_Payload,
+  personsGetPersonsOfGroupPayload: PersonsGetPersonsOfGroupPayload,
   config?: ClientConfiguration
-): Promise<Persons_GetPersonsOfGroup_Response> {
+): Promise<PersonsGetPersonsOfGroupResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetPersonsOfGroup",
-    Persons_GetPersonsOfGroup_PayloadJSON.encode(
-      persons_GetPersonsOfGroup_Payload
-    ),
+    "/common.Frey/GetPersonsOfGroup",
+    PersonsGetPersonsOfGroupPayloadJSON.encode(personsGetPersonsOfGroupPayload),
     config
   );
-  return Persons_GetPersonsOfGroup_ResponseJSON.decode(response);
+  return PersonsGetPersonsOfGroupResponseJSON.decode(response);
 }
 
 export async function GetGroupsOfPersonJSON(
-  persons_GetGroupsOfPerson_Payload: Persons_GetGroupsOfPerson_Payload,
+  personsGetGroupsOfPersonPayload: PersonsGetGroupsOfPersonPayload,
   config?: ClientConfiguration
-): Promise<Persons_GetGroupsOfPerson_Response> {
+): Promise<PersonsGetGroupsOfPersonResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/GetGroupsOfPerson",
-    Persons_GetGroupsOfPerson_PayloadJSON.encode(
-      persons_GetGroupsOfPerson_Payload
-    ),
+    "/common.Frey/GetGroupsOfPerson",
+    PersonsGetGroupsOfPersonPayloadJSON.encode(personsGetGroupsOfPersonPayload),
     config
   );
-  return Persons_GetGroupsOfPerson_ResponseJSON.decode(response);
+  return PersonsGetGroupsOfPersonResponseJSON.decode(response);
 }
 
 /**
- * superadmin: this should be covered with some bootstrap authenthication, TODO
+ * superadmin: this should be covered with some
+ * bootstrap authenthication, TODO
  */
 export async function AddSystemWideRuleForPersonJSON(
-  access_AddSystemWideRuleForPerson_Payload: Access_AddSystemWideRuleForPerson_Payload,
+  accessAddSystemWideRuleForPersonPayload: AccessAddSystemWideRuleForPersonPayload,
   config?: ClientConfiguration
-): Promise<Access_AddSystemWideRuleForPerson_Response> {
+): Promise<AccessAddSystemWideRuleForPersonResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/AddSystemWideRuleForPerson",
-    Access_AddSystemWideRuleForPerson_PayloadJSON.encode(
-      access_AddSystemWideRuleForPerson_Payload
+    "/common.Frey/AddSystemWideRuleForPerson",
+    AccessAddSystemWideRuleForPersonPayloadJSON.encode(
+      accessAddSystemWideRuleForPersonPayload
     ),
     config
   );
-  return Access_AddSystemWideRuleForPerson_ResponseJSON.decode(response);
+  return AccessAddSystemWideRuleForPersonResponseJSON.decode(response);
 }
 
 export async function AddSystemWideRuleForGroupJSON(
-  access_AddSystemWideRuleForGroup_Payload: Access_AddSystemWideRuleForGroup_Payload,
+  accessAddSystemWideRuleForGroupPayload: AccessAddSystemWideRuleForGroupPayload,
   config?: ClientConfiguration
-): Promise<Access_AddSystemWideRuleForGroup_Response> {
+): Promise<AccessAddSystemWideRuleForGroupResponse> {
   const response = await JSONrequest(
-    "/Common.Frey/AddSystemWideRuleForGroup",
-    Access_AddSystemWideRuleForGroup_PayloadJSON.encode(
-      access_AddSystemWideRuleForGroup_Payload
+    "/common.Frey/AddSystemWideRuleForGroup",
+    AccessAddSystemWideRuleForGroupPayloadJSON.encode(
+      accessAddSystemWideRuleForGroupPayload
     ),
     config
   );
-  return Access_AddSystemWideRuleForGroup_ResponseJSON.decode(response);
+  return AccessAddSystemWideRuleForGroupResponseJSON.decode(response);
 }
 
 //========================================//
@@ -1442,721 +1414,708 @@ export async function AddSystemWideRuleForGroupJSON(
 
 export interface Frey<Context = unknown> {
   RequestRegistration: (
-    auth_RequestRegistration_Payload: Auth_RequestRegistration_Payload,
+    authRequestRegistrationPayload: AuthRequestRegistrationPayload,
     context: Context
   ) =>
-    | Promise<Auth_RequestRegistration_Response>
-    | Auth_RequestRegistration_Response;
+    | Promise<AuthRequestRegistrationResponse>
+    | AuthRequestRegistrationResponse;
   ApproveRegistration: (
-    auth_ApproveRegistration_Payload: Auth_ApproveRegistration_Payload,
+    authApproveRegistrationPayload: AuthApproveRegistrationPayload,
     context: Context
   ) =>
-    | Promise<Auth_ApproveRegistration_Response>
-    | Auth_ApproveRegistration_Response;
+    | Promise<AuthApproveRegistrationResponse>
+    | AuthApproveRegistrationResponse;
   Authorize: (
-    auth_Authorize_Payload: Auth_Authorize_Payload,
+    authAuthorizePayload: AuthAuthorizePayload,
     context: Context
-  ) => Promise<Auth_Authorize_Response> | Auth_Authorize_Response;
+  ) => Promise<AuthAuthorizeResponse> | AuthAuthorizeResponse;
   QuickAuthorize: (
-    auth_QuickAuthorize_Payload: Auth_QuickAuthorize_Payload,
+    authQuickAuthorizePayload: AuthQuickAuthorizePayload,
     context: Context
-  ) => Promise<Auth_QuickAuthorize_Response> | Auth_QuickAuthorize_Response;
+  ) => Promise<AuthQuickAuthorizeResponse> | AuthQuickAuthorizeResponse;
   Me: (
-    auth_Me_Payload: Auth_Me_Payload,
+    authMePayload: AuthMePayload,
     context: Context
-  ) => Promise<Auth_Me_Response> | Auth_Me_Response;
+  ) => Promise<AuthMeResponse> | AuthMeResponse;
   ChangePassword: (
-    auth_ChangePassword_Payload: Auth_ChangePassword_Payload,
+    authChangePasswordPayload: AuthChangePasswordPayload,
     context: Context
-  ) => Promise<Auth_ChangePassword_Response> | Auth_ChangePassword_Response;
+  ) => Promise<AuthChangePasswordResponse> | AuthChangePasswordResponse;
   RequestResetPassword: (
-    auth_RequestResetPassword_Payload: Auth_RequestResetPassword_Payload,
+    authRequestResetPasswordPayload: AuthRequestResetPasswordPayload,
     context: Context
   ) =>
-    | Promise<Auth_RequestResetPassword_Response>
-    | Auth_RequestResetPassword_Response;
+    | Promise<AuthRequestResetPasswordResponse>
+    | AuthRequestResetPasswordResponse;
   ApproveResetPassword: (
-    auth_ApproveResetPassword_Payload: Auth_ApproveResetPassword_Payload,
+    authApproveResetPasswordPayload: AuthApproveResetPasswordPayload,
     context: Context
   ) =>
-    | Promise<Auth_ApproveResetPassword_Response>
-    | Auth_ApproveResetPassword_Response;
+    | Promise<AuthApproveResetPasswordResponse>
+    | AuthApproveResetPasswordResponse;
   GetAccessRules: (
-    access_GetAccessRules_Payload: Access_GetAccessRules_Payload,
+    accessGetAccessRulesPayload: AccessGetAccessRulesPayload,
     context: Context
-  ) => Promise<Access_GetAccessRules_Response> | Access_GetAccessRules_Response;
+  ) => Promise<AccessGetAccessRulesResponse> | AccessGetAccessRulesResponse;
   GetRuleValue: (
-    access_GetRuleValue_Payload: Access_GetRuleValue_Payload,
+    accessGetRuleValuePayload: AccessGetRuleValuePayload,
     context: Context
-  ) => Promise<Access_GetRuleValue_Response> | Access_GetRuleValue_Response;
+  ) => Promise<AccessGetRuleValueResponse> | AccessGetRuleValueResponse;
   UpdatePersonalInfo: (
-    persons_UpdatePersonalInfo_Payload: Persons_UpdatePersonalInfo_Payload,
+    personsUpdatePersonalInfoPayload: PersonsUpdatePersonalInfoPayload,
     context: Context
   ) =>
-    | Promise<protoAtoms.Generic_Success_Response>
-    | protoAtoms.Generic_Success_Response;
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
   GetPersonalInfo: (
-    persons_GetPersonalInfo_Payload: Persons_GetPersonalInfo_Payload,
+    personsGetPersonalInfoPayload: PersonsGetPersonalInfoPayload,
     context: Context
-  ) =>
-    | Promise<Persons_GetPersonalInfo_Response>
-    | Persons_GetPersonalInfo_Response;
+  ) => Promise<PersonsGetPersonalInfoResponse> | PersonsGetPersonalInfoResponse;
   FindByTenhouIds: (
-    persons_FindByTenhouIds_Payload: Persons_FindByTenhouIds_Payload,
+    personsFindByTenhouIdsPayload: PersonsFindByTenhouIdsPayload,
     context: Context
-  ) =>
-    | Promise<Persons_FindByTenhouIds_Response>
-    | Persons_FindByTenhouIds_Response;
+  ) => Promise<PersonsFindByTenhouIdsResponse> | PersonsFindByTenhouIdsResponse;
   FindByTitle: (
-    persons_FindByTitle_Payload: Persons_FindByTitle_Payload,
+    personsFindByTitlePayload: PersonsFindByTitlePayload,
     context: Context
-  ) => Promise<Persons_FindByTitle_Response> | Persons_FindByTitle_Response;
+  ) => Promise<PersonsFindByTitleResponse> | PersonsFindByTitleResponse;
   GetGroups: (
-    persons_GetGroups_Payload: Persons_GetGroups_Payload,
+    personsGetGroupsPayload: PersonsGetGroupsPayload,
     context: Context
-  ) => Promise<Persons_GetGroups_Response> | Persons_GetGroups_Response;
+  ) => Promise<PersonsGetGroupsResponse> | PersonsGetGroupsResponse;
   GetEventAdmins: (
-    access_GetEventAdmins_Payload: Access_GetEventAdmins_Payload,
+    accessGetEventAdminsPayload: AccessGetEventAdminsPayload,
     context: Context
-  ) => Promise<Access_GetEventAdmins_Response> | Access_GetEventAdmins_Response;
+  ) => Promise<AccessGetEventAdminsResponse> | AccessGetEventAdminsResponse;
   /**
    * admin
    */
   GetSuperadminFlag: (
-    access_GetSuperadminFlag_Payload: Access_GetSuperadminFlag_Payload,
+    accessGetSuperadminFlagPayload: AccessGetSuperadminFlagPayload,
     context: Context
   ) =>
-    | Promise<Access_GetSuperadminFlag_Response>
-    | Access_GetSuperadminFlag_Response;
+    | Promise<AccessGetSuperadminFlagResponse>
+    | AccessGetSuperadminFlagResponse;
   GetOwnedEventIds: (
-    access_GetOwnedEventIds_Payload: Access_GetOwnedEventIds_Payload,
+    accessGetOwnedEventIdsPayload: AccessGetOwnedEventIdsPayload,
     context: Context
-  ) =>
-    | Promise<Access_GetOwnedEventIds_Response>
-    | Access_GetOwnedEventIds_Response;
+  ) => Promise<AccessGetOwnedEventIdsResponse> | AccessGetOwnedEventIdsResponse;
   GetRulesList: (
-    access_GetRulesList_Payload: Access_GetRulesList_Payload,
+    accessGetRulesListPayload: AccessGetRulesListPayload,
     context: Context
-  ) => Promise<Access_GetRulesList_Response> | Access_GetRulesList_Response;
+  ) => Promise<AccessGetRulesListResponse> | AccessGetRulesListResponse;
   GetAllEventRules: (
-    access_GetAllEventRules_Payload: Access_GetAllEventRules_Payload,
+    accessGetAllEventRulesPayload: AccessGetAllEventRulesPayload,
     context: Context
-  ) =>
-    | Promise<Access_GetAllEventRules_Response>
-    | Access_GetAllEventRules_Response;
+  ) => Promise<AccessGetAllEventRulesResponse> | AccessGetAllEventRulesResponse;
   GetPersonAccess: (
-    access_GetPersonAccess_Payload: Access_GetPersonAccess_Payload,
+    accessGetPersonAccessPayload: AccessGetPersonAccessPayload,
     context: Context
-  ) =>
-    | Promise<Access_GetPersonAccess_Response>
-    | Access_GetPersonAccess_Response;
+  ) => Promise<AccessGetPersonAccessResponse> | AccessGetPersonAccessResponse;
   GetGroupAccess: (
-    access_GetGroupAccess_Payload: Access_GetGroupAccess_Payload,
+    accessGetGroupAccessPayload: AccessGetGroupAccessPayload,
     context: Context
-  ) => Promise<Access_GetGroupAccess_Response> | Access_GetGroupAccess_Response;
+  ) => Promise<AccessGetGroupAccessResponse> | AccessGetGroupAccessResponse;
   GetAllPersonAccess: (
-    access_GetAllPersonAccess_Payload: Access_GetAllPersonAccess_Payload,
+    accessGetAllPersonAccessPayload: AccessGetAllPersonAccessPayload,
     context: Context
   ) =>
-    | Promise<Access_GetAllPersonAccess_Response>
-    | Access_GetAllPersonAccess_Response;
+    | Promise<AccessGetAllPersonAccessResponse>
+    | AccessGetAllPersonAccessResponse;
   GetAllGroupAccess: (
-    access_GetAllGroupAccess_Payload: Access_GetAllGroupAccess_Payload,
+    accessGetAllGroupAccessPayload: AccessGetAllGroupAccessPayload,
     context: Context
   ) =>
-    | Promise<Access_GetAllGroupAccess_Response>
-    | Access_GetAllGroupAccess_Response;
+    | Promise<AccessGetAllGroupAccessResponse>
+    | AccessGetAllGroupAccessResponse;
   AddRuleForPerson: (
-    access_AddRuleForPerson_Payload: Access_AddRuleForPerson_Payload,
+    accessAddRuleForPersonPayload: AccessAddRuleForPersonPayload,
     context: Context
-  ) =>
-    | Promise<Access_AddRuleForPerson_Response>
-    | Access_AddRuleForPerson_Response;
+  ) => Promise<AccessAddRuleForPersonResponse> | AccessAddRuleForPersonResponse;
   AddRuleForGroup: (
-    access_AddRuleForGroup_Payload: Access_AddRuleForGroup_Payload,
+    accessAddRuleForGroupPayload: AccessAddRuleForGroupPayload,
     context: Context
-  ) =>
-    | Promise<Access_AddRuleForGroup_Response>
-    | Access_AddRuleForGroup_Response;
+  ) => Promise<AccessAddRuleForGroupResponse> | AccessAddRuleForGroupResponse;
   UpdateRuleForPerson: (
-    access_UpdateRuleForPerson_Payload: Access_UpdateRuleForPerson_Payload,
+    accessUpdateRuleForPersonPayload: AccessUpdateRuleForPersonPayload,
     context: Context
   ) =>
-    | Promise<protoAtoms.Generic_Success_Response>
-    | protoAtoms.Generic_Success_Response;
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
   UpdateRuleForGroup: (
-    access_UpdateRuleForGroup_Payload: Access_UpdateRuleForGroup_Payload,
+    accessUpdateRuleForGroupPayload: AccessUpdateRuleForGroupPayload,
     context: Context
   ) =>
-    | Promise<protoAtoms.Generic_Success_Response>
-    | protoAtoms.Generic_Success_Response;
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
   DeleteRuleForPerson: (
-    access_DeleteRuleForPerson_Payload: Access_DeleteRuleForPerson_Payload,
+    accessDeleteRuleForPersonPayload: AccessDeleteRuleForPersonPayload,
     context: Context
   ) =>
-    | Promise<protoAtoms.Generic_Success_Response>
-    | protoAtoms.Generic_Success_Response;
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
   DeleteRuleForGroup: (
-    access_DeleteRuleForGroup_Payload: Access_DeleteRuleForGroup_Payload,
+    accessDeleteRuleForGroupPayload: AccessDeleteRuleForGroupPayload,
     context: Context
   ) =>
-    | Promise<protoAtoms.Generic_Success_Response>
-    | protoAtoms.Generic_Success_Response;
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
   ClearAccessCache: (
-    access_ClearAccessCache_Payload: Access_ClearAccessCache_Payload,
+    accessClearAccessCachePayload: AccessClearAccessCachePayload,
     context: Context
   ) =>
-    | Promise<protoAtoms.Generic_Success_Response>
-    | protoAtoms.Generic_Success_Response;
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
   CreateAccount: (
-    persons_CreateAccount_Payload: Persons_CreateAccount_Payload,
+    personsCreateAccountPayload: PersonsCreateAccountPayload,
     context: Context
-  ) => Promise<Persons_CreateAccount_Response> | Persons_CreateAccount_Response;
+  ) => Promise<PersonsCreateAccountResponse> | PersonsCreateAccountResponse;
   CreateGroup: (
-    persons_CreateGroup_Payload: Persons_CreateGroup_Payload,
+    personsCreateGroupPayload: PersonsCreateGroupPayload,
     context: Context
-  ) => Promise<Persons_CreateGroup_Response> | Persons_CreateGroup_Response;
+  ) => Promise<PersonsCreateGroupResponse> | PersonsCreateGroupResponse;
   UpdateGroup: (
-    persons_UpdateGroup_Payload: Persons_UpdateGroup_Payload,
+    personsUpdateGroupPayload: PersonsUpdateGroupPayload,
     context: Context
   ) =>
-    | Promise<protoAtoms.Generic_Success_Response>
-    | protoAtoms.Generic_Success_Response;
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
   DeleteGroup: (
-    persons_DeleteGroup_Payload: Persons_DeleteGroup_Payload,
+    personsDeleteGroupPayload: PersonsDeleteGroupPayload,
     context: Context
   ) =>
-    | Promise<protoAtoms.Generic_Success_Response>
-    | protoAtoms.Generic_Success_Response;
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
   AddPersonToGroup: (
-    persons_AddPersonToGroup_Payload: Persons_AddPersonToGroup_Payload,
+    personsAddPersonToGroupPayload: PersonsAddPersonToGroupPayload,
     context: Context
   ) =>
-    | Promise<protoAtoms.Generic_Success_Response>
-    | protoAtoms.Generic_Success_Response;
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
   RemovePersonFromGroup: (
-    persons_RemovePersonFromGroup_Payload: Persons_RemovePersonFromGroup_Payload,
+    personsRemovePersonFromGroupPayload: PersonsRemovePersonFromGroupPayload,
     context: Context
   ) =>
-    | Promise<protoAtoms.Generic_Success_Response>
-    | protoAtoms.Generic_Success_Response;
+    | Promise<protoAtoms.GenericSuccessResponse>
+    | protoAtoms.GenericSuccessResponse;
   GetPersonsOfGroup: (
-    persons_GetPersonsOfGroup_Payload: Persons_GetPersonsOfGroup_Payload,
+    personsGetPersonsOfGroupPayload: PersonsGetPersonsOfGroupPayload,
     context: Context
   ) =>
-    | Promise<Persons_GetPersonsOfGroup_Response>
-    | Persons_GetPersonsOfGroup_Response;
+    | Promise<PersonsGetPersonsOfGroupResponse>
+    | PersonsGetPersonsOfGroupResponse;
   GetGroupsOfPerson: (
-    persons_GetGroupsOfPerson_Payload: Persons_GetGroupsOfPerson_Payload,
+    personsGetGroupsOfPersonPayload: PersonsGetGroupsOfPersonPayload,
     context: Context
   ) =>
-    | Promise<Persons_GetGroupsOfPerson_Response>
-    | Persons_GetGroupsOfPerson_Response;
+    | Promise<PersonsGetGroupsOfPersonResponse>
+    | PersonsGetGroupsOfPersonResponse;
   /**
-   * superadmin: this should be covered with some bootstrap authenthication, TODO
+   * superadmin: this should be covered with some
+   * bootstrap authenthication, TODO
    */
   AddSystemWideRuleForPerson: (
-    access_AddSystemWideRuleForPerson_Payload: Access_AddSystemWideRuleForPerson_Payload,
+    accessAddSystemWideRuleForPersonPayload: AccessAddSystemWideRuleForPersonPayload,
     context: Context
   ) =>
-    | Promise<Access_AddSystemWideRuleForPerson_Response>
-    | Access_AddSystemWideRuleForPerson_Response;
+    | Promise<AccessAddSystemWideRuleForPersonResponse>
+    | AccessAddSystemWideRuleForPersonResponse;
   AddSystemWideRuleForGroup: (
-    access_AddSystemWideRuleForGroup_Payload: Access_AddSystemWideRuleForGroup_Payload,
+    accessAddSystemWideRuleForGroupPayload: AccessAddSystemWideRuleForGroupPayload,
     context: Context
   ) =>
-    | Promise<Access_AddSystemWideRuleForGroup_Response>
-    | Access_AddSystemWideRuleForGroup_Response;
+    | Promise<AccessAddSystemWideRuleForGroupResponse>
+    | AccessAddSystemWideRuleForGroupResponse;
 }
 
 export function createFrey<Context>(service: Frey<Context>) {
   return {
-    name: "Common.Frey",
+    name: "common.Frey",
     methods: {
       RequestRegistration: {
         name: "RequestRegistration",
         handler: service.RequestRegistration,
         input: {
-          protobuf: Auth_RequestRegistration_Payload,
-          json: Auth_RequestRegistration_PayloadJSON,
+          protobuf: AuthRequestRegistrationPayload,
+          json: AuthRequestRegistrationPayloadJSON,
         },
         output: {
-          protobuf: Auth_RequestRegistration_Response,
-          json: Auth_RequestRegistration_ResponseJSON,
+          protobuf: AuthRequestRegistrationResponse,
+          json: AuthRequestRegistrationResponseJSON,
         },
       },
       ApproveRegistration: {
         name: "ApproveRegistration",
         handler: service.ApproveRegistration,
         input: {
-          protobuf: Auth_ApproveRegistration_Payload,
-          json: Auth_ApproveRegistration_PayloadJSON,
+          protobuf: AuthApproveRegistrationPayload,
+          json: AuthApproveRegistrationPayloadJSON,
         },
         output: {
-          protobuf: Auth_ApproveRegistration_Response,
-          json: Auth_ApproveRegistration_ResponseJSON,
+          protobuf: AuthApproveRegistrationResponse,
+          json: AuthApproveRegistrationResponseJSON,
         },
       },
       Authorize: {
         name: "Authorize",
         handler: service.Authorize,
         input: {
-          protobuf: Auth_Authorize_Payload,
-          json: Auth_Authorize_PayloadJSON,
+          protobuf: AuthAuthorizePayload,
+          json: AuthAuthorizePayloadJSON,
         },
         output: {
-          protobuf: Auth_Authorize_Response,
-          json: Auth_Authorize_ResponseJSON,
+          protobuf: AuthAuthorizeResponse,
+          json: AuthAuthorizeResponseJSON,
         },
       },
       QuickAuthorize: {
         name: "QuickAuthorize",
         handler: service.QuickAuthorize,
         input: {
-          protobuf: Auth_QuickAuthorize_Payload,
-          json: Auth_QuickAuthorize_PayloadJSON,
+          protobuf: AuthQuickAuthorizePayload,
+          json: AuthQuickAuthorizePayloadJSON,
         },
         output: {
-          protobuf: Auth_QuickAuthorize_Response,
-          json: Auth_QuickAuthorize_ResponseJSON,
+          protobuf: AuthQuickAuthorizeResponse,
+          json: AuthQuickAuthorizeResponseJSON,
         },
       },
       Me: {
         name: "Me",
         handler: service.Me,
-        input: { protobuf: Auth_Me_Payload, json: Auth_Me_PayloadJSON },
-        output: { protobuf: Auth_Me_Response, json: Auth_Me_ResponseJSON },
+        input: { protobuf: AuthMePayload, json: AuthMePayloadJSON },
+        output: { protobuf: AuthMeResponse, json: AuthMeResponseJSON },
       },
       ChangePassword: {
         name: "ChangePassword",
         handler: service.ChangePassword,
         input: {
-          protobuf: Auth_ChangePassword_Payload,
-          json: Auth_ChangePassword_PayloadJSON,
+          protobuf: AuthChangePasswordPayload,
+          json: AuthChangePasswordPayloadJSON,
         },
         output: {
-          protobuf: Auth_ChangePassword_Response,
-          json: Auth_ChangePassword_ResponseJSON,
+          protobuf: AuthChangePasswordResponse,
+          json: AuthChangePasswordResponseJSON,
         },
       },
       RequestResetPassword: {
         name: "RequestResetPassword",
         handler: service.RequestResetPassword,
         input: {
-          protobuf: Auth_RequestResetPassword_Payload,
-          json: Auth_RequestResetPassword_PayloadJSON,
+          protobuf: AuthRequestResetPasswordPayload,
+          json: AuthRequestResetPasswordPayloadJSON,
         },
         output: {
-          protobuf: Auth_RequestResetPassword_Response,
-          json: Auth_RequestResetPassword_ResponseJSON,
+          protobuf: AuthRequestResetPasswordResponse,
+          json: AuthRequestResetPasswordResponseJSON,
         },
       },
       ApproveResetPassword: {
         name: "ApproveResetPassword",
         handler: service.ApproveResetPassword,
         input: {
-          protobuf: Auth_ApproveResetPassword_Payload,
-          json: Auth_ApproveResetPassword_PayloadJSON,
+          protobuf: AuthApproveResetPasswordPayload,
+          json: AuthApproveResetPasswordPayloadJSON,
         },
         output: {
-          protobuf: Auth_ApproveResetPassword_Response,
-          json: Auth_ApproveResetPassword_ResponseJSON,
+          protobuf: AuthApproveResetPasswordResponse,
+          json: AuthApproveResetPasswordResponseJSON,
         },
       },
       GetAccessRules: {
         name: "GetAccessRules",
         handler: service.GetAccessRules,
         input: {
-          protobuf: Access_GetAccessRules_Payload,
-          json: Access_GetAccessRules_PayloadJSON,
+          protobuf: AccessGetAccessRulesPayload,
+          json: AccessGetAccessRulesPayloadJSON,
         },
         output: {
-          protobuf: Access_GetAccessRules_Response,
-          json: Access_GetAccessRules_ResponseJSON,
+          protobuf: AccessGetAccessRulesResponse,
+          json: AccessGetAccessRulesResponseJSON,
         },
       },
       GetRuleValue: {
         name: "GetRuleValue",
         handler: service.GetRuleValue,
         input: {
-          protobuf: Access_GetRuleValue_Payload,
-          json: Access_GetRuleValue_PayloadJSON,
+          protobuf: AccessGetRuleValuePayload,
+          json: AccessGetRuleValuePayloadJSON,
         },
         output: {
-          protobuf: Access_GetRuleValue_Response,
-          json: Access_GetRuleValue_ResponseJSON,
+          protobuf: AccessGetRuleValueResponse,
+          json: AccessGetRuleValueResponseJSON,
         },
       },
       UpdatePersonalInfo: {
         name: "UpdatePersonalInfo",
         handler: service.UpdatePersonalInfo,
         input: {
-          protobuf: Persons_UpdatePersonalInfo_Payload,
-          json: Persons_UpdatePersonalInfo_PayloadJSON,
+          protobuf: PersonsUpdatePersonalInfoPayload,
+          json: PersonsUpdatePersonalInfoPayloadJSON,
         },
         output: {
-          protobuf: protoAtoms.Generic_Success_Response,
-          json: protoAtoms.Generic_Success_ResponseJSON,
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       GetPersonalInfo: {
         name: "GetPersonalInfo",
         handler: service.GetPersonalInfo,
         input: {
-          protobuf: Persons_GetPersonalInfo_Payload,
-          json: Persons_GetPersonalInfo_PayloadJSON,
+          protobuf: PersonsGetPersonalInfoPayload,
+          json: PersonsGetPersonalInfoPayloadJSON,
         },
         output: {
-          protobuf: Persons_GetPersonalInfo_Response,
-          json: Persons_GetPersonalInfo_ResponseJSON,
+          protobuf: PersonsGetPersonalInfoResponse,
+          json: PersonsGetPersonalInfoResponseJSON,
         },
       },
       FindByTenhouIds: {
         name: "FindByTenhouIds",
         handler: service.FindByTenhouIds,
         input: {
-          protobuf: Persons_FindByTenhouIds_Payload,
-          json: Persons_FindByTenhouIds_PayloadJSON,
+          protobuf: PersonsFindByTenhouIdsPayload,
+          json: PersonsFindByTenhouIdsPayloadJSON,
         },
         output: {
-          protobuf: Persons_FindByTenhouIds_Response,
-          json: Persons_FindByTenhouIds_ResponseJSON,
+          protobuf: PersonsFindByTenhouIdsResponse,
+          json: PersonsFindByTenhouIdsResponseJSON,
         },
       },
       FindByTitle: {
         name: "FindByTitle",
         handler: service.FindByTitle,
         input: {
-          protobuf: Persons_FindByTitle_Payload,
-          json: Persons_FindByTitle_PayloadJSON,
+          protobuf: PersonsFindByTitlePayload,
+          json: PersonsFindByTitlePayloadJSON,
         },
         output: {
-          protobuf: Persons_FindByTitle_Response,
-          json: Persons_FindByTitle_ResponseJSON,
+          protobuf: PersonsFindByTitleResponse,
+          json: PersonsFindByTitleResponseJSON,
         },
       },
       GetGroups: {
         name: "GetGroups",
         handler: service.GetGroups,
         input: {
-          protobuf: Persons_GetGroups_Payload,
-          json: Persons_GetGroups_PayloadJSON,
+          protobuf: PersonsGetGroupsPayload,
+          json: PersonsGetGroupsPayloadJSON,
         },
         output: {
-          protobuf: Persons_GetGroups_Response,
-          json: Persons_GetGroups_ResponseJSON,
+          protobuf: PersonsGetGroupsResponse,
+          json: PersonsGetGroupsResponseJSON,
         },
       },
       GetEventAdmins: {
         name: "GetEventAdmins",
         handler: service.GetEventAdmins,
         input: {
-          protobuf: Access_GetEventAdmins_Payload,
-          json: Access_GetEventAdmins_PayloadJSON,
+          protobuf: AccessGetEventAdminsPayload,
+          json: AccessGetEventAdminsPayloadJSON,
         },
         output: {
-          protobuf: Access_GetEventAdmins_Response,
-          json: Access_GetEventAdmins_ResponseJSON,
+          protobuf: AccessGetEventAdminsResponse,
+          json: AccessGetEventAdminsResponseJSON,
         },
       },
       GetSuperadminFlag: {
         name: "GetSuperadminFlag",
         handler: service.GetSuperadminFlag,
         input: {
-          protobuf: Access_GetSuperadminFlag_Payload,
-          json: Access_GetSuperadminFlag_PayloadJSON,
+          protobuf: AccessGetSuperadminFlagPayload,
+          json: AccessGetSuperadminFlagPayloadJSON,
         },
         output: {
-          protobuf: Access_GetSuperadminFlag_Response,
-          json: Access_GetSuperadminFlag_ResponseJSON,
+          protobuf: AccessGetSuperadminFlagResponse,
+          json: AccessGetSuperadminFlagResponseJSON,
         },
       },
       GetOwnedEventIds: {
         name: "GetOwnedEventIds",
         handler: service.GetOwnedEventIds,
         input: {
-          protobuf: Access_GetOwnedEventIds_Payload,
-          json: Access_GetOwnedEventIds_PayloadJSON,
+          protobuf: AccessGetOwnedEventIdsPayload,
+          json: AccessGetOwnedEventIdsPayloadJSON,
         },
         output: {
-          protobuf: Access_GetOwnedEventIds_Response,
-          json: Access_GetOwnedEventIds_ResponseJSON,
+          protobuf: AccessGetOwnedEventIdsResponse,
+          json: AccessGetOwnedEventIdsResponseJSON,
         },
       },
       GetRulesList: {
         name: "GetRulesList",
         handler: service.GetRulesList,
         input: {
-          protobuf: Access_GetRulesList_Payload,
-          json: Access_GetRulesList_PayloadJSON,
+          protobuf: AccessGetRulesListPayload,
+          json: AccessGetRulesListPayloadJSON,
         },
         output: {
-          protobuf: Access_GetRulesList_Response,
-          json: Access_GetRulesList_ResponseJSON,
+          protobuf: AccessGetRulesListResponse,
+          json: AccessGetRulesListResponseJSON,
         },
       },
       GetAllEventRules: {
         name: "GetAllEventRules",
         handler: service.GetAllEventRules,
         input: {
-          protobuf: Access_GetAllEventRules_Payload,
-          json: Access_GetAllEventRules_PayloadJSON,
+          protobuf: AccessGetAllEventRulesPayload,
+          json: AccessGetAllEventRulesPayloadJSON,
         },
         output: {
-          protobuf: Access_GetAllEventRules_Response,
-          json: Access_GetAllEventRules_ResponseJSON,
+          protobuf: AccessGetAllEventRulesResponse,
+          json: AccessGetAllEventRulesResponseJSON,
         },
       },
       GetPersonAccess: {
         name: "GetPersonAccess",
         handler: service.GetPersonAccess,
         input: {
-          protobuf: Access_GetPersonAccess_Payload,
-          json: Access_GetPersonAccess_PayloadJSON,
+          protobuf: AccessGetPersonAccessPayload,
+          json: AccessGetPersonAccessPayloadJSON,
         },
         output: {
-          protobuf: Access_GetPersonAccess_Response,
-          json: Access_GetPersonAccess_ResponseJSON,
+          protobuf: AccessGetPersonAccessResponse,
+          json: AccessGetPersonAccessResponseJSON,
         },
       },
       GetGroupAccess: {
         name: "GetGroupAccess",
         handler: service.GetGroupAccess,
         input: {
-          protobuf: Access_GetGroupAccess_Payload,
-          json: Access_GetGroupAccess_PayloadJSON,
+          protobuf: AccessGetGroupAccessPayload,
+          json: AccessGetGroupAccessPayloadJSON,
         },
         output: {
-          protobuf: Access_GetGroupAccess_Response,
-          json: Access_GetGroupAccess_ResponseJSON,
+          protobuf: AccessGetGroupAccessResponse,
+          json: AccessGetGroupAccessResponseJSON,
         },
       },
       GetAllPersonAccess: {
         name: "GetAllPersonAccess",
         handler: service.GetAllPersonAccess,
         input: {
-          protobuf: Access_GetAllPersonAccess_Payload,
-          json: Access_GetAllPersonAccess_PayloadJSON,
+          protobuf: AccessGetAllPersonAccessPayload,
+          json: AccessGetAllPersonAccessPayloadJSON,
         },
         output: {
-          protobuf: Access_GetAllPersonAccess_Response,
-          json: Access_GetAllPersonAccess_ResponseJSON,
+          protobuf: AccessGetAllPersonAccessResponse,
+          json: AccessGetAllPersonAccessResponseJSON,
         },
       },
       GetAllGroupAccess: {
         name: "GetAllGroupAccess",
         handler: service.GetAllGroupAccess,
         input: {
-          protobuf: Access_GetAllGroupAccess_Payload,
-          json: Access_GetAllGroupAccess_PayloadJSON,
+          protobuf: AccessGetAllGroupAccessPayload,
+          json: AccessGetAllGroupAccessPayloadJSON,
         },
         output: {
-          protobuf: Access_GetAllGroupAccess_Response,
-          json: Access_GetAllGroupAccess_ResponseJSON,
+          protobuf: AccessGetAllGroupAccessResponse,
+          json: AccessGetAllGroupAccessResponseJSON,
         },
       },
       AddRuleForPerson: {
         name: "AddRuleForPerson",
         handler: service.AddRuleForPerson,
         input: {
-          protobuf: Access_AddRuleForPerson_Payload,
-          json: Access_AddRuleForPerson_PayloadJSON,
+          protobuf: AccessAddRuleForPersonPayload,
+          json: AccessAddRuleForPersonPayloadJSON,
         },
         output: {
-          protobuf: Access_AddRuleForPerson_Response,
-          json: Access_AddRuleForPerson_ResponseJSON,
+          protobuf: AccessAddRuleForPersonResponse,
+          json: AccessAddRuleForPersonResponseJSON,
         },
       },
       AddRuleForGroup: {
         name: "AddRuleForGroup",
         handler: service.AddRuleForGroup,
         input: {
-          protobuf: Access_AddRuleForGroup_Payload,
-          json: Access_AddRuleForGroup_PayloadJSON,
+          protobuf: AccessAddRuleForGroupPayload,
+          json: AccessAddRuleForGroupPayloadJSON,
         },
         output: {
-          protobuf: Access_AddRuleForGroup_Response,
-          json: Access_AddRuleForGroup_ResponseJSON,
+          protobuf: AccessAddRuleForGroupResponse,
+          json: AccessAddRuleForGroupResponseJSON,
         },
       },
       UpdateRuleForPerson: {
         name: "UpdateRuleForPerson",
         handler: service.UpdateRuleForPerson,
         input: {
-          protobuf: Access_UpdateRuleForPerson_Payload,
-          json: Access_UpdateRuleForPerson_PayloadJSON,
+          protobuf: AccessUpdateRuleForPersonPayload,
+          json: AccessUpdateRuleForPersonPayloadJSON,
         },
         output: {
-          protobuf: protoAtoms.Generic_Success_Response,
-          json: protoAtoms.Generic_Success_ResponseJSON,
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       UpdateRuleForGroup: {
         name: "UpdateRuleForGroup",
         handler: service.UpdateRuleForGroup,
         input: {
-          protobuf: Access_UpdateRuleForGroup_Payload,
-          json: Access_UpdateRuleForGroup_PayloadJSON,
+          protobuf: AccessUpdateRuleForGroupPayload,
+          json: AccessUpdateRuleForGroupPayloadJSON,
         },
         output: {
-          protobuf: protoAtoms.Generic_Success_Response,
-          json: protoAtoms.Generic_Success_ResponseJSON,
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       DeleteRuleForPerson: {
         name: "DeleteRuleForPerson",
         handler: service.DeleteRuleForPerson,
         input: {
-          protobuf: Access_DeleteRuleForPerson_Payload,
-          json: Access_DeleteRuleForPerson_PayloadJSON,
+          protobuf: AccessDeleteRuleForPersonPayload,
+          json: AccessDeleteRuleForPersonPayloadJSON,
         },
         output: {
-          protobuf: protoAtoms.Generic_Success_Response,
-          json: protoAtoms.Generic_Success_ResponseJSON,
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       DeleteRuleForGroup: {
         name: "DeleteRuleForGroup",
         handler: service.DeleteRuleForGroup,
         input: {
-          protobuf: Access_DeleteRuleForGroup_Payload,
-          json: Access_DeleteRuleForGroup_PayloadJSON,
+          protobuf: AccessDeleteRuleForGroupPayload,
+          json: AccessDeleteRuleForGroupPayloadJSON,
         },
         output: {
-          protobuf: protoAtoms.Generic_Success_Response,
-          json: protoAtoms.Generic_Success_ResponseJSON,
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       ClearAccessCache: {
         name: "ClearAccessCache",
         handler: service.ClearAccessCache,
         input: {
-          protobuf: Access_ClearAccessCache_Payload,
-          json: Access_ClearAccessCache_PayloadJSON,
+          protobuf: AccessClearAccessCachePayload,
+          json: AccessClearAccessCachePayloadJSON,
         },
         output: {
-          protobuf: protoAtoms.Generic_Success_Response,
-          json: protoAtoms.Generic_Success_ResponseJSON,
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       CreateAccount: {
         name: "CreateAccount",
         handler: service.CreateAccount,
         input: {
-          protobuf: Persons_CreateAccount_Payload,
-          json: Persons_CreateAccount_PayloadJSON,
+          protobuf: PersonsCreateAccountPayload,
+          json: PersonsCreateAccountPayloadJSON,
         },
         output: {
-          protobuf: Persons_CreateAccount_Response,
-          json: Persons_CreateAccount_ResponseJSON,
+          protobuf: PersonsCreateAccountResponse,
+          json: PersonsCreateAccountResponseJSON,
         },
       },
       CreateGroup: {
         name: "CreateGroup",
         handler: service.CreateGroup,
         input: {
-          protobuf: Persons_CreateGroup_Payload,
-          json: Persons_CreateGroup_PayloadJSON,
+          protobuf: PersonsCreateGroupPayload,
+          json: PersonsCreateGroupPayloadJSON,
         },
         output: {
-          protobuf: Persons_CreateGroup_Response,
-          json: Persons_CreateGroup_ResponseJSON,
+          protobuf: PersonsCreateGroupResponse,
+          json: PersonsCreateGroupResponseJSON,
         },
       },
       UpdateGroup: {
         name: "UpdateGroup",
         handler: service.UpdateGroup,
         input: {
-          protobuf: Persons_UpdateGroup_Payload,
-          json: Persons_UpdateGroup_PayloadJSON,
+          protobuf: PersonsUpdateGroupPayload,
+          json: PersonsUpdateGroupPayloadJSON,
         },
         output: {
-          protobuf: protoAtoms.Generic_Success_Response,
-          json: protoAtoms.Generic_Success_ResponseJSON,
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       DeleteGroup: {
         name: "DeleteGroup",
         handler: service.DeleteGroup,
         input: {
-          protobuf: Persons_DeleteGroup_Payload,
-          json: Persons_DeleteGroup_PayloadJSON,
+          protobuf: PersonsDeleteGroupPayload,
+          json: PersonsDeleteGroupPayloadJSON,
         },
         output: {
-          protobuf: protoAtoms.Generic_Success_Response,
-          json: protoAtoms.Generic_Success_ResponseJSON,
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       AddPersonToGroup: {
         name: "AddPersonToGroup",
         handler: service.AddPersonToGroup,
         input: {
-          protobuf: Persons_AddPersonToGroup_Payload,
-          json: Persons_AddPersonToGroup_PayloadJSON,
+          protobuf: PersonsAddPersonToGroupPayload,
+          json: PersonsAddPersonToGroupPayloadJSON,
         },
         output: {
-          protobuf: protoAtoms.Generic_Success_Response,
-          json: protoAtoms.Generic_Success_ResponseJSON,
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       RemovePersonFromGroup: {
         name: "RemovePersonFromGroup",
         handler: service.RemovePersonFromGroup,
         input: {
-          protobuf: Persons_RemovePersonFromGroup_Payload,
-          json: Persons_RemovePersonFromGroup_PayloadJSON,
+          protobuf: PersonsRemovePersonFromGroupPayload,
+          json: PersonsRemovePersonFromGroupPayloadJSON,
         },
         output: {
-          protobuf: protoAtoms.Generic_Success_Response,
-          json: protoAtoms.Generic_Success_ResponseJSON,
+          protobuf: protoAtoms.GenericSuccessResponse,
+          json: protoAtoms.GenericSuccessResponseJSON,
         },
       },
       GetPersonsOfGroup: {
         name: "GetPersonsOfGroup",
         handler: service.GetPersonsOfGroup,
         input: {
-          protobuf: Persons_GetPersonsOfGroup_Payload,
-          json: Persons_GetPersonsOfGroup_PayloadJSON,
+          protobuf: PersonsGetPersonsOfGroupPayload,
+          json: PersonsGetPersonsOfGroupPayloadJSON,
         },
         output: {
-          protobuf: Persons_GetPersonsOfGroup_Response,
-          json: Persons_GetPersonsOfGroup_ResponseJSON,
+          protobuf: PersonsGetPersonsOfGroupResponse,
+          json: PersonsGetPersonsOfGroupResponseJSON,
         },
       },
       GetGroupsOfPerson: {
         name: "GetGroupsOfPerson",
         handler: service.GetGroupsOfPerson,
         input: {
-          protobuf: Persons_GetGroupsOfPerson_Payload,
-          json: Persons_GetGroupsOfPerson_PayloadJSON,
+          protobuf: PersonsGetGroupsOfPersonPayload,
+          json: PersonsGetGroupsOfPersonPayloadJSON,
         },
         output: {
-          protobuf: Persons_GetGroupsOfPerson_Response,
-          json: Persons_GetGroupsOfPerson_ResponseJSON,
+          protobuf: PersonsGetGroupsOfPersonResponse,
+          json: PersonsGetGroupsOfPersonResponseJSON,
         },
       },
       AddSystemWideRuleForPerson: {
         name: "AddSystemWideRuleForPerson",
         handler: service.AddSystemWideRuleForPerson,
         input: {
-          protobuf: Access_AddSystemWideRuleForPerson_Payload,
-          json: Access_AddSystemWideRuleForPerson_PayloadJSON,
+          protobuf: AccessAddSystemWideRuleForPersonPayload,
+          json: AccessAddSystemWideRuleForPersonPayloadJSON,
         },
         output: {
-          protobuf: Access_AddSystemWideRuleForPerson_Response,
-          json: Access_AddSystemWideRuleForPerson_ResponseJSON,
+          protobuf: AccessAddSystemWideRuleForPersonResponse,
+          json: AccessAddSystemWideRuleForPersonResponseJSON,
         },
       },
       AddSystemWideRuleForGroup: {
         name: "AddSystemWideRuleForGroup",
         handler: service.AddSystemWideRuleForGroup,
         input: {
-          protobuf: Access_AddSystemWideRuleForGroup_Payload,
-          json: Access_AddSystemWideRuleForGroup_PayloadJSON,
+          protobuf: AccessAddSystemWideRuleForGroupPayload,
+          json: AccessAddSystemWideRuleForGroupPayloadJSON,
         },
         output: {
-          protobuf: Access_AddSystemWideRuleForGroup_Response,
-          json: Access_AddSystemWideRuleForGroup_ResponseJSON,
+          protobuf: AccessAddSystemWideRuleForGroupResponse,
+          json: AccessAddSystemWideRuleForGroupResponseJSON,
         },
       },
     },
@@ -2167,33 +2126,31 @@ export function createFrey<Context>(service: Frey<Context>) {
 //        Protobuf Encode / Decode        //
 //========================================//
 
-export const Auth_RequestRegistration_Payload = {
+export const AuthRequestRegistrationPayload = {
   /**
-   * Serializes Auth_RequestRegistration_Payload to protobuf.
+   * Serializes AuthRequestRegistrationPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Auth_RequestRegistration_Payload>
-  ): Uint8Array {
-    return Auth_RequestRegistration_Payload._writeMessage(
+  encode: function (msg: Partial<AuthRequestRegistrationPayload>): Uint8Array {
+    return AuthRequestRegistrationPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_RequestRegistration_Payload from protobuf.
+   * Deserializes AuthRequestRegistrationPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_RequestRegistration_Payload {
-    return Auth_RequestRegistration_Payload._readMessage(
-      Auth_RequestRegistration_Payload.initialize(),
+  decode: function (bytes: ByteSource): AuthRequestRegistrationPayload {
+    return AuthRequestRegistrationPayload._readMessage(
+      AuthRequestRegistrationPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_RequestRegistration_Payload with all fields set to their default value.
+   * Initializes AuthRequestRegistrationPayload with all fields set to their default value.
    */
-  initialize: function (): Auth_RequestRegistration_Payload {
+  initialize: function (): AuthRequestRegistrationPayload {
     return {
       email: "",
       title: "",
@@ -2206,7 +2163,7 @@ export const Auth_RequestRegistration_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_RequestRegistration_Payload>,
+    msg: Partial<AuthRequestRegistrationPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.email) {
@@ -2228,9 +2185,9 @@ export const Auth_RequestRegistration_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_RequestRegistration_Payload,
+    msg: AuthRequestRegistrationPayload,
     reader: BinaryReader
-  ): Auth_RequestRegistration_Payload {
+  ): AuthRequestRegistrationPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2260,33 +2217,31 @@ export const Auth_RequestRegistration_Payload = {
   },
 };
 
-export const Auth_RequestRegistration_Response = {
+export const AuthRequestRegistrationResponse = {
   /**
-   * Serializes Auth_RequestRegistration_Response to protobuf.
+   * Serializes AuthRequestRegistrationResponse to protobuf.
    */
-  encode: function (
-    msg: Partial<Auth_RequestRegistration_Response>
-  ): Uint8Array {
-    return Auth_RequestRegistration_Response._writeMessage(
+  encode: function (msg: Partial<AuthRequestRegistrationResponse>): Uint8Array {
+    return AuthRequestRegistrationResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_RequestRegistration_Response from protobuf.
+   * Deserializes AuthRequestRegistrationResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_RequestRegistration_Response {
-    return Auth_RequestRegistration_Response._readMessage(
-      Auth_RequestRegistration_Response.initialize(),
+  decode: function (bytes: ByteSource): AuthRequestRegistrationResponse {
+    return AuthRequestRegistrationResponse._readMessage(
+      AuthRequestRegistrationResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_RequestRegistration_Response with all fields set to their default value.
+   * Initializes AuthRequestRegistrationResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_RequestRegistration_Response {
+  initialize: function (): AuthRequestRegistrationResponse {
     return {
       approvalCode: "",
     };
@@ -2296,7 +2251,7 @@ export const Auth_RequestRegistration_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_RequestRegistration_Response>,
+    msg: Partial<AuthRequestRegistrationResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.approvalCode) {
@@ -2309,9 +2264,9 @@ export const Auth_RequestRegistration_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_RequestRegistration_Response,
+    msg: AuthRequestRegistrationResponse,
     reader: BinaryReader
-  ): Auth_RequestRegistration_Response {
+  ): AuthRequestRegistrationResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2329,33 +2284,31 @@ export const Auth_RequestRegistration_Response = {
   },
 };
 
-export const Auth_ApproveRegistration_Payload = {
+export const AuthApproveRegistrationPayload = {
   /**
-   * Serializes Auth_ApproveRegistration_Payload to protobuf.
+   * Serializes AuthApproveRegistrationPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Auth_ApproveRegistration_Payload>
-  ): Uint8Array {
-    return Auth_ApproveRegistration_Payload._writeMessage(
+  encode: function (msg: Partial<AuthApproveRegistrationPayload>): Uint8Array {
+    return AuthApproveRegistrationPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_ApproveRegistration_Payload from protobuf.
+   * Deserializes AuthApproveRegistrationPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_ApproveRegistration_Payload {
-    return Auth_ApproveRegistration_Payload._readMessage(
-      Auth_ApproveRegistration_Payload.initialize(),
+  decode: function (bytes: ByteSource): AuthApproveRegistrationPayload {
+    return AuthApproveRegistrationPayload._readMessage(
+      AuthApproveRegistrationPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_ApproveRegistration_Payload with all fields set to their default value.
+   * Initializes AuthApproveRegistrationPayload with all fields set to their default value.
    */
-  initialize: function (): Auth_ApproveRegistration_Payload {
+  initialize: function (): AuthApproveRegistrationPayload {
     return {
       approvalCode: "",
     };
@@ -2365,7 +2318,7 @@ export const Auth_ApproveRegistration_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ApproveRegistration_Payload>,
+    msg: Partial<AuthApproveRegistrationPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.approvalCode) {
@@ -2378,9 +2331,9 @@ export const Auth_ApproveRegistration_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ApproveRegistration_Payload,
+    msg: AuthApproveRegistrationPayload,
     reader: BinaryReader
-  ): Auth_ApproveRegistration_Payload {
+  ): AuthApproveRegistrationPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2398,33 +2351,31 @@ export const Auth_ApproveRegistration_Payload = {
   },
 };
 
-export const Auth_ApproveRegistration_Response = {
+export const AuthApproveRegistrationResponse = {
   /**
-   * Serializes Auth_ApproveRegistration_Response to protobuf.
+   * Serializes AuthApproveRegistrationResponse to protobuf.
    */
-  encode: function (
-    msg: Partial<Auth_ApproveRegistration_Response>
-  ): Uint8Array {
-    return Auth_ApproveRegistration_Response._writeMessage(
+  encode: function (msg: Partial<AuthApproveRegistrationResponse>): Uint8Array {
+    return AuthApproveRegistrationResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_ApproveRegistration_Response from protobuf.
+   * Deserializes AuthApproveRegistrationResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_ApproveRegistration_Response {
-    return Auth_ApproveRegistration_Response._readMessage(
-      Auth_ApproveRegistration_Response.initialize(),
+  decode: function (bytes: ByteSource): AuthApproveRegistrationResponse {
+    return AuthApproveRegistrationResponse._readMessage(
+      AuthApproveRegistrationResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_ApproveRegistration_Response with all fields set to their default value.
+   * Initializes AuthApproveRegistrationResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_ApproveRegistration_Response {
+  initialize: function (): AuthApproveRegistrationResponse {
     return {
       personId: 0,
     };
@@ -2434,7 +2385,7 @@ export const Auth_ApproveRegistration_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ApproveRegistration_Response>,
+    msg: Partial<AuthApproveRegistrationResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -2447,9 +2398,9 @@ export const Auth_ApproveRegistration_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ApproveRegistration_Response,
+    msg: AuthApproveRegistrationResponse,
     reader: BinaryReader
-  ): Auth_ApproveRegistration_Response {
+  ): AuthApproveRegistrationResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2467,31 +2418,31 @@ export const Auth_ApproveRegistration_Response = {
   },
 };
 
-export const Auth_Authorize_Payload = {
+export const AuthAuthorizePayload = {
   /**
-   * Serializes Auth_Authorize_Payload to protobuf.
+   * Serializes AuthAuthorizePayload to protobuf.
    */
-  encode: function (msg: Partial<Auth_Authorize_Payload>): Uint8Array {
-    return Auth_Authorize_Payload._writeMessage(
+  encode: function (msg: Partial<AuthAuthorizePayload>): Uint8Array {
+    return AuthAuthorizePayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_Authorize_Payload from protobuf.
+   * Deserializes AuthAuthorizePayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_Authorize_Payload {
-    return Auth_Authorize_Payload._readMessage(
-      Auth_Authorize_Payload.initialize(),
+  decode: function (bytes: ByteSource): AuthAuthorizePayload {
+    return AuthAuthorizePayload._readMessage(
+      AuthAuthorizePayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_Authorize_Payload with all fields set to their default value.
+   * Initializes AuthAuthorizePayload with all fields set to their default value.
    */
-  initialize: function (): Auth_Authorize_Payload {
+  initialize: function (): AuthAuthorizePayload {
     return {
       email: "",
       password: "",
@@ -2502,7 +2453,7 @@ export const Auth_Authorize_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_Authorize_Payload>,
+    msg: Partial<AuthAuthorizePayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.email) {
@@ -2518,9 +2469,9 @@ export const Auth_Authorize_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_Authorize_Payload,
+    msg: AuthAuthorizePayload,
     reader: BinaryReader
-  ): Auth_Authorize_Payload {
+  ): AuthAuthorizePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2542,31 +2493,31 @@ export const Auth_Authorize_Payload = {
   },
 };
 
-export const Auth_Authorize_Response = {
+export const AuthAuthorizeResponse = {
   /**
-   * Serializes Auth_Authorize_Response to protobuf.
+   * Serializes AuthAuthorizeResponse to protobuf.
    */
-  encode: function (msg: Partial<Auth_Authorize_Response>): Uint8Array {
-    return Auth_Authorize_Response._writeMessage(
+  encode: function (msg: Partial<AuthAuthorizeResponse>): Uint8Array {
+    return AuthAuthorizeResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_Authorize_Response from protobuf.
+   * Deserializes AuthAuthorizeResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_Authorize_Response {
-    return Auth_Authorize_Response._readMessage(
-      Auth_Authorize_Response.initialize(),
+  decode: function (bytes: ByteSource): AuthAuthorizeResponse {
+    return AuthAuthorizeResponse._readMessage(
+      AuthAuthorizeResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_Authorize_Response with all fields set to their default value.
+   * Initializes AuthAuthorizeResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_Authorize_Response {
+  initialize: function (): AuthAuthorizeResponse {
     return {
       personId: 0,
       authToken: "",
@@ -2577,7 +2528,7 @@ export const Auth_Authorize_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_Authorize_Response>,
+    msg: Partial<AuthAuthorizeResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -2593,9 +2544,9 @@ export const Auth_Authorize_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_Authorize_Response,
+    msg: AuthAuthorizeResponse,
     reader: BinaryReader
-  ): Auth_Authorize_Response {
+  ): AuthAuthorizeResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2617,31 +2568,31 @@ export const Auth_Authorize_Response = {
   },
 };
 
-export const Auth_QuickAuthorize_Payload = {
+export const AuthQuickAuthorizePayload = {
   /**
-   * Serializes Auth_QuickAuthorize_Payload to protobuf.
+   * Serializes AuthQuickAuthorizePayload to protobuf.
    */
-  encode: function (msg: Partial<Auth_QuickAuthorize_Payload>): Uint8Array {
-    return Auth_QuickAuthorize_Payload._writeMessage(
+  encode: function (msg: Partial<AuthQuickAuthorizePayload>): Uint8Array {
+    return AuthQuickAuthorizePayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_QuickAuthorize_Payload from protobuf.
+   * Deserializes AuthQuickAuthorizePayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_QuickAuthorize_Payload {
-    return Auth_QuickAuthorize_Payload._readMessage(
-      Auth_QuickAuthorize_Payload.initialize(),
+  decode: function (bytes: ByteSource): AuthQuickAuthorizePayload {
+    return AuthQuickAuthorizePayload._readMessage(
+      AuthQuickAuthorizePayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_QuickAuthorize_Payload with all fields set to their default value.
+   * Initializes AuthQuickAuthorizePayload with all fields set to their default value.
    */
-  initialize: function (): Auth_QuickAuthorize_Payload {
+  initialize: function (): AuthQuickAuthorizePayload {
     return {
       personId: 0,
       authToken: "",
@@ -2652,7 +2603,7 @@ export const Auth_QuickAuthorize_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_QuickAuthorize_Payload>,
+    msg: Partial<AuthQuickAuthorizePayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -2668,9 +2619,9 @@ export const Auth_QuickAuthorize_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_QuickAuthorize_Payload,
+    msg: AuthQuickAuthorizePayload,
     reader: BinaryReader
-  ): Auth_QuickAuthorize_Payload {
+  ): AuthQuickAuthorizePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2692,31 +2643,31 @@ export const Auth_QuickAuthorize_Payload = {
   },
 };
 
-export const Auth_QuickAuthorize_Response = {
+export const AuthQuickAuthorizeResponse = {
   /**
-   * Serializes Auth_QuickAuthorize_Response to protobuf.
+   * Serializes AuthQuickAuthorizeResponse to protobuf.
    */
-  encode: function (msg: Partial<Auth_QuickAuthorize_Response>): Uint8Array {
-    return Auth_QuickAuthorize_Response._writeMessage(
+  encode: function (msg: Partial<AuthQuickAuthorizeResponse>): Uint8Array {
+    return AuthQuickAuthorizeResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_QuickAuthorize_Response from protobuf.
+   * Deserializes AuthQuickAuthorizeResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_QuickAuthorize_Response {
-    return Auth_QuickAuthorize_Response._readMessage(
-      Auth_QuickAuthorize_Response.initialize(),
+  decode: function (bytes: ByteSource): AuthQuickAuthorizeResponse {
+    return AuthQuickAuthorizeResponse._readMessage(
+      AuthQuickAuthorizeResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_QuickAuthorize_Response with all fields set to their default value.
+   * Initializes AuthQuickAuthorizeResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_QuickAuthorize_Response {
+  initialize: function (): AuthQuickAuthorizeResponse {
     return {
       authSuccess: false,
     };
@@ -2726,7 +2677,7 @@ export const Auth_QuickAuthorize_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_QuickAuthorize_Response>,
+    msg: Partial<AuthQuickAuthorizeResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.authSuccess) {
@@ -2739,9 +2690,9 @@ export const Auth_QuickAuthorize_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_QuickAuthorize_Response,
+    msg: AuthQuickAuthorizeResponse,
     reader: BinaryReader
-  ): Auth_QuickAuthorize_Response {
+  ): AuthQuickAuthorizeResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2759,31 +2710,31 @@ export const Auth_QuickAuthorize_Response = {
   },
 };
 
-export const Auth_Me_Payload = {
+export const AuthMePayload = {
   /**
-   * Serializes Auth_Me_Payload to protobuf.
+   * Serializes AuthMePayload to protobuf.
    */
-  encode: function (msg: Partial<Auth_Me_Payload>): Uint8Array {
-    return Auth_Me_Payload._writeMessage(
+  encode: function (msg: Partial<AuthMePayload>): Uint8Array {
+    return AuthMePayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_Me_Payload from protobuf.
+   * Deserializes AuthMePayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_Me_Payload {
-    return Auth_Me_Payload._readMessage(
-      Auth_Me_Payload.initialize(),
+  decode: function (bytes: ByteSource): AuthMePayload {
+    return AuthMePayload._readMessage(
+      AuthMePayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_Me_Payload with all fields set to their default value.
+   * Initializes AuthMePayload with all fields set to their default value.
    */
-  initialize: function (): Auth_Me_Payload {
+  initialize: function (): AuthMePayload {
     return {
       personId: 0,
       authToken: "",
@@ -2794,7 +2745,7 @@ export const Auth_Me_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_Me_Payload>,
+    msg: Partial<AuthMePayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -2810,9 +2761,9 @@ export const Auth_Me_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_Me_Payload,
+    msg: AuthMePayload,
     reader: BinaryReader
-  ): Auth_Me_Payload {
+  ): AuthMePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2834,31 +2785,31 @@ export const Auth_Me_Payload = {
   },
 };
 
-export const Auth_Me_Response = {
+export const AuthMeResponse = {
   /**
-   * Serializes Auth_Me_Response to protobuf.
+   * Serializes AuthMeResponse to protobuf.
    */
-  encode: function (msg: Partial<Auth_Me_Response>): Uint8Array {
-    return Auth_Me_Response._writeMessage(
+  encode: function (msg: Partial<AuthMeResponse>): Uint8Array {
+    return AuthMeResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_Me_Response from protobuf.
+   * Deserializes AuthMeResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_Me_Response {
-    return Auth_Me_Response._readMessage(
-      Auth_Me_Response.initialize(),
+  decode: function (bytes: ByteSource): AuthMeResponse {
+    return AuthMeResponse._readMessage(
+      AuthMeResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_Me_Response with all fields set to their default value.
+   * Initializes AuthMeResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_Me_Response {
+  initialize: function (): AuthMeResponse {
     return {
       personId: 0,
       country: "",
@@ -2875,7 +2826,7 @@ export const Auth_Me_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_Me_Response>,
+    msg: Partial<AuthMeResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -2909,9 +2860,9 @@ export const Auth_Me_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_Me_Response,
+    msg: AuthMeResponse,
     reader: BinaryReader
-  ): Auth_Me_Response {
+  ): AuthMeResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -2961,31 +2912,31 @@ export const Auth_Me_Response = {
   },
 };
 
-export const Auth_ChangePassword_Payload = {
+export const AuthChangePasswordPayload = {
   /**
-   * Serializes Auth_ChangePassword_Payload to protobuf.
+   * Serializes AuthChangePasswordPayload to protobuf.
    */
-  encode: function (msg: Partial<Auth_ChangePassword_Payload>): Uint8Array {
-    return Auth_ChangePassword_Payload._writeMessage(
+  encode: function (msg: Partial<AuthChangePasswordPayload>): Uint8Array {
+    return AuthChangePasswordPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_ChangePassword_Payload from protobuf.
+   * Deserializes AuthChangePasswordPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_ChangePassword_Payload {
-    return Auth_ChangePassword_Payload._readMessage(
-      Auth_ChangePassword_Payload.initialize(),
+  decode: function (bytes: ByteSource): AuthChangePasswordPayload {
+    return AuthChangePasswordPayload._readMessage(
+      AuthChangePasswordPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_ChangePassword_Payload with all fields set to their default value.
+   * Initializes AuthChangePasswordPayload with all fields set to their default value.
    */
-  initialize: function (): Auth_ChangePassword_Payload {
+  initialize: function (): AuthChangePasswordPayload {
     return {
       email: "",
       password: "",
@@ -2997,7 +2948,7 @@ export const Auth_ChangePassword_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ChangePassword_Payload>,
+    msg: Partial<AuthChangePasswordPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.email) {
@@ -3016,9 +2967,9 @@ export const Auth_ChangePassword_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ChangePassword_Payload,
+    msg: AuthChangePasswordPayload,
     reader: BinaryReader
-  ): Auth_ChangePassword_Payload {
+  ): AuthChangePasswordPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3044,31 +2995,31 @@ export const Auth_ChangePassword_Payload = {
   },
 };
 
-export const Auth_ChangePassword_Response = {
+export const AuthChangePasswordResponse = {
   /**
-   * Serializes Auth_ChangePassword_Response to protobuf.
+   * Serializes AuthChangePasswordResponse to protobuf.
    */
-  encode: function (msg: Partial<Auth_ChangePassword_Response>): Uint8Array {
-    return Auth_ChangePassword_Response._writeMessage(
+  encode: function (msg: Partial<AuthChangePasswordResponse>): Uint8Array {
+    return AuthChangePasswordResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_ChangePassword_Response from protobuf.
+   * Deserializes AuthChangePasswordResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_ChangePassword_Response {
-    return Auth_ChangePassword_Response._readMessage(
-      Auth_ChangePassword_Response.initialize(),
+  decode: function (bytes: ByteSource): AuthChangePasswordResponse {
+    return AuthChangePasswordResponse._readMessage(
+      AuthChangePasswordResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_ChangePassword_Response with all fields set to their default value.
+   * Initializes AuthChangePasswordResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_ChangePassword_Response {
+  initialize: function (): AuthChangePasswordResponse {
     return {
       authToken: "",
     };
@@ -3078,7 +3029,7 @@ export const Auth_ChangePassword_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ChangePassword_Response>,
+    msg: Partial<AuthChangePasswordResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.authToken) {
@@ -3091,9 +3042,9 @@ export const Auth_ChangePassword_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ChangePassword_Response,
+    msg: AuthChangePasswordResponse,
     reader: BinaryReader
-  ): Auth_ChangePassword_Response {
+  ): AuthChangePasswordResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3111,33 +3062,31 @@ export const Auth_ChangePassword_Response = {
   },
 };
 
-export const Auth_RequestResetPassword_Payload = {
+export const AuthRequestResetPasswordPayload = {
   /**
-   * Serializes Auth_RequestResetPassword_Payload to protobuf.
+   * Serializes AuthRequestResetPasswordPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Auth_RequestResetPassword_Payload>
-  ): Uint8Array {
-    return Auth_RequestResetPassword_Payload._writeMessage(
+  encode: function (msg: Partial<AuthRequestResetPasswordPayload>): Uint8Array {
+    return AuthRequestResetPasswordPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_RequestResetPassword_Payload from protobuf.
+   * Deserializes AuthRequestResetPasswordPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_RequestResetPassword_Payload {
-    return Auth_RequestResetPassword_Payload._readMessage(
-      Auth_RequestResetPassword_Payload.initialize(),
+  decode: function (bytes: ByteSource): AuthRequestResetPasswordPayload {
+    return AuthRequestResetPasswordPayload._readMessage(
+      AuthRequestResetPasswordPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_RequestResetPassword_Payload with all fields set to their default value.
+   * Initializes AuthRequestResetPasswordPayload with all fields set to their default value.
    */
-  initialize: function (): Auth_RequestResetPassword_Payload {
+  initialize: function (): AuthRequestResetPasswordPayload {
     return {
       email: "",
       sendEmail: false,
@@ -3148,7 +3097,7 @@ export const Auth_RequestResetPassword_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_RequestResetPassword_Payload>,
+    msg: Partial<AuthRequestResetPasswordPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.email) {
@@ -3164,9 +3113,9 @@ export const Auth_RequestResetPassword_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_RequestResetPassword_Payload,
+    msg: AuthRequestResetPasswordPayload,
     reader: BinaryReader
-  ): Auth_RequestResetPassword_Payload {
+  ): AuthRequestResetPasswordPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3188,33 +3137,33 @@ export const Auth_RequestResetPassword_Payload = {
   },
 };
 
-export const Auth_RequestResetPassword_Response = {
+export const AuthRequestResetPasswordResponse = {
   /**
-   * Serializes Auth_RequestResetPassword_Response to protobuf.
+   * Serializes AuthRequestResetPasswordResponse to protobuf.
    */
   encode: function (
-    msg: Partial<Auth_RequestResetPassword_Response>
+    msg: Partial<AuthRequestResetPasswordResponse>
   ): Uint8Array {
-    return Auth_RequestResetPassword_Response._writeMessage(
+    return AuthRequestResetPasswordResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_RequestResetPassword_Response from protobuf.
+   * Deserializes AuthRequestResetPasswordResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_RequestResetPassword_Response {
-    return Auth_RequestResetPassword_Response._readMessage(
-      Auth_RequestResetPassword_Response.initialize(),
+  decode: function (bytes: ByteSource): AuthRequestResetPasswordResponse {
+    return AuthRequestResetPasswordResponse._readMessage(
+      AuthRequestResetPasswordResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_RequestResetPassword_Response with all fields set to their default value.
+   * Initializes AuthRequestResetPasswordResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_RequestResetPassword_Response {
+  initialize: function (): AuthRequestResetPasswordResponse {
     return {
       resetToken: "",
     };
@@ -3224,7 +3173,7 @@ export const Auth_RequestResetPassword_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_RequestResetPassword_Response>,
+    msg: Partial<AuthRequestResetPasswordResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.resetToken) {
@@ -3237,9 +3186,9 @@ export const Auth_RequestResetPassword_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_RequestResetPassword_Response,
+    msg: AuthRequestResetPasswordResponse,
     reader: BinaryReader
-  ): Auth_RequestResetPassword_Response {
+  ): AuthRequestResetPasswordResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3257,33 +3206,31 @@ export const Auth_RequestResetPassword_Response = {
   },
 };
 
-export const Auth_ApproveResetPassword_Payload = {
+export const AuthApproveResetPasswordPayload = {
   /**
-   * Serializes Auth_ApproveResetPassword_Payload to protobuf.
+   * Serializes AuthApproveResetPasswordPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Auth_ApproveResetPassword_Payload>
-  ): Uint8Array {
-    return Auth_ApproveResetPassword_Payload._writeMessage(
+  encode: function (msg: Partial<AuthApproveResetPasswordPayload>): Uint8Array {
+    return AuthApproveResetPasswordPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_ApproveResetPassword_Payload from protobuf.
+   * Deserializes AuthApproveResetPasswordPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_ApproveResetPassword_Payload {
-    return Auth_ApproveResetPassword_Payload._readMessage(
-      Auth_ApproveResetPassword_Payload.initialize(),
+  decode: function (bytes: ByteSource): AuthApproveResetPasswordPayload {
+    return AuthApproveResetPasswordPayload._readMessage(
+      AuthApproveResetPasswordPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_ApproveResetPassword_Payload with all fields set to their default value.
+   * Initializes AuthApproveResetPasswordPayload with all fields set to their default value.
    */
-  initialize: function (): Auth_ApproveResetPassword_Payload {
+  initialize: function (): AuthApproveResetPasswordPayload {
     return {
       email: "",
       resetToken: "",
@@ -3294,7 +3241,7 @@ export const Auth_ApproveResetPassword_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ApproveResetPassword_Payload>,
+    msg: Partial<AuthApproveResetPasswordPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.email) {
@@ -3310,9 +3257,9 @@ export const Auth_ApproveResetPassword_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ApproveResetPassword_Payload,
+    msg: AuthApproveResetPasswordPayload,
     reader: BinaryReader
-  ): Auth_ApproveResetPassword_Payload {
+  ): AuthApproveResetPasswordPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3334,33 +3281,33 @@ export const Auth_ApproveResetPassword_Payload = {
   },
 };
 
-export const Auth_ApproveResetPassword_Response = {
+export const AuthApproveResetPasswordResponse = {
   /**
-   * Serializes Auth_ApproveResetPassword_Response to protobuf.
+   * Serializes AuthApproveResetPasswordResponse to protobuf.
    */
   encode: function (
-    msg: Partial<Auth_ApproveResetPassword_Response>
+    msg: Partial<AuthApproveResetPasswordResponse>
   ): Uint8Array {
-    return Auth_ApproveResetPassword_Response._writeMessage(
+    return AuthApproveResetPasswordResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Auth_ApproveResetPassword_Response from protobuf.
+   * Deserializes AuthApproveResetPasswordResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Auth_ApproveResetPassword_Response {
-    return Auth_ApproveResetPassword_Response._readMessage(
-      Auth_ApproveResetPassword_Response.initialize(),
+  decode: function (bytes: ByteSource): AuthApproveResetPasswordResponse {
+    return AuthApproveResetPasswordResponse._readMessage(
+      AuthApproveResetPasswordResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Auth_ApproveResetPassword_Response with all fields set to their default value.
+   * Initializes AuthApproveResetPasswordResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_ApproveResetPassword_Response {
+  initialize: function (): AuthApproveResetPasswordResponse {
     return {
       newTmpPassword: "",
     };
@@ -3370,7 +3317,7 @@ export const Auth_ApproveResetPassword_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ApproveResetPassword_Response>,
+    msg: Partial<AuthApproveResetPasswordResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.newTmpPassword) {
@@ -3383,9 +3330,9 @@ export const Auth_ApproveResetPassword_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ApproveResetPassword_Response,
+    msg: AuthApproveResetPasswordResponse,
     reader: BinaryReader
-  ): Auth_ApproveResetPassword_Response {
+  ): AuthApproveResetPasswordResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3403,31 +3350,31 @@ export const Auth_ApproveResetPassword_Response = {
   },
 };
 
-export const Access_GetAccessRules_Payload = {
+export const AccessGetAccessRulesPayload = {
   /**
-   * Serializes Access_GetAccessRules_Payload to protobuf.
+   * Serializes AccessGetAccessRulesPayload to protobuf.
    */
-  encode: function (msg: Partial<Access_GetAccessRules_Payload>): Uint8Array {
-    return Access_GetAccessRules_Payload._writeMessage(
+  encode: function (msg: Partial<AccessGetAccessRulesPayload>): Uint8Array {
+    return AccessGetAccessRulesPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetAccessRules_Payload from protobuf.
+   * Deserializes AccessGetAccessRulesPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetAccessRules_Payload {
-    return Access_GetAccessRules_Payload._readMessage(
-      Access_GetAccessRules_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessGetAccessRulesPayload {
+    return AccessGetAccessRulesPayload._readMessage(
+      AccessGetAccessRulesPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetAccessRules_Payload with all fields set to their default value.
+   * Initializes AccessGetAccessRulesPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetAccessRules_Payload {
+  initialize: function (): AccessGetAccessRulesPayload {
     return {
       personId: 0,
       eventId: 0,
@@ -3438,7 +3385,7 @@ export const Access_GetAccessRules_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAccessRules_Payload>,
+    msg: Partial<AccessGetAccessRulesPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -3454,9 +3401,9 @@ export const Access_GetAccessRules_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAccessRules_Payload,
+    msg: AccessGetAccessRulesPayload,
     reader: BinaryReader
-  ): Access_GetAccessRules_Payload {
+  ): AccessGetAccessRulesPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3478,31 +3425,31 @@ export const Access_GetAccessRules_Payload = {
   },
 };
 
-export const Access_GetAccessRules_Response = {
+export const AccessGetAccessRulesResponse = {
   /**
-   * Serializes Access_GetAccessRules_Response to protobuf.
+   * Serializes AccessGetAccessRulesResponse to protobuf.
    */
-  encode: function (msg: Partial<Access_GetAccessRules_Response>): Uint8Array {
-    return Access_GetAccessRules_Response._writeMessage(
+  encode: function (msg: Partial<AccessGetAccessRulesResponse>): Uint8Array {
+    return AccessGetAccessRulesResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetAccessRules_Response from protobuf.
+   * Deserializes AccessGetAccessRulesResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetAccessRules_Response {
-    return Access_GetAccessRules_Response._readMessage(
-      Access_GetAccessRules_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessGetAccessRulesResponse {
+    return AccessGetAccessRulesResponse._readMessage(
+      AccessGetAccessRulesResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetAccessRules_Response with all fields set to their default value.
+   * Initializes AccessGetAccessRulesResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetAccessRules_Response {
+  initialize: function (): AccessGetAccessRulesResponse {
     return {
       rules: protoAtoms.AccessRules.initialize(),
     };
@@ -3512,7 +3459,7 @@ export const Access_GetAccessRules_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAccessRules_Response>,
+    msg: Partial<AccessGetAccessRulesResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.rules) {
@@ -3525,9 +3472,9 @@ export const Access_GetAccessRules_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAccessRules_Response,
+    msg: AccessGetAccessRulesResponse,
     reader: BinaryReader
-  ): Access_GetAccessRules_Response {
+  ): AccessGetAccessRulesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3545,31 +3492,31 @@ export const Access_GetAccessRules_Response = {
   },
 };
 
-export const Access_GetRuleValue_Payload = {
+export const AccessGetRuleValuePayload = {
   /**
-   * Serializes Access_GetRuleValue_Payload to protobuf.
+   * Serializes AccessGetRuleValuePayload to protobuf.
    */
-  encode: function (msg: Partial<Access_GetRuleValue_Payload>): Uint8Array {
-    return Access_GetRuleValue_Payload._writeMessage(
+  encode: function (msg: Partial<AccessGetRuleValuePayload>): Uint8Array {
+    return AccessGetRuleValuePayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetRuleValue_Payload from protobuf.
+   * Deserializes AccessGetRuleValuePayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetRuleValue_Payload {
-    return Access_GetRuleValue_Payload._readMessage(
-      Access_GetRuleValue_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessGetRuleValuePayload {
+    return AccessGetRuleValuePayload._readMessage(
+      AccessGetRuleValuePayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetRuleValue_Payload with all fields set to their default value.
+   * Initializes AccessGetRuleValuePayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetRuleValue_Payload {
+  initialize: function (): AccessGetRuleValuePayload {
     return {
       personId: 0,
       eventId: 0,
@@ -3581,7 +3528,7 @@ export const Access_GetRuleValue_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetRuleValue_Payload>,
+    msg: Partial<AccessGetRuleValuePayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -3600,9 +3547,9 @@ export const Access_GetRuleValue_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetRuleValue_Payload,
+    msg: AccessGetRuleValuePayload,
     reader: BinaryReader
-  ): Access_GetRuleValue_Payload {
+  ): AccessGetRuleValuePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3628,31 +3575,31 @@ export const Access_GetRuleValue_Payload = {
   },
 };
 
-export const Access_GetRuleValue_Response = {
+export const AccessGetRuleValueResponse = {
   /**
-   * Serializes Access_GetRuleValue_Response to protobuf.
+   * Serializes AccessGetRuleValueResponse to protobuf.
    */
-  encode: function (msg: Partial<Access_GetRuleValue_Response>): Uint8Array {
-    return Access_GetRuleValue_Response._writeMessage(
+  encode: function (msg: Partial<AccessGetRuleValueResponse>): Uint8Array {
+    return AccessGetRuleValueResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetRuleValue_Response from protobuf.
+   * Deserializes AccessGetRuleValueResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetRuleValue_Response {
-    return Access_GetRuleValue_Response._readMessage(
-      Access_GetRuleValue_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessGetRuleValueResponse {
+    return AccessGetRuleValueResponse._readMessage(
+      AccessGetRuleValueResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetRuleValue_Response with all fields set to their default value.
+   * Initializes AccessGetRuleValueResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetRuleValue_Response {
+  initialize: function (): AccessGetRuleValueResponse {
     return {
       value: protoAtoms.RuleValue.initialize(),
     };
@@ -3662,7 +3609,7 @@ export const Access_GetRuleValue_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetRuleValue_Response>,
+    msg: Partial<AccessGetRuleValueResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.value) {
@@ -3675,9 +3622,9 @@ export const Access_GetRuleValue_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetRuleValue_Response,
+    msg: AccessGetRuleValueResponse,
     reader: BinaryReader
-  ): Access_GetRuleValue_Response {
+  ): AccessGetRuleValueResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3695,31 +3642,31 @@ export const Access_GetRuleValue_Response = {
   },
 };
 
-export const Access_GetEventAdmins_Payload = {
+export const AccessGetEventAdminsPayload = {
   /**
-   * Serializes Access_GetEventAdmins_Payload to protobuf.
+   * Serializes AccessGetEventAdminsPayload to protobuf.
    */
-  encode: function (msg: Partial<Access_GetEventAdmins_Payload>): Uint8Array {
-    return Access_GetEventAdmins_Payload._writeMessage(
+  encode: function (msg: Partial<AccessGetEventAdminsPayload>): Uint8Array {
+    return AccessGetEventAdminsPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetEventAdmins_Payload from protobuf.
+   * Deserializes AccessGetEventAdminsPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetEventAdmins_Payload {
-    return Access_GetEventAdmins_Payload._readMessage(
-      Access_GetEventAdmins_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessGetEventAdminsPayload {
+    return AccessGetEventAdminsPayload._readMessage(
+      AccessGetEventAdminsPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetEventAdmins_Payload with all fields set to their default value.
+   * Initializes AccessGetEventAdminsPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetEventAdmins_Payload {
+  initialize: function (): AccessGetEventAdminsPayload {
     return {
       eventId: 0,
     };
@@ -3729,7 +3676,7 @@ export const Access_GetEventAdmins_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetEventAdmins_Payload>,
+    msg: Partial<AccessGetEventAdminsPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
@@ -3742,9 +3689,9 @@ export const Access_GetEventAdmins_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetEventAdmins_Payload,
+    msg: AccessGetEventAdminsPayload,
     reader: BinaryReader
-  ): Access_GetEventAdmins_Payload {
+  ): AccessGetEventAdminsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3762,31 +3709,31 @@ export const Access_GetEventAdmins_Payload = {
   },
 };
 
-export const Access_GetEventAdmins_Response = {
+export const AccessGetEventAdminsResponse = {
   /**
-   * Serializes Access_GetEventAdmins_Response to protobuf.
+   * Serializes AccessGetEventAdminsResponse to protobuf.
    */
-  encode: function (msg: Partial<Access_GetEventAdmins_Response>): Uint8Array {
-    return Access_GetEventAdmins_Response._writeMessage(
+  encode: function (msg: Partial<AccessGetEventAdminsResponse>): Uint8Array {
+    return AccessGetEventAdminsResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetEventAdmins_Response from protobuf.
+   * Deserializes AccessGetEventAdminsResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetEventAdmins_Response {
-    return Access_GetEventAdmins_Response._readMessage(
-      Access_GetEventAdmins_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessGetEventAdminsResponse {
+    return AccessGetEventAdminsResponse._readMessage(
+      AccessGetEventAdminsResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetEventAdmins_Response with all fields set to their default value.
+   * Initializes AccessGetEventAdminsResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetEventAdmins_Response {
+  initialize: function (): AccessGetEventAdminsResponse {
     return {
       admins: [],
     };
@@ -3796,7 +3743,7 @@ export const Access_GetEventAdmins_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetEventAdmins_Response>,
+    msg: Partial<AccessGetEventAdminsResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.admins?.length) {
@@ -3813,9 +3760,9 @@ export const Access_GetEventAdmins_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetEventAdmins_Response,
+    msg: AccessGetEventAdminsResponse,
     reader: BinaryReader
-  ): Access_GetEventAdmins_Response {
+  ): AccessGetEventAdminsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3835,33 +3782,31 @@ export const Access_GetEventAdmins_Response = {
   },
 };
 
-export const Access_GetSuperadminFlag_Payload = {
+export const AccessGetSuperadminFlagPayload = {
   /**
-   * Serializes Access_GetSuperadminFlag_Payload to protobuf.
+   * Serializes AccessGetSuperadminFlagPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Access_GetSuperadminFlag_Payload>
-  ): Uint8Array {
-    return Access_GetSuperadminFlag_Payload._writeMessage(
+  encode: function (msg: Partial<AccessGetSuperadminFlagPayload>): Uint8Array {
+    return AccessGetSuperadminFlagPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetSuperadminFlag_Payload from protobuf.
+   * Deserializes AccessGetSuperadminFlagPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetSuperadminFlag_Payload {
-    return Access_GetSuperadminFlag_Payload._readMessage(
-      Access_GetSuperadminFlag_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessGetSuperadminFlagPayload {
+    return AccessGetSuperadminFlagPayload._readMessage(
+      AccessGetSuperadminFlagPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetSuperadminFlag_Payload with all fields set to their default value.
+   * Initializes AccessGetSuperadminFlagPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetSuperadminFlag_Payload {
+  initialize: function (): AccessGetSuperadminFlagPayload {
     return {
       personId: 0,
     };
@@ -3871,7 +3816,7 @@ export const Access_GetSuperadminFlag_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetSuperadminFlag_Payload>,
+    msg: Partial<AccessGetSuperadminFlagPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -3884,9 +3829,9 @@ export const Access_GetSuperadminFlag_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetSuperadminFlag_Payload,
+    msg: AccessGetSuperadminFlagPayload,
     reader: BinaryReader
-  ): Access_GetSuperadminFlag_Payload {
+  ): AccessGetSuperadminFlagPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3904,33 +3849,31 @@ export const Access_GetSuperadminFlag_Payload = {
   },
 };
 
-export const Access_GetSuperadminFlag_Response = {
+export const AccessGetSuperadminFlagResponse = {
   /**
-   * Serializes Access_GetSuperadminFlag_Response to protobuf.
+   * Serializes AccessGetSuperadminFlagResponse to protobuf.
    */
-  encode: function (
-    msg: Partial<Access_GetSuperadminFlag_Response>
-  ): Uint8Array {
-    return Access_GetSuperadminFlag_Response._writeMessage(
+  encode: function (msg: Partial<AccessGetSuperadminFlagResponse>): Uint8Array {
+    return AccessGetSuperadminFlagResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetSuperadminFlag_Response from protobuf.
+   * Deserializes AccessGetSuperadminFlagResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetSuperadminFlag_Response {
-    return Access_GetSuperadminFlag_Response._readMessage(
-      Access_GetSuperadminFlag_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessGetSuperadminFlagResponse {
+    return AccessGetSuperadminFlagResponse._readMessage(
+      AccessGetSuperadminFlagResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetSuperadminFlag_Response with all fields set to their default value.
+   * Initializes AccessGetSuperadminFlagResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetSuperadminFlag_Response {
+  initialize: function (): AccessGetSuperadminFlagResponse {
     return {
       isAdmin: false,
     };
@@ -3940,7 +3883,7 @@ export const Access_GetSuperadminFlag_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetSuperadminFlag_Response>,
+    msg: Partial<AccessGetSuperadminFlagResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.isAdmin) {
@@ -3953,9 +3896,9 @@ export const Access_GetSuperadminFlag_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetSuperadminFlag_Response,
+    msg: AccessGetSuperadminFlagResponse,
     reader: BinaryReader
-  ): Access_GetSuperadminFlag_Response {
+  ): AccessGetSuperadminFlagResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -3973,31 +3916,31 @@ export const Access_GetSuperadminFlag_Response = {
   },
 };
 
-export const Access_GetOwnedEventIds_Payload = {
+export const AccessGetOwnedEventIdsPayload = {
   /**
-   * Serializes Access_GetOwnedEventIds_Payload to protobuf.
+   * Serializes AccessGetOwnedEventIdsPayload to protobuf.
    */
-  encode: function (msg: Partial<Access_GetOwnedEventIds_Payload>): Uint8Array {
-    return Access_GetOwnedEventIds_Payload._writeMessage(
+  encode: function (msg: Partial<AccessGetOwnedEventIdsPayload>): Uint8Array {
+    return AccessGetOwnedEventIdsPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetOwnedEventIds_Payload from protobuf.
+   * Deserializes AccessGetOwnedEventIdsPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetOwnedEventIds_Payload {
-    return Access_GetOwnedEventIds_Payload._readMessage(
-      Access_GetOwnedEventIds_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessGetOwnedEventIdsPayload {
+    return AccessGetOwnedEventIdsPayload._readMessage(
+      AccessGetOwnedEventIdsPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetOwnedEventIds_Payload with all fields set to their default value.
+   * Initializes AccessGetOwnedEventIdsPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetOwnedEventIds_Payload {
+  initialize: function (): AccessGetOwnedEventIdsPayload {
     return {
       personId: 0,
     };
@@ -4007,7 +3950,7 @@ export const Access_GetOwnedEventIds_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetOwnedEventIds_Payload>,
+    msg: Partial<AccessGetOwnedEventIdsPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -4020,9 +3963,9 @@ export const Access_GetOwnedEventIds_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetOwnedEventIds_Payload,
+    msg: AccessGetOwnedEventIdsPayload,
     reader: BinaryReader
-  ): Access_GetOwnedEventIds_Payload {
+  ): AccessGetOwnedEventIdsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4040,33 +3983,31 @@ export const Access_GetOwnedEventIds_Payload = {
   },
 };
 
-export const Access_GetOwnedEventIds_Response = {
+export const AccessGetOwnedEventIdsResponse = {
   /**
-   * Serializes Access_GetOwnedEventIds_Response to protobuf.
+   * Serializes AccessGetOwnedEventIdsResponse to protobuf.
    */
-  encode: function (
-    msg: Partial<Access_GetOwnedEventIds_Response>
-  ): Uint8Array {
-    return Access_GetOwnedEventIds_Response._writeMessage(
+  encode: function (msg: Partial<AccessGetOwnedEventIdsResponse>): Uint8Array {
+    return AccessGetOwnedEventIdsResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetOwnedEventIds_Response from protobuf.
+   * Deserializes AccessGetOwnedEventIdsResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetOwnedEventIds_Response {
-    return Access_GetOwnedEventIds_Response._readMessage(
-      Access_GetOwnedEventIds_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessGetOwnedEventIdsResponse {
+    return AccessGetOwnedEventIdsResponse._readMessage(
+      AccessGetOwnedEventIdsResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetOwnedEventIds_Response with all fields set to their default value.
+   * Initializes AccessGetOwnedEventIdsResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetOwnedEventIds_Response {
+  initialize: function (): AccessGetOwnedEventIdsResponse {
     return {
       eventIds: [],
     };
@@ -4076,7 +4017,7 @@ export const Access_GetOwnedEventIds_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetOwnedEventIds_Response>,
+    msg: Partial<AccessGetOwnedEventIdsResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventIds?.length) {
@@ -4089,9 +4030,9 @@ export const Access_GetOwnedEventIds_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetOwnedEventIds_Response,
+    msg: AccessGetOwnedEventIdsResponse,
     reader: BinaryReader
-  ): Access_GetOwnedEventIds_Response {
+  ): AccessGetOwnedEventIdsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4113,25 +4054,25 @@ export const Access_GetOwnedEventIds_Response = {
   },
 };
 
-export const Access_GetRulesList_Payload = {
+export const AccessGetRulesListPayload = {
   /**
-   * Serializes Access_GetRulesList_Payload to protobuf.
+   * Serializes AccessGetRulesListPayload to protobuf.
    */
-  encode: function (_msg?: Partial<Access_GetRulesList_Payload>): Uint8Array {
+  encode: function (_msg?: Partial<AccessGetRulesListPayload>): Uint8Array {
     return new Uint8Array();
   },
 
   /**
-   * Deserializes Access_GetRulesList_Payload from protobuf.
+   * Deserializes AccessGetRulesListPayload from protobuf.
    */
-  decode: function (_bytes?: ByteSource): Access_GetRulesList_Payload {
+  decode: function (_bytes?: ByteSource): AccessGetRulesListPayload {
     return {};
   },
 
   /**
-   * Initializes Access_GetRulesList_Payload with all fields set to their default value.
+   * Initializes AccessGetRulesListPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetRulesList_Payload {
+  initialize: function (): AccessGetRulesListPayload {
     return {};
   },
 
@@ -4139,7 +4080,7 @@ export const Access_GetRulesList_Payload = {
    * @private
    */
   _writeMessage: function (
-    _msg: Partial<Access_GetRulesList_Payload>,
+    _msg: Partial<AccessGetRulesListPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     return writer;
@@ -4149,38 +4090,38 @@ export const Access_GetRulesList_Payload = {
    * @private
    */
   _readMessage: function (
-    _msg: Access_GetRulesList_Payload,
+    _msg: AccessGetRulesListPayload,
     _reader: BinaryReader
-  ): Access_GetRulesList_Payload {
+  ): AccessGetRulesListPayload {
     return _msg;
   },
 };
 
-export const Access_GetRulesList_Response = {
+export const AccessGetRulesListResponse = {
   /**
-   * Serializes Access_GetRulesList_Response to protobuf.
+   * Serializes AccessGetRulesListResponse to protobuf.
    */
-  encode: function (msg: Partial<Access_GetRulesList_Response>): Uint8Array {
-    return Access_GetRulesList_Response._writeMessage(
+  encode: function (msg: Partial<AccessGetRulesListResponse>): Uint8Array {
+    return AccessGetRulesListResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetRulesList_Response from protobuf.
+   * Deserializes AccessGetRulesListResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetRulesList_Response {
-    return Access_GetRulesList_Response._readMessage(
-      Access_GetRulesList_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessGetRulesListResponse {
+    return AccessGetRulesListResponse._readMessage(
+      AccessGetRulesListResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetRulesList_Response with all fields set to their default value.
+   * Initializes AccessGetRulesListResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetRulesList_Response {
+  initialize: function (): AccessGetRulesListResponse {
     return {
       items: [],
     };
@@ -4190,7 +4131,7 @@ export const Access_GetRulesList_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetRulesList_Response>,
+    msg: Partial<AccessGetRulesListResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.items?.length) {
@@ -4207,9 +4148,9 @@ export const Access_GetRulesList_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetRulesList_Response,
+    msg: AccessGetRulesListResponse,
     reader: BinaryReader
-  ): Access_GetRulesList_Response {
+  ): AccessGetRulesListResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4229,31 +4170,31 @@ export const Access_GetRulesList_Response = {
   },
 };
 
-export const Access_GetAllEventRules_Payload = {
+export const AccessGetAllEventRulesPayload = {
   /**
-   * Serializes Access_GetAllEventRules_Payload to protobuf.
+   * Serializes AccessGetAllEventRulesPayload to protobuf.
    */
-  encode: function (msg: Partial<Access_GetAllEventRules_Payload>): Uint8Array {
-    return Access_GetAllEventRules_Payload._writeMessage(
+  encode: function (msg: Partial<AccessGetAllEventRulesPayload>): Uint8Array {
+    return AccessGetAllEventRulesPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetAllEventRules_Payload from protobuf.
+   * Deserializes AccessGetAllEventRulesPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetAllEventRules_Payload {
-    return Access_GetAllEventRules_Payload._readMessage(
-      Access_GetAllEventRules_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessGetAllEventRulesPayload {
+    return AccessGetAllEventRulesPayload._readMessage(
+      AccessGetAllEventRulesPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetAllEventRules_Payload with all fields set to their default value.
+   * Initializes AccessGetAllEventRulesPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllEventRules_Payload {
+  initialize: function (): AccessGetAllEventRulesPayload {
     return {
       eventId: 0,
     };
@@ -4263,7 +4204,7 @@ export const Access_GetAllEventRules_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllEventRules_Payload>,
+    msg: Partial<AccessGetAllEventRulesPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.eventId) {
@@ -4276,9 +4217,9 @@ export const Access_GetAllEventRules_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllEventRules_Payload,
+    msg: AccessGetAllEventRulesPayload,
     reader: BinaryReader
-  ): Access_GetAllEventRules_Payload {
+  ): AccessGetAllEventRulesPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4296,33 +4237,31 @@ export const Access_GetAllEventRules_Payload = {
   },
 };
 
-export const Access_GetAllEventRules_Response = {
+export const AccessGetAllEventRulesResponse = {
   /**
-   * Serializes Access_GetAllEventRules_Response to protobuf.
+   * Serializes AccessGetAllEventRulesResponse to protobuf.
    */
-  encode: function (
-    msg: Partial<Access_GetAllEventRules_Response>
-  ): Uint8Array {
-    return Access_GetAllEventRules_Response._writeMessage(
+  encode: function (msg: Partial<AccessGetAllEventRulesResponse>): Uint8Array {
+    return AccessGetAllEventRulesResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetAllEventRules_Response from protobuf.
+   * Deserializes AccessGetAllEventRulesResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetAllEventRules_Response {
-    return Access_GetAllEventRules_Response._readMessage(
-      Access_GetAllEventRules_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessGetAllEventRulesResponse {
+    return AccessGetAllEventRulesResponse._readMessage(
+      AccessGetAllEventRulesResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetAllEventRules_Response with all fields set to their default value.
+   * Initializes AccessGetAllEventRulesResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllEventRules_Response {
+  initialize: function (): AccessGetAllEventRulesResponse {
     return {
       personRules: [],
       groupRules: [],
@@ -4333,7 +4272,7 @@ export const Access_GetAllEventRules_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllEventRules_Response>,
+    msg: Partial<AccessGetAllEventRulesResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personRules?.length) {
@@ -4357,9 +4296,9 @@ export const Access_GetAllEventRules_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllEventRules_Response,
+    msg: AccessGetAllEventRulesResponse,
     reader: BinaryReader
-  ): Access_GetAllEventRules_Response {
+  ): AccessGetAllEventRulesResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4385,31 +4324,31 @@ export const Access_GetAllEventRules_Response = {
   },
 };
 
-export const Access_GetPersonAccess_Payload = {
+export const AccessGetPersonAccessPayload = {
   /**
-   * Serializes Access_GetPersonAccess_Payload to protobuf.
+   * Serializes AccessGetPersonAccessPayload to protobuf.
    */
-  encode: function (msg: Partial<Access_GetPersonAccess_Payload>): Uint8Array {
-    return Access_GetPersonAccess_Payload._writeMessage(
+  encode: function (msg: Partial<AccessGetPersonAccessPayload>): Uint8Array {
+    return AccessGetPersonAccessPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetPersonAccess_Payload from protobuf.
+   * Deserializes AccessGetPersonAccessPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetPersonAccess_Payload {
-    return Access_GetPersonAccess_Payload._readMessage(
-      Access_GetPersonAccess_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessGetPersonAccessPayload {
+    return AccessGetPersonAccessPayload._readMessage(
+      AccessGetPersonAccessPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetPersonAccess_Payload with all fields set to their default value.
+   * Initializes AccessGetPersonAccessPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetPersonAccess_Payload {
+  initialize: function (): AccessGetPersonAccessPayload {
     return {
       personId: 0,
       eventId: 0,
@@ -4420,7 +4359,7 @@ export const Access_GetPersonAccess_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetPersonAccess_Payload>,
+    msg: Partial<AccessGetPersonAccessPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -4436,9 +4375,9 @@ export const Access_GetPersonAccess_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetPersonAccess_Payload,
+    msg: AccessGetPersonAccessPayload,
     reader: BinaryReader
-  ): Access_GetPersonAccess_Payload {
+  ): AccessGetPersonAccessPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4460,31 +4399,31 @@ export const Access_GetPersonAccess_Payload = {
   },
 };
 
-export const Access_GetPersonAccess_Response = {
+export const AccessGetPersonAccessResponse = {
   /**
-   * Serializes Access_GetPersonAccess_Response to protobuf.
+   * Serializes AccessGetPersonAccessResponse to protobuf.
    */
-  encode: function (msg: Partial<Access_GetPersonAccess_Response>): Uint8Array {
-    return Access_GetPersonAccess_Response._writeMessage(
+  encode: function (msg: Partial<AccessGetPersonAccessResponse>): Uint8Array {
+    return AccessGetPersonAccessResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetPersonAccess_Response from protobuf.
+   * Deserializes AccessGetPersonAccessResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetPersonAccess_Response {
-    return Access_GetPersonAccess_Response._readMessage(
-      Access_GetPersonAccess_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessGetPersonAccessResponse {
+    return AccessGetPersonAccessResponse._readMessage(
+      AccessGetPersonAccessResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetPersonAccess_Response with all fields set to their default value.
+   * Initializes AccessGetPersonAccessResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetPersonAccess_Response {
+  initialize: function (): AccessGetPersonAccessResponse {
     return {
       rules: protoAtoms.AccessRules.initialize(),
     };
@@ -4494,7 +4433,7 @@ export const Access_GetPersonAccess_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetPersonAccess_Response>,
+    msg: Partial<AccessGetPersonAccessResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.rules) {
@@ -4507,9 +4446,9 @@ export const Access_GetPersonAccess_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetPersonAccess_Response,
+    msg: AccessGetPersonAccessResponse,
     reader: BinaryReader
-  ): Access_GetPersonAccess_Response {
+  ): AccessGetPersonAccessResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4527,31 +4466,31 @@ export const Access_GetPersonAccess_Response = {
   },
 };
 
-export const Access_GetGroupAccess_Payload = {
+export const AccessGetGroupAccessPayload = {
   /**
-   * Serializes Access_GetGroupAccess_Payload to protobuf.
+   * Serializes AccessGetGroupAccessPayload to protobuf.
    */
-  encode: function (msg: Partial<Access_GetGroupAccess_Payload>): Uint8Array {
-    return Access_GetGroupAccess_Payload._writeMessage(
+  encode: function (msg: Partial<AccessGetGroupAccessPayload>): Uint8Array {
+    return AccessGetGroupAccessPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetGroupAccess_Payload from protobuf.
+   * Deserializes AccessGetGroupAccessPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetGroupAccess_Payload {
-    return Access_GetGroupAccess_Payload._readMessage(
-      Access_GetGroupAccess_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessGetGroupAccessPayload {
+    return AccessGetGroupAccessPayload._readMessage(
+      AccessGetGroupAccessPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetGroupAccess_Payload with all fields set to their default value.
+   * Initializes AccessGetGroupAccessPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetGroupAccess_Payload {
+  initialize: function (): AccessGetGroupAccessPayload {
     return {
       groupId: 0,
       eventId: 0,
@@ -4562,7 +4501,7 @@ export const Access_GetGroupAccess_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetGroupAccess_Payload>,
+    msg: Partial<AccessGetGroupAccessPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.groupId) {
@@ -4578,9 +4517,9 @@ export const Access_GetGroupAccess_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetGroupAccess_Payload,
+    msg: AccessGetGroupAccessPayload,
     reader: BinaryReader
-  ): Access_GetGroupAccess_Payload {
+  ): AccessGetGroupAccessPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4602,31 +4541,31 @@ export const Access_GetGroupAccess_Payload = {
   },
 };
 
-export const Access_GetGroupAccess_Response = {
+export const AccessGetGroupAccessResponse = {
   /**
-   * Serializes Access_GetGroupAccess_Response to protobuf.
+   * Serializes AccessGetGroupAccessResponse to protobuf.
    */
-  encode: function (msg: Partial<Access_GetGroupAccess_Response>): Uint8Array {
-    return Access_GetGroupAccess_Response._writeMessage(
+  encode: function (msg: Partial<AccessGetGroupAccessResponse>): Uint8Array {
+    return AccessGetGroupAccessResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetGroupAccess_Response from protobuf.
+   * Deserializes AccessGetGroupAccessResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetGroupAccess_Response {
-    return Access_GetGroupAccess_Response._readMessage(
-      Access_GetGroupAccess_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessGetGroupAccessResponse {
+    return AccessGetGroupAccessResponse._readMessage(
+      AccessGetGroupAccessResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetGroupAccess_Response with all fields set to their default value.
+   * Initializes AccessGetGroupAccessResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetGroupAccess_Response {
+  initialize: function (): AccessGetGroupAccessResponse {
     return {
       rules: protoAtoms.AccessRules.initialize(),
     };
@@ -4636,7 +4575,7 @@ export const Access_GetGroupAccess_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetGroupAccess_Response>,
+    msg: Partial<AccessGetGroupAccessResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.rules) {
@@ -4649,9 +4588,9 @@ export const Access_GetGroupAccess_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetGroupAccess_Response,
+    msg: AccessGetGroupAccessResponse,
     reader: BinaryReader
-  ): Access_GetGroupAccess_Response {
+  ): AccessGetGroupAccessResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4669,33 +4608,31 @@ export const Access_GetGroupAccess_Response = {
   },
 };
 
-export const Access_GetAllPersonAccess_Payload = {
+export const AccessGetAllPersonAccessPayload = {
   /**
-   * Serializes Access_GetAllPersonAccess_Payload to protobuf.
+   * Serializes AccessGetAllPersonAccessPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Access_GetAllPersonAccess_Payload>
-  ): Uint8Array {
-    return Access_GetAllPersonAccess_Payload._writeMessage(
+  encode: function (msg: Partial<AccessGetAllPersonAccessPayload>): Uint8Array {
+    return AccessGetAllPersonAccessPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetAllPersonAccess_Payload from protobuf.
+   * Deserializes AccessGetAllPersonAccessPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetAllPersonAccess_Payload {
-    return Access_GetAllPersonAccess_Payload._readMessage(
-      Access_GetAllPersonAccess_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessGetAllPersonAccessPayload {
+    return AccessGetAllPersonAccessPayload._readMessage(
+      AccessGetAllPersonAccessPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetAllPersonAccess_Payload with all fields set to their default value.
+   * Initializes AccessGetAllPersonAccessPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllPersonAccess_Payload {
+  initialize: function (): AccessGetAllPersonAccessPayload {
     return {
       personId: 0,
     };
@@ -4705,7 +4642,7 @@ export const Access_GetAllPersonAccess_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllPersonAccess_Payload>,
+    msg: Partial<AccessGetAllPersonAccessPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -4718,9 +4655,9 @@ export const Access_GetAllPersonAccess_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllPersonAccess_Payload,
+    msg: AccessGetAllPersonAccessPayload,
     reader: BinaryReader
-  ): Access_GetAllPersonAccess_Payload {
+  ): AccessGetAllPersonAccessPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4738,33 +4675,33 @@ export const Access_GetAllPersonAccess_Payload = {
   },
 };
 
-export const Access_GetAllPersonAccess_Response = {
+export const AccessGetAllPersonAccessResponse = {
   /**
-   * Serializes Access_GetAllPersonAccess_Response to protobuf.
+   * Serializes AccessGetAllPersonAccessResponse to protobuf.
    */
   encode: function (
-    msg: Partial<Access_GetAllPersonAccess_Response>
+    msg: Partial<AccessGetAllPersonAccessResponse>
   ): Uint8Array {
-    return Access_GetAllPersonAccess_Response._writeMessage(
+    return AccessGetAllPersonAccessResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetAllPersonAccess_Response from protobuf.
+   * Deserializes AccessGetAllPersonAccessResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetAllPersonAccess_Response {
-    return Access_GetAllPersonAccess_Response._readMessage(
-      Access_GetAllPersonAccess_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessGetAllPersonAccessResponse {
+    return AccessGetAllPersonAccessResponse._readMessage(
+      AccessGetAllPersonAccessResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetAllPersonAccess_Response with all fields set to their default value.
+   * Initializes AccessGetAllPersonAccessResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllPersonAccess_Response {
+  initialize: function (): AccessGetAllPersonAccessResponse {
     return {
       rulesByEvent: {},
     };
@@ -4774,7 +4711,7 @@ export const Access_GetAllPersonAccess_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllPersonAccess_Response>,
+    msg: Partial<AccessGetAllPersonAccessResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.rulesByEvent) {
@@ -4784,7 +4721,7 @@ export const Access_GetAllPersonAccess_Response = {
           key: key as any,
           value: value as any,
         })) as any,
-        Access_GetAllPersonAccess_Response.RulesByEvent._writeMessage
+        AccessGetAllPersonAccessResponse.RulesByEvent._writeMessage
       );
     }
     return writer;
@@ -4794,17 +4731,17 @@ export const Access_GetAllPersonAccess_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllPersonAccess_Response,
+    msg: AccessGetAllPersonAccessResponse,
     reader: BinaryReader
-  ): Access_GetAllPersonAccess_Response {
+  ): AccessGetAllPersonAccessResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          const map = {} as Access_GetAllPersonAccess_Response.RulesByEvent;
+          const map = {} as AccessGetAllPersonAccessResponse.RulesByEvent;
           reader.readMessage(
             map,
-            Access_GetAllPersonAccess_Response.RulesByEvent._readMessage
+            AccessGetAllPersonAccessResponse.RulesByEvent._readMessage
           );
           msg.rulesByEvent[map.key.toString()] = map.value;
           break;
@@ -4823,7 +4760,7 @@ export const Access_GetAllPersonAccess_Response = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Access_GetAllPersonAccess_Response.RulesByEvent>,
+      msg: Partial<AccessGetAllPersonAccessResponse.RulesByEvent>,
       writer: BinaryWriter
     ): BinaryWriter {
       if (msg.key) {
@@ -4843,9 +4780,9 @@ export const Access_GetAllPersonAccess_Response = {
      * @private
      */
     _readMessage: function (
-      msg: Access_GetAllPersonAccess_Response.RulesByEvent,
+      msg: AccessGetAllPersonAccessResponse.RulesByEvent,
       reader: BinaryReader
-    ): Access_GetAllPersonAccess_Response.RulesByEvent {
+    ): AccessGetAllPersonAccessResponse.RulesByEvent {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
         switch (field) {
@@ -4872,33 +4809,31 @@ export const Access_GetAllPersonAccess_Response = {
   },
 };
 
-export const Access_GetAllGroupAccess_Payload = {
+export const AccessGetAllGroupAccessPayload = {
   /**
-   * Serializes Access_GetAllGroupAccess_Payload to protobuf.
+   * Serializes AccessGetAllGroupAccessPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Access_GetAllGroupAccess_Payload>
-  ): Uint8Array {
-    return Access_GetAllGroupAccess_Payload._writeMessage(
+  encode: function (msg: Partial<AccessGetAllGroupAccessPayload>): Uint8Array {
+    return AccessGetAllGroupAccessPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetAllGroupAccess_Payload from protobuf.
+   * Deserializes AccessGetAllGroupAccessPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetAllGroupAccess_Payload {
-    return Access_GetAllGroupAccess_Payload._readMessage(
-      Access_GetAllGroupAccess_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessGetAllGroupAccessPayload {
+    return AccessGetAllGroupAccessPayload._readMessage(
+      AccessGetAllGroupAccessPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetAllGroupAccess_Payload with all fields set to their default value.
+   * Initializes AccessGetAllGroupAccessPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllGroupAccess_Payload {
+  initialize: function (): AccessGetAllGroupAccessPayload {
     return {
       groupId: 0,
     };
@@ -4908,7 +4843,7 @@ export const Access_GetAllGroupAccess_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllGroupAccess_Payload>,
+    msg: Partial<AccessGetAllGroupAccessPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.groupId) {
@@ -4921,9 +4856,9 @@ export const Access_GetAllGroupAccess_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllGroupAccess_Payload,
+    msg: AccessGetAllGroupAccessPayload,
     reader: BinaryReader
-  ): Access_GetAllGroupAccess_Payload {
+  ): AccessGetAllGroupAccessPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -4941,33 +4876,31 @@ export const Access_GetAllGroupAccess_Payload = {
   },
 };
 
-export const Access_GetAllGroupAccess_Response = {
+export const AccessGetAllGroupAccessResponse = {
   /**
-   * Serializes Access_GetAllGroupAccess_Response to protobuf.
+   * Serializes AccessGetAllGroupAccessResponse to protobuf.
    */
-  encode: function (
-    msg: Partial<Access_GetAllGroupAccess_Response>
-  ): Uint8Array {
-    return Access_GetAllGroupAccess_Response._writeMessage(
+  encode: function (msg: Partial<AccessGetAllGroupAccessResponse>): Uint8Array {
+    return AccessGetAllGroupAccessResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_GetAllGroupAccess_Response from protobuf.
+   * Deserializes AccessGetAllGroupAccessResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_GetAllGroupAccess_Response {
-    return Access_GetAllGroupAccess_Response._readMessage(
-      Access_GetAllGroupAccess_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessGetAllGroupAccessResponse {
+    return AccessGetAllGroupAccessResponse._readMessage(
+      AccessGetAllGroupAccessResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_GetAllGroupAccess_Response with all fields set to their default value.
+   * Initializes AccessGetAllGroupAccessResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllGroupAccess_Response {
+  initialize: function (): AccessGetAllGroupAccessResponse {
     return {
       rulesByEvent: {},
     };
@@ -4977,7 +4910,7 @@ export const Access_GetAllGroupAccess_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllGroupAccess_Response>,
+    msg: Partial<AccessGetAllGroupAccessResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.rulesByEvent) {
@@ -4987,7 +4920,7 @@ export const Access_GetAllGroupAccess_Response = {
           key: key as any,
           value: value as any,
         })) as any,
-        Access_GetAllGroupAccess_Response.RulesByEvent._writeMessage
+        AccessGetAllGroupAccessResponse.RulesByEvent._writeMessage
       );
     }
     return writer;
@@ -4997,17 +4930,17 @@ export const Access_GetAllGroupAccess_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllGroupAccess_Response,
+    msg: AccessGetAllGroupAccessResponse,
     reader: BinaryReader
-  ): Access_GetAllGroupAccess_Response {
+  ): AccessGetAllGroupAccessResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
-          const map = {} as Access_GetAllGroupAccess_Response.RulesByEvent;
+          const map = {} as AccessGetAllGroupAccessResponse.RulesByEvent;
           reader.readMessage(
             map,
-            Access_GetAllGroupAccess_Response.RulesByEvent._readMessage
+            AccessGetAllGroupAccessResponse.RulesByEvent._readMessage
           );
           msg.rulesByEvent[map.key.toString()] = map.value;
           break;
@@ -5026,7 +4959,7 @@ export const Access_GetAllGroupAccess_Response = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Access_GetAllGroupAccess_Response.RulesByEvent>,
+      msg: Partial<AccessGetAllGroupAccessResponse.RulesByEvent>,
       writer: BinaryWriter
     ): BinaryWriter {
       if (msg.key) {
@@ -5046,9 +4979,9 @@ export const Access_GetAllGroupAccess_Response = {
      * @private
      */
     _readMessage: function (
-      msg: Access_GetAllGroupAccess_Response.RulesByEvent,
+      msg: AccessGetAllGroupAccessResponse.RulesByEvent,
       reader: BinaryReader
-    ): Access_GetAllGroupAccess_Response.RulesByEvent {
+    ): AccessGetAllGroupAccessResponse.RulesByEvent {
       while (reader.nextField()) {
         const field = reader.getFieldNumber();
         switch (field) {
@@ -5075,31 +5008,31 @@ export const Access_GetAllGroupAccess_Response = {
   },
 };
 
-export const Access_AddRuleForPerson_Payload = {
+export const AccessAddRuleForPersonPayload = {
   /**
-   * Serializes Access_AddRuleForPerson_Payload to protobuf.
+   * Serializes AccessAddRuleForPersonPayload to protobuf.
    */
-  encode: function (msg: Partial<Access_AddRuleForPerson_Payload>): Uint8Array {
-    return Access_AddRuleForPerson_Payload._writeMessage(
+  encode: function (msg: Partial<AccessAddRuleForPersonPayload>): Uint8Array {
+    return AccessAddRuleForPersonPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_AddRuleForPerson_Payload from protobuf.
+   * Deserializes AccessAddRuleForPersonPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_AddRuleForPerson_Payload {
-    return Access_AddRuleForPerson_Payload._readMessage(
-      Access_AddRuleForPerson_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessAddRuleForPersonPayload {
+    return AccessAddRuleForPersonPayload._readMessage(
+      AccessAddRuleForPersonPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_AddRuleForPerson_Payload with all fields set to their default value.
+   * Initializes AccessAddRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): Access_AddRuleForPerson_Payload {
+  initialize: function (): AccessAddRuleForPersonPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValue.initialize(),
@@ -5113,7 +5046,7 @@ export const Access_AddRuleForPerson_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddRuleForPerson_Payload>,
+    msg: Partial<AccessAddRuleForPersonPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleName) {
@@ -5138,9 +5071,9 @@ export const Access_AddRuleForPerson_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddRuleForPerson_Payload,
+    msg: AccessAddRuleForPersonPayload,
     reader: BinaryReader
-  ): Access_AddRuleForPerson_Payload {
+  ): AccessAddRuleForPersonPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5174,33 +5107,31 @@ export const Access_AddRuleForPerson_Payload = {
   },
 };
 
-export const Access_AddRuleForPerson_Response = {
+export const AccessAddRuleForPersonResponse = {
   /**
-   * Serializes Access_AddRuleForPerson_Response to protobuf.
+   * Serializes AccessAddRuleForPersonResponse to protobuf.
    */
-  encode: function (
-    msg: Partial<Access_AddRuleForPerson_Response>
-  ): Uint8Array {
-    return Access_AddRuleForPerson_Response._writeMessage(
+  encode: function (msg: Partial<AccessAddRuleForPersonResponse>): Uint8Array {
+    return AccessAddRuleForPersonResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_AddRuleForPerson_Response from protobuf.
+   * Deserializes AccessAddRuleForPersonResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_AddRuleForPerson_Response {
-    return Access_AddRuleForPerson_Response._readMessage(
-      Access_AddRuleForPerson_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessAddRuleForPersonResponse {
+    return AccessAddRuleForPersonResponse._readMessage(
+      AccessAddRuleForPersonResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_AddRuleForPerson_Response with all fields set to their default value.
+   * Initializes AccessAddRuleForPersonResponse with all fields set to their default value.
    */
-  initialize: function (): Access_AddRuleForPerson_Response {
+  initialize: function (): AccessAddRuleForPersonResponse {
     return {
       ruleId: 0,
     };
@@ -5210,7 +5141,7 @@ export const Access_AddRuleForPerson_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddRuleForPerson_Response>,
+    msg: Partial<AccessAddRuleForPersonResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleId) {
@@ -5223,9 +5154,9 @@ export const Access_AddRuleForPerson_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddRuleForPerson_Response,
+    msg: AccessAddRuleForPersonResponse,
     reader: BinaryReader
-  ): Access_AddRuleForPerson_Response {
+  ): AccessAddRuleForPersonResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5243,31 +5174,31 @@ export const Access_AddRuleForPerson_Response = {
   },
 };
 
-export const Access_AddRuleForGroup_Payload = {
+export const AccessAddRuleForGroupPayload = {
   /**
-   * Serializes Access_AddRuleForGroup_Payload to protobuf.
+   * Serializes AccessAddRuleForGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<Access_AddRuleForGroup_Payload>): Uint8Array {
-    return Access_AddRuleForGroup_Payload._writeMessage(
+  encode: function (msg: Partial<AccessAddRuleForGroupPayload>): Uint8Array {
+    return AccessAddRuleForGroupPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_AddRuleForGroup_Payload from protobuf.
+   * Deserializes AccessAddRuleForGroupPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_AddRuleForGroup_Payload {
-    return Access_AddRuleForGroup_Payload._readMessage(
-      Access_AddRuleForGroup_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessAddRuleForGroupPayload {
+    return AccessAddRuleForGroupPayload._readMessage(
+      AccessAddRuleForGroupPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_AddRuleForGroup_Payload with all fields set to their default value.
+   * Initializes AccessAddRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Access_AddRuleForGroup_Payload {
+  initialize: function (): AccessAddRuleForGroupPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValue.initialize(),
@@ -5281,7 +5212,7 @@ export const Access_AddRuleForGroup_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddRuleForGroup_Payload>,
+    msg: Partial<AccessAddRuleForGroupPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleName) {
@@ -5306,9 +5237,9 @@ export const Access_AddRuleForGroup_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddRuleForGroup_Payload,
+    msg: AccessAddRuleForGroupPayload,
     reader: BinaryReader
-  ): Access_AddRuleForGroup_Payload {
+  ): AccessAddRuleForGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5342,31 +5273,31 @@ export const Access_AddRuleForGroup_Payload = {
   },
 };
 
-export const Access_AddRuleForGroup_Response = {
+export const AccessAddRuleForGroupResponse = {
   /**
-   * Serializes Access_AddRuleForGroup_Response to protobuf.
+   * Serializes AccessAddRuleForGroupResponse to protobuf.
    */
-  encode: function (msg: Partial<Access_AddRuleForGroup_Response>): Uint8Array {
-    return Access_AddRuleForGroup_Response._writeMessage(
+  encode: function (msg: Partial<AccessAddRuleForGroupResponse>): Uint8Array {
+    return AccessAddRuleForGroupResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_AddRuleForGroup_Response from protobuf.
+   * Deserializes AccessAddRuleForGroupResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_AddRuleForGroup_Response {
-    return Access_AddRuleForGroup_Response._readMessage(
-      Access_AddRuleForGroup_Response.initialize(),
+  decode: function (bytes: ByteSource): AccessAddRuleForGroupResponse {
+    return AccessAddRuleForGroupResponse._readMessage(
+      AccessAddRuleForGroupResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_AddRuleForGroup_Response with all fields set to their default value.
+   * Initializes AccessAddRuleForGroupResponse with all fields set to their default value.
    */
-  initialize: function (): Access_AddRuleForGroup_Response {
+  initialize: function (): AccessAddRuleForGroupResponse {
     return {
       ruleId: 0,
     };
@@ -5376,7 +5307,7 @@ export const Access_AddRuleForGroup_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddRuleForGroup_Response>,
+    msg: Partial<AccessAddRuleForGroupResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleId) {
@@ -5389,9 +5320,9 @@ export const Access_AddRuleForGroup_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddRuleForGroup_Response,
+    msg: AccessAddRuleForGroupResponse,
     reader: BinaryReader
-  ): Access_AddRuleForGroup_Response {
+  ): AccessAddRuleForGroupResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5409,33 +5340,33 @@ export const Access_AddRuleForGroup_Response = {
   },
 };
 
-export const Access_UpdateRuleForPerson_Payload = {
+export const AccessUpdateRuleForPersonPayload = {
   /**
-   * Serializes Access_UpdateRuleForPerson_Payload to protobuf.
+   * Serializes AccessUpdateRuleForPersonPayload to protobuf.
    */
   encode: function (
-    msg: Partial<Access_UpdateRuleForPerson_Payload>
+    msg: Partial<AccessUpdateRuleForPersonPayload>
   ): Uint8Array {
-    return Access_UpdateRuleForPerson_Payload._writeMessage(
+    return AccessUpdateRuleForPersonPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_UpdateRuleForPerson_Payload from protobuf.
+   * Deserializes AccessUpdateRuleForPersonPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_UpdateRuleForPerson_Payload {
-    return Access_UpdateRuleForPerson_Payload._readMessage(
-      Access_UpdateRuleForPerson_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessUpdateRuleForPersonPayload {
+    return AccessUpdateRuleForPersonPayload._readMessage(
+      AccessUpdateRuleForPersonPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_UpdateRuleForPerson_Payload with all fields set to their default value.
+   * Initializes AccessUpdateRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): Access_UpdateRuleForPerson_Payload {
+  initialize: function (): AccessUpdateRuleForPersonPayload {
     return {
       ruleId: 0,
       ruleValue: protoAtoms.RuleValue.initialize(),
@@ -5447,7 +5378,7 @@ export const Access_UpdateRuleForPerson_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_UpdateRuleForPerson_Payload>,
+    msg: Partial<AccessUpdateRuleForPersonPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleId) {
@@ -5466,9 +5397,9 @@ export const Access_UpdateRuleForPerson_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_UpdateRuleForPerson_Payload,
+    msg: AccessUpdateRuleForPersonPayload,
     reader: BinaryReader
-  ): Access_UpdateRuleForPerson_Payload {
+  ): AccessUpdateRuleForPersonPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5494,33 +5425,31 @@ export const Access_UpdateRuleForPerson_Payload = {
   },
 };
 
-export const Access_UpdateRuleForGroup_Payload = {
+export const AccessUpdateRuleForGroupPayload = {
   /**
-   * Serializes Access_UpdateRuleForGroup_Payload to protobuf.
+   * Serializes AccessUpdateRuleForGroupPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Access_UpdateRuleForGroup_Payload>
-  ): Uint8Array {
-    return Access_UpdateRuleForGroup_Payload._writeMessage(
+  encode: function (msg: Partial<AccessUpdateRuleForGroupPayload>): Uint8Array {
+    return AccessUpdateRuleForGroupPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_UpdateRuleForGroup_Payload from protobuf.
+   * Deserializes AccessUpdateRuleForGroupPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_UpdateRuleForGroup_Payload {
-    return Access_UpdateRuleForGroup_Payload._readMessage(
-      Access_UpdateRuleForGroup_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessUpdateRuleForGroupPayload {
+    return AccessUpdateRuleForGroupPayload._readMessage(
+      AccessUpdateRuleForGroupPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_UpdateRuleForGroup_Payload with all fields set to their default value.
+   * Initializes AccessUpdateRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Access_UpdateRuleForGroup_Payload {
+  initialize: function (): AccessUpdateRuleForGroupPayload {
     return {
       ruleId: 0,
       ruleValue: protoAtoms.RuleValue.initialize(),
@@ -5532,7 +5461,7 @@ export const Access_UpdateRuleForGroup_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_UpdateRuleForGroup_Payload>,
+    msg: Partial<AccessUpdateRuleForGroupPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleId) {
@@ -5551,9 +5480,9 @@ export const Access_UpdateRuleForGroup_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_UpdateRuleForGroup_Payload,
+    msg: AccessUpdateRuleForGroupPayload,
     reader: BinaryReader
-  ): Access_UpdateRuleForGroup_Payload {
+  ): AccessUpdateRuleForGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5579,33 +5508,33 @@ export const Access_UpdateRuleForGroup_Payload = {
   },
 };
 
-export const Access_DeleteRuleForPerson_Payload = {
+export const AccessDeleteRuleForPersonPayload = {
   /**
-   * Serializes Access_DeleteRuleForPerson_Payload to protobuf.
+   * Serializes AccessDeleteRuleForPersonPayload to protobuf.
    */
   encode: function (
-    msg: Partial<Access_DeleteRuleForPerson_Payload>
+    msg: Partial<AccessDeleteRuleForPersonPayload>
   ): Uint8Array {
-    return Access_DeleteRuleForPerson_Payload._writeMessage(
+    return AccessDeleteRuleForPersonPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_DeleteRuleForPerson_Payload from protobuf.
+   * Deserializes AccessDeleteRuleForPersonPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_DeleteRuleForPerson_Payload {
-    return Access_DeleteRuleForPerson_Payload._readMessage(
-      Access_DeleteRuleForPerson_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessDeleteRuleForPersonPayload {
+    return AccessDeleteRuleForPersonPayload._readMessage(
+      AccessDeleteRuleForPersonPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_DeleteRuleForPerson_Payload with all fields set to their default value.
+   * Initializes AccessDeleteRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): Access_DeleteRuleForPerson_Payload {
+  initialize: function (): AccessDeleteRuleForPersonPayload {
     return {
       ruleId: 0,
     };
@@ -5615,7 +5544,7 @@ export const Access_DeleteRuleForPerson_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_DeleteRuleForPerson_Payload>,
+    msg: Partial<AccessDeleteRuleForPersonPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleId) {
@@ -5628,9 +5557,9 @@ export const Access_DeleteRuleForPerson_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_DeleteRuleForPerson_Payload,
+    msg: AccessDeleteRuleForPersonPayload,
     reader: BinaryReader
-  ): Access_DeleteRuleForPerson_Payload {
+  ): AccessDeleteRuleForPersonPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5648,33 +5577,31 @@ export const Access_DeleteRuleForPerson_Payload = {
   },
 };
 
-export const Access_DeleteRuleForGroup_Payload = {
+export const AccessDeleteRuleForGroupPayload = {
   /**
-   * Serializes Access_DeleteRuleForGroup_Payload to protobuf.
+   * Serializes AccessDeleteRuleForGroupPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Access_DeleteRuleForGroup_Payload>
-  ): Uint8Array {
-    return Access_DeleteRuleForGroup_Payload._writeMessage(
+  encode: function (msg: Partial<AccessDeleteRuleForGroupPayload>): Uint8Array {
+    return AccessDeleteRuleForGroupPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_DeleteRuleForGroup_Payload from protobuf.
+   * Deserializes AccessDeleteRuleForGroupPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_DeleteRuleForGroup_Payload {
-    return Access_DeleteRuleForGroup_Payload._readMessage(
-      Access_DeleteRuleForGroup_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessDeleteRuleForGroupPayload {
+    return AccessDeleteRuleForGroupPayload._readMessage(
+      AccessDeleteRuleForGroupPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_DeleteRuleForGroup_Payload with all fields set to their default value.
+   * Initializes AccessDeleteRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Access_DeleteRuleForGroup_Payload {
+  initialize: function (): AccessDeleteRuleForGroupPayload {
     return {
       ruleId: 0,
     };
@@ -5684,7 +5611,7 @@ export const Access_DeleteRuleForGroup_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_DeleteRuleForGroup_Payload>,
+    msg: Partial<AccessDeleteRuleForGroupPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleId) {
@@ -5697,9 +5624,9 @@ export const Access_DeleteRuleForGroup_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_DeleteRuleForGroup_Payload,
+    msg: AccessDeleteRuleForGroupPayload,
     reader: BinaryReader
-  ): Access_DeleteRuleForGroup_Payload {
+  ): AccessDeleteRuleForGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5717,31 +5644,31 @@ export const Access_DeleteRuleForGroup_Payload = {
   },
 };
 
-export const Access_ClearAccessCache_Payload = {
+export const AccessClearAccessCachePayload = {
   /**
-   * Serializes Access_ClearAccessCache_Payload to protobuf.
+   * Serializes AccessClearAccessCachePayload to protobuf.
    */
-  encode: function (msg: Partial<Access_ClearAccessCache_Payload>): Uint8Array {
-    return Access_ClearAccessCache_Payload._writeMessage(
+  encode: function (msg: Partial<AccessClearAccessCachePayload>): Uint8Array {
+    return AccessClearAccessCachePayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_ClearAccessCache_Payload from protobuf.
+   * Deserializes AccessClearAccessCachePayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Access_ClearAccessCache_Payload {
-    return Access_ClearAccessCache_Payload._readMessage(
-      Access_ClearAccessCache_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessClearAccessCachePayload {
+    return AccessClearAccessCachePayload._readMessage(
+      AccessClearAccessCachePayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_ClearAccessCache_Payload with all fields set to their default value.
+   * Initializes AccessClearAccessCachePayload with all fields set to their default value.
    */
-  initialize: function (): Access_ClearAccessCache_Payload {
+  initialize: function (): AccessClearAccessCachePayload {
     return {
       personId: 0,
       eventId: 0,
@@ -5752,7 +5679,7 @@ export const Access_ClearAccessCache_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_ClearAccessCache_Payload>,
+    msg: Partial<AccessClearAccessCachePayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -5768,9 +5695,9 @@ export const Access_ClearAccessCache_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_ClearAccessCache_Payload,
+    msg: AccessClearAccessCachePayload,
     reader: BinaryReader
-  ): Access_ClearAccessCache_Payload {
+  ): AccessClearAccessCachePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5792,35 +5719,35 @@ export const Access_ClearAccessCache_Payload = {
   },
 };
 
-export const Access_AddSystemWideRuleForPerson_Payload = {
+export const AccessAddSystemWideRuleForPersonPayload = {
   /**
-   * Serializes Access_AddSystemWideRuleForPerson_Payload to protobuf.
+   * Serializes AccessAddSystemWideRuleForPersonPayload to protobuf.
    */
   encode: function (
-    msg: Partial<Access_AddSystemWideRuleForPerson_Payload>
+    msg: Partial<AccessAddSystemWideRuleForPersonPayload>
   ): Uint8Array {
-    return Access_AddSystemWideRuleForPerson_Payload._writeMessage(
+    return AccessAddSystemWideRuleForPersonPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_AddSystemWideRuleForPerson_Payload from protobuf.
+   * Deserializes AccessAddSystemWideRuleForPersonPayload from protobuf.
    */
   decode: function (
     bytes: ByteSource
-  ): Access_AddSystemWideRuleForPerson_Payload {
-    return Access_AddSystemWideRuleForPerson_Payload._readMessage(
-      Access_AddSystemWideRuleForPerson_Payload.initialize(),
+  ): AccessAddSystemWideRuleForPersonPayload {
+    return AccessAddSystemWideRuleForPersonPayload._readMessage(
+      AccessAddSystemWideRuleForPersonPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_AddSystemWideRuleForPerson_Payload with all fields set to their default value.
+   * Initializes AccessAddSystemWideRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): Access_AddSystemWideRuleForPerson_Payload {
+  initialize: function (): AccessAddSystemWideRuleForPersonPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValue.initialize(),
@@ -5833,7 +5760,7 @@ export const Access_AddSystemWideRuleForPerson_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddSystemWideRuleForPerson_Payload>,
+    msg: Partial<AccessAddSystemWideRuleForPersonPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleName) {
@@ -5855,9 +5782,9 @@ export const Access_AddSystemWideRuleForPerson_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddSystemWideRuleForPerson_Payload,
+    msg: AccessAddSystemWideRuleForPersonPayload,
     reader: BinaryReader
-  ): Access_AddSystemWideRuleForPerson_Payload {
+  ): AccessAddSystemWideRuleForPersonPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5887,35 +5814,35 @@ export const Access_AddSystemWideRuleForPerson_Payload = {
   },
 };
 
-export const Access_AddSystemWideRuleForPerson_Response = {
+export const AccessAddSystemWideRuleForPersonResponse = {
   /**
-   * Serializes Access_AddSystemWideRuleForPerson_Response to protobuf.
+   * Serializes AccessAddSystemWideRuleForPersonResponse to protobuf.
    */
   encode: function (
-    msg: Partial<Access_AddSystemWideRuleForPerson_Response>
+    msg: Partial<AccessAddSystemWideRuleForPersonResponse>
   ): Uint8Array {
-    return Access_AddSystemWideRuleForPerson_Response._writeMessage(
+    return AccessAddSystemWideRuleForPersonResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_AddSystemWideRuleForPerson_Response from protobuf.
+   * Deserializes AccessAddSystemWideRuleForPersonResponse from protobuf.
    */
   decode: function (
     bytes: ByteSource
-  ): Access_AddSystemWideRuleForPerson_Response {
-    return Access_AddSystemWideRuleForPerson_Response._readMessage(
-      Access_AddSystemWideRuleForPerson_Response.initialize(),
+  ): AccessAddSystemWideRuleForPersonResponse {
+    return AccessAddSystemWideRuleForPersonResponse._readMessage(
+      AccessAddSystemWideRuleForPersonResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_AddSystemWideRuleForPerson_Response with all fields set to their default value.
+   * Initializes AccessAddSystemWideRuleForPersonResponse with all fields set to their default value.
    */
-  initialize: function (): Access_AddSystemWideRuleForPerson_Response {
+  initialize: function (): AccessAddSystemWideRuleForPersonResponse {
     return {
       ruleId: 0,
     };
@@ -5925,7 +5852,7 @@ export const Access_AddSystemWideRuleForPerson_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddSystemWideRuleForPerson_Response>,
+    msg: Partial<AccessAddSystemWideRuleForPersonResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleId) {
@@ -5938,9 +5865,9 @@ export const Access_AddSystemWideRuleForPerson_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddSystemWideRuleForPerson_Response,
+    msg: AccessAddSystemWideRuleForPersonResponse,
     reader: BinaryReader
-  ): Access_AddSystemWideRuleForPerson_Response {
+  ): AccessAddSystemWideRuleForPersonResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -5958,35 +5885,33 @@ export const Access_AddSystemWideRuleForPerson_Response = {
   },
 };
 
-export const Access_AddSystemWideRuleForGroup_Payload = {
+export const AccessAddSystemWideRuleForGroupPayload = {
   /**
-   * Serializes Access_AddSystemWideRuleForGroup_Payload to protobuf.
+   * Serializes AccessAddSystemWideRuleForGroupPayload to protobuf.
    */
   encode: function (
-    msg: Partial<Access_AddSystemWideRuleForGroup_Payload>
+    msg: Partial<AccessAddSystemWideRuleForGroupPayload>
   ): Uint8Array {
-    return Access_AddSystemWideRuleForGroup_Payload._writeMessage(
+    return AccessAddSystemWideRuleForGroupPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_AddSystemWideRuleForGroup_Payload from protobuf.
+   * Deserializes AccessAddSystemWideRuleForGroupPayload from protobuf.
    */
-  decode: function (
-    bytes: ByteSource
-  ): Access_AddSystemWideRuleForGroup_Payload {
-    return Access_AddSystemWideRuleForGroup_Payload._readMessage(
-      Access_AddSystemWideRuleForGroup_Payload.initialize(),
+  decode: function (bytes: ByteSource): AccessAddSystemWideRuleForGroupPayload {
+    return AccessAddSystemWideRuleForGroupPayload._readMessage(
+      AccessAddSystemWideRuleForGroupPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_AddSystemWideRuleForGroup_Payload with all fields set to their default value.
+   * Initializes AccessAddSystemWideRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Access_AddSystemWideRuleForGroup_Payload {
+  initialize: function (): AccessAddSystemWideRuleForGroupPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValue.initialize(),
@@ -5999,7 +5924,7 @@ export const Access_AddSystemWideRuleForGroup_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddSystemWideRuleForGroup_Payload>,
+    msg: Partial<AccessAddSystemWideRuleForGroupPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleName) {
@@ -6021,9 +5946,9 @@ export const Access_AddSystemWideRuleForGroup_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddSystemWideRuleForGroup_Payload,
+    msg: AccessAddSystemWideRuleForGroupPayload,
     reader: BinaryReader
-  ): Access_AddSystemWideRuleForGroup_Payload {
+  ): AccessAddSystemWideRuleForGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6053,35 +5978,35 @@ export const Access_AddSystemWideRuleForGroup_Payload = {
   },
 };
 
-export const Access_AddSystemWideRuleForGroup_Response = {
+export const AccessAddSystemWideRuleForGroupResponse = {
   /**
-   * Serializes Access_AddSystemWideRuleForGroup_Response to protobuf.
+   * Serializes AccessAddSystemWideRuleForGroupResponse to protobuf.
    */
   encode: function (
-    msg: Partial<Access_AddSystemWideRuleForGroup_Response>
+    msg: Partial<AccessAddSystemWideRuleForGroupResponse>
   ): Uint8Array {
-    return Access_AddSystemWideRuleForGroup_Response._writeMessage(
+    return AccessAddSystemWideRuleForGroupResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Access_AddSystemWideRuleForGroup_Response from protobuf.
+   * Deserializes AccessAddSystemWideRuleForGroupResponse from protobuf.
    */
   decode: function (
     bytes: ByteSource
-  ): Access_AddSystemWideRuleForGroup_Response {
-    return Access_AddSystemWideRuleForGroup_Response._readMessage(
-      Access_AddSystemWideRuleForGroup_Response.initialize(),
+  ): AccessAddSystemWideRuleForGroupResponse {
+    return AccessAddSystemWideRuleForGroupResponse._readMessage(
+      AccessAddSystemWideRuleForGroupResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Access_AddSystemWideRuleForGroup_Response with all fields set to their default value.
+   * Initializes AccessAddSystemWideRuleForGroupResponse with all fields set to their default value.
    */
-  initialize: function (): Access_AddSystemWideRuleForGroup_Response {
+  initialize: function (): AccessAddSystemWideRuleForGroupResponse {
     return {
       ruleId: 0,
     };
@@ -6091,7 +6016,7 @@ export const Access_AddSystemWideRuleForGroup_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddSystemWideRuleForGroup_Response>,
+    msg: Partial<AccessAddSystemWideRuleForGroupResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ruleId) {
@@ -6104,9 +6029,9 @@ export const Access_AddSystemWideRuleForGroup_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddSystemWideRuleForGroup_Response,
+    msg: AccessAddSystemWideRuleForGroupResponse,
     reader: BinaryReader
-  ): Access_AddSystemWideRuleForGroup_Response {
+  ): AccessAddSystemWideRuleForGroupResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6124,31 +6049,31 @@ export const Access_AddSystemWideRuleForGroup_Response = {
   },
 };
 
-export const Persons_CreateAccount_Payload = {
+export const PersonsCreateAccountPayload = {
   /**
-   * Serializes Persons_CreateAccount_Payload to protobuf.
+   * Serializes PersonsCreateAccountPayload to protobuf.
    */
-  encode: function (msg: Partial<Persons_CreateAccount_Payload>): Uint8Array {
-    return Persons_CreateAccount_Payload._writeMessage(
+  encode: function (msg: Partial<PersonsCreateAccountPayload>): Uint8Array {
+    return PersonsCreateAccountPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_CreateAccount_Payload from protobuf.
+   * Deserializes PersonsCreateAccountPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_CreateAccount_Payload {
-    return Persons_CreateAccount_Payload._readMessage(
-      Persons_CreateAccount_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsCreateAccountPayload {
+    return PersonsCreateAccountPayload._readMessage(
+      PersonsCreateAccountPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_CreateAccount_Payload with all fields set to their default value.
+   * Initializes PersonsCreateAccountPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_CreateAccount_Payload {
+  initialize: function (): PersonsCreateAccountPayload {
     return {
       email: "",
       password: "",
@@ -6164,7 +6089,7 @@ export const Persons_CreateAccount_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_CreateAccount_Payload>,
+    msg: Partial<PersonsCreateAccountPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.email) {
@@ -6195,9 +6120,9 @@ export const Persons_CreateAccount_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_CreateAccount_Payload,
+    msg: PersonsCreateAccountPayload,
     reader: BinaryReader
-  ): Persons_CreateAccount_Payload {
+  ): PersonsCreateAccountPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6239,31 +6164,31 @@ export const Persons_CreateAccount_Payload = {
   },
 };
 
-export const Persons_CreateAccount_Response = {
+export const PersonsCreateAccountResponse = {
   /**
-   * Serializes Persons_CreateAccount_Response to protobuf.
+   * Serializes PersonsCreateAccountResponse to protobuf.
    */
-  encode: function (msg: Partial<Persons_CreateAccount_Response>): Uint8Array {
-    return Persons_CreateAccount_Response._writeMessage(
+  encode: function (msg: Partial<PersonsCreateAccountResponse>): Uint8Array {
+    return PersonsCreateAccountResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_CreateAccount_Response from protobuf.
+   * Deserializes PersonsCreateAccountResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_CreateAccount_Response {
-    return Persons_CreateAccount_Response._readMessage(
-      Persons_CreateAccount_Response.initialize(),
+  decode: function (bytes: ByteSource): PersonsCreateAccountResponse {
+    return PersonsCreateAccountResponse._readMessage(
+      PersonsCreateAccountResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_CreateAccount_Response with all fields set to their default value.
+   * Initializes PersonsCreateAccountResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_CreateAccount_Response {
+  initialize: function (): PersonsCreateAccountResponse {
     return {
       personId: 0,
     };
@@ -6273,7 +6198,7 @@ export const Persons_CreateAccount_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_CreateAccount_Response>,
+    msg: Partial<PersonsCreateAccountResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -6286,9 +6211,9 @@ export const Persons_CreateAccount_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_CreateAccount_Response,
+    msg: PersonsCreateAccountResponse,
     reader: BinaryReader
-  ): Persons_CreateAccount_Response {
+  ): PersonsCreateAccountResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6306,31 +6231,31 @@ export const Persons_CreateAccount_Response = {
   },
 };
 
-export const Persons_CreateGroup_Payload = {
+export const PersonsCreateGroupPayload = {
   /**
-   * Serializes Persons_CreateGroup_Payload to protobuf.
+   * Serializes PersonsCreateGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<Persons_CreateGroup_Payload>): Uint8Array {
-    return Persons_CreateGroup_Payload._writeMessage(
+  encode: function (msg: Partial<PersonsCreateGroupPayload>): Uint8Array {
+    return PersonsCreateGroupPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_CreateGroup_Payload from protobuf.
+   * Deserializes PersonsCreateGroupPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_CreateGroup_Payload {
-    return Persons_CreateGroup_Payload._readMessage(
-      Persons_CreateGroup_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsCreateGroupPayload {
+    return PersonsCreateGroupPayload._readMessage(
+      PersonsCreateGroupPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_CreateGroup_Payload with all fields set to their default value.
+   * Initializes PersonsCreateGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_CreateGroup_Payload {
+  initialize: function (): PersonsCreateGroupPayload {
     return {
       title: "",
       description: "",
@@ -6342,7 +6267,7 @@ export const Persons_CreateGroup_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_CreateGroup_Payload>,
+    msg: Partial<PersonsCreateGroupPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.title) {
@@ -6361,9 +6286,9 @@ export const Persons_CreateGroup_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_CreateGroup_Payload,
+    msg: PersonsCreateGroupPayload,
     reader: BinaryReader
-  ): Persons_CreateGroup_Payload {
+  ): PersonsCreateGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6389,31 +6314,31 @@ export const Persons_CreateGroup_Payload = {
   },
 };
 
-export const Persons_CreateGroup_Response = {
+export const PersonsCreateGroupResponse = {
   /**
-   * Serializes Persons_CreateGroup_Response to protobuf.
+   * Serializes PersonsCreateGroupResponse to protobuf.
    */
-  encode: function (msg: Partial<Persons_CreateGroup_Response>): Uint8Array {
-    return Persons_CreateGroup_Response._writeMessage(
+  encode: function (msg: Partial<PersonsCreateGroupResponse>): Uint8Array {
+    return PersonsCreateGroupResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_CreateGroup_Response from protobuf.
+   * Deserializes PersonsCreateGroupResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_CreateGroup_Response {
-    return Persons_CreateGroup_Response._readMessage(
-      Persons_CreateGroup_Response.initialize(),
+  decode: function (bytes: ByteSource): PersonsCreateGroupResponse {
+    return PersonsCreateGroupResponse._readMessage(
+      PersonsCreateGroupResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_CreateGroup_Response with all fields set to their default value.
+   * Initializes PersonsCreateGroupResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_CreateGroup_Response {
+  initialize: function (): PersonsCreateGroupResponse {
     return {
       groupId: 0,
     };
@@ -6423,7 +6348,7 @@ export const Persons_CreateGroup_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_CreateGroup_Response>,
+    msg: Partial<PersonsCreateGroupResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.groupId) {
@@ -6436,9 +6361,9 @@ export const Persons_CreateGroup_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_CreateGroup_Response,
+    msg: PersonsCreateGroupResponse,
     reader: BinaryReader
-  ): Persons_CreateGroup_Response {
+  ): PersonsCreateGroupResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6456,31 +6381,31 @@ export const Persons_CreateGroup_Response = {
   },
 };
 
-export const Persons_UpdateGroup_Payload = {
+export const PersonsUpdateGroupPayload = {
   /**
-   * Serializes Persons_UpdateGroup_Payload to protobuf.
+   * Serializes PersonsUpdateGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<Persons_UpdateGroup_Payload>): Uint8Array {
-    return Persons_UpdateGroup_Payload._writeMessage(
+  encode: function (msg: Partial<PersonsUpdateGroupPayload>): Uint8Array {
+    return PersonsUpdateGroupPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_UpdateGroup_Payload from protobuf.
+   * Deserializes PersonsUpdateGroupPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_UpdateGroup_Payload {
-    return Persons_UpdateGroup_Payload._readMessage(
-      Persons_UpdateGroup_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsUpdateGroupPayload {
+    return PersonsUpdateGroupPayload._readMessage(
+      PersonsUpdateGroupPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_UpdateGroup_Payload with all fields set to their default value.
+   * Initializes PersonsUpdateGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_UpdateGroup_Payload {
+  initialize: function (): PersonsUpdateGroupPayload {
     return {
       groupId: 0,
       title: "",
@@ -6493,7 +6418,7 @@ export const Persons_UpdateGroup_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_UpdateGroup_Payload>,
+    msg: Partial<PersonsUpdateGroupPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.groupId) {
@@ -6515,9 +6440,9 @@ export const Persons_UpdateGroup_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_UpdateGroup_Payload,
+    msg: PersonsUpdateGroupPayload,
     reader: BinaryReader
-  ): Persons_UpdateGroup_Payload {
+  ): PersonsUpdateGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6547,31 +6472,31 @@ export const Persons_UpdateGroup_Payload = {
   },
 };
 
-export const Persons_DeleteGroup_Payload = {
+export const PersonsDeleteGroupPayload = {
   /**
-   * Serializes Persons_DeleteGroup_Payload to protobuf.
+   * Serializes PersonsDeleteGroupPayload to protobuf.
    */
-  encode: function (msg: Partial<Persons_DeleteGroup_Payload>): Uint8Array {
-    return Persons_DeleteGroup_Payload._writeMessage(
+  encode: function (msg: Partial<PersonsDeleteGroupPayload>): Uint8Array {
+    return PersonsDeleteGroupPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_DeleteGroup_Payload from protobuf.
+   * Deserializes PersonsDeleteGroupPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_DeleteGroup_Payload {
-    return Persons_DeleteGroup_Payload._readMessage(
-      Persons_DeleteGroup_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsDeleteGroupPayload {
+    return PersonsDeleteGroupPayload._readMessage(
+      PersonsDeleteGroupPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_DeleteGroup_Payload with all fields set to their default value.
+   * Initializes PersonsDeleteGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_DeleteGroup_Payload {
+  initialize: function (): PersonsDeleteGroupPayload {
     return {
       groupId: 0,
     };
@@ -6581,7 +6506,7 @@ export const Persons_DeleteGroup_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_DeleteGroup_Payload>,
+    msg: Partial<PersonsDeleteGroupPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.groupId) {
@@ -6594,9 +6519,9 @@ export const Persons_DeleteGroup_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_DeleteGroup_Payload,
+    msg: PersonsDeleteGroupPayload,
     reader: BinaryReader
-  ): Persons_DeleteGroup_Payload {
+  ): PersonsDeleteGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6614,33 +6539,31 @@ export const Persons_DeleteGroup_Payload = {
   },
 };
 
-export const Persons_AddPersonToGroup_Payload = {
+export const PersonsAddPersonToGroupPayload = {
   /**
-   * Serializes Persons_AddPersonToGroup_Payload to protobuf.
+   * Serializes PersonsAddPersonToGroupPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Persons_AddPersonToGroup_Payload>
-  ): Uint8Array {
-    return Persons_AddPersonToGroup_Payload._writeMessage(
+  encode: function (msg: Partial<PersonsAddPersonToGroupPayload>): Uint8Array {
+    return PersonsAddPersonToGroupPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_AddPersonToGroup_Payload from protobuf.
+   * Deserializes PersonsAddPersonToGroupPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_AddPersonToGroup_Payload {
-    return Persons_AddPersonToGroup_Payload._readMessage(
-      Persons_AddPersonToGroup_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsAddPersonToGroupPayload {
+    return PersonsAddPersonToGroupPayload._readMessage(
+      PersonsAddPersonToGroupPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_AddPersonToGroup_Payload with all fields set to their default value.
+   * Initializes PersonsAddPersonToGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_AddPersonToGroup_Payload {
+  initialize: function (): PersonsAddPersonToGroupPayload {
     return {
       personId: 0,
       groupId: 0,
@@ -6651,7 +6574,7 @@ export const Persons_AddPersonToGroup_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_AddPersonToGroup_Payload>,
+    msg: Partial<PersonsAddPersonToGroupPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -6667,9 +6590,9 @@ export const Persons_AddPersonToGroup_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_AddPersonToGroup_Payload,
+    msg: PersonsAddPersonToGroupPayload,
     reader: BinaryReader
-  ): Persons_AddPersonToGroup_Payload {
+  ): PersonsAddPersonToGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6691,33 +6614,33 @@ export const Persons_AddPersonToGroup_Payload = {
   },
 };
 
-export const Persons_RemovePersonFromGroup_Payload = {
+export const PersonsRemovePersonFromGroupPayload = {
   /**
-   * Serializes Persons_RemovePersonFromGroup_Payload to protobuf.
+   * Serializes PersonsRemovePersonFromGroupPayload to protobuf.
    */
   encode: function (
-    msg: Partial<Persons_RemovePersonFromGroup_Payload>
+    msg: Partial<PersonsRemovePersonFromGroupPayload>
   ): Uint8Array {
-    return Persons_RemovePersonFromGroup_Payload._writeMessage(
+    return PersonsRemovePersonFromGroupPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_RemovePersonFromGroup_Payload from protobuf.
+   * Deserializes PersonsRemovePersonFromGroupPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_RemovePersonFromGroup_Payload {
-    return Persons_RemovePersonFromGroup_Payload._readMessage(
-      Persons_RemovePersonFromGroup_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsRemovePersonFromGroupPayload {
+    return PersonsRemovePersonFromGroupPayload._readMessage(
+      PersonsRemovePersonFromGroupPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_RemovePersonFromGroup_Payload with all fields set to their default value.
+   * Initializes PersonsRemovePersonFromGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_RemovePersonFromGroup_Payload {
+  initialize: function (): PersonsRemovePersonFromGroupPayload {
     return {
       personId: 0,
       groupId: 0,
@@ -6728,7 +6651,7 @@ export const Persons_RemovePersonFromGroup_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_RemovePersonFromGroup_Payload>,
+    msg: Partial<PersonsRemovePersonFromGroupPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -6744,9 +6667,9 @@ export const Persons_RemovePersonFromGroup_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_RemovePersonFromGroup_Payload,
+    msg: PersonsRemovePersonFromGroupPayload,
     reader: BinaryReader
-  ): Persons_RemovePersonFromGroup_Payload {
+  ): PersonsRemovePersonFromGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6768,33 +6691,31 @@ export const Persons_RemovePersonFromGroup_Payload = {
   },
 };
 
-export const Persons_GetPersonsOfGroup_Payload = {
+export const PersonsGetPersonsOfGroupPayload = {
   /**
-   * Serializes Persons_GetPersonsOfGroup_Payload to protobuf.
+   * Serializes PersonsGetPersonsOfGroupPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Persons_GetPersonsOfGroup_Payload>
-  ): Uint8Array {
-    return Persons_GetPersonsOfGroup_Payload._writeMessage(
+  encode: function (msg: Partial<PersonsGetPersonsOfGroupPayload>): Uint8Array {
+    return PersonsGetPersonsOfGroupPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_GetPersonsOfGroup_Payload from protobuf.
+   * Deserializes PersonsGetPersonsOfGroupPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_GetPersonsOfGroup_Payload {
-    return Persons_GetPersonsOfGroup_Payload._readMessage(
-      Persons_GetPersonsOfGroup_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsGetPersonsOfGroupPayload {
+    return PersonsGetPersonsOfGroupPayload._readMessage(
+      PersonsGetPersonsOfGroupPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_GetPersonsOfGroup_Payload with all fields set to their default value.
+   * Initializes PersonsGetPersonsOfGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_GetPersonsOfGroup_Payload {
+  initialize: function (): PersonsGetPersonsOfGroupPayload {
     return {
       groupId: 0,
     };
@@ -6804,7 +6725,7 @@ export const Persons_GetPersonsOfGroup_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetPersonsOfGroup_Payload>,
+    msg: Partial<PersonsGetPersonsOfGroupPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.groupId) {
@@ -6817,9 +6738,9 @@ export const Persons_GetPersonsOfGroup_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetPersonsOfGroup_Payload,
+    msg: PersonsGetPersonsOfGroupPayload,
     reader: BinaryReader
-  ): Persons_GetPersonsOfGroup_Payload {
+  ): PersonsGetPersonsOfGroupPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6837,35 +6758,35 @@ export const Persons_GetPersonsOfGroup_Payload = {
   },
 };
 
-export const Persons_GetPersonsOfGroup_Response = {
+export const PersonsGetPersonsOfGroupResponse = {
   /**
-   * Serializes Persons_GetPersonsOfGroup_Response to protobuf.
+   * Serializes PersonsGetPersonsOfGroupResponse to protobuf.
    */
   encode: function (
-    msg: Partial<Persons_GetPersonsOfGroup_Response>
+    msg: Partial<PersonsGetPersonsOfGroupResponse>
   ): Uint8Array {
-    return Persons_GetPersonsOfGroup_Response._writeMessage(
+    return PersonsGetPersonsOfGroupResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_GetPersonsOfGroup_Response from protobuf.
+   * Deserializes PersonsGetPersonsOfGroupResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_GetPersonsOfGroup_Response {
-    return Persons_GetPersonsOfGroup_Response._readMessage(
-      Persons_GetPersonsOfGroup_Response.initialize(),
+  decode: function (bytes: ByteSource): PersonsGetPersonsOfGroupResponse {
+    return PersonsGetPersonsOfGroupResponse._readMessage(
+      PersonsGetPersonsOfGroupResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_GetPersonsOfGroup_Response with all fields set to their default value.
+   * Initializes PersonsGetPersonsOfGroupResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_GetPersonsOfGroup_Response {
+  initialize: function (): PersonsGetPersonsOfGroupResponse {
     return {
-      persons: [],
+      people: [],
     };
   },
 
@@ -6873,13 +6794,13 @@ export const Persons_GetPersonsOfGroup_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetPersonsOfGroup_Response>,
+    msg: Partial<PersonsGetPersonsOfGroupResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
-    if (msg.persons?.length) {
+    if (msg.people?.length) {
       writer.writeRepeatedMessage(
         1,
-        msg.persons as any,
+        msg.people as any,
         protoAtoms.Person._writeMessage
       );
     }
@@ -6890,16 +6811,16 @@ export const Persons_GetPersonsOfGroup_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetPersonsOfGroup_Response,
+    msg: PersonsGetPersonsOfGroupResponse,
     reader: BinaryReader
-  ): Persons_GetPersonsOfGroup_Response {
+  ): PersonsGetPersonsOfGroupResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
           const m = protoAtoms.Person.initialize();
           reader.readMessage(m, protoAtoms.Person._readMessage);
-          msg.persons.push(m);
+          msg.people.push(m);
           break;
         }
         default: {
@@ -6912,33 +6833,31 @@ export const Persons_GetPersonsOfGroup_Response = {
   },
 };
 
-export const Persons_GetGroupsOfPerson_Payload = {
+export const PersonsGetGroupsOfPersonPayload = {
   /**
-   * Serializes Persons_GetGroupsOfPerson_Payload to protobuf.
+   * Serializes PersonsGetGroupsOfPersonPayload to protobuf.
    */
-  encode: function (
-    msg: Partial<Persons_GetGroupsOfPerson_Payload>
-  ): Uint8Array {
-    return Persons_GetGroupsOfPerson_Payload._writeMessage(
+  encode: function (msg: Partial<PersonsGetGroupsOfPersonPayload>): Uint8Array {
+    return PersonsGetGroupsOfPersonPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_GetGroupsOfPerson_Payload from protobuf.
+   * Deserializes PersonsGetGroupsOfPersonPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_GetGroupsOfPerson_Payload {
-    return Persons_GetGroupsOfPerson_Payload._readMessage(
-      Persons_GetGroupsOfPerson_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsGetGroupsOfPersonPayload {
+    return PersonsGetGroupsOfPersonPayload._readMessage(
+      PersonsGetGroupsOfPersonPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_GetGroupsOfPerson_Payload with all fields set to their default value.
+   * Initializes PersonsGetGroupsOfPersonPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_GetGroupsOfPerson_Payload {
+  initialize: function (): PersonsGetGroupsOfPersonPayload {
     return {
       personId: 0,
     };
@@ -6948,7 +6867,7 @@ export const Persons_GetGroupsOfPerson_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetGroupsOfPerson_Payload>,
+    msg: Partial<PersonsGetGroupsOfPersonPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.personId) {
@@ -6961,9 +6880,9 @@ export const Persons_GetGroupsOfPerson_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetGroupsOfPerson_Payload,
+    msg: PersonsGetGroupsOfPersonPayload,
     reader: BinaryReader
-  ): Persons_GetGroupsOfPerson_Payload {
+  ): PersonsGetGroupsOfPersonPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -6981,33 +6900,33 @@ export const Persons_GetGroupsOfPerson_Payload = {
   },
 };
 
-export const Persons_GetGroupsOfPerson_Response = {
+export const PersonsGetGroupsOfPersonResponse = {
   /**
-   * Serializes Persons_GetGroupsOfPerson_Response to protobuf.
+   * Serializes PersonsGetGroupsOfPersonResponse to protobuf.
    */
   encode: function (
-    msg: Partial<Persons_GetGroupsOfPerson_Response>
+    msg: Partial<PersonsGetGroupsOfPersonResponse>
   ): Uint8Array {
-    return Persons_GetGroupsOfPerson_Response._writeMessage(
+    return PersonsGetGroupsOfPersonResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_GetGroupsOfPerson_Response from protobuf.
+   * Deserializes PersonsGetGroupsOfPersonResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_GetGroupsOfPerson_Response {
-    return Persons_GetGroupsOfPerson_Response._readMessage(
-      Persons_GetGroupsOfPerson_Response.initialize(),
+  decode: function (bytes: ByteSource): PersonsGetGroupsOfPersonResponse {
+    return PersonsGetGroupsOfPersonResponse._readMessage(
+      PersonsGetGroupsOfPersonResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_GetGroupsOfPerson_Response with all fields set to their default value.
+   * Initializes PersonsGetGroupsOfPersonResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_GetGroupsOfPerson_Response {
+  initialize: function (): PersonsGetGroupsOfPersonResponse {
     return {
       groups: [],
     };
@@ -7017,7 +6936,7 @@ export const Persons_GetGroupsOfPerson_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetGroupsOfPerson_Response>,
+    msg: Partial<PersonsGetGroupsOfPersonResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.groups?.length) {
@@ -7034,9 +6953,9 @@ export const Persons_GetGroupsOfPerson_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetGroupsOfPerson_Response,
+    msg: PersonsGetGroupsOfPersonResponse,
     reader: BinaryReader
-  ): Persons_GetGroupsOfPerson_Response {
+  ): PersonsGetGroupsOfPersonResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -7056,33 +6975,33 @@ export const Persons_GetGroupsOfPerson_Response = {
   },
 };
 
-export const Persons_UpdatePersonalInfo_Payload = {
+export const PersonsUpdatePersonalInfoPayload = {
   /**
-   * Serializes Persons_UpdatePersonalInfo_Payload to protobuf.
+   * Serializes PersonsUpdatePersonalInfoPayload to protobuf.
    */
   encode: function (
-    msg: Partial<Persons_UpdatePersonalInfo_Payload>
+    msg: Partial<PersonsUpdatePersonalInfoPayload>
   ): Uint8Array {
-    return Persons_UpdatePersonalInfo_Payload._writeMessage(
+    return PersonsUpdatePersonalInfoPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_UpdatePersonalInfo_Payload from protobuf.
+   * Deserializes PersonsUpdatePersonalInfoPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_UpdatePersonalInfo_Payload {
-    return Persons_UpdatePersonalInfo_Payload._readMessage(
-      Persons_UpdatePersonalInfo_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsUpdatePersonalInfoPayload {
+    return PersonsUpdatePersonalInfoPayload._readMessage(
+      PersonsUpdatePersonalInfoPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_UpdatePersonalInfo_Payload with all fields set to their default value.
+   * Initializes PersonsUpdatePersonalInfoPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_UpdatePersonalInfo_Payload {
+  initialize: function (): PersonsUpdatePersonalInfoPayload {
     return {
       id: 0,
       title: "",
@@ -7098,7 +7017,7 @@ export const Persons_UpdatePersonalInfo_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_UpdatePersonalInfo_Payload>,
+    msg: Partial<PersonsUpdatePersonalInfoPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.id) {
@@ -7129,9 +7048,9 @@ export const Persons_UpdatePersonalInfo_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_UpdatePersonalInfo_Payload,
+    msg: PersonsUpdatePersonalInfoPayload,
     reader: BinaryReader
-  ): Persons_UpdatePersonalInfo_Payload {
+  ): PersonsUpdatePersonalInfoPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -7173,31 +7092,31 @@ export const Persons_UpdatePersonalInfo_Payload = {
   },
 };
 
-export const Persons_GetPersonalInfo_Payload = {
+export const PersonsGetPersonalInfoPayload = {
   /**
-   * Serializes Persons_GetPersonalInfo_Payload to protobuf.
+   * Serializes PersonsGetPersonalInfoPayload to protobuf.
    */
-  encode: function (msg: Partial<Persons_GetPersonalInfo_Payload>): Uint8Array {
-    return Persons_GetPersonalInfo_Payload._writeMessage(
+  encode: function (msg: Partial<PersonsGetPersonalInfoPayload>): Uint8Array {
+    return PersonsGetPersonalInfoPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_GetPersonalInfo_Payload from protobuf.
+   * Deserializes PersonsGetPersonalInfoPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_GetPersonalInfo_Payload {
-    return Persons_GetPersonalInfo_Payload._readMessage(
-      Persons_GetPersonalInfo_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsGetPersonalInfoPayload {
+    return PersonsGetPersonalInfoPayload._readMessage(
+      PersonsGetPersonalInfoPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_GetPersonalInfo_Payload with all fields set to their default value.
+   * Initializes PersonsGetPersonalInfoPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_GetPersonalInfo_Payload {
+  initialize: function (): PersonsGetPersonalInfoPayload {
     return {
       ids: [],
     };
@@ -7207,7 +7126,7 @@ export const Persons_GetPersonalInfo_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetPersonalInfo_Payload>,
+    msg: Partial<PersonsGetPersonalInfoPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ids?.length) {
@@ -7220,9 +7139,9 @@ export const Persons_GetPersonalInfo_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetPersonalInfo_Payload,
+    msg: PersonsGetPersonalInfoPayload,
     reader: BinaryReader
-  ): Persons_GetPersonalInfo_Payload {
+  ): PersonsGetPersonalInfoPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -7244,35 +7163,33 @@ export const Persons_GetPersonalInfo_Payload = {
   },
 };
 
-export const Persons_GetPersonalInfo_Response = {
+export const PersonsGetPersonalInfoResponse = {
   /**
-   * Serializes Persons_GetPersonalInfo_Response to protobuf.
+   * Serializes PersonsGetPersonalInfoResponse to protobuf.
    */
-  encode: function (
-    msg: Partial<Persons_GetPersonalInfo_Response>
-  ): Uint8Array {
-    return Persons_GetPersonalInfo_Response._writeMessage(
+  encode: function (msg: Partial<PersonsGetPersonalInfoResponse>): Uint8Array {
+    return PersonsGetPersonalInfoResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_GetPersonalInfo_Response from protobuf.
+   * Deserializes PersonsGetPersonalInfoResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_GetPersonalInfo_Response {
-    return Persons_GetPersonalInfo_Response._readMessage(
-      Persons_GetPersonalInfo_Response.initialize(),
+  decode: function (bytes: ByteSource): PersonsGetPersonalInfoResponse {
+    return PersonsGetPersonalInfoResponse._readMessage(
+      PersonsGetPersonalInfoResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_GetPersonalInfo_Response with all fields set to their default value.
+   * Initializes PersonsGetPersonalInfoResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_GetPersonalInfo_Response {
+  initialize: function (): PersonsGetPersonalInfoResponse {
     return {
-      persons: [],
+      people: [],
     };
   },
 
@@ -7280,13 +7197,13 @@ export const Persons_GetPersonalInfo_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetPersonalInfo_Response>,
+    msg: Partial<PersonsGetPersonalInfoResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
-    if (msg.persons?.length) {
+    if (msg.people?.length) {
       writer.writeRepeatedMessage(
         1,
-        msg.persons as any,
+        msg.people as any,
         protoAtoms.PersonEx._writeMessage
       );
     }
@@ -7297,16 +7214,16 @@ export const Persons_GetPersonalInfo_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetPersonalInfo_Response,
+    msg: PersonsGetPersonalInfoResponse,
     reader: BinaryReader
-  ): Persons_GetPersonalInfo_Response {
+  ): PersonsGetPersonalInfoResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
           const m = protoAtoms.PersonEx.initialize();
           reader.readMessage(m, protoAtoms.PersonEx._readMessage);
-          msg.persons.push(m);
+          msg.people.push(m);
           break;
         }
         default: {
@@ -7319,31 +7236,31 @@ export const Persons_GetPersonalInfo_Response = {
   },
 };
 
-export const Persons_FindByTenhouIds_Payload = {
+export const PersonsFindByTenhouIdsPayload = {
   /**
-   * Serializes Persons_FindByTenhouIds_Payload to protobuf.
+   * Serializes PersonsFindByTenhouIdsPayload to protobuf.
    */
-  encode: function (msg: Partial<Persons_FindByTenhouIds_Payload>): Uint8Array {
-    return Persons_FindByTenhouIds_Payload._writeMessage(
+  encode: function (msg: Partial<PersonsFindByTenhouIdsPayload>): Uint8Array {
+    return PersonsFindByTenhouIdsPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_FindByTenhouIds_Payload from protobuf.
+   * Deserializes PersonsFindByTenhouIdsPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_FindByTenhouIds_Payload {
-    return Persons_FindByTenhouIds_Payload._readMessage(
-      Persons_FindByTenhouIds_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsFindByTenhouIdsPayload {
+    return PersonsFindByTenhouIdsPayload._readMessage(
+      PersonsFindByTenhouIdsPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_FindByTenhouIds_Payload with all fields set to their default value.
+   * Initializes PersonsFindByTenhouIdsPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_FindByTenhouIds_Payload {
+  initialize: function (): PersonsFindByTenhouIdsPayload {
     return {
       ids: [],
     };
@@ -7353,7 +7270,7 @@ export const Persons_FindByTenhouIds_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_FindByTenhouIds_Payload>,
+    msg: Partial<PersonsFindByTenhouIdsPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ids?.length) {
@@ -7366,9 +7283,9 @@ export const Persons_FindByTenhouIds_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_FindByTenhouIds_Payload,
+    msg: PersonsFindByTenhouIdsPayload,
     reader: BinaryReader
-  ): Persons_FindByTenhouIds_Payload {
+  ): PersonsFindByTenhouIdsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -7386,35 +7303,33 @@ export const Persons_FindByTenhouIds_Payload = {
   },
 };
 
-export const Persons_FindByTenhouIds_Response = {
+export const PersonsFindByTenhouIdsResponse = {
   /**
-   * Serializes Persons_FindByTenhouIds_Response to protobuf.
+   * Serializes PersonsFindByTenhouIdsResponse to protobuf.
    */
-  encode: function (
-    msg: Partial<Persons_FindByTenhouIds_Response>
-  ): Uint8Array {
-    return Persons_FindByTenhouIds_Response._writeMessage(
+  encode: function (msg: Partial<PersonsFindByTenhouIdsResponse>): Uint8Array {
+    return PersonsFindByTenhouIdsResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_FindByTenhouIds_Response from protobuf.
+   * Deserializes PersonsFindByTenhouIdsResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_FindByTenhouIds_Response {
-    return Persons_FindByTenhouIds_Response._readMessage(
-      Persons_FindByTenhouIds_Response.initialize(),
+  decode: function (bytes: ByteSource): PersonsFindByTenhouIdsResponse {
+    return PersonsFindByTenhouIdsResponse._readMessage(
+      PersonsFindByTenhouIdsResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_FindByTenhouIds_Response with all fields set to their default value.
+   * Initializes PersonsFindByTenhouIdsResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_FindByTenhouIds_Response {
+  initialize: function (): PersonsFindByTenhouIdsResponse {
     return {
-      persons: [],
+      people: [],
     };
   },
 
@@ -7422,13 +7337,13 @@ export const Persons_FindByTenhouIds_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_FindByTenhouIds_Response>,
+    msg: Partial<PersonsFindByTenhouIdsResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
-    if (msg.persons?.length) {
+    if (msg.people?.length) {
       writer.writeRepeatedMessage(
         1,
-        msg.persons as any,
+        msg.people as any,
         protoAtoms.PersonEx._writeMessage
       );
     }
@@ -7439,16 +7354,16 @@ export const Persons_FindByTenhouIds_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_FindByTenhouIds_Response,
+    msg: PersonsFindByTenhouIdsResponse,
     reader: BinaryReader
-  ): Persons_FindByTenhouIds_Response {
+  ): PersonsFindByTenhouIdsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
           const m = protoAtoms.PersonEx.initialize();
           reader.readMessage(m, protoAtoms.PersonEx._readMessage);
-          msg.persons.push(m);
+          msg.people.push(m);
           break;
         }
         default: {
@@ -7461,31 +7376,31 @@ export const Persons_FindByTenhouIds_Response = {
   },
 };
 
-export const Persons_FindByTitle_Payload = {
+export const PersonsFindByTitlePayload = {
   /**
-   * Serializes Persons_FindByTitle_Payload to protobuf.
+   * Serializes PersonsFindByTitlePayload to protobuf.
    */
-  encode: function (msg: Partial<Persons_FindByTitle_Payload>): Uint8Array {
-    return Persons_FindByTitle_Payload._writeMessage(
+  encode: function (msg: Partial<PersonsFindByTitlePayload>): Uint8Array {
+    return PersonsFindByTitlePayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_FindByTitle_Payload from protobuf.
+   * Deserializes PersonsFindByTitlePayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_FindByTitle_Payload {
-    return Persons_FindByTitle_Payload._readMessage(
-      Persons_FindByTitle_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsFindByTitlePayload {
+    return PersonsFindByTitlePayload._readMessage(
+      PersonsFindByTitlePayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_FindByTitle_Payload with all fields set to their default value.
+   * Initializes PersonsFindByTitlePayload with all fields set to their default value.
    */
-  initialize: function (): Persons_FindByTitle_Payload {
+  initialize: function (): PersonsFindByTitlePayload {
     return {
       query: "",
     };
@@ -7495,7 +7410,7 @@ export const Persons_FindByTitle_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_FindByTitle_Payload>,
+    msg: Partial<PersonsFindByTitlePayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.query) {
@@ -7508,9 +7423,9 @@ export const Persons_FindByTitle_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_FindByTitle_Payload,
+    msg: PersonsFindByTitlePayload,
     reader: BinaryReader
-  ): Persons_FindByTitle_Payload {
+  ): PersonsFindByTitlePayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -7528,33 +7443,33 @@ export const Persons_FindByTitle_Payload = {
   },
 };
 
-export const Persons_FindByTitle_Response = {
+export const PersonsFindByTitleResponse = {
   /**
-   * Serializes Persons_FindByTitle_Response to protobuf.
+   * Serializes PersonsFindByTitleResponse to protobuf.
    */
-  encode: function (msg: Partial<Persons_FindByTitle_Response>): Uint8Array {
-    return Persons_FindByTitle_Response._writeMessage(
+  encode: function (msg: Partial<PersonsFindByTitleResponse>): Uint8Array {
+    return PersonsFindByTitleResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_FindByTitle_Response from protobuf.
+   * Deserializes PersonsFindByTitleResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_FindByTitle_Response {
-    return Persons_FindByTitle_Response._readMessage(
-      Persons_FindByTitle_Response.initialize(),
+  decode: function (bytes: ByteSource): PersonsFindByTitleResponse {
+    return PersonsFindByTitleResponse._readMessage(
+      PersonsFindByTitleResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_FindByTitle_Response with all fields set to their default value.
+   * Initializes PersonsFindByTitleResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_FindByTitle_Response {
+  initialize: function (): PersonsFindByTitleResponse {
     return {
-      persons: [],
+      people: [],
     };
   },
 
@@ -7562,13 +7477,13 @@ export const Persons_FindByTitle_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_FindByTitle_Response>,
+    msg: Partial<PersonsFindByTitleResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
-    if (msg.persons?.length) {
+    if (msg.people?.length) {
       writer.writeRepeatedMessage(
         1,
-        msg.persons as any,
+        msg.people as any,
         protoAtoms.Person._writeMessage
       );
     }
@@ -7579,16 +7494,16 @@ export const Persons_FindByTitle_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_FindByTitle_Response,
+    msg: PersonsFindByTitleResponse,
     reader: BinaryReader
-  ): Persons_FindByTitle_Response {
+  ): PersonsFindByTitleResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
         case 1: {
           const m = protoAtoms.Person.initialize();
           reader.readMessage(m, protoAtoms.Person._readMessage);
-          msg.persons.push(m);
+          msg.people.push(m);
           break;
         }
         default: {
@@ -7601,31 +7516,31 @@ export const Persons_FindByTitle_Response = {
   },
 };
 
-export const Persons_GetGroups_Payload = {
+export const PersonsGetGroupsPayload = {
   /**
-   * Serializes Persons_GetGroups_Payload to protobuf.
+   * Serializes PersonsGetGroupsPayload to protobuf.
    */
-  encode: function (msg: Partial<Persons_GetGroups_Payload>): Uint8Array {
-    return Persons_GetGroups_Payload._writeMessage(
+  encode: function (msg: Partial<PersonsGetGroupsPayload>): Uint8Array {
+    return PersonsGetGroupsPayload._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_GetGroups_Payload from protobuf.
+   * Deserializes PersonsGetGroupsPayload from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_GetGroups_Payload {
-    return Persons_GetGroups_Payload._readMessage(
-      Persons_GetGroups_Payload.initialize(),
+  decode: function (bytes: ByteSource): PersonsGetGroupsPayload {
+    return PersonsGetGroupsPayload._readMessage(
+      PersonsGetGroupsPayload.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_GetGroups_Payload with all fields set to their default value.
+   * Initializes PersonsGetGroupsPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_GetGroups_Payload {
+  initialize: function (): PersonsGetGroupsPayload {
     return {
       ids: [],
     };
@@ -7635,7 +7550,7 @@ export const Persons_GetGroups_Payload = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetGroups_Payload>,
+    msg: Partial<PersonsGetGroupsPayload>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.ids?.length) {
@@ -7648,9 +7563,9 @@ export const Persons_GetGroups_Payload = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetGroups_Payload,
+    msg: PersonsGetGroupsPayload,
     reader: BinaryReader
-  ): Persons_GetGroups_Payload {
+  ): PersonsGetGroupsPayload {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -7672,31 +7587,31 @@ export const Persons_GetGroups_Payload = {
   },
 };
 
-export const Persons_GetGroups_Response = {
+export const PersonsGetGroupsResponse = {
   /**
-   * Serializes Persons_GetGroups_Response to protobuf.
+   * Serializes PersonsGetGroupsResponse to protobuf.
    */
-  encode: function (msg: Partial<Persons_GetGroups_Response>): Uint8Array {
-    return Persons_GetGroups_Response._writeMessage(
+  encode: function (msg: Partial<PersonsGetGroupsResponse>): Uint8Array {
+    return PersonsGetGroupsResponse._writeMessage(
       msg,
       new BinaryWriter()
     ).getResultBuffer();
   },
 
   /**
-   * Deserializes Persons_GetGroups_Response from protobuf.
+   * Deserializes PersonsGetGroupsResponse from protobuf.
    */
-  decode: function (bytes: ByteSource): Persons_GetGroups_Response {
-    return Persons_GetGroups_Response._readMessage(
-      Persons_GetGroups_Response.initialize(),
+  decode: function (bytes: ByteSource): PersonsGetGroupsResponse {
+    return PersonsGetGroupsResponse._readMessage(
+      PersonsGetGroupsResponse.initialize(),
       new BinaryReader(bytes)
     );
   },
 
   /**
-   * Initializes Persons_GetGroups_Response with all fields set to their default value.
+   * Initializes PersonsGetGroupsResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_GetGroups_Response {
+  initialize: function (): PersonsGetGroupsResponse {
     return {
       groups: [],
     };
@@ -7706,7 +7621,7 @@ export const Persons_GetGroups_Response = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetGroups_Response>,
+    msg: Partial<PersonsGetGroupsResponse>,
     writer: BinaryWriter
   ): BinaryWriter {
     if (msg.groups?.length) {
@@ -7723,9 +7638,9 @@ export const Persons_GetGroups_Response = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetGroups_Response,
+    msg: PersonsGetGroupsResponse,
     reader: BinaryReader
-  ): Persons_GetGroups_Response {
+  ): PersonsGetGroupsResponse {
     while (reader.nextField()) {
       const field = reader.getFieldNumber();
       switch (field) {
@@ -7749,30 +7664,30 @@ export const Persons_GetGroups_Response = {
 //          JSON Encode / Decode          //
 //========================================//
 
-export const Auth_RequestRegistration_PayloadJSON = {
+export const AuthRequestRegistrationPayloadJSON = {
   /**
-   * Serializes Auth_RequestRegistration_Payload to JSON.
+   * Serializes AuthRequestRegistrationPayload to JSON.
    */
-  encode: function (msg: Partial<Auth_RequestRegistration_Payload>): string {
+  encode: function (msg: Partial<AuthRequestRegistrationPayload>): string {
     return JSON.stringify(
-      Auth_RequestRegistration_PayloadJSON._writeMessage(msg)
+      AuthRequestRegistrationPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Auth_RequestRegistration_Payload from JSON.
+   * Deserializes AuthRequestRegistrationPayload from JSON.
    */
-  decode: function (json: string): Auth_RequestRegistration_Payload {
-    return Auth_RequestRegistration_PayloadJSON._readMessage(
-      Auth_RequestRegistration_PayloadJSON.initialize(),
+  decode: function (json: string): AuthRequestRegistrationPayload {
+    return AuthRequestRegistrationPayloadJSON._readMessage(
+      AuthRequestRegistrationPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_RequestRegistration_Payload with all fields set to their default value.
+   * Initializes AuthRequestRegistrationPayload with all fields set to their default value.
    */
-  initialize: function (): Auth_RequestRegistration_Payload {
+  initialize: function (): AuthRequestRegistrationPayload {
     return {
       email: "",
       title: "",
@@ -7785,7 +7700,7 @@ export const Auth_RequestRegistration_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_RequestRegistration_Payload>
+    msg: Partial<AuthRequestRegistrationPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -7807,9 +7722,9 @@ export const Auth_RequestRegistration_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_RequestRegistration_Payload,
+    msg: AuthRequestRegistrationPayload,
     json: any
-  ): Auth_RequestRegistration_Payload {
+  ): AuthRequestRegistrationPayload {
     const _email_ = json["email"];
     if (_email_) {
       msg.email = _email_;
@@ -7822,7 +7737,7 @@ export const Auth_RequestRegistration_PayloadJSON = {
     if (_password_) {
       msg.password = _password_;
     }
-    const _sendEmail_ = json["sendEmail"];
+    const _sendEmail_ = json["sendEmail"] ?? json["send_email"];
     if (_sendEmail_) {
       msg.sendEmail = _sendEmail_;
     }
@@ -7830,30 +7745,30 @@ export const Auth_RequestRegistration_PayloadJSON = {
   },
 };
 
-export const Auth_RequestRegistration_ResponseJSON = {
+export const AuthRequestRegistrationResponseJSON = {
   /**
-   * Serializes Auth_RequestRegistration_Response to JSON.
+   * Serializes AuthRequestRegistrationResponse to JSON.
    */
-  encode: function (msg: Partial<Auth_RequestRegistration_Response>): string {
+  encode: function (msg: Partial<AuthRequestRegistrationResponse>): string {
     return JSON.stringify(
-      Auth_RequestRegistration_ResponseJSON._writeMessage(msg)
+      AuthRequestRegistrationResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Auth_RequestRegistration_Response from JSON.
+   * Deserializes AuthRequestRegistrationResponse from JSON.
    */
-  decode: function (json: string): Auth_RequestRegistration_Response {
-    return Auth_RequestRegistration_ResponseJSON._readMessage(
-      Auth_RequestRegistration_ResponseJSON.initialize(),
+  decode: function (json: string): AuthRequestRegistrationResponse {
+    return AuthRequestRegistrationResponseJSON._readMessage(
+      AuthRequestRegistrationResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_RequestRegistration_Response with all fields set to their default value.
+   * Initializes AuthRequestRegistrationResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_RequestRegistration_Response {
+  initialize: function (): AuthRequestRegistrationResponse {
     return {
       approvalCode: "",
     };
@@ -7863,7 +7778,7 @@ export const Auth_RequestRegistration_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_RequestRegistration_Response>
+    msg: Partial<AuthRequestRegistrationResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.approvalCode) {
@@ -7876,10 +7791,10 @@ export const Auth_RequestRegistration_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_RequestRegistration_Response,
+    msg: AuthRequestRegistrationResponse,
     json: any
-  ): Auth_RequestRegistration_Response {
-    const _approvalCode_ = json["approvalCode"];
+  ): AuthRequestRegistrationResponse {
+    const _approvalCode_ = json["approvalCode"] ?? json["approval_code"];
     if (_approvalCode_) {
       msg.approvalCode = _approvalCode_;
     }
@@ -7887,30 +7802,30 @@ export const Auth_RequestRegistration_ResponseJSON = {
   },
 };
 
-export const Auth_ApproveRegistration_PayloadJSON = {
+export const AuthApproveRegistrationPayloadJSON = {
   /**
-   * Serializes Auth_ApproveRegistration_Payload to JSON.
+   * Serializes AuthApproveRegistrationPayload to JSON.
    */
-  encode: function (msg: Partial<Auth_ApproveRegistration_Payload>): string {
+  encode: function (msg: Partial<AuthApproveRegistrationPayload>): string {
     return JSON.stringify(
-      Auth_ApproveRegistration_PayloadJSON._writeMessage(msg)
+      AuthApproveRegistrationPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Auth_ApproveRegistration_Payload from JSON.
+   * Deserializes AuthApproveRegistrationPayload from JSON.
    */
-  decode: function (json: string): Auth_ApproveRegistration_Payload {
-    return Auth_ApproveRegistration_PayloadJSON._readMessage(
-      Auth_ApproveRegistration_PayloadJSON.initialize(),
+  decode: function (json: string): AuthApproveRegistrationPayload {
+    return AuthApproveRegistrationPayloadJSON._readMessage(
+      AuthApproveRegistrationPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_ApproveRegistration_Payload with all fields set to their default value.
+   * Initializes AuthApproveRegistrationPayload with all fields set to their default value.
    */
-  initialize: function (): Auth_ApproveRegistration_Payload {
+  initialize: function (): AuthApproveRegistrationPayload {
     return {
       approvalCode: "",
     };
@@ -7920,7 +7835,7 @@ export const Auth_ApproveRegistration_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ApproveRegistration_Payload>
+    msg: Partial<AuthApproveRegistrationPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.approvalCode) {
@@ -7933,10 +7848,10 @@ export const Auth_ApproveRegistration_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ApproveRegistration_Payload,
+    msg: AuthApproveRegistrationPayload,
     json: any
-  ): Auth_ApproveRegistration_Payload {
-    const _approvalCode_ = json["approvalCode"];
+  ): AuthApproveRegistrationPayload {
+    const _approvalCode_ = json["approvalCode"] ?? json["approval_code"];
     if (_approvalCode_) {
       msg.approvalCode = _approvalCode_;
     }
@@ -7944,30 +7859,30 @@ export const Auth_ApproveRegistration_PayloadJSON = {
   },
 };
 
-export const Auth_ApproveRegistration_ResponseJSON = {
+export const AuthApproveRegistrationResponseJSON = {
   /**
-   * Serializes Auth_ApproveRegistration_Response to JSON.
+   * Serializes AuthApproveRegistrationResponse to JSON.
    */
-  encode: function (msg: Partial<Auth_ApproveRegistration_Response>): string {
+  encode: function (msg: Partial<AuthApproveRegistrationResponse>): string {
     return JSON.stringify(
-      Auth_ApproveRegistration_ResponseJSON._writeMessage(msg)
+      AuthApproveRegistrationResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Auth_ApproveRegistration_Response from JSON.
+   * Deserializes AuthApproveRegistrationResponse from JSON.
    */
-  decode: function (json: string): Auth_ApproveRegistration_Response {
-    return Auth_ApproveRegistration_ResponseJSON._readMessage(
-      Auth_ApproveRegistration_ResponseJSON.initialize(),
+  decode: function (json: string): AuthApproveRegistrationResponse {
+    return AuthApproveRegistrationResponseJSON._readMessage(
+      AuthApproveRegistrationResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_ApproveRegistration_Response with all fields set to their default value.
+   * Initializes AuthApproveRegistrationResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_ApproveRegistration_Response {
+  initialize: function (): AuthApproveRegistrationResponse {
     return {
       personId: 0,
     };
@@ -7977,7 +7892,7 @@ export const Auth_ApproveRegistration_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ApproveRegistration_Response>
+    msg: Partial<AuthApproveRegistrationResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -7990,10 +7905,10 @@ export const Auth_ApproveRegistration_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ApproveRegistration_Response,
+    msg: AuthApproveRegistrationResponse,
     json: any
-  ): Auth_ApproveRegistration_Response {
-    const _personId_ = json["personId"];
+  ): AuthApproveRegistrationResponse {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
@@ -8001,28 +7916,28 @@ export const Auth_ApproveRegistration_ResponseJSON = {
   },
 };
 
-export const Auth_Authorize_PayloadJSON = {
+export const AuthAuthorizePayloadJSON = {
   /**
-   * Serializes Auth_Authorize_Payload to JSON.
+   * Serializes AuthAuthorizePayload to JSON.
    */
-  encode: function (msg: Partial<Auth_Authorize_Payload>): string {
-    return JSON.stringify(Auth_Authorize_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<AuthAuthorizePayload>): string {
+    return JSON.stringify(AuthAuthorizePayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Auth_Authorize_Payload from JSON.
+   * Deserializes AuthAuthorizePayload from JSON.
    */
-  decode: function (json: string): Auth_Authorize_Payload {
-    return Auth_Authorize_PayloadJSON._readMessage(
-      Auth_Authorize_PayloadJSON.initialize(),
+  decode: function (json: string): AuthAuthorizePayload {
+    return AuthAuthorizePayloadJSON._readMessage(
+      AuthAuthorizePayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_Authorize_Payload with all fields set to their default value.
+   * Initializes AuthAuthorizePayload with all fields set to their default value.
    */
-  initialize: function (): Auth_Authorize_Payload {
+  initialize: function (): AuthAuthorizePayload {
     return {
       email: "",
       password: "",
@@ -8033,7 +7948,7 @@ export const Auth_Authorize_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_Authorize_Payload>
+    msg: Partial<AuthAuthorizePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -8049,9 +7964,9 @@ export const Auth_Authorize_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_Authorize_Payload,
+    msg: AuthAuthorizePayload,
     json: any
-  ): Auth_Authorize_Payload {
+  ): AuthAuthorizePayload {
     const _email_ = json["email"];
     if (_email_) {
       msg.email = _email_;
@@ -8064,28 +7979,28 @@ export const Auth_Authorize_PayloadJSON = {
   },
 };
 
-export const Auth_Authorize_ResponseJSON = {
+export const AuthAuthorizeResponseJSON = {
   /**
-   * Serializes Auth_Authorize_Response to JSON.
+   * Serializes AuthAuthorizeResponse to JSON.
    */
-  encode: function (msg: Partial<Auth_Authorize_Response>): string {
-    return JSON.stringify(Auth_Authorize_ResponseJSON._writeMessage(msg));
+  encode: function (msg: Partial<AuthAuthorizeResponse>): string {
+    return JSON.stringify(AuthAuthorizeResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Auth_Authorize_Response from JSON.
+   * Deserializes AuthAuthorizeResponse from JSON.
    */
-  decode: function (json: string): Auth_Authorize_Response {
-    return Auth_Authorize_ResponseJSON._readMessage(
-      Auth_Authorize_ResponseJSON.initialize(),
+  decode: function (json: string): AuthAuthorizeResponse {
+    return AuthAuthorizeResponseJSON._readMessage(
+      AuthAuthorizeResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_Authorize_Response with all fields set to their default value.
+   * Initializes AuthAuthorizeResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_Authorize_Response {
+  initialize: function (): AuthAuthorizeResponse {
     return {
       personId: 0,
       authToken: "",
@@ -8096,7 +8011,7 @@ export const Auth_Authorize_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_Authorize_Response>
+    msg: Partial<AuthAuthorizeResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -8112,14 +8027,14 @@ export const Auth_Authorize_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_Authorize_Response,
+    msg: AuthAuthorizeResponse,
     json: any
-  ): Auth_Authorize_Response {
-    const _personId_ = json["personId"];
+  ): AuthAuthorizeResponse {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
-    const _authToken_ = json["authToken"];
+    const _authToken_ = json["authToken"] ?? json["auth_token"];
     if (_authToken_) {
       msg.authToken = _authToken_;
     }
@@ -8127,28 +8042,28 @@ export const Auth_Authorize_ResponseJSON = {
   },
 };
 
-export const Auth_QuickAuthorize_PayloadJSON = {
+export const AuthQuickAuthorizePayloadJSON = {
   /**
-   * Serializes Auth_QuickAuthorize_Payload to JSON.
+   * Serializes AuthQuickAuthorizePayload to JSON.
    */
-  encode: function (msg: Partial<Auth_QuickAuthorize_Payload>): string {
-    return JSON.stringify(Auth_QuickAuthorize_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<AuthQuickAuthorizePayload>): string {
+    return JSON.stringify(AuthQuickAuthorizePayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Auth_QuickAuthorize_Payload from JSON.
+   * Deserializes AuthQuickAuthorizePayload from JSON.
    */
-  decode: function (json: string): Auth_QuickAuthorize_Payload {
-    return Auth_QuickAuthorize_PayloadJSON._readMessage(
-      Auth_QuickAuthorize_PayloadJSON.initialize(),
+  decode: function (json: string): AuthQuickAuthorizePayload {
+    return AuthQuickAuthorizePayloadJSON._readMessage(
+      AuthQuickAuthorizePayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_QuickAuthorize_Payload with all fields set to their default value.
+   * Initializes AuthQuickAuthorizePayload with all fields set to their default value.
    */
-  initialize: function (): Auth_QuickAuthorize_Payload {
+  initialize: function (): AuthQuickAuthorizePayload {
     return {
       personId: 0,
       authToken: "",
@@ -8159,7 +8074,7 @@ export const Auth_QuickAuthorize_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_QuickAuthorize_Payload>
+    msg: Partial<AuthQuickAuthorizePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -8175,14 +8090,14 @@ export const Auth_QuickAuthorize_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_QuickAuthorize_Payload,
+    msg: AuthQuickAuthorizePayload,
     json: any
-  ): Auth_QuickAuthorize_Payload {
-    const _personId_ = json["personId"];
+  ): AuthQuickAuthorizePayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
-    const _authToken_ = json["authToken"];
+    const _authToken_ = json["authToken"] ?? json["auth_token"];
     if (_authToken_) {
       msg.authToken = _authToken_;
     }
@@ -8190,28 +8105,28 @@ export const Auth_QuickAuthorize_PayloadJSON = {
   },
 };
 
-export const Auth_QuickAuthorize_ResponseJSON = {
+export const AuthQuickAuthorizeResponseJSON = {
   /**
-   * Serializes Auth_QuickAuthorize_Response to JSON.
+   * Serializes AuthQuickAuthorizeResponse to JSON.
    */
-  encode: function (msg: Partial<Auth_QuickAuthorize_Response>): string {
-    return JSON.stringify(Auth_QuickAuthorize_ResponseJSON._writeMessage(msg));
+  encode: function (msg: Partial<AuthQuickAuthorizeResponse>): string {
+    return JSON.stringify(AuthQuickAuthorizeResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Auth_QuickAuthorize_Response from JSON.
+   * Deserializes AuthQuickAuthorizeResponse from JSON.
    */
-  decode: function (json: string): Auth_QuickAuthorize_Response {
-    return Auth_QuickAuthorize_ResponseJSON._readMessage(
-      Auth_QuickAuthorize_ResponseJSON.initialize(),
+  decode: function (json: string): AuthQuickAuthorizeResponse {
+    return AuthQuickAuthorizeResponseJSON._readMessage(
+      AuthQuickAuthorizeResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_QuickAuthorize_Response with all fields set to their default value.
+   * Initializes AuthQuickAuthorizeResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_QuickAuthorize_Response {
+  initialize: function (): AuthQuickAuthorizeResponse {
     return {
       authSuccess: false,
     };
@@ -8221,7 +8136,7 @@ export const Auth_QuickAuthorize_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_QuickAuthorize_Response>
+    msg: Partial<AuthQuickAuthorizeResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.authSuccess) {
@@ -8234,10 +8149,10 @@ export const Auth_QuickAuthorize_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_QuickAuthorize_Response,
+    msg: AuthQuickAuthorizeResponse,
     json: any
-  ): Auth_QuickAuthorize_Response {
-    const _authSuccess_ = json["authSuccess"];
+  ): AuthQuickAuthorizeResponse {
+    const _authSuccess_ = json["authSuccess"] ?? json["auth_success"];
     if (_authSuccess_) {
       msg.authSuccess = _authSuccess_;
     }
@@ -8245,28 +8160,28 @@ export const Auth_QuickAuthorize_ResponseJSON = {
   },
 };
 
-export const Auth_Me_PayloadJSON = {
+export const AuthMePayloadJSON = {
   /**
-   * Serializes Auth_Me_Payload to JSON.
+   * Serializes AuthMePayload to JSON.
    */
-  encode: function (msg: Partial<Auth_Me_Payload>): string {
-    return JSON.stringify(Auth_Me_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<AuthMePayload>): string {
+    return JSON.stringify(AuthMePayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Auth_Me_Payload from JSON.
+   * Deserializes AuthMePayload from JSON.
    */
-  decode: function (json: string): Auth_Me_Payload {
-    return Auth_Me_PayloadJSON._readMessage(
-      Auth_Me_PayloadJSON.initialize(),
+  decode: function (json: string): AuthMePayload {
+    return AuthMePayloadJSON._readMessage(
+      AuthMePayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_Me_Payload with all fields set to their default value.
+   * Initializes AuthMePayload with all fields set to their default value.
    */
-  initialize: function (): Auth_Me_Payload {
+  initialize: function (): AuthMePayload {
     return {
       personId: 0,
       authToken: "",
@@ -8277,7 +8192,7 @@ export const Auth_Me_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_Me_Payload>
+    msg: Partial<AuthMePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -8292,12 +8207,12 @@ export const Auth_Me_PayloadJSON = {
   /**
    * @private
    */
-  _readMessage: function (msg: Auth_Me_Payload, json: any): Auth_Me_Payload {
-    const _personId_ = json["personId"];
+  _readMessage: function (msg: AuthMePayload, json: any): AuthMePayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
-    const _authToken_ = json["authToken"];
+    const _authToken_ = json["authToken"] ?? json["auth_token"];
     if (_authToken_) {
       msg.authToken = _authToken_;
     }
@@ -8305,28 +8220,28 @@ export const Auth_Me_PayloadJSON = {
   },
 };
 
-export const Auth_Me_ResponseJSON = {
+export const AuthMeResponseJSON = {
   /**
-   * Serializes Auth_Me_Response to JSON.
+   * Serializes AuthMeResponse to JSON.
    */
-  encode: function (msg: Partial<Auth_Me_Response>): string {
-    return JSON.stringify(Auth_Me_ResponseJSON._writeMessage(msg));
+  encode: function (msg: Partial<AuthMeResponse>): string {
+    return JSON.stringify(AuthMeResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Auth_Me_Response from JSON.
+   * Deserializes AuthMeResponse from JSON.
    */
-  decode: function (json: string): Auth_Me_Response {
-    return Auth_Me_ResponseJSON._readMessage(
-      Auth_Me_ResponseJSON.initialize(),
+  decode: function (json: string): AuthMeResponse {
+    return AuthMeResponseJSON._readMessage(
+      AuthMeResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_Me_Response with all fields set to their default value.
+   * Initializes AuthMeResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_Me_Response {
+  initialize: function (): AuthMeResponse {
     return {
       personId: 0,
       country: "",
@@ -8343,7 +8258,7 @@ export const Auth_Me_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_Me_Response>
+    msg: Partial<AuthMeResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -8376,8 +8291,8 @@ export const Auth_Me_ResponseJSON = {
   /**
    * @private
    */
-  _readMessage: function (msg: Auth_Me_Response, json: any): Auth_Me_Response {
-    const _personId_ = json["personId"];
+  _readMessage: function (msg: AuthMeResponse, json: any): AuthMeResponse {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
@@ -8397,7 +8312,7 @@ export const Auth_Me_ResponseJSON = {
     if (_phone_) {
       msg.phone = _phone_;
     }
-    const _tenhouId_ = json["tenhouId"];
+    const _tenhouId_ = json["tenhouId"] ?? json["tenhou_id"];
     if (_tenhouId_) {
       msg.tenhouId = _tenhouId_;
     }
@@ -8413,28 +8328,28 @@ export const Auth_Me_ResponseJSON = {
   },
 };
 
-export const Auth_ChangePassword_PayloadJSON = {
+export const AuthChangePasswordPayloadJSON = {
   /**
-   * Serializes Auth_ChangePassword_Payload to JSON.
+   * Serializes AuthChangePasswordPayload to JSON.
    */
-  encode: function (msg: Partial<Auth_ChangePassword_Payload>): string {
-    return JSON.stringify(Auth_ChangePassword_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<AuthChangePasswordPayload>): string {
+    return JSON.stringify(AuthChangePasswordPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Auth_ChangePassword_Payload from JSON.
+   * Deserializes AuthChangePasswordPayload from JSON.
    */
-  decode: function (json: string): Auth_ChangePassword_Payload {
-    return Auth_ChangePassword_PayloadJSON._readMessage(
-      Auth_ChangePassword_PayloadJSON.initialize(),
+  decode: function (json: string): AuthChangePasswordPayload {
+    return AuthChangePasswordPayloadJSON._readMessage(
+      AuthChangePasswordPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_ChangePassword_Payload with all fields set to their default value.
+   * Initializes AuthChangePasswordPayload with all fields set to their default value.
    */
-  initialize: function (): Auth_ChangePassword_Payload {
+  initialize: function (): AuthChangePasswordPayload {
     return {
       email: "",
       password: "",
@@ -8446,7 +8361,7 @@ export const Auth_ChangePassword_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ChangePassword_Payload>
+    msg: Partial<AuthChangePasswordPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -8465,9 +8380,9 @@ export const Auth_ChangePassword_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ChangePassword_Payload,
+    msg: AuthChangePasswordPayload,
     json: any
-  ): Auth_ChangePassword_Payload {
+  ): AuthChangePasswordPayload {
     const _email_ = json["email"];
     if (_email_) {
       msg.email = _email_;
@@ -8476,7 +8391,7 @@ export const Auth_ChangePassword_PayloadJSON = {
     if (_password_) {
       msg.password = _password_;
     }
-    const _newPassword_ = json["newPassword"];
+    const _newPassword_ = json["newPassword"] ?? json["new_password"];
     if (_newPassword_) {
       msg.newPassword = _newPassword_;
     }
@@ -8484,28 +8399,28 @@ export const Auth_ChangePassword_PayloadJSON = {
   },
 };
 
-export const Auth_ChangePassword_ResponseJSON = {
+export const AuthChangePasswordResponseJSON = {
   /**
-   * Serializes Auth_ChangePassword_Response to JSON.
+   * Serializes AuthChangePasswordResponse to JSON.
    */
-  encode: function (msg: Partial<Auth_ChangePassword_Response>): string {
-    return JSON.stringify(Auth_ChangePassword_ResponseJSON._writeMessage(msg));
+  encode: function (msg: Partial<AuthChangePasswordResponse>): string {
+    return JSON.stringify(AuthChangePasswordResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Auth_ChangePassword_Response from JSON.
+   * Deserializes AuthChangePasswordResponse from JSON.
    */
-  decode: function (json: string): Auth_ChangePassword_Response {
-    return Auth_ChangePassword_ResponseJSON._readMessage(
-      Auth_ChangePassword_ResponseJSON.initialize(),
+  decode: function (json: string): AuthChangePasswordResponse {
+    return AuthChangePasswordResponseJSON._readMessage(
+      AuthChangePasswordResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_ChangePassword_Response with all fields set to their default value.
+   * Initializes AuthChangePasswordResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_ChangePassword_Response {
+  initialize: function (): AuthChangePasswordResponse {
     return {
       authToken: "",
     };
@@ -8515,7 +8430,7 @@ export const Auth_ChangePassword_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ChangePassword_Response>
+    msg: Partial<AuthChangePasswordResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.authToken) {
@@ -8528,10 +8443,10 @@ export const Auth_ChangePassword_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ChangePassword_Response,
+    msg: AuthChangePasswordResponse,
     json: any
-  ): Auth_ChangePassword_Response {
-    const _authToken_ = json["authToken"];
+  ): AuthChangePasswordResponse {
+    const _authToken_ = json["authToken"] ?? json["auth_token"];
     if (_authToken_) {
       msg.authToken = _authToken_;
     }
@@ -8539,30 +8454,30 @@ export const Auth_ChangePassword_ResponseJSON = {
   },
 };
 
-export const Auth_RequestResetPassword_PayloadJSON = {
+export const AuthRequestResetPasswordPayloadJSON = {
   /**
-   * Serializes Auth_RequestResetPassword_Payload to JSON.
+   * Serializes AuthRequestResetPasswordPayload to JSON.
    */
-  encode: function (msg: Partial<Auth_RequestResetPassword_Payload>): string {
+  encode: function (msg: Partial<AuthRequestResetPasswordPayload>): string {
     return JSON.stringify(
-      Auth_RequestResetPassword_PayloadJSON._writeMessage(msg)
+      AuthRequestResetPasswordPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Auth_RequestResetPassword_Payload from JSON.
+   * Deserializes AuthRequestResetPasswordPayload from JSON.
    */
-  decode: function (json: string): Auth_RequestResetPassword_Payload {
-    return Auth_RequestResetPassword_PayloadJSON._readMessage(
-      Auth_RequestResetPassword_PayloadJSON.initialize(),
+  decode: function (json: string): AuthRequestResetPasswordPayload {
+    return AuthRequestResetPasswordPayloadJSON._readMessage(
+      AuthRequestResetPasswordPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_RequestResetPassword_Payload with all fields set to their default value.
+   * Initializes AuthRequestResetPasswordPayload with all fields set to their default value.
    */
-  initialize: function (): Auth_RequestResetPassword_Payload {
+  initialize: function (): AuthRequestResetPasswordPayload {
     return {
       email: "",
       sendEmail: false,
@@ -8573,7 +8488,7 @@ export const Auth_RequestResetPassword_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_RequestResetPassword_Payload>
+    msg: Partial<AuthRequestResetPasswordPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -8589,14 +8504,14 @@ export const Auth_RequestResetPassword_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_RequestResetPassword_Payload,
+    msg: AuthRequestResetPasswordPayload,
     json: any
-  ): Auth_RequestResetPassword_Payload {
+  ): AuthRequestResetPasswordPayload {
     const _email_ = json["email"];
     if (_email_) {
       msg.email = _email_;
     }
-    const _sendEmail_ = json["sendEmail"];
+    const _sendEmail_ = json["sendEmail"] ?? json["send_email"];
     if (_sendEmail_) {
       msg.sendEmail = _sendEmail_;
     }
@@ -8604,30 +8519,30 @@ export const Auth_RequestResetPassword_PayloadJSON = {
   },
 };
 
-export const Auth_RequestResetPassword_ResponseJSON = {
+export const AuthRequestResetPasswordResponseJSON = {
   /**
-   * Serializes Auth_RequestResetPassword_Response to JSON.
+   * Serializes AuthRequestResetPasswordResponse to JSON.
    */
-  encode: function (msg: Partial<Auth_RequestResetPassword_Response>): string {
+  encode: function (msg: Partial<AuthRequestResetPasswordResponse>): string {
     return JSON.stringify(
-      Auth_RequestResetPassword_ResponseJSON._writeMessage(msg)
+      AuthRequestResetPasswordResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Auth_RequestResetPassword_Response from JSON.
+   * Deserializes AuthRequestResetPasswordResponse from JSON.
    */
-  decode: function (json: string): Auth_RequestResetPassword_Response {
-    return Auth_RequestResetPassword_ResponseJSON._readMessage(
-      Auth_RequestResetPassword_ResponseJSON.initialize(),
+  decode: function (json: string): AuthRequestResetPasswordResponse {
+    return AuthRequestResetPasswordResponseJSON._readMessage(
+      AuthRequestResetPasswordResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_RequestResetPassword_Response with all fields set to their default value.
+   * Initializes AuthRequestResetPasswordResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_RequestResetPassword_Response {
+  initialize: function (): AuthRequestResetPasswordResponse {
     return {
       resetToken: "",
     };
@@ -8637,7 +8552,7 @@ export const Auth_RequestResetPassword_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_RequestResetPassword_Response>
+    msg: Partial<AuthRequestResetPasswordResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.resetToken) {
@@ -8650,10 +8565,10 @@ export const Auth_RequestResetPassword_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_RequestResetPassword_Response,
+    msg: AuthRequestResetPasswordResponse,
     json: any
-  ): Auth_RequestResetPassword_Response {
-    const _resetToken_ = json["resetToken"];
+  ): AuthRequestResetPasswordResponse {
+    const _resetToken_ = json["resetToken"] ?? json["reset_token"];
     if (_resetToken_) {
       msg.resetToken = _resetToken_;
     }
@@ -8661,30 +8576,30 @@ export const Auth_RequestResetPassword_ResponseJSON = {
   },
 };
 
-export const Auth_ApproveResetPassword_PayloadJSON = {
+export const AuthApproveResetPasswordPayloadJSON = {
   /**
-   * Serializes Auth_ApproveResetPassword_Payload to JSON.
+   * Serializes AuthApproveResetPasswordPayload to JSON.
    */
-  encode: function (msg: Partial<Auth_ApproveResetPassword_Payload>): string {
+  encode: function (msg: Partial<AuthApproveResetPasswordPayload>): string {
     return JSON.stringify(
-      Auth_ApproveResetPassword_PayloadJSON._writeMessage(msg)
+      AuthApproveResetPasswordPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Auth_ApproveResetPassword_Payload from JSON.
+   * Deserializes AuthApproveResetPasswordPayload from JSON.
    */
-  decode: function (json: string): Auth_ApproveResetPassword_Payload {
-    return Auth_ApproveResetPassword_PayloadJSON._readMessage(
-      Auth_ApproveResetPassword_PayloadJSON.initialize(),
+  decode: function (json: string): AuthApproveResetPasswordPayload {
+    return AuthApproveResetPasswordPayloadJSON._readMessage(
+      AuthApproveResetPasswordPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_ApproveResetPassword_Payload with all fields set to their default value.
+   * Initializes AuthApproveResetPasswordPayload with all fields set to their default value.
    */
-  initialize: function (): Auth_ApproveResetPassword_Payload {
+  initialize: function (): AuthApproveResetPasswordPayload {
     return {
       email: "",
       resetToken: "",
@@ -8695,7 +8610,7 @@ export const Auth_ApproveResetPassword_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ApproveResetPassword_Payload>
+    msg: Partial<AuthApproveResetPasswordPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -8711,14 +8626,14 @@ export const Auth_ApproveResetPassword_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ApproveResetPassword_Payload,
+    msg: AuthApproveResetPasswordPayload,
     json: any
-  ): Auth_ApproveResetPassword_Payload {
+  ): AuthApproveResetPasswordPayload {
     const _email_ = json["email"];
     if (_email_) {
       msg.email = _email_;
     }
-    const _resetToken_ = json["resetToken"];
+    const _resetToken_ = json["resetToken"] ?? json["reset_token"];
     if (_resetToken_) {
       msg.resetToken = _resetToken_;
     }
@@ -8726,30 +8641,30 @@ export const Auth_ApproveResetPassword_PayloadJSON = {
   },
 };
 
-export const Auth_ApproveResetPassword_ResponseJSON = {
+export const AuthApproveResetPasswordResponseJSON = {
   /**
-   * Serializes Auth_ApproveResetPassword_Response to JSON.
+   * Serializes AuthApproveResetPasswordResponse to JSON.
    */
-  encode: function (msg: Partial<Auth_ApproveResetPassword_Response>): string {
+  encode: function (msg: Partial<AuthApproveResetPasswordResponse>): string {
     return JSON.stringify(
-      Auth_ApproveResetPassword_ResponseJSON._writeMessage(msg)
+      AuthApproveResetPasswordResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Auth_ApproveResetPassword_Response from JSON.
+   * Deserializes AuthApproveResetPasswordResponse from JSON.
    */
-  decode: function (json: string): Auth_ApproveResetPassword_Response {
-    return Auth_ApproveResetPassword_ResponseJSON._readMessage(
-      Auth_ApproveResetPassword_ResponseJSON.initialize(),
+  decode: function (json: string): AuthApproveResetPasswordResponse {
+    return AuthApproveResetPasswordResponseJSON._readMessage(
+      AuthApproveResetPasswordResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Auth_ApproveResetPassword_Response with all fields set to their default value.
+   * Initializes AuthApproveResetPasswordResponse with all fields set to their default value.
    */
-  initialize: function (): Auth_ApproveResetPassword_Response {
+  initialize: function (): AuthApproveResetPasswordResponse {
     return {
       newTmpPassword: "",
     };
@@ -8759,7 +8674,7 @@ export const Auth_ApproveResetPassword_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Auth_ApproveResetPassword_Response>
+    msg: Partial<AuthApproveResetPasswordResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.newTmpPassword) {
@@ -8772,10 +8687,10 @@ export const Auth_ApproveResetPassword_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Auth_ApproveResetPassword_Response,
+    msg: AuthApproveResetPasswordResponse,
     json: any
-  ): Auth_ApproveResetPassword_Response {
-    const _newTmpPassword_ = json["newTmpPassword"];
+  ): AuthApproveResetPasswordResponse {
+    const _newTmpPassword_ = json["newTmpPassword"] ?? json["new_tmp_password"];
     if (_newTmpPassword_) {
       msg.newTmpPassword = _newTmpPassword_;
     }
@@ -8783,28 +8698,28 @@ export const Auth_ApproveResetPassword_ResponseJSON = {
   },
 };
 
-export const Access_GetAccessRules_PayloadJSON = {
+export const AccessGetAccessRulesPayloadJSON = {
   /**
-   * Serializes Access_GetAccessRules_Payload to JSON.
+   * Serializes AccessGetAccessRulesPayload to JSON.
    */
-  encode: function (msg: Partial<Access_GetAccessRules_Payload>): string {
-    return JSON.stringify(Access_GetAccessRules_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<AccessGetAccessRulesPayload>): string {
+    return JSON.stringify(AccessGetAccessRulesPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetAccessRules_Payload from JSON.
+   * Deserializes AccessGetAccessRulesPayload from JSON.
    */
-  decode: function (json: string): Access_GetAccessRules_Payload {
-    return Access_GetAccessRules_PayloadJSON._readMessage(
-      Access_GetAccessRules_PayloadJSON.initialize(),
+  decode: function (json: string): AccessGetAccessRulesPayload {
+    return AccessGetAccessRulesPayloadJSON._readMessage(
+      AccessGetAccessRulesPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetAccessRules_Payload with all fields set to their default value.
+   * Initializes AccessGetAccessRulesPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetAccessRules_Payload {
+  initialize: function (): AccessGetAccessRulesPayload {
     return {
       personId: 0,
       eventId: 0,
@@ -8815,7 +8730,7 @@ export const Access_GetAccessRules_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAccessRules_Payload>
+    msg: Partial<AccessGetAccessRulesPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -8831,14 +8746,14 @@ export const Access_GetAccessRules_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAccessRules_Payload,
+    msg: AccessGetAccessRulesPayload,
     json: any
-  ): Access_GetAccessRules_Payload {
-    const _personId_ = json["personId"];
+  ): AccessGetAccessRulesPayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
-    const _eventId_ = json["eventId"];
+    const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = _eventId_;
     }
@@ -8846,30 +8761,28 @@ export const Access_GetAccessRules_PayloadJSON = {
   },
 };
 
-export const Access_GetAccessRules_ResponseJSON = {
+export const AccessGetAccessRulesResponseJSON = {
   /**
-   * Serializes Access_GetAccessRules_Response to JSON.
+   * Serializes AccessGetAccessRulesResponse to JSON.
    */
-  encode: function (msg: Partial<Access_GetAccessRules_Response>): string {
-    return JSON.stringify(
-      Access_GetAccessRules_ResponseJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<AccessGetAccessRulesResponse>): string {
+    return JSON.stringify(AccessGetAccessRulesResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetAccessRules_Response from JSON.
+   * Deserializes AccessGetAccessRulesResponse from JSON.
    */
-  decode: function (json: string): Access_GetAccessRules_Response {
-    return Access_GetAccessRules_ResponseJSON._readMessage(
-      Access_GetAccessRules_ResponseJSON.initialize(),
+  decode: function (json: string): AccessGetAccessRulesResponse {
+    return AccessGetAccessRulesResponseJSON._readMessage(
+      AccessGetAccessRulesResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetAccessRules_Response with all fields set to their default value.
+   * Initializes AccessGetAccessRulesResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetAccessRules_Response {
+  initialize: function (): AccessGetAccessRulesResponse {
     return {
       rules: protoAtoms.AccessRulesJSON.initialize(),
     };
@@ -8879,7 +8792,7 @@ export const Access_GetAccessRules_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAccessRules_Response>
+    msg: Partial<AccessGetAccessRulesResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rules) {
@@ -8895,9 +8808,9 @@ export const Access_GetAccessRules_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAccessRules_Response,
+    msg: AccessGetAccessRulesResponse,
     json: any
-  ): Access_GetAccessRules_Response {
+  ): AccessGetAccessRulesResponse {
     const _rules_ = json["rules"];
     if (_rules_) {
       const m = protoAtoms.AccessRules.initialize();
@@ -8908,28 +8821,28 @@ export const Access_GetAccessRules_ResponseJSON = {
   },
 };
 
-export const Access_GetRuleValue_PayloadJSON = {
+export const AccessGetRuleValuePayloadJSON = {
   /**
-   * Serializes Access_GetRuleValue_Payload to JSON.
+   * Serializes AccessGetRuleValuePayload to JSON.
    */
-  encode: function (msg: Partial<Access_GetRuleValue_Payload>): string {
-    return JSON.stringify(Access_GetRuleValue_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<AccessGetRuleValuePayload>): string {
+    return JSON.stringify(AccessGetRuleValuePayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetRuleValue_Payload from JSON.
+   * Deserializes AccessGetRuleValuePayload from JSON.
    */
-  decode: function (json: string): Access_GetRuleValue_Payload {
-    return Access_GetRuleValue_PayloadJSON._readMessage(
-      Access_GetRuleValue_PayloadJSON.initialize(),
+  decode: function (json: string): AccessGetRuleValuePayload {
+    return AccessGetRuleValuePayloadJSON._readMessage(
+      AccessGetRuleValuePayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetRuleValue_Payload with all fields set to their default value.
+   * Initializes AccessGetRuleValuePayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetRuleValue_Payload {
+  initialize: function (): AccessGetRuleValuePayload {
     return {
       personId: 0,
       eventId: 0,
@@ -8941,7 +8854,7 @@ export const Access_GetRuleValue_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetRuleValue_Payload>
+    msg: Partial<AccessGetRuleValuePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -8960,18 +8873,18 @@ export const Access_GetRuleValue_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetRuleValue_Payload,
+    msg: AccessGetRuleValuePayload,
     json: any
-  ): Access_GetRuleValue_Payload {
-    const _personId_ = json["personId"];
+  ): AccessGetRuleValuePayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
-    const _eventId_ = json["eventId"];
+    const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = _eventId_;
     }
-    const _ruleName_ = json["ruleName"];
+    const _ruleName_ = json["ruleName"] ?? json["rule_name"];
     if (_ruleName_) {
       msg.ruleName = _ruleName_;
     }
@@ -8979,28 +8892,28 @@ export const Access_GetRuleValue_PayloadJSON = {
   },
 };
 
-export const Access_GetRuleValue_ResponseJSON = {
+export const AccessGetRuleValueResponseJSON = {
   /**
-   * Serializes Access_GetRuleValue_Response to JSON.
+   * Serializes AccessGetRuleValueResponse to JSON.
    */
-  encode: function (msg: Partial<Access_GetRuleValue_Response>): string {
-    return JSON.stringify(Access_GetRuleValue_ResponseJSON._writeMessage(msg));
+  encode: function (msg: Partial<AccessGetRuleValueResponse>): string {
+    return JSON.stringify(AccessGetRuleValueResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetRuleValue_Response from JSON.
+   * Deserializes AccessGetRuleValueResponse from JSON.
    */
-  decode: function (json: string): Access_GetRuleValue_Response {
-    return Access_GetRuleValue_ResponseJSON._readMessage(
-      Access_GetRuleValue_ResponseJSON.initialize(),
+  decode: function (json: string): AccessGetRuleValueResponse {
+    return AccessGetRuleValueResponseJSON._readMessage(
+      AccessGetRuleValueResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetRuleValue_Response with all fields set to their default value.
+   * Initializes AccessGetRuleValueResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetRuleValue_Response {
+  initialize: function (): AccessGetRuleValueResponse {
     return {
       value: protoAtoms.RuleValueJSON.initialize(),
     };
@@ -9010,7 +8923,7 @@ export const Access_GetRuleValue_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetRuleValue_Response>
+    msg: Partial<AccessGetRuleValueResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.value) {
@@ -9026,9 +8939,9 @@ export const Access_GetRuleValue_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetRuleValue_Response,
+    msg: AccessGetRuleValueResponse,
     json: any
-  ): Access_GetRuleValue_Response {
+  ): AccessGetRuleValueResponse {
     const _value_ = json["value"];
     if (_value_) {
       const m = protoAtoms.RuleValue.initialize();
@@ -9039,28 +8952,28 @@ export const Access_GetRuleValue_ResponseJSON = {
   },
 };
 
-export const Access_GetEventAdmins_PayloadJSON = {
+export const AccessGetEventAdminsPayloadJSON = {
   /**
-   * Serializes Access_GetEventAdmins_Payload to JSON.
+   * Serializes AccessGetEventAdminsPayload to JSON.
    */
-  encode: function (msg: Partial<Access_GetEventAdmins_Payload>): string {
-    return JSON.stringify(Access_GetEventAdmins_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<AccessGetEventAdminsPayload>): string {
+    return JSON.stringify(AccessGetEventAdminsPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetEventAdmins_Payload from JSON.
+   * Deserializes AccessGetEventAdminsPayload from JSON.
    */
-  decode: function (json: string): Access_GetEventAdmins_Payload {
-    return Access_GetEventAdmins_PayloadJSON._readMessage(
-      Access_GetEventAdmins_PayloadJSON.initialize(),
+  decode: function (json: string): AccessGetEventAdminsPayload {
+    return AccessGetEventAdminsPayloadJSON._readMessage(
+      AccessGetEventAdminsPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetEventAdmins_Payload with all fields set to their default value.
+   * Initializes AccessGetEventAdminsPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetEventAdmins_Payload {
+  initialize: function (): AccessGetEventAdminsPayload {
     return {
       eventId: 0,
     };
@@ -9070,7 +8983,7 @@ export const Access_GetEventAdmins_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetEventAdmins_Payload>
+    msg: Partial<AccessGetEventAdminsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -9083,10 +8996,10 @@ export const Access_GetEventAdmins_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetEventAdmins_Payload,
+    msg: AccessGetEventAdminsPayload,
     json: any
-  ): Access_GetEventAdmins_Payload {
-    const _eventId_ = json["eventId"];
+  ): AccessGetEventAdminsPayload {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = _eventId_;
     }
@@ -9094,30 +9007,28 @@ export const Access_GetEventAdmins_PayloadJSON = {
   },
 };
 
-export const Access_GetEventAdmins_ResponseJSON = {
+export const AccessGetEventAdminsResponseJSON = {
   /**
-   * Serializes Access_GetEventAdmins_Response to JSON.
+   * Serializes AccessGetEventAdminsResponse to JSON.
    */
-  encode: function (msg: Partial<Access_GetEventAdmins_Response>): string {
-    return JSON.stringify(
-      Access_GetEventAdmins_ResponseJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<AccessGetEventAdminsResponse>): string {
+    return JSON.stringify(AccessGetEventAdminsResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetEventAdmins_Response from JSON.
+   * Deserializes AccessGetEventAdminsResponse from JSON.
    */
-  decode: function (json: string): Access_GetEventAdmins_Response {
-    return Access_GetEventAdmins_ResponseJSON._readMessage(
-      Access_GetEventAdmins_ResponseJSON.initialize(),
+  decode: function (json: string): AccessGetEventAdminsResponse {
+    return AccessGetEventAdminsResponseJSON._readMessage(
+      AccessGetEventAdminsResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetEventAdmins_Response with all fields set to their default value.
+   * Initializes AccessGetEventAdminsResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetEventAdmins_Response {
+  initialize: function (): AccessGetEventAdminsResponse {
     return {
       admins: [],
     };
@@ -9127,7 +9038,7 @@ export const Access_GetEventAdmins_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetEventAdmins_Response>
+    msg: Partial<AccessGetEventAdminsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.admins?.length) {
@@ -9140,9 +9051,9 @@ export const Access_GetEventAdmins_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetEventAdmins_Response,
+    msg: AccessGetEventAdminsResponse,
     json: any
-  ): Access_GetEventAdmins_Response {
+  ): AccessGetEventAdminsResponse {
     const _admins_ = json["admins"];
     if (_admins_) {
       for (const item of _admins_) {
@@ -9155,30 +9066,30 @@ export const Access_GetEventAdmins_ResponseJSON = {
   },
 };
 
-export const Access_GetSuperadminFlag_PayloadJSON = {
+export const AccessGetSuperadminFlagPayloadJSON = {
   /**
-   * Serializes Access_GetSuperadminFlag_Payload to JSON.
+   * Serializes AccessGetSuperadminFlagPayload to JSON.
    */
-  encode: function (msg: Partial<Access_GetSuperadminFlag_Payload>): string {
+  encode: function (msg: Partial<AccessGetSuperadminFlagPayload>): string {
     return JSON.stringify(
-      Access_GetSuperadminFlag_PayloadJSON._writeMessage(msg)
+      AccessGetSuperadminFlagPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_GetSuperadminFlag_Payload from JSON.
+   * Deserializes AccessGetSuperadminFlagPayload from JSON.
    */
-  decode: function (json: string): Access_GetSuperadminFlag_Payload {
-    return Access_GetSuperadminFlag_PayloadJSON._readMessage(
-      Access_GetSuperadminFlag_PayloadJSON.initialize(),
+  decode: function (json: string): AccessGetSuperadminFlagPayload {
+    return AccessGetSuperadminFlagPayloadJSON._readMessage(
+      AccessGetSuperadminFlagPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetSuperadminFlag_Payload with all fields set to their default value.
+   * Initializes AccessGetSuperadminFlagPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetSuperadminFlag_Payload {
+  initialize: function (): AccessGetSuperadminFlagPayload {
     return {
       personId: 0,
     };
@@ -9188,7 +9099,7 @@ export const Access_GetSuperadminFlag_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetSuperadminFlag_Payload>
+    msg: Partial<AccessGetSuperadminFlagPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -9201,10 +9112,10 @@ export const Access_GetSuperadminFlag_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetSuperadminFlag_Payload,
+    msg: AccessGetSuperadminFlagPayload,
     json: any
-  ): Access_GetSuperadminFlag_Payload {
-    const _personId_ = json["personId"];
+  ): AccessGetSuperadminFlagPayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
@@ -9212,30 +9123,30 @@ export const Access_GetSuperadminFlag_PayloadJSON = {
   },
 };
 
-export const Access_GetSuperadminFlag_ResponseJSON = {
+export const AccessGetSuperadminFlagResponseJSON = {
   /**
-   * Serializes Access_GetSuperadminFlag_Response to JSON.
+   * Serializes AccessGetSuperadminFlagResponse to JSON.
    */
-  encode: function (msg: Partial<Access_GetSuperadminFlag_Response>): string {
+  encode: function (msg: Partial<AccessGetSuperadminFlagResponse>): string {
     return JSON.stringify(
-      Access_GetSuperadminFlag_ResponseJSON._writeMessage(msg)
+      AccessGetSuperadminFlagResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_GetSuperadminFlag_Response from JSON.
+   * Deserializes AccessGetSuperadminFlagResponse from JSON.
    */
-  decode: function (json: string): Access_GetSuperadminFlag_Response {
-    return Access_GetSuperadminFlag_ResponseJSON._readMessage(
-      Access_GetSuperadminFlag_ResponseJSON.initialize(),
+  decode: function (json: string): AccessGetSuperadminFlagResponse {
+    return AccessGetSuperadminFlagResponseJSON._readMessage(
+      AccessGetSuperadminFlagResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetSuperadminFlag_Response with all fields set to their default value.
+   * Initializes AccessGetSuperadminFlagResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetSuperadminFlag_Response {
+  initialize: function (): AccessGetSuperadminFlagResponse {
     return {
       isAdmin: false,
     };
@@ -9245,7 +9156,7 @@ export const Access_GetSuperadminFlag_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetSuperadminFlag_Response>
+    msg: Partial<AccessGetSuperadminFlagResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.isAdmin) {
@@ -9258,10 +9169,10 @@ export const Access_GetSuperadminFlag_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetSuperadminFlag_Response,
+    msg: AccessGetSuperadminFlagResponse,
     json: any
-  ): Access_GetSuperadminFlag_Response {
-    const _isAdmin_ = json["isAdmin"];
+  ): AccessGetSuperadminFlagResponse {
+    const _isAdmin_ = json["isAdmin"] ?? json["is_admin"];
     if (_isAdmin_) {
       msg.isAdmin = _isAdmin_;
     }
@@ -9269,30 +9180,28 @@ export const Access_GetSuperadminFlag_ResponseJSON = {
   },
 };
 
-export const Access_GetOwnedEventIds_PayloadJSON = {
+export const AccessGetOwnedEventIdsPayloadJSON = {
   /**
-   * Serializes Access_GetOwnedEventIds_Payload to JSON.
+   * Serializes AccessGetOwnedEventIdsPayload to JSON.
    */
-  encode: function (msg: Partial<Access_GetOwnedEventIds_Payload>): string {
-    return JSON.stringify(
-      Access_GetOwnedEventIds_PayloadJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<AccessGetOwnedEventIdsPayload>): string {
+    return JSON.stringify(AccessGetOwnedEventIdsPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetOwnedEventIds_Payload from JSON.
+   * Deserializes AccessGetOwnedEventIdsPayload from JSON.
    */
-  decode: function (json: string): Access_GetOwnedEventIds_Payload {
-    return Access_GetOwnedEventIds_PayloadJSON._readMessage(
-      Access_GetOwnedEventIds_PayloadJSON.initialize(),
+  decode: function (json: string): AccessGetOwnedEventIdsPayload {
+    return AccessGetOwnedEventIdsPayloadJSON._readMessage(
+      AccessGetOwnedEventIdsPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetOwnedEventIds_Payload with all fields set to their default value.
+   * Initializes AccessGetOwnedEventIdsPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetOwnedEventIds_Payload {
+  initialize: function (): AccessGetOwnedEventIdsPayload {
     return {
       personId: 0,
     };
@@ -9302,7 +9211,7 @@ export const Access_GetOwnedEventIds_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetOwnedEventIds_Payload>
+    msg: Partial<AccessGetOwnedEventIdsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -9315,10 +9224,10 @@ export const Access_GetOwnedEventIds_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetOwnedEventIds_Payload,
+    msg: AccessGetOwnedEventIdsPayload,
     json: any
-  ): Access_GetOwnedEventIds_Payload {
-    const _personId_ = json["personId"];
+  ): AccessGetOwnedEventIdsPayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
@@ -9326,30 +9235,30 @@ export const Access_GetOwnedEventIds_PayloadJSON = {
   },
 };
 
-export const Access_GetOwnedEventIds_ResponseJSON = {
+export const AccessGetOwnedEventIdsResponseJSON = {
   /**
-   * Serializes Access_GetOwnedEventIds_Response to JSON.
+   * Serializes AccessGetOwnedEventIdsResponse to JSON.
    */
-  encode: function (msg: Partial<Access_GetOwnedEventIds_Response>): string {
+  encode: function (msg: Partial<AccessGetOwnedEventIdsResponse>): string {
     return JSON.stringify(
-      Access_GetOwnedEventIds_ResponseJSON._writeMessage(msg)
+      AccessGetOwnedEventIdsResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_GetOwnedEventIds_Response from JSON.
+   * Deserializes AccessGetOwnedEventIdsResponse from JSON.
    */
-  decode: function (json: string): Access_GetOwnedEventIds_Response {
-    return Access_GetOwnedEventIds_ResponseJSON._readMessage(
-      Access_GetOwnedEventIds_ResponseJSON.initialize(),
+  decode: function (json: string): AccessGetOwnedEventIdsResponse {
+    return AccessGetOwnedEventIdsResponseJSON._readMessage(
+      AccessGetOwnedEventIdsResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetOwnedEventIds_Response with all fields set to their default value.
+   * Initializes AccessGetOwnedEventIdsResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetOwnedEventIds_Response {
+  initialize: function (): AccessGetOwnedEventIdsResponse {
     return {
       eventIds: [],
     };
@@ -9359,7 +9268,7 @@ export const Access_GetOwnedEventIds_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetOwnedEventIds_Response>
+    msg: Partial<AccessGetOwnedEventIdsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventIds?.length) {
@@ -9372,10 +9281,10 @@ export const Access_GetOwnedEventIds_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetOwnedEventIds_Response,
+    msg: AccessGetOwnedEventIdsResponse,
     json: any
-  ): Access_GetOwnedEventIds_Response {
-    const _eventIds_ = json["eventIds"];
+  ): AccessGetOwnedEventIdsResponse {
+    const _eventIds_ = json["eventIds"] ?? json["event_ids"];
     if (_eventIds_) {
       msg.eventIds = _eventIds_;
     }
@@ -9383,25 +9292,25 @@ export const Access_GetOwnedEventIds_ResponseJSON = {
   },
 };
 
-export const Access_GetRulesList_PayloadJSON = {
+export const AccessGetRulesListPayloadJSON = {
   /**
-   * Serializes Access_GetRulesList_Payload to JSON.
+   * Serializes AccessGetRulesListPayload to JSON.
    */
-  encode: function (_msg?: Partial<Access_GetRulesList_Payload>): string {
+  encode: function (_msg?: Partial<AccessGetRulesListPayload>): string {
     return "{}";
   },
 
   /**
-   * Deserializes Access_GetRulesList_Payload from JSON.
+   * Deserializes AccessGetRulesListPayload from JSON.
    */
-  decode: function (_json?: string): Access_GetRulesList_Payload {
+  decode: function (_json?: string): AccessGetRulesListPayload {
     return {};
   },
 
   /**
-   * Initializes Access_GetRulesList_Payload with all fields set to their default value.
+   * Initializes AccessGetRulesListPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetRulesList_Payload {
+  initialize: function (): AccessGetRulesListPayload {
     return {};
   },
 
@@ -9409,7 +9318,7 @@ export const Access_GetRulesList_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    _msg: Partial<Access_GetRulesList_Payload>
+    _msg: Partial<AccessGetRulesListPayload>
   ): Record<string, unknown> {
     return {};
   },
@@ -9418,35 +9327,35 @@ export const Access_GetRulesList_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetRulesList_Payload,
+    msg: AccessGetRulesListPayload,
     _json: any
-  ): Access_GetRulesList_Payload {
+  ): AccessGetRulesListPayload {
     return msg;
   },
 };
 
-export const Access_GetRulesList_ResponseJSON = {
+export const AccessGetRulesListResponseJSON = {
   /**
-   * Serializes Access_GetRulesList_Response to JSON.
+   * Serializes AccessGetRulesListResponse to JSON.
    */
-  encode: function (msg: Partial<Access_GetRulesList_Response>): string {
-    return JSON.stringify(Access_GetRulesList_ResponseJSON._writeMessage(msg));
+  encode: function (msg: Partial<AccessGetRulesListResponse>): string {
+    return JSON.stringify(AccessGetRulesListResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetRulesList_Response from JSON.
+   * Deserializes AccessGetRulesListResponse from JSON.
    */
-  decode: function (json: string): Access_GetRulesList_Response {
-    return Access_GetRulesList_ResponseJSON._readMessage(
-      Access_GetRulesList_ResponseJSON.initialize(),
+  decode: function (json: string): AccessGetRulesListResponse {
+    return AccessGetRulesListResponseJSON._readMessage(
+      AccessGetRulesListResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetRulesList_Response with all fields set to their default value.
+   * Initializes AccessGetRulesListResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetRulesList_Response {
+  initialize: function (): AccessGetRulesListResponse {
     return {
       items: [],
     };
@@ -9456,7 +9365,7 @@ export const Access_GetRulesList_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetRulesList_Response>
+    msg: Partial<AccessGetRulesListResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.items?.length) {
@@ -9469,9 +9378,9 @@ export const Access_GetRulesList_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetRulesList_Response,
+    msg: AccessGetRulesListResponse,
     json: any
-  ): Access_GetRulesList_Response {
+  ): AccessGetRulesListResponse {
     const _items_ = json["items"];
     if (_items_) {
       for (const item of _items_) {
@@ -9484,30 +9393,28 @@ export const Access_GetRulesList_ResponseJSON = {
   },
 };
 
-export const Access_GetAllEventRules_PayloadJSON = {
+export const AccessGetAllEventRulesPayloadJSON = {
   /**
-   * Serializes Access_GetAllEventRules_Payload to JSON.
+   * Serializes AccessGetAllEventRulesPayload to JSON.
    */
-  encode: function (msg: Partial<Access_GetAllEventRules_Payload>): string {
-    return JSON.stringify(
-      Access_GetAllEventRules_PayloadJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<AccessGetAllEventRulesPayload>): string {
+    return JSON.stringify(AccessGetAllEventRulesPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetAllEventRules_Payload from JSON.
+   * Deserializes AccessGetAllEventRulesPayload from JSON.
    */
-  decode: function (json: string): Access_GetAllEventRules_Payload {
-    return Access_GetAllEventRules_PayloadJSON._readMessage(
-      Access_GetAllEventRules_PayloadJSON.initialize(),
+  decode: function (json: string): AccessGetAllEventRulesPayload {
+    return AccessGetAllEventRulesPayloadJSON._readMessage(
+      AccessGetAllEventRulesPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetAllEventRules_Payload with all fields set to their default value.
+   * Initializes AccessGetAllEventRulesPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllEventRules_Payload {
+  initialize: function (): AccessGetAllEventRulesPayload {
     return {
       eventId: 0,
     };
@@ -9517,7 +9424,7 @@ export const Access_GetAllEventRules_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllEventRules_Payload>
+    msg: Partial<AccessGetAllEventRulesPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.eventId) {
@@ -9530,10 +9437,10 @@ export const Access_GetAllEventRules_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllEventRules_Payload,
+    msg: AccessGetAllEventRulesPayload,
     json: any
-  ): Access_GetAllEventRules_Payload {
-    const _eventId_ = json["eventId"];
+  ): AccessGetAllEventRulesPayload {
+    const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = _eventId_;
     }
@@ -9541,30 +9448,30 @@ export const Access_GetAllEventRules_PayloadJSON = {
   },
 };
 
-export const Access_GetAllEventRules_ResponseJSON = {
+export const AccessGetAllEventRulesResponseJSON = {
   /**
-   * Serializes Access_GetAllEventRules_Response to JSON.
+   * Serializes AccessGetAllEventRulesResponse to JSON.
    */
-  encode: function (msg: Partial<Access_GetAllEventRules_Response>): string {
+  encode: function (msg: Partial<AccessGetAllEventRulesResponse>): string {
     return JSON.stringify(
-      Access_GetAllEventRules_ResponseJSON._writeMessage(msg)
+      AccessGetAllEventRulesResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_GetAllEventRules_Response from JSON.
+   * Deserializes AccessGetAllEventRulesResponse from JSON.
    */
-  decode: function (json: string): Access_GetAllEventRules_Response {
-    return Access_GetAllEventRules_ResponseJSON._readMessage(
-      Access_GetAllEventRules_ResponseJSON.initialize(),
+  decode: function (json: string): AccessGetAllEventRulesResponse {
+    return AccessGetAllEventRulesResponseJSON._readMessage(
+      AccessGetAllEventRulesResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetAllEventRules_Response with all fields set to their default value.
+   * Initializes AccessGetAllEventRulesResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllEventRules_Response {
+  initialize: function (): AccessGetAllEventRulesResponse {
     return {
       personRules: [],
       groupRules: [],
@@ -9575,7 +9482,7 @@ export const Access_GetAllEventRules_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllEventRules_Response>
+    msg: Partial<AccessGetAllEventRulesResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personRules?.length) {
@@ -9595,10 +9502,10 @@ export const Access_GetAllEventRules_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllEventRules_Response,
+    msg: AccessGetAllEventRulesResponse,
     json: any
-  ): Access_GetAllEventRules_Response {
-    const _personRules_ = json["personRules"];
+  ): AccessGetAllEventRulesResponse {
+    const _personRules_ = json["personRules"] ?? json["person_rules"];
     if (_personRules_) {
       for (const item of _personRules_) {
         const m = protoAtoms.EventRuleListItem.initialize();
@@ -9606,7 +9513,7 @@ export const Access_GetAllEventRules_ResponseJSON = {
         msg.personRules.push(m);
       }
     }
-    const _groupRules_ = json["groupRules"];
+    const _groupRules_ = json["groupRules"] ?? json["group_rules"];
     if (_groupRules_) {
       for (const item of _groupRules_) {
         const m = protoAtoms.EventRuleListItem.initialize();
@@ -9618,30 +9525,28 @@ export const Access_GetAllEventRules_ResponseJSON = {
   },
 };
 
-export const Access_GetPersonAccess_PayloadJSON = {
+export const AccessGetPersonAccessPayloadJSON = {
   /**
-   * Serializes Access_GetPersonAccess_Payload to JSON.
+   * Serializes AccessGetPersonAccessPayload to JSON.
    */
-  encode: function (msg: Partial<Access_GetPersonAccess_Payload>): string {
-    return JSON.stringify(
-      Access_GetPersonAccess_PayloadJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<AccessGetPersonAccessPayload>): string {
+    return JSON.stringify(AccessGetPersonAccessPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetPersonAccess_Payload from JSON.
+   * Deserializes AccessGetPersonAccessPayload from JSON.
    */
-  decode: function (json: string): Access_GetPersonAccess_Payload {
-    return Access_GetPersonAccess_PayloadJSON._readMessage(
-      Access_GetPersonAccess_PayloadJSON.initialize(),
+  decode: function (json: string): AccessGetPersonAccessPayload {
+    return AccessGetPersonAccessPayloadJSON._readMessage(
+      AccessGetPersonAccessPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetPersonAccess_Payload with all fields set to their default value.
+   * Initializes AccessGetPersonAccessPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetPersonAccess_Payload {
+  initialize: function (): AccessGetPersonAccessPayload {
     return {
       personId: 0,
       eventId: 0,
@@ -9652,7 +9557,7 @@ export const Access_GetPersonAccess_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetPersonAccess_Payload>
+    msg: Partial<AccessGetPersonAccessPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -9668,14 +9573,14 @@ export const Access_GetPersonAccess_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetPersonAccess_Payload,
+    msg: AccessGetPersonAccessPayload,
     json: any
-  ): Access_GetPersonAccess_Payload {
-    const _personId_ = json["personId"];
+  ): AccessGetPersonAccessPayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
-    const _eventId_ = json["eventId"];
+    const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = _eventId_;
     }
@@ -9683,30 +9588,28 @@ export const Access_GetPersonAccess_PayloadJSON = {
   },
 };
 
-export const Access_GetPersonAccess_ResponseJSON = {
+export const AccessGetPersonAccessResponseJSON = {
   /**
-   * Serializes Access_GetPersonAccess_Response to JSON.
+   * Serializes AccessGetPersonAccessResponse to JSON.
    */
-  encode: function (msg: Partial<Access_GetPersonAccess_Response>): string {
-    return JSON.stringify(
-      Access_GetPersonAccess_ResponseJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<AccessGetPersonAccessResponse>): string {
+    return JSON.stringify(AccessGetPersonAccessResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetPersonAccess_Response from JSON.
+   * Deserializes AccessGetPersonAccessResponse from JSON.
    */
-  decode: function (json: string): Access_GetPersonAccess_Response {
-    return Access_GetPersonAccess_ResponseJSON._readMessage(
-      Access_GetPersonAccess_ResponseJSON.initialize(),
+  decode: function (json: string): AccessGetPersonAccessResponse {
+    return AccessGetPersonAccessResponseJSON._readMessage(
+      AccessGetPersonAccessResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetPersonAccess_Response with all fields set to their default value.
+   * Initializes AccessGetPersonAccessResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetPersonAccess_Response {
+  initialize: function (): AccessGetPersonAccessResponse {
     return {
       rules: protoAtoms.AccessRulesJSON.initialize(),
     };
@@ -9716,7 +9619,7 @@ export const Access_GetPersonAccess_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetPersonAccess_Response>
+    msg: Partial<AccessGetPersonAccessResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rules) {
@@ -9732,9 +9635,9 @@ export const Access_GetPersonAccess_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetPersonAccess_Response,
+    msg: AccessGetPersonAccessResponse,
     json: any
-  ): Access_GetPersonAccess_Response {
+  ): AccessGetPersonAccessResponse {
     const _rules_ = json["rules"];
     if (_rules_) {
       const m = protoAtoms.AccessRules.initialize();
@@ -9745,28 +9648,28 @@ export const Access_GetPersonAccess_ResponseJSON = {
   },
 };
 
-export const Access_GetGroupAccess_PayloadJSON = {
+export const AccessGetGroupAccessPayloadJSON = {
   /**
-   * Serializes Access_GetGroupAccess_Payload to JSON.
+   * Serializes AccessGetGroupAccessPayload to JSON.
    */
-  encode: function (msg: Partial<Access_GetGroupAccess_Payload>): string {
-    return JSON.stringify(Access_GetGroupAccess_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<AccessGetGroupAccessPayload>): string {
+    return JSON.stringify(AccessGetGroupAccessPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetGroupAccess_Payload from JSON.
+   * Deserializes AccessGetGroupAccessPayload from JSON.
    */
-  decode: function (json: string): Access_GetGroupAccess_Payload {
-    return Access_GetGroupAccess_PayloadJSON._readMessage(
-      Access_GetGroupAccess_PayloadJSON.initialize(),
+  decode: function (json: string): AccessGetGroupAccessPayload {
+    return AccessGetGroupAccessPayloadJSON._readMessage(
+      AccessGetGroupAccessPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetGroupAccess_Payload with all fields set to their default value.
+   * Initializes AccessGetGroupAccessPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetGroupAccess_Payload {
+  initialize: function (): AccessGetGroupAccessPayload {
     return {
       groupId: 0,
       eventId: 0,
@@ -9777,7 +9680,7 @@ export const Access_GetGroupAccess_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetGroupAccess_Payload>
+    msg: Partial<AccessGetGroupAccessPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -9793,14 +9696,14 @@ export const Access_GetGroupAccess_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetGroupAccess_Payload,
+    msg: AccessGetGroupAccessPayload,
     json: any
-  ): Access_GetGroupAccess_Payload {
-    const _groupId_ = json["groupId"];
+  ): AccessGetGroupAccessPayload {
+    const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
       msg.groupId = _groupId_;
     }
-    const _eventId_ = json["eventId"];
+    const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = _eventId_;
     }
@@ -9808,30 +9711,28 @@ export const Access_GetGroupAccess_PayloadJSON = {
   },
 };
 
-export const Access_GetGroupAccess_ResponseJSON = {
+export const AccessGetGroupAccessResponseJSON = {
   /**
-   * Serializes Access_GetGroupAccess_Response to JSON.
+   * Serializes AccessGetGroupAccessResponse to JSON.
    */
-  encode: function (msg: Partial<Access_GetGroupAccess_Response>): string {
-    return JSON.stringify(
-      Access_GetGroupAccess_ResponseJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<AccessGetGroupAccessResponse>): string {
+    return JSON.stringify(AccessGetGroupAccessResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_GetGroupAccess_Response from JSON.
+   * Deserializes AccessGetGroupAccessResponse from JSON.
    */
-  decode: function (json: string): Access_GetGroupAccess_Response {
-    return Access_GetGroupAccess_ResponseJSON._readMessage(
-      Access_GetGroupAccess_ResponseJSON.initialize(),
+  decode: function (json: string): AccessGetGroupAccessResponse {
+    return AccessGetGroupAccessResponseJSON._readMessage(
+      AccessGetGroupAccessResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetGroupAccess_Response with all fields set to their default value.
+   * Initializes AccessGetGroupAccessResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetGroupAccess_Response {
+  initialize: function (): AccessGetGroupAccessResponse {
     return {
       rules: protoAtoms.AccessRulesJSON.initialize(),
     };
@@ -9841,7 +9742,7 @@ export const Access_GetGroupAccess_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetGroupAccess_Response>
+    msg: Partial<AccessGetGroupAccessResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rules) {
@@ -9857,9 +9758,9 @@ export const Access_GetGroupAccess_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetGroupAccess_Response,
+    msg: AccessGetGroupAccessResponse,
     json: any
-  ): Access_GetGroupAccess_Response {
+  ): AccessGetGroupAccessResponse {
     const _rules_ = json["rules"];
     if (_rules_) {
       const m = protoAtoms.AccessRules.initialize();
@@ -9870,30 +9771,30 @@ export const Access_GetGroupAccess_ResponseJSON = {
   },
 };
 
-export const Access_GetAllPersonAccess_PayloadJSON = {
+export const AccessGetAllPersonAccessPayloadJSON = {
   /**
-   * Serializes Access_GetAllPersonAccess_Payload to JSON.
+   * Serializes AccessGetAllPersonAccessPayload to JSON.
    */
-  encode: function (msg: Partial<Access_GetAllPersonAccess_Payload>): string {
+  encode: function (msg: Partial<AccessGetAllPersonAccessPayload>): string {
     return JSON.stringify(
-      Access_GetAllPersonAccess_PayloadJSON._writeMessage(msg)
+      AccessGetAllPersonAccessPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_GetAllPersonAccess_Payload from JSON.
+   * Deserializes AccessGetAllPersonAccessPayload from JSON.
    */
-  decode: function (json: string): Access_GetAllPersonAccess_Payload {
-    return Access_GetAllPersonAccess_PayloadJSON._readMessage(
-      Access_GetAllPersonAccess_PayloadJSON.initialize(),
+  decode: function (json: string): AccessGetAllPersonAccessPayload {
+    return AccessGetAllPersonAccessPayloadJSON._readMessage(
+      AccessGetAllPersonAccessPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetAllPersonAccess_Payload with all fields set to their default value.
+   * Initializes AccessGetAllPersonAccessPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllPersonAccess_Payload {
+  initialize: function (): AccessGetAllPersonAccessPayload {
     return {
       personId: 0,
     };
@@ -9903,7 +9804,7 @@ export const Access_GetAllPersonAccess_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllPersonAccess_Payload>
+    msg: Partial<AccessGetAllPersonAccessPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -9916,10 +9817,10 @@ export const Access_GetAllPersonAccess_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllPersonAccess_Payload,
+    msg: AccessGetAllPersonAccessPayload,
     json: any
-  ): Access_GetAllPersonAccess_Payload {
-    const _personId_ = json["personId"];
+  ): AccessGetAllPersonAccessPayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
@@ -9927,30 +9828,30 @@ export const Access_GetAllPersonAccess_PayloadJSON = {
   },
 };
 
-export const Access_GetAllPersonAccess_ResponseJSON = {
+export const AccessGetAllPersonAccessResponseJSON = {
   /**
-   * Serializes Access_GetAllPersonAccess_Response to JSON.
+   * Serializes AccessGetAllPersonAccessResponse to JSON.
    */
-  encode: function (msg: Partial<Access_GetAllPersonAccess_Response>): string {
+  encode: function (msg: Partial<AccessGetAllPersonAccessResponse>): string {
     return JSON.stringify(
-      Access_GetAllPersonAccess_ResponseJSON._writeMessage(msg)
+      AccessGetAllPersonAccessResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_GetAllPersonAccess_Response from JSON.
+   * Deserializes AccessGetAllPersonAccessResponse from JSON.
    */
-  decode: function (json: string): Access_GetAllPersonAccess_Response {
-    return Access_GetAllPersonAccess_ResponseJSON._readMessage(
-      Access_GetAllPersonAccess_ResponseJSON.initialize(),
+  decode: function (json: string): AccessGetAllPersonAccessResponse {
+    return AccessGetAllPersonAccessResponseJSON._readMessage(
+      AccessGetAllPersonAccessResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetAllPersonAccess_Response with all fields set to their default value.
+   * Initializes AccessGetAllPersonAccessResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllPersonAccess_Response {
+  initialize: function (): AccessGetAllPersonAccessResponse {
     return {
       rulesByEvent: {},
     };
@@ -9960,16 +9861,14 @@ export const Access_GetAllPersonAccess_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllPersonAccess_Response>
+    msg: Partial<AccessGetAllPersonAccessResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rulesByEvent) {
       const _rulesByEvent_ = Object.fromEntries(
         Object.entries(msg.rulesByEvent)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
-          .map(
-            Access_GetAllPersonAccess_ResponseJSON.RulesByEvent._writeMessage
-          )
+          .map(AccessGetAllPersonAccessResponseJSON.RulesByEvent._writeMessage)
           .map(({ key, value }) => [key, value])
       );
       if (Object.keys(_rulesByEvent_).length > 0) {
@@ -9983,15 +9882,15 @@ export const Access_GetAllPersonAccess_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllPersonAccess_Response,
+    msg: AccessGetAllPersonAccessResponse,
     json: any
-  ): Access_GetAllPersonAccess_Response {
-    const _rulesByEvent_ = json["rulesByEvent"];
+  ): AccessGetAllPersonAccessResponse {
+    const _rulesByEvent_ = json["rulesByEvent"] ?? json["rules_by_event"];
     if (_rulesByEvent_) {
       msg.rulesByEvent = Object.fromEntries(
         Object.entries(_rulesByEvent_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
-          .map(Access_GetAllPersonAccess_ResponseJSON.RulesByEvent._readMessage)
+          .map(AccessGetAllPersonAccessResponseJSON.RulesByEvent._readMessage)
           .map(({ key, value }) => [key, value])
       );
     }
@@ -10003,7 +9902,7 @@ export const Access_GetAllPersonAccess_ResponseJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Access_GetAllPersonAccess_Response.RulesByEvent>
+      msg: Partial<AccessGetAllPersonAccessResponse.RulesByEvent>
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -10024,9 +9923,9 @@ export const Access_GetAllPersonAccess_ResponseJSON = {
      * @private
      */
     _readMessage: function (
-      msg: Access_GetAllPersonAccess_Response.RulesByEvent,
+      msg: AccessGetAllPersonAccessResponse.RulesByEvent,
       json: any
-    ): Access_GetAllPersonAccess_Response.RulesByEvent {
+    ): AccessGetAllPersonAccessResponse.RulesByEvent {
       const _key_ = json["key"];
       if (_key_) {
         msg.key = _key_;
@@ -10042,30 +9941,30 @@ export const Access_GetAllPersonAccess_ResponseJSON = {
   },
 };
 
-export const Access_GetAllGroupAccess_PayloadJSON = {
+export const AccessGetAllGroupAccessPayloadJSON = {
   /**
-   * Serializes Access_GetAllGroupAccess_Payload to JSON.
+   * Serializes AccessGetAllGroupAccessPayload to JSON.
    */
-  encode: function (msg: Partial<Access_GetAllGroupAccess_Payload>): string {
+  encode: function (msg: Partial<AccessGetAllGroupAccessPayload>): string {
     return JSON.stringify(
-      Access_GetAllGroupAccess_PayloadJSON._writeMessage(msg)
+      AccessGetAllGroupAccessPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_GetAllGroupAccess_Payload from JSON.
+   * Deserializes AccessGetAllGroupAccessPayload from JSON.
    */
-  decode: function (json: string): Access_GetAllGroupAccess_Payload {
-    return Access_GetAllGroupAccess_PayloadJSON._readMessage(
-      Access_GetAllGroupAccess_PayloadJSON.initialize(),
+  decode: function (json: string): AccessGetAllGroupAccessPayload {
+    return AccessGetAllGroupAccessPayloadJSON._readMessage(
+      AccessGetAllGroupAccessPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetAllGroupAccess_Payload with all fields set to their default value.
+   * Initializes AccessGetAllGroupAccessPayload with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllGroupAccess_Payload {
+  initialize: function (): AccessGetAllGroupAccessPayload {
     return {
       groupId: 0,
     };
@@ -10075,7 +9974,7 @@ export const Access_GetAllGroupAccess_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllGroupAccess_Payload>
+    msg: Partial<AccessGetAllGroupAccessPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -10088,10 +9987,10 @@ export const Access_GetAllGroupAccess_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllGroupAccess_Payload,
+    msg: AccessGetAllGroupAccessPayload,
     json: any
-  ): Access_GetAllGroupAccess_Payload {
-    const _groupId_ = json["groupId"];
+  ): AccessGetAllGroupAccessPayload {
+    const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
       msg.groupId = _groupId_;
     }
@@ -10099,30 +9998,30 @@ export const Access_GetAllGroupAccess_PayloadJSON = {
   },
 };
 
-export const Access_GetAllGroupAccess_ResponseJSON = {
+export const AccessGetAllGroupAccessResponseJSON = {
   /**
-   * Serializes Access_GetAllGroupAccess_Response to JSON.
+   * Serializes AccessGetAllGroupAccessResponse to JSON.
    */
-  encode: function (msg: Partial<Access_GetAllGroupAccess_Response>): string {
+  encode: function (msg: Partial<AccessGetAllGroupAccessResponse>): string {
     return JSON.stringify(
-      Access_GetAllGroupAccess_ResponseJSON._writeMessage(msg)
+      AccessGetAllGroupAccessResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_GetAllGroupAccess_Response from JSON.
+   * Deserializes AccessGetAllGroupAccessResponse from JSON.
    */
-  decode: function (json: string): Access_GetAllGroupAccess_Response {
-    return Access_GetAllGroupAccess_ResponseJSON._readMessage(
-      Access_GetAllGroupAccess_ResponseJSON.initialize(),
+  decode: function (json: string): AccessGetAllGroupAccessResponse {
+    return AccessGetAllGroupAccessResponseJSON._readMessage(
+      AccessGetAllGroupAccessResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_GetAllGroupAccess_Response with all fields set to their default value.
+   * Initializes AccessGetAllGroupAccessResponse with all fields set to their default value.
    */
-  initialize: function (): Access_GetAllGroupAccess_Response {
+  initialize: function (): AccessGetAllGroupAccessResponse {
     return {
       rulesByEvent: {},
     };
@@ -10132,14 +10031,14 @@ export const Access_GetAllGroupAccess_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_GetAllGroupAccess_Response>
+    msg: Partial<AccessGetAllGroupAccessResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.rulesByEvent) {
       const _rulesByEvent_ = Object.fromEntries(
         Object.entries(msg.rulesByEvent)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
-          .map(Access_GetAllGroupAccess_ResponseJSON.RulesByEvent._writeMessage)
+          .map(AccessGetAllGroupAccessResponseJSON.RulesByEvent._writeMessage)
           .map(({ key, value }) => [key, value])
       );
       if (Object.keys(_rulesByEvent_).length > 0) {
@@ -10153,15 +10052,15 @@ export const Access_GetAllGroupAccess_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_GetAllGroupAccess_Response,
+    msg: AccessGetAllGroupAccessResponse,
     json: any
-  ): Access_GetAllGroupAccess_Response {
-    const _rulesByEvent_ = json["rulesByEvent"];
+  ): AccessGetAllGroupAccessResponse {
+    const _rulesByEvent_ = json["rulesByEvent"] ?? json["rules_by_event"];
     if (_rulesByEvent_) {
       msg.rulesByEvent = Object.fromEntries(
         Object.entries(_rulesByEvent_)
           .map(([key, value]) => ({ key: key as any, value: value as any }))
-          .map(Access_GetAllGroupAccess_ResponseJSON.RulesByEvent._readMessage)
+          .map(AccessGetAllGroupAccessResponseJSON.RulesByEvent._readMessage)
           .map(({ key, value }) => [key, value])
       );
     }
@@ -10173,7 +10072,7 @@ export const Access_GetAllGroupAccess_ResponseJSON = {
      * @private
      */
     _writeMessage: function (
-      msg: Partial<Access_GetAllGroupAccess_Response.RulesByEvent>
+      msg: Partial<AccessGetAllGroupAccessResponse.RulesByEvent>
     ): Record<string, unknown> {
       const json: Record<string, unknown> = {};
       if (msg.key) {
@@ -10194,9 +10093,9 @@ export const Access_GetAllGroupAccess_ResponseJSON = {
      * @private
      */
     _readMessage: function (
-      msg: Access_GetAllGroupAccess_Response.RulesByEvent,
+      msg: AccessGetAllGroupAccessResponse.RulesByEvent,
       json: any
-    ): Access_GetAllGroupAccess_Response.RulesByEvent {
+    ): AccessGetAllGroupAccessResponse.RulesByEvent {
       const _key_ = json["key"];
       if (_key_) {
         msg.key = _key_;
@@ -10212,30 +10111,28 @@ export const Access_GetAllGroupAccess_ResponseJSON = {
   },
 };
 
-export const Access_AddRuleForPerson_PayloadJSON = {
+export const AccessAddRuleForPersonPayloadJSON = {
   /**
-   * Serializes Access_AddRuleForPerson_Payload to JSON.
+   * Serializes AccessAddRuleForPersonPayload to JSON.
    */
-  encode: function (msg: Partial<Access_AddRuleForPerson_Payload>): string {
-    return JSON.stringify(
-      Access_AddRuleForPerson_PayloadJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<AccessAddRuleForPersonPayload>): string {
+    return JSON.stringify(AccessAddRuleForPersonPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_AddRuleForPerson_Payload from JSON.
+   * Deserializes AccessAddRuleForPersonPayload from JSON.
    */
-  decode: function (json: string): Access_AddRuleForPerson_Payload {
-    return Access_AddRuleForPerson_PayloadJSON._readMessage(
-      Access_AddRuleForPerson_PayloadJSON.initialize(),
+  decode: function (json: string): AccessAddRuleForPersonPayload {
+    return AccessAddRuleForPersonPayloadJSON._readMessage(
+      AccessAddRuleForPersonPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_AddRuleForPerson_Payload with all fields set to their default value.
+   * Initializes AccessAddRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): Access_AddRuleForPerson_Payload {
+  initialize: function (): AccessAddRuleForPersonPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
@@ -10249,7 +10146,7 @@ export const Access_AddRuleForPerson_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddRuleForPerson_Payload>
+    msg: Partial<AccessAddRuleForPersonPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleName) {
@@ -10277,28 +10174,28 @@ export const Access_AddRuleForPerson_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddRuleForPerson_Payload,
+    msg: AccessAddRuleForPersonPayload,
     json: any
-  ): Access_AddRuleForPerson_Payload {
-    const _ruleName_ = json["ruleName"];
+  ): AccessAddRuleForPersonPayload {
+    const _ruleName_ = json["ruleName"] ?? json["rule_name"];
     if (_ruleName_) {
       msg.ruleName = _ruleName_;
     }
-    const _ruleValue_ = json["ruleValue"];
+    const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
       const m = protoAtoms.RuleValue.initialize();
       protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
       msg.ruleValue = m;
     }
-    const _ruleType_ = json["ruleType"];
+    const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
       msg.ruleType = _ruleType_;
     }
-    const _personId_ = json["personId"];
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
-    const _eventId_ = json["eventId"];
+    const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = _eventId_;
     }
@@ -10306,30 +10203,30 @@ export const Access_AddRuleForPerson_PayloadJSON = {
   },
 };
 
-export const Access_AddRuleForPerson_ResponseJSON = {
+export const AccessAddRuleForPersonResponseJSON = {
   /**
-   * Serializes Access_AddRuleForPerson_Response to JSON.
+   * Serializes AccessAddRuleForPersonResponse to JSON.
    */
-  encode: function (msg: Partial<Access_AddRuleForPerson_Response>): string {
+  encode: function (msg: Partial<AccessAddRuleForPersonResponse>): string {
     return JSON.stringify(
-      Access_AddRuleForPerson_ResponseJSON._writeMessage(msg)
+      AccessAddRuleForPersonResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_AddRuleForPerson_Response from JSON.
+   * Deserializes AccessAddRuleForPersonResponse from JSON.
    */
-  decode: function (json: string): Access_AddRuleForPerson_Response {
-    return Access_AddRuleForPerson_ResponseJSON._readMessage(
-      Access_AddRuleForPerson_ResponseJSON.initialize(),
+  decode: function (json: string): AccessAddRuleForPersonResponse {
+    return AccessAddRuleForPersonResponseJSON._readMessage(
+      AccessAddRuleForPersonResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_AddRuleForPerson_Response with all fields set to their default value.
+   * Initializes AccessAddRuleForPersonResponse with all fields set to their default value.
    */
-  initialize: function (): Access_AddRuleForPerson_Response {
+  initialize: function (): AccessAddRuleForPersonResponse {
     return {
       ruleId: 0,
     };
@@ -10339,7 +10236,7 @@ export const Access_AddRuleForPerson_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddRuleForPerson_Response>
+    msg: Partial<AccessAddRuleForPersonResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10352,10 +10249,10 @@ export const Access_AddRuleForPerson_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddRuleForPerson_Response,
+    msg: AccessAddRuleForPersonResponse,
     json: any
-  ): Access_AddRuleForPerson_Response {
-    const _ruleId_ = json["ruleId"];
+  ): AccessAddRuleForPersonResponse {
+    const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
       msg.ruleId = _ruleId_;
     }
@@ -10363,30 +10260,28 @@ export const Access_AddRuleForPerson_ResponseJSON = {
   },
 };
 
-export const Access_AddRuleForGroup_PayloadJSON = {
+export const AccessAddRuleForGroupPayloadJSON = {
   /**
-   * Serializes Access_AddRuleForGroup_Payload to JSON.
+   * Serializes AccessAddRuleForGroupPayload to JSON.
    */
-  encode: function (msg: Partial<Access_AddRuleForGroup_Payload>): string {
-    return JSON.stringify(
-      Access_AddRuleForGroup_PayloadJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<AccessAddRuleForGroupPayload>): string {
+    return JSON.stringify(AccessAddRuleForGroupPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_AddRuleForGroup_Payload from JSON.
+   * Deserializes AccessAddRuleForGroupPayload from JSON.
    */
-  decode: function (json: string): Access_AddRuleForGroup_Payload {
-    return Access_AddRuleForGroup_PayloadJSON._readMessage(
-      Access_AddRuleForGroup_PayloadJSON.initialize(),
+  decode: function (json: string): AccessAddRuleForGroupPayload {
+    return AccessAddRuleForGroupPayloadJSON._readMessage(
+      AccessAddRuleForGroupPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_AddRuleForGroup_Payload with all fields set to their default value.
+   * Initializes AccessAddRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Access_AddRuleForGroup_Payload {
+  initialize: function (): AccessAddRuleForGroupPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
@@ -10400,7 +10295,7 @@ export const Access_AddRuleForGroup_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddRuleForGroup_Payload>
+    msg: Partial<AccessAddRuleForGroupPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleName) {
@@ -10428,28 +10323,28 @@ export const Access_AddRuleForGroup_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddRuleForGroup_Payload,
+    msg: AccessAddRuleForGroupPayload,
     json: any
-  ): Access_AddRuleForGroup_Payload {
-    const _ruleName_ = json["ruleName"];
+  ): AccessAddRuleForGroupPayload {
+    const _ruleName_ = json["ruleName"] ?? json["rule_name"];
     if (_ruleName_) {
       msg.ruleName = _ruleName_;
     }
-    const _ruleValue_ = json["ruleValue"];
+    const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
       const m = protoAtoms.RuleValue.initialize();
       protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
       msg.ruleValue = m;
     }
-    const _ruleType_ = json["ruleType"];
+    const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
       msg.ruleType = _ruleType_;
     }
-    const _groupId_ = json["groupId"];
+    const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
       msg.groupId = _groupId_;
     }
-    const _eventId_ = json["eventId"];
+    const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = _eventId_;
     }
@@ -10457,30 +10352,28 @@ export const Access_AddRuleForGroup_PayloadJSON = {
   },
 };
 
-export const Access_AddRuleForGroup_ResponseJSON = {
+export const AccessAddRuleForGroupResponseJSON = {
   /**
-   * Serializes Access_AddRuleForGroup_Response to JSON.
+   * Serializes AccessAddRuleForGroupResponse to JSON.
    */
-  encode: function (msg: Partial<Access_AddRuleForGroup_Response>): string {
-    return JSON.stringify(
-      Access_AddRuleForGroup_ResponseJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<AccessAddRuleForGroupResponse>): string {
+    return JSON.stringify(AccessAddRuleForGroupResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_AddRuleForGroup_Response from JSON.
+   * Deserializes AccessAddRuleForGroupResponse from JSON.
    */
-  decode: function (json: string): Access_AddRuleForGroup_Response {
-    return Access_AddRuleForGroup_ResponseJSON._readMessage(
-      Access_AddRuleForGroup_ResponseJSON.initialize(),
+  decode: function (json: string): AccessAddRuleForGroupResponse {
+    return AccessAddRuleForGroupResponseJSON._readMessage(
+      AccessAddRuleForGroupResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_AddRuleForGroup_Response with all fields set to their default value.
+   * Initializes AccessAddRuleForGroupResponse with all fields set to their default value.
    */
-  initialize: function (): Access_AddRuleForGroup_Response {
+  initialize: function (): AccessAddRuleForGroupResponse {
     return {
       ruleId: 0,
     };
@@ -10490,7 +10383,7 @@ export const Access_AddRuleForGroup_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddRuleForGroup_Response>
+    msg: Partial<AccessAddRuleForGroupResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10503,10 +10396,10 @@ export const Access_AddRuleForGroup_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddRuleForGroup_Response,
+    msg: AccessAddRuleForGroupResponse,
     json: any
-  ): Access_AddRuleForGroup_Response {
-    const _ruleId_ = json["ruleId"];
+  ): AccessAddRuleForGroupResponse {
+    const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
       msg.ruleId = _ruleId_;
     }
@@ -10514,30 +10407,30 @@ export const Access_AddRuleForGroup_ResponseJSON = {
   },
 };
 
-export const Access_UpdateRuleForPerson_PayloadJSON = {
+export const AccessUpdateRuleForPersonPayloadJSON = {
   /**
-   * Serializes Access_UpdateRuleForPerson_Payload to JSON.
+   * Serializes AccessUpdateRuleForPersonPayload to JSON.
    */
-  encode: function (msg: Partial<Access_UpdateRuleForPerson_Payload>): string {
+  encode: function (msg: Partial<AccessUpdateRuleForPersonPayload>): string {
     return JSON.stringify(
-      Access_UpdateRuleForPerson_PayloadJSON._writeMessage(msg)
+      AccessUpdateRuleForPersonPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_UpdateRuleForPerson_Payload from JSON.
+   * Deserializes AccessUpdateRuleForPersonPayload from JSON.
    */
-  decode: function (json: string): Access_UpdateRuleForPerson_Payload {
-    return Access_UpdateRuleForPerson_PayloadJSON._readMessage(
-      Access_UpdateRuleForPerson_PayloadJSON.initialize(),
+  decode: function (json: string): AccessUpdateRuleForPersonPayload {
+    return AccessUpdateRuleForPersonPayloadJSON._readMessage(
+      AccessUpdateRuleForPersonPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_UpdateRuleForPerson_Payload with all fields set to their default value.
+   * Initializes AccessUpdateRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): Access_UpdateRuleForPerson_Payload {
+  initialize: function (): AccessUpdateRuleForPersonPayload {
     return {
       ruleId: 0,
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
@@ -10549,7 +10442,7 @@ export const Access_UpdateRuleForPerson_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_UpdateRuleForPerson_Payload>
+    msg: Partial<AccessUpdateRuleForPersonPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10571,20 +10464,20 @@ export const Access_UpdateRuleForPerson_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_UpdateRuleForPerson_Payload,
+    msg: AccessUpdateRuleForPersonPayload,
     json: any
-  ): Access_UpdateRuleForPerson_Payload {
-    const _ruleId_ = json["ruleId"];
+  ): AccessUpdateRuleForPersonPayload {
+    const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
       msg.ruleId = _ruleId_;
     }
-    const _ruleValue_ = json["ruleValue"];
+    const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
       const m = protoAtoms.RuleValue.initialize();
       protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
       msg.ruleValue = m;
     }
-    const _ruleType_ = json["ruleType"];
+    const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
       msg.ruleType = _ruleType_;
     }
@@ -10592,30 +10485,30 @@ export const Access_UpdateRuleForPerson_PayloadJSON = {
   },
 };
 
-export const Access_UpdateRuleForGroup_PayloadJSON = {
+export const AccessUpdateRuleForGroupPayloadJSON = {
   /**
-   * Serializes Access_UpdateRuleForGroup_Payload to JSON.
+   * Serializes AccessUpdateRuleForGroupPayload to JSON.
    */
-  encode: function (msg: Partial<Access_UpdateRuleForGroup_Payload>): string {
+  encode: function (msg: Partial<AccessUpdateRuleForGroupPayload>): string {
     return JSON.stringify(
-      Access_UpdateRuleForGroup_PayloadJSON._writeMessage(msg)
+      AccessUpdateRuleForGroupPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_UpdateRuleForGroup_Payload from JSON.
+   * Deserializes AccessUpdateRuleForGroupPayload from JSON.
    */
-  decode: function (json: string): Access_UpdateRuleForGroup_Payload {
-    return Access_UpdateRuleForGroup_PayloadJSON._readMessage(
-      Access_UpdateRuleForGroup_PayloadJSON.initialize(),
+  decode: function (json: string): AccessUpdateRuleForGroupPayload {
+    return AccessUpdateRuleForGroupPayloadJSON._readMessage(
+      AccessUpdateRuleForGroupPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_UpdateRuleForGroup_Payload with all fields set to their default value.
+   * Initializes AccessUpdateRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Access_UpdateRuleForGroup_Payload {
+  initialize: function (): AccessUpdateRuleForGroupPayload {
     return {
       ruleId: 0,
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
@@ -10627,7 +10520,7 @@ export const Access_UpdateRuleForGroup_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_UpdateRuleForGroup_Payload>
+    msg: Partial<AccessUpdateRuleForGroupPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10649,20 +10542,20 @@ export const Access_UpdateRuleForGroup_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_UpdateRuleForGroup_Payload,
+    msg: AccessUpdateRuleForGroupPayload,
     json: any
-  ): Access_UpdateRuleForGroup_Payload {
-    const _ruleId_ = json["ruleId"];
+  ): AccessUpdateRuleForGroupPayload {
+    const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
       msg.ruleId = _ruleId_;
     }
-    const _ruleValue_ = json["ruleValue"];
+    const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
       const m = protoAtoms.RuleValue.initialize();
       protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
       msg.ruleValue = m;
     }
-    const _ruleType_ = json["ruleType"];
+    const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
       msg.ruleType = _ruleType_;
     }
@@ -10670,30 +10563,30 @@ export const Access_UpdateRuleForGroup_PayloadJSON = {
   },
 };
 
-export const Access_DeleteRuleForPerson_PayloadJSON = {
+export const AccessDeleteRuleForPersonPayloadJSON = {
   /**
-   * Serializes Access_DeleteRuleForPerson_Payload to JSON.
+   * Serializes AccessDeleteRuleForPersonPayload to JSON.
    */
-  encode: function (msg: Partial<Access_DeleteRuleForPerson_Payload>): string {
+  encode: function (msg: Partial<AccessDeleteRuleForPersonPayload>): string {
     return JSON.stringify(
-      Access_DeleteRuleForPerson_PayloadJSON._writeMessage(msg)
+      AccessDeleteRuleForPersonPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_DeleteRuleForPerson_Payload from JSON.
+   * Deserializes AccessDeleteRuleForPersonPayload from JSON.
    */
-  decode: function (json: string): Access_DeleteRuleForPerson_Payload {
-    return Access_DeleteRuleForPerson_PayloadJSON._readMessage(
-      Access_DeleteRuleForPerson_PayloadJSON.initialize(),
+  decode: function (json: string): AccessDeleteRuleForPersonPayload {
+    return AccessDeleteRuleForPersonPayloadJSON._readMessage(
+      AccessDeleteRuleForPersonPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_DeleteRuleForPerson_Payload with all fields set to their default value.
+   * Initializes AccessDeleteRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): Access_DeleteRuleForPerson_Payload {
+  initialize: function (): AccessDeleteRuleForPersonPayload {
     return {
       ruleId: 0,
     };
@@ -10703,7 +10596,7 @@ export const Access_DeleteRuleForPerson_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_DeleteRuleForPerson_Payload>
+    msg: Partial<AccessDeleteRuleForPersonPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10716,10 +10609,10 @@ export const Access_DeleteRuleForPerson_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_DeleteRuleForPerson_Payload,
+    msg: AccessDeleteRuleForPersonPayload,
     json: any
-  ): Access_DeleteRuleForPerson_Payload {
-    const _ruleId_ = json["ruleId"];
+  ): AccessDeleteRuleForPersonPayload {
+    const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
       msg.ruleId = _ruleId_;
     }
@@ -10727,30 +10620,30 @@ export const Access_DeleteRuleForPerson_PayloadJSON = {
   },
 };
 
-export const Access_DeleteRuleForGroup_PayloadJSON = {
+export const AccessDeleteRuleForGroupPayloadJSON = {
   /**
-   * Serializes Access_DeleteRuleForGroup_Payload to JSON.
+   * Serializes AccessDeleteRuleForGroupPayload to JSON.
    */
-  encode: function (msg: Partial<Access_DeleteRuleForGroup_Payload>): string {
+  encode: function (msg: Partial<AccessDeleteRuleForGroupPayload>): string {
     return JSON.stringify(
-      Access_DeleteRuleForGroup_PayloadJSON._writeMessage(msg)
+      AccessDeleteRuleForGroupPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_DeleteRuleForGroup_Payload from JSON.
+   * Deserializes AccessDeleteRuleForGroupPayload from JSON.
    */
-  decode: function (json: string): Access_DeleteRuleForGroup_Payload {
-    return Access_DeleteRuleForGroup_PayloadJSON._readMessage(
-      Access_DeleteRuleForGroup_PayloadJSON.initialize(),
+  decode: function (json: string): AccessDeleteRuleForGroupPayload {
+    return AccessDeleteRuleForGroupPayloadJSON._readMessage(
+      AccessDeleteRuleForGroupPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_DeleteRuleForGroup_Payload with all fields set to their default value.
+   * Initializes AccessDeleteRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Access_DeleteRuleForGroup_Payload {
+  initialize: function (): AccessDeleteRuleForGroupPayload {
     return {
       ruleId: 0,
     };
@@ -10760,7 +10653,7 @@ export const Access_DeleteRuleForGroup_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_DeleteRuleForGroup_Payload>
+    msg: Partial<AccessDeleteRuleForGroupPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10773,10 +10666,10 @@ export const Access_DeleteRuleForGroup_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_DeleteRuleForGroup_Payload,
+    msg: AccessDeleteRuleForGroupPayload,
     json: any
-  ): Access_DeleteRuleForGroup_Payload {
-    const _ruleId_ = json["ruleId"];
+  ): AccessDeleteRuleForGroupPayload {
+    const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
       msg.ruleId = _ruleId_;
     }
@@ -10784,30 +10677,28 @@ export const Access_DeleteRuleForGroup_PayloadJSON = {
   },
 };
 
-export const Access_ClearAccessCache_PayloadJSON = {
+export const AccessClearAccessCachePayloadJSON = {
   /**
-   * Serializes Access_ClearAccessCache_Payload to JSON.
+   * Serializes AccessClearAccessCachePayload to JSON.
    */
-  encode: function (msg: Partial<Access_ClearAccessCache_Payload>): string {
-    return JSON.stringify(
-      Access_ClearAccessCache_PayloadJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<AccessClearAccessCachePayload>): string {
+    return JSON.stringify(AccessClearAccessCachePayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Access_ClearAccessCache_Payload from JSON.
+   * Deserializes AccessClearAccessCachePayload from JSON.
    */
-  decode: function (json: string): Access_ClearAccessCache_Payload {
-    return Access_ClearAccessCache_PayloadJSON._readMessage(
-      Access_ClearAccessCache_PayloadJSON.initialize(),
+  decode: function (json: string): AccessClearAccessCachePayload {
+    return AccessClearAccessCachePayloadJSON._readMessage(
+      AccessClearAccessCachePayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_ClearAccessCache_Payload with all fields set to their default value.
+   * Initializes AccessClearAccessCachePayload with all fields set to their default value.
    */
-  initialize: function (): Access_ClearAccessCache_Payload {
+  initialize: function (): AccessClearAccessCachePayload {
     return {
       personId: 0,
       eventId: 0,
@@ -10818,7 +10709,7 @@ export const Access_ClearAccessCache_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_ClearAccessCache_Payload>
+    msg: Partial<AccessClearAccessCachePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -10834,14 +10725,14 @@ export const Access_ClearAccessCache_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_ClearAccessCache_Payload,
+    msg: AccessClearAccessCachePayload,
     json: any
-  ): Access_ClearAccessCache_Payload {
-    const _personId_ = json["personId"];
+  ): AccessClearAccessCachePayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
-    const _eventId_ = json["eventId"];
+    const _eventId_ = json["eventId"] ?? json["event_id"];
     if (_eventId_) {
       msg.eventId = _eventId_;
     }
@@ -10849,32 +10740,32 @@ export const Access_ClearAccessCache_PayloadJSON = {
   },
 };
 
-export const Access_AddSystemWideRuleForPerson_PayloadJSON = {
+export const AccessAddSystemWideRuleForPersonPayloadJSON = {
   /**
-   * Serializes Access_AddSystemWideRuleForPerson_Payload to JSON.
+   * Serializes AccessAddSystemWideRuleForPersonPayload to JSON.
    */
   encode: function (
-    msg: Partial<Access_AddSystemWideRuleForPerson_Payload>
+    msg: Partial<AccessAddSystemWideRuleForPersonPayload>
   ): string {
     return JSON.stringify(
-      Access_AddSystemWideRuleForPerson_PayloadJSON._writeMessage(msg)
+      AccessAddSystemWideRuleForPersonPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_AddSystemWideRuleForPerson_Payload from JSON.
+   * Deserializes AccessAddSystemWideRuleForPersonPayload from JSON.
    */
-  decode: function (json: string): Access_AddSystemWideRuleForPerson_Payload {
-    return Access_AddSystemWideRuleForPerson_PayloadJSON._readMessage(
-      Access_AddSystemWideRuleForPerson_PayloadJSON.initialize(),
+  decode: function (json: string): AccessAddSystemWideRuleForPersonPayload {
+    return AccessAddSystemWideRuleForPersonPayloadJSON._readMessage(
+      AccessAddSystemWideRuleForPersonPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_AddSystemWideRuleForPerson_Payload with all fields set to their default value.
+   * Initializes AccessAddSystemWideRuleForPersonPayload with all fields set to their default value.
    */
-  initialize: function (): Access_AddSystemWideRuleForPerson_Payload {
+  initialize: function (): AccessAddSystemWideRuleForPersonPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
@@ -10887,7 +10778,7 @@ export const Access_AddSystemWideRuleForPerson_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddSystemWideRuleForPerson_Payload>
+    msg: Partial<AccessAddSystemWideRuleForPersonPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleName) {
@@ -10912,24 +10803,24 @@ export const Access_AddSystemWideRuleForPerson_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddSystemWideRuleForPerson_Payload,
+    msg: AccessAddSystemWideRuleForPersonPayload,
     json: any
-  ): Access_AddSystemWideRuleForPerson_Payload {
-    const _ruleName_ = json["ruleName"];
+  ): AccessAddSystemWideRuleForPersonPayload {
+    const _ruleName_ = json["ruleName"] ?? json["rule_name"];
     if (_ruleName_) {
       msg.ruleName = _ruleName_;
     }
-    const _ruleValue_ = json["ruleValue"];
+    const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
       const m = protoAtoms.RuleValue.initialize();
       protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
       msg.ruleValue = m;
     }
-    const _ruleType_ = json["ruleType"];
+    const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
       msg.ruleType = _ruleType_;
     }
-    const _personId_ = json["personId"];
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
@@ -10937,32 +10828,32 @@ export const Access_AddSystemWideRuleForPerson_PayloadJSON = {
   },
 };
 
-export const Access_AddSystemWideRuleForPerson_ResponseJSON = {
+export const AccessAddSystemWideRuleForPersonResponseJSON = {
   /**
-   * Serializes Access_AddSystemWideRuleForPerson_Response to JSON.
+   * Serializes AccessAddSystemWideRuleForPersonResponse to JSON.
    */
   encode: function (
-    msg: Partial<Access_AddSystemWideRuleForPerson_Response>
+    msg: Partial<AccessAddSystemWideRuleForPersonResponse>
   ): string {
     return JSON.stringify(
-      Access_AddSystemWideRuleForPerson_ResponseJSON._writeMessage(msg)
+      AccessAddSystemWideRuleForPersonResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_AddSystemWideRuleForPerson_Response from JSON.
+   * Deserializes AccessAddSystemWideRuleForPersonResponse from JSON.
    */
-  decode: function (json: string): Access_AddSystemWideRuleForPerson_Response {
-    return Access_AddSystemWideRuleForPerson_ResponseJSON._readMessage(
-      Access_AddSystemWideRuleForPerson_ResponseJSON.initialize(),
+  decode: function (json: string): AccessAddSystemWideRuleForPersonResponse {
+    return AccessAddSystemWideRuleForPersonResponseJSON._readMessage(
+      AccessAddSystemWideRuleForPersonResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_AddSystemWideRuleForPerson_Response with all fields set to their default value.
+   * Initializes AccessAddSystemWideRuleForPersonResponse with all fields set to their default value.
    */
-  initialize: function (): Access_AddSystemWideRuleForPerson_Response {
+  initialize: function (): AccessAddSystemWideRuleForPersonResponse {
     return {
       ruleId: 0,
     };
@@ -10972,7 +10863,7 @@ export const Access_AddSystemWideRuleForPerson_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddSystemWideRuleForPerson_Response>
+    msg: Partial<AccessAddSystemWideRuleForPersonResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -10985,10 +10876,10 @@ export const Access_AddSystemWideRuleForPerson_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddSystemWideRuleForPerson_Response,
+    msg: AccessAddSystemWideRuleForPersonResponse,
     json: any
-  ): Access_AddSystemWideRuleForPerson_Response {
-    const _ruleId_ = json["ruleId"];
+  ): AccessAddSystemWideRuleForPersonResponse {
+    const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
       msg.ruleId = _ruleId_;
     }
@@ -10996,32 +10887,32 @@ export const Access_AddSystemWideRuleForPerson_ResponseJSON = {
   },
 };
 
-export const Access_AddSystemWideRuleForGroup_PayloadJSON = {
+export const AccessAddSystemWideRuleForGroupPayloadJSON = {
   /**
-   * Serializes Access_AddSystemWideRuleForGroup_Payload to JSON.
+   * Serializes AccessAddSystemWideRuleForGroupPayload to JSON.
    */
   encode: function (
-    msg: Partial<Access_AddSystemWideRuleForGroup_Payload>
+    msg: Partial<AccessAddSystemWideRuleForGroupPayload>
   ): string {
     return JSON.stringify(
-      Access_AddSystemWideRuleForGroup_PayloadJSON._writeMessage(msg)
+      AccessAddSystemWideRuleForGroupPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_AddSystemWideRuleForGroup_Payload from JSON.
+   * Deserializes AccessAddSystemWideRuleForGroupPayload from JSON.
    */
-  decode: function (json: string): Access_AddSystemWideRuleForGroup_Payload {
-    return Access_AddSystemWideRuleForGroup_PayloadJSON._readMessage(
-      Access_AddSystemWideRuleForGroup_PayloadJSON.initialize(),
+  decode: function (json: string): AccessAddSystemWideRuleForGroupPayload {
+    return AccessAddSystemWideRuleForGroupPayloadJSON._readMessage(
+      AccessAddSystemWideRuleForGroupPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_AddSystemWideRuleForGroup_Payload with all fields set to their default value.
+   * Initializes AccessAddSystemWideRuleForGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Access_AddSystemWideRuleForGroup_Payload {
+  initialize: function (): AccessAddSystemWideRuleForGroupPayload {
     return {
       ruleName: "",
       ruleValue: protoAtoms.RuleValueJSON.initialize(),
@@ -11034,7 +10925,7 @@ export const Access_AddSystemWideRuleForGroup_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddSystemWideRuleForGroup_Payload>
+    msg: Partial<AccessAddSystemWideRuleForGroupPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleName) {
@@ -11059,24 +10950,24 @@ export const Access_AddSystemWideRuleForGroup_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddSystemWideRuleForGroup_Payload,
+    msg: AccessAddSystemWideRuleForGroupPayload,
     json: any
-  ): Access_AddSystemWideRuleForGroup_Payload {
-    const _ruleName_ = json["ruleName"];
+  ): AccessAddSystemWideRuleForGroupPayload {
+    const _ruleName_ = json["ruleName"] ?? json["rule_name"];
     if (_ruleName_) {
       msg.ruleName = _ruleName_;
     }
-    const _ruleValue_ = json["ruleValue"];
+    const _ruleValue_ = json["ruleValue"] ?? json["rule_value"];
     if (_ruleValue_) {
       const m = protoAtoms.RuleValue.initialize();
       protoAtoms.RuleValueJSON._readMessage(m, _ruleValue_);
       msg.ruleValue = m;
     }
-    const _ruleType_ = json["ruleType"];
+    const _ruleType_ = json["ruleType"] ?? json["rule_type"];
     if (_ruleType_) {
       msg.ruleType = _ruleType_;
     }
-    const _groupId_ = json["groupId"];
+    const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
       msg.groupId = _groupId_;
     }
@@ -11084,32 +10975,32 @@ export const Access_AddSystemWideRuleForGroup_PayloadJSON = {
   },
 };
 
-export const Access_AddSystemWideRuleForGroup_ResponseJSON = {
+export const AccessAddSystemWideRuleForGroupResponseJSON = {
   /**
-   * Serializes Access_AddSystemWideRuleForGroup_Response to JSON.
+   * Serializes AccessAddSystemWideRuleForGroupResponse to JSON.
    */
   encode: function (
-    msg: Partial<Access_AddSystemWideRuleForGroup_Response>
+    msg: Partial<AccessAddSystemWideRuleForGroupResponse>
   ): string {
     return JSON.stringify(
-      Access_AddSystemWideRuleForGroup_ResponseJSON._writeMessage(msg)
+      AccessAddSystemWideRuleForGroupResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Access_AddSystemWideRuleForGroup_Response from JSON.
+   * Deserializes AccessAddSystemWideRuleForGroupResponse from JSON.
    */
-  decode: function (json: string): Access_AddSystemWideRuleForGroup_Response {
-    return Access_AddSystemWideRuleForGroup_ResponseJSON._readMessage(
-      Access_AddSystemWideRuleForGroup_ResponseJSON.initialize(),
+  decode: function (json: string): AccessAddSystemWideRuleForGroupResponse {
+    return AccessAddSystemWideRuleForGroupResponseJSON._readMessage(
+      AccessAddSystemWideRuleForGroupResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Access_AddSystemWideRuleForGroup_Response with all fields set to their default value.
+   * Initializes AccessAddSystemWideRuleForGroupResponse with all fields set to their default value.
    */
-  initialize: function (): Access_AddSystemWideRuleForGroup_Response {
+  initialize: function (): AccessAddSystemWideRuleForGroupResponse {
     return {
       ruleId: 0,
     };
@@ -11119,7 +11010,7 @@ export const Access_AddSystemWideRuleForGroup_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Access_AddSystemWideRuleForGroup_Response>
+    msg: Partial<AccessAddSystemWideRuleForGroupResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ruleId) {
@@ -11132,10 +11023,10 @@ export const Access_AddSystemWideRuleForGroup_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Access_AddSystemWideRuleForGroup_Response,
+    msg: AccessAddSystemWideRuleForGroupResponse,
     json: any
-  ): Access_AddSystemWideRuleForGroup_Response {
-    const _ruleId_ = json["ruleId"];
+  ): AccessAddSystemWideRuleForGroupResponse {
+    const _ruleId_ = json["ruleId"] ?? json["rule_id"];
     if (_ruleId_) {
       msg.ruleId = _ruleId_;
     }
@@ -11143,28 +11034,28 @@ export const Access_AddSystemWideRuleForGroup_ResponseJSON = {
   },
 };
 
-export const Persons_CreateAccount_PayloadJSON = {
+export const PersonsCreateAccountPayloadJSON = {
   /**
-   * Serializes Persons_CreateAccount_Payload to JSON.
+   * Serializes PersonsCreateAccountPayload to JSON.
    */
-  encode: function (msg: Partial<Persons_CreateAccount_Payload>): string {
-    return JSON.stringify(Persons_CreateAccount_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<PersonsCreateAccountPayload>): string {
+    return JSON.stringify(PersonsCreateAccountPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_CreateAccount_Payload from JSON.
+   * Deserializes PersonsCreateAccountPayload from JSON.
    */
-  decode: function (json: string): Persons_CreateAccount_Payload {
-    return Persons_CreateAccount_PayloadJSON._readMessage(
-      Persons_CreateAccount_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsCreateAccountPayload {
+    return PersonsCreateAccountPayloadJSON._readMessage(
+      PersonsCreateAccountPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_CreateAccount_Payload with all fields set to their default value.
+   * Initializes PersonsCreateAccountPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_CreateAccount_Payload {
+  initialize: function (): PersonsCreateAccountPayload {
     return {
       email: "",
       password: "",
@@ -11180,7 +11071,7 @@ export const Persons_CreateAccount_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_CreateAccount_Payload>
+    msg: Partial<PersonsCreateAccountPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.email) {
@@ -11211,9 +11102,9 @@ export const Persons_CreateAccount_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_CreateAccount_Payload,
+    msg: PersonsCreateAccountPayload,
     json: any
-  ): Persons_CreateAccount_Payload {
+  ): PersonsCreateAccountPayload {
     const _email_ = json["email"];
     if (_email_) {
       msg.email = _email_;
@@ -11234,7 +11125,7 @@ export const Persons_CreateAccount_PayloadJSON = {
     if (_phone_) {
       msg.phone = _phone_;
     }
-    const _tenhouId_ = json["tenhouId"];
+    const _tenhouId_ = json["tenhouId"] ?? json["tenhou_id"];
     if (_tenhouId_) {
       msg.tenhouId = _tenhouId_;
     }
@@ -11246,30 +11137,28 @@ export const Persons_CreateAccount_PayloadJSON = {
   },
 };
 
-export const Persons_CreateAccount_ResponseJSON = {
+export const PersonsCreateAccountResponseJSON = {
   /**
-   * Serializes Persons_CreateAccount_Response to JSON.
+   * Serializes PersonsCreateAccountResponse to JSON.
    */
-  encode: function (msg: Partial<Persons_CreateAccount_Response>): string {
-    return JSON.stringify(
-      Persons_CreateAccount_ResponseJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<PersonsCreateAccountResponse>): string {
+    return JSON.stringify(PersonsCreateAccountResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_CreateAccount_Response from JSON.
+   * Deserializes PersonsCreateAccountResponse from JSON.
    */
-  decode: function (json: string): Persons_CreateAccount_Response {
-    return Persons_CreateAccount_ResponseJSON._readMessage(
-      Persons_CreateAccount_ResponseJSON.initialize(),
+  decode: function (json: string): PersonsCreateAccountResponse {
+    return PersonsCreateAccountResponseJSON._readMessage(
+      PersonsCreateAccountResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_CreateAccount_Response with all fields set to their default value.
+   * Initializes PersonsCreateAccountResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_CreateAccount_Response {
+  initialize: function (): PersonsCreateAccountResponse {
     return {
       personId: 0,
     };
@@ -11279,7 +11168,7 @@ export const Persons_CreateAccount_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_CreateAccount_Response>
+    msg: Partial<PersonsCreateAccountResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -11292,10 +11181,10 @@ export const Persons_CreateAccount_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_CreateAccount_Response,
+    msg: PersonsCreateAccountResponse,
     json: any
-  ): Persons_CreateAccount_Response {
-    const _personId_ = json["personId"];
+  ): PersonsCreateAccountResponse {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
@@ -11303,28 +11192,28 @@ export const Persons_CreateAccount_ResponseJSON = {
   },
 };
 
-export const Persons_CreateGroup_PayloadJSON = {
+export const PersonsCreateGroupPayloadJSON = {
   /**
-   * Serializes Persons_CreateGroup_Payload to JSON.
+   * Serializes PersonsCreateGroupPayload to JSON.
    */
-  encode: function (msg: Partial<Persons_CreateGroup_Payload>): string {
-    return JSON.stringify(Persons_CreateGroup_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<PersonsCreateGroupPayload>): string {
+    return JSON.stringify(PersonsCreateGroupPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_CreateGroup_Payload from JSON.
+   * Deserializes PersonsCreateGroupPayload from JSON.
    */
-  decode: function (json: string): Persons_CreateGroup_Payload {
-    return Persons_CreateGroup_PayloadJSON._readMessage(
-      Persons_CreateGroup_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsCreateGroupPayload {
+    return PersonsCreateGroupPayloadJSON._readMessage(
+      PersonsCreateGroupPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_CreateGroup_Payload with all fields set to their default value.
+   * Initializes PersonsCreateGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_CreateGroup_Payload {
+  initialize: function (): PersonsCreateGroupPayload {
     return {
       title: "",
       description: "",
@@ -11336,7 +11225,7 @@ export const Persons_CreateGroup_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_CreateGroup_Payload>
+    msg: Partial<PersonsCreateGroupPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.title) {
@@ -11355,9 +11244,9 @@ export const Persons_CreateGroup_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_CreateGroup_Payload,
+    msg: PersonsCreateGroupPayload,
     json: any
-  ): Persons_CreateGroup_Payload {
+  ): PersonsCreateGroupPayload {
     const _title_ = json["title"];
     if (_title_) {
       msg.title = _title_;
@@ -11374,28 +11263,28 @@ export const Persons_CreateGroup_PayloadJSON = {
   },
 };
 
-export const Persons_CreateGroup_ResponseJSON = {
+export const PersonsCreateGroupResponseJSON = {
   /**
-   * Serializes Persons_CreateGroup_Response to JSON.
+   * Serializes PersonsCreateGroupResponse to JSON.
    */
-  encode: function (msg: Partial<Persons_CreateGroup_Response>): string {
-    return JSON.stringify(Persons_CreateGroup_ResponseJSON._writeMessage(msg));
+  encode: function (msg: Partial<PersonsCreateGroupResponse>): string {
+    return JSON.stringify(PersonsCreateGroupResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_CreateGroup_Response from JSON.
+   * Deserializes PersonsCreateGroupResponse from JSON.
    */
-  decode: function (json: string): Persons_CreateGroup_Response {
-    return Persons_CreateGroup_ResponseJSON._readMessage(
-      Persons_CreateGroup_ResponseJSON.initialize(),
+  decode: function (json: string): PersonsCreateGroupResponse {
+    return PersonsCreateGroupResponseJSON._readMessage(
+      PersonsCreateGroupResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_CreateGroup_Response with all fields set to their default value.
+   * Initializes PersonsCreateGroupResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_CreateGroup_Response {
+  initialize: function (): PersonsCreateGroupResponse {
     return {
       groupId: 0,
     };
@@ -11405,7 +11294,7 @@ export const Persons_CreateGroup_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_CreateGroup_Response>
+    msg: Partial<PersonsCreateGroupResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -11418,10 +11307,10 @@ export const Persons_CreateGroup_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_CreateGroup_Response,
+    msg: PersonsCreateGroupResponse,
     json: any
-  ): Persons_CreateGroup_Response {
-    const _groupId_ = json["groupId"];
+  ): PersonsCreateGroupResponse {
+    const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
       msg.groupId = _groupId_;
     }
@@ -11429,28 +11318,28 @@ export const Persons_CreateGroup_ResponseJSON = {
   },
 };
 
-export const Persons_UpdateGroup_PayloadJSON = {
+export const PersonsUpdateGroupPayloadJSON = {
   /**
-   * Serializes Persons_UpdateGroup_Payload to JSON.
+   * Serializes PersonsUpdateGroupPayload to JSON.
    */
-  encode: function (msg: Partial<Persons_UpdateGroup_Payload>): string {
-    return JSON.stringify(Persons_UpdateGroup_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<PersonsUpdateGroupPayload>): string {
+    return JSON.stringify(PersonsUpdateGroupPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_UpdateGroup_Payload from JSON.
+   * Deserializes PersonsUpdateGroupPayload from JSON.
    */
-  decode: function (json: string): Persons_UpdateGroup_Payload {
-    return Persons_UpdateGroup_PayloadJSON._readMessage(
-      Persons_UpdateGroup_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsUpdateGroupPayload {
+    return PersonsUpdateGroupPayloadJSON._readMessage(
+      PersonsUpdateGroupPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_UpdateGroup_Payload with all fields set to their default value.
+   * Initializes PersonsUpdateGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_UpdateGroup_Payload {
+  initialize: function (): PersonsUpdateGroupPayload {
     return {
       groupId: 0,
       title: "",
@@ -11463,7 +11352,7 @@ export const Persons_UpdateGroup_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_UpdateGroup_Payload>
+    msg: Partial<PersonsUpdateGroupPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -11485,10 +11374,10 @@ export const Persons_UpdateGroup_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_UpdateGroup_Payload,
+    msg: PersonsUpdateGroupPayload,
     json: any
-  ): Persons_UpdateGroup_Payload {
-    const _groupId_ = json["groupId"];
+  ): PersonsUpdateGroupPayload {
+    const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
       msg.groupId = _groupId_;
     }
@@ -11508,28 +11397,28 @@ export const Persons_UpdateGroup_PayloadJSON = {
   },
 };
 
-export const Persons_DeleteGroup_PayloadJSON = {
+export const PersonsDeleteGroupPayloadJSON = {
   /**
-   * Serializes Persons_DeleteGroup_Payload to JSON.
+   * Serializes PersonsDeleteGroupPayload to JSON.
    */
-  encode: function (msg: Partial<Persons_DeleteGroup_Payload>): string {
-    return JSON.stringify(Persons_DeleteGroup_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<PersonsDeleteGroupPayload>): string {
+    return JSON.stringify(PersonsDeleteGroupPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_DeleteGroup_Payload from JSON.
+   * Deserializes PersonsDeleteGroupPayload from JSON.
    */
-  decode: function (json: string): Persons_DeleteGroup_Payload {
-    return Persons_DeleteGroup_PayloadJSON._readMessage(
-      Persons_DeleteGroup_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsDeleteGroupPayload {
+    return PersonsDeleteGroupPayloadJSON._readMessage(
+      PersonsDeleteGroupPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_DeleteGroup_Payload with all fields set to their default value.
+   * Initializes PersonsDeleteGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_DeleteGroup_Payload {
+  initialize: function (): PersonsDeleteGroupPayload {
     return {
       groupId: 0,
     };
@@ -11539,7 +11428,7 @@ export const Persons_DeleteGroup_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_DeleteGroup_Payload>
+    msg: Partial<PersonsDeleteGroupPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -11552,10 +11441,10 @@ export const Persons_DeleteGroup_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_DeleteGroup_Payload,
+    msg: PersonsDeleteGroupPayload,
     json: any
-  ): Persons_DeleteGroup_Payload {
-    const _groupId_ = json["groupId"];
+  ): PersonsDeleteGroupPayload {
+    const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
       msg.groupId = _groupId_;
     }
@@ -11563,30 +11452,30 @@ export const Persons_DeleteGroup_PayloadJSON = {
   },
 };
 
-export const Persons_AddPersonToGroup_PayloadJSON = {
+export const PersonsAddPersonToGroupPayloadJSON = {
   /**
-   * Serializes Persons_AddPersonToGroup_Payload to JSON.
+   * Serializes PersonsAddPersonToGroupPayload to JSON.
    */
-  encode: function (msg: Partial<Persons_AddPersonToGroup_Payload>): string {
+  encode: function (msg: Partial<PersonsAddPersonToGroupPayload>): string {
     return JSON.stringify(
-      Persons_AddPersonToGroup_PayloadJSON._writeMessage(msg)
+      PersonsAddPersonToGroupPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Persons_AddPersonToGroup_Payload from JSON.
+   * Deserializes PersonsAddPersonToGroupPayload from JSON.
    */
-  decode: function (json: string): Persons_AddPersonToGroup_Payload {
-    return Persons_AddPersonToGroup_PayloadJSON._readMessage(
-      Persons_AddPersonToGroup_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsAddPersonToGroupPayload {
+    return PersonsAddPersonToGroupPayloadJSON._readMessage(
+      PersonsAddPersonToGroupPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_AddPersonToGroup_Payload with all fields set to their default value.
+   * Initializes PersonsAddPersonToGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_AddPersonToGroup_Payload {
+  initialize: function (): PersonsAddPersonToGroupPayload {
     return {
       personId: 0,
       groupId: 0,
@@ -11597,7 +11486,7 @@ export const Persons_AddPersonToGroup_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_AddPersonToGroup_Payload>
+    msg: Partial<PersonsAddPersonToGroupPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -11613,14 +11502,14 @@ export const Persons_AddPersonToGroup_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_AddPersonToGroup_Payload,
+    msg: PersonsAddPersonToGroupPayload,
     json: any
-  ): Persons_AddPersonToGroup_Payload {
-    const _personId_ = json["personId"];
+  ): PersonsAddPersonToGroupPayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
-    const _groupId_ = json["groupId"];
+    const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
       msg.groupId = _groupId_;
     }
@@ -11628,32 +11517,30 @@ export const Persons_AddPersonToGroup_PayloadJSON = {
   },
 };
 
-export const Persons_RemovePersonFromGroup_PayloadJSON = {
+export const PersonsRemovePersonFromGroupPayloadJSON = {
   /**
-   * Serializes Persons_RemovePersonFromGroup_Payload to JSON.
+   * Serializes PersonsRemovePersonFromGroupPayload to JSON.
    */
-  encode: function (
-    msg: Partial<Persons_RemovePersonFromGroup_Payload>
-  ): string {
+  encode: function (msg: Partial<PersonsRemovePersonFromGroupPayload>): string {
     return JSON.stringify(
-      Persons_RemovePersonFromGroup_PayloadJSON._writeMessage(msg)
+      PersonsRemovePersonFromGroupPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Persons_RemovePersonFromGroup_Payload from JSON.
+   * Deserializes PersonsRemovePersonFromGroupPayload from JSON.
    */
-  decode: function (json: string): Persons_RemovePersonFromGroup_Payload {
-    return Persons_RemovePersonFromGroup_PayloadJSON._readMessage(
-      Persons_RemovePersonFromGroup_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsRemovePersonFromGroupPayload {
+    return PersonsRemovePersonFromGroupPayloadJSON._readMessage(
+      PersonsRemovePersonFromGroupPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_RemovePersonFromGroup_Payload with all fields set to their default value.
+   * Initializes PersonsRemovePersonFromGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_RemovePersonFromGroup_Payload {
+  initialize: function (): PersonsRemovePersonFromGroupPayload {
     return {
       personId: 0,
       groupId: 0,
@@ -11664,7 +11551,7 @@ export const Persons_RemovePersonFromGroup_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_RemovePersonFromGroup_Payload>
+    msg: Partial<PersonsRemovePersonFromGroupPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -11680,14 +11567,14 @@ export const Persons_RemovePersonFromGroup_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_RemovePersonFromGroup_Payload,
+    msg: PersonsRemovePersonFromGroupPayload,
     json: any
-  ): Persons_RemovePersonFromGroup_Payload {
-    const _personId_ = json["personId"];
+  ): PersonsRemovePersonFromGroupPayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
-    const _groupId_ = json["groupId"];
+    const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
       msg.groupId = _groupId_;
     }
@@ -11695,30 +11582,30 @@ export const Persons_RemovePersonFromGroup_PayloadJSON = {
   },
 };
 
-export const Persons_GetPersonsOfGroup_PayloadJSON = {
+export const PersonsGetPersonsOfGroupPayloadJSON = {
   /**
-   * Serializes Persons_GetPersonsOfGroup_Payload to JSON.
+   * Serializes PersonsGetPersonsOfGroupPayload to JSON.
    */
-  encode: function (msg: Partial<Persons_GetPersonsOfGroup_Payload>): string {
+  encode: function (msg: Partial<PersonsGetPersonsOfGroupPayload>): string {
     return JSON.stringify(
-      Persons_GetPersonsOfGroup_PayloadJSON._writeMessage(msg)
+      PersonsGetPersonsOfGroupPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Persons_GetPersonsOfGroup_Payload from JSON.
+   * Deserializes PersonsGetPersonsOfGroupPayload from JSON.
    */
-  decode: function (json: string): Persons_GetPersonsOfGroup_Payload {
-    return Persons_GetPersonsOfGroup_PayloadJSON._readMessage(
-      Persons_GetPersonsOfGroup_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsGetPersonsOfGroupPayload {
+    return PersonsGetPersonsOfGroupPayloadJSON._readMessage(
+      PersonsGetPersonsOfGroupPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_GetPersonsOfGroup_Payload with all fields set to their default value.
+   * Initializes PersonsGetPersonsOfGroupPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_GetPersonsOfGroup_Payload {
+  initialize: function (): PersonsGetPersonsOfGroupPayload {
     return {
       groupId: 0,
     };
@@ -11728,7 +11615,7 @@ export const Persons_GetPersonsOfGroup_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetPersonsOfGroup_Payload>
+    msg: Partial<PersonsGetPersonsOfGroupPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groupId) {
@@ -11741,10 +11628,10 @@ export const Persons_GetPersonsOfGroup_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetPersonsOfGroup_Payload,
+    msg: PersonsGetPersonsOfGroupPayload,
     json: any
-  ): Persons_GetPersonsOfGroup_Payload {
-    const _groupId_ = json["groupId"];
+  ): PersonsGetPersonsOfGroupPayload {
+    const _groupId_ = json["groupId"] ?? json["group_id"];
     if (_groupId_) {
       msg.groupId = _groupId_;
     }
@@ -11752,32 +11639,32 @@ export const Persons_GetPersonsOfGroup_PayloadJSON = {
   },
 };
 
-export const Persons_GetPersonsOfGroup_ResponseJSON = {
+export const PersonsGetPersonsOfGroupResponseJSON = {
   /**
-   * Serializes Persons_GetPersonsOfGroup_Response to JSON.
+   * Serializes PersonsGetPersonsOfGroupResponse to JSON.
    */
-  encode: function (msg: Partial<Persons_GetPersonsOfGroup_Response>): string {
+  encode: function (msg: Partial<PersonsGetPersonsOfGroupResponse>): string {
     return JSON.stringify(
-      Persons_GetPersonsOfGroup_ResponseJSON._writeMessage(msg)
+      PersonsGetPersonsOfGroupResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Persons_GetPersonsOfGroup_Response from JSON.
+   * Deserializes PersonsGetPersonsOfGroupResponse from JSON.
    */
-  decode: function (json: string): Persons_GetPersonsOfGroup_Response {
-    return Persons_GetPersonsOfGroup_ResponseJSON._readMessage(
-      Persons_GetPersonsOfGroup_ResponseJSON.initialize(),
+  decode: function (json: string): PersonsGetPersonsOfGroupResponse {
+    return PersonsGetPersonsOfGroupResponseJSON._readMessage(
+      PersonsGetPersonsOfGroupResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_GetPersonsOfGroup_Response with all fields set to their default value.
+   * Initializes PersonsGetPersonsOfGroupResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_GetPersonsOfGroup_Response {
+  initialize: function (): PersonsGetPersonsOfGroupResponse {
     return {
-      persons: [],
+      people: [],
     };
   },
 
@@ -11785,11 +11672,11 @@ export const Persons_GetPersonsOfGroup_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetPersonsOfGroup_Response>
+    msg: Partial<PersonsGetPersonsOfGroupResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
-    if (msg.persons?.length) {
-      json["persons"] = msg.persons.map(protoAtoms.PersonJSON._writeMessage);
+    if (msg.people?.length) {
+      json["people"] = msg.people.map(protoAtoms.PersonJSON._writeMessage);
     }
     return json;
   },
@@ -11798,45 +11685,45 @@ export const Persons_GetPersonsOfGroup_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetPersonsOfGroup_Response,
+    msg: PersonsGetPersonsOfGroupResponse,
     json: any
-  ): Persons_GetPersonsOfGroup_Response {
-    const _persons_ = json["persons"];
-    if (_persons_) {
-      for (const item of _persons_) {
+  ): PersonsGetPersonsOfGroupResponse {
+    const _people_ = json["people"];
+    if (_people_) {
+      for (const item of _people_) {
         const m = protoAtoms.Person.initialize();
         protoAtoms.PersonJSON._readMessage(m, item);
-        msg.persons.push(m);
+        msg.people.push(m);
       }
     }
     return msg;
   },
 };
 
-export const Persons_GetGroupsOfPerson_PayloadJSON = {
+export const PersonsGetGroupsOfPersonPayloadJSON = {
   /**
-   * Serializes Persons_GetGroupsOfPerson_Payload to JSON.
+   * Serializes PersonsGetGroupsOfPersonPayload to JSON.
    */
-  encode: function (msg: Partial<Persons_GetGroupsOfPerson_Payload>): string {
+  encode: function (msg: Partial<PersonsGetGroupsOfPersonPayload>): string {
     return JSON.stringify(
-      Persons_GetGroupsOfPerson_PayloadJSON._writeMessage(msg)
+      PersonsGetGroupsOfPersonPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Persons_GetGroupsOfPerson_Payload from JSON.
+   * Deserializes PersonsGetGroupsOfPersonPayload from JSON.
    */
-  decode: function (json: string): Persons_GetGroupsOfPerson_Payload {
-    return Persons_GetGroupsOfPerson_PayloadJSON._readMessage(
-      Persons_GetGroupsOfPerson_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsGetGroupsOfPersonPayload {
+    return PersonsGetGroupsOfPersonPayloadJSON._readMessage(
+      PersonsGetGroupsOfPersonPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_GetGroupsOfPerson_Payload with all fields set to their default value.
+   * Initializes PersonsGetGroupsOfPersonPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_GetGroupsOfPerson_Payload {
+  initialize: function (): PersonsGetGroupsOfPersonPayload {
     return {
       personId: 0,
     };
@@ -11846,7 +11733,7 @@ export const Persons_GetGroupsOfPerson_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetGroupsOfPerson_Payload>
+    msg: Partial<PersonsGetGroupsOfPersonPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.personId) {
@@ -11859,10 +11746,10 @@ export const Persons_GetGroupsOfPerson_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetGroupsOfPerson_Payload,
+    msg: PersonsGetGroupsOfPersonPayload,
     json: any
-  ): Persons_GetGroupsOfPerson_Payload {
-    const _personId_ = json["personId"];
+  ): PersonsGetGroupsOfPersonPayload {
+    const _personId_ = json["personId"] ?? json["person_id"];
     if (_personId_) {
       msg.personId = _personId_;
     }
@@ -11870,30 +11757,30 @@ export const Persons_GetGroupsOfPerson_PayloadJSON = {
   },
 };
 
-export const Persons_GetGroupsOfPerson_ResponseJSON = {
+export const PersonsGetGroupsOfPersonResponseJSON = {
   /**
-   * Serializes Persons_GetGroupsOfPerson_Response to JSON.
+   * Serializes PersonsGetGroupsOfPersonResponse to JSON.
    */
-  encode: function (msg: Partial<Persons_GetGroupsOfPerson_Response>): string {
+  encode: function (msg: Partial<PersonsGetGroupsOfPersonResponse>): string {
     return JSON.stringify(
-      Persons_GetGroupsOfPerson_ResponseJSON._writeMessage(msg)
+      PersonsGetGroupsOfPersonResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Persons_GetGroupsOfPerson_Response from JSON.
+   * Deserializes PersonsGetGroupsOfPersonResponse from JSON.
    */
-  decode: function (json: string): Persons_GetGroupsOfPerson_Response {
-    return Persons_GetGroupsOfPerson_ResponseJSON._readMessage(
-      Persons_GetGroupsOfPerson_ResponseJSON.initialize(),
+  decode: function (json: string): PersonsGetGroupsOfPersonResponse {
+    return PersonsGetGroupsOfPersonResponseJSON._readMessage(
+      PersonsGetGroupsOfPersonResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_GetGroupsOfPerson_Response with all fields set to their default value.
+   * Initializes PersonsGetGroupsOfPersonResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_GetGroupsOfPerson_Response {
+  initialize: function (): PersonsGetGroupsOfPersonResponse {
     return {
       groups: [],
     };
@@ -11903,7 +11790,7 @@ export const Persons_GetGroupsOfPerson_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetGroupsOfPerson_Response>
+    msg: Partial<PersonsGetGroupsOfPersonResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groups?.length) {
@@ -11916,9 +11803,9 @@ export const Persons_GetGroupsOfPerson_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetGroupsOfPerson_Response,
+    msg: PersonsGetGroupsOfPersonResponse,
     json: any
-  ): Persons_GetGroupsOfPerson_Response {
+  ): PersonsGetGroupsOfPersonResponse {
     const _groups_ = json["groups"];
     if (_groups_) {
       for (const item of _groups_) {
@@ -11931,30 +11818,30 @@ export const Persons_GetGroupsOfPerson_ResponseJSON = {
   },
 };
 
-export const Persons_UpdatePersonalInfo_PayloadJSON = {
+export const PersonsUpdatePersonalInfoPayloadJSON = {
   /**
-   * Serializes Persons_UpdatePersonalInfo_Payload to JSON.
+   * Serializes PersonsUpdatePersonalInfoPayload to JSON.
    */
-  encode: function (msg: Partial<Persons_UpdatePersonalInfo_Payload>): string {
+  encode: function (msg: Partial<PersonsUpdatePersonalInfoPayload>): string {
     return JSON.stringify(
-      Persons_UpdatePersonalInfo_PayloadJSON._writeMessage(msg)
+      PersonsUpdatePersonalInfoPayloadJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Persons_UpdatePersonalInfo_Payload from JSON.
+   * Deserializes PersonsUpdatePersonalInfoPayload from JSON.
    */
-  decode: function (json: string): Persons_UpdatePersonalInfo_Payload {
-    return Persons_UpdatePersonalInfo_PayloadJSON._readMessage(
-      Persons_UpdatePersonalInfo_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsUpdatePersonalInfoPayload {
+    return PersonsUpdatePersonalInfoPayloadJSON._readMessage(
+      PersonsUpdatePersonalInfoPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_UpdatePersonalInfo_Payload with all fields set to their default value.
+   * Initializes PersonsUpdatePersonalInfoPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_UpdatePersonalInfo_Payload {
+  initialize: function (): PersonsUpdatePersonalInfoPayload {
     return {
       id: 0,
       title: "",
@@ -11970,7 +11857,7 @@ export const Persons_UpdatePersonalInfo_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_UpdatePersonalInfo_Payload>
+    msg: Partial<PersonsUpdatePersonalInfoPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.id) {
@@ -12001,9 +11888,9 @@ export const Persons_UpdatePersonalInfo_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_UpdatePersonalInfo_Payload,
+    msg: PersonsUpdatePersonalInfoPayload,
     json: any
-  ): Persons_UpdatePersonalInfo_Payload {
+  ): PersonsUpdatePersonalInfoPayload {
     const _id_ = json["id"];
     if (_id_) {
       msg.id = _id_;
@@ -12028,7 +11915,7 @@ export const Persons_UpdatePersonalInfo_PayloadJSON = {
     if (_phone_) {
       msg.phone = _phone_;
     }
-    const _tenhouId_ = json["tenhouId"];
+    const _tenhouId_ = json["tenhouId"] ?? json["tenhou_id"];
     if (_tenhouId_) {
       msg.tenhouId = _tenhouId_;
     }
@@ -12036,30 +11923,28 @@ export const Persons_UpdatePersonalInfo_PayloadJSON = {
   },
 };
 
-export const Persons_GetPersonalInfo_PayloadJSON = {
+export const PersonsGetPersonalInfoPayloadJSON = {
   /**
-   * Serializes Persons_GetPersonalInfo_Payload to JSON.
+   * Serializes PersonsGetPersonalInfoPayload to JSON.
    */
-  encode: function (msg: Partial<Persons_GetPersonalInfo_Payload>): string {
-    return JSON.stringify(
-      Persons_GetPersonalInfo_PayloadJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<PersonsGetPersonalInfoPayload>): string {
+    return JSON.stringify(PersonsGetPersonalInfoPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_GetPersonalInfo_Payload from JSON.
+   * Deserializes PersonsGetPersonalInfoPayload from JSON.
    */
-  decode: function (json: string): Persons_GetPersonalInfo_Payload {
-    return Persons_GetPersonalInfo_PayloadJSON._readMessage(
-      Persons_GetPersonalInfo_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsGetPersonalInfoPayload {
+    return PersonsGetPersonalInfoPayloadJSON._readMessage(
+      PersonsGetPersonalInfoPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_GetPersonalInfo_Payload with all fields set to their default value.
+   * Initializes PersonsGetPersonalInfoPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_GetPersonalInfo_Payload {
+  initialize: function (): PersonsGetPersonalInfoPayload {
     return {
       ids: [],
     };
@@ -12069,7 +11954,7 @@ export const Persons_GetPersonalInfo_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetPersonalInfo_Payload>
+    msg: Partial<PersonsGetPersonalInfoPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ids?.length) {
@@ -12082,9 +11967,9 @@ export const Persons_GetPersonalInfo_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetPersonalInfo_Payload,
+    msg: PersonsGetPersonalInfoPayload,
     json: any
-  ): Persons_GetPersonalInfo_Payload {
+  ): PersonsGetPersonalInfoPayload {
     const _ids_ = json["ids"];
     if (_ids_) {
       msg.ids = _ids_;
@@ -12093,32 +11978,32 @@ export const Persons_GetPersonalInfo_PayloadJSON = {
   },
 };
 
-export const Persons_GetPersonalInfo_ResponseJSON = {
+export const PersonsGetPersonalInfoResponseJSON = {
   /**
-   * Serializes Persons_GetPersonalInfo_Response to JSON.
+   * Serializes PersonsGetPersonalInfoResponse to JSON.
    */
-  encode: function (msg: Partial<Persons_GetPersonalInfo_Response>): string {
+  encode: function (msg: Partial<PersonsGetPersonalInfoResponse>): string {
     return JSON.stringify(
-      Persons_GetPersonalInfo_ResponseJSON._writeMessage(msg)
+      PersonsGetPersonalInfoResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Persons_GetPersonalInfo_Response from JSON.
+   * Deserializes PersonsGetPersonalInfoResponse from JSON.
    */
-  decode: function (json: string): Persons_GetPersonalInfo_Response {
-    return Persons_GetPersonalInfo_ResponseJSON._readMessage(
-      Persons_GetPersonalInfo_ResponseJSON.initialize(),
+  decode: function (json: string): PersonsGetPersonalInfoResponse {
+    return PersonsGetPersonalInfoResponseJSON._readMessage(
+      PersonsGetPersonalInfoResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_GetPersonalInfo_Response with all fields set to their default value.
+   * Initializes PersonsGetPersonalInfoResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_GetPersonalInfo_Response {
+  initialize: function (): PersonsGetPersonalInfoResponse {
     return {
-      persons: [],
+      people: [],
     };
   },
 
@@ -12126,11 +12011,11 @@ export const Persons_GetPersonalInfo_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetPersonalInfo_Response>
+    msg: Partial<PersonsGetPersonalInfoResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
-    if (msg.persons?.length) {
-      json["persons"] = msg.persons.map(protoAtoms.PersonExJSON._writeMessage);
+    if (msg.people?.length) {
+      json["people"] = msg.people.map(protoAtoms.PersonExJSON._writeMessage);
     }
     return json;
   },
@@ -12139,45 +12024,43 @@ export const Persons_GetPersonalInfo_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetPersonalInfo_Response,
+    msg: PersonsGetPersonalInfoResponse,
     json: any
-  ): Persons_GetPersonalInfo_Response {
-    const _persons_ = json["persons"];
-    if (_persons_) {
-      for (const item of _persons_) {
+  ): PersonsGetPersonalInfoResponse {
+    const _people_ = json["people"];
+    if (_people_) {
+      for (const item of _people_) {
         const m = protoAtoms.PersonEx.initialize();
         protoAtoms.PersonExJSON._readMessage(m, item);
-        msg.persons.push(m);
+        msg.people.push(m);
       }
     }
     return msg;
   },
 };
 
-export const Persons_FindByTenhouIds_PayloadJSON = {
+export const PersonsFindByTenhouIdsPayloadJSON = {
   /**
-   * Serializes Persons_FindByTenhouIds_Payload to JSON.
+   * Serializes PersonsFindByTenhouIdsPayload to JSON.
    */
-  encode: function (msg: Partial<Persons_FindByTenhouIds_Payload>): string {
-    return JSON.stringify(
-      Persons_FindByTenhouIds_PayloadJSON._writeMessage(msg)
-    );
+  encode: function (msg: Partial<PersonsFindByTenhouIdsPayload>): string {
+    return JSON.stringify(PersonsFindByTenhouIdsPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_FindByTenhouIds_Payload from JSON.
+   * Deserializes PersonsFindByTenhouIdsPayload from JSON.
    */
-  decode: function (json: string): Persons_FindByTenhouIds_Payload {
-    return Persons_FindByTenhouIds_PayloadJSON._readMessage(
-      Persons_FindByTenhouIds_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsFindByTenhouIdsPayload {
+    return PersonsFindByTenhouIdsPayloadJSON._readMessage(
+      PersonsFindByTenhouIdsPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_FindByTenhouIds_Payload with all fields set to their default value.
+   * Initializes PersonsFindByTenhouIdsPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_FindByTenhouIds_Payload {
+  initialize: function (): PersonsFindByTenhouIdsPayload {
     return {
       ids: [],
     };
@@ -12187,7 +12070,7 @@ export const Persons_FindByTenhouIds_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_FindByTenhouIds_Payload>
+    msg: Partial<PersonsFindByTenhouIdsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ids?.length) {
@@ -12200,9 +12083,9 @@ export const Persons_FindByTenhouIds_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_FindByTenhouIds_Payload,
+    msg: PersonsFindByTenhouIdsPayload,
     json: any
-  ): Persons_FindByTenhouIds_Payload {
+  ): PersonsFindByTenhouIdsPayload {
     const _ids_ = json["ids"];
     if (_ids_) {
       msg.ids = _ids_;
@@ -12211,32 +12094,32 @@ export const Persons_FindByTenhouIds_PayloadJSON = {
   },
 };
 
-export const Persons_FindByTenhouIds_ResponseJSON = {
+export const PersonsFindByTenhouIdsResponseJSON = {
   /**
-   * Serializes Persons_FindByTenhouIds_Response to JSON.
+   * Serializes PersonsFindByTenhouIdsResponse to JSON.
    */
-  encode: function (msg: Partial<Persons_FindByTenhouIds_Response>): string {
+  encode: function (msg: Partial<PersonsFindByTenhouIdsResponse>): string {
     return JSON.stringify(
-      Persons_FindByTenhouIds_ResponseJSON._writeMessage(msg)
+      PersonsFindByTenhouIdsResponseJSON._writeMessage(msg)
     );
   },
 
   /**
-   * Deserializes Persons_FindByTenhouIds_Response from JSON.
+   * Deserializes PersonsFindByTenhouIdsResponse from JSON.
    */
-  decode: function (json: string): Persons_FindByTenhouIds_Response {
-    return Persons_FindByTenhouIds_ResponseJSON._readMessage(
-      Persons_FindByTenhouIds_ResponseJSON.initialize(),
+  decode: function (json: string): PersonsFindByTenhouIdsResponse {
+    return PersonsFindByTenhouIdsResponseJSON._readMessage(
+      PersonsFindByTenhouIdsResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_FindByTenhouIds_Response with all fields set to their default value.
+   * Initializes PersonsFindByTenhouIdsResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_FindByTenhouIds_Response {
+  initialize: function (): PersonsFindByTenhouIdsResponse {
     return {
-      persons: [],
+      people: [],
     };
   },
 
@@ -12244,11 +12127,11 @@ export const Persons_FindByTenhouIds_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_FindByTenhouIds_Response>
+    msg: Partial<PersonsFindByTenhouIdsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
-    if (msg.persons?.length) {
-      json["persons"] = msg.persons.map(protoAtoms.PersonExJSON._writeMessage);
+    if (msg.people?.length) {
+      json["people"] = msg.people.map(protoAtoms.PersonExJSON._writeMessage);
     }
     return json;
   },
@@ -12257,43 +12140,43 @@ export const Persons_FindByTenhouIds_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_FindByTenhouIds_Response,
+    msg: PersonsFindByTenhouIdsResponse,
     json: any
-  ): Persons_FindByTenhouIds_Response {
-    const _persons_ = json["persons"];
-    if (_persons_) {
-      for (const item of _persons_) {
+  ): PersonsFindByTenhouIdsResponse {
+    const _people_ = json["people"];
+    if (_people_) {
+      for (const item of _people_) {
         const m = protoAtoms.PersonEx.initialize();
         protoAtoms.PersonExJSON._readMessage(m, item);
-        msg.persons.push(m);
+        msg.people.push(m);
       }
     }
     return msg;
   },
 };
 
-export const Persons_FindByTitle_PayloadJSON = {
+export const PersonsFindByTitlePayloadJSON = {
   /**
-   * Serializes Persons_FindByTitle_Payload to JSON.
+   * Serializes PersonsFindByTitlePayload to JSON.
    */
-  encode: function (msg: Partial<Persons_FindByTitle_Payload>): string {
-    return JSON.stringify(Persons_FindByTitle_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<PersonsFindByTitlePayload>): string {
+    return JSON.stringify(PersonsFindByTitlePayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_FindByTitle_Payload from JSON.
+   * Deserializes PersonsFindByTitlePayload from JSON.
    */
-  decode: function (json: string): Persons_FindByTitle_Payload {
-    return Persons_FindByTitle_PayloadJSON._readMessage(
-      Persons_FindByTitle_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsFindByTitlePayload {
+    return PersonsFindByTitlePayloadJSON._readMessage(
+      PersonsFindByTitlePayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_FindByTitle_Payload with all fields set to their default value.
+   * Initializes PersonsFindByTitlePayload with all fields set to their default value.
    */
-  initialize: function (): Persons_FindByTitle_Payload {
+  initialize: function (): PersonsFindByTitlePayload {
     return {
       query: "",
     };
@@ -12303,7 +12186,7 @@ export const Persons_FindByTitle_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_FindByTitle_Payload>
+    msg: Partial<PersonsFindByTitlePayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.query) {
@@ -12316,9 +12199,9 @@ export const Persons_FindByTitle_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_FindByTitle_Payload,
+    msg: PersonsFindByTitlePayload,
     json: any
-  ): Persons_FindByTitle_Payload {
+  ): PersonsFindByTitlePayload {
     const _query_ = json["query"];
     if (_query_) {
       msg.query = _query_;
@@ -12327,30 +12210,30 @@ export const Persons_FindByTitle_PayloadJSON = {
   },
 };
 
-export const Persons_FindByTitle_ResponseJSON = {
+export const PersonsFindByTitleResponseJSON = {
   /**
-   * Serializes Persons_FindByTitle_Response to JSON.
+   * Serializes PersonsFindByTitleResponse to JSON.
    */
-  encode: function (msg: Partial<Persons_FindByTitle_Response>): string {
-    return JSON.stringify(Persons_FindByTitle_ResponseJSON._writeMessage(msg));
+  encode: function (msg: Partial<PersonsFindByTitleResponse>): string {
+    return JSON.stringify(PersonsFindByTitleResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_FindByTitle_Response from JSON.
+   * Deserializes PersonsFindByTitleResponse from JSON.
    */
-  decode: function (json: string): Persons_FindByTitle_Response {
-    return Persons_FindByTitle_ResponseJSON._readMessage(
-      Persons_FindByTitle_ResponseJSON.initialize(),
+  decode: function (json: string): PersonsFindByTitleResponse {
+    return PersonsFindByTitleResponseJSON._readMessage(
+      PersonsFindByTitleResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_FindByTitle_Response with all fields set to their default value.
+   * Initializes PersonsFindByTitleResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_FindByTitle_Response {
+  initialize: function (): PersonsFindByTitleResponse {
     return {
-      persons: [],
+      people: [],
     };
   },
 
@@ -12358,11 +12241,11 @@ export const Persons_FindByTitle_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_FindByTitle_Response>
+    msg: Partial<PersonsFindByTitleResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
-    if (msg.persons?.length) {
-      json["persons"] = msg.persons.map(protoAtoms.PersonJSON._writeMessage);
+    if (msg.people?.length) {
+      json["people"] = msg.people.map(protoAtoms.PersonJSON._writeMessage);
     }
     return json;
   },
@@ -12371,43 +12254,43 @@ export const Persons_FindByTitle_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_FindByTitle_Response,
+    msg: PersonsFindByTitleResponse,
     json: any
-  ): Persons_FindByTitle_Response {
-    const _persons_ = json["persons"];
-    if (_persons_) {
-      for (const item of _persons_) {
+  ): PersonsFindByTitleResponse {
+    const _people_ = json["people"];
+    if (_people_) {
+      for (const item of _people_) {
         const m = protoAtoms.Person.initialize();
         protoAtoms.PersonJSON._readMessage(m, item);
-        msg.persons.push(m);
+        msg.people.push(m);
       }
     }
     return msg;
   },
 };
 
-export const Persons_GetGroups_PayloadJSON = {
+export const PersonsGetGroupsPayloadJSON = {
   /**
-   * Serializes Persons_GetGroups_Payload to JSON.
+   * Serializes PersonsGetGroupsPayload to JSON.
    */
-  encode: function (msg: Partial<Persons_GetGroups_Payload>): string {
-    return JSON.stringify(Persons_GetGroups_PayloadJSON._writeMessage(msg));
+  encode: function (msg: Partial<PersonsGetGroupsPayload>): string {
+    return JSON.stringify(PersonsGetGroupsPayloadJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_GetGroups_Payload from JSON.
+   * Deserializes PersonsGetGroupsPayload from JSON.
    */
-  decode: function (json: string): Persons_GetGroups_Payload {
-    return Persons_GetGroups_PayloadJSON._readMessage(
-      Persons_GetGroups_PayloadJSON.initialize(),
+  decode: function (json: string): PersonsGetGroupsPayload {
+    return PersonsGetGroupsPayloadJSON._readMessage(
+      PersonsGetGroupsPayloadJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_GetGroups_Payload with all fields set to their default value.
+   * Initializes PersonsGetGroupsPayload with all fields set to their default value.
    */
-  initialize: function (): Persons_GetGroups_Payload {
+  initialize: function (): PersonsGetGroupsPayload {
     return {
       ids: [],
     };
@@ -12417,7 +12300,7 @@ export const Persons_GetGroups_PayloadJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetGroups_Payload>
+    msg: Partial<PersonsGetGroupsPayload>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.ids?.length) {
@@ -12430,9 +12313,9 @@ export const Persons_GetGroups_PayloadJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetGroups_Payload,
+    msg: PersonsGetGroupsPayload,
     json: any
-  ): Persons_GetGroups_Payload {
+  ): PersonsGetGroupsPayload {
     const _ids_ = json["ids"];
     if (_ids_) {
       msg.ids = _ids_;
@@ -12441,28 +12324,28 @@ export const Persons_GetGroups_PayloadJSON = {
   },
 };
 
-export const Persons_GetGroups_ResponseJSON = {
+export const PersonsGetGroupsResponseJSON = {
   /**
-   * Serializes Persons_GetGroups_Response to JSON.
+   * Serializes PersonsGetGroupsResponse to JSON.
    */
-  encode: function (msg: Partial<Persons_GetGroups_Response>): string {
-    return JSON.stringify(Persons_GetGroups_ResponseJSON._writeMessage(msg));
+  encode: function (msg: Partial<PersonsGetGroupsResponse>): string {
+    return JSON.stringify(PersonsGetGroupsResponseJSON._writeMessage(msg));
   },
 
   /**
-   * Deserializes Persons_GetGroups_Response from JSON.
+   * Deserializes PersonsGetGroupsResponse from JSON.
    */
-  decode: function (json: string): Persons_GetGroups_Response {
-    return Persons_GetGroups_ResponseJSON._readMessage(
-      Persons_GetGroups_ResponseJSON.initialize(),
+  decode: function (json: string): PersonsGetGroupsResponse {
+    return PersonsGetGroupsResponseJSON._readMessage(
+      PersonsGetGroupsResponseJSON.initialize(),
       JSON.parse(json)
     );
   },
 
   /**
-   * Initializes Persons_GetGroups_Response with all fields set to their default value.
+   * Initializes PersonsGetGroupsResponse with all fields set to their default value.
    */
-  initialize: function (): Persons_GetGroups_Response {
+  initialize: function (): PersonsGetGroupsResponse {
     return {
       groups: [],
     };
@@ -12472,7 +12355,7 @@ export const Persons_GetGroups_ResponseJSON = {
    * @private
    */
   _writeMessage: function (
-    msg: Partial<Persons_GetGroups_Response>
+    msg: Partial<PersonsGetGroupsResponse>
   ): Record<string, unknown> {
     const json: Record<string, unknown> = {};
     if (msg.groups?.length) {
@@ -12485,9 +12368,9 @@ export const Persons_GetGroups_ResponseJSON = {
    * @private
    */
   _readMessage: function (
-    msg: Persons_GetGroups_Response,
+    msg: PersonsGetGroupsResponse,
     json: any
-  ): Persons_GetGroups_Response {
+  ): PersonsGetGroupsResponse {
     const _groups_ = json["groups"];
     if (_groups_) {
       for (const item of _groups_) {
